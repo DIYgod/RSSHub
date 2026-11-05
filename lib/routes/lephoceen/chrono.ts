@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -23,41 +24,44 @@ export const route: Route = {
             target: '/chrono',
         },
     ],
-    name: 'Fil Info Le Phocéen (Chrono)',
+    name: 'Fil Info (Chrono)',
     maintainers: ['Loopy03'],
     handler: async (_) => {
-        const response = await ofetch('https://www.lephoceen.fr/chrono');
+        const baseUrl = 'https://www.lephoceen.fr';
+        const response = await ofetch(`${baseUrl}/chrono`);
         const $ = load(response);
 
-        // Récupération du fichier json
-        const jsonRaw = $('script[id="__NEXT_DATA__"]').html();
-        const jsonData = JSON.parse(jsonRaw ?? '');
+        const list = $('article.feed-card')
+            .toArray()
+            .map((item): DataItem => {
+                const $item = $(item);
+                return {
+                    title: $item.find('h2').text(),
+                    link: new URL($item.find('a.feed-card-link').attr('href')!, baseUrl).href,
+                    description: $item.find('p[data-smart-excerpt]').text(),
+                    category: [$item.find('.feed-card-badge').text().trim()],
+                    image: $item.find('img').attr('src'),
+                };
+            });
 
-        // Tableau des articles via le chemin identifié du fichier json
-        // Structure: props -> pageProps -> data -> datas
-        const articles = jsonData?.props?.pageProps?.data?.datas || [];
+        // The list only shows relative times, so read the date from each page.
+        const items = await Promise.all(
+            list.map((item) =>
+                cache.tryGet(item.link!, async () => {
+                    const page = await ofetch(item.link!);
+                    const $page = load(page);
 
-        const items = articles.map((item: any) => {
-            // Gestion du lien : le slug est relatif, on ajoute le domaine
-            const baseUrl = 'https://www.lephoceen.fr';
-            const link = item.slug.startsWith('http') ? item.slug : `${baseUrl}${item.slug}`;
+                    item.pubDate = parseDate($page('time[datetime]').first().attr('datetime')!);
+                    item.description = $page('.article-content').html() ?? item.description;
 
-            // Gestion de la date : Le JSON fournit un timestamp UNIX (en secondes)
-            const pubDate = parseDate(item.date.publish_at.timestamp * 1000);
-
-            return {
-                title: item.title,
-                link,
-                description: item.text || `[${item.category?.name}] ${item.title}`,
-                pubDate, // L'objet Date standard gère le fuseau correctement
-                category: [item.category?.name],
-                image: item.images?.['16x9']?.url,
-            };
-        });
+                    return item;
+                })
+            )
+        );
 
         return {
             title: 'Le Phocéen - Fil Info',
-            link: 'https://www.lephoceen.fr/chrono',
+            link: `${baseUrl}/chrono`,
             item: items,
         };
     },

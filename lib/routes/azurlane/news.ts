@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,6 +40,9 @@ const handler: Route['handler'] = async (ctx) => {
 
 const ja: Route['handler'] = async (ctx) => {
     const { type = '0' } = ctx.req.param();
+    if (!Object.hasOwn(JP, type)) {
+        throw new InvalidParameterError('Invalid news type. Use 0 (all), 1 (notices), 2 (events), 3 (maintenance), or 4 (important).');
+    }
 
     const response = await ofetch<{ data: { rows: Array<{ id: number; content: string; title: string; publishTime: number }> } }>('https://www.azurlane.jp/api/news/list', {
         query: {

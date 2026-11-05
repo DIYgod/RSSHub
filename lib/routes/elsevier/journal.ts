@@ -38,12 +38,6 @@ async function handler(ctx) {
     const $ = load(response.data);
     const jrnlName = $('.anchor.js-title-link').text();
     const issueUrl = `${host}${$('.link-anchor.u-clr-black').attr('href')}`;
-    let issue = '';
-    if (issueUrl.match('suppl') !== null) {
-        issue = 'Volume ' + issueUrl.match('vol/(.*)/suppl')![1];
-    } else if (issueUrl.match('issue') !== null) {
-        issue = 'Volume ' + issueUrl.match('vol/(.*)/issue')![1] + ' Issue ' + issueUrl.match('/issue/(.*)')![1];
-    }
 
     const response2 = await got(issueUrl, {
         cookieJar,
@@ -51,7 +45,7 @@ async function handler(ctx) {
     const $2 = load(response2.data);
     const list = $2('.js-article')
         .toArray()
-        .map((item): DataItem & { id?: string; authors: string; issue: string; abstract?: string } => {
+        .map((item): DataItem => {
             const title = $2(item).find('.js-article-title').text();
             const authors = $2(item).find('.js-article__item__authors').text();
             const link = $2(item).find('.article-content-title').attr('href');
@@ -60,12 +54,10 @@ async function handler(ctx) {
                 title,
                 link,
                 id,
-                authors,
-                issue,
+                author: authors,
             };
         });
 
-    const renderDesc = (item) => renderDescription(item);
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
@@ -75,8 +67,7 @@ async function handler(ctx) {
                 const $3 = load(response3.data);
                 $3('.section-title').remove();
                 item.doi = $3('.doi').attr('href')!.replace('https://doi.org/', '');
-                item.abstract = $3('.abstract.author').text();
-                item.description = renderDesc(item);
+                item.description = renderDescription({ abstract: $3('.abstract.author').text() });
                 return item;
             })
         )

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { sorts, types } from './util';
 
@@ -70,7 +71,11 @@ The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/
 export async function handler(ctx) {
     const type = getSubPath(ctx).split('/', 2)[1];
     const { sort = 'new', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    if (!Object.hasOwn(sorts, sort)) {
+        throw new InvalidParameterError('Unknown sort; use metascore, userscore, popular, or new.');
+    }
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
 
     const rootUrl = 'https://www.metacritic.com';
     const rootApiUrl = 'https://backend.metacritic.com';
@@ -117,7 +122,7 @@ export async function handler(ctx) {
 
     if (platforms.length || networks.length) {
         const labels = {};
-        const labelPattern = String.raw`\{label:"([^"]+)",value:(\d+),href:a,meta:\{mcDisplayWeight`;
+        const labelPattern = String.raw`\{"label":\d+,"value":\d+,"meta":\d+\},"([^"]+)",(\d+),`;
 
         const matches = currentResponse.match(new RegExp(labelPattern, 'g'));
         for (const m of matches) {
@@ -168,7 +173,7 @@ export async function handler(ctx) {
         ),
         category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
-        pubDate: parseDate(item.releaseDate),
+        pubDate: item.releaseDate ? parseDateInTimezone(item.releaseDate, 0) : undefined,
         upvotes: item.criticScoreSummary?.positiveCount ? Number(item.criticScoreSummary?.positiveCount) : 0,
         downvotes: item.criticScoreSummary?.negativeCount ? Number(item.criticScoreSummary?.negativeCount) : 0,
         comments: item.criticScoreSummary?.reviewCount ? Number(item.criticScoreSummary?.reviewCount) : 0,
@@ -176,7 +181,7 @@ export async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop()!, rootUrl).href;
+    const icon = $('link[rel="icon"]').prop('href');
 
     return {
         item: items,
@@ -184,11 +189,10 @@ export async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang') as Language,
-        image: $('link[rel="icon"]').prop('content'),
+        image: icon,
         icon,
         logo: icon,
         subtitle: $('meta[name="msapplication-tooltip"]').prop('content'),
         author: $('meta[name="twitter:site"]').prop('content'),
-        allowEmpty: true,
     };
 }

@@ -6,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 dayjs.extend(localizedFormat);
 
@@ -73,7 +73,7 @@ async function handler() {
                 auditApplyDate={dayjs(item.auditApplyDate, 'YYYYMMDDHHmmss').locale('zh-cn').format('lll')}
             />
         ),
-        pubDate: parseDate(item.updateDate, 'YYYYMMDDHHmmss'),
+        pubDate: item.updateDate ? parseDateInTimezone(item.updateDate, 8) : undefined,
         link: `${host}/renewal/xmxq/index.shtml?auditId=${item.stockAuditNum}`,
         author: item.stockAuditName,
     }));

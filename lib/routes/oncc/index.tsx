@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://hk.on.cc';
 
@@ -60,7 +62,7 @@ export const route: Route = {
 \`https://hk.on.cc/hk/finance/index.html\` 对应 \`/oncc/zh-hant/finance\``,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const language = ctx.req.param('language');
     const channel = ctx.req.param('channel') ?? 'news';
     const newsUrl = `${rootUrl}/hk/${channel}/index${languageMap[language]}.html`;
@@ -72,7 +74,8 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const title = $(item).find('div.focusTitle > span').text();
             const link = rootUrl + $(item).find('a:nth-child(1)').attr('href');
-            const pubDate = parseDate($(item).attr('edittime')!, 'YYYYMMDDHHmmss');
+            const date = $(item).attr('edittime');
+            const pubDate = date ? timezone(parseDate(date, 'YYYYMMDDHHmmss'), 8) : undefined;
 
             return {
                 title,
@@ -81,8 +84,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map(async (item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             const desc = await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const $ = load(detailResponse.data);
@@ -98,12 +102,14 @@ async function handler(ctx) {
             item.description = desc;
 
             return item;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `東網 - ${channelMap[channel][language]}`,
         link: newsUrl,
+        language: language === 'zh-hans' ? 'zh-CN' : 'zh-HK',
         item: items,
     };
 }

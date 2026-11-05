@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -22,12 +23,13 @@ async function handler() {
 
     const forums = $('.node--forum .node-title a')
         .toArray()
-        .map((el) => `https://xiaomi.eu${$(el).attr('href')}`);
+        .map((el) => new URL($(el).attr('href')!, link).href);
 
-    const lists = await Promise.all(
-        forums.map((forum) =>
+    const lists = await pMap(
+        forums,
+        (forum) =>
             cache.tryGet(
-                forum,
+                `xiaomi.eu:forum:v1:${forum}`,
                 async () => {
                     const forumResponse = await ofetch(forum);
                     const $$ = load(forumResponse);
@@ -39,15 +41,15 @@ async function handler() {
                             const $title = $th.find('.structItem-title>a:nth-child(2)');
                             return {
                                 title: `[${$ver.text()}] ${$title.text()}`,
-                                link: `https://xiaomi.eu${$title.attr('href')}`,
+                                link: new URL($title.attr('href')!, forum).href,
                                 updated: $th.find('.structItem-cell--latest time').attr('datetime')!,
                             };
                         });
                 },
                 config.cache.routeExpire,
                 false
-            )
-        )
+            ),
+        { concurrency: 3, stopOnError: false }
     );
 
     const list = lists
@@ -55,24 +57,28 @@ async function handler() {
         .toSorted((a, b) => parseDate(b.updated).valueOf() - parseDate(a.updated).valueOf())
         .slice(0, 20);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`xiaomi.eu:release:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $$ = load(detailResponse);
                 const floors = $$('.bbWrapper');
+                const date = $$('time').attr('datetime');
+                const pubDate = date?.trim() ? parseDate(date) : undefined;
 
                 return {
-                    ...item,
                     description: floors
                         .slice(0, 2)
                         .toArray()
                         .map((el) => $$(el).html())
                         .join(''),
-                    pubDate: parseDate($$('time').attr('datetime')!),
+                    pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
                 };
-            })
-        )
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

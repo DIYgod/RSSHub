@@ -12,7 +12,7 @@ export const route: Route = {
 |          | hot      | social   |`,
     radar: [
         {
-            source: ['thenewslens.com/news/:sort?', 'thenewslens.com/'],
+            source: ['thenewslens.com/news/*sort', 'thenewslens.com/news', 'thenewslens.com/'],
             target: '/news/:sort?',
         },
     ],

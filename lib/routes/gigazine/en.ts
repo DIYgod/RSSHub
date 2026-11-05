@@ -6,6 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const ROOT_URL = 'https://gigazine.net';
 const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
@@ -89,7 +90,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit')) || DEFAULT_LIMIT;
+    const limit = getRouteLimit(ctx, DEFAULT_LIMIT);
 
     const html = await ofetch(LIST_URL);
     const $ = load(html);

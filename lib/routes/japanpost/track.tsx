@@ -4,23 +4,21 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Language } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 import utils from './utils';
 
-let baseTitle = '日本郵便';
 const baseUrl = 'https://trackings.post.japanpost.jp/services/srv/search/direct?';
 
 export async function track(ctx) {
     const reqCode = ctx.req.param('reqCode');
-    const reqReqCode = 'reqCodeNo1=' + reqCode;
 
     const locale: Language = ctx.req.param('locale') === 'en' ? 'en' : 'ja';
-    if (locale === 'en') {
-        baseTitle = 'Japanpost';
-    }
-    const reqLocale = '&locale=' + locale;
-
-    const link = baseUrl + reqReqCode + reqLocale;
+    const baseTitle = locale === 'en' ? 'Japanpost' : '日本郵便';
+    const url = new URL(baseUrl);
+    url.searchParams.set('reqCodeNo1', reqCode);
+    url.searchParams.set('locale', locale);
+    const link = url.href;
 
     const response = await got({
         method: 'get',
@@ -56,7 +54,6 @@ export async function track(ctx) {
     const packageService = $('.tableType01').eq(0).find('tr').eq(1).find('td').eq(2).text().trim();
     const serviceText = locale === 'ja' ? '付加サービス：' : 'Additional services: ';
 
-    let lastItemTimestamp;
     let tz;
 
     return {
@@ -117,15 +114,10 @@ export async function track(ctx) {
 
             let thisItemTimestamp;
             [thisItemTimestamp, tz] = utils.parseDatetime(itemPubDateText, packageOffice, packageRegion, tz, locale);
-            if (lastItemTimestamp && thisItemTimestamp <= lastItemTimestamp) {
-                thisItemTimestamp = lastItemTimestamp + 1000;
-            }
-            lastItemTimestamp = thisItemTimestamp;
-
             return {
                 title: itemTitle,
                 description: itemDescription,
-                pubDate: new Date(thisItemTimestamp),
+                pubDate: Number.isFinite(thisItemTimestamp) ? parseDate(thisItemTimestamp) : undefined,
                 link,
                 guid: itemGuid.slice(0, 32),
             };

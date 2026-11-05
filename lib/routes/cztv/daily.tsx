@@ -61,6 +61,10 @@ async function handler() {
             };
         });
 
+    if (!list.length) {
+        throw new Error('CZT no longer provides the Zhejiang News list at the legacy videos/zjxwlb page. Check whether the source page has moved or is blocked.');
+    }
+
     const out = {
         title: list[0].title,
         link: list[0].link,

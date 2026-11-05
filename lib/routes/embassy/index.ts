@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,31 +41,53 @@ async function handler(ctx) {
     const res = await got(link);
     const $ = load(res.data);
 
-    const list: any[] = [];
+    const list: Array<{ link: URL; title: string; date?: string }> = [];
 
     $(config.list)
         .slice(0, 10)
         .each((i, e) => {
             const temp = new URL($(e).attr('href')!, link);
-            if (temp.hostname === hostname) {
-                list.push(temp);
+            if (temp.hostname !== hostname || list.some((item) => item.link.href === temp.href)) {
+                return;
             }
+            const date = $(e)
+                .text()
+                .match(/（(\d{4}-\d{2}-\d{2})）/);
+            const nativeTitle = $('a[title]')
+                .toArray()
+                .find((element) => {
+                    const href = $(element).attr('href');
+                    return href && new URL(href, link).href === temp.href;
+                });
+            list.push({ link: temp, title: nativeTitle ? $(nativeTitle).attr('title')! : $(e).text(), date: date?.[1] });
         });
 
-    const out = await Promise.all(
-        list.map((link) =>
-            cache.tryGet(link.href, async () => {
+    const out = await pMap(
+        list,
+        ({ link, title, date }): DataItem | Promise<DataItem> => {
+            if (link.pathname.toLowerCase().endsWith('.pdf')) {
+                return {
+                    title,
+                    link: link.href,
+                    pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                    description: `<embed src="${link.href}" type="application/pdf">`,
+                    enclosure_url: link.href,
+                    enclosure_type: 'application/pdf',
+                };
+            }
+            return cache.tryGet(link.href, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
                 const single = {
                     title: $(config.title).text(),
-                    link,
-                    description: $(config.description).html(),
+                    link: link.href,
+                    description: $(config.description).html() ?? undefined,
                     pubDate: parseDate($(config.pubDate).text().replace('(', '').replace(')', '')),
                 };
                 return single;
-            })
-        )
+            });
+        },
+        { concurrency: 3 }
     );
 
     return {

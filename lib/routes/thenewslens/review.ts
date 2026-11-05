@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { sort: '排序方式，同上表，可在对应排序页 URL 中找到' },
     radar: [
         {
-            source: ['thenewslens.com/review/:sort?', 'thenewslens.com/'],
+            source: ['thenewslens.com/review/*sort', 'thenewslens.com/review', 'thenewslens.com/'],
             target: '/review/:sort?',
         },
     ],

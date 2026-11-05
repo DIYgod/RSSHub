@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -44,25 +45,26 @@ async function handler(ctx) {
     const title = $('h1.block_title').text();
     const list = $('div.list_wrapper > div')
         .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('div.title').text(),
-            link: $(item).find('div.title > a').attr('href'),
-            description: $(item).find('div.excerpt').text(),
-        }))
-        .filter((item) => item.link);
+        .flatMap((item): Array<DataItem & { link: string }> => {
+            const link = $(item).find('div.title > a').attr('href');
+            return link ? [{ title: $(item).find('div.title').text(), link, description: $(item).find('div.excerpt').text() }] : [];
+        });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`ntdtv:article:${item.link}`, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 
-                item.description = content('div.post_content').html() ?? '';
-                item.pubDate = timezone(parseDate(content('div.time > span').text()), 8);
-
-                return item;
-            })
-        )
+                return {
+                    description: content('div.post_content').html() ?? '',
+                    pubDate: timezone(parseDate(content('div.time > span').text()), 8),
+                };
+            });
+            return { ...item, ...article };
+        },
+        { concurrency: 3 }
     );
 
     return {

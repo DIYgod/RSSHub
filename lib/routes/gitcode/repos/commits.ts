@@ -24,7 +24,7 @@ export const route: Route = {
     radar: [
         {
             source: ['gitcode.com/:owner/:repo/commits', 'gitcode.com/:owner/:repo/commits/:branch'],
-            target: (params) => `/gitcode/commits/${params.owner}/${params.repo}${params.branch ? `/${params.branch}` : ''}`,
+            target: '/commits/:owner/:repo/:branch?',
         },
     ],
     name: '仓库提交',

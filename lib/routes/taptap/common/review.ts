@@ -1,7 +1,7 @@
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { appDetail, getRootUrl, X_UA } from '../utils';
+import { appDetail, getLanguage, getRootUrl, X_UA } from '../utils';
 
 /*
 const sortMap = {
@@ -121,6 +121,7 @@ export async function handler(ctx) {
         title: `TapTap 评价 ${appName}`,
         link: `${getRootUrl(isIntl)}/app/${id}/review?${makeSortParam(isIntl, order)}`,
         image: appImg,
+        language: getLanguage(lang),
         item: items,
     };
 }

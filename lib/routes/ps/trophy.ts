@@ -16,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'PlayStation Network user trophy',
+    name: 'Network user trophy',
     maintainers: ['DIYgod'],
     handler,
 };
@@ -56,9 +56,10 @@ async function handler(ctx) {
                     Silver: '银',
                     Bronze: '铜',
                 };
+                const image = $item.find('.trophy source').attr('srcset')?.split(',', 1)[0].trim().split(/\s+/, 1)[0] ?? $item.find('.trophy img').attr('src');
                 return {
                     title: $item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
-                    description: `<img src="${$item.find('.trophy source').attr('srcset')!.split(' ', 2)[1]}"><br>${$item
+                    description: `${image ? `<img src="${image}">` : ''}<br>${$item
                         .find('.title')
                         .parent()
                         .contents()
@@ -84,10 +85,7 @@ async function handler(ctx) {
             return items;
         })
     );
-    let result: any[] = [];
-    for (const item of items) {
-        result = [...result, ...item];
-    }
+    let result: any[] = items.flat();
     result = result.toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
     return {

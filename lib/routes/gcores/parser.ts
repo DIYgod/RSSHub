@@ -1,3 +1,5 @@
+import { escapeAttribute, escapeText } from 'entities';
+
 import { renderDescription } from './templates/description';
 
 interface Style {
@@ -90,7 +92,7 @@ const createStyledFragment = (text: string, style: Readonly<Style>): string => {
 const createEntityElement = (entity: Entity, text: string): string => {
     switch (entity.type) {
         case 'EMBED':
-            return entity.data.content.startsWith('http') ? `<a href="${entity.data.content}" target="_blank">${entity.data.content}</a>` : entity.data.content;
+            return entity.data.content.startsWith('http') ? `<a href="${escapeAttribute(entity.data.content)}" target="_blank">${escapeText(entity.data.content)}</a>` : entity.data.content;
         case 'IMAGE':
             return renderDescription({
                 images: entity.data.path
@@ -117,9 +119,9 @@ const createEntityElement = (entity: Entity, text: string): string => {
                 })),
             }).replaceAll('\n', '');
         case 'LINK':
-            return `<a href="${entity.data.url}" target="_blank">${text}</a>`;
+            return `<a href="${escapeAttribute(entity.data.url)}" target="_blank">${text}</a>`;
         case 'WIDGET':
-            return `<a href="${entity.data.url}" target="_blank">${entity.data.title}</a>`;
+            return `<a href="${escapeAttribute(entity.data.url)}" target="_blank">${escapeText(entity.data.title)}</a>`;
         default:
             return '';
     }
@@ -139,89 +141,84 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
 
     const { text, inlineStyleRanges, entityRanges } = block;
 
-    // Combine and sort ranges
-    const combinedRanges: Array<{
-        offset: number;
-        length: number;
-        styles: Style[];
-        entity: Entity | null;
-    }> = Array.from(inlineStyleRanges, (range) => {
-        const style = STYLES.get(range.style);
-        return {
-            ...range,
-            styles: style ? [style] : [],
-            entity: null,
-        };
-    });
-
-    for (const range of entityRanges) {
-        combinedRanges.push({
-            ...range,
-            styles: [],
-            entity: entityMap[range.key],
-        });
-    }
-
-    combinedRanges.sort((a, b) => a.offset - b.offset);
-
-    // Group ranges by offset and length
-    const groupedRangesMap = new Map<string, { offset: number; length: number; styles: Style[]; entities: Entity[] }>();
-    const groupedRanges: Array<{ offset: number; length: number; styles: Style[]; entities: Entity[] }> = [];
-
-    for (const range of combinedRanges) {
-        const rangeKey = `${range.offset}-${range.length}`;
-        let existingRange = groupedRangesMap.get(rangeKey);
-        if (!existingRange) {
-            existingRange = {
-                offset: range.offset,
-                length: range.length,
-                styles: [],
-                entities: [],
-            };
-            groupedRangesMap.set(rangeKey, existingRange);
-            groupedRanges.push(existingRange);
-        }
-
-        if (range.styles.length > 0) {
-            existingRange.styles.push(...range.styles);
-        }
-        if (range.entity) {
-            existingRange.entities.push(range.entity);
-        }
-    }
-
-    // Apply styles and entities
+    const styleRanges = inlineStyleRanges.map((range) => ({
+        start: Math.max(0, Math.min(text.length, range.offset)),
+        end: Math.max(0, Math.min(text.length, range.offset + range.length)),
+        style: STYLES.get(range.style),
+    }));
+    const mappedEntityRanges = entityRanges.map((range) => ({
+        start: Math.max(0, Math.min(text.length, range.offset)),
+        end: Math.max(0, Math.min(text.length, range.offset + range.length)),
+        entity: entityMap[range.key],
+    }));
+    const boundaries = [...new Set([0, text.length, ...styleRanges.flatMap((range) => [range.start, range.end]), ...mappedEntityRanges.flatMap((range) => [range.start, range.end])])].sort((a, b) => a - b);
     const resultParts: string[] = [];
-    let lastOffset = 0;
 
-    for (const range of groupedRanges) {
-        resultParts.push(text.slice(lastOffset, range.offset));
+    for (const [index, start] of boundaries.entries()) {
+        // Non-text entities replace their entire range and must only be rendered once.
+        for (const range of mappedEntityRanges) {
+            if (range.start === start && range.entity && (range.entity.type !== 'LINK' || range.start === range.end)) {
+                resultParts.push(createEntityElement(range.entity, ''));
+            }
+        }
 
-        let styledText = text.slice(range.offset, range.offset + range.length);
+        const end = boundaries[index + 1];
+        if (end === undefined || mappedEntityRanges.some((range) => range.entity && range.entity.type !== 'LINK' && range.start <= start && range.end >= end)) {
+            continue;
+        }
 
-        if (range.styles.length > 0) {
+        let styledText = escapeText(text.slice(start, end));
+        const styles = styleRanges.filter((range) => range.style && range.start <= start && range.end >= end);
+        if (styles.length > 0) {
             const combinedStyle: Style = {};
-            for (const style of range.styles) {
-                for (const [key, value] of Object.entries(style)) {
-                    combinedStyle[key] = value;
-                }
+            for (const range of styles) {
+                Object.assign(combinedStyle, range.style);
             }
             styledText = createStyledFragment(styledText, combinedStyle);
         }
 
-        if (range.entities.length > 0) {
-            for (const entity of range.entities) {
-                styledText = createEntityElement(entity, styledText);
+        for (const range of mappedEntityRanges) {
+            if (range.entity?.type === 'LINK' && range.start <= start && range.end >= end) {
+                styledText = createEntityElement(range.entity, styledText);
             }
         }
-
         resultParts.push(styledText);
-        lastOffset = range.offset + range.length;
     }
 
-    resultParts.push(text.slice(lastOffset));
-
     return `${blockType.element ? `<${blockType.element}>` : ''}${resultParts.join('').replaceAll('\n', '<br>')}${blockType.element ? `</${blockType.element}>` : ''}`;
+};
+
+const parseListBlocks = (blocks: Block[], entityMap: Readonly<Record<string, Entity>>): string => {
+    const parts: string[] = [];
+    const parents: Array<{ element: string; depth: number }> = [];
+
+    for (const block of blocks) {
+        const parent = BLOCK_TYPES.get(block.type)?.parentElement;
+        if (!parent) {
+            continue;
+        }
+        const depth = Math.max(0, block.depth ?? 0);
+
+        while (parents.length > 0 && parents.at(-1)!.depth > depth) {
+            parts.push(`</li></${parents.pop()!.element}>`);
+        }
+        if (parents.at(-1)?.depth === depth) {
+            parts.push('</li>');
+            if (parents.at(-1)?.element !== parent) {
+                parts.push(`</${parents.pop()!.element}><${parent}>`);
+                parents.push({ element: parent, depth });
+            }
+        } else {
+            parts.push(`<${parent}>`);
+            parents.push({ element: parent, depth });
+        }
+        // Keep the item open so its child list remains inside the parent item.
+        parts.push(parseBlock(block, entityMap).slice(0, -'</li>'.length));
+    }
+    while (parents.length > 0) {
+        parts.push(`</li></${parents.pop()!.element}>`);
+    }
+    return parts.join('');
 };
 
 /**
@@ -237,8 +234,7 @@ const parseContent = (content: Content): string => {
     }
 
     const htmlParts: string[] = [];
-    let currentParent: string | undefined = undefined;
-    let parentContent: string[] = [];
+    let listBlocks: Block[] = [];
 
     for (const block of blocks) {
         const blockType = BLOCK_TYPES.get(block.type);
@@ -246,30 +242,19 @@ const parseContent = (content: Content): string => {
             continue;
         }
 
-        const parsedBlock = parseBlock(block, entityMap);
-
         if (blockType.parentElement) {
-            if (currentParent === blockType.parentElement) {
-                parentContent.push(parsedBlock);
-            } else {
-                if (currentParent) {
-                    htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
-                }
-                currentParent = blockType.parentElement;
-                parentContent = [parsedBlock];
-            }
+            listBlocks.push(block);
         } else {
-            if (currentParent) {
-                htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
-                currentParent = undefined;
-                parentContent = [];
+            if (listBlocks.length > 0) {
+                htmlParts.push(parseListBlocks(listBlocks, entityMap));
+                listBlocks = [];
             }
-            htmlParts.push(parsedBlock);
+            htmlParts.push(parseBlock(block, entityMap));
         }
     }
 
-    if (currentParent) {
-        htmlParts.push(`<${currentParent}>${parentContent.join('')}</${currentParent}>`);
+    if (listBlocks.length > 0) {
+        htmlParts.push(parseListBlocks(listBlocks, entityMap));
     }
 
     return htmlParts.join('');

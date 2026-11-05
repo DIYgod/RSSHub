@@ -1,9 +1,11 @@
 import type { Context } from 'hono';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.av01.media';
 
@@ -36,12 +38,16 @@ const resolveId = (endpoint: Endpoint, name: string) =>
             body: { query: name, pagination: { page: 1, limit: 20 } },
         });
         const candidates = aggregations[endpoint === 'actress' ? 'actresses' : 'tags'];
-        return String((candidates.find((c) => c.name === name) ?? candidates[0]).id);
+        const match = candidates.find((candidate) => [candidate.name, ...Object.values(candidate.name_translations ?? {})].includes(name));
+        if (!match) {
+            throw new NotFoundError(`AV01 ${endpoint} "${name}" was not found. Use the exact name or numeric ID from the official page.`);
+        }
+        return String(match.id);
     });
 
 export const fetchVideos = async (ctx: Context, endpoint: Endpoint, key: string): Promise<Data> => {
     const id = /^\d+$/.test(key) ? key : await resolveId(endpoint, key);
-    const limit = ctx.req.query('limit') ?? '20';
+    const limit = getRouteLimit(ctx, 20);
     const response = await ofetch<Record<'actress' | 'tag', Named> & { videos: Video[] }>(`${baseUrl}/api/v1/videos/${endpoint}/${id}`, {
         query: { page: 1, limit },
     });

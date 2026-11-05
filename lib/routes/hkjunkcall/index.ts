@@ -31,6 +31,9 @@ async function handler() {
     });
 
     const $ = load(response.data);
+    if ($('#challenge-container').length) {
+        throw new Error(`HKJunkCall returned a verification challenge at ${currentUrl}. Public article data is unavailable.`);
+    }
 
     const list = $('.hh15')
         .toArray()
@@ -43,25 +46,40 @@ async function handler() {
             };
         });
 
+    const seenLinks = new Set<string>();
+    const uniqueList = list.filter((item) => {
+        if (seenLinks.has(item.link!)) {
+            return false;
+        }
+        seenLinks.add(item.link!);
+        return true;
+    });
+
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        uniqueList.map(async (item) => {
+            const details = await cache.tryGet(`hkjunkcall:article:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
                 const content = load(detailResponse.data);
+                if (!content('.card').length) {
+                    throw new Error(`HKJunkCall article content was not found at ${item.link}. The source may be showing a verification page.`);
+                }
 
                 content('.card').find('div, h2').remove();
 
                 item.guid = item.link!.split('/').pop();
                 item.description = content('.card').html();
-                item.pubDate = parseDate(detailResponse.data.match(/<br \/>(\d+-\d+-\d+)<\/div><\/a>/)[1]);
+                const sourceDate = detailResponse.data.match(/<br \/>(\d+-\d+-\d+)<\/div><\/a>/)?.[1];
+                const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
+                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined;
 
-                return item;
-            })
-        )
+                return { guid: item.guid, description: item.description, pubDate: item.pubDate };
+            });
+            return { ...item, ...details };
+        })
     );
 
     return {

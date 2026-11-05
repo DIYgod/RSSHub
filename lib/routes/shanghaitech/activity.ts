@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -26,7 +27,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const link = `${baseUrl}/hd/list.htm`;
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(Math.floor(requestedLimit)) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
 
     const response = await ofetch(`${baseUrl}/_wp3services/generalQuery?queryObj=articles`, {
         method: 'POST',
@@ -50,23 +52,25 @@ async function handler(ctx: Context) {
         parseResponse: JSON.parse,
     });
 
-    const list = response.data.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.url.replace(/^http:/, 'https:'),
         author: item.f2,
         pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
                 $('.mr .news_imgs a.dj').remove();
-                item.description = ($('.mr .news_imgs').html() ?? '') + $('div.wp_articlecontent').html();
-                return item;
-            })
-        )
+                return { description: ($('.mr .news_imgs').html() ?? '') + ($('div.wp_articlecontent').html() ?? '') };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

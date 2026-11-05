@@ -45,24 +45,9 @@ export const radar = [
         target: '/energy/:id',
     },
     {
-        title: '上海热交换系统节能工程技术研究中心',
-        source: ['energy-saving.shiep.edu.cn/:id/list.htm'],
-        target: '/energy-saving/:id',
-    },
-    {
-        title: 'Shanghai University of Electric Power',
-        source: ['english.shiep.edu.cn/:id/list.htm'],
-        target: '/english/:id',
-    },
-    {
         title: '国际交流与合作处（港澳台办公室）',
         source: ['fao.shiep.edu.cn/:id/list.htm'],
         target: '/fao/:id',
-    },
-    {
-        title: '妇工委',
-        source: ['fgw.shiep.edu.cn/:id/list.htm'],
-        target: '/fgw/:id',
     },
     {
         title: '发展规划处',
@@ -83,11 +68,6 @@ export const radar = [
         title: '上海绿色能源并网技术研究中心',
         source: ['green-energy.shiep.edu.cn/:id/list.htm'],
         target: '/green-energy/:id',
-    },
-    {
-        title: '能源化学实验教学中心',
-        source: ['hhsyzx.shiep.edu.cn/:id/list.htm'],
-        target: '/hhsyzx/:id',
     },
     {
         title: '环境与化学工程学院',
@@ -130,11 +110,6 @@ export const radar = [
         target: '/jjxy/:id',
     },
     {
-        title: '教师教学发展中心',
-        source: ['jsjxfzzx.shiep.edu.cn/:id/list.htm'],
-        target: '/jsjxfzzx/:id',
-    },
-    {
         title: '计算机科学与技术学院',
         source: ['jsjxy.shiep.edu.cn/:id/list.htm'],
         target: '/jsjxy/:id',
@@ -148,11 +123,6 @@ export const radar = [
         title: '教务处',
         source: ['jwc.shiep.edu.cn/:id/list.htm'],
         target: '/jwc/:id',
-    },
-    {
-        title: '电力装备设计与制造虚拟仿真中心',
-        source: ['jxfz.shiep.edu.cn/:id/list.htm'],
-        target: '/jxfz/:id',
     },
     {
         title: '能源电力科创中心',
@@ -180,11 +150,6 @@ export const radar = [
         target: '/metc/:id',
     },
     {
-        title: '上海市电力材料防护与新材料重点实验室',
-        source: ['mpep.shiep.edu.cn/:id/list.htm'],
-        target: '/mpep/:id',
-    },
-    {
         title: '新闻网',
         source: ['news.shiep.edu.cn/:id/list.htm'],
         target: '/news/:id',
@@ -198,11 +163,6 @@ export const radar = [
         title: '校长办公室（档案馆）',
         source: ['office.shiep.edu.cn/:id/list.htm'],
         target: '/office/:id',
-    },
-    {
-        title: '国家新能源电力系统实验教学示范中心',
-        source: ['rpstec.shiep.edu.cn/:id/list.htm'],
-        target: '/rpstec/:id',
     },
     {
         title: '党委教师工作部/人事处',

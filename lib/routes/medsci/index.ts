@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -91,13 +92,14 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
-                pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
+                pubDate: pubDate ? (pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate)) : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`medsci:detail:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -107,18 +109,20 @@ async function handler(ctx) {
 
                 const pubDateMatches = detailResponse.data.match(/"publishedTime":"(.*)","publishedTimeString"/);
 
-                item.author = content('.name').text();
-                item.description = content('#content').html();
-                item.pubDate = pubDateMatches ? parseDate(pubDateMatches[1]) : item.pubDate;
-                item.category =
-                    content('meta[name="keywords"]')
-                        .attr('content')
-                        ?.split(/,|，/)
-                        .filter((c) => c !== '' && c !== 'undefined') ?? [];
-
-                return item;
-            })
-        )
+                return {
+                    author: content('.name').text(),
+                    description: content('#content').html(),
+                    pubDate: pubDateMatches?.[1] ? parseDate(pubDateMatches[1]) : undefined,
+                    category:
+                        content('meta[name="keywords"]')
+                            .attr('content')
+                            ?.split(/,|，/)
+                            .filter((c) => c !== '' && c !== 'undefined') ?? [],
+                };
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

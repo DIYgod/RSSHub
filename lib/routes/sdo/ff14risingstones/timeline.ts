@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getFollowDynamicList } from './api';
 import { INDEX_URL, LOGO_URL, REQUIRE_CONFIG } from './constant';
@@ -21,7 +22,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     checkConfig();
 
-    const limit = ctx.req.query('limit') || 20;
+    const limit = getRouteLimit(ctx, 20);
     const dynamics = await getFollowDynamicList(limit);
 
     return {

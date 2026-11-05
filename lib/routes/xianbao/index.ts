@@ -1,10 +1,11 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    name: '线板酷',
+    name: '线报',
     url: 'new.xianbao.fun',
     maintainers: ['nashi23'],
     handler,
@@ -67,9 +68,12 @@ async function handler(ctx) {
 
     const category = categoryParam.category || 'latest';
 
-    const cat = CATEGORIES.find((cat) => cat.id === category) || CATEGORIES.find((cat) => cat.id === 'latest');
-    const fullName = cat!.fullName;
-    const pushPath = cat!.pushPath;
+    const cat = CATEGORIES.find((cat) => cat.id === category);
+    if (!cat) {
+        throw new InvalidParameterError(`Unknown category "${category}". Check the route documentation for supported category IDs.`);
+    }
+    const fullName = cat.fullName;
+    const pushPath = cat.pushPath;
 
     if (category.endsWith('xiaoshi') || category.endsWith('tian')) {
         urlPath = `${category}-hot.html`;
@@ -101,7 +105,7 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `线板酷-${fullName}`,
+        title: `线报酷-${fullName}`,
         link: `http://new.xianbao.fun/${urlPath}`,
         item: items,
     };

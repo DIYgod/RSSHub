@@ -1,4 +1,5 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -18,32 +19,38 @@ export const route: Route = {
     handler,
     url: 'zrblog.net/',
 };
-
 async function handler() {
     const url = 'https://www.zrblog.net/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
-
-    const list = $('div.art_img_box')
+    const list = $('article.excerpt')
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('h2 > a').attr('title');
+            const title = element.find('h2 > a').text();
             const link = element.find('h2 > a').attr('href');
-            const description = element.find('p.intro').text();
-            const dateraw = element.find('div.info').find('span').eq(0).text();
-
+            const description = element.find('p.note').text();
+            const dateText = element.find('time').text();
+            const category = copyContent(element.find('a.cat'), $).find('i').remove().end().text();
             return {
-                title: title!,
+                title,
                 description,
-                link,
-                pubDate: parseDate(dateraw, '发布日期：YYYY年MM月DD日'),
+                link: link ? new URL(link, url).href : undefined,
+                pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD') : undefined,
+                category: category ? [category] : undefined,
             };
         });
-
     return {
         title: '赵容部落',
         link: url,
         item: list,
     };
+}
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
 }

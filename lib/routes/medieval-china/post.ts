@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -26,30 +28,36 @@ async function handler(ctx) {
     const baseUrl = 'https://medieval-china.club';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
-    const posts = JSON.parse(
+    const sourcePosts: Array<{ title: string; path: string; date: string }> = JSON.parse(
         $('script:contains("window.localPosts")')
             .text()
             .match(/window\.localPosts = JSON\.parse\('(.*)'\);/)![1]
-    )
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
-        .map((item) => ({
-            title: item.title,
-            link: `${baseUrl}${item.path}`,
-            pubDate: timezone(parseDate(item.date), 8),
-        }));
-    const items = await Promise.all(
-        posts.map((item) =>
-            cache.tryGet(item.link, async () => {
+    );
+    const posts: Array<DataItem & { link: string }> = sourcePosts.slice(0, getRouteLimit(ctx, 10)).map((item) => ({
+        title: item.title,
+        link: `${baseUrl}${item.path}`,
+        pubDate: item.date ? timezone(parseDate(item.date), 8) : undefined,
+    }));
+    const items = await pMap(
+        posts,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`medieval-china:body:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                const imgSrc = $('img').attr('data-original');
-                $('img').attr('src', `${baseUrl}${imgSrc}`);
+                $('img').each((_, image) => {
+                    const $image = $(image);
+                    const imageSource = $image.attr('data-original') ?? $image.attr('src');
+                    if (imageSource) {
+                        $image.attr('src', new URL(imageSource, item.link).href);
+                    }
+                });
                 $('.head-mask').remove();
                 $('div.lover-box').remove();
-                item.description = $('article').first().html();
-                return item;
-            })
-        )
+                return { description: $('article').first().html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

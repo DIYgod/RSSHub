@@ -26,15 +26,17 @@ export const route: Route = {
 async function handler() {
     const resp = await got(currentURL);
     const $ = load(resp.data);
-    const text = $('script#__NEXT_DATA__').text();
-    const json = JSON.parse(text);
-    const posts = [json.props.pageProps.featuredPost, ...json.props.pageProps.posts];
-    const items = posts.map((item) => ({
-        title: `Issue ${item.slug}`,
-        pubDate: parseDate(item.date),
-        description: item.title,
-        link: `/archives/${item.slug}`,
-    }));
+    const items = $('main a[href^="/archives/"]')
+        .toArray()
+        .map((element) => {
+            const $item = $(element);
+            return {
+                title: $item.find('h3 > span').text(),
+                pubDate: parseDate($item.find('span').first().text(), 'M/D/YYYY'),
+                description: $item.find('h3 > p, h3 > div').text(),
+                link: new URL($item.attr('href')!, currentURL).href,
+            };
+        });
 
     return {
         title: 'bytes.dev',

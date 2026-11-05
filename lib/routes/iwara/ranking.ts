@@ -1,10 +1,11 @@
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
+import { apiRootUrl, parseCreatedAt, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -32,59 +33,45 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen233'],
     handler,
     features: {
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         nsfw: true,
     },
     radar: [
         {
-            source: ['www.iwara.tv/videos', 'www.iwara.tv/images'],
-            target: (params, url) => {
-                const searchParams = new URL(url).searchParams;
-                const type = url.includes('/videos') ? 'video' : 'image';
-                const sort = searchParams.get('sort') || 'date';
-                const rating = searchParams.get('rating') || 'ecchi';
-                return `/iwara/ranking/${type}/${sort}/${rating}`;
-            },
+            title: 'Videos (Latest, Ecchi)',
+            source: ['www.iwara.tv/videos'],
+            target: '/ranking/video',
+        },
+        {
+            title: 'Images (Latest, Ecchi)',
+            source: ['www.iwara.tv/images'],
+            target: '/ranking/image',
         },
     ],
 };
 
 async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
+    if (!Object.hasOwn(typeMap, type) || !Object.hasOwn(sortMap, sort) || !Object.hasOwn(ratingMap, rating)) {
+        throw new InvalidParameterError('Invalid ranking parameters. See the documented content types, sort options, and ratings.');
+    }
 
-    const limit = ctx.req.query('limit') || 32;
+    const limit = getRouteLimit(ctx, 32);
     const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
-        `iwara:ranking:${type}:${sort}:${rating}`,
+        `iwara:ranking:${type}:${sort}:${rating}:${limit}`,
         async () => {
-            const { page, destroy } = await getPlaywrightPage(url, {
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => {
-                        const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
-                    });
-                },
-                gotoConfig: {
-                    waitUntil: 'networkidle',
-                },
-            });
+            const response = await ofetch(url);
 
-            try {
-                const content = await page.evaluate(() => document.querySelector('pre')?.textContent || document.body.textContent);
-                const response = JSON.parse(content || '{}');
-
-                return response.results.map((item) => ({
-                    title: item.title,
-                    author: item.user.name,
-                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-                    category: item.tags?.map((i) => i.id) || [],
-                    description: parseThumbnail(type, item),
-                    pubDate: parseDate(item.createdAt),
-                }));
-            } finally {
-                await destroy();
-            }
+            return response.results.map((item) => ({
+                title: item.title,
+                author: item.user.name,
+                link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
+                category: item.tags?.map((i) => i.id) || [],
+                description: parseThumbnail(type, item),
+                pubDate: parseCreatedAt(item.createdAt),
+            }));
         },
         config.cache.routeExpire,
         false

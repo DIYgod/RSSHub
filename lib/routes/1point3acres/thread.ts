@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiRootUrl, ProcessThreads, rootUrl, types } from './utils';
 
@@ -27,7 +28,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'hot';
     const order = ctx.req.param('order') ?? '';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const apiUrl = `${apiRootUrl}/api/threads?type=${type}&includes=tags,forum_name,summary&ps=${limit}&pg=1&order=${order === '' ? '' : 'time_desc'}&is_groupid=1`;
 

@@ -36,16 +36,20 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const version = $('#WD_lblVersionSelected').text();
+    if (!version) {
+        throw new Error('Unable to find the software version on WD Support. The download page may have changed.');
+    }
+    const date = parseDate($('#WD_lblReleaseDateSelected').text(), 'D/M/YYYY', true);
 
     const items = [
         {
             title: version,
             link: `${currentUrl}#${version}`,
             enclosure_url: $('#WD_hlDownloadFWSelected').attr('href'),
-            pubDate: parseDate($('#WD_lblReleaseDateSelected').text(), 'D/M/YYYY'),
+            pubDate: Number.isFinite(date.getTime()) ? date : undefined,
             description: $('.toggleInner')
-                .html()!
-                .replace(/style="color:White;"/, ''),
+                .html()
+                ?.replace(/style="color:White;"/, ''),
         },
     ];
 

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -36,35 +37,35 @@ async function handler() {
     const res = await ofetch(rootUrl);
     const $ = load(res);
 
-    const items = await Promise.all(
-        $('ul.local-list li .cont h1 a')
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
+    const items = await pMap(
+        $('ul.local-list li .cont h1 a').toArray(),
+        (item) => {
+            const $item = $(item);
 
-                const title = $item.text();
-                const link = new URL($item.attr('href')!, rootUrl).href;
+            const title = $item.text();
+            const link = new URL($item.attr('href')!, rootUrl).href;
 
-                return cache.tryGet(link, async () => {
-                    const res = await ofetch(link);
-                    const $ = load(res);
+            return cache.tryGet(link, async () => {
+                const res = await ofetch(link);
+                const $ = load(res);
 
-                    const pubDate = $('.news_header .info')
-                        .text()
-                        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
-                    const media = $.html($('.news_header > img, .news_header > .media'));
-                    const summary = $.html($('.product > h2'));
+                const pubDate = $('.news_header .info')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+                const media = $.html($('.news_header > img, .news_header > .media'));
+                const summary = $.html($('.product > h2'));
 
-                    return {
-                        title,
-                        link,
-                        author: $('.cont h1 a').text(),
-                        category: [$('.story_header button').text()],
-                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
-                        description: media + summary + ($('.body').html() ?? ''),
-                    };
-                });
-            })
+                return {
+                    title,
+                    link,
+                    author: $('.cont h1 a').text(),
+                    category: [$('.story_header button').text()],
+                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                    description: media + summary + ($('.body').html() ?? ''),
+                };
+            });
+        },
+        { concurrency: 6 }
     );
 
     return {

@@ -14,14 +14,17 @@ export const route: Route = {
         class: '比赛类型',
         title: '通过 CTF 赛事名称过滤',
     },
-    description: `| \`:class\` | 类型                               |
-| :------: | ---------------------------------- |
-|     0    | Jeopardy \\[解题]                   |
-|     1    | Attack with Defense \\[AwD 攻防]    |
-|     2    | Robo Hacking Game \\[RHG AI 自动化] |
-|     3    | Real World \\[RW 真实世界]          |
-|     4    | King of The Hill \\[KoH 抢占山头]   |
-|     5    | Mix \\[混合]                        |
+    description: `| \`:class\` | 类型                                 |
+| :------: | ------------------------------------ |
+|     0    | Jeopardy \\[解题]                     |
+|     1    | Attack with Defense \\[AwD 攻防]      |
+|     2    | Attack with Defense Plus \\[ADP 攻防] |
+|     3    | Jeopardy + AwD \\[JAD 解题攻防]       |
+|     4    | Robo Hacking Game \\[RHG AI 自动化]   |
+|     5    | Real World \\[RW 真实世界]            |
+|     6    | Penetration \\[场景渗透]              |
+|     7    | King of The Hill \\[KoH 抢占山头]     |
+|     8    | Mix \\[混合]                          |
 
 > class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
@@ -68,6 +71,7 @@ async function handler(ctx: Context): Promise<Data> {
         description: '提供全网最全最新的 CTF 赛事信息，关注赛事定制自己专属的比赛日历吧。',
         item: response.data.items.map((item) => ({
             title: item.title,
+            guid: `ctfhub:event:${item.id}`,
             description: '',
             pubDate: parseDate(item.start_time * 1000),
             link: item.official_url,

@@ -22,5 +22,6 @@ async function handler(): Promise<Data> {
         link: 'https://web.dev/articles',
         image: 'https://web.dev/_pwa/web/icons/icon-144x144.png',
         item: await fetchItems('family_url:/articles'),
+        language: 'en',
     };
 }

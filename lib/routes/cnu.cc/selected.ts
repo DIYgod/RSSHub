@@ -24,9 +24,10 @@ async function handler() {
             link: `http://www.cnu.cc/works/${work.id}`,
         }))
     );
+    const candidates = list;
 
     const out = await Promise.all(
-        list.map((item) =>
+        candidates.map((item) =>
             cache.tryGet(item.link, async () => {
                 let result;
                 try {

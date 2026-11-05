@@ -2,17 +2,20 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import { convert } from 'html-to-text';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://www.ornl.gov';
     const targetUrl: string = new URL('all-news', baseUrl).href;
@@ -55,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: convert(description ?? '', { wordwrap: false }),
                 },
                 image,
                 banner: image,
@@ -66,13 +69,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const details = await cache.tryGet(`ornl:details:v3:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
                 const $$imgEl: Cheerio<Element> = $$('div.image-landscape img');
@@ -114,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: convert(description ?? '', { wordwrap: false }),
                     },
                     image,
                     banner: image,
@@ -122,12 +126,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+
+            return {
+                ...item,
+                ...details,
+                title: item.title || details.title,
+                pubDate: item.pubDate ?? details.pubDate,
+                updated: item.updated ?? details.updated,
+                language,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -135,7 +146,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[name="twitter:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,

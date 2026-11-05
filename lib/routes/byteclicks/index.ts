@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, parseItem, parseList } from './utils';
 
@@ -26,7 +27,7 @@ async function handler(ctx) {
     const response = await ofetch(baseUrl, { headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME });
     const $ = load(response);
 
-    const list = parseList($).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined);
+    const list = parseList($).slice(0, getRouteLimit(ctx));
     const items = await pMap(list, (item) => parseItem(item), { concurrency: 5 });
 
     return {

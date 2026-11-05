@@ -59,6 +59,9 @@ async function handler(ctx: Context) {
     const res = await fetchGbk(pageUrl, base);
     const data = iconv.decode(Buffer.from(res), 'gbk');
     const $ = load(data);
+    if ($('.box.message form[action="logging.php?action=login"]').length) {
+        throw new Error('The source requires a logged-in account with sufficient member permissions to view this section. Anonymous access is denied.');
+    }
     const title = (type ? `[${$('.threadlist .headactions strong').text()}]` : '') + $('title').text();
     const list = $('tbody[id^="normalthread_"] tr th').toArray();
 

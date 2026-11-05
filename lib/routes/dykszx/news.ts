@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -20,19 +21,22 @@ const getContent = async (href) => {
     // 移除二维码
     $('.sjlook').remove();
     const content = $('#show-body').html();
-    return { newsTime, content, newsPage };
+    return { newsTime, content, newsPage, title: $('.ptitle').text() };
 };
 
 const newsTypeObj = {
     all: { selector: '#nrs > li > b', name: '新闻中心' },
-    gwy: { selector: 'body > div:nth-child(3) > div:nth-child(8) > ul > li', name: '公务员考试' },
-    sydw: { selector: 'body > div:nth-child(3) > div:nth-child(9) > ul > li', name: '事业单位考试' },
-    zyzc: { selector: 'body > div:nth-child(3) > div:nth-child(10) > ul > li', name: '执（职）业资格、职称考试' },
-    other: { selector: 'body > div:nth-child(3) > div:nth-child(11) > ul > li', name: '其他考试' },
+    gwy: { selector: '.public:has(.title a[href="index.php?catid=19"]) > ul > li', name: '公务员考试' },
+    sydw: { selector: '.public:has(.title a[href="index.php?catid=20"]) > ul > li', name: '事业单位考试' },
+    zyzc: { selector: '.public:has(.title a[href="index.php?catid=21"]) > ul > li', name: '执（职）业资格、职称考试' },
+    other: { selector: '.public:has(.title a[href="index.php?catid=22"]) > ul > li', name: '其他考试' },
 };
 
 async function handler(ctx) {
     const newsType = ctx.req.param('newsType') || 'all';
+    if (!Object.hasOwn(newsTypeObj, newsType)) {
+        throw new InvalidParameterError(`Invalid news type: ${newsType}. Use all, gwy, sydw, zyzc, or other.`);
+    }
     const response = await got(HOST);
     const data = response.data;
     const $ = load(data);
@@ -41,10 +45,10 @@ async function handler(ctx) {
     const newsDetail = await Promise.all(
         newsList.map((item) => {
             const href = item.children[0].attribs.href;
-            return cache.tryGet(href, async () => {
+            return cache.tryGet(`dykszx:article:${href}`, async () => {
                 const newsContent = await getContent(href);
                 return {
-                    title: item.children[0].children[0].data,
+                    title: newsContent.title || item.children[0].children[0].data,
                     description: newsContent.content,
                     link: newsContent.newsPage,
                     pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), 8),

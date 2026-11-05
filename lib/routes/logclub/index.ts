@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -36,7 +39,7 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
+    const limit = getRouteLimit(ctx, 11);
 
     const rootUrl = 'https://www.logclub.com';
     const currentUrl = new URL(getSubPath(ctx), rootUrl).href;
@@ -68,77 +71,78 @@ export async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const { data: detailResponse } = await got(item.link);
+    items = await pMap(
+        items,
+        async (item) => {
+            const detailResponse = await cache.tryGet(`logclub:html:${item.link}`, async () => {
+                const { data } = await got(item.link);
+                return data;
+            });
 
-                const content = load(detailResponse);
+            const content = load(detailResponse);
 
-                content('a.dl_file').each((_, el) => {
-                    const $el = content(el);
-                    $el.parent().remove();
-                });
-                content('img').each((_, el) => {
-                    const $el = content(el);
-                    $el.replaceWith(
-                        renderDescription({
-                            image: {
-                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: $el.prop('title'),
-                            },
-                        })
-                    );
-                });
+            content('a.dl_file').each((_, el) => {
+                const $el = content(el);
+                $el.parent().remove();
+            });
+            content('img').each((_, el) => {
+                const $el = content(el);
+                $el.replaceWith(
+                    renderDescription({
+                        image: {
+                            src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                            alt: $el.prop('title'),
+                        },
+                    })
+                );
+            });
 
-                item.title = content('h1, div.current_video_title').first().text();
+            item.title = content('h1, div.current_video_title').first().text();
 
-                item.enclosure_url = content('video#ref_video').prop('src');
-                if (item.enclosure_url) {
-                    item.enclosure_type = `video/${item.enclosure_url.split(/\./).pop()}`;
-                }
+            item.enclosure_url = content('video#ref_video').prop('src');
+            item.enclosure_type = item.enclosure_url ? getMimeType(new URL(item.enclosure_url, item.link).pathname) : undefined;
 
-                item.description += renderDescription({
-                    video: {
-                        poster: item.itunes_item_image,
-                        src: item.enclosure_url,
-                        type: item.enclosure_type,
-                    },
-                    description: content('div.article-cont').html() ?? undefined,
-                });
-                item.author = content('div.article-info-r a')
-                    .toArray()
-                    .map((a) => content(a).text())
-                    .join('/');
-                item.category = [
-                    ...new Set([
-                        ...content('div.article-label-r a.label')
-                            .toArray()
-                            .map((c) => content(c).text()),
-                        ...(content('meta[name="keywords"]')
-                            .prop('content')
-                            ?.split(/\s?,\s?/) ?? []),
-                    ]),
-                ].filter(Boolean);
+            item.description += renderDescription({
+                video: {
+                    poster: item.itunes_item_image,
+                    src: item.enclosure_url,
+                    type: item.enclosure_type,
+                },
+                description: content('div.article-cont').html() ?? undefined,
+            });
+            item.author = content('div.article-info-r a')
+                .toArray()
+                .map((a) => content(a).text())
+                .join('/');
+            item.category = [
+                ...new Set([
+                    ...content('div.article-label-r a.label')
+                        .toArray()
+                        .map((c) => content(c).text()),
+                    ...(content('meta[name="keywords"]')
+                        .prop('content')
+                        ?.split(/\s?,\s?/) ?? []),
+                ]),
+            ].filter(Boolean);
 
-                item.pubDate =
-                    content('span.aritlceIn-time').length === 0
-                        ? parseDate(
-                              content(
-                                  content('div.video_info_item, div.lc-infos div')
-                                      .toArray()
-                                      .findLast((i) => /\d{4}-\d{2}-\d{2}/.test(content(i).text()))
-                              )
-                                  .text()
-                                  .split(/：/)
-                                  .pop()!
-                                  .trim()
+            item.pubDate =
+                content('span.aritlceIn-time').length === 0
+                    ? parseDate(
+                          content(
+                              content('div.video_info_item, div.lc-infos div')
+                                  .toArray()
+                                  .findLast((i) => /\d{4}-\d{2}-\d{2}/.test(content(i).text()))
                           )
-                        : parseDate(content('span.aritlceIn-time').text().trim());
+                              .text()
+                              .split(/：/)
+                              .pop()!
+                              .trim()
+                      )
+                    : parseDate(content('span.aritlceIn-time').text().trim());
 
-                return item;
-            })
-        )
+            return item;
+        },
+        { concurrency: 3 }
     );
 
     const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;

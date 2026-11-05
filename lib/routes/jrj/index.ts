@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -87,11 +88,11 @@ async function handler(ctx) {
 
     const alist = response.data.data;
 
-    const list = alist.map((item) => {
+    const list: Array<DataItem & { link: string }> = alist.map((item) => {
         const link = item.pcInfoUrl;
         const title = item.title;
         const author = item.paperMediaSource;
-        const pubDate = parseDate(item.makeDate);
+        const pubDate = item.makeDate ? parseDate(item.makeDate) : undefined;
 
         return {
             title,
@@ -101,20 +102,17 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const articleUrl = item.link;
-                const response = await ofetch(articleUrl);
-
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`jrj:article:${item.link}`, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
-
-                const content = $('.article_content').html();
-
-                item.description = content;
-                return item;
-            })
-        )
+                return $('.article_content').html();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

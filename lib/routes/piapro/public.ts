@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -25,7 +26,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const params = ctx.req.param();
     const type = types.has(params.type) ? params.type : 'music';
     const tag = params.tag ?? '';
@@ -44,21 +45,23 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item) => base + $(item).attr('href'));
 
-    const items = await Promise.all(
-        list.slice(0, 10).map((link) =>
+    const items = await pMap(
+        list.slice(0, 10),
+        (link) =>
             cache.tryGet(link, async () => {
                 const response = await ofetch(link);
                 return {
                     ...parseContent(response),
                     link,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: `piapro - ${typeName}${tag ? ' - ' + tagName : ''}${category ? ' - ' + categoryName : ''}`,
         link: url,
         item: items,
+        language: 'ja',
     };
 }

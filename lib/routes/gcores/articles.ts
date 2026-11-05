@@ -43,8 +43,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['www.gcores.com/'],
+            target: '/articles',
+        },
+        {
             source: ['www.gcores.com/articles'],
-            target: '/gcores/articles',
+            target: '/articles',
         },
     ],
     view: ViewType.Articles,

@@ -4,8 +4,10 @@
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import type { ApiResponse } from '../interfaces/api';
+import { getFeedLanguage, getLanguage } from '../utils';
 
 export const route: Route = {
     path: '/channel/posts/:id',
@@ -22,7 +24,7 @@ export const route: Route = {
     parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
-            source: ['ganjingworld.com'],
+            source: ['ganjingworld.com/channel/:id', 'www.ganjingworld.com/channel/:id'],
             target: '/channel/posts/:id',
         },
     ],
@@ -35,22 +37,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const url = `https://www.ganjingworld.com/channel/${id}?tab=posts`;
-    const apiUrl = `https://gw.ganjingworld.com/v1.0c/social-content/get-owner-posts?owner_id=${id}&start_key=&page_size=48&post_image=true&query=basic,post,owner,comment,view,like,is_liked,share `;
-    // const apiUrl = `https://gw.ganjingworld.com/v1.0c/social-content/get-owner-posts?owner_id=1fcahpcut9t3gz4zIvYSJR7qd1cs0c&start_key=&page_size=48&post_image=true&query=basic,post,owner,comment,view,like,is_liked,share%20Request%20Method `;
-
-    const parsed: ApiResponse = await ofetch<ApiResponse>(apiUrl);
+    const url = `https://www.ganjingworld.com/channel/${encodeURIComponent(id)}?tab=posts`;
+    const parsed = await ofetch<ApiResponse>('https://gw.ganjingworld.com/v1.0c/social-content/get-owner-posts', {
+        query: { owner_id: id, start_key: '', page_size: 48, post_image: true, query: 'basic,post,owner,comment,view,like,is_liked,share' },
+    });
     if (parsed.data.list.length === 0) {
         throw new Error('No posts found for this channel. Please make sure the channel ID is correct and that the channel contains posts.');
     }
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
-        const pubDate = new Date(item.time_scheduled);
+        const pubDate = Number.isFinite(item.time_scheduled) ? parseDate(item.time_scheduled) : undefined;
 
         const raw = item.text?.replaceAll('\n', '<br>') || '';
-        const textWithMedia = item.media?.length > 0 ? raw + `<figure><img src="${item.media[0].url}"></figure>` : raw;
+        const media = item.media?.[0];
+        const textWithMedia = media ? raw + `<figure><img src="${media.url}"></figure>` : raw;
         return {
             title: item.title,
+            author: item.channel.name,
+            category: item.hashtags ?? undefined,
+            language: getLanguage(item.lang),
             link: `https://www.ganjingworld.com/news/${item.id}`,
             pubDate,
             description: textWithMedia,
@@ -61,6 +66,7 @@ async function handler(ctx) {
         title,
         link: url,
         description: `Posts from Ganjing World Channel ${title}`,
+        language: getFeedLanguage(parsed.data.list),
         item: items,
     };
 }

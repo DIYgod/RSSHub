@@ -27,8 +27,8 @@ async function handler() {
 
     const $ = load(response);
     const list = $('div[class=subPage] div ul li')
-        .toArray()
         .slice(0, 25)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             const aTag = $item.find('a');

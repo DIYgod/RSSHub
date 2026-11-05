@@ -39,6 +39,7 @@ async function handler(ctx): Promise<Data> {
     const list = feed.items.map((item) => ({
         title: item.title,
         link: item.link,
+        pubDate: item.pubDate,
     }));
 
     const items = await processItems(list);

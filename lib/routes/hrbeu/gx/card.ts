@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://news.hrbeu.edu.cn';
 
@@ -36,8 +37,8 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('div.list-right-tt').text(),
-            pubDate: parseDate($(item).find('.news-date-li').text(), 'DDYYYY-MM'),
-            link: $(item).find('a').attr('href'),
+            pubDate: $(item).find('.news-date-li').text() ? timezone(parseDate($(item).find('.news-date-li').text(), 'DDYYYY-MM'), 8) : undefined,
+            link: new URL($(item).find('a').attr('href')!, toUrl).href,
             description: $(item).find('div.list-right-p').text(),
         }));
 

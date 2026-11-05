@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 import markdownit from 'markdown-it';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = markdownit({
     html: true,
@@ -78,35 +80,38 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const list = $('.card-body > a')
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 30)
+    const list = $('.card-body a[href^="/details/"]')
+        .slice(0, getRouteLimit(ctx, 30))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const href = $item.attr('href');
             return {
-                title: $item.find('h5').text().trim(),
+                title: $item.find('h5').text(),
                 link: rootUrl + href,
                 id: href?.split('/').pop()?.split('.', 1)[0],
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`lianxh:article:${item.link}`, async () => {
                 const { data: response } = await ofetch(`${rootUrl}/web-api/article`, {
                     query: {
                         id: item.id,
                     },
                 });
 
-                item.description = md.render(response.details);
-                item.pubDate = parseDate(response.release_time, 'YYYY-MM-DD');
-                item.author = response.author;
-
-                return item;
-            })
-        )
+                return {
+                    description: md.render(response.details),
+                    pubDate: response.release_time ? parseDateInTimezone(response.release_time, 0) : undefined,
+                    author: response.author,
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

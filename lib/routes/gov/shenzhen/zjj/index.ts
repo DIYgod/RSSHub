@@ -58,11 +58,13 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('a');
+            const date = $item.find('span').text().trim();
+            const pubDate = date ? timezone(parseDate(date, 'YY-MM-DD', true), 8) : undefined;
             return {
-                title: a.text(),
+                title: a.attr('title') || a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('span').text(), 'YY-MM-DD'), 0),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 

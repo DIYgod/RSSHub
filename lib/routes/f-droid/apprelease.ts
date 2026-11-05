@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     return {
         title: `${appName} releases on F-Droid`,
-        discription: $('.package-summary').text(),
+        description: $('.package-summary').text(),
         link: `https://f-droid.org/en/packages/${app}/`,
         item: items,
     };

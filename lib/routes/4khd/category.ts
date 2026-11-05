@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import loadArticle from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
@@ -31,7 +32,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const category = ctx.req.param('category');
     const categoryUrl = `${SUB_URL}pages/${category}/`;
     const slug = category === 'album' ? 'photo' : category;

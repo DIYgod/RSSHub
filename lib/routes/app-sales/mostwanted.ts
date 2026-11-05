@@ -2,15 +2,20 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { time = '24h', country = 'us' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    if (!['24h', 'week', 'alltime'].includes(time)) {
+        throw new InvalidParameterError('Invalid chart period. Use 24h, week, or alltime.');
+    }
+    const limit = getRouteLimit(ctx, 30);
 
     const targetUrl: string = new URL('mostwanted/', baseUrl).href;
 
@@ -23,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'en') as Language;
     const selector: string = time ? `div[id$="-${time}"] div.card-panel` : 'div.card-panel';
 
-    const items: DataItem[] = await fetchItems($, selector, targetUrl, country, limit);
+    const items: DataItem[] = fetchItems($, selector, limit);
 
     const title: string = $('title').text();
     const tabTitle: string = $(`ul.tabs li.tab a[href$="-${time}"]`).text();

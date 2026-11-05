@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rsksUrl = 'https://rlsbj.cq.gov.cn/ywzl/rsks/tzgg_109374/';
 export const route: Route = {
@@ -24,27 +25,31 @@ export const route: Route = {
 async function handler() {
     const { data: response } = await got(rsksUrl);
     const $ = load(response);
-    // 获取考试信息标题
-    const list = $('div.page-list .tab-item > li')
+    // Read the current notice list.
+    const list = $('ul.rsj-list1 > li')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a').first();
+            const pubDate = $item.find('span').text();
             return {
                 title: title.text(),
-                link: `${rsksUrl}${title.attr('href')}`,
-                pubDate: parseDate($item.find('span').text()),
+                link: new URL(title.attr('href')!, rsksUrl).href,
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
             };
         });
 
-    // 获取考试信息正文
+    // Fetch the notice details.
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')!) ?? item.pubDate;
-                item.description = $('.view.TRS_UEDITOR.trs_paper_default.trs_word').first().html();
+                const pubDate = $('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate), 8);
+                }
+                item.description = $('.trs_editor_view').first().html();
                 return item;
             })
         )

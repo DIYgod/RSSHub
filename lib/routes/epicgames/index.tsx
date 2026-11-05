@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -88,11 +89,13 @@ async function handler(ctx) {
             contentUrl += linkSlug;
             let description = item.description;
             if (isBundles) {
-                const contentResp = await got({
-                    method: 'get',
-                    url: contentUrl,
+                description = await cache.tryGet(contentUrl, async () => {
+                    const contentResp = await got({
+                        method: 'get',
+                        url: contentUrl,
+                    });
+                    return contentResp.data.data.about.shortDescription;
                 });
-                description = contentResp.data.data.about.shortDescription;
             }
             let image = item.keyImages[0].url;
             item.keyImages.some((keyImage) => {

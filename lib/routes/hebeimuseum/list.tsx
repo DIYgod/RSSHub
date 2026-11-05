@@ -1,57 +1,14 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
-
-// format the date to YYYY-MM-DD and handle missing year or month
-const extractDates = (durationStr: string) => {
-    let startDate: string | undefined;
-    let endDate: string | undefined;
-
-    if (!durationStr) {
-        return { startDate, endDate };
-    }
-
-    const parts = durationStr.split(/[-—~]+/); // currently ——and- is used, add — or ~ for redundency
-    const startStr = parts[0];
-    const endStr = parts[1];
-
-    let startYear: string | undefined;
-    let startMonth: string | undefined;
-
-    const startRegex = /(\d{4})年(\d{1,2})月(\d{1,2})日/;
-    const startMatch = startStr.match(startRegex);
-
-    if (startMatch) {
-        startYear = startMatch[1];
-        startMonth = startMatch[2].padStart(2, '0');
-        const startDay = startMatch[3].padStart(2, '0');
-        startDate = `${startYear}-${startMonth}-${startDay}`;
-    }
-
-    if (endStr && startDate) {
-        const endRegex = /(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日/;
-        const endMatch = endStr.match(endRegex);
-
-        if (endMatch) {
-            const matchYear = endMatch[1];
-            const matchMonth = endMatch[2]?.padStart(2, '0');
-            const matchDay = endMatch[3].padStart(2, '0');
-
-            const finalEndYear = matchYear || startYear;
-            const finalEndMonth = matchMonth || startMonth;
-            const finalEndDay = matchDay;
-            endDate = `${finalEndYear}-${finalEndMonth}-${finalEndDay}`;
-        }
-    }
-
-    return { startDate, endDate };
-};
 
 export const route: Route = {
     path: '/list/:type?',
@@ -99,8 +56,9 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) => {
+        const items = await pMap(
+            list,
+            (item) => {
                 // use seperate cache key for special path
                 const cacheKey = isSpecial ? `${item.itemLink}-special` : item.itemLink;
 
@@ -112,7 +70,7 @@ export const route: Route = {
                     const content = load(detailResponse.data);
 
                     const pubDateRaw = content('.article .info .infowrap img.icon_time').next('span').text().replaceAll('时间：', '');
-                    const pubDate = parseDate(pubDateRaw);
+                    const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
 
                     // Default path: return as news, no detail information for return
                     if (!isSpecial) {
@@ -133,22 +91,25 @@ export const route: Route = {
 
                     rawText = rawText.replaceAll(/\s+/g, '');
 
-                    const texts = rawText.split(/(?=展览名称：|展览时间：|时间：|展览地点：|展出地点：|地点：)/);
+                    const texts = rawText.split(/(?=展览名称：|展览时间：|展览日期：|时间：|展览地点：|展出地点：|地点：)/);
 
                     // use fullDration to extract startDate and endDate, if fullDuration is not exist, return empty data
-                    const fullDuration = texts.find((text) => text.includes('时间：'))?.replaceAll(/(?:展览)?时间：/g, '');
-
-                    if (!fullDuration) {
-                        return {};
-                    }
+                    const fullDuration = texts.find((text) => text.includes('时间：') || text.includes('日期：'))?.replaceAll(/(?:展览)?(?:时间|日期)：/g, '') || '';
 
                     let location = texts.find((text) => text.includes('地点：'))?.replaceAll(/(?:展(?:览|出))?地点：/g, '') || '';
 
-                    const locMatch = location.match(/^.*?展厅/) || [''];
+                    const locMatch = location.match(/^.*?厅/) || [''];
 
                     location = locMatch[0];
 
-                    let title = texts.find((text) => text.includes('展览名称：'))?.replaceAll('展览名称：', '');
+                    if (!location) {
+                        location = rawText.match(/(河北博物院[^，。；：“”]*?厅)/)?.[1] || '';
+                    }
+
+                    let title = texts
+                        .find((text) => /^【?展览名称[】：]/.test(text))
+                        ?.replace(/^【?展览名称[】：]/, '')
+                        .replaceAll(/^[“《]|[”》]$/g, '');
 
                     // Some exhibition titles are not in the format of "展览名称: xxx", try to extract title from the original list title if the above method failed
                     if (!title) {
@@ -157,14 +118,17 @@ export const route: Route = {
 
                         if (quoteMatch) {
                             title = quoteMatch[1];
-                        } else if (item.title.includes('|')) {
-                            const pipeParts = item.title.split('|');
-                            title = pipeParts.at(-1);
+                        } else if (/[|｜]/.test(item.title)) {
+                            const pipeParts = item.title.split(/[|｜]/);
+                            title = pipeParts.at(-1)?.trim();
+                        } else {
+                            title = item.title;
                         }
                     }
 
-                    const { startDate, endDate } = extractDates(fullDuration);
+                    const { startDate, endDate } = parseDateRange(fullDuration);
                     const { imgUrl, itemLink } = item;
+                    const articleContent = content('.content.f16').html();
 
                     const description = renderToString(
                         <div>
@@ -182,9 +146,13 @@ export const route: Route = {
                                 <b>闭展：</b>
                                 {endDate ?? '未定/常设'}
                             </p>
-                            <p>
-                                <small>原始展期：{fullDuration}</small>
-                            </p>
+                            {fullDuration ? (
+                                <p>
+                                    <small>原始展期：{fullDuration}</small>
+                                </p>
+                            ) : (
+                                <div>{articleContent}</div>
+                            )}
                         </div>
                     );
 
@@ -203,7 +171,8 @@ export const route: Route = {
                         },
                     };
                 });
-            })
+            },
+            { concurrency: 3 }
         );
 
         return {

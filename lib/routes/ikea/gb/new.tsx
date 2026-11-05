@@ -43,22 +43,7 @@ async function handler() {
         },
     });
 
-    const {
-        data: { moreProducts },
-    } = await got('https://sik.search.blue.cdtapps.com/gb/en/special/more-products', {
-        searchParams: {
-            special: 'new_product',
-            start: 24,
-            end: specialPage.productCount,
-            // 'subcategories-style': 'tree-navigation',
-            // c: 'lf',
-            // v: 20220826,
-            // sort: 'RELEVANCE',
-        },
-    });
-    const { productWindow } = moreProducts;
-
-    const products = [...specialPage.productWindow, ...productWindow];
+    const products = specialPage.productWindow;
 
     const items = products.map((p) => ({
         title: `${p.name} ${p.typeName}, ${p.itemMeasureReferenceText}`,

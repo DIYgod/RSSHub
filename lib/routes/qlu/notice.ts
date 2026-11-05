@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,23 +40,36 @@ async function handler() {
     });
 
     const $ = load(response.data);
-    const list = $('ul.news_list.list2').children();
+    const list = $('ul.news_list.list2')
+        .children()
+        .toArray()
+        .flatMap((item) => {
+            const href = $(item).find('.news_title > a').attr('href');
+            if (!href) {
+                return [];
+            }
+            const link = new URL(href, `${host}/tzggsh/list1.htm`);
+            if (!['http:', 'https:'].includes(link.protocol)) {
+                return [];
+            }
+            return { element: item, link: link.href };
+        });
 
-    const items = await Promise.all(
-        list.map((i, item) => {
-            const $item = $(item);
+    const items = await pMap(
+        list,
+        (item) => {
+            const $item = $(item.element);
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
-            const path = $item.find('.news_title').children().attr('href');
-            const itemUrl = path!.startsWith('https') ? path : host + path;
+            const itemUrl = item.link;
             return cache.tryGet(itemUrl!, async () => {
                 let description: string;
-                if (path!.startsWith('https')) {
-                    description = itemTitle;
-                } else {
+                if (new URL(itemUrl).origin === host) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
                     description = $('.read').html() ?? '';
+                } else {
+                    description = itemTitle;
                 }
                 return {
                     title: itemTitle,
@@ -64,7 +78,8 @@ async function handler() {
                     description,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

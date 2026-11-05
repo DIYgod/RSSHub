@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 
 import utils from './utils';
@@ -15,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'FT 中文网',
+    name: '频道',
     maintainers: ['HenryQW', 'xyqfer'],
     handler,
     description: `::: tip
@@ -33,8 +34,12 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const language = ctx.req.param('language');
+    if (language !== 'simplified' && language !== 'traditional') {
+        throw new InvalidParameterError('language must be simplified or traditional.');
+    }
     return await utils.getData({
-        site: ctx.req.param('language') === 'simplified' ? 'www' : 'big5',
+        site: language === 'simplified' ? 'www' : 'big5',
         channel: ctx.req.param('channel'),
     });
 }

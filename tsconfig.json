@@ -19,6 +19,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true
     },
-    "include": ["./lib/**/*"],
+    "include": ["./lib/**/*", "./cloudflare.config.ts", "./wrangler.config.ts"],
     "exclude": ["node_modules", "*.test.*"]
 }

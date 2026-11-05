@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 type Attachment = {
@@ -49,8 +50,16 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['www.stats.gov.cn/*path'],
-            target: '/:path',
+            source: ['www.stats.gov.cn/sj/zxfb/'],
+            target: '/sj/zxfb',
+        },
+        {
+            source: ['www.stats.gov.cn/sj/sjjd/'],
+            target: '/sj/sjjd',
+        },
+        {
+            source: ['www.stats.gov.cn/xw/szyw/zyjs/'],
+            target: '/xw/szyw/zyjs',
         },
     ],
     description: `::: tip
@@ -66,8 +75,13 @@ export const route: Route = {
 :::`,
 };
 
+function parsePublicationDate(date: string) {
+    const pubDate = date ? timezone(parseDate(date, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY/MM/DD', 'YYYY-MM-DD'], true), 8) : undefined;
+    return pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined;
+}
+
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
     const rootUrl = 'http://www.stats.gov.cn';
 
     const { headers } = await ofetch.raw(rootUrl);
@@ -90,7 +104,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $($('a.pchide').length === 0 ? 'a[title]' : '.list-content a.pchide')
-        .slice(0, limit)
+        .slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -117,7 +131,7 @@ async function handler(ctx) {
 
                 if (/news\.cn|www\.gov\.cn/.test(item.link!)) {
                     if (content('.year').text()) {
-                        item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), 8);
+                        item.pubDate = parsePublicationDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`);
                         item.author = content('.source')
                             .text()
                             .replace(/来源：/, '')
@@ -126,7 +140,7 @@ async function handler(ctx) {
                         content('.pages_print').remove();
 
                         const info = content('.info, .pages-date').text().split('来源：');
-                        item.pubDate = timezone(parseDate(info[0].trim()), 8);
+                        item.pubDate = parsePublicationDate(info[0].trim());
                         item.author = info.pop();
                     }
 
@@ -141,7 +155,7 @@ async function handler(ctx) {
                 content('.pchide').remove();
 
                 item.title ||= content('div.detail-title h1').text();
-                item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), 8);
+                item.pubDate = parsePublicationDate(content('div.detail-title-des h2 p, .info').first().text().trim());
                 item.description = renderDescription({
                     description: (content('.TRS_Editor').html() || content('.TRS_UEDITOR').html()) ?? undefined,
                     attachments: content('a[oldsrc]')
@@ -159,6 +173,11 @@ async function handler(ctx) {
             })
         )
     );
+
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
+        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+        items = items.slice(0, limit);
+    }
 
     return {
         title: $('title').text(),

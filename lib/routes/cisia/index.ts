@@ -1,24 +1,50 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import { CookieJar } from 'tough-cookie';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
+
+async function getResponse(url: string, cookieJar: CookieJar) {
+    const options = {
+        headers: { Cookie: cookieJar.getCookieStringSync(url) },
+        onResponse: ({ response }) => {
+            for (const cookie of response.headers.getSetCookie()) {
+                cookieJar.setCookieSync(cookie, url);
+            }
+        },
+    };
+    let response;
+    try {
+        response = await got(url, options);
+    } catch (error) {
+        if (!(error instanceof FetchError) || error.response?.status !== 403 || !cookieJar.getCookieStringSync(url)) {
+            throw error;
+        }
+        options.headers.Cookie = cookieJar.getCookieStringSync(url);
+        response = await got(url, options);
+    }
+    return response.data;
+}
 
 export const handler = async (ctx) => {
     const { id = '9' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const domain = 'www.cisia.org';
-    const rootUrl = `http://${domain}`;
-    const currentUrl = new URL(`site/term/${id}.html`, rootUrl).href;
+    const rootUrl = `https://${domain}`;
+    const currentUrl = new URL(`site/term/${id.replace(/\.html$/, '')}.html`, rootUrl).href;
 
-    const { data: response } = await got(currentUrl);
+    const cookieJar = new CookieJar();
+    const response = await getResponse(currentUrl, cookieJar);
 
     const $ = load(response);
 
-    let items = $('ul.list_first li')
-        .slice(0, limit)
+    let items = $('ul.list_first li, ul.product_list li, ul.three_list li')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -27,32 +53,52 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.text(),
-                pubDate: parseDate($item.find('span.time').text()),
+                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
                 link: new URL(a.prop('href')!, rootUrl).href,
             };
         });
 
+    const map = $('div.TextBox > div.map_section');
+    if (!items.length && map.length) {
+        const metadata = $('div.TextTitle div.shar').text();
+        const date = metadata.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+        const author = metadata.split('来源：', 2)[1]?.split('分享到：', 1)[0].trim();
+        items.push({
+            title: $('div.TextTitle > h6').text(),
+            link: currentUrl,
+            pubDate: date ? timezone(parseDate(date), 8) : undefined,
+            author: author && author !== '未知' ? author : undefined,
+            description: map.html(),
+        });
+    }
+
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => parseDate(b.pubDate!).valueOf() - parseDate(a.pubDate!).valueOf());
+    }
+    items = items.slice(0, limit);
+
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link!)) {
+                if (item.link === currentUrl || !/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link!)) {
                     return item;
                 }
 
-                const { data: detailResponse } = await got(item.link);
+                const detailResponse = await getResponse(item.link!, cookieJar);
 
                 const $$ = load(detailResponse);
 
-                const title = $$('div.TextTitle').text();
+                const title = $$('div.TextTitle > h6').text() || item.title;
                 const description = $$('div.NewsText').html();
                 const pubDate = $$('div.shar')
                     .text()
                     .match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+                const author = $$('div.shar').text().split('来源：', 2)[1]?.split('分享到：', 1)[0].trim();
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? parseDate(pubDate) : item.pubDate;
-                item.author = $$('meta[name="Description"]').prop('content');
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.author = author && author !== '未知' ? author : undefined;
                 item.content = {
                     html: description,
                     text: $$('div.NewsText').text(),
@@ -70,7 +116,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="Keywords"]').prop('content'),
     };
@@ -139,7 +184,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -148,11 +193,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.cisia.org/site/term/:id'],
-            target: (params) => {
-                const id = params.id.replace(/\.html/, '');
-
-                return id ? `/${id}` : '';
-            },
+            target: '/:id',
         },
         {
             title: '分支机构信息 - 企业动态',

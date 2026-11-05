@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import sanitizeHtml from 'sanitize-html';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -53,7 +55,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { bureau } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 35;
+    const limit = getRouteLimit(ctx, 35);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(35, limit);
 
     const rootUrl = 'https://www.nea.gov.cn';
     const link = `${rootUrl}/sjzz/${bureau}/index.htm`;
@@ -68,7 +71,7 @@ async function handler(ctx) {
     const jsonUrl = new URL(`ds_${dataSourceId}.json`, link).href;
     const jsonData: NeaResponse = await ofetch(jsonUrl);
 
-    const list: DataItem[] = jsonData.datasource.slice(0, limit).map((item) => {
+    const list: DataItem[] = jsonData.datasource.slice(0, candidateLimit).map((item) => {
         const title = sanitizeHtml(item.title, { allowedTags: [], allowedAttributes: {} });
 
         return {
@@ -83,10 +86,11 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(
-        list.map((item: DataItem) =>
-            cache.tryGet(item.link!, async () => {
-                try {
+    const items = await pMap(
+        list,
+        async (item: DataItem) => {
+            try {
+                return await cache.tryGet(item.link!, async () => {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
@@ -95,12 +99,13 @@ async function handler(ctx) {
                     item.category = [...new Set([...(item.category ?? []), ...($('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
                     const detailPubDate = $('meta[name="PubDate"]').prop('content');
                     item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), 8) : item.pubDate;
-                } catch {
-                    //
-                }
+                    return item;
+                });
+            } catch {
                 return item;
-            })
-        )
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -11,7 +11,7 @@ export const renderVideo = (article) => {
 
     return renderToString(
         <>
-            <iframe width="672" height="377" src={videoUrl} frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            <iframe width="672" height="377" src={videoUrl} frameborder="0" allowfullscreen></iframe>
             {article.credits ? raw(article.credits) : null}
             {article.description ? raw(article.description) : null}
         </>

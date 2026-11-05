@@ -47,12 +47,13 @@ async function handler() {
             const $item = $(item);
 
             const projectDiv = $item.parent().parent();
+            const published = projectDiv.find('time').text();
             const description = projectDiv.find('p').text();
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: parseDate(projectDiv.find('time').text()),
+                pubDate: published ? parseDate(published) : undefined,
                 description: renderDescription({
                     image: projectDiv.parent().find('.cover-fit')?.attr('src') ?? projectDiv.parent().parent().find('.cover-fit').attr('src'),
                     description: description ? `<p>${description}</p>` : '',

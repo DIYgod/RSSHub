@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,6 +23,11 @@ export const route: Route = {
     url: 'jxjy.ynnu.edu.cn',
 };
 
+function parsePublishedDate(value: string) {
+    const date = parseDate(value.trim(), '发布日期：YYYY-MM-DD', true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+}
+
 async function handler(): Promise<Data> {
     const baseUrl = 'https://jxjy.ynnu.edu.cn';
 
@@ -43,18 +49,23 @@ async function handler(): Promise<Data> {
         })
     );
 
-    const items = await Promise.all(
-        lists.flat().map((item) =>
-            cache.tryGet(item.link, async (): Promise<DataItem> => {
+    const items = await pMap(
+        lists.flat(),
+        async (item: DataItem & { link: string }) => {
+            const article = await cache.tryGet(`ynnu:article:v4:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
+                const title = $('.art-tit h3').text();
                 return {
-                    ...item,
-                    pubDate: timezone(parseDate($('.art-tit p span').text(), '发布日期：YYYY-MM-DD'), 8),
+                    title: title.trim() ? title : undefined,
+                    pubDate: parsePublishedDate($('.art-tit p span').text()),
                     description: $('.v_news_content').html(),
+                    category: [$('.channl-menu h2').text().trim()].filter(Boolean),
                 };
-            })
-        )
+            });
+            return { ...item, ...article, title: article.title ?? item.title };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

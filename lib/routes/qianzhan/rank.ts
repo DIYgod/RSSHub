@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,14 +39,20 @@ async function handler(ctx) {
     const type = ctx.req.param('type') === 'week' ? 1 : 2;
     const rootUrl = 'https://www.qianzhan.com/analyst/';
 
-    const response = await got(rootUrl);
+    const response = await got(rootUrl, { allowH2: false });
     const $ = load(response.data);
-    const links = $(`#div_hotlist ul[idx='${type}'] a`).map((_, item) => $(item).attr('href'));
+    const links = $(`#div_hotlist ul[idx='${type}'] a`)
+        .toArray()
+        .flatMap((item) => {
+            const href = $(item).attr('href');
+            return href === undefined ? [] : href;
+        });
 
-    const items = await Promise.all(
-        links.map((_, item) =>
+    const items = await pMap(
+        links,
+        (item) =>
             cache.tryGet(item, async () => {
-                const detailResponse = await got(item);
+                const detailResponse = await got(item, { allowH2: false });
                 const $ = load(detailResponse.data);
                 const description = $('#divArtBody').html();
                 const title = $('#h_title').text();
@@ -59,8 +66,8 @@ async function handler(ctx) {
                     author,
                     category: $('meta[name="Keywords"]').attr('content')!.split(','),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

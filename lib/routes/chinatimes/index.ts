@@ -6,6 +6,7 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -15,7 +16,7 @@ export const route: Route = {
     parameters: { category: '分類，見下表，留空為 `realtimenews`' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -38,7 +39,7 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://www.chinatimes.com';
 
-    const { category = 'realtimenews' } = ctx.req.param('category');
+    const category = ctx.req.param('category') ?? 'realtimenews';
     const link = `${baseUrl}/${category}/?chdtv`;
 
     const response = await ofetch(link);
@@ -47,7 +48,7 @@ async function handler(ctx) {
 
     const list = $('.articlebox-compact')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .map((item): DataItem & { category: string[] } => {
             const $item = $(item);
             const a = $item.find('.title a');

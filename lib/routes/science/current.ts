@@ -10,7 +10,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import { baseUrl, fetchDesc, getItem } from './utils';
 
@@ -65,9 +65,13 @@ async function handler(ctx) {
         .toArray()
         .map((item) => getItem(item, $));
 
-    const context = await playwright();
-    const items = await fetchDesc(list, context);
-    await context.close();
+    const { page, destroy } = await getPlaywrightPage('about:blank', { noGoto: true, closeTimeout: 0 });
+    let items;
+    try {
+        items = await fetchDesc(list, page);
+    } finally {
+        await destroy();
+    }
 
     return {
         title: `${pageTitleName} | Current Issue`,

@@ -3,6 +3,7 @@ import MarkdownIt from 'markdown-it';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({ html: true });
 
@@ -38,7 +39,7 @@ function processIssueCreated(activity, issueId) {
         title: `${activity.author.name} created issue ${issueId}`,
         author: activity.author.name,
         pubDate: parseDate(activity.timestamp),
-        link: `${rootUrl}/issue/${issueId}#focus=Comments-${activity.id}`,
+        link: `${rootUrl}/issue/${issueId}#focus=IssueCreated-${activity.id}`,
         description,
         guid: `${issueId}-comment-${activity.id}`,
     };
@@ -72,7 +73,7 @@ function processActivity(activity, issueId) {
 
 async function handler(ctx) {
     const issueId = ctx.req.param('issueId');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const issueInfo = await ofetch(`${apiUrl}/issues/${issueId}`, {
         query: { fields: ISSUE_FIELDS },
@@ -85,11 +86,11 @@ async function handler(ctx) {
         },
     });
 
-    const items = response.activities
-        .map((activity) => processActivity(activity, issueId))
-        .filter((item) => item !== null)
-        .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
-        .slice(0, limit);
+    let items = response.activities.map((activity) => processActivity(activity, issueId)).filter((item) => item !== null);
+    if (ctx.req.query('sorted') !== 'false') {
+        items = items.toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+    }
+    items = items.slice(0, limit);
 
     return {
         title: `YouTrack ${issueId} - ${issueInfo.summary}`,

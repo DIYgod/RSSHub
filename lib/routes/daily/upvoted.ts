@@ -1,7 +1,8 @@
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { baseUrl, getData, getList, variables } from './utils.js';
+import { baseUrl, getData, getDateSort, getList, variables } from './utils.js';
 
 const query = /* GraphQL */ `
     query MostUpvotedFeed($loggedIn: Boolean! = false, $first: Int, $after: String, $period: Int, $supportedTypes: [String!] = ["article", "share", "freeform", "video:youtube", "collection"], $source: ID, $tag: String) {
@@ -116,7 +117,12 @@ export const route: Route = {
     view: ViewType.Articles,
     radar: [
         {
-            source: ['app.daily.dev/upvoted'],
+            source: ['daily.dev/posts/upvoted', 'daily.dev/upvoted'],
+            target: '/upvoted',
+        },
+        {
+            source: ['app.daily.dev/posts/upvoted', 'app.daily.dev/upvoted'],
+            target: '/upvoted',
         },
     ],
     parameters: {
@@ -146,8 +152,10 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const link = `${baseUrl}/posts/upvoted`;
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
-    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+    const dateSort = getDateSort(ctx.req.param('dateSort'));
+    const requestedLimit = getRouteLimit(ctx, 20);
+    const shouldSort = ctx.req.query('sorted') === undefined ? dateSort : ctx.req.query('sorted') !== 'false';
+    const limit = shouldSort ? Math.max(20, requestedLimit) : requestedLimit;
     const period = ctx.req.param('period') ? Number(ctx.req.param('period')) : 7;
 
     const data = await getData({
@@ -158,12 +166,13 @@ async function handler(ctx): Promise<Data> {
             first: limit,
         },
     });
-    const items = getList(data, dateSort);
+    const items = getList(data);
 
     return {
         title: 'Most upvoted posts for developers | daily.dev',
         link,
         item: items,
+        sortItems: dateSort,
         description: 'Find the most upvoted developer posts on daily.dev. Explore top-rated content in coding, tutorials, and tech news from the largest developer network in the world.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,

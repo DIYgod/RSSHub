@@ -2,7 +2,9 @@ import dayjs from 'dayjs';
 import timezonePlugin from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -49,14 +51,19 @@ async function handler(ctx: Context) {
         thumbnail: 'picture3',
         poster: 'fenxiang_img',
     } as const;
+    if (imgTypeParam && !Object.hasOwn(imgTypes, imgTypeParam)) {
+        throw new InvalidParameterError('Invalid image style. Use original, medium, thumbnail, or poster.');
+    }
     const imgType = imgTypes[imgTypeParam] ?? imgTypes.original;
 
-    const data = await Promise.all(
-        Array.from({ length: days }, (_, x) => {
+    const data = await pMap(
+        Array.from({ length: days }, (_, x) => x),
+        (x) => {
             const date = dayjs().tz('Asia/Shanghai').subtract(x, 'day').format('YYYY-MM-DD');
             const link = `https://open.iciba.com/dsapi/?date=${date}`;
             return cache.tryGet(link, () => ofetch<DailySentence>(link, { parseResponse: JSON.parse }));
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

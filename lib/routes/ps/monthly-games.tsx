@@ -27,7 +27,7 @@ export const route: Route = {
             target: '/monthly-games',
         },
     ],
-    name: 'PlayStation Monthly Games',
+    name: 'Monthly Games',
     maintainers: ['justjustCC'],
     handler,
     url: 'www.playstation.com/en-sg/ps-plus/whats-new',

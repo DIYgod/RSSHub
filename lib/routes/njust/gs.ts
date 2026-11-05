@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -15,7 +17,7 @@ export const route: Route = {
     parameters: { type: '分类 ID，部分示例参数见下表，默认为首页通知公告，其他分类 ID 可以从网站 URL Path 中找到，如国际交流为 `gjjl`' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -45,22 +47,26 @@ async function handler(ctx) {
     const title = '南京理工大学研究生院 -- ' + $('title').text();
     const list = $('ul.news_ul').find('li');
 
-    const items = await Promise.all(
-        list.map(async (index, item) => {
+    const items = await pMap(
+        list.toArray(),
+        async (item) => {
             const url = $(item).find('a').attr('href');
             let desc = '';
             if (url!.startsWith('/')) {
-                const data = await getContent(host + url);
-                desc = load(data)('.wp_articlecontent').html() ?? '';
+                desc = await cache.tryGet(host + url, async () => {
+                    const data = await getContent(host + url);
+                    return load(data)('.wp_articlecontent').html() ?? '';
+                });
             }
 
             return {
-                title: $(item).find('a').attr('title')!.trim(),
+                title: $(item).find('a').attr('title') || $(item).find('a').text(),
                 description: desc,
                 pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), 8),
                 link: url,
             };
-        })
+        },
+        { concurrency: 6 }
     );
 
     return {

@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/apod-cn',
@@ -17,20 +18,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['apod.nasa.govundefined'],
+            source: ['www.nasachina.cn/nasa-image-of-the-day'],
         },
     ],
-    name: 'NASA 中文',
+    name: 'Chinese Mirror',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
-    url: 'apod.nasa.govundefined',
+    url: 'www.nasachina.cn/nasa-image-of-the-day',
     description: `::: tip
 [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
 :::`,
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const rootUrl = `https://www.nasachina.cn/wp-json/wp/v2/posts?categories=2&per_page=${limit}`;
     const { data } = await got({
         method: 'get',
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const items = data.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: item.date_gmt && item.date_gmt !== '0000-00-00T00:00:00' ? parseDate(`${item.date_gmt}Z`) : undefined,
         link: item.link,
     }));
 

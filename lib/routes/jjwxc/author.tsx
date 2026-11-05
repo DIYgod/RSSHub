@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,6 +29,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    if (!id || !/^[1-9]\d*$/.test(id)) {
+        throw new InvalidParameterError('A positive numeric author ID is required.');
+    }
 
     const rootUrl = 'https://www.jjwxc.net';
     const currentUrl = new URL(`oneauthor.php?authorid=${id}`, rootUrl).href;
@@ -38,6 +43,9 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const bookEl = $('font a').first();
+    if (!bookEl.prop('href')) {
+        throw new NotFoundError('No recent public work is listed for this author.');
+    }
     const bookInfoEl = bookEl.parent();
 
     const bookName = bookEl.text();
@@ -89,24 +97,24 @@ async function handler(ctx) {
             author,
             category: [bookStatus],
             guid: `jjwxc-${id}-${bookId}#${bookWords}`,
-            pubDate: timezone(parseDate(bookUpdatedTime), 8),
+            pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(bookUpdatedTime) ? timezone(parseDate(bookUpdatedTime), 8) : undefined,
         },
     ];
 
     const logoEl = $('div.logo a img');
-    const image = `https:${logoEl.prop('src')}`;
+    const imageSource = logoEl.prop('src');
+    const image = imageSource ? new URL(imageSource, currentUrl).href : undefined;
     const icon = new URL('favicon.ico', rootUrl).href;
 
     return {
         item: items,
-        title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author} - 最近更新`,
+        title: `${logoEl.prop('alt')?.replace(/logo/, '') || '晋江文学城'} | ${author} - 最近更新`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
         language: 'zh' as const,
         image,
         icon,
         logo: icon,
-        subtitle: $('meta[name="Description"]').prop('content'),
         author,
     };
 }

@@ -43,7 +43,7 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
-    const url = `http://${site}/api/v1/timelines/public?local=true&only_media=${only_media}`;
+    const url = `https://${site}/api/v1/timelines/public?local=true&only_media=${only_media}`;
 
     const response = await got.get(url, { headers: utils.apiHeaders(site) });
     const list = response.data;

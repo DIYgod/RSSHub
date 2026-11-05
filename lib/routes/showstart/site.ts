@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.showstart.com/venue/:id'],
+            source: ['www.showstart.com/venue/:siteId'],
         },
     ],
     name: '按场地 - 演出更新',

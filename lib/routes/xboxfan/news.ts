@@ -37,19 +37,21 @@ async function handler() {
     $('div.homeCom').remove();
     $('div.homeMore').remove();
 
-    $('el-image').each((index, el_image) => {
+    $('el-image').each((_, imageElement) => {
         const img = $('<img>');
-        img.attr('src', $(el_image).attr('src'));
-        $(el_image).replaceWith(img);
+        img.attr('src', $(imageElement).attr('src'));
+        $(imageElement).replaceWith(img);
     });
 
     const items = $(`div.homeItem[v-if="showFeedLevel == 'read'"]`)
         .toArray()
         .map((item) => {
+            const rawDate = $(item).find('div.homeTime').first().text().split(' ', 1)[0];
+            const pubDate = rawDate ? parseRelativeDate(rawDate) : undefined;
             const data: DataItem = {
                 title: '资讯',
                 author: $(item).find('div.homeName').text(),
-                pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ', 1)[0]),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
 
             $(item).find('div.homeName').remove();

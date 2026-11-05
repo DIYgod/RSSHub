@@ -1,6 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,6 +26,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { kind = '' } = ctx.req.param();
+    if (!['', 'macos', 'ios'].includes(kind)) {
+        throw new InvalidParameterError('kind must be macos or ios, or omitted for both platforms.');
+    }
     const baseUrl = 'https://gofans.cn';
 
     const { data: response } = await got('https://api.gofans.cn/v1/web/app_records', {

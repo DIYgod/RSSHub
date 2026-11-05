@@ -1,4 +1,6 @@
 import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import utils from './utils';
 
@@ -23,7 +25,7 @@ export const route: Route = {
 ::: warning
 
 1. 构造链接前请确认所有参数正确：错误\`快递公司 - 订单号\`组合将会缓存信息一小段时间防止产生无用查询
-2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率
+2. 正常查询的订单在未签收状态下会缓存 180 秒：请控制查询频率
 3. 订单完成后请尽快取消订阅，避免资源浪费
 
 :::`,
@@ -40,19 +42,10 @@ async function handler(ctx) {
     const { status, message, company } = await utils.checkCode(number, id, phone);
 
     let data;
-    const time = new Date().toString();
 
     if (status) {
         const query: any = await utils.getQuery(number, id, phone);
-        data =
-            query.status === '200'
-                ? query.data
-                : [
-                      {
-                          context: query.message,
-                          time,
-                      },
-                  ];
+        data = query.data;
     } else {
         throw new Error(`[本地]信息有误，请检查后重试：${message}`);
     }
@@ -66,9 +59,11 @@ async function handler(ctx) {
         item: data.map((item) => ({
             title: item.context,
             description: item.context,
-            guid: new Date(item.time || item.ftime).toUTCString(),
-            pubDate: new Date(item.time || item.ftime).toUTCString(),
+            guid: JSON.stringify([number, id, item.time || item.ftime, item.context]),
+            pubDate: parseTrackingDate(item.time || item.ftime),
             link: 'https://www.kuaidi100.com',
         })),
     };
 }
+
+const parseTrackingDate = (date?: string) => (date ? (/(?:Z|[+-]\d{2}:?\d{2})$/i.test(date) ? parseDate(date) : timezone(parseDate(date), 8)) : undefined);

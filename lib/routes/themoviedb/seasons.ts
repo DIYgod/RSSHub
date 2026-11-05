@@ -46,7 +46,7 @@ async function handler(ctx) {
                 title: item.name,
                 link: `https://www.themoviedb.org/tv/${data.id}/season/${item.season_number}`,
                 description: handleDescription(item),
-                pubDate: item.air_date ? parseDate(item.air_date) : undefined,
+                pubDate: item.air_date ? parseDate(`${item.air_date}T00:00:00Z`) : undefined,
             };
         }),
     };

@@ -3,6 +3,33 @@ import { describe, expect, it } from 'vitest';
 import jsonView from '@/views/json';
 
 describe('JSON view', () => {
+    it.each([
+        [65, 65],
+        ['65', 65],
+        ['0:01:05', 65],
+        ['01:02:03', 3723],
+        ['90:00', 5400],
+        ['0:00:01.5', 1.5],
+        [0, 0],
+        ['invalid', undefined],
+        ['0:99:00', undefined],
+        [-1, undefined],
+        [Infinity, undefined],
+    ])('serializes podcast duration %s as numeric seconds', (duration, seconds) => {
+        const feed = JSON.parse(
+            jsonView({
+                title: 'Podcast',
+                item: [{ title: 'Episode', enclosure_url: 'https://example.com/audio.mp3', enclosure_type: 'audio/mpeg', itunes_duration: duration }],
+            })
+        );
+        const attachment = feed.items[0].attachments[0];
+        if (seconds === undefined) {
+            expect(attachment).not.toHaveProperty('duration_in_seconds');
+        } else {
+            expect(attachment.duration_in_seconds).toBe(seconds);
+        }
+    });
+
     it('renders summary, authors, tags, attachments, and extras', () => {
         const jsonOutput = jsonView({
             title: 'JSON Feed',

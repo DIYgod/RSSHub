@@ -1,11 +1,23 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+function extractPublicationText(value: string): string | undefined {
+    for (const marker of value.matchAll(/时间：/g)) {
+        const tail = value.slice(marker.index + marker[0].length).trimStart();
+        const sourceIndex = tail.indexOf('来源：');
+        const candidate = (sourceIndex === -1 ? tail : tail.slice(0, sourceIndex)).trimEnd();
+        if (!/[\r\n\u{2028}\u{2029}]/u.test(candidate)) {
+            return candidate;
+        }
+    }
+}
 
 export const route: Route = {
     path: '/:type',
@@ -14,7 +26,7 @@ export const route: Route = {
     parameters: {
         type: '分类名',
     },
-    name: '中华人民共和国退役军人事务部',
+    name: '资讯',
     maintainers: ['sunshinenny'],
     handler,
     description: `| 部内信息 | 政策解读 |
@@ -29,20 +41,14 @@ function loadDetail(link: string) {
         const title = $('#main > div.outerlayer > div > div > h2 > p').text();
         const introduce = $('#div_zhengwen > div').html();
         const info = $('#main > div.outerlayer > div > div > div.article-info').contents().first().text();
-        const dateTime =
-            info
-                .slice(info.indexOf('时间：') + 3, info.indexOf('来源：'))
-                .trim()
-                .replace('年', '-')
-                .replace('月', '-')
-                .replace('日', '') + ':00';
+        const dateTime = extractPublicationText(info);
 
         return {
             title,
             description: introduce,
             link,
-            pubDate: timezone(parseDate(dateTime), 8),
-            author: info.slice(info.indexOf('来源：') + 3).trim(),
+            pubDate: dateTime ? timezone(parseDate(dateTime, ['YYYY年M月D日 HH:mm:ss', 'YYYY年M月D日 HH:mm']), 8) : undefined,
+            author: info.match(/来源：\s*(.*)/)?.[1],
         };
     });
 }
@@ -54,6 +60,9 @@ const pages = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!Object.hasOwn(pages, type)) {
+        throw new InvalidParameterError('Invalid category. Use bnxx for ministry news or zcjd for policy interpretations.');
+    }
     const checkType = {
         bnxx: '部内信息',
         zcjd: '政策解读',
@@ -72,6 +81,7 @@ async function handler(ctx: Context) {
                 link: itemUrl,
                 guid: itemUrl,
                 ...other,
+                title: other.title || $(item).text(),
             };
         })
     );

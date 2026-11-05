@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -33,9 +34,10 @@ async function handler() {
         .filter((a) => $(a).text() === 'テキスト版要旨')
         .map((a) => new URL($(a).attr('href')!, baseUrl).href);
 
-    const items = await Promise.all(
-        detailUrls.map((url) =>
-            cache.tryGet(url, async () => {
+    const items = await pMap(
+        detailUrls,
+        (url) =>
+            cache.tryGet(`${url}:article`, async () => {
                 const meeting = await ofetch(url);
                 const $ = load(meeting);
                 $('div.social-btn-top').remove();
@@ -48,10 +50,10 @@ async function handler() {
                     author: '外務省',
                     pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset.get(matches[1]) ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
                     link: $('meta[property="og:url"]').attr('content'),
-                    description: title3.html() + '<br/>' + $('div#maincontents').html(),
+                    description: $('div#maincontents').html(),
                 } as DataItem;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

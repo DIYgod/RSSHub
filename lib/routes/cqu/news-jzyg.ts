@@ -17,7 +17,6 @@ async function handler() {
     const url = 'https://news.cqu.edu.cn/archives/lecture/index.html';
     const response = await ofetch(url);
     const $ = load(response);
-
     const result = await Promise.all(
         $('.item')
             .toArray()

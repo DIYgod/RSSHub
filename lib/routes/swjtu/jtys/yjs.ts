@@ -1,36 +1,34 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootURL = 'https://ctt.swjtu.edu.cn';
-const url_addr = `${rootURL}/yethan/WebIndexAction?setAction=newsList&bigTypeId=0E4BF4D36E232918`;
+const sourceUrl = `${rootURL}/yjsjxnew/tzgg.htm`;
 
-const getItem = (item, cache) => {
-    const news_info = item.find('div[class="news-title newsInfo"]');
-    const news_month = item.find('.month').text();
-    const news_day = item.find('.day').text();
+const getArticle = async (link: string) => {
+    const resp = await got.get(link);
+    const $ = load(resp.data);
+    return $('.v_news_content').html();
+};
 
-    const info_id = news_info.attr('newsid');
-    const info_title = news_info.text();
-    const link = `${rootURL}/yethan/WebIndexAction?setAction=newsInfo&newsId=${info_id}`;
-    return cache.tryGet(link, async () => {
-        const resp = await got({
-            method: 'get',
-            url: link,
-        });
-        const $$ = load(resp.data);
-        const info_text = $$('.news-left').html();
-
-        return {
-            title: info_title,
-            pubDate: parseDate(`${news_month}.${news_day}`),
-            link,
-            description: info_text,
-        };
-    });
+const getItem = async (item) => {
+    const title = item.find('.news-title').text();
+    const month = item.find('.month').text();
+    const day = item.find('.day').text();
+    const date = month && day ? `${month}.${day}` : undefined;
+    const link = new URL(item.find('.news-box > a').attr('href'), sourceUrl).href;
+    const description = await cache.tryGet(`swjtu:jtys:article:${link}`, () => getArticle(link));
+    return {
+        title,
+        pubDate: date ? timezone(parseDate(date, 'YYYY.MM.DD'), 8) : undefined,
+        link,
+        description,
+    };
 };
 
 export const route: Route = {
@@ -55,23 +53,17 @@ export const route: Route = {
 async function handler() {
     const resp = await got({
         method: 'get',
-        url: url_addr,
+        url: sourceUrl,
     });
 
     const $ = load(resp.data);
-    const list = $("[class='news-list flex']");
+    const list = $('.news-list.flex');
 
-    const items = await Promise.all(
-        list.toArray().map((i) => {
-            const item = $(i);
-            return getItem(item, cache);
-        })
-    );
+    const items = await pMap(list.toArray(), (item) => getItem($(item)), { concurrency: 3 });
 
     return {
         title: '西南交大交运学院-研究生通知',
-        link: url_addr,
+        link: sourceUrl,
         item: items,
-        allowEmpty: true,
     };
 }

@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -37,12 +38,22 @@ async function handler() {
     return {
         title: 'CnGal - 每周速报',
         link: 'https://www.cngal.org/weeklynews',
-        item: response.data.map((item) => ({
-            title: item.name,
-            description: renderDescription(item),
-            pubDate: parseDate(item.lastEditTime),
-            link: `https://www.cngal.org/articles/index/${item.id}`,
-        })),
+        item: await Promise.all(
+            response.data.map(async (item) => {
+                const detail = await cache.tryGet<{ pubishTime?: string }>(`cngal:weekly:publication:${item.id}`, async () => {
+                    const detailResponse = await got(`https://api.cngal.org/api/articles/GetArticleView/${item.id}`);
+                    return { pubishTime: detailResponse.data.pubishTime };
+                });
+
+                return {
+                    title: item.name,
+                    description: renderDescription(item),
+                    pubDate: detail.pubishTime ? parseDate(detail.pubishTime) : undefined,
+                    updated: parseDate(item.lastEditTime),
+                    link: `https://www.cngal.org/articles/index/${item.id}`,
+                };
+            })
+        ),
     };
 }
 

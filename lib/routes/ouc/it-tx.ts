@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/it/tx/:id?',
@@ -44,26 +46,27 @@ async function handler(ctx) {
 
     const list = $('ul.wp_article_list li')
         .toArray()
-        .map((e): DataItem => {
+        .map((e): DataItem & { link: string } => {
             const $e = $(e);
             const a = $e.find('a');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const out = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`ouc:article:body:${item.link}`, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.author = '中国海洋大学信息科学与工程学院';
-                item.description = $('.wp_articlecontent').html();
-                return item;
-            })
-        )
+                return $('.wp_articlecontent').html();
+            });
+            return { ...item, author: '中国海洋大学信息科学与工程学院', description };
+        },
+        { concurrency: 3 }
     );
 
     return {

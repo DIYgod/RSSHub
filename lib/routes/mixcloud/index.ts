@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { escapeUTF8 } from 'entities/escape';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -43,9 +44,9 @@ async function callApi(objectType: string, objectFields: string, username: strin
     const lookupKey = objectType + 'Lookup';
     const headers = MIXCLOUD_CONFIG.headers;
 
-    const lookupParams = slug ? `, slug: "${slug}"` : '';
+    const lookupParams = slug ? `, slug: ${JSON.stringify(slug)}` : '';
     const query = /* GraphQL */ `{
-    ${lookupKey}(lookup: {username: "${username}"${lookupParams}}) {
+    ${lookupKey}(lookup: {username: ${JSON.stringify(username)}${lookupParams}}) {
       ${objectFields}
     }
   }`;
@@ -57,6 +58,13 @@ async function callApi(objectType: string, objectFields: string, username: strin
         json: { query },
     });
 
+    if (!response.data?.data) {
+        const message = response.data?.errors
+            ?.map((error) => error.message)
+            .filter(Boolean)
+            .join('; ');
+        throw new Error(`Mixcloud did not return ${objectType} data. ${message || 'Check whether the page is available and try again later.'}`);
+    }
     return response.data.data[lookupKey];
 }
 
@@ -108,6 +116,9 @@ export async function handler(ctx) {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
+    if (type === 'playlist' && !playlistSlug) {
+        throw new InvalidParameterError('Use /mixcloud/:username/playlists/:playlist with a playlist slug.');
+    }
     const { objectType, objectFields } = getObjectFields(type);
 
     const data = await callApi(objectType, objectFields, username, playlistSlug);
@@ -137,10 +148,10 @@ export async function handler(ctx) {
             const enclosureUrl = tryDecrypt(streamInfo.url);
             const tags = cloudcast.tags?.map((t: any) => t.tag?.name).filter(Boolean) || [];
 
-            let richDescription = cloudcast.description?.replaceAll('\n', '<br>') || '';
+            let richDescription = cloudcast.description ? escapeUTF8(cloudcast.description).replaceAll('\n', '<br>') : '';
 
             if (cloudcast.featuringArtistList && cloudcast.featuringArtistList.length > 0) {
-                const artists = cloudcast.featuringArtistList.slice(0, 5).join(', ');
+                const artists = escapeUTF8(cloudcast.featuringArtistList.slice(0, 5).join(', '));
                 richDescription += richDescription ? '<br><br>' : '';
                 richDescription += `<strong>Featured Artists:</strong> ${artists}`;
                 if (cloudcast.featuringArtistList.length > 5) {
@@ -171,13 +182,13 @@ export async function handler(ctx) {
                 title: cloudcast.name,
                 author: cloudcast.owner?.displayName || username,
                 description: richDescription,
-                pubDate: parseDate(cloudcast.publishDate),
+                pubDate: cloudcast.publishDate ? parseDate(cloudcast.publishDate) : undefined,
                 guid: Buffer.from(cloudcast.id, 'base64').toString(),
                 link: `${MIXCLOUD_CONFIG.host}/${cloudcast.owner?.username || username}/${cloudcast.slug}`,
                 itunes_item_image: cloudcast.picture?.url || '',
                 itunes_duration: cloudcast.audioLength,
                 enclosure_url: enclosureUrl,
-                enclosure_type: 'audio/x-m4a',
+                enclosure_type: 'audio/mp4',
                 itunes_author: cloudcast.owner?.displayName || username,
                 category: tags,
                 comments: cloudcast.comments?.totalCount || 0,
@@ -186,7 +197,7 @@ export async function handler(ctx) {
                     ? {
                           content: {
                               url: enclosureUrl,
-                              type: 'audio/x-m4a',
+                              type: 'audio/mp4',
                               duration: cloudcast.audioLength,
                           },
                           thumbnail: cloudcast.picture?.url
@@ -205,7 +216,7 @@ export async function handler(ctx) {
 
     return {
         title,
-        description: description?.replaceAll('\n', '<br>') || '',
+        description: description ? escapeUTF8(description).replaceAll('\n', '<br>') : '',
         itunes_author: displayName,
         image,
         link,

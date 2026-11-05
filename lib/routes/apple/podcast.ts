@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -19,7 +20,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -35,7 +36,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, region } = ctx.req.param();
-    const numericId = id.match(/id(\d+)/)?.[1];
+    const numericId = id.match(/^id(\d+)$/)?.[1];
+    if (!numericId) {
+        throw new InvalidParameterError('Invalid podcast ID. Use id followed by the numeric ID from the Apple Podcasts show URL.');
+    }
     const baseUrl = 'https://podcasts.apple.com';
     const link = `${baseUrl}/${region || 'cn'}/podcast/${id}`;
 
@@ -54,7 +58,10 @@ async function handler(ctx) {
             const modulesResponse = await ofetch<string>(moduleAddress, {
                 parseResponse: (txt) => txt,
             });
-            const bearerToken = modulesResponse.match(/="(eyJhbGci.*?)",/)![1];
+            const bearerToken = modulesResponse.match(/["'](eyJ[\w-]+\.[\w-]+\.[\w-]+)["']/)?.[1];
+            if (!bearerToken) {
+                throw new Error('Apple Podcasts public API token was not found in the current client module');
+            }
 
             return bearerToken;
         },
@@ -62,10 +69,9 @@ async function handler(ctx) {
         false
     );
 
-    const episodeReponse = await ofetch(`https://amp-api.podcasts.apple.com/v1/catalog/us/podcasts/${numericId}/episodes`, {
+    const episodeReponse = await ofetch(`https://amp-api.podcasts.apple.com/v1/catalog/${region || 'cn'}/podcasts/${numericId}/episodes`, {
         query: {
             'extend[podcast-channels]': 'editorialArtwork,subscriptionArtwork,subscriptionOffers',
-            include: 'channel',
             limit: 25,
             with: 'entitlements',
             l: 'en-US',
@@ -94,15 +100,13 @@ async function handler(ctx) {
         };
     });
 
-    const channel = episodeReponse.data.find((d) => d.type === 'podcast-episodes')?.relationships?.channel?.data?.find((d) => d.type === 'podcast-channels')?.attributes;
-
     return {
-        title: channel?.name ?? header.title,
-        link: channel?.url ?? header.contextAction.podcastOffer.storeUrl,
+        title: header.title,
+        link: header.contextAction.podcastOffer.storeUrl,
         itunes_author: header.contextAction.podcastOffer.author,
         item: episodes,
-        description: (header.description || channel?.description.standard)?.replaceAll('\n', ' '),
-        image: ((channel?.logoArtwork || channel?.subscriptionArtwork)?.url || header.contextAction.podcastOffer.artwork.template).replace(/\{w\}x\{h\}(?:\{c\}|bb)\.\{f\}/, '3000x3000bb.webp'),
+        description: header.description?.replaceAll('\n', ' '),
+        image: header.contextAction.podcastOffer.artwork.template.replace(/\{w\}x\{h\}(?:\{c\}|bb)\.\{f\}/, '3000x3000bb.webp'),
         itunes_category: header.metadata.find((d) => Object.hasOwn(d, 'category')).category?.title || header.metadata.find((d) => Object.hasOwn(d, 'category')).category,
     };
 }

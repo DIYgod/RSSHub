@@ -41,8 +41,8 @@ async function handler() {
         link: 'http://www.tqyb.com.cn/gz/weatherAlarm/suddenWeather/',
         author: item.issuer,
         description: renderToString(<p>{item.content}</p>),
-        pubDate: parseDate(item.ddate),
-        guid: parseDate(item.ddate) + item.title,
+        pubDate: typeof item.ddate === 'number' && Number.isFinite(item.ddate) ? parseDate(item.ddate) : undefined,
+        guid: `weather-tips:${item.ddate}:${item.title}`,
     }));
 
     return {

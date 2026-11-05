@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['mnowpick.nowcoder.com/m/discuss/hot'],
         },
     ],
-    name: '牛客热榜',
+    name: '热榜',
     description: '牛客热榜，包括热议话题和全站热贴',
     maintainers: ['xia0ne'],
     handler,
@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '1';
     const limit = Number(ctx.req.query('limit') ?? '20');
-    const size = Number.isFinite(limit) && limit > 0 ? limit : 20;
+    const size = Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : 20;
 
     let link: string;
     if (type === '1') {

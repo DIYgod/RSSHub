@@ -1,9 +1,12 @@
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+const isUnpinnedQuestion = (item) => item.is_toped === false;
 
 export const route: Route = {
     path: '/questions/:id',
@@ -31,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    // 发起 HTTP GET 请求
+    // Fetch the source API response.
     const response = await got({
         method: 'get',
         url: `https://www.lanqiao.cn/api/v2/questions/?sort=created_time&topic_id=${id}`,
@@ -40,42 +43,39 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.results; // response.data 为 HTTP GET 请求返回的数据对象
-    const topic_name = data[0].topic.name; // 获取话题名称
-    function filterToped(arr) {
-        // 过滤置顶的帖子
-        return arr.is_toped === false;
-    }
-    // 将 markdown 转换为 HTML
+    const data = response.data.results; // The source API response data.
+    const topicName = data[0].topic.name; // Read the topic name.
+    // Render Markdown as HTML.
     const md = new MarkdownIt();
-    const items = await Promise.all(
-        data
-            .filter((element) => filterToped(element))
-            .map((item) =>
-                cache.tryGet(`https://www.lanqiao.cn/api/v2/questions/${item.id}/`, async () => {
-                    const questionResponse = await got({
-                        method: 'get',
-                        url: `https://www.lanqiao.cn/api/v2/questions/${item.id}/`,
-                    });
-                    const question = questionResponse.data;
+    const items = await pMap(
+        data.filter((item) => isUnpinnedQuestion(item)),
+        (item: { id: number }) =>
+            cache.tryGet(`https://www.lanqiao.cn/api/v2/questions/${item.id}/`, async () => {
+                const questionResponse = await got({
+                    method: 'get',
+                    url: `https://www.lanqiao.cn/api/v2/questions/${item.id}/`,
+                });
+                const question = questionResponse.data;
 
-                    item.title = question.title;
-                    item.description = md.render(question.content);
-                    item.author = question.author.name;
-                    item.pubDate = parseDate(question.created_at);
-                    item.link = `https://www.lanqiao.cn/questions/${question.id}/`;
-                    return item;
-                })
-            )
+                return {
+                    id: String(item.id),
+                    title: question.title,
+                    description: md.render(question.content),
+                    author: question.author.name,
+                    pubDate: parseDate(question.created_at),
+                    link: `https://www.lanqiao.cn/questions/${question.id}/`,
+                };
+            }),
+        { concurrency: 3 }
     );
     return {
-        // 源标题
-        title: `蓝桥云课技术社区【${topic_name}】`,
-        // 源链接
+        // Feed title.
+        title: `蓝桥云课技术社区【${topicName}】`,
+        // Feed link.
         link: `https://www.lanqiao.cn/questions/topics/${id}/`,
-        // 源说明
-        description: `蓝桥云课技术社区【${topic_name}】`,
-        // 遍历此前获取的数据
+        // Feed description.
+        description: `蓝桥云课技术社区【${topicName}】`,
+        // Return the collected entries.
         item: items,
     };
 }

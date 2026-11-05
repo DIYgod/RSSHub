@@ -1,19 +1,31 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
-const rebuildFigure = ($e) => {
+const rebuildFigure = ($e, $) => {
     const img = $e.find('img');
     if (img.length === 0) {
-        $e.remove();
+        if ($e.find('iframe, video, audio').length === 0) {
+            $e.remove();
+        }
         return;
     }
     const caption = $e.find('figcaption').first().text().trim();
     const src = img.attr('src')?.replace(/width=\d+/, 'width=700');
-    $e.replaceWith(`<figure><img alt='${img.attr('alt')}' src='${src}'><br><figcaption>${caption}</figcaption></figure>`);
+    const figure = $('<figure>')
+        .append(
+            $('<img>')
+                .attr('alt', img.attr('alt') ?? '')
+                .attr('src', src ?? '')
+        )
+        .append('<br>')
+        .append($('<figcaption>').text(caption));
+    $e.replaceWith(figure);
 };
 
 const processFeed = (data: string) => {
@@ -26,11 +38,11 @@ const processFeed = (data: string) => {
 
     content.find('gu-island, ul > li > p> em > strong').remove();
 
-    content.find('figure').each((_, e) => rebuildFigure($(e)));
+    content.find('figure').each((_, e) => rebuildFigure($(e), $));
 
     const cover = $('div[data-gu-name="media"] figure');
     if (cover.length > 0) {
-        rebuildFigure(cover);
+        rebuildFigure(cover, $);
         $('div[data-gu-name="media"] figure').insertBefore(content.children().first());
     }
 
@@ -39,22 +51,21 @@ const processFeed = (data: string) => {
 
 export const getFeed = async (cfg: { link: string; title: string; rss: string }): Promise<Data> => {
     const feed = await parser.parseURL(cfg.rss);
-    const items = await Promise.all(
-        feed.items.slice(0, 10).map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
-                const description = processFeed(response);
-                const rawCategories: unknown[] | undefined = item.categories;
-
-                return {
-                    title: item.title,
-                    description: description ?? item.content,
-                    pubDate: item.pubDate,
-                    link: item.link,
-                    category: rawCategories?.map((c) => (c as { _: string })._),
-                };
-            })
-        )
+    const items = await pMap(
+        feed.items.slice(0, 10),
+        async (item) => ({
+            title: item.title,
+            author: item.creator,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            link: item.link,
+            category: (item.categories as unknown[] | undefined)?.map((category) => (category as { _: string })._),
+            description:
+                (await cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
+                    return processFeed(response);
+                })) ?? item.content,
+        }),
+        { concurrency: 3 }
     );
 
     return {

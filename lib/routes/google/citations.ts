@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/citations/:id',
@@ -26,7 +27,7 @@ Query parameters are also supported here, for example \`https://scholar.google.c
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const BASE_URL = 'https://scholar.google.com';
+    const baseUrl = 'https://scholar.google.com';
     const url = `https://scholar.google.com/citations?user=${id}`;
 
     const response = await got({
@@ -44,18 +45,20 @@ async function handler(ctx) {
     const list = $('#gsc_a_b .gsc_a_tr').toArray();
 
     const out = list.map((item) => {
-        const $ = load(item);
+        const $item = $(item);
 
-        const itemUrl = BASE_URL + $('.gsc_a_t a').attr('href');
+        const itemUrl = baseUrl + $item.find('.gsc_a_t a').attr('href');
 
-        const author = $('.gsc_a_t div').eq(0).text();
-        const publication = $('.gsc_a_t div').eq(1).text();
+        const author = $item.find('.gsc_a_t div').eq(0).text();
+        const publication = $item.find('.gsc_a_t div').eq(1).text();
+        const year = $item.find('.gsc_a_y').text().trim();
         return {
-            title: $('.gsc_a_t a').text(),
+            title: $item.find('.gsc_a_t a').text(),
             author,
-            description: `Author: ${author}; Publication: ${publication}`,
+            description: `Publication: ${publication}`,
             link: itemUrl,
             guid: itemUrl,
+            pubDate: /^\d{4}$/.test(year) ? parseDate(`${year}-01-01T00:00:00Z`) : undefined,
         };
     });
     return {

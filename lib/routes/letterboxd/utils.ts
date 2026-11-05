@@ -1,6 +1,8 @@
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 type LetterboxdItem = {
@@ -21,7 +23,8 @@ const parser = new Parser<object, LetterboxdItem>({
 });
 
 export async function getData(username: string, title: string) {
-    const feed = await parser.parseURL(`https://letterboxd.com/${username}/rss/`);
+    const feedUrl = `https://letterboxd.com/${username}/rss/`;
+    const feed = await cache.tryGet(feedUrl, async () => parser.parseString(await ofetch(feedUrl, { responseType: 'text' })));
 
     const item = feed.items
         .filter((entry) => entry['letterboxd:watchedDate'])
@@ -29,7 +32,7 @@ export async function getData(username: string, title: string) {
             const watchedDate = entry['letterboxd:watchedDate'];
             const rating = entry.title?.match(/[★½]+$/)?.[0] ?? '';
 
-            let description = `<b>${entry['letterboxd:filmTitle']}</b><br />watched by ${username}<br />Date: ${new Date(watchedDate).toDateString()}<br />Rating: ${rating}`;
+            let description = `Date: ${new Date(watchedDate).toDateString()}<br />Rating: ${rating}`;
             if (entry['letterboxd:memberLike'] === 'Yes') {
                 description += '<br />Liked';
             }
@@ -43,7 +46,7 @@ export async function getData(username: string, title: string) {
                 link: entry.link,
                 author: username,
                 guid: entry.link,
-                pubDate: parseDate(watchedDate),
+                pubDate: entry.pubDate ? parseDate(entry.pubDate) : undefined,
                 description,
             };
         });

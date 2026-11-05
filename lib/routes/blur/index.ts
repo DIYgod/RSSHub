@@ -33,9 +33,11 @@ async function handler() {
                     const mainvideo = $2('div.project-title').attr('data-video');
 
                     let content = `Client:${$2('div.client').text()}<br>${$2('p').text()}`;
-                    content += /\d+/.test(mainvideo ?? '')
-                        ? `<iframe ${videostyle} src='https://player.vimeo.com/video/${mainvideo}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>`
-                        : `<iframe ${videostyle} src='https://youtube.com/embed/${mainvideo}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>`;
+                    if (mainvideo) {
+                        content += /^\d+$/.test(mainvideo)
+                            ? `<iframe ${videostyle} src='https://player.vimeo.com/video/${mainvideo}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>`
+                            : `<iframe ${videostyle} src='https://youtube.com/embed/${mainvideo}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>`;
+                    }
 
                     for (const img of $2('.gridded img').toArray()) {
                         content += `<img ${imgstyle} src="${$2(img).attr('src')}"><br>`;

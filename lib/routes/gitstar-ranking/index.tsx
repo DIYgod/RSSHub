@@ -4,9 +4,11 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const renderDescription = ({ images, stargazersCount, language, description }) =>
     renderToString(
@@ -49,7 +51,11 @@ const renderDescription = ({ images, stargazersCount, language, description }) =
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'repositories' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    if (!['repositories', 'users', 'organizations'].includes(category)) {
+        throw new InvalidParameterError('category must be repositories, users, or organizations.');
+    }
+
+    const limit = getRouteLimit(ctx, 100);
 
     const baseUrl = 'https://gitstar-ranking.com';
     const targetUrl: string = new URL(category, baseUrl).href;
@@ -94,11 +100,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 id: guid,
                 content: {
                     html: description,
-                    text: description,
+                    text: $(description ?? '').text(),
                 },
                 image,
                 banner: image,
-                language: language as Language,
             };
 
             return processedItem;
@@ -111,7 +116,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title.split(/-/, 1)[0],
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: title.split(/-/).pop()?.trim(),
         language,
         id: $('meta[property="og:url"]').attr('content'),
@@ -165,8 +169,8 @@ To subscribe to [Repositories](https://gitstar-ranking.com/repositories), where 
     },
     radar: [
         {
-            source: ['gitstar-ranking.com/:category'],
-            target: '/:category',
+            source: ['gitstar-ranking.com/'],
+            target: '/repositories',
         },
         {
             title: 'Users',

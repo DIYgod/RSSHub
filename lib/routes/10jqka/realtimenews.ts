@@ -4,10 +4,11 @@ import iconv from 'iconv-lite';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://news.10jqka.com.cn';
     const apiUrl = new URL('tapp/news/push/stock', rootUrl).href;

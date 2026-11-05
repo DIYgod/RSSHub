@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -33,31 +35,35 @@ export const route: Route = {
 async function handler(ctx) {
     const term = ctx.req.param('term');
     const searchParams = term ? { pageId: 977_080_509_047_743, term } : { pageId: 977_080_509_047_743 };
-    const data = await ofetch(`${baseUrl}/node_api/v1/articles/posts`, { query: { ...searchParams } });
+    const data = await ofetch(`${baseUrl}/node_api/v1/articles/posts`, { query: searchParams });
 
-    const list = data.data.posts.map((post) => ({
+    const list: Array<DataItem & { api: string; guid: string }> = data.data.posts.map((post): DataItem & { api: string; guid: string } => ({
         title: post.title,
         description: post.description,
         link: `${baseUrl}${post.url}`,
-        pubDate: parseDate(post.post_date),
+        pubDate: post.post_date ? parseDate(post.post_date) : undefined,
         guid: post.guid,
         api: `${baseUrl}/node_api/v1/articles/${post.id}`,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.guid, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.guid, async () => {
                 const data = await ofetch(item.api, {
                     query: {
                         pageId: 977_080_509_047_743,
                     },
                 });
-                item.description = data.data.post_content;
-                item.category = [...new Set([...data.data.tags.map((t) => t.name), ...data.data.categories.map((c) => c.name)])];
-                item.author = data.data.author.display_name;
-                return item;
-            })
-        )
+                return {
+                    description: data.data.post_content,
+                    category: [...new Set<string>([...data.data.tags.map((tag) => tag.name), ...data.data.categories.map((category) => category.name)])],
+                    author: data.data.author.display_name,
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

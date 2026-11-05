@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'http://www.bmie.neu.edu.cn';
 
@@ -73,8 +75,9 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const items = $('#subIndex > div.main_frame_sub > div.detail_sub > div > div > div > ul > li').slice(0, 7).toArray();
-    const results = await Promise.all(
-        items.map(async (item) => {
+    const results = await pMap(
+        items,
+        async (item) => {
             const $ = load(item);
             const title = $('a').attr('title');
             const url = baseUrl + $('a').attr('href');
@@ -98,8 +101,8 @@ async function handler(ctx) {
                 $('.entry')
                     .find('div')
                     .each((_, el) => {
-                        const temp = $(el).html();
-                        $(el).replaceWith(temp as string);
+                        const temp = $.html($(el).contents());
+                        $(el).replaceWith(temp);
                     });
                 $('.entry').find('a').remove();
                 $('.entry')
@@ -112,7 +115,7 @@ async function handler(ctx) {
                 return { description: $('.entry').html(), date, author: auhor };
             });
             const description = data.description;
-            const pubDate = parseDate(data.date);
+            const pubDate = data.date ? timezone(parseDate(data.date), 8) : undefined;
             const author = data.author;
             const result = {
                 title: title!,
@@ -122,7 +125,8 @@ async function handler(ctx) {
                 author,
             };
             return result;
-        })
+        },
+        { concurrency: 3 }
     );
     return {
         title: `东北大学 医学与生物信息工程学院 ${title}`,

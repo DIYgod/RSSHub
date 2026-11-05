@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -16,9 +17,24 @@ export const route: Route = {
 };
 
 const author = '何幻';
+const baseUrl = 'https://thzt.github.io';
+
+async function getArticleDetails(link: string): Promise<Pick<DataItem, 'author' | 'pubDate' | 'description' | 'category'>> {
+    const details = await cache.tryGet(link, async () => {
+        const response = await got(`${baseUrl}/${link}`);
+        const $ = load(response.data);
+        const articlePubDate = $('meta[property="article:published_time"]').attr('content') || $('span.post-time > time').attr('datetime');
+        return {
+            author,
+            pubDate: articlePubDate ? parseDate(articlePubDate) : undefined,
+            description: $('div.post-body').html(),
+            category: [$('span.post-category>span>a>span').first().text()],
+        };
+    });
+    return { author: details.author, pubDate: details.pubDate, description: details.description, category: details.category };
+}
 
 async function handler() {
-    const baseUrl = 'https://thzt.github.io';
     const targetUrl = `${baseUrl}/archives/`;
 
     const response = await got({
@@ -41,28 +57,7 @@ async function handler() {
             link,
         };
     });
-    const items = await Promise.all(
-        list.slice(0, 15).map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const articleUrl = `${baseUrl}/${item.link}`;
-                const response = await got({
-                    method: 'get',
-                    url: articleUrl,
-                });
-
-                const $ = load(response.data);
-
-                const articlePubDate = $('span.post-time > time').text();
-
-                item.author = author;
-                item.pubDate = parseDate(articlePubDate);
-                item.description = $('div.post-body').html();
-                item.category = [$('span.post-category>span>a>span').first().text()];
-
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list.slice(0, 15), async (item) => ({ ...item, ...(await getArticleDetails(item.link!)) }), { concurrency: 3 });
 
     return {
         title: 'thzt articles',

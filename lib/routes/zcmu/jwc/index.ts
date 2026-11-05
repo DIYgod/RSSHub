@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,7 +9,6 @@ const host = 'https://jwc.zcmu.edu.cn/';
 
 const map = new Map([
     [0, { title: '教务处 -- 教务管理', id: 'jwgl' }],
-    [1, { title: '教务处 -- 成绩管理', id: 'jwgl/cjgl' }],
     [2, { title: '教务处 -- 学籍管理', id: 'jwgl/xjgl' }],
     [3, { title: '教务处 -- 考试管理', id: 'jwgl/ksgl' }],
     [4, { title: '教务处 -- 选课管理', id: 'jwgl/xkgl' }],
@@ -18,7 +18,7 @@ const map = new Map([
 export const route: Route = {
     path: '/jwc/:type?',
     categories: ['university'],
-    example: '/zcmu/jwc/1',
+    example: '/zcmu/jwc/0',
     parameters: { type: '通知模块id' },
     features: {
         requireConfig: false,
@@ -31,17 +31,22 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['CCraftY'],
     handler,
-    description: `| 教务管理 | 成绩管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 0        | 1        | 2        | 3        | 4        | 5        |`,
+    description: `| 教务管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
+| -------- | -------- | -------- | -------- | -------- |
+| 0        | 2        | 3        | 4        | 5        |`,
 };
 
 async function handler(ctx) {
-    const type = Number.parseInt(ctx.req.param('type'));
-    const id = map.get(type)!.id;
+    const type = Number.parseInt(ctx.req.param('type') ?? '0');
+    const channel = map.get(type);
+    if (!channel) {
+        throw new NotFoundError('Invalid notification type. Supported types are 0, 2, 3, 4 and 5.');
+    }
+    const id = channel.id;
+    const currentUrl = `${host}/${id}.htm`;
     const res = await got({
         method: 'get',
-        url: `${host}/${id}.htm`,
+        url: currentUrl,
     });
 
     const $ = load(res.data);
@@ -57,8 +62,8 @@ async function handler(ctx) {
         });
 
     return {
-        title: map.get(type)!.title,
-        link: `${host}${id}`,
+        title: channel.title,
+        link: currentUrl,
         item: items,
     };
 }

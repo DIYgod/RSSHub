@@ -64,7 +64,12 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: 'Pixiv refresh token required for accessing the app API.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

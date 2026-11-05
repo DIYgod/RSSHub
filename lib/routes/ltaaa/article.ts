@@ -2,17 +2,19 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.ltaaa.cn';
     const targetUrl: string = new URL('article', baseUrl).href;
@@ -46,92 +48,90 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 };
             });
             const image: string | undefined = $el.find('div.li-thumb img').attr('src');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDateInTimezone(pubDateStr, 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 author: authors,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('div.dbody p').text(),
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
-                }
+    items = await pMap(
+        items,
+        async (item) => {
+            if (!item.link) {
+                return item;
+            }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
+            const detail = await cache.tryGet('ltaaa:article:' + item.link, async (): Promise<DataItem> => {
+                const detailResponse = await ofetch(item.link!);
+                const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('div.post-title').text();
+                const title: string = $$('div.post-title').text();
 
-                    const pubDateStr: string | undefined = $$('i.icon-time').next().text().trim();
-                    const categoryEls: Element[] = $$('span.keywords a').toArray();
-                    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                    const authorEls: Element[] = $$('i.icon-user').first().nextAll('a').toArray();
-                    const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                        const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                        return {
-                            name: $$authorEl.text(),
-                            url: new URL($$authorEl.attr('href') ?? '', baseUrl).href,
-                            avatar: undefined,
-                        };
-                    });
-                    const upDatedStr: string | undefined = pubDateStr;
-
-                    $$('div.post-tip').each((_, el) => {
-                        const $$el: Cheerio<Element> = $$(el);
-                        const content: string = $$el.html() ?? '';
-
-                        if (content) {
-                            $$el.replaceWith(`<h1>${content}</h1>`);
-                        }
-                    });
-                    $$('div.post-param, div.post-title, div.post-keywords').remove();
-                    $$('div.attitude, div.clear').remove();
-
-                    const description: string = renderDescription({
-                        description: $$('div.post-body').html() ?? undefined,
-                    });
-
-                    const processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                        category: categories,
-                        author: authors,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
-                    };
+                const pubDateStr: string | undefined = $$('i.icon-time').next().text().trim();
+                const categoryEls: Element[] = $$('span.keywords a').toArray();
+                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
+                const authorEls: Element[] = $$('i.icon-user').first().nextAll('a').toArray();
+                const authors: DataItem['author'] = authorEls.map((authorEl) => {
+                    const $$authorEl: Cheerio<Element> = $$(authorEl);
 
                     return {
-                        ...item,
-                        ...processedItem,
+                        name: $$authorEl.text(),
+                        url: new URL($$authorEl.attr('href') ?? '', baseUrl).href,
+                        avatar: undefined,
                     };
                 });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
+
+                $$('div.post-tip').each((_, el) => {
+                    const $$el: Cheerio<Element> = $$(el);
+                    const content: string = $$el.html() ?? '';
+
+                    if (content) {
+                        $$el.replaceWith(`<h1>${content}</h1>`);
+                    }
+                });
+                $$('div.post-param, div.post-title, div.post-keywords').remove();
+                $$('div.attitude, div.clear').remove();
+
+                const description: string = renderDescription({
+                    description: $$('div.post-body').html() ?? undefined,
+                });
+
+                const processedItem: DataItem = {
+                    title,
+                    description,
+                    pubDate: pubDateStr ? parseDateInTimezone(pubDateStr, 8) : undefined,
+                    category: categories,
+                    author: authors,
+                    content: {
+                        html: description,
+                        text: $$('div.post-body').text(),
+                    },
+                    language,
+                };
+
+                return processedItem;
+            });
+            return {
+                ...item,
+                ...detail,
+                pubDate: detail.pubDate ?? item.pubDate,
+            };
+        },
+        { concurrency: 3 }
+    );
 
     const title: string = $('title').text();
 
@@ -140,7 +140,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: new URL('static/home/images/logo.png', baseUrl).href,
         author: title.split(/-/).pop(),
         language,

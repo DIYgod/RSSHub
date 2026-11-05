@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
 
-import type { Language, Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:language?',
@@ -14,6 +17,7 @@ export const route: Route = {
     radar: [
         {
             source: ['idai.ly/'],
+            target: '/',
         },
     ],
     handler,
@@ -22,9 +26,12 @@ export const route: Route = {
 | zh-hans  | zh-hant  |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { language = 'zh-hans' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    if (!['zh-hans', 'zh-hant'].includes(language)) {
+        throw new InvalidParameterError('Invalid language. Use zh-hans or zh-hant.');
+    }
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://idaily-cdn.idailycdn.com';
     const apiUrl = new URL(`api/list/v3/iphone/${language}`, rootUrl).href;
@@ -32,9 +39,9 @@ async function handler(ctx) {
 
     const { data: response } = await got(apiUrl);
 
-    const items = response
+    const articles = response
         .filter((item) => item.ui_sets?.caption_subtitle)
-        .slice(0, limit)
+
         .map((item) => {
             const image = item.ui_sets?.cover_landscape_hd_4k ?? item.cover_landscape_hd;
 
@@ -52,15 +59,21 @@ async function handler(ctx) {
                         : undefined,
                     item.content
                 ),
-                author: item.location,
+                author: item.author || undefined,
                 category: item.tags?.map((c) => c.name),
                 guid: `idaily-${item.guid}`,
-                pubDate: parseDate(item.pubdate_timestamp, 'X'),
-                updated: parseDate(item.lastupdate_timestamp, 'X'),
+                pubDate: item.pubdate_timestamp ? parseDate(item.pubdate_timestamp, 'X') : undefined,
+                updated: item.lastupdate_timestamp ? parseDate(item.lastupdate_timestamp, 'X') : undefined,
                 enclosure_url: image,
-                enclosure_type: `image/${image.split(/\./).pop()}`,
+                enclosure_type: image ? getMimeType(new URL(image).pathname) : undefined,
             };
         });
+
+    const canSort = articles.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    if (ctx.req.query('sorted') !== 'false' && canSort) {
+        articles.sort((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime());
+    }
+    const items = articles.slice(0, ctx.req.query('sorted') === 'false' || canSort ? limit : Math.max(100, limit));
 
     const { data: currentResponse } = await got(currentUrl);
 
@@ -74,11 +87,9 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as const satisfies Language,
+        language: (language === 'zh-hant' ? 'zh-TW' : 'zh-CN') satisfies Language,
         image,
-        subtitle: $('meta[name="keywords"]').prop('content'),
         author: title.split(/\s/, 1)[0],
-        allowEmpty: true,
     };
 }
 

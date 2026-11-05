@@ -41,7 +41,7 @@ async function handler(ctx) {
     const resultItem = list.map((item) => ({
         title: item.title,
         link: `https://www.xiaohongshu.com/discovery/item/${item.id}`,
-        description: `<img src ="${item.cover.url.split('?imageView2', 1)[0]}"><br>${item.title}`,
+        description: `<img src ="${item.cover.url.split('?imageView2', 1)[0]}">`,
         author: item.user.nickname,
         pubDate: timezone(parseDate(item.time), 8),
     }));

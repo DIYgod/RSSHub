@@ -1,5 +1,5 @@
 export default function getItems(data) {
-    const items = data('.category-list li')
+    const items = data('.category-list article')
         .toArray()
         .map((item) => {
             const $item = data(item);
@@ -11,7 +11,7 @@ export default function getItems(data) {
             return {
                 title,
                 link,
-                description: `<img src="${image}" alt="${title}">`,
+                description: image ? data('<img>').attr({ src: image, alt: title }).toString() : undefined,
                 author,
             };
         });

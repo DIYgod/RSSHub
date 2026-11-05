@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -40,20 +41,22 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`ngd:details:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
                 const info = content('.articleAuthor').text().split('|');
-
-                item.author = info[0].replace('来源：', '');
-                item.description = content('.gp-article').html();
-                item.pubDate = timezone(parseDate(info.at(-1)!.replace('发布时间：', '')), 8);
-
-                return item;
-            })
-        )
+                return {
+                    author: info[0].replace('来源：', ''),
+                    description: content('.gp-article').html(),
+                    pubDate: timezone(parseDate(info.at(-1)!.replace('发布时间：', '')), 8),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

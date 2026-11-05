@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/update',
@@ -26,28 +28,38 @@ async function handler() {
         .toArray()
         .map((element) => {
             const $item = $2(element);
+            const date = $item
+                .find('.date')
+                .text()
+                .match(/(\d{4})年(\d+)月(\d+)日/);
             return {
-                title: $item.find('h3').text().trim(),
+                pubDate: date ? parseDateInTimezone(`${date[1]}-${date[2]}-${date[3]}`, 0) : undefined,
+                title: $item.find('h3').text(),
                 link: url2 + $item.attr('href'),
             };
         });
 
-    const result2 = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const result2 = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:details`, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
-                const title = $('.page-ttl').text().trim();
+                const title = $('.page-ttl').text();
+                const release = $('.conts')
+                    .text()
+                    .match(/(\d{4})年(\d+)月(\d+)日[^\n]*?UTC[_ ]*(\d+)(?::(\d+)|点)/);
                 $('.page-ttl').remove();
 
                 return {
-                    title: title || item.title,
+                    title,
+                    pubDate: release ? parseDateInTimezone(`${release[1]}-${release[2]}-${release[3]} ${release[4]}:${release[5] ?? '00'}`, 0) : undefined,
                     description: $('.conts').html(),
-                    link: item.link,
-                    author: 'MONSTER HUNTER WORLD: ICEBORNE',
                 };
-            })
-        )
+            });
+            return { ...details, title: details.title || item.title, pubDate: details.pubDate || item.pubDate, link: item.link, author: 'MONSTER HUNTER WORLD: ICEBORNE' };
+        },
+        { concurrency: 3 }
     );
 
     return {

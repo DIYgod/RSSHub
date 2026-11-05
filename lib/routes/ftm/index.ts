@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -27,16 +29,21 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const list = $('.article-card')
+    let list = $('.article-card')
         .toArray()
         .map((e): DataItem => ({
             link: $(e).attr('href'),
             title: $(e).find('h2').text(),
-        }))
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : Infinity);
+        }));
+    const limit = getRouteLimit(ctx);
+    // Detail publication times can refine the calendar dates displayed on the list.
+    if (limit !== undefined && ctx.req.query('sorted') === 'false') {
+        list = list.slice(0, limit);
+    }
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const html = await ofetch(item.link!);
                 const content = load(html);
@@ -53,8 +60,8 @@ async function handler(ctx) {
                 item.description = content('.body').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: $('title').text(),

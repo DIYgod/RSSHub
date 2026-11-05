@@ -1,7 +1,5 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -19,39 +17,39 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bbcnewslabs.co.uk/'],
+            source: ['bbcnewslabs.co.uk/', 'www.bbc.co.uk/rdnewslabs/news/'],
         },
     ],
     name: 'News',
     maintainers: ['elxy'],
     handler,
-    url: 'bbcnewslabs.co.uk/',
+    url: 'www.bbc.co.uk/rdnewslabs/news/',
 };
 
 async function handler() {
-    const rootUrl = 'https://bbcnewslabs.co.uk';
-    const response = await got({
-        method: 'get',
-        url: `${rootUrl}/news`,
+    const rootUrl = 'https://www.bbc.co.uk';
+    const response = await ofetch('https://corporate.api.bbci.co.uk/api/search/ipages-live/_search', {
+        query: {
+            sort: 'originalDate:desc',
+            q: 'projectId.keyword:ipages-newslabs AND tags.id.keyword:News',
+            size: 10,
+            from: 0,
+        },
     });
 
-    const $ = load(response.data);
-
-    const items = $('a[href^="/news/20"]')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('h3[class^="thumbnail-module--thumbnailTitle--"]').text(),
-                description: $item.find('span[class^="thumbnail-module--thumbnailDescription--"]').text(),
-                pubDate: parseDate($item.find('span[class^="thumbnail-module--thumbnailType--"]').text()),
-                link: rootUrl + $item.attr('href'),
-            };
-        });
+    const items = response.hits.hits.map(({ _source: item }) => ({
+        title: item.name,
+        description: item.description,
+        pubDate: item.originalDate ? parseDate(item.originalDate) : undefined,
+        link: new URL(item.url, rootUrl).href,
+        author: item.authors?.map((author) => author.name).join(', ') || undefined,
+        category: item.tags?.map((tag) => tag.name),
+        image: item.imageUrl ? `https://${item.imageUrl.replace('$recipe', '400x225')}` : undefined,
+    }));
 
     return {
         title: 'News - BBC News Labs',
-        link: rootUrl,
+        link: `${rootUrl}/rdnewslabs/news`,
         item: items,
     };
 }

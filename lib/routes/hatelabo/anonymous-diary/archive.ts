@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escape } from 'entities';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -14,18 +15,18 @@ export const route: Route = {
     handler,
 };
 
-const baseURL = 'https://anond.hatelabo.jp';
+const baseUrl = 'https://anond.hatelabo.jp';
 
 async function handler(): Promise<Data> {
-    const archiveIndex = await ofetch(`${baseURL}/archive`);
-    const latestURL = new URL(load(archiveIndex)('.archives a').attr('href')!, baseURL).href;
-    const response = await ofetch(latestURL);
+    const archiveIndex = await ofetch(`${baseUrl}/archive`);
+    const latestUrl = new URL(load(archiveIndex)('.archives a').attr('href')!, baseUrl).href;
+    const response = await ofetch(latestUrl);
 
     const $ = load(response);
 
     return {
         title: 'はてな匿名ダイアリー - 人気記事アーカイブ',
-        link: `${baseURL}/archive`,
+        link: `${baseUrl}/archive`,
         language: 'ja',
         item: $('.archives li')
             .toArray()
@@ -36,8 +37,8 @@ async function handler(): Promise<Data> {
 
                 return {
                     title: a.text(),
-                    description: $item.find('blockquote p').text(),
-                    link: new URL(href, baseURL).href,
+                    description: escape($item.find('blockquote p').text()),
+                    link: new URL(href, baseUrl).href,
                     pubDate: timezone(parseDate(href.replace('/', ''), 'YYYYMMDDHHmmss'), 9),
                 };
             }),

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -26,6 +27,9 @@ const map = {
 
 async function handler(ctx: Context) {
     const { type = 'news' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid type. Use news.');
+    }
     const link = host + map[type];
     const response = await ofetch(link, {
         headers: {
@@ -39,8 +43,8 @@ async function handler(ctx: Context) {
         link,
         description: $('meta[name="description"]').attr('content') || '重科图书馆公告',
         item: $('div[class="newsList"] li')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {

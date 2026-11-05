@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { feedMeta, fetchArticle, handler as commonHandler, parseCardList } from './common';
 
@@ -104,7 +105,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const currentUrl = `https://www.jiemian.com/lists/${id}.html`;
     const pageResponse = await ofetch(currentUrl);

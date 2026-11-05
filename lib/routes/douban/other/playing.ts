@@ -7,7 +7,7 @@ export const route: Route = {
     path: ['/movie/playing', '/movie/playing/:score'],
     categories: ['social-media'],
     example: '/douban/movie/playing',
-    parameters: {},
+    parameters: { score: '最低评分，默认不限制' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -40,7 +40,7 @@ async function handler(ctx) {
                 return itemScore >= score
                     ? {
                           title: item.attr('data-title')!,
-                          description: `标题：${item.attr('data-title')}<br>评分：${itemScore}<br>片长：${item.attr('data-duration')}<br>制片国家/地区：${item.attr('data-region')}<br>导演：${item.attr(
+                          description: `评分：${itemScore}<br>片长：${item.attr('data-duration')}<br>制片国家/地区：${item.attr('data-region')}<br>导演：${item.attr(
                               'data-director'
                           )}<br>主演：${item.attr('data-actors')}<br><img src="${item.find('.poster img').attr('src')}">`,
                           link: `https://movie.douban.com/subject/${item.attr('id')}`,
@@ -48,6 +48,5 @@ async function handler(ctx) {
                     : null;
             })
             .filter((item) => item !== null),
-        allowEmpty: true,
     };
 }

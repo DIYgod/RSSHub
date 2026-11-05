@@ -1,26 +1,30 @@
 import { load } from 'cheerio';
-import { JSDOM } from 'jsdom';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
-const ProcessVideo = (content) => {
-    content('div.video').each((i, v) => {
+const processVideo = ($, scope) => {
+    scope.find('div.video').each((i, v) => {
         let link = new URL(v.attribs.src);
         if (link.host === 'm.miguvideo.com') {
-            content(`<a href="${link.href}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
-            content(v).remove();
+            $(`<a href="${link.href}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
+            $(v).remove();
         } else {
             link = v.attribs.src;
             switch (v.attribs.site) {
                 case 'qiniu':
-                    content(`<video width="100%" controls="controls"> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
-                    content(v).remove();
+                    $(`<video width="100%" controls="controls"> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
+                    $(v).remove();
                     break;
                 case 'youku':
-                    content(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
-                    content(v).remove();
+                    $(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
+                    $(v).remove();
                     break;
                 default:
                     break;
@@ -29,19 +33,17 @@ const ProcessVideo = (content) => {
     });
 
     // Process iframes
-    content('iframe.media-iframe, .edui-faked-video').each((i, v) => {
+    scope.find('iframe.media-iframe, .edui-faked-video').each((i, v) => {
         const link = v.attribs.src;
         if (link.startsWith('http://ssports.iqiyi.com/')) {
-            content(`<a href="${link.link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
+            $(`<a href="${link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
         }
 
-        content(v).remove();
+        $(v).remove();
     });
-
-    return content;
 };
 
-const ProcessHref = (content) => {
+const processHref = (content) => {
     content.each((j, y) => {
         if (y.attribs.href) {
             y.attribs.href = y.attribs.href.replace('dongqiudi:///news', 'https://www.dongqiudi.com/article');
@@ -49,7 +51,7 @@ const ProcessHref = (content) => {
     });
 };
 
-const ProcessImg = (content) => {
+const processImg = (content) => {
     content.each((_, img) => {
         if (img.attribs['data-gif-src'] && img.attribs['data-gif-src'].length) {
             img.attribs = { src: img.attribs['data-gif-src'] };
@@ -59,57 +61,74 @@ const ProcessImg = (content) => {
             delete img.attribs['orig-src'];
             delete img.attribs['data-src'];
         }
-        img.attribs.src = img.attribs.src.includes('?watermark') ? img.attribs.src.split('?watermark', 1)[0] : img.attribs.src;
+        if (img.attribs.src?.includes('?watermark')) {
+            img.attribs.src = img.attribs.src.split('?watermark', 1)[0];
+        }
     });
 };
 
-const ProcessFeed = async (ctx, type, id) => {
+export const processFeed = async (ctx: Context, type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
+    const $ = load(response);
 
-    const { window } = new JSDOM(response, {
-        runScripts: 'dangerously',
-    });
-
-    const nuxtData = window.__NUXT__.data[0];
     let name;
     let image;
     if (type === 'team') {
-        name = nuxtData.teamInfo.name;
-        image = nuxtData.teamInfo.logo;
+        name = $('h1.tp-hero__name').text();
+        image = $('.tp-hero__logo').attr('src');
     } else {
-        name = nuxtData.detail.base_info.person_name;
-        image = nuxtData.detail.base_info.person_logo;
+        name = $('h1.pp-hero__name').text().trim();
+        image = $('.pp-hero__avatar').attr('src');
     }
 
     const { data } = await got(apiUrl, {
         searchParams: {
             id,
             type,
-            size: 20,
+            // The API counts mixed feed slots; size=3 can yield only one article.
+            size: Math.max(20, getRouteLimit(ctx, 20)),
             platform: 'web',
             version: '',
         },
     });
 
-    const list = data.data.articles.map((article) => ({
+    let list: Array<DataItem & { link: string; pubDate: Date }> = data.data.articles.map((article) => ({
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
         pubDate: parseDate(article.show_time, 'X'),
     }));
 
-    const out = await Promise.all(
-        list.map((item) =>
+    if (type === 'team' && list.length === 0) {
+        list = $('.tp-news-item')
+            .toArray()
+            .map((element) => {
+                const news = $(element);
+                return {
+                    title: news.find('.tp-news-item__title').text(),
+                    link: new URL(news.attr('href')!, link).href,
+                    category: [news.find('.tp-news-item__tag').text()],
+                    pubDate: timezone(parseDate(news.find('.tp-news-item__time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                };
+            });
+    }
+
+    if (ctx.req.query('sorted') !== 'false') {
+        list = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+    const out = await pMap(
+        list.slice(0, getRouteLimit(ctx)),
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
-                ProcessFeedType2(item, response);
+                await processFeedType2(item, response);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
 
     return {
@@ -120,23 +139,16 @@ const ProcessFeed = async (ctx, type, id) => {
     };
 };
 
-const ProcessFeedType2 = (item, response) => {
-    const dom = new JSDOM(response, {
-        runScripts: 'dangerously',
-    });
-
-    const data = dom.window.__NUXT__?.data?.[0]?.article;
-
-    // filter out undefined item
-    if (!data) {
+export const processFeedType2 = (item, response) => {
+    const $ = load(response);
+    const articleBody = $('.article-body');
+    if (!articleBody.length) {
         return;
     }
 
-    const body = ProcessVideo(load(data.rawBody, null, false));
-    ProcessHref(body('a'));
-    ProcessImg(body('img'));
-    item.description = body.html();
-    item.author = data.author;
+    processVideo($, articleBody);
+    processHref(articleBody.find('a'));
+    processImg(articleBody.find('img'));
+    item.description = articleBody.html();
+    item.author = $('.article-head__author-name').text();
 };
-
-export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };

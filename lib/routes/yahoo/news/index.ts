@@ -1,5 +1,7 @@
+import pMap from 'p-map';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import parser from '@/utils/rss-parser';
 
 import { getArchive, parseItem, parseList, regionConfig } from './utils';
@@ -63,7 +65,7 @@ To give another example, since uk.news.yahoo.com/rss/ukoriginal is accessible an
 
 For Yahoo Hong Kong and Yahoo Taiwan, please use another "news source" route.
 
-For other Yahoo News, this route's RSS provides the author field. You can use RSSHub's built-in "content filtering" feature. For example, /yahoo-wg/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget can filter out news with authors containing Yahoo Tech or Engadget from Yahoo Taiwan's technology news, which is the Chinese version of Engadget.`,
+For other Yahoo News, this route's RSS provides the author field. You can use RSSHub's built-in "content filtering" feature. For example, /yahoo/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget can filter out news with authors containing Yahoo Tech or Engadget from Yahoo Taiwan's technology news, which is the Chinese version of Engadget.`,
 
     zh: {
         name: '新闻',
@@ -101,18 +103,19 @@ news.yahoo.com (美国) 所支持的分类
 
 对于香港和台湾雅虎，请使用另一个 "新聞來源" 路由。
 
-对于其他雅虎新闻，本路由的 RSS 中提供了 author 字段，可使用 RSSHub 的内置 "内容过滤" 功能，例如 /yahoo-wg/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget 可从台湾雅虎的科技新闻中过滤出作者名称中包含 Yahoo Tech 或者 Engadget 的新闻，即瘾科技中文版。`,
+对于其他雅虎新闻，本路由的 RSS 中提供了 author 字段，可使用 RSSHub 的内置 "内容过滤" 功能，例如 /yahoo/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget 可从台湾雅虎的科技新闻中过滤出作者名称中包含 Yahoo Tech 或者 Engadget 的新闻，即瘾科技中文版。`,
     },
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const region = ['en', 'EN', 'us', 'US', 'www', 'WWW', ''].includes(ctx.req.param('region')) ? '' : ctx.req.param('region').toLowerCase();
     const category = ctx.req.param('category');
     if (!['hk', 'tw', 'au', 'ca', 'fr', 'malaysia', 'nz', 'sg', 'uk', ''].includes(region)) {
         throw new InvalidParameterError(`Unknown region: ${region}`);
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
 
     if (['hk', 'tw'].includes(region)) {
         const { categoryMap } = regionConfig[region];
@@ -124,10 +127,11 @@ async function handler(ctx) {
         const response = await getArchive(region, limit, tags);
         const list = parseList(region, response);
 
-        const items = await Promise.all(list.map((item) => parseItem(item)));
+        const items = await pMap(list, parseItem, { concurrency: 3 });
 
         return {
             title: `Yahoo 新聞 ${region.toUpperCase()} - ${category ? categoryMap[category].name : '所有類別'}`,
+            language: region === 'hk' ? 'zh-HK' : 'zh-TW',
             link: `https://${region}.news.yahoo.com/${category ? `${category}/` : ''}archive`,
             image: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo-1200x1200.png',
             item: items,
@@ -136,7 +140,7 @@ async function handler(ctx) {
     const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category ? `${category}/` : ''}`;
     const feed = await parser.parseURL(rssUrl);
     const filteredItems = feed.items.filter((item) => item?.link && !item.link.includes('promotions') && new URL(item.link).hostname.match(/.*\.yahoo\.com$/));
-    const items = await Promise.all(filteredItems.map((item) => parseItem(item)));
+    const items = await pMap(filteredItems, parseItem, { concurrency: 3 });
 
     return {
         title: `Yahoo News ${region.toUpperCase()} - ${category ? category.toUpperCase() : 'All'}`,

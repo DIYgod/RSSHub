@@ -1,8 +1,12 @@
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -28,14 +32,14 @@ export const route: Route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.shanghaimuseum.net/mu/frontend/pg/display/offline-exhibit'],
+            source: ['www.shanghaimuseum.cn/mu/frontend/pg/display/offline-exhibit'],
             target: '/display/offline-exhibit',
         },
     ],
     handler: async (ctx) => {
         const type = ctx.req.param('type');
 
-        const baseUrl = 'https://www.shanghaimuseum.net';
+        const baseUrl = 'https://www.shanghaimuseum.cn';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
         const fetchExhibits = async (status: string, limit = 20): Promise<ExhibitItem[]> => {
@@ -50,7 +54,7 @@ export const route: Route = {
                     },
                 },
             });
-            return (response.data?.data as ExhibitItem[]) || [];
+            return response.data?.data || [];
         };
 
         let rawItems: ExhibitItem[] = [];
@@ -69,69 +73,95 @@ export const route: Route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        const items = rawItems.map((item) => {
-            const title = item.name;
-            const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
-            const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
-            const location = item.exhibitPlace || '上海博物馆';
-            const pubDate = timezone(parseDate(item.issueTime), 8);
+        const items = await pMap(
+            rawItems,
+            async (item) => {
+                const title = item.name;
+                const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
+                const imgUrl = item.picPath ? `${baseUrl}/mu/${item.picPath}` : '';
+                const location = item.exhibitPlace || '上海博物馆';
+                const pubDate = timezone(parseDate(item.issueTime), 8);
 
-            const fullDuration = item.exhibitDateRange || '';
-            const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ') : [fullDuration, ''];
+                const fullDuration = item.exhibitDateRange || '';
+                const { startDate, endDate } = parseDateRange(fullDuration);
 
-            const description = renderToString(
-                <div>
-                    {imgUrl && (
-                        <>
-                            <img src={imgUrl} />
-                            <br />
-                        </>
-                    )}
-                    <p>
-                        <b>地点：</b>
-                        {location}
-                    </p>
-                    <p>
-                        <b>开展：</b>
-                        {startDate ?? '未定/常设'}
-                    </p>
-                    <p>
-                        <b>闭展：</b>
-                        {endDate ?? '未定/常设'}
-                    </p>
-
-                    {fullDuration && (
+                const description = renderToString(
+                    <div>
+                        {imgUrl && (
+                            <>
+                                <img src={imgUrl} />
+                                <br />
+                            </>
+                        )}
                         <p>
-                            <small>
-                                原始展期：
-                                {fullDuration.split('\n').map((line, i) => (
-                                    <span key={i}>
-                                        {line}
-                                        <br />
-                                    </span>
-                                ))}
-                            </small>
+                            <b>地点：</b>
+                            {location}
                         </p>
-                    )}
-                </div>
-            );
+                        <p>
+                            <b>开展：</b>
+                            {startDate ?? '未定/常设'}
+                        </p>
+                        <p>
+                            <b>闭展：</b>
+                            {endDate ?? '未定/常设'}
+                        </p>
 
-            return {
-                title,
-                link: itemLink,
-                pubDate,
-                description,
-                // For further .ics file processing
-                _extra: {
-                    museumName,
+                        {fullDuration && (
+                            <p>
+                                <small>
+                                    原始展期：
+                                    {fullDuration.split('\n').map((line, i) => (
+                                        <span key={i}>
+                                            {line}
+                                            <br />
+                                        </span>
+                                    ))}
+                                </small>
+                            </p>
+                        )}
+                    </div>
+                );
+
+                const detail = await cache.tryGet(itemLink, async () => {
+                    const { data: article } = await got(itemLink);
+                    const $ = load(article);
+                    const content = $('.site-article');
+                    content.children('.title').remove();
+                    content
+                        .children('div')
+                        .filter((_, element) => $(element).children('a.site-link').length > 0)
+                        .remove();
+                    content.find('script').remove();
+                    const documentBase = new URL($('base').attr('href') || itemLink, itemLink).href;
+                    content.find('[src], [href]').each((_, element) => {
+                        for (const attribute of ['src', 'href']) {
+                            const value = $(element).attr(attribute);
+                            if (value) {
+                                $(element).attr(attribute, new URL(value, documentBase).href);
+                            }
+                        }
+                    });
+                    return { description: content.html() ?? '' };
+                });
+
+                return {
                     title,
-                    location,
-                    startDate, // format: YYYY-MM-DD or '未定/常设'
-                    endDate, // format: YYYY-MM-DD or '未定/常设'
-                    itemLink,
-                },
-            };
-        });
+                    link: itemLink,
+                    pubDate,
+                    description: description + detail.description,
+                    // For further .ics file processing
+                    _extra: {
+                        museumName,
+                        title,
+                        location,
+                        startDate, // format: YYYY-MM-DD or '未定/常设'
+                        endDate, // format: YYYY-MM-DD or '未定/常设'
+                        itemLink,
+                    },
+                };
+            },
+            { concurrency: 3 }
+        );
 
         return {
             title: `${museumName} - 特别展览 - ${titleTag}`,

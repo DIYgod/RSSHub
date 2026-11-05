@@ -22,15 +22,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: ['/topics/:id/recommend', '/topics/recommend'],
+    path: '/topics/:id/recommend',
     name: '机组推荐',
     url: 'www.gcores.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/gcores/topics/recommend',
+    example: '/gcores/topics/581/recommend',
     parameters: {
         id: {
-            description: '小组 ID，默认为空，即全部，可在对应小组页 URL 中找到',
+            description: '小组 ID，可在对应小组页 URL 中找到',
         },
     },
     description: `::: tip
@@ -48,12 +48,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.gcores.com/topics/home'],
-            target: '/gcores/topics/recommend',
-        },
-        {
             source: ['www.gcores.com/topics/:id'],
-            target: '/gcores/topics/:id/recommend',
+            target: '/topics/:id/recommend',
         },
     ],
     view: ViewType.SocialMedia,

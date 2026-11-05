@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:id?',
@@ -23,30 +24,35 @@ async function handler(ctx: Context) {
     const { id = 'bwzq' } = ctx.req.param();
 
     const rootUrl = 'http://news.ctei.cn';
-    const currentUrl = `${rootUrl}/${id}`;
+    const currentUrl = `${rootUrl}/${id}/`;
 
     const response = await ofetch(currentUrl);
     const $ = load(response);
 
-    const list: DataItem[] = $('.news_text ul li a')
+    const legacyLinks = $('.news_text ul li a');
+    const list: DataItem[] = (legacyLinks.length ? legacyLinks : $('.new_pd li a'))
         .toArray()
+        .filter((item) => /\/t\d{8}_\d+\.htm/.test($(item).attr('href') ?? ''))
         .map((item) => {
             const $item = $(item);
+            const link = new URL($item.attr('href')!, currentUrl).href;
 
             return {
-                title: $item.text(),
-                link: `${currentUrl}${$item.attr('href')!.replace(/\./, '')}`,
+                title: $item.attr('title') || $item.text(),
+                link,
+                pubDate: timezone(parseDate(link.match(/\/t(\d{8})_\d+\.htm/)![1], 'YYYYMMDD'), 8),
             };
         });
 
+    const uniqueItems = new Map(list.map((item) => [item.link, item])).values().toArray();
+    const articles = uniqueItems;
     const items = await Promise.all(
-        list.map((item) =>
+        articles.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.TRS_Editor').html();
-                item.pubDate = parseDate(item.link!.match(/\/t(\d{8})_\d+\.htm/)![1], 'YYYYMMDD');
 
                 return item;
             })

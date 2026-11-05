@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language } from '@/types';
+import type { DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,7 +47,7 @@ const convertToQueryString = (path) => {
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
 const getInfo = (url, range?) =>
-    cache.tryGet(url, async () => {
+    cache.tryGet(url + '#range=' + (range ?? ''), async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
@@ -67,7 +68,6 @@ const getInfo = (url, range?) =>
             logo: icon,
             subtitle: $('meta[name="keywords"]').prop('content'),
             author: title,
-            allowEmpty: true,
         };
     });
 
@@ -75,12 +75,12 @@ const getInfo = (url, range?) =>
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
-const processItems = async (items) =>
-    await Promise.all(
-        items.map((item) =>
+const processItems = async <T extends DataItem>(items: T[]) =>
+    await pMap(
+        items,
+        (item) =>
             cache.tryGet(`${domain}#${item.guid}`, async () => {
                 const { data: detailResponse } = await got(`${rootUrl}/newsview/${item.guid}.html`);
 
@@ -108,8 +108,8 @@ const processItems = async (items) =>
                 item.comments = content('#tpinglun').text() ? Number(content('#tpinglun').text()) : 0;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 export { categories, convertToQueryString, getInfo, processItems, rootRSSUrl, rootUrl, title };

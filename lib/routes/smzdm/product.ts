@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -17,6 +16,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'SMZDM_COOKIE',
+                optional: true,
                 description: '什么值得买登录后的 Cookie 值',
             },
         ],
@@ -38,16 +38,14 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    if (!config.smzdm.cookie) {
-        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
-    }
-
     const link = `https://wiki.smzdm.com/p/${ctx.req.param('id')}`;
 
-    const response = await ofetch(link, {
+    const listUrl = `${link}/jiage/`;
+    const response = await ofetch.raw(listUrl, {
         headers: getHeaders(),
     });
-    const $ = load(response);
+    const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${listUrl}`].join('; ');
+    const $ = load(response._data);
     const title = $('title').text();
 
     // get simple info from list
@@ -68,34 +66,39 @@ async function handler(ctx): Promise<Data> {
         });
 
     // get detail info from each item
-    const out = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async (): Promise<any> => {
+    const out = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!, {
-                    headers: getHeaders(),
+                    headers: {
+                        cookie,
+                    },
                 });
                 const $ = load(response);
 
                 // filter outdated articles
                 if ($('span.old').length > 0) {
-                    return null;
+                    return { outdated: true };
                 }
                 const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                item.pubDate = pubDate;
-
-                if (item.description === '阅读全文') {
-                    item.description = $('p[itemprop="description"]').first().html() ?? undefined;
-                }
-
-                return item;
-            })
-        )
+                const description = $('p[itemprop="description"]').first().html() ?? undefined;
+                return { pubDate, description };
+            });
+            if (detail.outdated) {
+                return null;
+            }
+            return { ...item, pubDate: detail.pubDate, description: item.description === '阅读全文' ? detail.description : item.description };
+        },
+        { concurrency: 3 }
     );
 
     const filteredOut = out.filter((result) => result !== null);
 
     return {
         title,
+        description: $('.pinpai-info').text(),
+        image: $('.pp-img img').attr('src'),
         link,
         item: filteredOut,
     };

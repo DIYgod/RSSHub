@@ -49,9 +49,11 @@ async function handler(ctx) {
 
     const list = response.content.map((item) => {
         const date = item.date ?? item.issue_date ?? item.year;
+        const links = (item.links ?? []).map((link) => `<a href="${link.url}">${link.is_open_access ? '「Open Access」' : ''}${link.name}</a>`).join('<br>');
+        const description = [item.abstracts, links].filter(Boolean).join('<br>') || undefined;
         return {
             title: (item.is_free || item.links?.some((l) => l.is_open_access) ? '「Open Access」' : '') + sanitizeHtml(item.title, { allowedTags: [], allowedAttributes: {} }),
-            description: item.abstracts + `<br>${(item.links ?? []).map((link) => `<a href="${link.url}">${link.is_open_access ? '「Open Access」' : ''}${link.name}</a>`).join('<br>')}`,
+            description,
             author: (item.author ?? item.inventors)?.join('; '),
             pubDate: date ? parseDate(String(date), ['YYYY-MM-DD', 'YYYYMMDD', 'YYYY']) : undefined,
             category: item.keywords?.map((keyword) => sanitizeHtml(keyword, { allowedTags: [], allowedAttributes: {} })),

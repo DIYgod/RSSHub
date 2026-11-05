@@ -2,6 +2,7 @@ import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getBuildId, getData, getList } from './utils';
 
@@ -129,7 +130,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['daily.dev/sources/:sourceId'],
+            target: '/source/:sourceId',
+        },
+        {
             source: ['app.daily.dev/sources/:sourceId'],
+            target: '/source/:sourceId',
         },
     ],
     name: 'Source Posts',
@@ -140,18 +146,19 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const sourceId = ctx.req.param('sourceId');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(10, requestedLimit);
 
     const link = `${baseUrl}/sources/${sourceId}`;
     const buildId = await getBuildId();
 
     const userData = await cache.tryGet(`daily:source:${sourceId}`, async () => {
-        const response = await ofetch<{ pageProps: { source: Source } }>(`${baseUrl}/_next/data/${buildId}/en/sources/${sourceId}.json`);
+        const response = await ofetch<{ pageProps: { source: Source } }>(`${baseUrl}/_next/data/${buildId}/sources/${sourceId}.json`);
         return response.pageProps.source;
     });
 
     const items = await cache.tryGet(
-        `daily:source:${sourceId}:posts`,
+        `daily:source:${sourceId}:posts:${limit}`,
         async () => {
             const edges = await getData({
                 query: sourceFeedQuery,
@@ -164,7 +171,7 @@ async function handler(ctx): Promise<Data> {
                     loggedIn: false,
                 },
             });
-            return getList(edges, true);
+            return getList(edges);
         },
         config.cache.routeExpire,
         false

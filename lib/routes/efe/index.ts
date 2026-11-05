@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://efe.com';
 
@@ -50,48 +51,59 @@ export const route: Route = {
     ],
 };
 
+interface Post {
+    link: string;
+    title: { rendered: string };
+    content: { rendered: string };
+    date_gmt?: string;
+    modified_gmt?: string;
+    jetpack_featured_media_url?: string;
+    _embedded?: {
+        author?: Array<{ name: string }>;
+        'wp:term'?: Array<Array<{ name: string }>>;
+    };
+}
+
+function getGmtDate(date?: string) {
+    if (!date) {
+        return;
+    }
+    const result = parseDate(`${date}Z`);
+    return Number.isFinite(result.getTime()) ? result : undefined;
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'mundo';
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const pageUrl = `${rootUrl}/${category}/`;
-
-    const response = await ofetch(pageUrl);
-    const $ = load(response);
-
-    const links = $('.e-loop-item .elementor-widget-theme-post-title a[href]')
-        .toArray()
-        .map((el) => $(el).attr('href'))
-        .filter((href): href is string => !!href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href));
-
-    const items = await pMap(
-        links.slice(0, limit),
-        (link) =>
-            cache.tryGet(link, async () => {
-                const detail = await ofetch(link);
-                const $detail = load(detail);
-
-                const title = $detail('title').text();
-                const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
-                const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
-
-                const image = $detail('meta[property="og:image"]').attr('content');
-                const content = $detail('.elementor-widget-theme-post-content');
-                content.find('.auto-banner').remove();
-                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
-
-                return {
-                    title,
-                    link,
-                    pubDate,
-                    description,
-                };
-            }),
-        { concurrency: 2 }
-    );
+    const categoryInfo = await cache.tryGet(`efe:category:${category}`, async () => {
+        const result = await ofetch<Array<{ id: number; name: string }>>(`${rootUrl}/wp-json/wp/v2/categories`, { query: { slug: category } });
+        if (!result[0]) {
+            throw new InvalidParameterError(`Unknown EFE category: ${category}. Use a category slug from efe.com.`);
+        }
+        return result[0];
+    });
+    const posts = await ofetch<Post[]>(`${rootUrl}/wp-json/wp/v2/posts`, {
+        query: { categories: categoryInfo.id, per_page: Math.min(getRouteLimit(ctx, 20), 100), _embed: 'author,wp:term,wp:featuredmedia' },
+    });
+    const items = posts.map((post) => {
+        const $ = load(post.content.rendered);
+        $('.auto-banner, script, style').remove();
+        return {
+            title: load(post.title.rendered).text(),
+            link: post.link,
+            description: $('body').html(),
+            pubDate: getGmtDate(post.date_gmt),
+            updated: getGmtDate(post.modified_gmt),
+            author: post._embedded?.author?.[0]?.name,
+            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+            image: post.jetpack_featured_media_url,
+        };
+    });
 
     return {
-        title: `EFE Noticias - ${categories[category] || category}`,
+        title: `EFE Noticias - ${categories[category] || categoryInfo.name}`,
         link: pageUrl,
+        language: 'es' as const,
         item: items,
     };
 }

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,13 +33,18 @@ async function handler(ctx: Context): Promise<Data> {
     const categoryName = $('header.story-card-header:first-of-type > h1').text();
     const listSelector = $('div.story-card-feed.grid.hide_on_mobile > div > article');
 
-    const items: DataItem[] = await Promise.all(
-        listSelector.toArray().map((el) => {
+    const items: DataItem[] = await pMap(
+        listSelector.toArray(),
+        (el) => {
             const item = $(el);
             item.find('p a').remove();
 
             const title = item.find('div.story-card-flex > h2.headline > a').text();
-            const link = baseUrl + (item.find('div.story-card-flex > h2.headline > a').attr('href') || '');
+            const href = item.find('div.story-card-flex > h2.headline > a').attr('href');
+            if (!href) {
+                throw new Error('Sankei article URL is missing');
+            }
+            const link = new URL(href, baseUrl).href;
             const pubDate = parseDate(item.find('div.story-card-flex > div > time').attr('datetime') || '');
 
             return cache.tryGet(link, async () => {
@@ -54,7 +60,8 @@ async function handler(ctx: Context): Promise<Data> {
                     description: articleHTML,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

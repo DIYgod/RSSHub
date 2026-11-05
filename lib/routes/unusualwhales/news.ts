@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['unusualwhales.com/news', 'unusualwhales.com/'],
+            source: ['unusualwhales.com/news', 'unusualwhales.com/news-feed', 'unusualwhales.com/'],
         },
     ],
     name: 'News Feed',
@@ -36,7 +36,7 @@ async function handler(): Promise<Data> {
         link: item.url,
         guid: item.id,
         author: item.source,
-        pubDate: parseDate(item.created_at),
+        pubDate: item.created_at ? parseDate(item.created_at) : undefined,
         category: item.tickers,
     }));
 

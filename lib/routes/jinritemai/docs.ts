@@ -11,10 +11,6 @@ const typeMap = {
     '22': '其他公告',
 };
 
-/**
- *
- * @param ctx {import('koa').Context}
- */
 export const route: Route = {
     path: '/docs/:dirId?',
     categories: ['programming'],
@@ -47,23 +43,24 @@ async function handler(ctx) {
 
     const list = response.data.data.articles.map((item) => ({
         title: item.title,
-        id: item.id,
-        dirName: item.dirName,
+        id: String(item.id),
+        category: item.dirName ? [item.dirName] : undefined,
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}/${item.id}`,
-        pubDate: parseDate(item.updateTime * 1000),
+        pubDate: parseTimestamp(item.createTime),
+        updated: parseTimestamp(item.updateTime),
     }));
 
     const result = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => {
+            const description = await cache.tryGet(`${item.link}:description`, async () => {
                 const itemResponse = await got({
                     method: 'get',
                     url: `https://op.jinritemai.com/doc/external/open/queryDocArticleDetail?articleId=${item.id}&onlyView=false`,
                 });
-                item.description = itemResponse.data.data.article.content;
-                return item;
-            })
-        )
+                return itemResponse.data.data.article.content;
+            });
+            return { ...item, description };
+        })
     );
 
     return {
@@ -71,4 +68,9 @@ async function handler(ctx) {
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}`,
         item: result,
     };
+}
+
+function parseTimestamp(value?: number): Date | undefined {
+    const date = typeof value === 'number' ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
 }

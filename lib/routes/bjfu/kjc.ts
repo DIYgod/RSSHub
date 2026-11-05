@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -30,13 +31,14 @@ export const route: Route = {
     url: 'kyc.bjfu.edu.cn/',
 };
 
-async function handler() {
-    const url = 'http://kyc.bjfu.edu.cn/tztg/index.html';
+async function handler(ctx) {
+    const limit = Math.min(getRouteLimit(ctx, 15), 15);
+    const url = 'https://kyc.bjfu.edu.cn/tztg/index.htm';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
     const list = $('.ll_con_r_b li')
-        .slice(0, 15)
+        .slice(0, limit)
         .toArray()
         .map((e): DataItem => {
             const element = $(e);
@@ -50,7 +52,7 @@ async function handler() {
 
             return {
                 title,
-                link: 'http://kyc.bjfu.edu.cn/tztg/' + link,
+                link: new URL(link!, url).href,
                 author: '北京林业大学科技处通知公告',
                 pubDate,
             };

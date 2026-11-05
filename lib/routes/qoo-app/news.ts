@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { fixImg, newsUrl, siteIcon } from './utils';
 
@@ -29,11 +29,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { lang = '' } = ctx.req.param();
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 100;
     const apiUrl = `${newsUrl}${lang ? `/${lang}` : ''}/wp-json/wp/v2/posts`;
 
     const { data } = await got(apiUrl, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
+            per_page: limit,
         },
     });
 
@@ -46,7 +48,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link.slice(0, item.link.lastIndexOf('/')),
             description: $.html(),
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDateInTimezone(item.date_gmt, 0),
         };
     });
 

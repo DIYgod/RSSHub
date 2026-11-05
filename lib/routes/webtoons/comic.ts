@@ -17,16 +17,6 @@ export const route: Route = {
     description: 'For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894`, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.',
 };
 
-const dP = (html: string, lang: string) => {
-    if (lang === 'zh-cn' || lang === 'zh-hant') {
-        return parseDate(html, 'DD MMMM YYYY HH:mm:ss', lang);
-    }
-    if (lang === 'en') {
-        return parseDate(html, 'DD MMM YYYY HH:mm:ss');
-    }
-    return html;
-};
-
 const domain = 'https://www.webtoons.com';
 
 async function handler(ctx: Context) {
@@ -41,12 +31,15 @@ async function handler(ctx: Context) {
             title: `Webtoons - ${body.title}`,
             link: comicLink,
             description: body.description,
-            item: body.items.map((x) => ({
-                title: x.title,
-                pubDate: x.pubDate ? dP(x.pubDate, lang) : undefined,
-                link: x.link,
-                description: `<a href=${x.link} target="_blank">${x.title}</a>`,
-            })),
+            item: body.items.map((x) => {
+                const date = x.pubDate ? parseDate(x.pubDate) : undefined;
+                return {
+                    title: x.title,
+                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                    link: x.link,
+                    description: x.content,
+                };
+            }),
         };
     } catch {
         const body = await ofetch(comicLink);
@@ -57,12 +50,16 @@ async function handler(ctx: Context) {
             description: $('p.summary').text(),
             item: $('#_listUl > li > a')
                 .toArray()
-                .map((ep) => ({
-                    title: $('.subj > span', ep).text(),
-                    pubDate: lang === 'zh-cn' || lang === 'zh-hant' ? parseDate($('.date', ep).text(), 'YYYY年M月D日') : parseDate($('.date', ep).text()),
-                    link: $(ep).attr('href'),
-                    description: `<a href=${$(ep).attr('href')} target="_blank">${$('.subj > span', ep).text()}</a>`,
-                })),
+                .map((ep) => {
+                    const dateText = $('.date', ep).text();
+                    const date = dateText ? (lang === 'zh-cn' || lang === 'zh-hant' ? parseDate(dateText, 'YYYY年M月D日', true) : parseDate(dateText)) : undefined;
+                    return {
+                        title: $('.subj > span', ep).text(),
+                        pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                        link: $(ep).attr('href'),
+                        description: $('.thmb', ep).html() ?? undefined,
+                    };
+                }),
         };
     }
 

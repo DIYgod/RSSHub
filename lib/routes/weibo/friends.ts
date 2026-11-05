@@ -5,6 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import weiboUtils from './utils';
@@ -18,7 +19,6 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'WEIBO_COOKIES',
-                optional: true,
                 description: '',
             },
         ],
@@ -67,7 +67,7 @@ async function handler(ctx) {
     }
 
     const uid = await cache.tryGet(
-        'weibo:friends:login-user',
+        `weibo:friends:login-user:${md5(config.weibo.cookies)}`,
         async () => {
             const _r = await got({
                 method: 'get',

@@ -1,21 +1,57 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const renderDescription = (elements) =>
-    renderToString(
+type ContentElement = {
+    type: string;
+    content?: string;
+    embed?: {
+        config?: {
+            shorthandScript?: string;
+            url?: string;
+        };
+    };
+};
+type Story = {
+    headlines: {
+        basic: string;
+    };
+    content_elements?: ContentElement[];
+    publish_date?: number | string;
+    website_url: string;
+    taxonomy?: {
+        primary_section?: {
+            name?: string;
+        };
+    };
+    credits?: {
+        by?: Array<{
+            name: string;
+        }>;
+    };
+    promo_items?: {
+        basic?: {
+            url?: string;
+        };
+    };
+    last_updated_date?: number | string;
+};
+function renderDescription(elements: ContentElement[] | undefined, title: string): Pick<DataItem, 'description' | 'content'> {
+    const html = renderToString(
         <>
             {elements?.length
                 ? elements.map((element) => {
                       if (element.type === 'text') {
-                          return <p>{element.content}</p>;
+                          return element.content ? <p>{raw(element.content)}</p> : null;
                       }
                       if (element.type === 'raw_html') {
                           return <>{raw(element.content ?? '')}</>;
@@ -25,83 +61,137 @@ const renderDescription = (elements) =>
                 : null}
         </>
     );
-
+    const $ = load(html, { scriptingEnabled: false }, false);
+    $('h1')
+        .filter((_, element) => $(element).text() === title)
+        .remove();
+    $('noscript').each((_, element) => {
+        $(element).replaceWith($(element).contents());
+    });
+    const description = $.html();
+    return { description, content: { html: description, text: $.text() } };
+}
+export async function fetchEmbeddedStory(url: string): Promise<Pick<DataItem, 'description' | 'content'>> {
+    const response = await ofetch(url);
+    const $ = load(response);
+    const article = $('article').first();
+    if (!article.length) {
+        throw new Error(`Wainao embedded story has no article: ${url}`);
+    }
+    const hero = copyContent(
+        article
+            .children('header')
+            .find('img[src]')
+            .filter((_, element) => !$(element).attr('src')?.startsWith('data:'))
+            .first(),
+        $
+    );
+    article.children('header').remove();
+    article.find('#StandardFooter, script, style').remove();
+    if (hero.length) {
+        article.prepend(hero);
+    }
+    article.find('img, video, source, iframe').each((_, element) => {
+        const media = $(element);
+        const src = media.attr('data-src') || media.attr('src');
+        if (src && !src.startsWith('data:')) {
+            media.attr('src', new URL(src, url).href);
+        } else if (element.name === 'img') {
+            media.remove();
+        }
+    });
+    article.find('[href], [poster]').each((_, element) => {
+        const media = $(element);
+        for (const attribute of ['href', 'poster']) {
+            const value = media.attr(attribute);
+            if (value) {
+                media.attr(attribute, new URL(value, url).href);
+            }
+        }
+    });
+    article.find('[class]').removeAttr('class');
+    article.find('[style]').removeAttr('style');
+    const description = article.html() || undefined;
+    return { description, content: { html: description, text: article.text() } };
+}
+function parseSourceTime(value?: string | number) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+function parseLimit(value: string | undefined, defaultLimit: number) {
+    const limit = Number(value);
+    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
+}
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hotspot' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
-
+    const limit = parseLimit(ctx.req.query('limit'), 30);
     const baseUrl = 'https://www.wainao.me';
     const targetUrl: string = new URL(`topics/${id}`, baseUrl).href;
     const apiUrl: string = new URL('pf/api/v3/content/fetch/story-feed-sections', baseUrl).href;
-
-    const response = await ofetch(apiUrl, {
+    const response = await ofetch<{
+        content_elements: Story[];
+    }>(apiUrl, {
         query: {
             query: JSON.stringify({
                 feedOffset: 0,
                 feedSize: limit,
                 includeSections: `/topics/${id}`,
             }),
-            d: 81,
             _website: 'wainao',
         },
     });
-
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
-
-    const items: DataItem[] = response.content_elements
-        .slice(0, limit)
-        .map((item): DataItem => {
+    const items = await pMap(
+        response.content_elements.slice(0, limit),
+        async (item): Promise<DataItem> => {
             const title: string = item.headlines.basic;
-            const description: string = renderDescription(item.content_elements);
-            const pubDate: number | string = item.publish_date;
+            const embedded = item.content_elements?.find((element) => element.type === 'custom_embed');
+            const embeddedUrl = embedded?.embed?.config?.shorthandScript || embedded?.embed?.config?.url;
+            const details = embeddedUrl ? await cache.tryGet<Pick<DataItem, 'description' | 'content'>>(`wainao:embedded-story:${embeddedUrl}`, () => fetchEmbeddedStory(embeddedUrl)) : renderDescription(item.content_elements, title);
+            const pubDate = item.publish_date;
             const linkUrl: string | undefined = item.website_url;
-            const categories: string[] = [item.taxonomy?.primary_section?.name].filter(Boolean);
+            const categories = [item.taxonomy?.primary_section?.name].filter((category): category is string => Boolean(category));
             const authors: DataItem['author'] =
                 item.credits?.by?.map((author) => ({
                     name: author.name,
                 })) ?? [];
             const guid: string = item.website_url;
-            const image: string | undefined = item.promo_items.basic.url;
-            const updated: number | string = item.last_updated_date;
-
+            const image = item.promo_items?.basic?.url;
+            const updated = item.last_updated_date;
             const processedItem: DataItem = {
                 title,
-                description,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
+                ...details,
+                pubDate: parseSourceTime(pubDate),
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
                 guid,
                 id: guid,
-                content: {
-                    html: description,
-                    text: description,
-                },
                 image,
                 banner: image,
-                updated: updated ? parseDate(updated) : undefined,
+                updated: parseSourceTime(updated),
                 language,
             };
-
             return processedItem;
-        })
-        .filter((_): _ is DataItem => true);
-
+        },
+        { concurrency: 3 }
+    );
     return {
         title: $('title').text(),
         description: $('meta[property="og:title"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
         id: targetUrl,
     };
 };
-
 export const route: Route = {
     path: '/topics/:id?',
     name: '主题',
@@ -222,3 +312,11 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
+}

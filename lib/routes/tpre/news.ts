@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
@@ -21,6 +21,14 @@ export const route: Route = {
     url: 'www.tpre.cn/news/zxdt.html',
 };
 
+function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(`${value} +08:00`, `${format} Z`);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
 async function handler() {
     const baseUrl = 'https://www.tpre.cn';
     const link = `${baseUrl}/news/zxdt.html`;
@@ -29,20 +37,21 @@ async function handler() {
 
     const list = $('.newsLi')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.newsTitle');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.newsTime').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parsePubDate($item.find('.newsTime').text()),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`tpre:news:detail:v2:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const $ = load(detailResponse);
 
                 const content = $('.newsinfo .newsDesc');
@@ -51,13 +60,14 @@ async function handler() {
                     .map((e) => $(e).text());
 
                 return {
-                    ...item,
                     description: content.html(),
-                    pubDate: timezone(parseDate(time.replace('时间：', ''), 'YYYY-M-D H:mm:ss'), 8),
+                    pubDate: parsePubDate(time?.replace('时间：', ''), 'YYYY-M-D H:mm:ss'),
                     author: author?.replace('作者：', ''),
                 };
-            })
-        )
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

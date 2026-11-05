@@ -1,6 +1,4 @@
-/// <reference types="@cloudflare/vitest-pool-workers/types" />
-/// <reference types="@cloudflare/vitest-pool-workers" />
-import { env } from 'cloudflare:test';
+import { env } from 'cloudflare:workers';
 import { describe, expect, it, vi } from 'vitest';
 
 import cache, { setKVNamespace } from '@/utils/cache/index.worker';
@@ -18,6 +16,7 @@ describe('worker cache before KV binding', () => {
         expect(second).toEqual({ fresh: 1 });
         expect(getValue).toHaveBeenCalledTimes(2);
         expect(await cache.globalCache.get('worker:fallback')).toBeNull();
+        expect(await cache.globalCache.has('worker:fallback')).toBe(false);
     });
 });
 
@@ -26,6 +25,7 @@ describe('worker cache with KV binding', () => {
     it('becomes available once the KV namespace is bound', () => {
         setKVNamespace(env.CACHE);
         expect(cache.status.available).toBe(true);
+        expect(cache.globalCache.supportsAtomicClaims).toBe(false);
     });
 
     it('round-trips strings and serializes objects', async () => {
@@ -44,10 +44,7 @@ describe('worker cache with KV binding', () => {
         const miss = await cache.tryGet('worker:tryget', getValue);
         expect(miss).toEqual({ cached: true });
 
-        // tryGet writes the cache without awaiting the KV put
-        await vi.waitFor(async () => {
-            expect(await kv.has('worker:tryget')).toBe(true);
-        });
+        expect(await kv.has('worker:tryget')).toBe(true);
 
         const hit = await cache.tryGet('worker:tryget', getValue);
         expect(hit).toEqual({ cached: true });
@@ -62,6 +59,15 @@ describe('worker cache with KV binding', () => {
         expect(await env.CACHE.get('rsshub:cacheTtl:worker:default-ttl')).toBeNull();
     });
 
+    it('accepts expiry below the KV minimum of 60 seconds', async () => {
+        await kv.set('worker:short-ttl', 'v', 1);
+        expect(await kv.get('worker:short-ttl')).toBe('v');
+        expect(await env.CACHE.get('rsshub:cacheTtl:worker:short-ttl')).toBe('1');
+
+        await cache.globalCache.set('worker:global-short-ttl', 'v', 1);
+        expect(await cache.globalCache.get('worker:global-short-ttl')).toBe('v');
+    });
+
     it('rejects keys using the reserved ttl prefix', async () => {
         await expect(kv.get('rsshub:cacheTtl:foo')).rejects.toThrow('reserved');
     });
@@ -74,5 +80,22 @@ describe('worker cache with KV binding', () => {
     it('exposes get/set through globalCache', async () => {
         await cache.globalCache.set('worker:global', { b: 2 }, 60);
         expect(await cache.globalCache.get('worker:global')).toBe('{"b":2}');
+        expect(await env.CACHE.get('rsshub:cacheTtl:worker:global')).toBeNull();
+    });
+
+    it('reads raw global keys without applying the content cache sidecar rules', async () => {
+        await env.CACHE.put('rsshub:cacheTtl:worker:global-raw', '120');
+        expect(await cache.globalCache.get('rsshub:cacheTtl:worker:global-raw')).toBe('120');
+    });
+
+    it('checks global cache existence without treating empty values as missing', async () => {
+        expect(await cache.globalCache.has('worker:global-missing')).toBe(false);
+        expect(await cache.globalCache.has('')).toBe(false);
+
+        await cache.globalCache.set('worker:global-existing', { lastBuildDate: 'Sat, 5 Sep 2026 00:00:00 GMT' }, 60);
+        expect(await cache.globalCache.has('worker:global-existing')).toBe(true);
+
+        await cache.globalCache.set('worker:global-empty', '', 60);
+        expect(await cache.globalCache.has('worker:global-empty')).toBe(true);
     });
 });

@@ -1,4 +1,4 @@
-export interface SeriesChapter {
+interface SeriesChapter {
     id: string;
     title: string;
     available: boolean;
@@ -68,12 +68,12 @@ export interface SeriesFeed {
     }>;
 }
 
-export interface AppUser {
+interface AppUser {
     id: number;
     name: string;
 }
 
-export interface AppNovelSeriesDetail {
+interface AppNovelSeriesDetail {
     id: string;
     title: string;
     caption: string;

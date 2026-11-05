@@ -8,6 +8,7 @@ export const route: Route = {
     example: '/hanime/video',
     name: 'Recently updated',
     maintainers: ['EsuRt'],
+    features: { nsfw: true },
     handler,
 };
 
@@ -21,9 +22,9 @@ async function handler() {
     return {
         title: 'Hanime',
         link: 'https://hanime.tv/',
-        item: response.map((item) => ({
+        item: response.data.map((item) => ({
             title: item.name,
-            description: `<b>Name:</b> ${item.name}<br><b>Brand:</b> ${item.brand}<br><b>Tags:</b> ${item.tags.join(', ')}<br><b>Description:</b> ${item.description}<br><img src="${item.cover_url}"><br><img src="${item.poster_url}">`,
+            description: `${item.description}<br><img src="${item.cover_url}"><br><img src="${item.poster_url}">`,
             link: `https://hanime.tv/videos/hentai/${item.slug}`,
             pubDate: parseDate(item.created_at_unix, 'X'),
             category: item.tags,

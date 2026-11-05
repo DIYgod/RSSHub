@@ -5,9 +5,12 @@ import { ViewType } from '@/types';
 
 export const handler = (ctx: Context): void => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const query = new URLSearchParams(ctx.req.query());
+    if (!query.has('limit')) {
+        query.set('limit', '20');
+    }
 
-    return ctx.set('redirect', `/iresearch/report/3${id ? `/${id}` : ''}?limit=${limit}`);
+    return ctx.set('redirect', `/iresearch/report/3${id ? `/${encodeURIComponent(id)}` : ''}?${query.toString()}`);
 };
 
 export const route: Route = {
@@ -72,12 +75,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/weekly${id ? `/${id}` : ''}`;
-            },
+            target: '/weekly',
         },
         {
             title: '家电行业',

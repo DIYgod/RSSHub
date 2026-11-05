@@ -20,7 +20,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const link = 'https://bbs.loongarch.org/api/discussions';
+    const link = 'https://bbs.loongarch.org/';
 
     let title = '最新帖子';
     let sortValue = '-createdAt';

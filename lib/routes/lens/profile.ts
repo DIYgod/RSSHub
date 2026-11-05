@@ -1,5 +1,46 @@
+import { html } from 'hono/html';
+import MarkdownIt from 'markdown-it';
+
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+const apiUrl = 'https://api.lens.xyz/graphql';
+const lensNamespace = '0x1aA55B9042f08f45825dC4b651B64c9F98Af4615';
+const markdown = new MarkdownIt();
+
+type Media = { __typename?: string; item: string; cover?: string; altTag?: string; title?: string };
+type Metadata = { content?: string; title?: string; tags?: string[]; image?: Media; video?: Media; audio?: Media; asset?: Media; attachments?: Media[]; raw?: string };
+type Post = { id: string; slug: string; timestamp?: string; isDeleted: boolean; metadata: Metadata; repostOf?: Post };
+type Account = { address: string; username?: { localName: string }; metadata?: { name?: string; bio?: string; picture?: string } };
+type GraphqlVariables = { request: { username: { localName: string; namespace: string } } | { filter: { authors: string[]; postTypes: string[] }; pageSize: string } };
+type GraphqlResult<T> = { data?: T; errors?: Array<{ message: string }> };
+
+const profileQuery = 'query Profile($request: AccountRequest!) { account(request: $request) { address username { localName } metadata { name bio picture } } }';
+const postsQuery =
+    'query Posts($request: PostsRequest!) { posts(request: $request) { items { __typename ... on Post { ...PostFields } ... on Repost { id slug timestamp isDeleted repostOf { ...PostFields } } } } }\nfragment PostFields on Post { id slug timestamp isDeleted metadata { ...MetadataFields } }\nfragment MetadataFields on PostMetadata { __typename ... on ArticleMetadata { content tags title attachments { ...MediaFields } } ... on AudioMetadata { content tags title audio { item cover title type } attachments { ...MediaFields } } ... on CheckingInMetadata { content tags attachments { ...MediaFields } } ... on EmbedMetadata { content tags attachments { ...MediaFields } } ... on EventMetadata { content tags title attachments { ...MediaFields } } ... on ImageMetadata { content tags title image { item altTag type } attachments { ...MediaFields } } ... on LinkMetadata { content tags attachments { ...MediaFields } } ... on LivestreamMetadata { content tags title attachments { ...MediaFields } } ... on MintMetadata { content tags attachments { ...MediaFields } } ... on SpaceMetadata { content tags title attachments { ...MediaFields } } ... on StoryMetadata { content tags asset { ...MediaFields } } ... on TextOnlyMetadata { content tags } ... on ThreeDMetadata { content tags attachments { ...MediaFields } } ... on TransactionMetadata { content tags attachments { ...MediaFields } } ... on VideoMetadata { content tags title video { item cover type } attachments { ...MediaFields } } ... on UnknownPostMetadata { raw } }\nfragment MediaFields on AnyMedia { __typename ... on MediaImage { item altTag type } ... on MediaVideo { item cover type } ... on MediaAudio { item cover title type } }';
+
+const request = async <T>(query: string, variables: GraphqlVariables): Promise<T> => {
+    const result = await ofetch<GraphqlResult<T>>(apiUrl, { method: 'POST', body: { query, variables } });
+    if (result.errors?.length || !result.data) {
+        throw new Error(`Lens API request failed: ${result.errors?.map((error) => error.message).join('; ') || 'No response data'}`);
+    }
+    return result.data;
+};
+
+const renderMedia = (media: Media | undefined, kind = media?.__typename): string => {
+    if (!media?.item) {
+        return '';
+    }
+    switch (kind) {
+        case 'MediaVideo':
+            return String(html`<video controls src="${media.item}" poster="${media.cover || ''}"></video>`);
+        case 'MediaAudio':
+            return String(html`<audio controls src="${media.item}"></audio>`);
+        default:
+            return String(html`<img src="${media.item}" alt="${media.altTag || ''}" />`);
+    }
+};
 
 export const route: Route = {
     path: '/profile/:handle',
@@ -20,61 +61,47 @@ export const route: Route = {
             target: '/profile/:handle',
         },
     ],
-    name: 'Lens Profile',
+    name: 'Profile',
     maintainers: ['DIYgod'],
     handler,
 };
 
 async function handler(ctx) {
     const handle = ctx.req.param('handle');
-
-    const profile = (
-        await got('https://api-v2.lens.dev/', {
-            method: 'POST',
-            json: {
-                operationName: 'Profile',
-                variables: {
-                    request: {
-                        forHandle: `lens/${handle}`,
-                    },
-                },
-                query: 'query Profile($request: ProfileRequest!) {\n  profile(request: $request) {\n    ...ProfileFields\n    __typename\n  }\n}\n\nfragment AmountFields on Amount {\n  asFiat(request: {for: USD}) {\n    value\n    __typename\n  }\n  asset {\n    ...Erc20Fields\n    __typename\n  }\n  value\n  __typename\n}\n\nfragment Erc20Fields on Asset {\n  ... on Erc20 {\n    name\n    symbol\n    decimals\n    contract {\n      ...NetworkAddressFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment FollowModuleFields on FollowModule {\n  ... on FeeFollowModuleSettings {\n    type\n    amount {\n      ...AmountFields\n      __typename\n    }\n    recipient\n    __typename\n  }\n  ... on RevertFollowModuleSettings {\n    type\n    __typename\n  }\n  ... on UnknownFollowModuleSettings {\n    type\n    __typename\n  }\n  __typename\n}\n\nfragment HandleInfoFields on HandleInfo {\n  fullHandle\n  localName\n  linkedTo {\n    nftTokenId\n    __typename\n  }\n  __typename\n}\n\nfragment ImageSetFields on ImageSet {\n  optimized {\n    uri\n    __typename\n  }\n  raw {\n    uri\n    __typename\n  }\n  __typename\n}\n\nfragment MetadataAttributeFields on MetadataAttribute {\n  type\n  key\n  value\n  __typename\n}\n\nfragment NetworkAddressFields on NetworkAddress {\n  address\n  chainId\n  __typename\n}\n\nfragment ProfileFields on Profile {\n  id\n  handle {\n    ...HandleInfoFields\n    __typename\n  }\n  ownedBy {\n    ...NetworkAddressFields\n    __typename\n  }\n  signless\n  sponsor\n  createdAt\n  stats {\n    ...ProfileStatsFields\n    __typename\n  }\n  operations {\n    ...ProfileOperationsFields\n    __typename\n  }\n  interests\n  followNftAddress {\n    ...NetworkAddressFields\n    __typename\n  }\n  followModule {\n    ...FollowModuleFields\n    __typename\n  }\n  metadata {\n    ...ProfileMetadataFields\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileMetadataFields on ProfileMetadata {\n  displayName\n  bio\n  picture {\n    ... on ImageSet {\n      ...ImageSetFields\n      __typename\n    }\n    __typename\n  }\n  coverPicture {\n    ...ImageSetFields\n    __typename\n  }\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileOperationsFields on ProfileOperations {\n  id\n  isBlockedByMe {\n    value\n    __typename\n  }\n  isFollowedByMe {\n    value\n    __typename\n  }\n  isFollowingMe {\n    value\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileStatsFields on ProfileStats {\n  id\n  followers\n  following\n  publications\n  comments\n  posts\n  mirrors\n  quotes\n  lensClassifierScore\n  __typename\n}',
-            },
-        })
-    ).data.data.profile;
-
-    const publications = (
-        await got('https://api-v2.lens.dev/', {
-            method: 'POST',
-            json: {
-                operationName: 'Publications',
-                variables: {
-                    request: {
-                        limit: 'TwentyFive',
-                        where: {
-                            metadata: null,
-                            publicationTypes: ['POST', 'MIRROR', 'QUOTE'],
-                            from: [profile.id],
-                        },
-                    },
-                },
-                query: 'query Publications($request: PublicationsRequest!) {\n  publications(request: $request) {\n    items {\n      ... on Post {\n        ...PostFields\n        __typename\n      }\n      ... on Comment {\n        ...CommentFields\n        __typename\n      }\n      ... on Mirror {\n        ...MirrorFields\n        __typename\n      }\n      ... on Quote {\n        ...QuoteFields\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      next\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AmountFields on Amount {\n  asFiat(request: {for: USD}) {\n    value\n    __typename\n  }\n  asset {\n    ...Erc20Fields\n    __typename\n  }\n  value\n  __typename\n}\n\nfragment AnyPublicationMetadataFields on PublicationMetadata {\n  ... on VideoMetadataV3 {\n    ...VideoMetadataV3Fields\n    __typename\n  }\n  ... on ArticleMetadataV3 {\n    ...ArticleMetadataV3Fields\n    __typename\n  }\n  ... on AudioMetadataV3 {\n    ...AudioMetadataV3Fields\n    __typename\n  }\n  ... on ImageMetadataV3 {\n    ...ImageMetadataV3Fields\n    __typename\n  }\n  ... on LinkMetadataV3 {\n    ...LinkMetadataV3Fields\n    __typename\n  }\n  ... on LiveStreamMetadataV3 {\n    ...LiveStreamMetadataV3Fields\n    __typename\n  }\n  ... on MintMetadataV3 {\n    ...MintMetadataV3Fields\n    __typename\n  }\n  ... on TextOnlyMetadataV3 {\n    ...TextOnlyMetadataV3Fields\n    __typename\n  }\n  ... on CheckingInMetadataV3 {\n    ...CheckingInMetadataV3Fields\n    __typename\n  }\n  __typename\n}\n\nfragment CommentBaseFields on Comment {\n  id\n  publishedOn {\n    id\n    __typename\n  }\n  isHidden\n  isEncrypted\n  momoka {\n    proof\n    __typename\n  }\n  createdAt\n  by {\n    ...PublicationProfileFields\n    __typename\n  }\n  stats {\n    ...PublicationStatsFields\n    __typename\n  }\n  operations {\n    ...PublicationOperationFields\n    __typename\n  }\n  metadata {\n    ...AnyPublicationMetadataFields\n    __typename\n  }\n  openActionModules {\n    ...OpenActionModulesFields\n    __typename\n  }\n  root {\n    ... on Post {\n      ...PostFields\n      __typename\n    }\n    ... on Quote {\n      ...QuoteBaseFields\n      __typename\n    }\n    __typename\n  }\n  profilesMentioned {\n    snapshotHandleMentioned {\n      ...HandleInfoFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment CommentFields on Comment {\n  ...CommentBaseFields\n  commentOn {\n    ...CommentOnFields\n    ... on Comment {\n      ...CommentBaseFields\n      commentOn {\n        ...CommentOnFields\n        ... on Comment {\n          ...CommentBaseFields\n          commentOn {\n            ...CommentOnFields\n            ... on Comment {\n              ...CommentBaseFields\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment CommentOnFields on PrimaryPublication {\n  ... on Post {\n    ...PostFields\n    __typename\n  }\n  ... on Quote {\n    ...QuoteBaseFields\n    __typename\n  }\n  __typename\n}\n\nfragment EncryptableImageSetFields on EncryptableImageSet {\n  optimized {\n    uri\n    __typename\n  }\n  __typename\n}\n\nfragment Erc20Fields on Asset {\n  ... on Erc20 {\n    name\n    symbol\n    decimals\n    contract {\n      ...NetworkAddressFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment HandleInfoFields on HandleInfo {\n  fullHandle\n  localName\n  linkedTo {\n    nftTokenId\n    __typename\n  }\n  __typename\n}\n\nfragment ImageSetFields on ImageSet {\n  optimized {\n    uri\n    __typename\n  }\n  raw {\n    uri\n    __typename\n  }\n  __typename\n}\n\nfragment MetadataAttributeFields on MetadataAttribute {\n  type\n  key\n  value\n  __typename\n}\n\nfragment MirrorFields on Mirror {\n  id\n  publishedOn {\n    id\n    __typename\n  }\n  isHidden\n  momoka {\n    proof\n    __typename\n  }\n  createdAt\n  by {\n    ...PublicationProfileFields\n    __typename\n  }\n  mirrorOn {\n    ... on Post {\n      ...PostFields\n      __typename\n    }\n    ... on Comment {\n      ...CommentFields\n      __typename\n    }\n    ... on Quote {\n      ...QuoteFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment NetworkAddressFields on NetworkAddress {\n  address\n  chainId\n  __typename\n}\n\nfragment OpenActionModulesFields on OpenActionModule {\n  ... on SimpleCollectOpenActionSettings {\n    type\n    contract {\n      ...NetworkAddressFields\n      __typename\n    }\n    amount {\n      ...AmountFields\n      __typename\n    }\n    collectNft\n    collectLimit\n    followerOnly\n    recipient\n    referralFee\n    endsAt\n    __typename\n  }\n  ... on MultirecipientFeeCollectOpenActionSettings {\n    type\n    contract {\n      ...NetworkAddressFields\n      __typename\n    }\n    amount {\n      ...AmountFields\n      __typename\n    }\n    collectNft\n    collectLimit\n    referralFee\n    followerOnly\n    endsAt\n    recipients {\n      recipient\n      split\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment PostFields on Post {\n  id\n  publishedOn {\n    id\n    __typename\n  }\n  isHidden\n  isEncrypted\n  momoka {\n    proof\n    __typename\n  }\n  createdAt\n  by {\n    ...PublicationProfileFields\n    __typename\n  }\n  stats {\n    ...PublicationStatsFields\n    __typename\n  }\n  operations {\n    ...PublicationOperationFields\n    __typename\n  }\n  metadata {\n    ...AnyPublicationMetadataFields\n    __typename\n  }\n  openActionModules {\n    ...OpenActionModulesFields\n    __typename\n  }\n  profilesMentioned {\n    snapshotHandleMentioned {\n      ...HandleInfoFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileMetadataFields on ProfileMetadata {\n  displayName\n  bio\n  picture {\n    ... on ImageSet {\n      ...ImageSetFields\n      __typename\n    }\n    __typename\n  }\n  coverPicture {\n    ...ImageSetFields\n    __typename\n  }\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileOperationsFields on ProfileOperations {\n  id\n  isBlockedByMe {\n    value\n    __typename\n  }\n  isFollowedByMe {\n    value\n    __typename\n  }\n  isFollowingMe {\n    value\n    __typename\n  }\n  __typename\n}\n\nfragment PublicationOperationFields on PublicationOperations {\n  isNotInterested\n  hasBookmarked\n  hasActed {\n    value\n    __typename\n  }\n  hasReacted(request: {type: UPVOTE})\n  canMirror\n  hasMirrored\n  hasQuoted\n  __typename\n}\n\nfragment PublicationProfileFields on Profile {\n  id\n  handle {\n    ...HandleInfoFields\n    __typename\n  }\n  operations {\n    ...ProfileOperationsFields\n    __typename\n  }\n  ownedBy {\n    ...NetworkAddressFields\n    __typename\n  }\n  metadata {\n    ...ProfileMetadataFields\n    __typename\n  }\n  __typename\n}\n\nfragment PublicationStatsFields on PublicationStats {\n  id\n  comments\n  mirrors\n  quotes\n  reactions(request: {type: UPVOTE})\n  countOpenActions(request: {anyOf: [{category: COLLECT}]})\n  bookmarks\n  __typename\n}\n\nfragment QuoteBaseFields on Quote {\n  id\n  publishedOn {\n    id\n    __typename\n  }\n  isHidden\n  isEncrypted\n  momoka {\n    proof\n    __typename\n  }\n  createdAt\n  by {\n    ...PublicationProfileFields\n    __typename\n  }\n  stats {\n    ...PublicationStatsFields\n    __typename\n  }\n  operations {\n    ...PublicationOperationFields\n    __typename\n  }\n  metadata {\n    ...AnyPublicationMetadataFields\n    __typename\n  }\n  openActionModules {\n    ...OpenActionModulesFields\n    __typename\n  }\n  profilesMentioned {\n    snapshotHandleMentioned {\n      ...HandleInfoFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment QuoteFields on Quote {\n  ...QuoteBaseFields\n  quoteOn {\n    ... on Post {\n      ...PostFields\n      __typename\n    }\n    ... on Comment {\n      ...CommentBaseFields\n      __typename\n    }\n    ... on Quote {\n      ...QuoteBaseFields\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ArticleMetadataV3Fields on ArticleMetadataV3 {\n  id\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment AudioMetadataV3Fields on AudioMetadataV3 {\n  id\n  title\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  asset {\n    ...PublicationMetadataMediaAudioFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment CheckingInMetadataV3Fields on CheckingInMetadataV3 {\n  id\n  content\n  tags\n  location\n  geographic {\n    latitude\n    longitude\n    __typename\n  }\n  address {\n    country\n    locality\n    postalCode\n    __typename\n  }\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment ImageMetadataV3Fields on ImageMetadataV3 {\n  id\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  asset {\n    ...PublicationMetadataMediaImageFields\n    __typename\n  }\n  __typename\n}\n\nfragment LinkMetadataV3Fields on LinkMetadataV3 {\n  id\n  content\n  sharingLink\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment LiveStreamMetadataV3Fields on LiveStreamMetadataV3 {\n  id\n  playbackURL\n  liveURL\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment MintMetadataV3Fields on MintMetadataV3 {\n  id\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment TextOnlyMetadataV3Fields on TextOnlyMetadataV3 {\n  id\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  __typename\n}\n\nfragment VideoMetadataV3Fields on VideoMetadataV3 {\n  id\n  content\n  tags\n  attributes {\n    ...MetadataAttributeFields\n    __typename\n  }\n  asset {\n    ...PublicationMetadataMediaVideoFields\n    __typename\n  }\n  attachments {\n    ...PublicationMetadataMediaFields\n    __typename\n  }\n  __typename\n}\n\nfragment PublicationMetadataMediaAudioFields on PublicationMetadataMediaAudio {\n  artist\n  audio {\n    optimized {\n      uri\n      __typename\n    }\n    __typename\n  }\n  cover {\n    ...EncryptableImageSetFields\n    __typename\n  }\n  license\n  __typename\n}\n\nfragment PublicationMetadataMediaFields on PublicationMetadataMedia {\n  ... on PublicationMetadataMediaVideo {\n    ...PublicationMetadataMediaVideoFields\n    __typename\n  }\n  ... on PublicationMetadataMediaImage {\n    ...PublicationMetadataMediaImageFields\n    __typename\n  }\n  ... on PublicationMetadataMediaAudio {\n    ...PublicationMetadataMediaAudioFields\n    __typename\n  }\n  __typename\n}\n\nfragment PublicationMetadataMediaImageFields on PublicationMetadataMediaImage {\n  image {\n    ...EncryptableImageSetFields\n    __typename\n  }\n  __typename\n}\n\nfragment PublicationMetadataMediaVideoFields on PublicationMetadataMediaVideo {\n  video {\n    optimized {\n      uri\n      __typename\n    }\n    __typename\n  }\n  cover {\n    ...EncryptableImageSetFields\n    __typename\n  }\n  license\n  __typename\n}',
-            },
-        })
-    ).data.data.publications.items;
+    const { account } = await request<{ account?: Account }>(profileQuery, { request: { username: { localName: handle, namespace: lensNamespace } } });
+    if (!account) {
+        throw new Error(`Lens profile "${handle}" was not found. Check the Lens handle.`);
+    }
+    const { posts } = await request<{ posts: { items: Post[] } }>(postsQuery, { request: { filter: { authors: [account.address], postTypes: ['ROOT', 'REPOST', 'QUOTE'] }, pageSize: 'FIFTY' } });
 
     return {
-        title: `${profile.metadata.displayName} on Lens`,
+        title: `${account.metadata?.name || account.username?.localName || handle} on Lens`,
+        description: account.metadata?.bio,
+        image: account.metadata?.picture,
         link: `https://hey.xyz/u/${handle}`,
-        item: publications.map((item) => {
-            const itemWithMirror = item.mirrorOn || item;
-            return {
-                title: itemWithMirror.metadata?.content || 'No content',
-                description: `${item.mirrorOn ? 'Mirrored: ' : ''}${itemWithMirror.metadata?.content || ''} ${itemWithMirror.metadata?.asset?.image?.optimized?.uri ? `<img src="${itemWithMirror.metadata?.asset?.image?.optimized?.uri}" />` : ''}`,
-                link: `https://hey.xyz/posts/${item.id}`,
-                pubDate: new Date(item.createdAt).toUTCString(),
-                guid: item.id,
-            };
-        }),
+        item: posts.items
+            .filter((post) => !post.isDeleted)
+            .slice(0, 25)
+            .map((post) => {
+                const original = post.repostOf || post;
+                const metadata: Metadata = original.metadata.raw ? JSON.parse(original.metadata.raw) : original.metadata;
+                const content = metadata.content || '';
+                return {
+                    title: metadata.title || content || 'No content',
+                    description:
+                        (post.repostOf ? '<p>Mirrored:</p>' : '') +
+                        markdown.render(content) +
+                        renderMedia(metadata.image, 'MediaImage') +
+                        renderMedia(metadata.video, 'MediaVideo') +
+                        renderMedia(metadata.audio, 'MediaAudio') +
+                        renderMedia(metadata.asset) +
+                        (metadata.attachments || []).map((media) => renderMedia(media)).join(''),
+                    link: `https://hey.xyz/posts/${post.slug}`,
+                    pubDate: post.timestamp ? parseDate(post.timestamp) : undefined,
+                    guid: post.id,
+                    author: account.metadata?.name || handle,
+                    category: metadata.tags,
+                };
+            }),
     };
 }

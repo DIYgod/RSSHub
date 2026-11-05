@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { buildApiUrl, rootUrl } from './util';
 
@@ -13,7 +14,7 @@ export const route: Route = {
     maintainers: ['zreo0'],
     handler: async (ctx) => {
         // 每页数量限制
-        const limit = Number(ctx.req.query('limit') ?? '30');
+        const limit = getRouteLimit(ctx, 30);
         // 用项目中已有的获取页面方法，获取页面以及 Token
         const currentUrl = new URL('discover', rootUrl).href;
         const currentHtml = await ofetch(currentUrl);

@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/music/djradio/:id/:info?',
@@ -31,7 +32,7 @@ export const route: Route = {
     handler,
 };
 
-const renderDescription = (pg, description, itunes_duration, info) =>
+const renderDescription = (pg, description, durationText, info) =>
     renderToString(
         <>
             <img src={pg.coverUrl} />
@@ -43,7 +44,7 @@ const renderDescription = (pg, description, itunes_duration, info) =>
             {info ? (
                 <div>
                     <audio src={`https://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`} controls></audio>
-                    <p>时长: {itunes_duration}</p>
+                    <p>时长: {durationText}</p>
                     <p>
                         <a href={`https://music.163.com/program/${pg.id}`}>查看节目</a>
                     </p>
@@ -52,7 +53,7 @@ const renderDescription = (pg, description, itunes_duration, info) =>
         </>
     );
 
-const ProcessFeed = (id, limit, offset) =>
+const processFeed = (id, limit, offset) =>
     cache.tryGet(
         `163:music:djradio:${id}:${limit}:${offset}`,
         async () =>
@@ -71,42 +72,34 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const info = !ctx.req.param('info');
 
-    const response = await ProcessFeed(id, 1, 0);
+    const limit = getRouteLimit(ctx, 500);
+    const response = await processFeed(id, limit, 0);
 
     const programs = response.data.programs || [];
     const { radio, dj } = programs[0] || { radio: {}, dj: {} };
-    const count = response.data.count || 0;
+    const items = programs.map((pg) => {
+        const description = (pg.description || '').split('\n').map((p) => p);
+        const duration = Math.trunc(pg.duration / 1000);
+        const durationText = `${Math.floor(duration / 60)
+            .toString()
+            .padStart(2, '0')}:${(duration % 60).toString().padStart(2, '0')}`;
 
-    const countPage = Array.from({ length: Math.ceil(count / 500) }, (_, i) => i);
+        const html = renderDescription(pg, description, durationText, info);
 
-    const items = await Promise.all(
-        countPage.map(async (item) => {
-            const response = await ProcessFeed(id, 500, item * 500);
-            const programs = response.data.programs || [];
-            const list = programs.map((pg) => {
-                const description = (pg.description || '').split('\n').map((p) => p);
-                const duration = Math.trunc(pg.duration / 1000);
-                const mm_ss_duration = `${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}`;
-
-                const html = renderDescription(pg, description, mm_ss_duration, info);
-
-                return {
-                    title: pg.name,
-                    link: 'https://music.163.com/program/' + pg.id,
-                    pubDate: parseDate(pg.createTime),
-                    published: parseDate(pg.createTime),
-                    author: pg.dj.nickname,
-                    description: html,
-                    content: { html },
-                    itunes_item_image: pg.coverUrl,
-                    enclosure_url: `https://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`,
-                    enclosure_type: 'audio/mpeg',
-                    itunes_duration: duration,
-                };
-            });
-            return list;
-        })
-    );
+        return {
+            title: pg.name,
+            link: 'https://music.163.com/program/' + pg.id,
+            pubDate: parseDate(pg.createTime),
+            published: parseDate(pg.createTime),
+            author: pg.dj.nickname,
+            description: html,
+            content: { html },
+            itunes_item_image: pg.coverUrl,
+            enclosure_url: `https://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`,
+            enclosure_type: 'audio/mpeg',
+            itunes_duration: duration,
+        };
+    });
 
     return {
         title: radio.name,
@@ -119,6 +112,6 @@ async function handler(ctx) {
         image: radio.picUrl,
         itunes_author: dj.nickname,
         itunes_category: radio.category,
-        item: items.flat(),
+        item: items,
     };
 }

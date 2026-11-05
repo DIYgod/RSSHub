@@ -12,8 +12,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cnbeta.com.tw/category/:id'],
-            target: (params) => `/cnbeta/category/${params.id.replace('.htm', '')}`,
+            source: ['cnbeta.com.tw/category/:id', 'www.cnbeta.com.tw/category/:id'],
+            target: '/category/:id',
         },
     ],
     handler,

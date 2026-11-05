@@ -3,76 +3,114 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { getTwitterUserCacheKey } from '../../utils';
+import { getTwitterUserCacheKey, TWITTER_USER_CACHE_EXPIRE } from '../../utils';
 import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import type { ApiParams } from './utils';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
-const getUserData = (id) =>
-    cache.tryGet(`twitter-userdata-${id}`, () => {
-        const params = {
-            variables: id.startsWith('+')
-                ? JSON.stringify({
-                      userId: id.slice(1),
-                      withSafetyModeUserFields: true,
-                  })
-                : JSON.stringify({
-                      screen_name: id,
-                      withSafetyModeUserFields: true,
-                  }),
-            features: JSON.stringify(id.startsWith('+') ? gqlFeatures.UserByRestId : gqlFeatures.UserByScreenName),
-            fieldToggles: JSON.stringify({
-                withAuxiliaryUserLabels: false,
-            }),
-        };
+const isRestId = (value: unknown): value is string => typeof value === 'string' && value.length > 0;
 
-        if (config.twitter.thirdPartyApi) {
-            const endpoint = id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName;
+const getUserResult = (response: any) => {
+    const errors = response?.errors;
+    if (errors !== undefined && errors !== null && (!Array.isArray(errors) || errors.length > 0)) {
+        const codes = Array.isArray(errors) ? [...new Set(errors.map((error) => error?.code).filter((code) => Number.isSafeInteger(code)))] : [];
+        throw new Error(`Twitter API user lookup failed${codes.length ? ` (codes: ${codes.join(', ')})` : ''}`);
+    }
 
-            return ofetch(`${config.twitter.thirdPartyApi}${endpoint}`, {
-                method: 'GET',
-                params,
-                headers: {
-                    'accept-encoding': 'gzip',
-                },
-            });
+    // Some third-party providers return errors with HTTP 200 outside GraphQL.
+    const code = response?.code;
+    if (Number.isSafeInteger(code) && code >= 400) {
+        if (code === 404 && response.message === 'User not found') {
+            throw new InvalidParameterError('Twitter API could not find this user');
         }
+        throw new Error(`Twitter API user lookup failed (code: ${code})`);
+    }
 
-        return twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
-            allowNoAuth: !id.startsWith('+'),
-        });
-    });
+    const user = response?.data?.user;
+    if (user === null || user?.result === null) {
+        throw new InvalidParameterError("This account doesn't exist");
+    }
+    const result = user?.result;
+    if (result?.__typename === 'UserUnavailable') {
+        throw new InvalidParameterError('Twitter user is unavailable');
+    }
+    if (!result || !isRestId(result.rest_id)) {
+        throw new Error('Twitter API returned an incomplete user response');
+    }
+    return result;
+};
+
+const getUserData = async (id: string) => {
+    // Other Twitter API adapters cache different schemas under the legacy key.
+    const data = await cache.tryGet(
+        `twitter:web:userdata:v2:${id}`,
+        async () => {
+            const params = {
+                variables: id.startsWith('+')
+                    ? JSON.stringify({
+                          userId: id.slice(1),
+                          withSafetyModeUserFields: true,
+                      })
+                    : JSON.stringify({
+                          screen_name: id,
+                          withSafetyModeUserFields: true,
+                      }),
+                features: JSON.stringify(id.startsWith('+') ? gqlFeatures.UserByRestId : gqlFeatures.UserByScreenName),
+                fieldToggles: JSON.stringify({
+                    withAuxiliaryUserLabels: false,
+                }),
+            };
+
+            const response = config.twitter.thirdPartyApi
+                ? await ofetch(`${config.twitter.thirdPartyApi}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, {
+                      method: 'GET',
+                      params,
+                      headers: {
+                          'accept-encoding': 'gzip',
+                      },
+                  })
+                : await twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
+                      allowNoAuth: !id.startsWith('+'),
+                  });
+
+            // HTTP 200 can still contain GraphQL errors; never cache those responses.
+            getUserResult(response);
+            return response;
+        },
+        TWITTER_USER_CACHE_EXPIRE
+    );
+    return getUserResult(data);
+};
 
 const cacheTryGet = async (_id, params, operationName, func) => {
-    const userData: any = await getUserData(_id);
-    const id = userData.data?.user?.result?.rest_id;
-    if (id === undefined) {
-        cache.set(`twitter-userdata-${_id}`, '', config.cache.contentExpire);
-        throw new InvalidParameterError('User not found');
-    }
-    return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
+    const user = await getUserData(_id);
+    return cache.tryGet(getTwitterUserCacheKey(user.rest_id, operationName, params), () => func(user.rest_id, params), config.cache.routeExpire, false);
 };
 
 const getUserTweets = (id: string, params?: ApiParams) =>
-    cacheTryGet(id, params, 'getUserTweets', async (id, params = {}) =>
-        gatherLegacyFromData(
+    cacheTryGet(id, params, 'getUserTweets', async (id, params: ApiParams = {}) => {
+        const tweets = gatherLegacyFromData(
             await paginationTweets('UserTweets', id, {
                 ...params,
-                count: 20,
+                count: params.count ?? 20,
                 includePromotedContent: true,
                 withQuickPromoteEligibilityTweetFields: true,
                 withVoice: true,
                 withV2Timeline: true,
-            })
-        )
-    );
+            }),
+            ['profile-conversation-'],
+            id
+        );
+        // Keep only root posts; drop replies and self-thread continuations from profile-conversation modules
+        return tweets.filter((t) => !t.in_reply_to_status_id_str);
+    });
 
 const getUserTweetsAndReplies = (id: string, params?: ApiParams) =>
-    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params = {}) =>
+    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params: ApiParams = {}) =>
         gatherLegacyFromData(
             await paginationTweets('UserTweetsAndReplies', id, {
                 ...params,
-                count: 20,
+                count: params.count ?? 20,
                 includePromotedContent: true,
                 withCommunity: true,
                 withVoice: true,
@@ -164,19 +202,11 @@ const getList = async (id: string, params?: ApiParams) =>
     );
 
 const getUser = async (id: string) => {
-    const userData: any = await getUserData(id);
-
-    if (!userData.data.user) {
-        throw new InvalidParameterError("This account doesn't exist");
-    }
-    if (userData.data.user.result.__typename === 'UserUnavailable') {
-        throw new InvalidParameterError(userData.data.user.result.message || 'User is unavailable');
-    }
-
+    const user = await getUserData(id);
     return {
-        profile_image_url: userData.data?.user?.result?.avatar?.image_url,
-        description: userData.data?.user?.result?.profile_bio?.description,
-        ...userData.data?.user?.result?.core,
+        profile_image_url: user.avatar?.image_url,
+        description: user.profile_bio?.description,
+        ...user.core,
     };
 };
 

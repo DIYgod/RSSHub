@@ -5,6 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { allowHost } from './common';
 
@@ -47,7 +48,7 @@ async function handler(ctx: Context) {
         body: {
             operationName: 'exploreProjects',
             variables: {
-                first: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
+                first: getRouteLimit(ctx, 20),
                 active: type === 'active',
                 sort: 'latest_activity_desc',
             },

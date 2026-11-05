@@ -31,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return {
             name: $authorEl.find('span').text(),
             url: authorHref ? new URL(authorHref, baseUrl).href : undefined,
-            avatar: $authorEl.attr('src'),
+            avatar: $(authorEl).attr('src'),
         };
     });
     const guid = `chocolatey-${title}`;
@@ -98,12 +98,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['community.chocolatey.org/packages'],
-            target: (params) => {
-                const id: string = params.id;
-
-                return `/chocolatey/package${id ? `/${id}` : ''}`;
-            },
+            source: ['community.chocolatey.org/packages/:id', 'community.chocolatey.org/packages/:id/:version'],
+            target: '/packages/:id',
         },
     ],
     view: ViewType.Notifications,
@@ -114,7 +110,7 @@ export const route: Route = {
         url: 'community.chocolatey.org',
         maintainers: ['nczitzk'],
         handler,
-        example: '/chocolatey/package/microsoft-edge',
+        example: '/chocolatey/packages/microsoft-edge',
         parameters: {
             id: {
                 description: '程序包 ID',

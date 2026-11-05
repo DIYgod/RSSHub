@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const categoryTitle = new Map([
     ['latest', { name: '最新文章', type: {} }],
@@ -31,7 +34,7 @@ export const route: Route = {
         category: '文章专题分类',
         subcate: 'hot 分类下的子类',
     },
-    name: '数英网文章专题',
+    name: '文章专题',
     maintainers: ['occupy5'],
     description: `| 最新文章 | 头条     | 热文 | 精选   |
 | -------- | -------- | ---- | ------ |
@@ -49,14 +52,21 @@ async function handler(ctx: Context) {
     let category = ctx.req.param('category') || 'latest';
     const subcate = ctx.req.param('subcate');
 
-    let title = categoryTitle.get(category)!.name;
+    const categoryInfo = categoryTitle.get(category);
+    if (!categoryInfo) {
+        throw new InvalidParameterError('Invalid article category. Use latest, headline, hot, or choice.');
+    }
+    if (subcate && (category !== 'hot' || !Object.hasOwn(categoryInfo.type, subcate))) {
+        throw new InvalidParameterError('Subcategories are only available for hot. Use views, collects, or zan.');
+    }
+    let title = categoryInfo.name;
     if (category === 'latest') {
         category = '';
     }
     let link = `https://www.digitaling.com/articles/${category}/`;
     if (subcate) {
         link += subcate;
-        title += '/' + categoryTitle.get(category)!.type[subcate];
+        title += '/' + categoryInfo.type[subcate];
     }
 
     const res = await ofetch(link);
@@ -67,8 +77,9 @@ async function handler(ctx: Context) {
         .toArray()
         .map((e) => $(e).attr('href')!);
 
-    const out = await Promise.all(
-        list.map((itemUrl) =>
+    const out = await pMap(
+        list,
+        (itemUrl) =>
             cache.tryGet(itemUrl, async () => {
                 const res = await ofetch(itemUrl);
                 const $ = load(res);
@@ -78,10 +89,10 @@ async function handler(ctx: Context) {
                     author: $('#avatar_by').parent().find('h3 a').text(),
                     link: itemUrl,
                     description: $('#article_con').html(),
-                    pubDate: parseDate($('#edit_url').parent().children().last().text()),
+                    pubDate: timezone(parseDate($('#edit_url').parent().children().last().text()), 8),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

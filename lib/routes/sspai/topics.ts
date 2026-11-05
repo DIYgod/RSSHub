@@ -35,8 +35,8 @@ async function handler() {
     });
     const data = resp.data.list;
     const items = data.map((item) => ({
-        title: item.title.trim(),
-        description: `<br><img src="https://cdnfile.sspai.com/${item.banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"/>${item.intro}<br>如有兴趣,请复制链接订阅 <br> <h3>https://rsshub.app/sspai/topic/${item.id}</h3>`,
+        title: item.title,
+        description: `<br><img src="https://cdnfile.sspai.com/${item.banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"/>${item.intro}`,
         link: `https://sspai.com/topic/${item.id}`,
         pubDate: parseDate(item.released_at * 1000),
         author: item.author.nickname,

@@ -11,7 +11,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.grupoanimal.mx/estados'],
-            target: '/grupoanimal/estados',
+            target: '/estados',
         },
     ],
     handler: async () => {
@@ -81,6 +81,7 @@ export const route: Route = {
                     title
                     slug
                     date
+                    dateGmt
                     databaseId
                     notasGlobales {
                         ...NotasGlobalesFields
@@ -118,13 +119,14 @@ export const route: Route = {
             title: item.title,
             link: `https://grupoanimal.mx/estados/${item.slug}`,
             author: item.notasGlobales.informacionDeLaNota.autor,
-            pubDate: parseDate(item.date),
+            pubDate: item.dateGmt ? parseDate(`${item.dateGmt}Z`) : undefined,
             category: item.tags.nodes.map((label) => label.name),
             description: item.notasGlobales.contenido,
         }));
 
         return {
             title: 'Grupo Animal - Estados',
+            language: 'es-mx',
             link: 'https://grupoanimal.mx/estados',
             item: items,
         };

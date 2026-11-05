@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 // Warning: The author still knows nothing about javascript!
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -43,7 +45,7 @@ async function handler(ctx) {
 
     const results: Array<{ title: string; link: string; pubDate: Date }> = await getNotifByPage(url);
 
-    const resultsWithContent = await Promise.all(results.map((item) => cache.tryGet(item.link, () => getArticle(item))));
+    const resultsWithContent = await pMap(results, async (item) => ({ ...item, ...(await cache.tryGet(`tongji:sem:article:${item.link}`, () => getArticle(item.link))) }), { concurrency: 3 });
 
     // feed the data to rss
     return {

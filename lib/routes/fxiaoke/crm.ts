@@ -74,7 +74,10 @@ async function handler(ctx) {
                 });
 
                 item.description = firstViewBox.html();
-                item.pubDate = parseDate($('.month-day').first().text().trim());
+                const published = $('meta[property="article:published_time"]').attr('content');
+                const modified = $('meta[property="article:modified_time"]').attr('content');
+                item.pubDate = published ? parseDate(published) : undefined;
+                item.updated = modified ? parseDate(modified) : undefined;
                 return item;
             })
         )

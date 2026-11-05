@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const baseUrl = 'https://nosec.org/home/ajaxindexdata';
 const keykinds = {
@@ -34,9 +35,13 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['nosec.org/home/index/:keykind', 'nosec.org/home/index'],
-            target: (params) => `/nosec${params.keykind ? `/${params.keybind.replace('.html', '')}` : ''}`,
+            source: ['nosec.org/home/index'],
+            target: '/',
         },
+        ...Object.keys(keykinds).map((keykind) => ({
+            source: [`nosec.org/home/index/${keykind}.html`],
+            target: `/${keykind}`,
+        })),
     ],
 };
 
@@ -92,7 +97,7 @@ async function handler(ctx) {
             // 文章正文
             description: item.summary,
             // 文章发布时间
-            pubDate: new Date(item.publiced_at).toUTCString(),
+            pubDate: item.publiced_at ? parseDateInTimezone(item.publiced_at, 8) : undefined,
             // 文章链接
             link: `https://nosec.org/home/detail/${item.id}.html`,
             author: item.username,

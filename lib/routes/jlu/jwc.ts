@@ -1,7 +1,9 @@
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got'; // 自订的 got
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc',
@@ -34,22 +36,20 @@ async function handler() {
             const el = $(item);
 
             const linkEl = el.find('a');
-            const YMDiv = el.find('.tm p');
-            const YMStr = YMDiv.text();
-            const DDiv = el.find('.tm span');
-            const DStr = DDiv.text();
+            const yearMonth = el.find('.tm p').text();
+            const day = el.find('.tm span').text();
 
             const titleDiv = el.find('.s3-info p');
             const title = titleDiv.text();
 
-            const link = `${baseUrl}/${linkEl.attr('href')}`;
+            const link = new URL(linkEl.attr('href')!, baseUrl).href;
 
-            const newsDate = new Date(YMStr + '-' + DStr);
+            const date = /^\d{4}-\d{1,2}$/.test(yearMonth) && /^\d{1,2}$/.test(day) ? `${yearMonth}-${day}` : undefined;
 
             return {
                 title,
                 link,
-                pubDate: newsDate,
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         }),
     };

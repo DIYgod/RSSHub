@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
 
@@ -22,32 +23,6 @@ type ExhibitionConfig = {
     selector: string;
     type: 'permanent' | 'special' | 'temporary';
     extra: ($item: Cheerio<AnyNode>) => Partial<Pick<ExhibitionItem, 'location' | 'fullDuration'>>;
-};
-
-// convert date string like "YYYY年M月D日" to "YYYY-MM-DD"
-const formatStr = (dateStr: string | undefined): string | undefined => {
-    if (!dateStr) {
-        return undefined;
-    }
-
-    const match = dateStr.match(/(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
-
-    if (match) {
-        const year = match[1];
-        const month = match[2].padStart(2, '0');
-        const day = match[3].padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-    return undefined;
-};
-
-const extractDates = (durationStr?: string) => {
-    if (!durationStr || durationStr.includes('永久')) {
-        return { startDate: undefined, endDate: undefined };
-    }
-    const parts = durationStr.split(/—/);
-
-    return { startDate: formatStr(parts[0]), endDate: formatStr(parts[1]) };
 };
 
 const renderDescription = (imgUrl: string, location?: string, startDate?: string, endDate?: string, fullDuration?: string) =>
@@ -151,23 +126,21 @@ export const route: Route = {
         const targetList = isSpecial ? list.filter((item) => item.exhibitionType === 'special' || item.exhibitionType === 'temporary') : list;
 
         const items = await Promise.all(
-            targetList.map((item) => {
-                const cacheKey = item.itemLink;
+            targetList.map(async (item): Promise<DataItem> => {
+                if (item.exhibitionType === 'permanent' || item.exhibitionType === 'special') {
+                    const { startDate, endDate } = parseDateRange(item.fullDuration);
+                    return {
+                        title: item.title,
+                        link: item.itemLink,
+                        pubDate: startDate ? parseDate(startDate) : undefined,
+                        description: renderDescription(item.imgUrl, item.location, startDate, endDate, item.fullDuration),
+                        _extra: { museumName, location: item.location, startDate, endDate },
+                    };
+                }
 
-                return cache.tryGet(cacheKey, async (): Promise<DataItem> => {
-                    if (item.exhibitionType === 'permanent' || item.exhibitionType === 'special') {
-                        const { startDate, endDate } = extractDates(item.fullDuration);
-                        return {
-                            title: item.title,
-                            link: item.itemLink,
-                            pubDate: startDate ? parseDate(startDate) : undefined,
-                            description: renderDescription(item.imgUrl, item.location, startDate, endDate, item.fullDuration),
-                            _extra: { museumName, location: item.location, startDate, endDate },
-                        };
-                    }
-
+                const details = await cache.tryGet(`hnmuseum:exhibition-details:${item.itemLink}`, async () => {
                     const url = new URL(item.itemLink);
-                    // for theme exhibition, the detail page may be a SPA, so need to fetch the JS file to extract the data
+                    // Theme exhibitions publish their metadata in a module script.
                     if (url.hostname === 'vrexhibition.hnmuseum.com') {
                         const htmlRes = await got({ method: 'get', url: item.itemLink });
                         const $spa = load(htmlRes.data);
@@ -181,27 +154,22 @@ export const route: Route = {
                         const fullDuration = dateMatch?.[1];
                         const locMatch = jsContent.match(/"(湖南省博物馆[^"]+厅)"/);
                         const location = locMatch?.[1];
-                        const { startDate, endDate } = extractDates(fullDuration);
-
-                        return {
-                            title,
-                            link: item.itemLink,
-                            pubDate: startDate ? parseDate(startDate) : undefined,
-                            description: renderDescription(item.imgUrl, location, startDate, endDate, fullDuration),
-                            _extra: { museumName, location, startDate, endDate },
-                        };
+                        const { startDate, endDate } = parseDateRange(fullDuration);
+                        return { title, location, startDate, endDate, fullDuration };
                     }
 
                     const detailResponse = await got({ method: 'get', url: item.itemLink });
                     const content = load(detailResponse.data);
-                    const title = content('h1#page-title').text();
-                    return {
-                        title,
-                        link: item.itemLink,
-                        description: renderDescription(item.imgUrl),
-                        _extra: { museumName },
-                    };
+                    return { title: content('h1#page-title').text() };
                 });
+
+                return {
+                    title: details.title,
+                    link: item.itemLink,
+                    pubDate: details.startDate ? parseDate(details.startDate) : undefined,
+                    description: renderDescription(item.imgUrl, details.location, details.startDate, details.endDate, details.fullDuration),
+                    _extra: { museumName, location: details.location, startDate: details.startDate, endDate: details.endDate },
+                };
             })
         );
 

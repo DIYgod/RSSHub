@@ -3,7 +3,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/entry/:id',
@@ -42,7 +41,7 @@ async function handler(ctx) {
         item: data.newsOfEntry.map((item) => ({
             title: item.title,
             description: renderDescription(item),
-            pubDate: timezone(parseDate(item.happenedTime), 8),
+            pubDate: parseDate(item.happenedTime),
             link: item.link,
         })),
     };

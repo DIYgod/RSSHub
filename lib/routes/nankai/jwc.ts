@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,7 +35,7 @@ export const route: Route = {
         const { data: response } = await got(`${baseUrl}/tzgg/list.htm`);
         const $ = load(response);
 
-        // 解析列表页面中的所有通知项
+        // Parse the notice entries from the listing page.
         const list = $('.page-con-list-news .item')
             .toArray()
             .map((item): DataItem => {
@@ -43,67 +44,64 @@ export const route: Route = {
                 const $dateDay = $item.find('.d .d-d');
                 const $dateMonth = $item.find('.d .d-m');
 
-                // 构建完整的日期
-                const day = $dateDay.text(); // 格式：04
-                const monthYear = $dateMonth.text(); // 格式：2025/06
+                // Combine the date components.
+                const day = $dateDay.text().trim(); // Format: 04.
+                const monthYear = $dateMonth.text().trim(); // Format: 2025/06.
                 const fullDate = `${monthYear}/${day}`; // 2025/06/04
 
-                let linkStr = $link.attr('href');
-                // 处理相对链接
-                if (linkStr && !linkStr.startsWith('http')) {
-                    linkStr = `${baseUrl}${linkStr}`;
-                }
+                const href = $link.attr('href');
+                const link = href ? new URL(href, `${baseUrl}/tzgg/list.htm`).href : undefined;
 
                 return {
                     title: $link.text(),
-                    link: linkStr,
-                    pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8),
+                    link,
+                    pubDate: day && monthYear ? timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8) : undefined,
                 };
             })
-            .filter((item) => item.link); // 过滤掉没有链接的项目
+            .filter((item) => item.link); // Discard entries without a link.
 
-        // 获取每个通知的详细内容
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    try {
-                        const { data: response } = await got(item.link);
-                        const $ = load(response);
+        // Fetch the notice details.
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`nankai:jwc:article:v3:${item.link}`, async () => {
+                    const detail: Pick<DataItem, 'description' | 'pubDate'> = {};
+                    const { data: response } = await got(item.link);
+                    const $ = load(response);
 
-                        // 获取发布时间（更精确的时间）
-                        const publishTimeText = $('.page-news-souse').text();
-                        const timeMatch = publishTimeText.match(/发布时间：(\d{4}-\d{2}-\d{2})/);
-                        if (timeMatch) {
-                            item.pubDate = timezone(parseDate(timeMatch[1]), 8);
-                        }
-
-                        // 获取文章内容
-                        const content = $('.page-news-con .wp_articlecontent');
-                        if (content.length > 0) {
-                            // 处理PDF播放器div，提取PDF链接
-                            content.find('.wp_pdf_player').each((i, el) => {
-                                const $el = $(el);
-
-                                const pdfSrc = $el.attr('pdfsrc');
-                                const sudyfileAttr = ($(el).attr('sudyfile-attr') || '{}').replaceAll("'", '"');
-                                const sudyfileAttrJson = JSON.parse(sudyfileAttr);
-                                const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
-                                if (pdfSrc) {
-                                    // 替换PDF播放器为下载链接
-                                    $el.replaceWith(`<p><a href="${pdfSrc}" target="_blank">${fileName}</a></p>`);
-                                }
-                            });
-
-                            item.description = content.html();
-                        } else {
-                            item.description = '无法获取内容详情';
-                        }
-                    } catch {
-                        item.description = '获取内容失败';
+                    // Read the publication timestamp from the article page.
+                    const publishTimeText = $('.page-news-souse').text();
+                    const timeMatch = publishTimeText.match(/发布时间：(\d{4}-\d{2}-\d{2})/);
+                    if (timeMatch) {
+                        detail.pubDate = timezone(parseDate(timeMatch[1]), 8);
                     }
-                    return item;
-                })
-            )
+
+                    // Extract the article body.
+                    const content = $('.page-news-con .wp_articlecontent');
+                    if (content.length > 0) {
+                        // Replace the PDF player with a download link.
+                        content.find('.wp_pdf_player').each((i, el) => {
+                            const $el = $(el);
+
+                            const pdfSrc = $el.attr('pdfsrc');
+                            const sudyfileAttr = ($(el).attr('sudyfile-attr') || '{}').replaceAll("'", '"');
+                            const sudyfileAttrJson = JSON.parse(sudyfileAttr);
+                            const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
+                            if (pdfSrc) {
+                                // Replace the player with the download link.
+                                $el.replaceWith(`<p><a href="${pdfSrc}" target="_blank">${fileName}</a></p>`);
+                            }
+                        });
+
+                        detail.description = content.html();
+                    } else {
+                        throw new Error(`Could not find the academic notice content: ${item.link}`);
+                    }
+                    return detail;
+                });
+                return { ...item, ...detail };
+            },
+            { concurrency: 3 }
         );
 
         return {

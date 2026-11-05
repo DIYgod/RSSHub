@@ -19,12 +19,12 @@ type DescriptionData = {
 export const renderDescription = ({ image, video, description }: DescriptionData) =>
     renderToString(
         <>
-            {image?.src && !video ? (
+            {image?.src && !video?.src ? (
                 <figure>
                     <img src={image.src} alt={image.alt} />
                 </figure>
             ) : null}
-            {video ? (
+            {video?.src ? (
                 <video poster={image?.src} controls>
                     <source src={video.src} type={video.type} />
                     <object data={video.src}>

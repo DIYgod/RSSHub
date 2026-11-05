@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -21,8 +22,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.cctv.com/:category'],
-            target: '/:category',
+            source: ['tv.cctv.com/lm/:id', 'tv.cctv.com/lm/:id/*'],
+            target: '/lm/:id',
+        },
+        {
+            source: ['tv.cctv.com/lm'],
+            target: '/lm',
         },
     ],
     name: '栏目',
@@ -65,7 +70,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const list = response.data.data.list.map((item) => ({
+    let list = response.data.data.list.map((item) => ({
         url: item.url,
         guid: item.guid,
         image: item.image,
@@ -74,6 +79,13 @@ async function handler(ctx) {
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));
+    const limit = getRouteLimit(ctx);
+    if (limit !== undefined) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        }
+        list = list.slice(0, limit);
+    }
 
     const items = await Promise.all(
         list.map((item) =>

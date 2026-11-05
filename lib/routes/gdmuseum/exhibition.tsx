@@ -1,29 +1,14 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
-
-// convert exhibition date string to YYYY-MM-DD format, e.g. "2023年5月1日" or "2023/5/1" => "2023-05-01"
-const formatExhibitionDate = (d?: string) => {
-    if (!d) {
-        return;
-    }
-    return dayjs(d.replaceAll(/[年月/.]/g, '-').replaceAll('日', '')).format('YYYY-MM-DD');
-};
-
-const parseExhibitionDuration = (duration?: string) => {
-    const allDates = duration?.match(/\d{4}[./年-]\d{1,2}[./月-]\d{1,2}日?/g) || [];
-    return {
-        startDate: formatExhibitionDate(allDates[0]),
-        endDate: formatExhibitionDate(allDates[1]),
-    };
-};
 
 export const route: Route = {
     path: '/exhibition/:type?',
@@ -42,6 +27,9 @@ export const route: Route = {
     ],
     handler: async (ctx: Context) => {
         const typeParam = ctx.req.param('type') || 'all';
+        if (typeParam !== 'all' && typeParam !== 'temp') {
+            throw new InvalidParameterError('type must be all or temp.');
+        }
 
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.gdmuseum.org.cn';
@@ -72,7 +60,7 @@ export const route: Route = {
                 const textDurationAndLocation = $item.find('.quitxt.qui-dot').text();
                 const [fullDuration = '', location = ''] = textDurationAndLocation.split('|').map((p) => p.trim());
 
-                const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                const { startDate, endDate } = parseDateRange(fullDuration);
                 const pubDate = startDate ? parseDate(startDate) : undefined;
 
                 const description = renderToString(

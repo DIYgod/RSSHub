@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -29,6 +30,11 @@ export const route: Route = {
 | doc  | video |`,
 };
 
+function parseNewsDate(value: string) {
+    const date = value?.trim() ? parseDate(value.trim(), 'YYYY-MM-DD HH:mm:ss', true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+}
+
 async function handler(ctx) {
     const { id, type } = ctx.req.param();
     const { data: userResponse } = await got(`https://ishare.ifeng.com/mediaShare/home/${id}/media`, {
@@ -51,36 +57,32 @@ async function handler(ctx) {
     const { data: contentData } = JSON.parse(contentResponse.match(/getListData\((.*)\)/)[1]);
     const { weMediaName: mediaName, honorDesc, description, logo } = allData;
 
-    const list = contentData.map((item) => ({
+    const list: Array<DataItem & { link: string }> = contentData.map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.newsTime), 8),
+        pubDate: parseNewsDate(item.newsTime),
         author: mediaName,
-        link: `https:${item.url}`,
+        link: new URL(item.url, 'https://ishare.ifeng.com').href,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
-
-                const _allData = JSON.parse(
-                    $('script')
-                        .text()
-                        .match(/var allData = (\{.*?\});/)![1]
-                );
-                if (type === 'doc') {
-                    item.description = extractDoc(_allData.docData.contentData.contentList);
-                } else if (type === 'video') {
-                    item.description = renderVideo(_allData.videoInfo);
-                }
-
-                item.category = _allData.keywords.split(',');
-                item.author = _allData.docData?.editorName ?? item.author;
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const response = await cache.tryGet(`ifeng:article-html:${item.link}`, async () => (await got(item.link)).data);
+            const $ = load(response);
+            const articleData = JSON.parse(
+                $('script')
+                    .text()
+                    .match(/var allData = (\{.*?\});/)![1]
+            );
+            const description = type === 'doc' ? extractDoc(articleData.docData.contentData.contentList) : type === 'video' ? renderVideo(articleData.videoInfo) : undefined;
+            return {
+                ...item,
+                description,
+                category: articleData.keywords.split(','),
+                author: articleData.docData?.editorName ?? item.author,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

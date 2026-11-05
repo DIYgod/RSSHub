@@ -2,6 +2,7 @@ import pMap from 'p-map';
 import { getSubtitles } from 'youtube-caption-extractor';
 
 import cache from '@/utils/cache';
+import { isWorker } from '@/utils/is-worker';
 
 function pad(n: number, width: number = 2) {
     return String(n).padStart(width, '0');
@@ -16,7 +17,7 @@ function toSrtTime(seconds: number): string {
     return `${pad(hours)}:${pad(minutes)}:${pad(secs)},${pad(millis, 3)}`;
 }
 
-export type Subtitle = {
+type Subtitle = {
     start: string;
     dur: string;
     text: string;
@@ -35,8 +36,12 @@ ${seg.text}
         .join('\n');
 }
 
-export const getSubtitlesByVideoId = (videoId: string) =>
-    cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
+const getSubtitlesByVideoId = (videoId: string) => {
+    // Subtitle extraction can exceed the Workers memory limit.
+    if (isWorker) {
+        return Promise.resolve('');
+    }
+    return cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
         try {
             const subtitles = await getSubtitles({ videoID: videoId });
             const srt = convertToSrt(subtitles);
@@ -46,6 +51,7 @@ export const getSubtitlesByVideoId = (videoId: string) =>
             return '';
         }
     });
+};
 
 const createSubtitleDataUrl = (srt: string): string => `data:text/plain;charset=utf-8,${encodeURIComponent(srt)}`;
 
@@ -64,16 +70,10 @@ function createSrtAttachmentFromSrt(srt: string): Array<{ url: string; mime_type
     ];
 }
 
-export const getSrtAttachment = async (videoId: string): Promise<Array<{ url: string; mime_type: string; title: string }>> => {
-    try {
-        const srt = await getSubtitlesByVideoId(videoId);
-        return createSrtAttachmentFromSrt(srt);
-    } catch {
-        return [];
-    }
-};
-
 export const getSrtAttachmentBatch = async (videoIds: string[]) => {
+    if (isWorker) {
+        return {};
+    }
     const results = await pMap(
         videoIds,
         async (videoId) => {

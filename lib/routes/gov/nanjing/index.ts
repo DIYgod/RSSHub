@@ -47,11 +47,11 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item): DataItem => {
             const $item = $(item);
             const $aTag = $item.find('a');
+            const publishedDate = $item.find('span').text();
 
             return {
-                title: $aTag.text(),
-                description: $aTag.attr('title'),
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                title: $aTag.attr('title') || $aTag.text(),
+                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
                 link: new URL($aTag.attr('href')!, link).href,
             };
         });

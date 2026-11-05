@@ -43,7 +43,6 @@ async function handler() {
         title: 'IKEA 宜家 - 低价优选',
         link: 'https://www.ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40',
         description: '低价优选',
-        allowEmpty: true,
         item: response.data.products.map((element) => generateProductItem(element)),
     };
 }

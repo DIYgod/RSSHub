@@ -5,6 +5,7 @@ import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/upcoming/:limit?',
@@ -36,8 +37,10 @@ async function handler(ctx: Context): Promise<Data> {
         throw new Error('CTFHub API returned an error');
     }
 
+    const events = ctx.req.query('sorted') === 'false' ? response.data.items : [...response.data.items].sort((a, b) => b.start_time - a.start_time);
+    const commonLimit = getRouteLimit(ctx);
     const items = await Promise.all(
-        response.data.items.map((item) =>
+        events.slice(0, commonLimit).map((item) =>
             cache.tryGet(`ctfhub:event:${item.id}`, async () => {
                 const det = await getDetails(item.id);
                 return {

@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -25,19 +26,21 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
     const response = await got({
         method: 'get',
         url: 'https://www.ahhhhfs.com/wp-json/wp/v2/posts',
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10,
+            per_page: limit,
             _embed: '',
         },
     });
     const list = response.data.map((item) => ({
         title: item.title.rendered,
         link: item.link,
-        pubDate: parseDate(item.date_gmt),
-        updated: parseDate(item.modified_gmt),
+        pubDate: parseDate(`${item.date_gmt}Z`),
+        updated: parseDate(`${item.modified_gmt}Z`),
         author: item._embedded.author[0].name,
         category: [...new Set(item._embedded['wp:term'].flatMap((i) => i.map((j) => j.name)))],
     }));
@@ -50,8 +53,14 @@ async function handler(ctx) {
                 $detail('article.post-content').find('.lwptoc').remove();
                 $detail('article.post-content').find('#related_posts').remove();
                 $detail('article.post-content').find('.entry-copyright').remove();
+                $detail('article.post-content').find('noscript').remove();
                 $detail('article.post-content img').each((_, el) => {
-                    $detail(el).replaceWith(`<img src=https:${$detail(el).attr('src')}>`);
+                    const image = $detail(el);
+                    const src = image.attr('data-lazy-src') || image.attr('src');
+                    if (src) {
+                        image.attr('src', new URL(src, item.link).href);
+                    }
+                    image.removeAttr('data-lazy-src data-lazy-srcset data-lazy-sizes');
                 });
                 item.description = $detail('article.post-content').html();
                 return item;

@@ -22,6 +22,7 @@ export const route: Route = {
     ],
     name: '最新消息',
     maintainers: ['zenxds'],
+    features: { requirePuppeteer: true },
     handler,
     url: 'ielts.neea.cn/allnews',
 };
@@ -31,19 +32,20 @@ async function handler() {
         targetUrl,
         async () => {
             const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-            });
-            await page.goto(targetUrl, {
-                waitUntil: 'domcontentloaded',
-            });
-            await page.waitForSelector('div.container');
-
-            const html = await page.evaluate(() => document.documentElement.getHTML());
-            await context.close();
-            return html;
+            try {
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                });
+                await page.goto(targetUrl, {
+                    waitUntil: 'domcontentloaded',
+                });
+                await page.waitForSelector('div.container');
+                return await page.evaluate(() => document.documentElement.getHTML());
+            } finally {
+                await context.close();
+            }
         },
         config.cache.routeExpire,
         false

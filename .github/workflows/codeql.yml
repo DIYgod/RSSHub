@@ -14,10 +14,22 @@ name: 'CodeQL'
 on:
     push:
         branches: ['master']
+    # Docs-only pull requests skip the scan. Pushes to master are not filtered, so every commit on master
+    # keeps an analysis for pull requests to compare against.
     pull_request:
         branches: ['master']
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     schedule:
         - cron: '15 9 * * 3'
+
+# A new push to a pull request cancels the run of the previous push.
+# Every other run gets its own group per branch and commit, so a push to master is never cancelled or replaced.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
     analyze:
@@ -82,3 +94,32 @@ jobs:
               uses: github/codeql-action/analyze@v4
               with:
                   category: '/language:${{matrix.language}}'
+
+    # On master, CodeQL saves a ~340 MB overlay-base database to the Actions cache for every commit and never deletes one,
+    # while pull requests only restore the newest. Keep the two newest so they do not fill the 10 GB cache.
+    prune-overlay-cache:
+        name: Prune old CodeQL databases
+        needs: analyze
+        if: github.event_name != 'pull_request'
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            actions: write
+        steps:
+            - name: Delete all but the two newest overlay-base databases
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  REPO: ${{ github.repository }}
+                  REF: ${{ github.ref }}
+              run: |
+                  set -euo pipefail
+                  ids=$(gh cache list --repo "$REPO" --ref "$REF" --key codeql-overlay-base-database- --sort created_at --order desc --limit 100 --json id --jq '.[2:][].id')
+                  for id in $ids; do
+                      if ! gh cache delete "$id" --repo "$REPO"; then
+                          # The run for another commit may have deleted it a moment ago; fail only if it is still there
+                          left=$(gh cache list --repo "$REPO" --ref "$REF" --key codeql-overlay-base-database- --limit 100 --json id --jq ".[] | select(.id == $id) | .id")
+                          if [ -n "$left" ]; then
+                              exit 1
+                          fi
+                      fi
+                  done

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hacs/repositories',
@@ -25,7 +26,7 @@ interface HacsRepository {
 }
 
 async function handler() {
-    const sections = ['appdaemon', 'critical', 'integration', 'theme', 'python_script', 'plugin'];
+    const sections = ['appdaemon', 'integration', 'theme', 'python_script', 'plugin'];
     const dataList = (
         await Promise.all(
             sections.map(async (section) => {
@@ -41,11 +42,11 @@ async function handler() {
         link: 'https://www.hacs.xyz/',
         item: dataList.map((item) => ({
             title: item.manifest_name || item.manifest?.name || item.full_name,
-            description: `${item.domain ? `<img src="https://brands.home-assistant.io/_/${item.domain}/icon.png" />` : ''}<br>${item.description}<br><br>Last updated: ${item.last_updated}<br>Stars: ${item.stargazers_count}<br>Topics: ${item.topics?.join(', ')}`,
+            description: `${item.domain ? `<img src="https://brands.home-assistant.io/_/${item.domain}/icon.png" />` : ''}<br>${item.description}<br><br>Stars: ${item.stargazers_count}`,
             link: `https://github.com/${item.full_name}`,
-            guid: item.domain || item.full_name,
-            tags: item.topics,
-            pubDate: new Date(item.last_fetched * 1000),
+            guid: item.full_name,
+            category: item.topics,
+            updated: item.last_updated ? parseDate(item.last_updated) : undefined,
         })),
     };
 }

@@ -1,11 +1,14 @@
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 interface Book {
@@ -64,6 +67,10 @@ interface Info {
     title: string;
 }
 
+function isCertificateTrustError(error: unknown): error is Error {
+    return error instanceof Error && (('code' in error && (error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' || error.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY')) || isCertificateTrustError(error.cause));
+}
+
 export const route: Route = {
     path: String.raw`/lib/space/:path{newbook.*}`,
     name: '图书馆 - 新书速递',
@@ -105,7 +112,7 @@ export const route: Route = {
 
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportRadar: false,
         supportBT: false,
@@ -128,9 +135,33 @@ async function handler(ctx: Context): Promise<Data> {
     searchParams.set('page', '1');
     !dcpCode && !clsNo && searchParams.set('dcpCode', 'nolimit'); // No classification filter
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/new/100/${clsNo ? 'byclass' : 'bysubject'}?${searchParams.toString()}`;
-    const { data } = await got(url);
+    let data;
+    try {
+        ({ data } = await got(url));
+    } catch (error) {
+        if (!(error instanceof FetchError) || !isCertificateTrustError(error)) {
+            throw error;
+        }
+        const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
+        try {
+            const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
+            await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+            const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+            if (!response?.ok() || new URL(page.url()).origin !== 'https://space.lib.buaa.edu.cn') {
+                throw new Error('The BUAA library did not provide its public new-book API.', { cause: error });
+            }
+            data = await response.json();
+            return await createFeed(data, page);
+        } finally {
+            await destroy();
+        }
+    }
+    return await createFeed(data);
+}
+
+async function createFeed(data: { data?: { dataList?: Book[] } }, page?: Page): Promise<Data> {
     const list: Book[] = data?.data?.dataList || [];
-    const item = await Promise.all(list.map(async (item: Book) => await getItem(item)));
+    const item = page ? await pMap(list, (item) => getItem(item, page), { concurrency: 3 }) : await Promise.all(list.map((item) => getItem(item)));
     const res: Data = {
         title: '北航图书馆 - 新书速递',
         item,
@@ -144,9 +175,9 @@ async function handler(ctx: Context): Promise<Data> {
     return res;
 }
 
-async function getItem(item: Book): Promise<DataItem> {
+async function getItem(item: Book, page?: Page): Promise<DataItem> {
     return await cache.tryGet(item.isbn, async (): Promise<DataItem> => {
-        const info = await getItemInfo(item.isbn);
+        const info = await getItemInfo(item.isbn, page);
         const holdings: Holding[] = JSON.parse(item.holdings);
         const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
         const content = renderToString(
@@ -241,8 +272,18 @@ async function getItem(item: Book): Promise<DataItem> {
     });
 }
 
-async function getItemInfo(isbn: string): Promise<Info | null> {
+async function getItemInfo(isbn: string, page?: Page): Promise<Info | null> {
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/third_api/douban/${isbn}/info`;
+    if (page) {
+        return await page.evaluate(async (url) => {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`The BUAA library book-info API returned HTTP ${response.status}.`);
+            }
+            const data = await response.json();
+            return data.data;
+        }, url);
+    }
     const response = await got(url);
     return JSON.parse(response.body).data;
 }

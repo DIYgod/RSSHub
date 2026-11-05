@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { namespace } from './namespace';
 import { apiBaseUrl, baseUrl, parseList, processItems } from './utils';
@@ -36,7 +37,7 @@ const getTagName = async (tagId: string) => {
 
 async function handler(ctx) {
     const { tagId } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit')) || 15;
+    const limit = Math.max(15, getRouteLimit(ctx, 15));
 
     const response = await ofetch(`${apiBaseUrl}/news/news/page`, {
         headers: {
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
     const tagName = await getTagName(tagId);
     const list = parseList(response.data.records);
-    const items = await processItems(list);
+    const items = await processItems(list, ctx);
 
     return {
         title: `“${tagName}” 相关资讯-${namespace.name}`,

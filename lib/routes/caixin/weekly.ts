@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/weekly',
@@ -37,7 +38,7 @@ async function handler(ctx) {
             .map((item) => ({
                 link: $(item).attr('href'),
             })),
-    ].slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
+    ].slice(0, getRouteLimit(ctx, 10));
 
     const items = await Promise.all(
         list.map((item) =>

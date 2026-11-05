@@ -1,3 +1,5 @@
+import { html } from 'hono/html';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,12 +33,9 @@ async function handler() {
     const items = response.results.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.publication_date),
+        pubDate: item.publication_date ? parseDate(item.publication_date) : undefined,
         author: item.author_name,
-        description: `
-            ${item.recommender_name ? `<p>Recommended by: ${item.recommender_name}</p>` : ''}
-            ${item.screenshot ? `<img src="${item.screenshot}" alt="Screenshot - ${item.title}">` : ''}
-        `,
+        description: html` ${item.recommender_name ? html`<p>Recommended by: ${item.recommender_name}</p>` : ''} ${item.screenshot ? html`<img src="${item.screenshot}" alt="${`Screenshot - ${item.title}`}" />` : ''} `.toString(),
     }));
 
     return {

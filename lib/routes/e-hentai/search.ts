@@ -14,12 +14,6 @@ export const route: Route = {
     features: {
         nsfw: true,
     },
-    radar: [
-        {
-            source: ['e-hentai.org/:keyword', 'e-hentai.org/'],
-            target: '/search/:keyword',
-        },
-    ],
     name: '搜索',
     maintainers: ['nczitzk'],
     description: `::: tip

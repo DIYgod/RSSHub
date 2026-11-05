@@ -14,12 +14,22 @@ type DescriptionProps = {
     description?: string;
 };
 
+const getPlayerUrl = (baseUrl: string, parameters: Record<string, string | undefined>) => {
+    const url = new URL(baseUrl);
+    for (const [key, value] of Object.entries(parameters)) {
+        if (value !== undefined) {
+            url.searchParams.set(key, value);
+        }
+    }
+    return url.href;
+};
+
 const Description = ({ embed, ugc, ogv, aid, cid, bvid, seasonId, episodeId, img, description }: DescriptionProps) => (
     <>
         {embed ? (
             <>
-                {ugc ? <iframe width="640" height="360" src={`https://www.bilibili.com/blackboard/html5mobileplayer.html?aid=${aid}&cid=${cid}&bvid=${bvid}`} frameborder="0" allowfullscreen></iframe> : null}
-                {ogv ? <iframe width="640" height="360" src={`https://www.bilibili.com/blackboard/html5mobileplayer.html?seasonId=${seasonId}&episodeId=${episodeId}`} frameborder="0" allowfullscreen></iframe> : null}
+                {ugc ? <iframe width="640" height="360" src={getPlayerUrl('https://player.bilibili.com/player.html', { aid, cid, bvid })} frameborder="0" allowfullscreen></iframe> : null}
+                {ogv ? <iframe width="640" height="360" src={getPlayerUrl('https://www.bilibili.com/blackboard/html5mobileplayer.html', { seasonId, episodeId })} frameborder="0" allowfullscreen></iframe> : null}
                 <br />
             </>
         ) : null}

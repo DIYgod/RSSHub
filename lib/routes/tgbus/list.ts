@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -57,7 +58,7 @@ async function handler(ctx) {
             };
         });
 
-    const out = await Promise.all(list.map((item) => parseArticle(item)));
+    const out = await pMap(list, parseArticle, { concurrency: 3, stopOnError: false });
 
     return {
         title: `${categories[category]} - 电玩巴士`,

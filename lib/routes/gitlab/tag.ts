@@ -1,3 +1,4 @@
+import { escapeText } from 'entities';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
@@ -41,9 +42,9 @@ async function handler(ctx: Context) {
         item: data.map((item) => ({
             title: item.name,
             author: item.commit.author_name,
-            description: item.message,
-            pubDate: parseDate(item.commit.created_at),
-            link: item.commit.web_url,
+            description: item.message ? `<pre>${escapeText(item.message)}</pre>` : undefined,
+            pubDate: parseDate(item.created_at ?? item.commit.created_at),
+            link: `https://${host}/${namespace}/${project}/-/tags/${encodeURIComponent(item.name)}`,
         })),
     };
 }

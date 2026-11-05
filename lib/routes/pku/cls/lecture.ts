@@ -4,8 +4,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const homeUrl = 'http://bio.pku.edu.cn/homes/Index/news_jz/7/7.html';
-const baseUrl = 'http://bio.pku.edu.cn';
+const homeUrl = 'https://www.bio.pku.edu.cn/homes/Index/news_jz/7/7.html';
 
 export const route: Route = {
     path: '/cls/lecture',
@@ -22,13 +21,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bio.pku.edu.cn/homes/Index/news_jz/7/7.html', 'bio.pku.edu.cn/'],
+            source: ['www.bio.pku.edu.cn/homes/Index/news_jz/7/7.html', 'www.bio.pku.edu.cn/'],
         },
     ],
     name: '生命科学学院近期讲座',
     maintainers: ['TPOB'],
     handler,
-    url: 'bio.pku.edu.cn/homes/Index/news_jz/7/7.html',
+    url: 'www.bio.pku.edu.cn/homes/Index/news_jz/7/7.html',
 };
 
 async function handler() {
@@ -42,10 +41,14 @@ async function handler() {
         item: $('a.clearfix')
             .toArray()
             .map((item) => ({
-                title: $(item).find('p').text().trim(),
-                description: '日期: ' + $(item).find('span'), // ${item.find('.chair_txt div').find('span').second().text()}
-                pubDate: parseDate($(item).find('.date').text()),
-                link: baseUrl + $('a.clearfix').attr('href'),
+                title: $(item).find('p').text(),
+                description: $(item)
+                    .find('.chair_txt span')
+                    .toArray()
+                    .map((elem) => $.html(elem))
+                    .join(''),
+                pubDate: $(item).find('.date').text() ? parseDate(`${$(item).find('.date').text().replaceAll('.', '-')}T00:00:00Z`) : undefined,
+                link: new URL($(item).attr('href')!, homeUrl).href,
             })),
     };
 }

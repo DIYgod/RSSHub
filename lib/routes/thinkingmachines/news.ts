@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -19,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['thinkingmachines.ai/news', 'thinkingmachines.ai/news/'],
+            source: ['thinkingmachines.ai/news'],
             target: '/news',
         },
     ],
@@ -38,7 +39,7 @@ async function handler() {
         .map((el) => {
             const $el = $(el);
             const title = $el.find('.post-title').text();
-            const dateStr = $el.find('time.desktop-time').text();
+            const dateStr = $el.find('time').attr('datetime');
             const href = $el.attr('href') || '';
             const link = href.startsWith('http') ? href : `${baseUrl}${href}`;
 
@@ -46,11 +47,16 @@ async function handler() {
         })
         .filter((item) => item.title && item.link);
 
-    const fullItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const fullItems = await pMap(
+        items,
+        async (item) => ({
+            title: item.title,
+            link: item.link,
+            pubDate: item.dateStr ? parseDate(`${item.dateStr}T00:00:00Z`) : undefined,
+            ...(await cache.tryGet(item.link, async () => {
                 const articleResponse = await ofetch(item.link);
                 const $article = load(articleResponse);
+                const author = $article('.publish-metadata .author').text();
 
                 // Remove non-content elements
                 $article('nav, footer, header, script, style').remove();
@@ -60,13 +66,12 @@ async function handler() {
                 const description = $article('main').html()?.trim() || '';
 
                 return {
-                    title: item.title,
-                    link: item.link,
-                    pubDate: parseDate(item.dateStr, 'MMM D, YYYY'),
+                    author: author || undefined,
                     description,
                 };
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

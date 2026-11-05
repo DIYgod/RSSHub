@@ -37,6 +37,7 @@ async function handler() {
 
     return {
         title: 'njuferret - blog',
+        link: baseUrl,
         item: items,
     };
 }

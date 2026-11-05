@@ -4,16 +4,17 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.78dm.net';
-    const currentUrl = new URL(category.includes('/') ? `${category}.html` : category, rootUrl).href;
+    const currentUrl = new URL(category.includes('/') && !category.endsWith('.html') ? `${category}.html` : category, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -225,12 +226,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.78dm.net/:category?'],
-            target: (params) => {
-                const category = params.category?.replace(/\.html$/, '');
-
-                return `/78dm${category ? `/${category}` : ''}`;
-            },
+            source: ['www.78dm.net/*category', 'www.78dm.net/'],
+            target: '/:category?',
         },
         {
             title: '新品速递 - 全部',

@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -33,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '新闻';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'http://www.aliresearch.com';
     const currentUrl = `${rootUrl}/cn/information`;

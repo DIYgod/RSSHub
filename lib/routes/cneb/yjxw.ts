@@ -1,15 +1,24 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const indexs = {
     gnxw: 0,
     gjxw: 1,
 };
+
+interface VideoInfo {
+    errcode: number;
+    cover_pic?: string;
+    synopsis?: string;
+    om_info?: { title?: string };
+}
 
 export const route: Route = {
     path: '/yjxw/:category?',
@@ -38,7 +47,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 400;
+    const limit = getRouteLimit(ctx, 400);
 
     const category = ctx.req.param('category') ?? '';
     const index = Object.hasOwn(indexs, category) ? indexs[category] : -1;
@@ -75,8 +84,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -85,12 +95,34 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('.w940').html();
-                item.author = content('.source span').last().text();
+                const videoState = content('script[statesync="video"]')
+                    .text()
+                    .trim()
+                    .match(/^window\.__STATE_video__\s*=\s*(\{[\s\S]*\});?$/);
+                if (videoState) {
+                    const video: VideoInfo = JSON.parse(videoState[1]).payloads.sharevideo;
+                    if (video.errcode !== 0) {
+                        throw new Error(`Video metadata is unavailable at ${item.link}`);
+                    }
+                    const description = content('<div/>');
+                    if (video.cover_pic) {
+                        description.append(content('<img/>').attr('src', video.cover_pic));
+                        item.image = video.cover_pic;
+                    }
+                    if (video.synopsis && video.synopsis !== item.title) {
+                        description.append(content('<p/>').text(video.synopsis));
+                    }
+                    item.description = description.html();
+                    item.author = video.om_info?.title;
+                } else {
+                    content('.w940 .editor').remove();
+                    item.description = content('.w940').html();
+                    item.author = content('.source span').last().text();
+                }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

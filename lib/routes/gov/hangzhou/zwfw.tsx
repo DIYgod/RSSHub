@@ -1,6 +1,7 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -168,7 +169,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                         </>
                     ) : (
                         <>
-                            <th>法人主题分类</th>
+                            <th>自然人主题分类</th>
                             <td colspan={3}>{otherInfo.naturalPersonThemeClassification}</td>
                         </>
                     )}
@@ -216,7 +217,6 @@ async function handler() {
     const host = 'https://www.hangzhou.gov.cn/col/col1256349/index.html';
     const response = await ofetch(host);
 
-    const context = await playwright();
     const link = host;
     const formatted = response
         .replace('<script type="text/xml">', '')
@@ -234,7 +234,8 @@ async function handler() {
         .map((item: any) => {
             const $item = $(item);
             const title = $item.find('a').first().text();
-            const time = timezone(parseDate($item.find('span').first().text(), 'YYYY-MM-DD'), 8);
+            const dateText = $item.find('span').first().text();
+            const time = dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined;
             const a = $item.find('a').first().attr('href');
             const fullUrl = new URL(a!, host).href;
 
@@ -245,37 +246,46 @@ async function handler() {
             };
         })
         .filter((item) => !item.title.includes('置顶'));
-    const items: any = await Promise.all(
-        list.map((item: any) =>
-            cache.tryGet(item.link, async () => {
-                const host = new URL(item.link).hostname;
-                if (host === 'www.zjzwfw.gov.cn') {
-                    // 来源为浙江政务服务网
-                    const content = await crawler(item, context);
-                    const $ = load(content);
-                    item.category = $('meta[name="ColumnType"]').attr('content');
-                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
-                    item.author = '浙江政务服务网';
-                } else {
-                    // 其他正常抓取
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    // 来源为杭州市公安局 / 缺省：来源为杭州市政府网
-                    item.description = host === 'police.hangzhou.gov.cn' ? $('.art-content .wz_con_content').html() : $('.article').html();
-                    item.author = $('meta[name="ContentSource"]').attr('content');
-                    item.category = $('meta[name="ColumnType"]').attr('content');
-                }
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
-                return item;
-            })
-        )
-    );
+    let context: Awaited<ReturnType<typeof playwright>> | undefined;
+    try {
+        const items: any = await pMap(
+            list,
+            (item: any) =>
+                cache.tryGet(item.link, async () => {
+                    const host = new URL(item.link).hostname;
+                    let content: CheerioAPI;
+                    if (host === 'www.zjzwfw.gov.cn') {
+                        context ??= await playwright();
+                        // Fetch Zhejiang government service details.
+                        const response = await crawler(item, context);
+                        content = load(response);
+                        item.category = content('meta[name="ColumnType"]').attr('content');
+                        item.description = renderDescription(analyzer(content('.item-left .item .bg_box')));
+                        item.author = '浙江政务服务网';
+                    } else {
+                        // Fetch standard article details.
+                        const response = await got(item.link);
+                        content = load(response.data);
+                        // Use the police article container when applicable.
+                        item.description = host === 'police.hangzhou.gov.cn' ? content('.art-content .wz_con_content').html() : content('.article').html();
+                        item.author = content('meta[name="ContentSource"]').attr('content');
+                        item.category = content('meta[name="ColumnType"]').attr('content');
+                    }
+                    const pubDate = content('meta[name="PubDate"]').attr('content');
+                    if (pubDate) {
+                        item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm'), 8);
+                    }
+                    return item;
+                }),
+            { concurrency: 1 }
+        );
 
-    await context.close();
-    return {
-        allowEmpty: true,
-        title: '杭州市人民政府-政务服务公开',
-        link,
-        item: items,
-    };
+        return {
+            title: '杭州市人民政府-政务服务公开',
+            link,
+            item: items,
+        };
+    } finally {
+        await context?.close();
+    }
 }

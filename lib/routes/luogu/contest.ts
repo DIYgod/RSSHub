@@ -4,8 +4,10 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import { getPageData } from './utils';
 
 const md = MarkdownIt();
 
@@ -33,10 +35,10 @@ interface Contest {
     id: number;
     name: string;
     host: { name: string };
-    rated: boolean;
+    rated: number;
     startTime: number;
-    ruleType: keyof typeof typeMap.ruleType;
-    visibilityType: keyof typeof typeMap.visibilityType;
+    method: keyof typeof typeMap.ruleType;
+    visibility: keyof typeof typeMap.visibilityType;
 }
 
 export const route: Route = {
@@ -65,42 +67,30 @@ export const route: Route = {
 
 async function handler() {
     const link = `${baseUrl}/contest/list`;
-    const { data: response } = await got(link);
+    const response = await ofetch(link, { responseType: 'text' });
     const $ = load(response);
-
-    const data = JSON.parse(
-        decodeURIComponent(
-            $('script')
-                .text()
-                .match(/decodeURIComponent\("(.*)"\)/)![1]
-        )
-    );
-
-    const contests: Contest[] = data.currentData.contests.result;
+    const data = getPageData<{ contests: { result: Contest[] } }>($);
+    const contests = data.contests.result;
 
     const result = await pMap(
         contests,
-        (item) =>
-            cache.tryGet(`${baseUrl}/contest/${item.id}`, async () => {
-                const { data: response } = await got(`${baseUrl}/contest/${item.id}`);
-                const $ = load(response);
-                const data = JSON.parse(
-                    decodeURIComponent(
-                        $('script')
-                            .text()
-                            .match(/decodeURIComponent\("(.*)"\)/)![1]
-                    )
-                );
+        async (item) => {
+            const link = `${baseUrl}/contest/${item.id}`;
+            const description = await cache.tryGet(link, async () => {
+                const response = await ofetch(link, { responseType: 'text' });
+                const { contest } = getPageData<{ contest: { description: string } }>(response);
+                return md.render(contest.description);
+            });
 
-                return {
-                    title: item.name,
-                    description: md.render(data.currentData.contest.description),
-                    link: `${baseUrl}/contest/${item.id}`,
-                    author: item.host.name,
-                    pubDate: parseDate(item.startTime, 'X'),
-                    category: [item.rated ? 'Rated' : null, typeMap.ruleType[item.ruleType], typeMap.visibilityType[item.visibilityType]].filter(Boolean) as string[],
-                };
-            }),
+            return {
+                title: item.name,
+                description,
+                link,
+                author: item.host.name,
+                pubDate: parseDate(item.startTime, 'X'),
+                category: [item.rated ? 'Rated' : undefined, typeMap.ruleType[item.method], typeMap.visibilityType[item.visibility]].filter((category): category is string => Boolean(category)),
+            };
+        },
         { concurrency: 4 }
     );
 

@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { getFullText } from '../utils';
@@ -37,7 +38,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('*:is(.pcBox .caItem, .mainList li a div) h2')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .toArray()
         .map((item) => {
             const $item = $(item);

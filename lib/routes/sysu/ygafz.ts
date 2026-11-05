@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ygafz/:type?',
@@ -12,7 +14,7 @@ export const route: Route = {
     parameters: { type: '分类，见下表，默认为 `notice`' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -47,26 +49,30 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.find('.date').text().trim();
             return {
                 title: $item.find('p').text(),
                 link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: parseDate($item.find('.date').text()), // 2023-03-22
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sysu:ygafz:article:v2:${item.link}`, async () => {
                 const data = await ofetch(item.link!);
                 const $ = load(data);
-
-                item.author = $('.article-submit')
-                    .text()
-                    .match(/发布人：(.*)/)![1];
-                item.description = $('div[data-block-plugin-id="entity_field:node:body"]').html() + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? '');
-                return item;
-            })
-        )
+                return {
+                    author: $('.article-submit')
+                        .text()
+                        .match(/发布人：(.*)/)?.[1],
+                    description: ($('div[data-block-plugin-id="entity_field:node:body"]').html() ?? '') + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? '') || undefined,
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

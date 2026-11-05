@@ -5,9 +5,9 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:url',
     name: 'Events',
-    url: 'lu.ma',
+    url: 'luma.com',
     maintainers: ['cxheng315'],
-    example: '/luma/yieldnest',
+    example: '/luma/singapore',
     categories: ['other'],
     parameters: {
         url: 'LuMa URL',
@@ -21,6 +21,10 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
+        {
+            source: ['luma.com/:url'],
+            target: '/:url',
+        },
         {
             source: ['lu.ma/:url'],
             target: '/:url',
@@ -73,20 +77,16 @@ async function handler(ctx) {
             }));
             break;
         default:
-            items = [
-                {
-                    title: 'Not Found',
-                    link: 'Not Found',
-                },
-            ];
-            break;
+            throw new Error('This Luma URL does not identify a calendar, event, or discovery page. Check the URL parameter.');
     }
 
+    const metadata = response.kind === 'event' ? response.data.event : (response.data.calendar ?? response.data.place);
+
     return {
-        title: response.data.calendar ? response.data.calendar.name : response.data.place.name,
+        title: metadata.name,
         description: response.data.place ? response.data.place.description : '',
         link: 'https://lu.ma/' + ctx.req.param('url'),
-        image: response.data.calendar ? response.data.calendar.cover_url : response.data.place.cover_url,
+        image: metadata.cover_url,
         item: items,
     };
 }

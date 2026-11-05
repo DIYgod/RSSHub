@@ -5,13 +5,14 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const targetUrl: string = new URL(`/topic/${id}`, rootUrl).href;
 
@@ -23,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     $('div.pagination').remove();
 
-    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
+    const author = $('meta[name="keywords"]').prop('content')?.split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {
@@ -31,7 +32,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').prop('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: feedImage,
         author,
         language: language as Language,

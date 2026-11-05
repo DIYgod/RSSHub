@@ -8,15 +8,19 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+const getPhotoDate = (caption: { preHeading?: string; title?: string }) => {
+    const date = caption.preHeading || caption.title?.match(/^[A-Z][a-z]+ \d{1,2}, \d{4}(?= \|)/)?.[0];
+    return date ? timezone(parseDate(date), 0) : undefined;
+};
 
 const renderDescription = (img) =>
     renderToString(
         <>
             <img src={img?.src} alt={img?.altText} />
             <br />
-            <h3>{img?.ttl ? raw(img.ttl) : null}</h3>
             <p>{img?.dsc ? raw(img.dsc) : null}</p>
-            <p>{img?.crdt ? raw(img.crdt) : null}</p>
         </>
     );
 
@@ -58,7 +62,7 @@ async function handler() {
         title: item.meta.title,
         description: renderDescription(item.img),
         link: rootUrl + item.locator,
-        pubDate: parseDate(item.caption.preHeading),
+        pubDate: getPhotoDate(item.caption),
         author: item.img.crdt,
     }));
 

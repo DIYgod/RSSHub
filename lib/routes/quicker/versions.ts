@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+
+import { parseDateText } from './utils';
 
 export const route: Route = {
     path: '/versions',
@@ -36,7 +37,7 @@ async function handler() {
                 title: a.text().trim(),
                 link: `${rootUrl}${a.attr('href')}`,
                 description: $item.find('.article-content').html(),
-                pubDate: parseDate($item.find('.text-secondary').first().text()),
+                pubDate: parseDateText($item.find('.text-secondary').first().text()),
             };
         });
 

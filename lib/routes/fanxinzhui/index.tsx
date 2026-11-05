@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -26,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.fanxinzhui.com';
     const currentUrl = new URL('lastest', rootUrl).href;
@@ -36,7 +38,7 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(response);
 
     let items = $('a.la')
-        .slice(0, limit)
+        .slice(0, Math.max(30, limit))
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -53,67 +55,82 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+    const sorted = ctx.req.query('sorted') !== 'false';
+    const allDated = items.every((item) => Number.isFinite(item.pubDate.getTime()));
+    if (sorted && allDated) {
+        items = items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+    if (!sorted || allDated) {
+        items = items.slice(0, limit);
+    }
 
-                const content = load(detailResponse);
+    const links = [...new Set(items.map((item) => item.link))];
+    const details = new Map(
+        await pMap(
+            links,
+            async (link) => {
+                const detail = await cache.tryGet(`${link}#article`, async () => {
+                    const { data: detailResponse } = await got(link);
 
-                let author: string | undefined;
-                let category: string[] = [];
+                    const content = load(detailResponse);
 
-                content('div.info ul li').each((_, el) => {
-                    const $el = content(el);
+                    let author: string | undefined;
+                    let category: string[] = [];
 
-                    const key = $el.find('span').text().split(/:/, 1)[0];
-                    const value = $el.contents().last().text().trim();
+                    content('div.info ul li').each((_, el) => {
+                        const $el = content(el);
 
-                    if (key === '类型') {
-                        category = [...category, ...value.split(/\//)];
-                    } else if (key === '首播日期') {
-                        return;
-                    } else {
-                        author = `${author ? `${author}/` : ''}${value}`;
-                        category = [...category, ...value.split(/\//)].filter((c) => c !== '等');
-                    }
+                        const key = $el.find('span').text().split(/:/, 1)[0];
+                        const value = $el.contents().last().text().trim();
+
+                        if (key === '类型') {
+                            category = [...category, ...value.split(/\//)];
+                        } else if (key === '首播日期') {
+                            return;
+                        } else {
+                            author = `${author ? `${author}/` : ''}${value}`;
+                        }
+                    });
+
+                    content('div.image').each((_, el) => {
+                        const $el = content(el);
+
+                        const image = $el.find('img').prop('src');
+
+                        $el.replaceWith(
+                            renderDescription(
+                                image
+                                    ? [
+                                          {
+                                              src: image.replace(/@\d+,\d+\.\w+$/, ''),
+                                              alt: content('div.resource_title h2').text(),
+                                          },
+                                      ]
+                                    : undefined
+                            )
+                        );
+                    });
+
+                    content('a.password').each((_, el) => {
+                        const $el = content(el);
+
+                        $el.replaceWith($el.text());
+                    });
+
+                    content('div.resource_title, div.info ul').remove();
+
+                    return {
+                        author,
+                        category,
+                        description: content('div.middle_box').html(),
+                    };
                 });
-
-                content('div.image').each((_, el) => {
-                    const $el = content(el);
-
-                    const image = $el.find('img').prop('src');
-
-                    $el.replaceWith(
-                        renderDescription(
-                            image
-                                ? [
-                                      {
-                                          src: image.replace(/@\d+,\d+\.\w+$/, ''),
-                                          alt: content('div.resource_title h2').text(),
-                                      },
-                                  ]
-                                : undefined
-                        )
-                    );
-                });
-
-                content('a.password').each((_, el) => {
-                    const $el = content(el);
-
-                    $el.replaceWith($el.text());
-                });
-
-                return {
-                    ...item,
-                    author,
-                    category,
-                    description: content('div.middle_box').html(),
-                    enclosure_url: content('p.way span a').prop('href'),
-                };
-            })
+                return [link, detail] as const;
+            },
+            { concurrency: 3 }
         )
     );
+    items = items.map((item) => ({ ...item, ...details.get(item.link) }));
 
     const title = $('title').text();
     const image = new URL($('img.logo').prop('src')!, rootUrl).href;
@@ -126,7 +143,6 @@ async function handler(ctx: Context): Promise<Data> {
         language: 'zh',
         image,
         author: title.split(/_/).pop(),
-        allowEmpty: true,
     };
 }
 

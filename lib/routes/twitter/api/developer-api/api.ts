@@ -6,7 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 
-import { getTwitterUserCacheKey } from '../../utils';
+import { getTwitterUserCacheKey, TWITTER_USER_CACHE_EXPIRE } from '../../utils';
 
 interface ClientWrapper {
     client: TwitterApiReadOnly;
@@ -52,6 +52,7 @@ interface LegacyTweet {
     full_text: string;
     text: string;
     created_at?: string;
+    favorite_count?: number;
     entities: {
         urls: Array<{ url: string; expanded_url: string; display_url: string }>;
         hashtags: Array<{ text: string }>;
@@ -67,7 +68,9 @@ interface LegacyTweet {
     in_reply_to_status_id_str?: string;
     in_reply_to_screen_name?: string;
     retweeted_status?: LegacyTweet;
+    is_quote_status?: boolean;
     quoted_status?: LegacyTweet;
+    in_reply_to_status?: LegacyTweet;
 }
 
 type DevApiParams = Record<string, string | number | boolean | undefined>;
@@ -81,10 +84,7 @@ const appClients: ClientWrapper[] = [];
 let index = -1;
 
 const init = () => {
-    if (appClients.length) {
-        return;
-    }
-    if (!config.twitter.consumerKey || !config.twitter.consumerSecret) {
+    if (appClients.length || !config.twitter.consumerKey || !config.twitter.consumerSecret) {
         return;
     }
 
@@ -214,6 +214,7 @@ const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, c
         full_text: tweet.text,
         text: tweet.text,
         created_at: tweet.created_at,
+        favorite_count: tweet.public_metrics?.like_count,
         entities: {
             urls: mapUrlsToLegacy(tweet.entities?.urls),
             hashtags: mapHashtagsToLegacy(tweet.entities?.hashtags),
@@ -246,10 +247,12 @@ const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, c
                 break;
 
             case 'quoted':
+                legacy.is_quote_status = true;
                 legacy.quoted_status = mappedReferenced;
                 break;
 
             case 'replied_to': {
+                legacy.in_reply_to_status = mappedReferenced;
                 legacy.in_reply_to_status_id_str = reference.id;
                 legacy.in_reply_to_user_id_str = referenced.author_id;
                 const replyUser = users.get(referenced.author_id!);
@@ -275,14 +278,18 @@ const mapTweetResponseToLegacy = (response: TweetsV2Response) => {
 };
 
 const getUserData = (id: string) =>
-    cache.tryGet(`twitter-userdata-${id}`, async () => {
-        const client = await getAppClient();
-        const params = {
-            'user.fields': 'profile_image_url,description,verified,url',
-        };
-        const response = id.startsWith('+') ? await client.v2.user(id.slice(1), params) : await client.v2.userByUsername(id, params);
-        return mapUserToLegacy(response?.data) ?? '';
-    });
+    cache.tryGet(
+        `twitter-userdata-${id}`,
+        async () => {
+            const client = await getAppClient();
+            const params = {
+                'user.fields': 'profile_image_url,description,verified,url',
+            };
+            const response = id.startsWith('+') ? await client.v2.user(id.slice(1), params) : await client.v2.userByUsername(id, params);
+            return mapUserToLegacy(response?.data) ?? '';
+        },
+        TWITTER_USER_CACHE_EXPIRE
+    );
 
 const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operationName: string, func: (id: string, params?: DevApiParams) => Promise<LegacyTweet[]>) => {
     const userData: any = await getUserData(_id);
@@ -295,16 +302,34 @@ const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operat
 };
 
 const getUserTimeline = async (id: string, params?: DevApiParams, options: DevApiParams = {}) => {
+    const count = Number(params?.count ?? 20);
+    const snapshotKey = `twitter:developer-timeline:${id}:${count}:${JSON.stringify(options)}`;
+    const stored = await cache.get(snapshotKey, false);
+    const previous: LegacyTweet[] = stored ? JSON.parse(stored) : [];
+    let newestId = '0';
+    for (const tweet of previous) {
+        if (BigInt(tweet.id_str) > BigInt(newestId)) {
+            newestId = tweet.id_str;
+        }
+    }
     const client = await getAppClient();
     const response = await client.v2.get(`users/${id}/tweets`, {
-        max_results: params?.count ?? 20,
+        max_results: count,
+        ...(newestId !== '0' && { since_id: newestId }),
         expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-        'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+        'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
         'user.fields': 'username,name,profile_image_url,description',
         'media.fields': 'preview_image_url,url,type,width,height,variants',
         ...options,
     });
-    return mapTweetResponseToLegacy(response);
+    const tweets = [...mapTweetResponseToLegacy(response), ...previous]
+        .filter((tweet, index, all) => all.findIndex((candidate) => candidate.id_str === tweet.id_str) === index)
+        .toSorted((a, b) => (BigInt(a.id_str) > BigInt(b.id_str) ? -1 : 1))
+        .slice(0, count);
+    if (tweets.length) {
+        await cache.set(snapshotKey, JSON.stringify(tweets), config.cache.contentExpire);
+    }
+    return tweets;
 };
 
 const getUserTweets = (id: string, params?: DevApiParams) => cacheTryGet(id, params, 'getUserTweets', (id, params = {}) => getUserTimeline(id, params, { exclude: 'replies' }));
@@ -323,7 +348,7 @@ const getUserLikes = (id: string, params?: DevApiParams) =>
         const response = await client.v2.get(`users/${id}/liked_tweets`, {
             max_results: params.count ?? 20,
             expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
             'user.fields': 'username,name,profile_image_url,description',
             'media.fields': 'preview_image_url,url,type,width,height,variants',
         });
@@ -339,7 +364,7 @@ const getUserTweet = (id: string, params?: DevApiParams) =>
         }
         const response = await client.v2.get(`tweets/${tweetId}`, {
             expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
             'user.fields': 'username,name,profile_image_url,description',
             'media.fields': 'preview_image_url,url,type,width,height,variants',
         });
@@ -355,7 +380,7 @@ const getSearch = (keywords: string, params?: DevApiParams) =>
                 query: keywords,
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });
@@ -373,7 +398,7 @@ const getList = (id: string, params?: DevApiParams) =>
             const response = await client.v2.get(`lists/${id}/tweets`, {
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });
@@ -394,7 +419,7 @@ const getHomeTimeline = (_id: string, params?: DevApiParams) =>
             const response = await client.v2.get(`users/${_id}/timelines/reverse_chronological`, {
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });

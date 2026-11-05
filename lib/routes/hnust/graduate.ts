@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -26,6 +27,9 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type = 'sszs' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid type: expected sszs or bszs.');
+    }
     const base = 'https://graduate.hnust.edu.cn/zsgz/' + (Object.hasOwn(map, type) ? map[type] : map.sszs);
     const link = `${base}index.htm`;
     const response = await ofetch(link);
@@ -40,9 +44,8 @@ async function handler(ctx: Context) {
 
             return {
                 title,
-                description: title,
                 pubDate: timezone(parseDate(date), 8),
-                link: base + $item.find('a').attr('href'),
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 

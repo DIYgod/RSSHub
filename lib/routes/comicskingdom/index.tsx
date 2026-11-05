@@ -1,10 +1,7 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,50 +31,28 @@ async function handler(ctx) {
     const baseURL = 'https://comicskingdom.com';
     const name = ctx.req.param('name');
     const url = `${baseURL}/${name}/archive`;
-    const { data } = await got(url);
-
-    const $ = load(data);
-
-    // Determine Comic and Author from main page
-    const comic = $('title').text().replace('Comics Kingdom - ', '').trim();
-    const author = $('.feature-title h2').text();
-
-    // Find the links for all non-archived items
-    const links = $('div.tile')
-        .toArray()
-        .map((el) => $(el).find('a').first().attr('href'));
-
-    if (links.length === 0) {
-        throw new InvalidParameterError(`Comic Not Found - ${name}`);
-    }
-    const items = await Promise.all(
-        links.map((link) =>
-            cache.tryGet(link!, async () => {
-                const detailResponse = await got(link);
-                const content = load(detailResponse.data);
-
-                const title = content('meta[property="og:description"]').attr('content');
-                const image = content('meta[property="og:image"]').attr('content');
-                const description = renderToString(<img src={image} />);
-                // Pull the date out of the URL
-                const pubDate = parseDate(link!.slice(link!.lastIndexOf('/') + 1), 'YYYY-MM-DD');
-
-                return {
-                    title: title!,
-                    author,
-                    category: 'comic',
-                    description,
-                    pubDate,
-                    link,
-                };
-            })
-        )
-    );
+    const comics = await ofetch('https://wp.comicskingdom.com/wp-json/wp/v2/ck_comic', {
+        query: {
+            ck_feature: name,
+            per_page: 75,
+            page: 1,
+            order: 'desc',
+        },
+    });
+    const items = comics
+        .filter((comic) => new URL(comic.link).pathname.startsWith(`/${name}/`))
+        .map((comic) => ({
+            title: comic.title.rendered,
+            author: comic.ck_comic_byline.replace(/^By\s+/, ''),
+            category: 'comic',
+            description: renderToString(<img src={comic.assets.single.url} alt={comic.assets.single.altText} />),
+            pubDate: parseDate(`${comic.date_gmt}Z`),
+            link: new URL(new URL(comic.link).pathname, baseURL).href,
+        }));
 
     return {
-        title: comic,
+        title: comics[0]?.ck_comic_feature_name || name,
         link: url,
-        image: $('.feature-logo').attr('src'),
         item: items,
         language: 'en-us' as const satisfies Language,
     };

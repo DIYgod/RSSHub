@@ -33,7 +33,8 @@ async function handler(): Promise<Data> {
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = a.find('span');
-            const pubDate = timezone(parseDate(date.text(), 'YYYY.MM.DD'), 8);
+            const dateText = date.text().trim();
+            const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY.MM.DD'), 8) : undefined;
             date.remove();
             return {
                 title: a.text(),

@@ -17,10 +17,26 @@ type VideoEmbed = {
     playlist?: string;
 };
 
+type QuotedRecord = {
+    $type?: string;
+    uri?: string;
+    author?: {
+        handle: string;
+        displayName?: string;
+    };
+    value?: {
+        text?: string;
+    };
+    embeds?: Embed[];
+    record?: QuotedRecord;
+};
+
 type Embed = {
     $type?: string;
     images?: ImageEmbed[];
     external?: ExternalEmbed;
+    record?: QuotedRecord;
+    media?: Embed;
 } & VideoEmbed;
 
 type PostProps = {
@@ -31,12 +47,14 @@ type PostProps = {
 export const renderPost = ({ text, embed }: PostProps): string =>
     renderToString(
         <>
-            {text ? (
-                <>
-                    {raw(text)}
-                    <br />
-                </>
-            ) : null}
+            {text
+                ? text.split('\n').map((line) => (
+                      <>
+                          {line}
+                          <br />
+                      </>
+                  ))
+                : null}
             {embed ? (
                 <>
                     {embed.$type === 'app.bsky.embed.images#view' ? (
@@ -60,8 +78,31 @@ export const renderPost = ({ text, embed }: PostProps): string =>
                             <br />
                             {embed.external?.description}
                         </a>
+                    ) : embed.$type === 'app.bsky.embed.record#view' ? (
+                        renderQuotedRecord(embed.record)
+                    ) : embed.$type === 'app.bsky.embed.recordWithMedia#view' ? (
+                        <>
+                            {raw(renderPost({ embed: embed.media }))}
+                            {renderQuotedRecord(embed.record?.record)}
+                        </>
                     ) : null}
                 </>
             ) : null}
         </>
     );
+
+function renderQuotedRecord(record?: QuotedRecord) {
+    if (record?.$type !== 'app.bsky.embed.record#viewRecord' || !record.uri?.includes('/app.bsky.feed.post/') || !record.author?.handle || typeof record.value?.text !== 'string') {
+        return null;
+    }
+
+    const link = `https://bsky.app/profile/${record.author.handle}/post/${record.uri.split('/').pop()}`;
+    return (
+        <blockquote>
+            <a href={link}>{record.author.displayName || record.author.handle}</a>
+            <br />
+            {raw(renderPost({ text: record.value.text }))}
+            {record.embeds?.map((embed) => raw(renderPost({ embed })))}
+        </blockquote>
+    );
+}

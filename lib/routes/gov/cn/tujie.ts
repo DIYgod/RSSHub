@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -29,10 +30,10 @@ const config = {
 
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
-    const cfg = config[caty];
-    if (!cfg) {
-        throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-tu-jie">docs</a>');
+    if (!Object.hasOwn(config, caty)) {
+        throw new InvalidParameterError('caty must be zhengce.');
     }
+    const cfg = config[caty];
 
     const currentUrl = cfg.link;
     const response = await ofetch(currentUrl);

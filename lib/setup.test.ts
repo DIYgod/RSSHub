@@ -1,7 +1,17 @@
 // oxlint-disable unicorn-js/no-useless-template-literals
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
+import { FormData, Headers, Request, Response } from 'undici';
 import { afterAll, afterEach } from 'vitest';
+
+Object.defineProperties(globalThis, {
+    Headers: { value: Headers, writable: true, configurable: true },
+    FormData: { value: FormData, writable: true, configurable: true },
+    Request: { value: Request, writable: true, configurable: true },
+    Response: { value: Response, writable: true, configurable: true },
+});
+// load msw after setting up the undici globals
+const { HttpRequestInterceptor } = await import('@mswjs/interceptors/http');
+const { http, HttpResponse } = await import('msw');
+const { defineNetwork, InterceptorSource } = await import('msw/experimental');
 
 const genWeChatMpPage = (rich_media_content: string, scripts: string[] | string) => {
     if (!Array.isArray(scripts)) {
@@ -26,25 +36,27 @@ ${script}
     return pageHtml;
 };
 
-const server = setupServer(
-    http.post('https://api.openai.mock/v1/chat/completions', () =>
-        HttpResponse.json({
-            choices: [
-                {
-                    message: {
-                        content: 'AI processed content.',
+const server = defineNetwork({
+    sources: [new InterceptorSource({ interceptors: [new HttpRequestInterceptor()] })],
+    handlers: [
+        http.post('https://api.openai.mock/v1/chat/completions', () =>
+            HttpResponse.json({
+                choices: [
+                    {
+                        message: {
+                            content: 'AI processed content.',
+                        },
                     },
-                },
-            ],
-        })
-    ),
-    http.get('http://rsshub.test/config', () =>
-        HttpResponse.json({
-            UA: 'test',
-        })
-    ),
-    http.get('http://rsshub.test/buildData', () =>
-        HttpResponse.text(`<div class="content">
+                ],
+            })
+        ),
+        http.get('http://rsshub.test/config', () =>
+            HttpResponse.json({
+                UA: 'test',
+            })
+        ),
+        http.get('http://rsshub.test/buildData', () =>
+            HttpResponse.text(`<div class="content">
             <ul>
                 <li>
                     <a href="/1">1</a>
@@ -58,16 +70,16 @@ const server = setupServer(
                 </li>
             </ul>
         </div>`)
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/appMsg', () =>
-        HttpResponse.text(
-            genWeChatMpPage(
-                `
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/appMsg', () =>
+            HttpResponse.text(
+                genWeChatMpPage(
+                    `
 description
 <iframe class="video_iframe rich_pages" data-ratio="1.7777777777777777" data-w="864"data-src="https://v.qq.com/rsshub_test/?vid=fake"></iframe>
 <mpvoice name="title" voice_encode_fileid="rsshub_test"></mpvoice>
 `,
-                `
+                    `
 var item_show_type = "0";
 var real_item_show_type = "0";
 var appmsg_type = "9";
@@ -81,12 +93,12 @@ window.ip_wording = {
   cityName: '',
   cityId: ''
 };`
+                )
             )
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/original_empty', () =>
-        HttpResponse.text(
-            `<meta name="description" content="summary" />
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/original_empty', () =>
+            HttpResponse.text(
+                `<meta name="description" content="summary" />
 <meta name="author" content="author" />
 <meta property="og:title" content="title" />
 <meta property="og:image" content="https://mmbiz.qpic.cn/rsshub_test/og_img_1/0?wx_fmt=jpeg" />
@@ -101,44 +113,44 @@ var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";
 </script>`
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/original_source', () =>
-        HttpResponse.text(
-            genWeChatMpPage(
-                'original content',
-                `
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/original_source', () =>
+            HttpResponse.text(
+                genWeChatMpPage(
+                    'original content',
+                    `
 var item_show_type = "0";
 var real_item_show_type = "0";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+                )
             )
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/original_long', () =>
-        HttpResponse.text(
-            genWeChatMpPage(
-                'long-content-'.repeat(10),
-                `
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/original_long', () =>
+            HttpResponse.text(
+                genWeChatMpPage(
+                    'long-content-'.repeat(10),
+                    `
 var item_show_type = "0";
 var real_item_show_type = "0";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+                )
             )
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/img', () =>
-        HttpResponse.text(
-            genWeChatMpPage('fake_description', [
-                `
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/img', () =>
+            HttpResponse.text(
+                genWeChatMpPage('fake_description', [
+                    `
 var item_show_type = "8";
 var real_item_show_type = "8";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 `,
-                `
+                    `
 window.picture_page_info_list = [
 {
   cdn_url: 'https://mmbiz.qpic.cn/rsshub_test/fake_img_1/0?wx_fmt=jpeg',
@@ -148,19 +160,19 @@ window.picture_page_info_list = [
 },
 ].slice(0, 20);
 `,
-            ])
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/audio', () =>
-        HttpResponse.text(
-            genWeChatMpPage('fake_description', [
-                `
+                ])
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/audio', () =>
+            HttpResponse.text(
+                genWeChatMpPage('fake_description', [
+                    `
 var item_show_type = "7";
 var real_item_show_type = "7";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 `,
-                `
+                    `
 reportOpt = {
   voiceid: "",
   uin: "",
@@ -173,45 +185,45 @@ window.cgiData = {
   duration: "6567" * 1,
 };
 `,
-            ])
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/video', () =>
-        HttpResponse.text(
-            genWeChatMpPage(
-                'fake_description',
-                `
+                ])
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/video', () =>
+            HttpResponse.text(
+                genWeChatMpPage(
+                    'fake_description',
+                    `
 var item_show_type = "5";
 var real_item_show_type = "5";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 `
+                )
             )
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/rsshub_test/fallback', () =>
-        HttpResponse.text(
-            genWeChatMpPage(
-                'fake_description',
-                `
+        ),
+        http.get('https://mp.weixin.qq.com/rsshub_test/fallback', () =>
+            HttpResponse.text(
+                genWeChatMpPage(
+                    'fake_description',
+                    `
 var item_show_type = "99988877";
 var real_item_show_type = "99988877";
 var appmsg_type = "9";
 var ct = "${1_636_626_300}";
 `
+                )
             )
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/s/rsshub_test', () => HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback')),
-    http.get('https://mp.weixin.qq.com/s', ({ request }) => {
-        const url = new URL(request.url);
-        if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
-            return HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback');
-        }
-    }),
-    http.get('https://mp.weixin.qq.com/mp/rsshub_test/waf', () =>
-        HttpResponse.text(
-            `<html>
+        ),
+        http.get('https://mp.weixin.qq.com/s/rsshub_test', () => HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback')),
+        http.get('https://mp.weixin.qq.com/s', ({ request }) => {
+            const url = new URL(request.url);
+            if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
+                return HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback');
+            }
+        }),
+        http.get('https://mp.weixin.qq.com/mp/rsshub_test/waf', () =>
+            HttpResponse.text(
+                `<html>
 <head>
 <title>Title</title>
 <script>console.log</script>
@@ -235,12 +247,12 @@ var ct = "${1_636_626_300}";
     </div>
 </div>
 </body></html>`
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/s/rsshub_test_hit_waf', () => HttpResponse.redirect('https://mp.weixin.qq.com/mp/rsshub_test/waf')),
-    http.get('https://mp.weixin.qq.com/s/unknown_page', () =>
-        HttpResponse.text(
-            `<html>
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/s/rsshub_test_hit_waf', () => HttpResponse.redirect('https://mp.weixin.qq.com/mp/rsshub_test/waf')),
+        http.get('https://mp.weixin.qq.com/s/unknown_page', () =>
+            HttpResponse.text(
+                `<html>
 <head>
 <title>Title</title>
 <script>console.log</script>
@@ -252,11 +264,11 @@ var ct = "${1_636_626_300}";
 Unknown paragraph
 </p>
 </body></html>`
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/s/deleted_page', () =>
-        HttpResponse.text(
-            `<html>
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/s/deleted_page', () =>
+            HttpResponse.text(
+                `<html>
 <head>
 <title>Title</title>
 <script>console.log</script>
@@ -268,29 +280,32 @@ Unknown paragraph
 该内容已被发布者删除
 </p>
 </body></html>`
-        )
-    ),
-    http.get('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location', () => HttpResponse.text('', { status: 302 })),
-    http.get('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect', () => HttpResponse.redirect('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')),
-    http.get('http://rsshub.test/headers', ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
-    http.post('http://rsshub.test/form-post', async ({ request }) => {
-        const formData = await request.formData();
-        return HttpResponse.json({
-            test: formData.get('test'),
-            req: { headers: Object.fromEntries(request.headers.entries()) },
-        });
-    }),
-    http.post<never, { test: string }>('http://rsshub.test/json-post', async ({ request }) => {
-        const jsonData = await request.json();
-        return HttpResponse.json({
-            test: jsonData?.test,
-        });
-    }),
-    http.get('http://rsshub.test/rss', () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
-);
-server.listen({ onUnhandledRequest: 'bypass' });
+            )
+        ),
+        http.get('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location', () => HttpResponse.text('', { status: 302 })),
+        http.get('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect', () => HttpResponse.redirect('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')),
+        http.get('http://rsshub.test/headers', ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
+        http.post('http://rsshub.test/form-post', async ({ request }) => {
+            const formData = await request.formData();
+            return HttpResponse.json({
+                test: formData.get('test'),
+                req: { headers: Object.fromEntries(request.headers.entries()) },
+            });
+        }),
+        http.post<never, { test: string }>('http://rsshub.test/json-post', async ({ request }) => {
+            const jsonData = await request.json();
+            return HttpResponse.json({
+                test: jsonData?.test,
+            });
+        }),
+        http.get('http://rsshub.test/rss', () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>')),
+    ],
+    onUnhandledFrame: 'bypass',
+    context: { quiet: true },
+});
+server.enable();
 
-afterAll(() => server.close());
+afterAll(() => server.disable());
 afterEach(() => server.resetHandlers());
 
 export default server;

@@ -1,11 +1,23 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+interface NewsArticle {
+    id: string;
+    title_en: string;
+    title_cn: string;
+    published_at: string;
+    category: { name: string };
+    exam_level: { name: string };
+    sbay_level: { name: string };
+    source: { name_en: string; name_cn: string };
+}
 
 const categories = {
     aaaaa: '全部',
@@ -49,6 +61,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { category = 'aaaaa' } = ctx.req.param();
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(Math.floor(requestedLimit)) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;
     const apiUrl = 'https://apiv3.shanbay.com';
     const baseUrl = 'https://web.shanbay.com/reading/web-news';
     const headers = {
@@ -67,13 +81,20 @@ async function handler(ctx: Context) {
             sbay_level_id: 'aaaaa',
             category_id: category,
             page: 1,
-            ipp: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15,
+            ipp: limit,
         },
     });
 
-    const items = await Promise.all(
-        response.objects.map((article) =>
-            cache.tryGet(`${baseUrl}/articles/${article.id}`, async () => {
+    const articles: NewsArticle[] = response.objects.slice(0, limit);
+    const items = await pMap(
+        articles,
+        async (article) => ({
+            title: `${article.title_en} | ${article.title_cn}`,
+            link: `${baseUrl}/articles/${article.id}`,
+            pubDate: timezone(parseDate(article.published_at), 8),
+            category: [article.category.name, article.exam_level.name, article.sbay_level.name],
+            author: `${article.source.name_en} (${article.source.name_cn})`,
+            ...(await cache.tryGet(`${baseUrl}/articles/${article.id}`, async () => {
                 const detail = await ofetch(`${apiUrl}/news/articles/${article.id}`);
                 const $ = load(detail.content, { xmlMode: true });
 
@@ -92,16 +113,10 @@ async function handler(ctx: Context) {
                     })
                     .join('');
 
-                return {
-                    title: `${article.title_en} | ${article.title_cn}`,
-                    description,
-                    link: `${baseUrl}/articles/${article.id}`,
-                    pubDate: timezone(parseDate(article.published_at), 8),
-                    category: [article.category.name, article.exam_level.name, article.sbay_level.name],
-                    author: `${article.source.name_en} (${article.source.name_cn})`,
-                };
-            })
-        )
+                return { description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

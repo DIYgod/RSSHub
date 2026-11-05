@@ -37,18 +37,25 @@ async function handler(ctx) {
     const host = 'https://www.theatlantic.com';
     const category = ctx.req.param('category');
     const url = `${host}/${category}/`;
-    const response = await ofetch(url);
+    const init = await ofetch.raw(url, { minVersion: 'TLSv1.3', ignoreResponseError: true });
+    const headers = {
+        cookie: init.headers
+            .getSetCookie()
+            .find((c) => c.startsWith('__cf_bm='))!
+            .split(';', 1)[0],
+    };
+    const response = init.ok ? init._data : await ofetch(url, { minVersion: 'TLSv1.3', headers });
     const $ = load(response);
     const contents = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.urqlState;
-    const keyWithContent = Object.keys(contents).find((key) => contents[key].data.includes(category))!;
-    const data = JSON.parse(contents[keyWithContent].data);
-    let list = Object.values<any>(data)[0].river.edges;
-    list = list.filter((item) => !item.node.url.startsWith('https://www.theatlantic.com/photo'));
-    list = list.map((item) => {
-        const data = { link: item.node.url, pubDate: item.node.datePublished };
-        return data;
-    });
-    const items = await getArticleDetails(list);
+    const list = Object.values<any>(contents)
+        .map((content) => Object.values<any>(JSON.parse(content.data))[0])
+        .find((data) => data?.river)
+        .river.edges.filter((item) => !item.node.url.startsWith('https://www.theatlantic.com/photo/'))
+        .map((item) => {
+            const data = { link: item.node.url, pubDate: item.node.datePublished };
+            return data;
+        });
+    const items = await getArticleDetails(list, headers);
 
     return {
         title: `The Atlantic - ${category.toUpperCase()}`,

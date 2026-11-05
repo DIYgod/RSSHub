@@ -43,6 +43,8 @@ export const route: Route = {
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? '';
     const category = ctx.req.param('category') ?? 'figure';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
     if (language && !isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
@@ -58,7 +60,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('.item-icon, .picture-icon')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item).find('a');
@@ -117,7 +119,7 @@ const renderDescription = (pictures: Array<{ src?: string; w?: string; h?: strin
     renderToString(
         <>
             {pictures?.map((picture, index) => (
-                <img key={`${picture.src}-${index}`} src={picture.src} weight={picture.w} height={picture.h} />
+                <img key={`${picture.src}-${index}`} src={picture.src} width={picture.w} height={picture.h} />
             ))}
             {fields.length ? (
                 <table>

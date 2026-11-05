@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionData = {
     description?: string;
+    projectUrl?: string;
     image?: {
         src?: string;
         title?: string;
@@ -11,10 +12,12 @@ type DescriptionData = {
         asset_type?: string;
         player_embedded?: string;
         image_url?: string;
+        title?: string;
+        title_formatted?: string;
     }>;
 };
 
-const ArtstationDescription = ({ description, image, assets }: DescriptionData) => (
+const ArtstationDescription = ({ description, projectUrl, image, assets }: DescriptionData) => (
     <>
         {description ? (
             <>
@@ -23,27 +26,12 @@ const ArtstationDescription = ({ description, image, assets }: DescriptionData) 
             </>
         ) : null}
         {image ? <img src={image.src} alt={image.title} /> : null}
-        {assets?.map((asset) => {
-            if ((asset.asset_type === 'video' || asset.asset_type === 'video_clip') && asset.player_embedded) {
-                return (
-                    <>
-                        {raw(asset.player_embedded)}
-                        <br />
-                    </>
-                );
-            }
-
-            if (asset.asset_type === 'image' || asset.asset_type === 'cover') {
-                return (
-                    <>
-                        <img src={asset.image_url} />
-                        <br />
-                    </>
-                );
-            }
-
-            return null;
-        })}
+        {assets?.map((asset) => (
+            <figure>
+                {asset.player_embedded ? raw(asset.player_embedded) : asset.image_url ? <img src={asset.image_url} /> : projectUrl ? <a href={projectUrl}>View artwork on ArtStation</a> : null}
+                {asset.title_formatted || asset.title ? <figcaption>{asset.title_formatted ? raw(asset.title_formatted) : asset.title}</figcaption> : null}
+            </figure>
+        ))}
     </>
 );
 

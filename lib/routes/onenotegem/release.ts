@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,7 +23,7 @@ async function handler() {
 
     const $ = load(response);
 
-    const list = $('.paragraph ul li a')
+    const list = $('.paragraph ul li a[href]')
         .slice(0, 10)
         .toArray()
         .map((item): DataItem => {
@@ -30,24 +31,32 @@ async function handler() {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href')}`,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`onenotegem:detail:v3:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 const title = content('h1.wsite-content-title');
+                const publishedAt = title
+                    .next()
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/)?.[0];
 
-                item.description = title.next().next().next().html();
-                item.pubDate = parseDate(title.next().text());
+                return {
+                    description: title.next().next().next().html(),
+                    pubDate: publishedAt ? parseDate(publishedAt, 'YYYY-MM-DD HH:mm') : undefined,
+                };
+            });
 
-                return item;
-            })
-        )
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

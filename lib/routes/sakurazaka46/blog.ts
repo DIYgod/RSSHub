@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -10,7 +11,10 @@ export const route: Route = {
     path: '/blog/:id?/:page?',
     categories: ['new-media'],
     example: '/sakurazaka46/blog',
-    parameters: { id: 'Member ID, see below, `all` by default', page: 'Page, `0` by default' },
+    parameters: {
+        id: 'Member ID, see below, `all` by default',
+        page: { description: 'Compatibility parameter; only the first page is fetched.', default: '0', options: [{ value: '0', label: 'First page' }] },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,7 +23,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Sakurazaka46 Blog 櫻坂 46 博客',
+    name: '博客',
     maintainers: ['victor21813', 'nczitzk', 'AkashiGakki'],
     handler,
     description: `Member ID
@@ -64,7 +68,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'all';
-    const page = ctx.req.param('page') ?? '0';
+    const page = '0';
 
     const rootUrl = 'https://sakurazaka46.com';
     const params = id === 'all' ? `?page=${page}` : `?page=${page}&ct=${id}`;
@@ -83,14 +87,15 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.text(),
+                title: $item.find('.title').text(),
                 author: $item.find('.name').text(),
                 link: `${rootUrl}${$item.attr('href')!.split('?', 1)[0]}`,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -103,12 +108,12 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('.blog-foot .date').text()), 9);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        title: `${$('title').text()}${id ? ` - ${$('.name').first().text()}` : ''}`,
+        title: `${$('title').text()}${id === 'all' ? '' : ` - ${$('.name').first().text()}`}`,
         link: currentUrl,
         item: items,
     };

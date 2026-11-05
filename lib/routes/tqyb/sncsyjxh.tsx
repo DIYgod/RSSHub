@@ -3,7 +3,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://www.tqyb.com.cn';
 
@@ -31,6 +30,14 @@ export const route: Route = {
     url: 'www.tqyb.com.cn/gz/weatherAlarm/otherCity/',
 };
 
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(`${value} +08:00`, 'YYYY年MM月DD日 HH:mm Z');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
 async function handler() {
     const sncsyjxhJsUrl = `${rootUrl}/data/gzWeather/otherCityAlarm.js`;
 
@@ -52,12 +59,10 @@ async function handler() {
                 <text>地区： {item.cname} </text>
                 <br />
                 <text>等级： {item.sigtypename} </text>
-                <br />
-                <text>发布时间：{item.datetime}</text>
             </>
         ),
-        pubDate: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8),
-        guid: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8) + item.cname + item.sigtypename,
+        pubDate: parsePubDate(item.datetime),
+        guid: `weather-alert:${item.obtid}:${item.signame}:${item.sigcolor}:${item.datetime}`,
     }));
 
     return {

@@ -56,7 +56,13 @@ export const route: Route = {
         const feedDesc = $('.content > p').first().text();
         const itemSlugs = $('#main-content article.item-list > h2 a')
             .toArray()
-            .map((link) => new URL($(link).attr('href') || '').pathname.slice(1, -1));
+            .map((link) => $(link).attr('href'))
+            .filter((href): href is string => Boolean(href))
+            .map((href) => new URL(href, topLink).pathname.slice(1, -1))
+            .filter(Boolean);
+        if (!itemSlugs.length) {
+            throw new Error(`No ranked posts were found at ${topLink}. Check whether the ranking has entries.`);
+        }
         const searchParams = new URLSearchParams();
         searchParams.set('slug', itemSlugs.join(','));
         searchParams.set('per_page', itemSlugs.length.toString());

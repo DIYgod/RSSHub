@@ -19,7 +19,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.bnext.com.tw'],
-            target: '/bnext',
+            target: '/',
         },
     ],
     name: '最新文章',

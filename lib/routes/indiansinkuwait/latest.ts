@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -40,24 +41,26 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             return {
-                title: $item.find('.content-heading h6 a').text().trim(),
-                link: baseUrl + $item.find('a').attr('href'),
+                title: $item.find('.content-heading h6 a').text(),
+                link: new URL($item.find('a').attr('href')!, `${baseUrl}/latest-news`).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.pubDate = parseDate($('#ctl00_ContentPlaceHolder1_SpanAuthor').text());
+                const date = $('#ctl00_ContentPlaceHolder1_SpanAuthor').text();
+                item.pubDate = date ? parseDate(`${date} GMT`) : undefined;
                 $('#newsdetails h3, #ctl00_ContentPlaceHolder1_SpanAuthor, .noprint, [id^=div-gpt-ad]').remove();
                 item.description = $('#newsdetails').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

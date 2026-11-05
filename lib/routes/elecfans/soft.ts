@@ -21,7 +21,8 @@ export const route: Route = {
     name: '资料',
     radar: [
         {
-            source: ['www.elecfans.com'],
+            source: ['www.elecfans.com/soft/:atype'],
+            target: '/soft/:atype',
         },
     ],
     maintainers: ['tian051011'],

@@ -7,6 +7,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { fixArticleContent } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/edu/:caty',
@@ -47,7 +48,7 @@ const config = {
         title: '公示公告',
     },
     jyzcfg: {
-        link: '/zwgknew/jyzcfg/index.html',
+        link: '/zwgknew/jyzcfg/zc/index.html',
         title: '教育政策法规',
     },
     zcjd: {
@@ -59,7 +60,7 @@ const config = {
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
     const cfg = config[caty];
-    if (!cfg) {
+    if (!Object.hasOwn(config, caty)) {
         throw new InvalidParameterError('Bad category. See docs');
     }
 
@@ -74,23 +75,28 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($(item).find('span.time').text()), 8),
+                pubDate: getPublicationDate($(item).find('span.time').text()),
             };
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
+                const article = await getWechatArticle(item.link!);
+                return { ...item, ...article, pubDate: article.pubDate ?? item.pubDate };
+            }
+            return cache.tryGet(item.link!, async () => {
                 if (!new URL(item.link!).hostname.endsWith('.gd.gov.cn')) {
                     return item;
                 }
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
                 item.description = content('div.article').html();
-                item.pubDate = timezone(parseDate(content('div.message span.time').text().replace('时间：', '')), 8);
+                item.author = content('meta[name="ContentSource"]').attr('content');
+                item.pubDate = getPublicationDate(content('div.message span.time').text().replace('时间：', '')) ?? getPublicationDate(content('meta[name="PubDate"]').attr('content')) ?? item.pubDate;
                 return item;
-            })
-        )
+            });
+        })
     );
 
     return {
@@ -98,4 +104,35 @@ async function handler(ctx: Context) {
         link: currentUrl,
         item: items,
     };
+}
+
+function getPublicationDate(dateText: string | undefined) {
+    const date = dateText ? parseDate(dateText) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+}
+
+function getWechatArticle(link: string) {
+    // Older route caches contain only list metadata under the raw article URL.
+    return cache.tryGet(`${link}:gov-gd-wechat`, async () => {
+        const response = await ofetch<string, 'text'>(link, { responseType: 'text' });
+        const $ = load(response);
+        const content = $('#js_content');
+        if (!content.length) {
+            throw new Error(`WeChat article content is unavailable: ${link}`);
+        }
+        content.find('iframe[data-src]').each((_, iframe) => {
+            const element = $(iframe);
+            const src = element.attr('data-src');
+            if (src && new URL(src).hostname === 'mp.weixin.qq.com') {
+                element.attr('src', src).removeAttr('data-src');
+            }
+        });
+        const timestamp = response.match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)?.[1];
+        const pubDate = timestamp ? parseDate(Number(timestamp) * 1000) : undefined;
+        return {
+            description: fixArticleContent(content),
+            author: $('meta[name="author"]').attr('content') || $('#js_name').text().trim() || undefined,
+            pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+        };
+    });
 }

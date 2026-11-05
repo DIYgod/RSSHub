@@ -77,8 +77,8 @@ Parsing of \`routeParams\` parameter:
         const rssTitle = routeParams.get('title') || $('title').text();
         const item = routeParams.get('item') || 'html';
         let items: DataItem[] = $(item)
-            .toArray()
             .slice(0, 20)
+            .toArray()
             .map((item) => {
                 try {
                     const $item = $(item);

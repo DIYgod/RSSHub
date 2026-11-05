@@ -29,7 +29,6 @@ async function handler() {
         },
     });
     const $ = load(response.data);
-
     const articlesLink = $('.post-info-box .post-thumb a')
         .toArray()
         .map((item): DataItem => ({

@@ -5,11 +5,12 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 export const handler = async (ctx): Promise<Data> => {
     const feed = await parser.parseURL('https://feed.iplaysoft.com');
-    const limit = Number(ctx.req.query('limit') || '20');
+    const limit = getRouteLimit(ctx, 20);
 
     const filteredItems = feed.items
         .map((item) => (item.title && item.link && item.pubDate && /.*\.iplaysoft\.com$/.test(new URL(item.link).hostname) ? { ...item, title: item.title, link: item.link, pubDate: item.pubDate } : null))
@@ -17,22 +18,23 @@ export const handler = async (ctx): Promise<Data> => {
         .slice(0, limit);
 
     const items = await Promise.all(
-        filteredItems.map((item) =>
-            cache.tryGet(item.link, async (): Promise<DataItem> => {
+        filteredItems.map(async (item): Promise<DataItem> => {
+            const description = await cache.tryGet(`iplaysoft:article:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
                 $('.entry-content').find('div[style*="overflow:hidden"]').remove();
 
-                return {
-                    title: item.title,
-                    description: $('.entry-content').html(),
-                    link: item.link,
-                    author: item.author,
-                    pubDate: parseDate(item.pubDate),
-                };
-            })
-        )
+                return $('.entry-content').html();
+            });
+            return {
+                title: item.title,
+                description,
+                link: item.link,
+                author: item.author ?? item.creator,
+                pubDate: parseDate(item.pubDate),
+            };
+        })
     );
 
     return {

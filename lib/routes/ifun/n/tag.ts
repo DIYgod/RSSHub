@@ -3,33 +3,26 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { author, language, processItems, rootUrl } from './util';
+import { apiRoot, author, getRecords, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
-    const targetUrl: string = new URL(`article-list/1?tagName=${name}`, rootUrl).href;
-    const apiUrl: string = new URL('api/articles/tagId', rootUrl).href;
-
-    const apiResponse = await ofetch(apiUrl, {
-        query: {
-            datasrc: 'tagid',
-            tagname: name,
-            current: 1,
-            size: limit,
-        },
+    const targetUrl = new URL(`tag/${encodeURIComponent(name)}`, rootUrl).href;
+    const apiResponse = await ofetch(`${apiRoot}/post/list/tag`, {
+        method: 'POST',
+        body: { current: 1, pageSize: limit, searchText: '', tag: name },
     });
-
-    const items: DataItem[] = processItems(apiResponse.data.records, limit);
+    const items: DataItem[] = processItems(getRecords(apiResponse), limit);
 
     return {
         title: `${author} - ${name}`,
         description: name,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author,
         language,
     };
@@ -38,18 +31,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
 export const route: Route = {
     path: '/n/tag/:name',
     name: '盐选故事专栏',
-    url: 'n.ifun.cool',
+    url: 'iread.life',
     maintainers: ['nczitzk'],
     handler,
     example: '/ifun/n/tag/zhihu',
     parameters: {
-        name: '专栏 id，可在对应专栏页 URL 中找到',
+        name: '故事集名称，可在对应故事集页 URL 的 /tag/ 后找到',
     },
-    description: `::: tip
-若订阅 [zhihu](https://n.ifun.cool/article-list/2?tagName=zhihu)，网址为 \`https://n.ifun.cool/article-list/2?tagName=zhihu\`，请截取 \`tagName\` 的值 \`zhihu\` 作为 \`name\` 参数填入，此时目标路由为 [\`/ifun/n/tag/zhihu\`](https://rsshub.app/ifun/n/tag/zhihu)。
-
-更多专栏请见 [盐选故事专栏](https://n.ifun.cool/tags)。
-:::`,
+    description: '例如 [zhihu 故事集](https://iread.life/tag/zhihu) 对应 `/ifun/n/tag/zhihu`。更多故事集请见 [iRead 故事集](https://iread.life/tag)。',
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -60,16 +49,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['n.ifun.cool/article-list/1'],
-            target: (_, url) => {
-                const urlObj = new URL(url);
-                const name = urlObj.searchParams.get('tagName');
-
-                return `/ifun/n/tag/${name}`;
-            },
-        },
-    ],
+    radar: [{ source: ['iread.life/tag/:name'], target: '/n/tag/:name' }],
     view: ViewType.Articles,
 };

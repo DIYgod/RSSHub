@@ -1,11 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const get_url = (caty) => `https://${caty}.ithome.com/`;
+import { parseSourceDate } from './utils';
+
+const getUrl = (caty) => `https://${caty}.ithome.com/`;
 
 const config = {
     it: {
@@ -59,15 +62,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const cfg = config[ctx.req.param('caty')];
-    if (!cfg) {
+    const category = ctx.req.param('caty');
+    if (!Object.hasOwn(config, category)) {
         throw new InvalidParameterError('Bad category. See <a href="https://docs.rsshub.app/routes/new-media#it-zhi-jia">https://docs.rsshub.app/routes/new-media#it-zhi-jia</a>');
     }
+    const cfg = config[category];
 
-    const current_url = get_url(ctx.req.param('caty'));
+    const currentUrl = getUrl(ctx.req.param('caty'));
     const response = await got({
         method: 'get',
-        url: current_url,
+        url: currentUrl,
     });
 
     const $ = load(response.data);
@@ -82,9 +86,10 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`ithome:article:${item.link}`, async () => {
                 const res = await got({ method: 'get', url: item.link });
                 const content = load(res.data);
                 const post = content('#paragraph');
@@ -94,16 +99,16 @@ async function handler(ctx) {
                     $ele.removeAttr('class');
                     $ele.removeAttr('data-original');
                 });
-                item.description = post.html();
-                item.pubDate = new Date(content('#pubtime_baidu').text() + ' GMT+8').toUTCString();
-                return item;
-            })
-        )
+                return { description: post.html(), pubDate: parseSourceDate(content('#pubtime_baidu').text()) };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: 'IT 之家 - ' + cfg.title,
-        link: current_url,
+        link: currentUrl,
         image: 'https://img.ithome.com/m/images/logo.png',
         item: items,
     };

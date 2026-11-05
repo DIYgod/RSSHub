@@ -1,4 +1,7 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -18,6 +21,8 @@ const statusMap = {
     're-reading': 're_reading',
     dropped: 'dropped',
 } satisfies Record<FollowType, StatusType>;
+
+const isFollowType = (s: string): s is FollowType => Object.hasOwn(statusMap, s);
 
 const labelMap = {
     reading: 'Reading',
@@ -95,7 +100,10 @@ async function handler(ctx) {
 
     const { type } = ctx.req.param();
 
-    const followType = (type || 'reading') as FollowType;
+    const followType = type || 'reading';
+    if (!isFollowType(followType)) {
+        throw new InvalidParameterError(`Unknown follow type "${followType}", expected one of ${Object.keys(statusMap).join(', ')}`);
+    }
 
     const accessToken = await getToken();
 
@@ -124,7 +132,7 @@ async function handler(ctx) {
 
     const mangaMetaMap = await getMangaMetaByIds(mangaIds);
 
-    const mangaChapters = await Promise.all(mangaIds.map((id) => getMangaChapters(id, undefined, 10)));
+    const mangaChapters = await pMap(mangaIds, (id) => getMangaChapters(id, undefined, 10), { concurrency: 3 });
 
     const mangas = mangaChapters.flatMap((chapters, index) => {
         const mangaMeta = mangaMetaMap.get(mangaIds[index]);

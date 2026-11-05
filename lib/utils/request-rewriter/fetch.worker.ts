@@ -1,7 +1,9 @@
 // Worker-compatible fetch wrapper
 // Simplified version without proxy, rate limiting, or header-generator
 import { config } from '@/config';
+import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
+import fetchWithPlaywrightRetry from '@/utils/playwright-fetch';
 
 // Static browser headers (Chrome-like fingerprint)
 const STATIC_BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36';
@@ -20,10 +22,11 @@ const STATIC_BROWSER_HEADERS = {
 
 const originalFetch = fetch;
 
-const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     const request = new Request(input, init);
 
-    logger.debug(`Outgoing request: ${request.method} ${request.url}`);
+    const requestUrl = new URL(request.url);
+    logger.debug(`Outgoing request: ${request.method} ${requestUrl.origin}${requestUrl.pathname}`);
 
     // Set User-Agent if not provided
     if (config.isDefaultUA) {
@@ -56,7 +59,8 @@ const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Res
         request.headers.delete('x-prefer-proxy');
     }
 
-    return originalFetch(request);
+    await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
+    return fetchWithPlaywrightRetry(request, originalFetch);
 };
 
 export default wrappedFetch;

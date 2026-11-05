@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -48,87 +49,92 @@ export const route = {
             },
         };
 
+        const invalidTypes = fetchTypes.filter((type) => !Object.hasOwn(apiConfig, type));
+        if (invalidTypes.length) {
+            throw new InvalidParameterError(`Unsupported exhibition type: ${invalidTypes.join(', ')}. Use now, future, or past.`);
+        }
+
         const museumName = namespace.zh?.name || namespace.name;
 
         const titleTag = fetchTypes.length === 3 ? '全部展览' : fetchTypes.map((t) => apiConfig[t]?.name).join(' & ');
 
-        const responses = await Promise.all(
+        const responses = await Promise.allSettled(
             fetchTypes.map(async (t) => {
                 const config = apiConfig[t];
 
-                // add trycatch to prevent one failed request, espacially for now/future exhibition.
-                try {
-                    const response = await got({
-                        method: 'get',
-                        url: `${apiUrl}${config.endpoint}`,
-                        searchParams: {
-                            ...config.query,
-                            _: Date.now(),
-                        },
-                    });
+                const response = await got({
+                    method: 'get',
+                    url: `${apiUrl}${config.endpoint}`,
+                    searchParams: {
+                        ...config.query,
+                        _: Date.now(),
+                    },
+                });
 
-                    const resData = response.data?.data;
-                    const list = Array.isArray(resData) ? resData : resData?.list || [];
+                const resData = response.data?.data;
+                const list = Array.isArray(resData) ? resData : resData?.list || [];
 
-                    return list.map((item) => {
-                        const title = item.title;
-                        const itemLink = item.fullurl;
-                        const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
-                        const startDate = item.start_time.split(' ', 1)[0];
-                        const endDate = item.end_time.split(' ', 1)[0];
-                        const fullDuration = item.display_time;
-                        const location = item.area;
-                        const imgUrl = `${baseUrl}${item.image}`;
+                return list.map((item) => {
+                    const title = item.title;
+                    const itemLink = item.fullurl;
+                    const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
+                    const startDate = item.start_time.split(' ', 1)[0];
+                    const endDate = item.end_time.split(' ', 1)[0];
+                    const fullDuration = item.display_time;
+                    const location = item.area;
+                    const imgUrl = `${baseUrl}${item.image}`;
 
-                        const description = renderToString(
-                            <div>
-                                <img src={imgUrl} />
-                                <br />
+                    const description = renderToString(
+                        <div>
+                            <img src={imgUrl} />
+                            <br />
+                            <p>
+                                <b>地点：</b>
+                                {location || '参考展览图片'}
+                                {/* location is only defined on the exhibition poster, cannot fetch directly from the website */}
+                            </p>
+                            <p>
+                                <b>开展：</b>
+                                {startDate || '未定/常设'}
+                            </p>
+                            <p>
+                                <b>闭展：</b>
+                                {endDate || '未定/常设'}
+                            </p>
+
+                            {fullDuration && (
                                 <p>
-                                    <b>地点：</b>
-                                    {location || '参考展览图片'}
-                                    {/* location is only defined on the exhibition poster, cannot fetch directly from the website */}
+                                    <small>原始展期：{fullDuration}</small>
                                 </p>
-                                <p>
-                                    <b>开展：</b>
-                                    {startDate || '未定/常设'}
-                                </p>
-                                <p>
-                                    <b>闭展：</b>
-                                    {endDate || '未定/常设'}
-                                </p>
+                            )}
+                        </div>
+                    );
 
-                                {fullDuration && (
-                                    <p>
-                                        <small>原始展期：{fullDuration}</small>
-                                    </p>
-                                )}
-                            </div>
-                        );
-
-                        return {
+                    return {
+                        title,
+                        link: itemLink,
+                        pubDate,
+                        description,
+                        // For further .ics file processing
+                        _extra: {
+                            museumName,
                             title,
-                            link: itemLink,
-                            pubDate,
-                            description,
-                            // For further .ics file processing
-                            _extra: {
-                                museumName,
-                                title,
-                                location,
-                                startDate, // format: YYYY-MM-DD or '未定/常设'
-                                endDate, // format: YYYY-MM-DD or '未定/常设'
-                                itemLink,
-                            },
-                        };
-                    });
-                } catch {
-                    return [];
-                }
+                            location,
+                            startDate, // format: YYYY-MM-DD or '未定/常设'
+                            endDate, // format: YYYY-MM-DD or '未定/常设'
+                            itemLink,
+                        },
+                    };
+                });
             })
         );
 
-        const items = responses.flat();
+        const successfulResponses = responses.filter((response) => response.status === 'fulfilled');
+        if (!successfulResponses.length) {
+            const errors = responses.map((response) => (response.status === 'rejected' ? response.reason.message : '')).join('; ');
+            throw new Error(`Unable to fetch temporary exhibitions (${fetchTypes.join(', ')}): ${errors}`);
+        }
+        const items = successfulResponses.flatMap((response) => response.value);
 
         return {
             title: `${museumName} - 临时展览 - ${titleTag}`,

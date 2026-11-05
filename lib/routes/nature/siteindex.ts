@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,8 +40,9 @@ async function handler(ctx) {
             };
         });
 
-    const detailedItems = await Promise.all(
-        items.map((item) =>
+    const detailedItems = await pMap(
+        items,
+        (item) =>
             cache.tryGet(`nature:siteindex:${item.title}`, async () => {
                 try {
                     const response = await got(item.link, { cookieJar });
@@ -69,8 +71,8 @@ async function handler(ctx) {
                         name: item.name,
                     };
                 }
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     ctx.set('json', {
@@ -78,7 +80,11 @@ async function handler(ctx) {
     });
     return {
         title: 'Nature siteindex',
-        link: response.url,
-        item: detailedItems,
+        link: `${baseUrl}/siteindex`,
+        item: detailedItems.map((item, index) => ({
+            title: item.title,
+            description: 'description' in item ? item.description : undefined,
+            link: items[index].link,
+        })),
     };
 }

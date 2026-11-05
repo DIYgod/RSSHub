@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getArticleItems, rootUrl } from './utils';
 
@@ -50,7 +51,7 @@ const categoryMap = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
-    const limit = ctx.req.query('limit') ?? 50;
+    const limit = getRouteLimit(ctx, 50);
     const currentUrl = `${rootUrl}/zh-CN/article`;
     const items = await getArticleItems({
         category,

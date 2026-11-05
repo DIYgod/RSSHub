@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,121 +33,138 @@ export const route: Route = {
     url: 'www.shcstheatre.com/Program/programList.aspx',
 };
 
+const baseUrl = 'https://www.shcstheatre.com';
+
+function splitImages(value?: string) {
+    return (
+        value
+            ?.split(';')
+            .map((item) => item.trim())
+            .filter(Boolean) ?? []
+    );
+}
+
+function renderDescription(data) {
+    const {
+        SCS_PC_YMXQ_PIC,
+        SCS_WEBPERCYCLE,
+        SCS_EINLASSNAME,
+        SCS_PERFORMANCE_TYPENAME,
+        SCS_LENGTH,
+        SCS_PERLANGUAGENAME,
+        SCS_PC_LUNBO_YCJS_EDITOR,
+        SCS_PC_LUNBO_YCJS_PIC,
+        SCS_PC_LUNBO_ZCTD_EDITOR,
+        SCS_PC_LUNBO_ZCTD_PIC,
+        SCS_PC_LUNBO_JQGG_EDITOR,
+        SCS_PC_LUNBO_JQGG_PIC,
+        SCS_PC_LUNBO_HJJL_EDITOR,
+        SCS_PC_LUNBO_HJJL_PIC,
+        SCS_PC_LUNBO_MTPL_EDITOR,
+        SCS_PC_LUNBO_MTPL_PIC,
+    } = data;
+
+    return renderToString(
+        <div>
+            {splitImages(SCS_PC_YMXQ_PIC).map((src) => (
+                <img src={`${baseUrl}${src}`} />
+            ))}
+
+            <ul>
+                <li>演出日期：{SCS_WEBPERCYCLE}</li>
+                <li>入场时间：{SCS_EINLASSNAME}</li>
+                <li>演出类型：{SCS_PERFORMANCE_TYPENAME}</li>
+                <li>演出时长：{SCS_LENGTH}分钟</li>
+                <li>演出语言：{SCS_PERLANGUAGENAME}</li>
+            </ul>
+
+            {SCS_PC_LUNBO_YCJS_EDITOR ? (
+                <>
+                    <h1>演出介绍</h1>
+                    {splitImages(SCS_PC_LUNBO_YCJS_PIC).map((src) => (
+                        <img src={`${baseUrl}${src}`} />
+                    ))}
+                    <div>{raw(SCS_PC_LUNBO_YCJS_EDITOR)}</div>
+                </>
+            ) : null}
+
+            {SCS_PC_LUNBO_ZCTD_EDITOR ? (
+                <>
+                    <h1>主创团队</h1>
+                    {splitImages(SCS_PC_LUNBO_ZCTD_PIC).map((src) => (
+                        <img src={`${baseUrl}${src}`} />
+                    ))}
+                    <div>{raw(SCS_PC_LUNBO_ZCTD_EDITOR)}</div>
+                </>
+            ) : null}
+
+            {SCS_PC_LUNBO_JQGG_EDITOR ? (
+                <>
+                    <h1>剧情梗概</h1>
+                    {splitImages(SCS_PC_LUNBO_JQGG_PIC).map((src) => (
+                        <img src={`${baseUrl}${src}`} />
+                    ))}
+                    <div>{raw(SCS_PC_LUNBO_JQGG_EDITOR)}</div>
+                </>
+            ) : null}
+
+            {SCS_PC_LUNBO_HJJL_EDITOR ? (
+                <>
+                    <h1>获奖记录</h1>
+                    {splitImages(SCS_PC_LUNBO_HJJL_PIC).map((src) => (
+                        <img src={`${baseUrl}${src}`} />
+                    ))}
+                    <div>{raw(SCS_PC_LUNBO_HJJL_EDITOR)}</div>
+                </>
+            ) : null}
+
+            {SCS_PC_LUNBO_MTPL_EDITOR ? (
+                <>
+                    <h1>媒体评论</h1>
+                    {splitImages(SCS_PC_LUNBO_MTPL_PIC).map((src) => (
+                        <img src={`${baseUrl}${src}`} />
+                    ))}
+                    <div>{raw(SCS_PC_LUNBO_MTPL_EDITOR)}</div>
+                </>
+            ) : null}
+        </div>
+    );
+}
+
 async function handler() {
     const url = 'https://www.shcstheatre.com/Program/programList.aspx';
     const res = await got.get(url);
     const $ = load(res.data);
-    const baseUrl = 'https://www.shcstheatre.com';
-    const splitImages = (value?: string) =>
-        value
-            ?.split(';')
-            .map((item) => item.trim())
-            .filter(Boolean) ?? [];
-    const renderDescription = (data) => {
-        const {
-            SCS_PC_YMXQ_PIC,
-            SCS_WEBPERCYCLE,
-            SCS_EINLASSNAME,
-            SCS_PERFORMANCE_TYPENAME,
-            SCS_LENGTH,
-            SCS_PERLANGUAGENAME,
-            SCS_PC_LUNBO_YCJS_EDITOR,
-            SCS_PC_LUNBO_YCJS_PIC,
-            SCS_PC_LUNBO_ZCTD_EDITOR,
-            SCS_PC_LUNBO_ZCTD_PIC,
-            SCS_PC_LUNBO_JQGG_EDITOR,
-            SCS_PC_LUNBO_JQGG_PIC,
-            SCS_PC_LUNBO_HJJL_EDITOR,
-            SCS_PC_LUNBO_HJJL_PIC,
-            SCS_PC_LUNBO_MTPL_EDITOR,
-            SCS_PC_LUNBO_MTPL_PIC,
-        } = data;
 
-        return renderToString(
-            <div>
-                {splitImages(SCS_PC_YMXQ_PIC).map((src) => (
-                    <img src={`${baseUrl}${src}`} />
-                ))}
-
-                <ul>
-                    <li>演出日期：{SCS_WEBPERCYCLE}</li>
-                    <li>入场时间：{SCS_EINLASSNAME}</li>
-                    <li>演出类型：{SCS_PERFORMANCE_TYPENAME}</li>
-                    <li>演出时长：{SCS_LENGTH}分钟</li>
-                    <li>演出语言：{SCS_PERLANGUAGENAME}</li>
-                </ul>
-
-                {SCS_PC_LUNBO_YCJS_EDITOR ? (
-                    <>
-                        <h1>演出介绍</h1>
-                        {splitImages(SCS_PC_LUNBO_YCJS_PIC).map((src) => (
-                            <img src={`${baseUrl}${src}`} />
-                        ))}
-                        <div>{raw(SCS_PC_LUNBO_YCJS_EDITOR)}</div>
-                    </>
-                ) : null}
-
-                {SCS_PC_LUNBO_ZCTD_EDITOR ? (
-                    <>
-                        <h1>主创团队</h1>
-                        {splitImages(SCS_PC_LUNBO_ZCTD_PIC).map((src) => (
-                            <img src={`${baseUrl}${src}`} />
-                        ))}
-                        <div>{raw(SCS_PC_LUNBO_ZCTD_EDITOR)}</div>
-                    </>
-                ) : null}
-
-                {SCS_PC_LUNBO_JQGG_EDITOR ? (
-                    <>
-                        <h1>剧情梗概</h1>
-                        {splitImages(SCS_PC_LUNBO_JQGG_PIC).map((src) => (
-                            <img src={`${baseUrl}${src}`} />
-                        ))}
-                        <div>{raw(SCS_PC_LUNBO_JQGG_EDITOR)}</div>
-                    </>
-                ) : null}
-
-                {SCS_PC_LUNBO_HJJL_EDITOR ? (
-                    <>
-                        <h1>获奖记录</h1>
-                        {splitImages(SCS_PC_LUNBO_HJJL_PIC).map((src) => (
-                            <img src={`${baseUrl}${src}`} />
-                        ))}
-                        <div>{raw(SCS_PC_LUNBO_HJJL_EDITOR)}</div>
-                    </>
-                ) : null}
-
-                {SCS_PC_LUNBO_MTPL_EDITOR ? (
-                    <>
-                        <h1>媒体评论</h1>
-                        {splitImages(SCS_PC_LUNBO_MTPL_PIC).map((src) => (
-                            <img src={`${baseUrl}${src}`} />
-                        ))}
-                        <div>{raw(SCS_PC_LUNBO_MTPL_EDITOR)}</div>
-                    </>
-                ) : null}
-            </div>
-        );
-    };
-
-    const items = await Promise.all(
-        $('#datarow .program-name a').map((_, elem) => {
+    const items = await pMap(
+        $('#datarow .program-name a').toArray(),
+        (elem) => {
             const link = new URL($(elem).attr('href')!, url);
-            return cache.tryGet(link.href, async () => {
-                const id = link.searchParams.get('id');
-                const res2 = await got.post('https://www.shcstheatre.com/webapi.ashx?op=GettblprogramCache', {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-                    form: { id },
-                });
-                const data = res2.data.data.tblprogram[0];
+            return cache.tryGet(`shcstheatre:program-v2:${link.href}`, async () => {
+                const detailResponse = await got(link.href);
+                const content = load(detailResponse.data);
+                const programData = content('script')
+                    .toArray()
+                    .map((script) =>
+                        content(script)
+                            .text()
+                            .match(/var r\s*=\s*(\{[^\r\n]*\});/)
+                    )
+                    .find(Boolean)?.[1];
+                if (!programData) {
+                    throw new Error(`Unable to find public program data at ${link.href}`);
+                }
+                const program = JSON.parse(programData);
+                const data = program.data.tblprogram[0];
                 return {
                     title: data.SCS_WEB_BRIEFNAME,
                     link: link.href,
                     description: renderDescription(data),
-                    pubDate: timezone(parseDate(data.SJ_DATE_PC), 8),
+                    pubDate: data.SJ_DATE_PC ? timezone(parseDate(data.SJ_DATE_PC), 8) : undefined,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
     const image = $('.menu-logo img').attr('src');
 

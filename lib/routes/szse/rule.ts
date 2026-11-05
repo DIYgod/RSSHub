@@ -1,13 +1,35 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
+
+async function getArticle(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'pubDate' | 'author' | 'content' | 'language'>> {
+    const { data: detailResponse } = await got(link);
+    const $ = load(detailResponse);
+    const description = $('div#desContent').html() ?? undefined;
+    const pubDate = $('div.time span').text().trim();
+
+    return {
+        title: $('h2.title').text(),
+        description,
+        pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+        author: $('meta[name="author"]').prop('content'),
+        content: {
+            html: description,
+            text: $('div#desContent').text(),
+        },
+        language: $('html').prop('lang') as Language,
+    };
+}
 
 export const handler = async (ctx) => {
     const { channel = 'allrules/bussiness' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.szse.cn';
     const apiUrl = new URL('api/search/content', rootUrl).href;
@@ -32,36 +54,20 @@ export const handler = async (ctx) => {
         },
     });
 
-    let items = response.data.slice(0, limit).map((item) => ({
+    let items: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.doctitle,
-        pubDate: parseDate(item.docpubtime, 'X'),
+        pubDate: item.docpubtime === undefined || item.docpubtime === null || String(item.docpubtime).trim() === '' ? undefined : parseDate(item.docpubtime, 'x'),
         link: item.docpuburl,
         category: item.navigation,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const $$ = load(detailResponse);
-
-                const title = $$('h2.title').text();
-                const description = $$('div#desContent').html();
-
-                item.title = title;
-                item.description = description;
-                item.pubDate ??= parseDate($$('div.time span').text());
-                item.author = $$('meta[name="author"]').prop('content');
-                item.content = {
-                    html: description,
-                    text: $$('div#desContent').text(),
-                };
-                item.language = $$('html').prop('lang');
-
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        async (item) => {
+            const article = await cache.tryGet(`szse:rule:article:v1:${item.link}`, () => getArticle(item.link));
+            return { ...item, ...article, pubDate: item.pubDate ?? article.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     const image = $('a.navbar-brand img').prop('src');
@@ -72,7 +78,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
         language,
@@ -93,74 +98,74 @@ export const route: Route = {
 
 | 频道                                                                        | ID                                                    |
 | --------------------------------------------------------------------------- | ----------------------------------------------------- |
-| [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)              | [all](https://rsshub.app/szes/rule/all)               |
-| [基础设施 REITs 类](https://www.szse.cn/www/lawrules/rule/reits/index.html) | [reits](https://rsshub.app/szes/rule/reits)           |
-| [衍生品类](https://www.szse.cn/www/lawrules/rule/derivative/index.html)     | [derivative](https://rsshub.app/szes/rule/derivative) |
-| [会员管理类](https://www.szse.cn/www/lawrules/rule/memberty/index.html)     | [memberty](https://rsshub.app/szes/rule/memberty)     |
-| [纪律处分与内部救济类](https://www.szse.cn/www/lawrules/rule/pr/index.html) | [pr](https://rsshub.app/szes/rule/pr)                 |
+| [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)              | [all](https://rsshub.app/szse/rule/all)               |
+| [基础设施 REITs 类](https://www.szse.cn/www/lawrules/rule/reits/index.html) | [reits](https://rsshub.app/szse/rule/reits)           |
+| [衍生品类](https://www.szse.cn/www/lawrules/rule/derivative/index.html)     | [derivative](https://rsshub.app/szse/rule/derivative) |
+| [会员管理类](https://www.szse.cn/www/lawrules/rule/memberty/index.html)     | [memberty](https://rsshub.app/szse/rule/memberty)     |
+| [纪律处分与内部救济类](https://www.szse.cn/www/lawrules/rule/pr/index.html) | [pr](https://rsshub.app/szse/rule/pr)                 |
 
 #### 股票类
 
 | 频道                                                                                     | ID                                                                                    |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [发行上市审核](https://www.szse.cn/www/lawrules/rule/stock/audit/index.html)             | [stock/audit](https://rsshub.app/szes/rule/stock/audit)                               |
-| [发行承销](https://www.szse.cn/www/lawrules/rule/stock/issue/index.html)                 | [stock/issue](https://rsshub.app/szes/rule/stock/issue)                               |
-| [通用](https://www.szse.cn/www/lawrules/rule/stock/supervision/currency/index.html)      | [stock/supervision/currency](https://rsshub.app/szes/rule/stock/supervision/currency) |
-| [主板专用](https://www.szse.cn/www/lawrules/rule/stock/supervision/mb/index.html)        | [stock/supervision/mb](https://rsshub.app/szes/rule/stock/supervision/mb)             |
-| [创业板专用](https://www.szse.cn/www/lawrules/rule/stock/supervision/chinext/index.html) | [stock/supervision/chinext](https://rsshub.app/szes/rule/stock/supervision/chinext)   |
-| [交易](https://www.szse.cn/www/lawrules/rule/stock/trade/index.html)                     | [stock/trade](https://rsshub.app/szes/rule/stock/trade)                               |
+| [发行上市审核](https://www.szse.cn/www/lawrules/rule/stock/audit/index.html)             | [stock/audit](https://rsshub.app/szse/rule/stock/audit)                               |
+| [发行承销](https://www.szse.cn/www/lawrules/rule/stock/issue/index.html)                 | [stock/issue](https://rsshub.app/szse/rule/stock/issue)                               |
+| [通用](https://www.szse.cn/www/lawrules/rule/stock/supervision/currency/index.html)      | [stock/supervision/currency](https://rsshub.app/szse/rule/stock/supervision/currency) |
+| [主板专用](https://www.szse.cn/www/lawrules/rule/stock/supervision/mb/index.html)        | [stock/supervision/mb](https://rsshub.app/szse/rule/stock/supervision/mb)             |
+| [创业板专用](https://www.szse.cn/www/lawrules/rule/stock/supervision/chinext/index.html) | [stock/supervision/chinext](https://rsshub.app/szse/rule/stock/supervision/chinext)   |
+| [交易](https://www.szse.cn/www/lawrules/rule/stock/trade/index.html)                     | [stock/trade](https://rsshub.app/szse/rule/stock/trade)                               |
 
 #### 固收类
 
 | 频道                                                                                 | ID                                                                            |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| [发行上市（挂牌）](https://www.szse.cn/www/lawrules/rule/bond/bonds/list/index.html) | [bond/bonds/list](https://rsshub.app/szes/rule/bond/bonds/list)               |
-| [持续监管](https://www.szse.cn/www/lawrules/rule/bond/bonds/supervision/index.html)  | [bond/bonds/supervision](https://rsshub.app/szes/rule/bond/bonds/supervision) |
-| [交易](https://www.szse.cn/www/lawrules/rule/bond/bonds/trade/index.html)            | [bond/bonds/trade](https://rsshub.app/szes/rule/bond/bonds/trade)             |
-| [资产支持证券](https://www.szse.cn/www/lawrules/rule/bond/abs/index.html)            | [bond/abs](https://rsshub.app/szes/rule/bond/abs)                             |
+| [发行上市（挂牌）](https://www.szse.cn/www/lawrules/rule/bond/bonds/list/index.html) | [bond/bonds/list](https://rsshub.app/szse/rule/bond/bonds/list)               |
+| [持续监管](https://www.szse.cn/www/lawrules/rule/bond/bonds/supervision/index.html)  | [bond/bonds/supervision](https://rsshub.app/szse/rule/bond/bonds/supervision) |
+| [交易](https://www.szse.cn/www/lawrules/rule/bond/bonds/trade/index.html)            | [bond/bonds/trade](https://rsshub.app/szse/rule/bond/bonds/trade)             |
+| [资产支持证券](https://www.szse.cn/www/lawrules/rule/bond/abs/index.html)            | [bond/abs](https://rsshub.app/szse/rule/bond/abs)                             |
 
 #### 基金类
 
 | 频道                                                                | ID                                                    |
 | ------------------------------------------------------------------- | ----------------------------------------------------- |
-| [上市](https://www.szse.cn/www/lawrules/rule/fund/list/index.html)  | [fund/list](https://rsshub.app/szes/rule/fund/list)   |
-| [交易](https://www.szse.cn/www/lawrules/rule/fund/trade/index.html) | [fund/trade](https://rsshub.app/szes/rule/fund/trade) |
+| [上市](https://www.szse.cn/www/lawrules/rule/fund/list/index.html)  | [fund/list](https://rsshub.app/szse/rule/fund/list)   |
+| [交易](https://www.szse.cn/www/lawrules/rule/fund/trade/index.html) | [fund/trade](https://rsshub.app/szse/rule/fund/trade) |
 
 #### 交易类
 
 | 频道                                                                                     | ID                                                                                    |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [通用](https://www.szse.cn/www/lawrules/rule/trade/current/index.html)                   | [trade/current](https://rsshub.app/szes/rule/trade/current)                           |
-| [融资融券](https://www.szse.cn/www/lawrules/rule/trade/business/margin/index.html)       | [trade/business/margin](https://rsshub.app/szes/rule/trade/business/margin)           |
-| [转融通](https://www.szse.cn/www/lawrules/rule/trade/business/refinancing/index.html)    | [trade/business/refinancing](https://rsshub.app/szes/rule/trade/business/refinancing) |
-| [股票质押式回购](https://www.szse.cn/www/lawrules/rule/trade/business/pledge/index.html) | [trade/business/pledge](https://rsshub.app/szes/rule/trade/business/pledge)           |
-| [质押式报价回购](https://www.szse.cn/www/lawrules/rule/trade/business/price/index.html)  | [trade/business/price](https://rsshub.app/szes/rule/trade/business/price)             |
-| [约定购回](https://www.szse.cn/www/lawrules/rule/trade/business/promise/index.html)      | [trade/business/promise](https://rsshub.app/szes/rule/trade/business/promise)         |
-| [协议转让](https://www.szse.cn/www/lawrules/rule/trade/business/transfer/index.html)     | [trade/business/transfer](https://rsshub.app/szes/rule/trade/business/transfer)       |
-| [其他](https://www.szse.cn/www/lawrules/rule/trade/business/oth/index.html)              | [trade/business/oth](https://rsshub.app/szes/rule/trade/business/oth)                 |
+| [通用](https://www.szse.cn/www/lawrules/rule/trade/current/index.html)                   | [trade/current](https://rsshub.app/szse/rule/trade/current)                           |
+| [融资融券](https://www.szse.cn/www/lawrules/rule/trade/business/margin/index.html)       | [trade/business/margin](https://rsshub.app/szse/rule/trade/business/margin)           |
+| [转融通](https://www.szse.cn/www/lawrules/rule/trade/business/refinancing/index.html)    | [trade/business/refinancing](https://rsshub.app/szse/rule/trade/business/refinancing) |
+| [股票质押式回购](https://www.szse.cn/www/lawrules/rule/trade/business/pledge/index.html) | [trade/business/pledge](https://rsshub.app/szse/rule/trade/business/pledge)           |
+| [质押式报价回购](https://www.szse.cn/www/lawrules/rule/trade/business/price/index.html)  | [trade/business/price](https://rsshub.app/szse/rule/trade/business/price)             |
+| [约定购回](https://www.szse.cn/www/lawrules/rule/trade/business/promise/index.html)      | [trade/business/promise](https://rsshub.app/szse/rule/trade/business/promise)         |
+| [协议转让](https://www.szse.cn/www/lawrules/rule/trade/business/transfer/index.html)     | [trade/business/transfer](https://rsshub.app/szse/rule/trade/business/transfer)       |
+| [其他](https://www.szse.cn/www/lawrules/rule/trade/business/oth/index.html)              | [trade/business/oth](https://rsshub.app/szse/rule/trade/business/oth)                 |
 
 #### 跨境创新类
 
 | 频道                                                                          | ID                                                    |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------- |
-| [深港通](https://www.szse.cn/www/lawrules/rule/inno/szhk/index.html)          | [inno/szhk](https://rsshub.app/szes/rule/inno/szhk)   |
-| [试点创新企业](https://www.szse.cn/www/lawrules/rule/inno/pilot/index.html)   | [inno/pilot](https://rsshub.app/szes/rule/inno/pilot) |
-| [H 股全流通](https://www.szse.cn/www/lawrules/rule/inno/hc/index.html)        | [inno/hc](https://rsshub.app/szes/rule/inno/hc)       |
-| [互联互通存托凭证](https://www.szse.cn/www/lawrules/rule/inno/gdr/index.html) | [inno/gdr](https://rsshub.app/szes/rule/inno/gdr)     |
+| [深港通](https://www.szse.cn/www/lawrules/rule/inno/szhk/index.html)          | [inno/szhk](https://rsshub.app/szse/rule/inno/szhk)   |
+| [试点创新企业](https://www.szse.cn/www/lawrules/rule/inno/pilot/index.html)   | [inno/pilot](https://rsshub.app/szse/rule/inno/pilot) |
+| [H 股全流通](https://www.szse.cn/www/lawrules/rule/inno/hc/index.html)        | [inno/hc](https://rsshub.app/szse/rule/inno/hc)       |
+| [互联互通存托凭证](https://www.szse.cn/www/lawrules/rule/inno/gdr/index.html) | [inno/gdr](https://rsshub.app/szse/rule/inno/gdr)     |
 
 #### 全部规则
 
 | 频道                                                                                | ID                                                                    |
 | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [全部业务规则](https://www.szse.cn/www/lawrules/rule/allrules/bussiness/index.html) | [allrules/bussiness](https://rsshub.app/szes/rule/allrules/bussiness) |
-| [规则汇编下载](https://www.szse.cn/www/lawrules/rule/allrules/rulejoin/index.html)  | [allrules/rulejoin](https://rsshub.app/szes/rule/allrules/rulejoin)   |
+| [全部业务规则](https://www.szse.cn/www/lawrules/rule/allrules/bussiness/index.html) | [allrules/bussiness](https://rsshub.app/szse/rule/allrules/bussiness) |
+| [规则汇编下载](https://www.szse.cn/www/lawrules/rule/allrules/rulejoin/index.html)  | [allrules/rulejoin](https://rsshub.app/szse/rule/allrules/rulejoin)   |
 
 #### 已废止规则
 
 | 频道                                                                                 | ID                                                                      |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| [规则废止公告](https://www.szse.cn/www/lawrules/rule/repeal/announcement/index.html) | [repeal/announcement](https://rsshub.app/szes/rule/repeal/announcement) |
-| [已废止规则文本](https://www.szse.cn/www/lawrules/rule/repeal/rules/index.html)      | [repeal/rules](https://rsshub.app/szes/rule/repeal/rules)               |`,
+| [规则废止公告](https://www.szse.cn/www/lawrules/rule/repeal/announcement/index.html) | [repeal/announcement](https://rsshub.app/szse/rule/repeal/announcement) |
+| [已废止规则文本](https://www.szse.cn/www/lawrules/rule/repeal/rules/index.html)      | [repeal/rules](https://rsshub.app/szse/rule/repeal/rules)               |`,
     categories: ['finance'],
 
     features: {
@@ -175,11 +180,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.szse.cn/www/lawrules/rule/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/szse/rule${category ? `/${category}` : ''}`;
-            },
+            target: '/rule/:category?',
         },
         {
             title: '综合类',

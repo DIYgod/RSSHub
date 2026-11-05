@@ -1,14 +1,74 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
+function getListItems($: CheerioAPI, url: string): DataItem[] {
+    return $('article.list__item')
+        .toArray()
+        .flatMap((element) => {
+            const article = $(element);
+            const anchor = article.find('h2.list__title.post__title > a').first();
+            const href = anchor.attr('href');
+            if (!href) {
+                return [];
+            }
+
+            const body = copyContent(article.find('.content.list__content'));
+            const authorElement = body
+                .children('p')
+                .slice(0, 2)
+                .filter((_, element) => /^作者[：:]\s*\S/.test($(element).text()))
+                .first();
+            const author = authorElement
+                .text()
+                .match(/^作者[：:]\s*(\S.*)$/s)?.[1]
+                .trim();
+            if (author) {
+                authorElement.remove();
+            }
+
+            return {
+                title: anchor.text(),
+                link: new URL(href, url).href,
+                description: body.html() ?? undefined,
+                author,
+                category: article
+                    .find('.meta__item-tags a')
+                    .toArray()
+                    .map((element) => $(element).text()),
+            };
+        });
+}
+
+function copyContent<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
+
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'category'>> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return {
+        description: $('.post-body.entry-content').html() ?? undefined,
+        category: $('.post-labels a')
+            .toArray()
+            .map((element) => $(element).text()),
+    };
+}
+
 export const route: Route = {
-    path: '/:label?', // 路由路径
-    categories: ['reading'], // 分类
-    example: '/xbookcn/精选作品', // 示例路径
-    parameters: { label: '按名称分类，详见https://blog.xbookcn.net/p/all.html' }, // 参数
+    path: '/:label?',
+    categories: ['reading'],
+    example: '/xbookcn/精选作品',
+    parameters: { label: '按名称分类，详见https://blog.xbookcn.net/p/all.html' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,51 +78,50 @@ export const route: Route = {
         supportScihub: false,
         nsfw: true,
     },
-    name: '短篇', // 源名称
-    maintainers: ['Lyunvy'], // 维护者
-    handler: async (ctx) => {
-        const { label = '精选作品' } = ctx.req.param(); // 从请求参数中获取 label
-        const url = `https://blog.xbookcn.net/search/label/${label}`; // 使用反引号构建 URL
-        const response = await ofetch(url); // 请求源链接
-        const $ = load(response); // 加载 HTML
+    name: '短篇',
+    maintainers: ['Lyunvy'],
+    handler,
+};
 
-        const articles = $('.blog-posts.hfeed .date-outer').find('.post'); // 查找文章
+async function handler(ctx) {
+    const { label = '精选作品' } = ctx.req.param();
+    const url = `https://blog.xbookcn.net/search/label/${label}`;
+    const response = await ofetch(url);
+    const $ = load(response);
 
-        const list = articles.toArray().map((elem): DataItem => {
-            const a = $(elem).find('.post-title a'); // 获取标题链接
+    if ($('article.list__item').length) {
+        return {
+            title: 'xbookcn',
+            link: url,
+            item: getListItems($, url),
+        };
+    }
+
+    const articles = $('.blog-posts.hfeed .date-outer').find('.post');
+    const list = articles
+        .toArray()
+        .filter((element) => $(element).find('.post-title a').attr('href'))
+        .map((element): DataItem & { link: string } => {
+            const a = $(element).find('.post-title a');
             return {
-                title: a.text(), // 标题
-                link: a.attr('href'), // 链接
-                category: [], // 分类
+                title: a.text(),
+                link: new URL(a.attr('href')!, url).href,
+                category: [],
             };
         });
 
-        const items = await Promise.all(
-            list.map(
-                async (item) =>
-                    // 使用缓存以避免重复请求
-                    await cache.tryGet(item.link!, async () => {
-                        const response = await ofetch(item.link!); // 请求文章链接
-                        const $ = load(response); // 加载文章页面
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`xbookcn:detail:v2:${item.link}`, () => fetchDetail(item.link));
+            return { ...item, description: detail.description, category: detail.category };
+        },
+        { concurrency: 3, stopOnError: false }
+    );
 
-                        // 获取文章的完整描述
-                        item.description = $('.post-body.entry-content').html() || '无内容'; // 抓取指定内容
-
-                        // 获取分类信息
-                        const categories = $('.post-labels a')
-                            .toArray()
-                            .map((el) => $(el).text());
-                        item.category = categories; // 添加多个分类信息
-
-                        return item; // 返回带有描述和分类的文章对象
-                    })
-            )
-        );
-
-        return {
-            title: 'xbookcn', // 源标题
-            link: url, // 源链接
-            item: items, // 源文章
-        };
-    },
-};
+    return {
+        title: 'xbookcn',
+        link: url,
+        item: items,
+    };
+}

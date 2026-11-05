@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/newest',
@@ -15,7 +16,11 @@ export const route: Route = {
 async function handler() {
     const link = 'https://www.icourse163.org/category/all';
     const homePage = await ofetch.raw(link);
-    const csrfKey = homePage.headers.getSetCookie()[0].split(';', 1)[0].split('=', 2)[1];
+    const csrfCookie = homePage.headers.getSetCookie().find((cookie) => cookie.startsWith('NTESSTUDYSI='));
+    const csrfKey = csrfCookie?.split(';', 1)[0].slice('NTESSTUDYSI='.length);
+    if (!csrfKey) {
+        throw new Error('MOOC did not return the NTESSTUDYSI cookie required to request new courses.');
+    }
 
     const response = await ofetch(`https://www.icourse163.org/web/j/courseBean.getCoursePanelListByFrontCategory.rpc?csrfKey=${csrfKey}`, {
         method: 'POST',
@@ -34,9 +39,8 @@ async function handler() {
     const items = response.result.result.map((item) => {
         const title = item.name;
         const link = `https://www.icourse163.org/course/${item.schoolPanel.shortName}-${item.id}`;
-        const lectors = item.termPanel.lectorPanels.map((lector) => `${lector.realName || lector.nickName}、`).join('');
+        const lectors = item.termPanel.lectorPanels.map((lector) => lector.realName || lector.nickName).join('、');
         const category = (item.mocTagDtos || []).map((tag) => tag.name);
-        const tags = category.join('、');
         const startTimeString = item.termPanel.startTime === 32_503_651_201_000 ? '待定' : dayjs(item.termPanel.startTime).format('YYYY-MM-DD');
         const media = item.VideoUrl
             ? `
@@ -47,14 +51,11 @@ async function handler() {
               style="width: 100%;"
               poster="${item.imgUrl.split('?', 1)[0]}"
               src="https://v.stu.126.net/mooc-video/${item.VideoUrl}"
-              >
+              ></video>
         </p>
       `
             : `<img src="${item.imgUrl.split('?', 1)[0]}"><br>`;
         const description = `
-      <strong>${title}</strong><br>
-      ${tags}<br>
-      ${item.schoolPanel.name} ${lectors}<br>
       开课时间: ${startTimeString}<br><br>
       ${media}
       ${(item.termPanel.jsonContent || '').replace('spContent=', '')}
@@ -65,6 +66,8 @@ async function handler() {
             link,
             description,
             category,
+            author: lectors,
+            pubDate: item.firstPublishTime ? parseDate(item.firstPublishTime, 'x') : undefined,
         };
     });
 

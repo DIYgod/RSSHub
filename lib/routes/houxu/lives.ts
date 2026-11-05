@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/lives/:id',
@@ -40,7 +41,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `${apiUrl}/threads?limit=${ctx.req.query('limit') ?? 500}`,
+        url: `${apiUrl}/threads?limit=${getRouteLimit(ctx, 500)}`,
     });
 
     const items = response.data.results.map((item) => ({

@@ -46,6 +46,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
+                item.title = content('.cnt_box h3').text() || item.title;
                 item.description = content('.cnt_box .con').html();
                 item.author = content('.info em').text().split('：', 2)[1];
 

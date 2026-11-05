@@ -35,21 +35,21 @@ export const route: Route = {
         });
         const items = data.map((item) => ({
             title: item.GOODS_NM,
-            url: item.IMG_PATH,
+            image: item.IMG_PATH,
             link: `https://cn.ktown4u.com/iteminfo?goods_no=${item.GOODS_NO}`,
             description: desc(item),
-            pubDate: parseDate(item.RELEASE_DT),
+            pubDate: item.RELEASE_DT ? parseDate(`${item.RELEASE_DT}T00:00:00Z`) : undefined,
         }));
 
         return {
-            title: rssTitle(data),
+            title: rssTitle(data, grpNo),
             link: `https://cn.ktown4u.com/artistBrandlist?grp_no=${grpNo}&grp_no2=${grpNo2}`,
             item: items,
         };
     },
 };
 
-const rssTitle = (data) => `ktown4u ${data[0].GRP_NM}`;
+const rssTitle = (data, grpNo) => `ktown4u ${data[0]?.GRP_NM ?? grpNo}`;
 
 const desc = (item) => {
     const saleState = item.SALE_YN === 'N' ? '【售罄】' : '';
@@ -57,5 +57,5 @@ const desc = (item) => {
     if (item.DISP_PRICE !== item.DISP_DC_PRICE) {
         price = `${item.CURR_F_CD}${item.DISP_DC_PRICE} / 原价：${price}`;
     }
-    return `${saleState} ${price} <br> <img src=${item.IMG_PATH}> <br> ${item.GOODS_NM}`;
+    return `${saleState} ${price} <br> <img src=${item.IMG_PATH}>`;
 };

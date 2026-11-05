@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,6 +10,19 @@ const rangeMap = {
     daily: '日榜',
     weekly: '周榜',
     monthly: '月榜',
+};
+
+function parsePublicationTime(value?: number) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+        return;
+    }
+    const date = parseDate(value, 'x');
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+const parseArticleResult = async (item: DataItem) => {
+    const [result] = await Promise.allSettled([parseArticle(item)]);
+    return result;
 };
 
 export const route: Route = {
@@ -48,12 +63,12 @@ async function handler(ctx) {
             title: item.articleTitle,
             description: item.articleSummary,
             link: `${baseUrl}/${item.type || 'ai'}/${item.id}.html`,
-            pubDate: parseDate(item.publishTime, 'x'),
+            pubDate: parsePublicationTime(item.publishTime),
             author: item.articleAuthor,
         };
     });
 
-    const results = await Promise.allSettled(list.map((item) => parseArticle(item)));
+    const results = await pMap(list, parseArticleResult, { concurrency: 3 });
     const result = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
 
     return {

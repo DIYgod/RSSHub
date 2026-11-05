@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -43,17 +44,24 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.description = content('.blogs-block .col-md-12').html();
+                item.description = content('.blogs-block .row.margin-top-large > .col-md-12').html();
+                const pubDate = content('[id$="ByLinePanel"]')
+                    .text()
+                    .match(/\b\d{2}-\d{2}-\d{4} \d{2}:\d{2}\b/)?.[0];
+                if (pubDate) {
+                    item.pubDate = parseDate(pubDate, 'MM-DD-YYYY HH:mm');
+                }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

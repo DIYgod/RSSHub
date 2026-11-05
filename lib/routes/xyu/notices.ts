@@ -1,10 +1,66 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { fixArticleContent } from '@/utils/wechat-mp';
+
+function getWechatAuthor(content: CheerioAPI) {
+    const author = content('script')
+        .toArray()
+        .map((element) => {
+            try {
+                const literal = content(element)
+                    .text()
+                    .match(/\bvar\s+author\s*=\s*("(?:\\.|[^"\\])*")/)?.[1];
+                return literal ? JSON.parse(literal) : undefined;
+            } catch {
+                return;
+            }
+        })
+        .find((value) => typeof value === 'string' && value.trim());
+
+    return typeof author === 'string' ? author : content('#js_name').text().trim() || undefined;
+}
+
+function parseWechatPublication(content: string) {
+    const timestamp = content.match(/\bvar\s+ct\s*=\s*["'](\d+)["']\s*;/)?.[1];
+    if (!timestamp) {
+        return;
+    }
+
+    const date = parseDate(timestamp, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
+async function fetchDetails(url: string): Promise<{ description?: string; pubDate?: Date; author?: string }> {
+    try {
+        const response = await ofetch(url);
+        const $ = load(response);
+        const wechatContent = $('#js_content');
+        if (wechatContent.length) {
+            return { description: fixArticleContent(wechatContent) || undefined, pubDate: parseWechatPublication(response), author: getWechatAuthor($) };
+        }
+
+        const content = $('.v_news_content').first();
+        if (!content.length) {
+            return {};
+        }
+
+        const attachments = $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"], .art-body a[href*="DownloadAttachUrl"]')
+            .filter((_, link) => !$(link).closest('.v_news_content').length)
+            .toArray()
+            .map((link) => `<li>${$.html(link)}</li>`)
+            .join('');
+
+        return { description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined };
+    } catch {
+        return {};
+    }
+}
 
 export const route: Route = {
     path: '/index/tzgg',
@@ -53,7 +109,7 @@ async function handler() {
                 return null;
             }
 
-            const title = currentItem.find('.list-tx h3').text().trim();
+            const title = currentItem.find('.list-tx h3').text();
             const description = currentItem.find('.list-tx p').text().trim();
             const day = currentItem.find('.date p').text();
             const yearMonth = currentItem.find('.date span').text();
@@ -62,41 +118,19 @@ async function handler() {
             return {
                 title,
                 link: new URL(link, baseUrl).href,
-                description: description || title,
+                description: description || undefined,
                 pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), 8),
             };
         })
         .filter((item) => item !== null);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await ofetch(item.link);
-                    if (!detailResponse) {
-                        return {
-                            ...item,
-                            description: '该通知无法直接预览，请点击原文链接查看',
-                        };
-                    }
-
-                    const $$ = load(detailResponse);
-                    const content = $$('.v_news_content, .content, .article-content').html();
-
-                    if (content) {
-                        const $content = load(content);
-                        item.description = $content.html();
-                    }
-
-                    return item;
-                } catch {
-                    return {
-                        ...item,
-                        description: '该通知无法直接预览，请点击原文链接查看',
-                    };
-                }
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`xyu:notices:detail:v3:${item.link}`, () => fetchDetails(item.link));
+            return { ...item, description: details.description ?? item.description, pubDate: details.pubDate ?? item.pubDate, author: details.author };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,3 +1,5 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
@@ -62,7 +64,7 @@ async function handler(ctx) {
     const arr = obj.result.cmsArticleWebOld;
 
     const items = arr.map((item) => ({
-        title: item.title,
+        title: load(item.title).text(),
         description: item.content,
         pubDate: timezone(parseDate(item.date), 8),
         link: item.url,

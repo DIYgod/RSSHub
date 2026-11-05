@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const targetUrl = new URL(`users/${id}/talks`, baseUrl).href;
     const apiUrl = new URL(`gapi/v1/users/${id}/talks`, baseUrl).href;
 
-    // 获取更多数据以确保过滤后仍有足够的项目
+    // Allow for radio and video resources excluded from the talk feed.
     const fetchLimit = Math.min(limit * 2, 100);
 
     const query = {
@@ -34,10 +34,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const included = response.included || [];
 
-    // 过滤掉播客和视频类型的动态
+    // Exclude radio and video resources from the talk feed.
     let data = response.data.filter((item) => item.type !== 'radios' && item.type !== 'videos');
 
-    // 限制数量
     data = data.slice(0, limit);
 
     const items: DataItem[] = data.map((item): DataItem => {
@@ -46,6 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const title: string = attributes.title;
         const pubDate: number | string = attributes['created-at'] || attributes['published-at'];
+        const updated: number | string | undefined = attributes['updated-at'];
 
         const authorObj = relationships?.user?.data;
         const authorIncluded = authorObj ? included.find((i) => i.type === authorObj.type && i.id === authorObj.id) : undefined;
@@ -54,7 +54,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   {
                       name: authorIncluded.attributes?.nickname,
                       url: authorIncluded.id ? new URL(`users/${authorIncluded.id}`, baseUrl).href : undefined,
-                      avatar: authorIncluded.thumb ? new URL(authorIncluded.thumb, imageBaseUrl).href : undefined,
+                      avatar: authorIncluded.attributes?.thumb ? new URL(authorIncluded.attributes.thumb, imageBaseUrl).href : undefined,
                   },
               ]
             : undefined;
@@ -84,12 +84,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             image,
             banner: image,
-            updated: pubDate ? parseDate(pubDate) : undefined,
+            updated: updated ? parseDate(updated) : undefined,
             language,
             description,
             content: {
                 html: description,
-                text: description,
             },
         };
     });
@@ -99,7 +98,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: $('title').text().split(/\|/).pop()?.trim(),
         language,
         id: $('meta[property="og:url"]').attr('content'),

@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const BASE_URL = 'https://www.ruankao.org.cn/index/work.html';
 
@@ -38,7 +39,7 @@ const handler: Route['handler'] = async () => {
         const title = $(element).find('a').attr('title')!;
         const link = $(element).find('a').attr('href')!;
 
-        const formattedDate = parseDate(date);
+        const formattedDate = date ? parseDateInTimezone(date, 8) : undefined;
         return {
             date: formattedDate,
             title,
@@ -51,29 +52,31 @@ const handler: Route['handler'] = async () => {
         description: '计算机职业技术资格考试（软考）消息推送',
         link: BASE_URL,
         image: 'https://bm.ruankao.org.cn/asset/image/public/logo.png',
-        item: (await Promise.all(
-            contentLinkList.map((item) =>
-                cache.tryGet(item.link, async () => {
+        item: await pMap(
+            contentLinkList,
+            async (item) => {
+                const content = await cache.tryGet(item.link, async () => {
                     const CONTENT_SELECTOR = '#contentTxt';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
-                    const content = removeFontPresetting(contentPage(CONTENT_SELECTOR).html() || '');
-                    return {
-                        title: item.title,
-                        pubDate: item.date,
-                        link: item.link,
-                        description: content,
-                        category: ['study'],
-                        guid: item.link,
-                        id: item.link,
-                        image: 'https://bm.ruankao.org.cn/asset/image/public/logo.png',
-                        content,
-                        updated: item.date,
-                        language: 'zh-CN',
-                    };
-                })
-            )
-        )) as DataItem[],
+                    return removeFontPresetting(contentPage(CONTENT_SELECTOR).html() || '');
+                });
+                return {
+                    title: item.title,
+                    pubDate: item.date,
+                    link: item.link,
+                    description: content,
+                    category: ['study'],
+                    guid: item.link,
+                    id: item.link,
+                    image: 'https://bm.ruankao.org.cn/asset/image/public/logo.png',
+                    content: { html: content },
+                    updated: item.date,
+                    language: 'zh-CN',
+                };
+            },
+            { concurrency: 3 }
+        ),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: 'https://rsshub.app/ruankao/news',

@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/tracks/:user',
@@ -16,6 +17,8 @@ export const route: Route = {
 
 const apiBaseUrl = 'https://api-v2.soundcloud.com';
 
+const parseTags = (tagList: string) => Array.from(tagList.matchAll(/"([^"]*)"|(\S+)/g), (match) => match[1] ?? match[2]);
+
 async function handler(ctx: Context) {
     const { user } = ctx.req.param();
     const link = `https://soundcloud.com/${user}/tracks`;
@@ -27,7 +30,7 @@ async function handler(ctx: Context) {
     const data = await ofetch(`${apiBaseUrl}/users/${userInfo.id}/tracks`, {
         query: {
             client_id: clientId,
-            limit: ctx.req.query('limit') ?? 20,
+            limit: getRouteLimit(ctx, 20),
             offset: 0,
             linked_partitioning: 1,
         },
@@ -38,10 +41,10 @@ async function handler(ctx: Context) {
         link: track.permalink_url,
         guid: track.permalink_url,
         author: track.user.username,
-        pubDate: parseDate(track.display_date),
+        pubDate: track.display_date ? parseDate(track.display_date) : undefined,
         description: `<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(track.permalink_url)}"></iframe>${track.description ? `<p>${track.description.replaceAll('\n', '<br>')}</p>` : ''}`,
-        image: track.artwork_url.replace('-large.', '-t500x500.'),
-        category: [track.genre, track.tag_list.split(' ')],
+        image: track.artwork_url?.replace('-large.', '-t500x500.'),
+        category: [track.genre, ...parseTags(track.tag_list)].filter(Boolean),
     }));
 
     return {

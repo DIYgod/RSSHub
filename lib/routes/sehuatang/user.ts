@@ -1,4 +1,5 @@
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -7,6 +8,7 @@ import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://sehuatang.org/';
 
@@ -52,8 +54,9 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
+    const limit = getRouteLimit(ctx, 25);
     const list = $('#delform tr:not(.th)')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -68,8 +71,9 @@ async function handler(ctx) {
             };
         });
 
-    const out = await Promise.all(
-        list.map((info) =>
+    const out = await pMap(
+        list,
+        (info) =>
             cache.tryGet(info.link!, async () => {
                 const response = await got(info.link, {
                     headers: {
@@ -127,8 +131,8 @@ async function handler(ctx) {
                 }
 
                 return info;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -18,12 +18,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['www.zhihu.com/people/:id'],
-            target: '/people/activities/:id',
-        },
-    ],
     name: 'xhu - 用户动态',
     maintainers: ['JimenezLi'],
     handler,
@@ -149,7 +143,7 @@ async function handler(ctx) {
                     url = `https://www.zhihu.com/roundtable/${detail.id}`;
                     break;
                 default:
-                    description = `未知类型 ${item.target.type}，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue`;
+                    throw new Error(`Unknown activity item type: ${item.target.type}`);
             }
 
             return {

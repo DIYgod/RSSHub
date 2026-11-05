@@ -7,13 +7,18 @@ export const route: Route = {
     path: '/839studio',
     categories: ['traditional-media'],
     example: '/thepaper/839studio',
+    radar: [
+        {
+            source: ['projects.thepaper.cn/thepaper-cases/839studio/'],
+            target: '/839studio',
+        },
+    ],
     name: '澎湃美数课作品集',
     maintainers: ['umm233'],
     handler,
 };
 
 async function handler() {
-    // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
         url: 'http://projects.thepaper.cn/thepaper-cases/839studio/?lang=zh',
@@ -21,7 +26,6 @@ async function handler() {
 
     const data = response.data;
 
-    // 使用 cheerio 加载返回的 HTML
     const $ = load(data);
     const list = $('div[class=imgtext]');
 

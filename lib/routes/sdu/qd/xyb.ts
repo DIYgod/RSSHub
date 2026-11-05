@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://xyb.qd.sdu.edu.cn/';
@@ -53,13 +54,15 @@ async function handler(ctx) {
             return {
                 title: a.text().slice(1).trim(),
                 link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDate($e.find('b').text().trim(), 'YYYY-MM-DD'),
+                pubDate: parseDateInTimezone($e.find('b').text().trim(), 8),
             };
         });
 
-    item = await Promise.all(
-        item.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    item = await pMap(
+        item,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`qd-xyb:article-v2:${item.link}`, async () => {
                 const hostname = new URL(item.link!).hostname;
                 if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
@@ -69,9 +72,10 @@ async function handler(ctx) {
 
                 item.description = $('.v_news_content').html();
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

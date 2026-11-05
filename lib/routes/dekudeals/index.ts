@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:type',
@@ -16,6 +18,9 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!isValidHost(type)) {
+        throw new InvalidParameterError('Invalid type');
+    }
 
     const host = 'https://www.dekudeals.com/';
     const link = new URL(type, host).href;
@@ -25,16 +30,16 @@ async function handler(ctx: Context) {
 
     const title = $('#search-title').text();
 
-    const out = $('.search-main > .item-grid2 > div.cell')
+    const out = $('.search-main .browse-cards .col')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const img = $item.find('.main-link img').attr('src');
+            const img = $item.find('picture img').attr('src');
             const price = $item.find('strong').html();
             const oldprice = $item.find('s.text-muted').html();
 
             return {
-                title: $item.find('.name').text(),
+                title: $item.find('.main-link h6').text(),
                 link: new URL($item.find('.main-link').attr('href')!, host).href,
                 description: `<img src="${img}"><br><s>${oldprice}</s><br>${price}`,
             };

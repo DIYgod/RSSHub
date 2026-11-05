@@ -3,12 +3,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.ymgal.games';
-
-const date = new Date();
-const year = date.getFullYear();
-const month = date.getMonth() + 1;
 
 export const route: Route = {
     path: '/game/release',
@@ -36,6 +33,10 @@ export const route: Route = {
 };
 
 async function handler() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
     const response = await got({
         method: 'get',
         url: `${host}/release-list/${year}/${month}`,
@@ -50,11 +51,13 @@ async function handler() {
             const $item = $(item);
             const itemPicUrl = $item.find('.lazy').first().attr('data-original');
             const tags = $item.find('.tag-info-list').children();
-            const taginfo = tags.toArray().map((elem) => $(elem).text());
+            const tagInfo = tags.toArray().map((elem) => ({ text: $(elem).text(), date: getReleaseDate($(elem).text()) }));
             return {
                 title: $item.attr('title')!,
                 link: `${host}${$item.attr('href')}`,
-                description: renderDescription(itemPicUrl, taginfo),
+                description: renderDescription(itemPicUrl),
+                category: tagInfo.filter((tag) => !tag.date && tag.text.trim()).map((tag) => tag.text),
+                pubDate: tagInfo.find((tag) => tag.date)?.date,
             };
         });
 
@@ -66,13 +69,19 @@ async function handler() {
     };
 }
 
-const renderDescription = (itemPicUrl: string | undefined, taginfo: string[]): string =>
+const renderDescription = (itemPicUrl: string | undefined): string =>
     renderToString(
         <>
             {itemPicUrl ? <img src={itemPicUrl} /> : null}
             <br />
-            {taginfo.map((tag, index) => (
-                <li key={`${tag}-${index}`}>{tag}</li>
-            ))}
         </>
     );
+
+function getReleaseDate(value: string): Date | undefined {
+    const date = value.match(/^(\d{4}-\d{2}-\d{2})发行$/)?.[1];
+    if (!date || !Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime())) {
+        return;
+    }
+    // The source provides a calendar day; midnight only serializes that day.
+    return parseDate(`${date}T00:00:00Z`);
+}

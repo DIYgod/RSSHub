@@ -1,6 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://api.openalex.org';
 
@@ -59,25 +61,17 @@ export const handler = async (ctx) => {
         },
     });
 
-    const seenTitleKeys = new Set<string>();
+    const seenWorkIds = new Set<string>();
 
     const items = response.results
-        .filter((work) => {
-            const abstract = reconstructAbstract(work.abstract_inverted_index).trim();
-            if (!abstract) {
-                return false;
-            }
-
-            // Exclude likely news/briefing entries that usually do not have institution metadata.
-            return work.authorships?.some((authorship) => authorship.institutions?.length > 0) ?? false;
-        })
+        .filter((work) => reconstructAbstract(work.abstract_inverted_index).trim())
         .map((work) => {
             const abstract = reconstructAbstract(work.abstract_inverted_index);
             const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
             const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
-            const normalizedTitle = (work.title || 'Untitled').trim().toLowerCase();
 
-            const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
+            const publicationDate = work.publication_date ? timezone(parseDate(work.publication_date, 'YYYY-MM-DD', true), 0) : undefined;
+            const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined;
 
             return {
                 title: work.title || 'Untitled',
@@ -87,22 +81,16 @@ export const handler = async (ctx) => {
                 pubDate,
                 // OpenAlex id is immutable and stable across metadata updates.
                 guid: work.id,
-                normalizedTitle,
                 category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
             };
         })
         .filter((item) => {
-            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T', 1)[0] : '';
-            const titleKey = `${item.normalizedTitle}::${day}`;
-            if (seenTitleKeys.has(titleKey)) {
+            if (seenWorkIds.has(item.guid)) {
                 return false;
             }
-            seenTitleKeys.add(titleKey);
+            seenWorkIds.add(item.guid);
             return true;
-        })
-        .map(({ normalizedTitle: _normalizedTitle, ...item }) => ({
-            ...item,
-        }));
+        });
 
     // Get journal and filter type names for title
     const journalIdArray = journals.split('|');
@@ -172,7 +160,7 @@ export const route: Route = {
     url: 'openalex.org',
     maintainers: ['emdoe'],
     handler,
-    example: '/openalex/s64187185/subfield/2604',
+    example: '/openalex/s64187185/subfield/1312',
     parameters: {
         journals: 'Pipe-separated journal source IDs (e.g., s64187185|s123456789)',
         type: 'Optional filter type: subfield, topic, field, or domain',
@@ -183,7 +171,7 @@ export const route: Route = {
 Examples:
 
 - /openalex/s64187185 - All works from a journal (no topic filter)
-- /openalex/s64187185/subfield/2604 - Filter by subfield
+- /openalex/s64187185/subfield/1312 - Filter by subfield
 - /openalex/s64187185|s123456/topic/T10001|T10002 - Filter by topic with multiple journals
 - /openalex/s64187185/field/19 - Filter by field
 - /openalex/s64187185/domain/1 - Filter by domain`,

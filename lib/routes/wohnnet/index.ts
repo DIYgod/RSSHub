@@ -31,6 +31,17 @@ all desired filters (but at least a category and a region!) and click the
 \`https://www.wohnnet.at/immobilien/\` part at the beginning and replace only
 the \`?\` (the \`&\`s stay as is!) after the region name with a \`/\`.
 
+Search options in the wildcard path after the region:
+
+| Option | Meaning |
+| --- | --- |
+| \`unterregionen\` | Unterregionen (e.g. \`g90101--g90201--g90301\`) |
+| \`intention\` | Intention (\`kauf\` \\| \`miete\`) |
+| \`zimmer\` | Zimmer (at least number, e.g. \`2\`) |
+| \`flaeche\` | Fläche (m², \`40-\` = at least 40 m², \`40-60\` = between 40 m² and 60 m²) |
+| \`preis\` | Preis (€, \`-1000\` = at most 1,000 €, \`500-1000\` = between 500 € and 1,000 €) |
+| \`merkmale\` | Merkmale (multiple, delimited by \`--\`, e.g. \`balkon--garten--kurzzeitmiete--moebliert--parkplatz--provisionsfrei--sofort-beziehbar\`) |
+
 Examples:
 
 * \`${BASE_URL}mietwohnungen/wien\`
@@ -45,12 +56,6 @@ Examples:
     parameters: {
         category: 'Category (`mietwohnungen`, `eigentumswohnungen`, `grundstuecke`, …)',
         region: 'Region (`wien`, `oesterreich`, …)',
-        unterregionen: 'Unterregionen (e.g. `g90101--g90201--g90301`)',
-        intention: 'Intention (`kauf` | `miete`)',
-        zimmer: 'Zimmer (at least number, e.g. `2`)',
-        flaeche: 'Fläche (m², `40-` = at least 40 m², `40-60` = between 40 m² and 60 m²)',
-        preis: 'Preis (€, `-1000` = at most 1,000 €, `500-1000` = between 500 € and 1,000 €)',
-        merkmale: 'Merkmale (multiple, delimited by `--`, e.g. `balkon--garten--kurzzeitmiete--moebliert--parkplatz--provisionsfrei--sofort-beziehbar`)',
     },
     features: {
         requireConfig: false,
@@ -79,6 +84,7 @@ Examples:
 
         const items = $('a:has(> .realty)')
             .toArray()
+            .filter((el) => $(el).attr('href')?.trim())
             .map((el) => {
                 const $el = $(el);
                 const href = $el.attr('href');
@@ -103,7 +109,7 @@ Examples:
                 const imgSrc = $el.find('.realty-image img').attr('src');
 
                 const itemTitle = `${address} · ${price} | ${title}`;
-                const itemLink = new URL(href ?? '', BASE_URL).href;
+                const itemLink = new URL(href!, BASE_URL).href;
                 const itemDescription = `${details.join(' · ')} | ${badges.join(' · ')} | ${agency}`;
                 const itemCategories = badges.filter((b) => !b.endsWith(' Bilder'));
                 const itemImage = imgSrc ? new URL(imgSrc, BASE_URL).href : undefined;
@@ -122,7 +128,6 @@ Examples:
             title: FEED_TITLE,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
-            allowEmpty: true,
             item: items,
             link,
         } satisfies Data;

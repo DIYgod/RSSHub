@@ -1,4 +1,7 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getRollNewsList, parseArticle, parseRollNewsList } from './utils';
 
@@ -40,11 +43,11 @@ async function handler(ctx) {
 
     const pageid = '153';
     const { lid = '2509' } = ctx.req.param();
-    const { limit = '50' } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 50);
     const response = await getRollNewsList(pageid, lid, limit);
     const list = parseRollNewsList(response.data.result.data);
 
-    const out = await Promise.all(list.map((item) => parseArticle(item)));
+    const out = await pMap(list, parseArticle, { concurrency: 3 });
 
     return {
         title: `新浪${map[lid]}滚动新闻`,

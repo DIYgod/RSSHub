@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/post';
 
@@ -24,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ?? 7;
+    const limit = Math.min(getRouteLimit(ctx, 7), 100);
     const url = `${postsAPIUrl}?per_page=${limit}&_embed`;
 
     const response = await got.get(url);
@@ -40,7 +41,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link,
             description,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parsePublicationDate(item.date_gmt),
             author: item._embedded.author[0].name,
         };
     });
@@ -50,4 +51,16 @@ async function handler(ctx) {
         link: rootUrl,
         item: items,
     };
+}
+
+function parsePublicationDate(value?: string) {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    const match = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,3})?(?:Z|\+00:00)?$/.exec(value);
+    if (!match || !Number.isFinite(parseDate(match[1], 'YYYY-MM-DDTHH:mm:ss', true).getTime())) {
+        return;
+    }
+    const date = parseDate(value.endsWith('Z') || value.endsWith('+00:00') ? value : `${value}Z`);
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }

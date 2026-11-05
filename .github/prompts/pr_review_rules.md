@@ -47,4 +47,3 @@ Only report **clear and actionable** violations in changed lines/files. Do not r
 - Report only violated rules.
 - Each bullet should include: file path, problem, and concrete fix.
 - Group repeated issues across files into one concise bullet when possible.
-- If no rule is clearly violated, do not comment.

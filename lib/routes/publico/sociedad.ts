@@ -16,7 +16,7 @@ export const route: Route = {
     example: '/publico/sociedad',
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = getItems($);
 
     return {
-        title: 'Medio Ambiente | Sociedad | Público',
+        title: $('head title').text(),
         link: currentUrl,
         item: items,
     };

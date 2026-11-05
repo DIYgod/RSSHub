@@ -40,7 +40,7 @@ export const route: Route = {
         },
         sort: {
             description: '排序方式，默认为最新发布',
-            default: 'hot',
+            default: 'latest',
             options: [
                 { value: 'hot', label: '热门' },
                 { value: 'latest', label: '最新' },
@@ -57,7 +57,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['juejin.cn/books'],
+            source: ['aicoding.juejin.cn/'],
+            target: '/aicoding',
         },
     ],
     name: 'AI 编程',

@@ -6,6 +6,13 @@ import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+function parseSourceDate(value: string | number | Date | undefined) {
+    if (value === undefined || value === '') {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 export const route: Route = {
     path: '/',
     categories: ['multimedia'],
@@ -21,20 +28,15 @@ export const route: Route = {
     handler,
     url: 'xyzrank.com/',
 };
-
 export async function handler(ctx) {
     const category = getSubPath(ctx).slice(1);
-
     const rootUrl = 'https://xyzrank.com';
     const currentUrl = `${rootUrl}/#/${category}`;
-
     let response = await got({
         method: 'get',
         url: rootUrl,
     });
-
     const $ = load(response.data);
-
     const categories = {
         '': {
             url: `${rootUrl}/api/episodes`,
@@ -57,20 +59,19 @@ export async function handler(ctx) {
             type: 'podcasts',
         },
     };
-
     response = await got({
         method: 'get',
         url: categories[category].url,
     });
-
     const type = categories[category].type;
-
-    const items = response.data.items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 250).map((item, index) => ({
+    const requestedLimit = Number(ctx.req.query('limit') ?? 250);
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 250;
+    const items = response.data.items.slice(0, limit).map((item, index) => ({
         title: `#${index + 1} ${item.title ?? item.name}`,
         category: [item.primaryGenreName],
         author: item.authorsText,
-        link: `${item.link ?? item.links[0].url}${item.trackCount ? `#${item.trackCount}` : ''}`,
-        pubDate: parseDate(item.postTime ?? item.lastReleaseDate),
+        link: item.link ?? item.links[0].url,
+        pubDate: parseSourceDate(item.postTime ?? item.lastReleaseDate),
         description: renderToString(
             <>
                 {item.logoURL ? <img src={item.logoURL} /> : null}
@@ -79,9 +80,6 @@ export async function handler(ctx) {
                         type === 'podcasts'
                             ? {
                                   '#': index + 1,
-                                  播客电台: item.name,
-                                  主持: item.authorsText,
-                                  分类: item.primaryGenreName,
                                   更新频率: `${(item.avgUpdateFreq / 24).toFixed(1)}天`,
                                   最近更新: `${item.lastReleaseDateDayCount.toFixed(1)}天前`,
                                   总集数: item.trackCount,
@@ -97,15 +95,12 @@ export async function handler(ctx) {
                               }
                             : {
                                   '#': index + 1,
-                                  节目标题: item.title,
                                   播客电台: item.podcastName,
                                   播放量: item.playCount,
                                   评论量: item.commentCount,
                                   互动率: `${((item.commentCount / item.playCount) * 100).toFixed(1)}%`,
                                   打开率: `${(item.openRate * 100).toFixed(1)}%`,
                                   时长: `${item.duration}′`,
-                                  发布时间: item.postTime,
-                                  分类: item.primaryGenreName,
                                   链接: item.link,
                               }
                     ).map(([label, value]) =>
@@ -122,7 +117,6 @@ export async function handler(ctx) {
             </>
         ),
     }));
-
     return {
         title: `${$('title').text()} - ${categories[category].title}`,
         link: currentUrl,

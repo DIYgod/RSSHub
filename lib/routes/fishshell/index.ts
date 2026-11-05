@@ -35,11 +35,14 @@ async function handler() {
             .map((item) => {
                 const title = $(item).find('h2').contents().first().text();
                 const date = title.match(/\(released (.+?)\)/)?.[1];
+                const itemLink = new URL($(item).find('a').attr('href')!, link).href;
+                const content = $(item);
+                content.children('h2').remove();
                 return {
                     title,
-                    link: new URL($(item).find('a').attr('href')!, link).href,
-                    pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
-                    description: $(item).html(),
+                    link: itemLink,
+                    pubDate: date ? parseDate(`${date} UTC`) : undefined,
+                    description: content.html(),
                 };
             }),
     };

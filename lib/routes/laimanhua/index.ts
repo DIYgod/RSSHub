@@ -41,18 +41,23 @@ async function handler(ctx) {
     const charset = $('meta[http-equiv="Content-Type"]')
         .attr('content')
         ?.match(/charset=(.*)/)?.[1];
-    if (charset?.toLowerCase() !== 'utf-8') {
-        $ = load(iconv.decode(response, charset ?? 'utf-8'));
+    if (charset && charset.toLowerCase() !== 'utf-8') {
+        $ = load(iconv.decode(response, charset));
     }
 
+    const updateTime = $('head meta[property="og:novel:update_time"]').attr('content');
     const items = $('.plist a')
         .toArray()
-        .map((item, index) => {
+        .flatMap((item, index) => {
             const $item = $(item);
+            const href = $item.attr('href');
+            if (!href) {
+                return [];
+            }
             return {
                 title: $item.attr('title')!,
-                link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: index === 0 ? parseDate($('head meta[property="og:novel:update_time"]').attr('content')!) : null,
+                link: new URL(href, link).href,
+                pubDate: index === 0 && updateTime ? parseDate(updateTime) : undefined,
                 author: $('head meta[property="og:novel:author"]').attr('content'),
             };
         });

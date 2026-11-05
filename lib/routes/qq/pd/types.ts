@@ -19,7 +19,7 @@ export type Feed = {
     createTime: string;
 };
 
-export type ChannelInfo = {
+type ChannelInfo = {
     name: string;
     guild_number: string;
     guild_name: string;
@@ -29,7 +29,7 @@ export type ChannelInfo = {
     };
 };
 
-export type FeedContent = {
+type FeedContent = {
     type: number;
     pattern_id: string;
     text_content?: {

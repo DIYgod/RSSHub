@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const host = 'http://acg17.com';
+const host = 'https://acg17.com';
 
 export const route: Route = {
     path: '/post/all',
@@ -33,12 +33,12 @@ async function handler() {
     const list = response.data;
     return {
         title: 'ACG17 - 全部文章',
-        link: `${host}/blog`,
+        link: `${host}/post`,
         description: 'ACG17 - 全部文章',
         item: list.map((item) => ({
             title: item.title.rendered,
             link: item.link,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
             description: item.content.rendered,
         })),
     };

@@ -1,6 +1,9 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getArticle } from './utils';
 
@@ -24,16 +27,16 @@ async function handler(ctx) {
 
     const response = await ofetch('https://v3-statics.mirrormedia.mg/files/json/post_external01.json');
 
-    const items = [...response.choices.map((e) => ({ __from: 'choices', ...e })), ...response.latest.map((e) => ({ __from: 'latest', ...e }))]
+    const items: DataItem[] = [...response.choices.map((e) => ({ __from: 'choices', ...e })), ...response.latest.map((e) => ({ __from: 'latest', ...e }))]
         .map((e) => ({
             title: e.title,
             pubDate: parseDate(e.publishedDate),
             category: [...(e.sections ?? []).map((_) => _.name), e.__from],
             link: `${rootUrl}/${e.style === '' ? 'external' : 'story'}/${e.slug}`,
         }))
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
+        .slice(0, getRouteLimit(ctx, 20));
 
-    const list = await Promise.all(items.map((item) => getArticle(item)));
+    const list = await pMap(items, (item) => getArticle(item), { concurrency: 3 });
 
     return {
         title: '鏡週刊 Mirror Media',

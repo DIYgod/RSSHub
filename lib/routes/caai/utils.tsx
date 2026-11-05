@@ -6,9 +6,9 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const base = 'http://www.caai.cn';
+const base = 'https://www.caai.cn';
 
-const urlBase = (caty) => base + `/index.php?s=/home/article/index/id/${caty}.html`;
+const urlBase = (caty) => base + `/site/term/${caty}.html`;
 
 const renderDesc = (desc) => renderToString(<>{desc ? raw(desc) : null}</>);
 
@@ -16,19 +16,18 @@ const detailPage = (e, cache) =>
     cache.tryGet(e.link, async () => {
         const result = await got(e.link);
         const $ = load(result.data);
-        e.description = $('div.article').html();
+        e.description = $('div.NewsText').html();
         return e;
     });
 
-const fetchAllArticles = (data) => {
-    const $ = load(data);
-    const articles = $('div.article-list > ul > li');
+const fetchAllArticles = ($) => {
+    const articles = $('ul.news-list-page > li > a');
     const info = articles.toArray().map((e) => {
         const c = $(e);
         const r = {
-            title: c.find('h3 a[href]').text().trim(),
-            link: base + c.find('h3 a[href]').attr('href'),
-            pubDate: timezone(parseDate(c.find('h4').text().trim(), 'YYYY-MM-DD'), 8),
+            title: c.find('h4').text(),
+            link: new URL(c.attr('href'), base).href,
+            pubDate: timezone(parseDate(c.find('span.date').text(), 'YYYY-MM-DD'), 8),
         };
         return r;
     });

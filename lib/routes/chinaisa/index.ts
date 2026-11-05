@@ -4,6 +4,8 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
@@ -165,7 +167,7 @@ export const route: Route = {
 async function handler(ctx) {
     const language: Language = 'zh-CN';
     const { id = '58af05dfb6b4300151760176d2aad0a04c275aaadbb1315039263f021f920dcd' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.chinaisa.org.cn';
 
@@ -196,7 +198,7 @@ async function handler(ctx) {
                 title: $item.prop('title') ?? $item.text(),
                 link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
                 guid: $item.prop('href')!.match(/articleId=(\w+)/)![1],
-                pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', '')),
+                pubDate: timezone(parseDate($item.parent().find('span.times').text().replaceAll('[]', '')), 8),
             };
         });
 
@@ -224,7 +226,7 @@ async function handler(ctx) {
                 item.description = content('div.article_main').html();
                 item.author = matches[1].split(/&/, 1)[0];
                 item.guid = `chinaisa-${item.guid}`;
-                item.pubDate = parseDate(matches[2]);
+                item.pubDate = timezone(parseDate(matches[2]), 8);
 
                 return item;
             })

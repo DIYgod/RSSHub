@@ -29,12 +29,15 @@ async function handler(ctx) {
     const rootUrl = 'https://www.inoreader.com/stream';
     const rssUrl = `${rootUrl}/user/${user}/tag/${tag}`;
     const feed = await parser.parseURL(rssUrl);
+    if (feed.items.length === 1 && feed.items[0].guid === 'https://www.inoreader.com/upgrade/feature/rss_common?post') {
+        throw new Error('Inoreader has suspended this RSS export. Ask the feed owner to enable RSS exports with their Inoreader plan.');
+    }
     const items = feed.items.map((item) => {
-        if (item && item.enclosure && item.enclosure.type!.includes('audio')) {
+        if (item && item.enclosure && item.enclosure.type?.startsWith('audio/')) {
             // output podcast rss
             // get first image in content
             let firstImgSrc = '';
-            if (item.content !== null) {
+            if (item.content) {
                 const $ = load(item.content!);
                 firstImgSrc = $('img').first().attr('src')!;
             }

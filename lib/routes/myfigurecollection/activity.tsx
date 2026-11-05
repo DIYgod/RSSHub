@@ -31,7 +31,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-            target: '/:category?/:language?',
+            target: '/activity/:category?/:language?',
         },
     ],
     name: 'Activity',

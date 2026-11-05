@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const defaultCategories = {
     sub: 'new',
@@ -49,25 +49,25 @@ export async function handler(ctx) {
         $(el).removeClass('link-dark');
     });
 
-    let items = $('.link-dark')
+    let items = $('.view-text a.link-dark[href^="/a/"]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
-            const pubDate = $item.parent().parent().find('.align-text-top').last().text();
-            const today = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+            const pubDate = $item.parent().parent().find('time[datetime]').attr('datetime');
 
             return {
                 link: `${rootUrl}${$item.attr('href')}`,
                 author: $item.parent().parent().find('.text-dark').last().text(),
-                pubDate: timezone(parseDate(pubDate.includes('-') ? pubDate : `${today} ${pubDate}`), 8),
+                pubDate: pubDate ? parseDate(pubDate) : undefined,
                 title: `${$item.parent().parent().find('.align-middle').text()} ${$item.text().replace(/ - SubHD/, '')}`,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`subhd:article:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -75,14 +75,15 @@ export async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('.rounded-circle').remove();
-                content('.view-text').last().remove();
+                const files = content('.subtitle-file-list');
+                files.find('a[href="#"]').removeAttr('href');
+                const description = (content('.subtitle-description').html() ?? '') + (files.html() ?? '');
 
-                item.description = content('.view-text').html()! + content('.bg-white').first().html()!;
-
-                return item;
-            })
-        )
+                return { description };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

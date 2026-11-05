@@ -44,13 +44,13 @@ export const route: Route = {
     ],
     description: `Query Parameters:
 
-| Name                   | Type   | Description             |
-| ---------------------- | ------ | ----------------------- |
-| p                      | string | p                       |
-| rgSections\\[]          | string | rgSections              |
-| filterLanguage         | string | Filter Language         |
-| languageTag            | string | Language Tag            |
-| nMaxInappropriateScore | string | Max Inappropriate Score |
+| Name                   | Type   | Description                                             |
+| ---------------------- | ------ | ------------------------------------------------------- |
+| p                      | string | Compatibility parameter; always requests the first page |
+| rgSections\\[]          | string | rgSections                                              |
+| filterLanguage         | string | Filter Language                                         |
+| languageTag            | string | Language Tag                                            |
+| nMaxInappropriateScore | string | Max Inappropriate Score                                 |
 
 Example:
 
@@ -61,14 +61,18 @@ Example:
 ::: tip
 It can also access community hub contents that require a logged-in account.
 :::`,
-    name: 'Steam Community Hub Feeds',
+    name: 'Community Hub Feeds',
     maintainers: ['NyaaaDoge'],
 
     handler: async (ctx) => {
         const { appid = 730, routeParams } = ctx.req.param();
 
         const baseUrl = 'https://steamcommunity.com';
-        const apiUrl = `${baseUrl}/library/appcommunityfeed/${appid}${routeParams ? `?${routeParams}` : ''}`;
+        const query = new URLSearchParams(routeParams);
+        if (query.has('p')) {
+            query.set('p', '1');
+        }
+        const apiUrl = `${baseUrl}/library/appcommunityfeed/${appid}${query.size ? `?${query}` : ''}`;
         const response = await ofetch(apiUrl);
 
         return {
@@ -77,7 +81,7 @@ It can also access community hub contents that require a logged-in account.
             item: response.hub.map((item) => ({
                 title: item.title === '' ? workshopFileTypes[item.type] : item.title,
                 link: `https://steamcommunity.com/sharedfiles/filedetails/?id=${item.published_file_id}`,
-                description: renderToString(<SteamAppCommunityDescription image={item.full_image_url} description={item.description} />),
+                description: renderToString(<SteamAppCommunityDescription image={item.full_image_url} videoId={item.youtube_video_id} description={item.description} />),
                 author: item.creator.name,
                 category: workshopFileTypes[item.type],
             })),
@@ -85,9 +89,10 @@ It can also access community hub contents that require a logged-in account.
     },
 };
 
-const SteamAppCommunityDescription = ({ image, description }: { image?: string; description?: string }) => (
+const SteamAppCommunityDescription = ({ image, videoId, description }: { image?: string; videoId?: string; description?: string }) => (
     <>
         {image ? <img src={image} /> : null}
+        {videoId ? <iframe src={`https://www.youtube-nocookie.com/embed/${videoId}`} title="YouTube video player" allowFullScreen /> : null}
         <p>{description}</p>
     </>
 );

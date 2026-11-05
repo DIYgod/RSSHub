@@ -1,25 +1,13 @@
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import NotFoundError from '@/errors/types/not-found';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-const renderDescription = (images, article) =>
-    renderToString(
-        <>
-            {images?.map((image) =>
-                image?.url ? (
-                    <figure>
-                        <img src={image.large ?? image.url} height={image.height} width={image.width} />
-                        {image.caption ? <figcaption>{image.caption}</figcaption> : null}
-                    </figure>
-                ) : null
-            )}
-            {article ? raw(article) : null}
-        </>
-    );
 
 export const route: Route = {
     path: '/:category?/:section?',
@@ -73,75 +61,103 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ? ctx.req.param('category').toLowerCase() : 'singapore';
-    const section = ctx.req.param('section') ? ctx.req.param('section').toLowerCase() : undefined;
-    const apiKey = 'T9XUJM9rAZoLOd2CAx2wCBSTrm3xoyPw';
-    const platform = 'iosflex';
-    let feed;
-    const response = await got({
-        method: 'get',
-        url: `https://newsapi.sphdigital.com/v2/feed/section/st?page=1&platform=${platform}&section=${category}/star&subscribed=false&version=4.0`,
-        headers: {
-            'x-api-key': apiKey,
-        },
-    });
-    feed = response.data.data;
-    const sections = new Set(feed.filter((item) => item.items[0].itemType === 'SectionFooter').map((items) => items.items[0].sectionFooterData.link.id));
-    let slug = section && sections.has(`${category}-${section}-more/star`) ? `${category}-${section}-more/star` : undefined;
-    if (section === undefined) {
-        for (const section of ['latest', 'top-picks', 'top-stories']) {
-            if (!sections.has(`${category}-${section}-more/star`)) {
-                continue;
+    const section = ctx.req.param('section')?.toLowerCase();
+    const baseUrl = 'https://www.straitstimes.com';
+    const currentUrl = new URL(`/${category}`, baseUrl).href;
+    const { data: response } = await got(currentUrl);
+    const $ = load(response);
+    const refCode = section === 'top-stories' ? 'top-stories' : 'latest';
+    const seen = new Set<string>();
+    const list: Array<DataItem & { link: string }> = $('a[href]')
+        .toArray()
+        .flatMap((element) => {
+            const anchor = $(element);
+            const url = new URL(anchor.attr('href') || '', baseUrl);
+            if (url.searchParams.get('ref') !== refCode) {
+                return [];
             }
-
-            slug = `${category}-${section}-more/star`;
-            break;
-        }
-    }
-    if (slug) {
-        const response = await got({
-            method: 'get',
-            url: `https://newsapi.sphdigital.com/v2/feed/section/st?page=1&platform=${platform}&section=${slug}&subscribed=false&version=4.0`,
-            headers: {
-                'x-api-key': apiKey,
-            },
+            url.search = '';
+            if (seen.has(url.href)) {
+                return [];
+            }
+            seen.add(url.href);
+            return {
+                title: anchor.find('[data-testid="heading-test-id"]').first().text(),
+                link: url.href,
+                image: anchor.find('img').first().attr('src'),
+            };
         });
-        feed = response.data.data;
-    }
-    const articles = feed.filter((item) => item.items[0].itemType === 'Article');
-    const items = await Promise.all(
-        articles.map((item) =>
-            cache.tryGet(item.items[0].articleData.url, async () => {
-                const article = item.items[0].articleData;
-                if (article.authors) {
-                    item.author = article.authors.map((author) => author.name).join(', ');
+
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`straitstimes:article:v3:${item.link}`, async () => {
+                const { data: response } = await got(item.link);
+                const content = load(response);
+                const body = content('.storyline-wrapper').first();
+                body.find('.more-on-this-topic-wrapper').remove();
+                const description = (content('.hero-media-wrapper').first().html() ?? '') + (body.html() ?? '');
+                const liveBlogId = content('.live-blog-coverage')
+                    .attr('data-testid')
+                    ?.match(/^live-coverage-test-id-(\d+)$/)?.[1];
+                if (!description && liveBlogId) {
+                    const entries = await ofetch<LiveBlogEntry[]>(`https://liveblog.straitstimes.com/Feed/view/${liveBlogId}`, { responseType: 'json' });
+                    const liveContent = entries.map((entry) => entry.item_content ?? '').join('');
+                    if (!liveContent) {
+                        throw new NotFoundError(`No readable live updates are available at ${item.link}`);
+                    }
+                    const schema = getLiveBlogSchema(content);
+                    return {
+                        description: liveContent,
+                        author:
+                            content('.live-blog-header .st-byline')
+                                .filter((_, element) => content(element).text().startsWith('Edited by:'))
+                                .text()
+                                .replace(/^Edited by:\s*/, '') || undefined,
+                        pubDate: schema?.datePublished ? parseDate(schema.datePublished) : undefined,
+                        updated: schema?.dateModified ? parseDate(schema.dateModified) : undefined,
+                    };
                 }
-                if (article.keywords) {
-                    item.category = article.keywords.map((keyword) => keyword.name);
+                if (!description) {
+                    throw new NotFoundError(`No readable article content is available at ${item.link}`);
                 }
-                item.title = article.headline;
-                item.pubDate = parseDate(article.publicationTime, 'X');
-                item.updated = parseDate(article.updatedTime, 'X');
-                item.link = article.url;
-                let content = article.teaser;
-                if (article.documentId) {
-                    const response = await got({
-                        method: 'get',
-                        url: `https://newsapi.sphdigital.com/v2/feed/article/st/${article.documentId}?platform=${platform}&version=4.0`,
-                        headers: {
-                            'x-api-key': apiKey,
-                        },
-                    });
-                    content = response.data.data.body;
-                }
-                item.description = renderDescription(article.images ?? [], content);
-                return item;
-            })
-        )
+                const published = content('meta[property="article:published_time"]').attr('content');
+                const modified = content('meta[property="article:modified_time"]').attr('content');
+                return {
+                    description,
+                    author: content('meta[property="article:author"]').attr('content'),
+                    category: content('[data-testid="tags-test-id"] [data-testid="topic-tag-content-test-id"]')
+                        .toArray()
+                        .map((element) => content(element).text()),
+                    pubDate: published ? parseDate(published) : undefined,
+                    updated: modified ? parseDate(modified) : undefined,
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: `The Strait Times - ${category.replaceAll('-', ' ').toUpperCase()}`,
-        link: `https://www.straitstimes.com/${category.toLowerCase()}`,
+        title: `The Straits Times - ${category.replaceAll('-', ' ').toUpperCase()}`,
+        link: currentUrl,
         item: items,
     };
+}
+
+interface LiveBlogEntry {
+    item_content?: string;
+}
+
+interface LiveBlogSchema {
+    '@type': string;
+    datePublished?: string;
+    dateModified?: string;
+}
+
+function getLiveBlogSchema($: CheerioAPI): LiveBlogSchema | undefined {
+    return $('main script[type="application/ld+json"]')
+        .toArray()
+        .map((element): LiveBlogSchema => JSON.parse($(element).text()))
+        .find((schema) => schema['@type'] === 'LiveBlogPosting');
 }

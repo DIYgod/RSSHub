@@ -1,152 +1,31 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootURL = 'https://gs.bjtu.edu.cn';
-const urlCms = `${rootURL}/cms/item/?tag=`;
-const urlZszt = `${rootURL}/cms/zszt/item/?cat=`;
 const title = ' - 北京交通大学研究生院';
-const zsztRegex = /_zszt/;
-const struct = {
-    noti_zs: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 1,
-        name: '通知公告_招生',
-    },
-    noti: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 2,
-        name: '通知公告',
-    },
-    news: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 3,
-        name: '新闻动态',
-    },
-    zsxc: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 4,
-        name: '招生宣传',
-    },
-    py: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 5,
-        name: '培养',
-    },
-    zs: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 6,
-        name: '招生',
-    },
-    xw: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 7,
-        name: '学位',
-    },
-    ygb: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 8,
-        name: '研工部',
-    },
-    ygbtzgg: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 9,
-        name: '通知公告 - 研工部',
-    },
-    ygbnews: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 10,
-        name: '新闻动态 - 研工部',
-    },
-    ygbnewscover: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 11,
-        name: '新闻封面 - 研工部',
-    },
-    all: {
-        selector: {
-            list: '.tab-content li',
-        },
-        tag: 12,
-        name: '文章列表',
-    },
-    bszs_zszt: {
-        selector: {
-            list: '.mainleft_box li',
-        },
-        tag: 2,
-        name: '博士招生 - 招生专题',
-    },
-    sszs_zszt: {
-        selector: {
-            list: '.mainleft_box li',
-        },
-        tag: 3,
-        name: '硕士招生 - 招生专题',
-    },
-    zsjz_zszt: {
-        selector: {
-            list: '.mainleft_box li',
-        },
-        tag: 4,
-        name: '招生简章 - 招生专题',
-    },
-    zcfg_zszt: {
-        selector: {
-            list: '.mainleft_box li',
-        },
-        tag: 5,
-        name: '政策法规 - 招生专题',
-    },
+const sections = {
+    noti_zs: { path: '/tzgg/zstzgg/index.htm', name: '通知公告_招生' },
+    noti: { path: '/tzgg/qb/index.htm', name: '通知公告' },
+    news: { path: '/xwdt/index.htm', name: '新闻动态' },
+    py: { path: '/tzgg/pytzgg/index.htm', name: '培养' },
+    xw: { path: '/tzgg/xwtzgg/index.htm', name: '学位' },
+    bszs_zszt: { path: 'https://yzb.bjtu.edu.cn/bszs/index.htm', name: '博士招生 - 招生专题' },
+    sszs_zszt: { path: 'https://yzb.bjtu.edu.cn/sszs/index.htm', name: '硕士招生 - 招生专题' },
+    zsjz_zszt: { path: 'https://yzb.bjtu.edu.cn/zsjz/index.htm', name: '招生简章 - 招生专题' },
 };
 
-const getItem = (item, selector) => {
-    const newsInfo = item.find('a');
-    const newsDate = item
-        .find('span')
-        .text()
-        .match(/\d{4}(.)\d{1,2}\1\d{1,2}/)[0];
-
-    const infoTitle = newsInfo.text();
-    const link = rootURL + newsInfo.attr('href');
-    return cache.tryGet(link, async () => {
-        const resp = await ofetch(link);
-        const $$ = load(resp);
-        const infoText = $$(selector).html();
-
-        return {
-            title: infoTitle,
-            pubDate: parseDate(newsDate),
-            link,
-            description: infoText,
-        };
+const getItem = (item: DataItem & { link: string }) =>
+    cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
+        const $ = load(response);
+        return { ...item, description: $('.articleDiv').html() ?? undefined };
     });
-};
 
 export const route: Route = {
     path: '/gs/:type?',
@@ -169,56 +48,46 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `| 文章来源            | 参数         |
-| ------------------- | ------------ |
-| 通知公告\\_招生      | noti\\_zs     |
-| 通知公告            | noti         |
-| 新闻动态            | news         |
-| 招生宣传            | zsxc         |
-| 培养                | py           |
-| 招生                | zs           |
-| 学位                | xw           |
-| 研工部              | ygb          |
-| 通知公告 - 研工部   | ygbtzgg      |
-| 新闻动态 - 研工部   | ygbnews      |
-| 新闻封面 - 研工部   | ygbnewscover |
-| 文章列表            | all          |
-| 博士招生 - 招生专题 | bszs\\_zszt   |
-| 硕士招生 - 招生专题 | sszs\\_zszt   |
-| 招生简章 - 招生专题 | zsjz\\_zszt   |
-| 政策法规 - 招生专题 | zcfg\\_zszt   |
+    description: `| 文章来源            | 参数       |
+| ------------------- | ---------- |
+| 通知公告\\_招生      | noti\\_zs   |
+| 通知公告            | noti       |
+| 新闻动态            | news       |
+| 培养                | py         |
+| 学位                | xw         |
+| 博士招生 - 招生专题 | bszs\\_zszt |
+| 硕士招生 - 招生专题 | sszs\\_zszt |
+| 招生简章 - 招生专题 | zsjz\\_zszt |
 
 ::: tip
-文章来源的命名均来自研究生院网站标题。
+文章来源的命名均来自研究生院网站标题。官网改版后，当前支持 noti\\_zs、noti、news、py、xw、bszs\\_zszt、sszs\\_zszt 和 zsjz\\_zszt；其余旧栏目没有可验证的对应列表。
 最常用的几项有 “通知公告\\_招生”、“通知公告”、“博士招生 - 招生专题”、“硕士招生 - 招生专题”。
 :::`,
 };
 
 async function handler(ctx) {
     const { type = 'noti' } = ctx.req.param();
-    let url = urlCms;
-    let selectorArticle = 'div.main_left.main_left_list';
-    if (zsztRegex.test(type)) {
-        url = urlZszt;
-        selectorArticle = 'div.mainleft_box';
+    if (!Object.hasOwn(sections, type)) {
+        throw new InvalidParameterError(`The "${type}" section no longer has a corresponding list on the current website. Available sections: ${Object.keys(sections).join(', ')}.`);
     }
-    const urlAddr = `${url}${struct[type].tag}`;
-    const resp = await ofetch(urlAddr);
-    const $ = load(resp);
-
-    const list = $(struct[type].selector.list);
-
-    const items = await Promise.all(
-        list.toArray().map((i) => {
-            const item = $(i);
-            return getItem(item, selectorArticle);
-        })
-    );
-
+    const section = sections[type as keyof typeof sections];
+    const link = new URL(section.path, rootURL).href;
+    const response = await ofetch(link);
+    const $ = load(response);
+    const list = $('.sub_right_list .list01 > li')
+        .toArray()
+        .map((element): DataItem & { link: string } => {
+            const $item = $(element);
+            return {
+                title: $item.find('.timeListPartnerTitle').text(),
+                link: new URL($item.find('a').attr('href')!, link).href,
+                pubDate: timezone(parseDate($item.find('.subListTime').text()), 8),
+            };
+        });
+    const selectedList = list;
     return {
-        title: `${struct[type].name}${title}`,
-        link: urlAddr,
-        item: items,
-        allowEmpty: true,
+        title: `${section.name}${title}`,
+        link,
+        item: await Promise.all(selectedList.map((item) => getItem(item))),
     };
 }

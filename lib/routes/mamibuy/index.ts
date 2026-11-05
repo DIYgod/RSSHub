@@ -2,7 +2,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const categories = {
     '2': '懷孕',
@@ -41,7 +42,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '10'));
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = Math.min(ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(10, requestedLimit), 100);
     const baseUrl = 'https://mamibuy.com.hk';
 
     const response = await ofetch(`${baseUrl}/wp-json/wp/v2/posts`, {
@@ -57,7 +59,7 @@ async function handler(ctx: Context) {
         link: item.link,
         guid: item.guid.rendered,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: item.date_gmt ? parseDateInTimezone(item.date_gmt, 0) : undefined,
         author: item._embedded.author.map((author) => author.name).join(', '),
         category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));

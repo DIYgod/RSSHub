@@ -1,19 +1,21 @@
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
 
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import type { PostNode } from './types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/community/:community',
     categories: ['social-media'],
-    example: '/digg/community/askdigg',
+    example: '/digg/community/tech',
     parameters: {
-        community: 'Community slug, can be found in the URL',
+        community: 'Current topic slug from the Digg URL, such as tech, ai, gaming, entertainment, world-business, science, or sports',
     },
+    description: 'Digg now publishes topic stories instead of the former community posts. Retired communities such as askdigg are unavailable. Only the current first page of published stories is returned.',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,369 +29,119 @@ export const route: Route = {
             source: ['digg.com/:community'],
         },
     ],
-    name: 'Community Posts',
+    name: 'Topic Stories',
     maintainers: ['TonyRL'],
     handler,
     url: 'digg.com/',
 };
 
-const baseUrl = 'https://digg.com';
-const graphqlUrl = 'https://apineapple-prod.digg.com/graphql';
-
-const DiggDescription = ({ node }) => {
-    if (!node) {
-        return null;
-    }
-
-    const children = Array.isArray(node.content) ? node.content : [];
-
-    switch (node.type) {
-        case 'bulletList':
-            return (
-                <ul>
-                    {children.map((element, index) => (
-                        <DiggDescription node={element} key={index} />
-                    ))}
-                </ul>
-            );
-        case 'listItem':
-            return (
-                <li>
-                    {children.map((element, index) => (
-                        <DiggDescription node={element} key={index} />
-                    ))}
-                </li>
-            );
-
-        case 'diggImagesBlock':
-            if (node.attrs && Array.isArray(node.attrs.images)) {
-                return (
-                    <div>
-                        {node.attrs.images.map((img: any, index: number) => (
-                            <img src={img.url} alt="" width={img.width} height={img.height} key={index} />
-                        ))}
-                    </div>
-                );
-            }
-            return null;
-
-        case 'diggLinkBlock':
-            return (
-                <>
-                    <a href={node.attrs.url}>
-                        {node.attrs.title || node.attrs.url}
-                        <br />
-                        {node.attrs.description}
-                    </a>
-                    {node.attrs.tldr}
-                </>
-            );
-
-        case 'diggTextBlock':
-        case 'doc':
-            return (
-                <>
-                    {children.map((element, index) => (
-                        <DiggDescription node={element} key={index} />
-                    ))}
-                </>
-            );
-
-        case 'diggTitleBlock':
-            return null;
-
-        case 'hardBreak':
-            return <br />;
-
-        case 'mention':
-            return <a href={`${baseUrl}/${node.attrs.label}`}>/{node.attrs.label}</a>;
-
-        case 'paragraph':
-            if (children.length === 0) {
-                return null;
-            }
-            return (
-                <p>
-                    {children.map((element, index) => (
-                        <DiggDescription node={element} key={index} />
-                    ))}
-                    <br />
-                </p>
-            );
-
-        case 'text':
-            return node.text || '';
-
-        default:
-            throw new Error(`Unknown node type: ${node.type}`);
-    }
+type Story = {
+    clusterId: string;
+    clusterUrlId: string;
+    createdAt: string;
+    summary: {
+        title: string;
+        description?: string;
+    };
+    image?: {
+        src: string;
+    };
 };
 
-async function handler(ctx) {
-    const { community } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 30);
+type FeedPage = {
+    posts: Story[];
+};
 
-    const communityData = await cache.tryGet(`digg:community:${community}`, async () => {
-        const {
-            data: { community: communityData },
-        } = await ofetch(graphqlUrl, {
-            method: 'POST',
-            body: {
-                query: /* GraphQL */ `
-                    query CommunityQuery($id: ID, $slug: String) {
-                        community(where: { _id_EQ: $id, slug_EQ: $slug }) {
-                            ...CommunityFragment
-                            topContributors {
-                                account {
-                                    _id
-                                    avatarUrl
-                                    avatarImage {
-                                        ...ImageFragment
-                                    }
-                                    username
-                                }
-                                score
-                            }
-                            topGemFinders {
-                                account {
-                                    _id
-                                    avatarUrl
-                                    avatarImage {
-                                        ...ImageFragment
-                                    }
-                                    username
-                                }
-                                score
-                            }
-                        }
-                    }
-                    fragment AuthorFragment on Account {
-                        _id
-                        username
-                        avatarUrl
-                        avatarImage {
-                            ...ImageFragment
-                        }
-                        badges {
-                            name
-                            iconUrl
-                        }
-                        blockStatus
-                        roles {
-                            name
-                            iconUrl
-                        }
-                    }
-                    fragment CommunityFragment on Community {
-                        _id
-                        name
-                        slug
-                        description
-                        iconUrl
-                        guidelinesPM
-                        descriptionPM
-                        iconImage {
-                            ...ImageFragment
-                        }
-                        bannerUrl
-                        bannerDesktopImage {
-                            ...ImageFragment
-                        }
-                        bannerMobileImage {
-                            ...ImageFragment
-                        }
-                        founder {
-                            ...AuthorFragment
-                            bio
-                        }
-                        manager {
-                            ...AuthorFragment
-                        }
-                        memberCount
-                        postCount
-                        isJoinedByAccount
-                        isPinnedByAccount
-                        isJoinedByDefault
-                        createdDate
-                        editedDate
-                        deletedDate
-                    }
-                    fragment ImageFragment on Image {
-                        alt
-                        height
-                        width
-                        url
-                        blurhash
-                    }
-                `,
-                variables: { slug: community },
+const baseUrl = 'https://digg.com';
+
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function findFirstPage(value: JsonValue): FeedPage | undefined {
+    if (!value || typeof value !== 'object') {
+        return;
+    }
+    if ('initialPage' in value && value.initialPage && typeof value.initialPage === 'object' && 'posts' in value.initialPage && Array.isArray(value.initialPage.posts)) {
+        return value.initialPage as FeedPage;
+    }
+    for (const entry of Object.values(value)) {
+        const page = findFirstPage(entry);
+        if (page) {
+            return page;
+        }
+    }
+}
+
+async function fetchFirstPage(community: string): Promise<FeedPage> {
+    try {
+        return await ofetch<FeedPage>(`${baseUrl}/api/feed/continuous`, {
+            query: {
+                topic: community,
+                view: 'top',
+                range: 'today',
+                published: '1',
             },
         });
+    } catch (error) {
+        if (!(error instanceof FetchError) || error.statusCode !== 429) {
+            throw error;
+        }
+    }
 
-        return communityData;
-    });
+    // The public topic page embeds the same first feed page when the API is rate limited.
+    const html = await ofetch<string>(`${baseUrl}/${encodeURIComponent(community)}`);
+    const $ = load(html);
+    const flight = $('script')
+        .toArray()
+        .map((script) => {
+            const match = $(script)
+                .html()
+                ?.match(/^self\.__next_f\.push\((\[.*\])\)$/s);
+            if (!match) {
+                return '';
+            }
+            const chunk = JSON.parse(match[1]) as unknown[];
+            return typeof chunk[1] === 'string' ? chunk[1] : '';
+        })
+        .join('');
+    for (const record of flight.split('\n')) {
+        if (!/^[\da-f]+:[{[]/i.test(record)) {
+            continue;
+        }
+        const model = JSON.parse(record.slice(record.indexOf(':') + 1));
+        const page = findFirstPage(model);
+        if (page) {
+            return page;
+        }
+    }
+    throw new Error(`Digg topic "${community}" has no published feed on the current site. Retired communities are unavailable.`);
+}
 
-    const {
-        data: { posts },
-    } = await ofetch(graphqlUrl, {
-        method: 'POST',
-        body: {
-            query: /* GraphQL */ `
-                query PostsQuery($first: Int, $after: String, $where: PostWhere, $sort: PostSort) {
-                    posts(first: $first, after: $after, where: $where, sort: $sort) {
-                        edges {
-                            node {
-                                ...PostsNodeFragment
-                            }
-                        }
-                        pageInfo {
-                            ...PageInfoFragment
-                        }
-                    }
-                }
-                fragment AuthorFragment on Account {
-                    _id
-                    username
-                    avatarUrl
-                    avatarImage {
-                        ...ImageFragment
-                    }
-                    badges {
-                        name
-                        iconUrl
-                    }
-                    blockStatus
-                    roles {
-                        name
-                        iconUrl
-                    }
-                }
-                fragment CommunityFragment on Community {
-                    _id
-                    name
-                    slug
-                    description
-                    iconUrl
-                    guidelinesPM
-                    descriptionPM
-                    iconImage {
-                        ...ImageFragment
-                    }
-                    bannerUrl
-                    bannerDesktopImage {
-                        ...ImageFragment
-                    }
-                    bannerMobileImage {
-                        ...ImageFragment
-                    }
-                    founder {
-                        ...AuthorFragment
-                        bio
-                    }
-                    manager {
-                        ...AuthorFragment
-                    }
-                    memberCount
-                    postCount
-                    isJoinedByAccount
-                    isPinnedByAccount
-                    isJoinedByDefault
-                    createdDate
-                    editedDate
-                    deletedDate
-                }
-                fragment ImageFragment on Image {
-                    alt
-                    height
-                    width
-                    url
-                    blurhash
-                }
-                fragment ModerationReasonFragment on ModerationRemovalReason {
-                    id
-                    key
-                    description
-                    message
-                    type
-                    createdDate
-                    editedDate
-                    deletedDate
-                }
-                fragment PageInfoFragment on PageInfo {
-                    endCursor
-                    hasNextPage
-                    hasPreviousPage
-                    startCursor
-                }
-                fragment PostsNodeFragment on Post {
-                    _id
-                    title
-                    isSavedByAccount
-                    moderationStatus
-                    isDuggByAccount
-                    voteDirectionByAccount
-                    upvoteCount
-                    downvoteCount
-                    score
-                    reportByAccount
-                    slug
-                    type
-                    externalContent {
-                        url
-                        headline
-                        subHeadline
-                        imageUrl
-                        iconUrl
-                    }
-                    commentCount
-                    shareCount
-                    textPreview
-                    contextCards {
-                        tldr {
-                            text
-                        }
-                    }
-                    community {
-                        ...CommunityFragment
-                    }
-                    attachments {
-                        __typename
-                        ... on Image {
-                            ...ImageFragment
-                        }
-                    }
-                    author {
-                        ...AuthorFragment
-                    }
-                    createdDate
-                    editedDate
-                    deletedDate
-                    nsfw
-                    text
-                    pm
-                    moderatedDate
-                    moderationReason {
-                        ...ModerationReasonFragment
-                    }
-                }
-            `,
-            variables: { first: limit, where: { community: { slug_EQ: community } }, sort: 'RECENT' },
-        },
-    });
+async function handler(ctx: Context): Promise<Data> {
+    const community = ctx.req.param('community')!;
+    const response = await fetchFirstPage(community);
+    if (!Array.isArray(response.posts)) {
+        throw new TypeError('Digg did not return its published topic stories. Please check the topic on the original site.');
+    }
 
-    const items = posts.edges.map(({ node }: { node: PostNode }) => ({
-        title: node.title,
-        description: renderToString(<DiggDescription node={node.pm} />),
-        link: `${baseUrl}/${node._id.replaceAll('-', '/')}/${node.slug}`,
-        pubDate: parseDate(node.createdDate),
-        author: node.author.username,
+    const items: DataItem[] = response.posts.map((post) => ({
+        title: post.summary.title,
+        id: post.clusterId,
+        description: post.summary.description ? renderToString(<p>{post.summary.description}</p>) : undefined,
+        link: `${baseUrl}/${encodeURIComponent(community)}/${encodeURIComponent(post.clusterUrlId)}`,
+        pubDate: post.createdAt ? parseDate(post.createdAt) : undefined,
+        author: 'Digg',
+        image: post.image?.src,
+        category: [community],
     }));
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+    }
 
     return {
-        title: `${communityData.name} Community | Digg | Digg`,
-        description: communityData.description,
-        image: communityData.iconUrl,
-        link: `${baseUrl}/${community}`,
-        item: items,
+        title: `${community} | Digg`,
+        description: `Published stories from Digg's ${community} topic`,
+        link: `${baseUrl}/${encodeURIComponent(community)}`,
+        language: 'en',
+        item: items.slice(0, getRouteLimit(ctx, 30)),
     };
 }

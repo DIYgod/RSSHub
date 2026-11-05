@@ -106,7 +106,6 @@ const handler: Route['handler'] = async (ctx) => {
                 })
             )
         ),
-        allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/department/postgraduate/${columnParam}`,
         id: `https://rsshub.app/nwnu/department/postgraduate/${columnParam}`,

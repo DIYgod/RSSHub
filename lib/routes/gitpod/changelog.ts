@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
-import got from '@/utils/got';
+import type { DataItem, Language, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 import { rootUrl } from './utils';
 
@@ -21,41 +22,43 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gitpod.io/changelog', 'gitpod.io/'],
+            source: ['ona.com/docs/changelog', 'ona.com/', 'gitpod.io/changelog', 'gitpod.io/'],
         },
     ],
     name: 'Changelog',
     maintainers: ['TonyRL'],
     handler,
-    url: 'gitpod.io/changelog',
+    url: 'ona.com/docs/changelog',
 };
 
 async function handler() {
-    const response = await got(rootUrl + '/changelog');
-    const $ = load(response.data);
-    const items = $('div[class^=changelog-entry]')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('h2').text(),
-                link: rootUrl + $item.find('a').attr('href'),
-                description: $item.find('div[class^=content-docs]').html(),
-                pubDate: parseDate($item.find('a[class*=mb-xx-small]').text()),
-                author: $item
-                    .find('span[class^=flex-shrink-0]')
-                    .eq(0)
-                    .find('img')
-                    .toArray()
-                    .map((e) => $(e).attr('alt')!.replace('Avatar of ', ''))
-                    .join(', '),
-            };
+    const link = `${rootUrl}/docs/changelog`;
+    const [xml, html] = await Promise.all([ofetch(`${link}/rss.xml`, { responseType: 'text' }), ofetch(link, { responseType: 'text' })]);
+    const feed = await parser.parseString(xml);
+    const $ = load(html);
+    const items = feed.items.map((item): DataItem => {
+        const id = new URL(item.link!).hash.slice(1);
+        const content = $(`[id="${id}"] [data-component-part="update-content"]`);
+        if (!content.length) {
+            throw new Error(`Ona changelog content was not found: ${item.link}`);
+        }
+        content.find('h2 > .absolute, h3 > .absolute').remove();
+        content.find('[data-as="p"]').each((_, element) => {
+            $(element).replaceWith($('<p>').html($(element).html() ?? ''));
         });
+        return {
+            title: item.title!,
+            link: item.link,
+            guid: item.guid,
+            description: content.html() ?? undefined,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        };
+    });
 
     return {
-        title: $('title').text(),
-        link: rootUrl + '/changelog',
-        description: $('meta[name="description"]').attr('content'),
+        title: feed.title!,
+        link,
+        description: feed.description,
         language: 'en-us' as const satisfies Language,
         item: items,
     };

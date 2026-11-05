@@ -48,7 +48,7 @@ async function handler(ctx) {
             do {
                 bHasNextPage = false;
                 // eslint-disable-next-line no-await-in-loop
-                const data = await ofetch(strBaseUrl, {
+                const { code, results } = await ofetch(strBaseUrl, {
                     headers: {
                         platform: '',
                     },
@@ -57,7 +57,6 @@ async function handler(ctx) {
                         offset: iReqOffSet,
                     },
                 });
-                const { code, results } = data;
 
                 if (code !== 200) {
                     break;
@@ -68,7 +67,7 @@ async function handler(ctx) {
                 }
                 iReqOffSet += iReqLimit;
 
-                chapters = [...chapters, ...results.list];
+                chapters.push(...results.list);
             } while (bHasNextPage);
 
             chapters = chapters

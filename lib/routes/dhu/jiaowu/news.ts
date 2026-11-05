@@ -1,9 +1,15 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { selectItems } from '../utils';
 
 const baseUrl = 'https://jw.dhu.edu.cn';
 
@@ -34,49 +40,44 @@ export const route: Route = {
 | student  | teacher  | class                      | fxzy     |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const type = ctx.req.param('type') || 'student';
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid notification type. Use student, teacher, class, or fxzy.');
+    }
     const link = `${baseUrl}${map[type]}`;
     const { data: response } = await got(link);
 
     const $ = load(response);
 
-    const items = await Promise.all(
-        $('.list2 > li')
-            .toArray()
-            .map(async (item) => {
-                const $item = $(item);
-                const newsTitle = $item.find('.news_title > a');
-                const newsMeta = $item.find('.news_meta');
+    const list = $('.list2 > li')
+        .toArray()
+        .map((element) => {
+            const $item = $(element);
+            const newsTitle = $item.find('.news_title > a');
+            return {
+                title: newsTitle.text(),
+                link: new URL(newsTitle.attr('href')!, baseUrl).href,
+                pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 'zh-cn'), 8),
+            };
+        });
 
-                // article meta
-                const link = newsTitle.attr('href');
-                const title = newsTitle.text();
-                const pubDate = parseDate(newsMeta.text(), 'YYYY-MM-DD', 'zh-cn');
-
-                // fetch article content and return item using cache.tryGet
-                // url as cache key
-                const url = `${baseUrl}${link}`;
-                return await cache.tryGet(url, async () => {
-                    // fetch article content
-                    // some contents are only available for internal network
-                    let description: string;
-                    try {
-                        const { data: response } = await got(url);
-                        const $ = load(response);
-                        description = $('.wp_articlecontent').html() ?? '';
-                    } catch {
-                        description = '';
-                    }
-
-                    return {
-                        title,
-                        link,
-                        pubDate,
-                        description,
-                    };
-                });
-            })
+    const items = await pMap(
+        selectItems(list),
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                // Some article bodies are restricted to the university network.
+                let description: string;
+                try {
+                    const { data: response } = await got(item.link);
+                    const $ = load(response);
+                    description = $('.wp_articlecontent').html() ?? '';
+                } catch {
+                    description = '';
+                }
+                return { ...item, description };
+            }),
+        { concurrency: 3 }
     );
 
     return {

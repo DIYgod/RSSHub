@@ -40,21 +40,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const allProductSummaries: any[] = [];
-
-    const loadMoreRequest = async ({ moreToken }: { moreToken?: string }) => {
-        const response = await request({ moreToken });
-        const { data } = response;
-        allProductSummaries.push(data.productSummaries);
-        if (data.moreToken) {
-            await loadMoreRequest({ moreToken: data.moreToken });
-        }
-        return;
-    };
-
-    await loadMoreRequest({});
-
-    const products = allProductSummaries.flat();
+    const { data } = await request({});
+    const products = data.productSummaries;
 
     return {
         title: 'IKEA 宜家 - 当季新品推荐',

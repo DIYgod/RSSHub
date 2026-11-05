@@ -6,6 +6,9 @@ import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
+import { parseContent } from './parser';
+import { getAudioMimeType } from './util';
+
 export const route: Route = {
     path: '/radios/:category?',
     categories: ['new-media'],
@@ -49,7 +52,7 @@ async function handler(ctx) {
     api.searchParams.set('filter[list-all]', '0');
     api.searchParams.set('filter[is-require-privilege]', '0');
     api.searchParams.set('fields[radios]', 'title,cover,published-at,duration,content,media');
-    const { data, included } = await get(api);
+    const { data, included = [] } = await get(api);
 
     const audios = {};
     for (const media of included) {
@@ -60,9 +63,9 @@ async function handler(ctx) {
         const { id, attributes, relationships } = radio;
 
         const link = `https://www.gcores.com/radios/${id}`;
-        const itunes_item_image = `https://image.gcores.com/${attributes.cover}`;
-        const media_id = relationships.media.data.id;
-        const enclosure_url = new URL(audios[media_id], 'https://alioss.gcores.com/uploads/audio/').href;
+        const itunesItemImage = `https://image.gcores.com/${attributes.cover}`;
+        const mediaId = relationships.media.data.id;
+        const enclosureUrl = new URL(audios[mediaId], 'https://alioss.gcores.com/uploads/audio/').href;
         const description = renderContentDescription(JSON.parse(attributes.content));
 
         return {
@@ -72,10 +75,10 @@ async function handler(ctx) {
             pubDate: parseDate(attributes['published-at']),
             guid: md5(link),
             link,
-            itunes_item_image,
+            itunes_item_image: itunesItemImage,
             itunes_duration: attributes.duration,
-            enclosure_url,
-            enclosure_type: 'audio/mpeg',
+            enclosure_url: enclosureUrl,
+            enclosure_type: getAudioMimeType(enclosureUrl),
         };
     });
 
@@ -93,25 +96,14 @@ async function handler(ctx) {
 }
 
 const renderContentDescription = (content): string =>
-    renderToString(
-        content ? (
-            <>
-                {content.blocks?.map((line, index) => (line.type === 'unstyled' ? <p key={`block-${index}`}>{line.text}</p> : null))}
-                {Object.values(content.entityMap ?? {}).map((ent: any, index) =>
-                    ent.type === 'WIDGET' ? (
-                        <p key={`widget-${index}`}>
-                            <a href={ent.data.url}>{ent.data.title}</a>
-                        </p>
-                    ) : null
-                )}
-            </>
-        ) : (
-            <>
-                <p>机核从2010年开始一直致力于分享游戏玩家的生活，以及深入探讨游戏相关的文化。我们开发原创的播客以及视频节目，一直在不断寻找民间高质量的内容创作者。</p>
-                <p>我们坚信游戏不止是游戏，游戏中包含的科学，文化，历史等各个层面的知识和故事，它们同时也会辐射到二次元甚至电影的领域，这些内容非常值得分享给热爱游戏的您。</p>
-            </>
-        )
-    );
+    content
+        ? parseContent(content)
+        : renderToString(
+              <>
+                  <p>机核从2010年开始一直致力于分享游戏玩家的生活，以及深入探讨游戏相关的文化。我们开发原创的播客以及视频节目，一直在不断寻找民间高质量的内容创作者。</p>
+                  <p>我们坚信游戏不止是游戏，游戏中包含的科学，文化，历史等各个层面的知识和故事，它们同时也会辐射到二次元甚至电影的领域，这些内容非常值得分享给热爱游戏的您。</p>
+              </>
+          );
 
 const get = async (url) => {
     const response = await got({

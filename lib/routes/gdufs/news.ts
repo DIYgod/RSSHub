@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,52 +39,50 @@ async function handler() {
     const $ = load(response.body);
     const list = $('ul.list_luntan li');
 
-    const items = await Promise.all(
-        list.toArray().map((element) => {
-            const item = $(element);
-            const href = item.find('a').attr('href') || '';
-            const title = item.find('h5').text().trim();
-            const day = item.find('h3').text().trim();
-            const yearMonth = item.find('h6').text().trim();
-            const dateString = yearMonth + '/' + day;
-            const fullLink = href.startsWith('http') ? href : new URL(href, site).href;
-            const pubDate = parseDate(dateString).toUTCString();
+    const candidates = list.toArray().map((element) => {
+        const item = $(element);
+        const href = item.find('a').attr('href') || '';
+        const title = item.find('h5').text().trim();
+        const day = item.find('h3').text().trim();
+        const yearMonth = item.find('h6').text().trim();
+        const dateString = yearMonth + '/' + day;
+        const fullLink = href.startsWith('http') ? href : new URL(href, site).href;
+        const pubDate = parseDate(dateString).toUTCString();
 
-            return cache.tryGet(fullLink, async () => {
-                try {
-                    const articleRes = await got(fullLink);
-                    const $$ = load(articleRes.body);
-                    const description = $$('.v_news_content').html()?.trim();
+        return { title, link: fullLink, pubDate };
+    });
 
-                    let author = '';
-                    const authorSpans = $$('.nav01 h6 .ll span');
-                    authorSpans.each((_, el) => {
-                        const text = $$(el).text().trim();
-                        if (text.includes('责任编辑：')) {
-                            author = text.replace('责任编辑：', '').trim();
-                        } else if (text.includes('文字：')) {
-                            author = text.replace('文字：', '').trim();
-                        }
-                    });
+    const items = await pMap(
+        candidates,
+        async (item) => {
+            const article = await cache.tryGet(`${item.link}#article-content`, async () => {
+                const articleRes = await got(item.link);
+                const $$ = load(articleRes.body);
+                const description = $$('.v_news_content').html()?.trim();
 
-                    return {
-                        title,
-                        link: fullLink,
-                        description,
-                        pubDate,
-                        author,
-                    };
-                } catch {
-                    return {
-                        title,
-                        link: fullLink,
-                        description: '内容获取失败。',
-                        pubDate,
-                        author: '',
-                    };
-                }
+                let author = '';
+                const authorSpans = $$('.nav01 h6 .ll span');
+                authorSpans.each((_, el) => {
+                    const text = $$(el).text().trim();
+                    if (text.includes('责任编辑：')) {
+                        author = text.replace('责任编辑：', '').trim();
+                    } else if (text.includes('文字：')) {
+                        author = text.replace('文字：', '').trim();
+                    }
+                });
+
+                return {
+                    description,
+                    author,
+                };
             });
-        })
+
+            return {
+                ...item,
+                ...article,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

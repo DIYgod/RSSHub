@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -18,6 +19,16 @@ const categories = {
     tracker: 123,
     feature: 124,
     opinion: 125,
+};
+
+const categoryNames = {
+    local: '港聞',
+    international: '兩岸國際',
+    entertainment: '娛樂',
+    life: '生活',
+    technology: '科技',
+    finance: '財經',
+    sports: '體育',
 };
 
 export const route: Route = {
@@ -64,7 +75,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '', id = '' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') || '20');
+    const requestedLimit = Number(ctx.req.query('limit') || '20');
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
     const hasTopicId = id && Object.hasOwn(categories, category);
 
     const rootUrl = 'https://news.now.com';
@@ -84,9 +96,9 @@ async function handler(ctx) {
 
     const response = await ofetch(apiUrl);
     const isApi = Array.isArray(response);
-    const $ = load(response);
+    const $ = load(isApi ? '' : response);
 
-    let list;
+    let list: Array<DataItem & { link: string; newsId?: number }>;
     if (isApi) {
         list =
             category === 'sports'
@@ -131,34 +143,46 @@ async function handler(ctx) {
             });
     }
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.pubDate || item.newsId) {
-                    const detailResponse = await ofetch(item.link);
-                    const $ = load(detailResponse);
-
-                    const newsData = JSON.parse(
-                        $('script:contains("var newsData")')
-                            .text()
-                            .match(/var newsData = (.*?);/)?.[1] || '{}'
-                    );
-
-                    const images = newsData.imageList ? newsData.imageList.map((img) => `<img src="${img.image2Url}">`).join('') : '';
-
-                    item.description = item.description ? item.description + ($('.img_caption').prop('outerHTML') ?? '') + $('.newsLeading').html() : images + $('.newsLeading').html();
-                    item.pubDate ||= parseDate(newsData.publishDate, 'x');
-                    item.updated ||= parseDate(newsData.lastModifyDate, 'x');
-                    item.category ||= [...new Set([newsData.categoryName, ...newsData.newsTags.map((t) => t.tag), ...newsData.newsTopics.map((t) => t.topicName)])];
-                }
-
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (item.pubDate && !item.newsId) {
                 return item;
-            })
-        )
+            }
+            const article = await cache.tryGet(`now:article:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link);
+                const $ = load(detailResponse);
+
+                const newsData = JSON.parse(
+                    $('script:contains("var newsData")')
+                        .text()
+                        .match(/var newsData = (.*?);/)?.[1] || '{}'
+                );
+
+                const images = newsData.imageList ? newsData.imageList.map((img) => `<img src="${img.image2Url}">`).join('') : '';
+
+                return {
+                    description: $('.newsLeading').html() ?? '',
+                    images,
+                    caption: $('.img_caption').prop('outerHTML') ?? '',
+                    pubDate: newsData.publishDate ? parseDate(newsData.publishDate, 'x') : undefined,
+                    updated: newsData.lastModifyDate ? parseDate(newsData.lastModifyDate, 'x') : undefined,
+                    category: [...new Set([newsData.categoryName, ...(newsData.newsTags ?? []).map((t) => t.tag), ...(newsData.newsTopics ?? []).map((t) => t.topicName)])].filter(Boolean),
+                };
+            });
+            return {
+                ...item,
+                description: (item.description ? item.description + article.caption : article.images) + article.description,
+                pubDate: item.pubDate ?? article.pubDate,
+                updated: item.updated ?? article.updated,
+                category: item.category ?? article.category,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: Object.hasOwn(categories, category) ? $('title').text() : ($('.smallSpace.active').text() || '首頁') + ' | Now 新聞',
+        title: Object.hasOwn(categories, category) ? $('title').text() : ($('.smallSpace.active').text() || categoryNames[category] || '首頁') + ' | Now 新聞',
         link: pageUrl,
         item: items,
     };

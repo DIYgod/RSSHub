@@ -4,6 +4,8 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc',
@@ -14,13 +16,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler(): Promise<Data> {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://jwc.cpu.edu.cn';
     const url = `${baseUrl}/851/list.htm`;
     const response = await ofetch(url);
     const $ = load(response);
 
-    const list: DataItem[] = $('div#wp_news_w6 ul.news_list li')
+    let list: DataItem[] = $('div#wp_news_w6 ul.news_list li')
         .slice(0, 10)
         .toArray()
         .map((item) => {
@@ -29,9 +31,17 @@ async function handler(): Promise<Data> {
             return {
                 title: $link.attr('title')!,
                 link: new URL($link.attr('href')!, baseUrl).href,
-                pubDate: parseDate($item.find('span.news_meta').text()),
+                pubDate: timezone(parseDate($item.find('span.news_meta').text(), 'YYYY-MM-DD'), 8),
             };
         });
+
+    const limit = getRouteLimit(ctx);
+    if (limit !== undefined) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        }
+        list = list.slice(0, limit);
+    }
 
     const items = await Promise.all(
         list.map((item) =>

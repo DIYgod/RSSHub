@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import { escape } from 'entities/escape';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -26,12 +28,11 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const address = ctx.req.param('address');
 
     // Fetch profile and activity
-    let profile: PublicProfile | null = null;
-    let activity: Activity[] = [];
+    let profile: PublicProfile | undefined;
 
     try {
         profile = await ofetch<PublicProfile>(`${GAMMA_API}/public-profile`, {
@@ -41,18 +42,14 @@ async function handler(ctx) {
         // Profile not found, continue without it
     }
 
-    try {
-        activity = await ofetch<Activity[]>(`${DATA_API}/activity`, {
-            query: {
-                user: address,
-                limit: 50,
-                sortBy: 'TIMESTAMP',
-                sortDirection: 'DESC',
-            },
-        });
-    } catch {
-        // Activity not found, continue with empty array
-    }
+    const activity = await ofetch<Activity[]>(`${DATA_API}/activity`, {
+        query: {
+            user: address,
+            limit: 50,
+            sortBy: 'TIMESTAMP',
+            sortDirection: 'DESC',
+        },
+    });
 
     const displayName = profile?.name || profile?.pseudonym || address;
 
@@ -70,14 +67,15 @@ async function handler(ctx) {
         const typeLabel = `${typeEmoji[act.type] || '📝'} ${act.type}`;
 
         return {
+            guid: [address.toLowerCase(), act.transactionHash, act.asset, act.type, act.side, act.timestamp, act.size, act.price].join(':'),
             title: act.title ? `${act.title} - ${act.outcome || `Outcome ${act.outcomeIndex}`}` : typeLabel,
             description: `
-                <p><strong>Type:</strong> ${typeLabel}</p>
-                ${act.side ? `<p><strong>Side:</strong> ${act.side}</p>` : ''}
+                <p><strong>Type:</strong> ${escape(typeLabel)}</p>
+                ${act.side ? `<p><strong>Side:</strong> ${escape(act.side)}</p>` : ''}
                 ${act.price === undefined ? '' : `<p><strong>Price:</strong> $${act.price.toFixed(4)}</p>`}
                 ${act.size === undefined ? '' : `<p><strong>Size:</strong> ${act.size.toLocaleString()}</p>`}
                 ${act.usdcSize === undefined ? '' : `<p><strong>USDC:</strong> $${act.usdcSize.toLocaleString()}</p>`}
-                ${act.icon ? `<img src="${act.icon}" alt="${act.title || 'Market'}" style="max-width: 100%;">` : ''}
+                ${act.icon ? `<img src="${escape(act.icon)}" alt="${escape(act.title || 'Market')}" style="max-width: 100%;">` : ''}
             `,
             link: act.eventSlug ? `https://polymarket.com/event/${act.eventSlug}` : act.slug ? `https://polymarket.com/event/${act.slug}` : 'https://polymarket.com',
             pubDate: parseDate(act.timestamp * 1000),
@@ -89,6 +87,7 @@ async function handler(ctx) {
         title: `Polymarket User - ${displayName}`,
         link: `https://polymarket.com/portfolio?address=${address}`,
         item: items,
+        language: 'en',
         description: profile?.bio,
     };
 }

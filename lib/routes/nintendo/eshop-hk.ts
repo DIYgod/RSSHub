@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderEshopHkDescription } from './templates/eshop-hk';
 
@@ -22,13 +24,15 @@ export const route: Route = {
     url: 'nintendo.com.hk/software/switch',
 };
 
-async function handler(ctx) {
-    const response = await got('https://www.nintendo.com.hk/data/json/switch_software.json');
-    const data = response.data.filter(({ link }) => link.startsWith('https://')).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
+type Software = { title: string; link: string; release_date: string };
 
-    // 获取游戏描述
-    const result = await Promise.all(
-        data.map((item) =>
+async function handler(ctx) {
+    const response: { data: Software[] } = await got('https://www.nintendo.com.hk/data/json/switch_software.json');
+    const data = response.data.filter(({ link }) => link.startsWith('https://')).slice(0, getRouteLimit(ctx, 30));
+
+    const result = await pMap(
+        data,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
@@ -52,7 +56,10 @@ async function handler(ctx) {
                     const galleryMatch = $('[type=text/x-magento-init]')
                         .text()
                         .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s);
-                    const gallery = JSON.parse(galleryMatch ? galleryMatch[0] : 'null');
+                    if (!galleryMatch) {
+                        throw new Error(`Nintendo store product gallery is missing. Check whether the source page is accessible: ${item.link}`);
+                    }
+                    const gallery = JSON.parse(galleryMatch[0]);
 
                     description = renderEshopHkDescription({
                         attributes,
@@ -83,8 +90,8 @@ async function handler(ctx) {
                     link: item.link,
                     pubDate: parseDate(item.release_date, 'YYYY.M.D'),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

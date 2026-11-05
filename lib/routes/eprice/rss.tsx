@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
@@ -44,16 +45,18 @@ async function handler(ctx) {
     for (const e of feed.items) {
         e.link = e.link!.replace(/^http:\/\//i, 'https://');
     }
+    const list = feed.items;
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet<DataItem>(item.link!, async () => {
                 const response = await got(item.link);
 
                 const $ = load(response.data);
 
                 // remove unwanted elements
-                $('noscript').remove();
+                $('noscript, script, style, .related-link-block').remove();
                 $('div[id^=dablewidget]').remove();
                 $('div[class^=parallax-ads]').remove();
                 $('.adsbygoogle, .join-eprice-fb, .teads').remove();
@@ -68,17 +71,19 @@ async function handler(ctx) {
                 // fix lazyload image
                 $('a').each((_, e) => {
                     const $e = $(e);
-                    if ($e.attr('href') && $e.attr('href')!.endsWith('.jpg')) {
-                        $e.after(
-                            renderToString(
-                                <figure>
-                                    <img src={$e.attr('href')} alt={$e.attr('title') ?? ''} title={$e.attr('title') ?? ''} />
-                                    <figcaption>{$e.attr('title') ?? ''}</figcaption>
-                                </figure>
-                            )
-                        );
-                        $e.remove();
+                    if (!$e.attr('href')?.endsWith('.jpg')) {
+                        return;
                     }
+
+                    $e.after(
+                        renderToString(
+                            <figure>
+                                <img src={$e.attr('href')} alt={$e.attr('title') ?? ''} title={$e.attr('title') ?? ''} />
+                                <figcaption>{$e.attr('title') ?? ''}</figcaption>
+                            </figure>
+                        )
+                    );
+                    $e.remove();
                 });
                 $('img').each((_, e) => {
                     const $e = $(e);
@@ -103,8 +108,8 @@ async function handler(ctx) {
                     content: undefined,
                     pubDate: parseDate(item.pubDate!),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const ret = {

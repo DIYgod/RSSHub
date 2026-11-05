@@ -37,11 +37,11 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const homeUrl = `${baseUrl}/jystz`;
     const response = await ofetch(homeUrl);
 
-    // 使用 Cheerio 选择器解析 HTML
+    // Parse the first page of announcements.
     const $ = load(response);
     const list = $('div.notice_list li')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { pubDate: Date } => {
             const $item = $(item); // (Element) -> LoadedCheerio
             const titleEle = $($item).find('a').first();
             const dateEle = $($item).find('a').eq(1);

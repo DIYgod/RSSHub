@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/smkxxy',
@@ -12,7 +13,7 @@ export const route: Route = {
     radar: [
         {
             source: ['smkxxy.cnu.edu.cn/tzgg3/index.htm'],
-            target: '/cnu/smkxxy',
+            target: '/smkxxy',
         },
     ],
     name: '生命科学学院通知公告',
@@ -45,7 +46,7 @@ async function handler() {
             return {
                 title: item.find('p.gpArticleTitle').text().trim(),
                 link: linkUrl,
-                pubDate: parseDate(item.find('span.gpArticleDate').text(), 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate(item.find('span.gpArticleDate').text(), 'YYYY-MM-DD'), 8),
                 description: '',
             };
         });

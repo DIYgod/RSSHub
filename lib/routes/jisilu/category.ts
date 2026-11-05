@@ -6,6 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { processItems, rootUrl } from './util';
 
@@ -16,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('请填入合法的分类 id，参见广场 https://www.jisilu.cn/explore/');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const targetUrl: string = new URL(`/category/${id}`, rootUrl).href;
 
@@ -28,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     $('div.pagination').remove();
 
-    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
+    const author = $('meta[name="keywords"]').prop('content')?.split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {
@@ -40,7 +41,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').prop('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: feedImage,
         author,
         language: language as Language,
@@ -79,36 +79,6 @@ export const route: Route = {
         {
             source: ['www.jisilu.cn/category/:id'],
             target: '/category/:id',
-        },
-        {
-            title: '新股',
-            source: ['www.jisilu.cn/category/3'],
-            target: '/category/3',
-        },
-        {
-            title: '债券/可转债',
-            source: ['www.jisilu.cn/category/4'],
-            target: '/category/4',
-        },
-        {
-            title: '套利',
-            source: ['www.jisilu.cn/category/5'],
-            target: '/category/5',
-        },
-        {
-            title: '其他',
-            source: ['www.jisilu.cn/category/6'],
-            target: '/category/6',
-        },
-        {
-            title: '基金',
-            source: ['www.jisilu.cn/category/7'],
-            target: '/category/7',
-        },
-        {
-            title: '股票',
-            source: ['www.jisilu.cn/category/8'],
-            target: '/category/8',
         },
     ],
     view: ViewType.Articles,

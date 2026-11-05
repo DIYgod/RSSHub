@@ -23,7 +23,7 @@ interface Content {
     cn_type: string;
     article_type: string;
     issue: string;
-    abstracts: string;
+    abstracts?: string;
     author?: string[];
     inventors?: string[];
     issue_date?: string;

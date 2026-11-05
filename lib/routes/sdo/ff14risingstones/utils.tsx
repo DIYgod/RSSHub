@@ -116,7 +116,7 @@ export function checkConfig() {
     }
 }
 
-export function request<T>(url: string, options?: RequestInit) {
+function request<T>(url: string, options?: RequestInit) {
     return ofetch<T>(url, {
         ...options,
         headers: {

@@ -1,9 +1,9 @@
 import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const md = MarkdownIt({
     html: true,
@@ -36,7 +36,7 @@ async function handler() {
         Easy: '🟢',
         Hard: '🔴',
     };
-    // 获取每日一题
+    // Fetch the daily challenge.
     const data = (
         await got({
             method: 'post',
@@ -67,7 +67,7 @@ async function handler() {
     const questionTitle = data.todayRecord[0].question.titleSlug;
     const questionUrl = `${baseurl}/problems/${questionTitle}/`;
 
-    // 获取题目内容
+    // Fetch the question content.
     const question = (
         await got({
             method: 'post',
@@ -100,7 +100,7 @@ async function handler() {
         })
     ).data.data.question;
     const diffEmoji = emoji[question.difficulty] || '';
-    // 获取题解（点赞前3）
+    // Fetch the three most upvoted solutions.
     const articles = (
         await got({
             method: 'post',
@@ -143,11 +143,11 @@ async function handler() {
             headers,
         })
     ).data.data.questionSolutionArticles.edges;
-    // 获取题解内容
-    const articleContent = (
-        await Promise.all(
-            articles.map((art) =>
-                got({
+    // Fetch each solution body.
+    const articleContent = await Promise.all(
+        articles.map((art) =>
+            cache.tryGet(`leetcode:cn:solution:${art.node.slug}`, async () => {
+                const response = await got({
                     method: 'post',
                     url,
                     json: {
@@ -181,13 +181,14 @@ async function handler() {
                         },
                     },
                     headers,
-                })
-            )
+                });
+                return response.data.data.solutionArticle;
+            })
         )
-    ).map((v) => v.data.data.solutionArticle);
+    );
 
     const handleText = (s) => {
-        // 处理多语言代码展示问题
+        // Normalize code blocks for multiple languages.
         s = s.replaceAll(/(```)([\d#+A-Z-]+)\s*?(\[.*?\])?\n/gi, '\r\n###$2\r\n$1$2\r\n');
         return s;
     };
@@ -200,13 +201,13 @@ async function handler() {
                 title: `每日一题-${question.translatedTitle}${diffEmoji}`,
                 link: questionUrl,
                 description: question.translatedContent,
-                pubDate: timezone(parseDate(data.todayRecord[0].date), 8),
+                pubDate: data.todayRecord[0].date ? parseDate(`${data.todayRecord[0].date}T00:00:00Z`) : undefined,
             },
             ...articleContent.map((art, i) => ({
                 title: art.title,
-                link: `${questionUrl}/solution/${art.slug}`,
+                link: new URL(`solution/${art.slug}`, questionUrl).href,
                 description: md.render(handleText(art.content)),
-                pubDate: timezone(parseDate(articles[i].node.createdAt), 8),
+                pubDate: articles[i].node.createdAt ? parseDate(articles[i].node.createdAt) : undefined,
                 author: art.author.username,
             })),
         ],

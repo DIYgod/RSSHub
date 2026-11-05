@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
 
 const host = 'https://www.hpoi.net';
@@ -24,34 +25,18 @@ const MAPs = {
 };
 
 const ProcessFeed = async (type, id, order) => {
-    let link = MAPs[type].url.replace(/\{id\}/, () => id).replace(/\{order\}/, () => order || 'add');
-    let response = await got({
+    if (order && !['release', 'add', 'hits', 'hits7Day', 'hitsDay', 'rating'].includes(order)) {
+        throw new InvalidParameterError('Invalid order: expected release, add, hits, hits7Day, hitsDay, or rating.');
+    }
+    if (type !== 'all' && !/^[1-9]\d*$/.test(id)) {
+        throw new InvalidParameterError('Invalid id: expected a positive integer.');
+    }
+    const link = MAPs[type].url.replace(/\{id\}/, () => id).replace(/\{order\}/, () => order || 'add');
+    const response = await got({
         method: 'get',
         url: link,
     });
-    let $ = load(response.data);
-
-    if (type === 'work') {
-        const overviewLink = MAPs.overview.url.replace(/\{id\}/, () => id);
-        const overviewResponse = await got({
-            method: 'get',
-            url: overviewLink,
-        });
-        const $overview = load(overviewResponse.data);
-
-        const moreLink = $overview('.company-ibox a.hpoi-btn-border.hpoi-btn-more').attr('href');
-        if (moreLink) {
-            const worksId = moreLink.match(/modal\/taobao\/more\/(\d+)/)?.[1];
-            if (worksId) {
-                link = `${host}/hobby/all?order=${order || 'add'}&r18=-1&works=${worksId}`;
-                response = await got({
-                    method: 'get',
-                    url: link,
-                });
-                $ = load(response.data);
-            }
-        }
-    }
+    const $ = load(response.data);
 
     return {
         title: `Hpoi 手办维基 - ${MAPs[type].title}${id ? ` ${id}` : ''}`,
@@ -62,7 +47,7 @@ const ProcessFeed = async (type, id, order) => {
                 const $_item = $(_item);
                 return {
                     title: $_item.find('.hpoi-detail-grid-title a').text(),
-                    link: host + '/' + $_item.find('a').attr('href'),
+                    link: new URL($_item.find('a').attr('href')!, link).href,
                     description: `<img src="${$_item.find('img').attr('src')!.replace('/s/', '/n/')}">${$_item.find('.hpoi-detail-grid-info').html()!.replaceAll('span>', 'p>')}`,
                 };
             }),

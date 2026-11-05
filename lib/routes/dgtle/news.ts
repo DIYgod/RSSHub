@@ -10,7 +10,6 @@ import { baseUrl, ProcessItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '0' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL('news', baseUrl).href;
     const apiUrl: string = new URL(`news/getNewsIndexList/${id}`, baseUrl).href;
@@ -21,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(apiUrl);
 
-    const items: DataItem[] = await ProcessItems(limit, response.data.dataList);
+    const items: DataItem[] = await ProcessItems(ctx, 30, response.data.dataList);
 
     const title: string | undefined = $(`div.whale_news_index-content-tab li[data_id="${id}"]`).text();
 
@@ -30,7 +29,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,

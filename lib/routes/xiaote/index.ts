@@ -1,5 +1,5 @@
 import type { Route } from '@/types';
-import got from '@/utils/got'; // 自订的 got
+import got from '@/utils/got'; // RSSHub HTTP client
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got.post('https://lcen.xiaote.net//api/graphql/', {
+    const { data } = await got.post('https://lcen.xiaote.net/api/graphql/', {
         json: {
             query: /* GraphQL */ `
                 query ($startCursor: Int) {
@@ -51,9 +51,9 @@ async function handler() {
 
     return {
         title: '小特社区',
-        // 源链接
+        // Source webpage
         link: 'https://xiaote.com/',
-        // 遍历所有此前获取的数据
+        // Map the previously fetched entries
         item: data.data.communities.edges.map((node) => {
             const item = node.node;
             let description = item.content;

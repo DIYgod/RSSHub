@@ -1,9 +1,10 @@
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const baseUrl = 'https://jwc.scu.edu.cn/tzgg.htm';
 const baseIndexUrl = 'https://jwc.scu.edu.cn/';
@@ -43,15 +44,16 @@ async function handler() {
             return link.startsWith('http') ? link : baseIndexUrl + link;
         });
 
-    const items = await Promise.all(
-        links.map((link) =>
+    const items = await pMap(
+        links,
+        (link) =>
             cache.tryGet(link, async () => {
                 const { data: info } = await got.get(link);
                 const $ = load(info);
 
                 // 获取head里的meta标签
                 const title = $('head meta[name="ArticleTitle"]').attr('content') ?? '';
-                const pubDate = parseDate($('head meta[name="PubDate"]').attr('content') ?? '');
+                const pubDate = parseDateInTimezone($('head meta[name="PubDate"]').attr('content') ?? '', 8);
                 const description = $('.v_news_content').html();
                 return {
                     title,
@@ -59,8 +61,8 @@ async function handler() {
                     pubDate,
                     description,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

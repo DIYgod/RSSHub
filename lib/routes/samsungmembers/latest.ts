@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -31,8 +32,9 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const res = await ofetch(item.link);
                 const content = load(res);
@@ -41,8 +43,8 @@ async function handler() {
                     pubDate: timezone(parseDate(content('p.data').last().text()), 8),
                     description: content('div.BSHARE_POP').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

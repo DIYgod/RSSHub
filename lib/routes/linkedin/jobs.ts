@@ -125,7 +125,7 @@ async function handler(ctx) {
 
     return {
         title: feedTitle,
-        link: searchUrl,
+        link: new URL(`/jobs/search/?${url.searchParams.toString()}`, BASE_URL).href,
         description: 'This feed gets LinkedIn job posts',
         item: jobs.map((job) => {
             const title = `${job.company} is hiring ${job.title}`;

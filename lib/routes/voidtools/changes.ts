@@ -1,3 +1,5 @@
+import { escapeText } from 'entities';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -24,11 +26,12 @@ async function handler() {
             const item = block.startsWith('\n') ? block.slice(2) : block;
 
             const title = item.split('\n', 1)[0].split(':');
-            const description = `<ul>${item.split(title[1])[1].replaceAll('\t', '<li>').replaceAll('\n', '</li>')}</ul>`;
+            const description = `<ul>${escapeText(item.split(title[1])[1]).replaceAll('\t', '<li>').replaceAll('\n', '</li>')}</ul>`;
 
             return {
                 description,
                 link: rootUrl,
+                guid: `${rootUrl}#${encodeURIComponent(title[1])}`,
                 title: title[1],
                 pubDate: parseDate(title[0]),
             };
@@ -36,7 +39,7 @@ async function handler() {
 
     return {
         title: 'Everything - Changes',
-        link: rootUrl,
+        link: 'https://www.voidtools.com/support/everything/whats_new/',
         item: items,
     };
 }

@@ -22,7 +22,7 @@ async function handler() {
     const response = await got(feedUrl);
     const $ = load(response.data, { xmlMode: true });
 
-    // 从 RSS XML 中直接提取文章信息
+    // Extract article metadata directly from the RSS XML.
     const list = $('item')
         .toArray()
         .map((item): DataItem => {
@@ -31,11 +31,10 @@ async function handler() {
                 title: $item.find('title').text(),
                 link: $item.find('link').text(),
                 author: $item.find(String.raw`dc\:creator`).text(),
-                category:
-                    $item
-                        .find('category')
-                        .text()
-                        .match(/>([^<]+)</)?.[1] || '',
+                category: $item
+                    .find('category')
+                    .toArray()
+                    .map((category) => load($(category).text()).text()),
                 pubDate: parseDate($item.find('pubDate').text()),
             };
         });
@@ -46,7 +45,7 @@ async function handler() {
                 const { data: articleData } = await got(item.link);
                 const $article = load(articleData);
 
-                // 获取文章正文内容
+                // Extract the main article content.
                 item.description = $article('.entry-content').html();
                 return item;
             })

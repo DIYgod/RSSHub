@@ -147,7 +147,6 @@ async function handler(ctx) {
     const data = response.data.data.repository.discussions.nodes.filter((item) => (closed === null ? item : item.closed === closed)).filter((item) => (locked === null ? item : item.locked === locked));
 
     return {
-        allowEmpty: true,
         title: `${user}/${repo} Discussions`,
         link: host,
         item: data.map((item) => ({

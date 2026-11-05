@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
-// 导入所需模组
 import ofetch from '@/utils/ofetch';
-// import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/:field',
@@ -10,15 +9,16 @@ export const route: Route = {
     parameters: { field: 'Research field' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['dblp.org/:field'],
+            // Search keywords are query parameters, not arbitrary path segments.
+            source: ['dblp.org/search'],
         },
     ],
     name: 'Keyword Search',
@@ -27,60 +27,55 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // 在此处编写您的逻辑
     const field = ctx.req.param('field');
+    const link = new URL('https://dblp.org/search');
+    link.searchParams.set('q', field);
 
-    // 发送 HTTP GET 请求到 API 并解构返回的数据对象
-    const {
-        result: { hits },
-    } = await ofetch('https://dblp.org/search/publ/api', {
-        query: {
-            q: field,
-            format: 'json',
-            h: 10,
-        },
+    const apiUrl = new URL('https://dblp.org/search/publ/api');
+    apiUrl.search = new URLSearchParams({ q: field, format: 'json', h: '10' }).toString();
+    let response = await ofetch(apiUrl.href, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
     });
-    const { hit: data } = hits;
+    if (!response?.result?.hits) {
+        const { page, destroy } = await getPlaywrightPage(apiUrl.href, { noGoto: true, closeTimeout: 0 });
+        try {
+            await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'other'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            await page.goto(apiUrl.href, { waitUntil: 'domcontentloaded' });
+            await page.waitForSelector('body > pre');
+            response = JSON.parse((await page.locator('body > pre').textContent()) ?? '');
+        } finally {
+            await destroy();
+        }
+    }
+    if (!response?.result?.hits) {
+        throw new Error('DBLP did not return publication search data. The source may be showing an anti-bot challenge.');
+    }
+    const {
+        result: { hits },
+    } = response;
+    const { hit: data = [] } = hits;
 
-    // console.log(data);
-
-    // 从 API 响应中提取相关数据
     const list = data.map((item) => {
         const { info } = item;
-        // console.log(info);
-        const {
-            authors: { author },
-            title,
-            venue,
-            year,
-            type,
-            doi,
-            ee,
-        } = info;
+        const { authors, title, venue, year, type, doi, ee } = info;
 
-        const authorName = Array.isArray(author) ? author[0].text : author.text;
+        const authorList = authors?.author ? (Array.isArray(authors.author) ? authors.author : [authors.author]) : [];
 
         return {
             title,
             link: ee,
-            author: `${authorName} et al.`,
+            author: authorList.length ? authorList.map((author) => ({ name: author.text })) : undefined,
             doi,
             description: `Year: ${year ?? 'unknown'}, Venue: ${venue}, Type: ${type}, Doi: ${doi}`,
         };
     });
 
     return {
-        // 在此处输出您的 RSS
-        // 源标题
         title: `【dblp】${field}`,
-        // 源链接
-        link: `https://dblp.org/search?q=${field}`,
-        // 源描述
+        link: link.href,
         description: `DBLP ${field} RSS`,
-        // 处理后的数据，即文章列表
         item: list,
     };
 }

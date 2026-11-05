@@ -36,7 +36,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = await ProcessItems(response.data.items, ctx.req.query('limit'));
+    const items = await ProcessItems(response.data.items, ctx);
 
     return {
         title: '熱門新聞、全城熱話及社會時事 | 香港01',

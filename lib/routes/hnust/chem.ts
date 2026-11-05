@@ -29,9 +29,8 @@ async function handler() {
 
             return {
                 title,
-                description: title,
                 pubDate: timezone(parseDate(date), 8),
-                link: base + $item.find('a').attr('href'),
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 

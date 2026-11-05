@@ -4,11 +4,11 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import type { PostData } from './types';
-import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
+import { getApiResponse, getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
@@ -49,32 +49,23 @@ async function handler(ctx) {
     const pageData = await cache.tryGet(
         `douyin:user:${uid}`,
         async () => {
-            let postData: PostData | undefined;
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
-            });
-            page.on('response', async (response) => {
-                const request = response.request();
-                if (request.url().includes('/web/aweme/post') && !postData) {
-                    postData = await response.json();
+            const { page, destroy } = await getPlaywrightPage(pageUrl, { noGoto: true, closeTimeout: 0 });
+            try {
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                });
+                logger.http(`Requesting ${pageUrl}`);
+                const postData = (await getApiResponse(page, pageUrl, '/web/aweme/post')) as PostData;
+
+                if (!postData) {
+                    throw new Error('Empty post data. The request may be filtered by WAF.');
                 }
-            });
 
-            logger.http(`Requesting ${pageUrl}`);
-            await page.goto(pageUrl, {
-                waitUntil: 'networkidle',
-            });
-
-            await context.close();
-
-            if (!postData) {
-                throw new Error('Empty post data. The request may be filtered by WAF.');
+                return postData;
+            } finally {
+                await destroy();
             }
-
-            return postData;
         },
         config.cache.routeExpire,
         false
@@ -112,7 +103,7 @@ async function handler(ctx) {
         const description = templates.desc({ desc, media });
 
         return {
-            title: post.desc.split('\n', 1)[0],
+            title: post.desc,
             description,
             link: `https://www.douyin.com/video/${post.aweme_id}`,
             pubDate: parseDate(post.create_time * 1000),

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -45,34 +46,41 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             $item.find('.topic-has-suggested-item').remove();
+            const date = $item.find('.topic-header .timeago').attr('title');
+            const pubDate = date?.trim() ? parseDate(date) : undefined;
             return {
-                title: $item.find('h3').text().trim(),
+                title: $item.find('h3').text(),
                 link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
                 author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
-                pubDate: parseDate($item.find('.topic-header .timeago').attr('title')!),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`xiaozhuanlan:article:v1:${item.link}`, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
-
-                item.description = md.render($('.hidden_markdown_body').attr('data-summary')!);
-                if ($('.topic-tags')) {
-                    item.category = $('.topic-tags label')
-                        .toArray()
-                        .map((l) => $(l).text());
+                const markdown = $('.hidden_markdown_body').attr('data-summary');
+                if (markdown === undefined) {
+                    throw new Error(`The article page at ${item.link} does not contain its Markdown body.`);
                 }
 
-                return item;
-            })
-        )
+                return {
+                    description: md.render(markdown),
+                    category: $('.topic-tags label')
+                        .toArray()
+                        .map((l) => $(l).text()),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         link: `${baseUrl}/${id}`,
         description: $('meta[name=description]').attr('content'),
         item: items,

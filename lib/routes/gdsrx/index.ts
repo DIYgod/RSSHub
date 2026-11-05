@@ -4,6 +4,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:id?',
@@ -34,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '10' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'http://www.gdsrx.org.cn';
     const currentUrl = new URL(`portal/list/index/id/${id}.html`, rootUrl).href;

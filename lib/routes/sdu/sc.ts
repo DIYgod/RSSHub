@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const host = 'https://www.sc.sdu.edu.cn/';
 const typelist = ['通知公告', '学术动态', '本科教育', '研究生教育'];
@@ -47,13 +48,15 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate($e.find('.date').text().trim()),
+                pubDate: parseDateInTimezone($e.find('.date').text().trim(), 8),
             };
         });
 
-    item = await Promise.all(
-        item.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    item = await pMap(
+        item,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sc:article-v2:${item.link}`, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
@@ -67,13 +70,14 @@ async function handler(ctx) {
                     $('h3, .pr').remove();
                     item.description = $('.content').html();
 
-                    return item;
+                    return { title: item.title, author: item.author, description: item.description };
                 } catch {
                     // intranet oa.sdu.edu.cn
-                    return item;
+                    return {};
                 }
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

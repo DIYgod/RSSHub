@@ -4,11 +4,12 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'sy/gzdt_210283' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://81rc.81.cn';
     const currentUrl = new URL(category?.endsWith('/') ? `${category}/` : category, rootUrl).href;
@@ -96,12 +97,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['81rc.81.cn/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/81/81rc/${category ? `/${category}` : ''}`;
-            },
+            source: ['81rc.81.cn/*category', '81rc.81.cn/'],
+            target: '/81rc/:category?',
         },
     ],
 };

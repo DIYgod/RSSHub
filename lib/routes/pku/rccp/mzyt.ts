@@ -41,9 +41,23 @@ async function handler() {
         item: $('li.list')
             .toArray()
             .map((item) => ({
-                title: $(item).find('a').text().trim(),
+                title: $(item).find('a').text(),
                 description: '',
-                pubDate: parseDate($(item).find('span').first().text(), '[YYYY-MM-DD]'),
+                pubDate: $(item)
+                    .find('span')
+                    .first()
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0]
+                    ? parseDate(
+                          `${
+                              $(item)
+                                  .find('span')
+                                  .first()
+                                  .text()
+                                  .match(/\d{4}-\d{2}-\d{2}/)![0]
+                          }T00:00:00Z`
+                      )
+                    : undefined,
                 link: baseUrl + $(item).find('a').attr('href'),
             })),
     };

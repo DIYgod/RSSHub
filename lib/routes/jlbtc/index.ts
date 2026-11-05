@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -33,16 +34,21 @@ async function handler(ctx: Context) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.newslisttitlex a');
+            const date = $item
+                .find('.wapnewsdate')
+                .text()
+                .match(/\d{4}-\d{1,2}-\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?/)?.[0];
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: timezone(parseDate($item.find('.wapnewsdate').text()), 8),
+                pubDate: date ? timezone(parseDate(date), 8) : undefined,
                 description: $item.find('.newslisttitlexx').text(),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             item.link!.startsWith('https://www.jlbtc.edu.cn/')
                 ? cache.tryGet(item.link!, async () => {
                       const detailResponse = await ofetch(item.link!);
@@ -52,8 +58,8 @@ async function handler(ctx: Context) {
 
                       return item;
                   })
-                : item
-        )
+                : item,
+        { concurrency: 3 }
     );
 
     return {

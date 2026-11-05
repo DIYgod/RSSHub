@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import Parser from 'rss-parser';
 
 import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+const parser = new Parser();
 
 export const route: Route = {
     path: '/:type',
@@ -20,8 +22,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.kelownacapnews.com/:type'],
-            target: '/:type',
+            source: ['kelownacapnews.com/category/news/regional-news/', 'kelownacapnews.com/local-news'],
+            target: '/local-news',
+        },
+        {
+            source: ['www.kelownacapnews.com/category/news/regional-news/', 'www.kelownacapnews.com/local-news'],
+            target: '/local-news',
         },
     ],
     name: 'News',
@@ -38,56 +44,29 @@ export const route: Route = {
 | Entertainment | entertainment |              |              |`,
     handler: async (ctx) => {
         const type = ctx.req.param('type');
-        const baseURL = 'https://www.kelownacapnews.com';
+        const baseURL = 'https://kelownacapnews.com';
 
-        const response = await ofetch(`${baseURL}/${type}`);
-        const $ = load(response);
-
-        const list = $('.media')
-            .toArray()
-            .map((item): DataItem => {
-                const a = $(item);
-                return {
-                    title: a.find('.media-heading').text(),
-                    pubDate: parseDate(a.find('.media-links time').attr('datetime')!),
-                    link: baseURL + a.attr('href'),
-                };
-            });
-
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
-
-                    let image = $('.details-file')!;
-                    if (!image.length) {
-                        image = $('#sliderImgs .tablist-item .galleryWrap');
-                    }
-                    const byline = $('.details-byline');
-                    const profileTitle = byline.find('.profile-title');
-                    if (profileTitle.length) {
-                        item.author = profileTitle.find('a').text();
-                    }
-                    let label = '';
-                    if (image.length > 1) {
-                        for (const e of image.toArray()) {
-                            const img = $(e);
-                            label += `<figure style="margin: 10px 0 0 0"><img src='${img.data('src')}' /><figcaption>${img.attr('title')}</figcaption></figure>`;
-                        }
-                    } else {
-                        label = `<figure style="margin: 0">${image.html()!}</figure>`;
-                    }
-                    item.description = label + $('.details-body').html()!;
-
-                    return item;
-                })
-            )
-        );
+        const response = await ofetch.raw<string, 'text'>(`${baseURL}/${type}`, { responseType: 'text' });
+        const $ = load(response._data!);
+        const feedLink = $('link[rel="alternate"][type="application/rss+xml"]').attr('href');
+        if (!feedLink) {
+            throw new Error('Kelowna Capital News did not provide a category RSS feed. Check that the requested news category still exists.');
+        }
+        const feed = await parser.parseString(await ofetch(new URL(feedLink, response.url).href, { responseType: 'text' }));
+        const items: DataItem[] = feed.items.map((item) => ({
+            title: item.title ?? '',
+            link: item.link,
+            guid: item.guid,
+            author: item.creator,
+            pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
+            description: item['content:encoded'] ?? item.content,
+            category: item.categories,
+        }));
 
         return {
-            title: `${$('.body-title').text()} - Kelowna Capital News`,
-            link: `${baseURL}/${type}`,
+            title: feed.title ?? `${$('title').text()} - Kelowna Capital News`,
+            link: response.url,
+            language: 'en' as const,
             item: items,
         };
     },

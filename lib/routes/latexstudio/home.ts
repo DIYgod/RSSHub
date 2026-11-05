@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -23,8 +24,8 @@ async function handler() {
 
     const list = $('div.article-list')
         .find('h3.article-title')
-        .toArray()
         .slice(0, 20)
+        .toArray()
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             return {
@@ -33,18 +34,21 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const res = await ofetch(item.link);
                 const content = load(res);
 
-                item.pubDate = timezone(parseDate(content('div.entry-meta ul li').eq(3).text().replace('发布日期：', '')), 8);
-                item.description = content('div.article-text').html();
-
-                return item;
-            })
-        )
+                return {
+                    pubDate: timezone(parseDate(content('div.entry-meta ul li').eq(3).text().replace('发布日期：', '')), 8),
+                    description: content('div.article-text').html(),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

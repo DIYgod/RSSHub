@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, fixImages, headers, parseReviews } from './utils';
+import { baseUrl, fixImages, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/review/:keyword?',
@@ -37,15 +38,13 @@ const language: Language = 'en';
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
-    const url = new URL(`${baseUrl}/review/${keyword ? 'search/' : ''}`);
+    // The review list filters by keyword itself; the old /review/search/ endpoint answers 410
+    const url = new URL(`${baseUrl}/review/`);
     if (keyword) {
         url.searchParams.set('q', keyword);
-        url.searchParams.set('_', Date.now().toString());
     }
 
-    const response = await ofetch(url.href, {
-        headers,
-    });
+    const response = await ofetch(url.href);
 
     const $ = load(response);
 
@@ -54,10 +53,11 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.title a');
+            const date = $item.find('.date time').attr('datetime');
             return {
                 title: a.text(),
                 link: baseUrl + a.attr('href'),
-                pubDate: parseDate($item.find('.date time').attr('datetime')!), // 2023-05-21T16:05:14+00:00
+                pubDate: date ? parseDate(date) : undefined, // 2023-05-21T16:05:14+00:00
                 author: $item
                     .find('.author')
                     .contents()
@@ -71,21 +71,20 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
-                    headers,
-                });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`techpowerup:detail-fields:v1:${item.link}`, async (): Promise<Partial<DataItem>> => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
-
                 fixImages($);
-
-                await parseReviews($, item);
-
-                return item;
-            })
-        )
+                const detail: Partial<DataItem> = {};
+                await parseReviews($, detail);
+                return detail;
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

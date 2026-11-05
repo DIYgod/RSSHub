@@ -1,7 +1,6 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -12,133 +11,88 @@ import { parseDate } from '@/utils/parse-date';
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '12');
-
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 12;
     const baseUrl = 'https://magazine.raspberrypi.com';
-    const targetUrl: string = new URL('issues', baseUrl).href;
-
+    const targetUrl = new URL('issues', baseUrl).href;
     const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
+    const $ = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
+    const author = $('meta[property="og:site_name"]').attr('content');
 
-    const author: DataItem['author'] = $('meta[property="og:site_name"]').attr('content');
-
-    let items: DataItem[] = $('div.o-grid--equal div.o-grid__col')
-        .slice(0, limit)
+    const items = $('main a[href]')
         .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-            const $aEl: Cheerio<Element> = $el.find('h2.rspec-issue-card-heading a.c-link');
-
-            const title: string = $aEl.text()?.trim();
-            const image: string | undefined = $el.find('div.o-media__fixed a.c-link img').attr('src');
-            const description: string | undefined = renderDescription({
-                images: image
-                    ? [
-                          {
-                              src: image,
-                              alt: title,
-                          },
-                      ]
-                    : undefined,
-                intro: $el.find('p.rspec-issue-card-summary').text(),
-            });
-            const pubDateStr: string | undefined = $el.find('time').attr('datetime');
-            const linkUrl: string | undefined = $aEl.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
+        .filter((element) => /^\/issues\/\d+$/.test($(element).attr('href') ?? ''))
+        .filter((element, index, elements) => elements.findIndex((previous) => $(previous).attr('href') === $(element).attr('href')) === index)
+        .slice(0, limit)
+        .flatMap((element): DataItem | DataItem[] => {
+            const image = $(element).find('img');
+            const title = image.attr('alt');
+            if (!title) {
+                return [];
+            }
+            return {
                 title,
-                description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                link: new URL($(element).attr('href')!, baseUrl).href,
+                image: image.attr('src'),
                 author,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                image,
-                banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
-
-            return processedItem;
         });
 
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
-                }
-
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
-
-                    const title: string = $$('h1.rspec-issue__heading').text().split(/-/).pop()?.trim() ?? item.title;
-                    const description: string | undefined =
-                        item.description +
-                        renderDescription({
-                            description: $$('div.rspec-issue__description').html() || undefined,
-                        });
-                    const pubDateStr: string | undefined = $$('time.rspec-issue__publication-month').attr('datetime');
-                    const image: string | undefined = $$('img.c-figure__image').attr('src');
-                    const upDatedStr: string | undefined = pubDateStr;
-
-                    let processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                        author,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        image,
-                        banner: image,
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
-                    };
-
-                    const pdfUrl: string = new URL('pdf/download', `${item.link}/`).href;
-                    const pdfResponse = await ofetch(pdfUrl);
-                    const $$$: CheerioAPI = load(pdfResponse);
-
-                    const $$$enclosureEl: Cheerio<Element> = $$$('a.c-link').first();
-                    const enclosureHref: string | undefined = $$$enclosureEl.attr('href');
-                    const enclosureUrl: string | undefined = enclosureHref ? new URL(enclosureHref, baseUrl).href : undefined;
-
-                    if (enclosureUrl) {
-                        const enclosureType = 'application/pdf';
-
-                        processedItem = {
-                            ...processedItem,
-                            enclosure_url: enclosureUrl,
-                            enclosure_type: enclosureType,
-                            enclosure_title: title,
-                            enclosure_length: undefined,
-                        };
-                    }
-
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
+    const detailedItems = await pMap(
+        items,
+        async (item) => {
+            const article = await cache.tryGet(`raspberrypi:issue:v5:${item.link}`, async () => {
+                const response = await ofetch(item.link!);
+                const $ = load(response);
+                const article = $('main > section').first();
+                const title = $('meta[property="og:title"]').attr('content') ?? item.title;
+                const image = article.find('img').first().attr('src');
+                const content = article.find('.markdown');
+                const gallery = article.find('a[href*="/storage/representations/"]').parent();
+                const description = renderDescription({
+                    images: image ? [{ src: image, alt: title ?? undefined }] : undefined,
+                    description: (content.html() ?? '') + (content.next('ul').prop('outerHTML') ?? '') + (gallery.html() ?? ''),
                 });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
+                const date = article.find('time').attr('datetime');
+                const pdfPath = article.find('a[href$="/pdf"]').attr('href');
+                let enclosureUrl: string | undefined;
+                if (pdfPath) {
+                    const pdfPageUrl = new URL(pdfPath, item.link!).href;
+                    const pageSource1 = await ofetch(pdfPageUrl);
+                    const pdfPage = load(pageSource1);
+                    const downloadPath = pdfPage('main a[href$="/pdf/download"]').attr('href');
+                    if (downloadPath) {
+                        const downloadPageUrl = new URL(downloadPath, pdfPageUrl).href;
+                        const pageSource2 = await ofetch(downloadPageUrl);
+                        const downloadPage = load(pageSource2);
+                        enclosureUrl = downloadPage('main a[href$=".pdf"]').attr('href');
+                    }
+                }
+                return {
+                    title,
+                    description,
+                    pubDate: date ? parseDate(date) : undefined,
+                    content: { html: description },
+                    image,
+                    banner: image,
+                    enclosure_url: enclosureUrl,
+                    enclosure_type: enclosureUrl ? 'application/pdf' : undefined,
+                };
+            });
+            return { ...item, ...article };
+        },
+        { concurrency: 3 }
+    );
 
     return {
-        title: $('title').text(),
+        title: $('meta[property="og:site_name"]').attr('content') ?? $('title').text(),
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
-        item: items,
-        allowEmpty: true,
+        item: detailedItems,
         image: $('meta[property="og:image"]').attr('content'),
-        author: $('meta[property="og:site_name"]').attr('content'),
+        author,
         language,
         id: $('meta[property="og:url"]').attr('content'),
     };
@@ -165,7 +119,7 @@ export const route: Route = {
     radar: [
         {
             source: ['magazine.raspberrypi.com'],
-            target: '/raspberrypi/magazine',
+            target: '/magazine',
         },
     ],
     view: ViewType.Articles,

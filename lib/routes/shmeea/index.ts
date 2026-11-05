@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -48,29 +49,25 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title') || $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, baseURL).href,
-                pubDate: parseDate($item.find('.listTime').text(), 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate($item.find('.listTime').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.endsWith('.html') || new URL(item.link).hostname !== new URL(baseURL).hostname) {
-                    return item;
-                }
-
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (!item.link.endsWith('.html') || new URL(item.link).hostname !== new URL(baseURL).hostname) {
+                return item;
+            }
+            const details = await cache.tryGet(`shmeea:details:v2:${item.link}:${item.pubDate}`, async () => {
                 const result = await got(item.link);
                 const $ = load(result.data);
-
-                const description = $('#ivs_content').html();
                 const pbTimeText = $('#ivs_title .PBtime').text();
-
-                item.description = description;
-                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
-
-                return item;
-            })
-        )
+                return { description: $('#ivs_content').html(), pubDate: pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

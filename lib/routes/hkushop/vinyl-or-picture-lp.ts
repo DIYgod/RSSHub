@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/vinyl/:cat?',
@@ -25,7 +25,7 @@ export const route: Route = {
             target: '/vinyl',
         },
     ],
-    name: 'HKU Shop 黑胶专区',
+    name: '黑胶专区',
     maintainers: ['gideonsenku'],
     handler,
     description: `常见分类:
@@ -41,19 +41,25 @@ async function handler(ctx) {
     const cat = ctx.req.param('cat') ?? '';
     const url = cat ? `${baseUrl}/vinyl-or-picture-lp.html?cat=${cat}` : `${baseUrl}/vinyl-or-picture-lp.html`;
 
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+    const { page, destroy } = await getPlaywrightPage(url, {
+        noGoto: true,
+        closeTimeout: 0,
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
     });
-    await page.goto(url, {
-        waitUntil: 'domcontentloaded',
-    });
-
-    const response = await page.content();
-    await page.close();
-    await context.close();
+    let response: string;
+    try {
+        const navigation = await page.goto(url, {
+            waitUntil: 'domcontentloaded',
+        });
+        if (navigation?.status() === 404) {
+            throw new Error(`HKU Shop vinyl category is unavailable (HTTP 404) at ${url}. The source category or its mapping must be updated.`);
+        }
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
 
@@ -67,11 +73,11 @@ async function handler(ctx) {
             const $artist = $item.find('.artist a').text().trim();
 
             return {
-                title: $link.text().trim(),
+                title: $link.text(),
                 link: $link.attr('href'),
+                author: $artist || undefined,
                 description: `
                 <img src="${$image.attr('src')}" />
-                <p>作者: ${$artist}</p>
                 <p>价格: ${$price.text().trim()}</p>
             `,
                 guid: $link.attr('href'),

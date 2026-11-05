@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getPlurk } from './utils';
 
@@ -31,7 +32,7 @@ async function handler(ctx) {
     const { data: apiResponse } = await got(`${baseUrl}/Stats/getAnonymousPlurks`, {
         searchParams: {
             offset: 0,
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 200,
+            limit: getRouteLimit(ctx, 200),
         },
     });
 

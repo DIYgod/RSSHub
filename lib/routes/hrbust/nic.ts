@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -66,8 +67,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.startsWith(rootUrl)) {
                     item.description = '本文需跳转，请点击原文链接后阅读';
@@ -86,8 +88,8 @@ async function handler(ctx) {
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

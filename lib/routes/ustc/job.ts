@@ -1,7 +1,121 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+interface RecruitmentItem extends DataItem {
+    link: string;
+    ID?: number;
+}
+
+interface Company {
+    CompanyID: number;
+    CompanyName: string;
+    nPos?: string;
+    Stand?: string;
+    JobList?: string;
+}
+
+function renderCompanyList(response: { CompanyList?: Company[]; data?: string }, rootUrl: string): string | undefined {
+    const $ = load('<table><thead><tr><th>单位名称</th><th>展位号</th><th>职位信息</th></tr></thead><tbody></tbody></table>');
+    if (!response.CompanyList?.length) {
+        return typeof response.data === 'string' ? ($('<p>').text(response.data).prop('outerHTML') ?? undefined) : undefined;
+    }
+    const body = $('tbody');
+    for (const company of response.CompanyList) {
+        const row = $('<tr>');
+        row.append($('<td>').append($('<a>').attr('href', `${rootUrl}/Jobinformation/info.aspx?itemid=${company.CompanyID}`).text(company.CompanyName)));
+        row.append($('<td>').text(company.nPos ?? company.Stand ?? ''));
+        row.append($('<td>').html(company.JobList ?? ''));
+        body.append(row);
+    }
+    return $('table').prop('outerHTML') ?? undefined;
+}
+
+const rand = 0.01234567890123456;
+const apiRootUrl = 'https://ustc.ahbys.com';
+const rootUrl = 'https://job.ustc.edu.cn';
+
+function parseRecruitmentDate(value?: string): Date | undefined {
+    if (!value) {
+        return undefined;
+    }
+    const parsed = parseDate(value);
+    return /(?:Z|[+-]\d{2}:\d{2})$/i.test(value) ? parsed : timezone(parsed, 8);
+}
+
+async function getRecruitmentDetails(category: string, id?: number): Promise<Pick<DataItem, 'title' | 'description'>> {
+    const eventResponse = category === 'Doublechoice' ? await got({ method: 'post', url: `${rootUrl}/Ajax/jywapi.ashx`, form: { action: 'recruitinfo', rid: id } }) : undefined;
+    const detailResponse = await got({
+        method: (() => {
+            switch (category) {
+                case 'RecruitList':
+                case 'Broadcast':
+                    return 'get';
+                case 'joblist2':
+                case 'Doublechoice':
+                    return 'post';
+                default:
+                    throw new Error(`Unknown category: ${category}`);
+            }
+        })(),
+
+        url: (() => {
+            switch (category) {
+                case 'RecruitList':
+                    return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=bookinginfo&rid=${id}&rand=${rand}`;
+                case 'Doublechoice':
+                    return `${rootUrl}/Ajax/jywapi.ashx`;
+                case 'Broadcast':
+                    return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=binfo&rid=${id}&rand=${rand}`;
+                case 'joblist2':
+                    return `${rootUrl}/Ajax/jywapi.ashx`;
+                default:
+                    throw new Error(`Unknown category: ${category}`);
+            }
+        })(),
+
+        form: category === 'Doublechoice' ? { action: 'recruitcompany', rid: id, pageindex: 1, pagesize: 100 } : category === 'joblist2' ? { action: 'jobinfo2', jid: id } : undefined,
+    });
+
+    const title = (() => {
+        switch (category) {
+            case 'RecruitList':
+            case 'Broadcast':
+                return detailResponse.data.Theme;
+            case 'Doublechoice':
+                return;
+            case 'joblist2':
+                return detailResponse.data.JobName;
+            default:
+                throw new Error(`Unknown category: ${category}`);
+        }
+    })();
+
+    const description = (() => {
+        switch (category) {
+            case 'RecruitList':
+            case 'Broadcast':
+                return detailResponse.data.Description;
+
+            case 'Doublechoice': {
+                const content = [eventResponse?.data.Description, renderCompanyList(detailResponse.data, rootUrl)].filter(Boolean).join('');
+                return content || undefined;
+            }
+
+            case 'joblist2':
+                return detailResponse.data.PostionDesc;
+            default:
+                throw new Error(`Unknown category: ${category}`);
+        }
+    })();
+
+    return { title, description };
+}
 
 const titles = {
     RecruitList: '专场招聘会',
@@ -41,19 +155,16 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'joblist2';
 
-    const rand = 0.01234567890123456;
-    const apiRootUrl = 'http://ustc.ahbys.com';
-    const rootUrl = 'http://www.job.ustc.edu.cn';
-
-    const currentUrl = `${rootUrl}/${category}.html`;
+    const pages = { RecruitList: 'Specialrecruitment', Doublechoice: 'Campusdouble', Broadcast: 'airtalk', joblist2: 'Recruitment' };
+    const currentUrl = `${rootUrl}/${pages[category]}/list.aspx`;
 
     const response = await got({
         method: (() => {
             switch (category) {
                 case 'RecruitList':
                 case 'Broadcast':
-                case 'joblist2':
                     return 'get';
+                case 'joblist2':
                 case 'Doublechoice':
                     return 'post';
                 default:
@@ -66,169 +177,61 @@ async function handler(ctx) {
                 case 'RecruitList':
                     return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&pagesize=20&pageindex=1&action=bookinglist&kind=13&keyword=`;
                 case 'Doublechoice':
-                    return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}`;
+                    return `${rootUrl}/Ajax/jywapi.ashx`;
                 case 'Broadcast':
                     return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&pagesize=20&pageindex=1&action=bookinglist2&kind=2`;
                 case 'joblist2':
-                    return `${apiRootUrl}/API/Web/index10358.ashx?action=joblist2&pagesize=50&pageindex=1&rand=${rand}&keyword=`;
+                    return `${rootUrl}/Ajax/jywapi.ashx`;
                 default:
                     throw new Error(`Unknown category: ${category}`);
             }
         })(),
 
-        form: (() => {
-            switch (category) {
-                case 'RecruitList':
-                case 'Broadcast':
-                case 'joblist2':
-                    return {};
-                case 'Doublechoice':
-                    return {
-                        pagesize: 15,
-                        pageindex: 1,
-                        action: 'recruitlist',
-                        rand,
-                    };
-                default:
-                    throw new Error(`Unknown category: ${category}`);
-            }
-        })(),
-
-        allowGetBody: true,
+        form: category === 'Doublechoice' ? { action: 'recruitlist', pageindex: 1, pagesize: 10 } : category === 'joblist2' ? { action: 'joblist2', pageindex: 1, pagesize: 10 } : undefined,
     });
 
-    const list = response.data.data.slice(0, 10).map((item) => {
+    const list: RecruitmentItem[] = response.data.data.slice(0, 10).map((item) => {
         switch (category) {
             case 'RecruitList':
                 return {
-                    title: item.ID,
-                    pubDate: parseDate(item.HoldDate),
-                    link: `${rootUrl}/Recruit.html?id=${item.ID}`,
+                    ID: item.ID,
+                    title: item.Theme,
+                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    link: `${rootUrl}/Specialrecruitment/info.aspx?itemid=${item.ID}`,
                 };
             case 'Doublechoice':
                 return {
                     ID: item.ID,
                     title: item.Theme,
-                    pubDate: parseDate(item.HoldDate),
-                    link: `${rootUrl}/R2.html?id=${item.ID}`,
+                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    link: `${rootUrl}/Campusdouble/info.aspx?itemid=${item.ID}`,
                 };
             case 'Broadcast':
                 return {
-                    title: item.ID,
-                    pubDate: parseDate(item.HoldDate),
-                    link: `${rootUrl}/R2.html?id=${item.ID}`,
+                    ID: item.ID,
+                    title: item.Theme,
+                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    link: `${rootUrl}/airtalk/info.aspx?itemid=${item.ID}`,
                 };
             case 'joblist2':
                 return {
-                    title: item.JID,
-                    pubDate: parseDate(item.UpdateDate),
-                    link: `${rootUrl}/Job2.html?jid=${item.JID}&cid=${item.CompanyID}`,
+                    ID: item.JID,
+                    title: item.JobName,
+                    updated: parseRecruitmentDate(item.UpdateDate),
+                    link: `${rootUrl}/Recruitment/info.aspx?itemid=${item.JID}`,
                 };
             default:
                 return {};
         }
     });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: (() => {
-                        switch (category) {
-                            case 'RecruitList':
-                            case 'Broadcast':
-                            case 'joblist2':
-                                return 'get';
-                            case 'Doublechoice':
-                                return 'post';
-                            default:
-                                throw new Error(`Unknown category: ${category}`);
-                        }
-                    })(),
-
-                    url: (() => {
-                        switch (category) {
-                            case 'RecruitList':
-                                return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=bookinginfo&rid=${item.title}&rand=${rand}`;
-                            case 'Doublechoice':
-                                return `${apiRootUrl}/API/Web/index10358.ashx`;
-                            case 'Broadcast':
-                                return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=binfo&rid=${item.title}&rand=${rand}`;
-                            case 'joblist2':
-                                return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=jobinfo2&jid=${item.title}&rand=${rand}`;
-                            default:
-                                throw new Error(`Unknown category: ${category}`);
-                        }
-                    })(),
-
-                    form: (() => {
-                        switch (category) {
-                            case 'RecruitList':
-                            case 'Broadcast':
-                            case 'joblist2':
-                                return {};
-                            case 'Doublechoice':
-                                return {
-                                    pagesize: 100,
-                                    pageindex: 1,
-                                    action: 'recruitcompany',
-                                    rid: item.ID,
-                                    rand,
-                                };
-                            default:
-                                throw new Error(`Unknown category: ${category}`);
-                        }
-                    })(),
-
-                    allowGetBody: true,
-                });
-
-                item.title = (() => {
-                    switch (category) {
-                        case 'RecruitList':
-                        case 'Broadcast':
-                            return detailResponse.data.Theme;
-                        case 'Doublechoice':
-                            return item.title;
-                        case 'joblist2':
-                            return detailResponse.data.JobName;
-                        default:
-                            throw new Error(`Unknown category: ${category}`);
-                    }
-                })();
-
-                item.description = (() => {
-                    switch (category) {
-                        case 'RecruitList':
-                        case 'Broadcast':
-                            return detailResponse.data.Description;
-
-                        case 'Doublechoice': {
-                            let tbody =
-                                '<table><thead style="background-color: #f6f6ee"><tr>' +
-                                '<th style="white-space: nowrap;">单位名称</th>' +
-                                '<th style="white-space: nowrap;">展位号</th>' +
-                                '<th>职位信息</th></tr><tr></tr></thead><tbody>';
-
-                            for (const company of detailResponse.data.CompanyList) {
-                                tbody += `<tr><td style="white-space:nowrap"><a style="color:#004276;font-size:14px;"'+
-                                    'href="${rootUrl}/Company.html?cid=${company.CompanyID}" target="_blank">${company.CompanyName}</a></td>'+
-                                    '<td style="white-space:nowrap">${item.nPos}</td><td>${item.JobList}</td></tr>`;
-                            }
-
-                            return `${tbody}</tbody></table>`;
-                        }
-
-                        case 'joblist2':
-                            return detailResponse.data.PostionDesc;
-                        default:
-                            throw new Error(`Unknown category: ${category}`);
-                    }
-                })();
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async ({ ID, ...item }) => {
+            const details = await cache.tryGet<Pick<DataItem, 'title' | 'description'>>(`ustc:job:detail:${item.link}`, () => getRecruitmentDetails(category, ID));
+            return { ...item, ...details, title: item.title ?? details.title };
+        },
+        { concurrency: 3 }
     );
 
     return {

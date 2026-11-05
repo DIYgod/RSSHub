@@ -1,9 +1,11 @@
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/desc';
 
@@ -42,13 +44,13 @@ async function handler(ctx) {
 
     const { data } = await got.put(`${baseUrl}/api/v1/studios`, {
         json: {
-            PageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 36,
+            PageSize: getRouteLimit(ctx, 36),
             PageNumber: 1,
             SortBy: 'gmt_modified',
         },
     });
 
-    const studios = data.Data.Studios.map((studio) => ({
+    const studios: Array<DataItem & { link: string; slug: string; coverImage?: string }> = data.Data.Studios.map((studio) => ({
         title: studio.ChineseName || studio.Name,
         description: studio.Description,
         author: studio.CreatedBy,
@@ -59,21 +61,18 @@ async function handler(ctx) {
         coverImage: studio.CoverImage.startsWith('https://img.alicdn.com/') ? undefined : studio.CoverImage,
     }));
 
-    const items = await Promise.all(
-        studios.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await got(`${baseUrl}/api/v1/studio${item.slug}`);
+    const items = await pMap(
+        studios,
+        async ({ slug, coverImage, ...item }) => {
+            const body = await cache.tryGet(`${item.link}:readme`, async () => {
+                const { data } = await got(`${baseUrl}/api/v1/studio${slug}`);
 
                 const content = data.Data.ReadMeContent;
-                item.description = renderDescription({
-                    coverImage: item.coverImage,
-                    description: item.description,
-                    md: md.render(content),
-                });
-
-                return item;
-            })
-        )
+                return { content: md.render(content) };
+            });
+            return { ...item, description: renderDescription({ coverImage, description: item.description ?? undefined, md: body.content }) };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const apiKey = 'Cah2snYi52eJjpshbIfof1Tpx8ZhzXqh';
 
@@ -53,8 +54,9 @@ async function handler() {
         return {
             title: item.title,
             link: item.link,
-            pubDate: parseDate(item.item_datetime),
+            pubDate: timezone(parseDate(item.item_datetime), 8),
             description,
+            category: [item.channel_name, ...(item.keyword?.map((tag) => tag.name) || [])].filter(Boolean),
         };
     });
 

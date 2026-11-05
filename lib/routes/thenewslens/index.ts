@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -18,7 +19,7 @@ export const route: Route = {
 |          | hot      | social   | hot/today | hot/week | hot/month | hot/year | hot/lastYear | hot/history |`,
     radar: [
         {
-            source: ['thenewslens.com/latest-article/:sort?', 'thenewslens.com/'],
+            source: ['thenewslens.com/latest-article/*sort', 'thenewslens.com/latest-article', 'thenewslens.com/'],
             target: '/latest-article/:sort?',
         },
     ],
@@ -37,13 +38,15 @@ export async function handler(ctx) {
     });
 
     const $ = load(response.data);
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 25;
 
     $('h1.title').remove();
 
-    let items = $('.regular-article-list, #list-container, .list-container')
+    let items: DataItem[] = $('.regular-article-list, #list-container, .list-container')
         .find('.article-title, .title')
         .find('a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -56,9 +59,11 @@ export async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -74,24 +79,29 @@ export async function handler(ctx) {
                 content('.article-img-container').each((_, el) => {
                     content(el).replaceWith(
                         renderDescription({
-                            image: content(el).find('img').attr('data-srcset')!.split('?', 1)[0] ?? undefined,
+                            image: content(el).find('img').attr('data-srcset')?.split('?', 1)[0],
                         })
                     );
                 });
 
-                item.author = content('meta[property="article:author"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
-                item.category = content('meta[property="article:tag"]')
+                const category = content('meta[property="article:tag"]')
                     .toArray()
                     .map((t) => content(t).attr('content')!);
-                item.description = renderDescription({
-                    image: content('meta[property="og:image"]').attr('content')!.split('?', 1)[0] ?? undefined,
+                const description = renderDescription({
+                    image: content('meta[property="og:image"]').attr('content')?.split('?', 1)[0],
                     description: content('.article-main-box, article[itemprop="articleBody"]').html() ?? undefined,
                 });
 
-                return item;
-            })
-        )
+                const published = content('meta[property="article:published_time"]').attr('content');
+                return {
+                    author: content('meta[property="article:author"]').attr('content'),
+                    pubDate: published ? parseDate(published) : undefined,
+                    category,
+                    description,
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -62,20 +64,27 @@ const timeDiff = 1000 * 60 * 60 * 24 * 3;
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'all';
     const type = ctx.req.param('type') || 'latest';
+    if (category !== 'all' && category !== 'digest' && !Object.hasOwn(categoryId, category)) {
+        throw new InvalidParameterError(`Unknown Kanxue category: ${category}. See the documented category values.`);
+    }
+    if (type !== 'latest' && type !== 'digest') {
+        throw new InvalidParameterError(`Unknown Kanxue type: ${type}. Use latest or digest.`);
+    }
+
     let path;
     let title;
     if (Object.hasOwn(categoryId, category)) {
         if (type === 'digest') {
-            // type为digest时只获取精华帖
+            // Digest topics in the requested forum.
             path = `forum-${categoryId[category][0]}-1.htm?digest=1`;
             title = `看雪论坛精华主题 - ${categoryId[category][1]}`;
         } else {
-            // type为空/非法/latest时则只获取最新帖
+            // Latest topics in the requested forum.
             path = `forum-${categoryId[category][0]}.html`;
             title = `看雪论坛最新主题 - ${categoryId[category][1]}`;
         }
-    } else if (category === 'digest') {
-        // category未知时则获取全站最新帖
+    } else if (type === 'digest' || category === 'digest') {
+        // Retain the legacy /topic/digest alias.
         path = 'new-digest.htm';
         title = '看雪论坛精华主题';
     } else {
@@ -89,61 +98,57 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('.thread');
+    const list = $('.thread')
+        .toArray()
+        .filter((elem) => {
+            const timeStr = $('.date', elem).eq(0).text();
+            const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
+            return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
+        });
 
-    const resultItem = await Promise.all(
-        list
-            ? list
-                  // fix .thread .top_3
-                  .toArray()
-                  .filter((elem) => {
-                      const timeStr = $('.date', elem).eq(0).text();
-                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
-                      return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
-                  })
-                  .map((elem) => {
-                      const subject = $('.subject a', elem).eq(1);
-                      const timeStr = $('.date', elem).eq(0).text();
-                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
+    const resultItem = await pMap(
+        list,
+        async (elem) => {
+            const subject = $('.subject a', elem).eq(1);
+            const timeStr = $('.date', elem).eq(0).text();
+            const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
 
-                      const link = `${baseUrl}${subject.attr('href')}`;
-                      const key = `kanxue: ${link}`;
+            const link = `${baseUrl}${subject.attr('href')}`;
+            const key = `kanxue:body:${link}`;
 
-                      return cache.tryGet(key, async () => {
-                          const postDetail = await got({
-                              method: 'get',
-                              url: link,
-                          });
-                          const $ = load(postDetail.data);
-                          $('.card')
-                              .eq(0)
-                              .find('.message img')
-                              .each((_, item) => {
-                                  const $item = $(item);
+            const description = await cache.tryGet(key, async () => {
+                const postDetail = await got({
+                    method: 'get',
+                    url: link,
+                });
+                const $ = load(postDetail.data);
+                $('.card')
+                    .eq(0)
+                    .find('.message img')
+                    .each((_, item) => {
+                        const $item = $(item);
 
-                                  const src = $item.attr('src');
-                                  if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
-                                      $item.attr('src', `https://bbs.kanxue.com/${src}`);
-                                  }
-                              });
+                        const src = $item.attr('src');
+                        if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
+                            $item.attr('src', `https://bbs.kanxue.com/${src}`);
+                        }
+                    });
 
-                          const description = $('.card').eq(0).find('.message').html();
-
-                          return {
-                              title: subject.text(),
-                              link,
-                              pubDate,
-                              description,
-                          };
-                      });
-                  })
-            : []
+                return $('.card').eq(0).find('.message').html();
+            });
+            return {
+                title: subject.text(),
+                link,
+                pubDate,
+                description,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title,
         link: baseUrl + path,
         item: resultItem,
-        allowEmpty: true,
     };
 }

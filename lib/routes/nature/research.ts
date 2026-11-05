@@ -13,6 +13,7 @@
 // nmat:             Nature Materials
 // natmachintell:    Nature Machine Intelligence
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -34,8 +35,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['nature.com/:journal/research-articles', 'nature.com/:journal', 'nature.com/'],
-            target: '/research/:journal',
+            source: ['nature.com/:journal/research-articles', 'nature.com/'],
+            target: '/research/:journal?',
         },
     ],
     name: 'Latest Research',
@@ -70,7 +71,7 @@ async function handler(ctx) {
 
     let items = getArticleList(pageCapture);
 
-    items = await Promise.all(items.map((item) => getArticle(item)));
+    items = await pMap(items, getArticle, { concurrency: 3 });
 
     return {
         title: `Nature (${pageTitle}) | Latest Research`,

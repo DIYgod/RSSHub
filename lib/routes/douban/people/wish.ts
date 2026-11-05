@@ -54,10 +54,9 @@ async function handler(ctx) {
             const info = $item.find('.info');
             const title = info.find('ul li.title a').text();
             const url = info.find('ul li.title a').attr('href');
-            const title_ = title.split('/').find((title) => title.trim());
             const day = info.find('ul li .date').text().trim();
             return {
-                title: title_!,
+                title,
                 description: `${info.find('.intro').text()}<br><img src="${itemPicUrl}">`,
                 link: url,
                 pubDate: new Date(day),

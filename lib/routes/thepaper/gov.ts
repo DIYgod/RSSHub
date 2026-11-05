@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -23,7 +25,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { pphId } = ctx.req.param();
-    const pageSize = Number(ctx.req.query('limit') ?? '10');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const pageSize = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
 
     const response = await ofetch('https://api.thepaper.cn/contentapi/cont/pph/gov', {
         method: 'POST',
@@ -36,7 +39,7 @@ async function handler(ctx) {
 
     const list = response.data?.list ?? [];
     const authorName = list[0]?.authorInfo?.sname ?? `政务号 ${pphId}`;
-    const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
+    const items = await pMap(list, (item) => utils.ProcessItem(item, ctx), { concurrency: 3 });
 
     return {
         title: `澎湃新闻政务号 - ${authorName}`,

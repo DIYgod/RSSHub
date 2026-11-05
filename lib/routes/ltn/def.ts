@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -71,16 +72,18 @@ async function handler(ctx: Context) {
 
     const response = await ofetch(`${baseUrl}/ajax/${channel}/1`, { responseType: 'json' });
 
-    const list: DataItem[] = response.map((item) => ({
+    const list: DataItem[] = response.data.items.map((item) => ({
         title: item.title,
         link: item.url,
         pubDate: timezone(parseDate(item.createTime, 'YYYYMMDDHHmmss'), 8),
         image: item.url_b,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet('ltn:article:' + item.link, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
@@ -89,14 +92,12 @@ async function handler(ctx: Context) {
                 content.find('img[data-src]').each((_, img) => {
                     $(img).attr('src', $(img).attr('data-src')!).removeAttr('data-src');
                 });
-                content.find('iframe[src^="https://www.youtube.com/embed/"]').each((_, iframe) => {
-                    $(iframe).attr('referrerpolicy', 'strict-origin-when-cross-origin').removeAttr('allow');
-                });
+                content.find('iframe[src^="https://www.youtube.com/embed/"]').removeAttr('allow');
 
-                item.description = content.html()?.trim();
-                return item;
-            })
-        )
+                return content.html()?.trim();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,10 +1,3 @@
-export interface AnnouncementsConfig {
-    title: string;
-    description: string;
-    url: string;
-    imgUrl: string;
-}
-
 export interface AnnouncementCatalog {
     articles: AnnouncementArticle[];
     catalogId: number;
@@ -17,7 +10,7 @@ export interface AnnouncementCatalog {
     total: number;
 }
 
-export interface AnnouncementArticle {
+interface AnnouncementArticle {
     id: number;
     code: string;
     title: string;

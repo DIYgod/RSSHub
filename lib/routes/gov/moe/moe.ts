@@ -5,14 +5,15 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const moeUrl = 'https://www.moe.gov.cn/';
 const typesIdMap = [
     { type: 'policy_anal', id: 'tt_con2', name: '政策解读' },
     { type: 'newest_file', id: 'nine_con1', name: '最新文件' },
     { type: 'notice', id: 'nine_con2', name: '公告公示' },
-    { type: 'edu_ministry_news', id: 'nine_con3', name: '教育部简报' },
-    { type: 'edu_focus_news', id: 'eight_con2 .pchide>.TRS_Editor', name: '教育要闻' },
+    { type: 'edu_ministry_news', id: 'nine_con3 .swiper-slide:first-child', name: '教育部简报' },
+    { type: 'edu_focus_news', id: 'eight_con3 .pchide>.TRS_Editor', name: '教育要闻' },
 ];
 
 export const route: Route = {
@@ -71,8 +72,9 @@ async function handler(ctx) {
                 const itemUrl = new URL(firstA.attr('href')!, moeUrl).href;
 
                 // some live pages have no content, just return the liva page url
-                const infos = itemUrl.includes('/live/')
+                const infos: Pick<DataItem, 'description' | 'pubDate'> & Partial<Pick<DataItem, 'title'>> = itemUrl.includes('/live/')
                     ? {
+                          title: firstA.text(),
                           description: firstA.html(),
                       }
                     : await cache.tryGet(itemUrl, async () => {
@@ -92,17 +94,21 @@ async function handler(ctx) {
                           } else if (itemUrl.includes('srcsite')) {
                               description = data('div#content_body_xxgk').html();
                           } else if (itemUrl.includes('jyb_')) {
-                              description = data('div.moe-detail-box').html() || data('div#moe-detail-box').html();
+                              const content = data('div.moe-detail-box, div#moe-detail-box').first();
+                              content.find('#moe-detail-page-set, #moeCode, .moe-detail-shuxing').remove();
+                              content.children('h1').remove();
+                              description = content.html();
                           }
 
-                          return { description };
+                          const pubDate = data('meta[name="PubDate"]').attr('content');
+                          return { title: data('meta[name="ArticleTitle"]').attr('content'), description, pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined };
                       });
 
                 return {
-                    title: firstA.text(),
+                    title: infos.title || firstA.text(),
                     description: infos.description,
                     link: itemUrl,
-                    pubDate: parseDate($item.find('span').text(), 'MM-DD'),
+                    pubDate: infos.pubDate,
                 };
             })
         ),

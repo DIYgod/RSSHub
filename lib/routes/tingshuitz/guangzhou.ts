@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/guangzhou',
@@ -28,10 +29,11 @@ async function handler() {
     });
 
     const data = response.data;
-    const items = data.appmsg_list.map(({ title, link, digest }) => ({
+    const items = data.appmsg_list.map(({ title, link, digest, sendtime }) => ({
         title,
         link,
-        description: `${title}<br>${digest}...`,
+        description: digest || undefined,
+        pubDate: sendtime ? parseDate(sendtime, 'X') : undefined,
     }));
 
     return {

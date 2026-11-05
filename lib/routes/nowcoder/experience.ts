@@ -21,12 +21,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['nowcoder.com/'],
-            target: '/experience',
-        },
-    ],
     name: '面经',
     maintainers: ['huyyi'],
     handler,

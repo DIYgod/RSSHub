@@ -110,18 +110,18 @@ async function handler(ctx: Context) {
         49: '圆圈图',
         50: '组织结构',
         51: '树状图',
-        57: '程图',
+        57: '流程图',
     };
 
     const { classId: classIdParam, order = 'PV', sort = 'DESC', search = '', lang = 'CN', price = '1' } = ctx.req.param();
 
-    const classId = classIdParam && classIdParam !== '0' ? `&classId=${classIdParam}` : '';
+    const classId = classIdParam && classIdParam !== '0' ? classIdParam : undefined;
 
-    const currentUrl = search
-        ? `https://masterapi.edrawsoft.cn/api/publish?offset=0&count=30&order=PV&sort=DESC&search=${search}&lang=CN&price=1`
-        : `https://masterapi.edrawsoft.cn/api/publish${classId === '' ? '' : '2'}?offset=0&count=30${classId}&order=${order}&sort=${sort}&lang=${lang}&price=${price}`;
+    const currentUrl = `https://masterapi.edrawsoft.cn/api/publish${!search && classId ? '2' : ''}`;
 
-    const response = await ofetch(currentUrl);
+    const response = await ofetch(currentUrl, {
+        query: search ? { offset: 0, count: 30, order: 'PV', sort: 'DESC', search, lang: 'CN', price: '1' } : { offset: 0, count: 30, classId, order, sort, lang, price },
+    });
 
     const list = response.data.map((item) => ({
         title: item.title,
@@ -132,8 +132,8 @@ async function handler(ctx: Context) {
     }));
 
     return {
-        title: `思维导图社区 - ${search === '' ? (classId === '' ? '全部' : classes[classIdParam]) : search}`,
-        link: currentUrl,
+        title: `思维导图社区 - ${search === '' ? (classId === undefined ? '全部' : classes[classIdParam]) : search}`,
+        link: 'https://mm.edrawsoft.cn/community',
         item: list,
     };
 }

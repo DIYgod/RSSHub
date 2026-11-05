@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -15,35 +16,60 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
-    const { subject_id } = ctx.req.param();
+type SubjectMessage = {
+    Id: string | number;
+    Title: string;
+    Url?: string;
+    ShareUrl2?: string;
+    CreatedAt?: string | number;
+    Summary?: string;
+    PcImage?: string;
+};
 
-    const link = `https://xuangubao.cn/subject/${subject_id}`;
-    const response = await ofetch(`https://api.xuangubao.cn/api/pc/subj/${subject_id}?limit=20`, {
+function parseMessageDate(value?: string | number | null) {
+    if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const timestamp = Number(value);
+    if (!Number.isFinite(timestamp)) {
+        return;
+    }
+    const date = parseDate(timestamp, 'X');
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+async function fetchMessageContent(detailUrl: string, referer: string): Promise<Pick<DataItem, 'description'>> {
+    const detail = await ofetch(detailUrl, { headers: { Referer: referer } });
+    return { description: detail.Content };
+}
+
+async function handler(ctx: Context) {
+    const { subject_id: subjectId } = ctx.req.param();
+
+    const link = `https://xuangubao.cn/subject/${subjectId}`;
+    const response = await ofetch(`https://api.xuangubao.cn/api/pc/subj/${subjectId}?limit=20`, {
         headers: {
             Referer: link,
         },
     });
 
     const subject = response.Subject;
+    const messages: SubjectMessage[] = response.Messages;
 
-    const out = await Promise.all(
-        response.Messages.map((item) =>
-            cache.tryGet(item.Url, async () => {
-                const detail = await ofetch(`https://baoer-api-prod.xuangubao.cn/baoer_backend/api/messages/show/v2/${item.Id}?subjectId=${subject_id}`, {
-                    headers: {
-                        Referer: `https://m.xuangubao.cn/subject/${subject_id}`,
-                    },
-                });
-                return {
-                    title: item.Title,
-                    link: item.Url || item.ShareUrl2,
-                    pubDate: parseDate(item.CreatedAt, 'X'),
-                    description: detail.Content || item.Summary,
-                    image: item.PcImage,
-                };
-            })
-        )
+    const out = await pMap(
+        messages,
+        async (item) => {
+            const detailUrl = `https://baoer-api-prod.xuangubao.cn/baoer_backend/api/messages/show/v2/${item.Id}?subjectId=${subjectId}`;
+            const detail = await cache.tryGet(detailUrl, () => fetchMessageContent(detailUrl, `https://m.xuangubao.cn/subject/${subjectId}`));
+            return {
+                title: item.Title,
+                link: item.Url || item.ShareUrl2,
+                pubDate: parseMessageDate(item.CreatedAt),
+                description: detail.description || item.Summary,
+                image: item.PcImage,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

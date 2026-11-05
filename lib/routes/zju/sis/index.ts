@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -6,7 +7,6 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const base = 'http://www.sis.zju.edu.cn/sischinese/';
-
 /**
  * Map of category types to their corresponding IDs and titles
  * Used to generate URLs and titles for different news categories
@@ -27,7 +27,6 @@ const categoryMap = new Map([
     [12, { id: 'xyll/list.htm', title: '浙江大学外国语学院-校友联络' }],
     [13, { id: '12609/list.htm', title: '浙江大学外国语学院-对外交流' }],
 ]);
-
 /**
  * Fetches and parses news items from a specific category page
  * @param categoryId - The category ID to fetch news from
@@ -38,10 +37,8 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
         method: 'get',
         url: `${base}${categoryId}`,
     });
-
     const $ = load(response.data);
     const newsItems = $('.news_list').find('li');
-
     return newsItems.toArray().map((item) => {
         const element = $(item);
         const href = element.find('a').attr('href');
@@ -50,7 +47,6 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
             // If the title is not found, try to extract it from the link text
             title = element.find('a').text().trim();
         }
-
         return {
             title,
             pubDate: parseDate(element.find('.news_meta').text()),
@@ -58,7 +54,6 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
         };
     });
 }
-
 /**
  * Enriches a news item with detailed content by fetching its full page
  * @param item - The basic news item to enrich
@@ -70,42 +65,30 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
     if (!item.link) {
         return item;
     }
-
-    return await cache.tryGet(item.link, async () => {
-        try {
-            // Some news items may link to pages that require ZJU private network access
-            // or university account authentication. We'll handle these gracefully.
+    try {
+        const details = await cache.tryGet(`zju:sis:details:${item.link}`, async () => {
             const response = await got({
                 method: 'get',
                 url: item.link,
-                headers: {
-                    Referer: refererUrl,
-                },
+                headers: { Referer: refererUrl },
             });
-
             const $ = load(response.data);
-
-            // Extract and set the full article content as description
-            const description = $('.wp_articlecontent').html();
-            item.description = description;
-
-            // Extract and clean the author information
-            let author = $('.arti_metas').find('.arti_publisher').text();
-            // Remove the '发布者：' (Publisher:) prefix and trim whitespace
-            author = author.replace('发布者：', '').trim();
-            if (author) {
-                item.author = author;
+            const article = $('.wp_articlecontent');
+            if (!article.length) {
+                throw new Error('Article content is unavailable; the source may require a campus connection or login.');
             }
-
-            return item;
-        } catch {
-            // If there's an error accessing the page (network issues, authentication required, etc.),
-            // return the item with only the basic information we already have
-            return item;
-        }
-    });
+            const author = $('.arti_metas .arti_publisher').text().replace('发布者：', '').trim();
+            return {
+                description: article.html(),
+                ...(author && { author }),
+            };
+        });
+        return { ...item, ...details };
+    } catch {
+        // Keep the current list entry; failed details must not enter the cache.
+        return item;
+    }
 }
-
 export const route: Route = {
     path: '/sis/:type',
     categories: ['university'],
@@ -127,7 +110,6 @@ export const route: Route = {
     handler: handleSisRequest,
     url: 'www.sis.zju.edu.cn',
 };
-
 /**
  * Main handler function for processing SIS (School of International Studies) news requests
  * @param ctx - The request context containing route parameters
@@ -136,21 +118,16 @@ export const route: Route = {
 async function handleSisRequest(ctx) {
     const requestedType = Number.parseInt(ctx.req.param('type'));
     const categoryInfo = categoryMap.get(requestedType);
-
     // Validate the requested category type
     if (!categoryInfo) {
         const validTypes = categoryMap.keys().toArray().join(', ');
         throw new Error(`Invalid type: ${requestedType}. Valid types are: ${validTypes}`);
     }
-
     const categoryUrl = `${base}${categoryInfo.id}`;
-
     // Fetch news items from all relevant categories
     const allNewsItems = await fetchNewsItemsByCategory(categoryInfo.id);
-
     // Enrich each news item with detailed content
-    const enrichedItems = await Promise.all(allNewsItems.map((item) => enrichNewsItemWithDetails(item, categoryUrl)));
-
+    const enrichedItems = await pMap(allNewsItems, (item) => enrichNewsItemWithDetails(item, categoryUrl), { concurrency: 3 });
     return {
         title: categoryInfo.title,
         link: categoryUrl,

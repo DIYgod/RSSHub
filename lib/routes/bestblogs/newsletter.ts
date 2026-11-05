@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/newsletter',
@@ -21,7 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageSize = Number(ctx.req.query('limit') ?? '10');
+    const pageSize = getRouteLimit(ctx, 10);
 
     const response = await ofetch('https://www.bestblogs.dev/api/proxy/newsletters', {
         method: 'GET',

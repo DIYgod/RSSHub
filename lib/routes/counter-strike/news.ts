@@ -1,4 +1,5 @@
 import bbobHTML from '@bbob/html';
+import { isTagNode } from '@bbob/plugin-helper';
 import presetHTML5 from '@bbob/preset-html5';
 import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
 import { load } from 'cheerio';
@@ -6,6 +7,39 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+const languageCodes = {
+    english: 'en',
+    spanish: 'es',
+    french: 'fr',
+    italian: 'it',
+    german: 'de',
+    greek: 'el',
+    koreana: 'ko',
+    schinese: 'zh-Hans',
+    tchinese: 'zh-Hant',
+    russian: 'ru',
+    thai: 'th',
+    japanese: 'ja',
+    portuguese: 'pt-PT',
+    brazilian: 'pt-BR',
+    polish: 'pl',
+    danish: 'da',
+    dutch: 'nl',
+    finnish: 'fi',
+    norwegian: 'no',
+    swedish: 'sv',
+    czech: 'cs',
+    hungarian: 'hu',
+    romanian: 'ro',
+    bulgarian: 'bg',
+    turkish: 'tr',
+    ukrainian: 'uk',
+    vietnamese: 'vi',
+    latam: 'es-419',
+    arabic: 'ar',
+};
 
 const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
@@ -20,6 +54,17 @@ const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
 
 const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     ...tags,
+    list: (node, helpers, options) =>
+        tags.list(
+            {
+                ...node,
+                content: Array.isArray(node.content)
+                    ? node.content.flatMap((item) => (isTagNode(item) && item.tag === '*' ? [{ ...item, content: [] }, ...(Array.isArray(item.content) ? item.content : [item.content ?? ''])] : [item]))
+                    : node.content,
+            },
+            helpers,
+            options
+        ),
     url: (node) => ({
         tag: 'a',
         attrs: {
@@ -53,7 +98,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
 
 export const handler = async (ctx) => {
     const { category = 'all', language = 'english' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://www.counter-strike.net';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -66,7 +111,7 @@ export const handler = async (ctx) => {
             clan_accountid: 0,
             appid: 730,
             offset: 0,
-            count: limit,
+            count: 100,
             l: language,
         },
     });
@@ -89,7 +134,7 @@ export const handler = async (ctx) => {
                 id: guid,
                 content: {
                     html: description,
-                    text: item.announcement_body.body,
+                    text: load(description).text(),
                 },
                 updated: parseDate(item.announcement_body.updatetime, 'X'),
             };
@@ -107,10 +152,9 @@ export const handler = async (ctx) => {
         description: $('title').text(),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author,
-        language,
+        language: languageCodes[language],
     };
 };
 
@@ -174,14 +218,12 @@ If you subscribe to [Updates in English](https://www.counter-strike.net/news/upd
     },
     radar: [
         {
+            source: ['www.counter-strike.net/news', 'www.counter-strike.net/'],
+            target: '/news/all',
+        },
+        {
             source: ['www.counter-strike.net/news/:category'],
-            target: (params, url) => {
-                const parsedUrl = new URL(url);
-                const category = params.category;
-                const language = parsedUrl.searchParams.get('l');
-
-                return `/news${category ? `/${category}${language ? `/${language}` : ''}` : ''}`;
-            },
+            target: '/news/:category',
         },
     ],
 };

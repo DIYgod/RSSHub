@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
 import type { Data, DataItem, Language, Route } from '@/types';
@@ -21,7 +22,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: "Thailand Parliament Draft of Law's public hearing system",
+    name: 'Draft law public hearings',
     maintainers: ['itpcc'],
     handler,
     description: `| Presented by MP \\*       | Presented by People \\* | Hearing Ongoing      | Hearing ended   | Hearing result reported  | Waiting for PM approval | Assigned into the session | Processed  | PM Rejected   |
@@ -109,8 +110,9 @@ async function handler(ctx) {
         return result;
     }
 
-    const actListFull = await Promise.all(
-        actList.map((item) =>
+    const actListFull = await pMap(
+        actList,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got({
                     url: item.link,
@@ -130,7 +132,8 @@ async function handler(ctx) {
                 const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
                     ...item.category,
-                    ...$('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')
+                    ...$('.container-fluid .bg-status .col-md-8.p-0 h5')
+                        .find('span, a')
                         .toArray()
                         .map((statusElem) => $(statusElem).text()),
                     presenter,
@@ -138,15 +141,21 @@ async function handler(ctx) {
                 ];
 
                 const voteText = $('.row.bg-status .col-md-4.text-right').text().trim();
-                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*\d+(?:\.\d+)?%/.exec(voteText);
+                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*(\d+(?:\.\d+)?)%/.exec(voteText);
+                const voteIcons = $('.row.bg-status .col-md-4.text-right');
+                const voteCount = voteRegex?.[1] ?? voteIcons.find('.fa-user span').text();
+                const upvoteText = voteRegex?.[2] ?? voteIcons.find('.fa-thumbs-up span').text();
+                const downvoteText = voteRegex?.[3] ?? voteIcons.find('.fa-thumbs-down span').text();
 
-                if (voteRegex) {
-                    const voteTotal = Number.parseInt(voteRegex[0]);
-                    const upvotePercent = Number(voteRegex[1]);
-                    const downvotePercent = Number(voteRegex[2]);
+                if (voteCount && upvoteText && downvoteText) {
+                    const voteTotal = Number.parseInt(voteCount);
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- Preserve numeric-prefix parsing of source percentage text.
+                    const upvotePercent = Number.parseFloat(upvoteText);
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- Preserve numeric-prefix parsing of source percentage text.
+                    const downvotePercent = Number.parseFloat(downvoteText);
 
-                    item.upvotes = Math.trunc((upvotePercent / 100) * voteTotal);
-                    item.downvotes = Math.trunc((downvotePercent / 100) * voteTotal);
+                    item.upvotes = Math.round((upvotePercent / 100) * voteTotal);
+                    item.downvotes = Math.round((downvotePercent / 100) * voteTotal);
                 }
 
                 const dateText = $('.banner-detail .banner-detail-caption .blockquote p:last-child').text();
@@ -179,8 +188,8 @@ async function handler(ctx) {
                 // Every property of a list item defined above is reused here
                 // and we add a new property 'description'
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     if (!actListFull.length) {

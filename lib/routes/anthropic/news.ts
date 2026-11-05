@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news',
@@ -25,15 +26,16 @@ async function handler(ctx) {
     const link = 'https://www.anthropic.com/news';
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
-    const list: DataItem[] = $('[class^="PublicationList-module-scss-module__"][class$="__list"] a')
+    const list: DataItem[] = $('[data-listing-row]')
         .toArray()
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('[class*="__title"]').text().trim();
-            const href = $el.attr('href') ?? '';
+            const $link = $el.find('a[class$="_title-link"]');
+            const title = $link.text().trim();
+            const href = $link.attr('href') ?? '';
             const pubDate = $el.find('time').text().trim();
             const link = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
@@ -52,7 +54,7 @@ async function handler(ctx) {
 
                 const content = $('#main-content');
 
-                $('[class$="__header"], [class$="__socialShare"], [class*="__carousel-controls"], [class^="LandingPageSection-module-scss-module__"]').remove();
+                $('[class$="_Header"], [class$="_ConstellationPanelSlot"]').remove();
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);

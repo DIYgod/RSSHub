@@ -12,7 +12,13 @@ export const route: Route = {
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TELEGRAM_TOKEN',
+                optional: false,
+                description: 'Telegram Bot API token',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

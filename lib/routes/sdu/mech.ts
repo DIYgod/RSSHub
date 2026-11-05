@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -48,30 +49,30 @@ async function handler(ctx) {
             };
         });
 
-    item = await Promise.all(
-        item
-            .filter((e) => e.link!.startsWith('../info') || e.link!.startsWith('https://www.rd.sdu.edu.cn/'))
-            .map((item) => {
-                const isFromMech = item.link!.startsWith('../info');
-                if (isFromMech) {
-                    item.link = new URL(item.link!.slice(3), host).href;
-                }
-                return cache.tryGet(item.link!, async () => {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
+    item = await pMap(
+        item.filter((e) => e.link!.startsWith('../info') || e.link!.startsWith('https://www.rd.sdu.edu.cn/')),
+        (item) => {
+            const isFromMech = item.link!.startsWith('../info');
+            if (isFromMech) {
+                item.link = new URL(item.link!.slice(3), host).href;
+            }
+            return cache.tryGet(item.link!, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
 
-                    const info = $('#show_info').text().split(/\s{4}/);
-                    const date = info[0].split('：', 2)[1];
+                const info = $('#show_info').text().split(/\s{4}/);
+                const date = info[0].split('：', 2)[1];
 
-                    item.title = $('#show_title').text().trim();
-                    item.author = info[1].replace('作者：', '') || '山东大学机械工程学院';
-                    $('#show_title, #show_info').remove();
-                    item.description = $('form[name=_newscontent_fromname] div').html();
-                    item.pubDate = timezone(parseDate(date), 8);
+                item.title = $('#show_title').text().trim();
+                item.author = info[1].replace('作者：', '') || '山东大学机械工程学院';
+                $('#show_title, #show_info').remove();
+                item.description = $('form[name=_newscontent_fromname] div').html();
+                item.pubDate = timezone(parseDate(date), 8);
 
-                    return item;
-                });
-            })
+                return item;
+            });
+        },
+        { concurrency: 3 }
     );
 
     return {

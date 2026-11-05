@@ -1,5 +1,6 @@
 import { config } from '@/config';
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -27,7 +28,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { caty: category, img } = ctx.req.param();
 
     const categories = await cache.tryGet('pornhub:categories', async () => {
@@ -35,8 +36,12 @@ async function handler(ctx) {
         return data.categories;
     });
 
-    const categoryId = Number.isNaN(category) ? categories.find((item) => item.category === category)?.id : category;
-    const categoryName = Number.isNaN(category) ? category : categories.find((item) => item.id === Number.parseInt(category)).category;
+    const matchedCategory = categories.find((item) => item.category === category || String(item.id) === category);
+    if (!matchedCategory) {
+        throw new InvalidParameterError('Unknown Pornhub category. Use a category name or ID from the categories endpoint.');
+    }
+    const categoryId = matchedCategory.id;
+    const categoryName = matchedCategory.category;
 
     const response = await cache.tryGet(
         `pornhub:category:${categoryName}`,
@@ -65,6 +70,7 @@ async function handler(ctx) {
     return {
         title: `Pornhub - ${categoryName}`,
         link: `${defaultDomain}/video?c=${categoryId}`,
+        language: 'en',
         item: list,
     };
 }

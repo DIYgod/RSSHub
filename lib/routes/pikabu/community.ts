@@ -24,16 +24,19 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const { name, sort = 'new' } = ctx.req.param();
+    const { name } = ctx.req.param();
     const type = getSubPath(ctx).split('/', 2)[1];
-    const sortString = sort === 'default' || type === 'tag' ? '' : `/${sort}`;
-    const { data: response } = await got(`${baseUrl}/ajax/${type}/${name}${sortString}`);
+    const { data: response } = await got(`${baseUrl}/ajax/${type}/${name}`);
 
-    const items = response.data.stories.map((story) => {
+    const items = response.data.stories.flatMap((story) => {
         const $ = load(story.html, null, false);
-        const data = JSON.parse($('script[type="application/ld+json"]').text());
-
         const content = $('.story__main');
+        const title = content.find('.story__title a');
+        const link = title.attr('href');
+        if (!link) {
+            return [];
+        }
+        const date = content.find('time').attr('datetime');
 
         fixImage(content);
         content.find('.player').each((_, elem) => {
@@ -41,11 +44,16 @@ export async function handler(ctx) {
             fixVideo($elem);
         });
         return {
-            title: data.name,
+            title: title.text(),
             description: content.find('.story__content-inner').html(),
-            pubDate: parseDate(data.dateCreated),
-            author: data.author.name,
-            link: data.url,
+            pubDate: date ? parseDate(date) : undefined,
+            author: $('article').attr('data-author-name'),
+            category: content
+                .find('.tags__tag[data-tag]')
+                .toArray()
+                .map((tag) => $(tag).attr('data-tag'))
+                .filter((tag): tag is string => Boolean(tag)),
+            link: new URL(link, baseUrl).href,
         };
     });
 

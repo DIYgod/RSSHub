@@ -37,7 +37,7 @@ async function handler(ctx): Promise<Data> {
 
     return {
         title: `Tag: ${name} - chikubi.jp`,
-        link: `${baseUrl}/category/${keyword}`,
+        link: `${baseUrl}/tag/${keyword}`,
         item: items,
     };
 }

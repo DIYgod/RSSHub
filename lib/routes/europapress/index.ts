@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:category?',
@@ -13,10 +14,6 @@ export const route: Route = {
     example: '/europapress',
     parameters: {
         category: 'Category, see below, Home by default',
-        limit: {
-            description: 'Number of articles, 10 by default',
-            default: '10',
-        },
     },
     name: 'Category',
     maintainers: ['nczitzk'],
@@ -58,7 +55,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 10;
+    const limit = getRouteLimit(ctx, 10);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit ?? 10, 10);
 
     const rootUrl = 'https://www.europapress.es';
     const currentUrl = `${rootUrl}${category ? `/${category}` : ''}`;
@@ -70,7 +68,7 @@ async function handler(ctx: Context) {
     const list = $('.articulo-titulo, .c-item__title, .home-articulo-titulo')
         .find('a')
         .toArray()
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .map((item) => {
             const $item = $(item);
 

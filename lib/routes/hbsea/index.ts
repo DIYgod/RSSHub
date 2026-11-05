@@ -1,20 +1,21 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/:id',
     categories: ['government'],
     example: '/hbsea/19',
-    parameters: { id: '栏目 id，见下表' },
+    parameters: { id: '栏目 id，见下表，也支持官网路径中的文件名（如 19.html）' },
     radar: [
         {
-            source: ['www.hbsea.org.cn/portal/list/index/id/:id.html'],
+            source: ['www.hbsea.org.cn/portal/list/index/id/:id'],
             target: '/:id',
         },
     ],
@@ -32,7 +33,10 @@ export const route: Route = {
 const rootUrl = 'http://www.hbsea.org.cn';
 
 async function handler(ctx: Context) {
-    const { id } = ctx.req.param();
+    const id = (ctx.req.param('id') ?? '').replace(/\.html$/, '');
+    if (!/^0*[1-9]\d*$/.test(id)) {
+        throw new InvalidParameterError('Invalid channel id: expected a positive integer or its .html filename.');
+    }
 
     const currentUrl = `${rootUrl}/portal/list/index/id/${id}.html`;
     const response = await ofetch(currentUrl);
@@ -41,24 +45,29 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.find('.text i').text();
             return {
                 title: $item.find('b').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.find('.text i').text(), 'YYYY-MM-DD'), 8),
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.text-content').html();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss'), 8);
+                const date = content('meta[name="PubDate"]').attr('content');
+                if (date) {
+                    item.pubDate = parseDateInTimezone(date, 8);
+                }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

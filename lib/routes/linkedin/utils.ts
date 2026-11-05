@@ -103,22 +103,6 @@ function parseJobSearch(data) {
     return jobs;
 }
 
-/**
- * Parse job detail page
- * Example page: https://www.linkedin.com/jobs/view/software-engineer-backend-junior-at-genies-3429649821?trk=public_jobs_topcard-title
- *
- * @param {String} data HTML string of job detail page
- * @returns Job details
- */
-function parseJobDetail(data) {
-    const $ = load(data);
-
-    return {
-        recruiter: $('a.message-the-recruiter__cta').attr('href'),
-        description: $('div.description__text description__text--rich').text(),
-    };
-}
-
 const parseRouteParam = (searchParam: string | null): string => {
     if (!searchParam) {
         return 'all';
@@ -192,18 +176,4 @@ function parseRelativeShorthandDate(shorthand) {
     return dayjs().subtract(Number.parseInt(amount), unitMap[unit]);
 }
 
-export {
-    BASE_URL,
-    EXP_LEVELS,
-    EXP_LEVELS_QUERY_KEY,
-    JOB_TYPES,
-    JOB_TYPES_QUERY_KEY,
-    KEYWORDS_QUERY_KEY,
-    parseCompanyName,
-    parseCompanyPosts,
-    parseJobDetail,
-    parseJobSearch,
-    parseParamsToSearchParams,
-    parseParamsToString,
-    parseRouteParam,
-};
+export { BASE_URL, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseCompanyName, parseCompanyPosts, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam };

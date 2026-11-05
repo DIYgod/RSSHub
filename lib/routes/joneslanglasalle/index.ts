@@ -1,9 +1,11 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const searchApiUrl = 'https://www.jll.com/api/search/template';
 const subscriptionKey = '8f6a4de5b0144673acaa89b03aac035e';
@@ -55,9 +57,12 @@ const localeMap = new Map<string, LocaleConfig>([
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '12');
+    const limit = getRouteLimit(ctx, 12);
 
-    const locale = localeMap.get(lang) || defaultLocale;
+    const locale = localeMap.get(lang);
+    if (!locale) {
+        throw new InvalidParameterError('Language must be zh, en, zh-hk, or en-hk.');
+    }
 
     // Reason: site rebuilt with search API; old HTML scraping no longer works.
     // Using the public search API (Elasticsearch-backed) with subscription key from page JS.
@@ -99,7 +104,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         title: locale.title,
         link: locale.insightsUrl,
         item: items,
-        allowEmpty: true,
         language: locale.apiLang as Language,
     };
 };
@@ -113,7 +117,7 @@ export const route: Route = {
     example: '/joneslanglasalle/en/trends-and-insights',
     parameters: {
         language: 'Language, `zh` for China Mainland Chinese, `en` for China Mainland English, `zh-hk` for Hong Kong Chinese, `en-hk` for Hong Kong English, `zh` by default',
-        category: 'Category, `trends-and-insights` by default',
+        category: 'Legacy compatibility segment. The current insights API selects content by language; this segment does not filter a category.',
     },
     description: `::: tip
 If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com.cn/en-cn/insights), use \`en\` as the language. For [Hong Kong Insights](https://www.jll.com/zh-hk/insights), use \`zh-hk\` as the language.
@@ -136,15 +140,6 @@ If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['joneslanglasalle.com.cn/:language/:category'],
-            target: (params) => {
-                const language = params.language;
-                const category = params.category;
-
-                return language ? `/${language}${category ? `/${category}` : ''}` : '';
-            },
-        },
         {
             title: 'Latest',
             source: ['joneslanglasalle.com.cn/en-cn/insights'],
@@ -175,7 +170,7 @@ If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com
         example: '/joneslanglasalle/zh/trends-and-insights',
         parameters: {
             language: '语言，`zh` 为中国大陆中文，`en` 为中国大陆英文，`zh-hk` 为香港中文，`en-hk` 为香港英文，默认为 `zh`',
-            category: '分类，默认为 `trends-and-insights`',
+            category: '兼容旧链接的可选路径段。当前洞察 API 按语言选择内容，此路径段不筛选分类。',
         },
         description: `::: tip
 若订阅 [中国大陆洞察](https://www.joneslanglasalle.com.cn/zh-cn/insights)，语言参数为 \`zh\`。若订阅 [香港洞察](https://www.jll.com/zh-hk/insights)，语言参数为 \`zh-hk\`。

@@ -3,11 +3,14 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
-    categories: ['game'],
+    categories: ['anime'],
     example: '/dorohedoro/news',
     parameters: {},
     features: {
@@ -30,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const rootUrl = 'https://dorohedoro.net';
     const apiUrl = `${rootUrl}/news/news.xml`;
@@ -53,18 +56,20 @@ async function handler(ctx) {
 
             const link = $item.find('permalink').text();
             const isNews = /news_\d+_\d+\.html/.test(link);
+            const articleLink = new URL(link, isNews ? currentUrl : rootUrl).href;
 
             return {
                 title: $item.find('title').text(),
-                pubDate: parseDate($item.find('date').text()),
-                link: `${rootUrl}${isNews ? `/news/${link}` : ''}`,
+                pubDate: timezone(parseDate($item.find('date').text(), 'YYYY.MM.DD'), 9),
+                link: articleLink,
+                guid: isNews ? articleLink : md5(JSON.stringify([$item.find('title').text(), $item.find('date').text(), link])),
                 isNews,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.guid!, async () => {
                 if (item.isNews) {
                     try {
                         const detailResponse = await got({

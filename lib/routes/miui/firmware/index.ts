@@ -40,6 +40,9 @@ async function handler(ctx) {
     });
 
     const responseData = response.data;
+    if (!responseData?.LatestFullRom?.version) {
+        throw new Error(`No firmware information was returned for ${device} (${type}, ${region}). Check the device codename and whether this firmware channel is still supported.`);
+    }
 
     return {
         title: `MIUI 更新 - ${device} - ${type === 'release' ? '稳定版' : '开发版'}`,

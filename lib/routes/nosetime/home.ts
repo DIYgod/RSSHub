@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/home',
@@ -28,8 +27,8 @@ async function handler() {
         item: response.items.map((item) => ({
             title: `${'★★★★★☆☆☆☆☆'.slice(5 - item.uwscore, 10 - item.uwscore)} ${item.ifullname}`,
             description: item.udcontent,
-            pubDate: parseDate(item.uface * 1000),
             link: `https://www.nosetime.com/xiangshui/${item.iid}-${item.iurl}.html`,
+            guid: `nosetime:review:${item.udid}`,
             author: item.uname,
         })),
     };

@@ -62,11 +62,12 @@ async function handler(ctx) {
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
-    const name = await cache.getUsernameFromUID(uid);
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',
@@ -174,7 +175,7 @@ async function handler(ctx) {
 
             // emoji
             let data_content = getDes(data);
-            if (item.display && item.display.emoji_info && showEmoji) {
+            if (showEmoji && item.display?.emoji_info?.emoji_details) {
                 const emoji = item.display.emoji_info.emoji_details;
                 for (const item of emoji) {
                     data_content = data_content.replaceAll(

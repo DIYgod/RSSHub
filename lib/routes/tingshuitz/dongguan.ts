@@ -39,10 +39,10 @@ async function handler() {
         description: $('title').text() || '停水通知 - 东莞市东江水务有限公司',
         item: list.toArray().map((item) => {
             const $item = $(item);
+            const publishedDate = $($item.contents()[1]).text().slice(1, -1);
             return {
                 title: $item.find('a').text(),
-                description: `东莞市停水通知：${$item.find('a').text()}`,
-                pubDate: parseDate($($item.contents()[1]).text().slice(1, -1)),
+                pubDate: publishedDate.trim() ? parseDate(publishedDate) : undefined,
                 link: $item.find('a').attr('href'),
             };
         }),

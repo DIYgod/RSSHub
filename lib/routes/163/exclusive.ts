@@ -145,7 +145,7 @@ async function handler(ctx) {
                     if (item.videoId) {
                         const detailResponse = await got({
                             method: 'get',
-                            url: `${rootUrl}/touch/video/detail/jsonp/VIA8K0PTB.html?callback=videoList`,
+                            url: `${rootUrl}/touch/video/detail/jsonp/${item.videoId}.html?callback=videoList`,
                         });
 
                         const video = JSON.parse(detailResponse.data.match(/^videoList\((.*)\)$/)[1])?.mp4_url;

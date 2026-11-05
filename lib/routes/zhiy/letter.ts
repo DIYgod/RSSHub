@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchUserDate } from './utils';
 
@@ -30,21 +31,21 @@ export const route: Route = {
 async function handler(ctx) {
     const author = ctx.req.param('author');
 
-    const userData = await fetchUserDate(author);
-    const { author_id: authorId, author_name: authorName, author_signature: authorSignature, author_avatar_url: authorAvatarUrl } = userData;
+    const { author_id: authorId, author_name: authorName, author_signature: authorSignature, author_avatar_url: authorAvatarUrl } = await fetchUserDate(author);
 
     const {
         data: { result: letters },
     } = await got(`${baseUrl}/api/app/users/${authorId}/letters`, {
         searchParams: {
             page: 1,
-            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
+            limit: getRouteLimit(ctx, 100),
         },
     });
 
     const items = letters.map((item) => ({
         title: item.title,
         description: item.shortcut,
+        author: authorName,
         pubDate: parseDate(item.send_time, 'X'),
         link: `${baseUrl}/letter/${item.id}`,
     }));

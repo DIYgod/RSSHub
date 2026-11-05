@@ -35,6 +35,10 @@ export const route: Route = {
         {
             source: ['developers.googleblog.com'],
         },
+        {
+            source: ['developers.googleblog.com/:locale/search'],
+            target: '/developers/:locale',
+        },
     ],
 };
 
@@ -49,6 +53,8 @@ async function handler(ctx: Context) {
         .map((element) => {
             const dateCategory = $(element).find('.search-result__eyebrow').text();
             const [date, category] = dateCategory.split(' / ', 2);
+            const calendar = date?.replace(/^(\d{4})(?:年|년\s*)(\d{1,2})(?:月|월\s*)(\d{1,2})(?:日|일)$/, '$1-$2-$3');
+            const publicationDate = calendar ? parseDate(`${calendar} UTC`) : undefined;
             const titleElement = $(element).find('.search-result__title a');
             const title = titleElement.text();
             const link = titleElement.attr('href');
@@ -57,7 +63,7 @@ async function handler(ctx: Context) {
             return {
                 title,
                 link: `${baseUrl}${link}`,
-                pubDate: parseDate(date),
+                pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
                 description: summary,
                 author: 'Google',
                 category: [category],

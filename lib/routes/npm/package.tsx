@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
@@ -61,6 +62,7 @@ async function handler(ctx) {
                 ),
                 link: `https://www.npmjs.com/package/${name}`,
                 guid: `https://www.npmjs.com/package/${name}${packageVersion.modified}`,
+                pubDate: packageVersion.modified ? parseDate(packageVersion.modified) : undefined,
             },
         ],
     };

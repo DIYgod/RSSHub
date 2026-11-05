@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Language } from '@/types';
 import cache from '@/utils/cache';
@@ -31,7 +32,7 @@ const renderDescription = (content, cover, enclousure) =>
  * @returns {Promise<Object>} - A Promise that resolves to an object containing the retrieved information.
  */
 const getData = (url) =>
-    cache.tryGet(url, async () => {
+    cache.tryGet(`xinpianchang:page:v1:${url}`, async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
@@ -53,7 +54,6 @@ const getData = (url) =>
                 author,
                 itunes_author: author,
                 itunes_category: 'TV &amp Film',
-                allowEmpty: true,
             },
             response,
         };
@@ -65,7 +65,7 @@ const getData = (url) =>
  * @param {Array<Object>} items - The array of items to process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
-const processItems = async (items) => {
+const processItems = async (items: any[]) => {
     items = items.map((item) => ({
         title: item.title,
         link: item.web_url,
@@ -76,38 +76,44 @@ const processItems = async (items) => {
         pubDate: parseDate(item.publish_time * 1000),
         itunes_item_image: item.cover,
         itunes_duration: item.duration,
-        enclosure_url: item.video_library_id,
+        videoLibraryId: item.video_library_id,
         upvotes: item.count.count_liked ?? item.count.count_like,
         comments: item.count.count_comment ?? 0,
     }));
 
-    return await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                const apiUrl = new URL(`mod/api/v2/media/${item.enclosure_url}?appKey=${appKey}`, rootApiUrl).href;
+    return await pMap(
+        items,
+        async ({ videoLibraryId, ...item }) => {
+            const data = await cache.tryGet(`xinpianchang:media:v2:${item.guid}`, async () => {
+                const apiUrl = new URL(`mod/api/v2/media/${videoLibraryId}?appKey=${appKey}`, rootApiUrl).href;
 
                 const { data: detailResponse } = await got(apiUrl);
-                const data = detailResponse.data;
-
-                const enclousure = data.resource?.progressive ? data.resource.progressive[0] : undefined;
-
-                item.title = data.title ?? item.title;
-                item.description = renderDescription(item.description, data.cover ?? item.itunes_item_image, enclousure);
-                item.author = data.owner.username ?? item.author;
-
-                item.category = [...new Set([...item.category, ...(data.categories ?? []), ...(data.keywords ?? [])])];
-                item.itunes_item_image = data.cover ?? item.itunes_item_image;
-                item.itunes_duration = data.duration ?? item.itunes_duration;
-
-                if (enclousure) {
-                    item.enclosure_url = enclousure.url ?? enclousure.backupUrl;
-                    item.enclosure_length = enclousure.filesize;
-                    item.enclosure_type = enclousure.mime;
+                const detailData = detailResponse?.data;
+                if (!detailData || typeof detailData !== 'object' || Array.isArray(detailData)) {
+                    throw new Error(`Unable to obtain video details from ${apiUrl}`);
                 }
+                return detailData;
+            });
 
-                return item;
-            })
-        )
+            const enclousure = data.resource?.progressive ? data.resource.progressive[0] : undefined;
+
+            item.title = data.title ?? item.title;
+            item.description = renderDescription(item.description, data.cover ?? item.itunes_item_image, enclousure);
+            item.author = data.owner?.username ?? item.author;
+
+            item.category = [...new Set([...item.category, ...(data.categories ?? []), ...(data.keywords ?? [])])];
+            item.itunes_item_image = data.cover ?? item.itunes_item_image;
+            item.itunes_duration = data.duration ?? item.itunes_duration;
+
+            if (enclousure) {
+                item.enclosure_url = enclousure.url ?? enclousure.backupUrl;
+                item.enclosure_length = enclousure.filesize;
+                item.enclosure_type = enclousure.mime;
+            }
+
+            return item;
+        },
+        { concurrency: 3, stopOnError: false }
     );
 };
 

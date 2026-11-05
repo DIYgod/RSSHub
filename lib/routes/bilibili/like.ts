@@ -53,7 +53,8 @@ async function handler(ctx) {
         item: data.list.map((item) => ({
             title: item.title,
             description: utils.renderUGCDescription(embed, item.pic, item.desc, item.aid, undefined, item.bvid),
-            pubDate: parseDate(item.pubdate * 1000),
+            // Liked movies and other bangumi episodes come back with pubdate 0
+            pubDate: item.pubdate ? parseDate(item.pubdate * 1000) : undefined,
             link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
             author: item.owner.name,
         })),

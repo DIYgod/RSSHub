@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -56,26 +57,34 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const dateText = $item.find('span').text();
             return {
                 link: $item.attr('href'),
-                title: '',
+                // The list shows a shortened title followed by the date in a <span>
+                title: $item.contents().not('span').text().trim(),
+                pubDate: dateText ? timezone(parseDate(dateText), 8) : undefined,
             };
         });
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(detailResponse.data);
-                item.title = content('td[id="artTitMob"]').text();
-                item.description = content('div[id="c"]').html();
-                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), 8);
-                item.author = content('.mobile_time.shareFromz').text();
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        (item) =>
+            // Some entries link to other sites, such as scio.gov.cn, whose pages use a different layout
+            new URL(item.link!).hostname === new URL(rootUrl).hostname
+                ? cache.tryGet(item.link!, async () => {
+                      const detailResponse = await got({
+                          method: 'get',
+                          url: item.link,
+                      });
+                      const content = load(detailResponse.data);
+                      item.title = content('td[id="artTitMob"]').text();
+                      item.description = content('div[id="c"]').html();
+                      const dateText = content('.mobile_time.shareWarpTime').text().trim();
+                      item.pubDate = dateText ? timezone(parseDate(dateText), 8) : item.pubDate;
+                      item.author = content('.mobile_time.shareFromz').text();
+                      return item;
+                  })
+                : item,
+        { concurrency: 3 }
     );
     return {
         title: Object.hasOwn(categories, category) ? categories[category] : '其他',

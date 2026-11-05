@@ -1,18 +1,14 @@
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 
-import { fetchNewsItems, fetchTag } from './utils';
+import { fetchArchive } from './utils';
 
 export const handler = async (ctx): Promise<Data> => {
     const slug = ctx.req.param('slug');
 
-    const { id, name } = await fetchTag(slug);
+    const { name, items } = await fetchArchive(slug, 'tags');
 
     const rootUrl = 'https://www.iplaysoft.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&tags=${id}`;
-
-    const items: DataItem[] = await fetchNewsItems(postApiUrl);
-
     return {
         title: `${name} - 异次元软件世界`,
         description: '软件改变生活',

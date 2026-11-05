@@ -10,9 +10,9 @@ import { findOrphanFiles } from './check-orphan-files';
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const orphanTests = await findOrphanFiles();
-if (orphanTests.length) {
-    throw new Error(`Test files without a corresponding source file:\n${orphanTests.join('\n')}`);
+const orphanFiles = await findOrphanFiles();
+if (orphanFiles.length) {
+    throw new Error(`Orphan files found it:\n${orphanFiles.join('\n')}`);
 }
 
 // Check if building for Worker environment
@@ -37,30 +37,13 @@ const radar: {
 // Generate route paths type
 const allRoutePaths = new Set<string>();
 
-// Use all namespaces for both regular and Worker builds
-const namespacesToProcess = namespaces;
-
-for (const namespace in namespacesToProcess) {
-    const namespaceData = namespacesToProcess[namespace];
-    let defaultCategory = namespaceData.categories?.[0];
-    if (!defaultCategory) {
-        for (const path in namespaceData.routes) {
-            if (!namespaceData.routes[path].categories) {
-                continue;
-            }
-
-            defaultCategory = namespaceData.routes[path].categories[0];
-            break;
-        }
-    }
-    if (!defaultCategory) {
-        defaultCategory = 'other';
-    }
+// Use all namespaces for both regular and Worker builds.
+for (const namespace in namespaces) {
+    const namespaceData = namespaces[namespace];
     for (const path in namespaceData.routes) {
         const realPath = `/${namespace}${path}`;
         allRoutePaths.add(realPath);
         const data = namespaceData.routes[path];
-        const categories = data.categories || namespaceData.categories || [defaultCategory];
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
@@ -71,25 +54,26 @@ for (const namespace in namespacesToProcess) {
                 const parsedDomain = parse(new URL('https://' + radarItem.source[0]).hostname);
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
-                if (domain) {
-                    if (!Object.hasOwn(radar, domain)) {
-                        radar[domain] = {
-                            _name: namespaceData.name,
-                        };
-                    }
-                    if (!Object.hasOwn(radar[domain], subdomain)) {
-                        radar[domain][subdomain] = [];
-                    }
-                    radar[domain][subdomain].push({
-                        title: radarItem.title || data.name,
-                        docs: `https://docs.rsshub.app/routes/${categories[0]}`,
-                        source: radarItem.source.map((source) => {
-                            const sourceURL = new URL('https://' + source);
-                            return sourceURL.pathname + sourceURL.search + sourceURL.hash;
-                        }),
-                        target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
-                    });
+                if (!domain) {
+                    continue;
                 }
+                if (!Object.hasOwn(radar, domain)) {
+                    radar[domain] = {
+                        _name: namespaceData.name,
+                    };
+                }
+                if (!Object.hasOwn(radar[domain], subdomain)) {
+                    radar[domain][subdomain] = [];
+                }
+                radar[domain][subdomain].push({
+                    title: radarItem.title || data.name,
+                    docs: `https://docs.rsshub.app/routes/${namespace}`,
+                    source: radarItem.source.map((source) => {
+                        const sourceURL = new URL('https://' + source);
+                        return sourceURL.pathname + sourceURL.search + sourceURL.hash;
+                    }),
+                    target: typeof radarItem.target === 'string' && radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
+                });
             }
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
@@ -114,10 +98,10 @@ ${uniquePaths.map((path) => `  | \`${path}\``).join('\n')};
 const buildDir = path.join(__dirname, '../../assets/build');
 fs.mkdirSync(buildDir, { recursive: true });
 
-// For Worker build, only output routes-worker.js with filtered namespaces
+// For Worker build, output the complete registry to routes-worker.js.
 // For regular build, output all files
 if (isWorkerBuild) {
-    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespacesToProcess, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
 } else {
     fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
     fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);

@@ -2,6 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getWafTokenId, ProcessItem, rootUrl } from './utils';
 
@@ -73,15 +74,17 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: currentUrl,
-        headers: {
-            Cookie: `_waftokenid=${wafTokenId}`,
-        },
+        headers: wafTokenId
+            ? {
+                  Cookie: `_waftokenid=${wafTokenId}`,
+              }
+            : undefined,
     });
 
     const data = getProperty(JSON.parse(response.data.match(/window.initialState=(\{.*\})/)[1]), categories[category].key);
 
     let items = data
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .filter((item) => item.itemType !== 0)
         .map((item) => {
             item = item.templateMaterial ?? item;

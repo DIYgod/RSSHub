@@ -32,8 +32,12 @@ async function handler() {
         gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const response = await page.content();
-    await destroy();
+    let response: string;
+    try {
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
 

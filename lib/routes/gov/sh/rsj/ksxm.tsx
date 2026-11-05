@@ -1,22 +1,31 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
-import iconv from 'iconv-lite';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-const rootUrl = 'http://www.rsj.sh.gov.cn';
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
-const renderDescription = ({ name, type, date, registrationDeadline }) =>
+const rootUrl = 'https://rsj.sh.gov.cn';
+
+const renderDescription = (fields: Array<{ name: string; value: string }>) =>
     renderToString(
         <>
-            <text>考试项目名称：{name} </text>
-            <br />
-            <text>考试类别：{type} </text>
-            <br />
-            <text>考试日期：{date} </text>
-            <br />
-            <text>报名起止日期：{registrationDeadline} </text>
+            {fields.map(({ name, value }) => (
+                <p key={name}>
+                    {name}：{value}
+                </p>
+            ))}
         </>
     );
 
@@ -36,6 +45,11 @@ export const route: Route = {
     radar: [
         {
             source: ['rsj.sh.gov.cn/'],
+            target: '/rsj/ksxm',
+        },
+        {
+            source: ['rsj.sh.gov.cn/tksxm_17825/index.html'],
+            target: '/rsj/ksxm',
         },
     ],
     name: '职业能力考试院 考试项目',
@@ -45,29 +59,32 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = `${rootUrl}/ksyzc/wangz/kwaplist_300.jsp`;
-
-    const response = await got({
-        method: 'get',
-        url,
-        responseType: 'buffer',
-    });
-    const dataHtml = iconv.decode(response.data, 'gbk');
-    const $ = load(dataHtml);
-
-    const items = $('kwap')
+    const url = `${rootUrl}/tksxm_17825/index.html`;
+    const { data } = await got(url);
+    const $ = load(data);
+    const headers = $('.table-exam thead th')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('kaosxmmc').text(),
-            link: 'http://www.rsj.sh.gov.cn/ksyzc/index801.jsp',
-            description: renderDescription({
-                name: $(item).find('kaosxmmc').text(),
-                type: $(item).find('kaoslb_dmfy').text(),
-                date: $(item).find('kaosrq').text(),
-                registrationDeadline: $(item).find('baomksrq_A300').text(),
-            }),
-            guid: `${$(item).find('kaosrq').text()}${$(item).find('kaosxmmc').text()}`,
-        }));
+        .map((cell) => $(cell).text());
+    const items = $('.table-exam tbody tr')
+        .toArray()
+        .map((row) => {
+            const cells = $(row).children('td');
+            const title = cells.eq(1).find('a');
+            const published = copyElements(cells.eq(3)).children().remove().end().text().trim();
+            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD', true), 8) : undefined;
+            return {
+                title: title.attr('title') || title.text(),
+                link: new URL(title.attr('href')!, url).href,
+                description: renderDescription(
+                    cells
+                        .toArray()
+                        .map((cell, index) => ({ name: headers[index], value: $(cell).text().replaceAll(/\s+/g, ' ').trim(), index }))
+                        .filter(({ index, value }) => index >= 2 && index !== 3 && value)
+                ),
+                category: [cells.eq(0).text()],
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            };
+        });
 
     return {
         title: '上海市职业能力考试院 - 考试项目',

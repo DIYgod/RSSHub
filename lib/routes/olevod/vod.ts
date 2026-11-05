@@ -30,7 +30,7 @@ async function handler(ctx) {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const title = $('.title.scookie').text().trim();
+    const title = $('.title.scookie').text();
     const image = $('.vodlist_thumb.lazyload').attr('data-original');
     const items = $('.content_playlist.clearfix a')
         .toArray()

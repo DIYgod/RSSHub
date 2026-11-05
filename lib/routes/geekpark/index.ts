@@ -1,15 +1,18 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { column } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://geekpark.net';
     const apiRootUrl = 'https://mainssl.geekpark.net';
@@ -18,7 +21,7 @@ export const handler = async (ctx) => {
 
     const { data: response } = await got(apiUrl);
 
-    let items = (response.homepage_posts ?? response.column.posts).slice(0, limit).map((item) => {
+    let items: Array<DataItem & { link: string }> = (response.homepage_posts ?? response.column.posts).slice(0, limit).map((item) => {
         item = item.post ?? item;
 
         const title = item.title;
@@ -54,9 +57,10 @@ export const handler = async (ctx) => {
         };
     });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(`${item.link}#html-content`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const data = detailResponse.post;
@@ -87,15 +91,14 @@ export const handler = async (ctx) => {
                 item.id = guid;
                 item.content = {
                     html: description,
-                    text: data.content,
                 };
                 item.image = image;
                 item.banner = image;
                 item.updated = parseDate(data.updated_at);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const data = {
@@ -103,7 +106,6 @@ export const handler = async (ctx) => {
         description: '',
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image: '',
         author: '',
     };
@@ -113,14 +115,21 @@ export const handler = async (ctx) => {
         data.description = response.column.description;
         data.image = response.column.banner_url;
     } else {
-        const { data: currentResponse } = await got(currentUrl);
+        try {
+            const { data: currentResponse } = await got(currentUrl);
 
-        const $ = load(currentResponse);
+            const $ = load(currentResponse);
 
-        data.title = $('title').text();
-        data.description = $('meta[property="og:description"]').prop('content');
-        data.image = `https:${$('meta[name="og:image"]').prop('content')}`;
-        data.author = $('meta[property="og:site_name"]').prop('content');
+            data.title = $('title').text();
+            data.description = $('meta[property="og:description"]').prop('content');
+            data.image = `https:${$('meta[name="og:image"]').prop('content')}`;
+            data.author = $('meta[property="og:site_name"]').prop('content');
+        } catch (error) {
+            if (!(error instanceof FetchError) || error.statusCode !== 403) {
+                throw error;
+            }
+            data.title = '极客公园';
+        }
     }
 
     return data;
@@ -165,12 +174,8 @@ export const route: Route = {
             target: '/',
         },
         {
-            source: ['geekpark.net/column/:column?'],
-            target: (params) => {
-                const column = params.column;
-
-                return column ? `/${column}` : '';
-            },
+            source: ['geekpark.net/column/:column'],
+            target: '/:column',
         },
         {
             title: '综合报道',

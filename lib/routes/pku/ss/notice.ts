@@ -1,8 +1,10 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 
-import { baseUrl, getArticle, getSingleRecord } from './common';
+import { getArticle, getSingleRecord } from './common';
 
-const host = `${baseUrl}/newscenter/notice/`;
+const host = 'https://ss.pku.edu.cn/xwzx/tzgg/index.htm';
 
 export const route: Route = {
     path: '/ss/notice',
@@ -19,18 +21,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ss.pku.edu.cn/index.php/newscenter/notice', 'ss.pku.edu.cn/'],
+            source: ['ss.pku.edu.cn/xwzx/tzgg/index.htm', 'ss.pku.edu.cn/'],
         },
     ],
     name: '软件与微电子学院 - 通知公告',
     maintainers: ['legr4ndk'],
     handler,
-    url: 'ss.pku.edu.cn/index.php/newscenter/notice',
+    url: 'ss.pku.edu.cn/xwzx/tzgg/index.htm',
 };
 
 async function handler() {
     const items = await getSingleRecord(host);
-    const out = await Promise.all(items.map((item) => getArticle(item)));
+    const out = await pMap(items, getArticle, { concurrency: 3 });
 
     return {
         title: '北大软微-通知公告',

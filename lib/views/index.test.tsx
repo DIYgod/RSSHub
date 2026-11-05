@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 describe('Index view', () => {
-    const renderIndex = async (debugInfo: string | undefined, debugQuery: string | undefined) => {
+    const renderIndex = async (debugInfo: string | undefined) => {
         const debugData = {
             hitCache: 2,
             request: 10,
@@ -56,11 +56,11 @@ describe('Index view', () => {
 
         const { default: Index } = await import('@/views/index');
 
-        return renderToString(<Index debugQuery={debugQuery} />);
+        return renderToString(<Index debugQuery="secret" />);
     };
 
     it('shows debug info when enabled', async () => {
-        const html = await renderIndex('secret', 'secret');
+        const html = await renderIndex('secret');
 
         expect(html).toContain('Debug Info');
         expect(html).toContain('TestNode');
@@ -70,7 +70,7 @@ describe('Index view', () => {
     });
 
     it('hides debug info when disabled', async () => {
-        const html = await renderIndex('false', 'secret');
+        const html = await renderIndex('false');
 
         expect(html).not.toContain('Debug Info');
     });

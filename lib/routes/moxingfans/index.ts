@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,35 +33,34 @@ async function handler() {
     });
     const $ = load(response);
 
-    const out = await Promise.all(
-        $('article')
-            .toArray()
-            .map((item) => {
-                const $a = $(item).find('header > h2 > a');
-                const href = $a.attr('href');
-                if (!href) {
-                    return;
-                }
-                const link = new URL(href, baseUrl).href;
-                const title = $a.text();
+    const list = $('article')
+        .toArray()
+        .map((item) => {
+            const $a = $(item).find('header > h2 > a');
+            const href = $a.attr('href');
+            if (!href) {
+                return;
+            }
+            return { link: new URL(href, baseUrl).href, title: $a.text() };
+        })
+        .filter((item) => item !== undefined);
 
-                return cache.tryGet(link, async () => {
-                    const detailResponse = await ofetch(link, {
-                        headers: {
-                            cookie,
-                        },
-                    });
-                    const $$ = load(detailResponse);
-
-                    return {
-                        title,
-                        description: $$('article.article-content').html(),
-                        link,
-                        pubDate: timezone(parseDate($$('time').text()), 8),
-                    };
-                });
-            })
-            .filter((v) => v !== undefined)
+    const out = await pMap(
+        list,
+        async ({ link, title }) => {
+            const details = await cache.tryGet(link, async () => {
+                const detailResponse = await ofetch(link, { headers: { cookie } });
+                const $$ = load(detailResponse);
+                return {
+                    title,
+                    description: $$('article.article-content').html(),
+                    link,
+                    pubDate: timezone(parseDate($$('time').text()), 8),
+                };
+            });
+            return { ...details, title, link };
+        },
+        { concurrency: 3 }
     );
 
     return {

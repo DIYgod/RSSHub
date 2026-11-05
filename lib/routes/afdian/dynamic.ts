@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -12,15 +13,17 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const url_slug = ctx.req.param('uid').replace('@', '');
+    const urlSlug = ctx.req.param('uid')?.replace('@', '');
+    if (!urlSlug) {
+        throw new InvalidParameterError('A creator ID is required. Find it in the creator page URL, for example /afdian/dynamic/@afdian.');
+    }
     const baseUrl = 'https://afdian.com';
     const userInfoRes = await got(`${baseUrl}/api/user/get-profile-by-slug`, {
         searchParams: {
-            url_slug,
+            url_slug: urlSlug,
         },
     });
-    const userInfo = userInfoRes.data.data.user;
-    const { user_id, name, avatar } = userInfo;
+    const { user_id, name, avatar } = userInfoRes.data.data.user;
 
     const dynamicRes = await got(`${baseUrl}/api/post/get-list`, {
         searchParams: {
@@ -41,7 +44,7 @@ async function handler(ctx) {
         title: `${name}的爱发电动态`,
         description: `${name}的爱发电动态`,
         image: avatar,
-        link: `${baseUrl}/@${url_slug}`,
+        link: `${baseUrl}/@${urlSlug}`,
         item: list,
     };
 }

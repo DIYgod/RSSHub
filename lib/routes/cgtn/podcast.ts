@@ -1,3 +1,4 @@
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -14,6 +15,16 @@ function combDate(date, time) {
     return timezone(parseDate(date + ' ' + time), 8);
 }
 
+function getTitleSlug(title: string): string {
+    return (
+        title
+            .replaceAll(' ', '-')
+            .replaceAll(/[^a-z0-9-]+/gi, '')
+            .replaceAll(/-{2,}/g, '-')
+            .replaceAll(/^-|-$/g, '') || 'radio-cgtn'
+    );
+}
+
 export const route: Route = {
     path: '/podcast/:category/:id',
     categories: ['traditional-media'],
@@ -24,29 +35,36 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['cgtn.com/podcast/column/:category/*/:id'],
+            source: ['radio.cgtn.com/podcast/column/:category/*/:id'],
         },
     ],
     name: '播客',
     maintainers: ['5upernova-heng'],
     handler,
     description: `> 类型名与播客 id 可以在播客对应的 URL 中找到
-> 如 URL \`https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4\` ，其 \`category\` 为 \`ezfm\` ，\`id\` 为 \`4\`，对应的订阅路由为 [\`/podcast/ezfm/4\`](https://rsshub.app/podcast/ezfm/4)`,
+> 如 URL \`https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4\` ，其 \`category\` 为 \`ezfm\` ，\`id\` 为 \`4\`，对应的订阅路由为 [\`/cgtn/podcast/ezfm/4\`](https://rsshub.app/cgtn/podcast/ezfm/4)`,
 };
 
 async function handler(ctx) {
     const { category, id } = ctx.req.param();
     const categoryMap = { ezfm: 1, other: 5 };
+    if (!Object.hasOwn(categoryMap, category)) {
+        throw new NotFoundError('Invalid category. Supported categories: ezfm, other.');
+    }
+    if (!/^[1-9]\d*$/.test(id)) {
+        throw new NotFoundError('Invalid podcast id. Use a positive numeric program id from the podcast column URL.');
+    }
     const data = await getData(categoryMap[category], id);
     const items = data.data.map((item) => ({
         title: item.title,
+        link: `https://radio.cgtn.com/podcast/news/${categoryMap[category]}/${getTitleSlug(item.title)}/${item.programId}`,
         pubDate: combDate(item.showDate, item.time.split(' ', 1)[0]),
-        description: item.programSeries.content || item.detail,
+        description: item.programSeries?.content || item.detail,
         itunes_item_image: item.programUrl,
         itunes_duration: item.duration,
         enclosure_url: item.mediaUrl,
@@ -54,7 +72,7 @@ async function handler(ctx) {
     }));
     return {
         title: `中国环球电视网 CGTN Podcast - ${data.info}`,
-        link: 'https://www.cgtn.com/radio/',
+        link: `https://radio.cgtn.com/podcast/column/${category}/${getTitleSlug(data.data[0]?.programTitle ?? id)}/${id}`,
         item: items,
         description: String(data.info),
     };

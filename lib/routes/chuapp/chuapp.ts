@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -91,7 +92,7 @@ async function handler(ctx: Context): Promise<Data | null> {
             link: $(element).attr('href'),
         }));
 
-    const processedItems: Array<Promise<DataItem>> = articles
+    const candidates = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
         .map((article: ValidArticle) => {
             if (article.link.startsWith('/')) {
@@ -102,8 +103,10 @@ async function handler(ctx: Context): Promise<Data | null> {
                 title: article.title,
                 link: `/${article.link}`,
             };
-        })
-        .map((article: ValidArticle) => {
+        });
+    const items = await pMap(
+        candidates,
+        (article: ValidArticle) => {
             const fullArticleUrl = `${baseUrl}${article.link}`;
             return cache.tryGet(fullArticleUrl, async () => {
                 const res = await ofetch(fullArticleUrl);
@@ -119,9 +122,9 @@ async function handler(ctx: Context): Promise<Data | null> {
 
                 return item;
             });
-        });
-
-    const items = await Promise.all(processedItems);
+        },
+        { concurrency: 5 }
+    );
 
     return {
         title: `触乐 - ${subpath.title}`,

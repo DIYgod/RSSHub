@@ -74,14 +74,14 @@ async function handler(ctx) {
             : {
                   Accept: 'application/vnd.github.v3+json',
               };
-    const limit = ctx.req.query('limit');
+    const limit = Math.max(100, Number.parseInt(ctx.req.query('limit') ?? '') || 100);
     const response = await ofetch(url, {
         query: {
             state,
             labels,
             sort: 'created',
             direction: 'desc',
-            per_page: limit ? Number.parseInt(limit) : 100,
+            per_page: limit,
         },
         headers,
     });

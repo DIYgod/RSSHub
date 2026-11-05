@@ -27,7 +27,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'HKEPC 电脑领域',
+    name: '电脑领域',
     maintainers: ['TonyRL'],
     handler,
     url: 'hkepc.com/',
@@ -56,8 +56,8 @@ async function handler(ctx) {
         }));
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => {
+            const details = await cache.tryGet(`hkepc:article:${item.link}`, async () => {
                 const { data: response } = await got(item.link, {
                     headers: {
                         Referer: baseUrl,
@@ -114,17 +114,20 @@ async function handler(ctx) {
                     .toArray()
                     .map((e) => $(e).text().trim());
                 item.description = content.html();
-                item.pubDate = timezone(parseDate($('.publishDate').text()), 8);
+                const sourceDate = $('.publishDate').text();
+                const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
+                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined;
                 item.guid = item.link.slice(0, item.link.lastIndexOf('/'));
 
-                return item;
-            })
-        )
+                return { author: item.author, category: item.category, description: item.description, pubDate: item.pubDate, guid: item.guid };
+            });
+            return { ...item, ...details };
+        })
     );
 
     return {
         title: `電腦領域 HKEPC${categoryMap[category].feedSuffix}`,
-        link: `https://www.hkepc.com/${category}`,
+        link: categoryMap[category].url,
         description: '電腦領域 HKEPC Hardware - 全港 No.1 PC網站',
         language: 'zh-HK' as const,
         item: items,

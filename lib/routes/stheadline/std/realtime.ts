@@ -1,6 +1,8 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -28,7 +30,7 @@ async function handler(ctx) {
     const { data: response } = await got(url);
     const $ = load(response);
 
-    let items = $('.news-block .news-detail > a')
+    let items: Array<DataItem & { link: string }> = $('.news-block .news-detail > a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -38,21 +40,28 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`stheadline:article:v6:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
+                const published = $('meta[property="article:published_time"]').attr('content');
+                const modified = $('meta[property="article:modified_time"]').attr('content');
+                const author = getArticleByline($) || $('meta[name="dable:author"]').attr('content');
+
                 return {
-                    ...item,
-                    description: $('.content-body').html(),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
-                    category: $("meta[name='keyword']").attr('content')!.split(','),
-                    guid: item.link.slice(0, item.link.lastIndexOf('/')),
+                    description: getArticleContent($, response),
+                    author,
+                    pubDate: published ? parseDate(published) : undefined,
+                    updated: modified ? parseDate(modified) : undefined,
+                    category: $("meta[name='keyword']").attr('content')?.split(','),
                 };
-            })
-        )
+            });
+            return { ...item, ...detail, guid: item.link.slice(0, item.link.lastIndexOf('/')) };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -63,4 +72,56 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
+}
+
+interface GalleryImage {
+    src: string;
+    srcset?: string;
+    alt_text?: string;
+    caption?: string;
+}
+
+function getArticleContent($: CheerioAPI, response: string) {
+    const content = $('.content-body');
+    const galleryData = response.match(/const article_galleries\s*=\s*(\{[^\n]+\});/);
+    const galleries: Record<string, GalleryImage[]> = galleryData ? JSON.parse(galleryData[1]) : {};
+    for (const [key, images] of Object.entries(galleries)) {
+        const figure = $('<figure>');
+        for (const image of images) {
+            const imageFigure = $('<figure>').append(
+                $('<img>')
+                    .attr('src', image.src)
+                    .attr('alt', image.alt_text ?? '')
+            );
+            if (image.srcset) {
+                imageFigure.find('img').attr('srcset', image.srcset);
+            }
+            if (image.caption) {
+                imageFigure.append($('<figcaption>').text(image.caption));
+            }
+            figure.append(imageFigure);
+        }
+        content.find(key).replaceWith(figure);
+    }
+    const article = $('.main-column > article');
+    const media = article.children('figure').add(article.children('[id^="videoplayer"]').find('video'));
+    return (
+        media
+            .toArray()
+            .map((element) => $.html(element))
+            .join('') + (content.html() ?? '')
+    );
+}
+
+function getArticleByline($: CheerioAPI) {
+    const credits: string[] = [];
+    for (const paragraph of $('.content-body p').toArray().toReversed()) {
+        const text = $(paragraph).text().trim();
+        if (!/^(?:記者(?:[/／]攝影)?[：:\s]|攝影[：:\s]|本報記者$)/.test(text) || $(paragraph).find('a, img, video').length) {
+            break;
+        }
+        credits.unshift(text);
+        $(paragraph).remove();
+    }
+    return credits.join('；');
 }

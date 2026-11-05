@@ -1,9 +1,12 @@
+import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -109,6 +112,35 @@ async function handler(ctx) {
     const link = `https://www.malaysiakini.com/rss/${lang}/${category}.rss`;
     const feed = await parser.parseURL(link);
 
+    if (!cookie) {
+        const items = await pMap(
+            feed.items,
+            async (item): Promise<DataItem> => {
+                const link = item.link;
+                if (!link || !item.title) {
+                    throw new Error('Malaysiakini RSS did not provide an article title or link.');
+                }
+                const details = await cache.tryGet(`malaysiakini:public-article:v1:${link}`, () => getPublicArticleDetails(link));
+                return {
+                    title: item.title,
+                    link,
+                    description: details.description,
+                    author: details.author ?? item.creator,
+                    category: item.categories,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                };
+            },
+            { concurrency: 3 }
+        );
+        return {
+            title: feed.title!,
+            link: feed.link,
+            description: feed.description,
+            language: lang,
+            item: items,
+        };
+    }
+
     if (cookie) {
         // Testing the cookie with the first item of the feed
         try {
@@ -173,5 +205,31 @@ async function handler(ctx) {
         description: feed.description,
         language: lang,
         item: items as DataItem[],
+    };
+}
+
+async function getPublicArticleDetails(link: string) {
+    const { data } = await got(link);
+    const $ = load(data);
+    const teaser = $('.article-paywall').first();
+    const content = teaser.length ? teaser : $('article.article-content .details').first();
+    content.find('script, style, .advertisement, .ad-center').remove();
+    const body = content.html();
+    if (!body || !content.text().trim()) {
+        throw new Error(`Cannot find the public article content on ${link}.`);
+    }
+    const image = $('#main-article-image img').first().attr('src');
+    const article = $('script[type="application/ld+json"]')
+        .toArray()
+        .flatMap((script) => JSON.parse($(script).text()))
+        .find((data) => data['@type'] === 'NewsArticle');
+    const authors = Array.isArray(article?.author) ? article.author : [article?.author];
+    const author = authors
+        .map((author) => (typeof author === 'string' ? author : author?.name))
+        .filter(Boolean)
+        .join(', ');
+    return {
+        description: `${image ? `<img src="${new URL(image, link).href}">` : ''}${body}`,
+        author: author || undefined,
     };
 }

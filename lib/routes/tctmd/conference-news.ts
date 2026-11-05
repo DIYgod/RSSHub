@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -51,7 +52,7 @@ async function handler() {
             }
 
             return {
-                title: $link.text().trim(),
+                title: $link.text(),
                 link: href.startsWith('http') ? href : `${rootUrl}${href}`,
                 pubDate: $el.find('time.datetime').attr('datetime') ? parseDate($el.find('time.datetime').attr('datetime')!) : undefined,
                 author: $el.find('.author__container--name').text().trim(),
@@ -60,41 +61,25 @@ async function handler() {
         })
         .filter((item) => item !== null);
 
-    const fullItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    const fullItems = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`tctmd:detail-fields:v1:${item.link}`, async (): Promise<Partial<DataItem>> => {
+                const detailResponse = await got({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-
                 const articleBody = content('.field--name-field-body-content').html() || '';
                 const introText = content('.field--name-field-intro-text').text().trim();
-
-                if (articleBody) {
-                    item.description = (introText ? `<p><strong>${introText}</strong></p>` : '') + articleBody;
-                } else if (introText) {
-                    item.description = introText;
-                }
-
-                if (!item.pubDate) {
-                    const detailTime = content('time').first().attr('datetime');
-                    if (detailTime) {
-                        item.pubDate = parseDate(detailTime);
-                    }
-                }
-
-                if (!item.author) {
-                    const detailAuthor = content('.node-meta__text a').first().text().trim();
-                    if (detailAuthor) {
-                        item.author = detailAuthor;
-                    }
-                }
-
-                return item;
-            })
-        )
+                const date = content('time').first().attr('datetime');
+                const author = content('.node-meta__text a').first().text().trim();
+                return {
+                    description: articleBody ? (introText ? `<p><strong>${introText}</strong></p>` : '') + articleBody : introText || undefined,
+                    pubDate: date ? parseDate(date) : undefined,
+                    author: author || undefined,
+                };
+            });
+            return { ...detail, ...item, description: detail.description, pubDate: item.pubDate ?? detail.pubDate, author: item.author || detail.author };
+        },
+        { concurrency: 3 }
     );
 
     return {

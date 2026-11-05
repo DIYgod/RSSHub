@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +31,7 @@ async function handler(ctx) {
     const programUrl = `https://i.qingting.fm/capi/channel/${ctx.req.param('id')}/programs/${response.data.v}?curpage=1&order=asc`;
     response = await ofetch(programUrl);
 
-    const items = response.data.programs.map((item) => ({
+    const items: Array<DataItem & { link: string }> = response.data.programs.map((item) => ({
         title: item.title,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}/programs/${item.id}/`,
         pubDate: timezone(parseDate(item.update_time), 8),
@@ -38,15 +40,16 @@ async function handler(ctx) {
     return {
         title: `${title} - 蜻蜓FM`,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}`,
-        item: await Promise.all(
-            items.map((item) =>
+        item: await pMap(
+            items,
+            (item) =>
                 cache.tryGet(item.link, async () => {
-                    response = await ofetch(item.link);
+                    response = await ofetch(item.link, { allowH2: false });
                     const data = JSON.parse(response.match(/\},"program":(.*?),"plist":/)[1]);
                     item.description = data.richtext;
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         ),
     };
 }

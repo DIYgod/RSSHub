@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const renderDetail = (jobs) =>
     renderToString(
@@ -57,7 +58,7 @@ const descpPage = (link, cache) =>
 
         return {
             title: `${intro.dwmc}（${intro.xzyjmc}）`,
-            pubDate: parseDate(String(intro.fbrq)),
+            pubDate: intro.fbrq ? timezone(parseDate(intro.fbrq, 'YYYY-MM-DD'), 8) : undefined,
             description: renderDesc(intro),
             link: String(link.replace('data', 'view')),
         };

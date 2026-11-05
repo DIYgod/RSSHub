@@ -53,7 +53,6 @@ async function handler(ctx) {
     }));
 
     return {
-        allowEmpty: true,
         title: `${user}'s starred repositories`,
         link: host,
         description: `${user}'s starred repositories`,

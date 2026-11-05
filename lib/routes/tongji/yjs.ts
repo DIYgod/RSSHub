@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/yjs',
@@ -29,12 +31,11 @@ export const route: Route = {
     url: 'yz.tongji.edu.cn/zsxw/ggtz.htm',
 };
 
-async function getNoticeContent(item) {
-    const response = await got(item.link);
+async function getNoticeContent(link: string) {
+    const response = await got(link);
     const $ = load(response.data);
     const content = $('#vsb_content').html();
-    item.description = content;
-    return item;
+    return { description: content };
 }
 
 async function handler() {
@@ -46,14 +47,14 @@ async function handler() {
         .find('li')
         .toArray()
         .map((item) => {
-            const title = $(item).find('a').attr('title');
+            const title = $(item).find('a').attr('title')!;
             const linkRaw = $(item).find('a').attr('href');
             const link = linkRaw!.startsWith('http') ? linkRaw : new URL(linkRaw!, `${baseUrl}/zsxw`).href;
             const pubDate = $(item).find('span').text();
-            return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
+            return { title, link, pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) };
         });
 
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getNoticeContent(item))));
+    const itemsWithContent = await pMap(items, async (item) => ({ ...item, ...(await cache.tryGet(`tongji:yjs:article:${item.link}`, () => getNoticeContent(item.link!))) }), { concurrency: 3 });
 
     return {
         title: '同济大学研究生招生网',

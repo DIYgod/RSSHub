@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -15,29 +16,29 @@ export const route: Route = {
 
 async function handler() {
     const url = 'https://jtn.com/CN/majorbook.aspx?Lan=CN&PageUrl=majorbook&MenuID=06001';
-    const oriUrl = 'https://jtn.com/CN/';
     const res = await ofetch(url);
     const $ = load(res);
     const list = $('.col-sm-9 .news_list').toArray();
 
-    const out = await Promise.all(
-        list.map((item) => {
+    const out = await pMap(
+        list,
+        async (item) => {
             const $item = $(item);
-            const title = $item.find('a').html() ?? '';
+            const title = $item.find('a').text();
             const subUrl = $item.find('a').attr('href');
-            const itemUrl = oriUrl + subUrl;
+            const itemUrl = new URL(subUrl!, url).href;
 
-            return cache.tryGet(itemUrl, async () => {
-                const response = await ofetch(itemUrl);
-                const $d = load(response);
-
-                return {
-                    title,
-                    link: itemUrl,
-                    description: $d('.col-sm-9 .news_page_content').html(),
-                };
-            });
-        })
+            return {
+                title,
+                link: itemUrl,
+                description: await cache.tryGet(`jtn:article:${itemUrl}`, async () => {
+                    const response = await ofetch(itemUrl);
+                    const $d = load(response);
+                    return $d('.col-sm-9 .news_page_content').html();
+                }),
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

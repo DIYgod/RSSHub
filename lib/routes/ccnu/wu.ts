@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/wu',
@@ -19,34 +20,34 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['uowji.ccnu.edu.cn/xwzx/tzgg.htm', 'uowji.ccnu.edu.cn/'],
+            source: ['uowji.ccnu.edu.cn/index/tzgg.htm', 'uowji.ccnu.edu.cn/'],
         },
     ],
-    name: '伍论贡学院',
+    name: '伍伦贡联合研究院',
     maintainers: ['shengmaosu'],
     handler,
-    url: 'uowji.ccnu.edu.cn/xwzx/tzgg.htm',
+    url: 'uowji.ccnu.edu.cn/index/tzgg.htm',
 };
 
 async function handler() {
-    const link = 'http://uowji.ccnu.edu.cn/tzgg.htm';
+    const link = 'https://uowji.ccnu.edu.cn/index/tzgg.htm';
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('.zy-mainxrx li');
+    const list = $('.txtList li');
 
     return {
-        title: '华中师范大学伍论贡学院',
+        title: '华中师范大学伍伦贡联合研究院',
         link,
-        description: '华中师范大学伍论贡学院通知公告',
+        description: '华中师范大学伍伦贡联合研究院通知公告',
         item:
             list &&
             list.toArray().map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
                 return {
-                    title: a.text(),
+                    title: a.attr('title')!,
                     link: new URL(a.attr('href')!, link).href,
-                    pubDate: parseDate($item.find('small').text(), 'YYYY-MM-DD'),
+                    pubDate: timezone(parseDate($item.find('.time').text().replaceAll(/\s/g, ''), 'DDYYYY.MM'), 8),
                 };
             }),
     };

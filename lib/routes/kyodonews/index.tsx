@@ -1,15 +1,16 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
-const resolveRelativeLink = (link, baseUrl) => (link.startsWith('http') ? link : `${baseUrl}${link}`);
+const resolveRelativeLink = (link: string | undefined, baseUrl: string) => (link ? new URL(link, baseUrl).href : undefined);
 
 export const route: Route = {
     path: '/:language?/:keyword?',
@@ -57,52 +58,51 @@ async function handler(ctx) {
     try {
         response = await got(currentUrl);
     } catch (error) {
-        const err = error as { response?: { statusCode: number } };
-        throw err.response && err.response.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
+        throw error instanceof FetchError && error.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
     }
 
     const $ = load(response.data, { xmlMode: keyword === 'rss' });
 
-    let title, description, image, items;
+    let title, description, image;
+    let list: Array<{ link: string }>;
     image = `https://${language}-kyodo.ismcdn.jp/common/images/apple-touch-icon-180x180.png`;
 
     if (keyword === 'rss') {
         title = $('channel > title').text();
         description = $('channel > description').text();
-        items = $('item')
+        list = $('item')
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const $item = $(item);
                 const link = $item.find('link').text();
-                // const pubDate = $item.find('pubDate').text();
-                return {
-                    link,
-                    // pubDate,  // no need to normalize because it's from a valid RSS feed
-                };
+                return link ? { link: new URL(link, currentUrl).href } : [];
             });
     } else {
         title = $('head > title').text();
         description = $('meta[name="description"]').attr('content');
         image = resolveRelativeLink($('head > link[rel="apple-touch-icon"]').attr('href'), rootUrl) || image;
-        items = $('.m-article-wrap:first-of-type .m-article-item__link')
+        list = $('.m-article-wrap:first-of-type .m-article-item__link')
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const $item = $(item);
                 const link = $item.attr('href');
-                return {
-                    link: resolveRelativeLink(link, rootUrl),
-                };
+                const resolvedLink = resolveRelativeLink(link, rootUrl);
+                return resolvedLink ? { link: resolvedLink } : [];
             });
     }
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(`kyodonews:article:v2:${item.link}`, async () => {
                 const detailResponse = await got(item.link);
 
                 const $ = load(detailResponse.data);
-                item.title = $('head > title').text();
-                item.author = $('meta[name="author"]').attr('content');
+                const article: DataItem = {
+                    title: $('head > title').text(),
+                    link: item.link,
+                    author: $('meta[name="author"]').attr('content'),
+                };
 
                 // add main pic
                 const mainPicArea = $('.article-header-img');
@@ -114,7 +114,7 @@ async function handler(ctx) {
                 articleBody = articleBody ? articleBody.trim().replace(/（完）(?=<\/p>\s*$)/m, '') : '';
 
                 // render description
-                item.description = renderToString(
+                article.description = renderToString(
                     <>
                         {mainPic ? raw(mainPic) : null}
                         {articleBody ? raw(articleBody) : null}
@@ -122,21 +122,27 @@ async function handler(ctx) {
                 );
 
                 const ldJson = JSON.parse($('script[type="application/ld+json"]').text() || '[]').find((obj) => obj['@type'] === 'NewsArticle');
+                const authors = Array.isArray(ldJson?.author) ? ldJson.author : [ldJson?.author];
+                article.author ||=
+                    authors
+                        .map((author) => (typeof author === 'string' ? author : author?.name))
+                        .filter(Boolean)
+                        .join(', ') || undefined;
                 const pubDateMatch = ldJson && ldJson.datePublished;
                 const updatedMatch = ldJson && ldJson.dateModified;
                 if (pubDateMatch) {
-                    item.pubDate = timezone(parseDate(pubDateMatch), 9);
+                    article.pubDate = parseDateInTimezone(pubDateMatch, 9);
                 }
                 if (updatedMatch) {
-                    item.updated = timezone(parseDate(updatedMatch), 9);
+                    article.updated = parseDateInTimezone(updatedMatch, 9);
                 }
 
-                item.category = $('.article-header-cate__link')
+                article.category = $('.article-header-cate__link')
                     .toArray()
                     .map((a) => $(a).text());
-                return item;
-            })
-        )
+                return article;
+            }),
+        { concurrency: 3 }
     );
 
     return {

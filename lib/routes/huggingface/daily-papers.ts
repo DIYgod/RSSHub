@@ -4,6 +4,14 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+function getPublicationDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 export const route: Route = {
     path: '/daily-papers/:cycle?/:voteFliter?',
     categories: ['programming'],
@@ -66,7 +74,11 @@ async function handler(ctx) {
 
     const { body: response } = await got(url);
     const $ = load(response);
-    const papers = $('div[data-target="DailyPapers"]').data('props') as PapersData;
+    const props = $('div[data-target="DailyPapers"]').attr('data-props');
+    if (!props) {
+        throw new Error(`Daily papers data not found on ${url}`);
+    }
+    const papers: PapersData = JSON.parse(props);
 
     const items = papers.dailyPapers
         .filter((item) => item.paper.upvotes >= voteFliter)
@@ -74,14 +86,13 @@ async function handler(ctx) {
             title: item.title,
             link: `https://arxiv.org/abs/${item.paper.id}`,
             description: item.paper.summary.replaceAll('\n', ' '),
-            pubDate: parseDate(item.publishedAt),
+            pubDate: getPublicationDate(item.publishedAt),
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
         }))
         .toSorted((a, b) => b.upvotes - a.upvotes);
 
     return {
-        allowEmpty: true,
         title: 'Huggingface Daily Papers',
         link: 'https://huggingface.co/papers',
         item: items,

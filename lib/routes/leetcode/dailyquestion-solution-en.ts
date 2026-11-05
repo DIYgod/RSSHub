@@ -1,11 +1,9 @@
-import path from 'node:path';
-
 import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const md = MarkdownIt({
     html: true,
@@ -37,7 +35,7 @@ async function handler() {
         Easy: '🟢',
         Hard: '🔴',
     };
-    // 获取每日一题
+    // Fetch the daily challenge.
     const data = (
         await got({
             method: 'post',
@@ -64,7 +62,7 @@ async function handler() {
     const questionTitle = data.activeDailyCodingChallengeQuestion.question.titleSlug;
     const questionUrl = `${baseurl}/problems/${questionTitle}/`;
 
-    // 获取题目内容
+    // Fetch the question content.
     const question = (
         await got({
             method: 'post',
@@ -97,7 +95,7 @@ async function handler() {
         })
     ).data.data.question;
     const diffEmoji = emoji[question.difficulty] || '';
-    // 获取题解（en网站仅一个题解)
+    // Fetch the official English solution.
     const article = (
         await got({
             method: 'post',
@@ -140,7 +138,7 @@ async function handler() {
         article.content = 'Sorry, the solution of this question may be locked.';
     }
 
-    // 图片处理
+    // Expand image slides.
     const parsePngSlide = async (s) => {
         const pattern = /!\?!(.+)!\?!/;
         if (!pattern.test(s)) {
@@ -148,8 +146,8 @@ async function handler() {
         }
         const matched = s.match(new RegExp(pattern, 'g'));
         const fn = async (m) => {
-            const relaurl = m.match(pattern)[1].split(':', 1)[0];
-            const fullurl = path.resolve('/' + questionUrl + 'solution/', relaurl).slice(1);
+            const relaurl = m.match(pattern)[1].split(/:(?!\/\/)/, 1)[0];
+            const fullurl = new URL(relaurl, `${questionUrl}solution/`).href;
             const pngList = (
                 await got({
                     url: fullurl,
@@ -157,7 +155,7 @@ async function handler() {
                     headers,
                 })
             ).data.timeline;
-            return pngList.map((v) => `![pic](${path.resolve(`/problems/${questionTitle}/solution/`, v.image)})`).join('\n');
+            return pngList.map((v) => `![pic](${new URL(v.image, `${questionUrl}solution/`).href})`).join('\n');
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
         for (let i = 0; i < matched.length; i++) {
@@ -165,7 +163,7 @@ async function handler() {
         }
         return s;
     };
-    // iframe代码框处理
+    // Expand embedded playground code.
     const parseIframe = async (s) => {
         const pattern = /<iframe.*? src=".*?playground\/(.*?)\/shared".*<\/iframe>/;
         if (!pattern.test(s)) {
@@ -174,13 +172,16 @@ async function handler() {
         const matched = s.match(new RegExp(pattern, 'g'));
         const fn = async (m) => {
             const uuid = m.match(pattern)[1];
-            const code = (
-                await got({
-                    method: 'post',
-                    url,
-                    json: {
-                        operationName: 'fetchPlayground',
-                        query: /* GraphQL */ `query fetchPlayground {
+            const code = await cache.tryGet(
+                `leetcode:en:playground:${uuid}`,
+                async () =>
+                    (
+                        await got({
+                            method: 'post',
+                            url,
+                            json: {
+                                operationName: 'fetchPlayground',
+                                query: /* GraphQL */ `query fetchPlayground {
                             playground(uuid: "${uuid}") {
                               testcaseInput
                               name
@@ -198,11 +199,12 @@ async function handler() {
                               __typename
                             }
                           }`,
-                        variables: {},
-                    },
-                    headers,
-                })
-            ).data.data.allPlaygroundCodes;
+                                variables: {},
+                            },
+                            headers,
+                        })
+                    ).data.data.allPlaygroundCodes
+            );
             return code.map((c) => `###${c.langSlug}\n\r \`\`\`${c.langSlug}\n ${c.code}\n\`\`\``).join('\n\r');
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
@@ -212,9 +214,9 @@ async function handler() {
         return s;
     };
     const handleText = async (s) => {
-        // 处理代码iframe嵌入问题
+        // Expand embedded playground code.
         s = await parseIframe(s);
-        // 处理图片展示问题
+        // Expand image slides.
         s = await parsePngSlide(s);
         return s;
     };
@@ -228,13 +230,13 @@ async function handler() {
                 title: `DailyQuestion-${question.title}${diffEmoji}`,
                 link: questionUrl,
                 description: question.content,
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
+                pubDate: data.activeDailyCodingChallengeQuestion.date ? parseDate(`${data.activeDailyCodingChallengeQuestion.date}T00:00:00Z`) : undefined,
             },
             {
                 title: `Solution-${question.title}`,
                 link: `${questionUrl}solution/`,
                 description: md.render(article.content),
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
+                pubDate: data.activeDailyCodingChallengeQuestion.date ? parseDate(`${data.activeDailyCodingChallengeQuestion.date}T00:00:00Z`) : undefined,
                 author: 'leetcode',
             },
         ],

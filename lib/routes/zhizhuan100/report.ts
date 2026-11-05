@@ -64,7 +64,7 @@ async function handler() {
 
             return {
                 title,
-                pubDate: parseRelativeDate(dateText),
+                pubDate: dateText ? parseRelativeDate(dateText) : undefined,
                 link: href.startsWith('http') ? href : `https://www.zhizhuan100.com.cn${href}`,
                 description: `<img src="${imgSrc.startsWith('//') ? 'https:' + imgSrc : imgSrc}" alt="${title}">`,
                 guid: id,
@@ -75,7 +75,6 @@ async function handler() {
     return {
         title: '智篆商业-消费报告',
         link: 'https://www.zhizhuan100.com.cn/analysis',
-        allowEmpty: true,
         item: items,
     };
 }

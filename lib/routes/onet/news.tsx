@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,9 +39,10 @@ export const route: Route = {
 async function handler() {
     const rssUrl = 'https://wiadomosci.onet.pl/.feed';
     const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.map(async (item) => {
-            const { description, author, category } = await cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        feed.items,
+        async (item) => {
+            const { description, author, category } = await cache.tryGet(`onet:article:v5:${item.link}`, async () => {
                 const { data: response } = await got(item.link, {
                     headers: {
                         referer: 'https://www.onet.pl/', // for some reason onet.pl will redirect to the main page if referer is not set
@@ -52,9 +54,13 @@ async function handler() {
 
                 const mainImage = parseMainImage($);
 
-                const description = renderDescription($('#lead').text()?.trim(), mainImage, content.html()?.trim());
+                const description = renderDescription($('#lead, .ods-a-lead-text').first().text()?.trim(), mainImage, content.html()?.trim());
 
-                const author = $('.authorNameWrapper span[itemprop="name"]').text()?.trim();
+                const author = $('.authorNameWrapper span[itemprop="name"], [data-section="author-top"] .ods-m-author-authorship__author-item a span')
+                    .toArray()
+                    .map((element) => $(element).text().trim())
+                    .filter(Boolean)
+                    .join(', ');
                 const category = $('span.relatedTopic').text()?.trim();
 
                 return { description, author, category };
@@ -65,10 +71,11 @@ async function handler() {
                 description,
                 author,
                 category,
-                pubDate: parseDate(item.pubDate!),
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 guid: item.id,
             };
-        })
+        },
+        { concurrency: 3 }
     );
     return {
         title: feed.title!,

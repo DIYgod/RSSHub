@@ -1,10 +1,8 @@
-import { load } from 'cheerio';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
@@ -21,80 +19,90 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['barronschina.com.cn/'],
-            target: '/:category?',
+            source: ['www.barrons.com.cn/', 'www.barrons.com.cn/news'],
+            target: '/',
+        },
+        {
+            source: ['www.barrons.com.cn/column/:id'],
+            target: '/:id',
         },
     ],
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
-    url: 'barronschina.com.cn/',
-    description: `::: tip
-栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
-:::`,
+    url: 'www.barrons.com.cn',
+    description: '栏目 id 留空则返回快报，可在新站栏目地址 `https://www.barrons.com.cn/column/121` 中找到栏目 id，例如 `121` 为选股、`4891` 为财富。付费文章只返回源站公开提供的预览内容。',
 };
 
+type ApiResponse<T> = {
+    result: string;
+    data: T;
+};
+
+type Article = {
+    guid: number;
+    title: string;
+    content?: string;
+    summary?: string;
+    published_at?: number;
+    item_type: 'article' | 'news';
+    barron_author?: string;
+    authors?: Array<{ nickname: string }>;
+    column_list?: Array<{ title: string }>;
+    cover_image?: { original?: { url?: string } };
+};
+
+const rootUrl = 'https://www.barrons.com.cn';
+const apiUrl = 'https://api.barrons.com.cn';
+// Public client identifiers used by the website's anonymous API requests.
+const apiHeaders = {
+    client: 'pc',
+    'app-version': '1.0.0',
+    'app-key': '81fRY2dR7JShBOQUEqCn',
+};
+
+const toItem = (article: Article): DataItem => ({
+    title: article.title,
+    description: article.content || article.summary,
+    link: `${rootUrl}/${article.item_type === 'news' ? 'news' : 'articles'}/${article.guid}`,
+    pubDate: article.published_at ? parseDate(article.published_at, 'X') : undefined,
+    author: article.barron_author || article.authors?.map((author) => author.nickname).join(', '),
+    category: article.column_list?.map((column) => column.title),
+    image: article.cover_image?.original?.url,
+});
+
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '';
-
-    const rootUrl = 'http://www.barronschina.com.cn';
-    const currentUrl = `${rootUrl}/index/${id ? `column/article?columnId=${id}` : 'shortNews'}`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const id = ctx.req.param('id');
+    const limit = 20;
+    const currentUrl = `${rootUrl}/${id ? `column/${id}` : 'news'}`;
+    let title = '快报';
+    if (id) {
+        const column = await ofetch<ApiResponse<{ title?: string }>>(`${apiUrl}/column/${id}`, { headers: apiHeaders });
+        if (column.result !== 'ok' || !column.data.title) {
+            throw new InvalidParameterError(`Unknown column: ${id}. Find a current column ID at ${rootUrl}.`);
+        }
+        title = column.data.title;
+    }
+    const response = await ofetch<ApiResponse<Article[]>>(`${apiUrl}/${id ? `list/column/${id}` : 'news/list'}`, {
+        headers: apiHeaders,
+        query: { limit },
     });
-
-    const $ = load(response.data);
-
-    const items = id
-        ? await Promise.all(
-              $('.title')
-                  .toArray()
-                  .map((item): DataItem => {
-                      const $item = $(item);
-                      return {
-                          title: $item.find('.title').text(),
-                          link: `${rootUrl}${$item.parent().attr('href')}`,
-                      };
+    const items = await Promise.all(
+        response.data.map((article) =>
+            id
+                ? cache.tryGet(`${apiUrl}/${article.item_type === 'news' ? 'news' : 'article'}/${article.guid}`, async () => {
+                      const detail = await ofetch<ApiResponse<Article>>(`${apiUrl}/${article.item_type === 'news' ? 'news' : 'article'}/${article.guid}`, {
+                          headers: apiHeaders,
+                          query: { fields: 'content;authors;column_list;has_access;' },
+                      });
+                      return toItem(detail.data);
                   })
-                  .map((item) =>
-                      cache.tryGet(item.link!, async () => {
-                          const detailResponse = await got({
-                              method: 'get',
-                              url: item.link,
-                          });
-
-                          const content = load(detailResponse.data);
-
-                          item.description = content('.cont_main').html();
-                          item.pubDate = timezone(parseDate(content('.timeTag').text()), 8);
-
-                          return item;
-                      })
-                  )
-          )
-        : $('dd')
-              .toArray()
-              .map((item) => {
-                  const $item = $(item);
-
-                  const title = $item.find('strong').text();
-                  $item.find('strong').remove();
-
-                  const description = $item.find('.short').html();
-                  $item.find('.short').remove();
-
-                  return {
-                      title,
-                      description,
-                      link: currentUrl,
-                      pubDate: timezone(parseDate(`${$item.parent().find('dt').text()} ${$item.text()}`), 8),
-                  };
-              });
+                : toItem(article)
+        )
+    );
 
     return {
-        title: $('title').text().split('，', 1)[0],
+        title: `巴伦中文网 - ${title}`,
         link: currentUrl,
         item: items,
     };

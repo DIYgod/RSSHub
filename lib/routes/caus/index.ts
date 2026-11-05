@@ -1,6 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 // Reason: preserve original category numbers for backward compatibility.
 // WordPress category ids from REST API (GET /wp-json/wp/v2/categories).
@@ -44,13 +46,16 @@ interface PostsQuery {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || '0';
-    const cat = categories[category] || categories[0];
+    if (!Object.hasOwn(categories, category)) {
+        throw new InvalidParameterError(`Unknown category "${category}". Supported categories are ${Object.keys(categories).join(', ')}.`);
+    }
+    const cat = categories[category];
 
     const rootUrl = 'https://caus.com';
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
     const query: PostsQuery = {
-        per_page: 20,
+        per_page: Math.min(getRouteLimit(ctx, 20), 100),
         _embed: '',
     };
     if (cat.id) {
@@ -63,7 +68,7 @@ async function handler(ctx) {
         title: item.title.rendered,
         link: item.link,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: parseDate(`${item.date_gmt}Z`),
         author: item._embedded?.author?.[0]?.name,
         category: item._embedded?.['wp:term']?.[0]?.map((t) => t.name),
     }));

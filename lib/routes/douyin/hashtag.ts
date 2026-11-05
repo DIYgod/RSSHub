@@ -3,10 +3,10 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
+import { getApiResponse, getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
 export const route: Route = {
     path: '/hashtag/:cid/:routeParams?',
@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cid = ctx.req.param('cid');
-    if (Number.isNaN(cid)) {
+    if (!/^[1-9]\d*$/.test(cid)) {
         throw new InvalidParameterError('Invalid tag ID. Tag ID should be a number.');
     }
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
@@ -47,30 +47,23 @@ async function handler(ctx) {
     const tagData = await cache.tryGet(
         `douyin:hashtag:${cid}`,
         async () => {
-            const context = await playwright();
-            const page = await context.newPage();
-            let awemeList: any = '';
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
-            });
-            page.on('response', async (response) => {
-                const request = response.request();
-                if (request.url().includes('/v1/web/challenge/aweme')) {
-                    awemeList = await response.json();
-                }
-            });
-            await page.goto(tagUrl, {
-                waitUntil: 'networkidle',
-            });
-            await page.waitForSelector('#RENDER_DATA');
-            const html = await page.evaluate(() => document.querySelector('#RENDER_DATA')!.textContent);
-            await context.close();
+            const { page, destroy } = await getPlaywrightPage(tagUrl, { noGoto: true, closeTimeout: 0 });
+            try {
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                });
+                const awemeList = await getApiResponse(page, tagUrl, '/v1/web/challenge/aweme');
+                await page.waitForSelector('#RENDER_DATA', { timeout: config.requestTimeout });
+                const html = await page.evaluate(() => document.querySelector('#RENDER_DATA')!.textContent);
 
-            const renderData = JSON.parse(decodeURIComponent(html));
-            const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail)!;
-            renderData[dataKey].defaultData = awemeList.aweme_list;
-            return renderData[dataKey];
+                const renderData = JSON.parse(decodeURIComponent(html));
+                const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail)!;
+                renderData[dataKey].defaultData = awemeList.aweme_list;
+                return renderData[dataKey];
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false

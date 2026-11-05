@@ -1,78 +1,80 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
     const { category = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.sse.com.cn';
-    const currentUrl = new URL(`lawandrules/sselawsrules/${category}`, rootUrl).href;
+    const currentUrl = new URL(category.startsWith('/lawandrules/') ? category : `lawandrules/sselawsrules/${category}`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
-    let items = $('div#sse_list_1 dl dd')
+    const listItems = $('div#sse_list_1 dl dd');
+    let items: DataItem[] = listItems
         .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                title: $item.find('a').text().trim(),
-                pubDate: parseDate($item.find('span').text().trim()),
+                title: $item.find('a').attr('title') ?? $item.find('a').text(),
+                pubDate: parseDateInTimezone($item.find('span').text().trim(), 8),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const $$ = load(detailResponse);
-
-                const title = $$('div.article-infor h2').text().trim();
-                const description = $$('div.allZoom').html();
-
-                item.title = title;
-                item.description = description;
-                item.pubDate = parseDate($$('div.article_opt i').text().trim());
-                item.author = $$('meta[name="author"]').prop('content');
-                item.content = {
-                    html: description,
-                    text: $$('div.allZoom').text(),
-                };
-                item.updated = $$('meta[name="others"]').prop('content')
-                    ? timezone(
-                          parseDate(
-                              $$('meta[name="others"]')
-                                  .prop('content')
-                                  .split(/时间\s/)
-                                  .pop()!
-                          ),
-                          8
-                      )
-                    : undefined;
-
-                return item;
+    if (!listItems.length) {
+        items = $('#sourceHtml')
+            .text()
+            .split('@doc@')
+            .flatMap((record): DataItem[] => {
+                const [, date, href, title] = record.split('@memo@').map((field) => field.trim());
+                if (!date || !href || !title) {
+                    return [];
+                }
+                return [{ title, pubDate: parseDateInTimezone(date, 8), link: new URL(href.startsWith('/sse/') ? href.slice(4) : href, rootUrl).href }];
             })
-        )
+            .slice(0, limit);
+    }
+
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`sse:rules:body:v2:${item.link}`, async () => {
+                const { data: detailResponse } = await got(item.link);
+                const $$ = load(detailResponse);
+                const description = $$('div.allZoom').html();
+                return {
+                    description,
+                    author: $$('meta[name="author"]').prop('content'),
+                    content: {
+                        html: description,
+                        text: $$('div.allZoom').text(),
+                    },
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
-    const image = new URL($('img.sse_logo').prop('content'), rootUrl).href;
+    const imagePath = $('img.sse_logo').attr('src');
+    const image = imagePath ? new URL(imagePath, rootUrl).href : undefined;
 
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
     };
@@ -137,14 +139,6 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['www.sse.com.cn/lawandrules/sselawsrules/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/sse/sselawsrules${category ? `/${category}` : ''}`;
-            },
-        },
         {
             title: '最新规则',
             source: ['www.sse.com.cn/lawandrules/sselawsrules/latest/'],

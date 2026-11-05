@@ -1,12 +1,16 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit);
 
     const rootUrl = 'https://zfxxgk.ndrc.gov.cn';
     const currentUrl = new URL('web/dirlist.jsp', rootUrl).href;
@@ -20,56 +24,60 @@ export const handler = async (ctx) => {
     $('th').parent().remove();
 
     let items = $('div.zwxxkg-result tr')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('a.xxgk_list1');
+            const publishedDate = $item.find('td').last().text().trim();
 
             return {
                 title: a.text(),
-                pubDate: parseDate($item.find('td').last().text()),
+                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
                 const title = $$('meta[name="ArticleTitle"]').prop('content');
-                const description = $$('div.zwgkdetail').html();
+                const article = $$('div.article, div.zhengwen').first();
+                article.append($$('table.enclosure, div.downloadbtn'));
+                const description = article.html();
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
                 item.category = [...new Set([$$('meta[name="ContentSource"]').prop('content'), $$('meta[name="ColumnName"]').prop('content'), $$('meta[name="ColumnType"]').prop('content')])].filter(Boolean);
                 item.author = $$('meta[name="ContentSource"]').prop('content');
                 item.content = {
                     html: description,
-                    text: $$('div.article').text(),
+                    text: article.text(),
                 };
                 item.language = language;
                 item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
-    const image = new URL($('div.zwgklogo img').prop('src')!, currentUrl).href;
+    const imageSrc = $('div.zwgklogo img').prop('src');
+    const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
 
     return {
         title: `${$('meta[name="SiteName"]').prop('content')} - ${$('div.zwgktoptitle').text()}`,
         description: $('meta[name="ColumnDescription"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').prop('content'),
         language,

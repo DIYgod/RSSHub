@@ -107,7 +107,7 @@ export const parsePost = (item) => {
 
                 case 'VIDEO':
                     content += '<br />';
-                    content += `<video controls src="${attachment.fileUrl}" width="640" height="360"></video>`;
+                    content += `<video controls src="${attachment.fileUrl}"${attachment.videoCoverUrl ? ` poster="${attachment.videoCoverUrl}"` : ''} width="640" height="360"></video>`;
                     break;
 
                 case 'AUDIO':
@@ -131,7 +131,7 @@ export const parsePost = (item) => {
         author: item.signature,
         description: content,
         category: item.innerTags?.map((tag) => `${tag.name} (${tag.tagIdEcpt})`),
-        pubDate: parseDate(item.createTime),
+        pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime),
         guid: item.postIdEcpt,
         link: `${shareRoot}?postIdEcpt=${item.postIdEcpt}`,
     };

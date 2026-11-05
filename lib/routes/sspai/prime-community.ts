@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -31,20 +32,11 @@ export const route: Route = {
     handler,
 };
 
-const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyNzU3NiIsInR5cGUiOiJ1c2VyIiwiZXhwIjoxNzQ4NTI2MDEzfQ.di8RB-lxHI_JMBQHFd2xhcpk6Zd_3bvfQlAti6HAuZA';
-
 async function handler() {
-    let token;
-    const cacheIn = await cache.get('sspai:token');
-
-    if (cacheIn) {
-        token = cacheIn;
-    } else if (config.sspai.bearertoken) {
-        token = config.sspai.bearertoken;
-        cache.set('sspai:token', config.sspai.bearertoken);
-    } else {
-        token = TOKEN;
+    if (!config.sspai.bearertoken) {
+        throw new ConfigNotFoundError('Configure SSPAI_BEARERTOKEN to access your authorized member community.');
     }
+    const token = config.sspai.bearertoken;
 
     const feedEndpoint = 'https://sspai.com/api/v1/community/page/get';
     const headers = {

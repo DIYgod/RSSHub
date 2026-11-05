@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shouts/:username',
@@ -42,13 +43,12 @@ async function handler(ctx) {
         title: `${item.name} shout at ${username}`,
         link: `https://www.furaffinity.net/user/${username}`,
         guid: item.id,
-        description: `<img src="${item.avatar}"> <br> ${item.name}: ${item.text}`,
-        pubDate: new Date(item.posted_at).toUTCString(),
-        author: username,
+        description: item.text,
+        pubDate: item.posted_at ? parseDate(item.posted_at) : undefined,
+        author: [{ name: item.name, ...(item.avatar && { avatar: new URL(item.avatar, 'https://www.furaffinity.net').href }) }],
     }));
 
     return {
-        allowEmpty: true,
         title: `Fur Affinity | ${username}'s Shouts`,
         link: `https://www.furaffinity.net/user/${username}`,
         description: `Fur Affinity ${username}'s Shouts`,

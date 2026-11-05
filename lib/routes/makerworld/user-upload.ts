@@ -12,6 +12,7 @@ export const route: Route = {
     },
     name: 'User Uploads',
     maintainers: ['TonyRL'],
+    features: { requirePuppeteer: true },
     handler,
     radar: [
         {

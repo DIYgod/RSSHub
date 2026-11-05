@@ -27,10 +27,13 @@ async function handler() {
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const day = $item.find('.o-dated-list__day').text();
+                const month = $item.find('.o-dated-list__month').text();
+                const year = $item.find('.o-dated-list__year').text();
                 return {
                     title: $item.find('.m-post__title').text(),
                     description: $item.find('.m-post__aside').html(),
-                    pubDate: parseDate(`${$item.find('.o-dated-list__day').text()} ${$item.find('.o-dated-list__month').text()} ${$item.find('.o-dated-list__year').text()}`),
+                    pubDate: day && month && year ? parseDate(`${day} ${month} ${year} +0000`, 'DD MMM YYYY ZZ') : undefined,
                     link: $item.find('.m-post__block-link').attr('href'),
                 };
             }),

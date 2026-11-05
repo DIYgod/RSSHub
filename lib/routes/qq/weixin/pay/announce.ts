@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -38,14 +40,15 @@ async function handler() {
         contentId: item.contentId,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detail = await ofetch('https://pay.weixin.qq.com/index.php/public/cms/get_content', { query: { id: item.contentId, g_ty: 'ajax' } });
                 item.description = Buffer.from(detail.data.content, 'base64').toString();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

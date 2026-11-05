@@ -2,7 +2,15 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+
+const configurePage = async (page: Page) => {
+    await page.route('**/*', async (route) => {
+        const request = route.request();
+        await (['document', 'script', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort());
+    });
+};
 
 export const route: Route = {
     path: '/',
@@ -19,6 +27,7 @@ export const route: Route = {
     handler,
     url: 'uraaka-joshi.com/',
     features: {
+        requirePuppeteer: true,
         nsfw: true,
     },
 };
@@ -27,28 +36,20 @@ async function handler() {
     const link = 'https://www.uraaka-joshi.com/';
     const title = '裏垢女子まとめ';
 
-    const context = await playwright();
-
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
-    });
-    page.on('requestfinished', async (request) => {
-        if (request.url() !== link) {
-            return;
-        }
-        const response = await request.response();
-        if (response?.status() === 403) {
-            await page.close();
-        }
+    const { page, destroy } = await getPlaywrightPage(link, {
+        closeTimeout: 0,
+        noGoto: true,
+        onBeforeLoad: configurePage,
     });
 
     let html: string;
     try {
-        await page.goto(link, {
+        const response = await page.goto(link, {
             waitUntil: 'domcontentloaded',
         });
+        if (response && response.status() >= 400) {
+            throw new Error(`The source returned HTTP ${response.status()} for ${link}`);
+        }
 
         await page.waitForSelector('#pickup03 .grid-cell');
         await page.waitForSelector('#pickup04 .grid-cell');
@@ -56,10 +57,9 @@ async function handler() {
 
         const bodyHandle = await page.$('body');
         html = await page.evaluate((body) => body!.getHTML(), bodyHandle);
-    } catch {
-        throw new Error('Access denied (403)');
+    } finally {
+        await destroy();
     }
-    await context.close();
 
     const $ = load(html);
     const list = $('.grid-cell');

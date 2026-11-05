@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -23,10 +24,11 @@ export async function fetchMain(url: string, dataElement: string) {
 }
 
 export function fetchDetail(list: Array<{ href?: string; publishDate: string }>, baseUrl: string, contentElement: string) {
-    return Promise.all(
-        list.map((item) => {
+    return pMap(
+        list,
+        async (item) => {
             const href = item.href!.startsWith('http') ? item.href! : baseUrl + item.href;
-            return cache.tryGet(href, async () => {
+            const article = await cache.tryGet(href, async () => {
                 const response = await ofetch(href);
                 const $ = load(response);
                 let description = $(contentElement).html();
@@ -37,9 +39,13 @@ export function fetchDetail(list: Array<{ href?: string; publishDate: string }>,
                     title: $('title').text(),
                     link: href,
                     description,
-                    pubDate: timezone(parseDate(item.publishDate, 'YYYY-MM-DD'), 8),
                 };
             });
-        })
+            return {
+                ...article,
+                pubDate: item.publishDate ? timezone(parseDate(item.publishDate, 'YYYY-MM-DD'), 8) : undefined,
+            };
+        },
+        { concurrency: 3 }
     );
 }

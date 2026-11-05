@@ -1,24 +1,21 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { tag } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
-
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = 'https://yuanliao.info';
     const apiUrl: string = new URL('api/discussions', baseUrl).href;
     const targetUrl: string = new URL(tag ? `t/${tag}` : '', baseUrl).href;
-
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
-
     const response = await ofetch(apiUrl, {
         query: {
             include: 'user,firstPost,tags',
@@ -27,28 +24,24 @@ export const handler = async (ctx: Context): Promise<Data> => {
             'page[offset]': '',
         },
     });
-
+    if (!Array.isArray(response?.data) || !Array.isArray(response?.included)) {
+        throw new TypeError('Yuanliao discussions API did not return forum data. Check whether the upstream site has moved or is blocking access.');
+    }
     const includedMap = new Map<string, any>();
     for (const item of response.included) {
         includedMap.set(`${item.type}-${item.id}`, item);
     }
-
     const items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const attributes = item.attributes;
         const relationships = item.relationships;
-
         const title: string = attributes.title;
-
         const firstPostData = relationships?.firstPost?.data;
-
         const description: string | undefined = firstPostData?.type && firstPostData.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
         const pubDate: number | string = attributes.createdAt;
         const linkUrl: string | undefined = item.id ? `d/${item.id}` : undefined;
         const categories: string[] = [...new Set<string>(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);
-
         const userData = relationships?.user?.data;
         const userAttributes = userData && userData.type && userData.id ? includedMap.get(`${userData.type}-${userData.id}`)?.attributes : undefined;
-
         const authors: DataItem['author'] = userAttributes
             ? [
                   {
@@ -60,7 +53,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             : undefined;
         const guid = `yuanliao-${item.id}`;
         const updated: number | string = attributes.lastPostedAt ?? pubDate;
-
         const processedItem: DataItem = {
             title,
             description,
@@ -77,10 +69,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             updated: updated ? parseDate(updated) : undefined,
             language,
         };
-
         return processedItem;
     });
-
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
@@ -93,7 +83,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         id: targetUrl,
     };
 };
-
 export const route: Route = {
     path: '/:tag?',
     name: '主题',
@@ -169,7 +158,6 @@ export const route: Route = {
             source: ['yuanliao.info', 'yuanliao.info/t/:tag'],
             target: (params) => {
                 const tag: string = params.tag;
-
                 return `/yuanliao${tag ? `/${tag}` : ''}`;
             },
         },

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import { parseDateText } from './utils';
 
 export const route: Route = {
     path: '/qa/:category?/:state?',
@@ -44,21 +45,29 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
     const category = ctx.req.param('category') ?? 'all';
     const state = ctx.req.param('state') ?? '';
 
     const rootUrl = 'https://getquicker.net';
-    const currentUrl = `${rootUrl}/QA${category === 'all' ? '' : `?category=${category}`}${state ? `?state=${state}` : ''}`;
+    const currentUrl = new URL('/QA', rootUrl);
+    if (category !== 'all') {
+        currentUrl.searchParams.set('category', category);
+    }
+    if (state) {
+        currentUrl.searchParams.set('state', state);
+    }
 
     const response = await got({
         method: 'get',
-        url: currentUrl,
+        url: currentUrl.href,
     });
 
     const $ = load(response.data);
 
     let items = $('a.question-title')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -69,8 +78,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -88,17 +98,16 @@ async function handler(ctx) {
 
                 item.description = content('.topic-body').html();
                 item.author = content('.user-link').first().text();
-                item.pubDate = timezone(/-/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8);
+                item.pubDate = parseDateText(pubDate) ?? item.pubDate;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
-        link: currentUrl,
+        link: currentUrl.href,
         item: items,
-        allowEmpty: true,
     };
 }

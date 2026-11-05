@@ -35,8 +35,8 @@ async function handler(ctx: Context) {
         link: pageUrl,
         title: category === 'all' ? baseTitle : `${baseTitle} ${$('title').text()}`,
         item: $('.news_title a')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .filter((elem) => entryUrlRegex.test(elem.attribs.href))
             .map((elem) => ({
                 link: new URL(elem.attribs.href, pageUrl).href,

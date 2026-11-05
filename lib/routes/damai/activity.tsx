@@ -48,12 +48,14 @@ async function handler(ctx) {
         },
     });
     const data = response.data;
-    const list = data.pageData.resultData || [];
+    const list = data?.pageData?.resultData;
+    if (!Array.isArray(list)) {
+        throw new TypeError('Damai did not return ticket search results. The source may require verification or login.');
+    }
 
     return {
         title: `大麦网票务 - ${city || '全国'} - ${category || '全部分类'}${subcategory ? ' - ' + subcategory : ''}${keyword ? ' - ' + keyword : ''}`,
         link: 'https://search.damai.cn/search.htm',
-        allowEmpty: true,
         item: list.map((item) => ({
             title: item.nameNoHtml,
             author: item.actors ? load(item.actors, null, false).text() : '大麦网',

@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
@@ -69,7 +70,7 @@ async function handler(ctx) {
         searchParams: {
             subject: entity.id,
             type: 0,
-            count: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25,
+            count: getRouteLimit(ctx, 25),
             picdim: '_266_177',
             start: 0,
         },

@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://nautil.us';
 const apiUrl = 'https://lede-admin.nautil.us';
@@ -51,7 +52,7 @@ async function handler(ctx) {
     const { data: list } = await got(`${apiUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             categories: categoryIdMap.find((item) => item.slug === ctx.req.param('tid').toLowerCase()).id,
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+            per_page: Math.min(getRouteLimit(ctx, 20), 100),
         },
     });
 
@@ -62,8 +63,10 @@ async function handler(ctx) {
         // lazyload images
         $('img').each((_, e) => {
             const $e = $(e);
-            $e.attr('src', $e.attr('data-src') ?? $e.attr('srcset'));
-            $e.attr('src', $e.attr('src')!.split('?', 1)[0]);
+            const src = $e.attr('data-src') || $e.attr('src') || $e.attr('srcset')?.match(/^\s*(\S+)\s+\d+[wx](?:,|$)/)?.[1];
+            if (src) {
+                $e.attr('src', src);
+            }
             $e.removeAttr('data-src');
             $e.removeAttr('srcset');
         });
@@ -77,7 +80,7 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: item.date_gmt && item.date_gmt !== '0000-00-00T00:00:00' ? parseDate(`${item.date_gmt}Z`) : undefined,
         };
     });
 

@@ -31,6 +31,7 @@ export const cnNewsHander = async (limit: number) => {
     return {
         title: '拜仁慕尼黑俱乐部中文官方网站 - 新闻',
         link: 'https://www.fcbayern.cn/news',
+        language: 'zh-CN',
         item: items,
     } satisfies Data;
 };

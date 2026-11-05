@@ -41,8 +41,8 @@ export type LiveRoomUserInfo = {
     liveRoom: {
         title: string;
         status: number;
-        startTime: number;
-        streamId: string;
+        startTime?: number;
+        streamId?: string;
     };
 };
 

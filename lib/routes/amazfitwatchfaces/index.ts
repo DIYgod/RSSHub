@@ -3,17 +3,24 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { device, sort, searchParams } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    if (!isValidHost(device)) {
+        throw new InvalidParameterError('Invalid device');
+    }
+
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://amazfitwatchfaces.com';
     const targetUrl: string = new URL(`${device}/${sort}${searchParams ? `?${searchParams}` : ''}`, baseUrl).href;
@@ -319,12 +326,7 @@ If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9]
     radar: [
         {
             source: ['amazfitwatchfaces.com/:device/:sort'],
-            target: (params) => {
-                const device: string = params.device;
-                const sort: string = params.sort;
-
-                return `/amazfitwatchfaces${device ? `/${device}${sort ? `/${sort}` : ''}` : ''}`;
-            },
+            target: '/:device/:sort',
         },
         {
             title: 'Fresh watch faces for Amazfit X',

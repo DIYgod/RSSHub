@@ -2,6 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export function parseItems($: CheerioAPI): DataItem[] {
     return $('div.top-post-list article')
@@ -11,7 +12,7 @@ export function parseItems($: CheerioAPI): DataItem[] {
             const a = $el.find('a').first();
             const title = a.attr('title')!;
             const link = a.attr('href');
-            const pubDate = parseDate($el.find('span.date.gf.updated').text());
+            const pubDate = timezone(parseDate($el.find('span.date.gf.updated').text(), 'YYYY/MM/DD'), 9);
             const author = $el.find('span.author span.fn').text();
             const category = [$el.find('span.cat-name').text()];
             const description = $el.find('div.description p').text();

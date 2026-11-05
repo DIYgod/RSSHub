@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.peopo.org';
 
@@ -12,7 +12,7 @@ export const route: Route = {
     path: '/topic/:topicId?',
     categories: ['new-media'],
     example: '/peopo/topic/159',
-    parameters: { topicId: '分類 ID，見下表，默認為社會關懷' },
+    parameters: { topicId: '分類 ID，見下表；保留既有預設值 159，目前對應坪林區' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,25 +30,20 @@ export const route: Route = {
     name: '新聞分類',
     maintainers: ['TonyRL'],
     handler,
-    description: `| 分類     | ID  |
-| -------- | --- |
-| 社會關懷 | 159 |
-| 生態環保 | 113 |
-| 文化古蹟 | 143 |
-| 社區改造 | 160 |
-| 教育學習 | 161 |
-| 農業     | 163 |
-| 生活休閒 | 162 |
-| 媒體觀察 | 164 |
-| 運動科技 | 165 |
-| 政治經濟 | 166 |
-| 北台灣   | 223 |
-| 中台灣   | 224 |
-| 南台灣   | 225 |
-| 東台灣   | 226 |
-| 校園中心 | 167 |
-| 原住民族 | 227 |
-| 天然災害 | 168 |`,
+    description: `預設值及範例保留為 \`159\`，目前對應坪林區。網站現行新聞分類如下：
+
+| 分類     | ID |
+| -------- | -- |
+| 社會關懷 | 2  |
+| 生態環保 | 3  |
+| 文化古蹟 | 4  |
+| 社區改造 | 5  |
+| 教育學習 | 6  |
+| 農漁畜牧 | 7  |
+| 生活休閒 | 8  |
+| 媒體觀察 | 9  |
+| 運動科技 | 10 |
+| 政治經濟 | 11 |`,
 };
 
 async function handler(ctx) {
@@ -56,32 +51,48 @@ async function handler(ctx) {
     const url = `${baseUrl}/topic/${topicId}`;
     const response = await got(url);
     const $ = load(response.data);
-    const list = $('.view-list-title')
+    const list = $('main .view-content > .views-row')
         .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            return {
-                title: $item.find('a').text(),
-                link: new URL($item.find('a').attr('href')!, baseUrl).href,
-            };
+        .flatMap((row): Array<DataItem & { link: string }> => {
+            const $row = $(row);
+            const anchor = $row.find('.views-field-title h3 a').first();
+            const title = anchor.text();
+            const href = anchor.attr('href');
+            if (!title || !href) {
+                return [];
+            }
+            const datetime = $row.find('time[datetime]').first().attr('datetime');
+            return [
+                {
+                    title,
+                    link: new URL(href, baseUrl).href,
+                    author: $row.find('.username a').first().text() || undefined,
+                    pubDate: datetime ? parseDate(datetime) : undefined,
+                },
+            ];
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-
-                item.author = $('#user-info h3').text();
-                item.category = $('#node-terms .inline li')
+                const article = $('article.node--type-post').first();
+                item.category = article
+                    .find('.field--name-field-peopo-term .field__item a, .field--name-field-tags .field__item a, .field--name-field-area-term .field__item a')
                     .toArray()
-                    .map((item) => $(item).find('a').text());
-                item.pubDate = timezone(parseDate($('.submitted span').text()), 8);
-                item.description = ($('.field-name-field-video-id .field-items').text() ? $('.field-name-field-video-id input').attr('value') : '')! + $('.post_text_s .field-items').html()!;
-
+                    .map((tag) => $(tag).text());
+                const media = article
+                    .find('.field--name-field-video-id video, .field--name-field-video-id iframe')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join('');
+                const body = article.find('.node__content > .field--name-body').first().html() ?? '';
+                item.description = media + body;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

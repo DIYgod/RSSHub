@@ -1,5 +1,7 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import { getArtwork } from './utils';
 
 export const route: Route = {
     path: '/browse/:mode?',
@@ -29,17 +31,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { mode = 'sfw' } = ctx.req.param();
+    if (!['sfw', 'nsfw'].includes(mode)) {
+        throw new InvalidParameterError('mode must be sfw or nsfw.');
+    }
     let url = 'https://faexport.spangle.org.uk/browse.json?sfw=1';
     if (mode === 'nsfw') {
         url = 'https://faexport.spangle.org.uk/browse.json';
     }
 
-    const data = await ofetch(url, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
+    const data = await getArtwork(url, 'https://www.furaffinity.net/browse/', mode);
 
     const items = data.map((item) => ({
         title: item.title,

@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/cdrh/:titleOnly?',
@@ -13,7 +15,7 @@ export const route: Route = {
     radar: [
         {
             source: ['fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates', 'fda.gov/'],
-            target: '/cdrh/:titleOnly',
+            target: '/cdrh',
         },
     ],
     name: 'CDRHNew',
@@ -34,45 +36,52 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('div[role="main"] a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
+    const seen = new Set<string>();
+    let items = $('div[role="main"] h2')
         .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-
-            const link = $item.attr('href');
-
-            return {
-                title: $item.text(),
-                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-            };
-        });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(titleOnly ? `${item.link}#${item.title}#titleOnly` : `${item.link}#${item.title}`, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
+        .flatMap((heading) => {
+            const $heading = $(heading);
+            const date = $heading.text().trim();
+            if (!/^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(date)) {
+                return [];
+            }
+            const pubDate = parseDate(`${date} UTC`);
+            return $heading
+                .nextUntil('h2')
+                .find('li > a[href]')
+                .toArray()
+                .map((item): DataItem => {
+                    const title = $(item).text();
+                    const link = new URL($(item).attr('href')!, rootUrl).href;
+                    return { title, link, pubDate, guid: `${link}#${title}#${date}` };
                 });
+        })
+        .filter((item) => {
+            if (seen.has(item.guid!)) {
+                return false;
+            }
+            seen.add(item.guid!);
+            return true;
+        })
+        .slice(0, getRouteLimit(ctx, 30));
 
-                const content = load(detailResponse.data);
-
-                item.author = content('meta[property="article:publisher"]').attr('content');
-
-                try {
-                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!.split(', ').pop()!, 'MM/DD/YYYY - HH:mm');
-                } catch {
-                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
-                }
-
-                item.description = titleOnly ? null : content('div[role="main"], .doc-content-area').html();
-                item.guid = titleOnly ? `${item.link}#${item.title}#titleOnly` : `${item.link}#${item.title}`;
-
-                return item;
-            })
-        )
-    );
+    items = items.map((item) => ({ ...item, guid: titleOnly ? `${item.guid}#titleOnly` : item.guid }));
+    if (!titleOnly) {
+        items = await pMap(
+            items,
+            (item) =>
+                cache.tryGet(item.guid!, async () => {
+                    const detailResponse = await got({ method: 'get', url: item.link });
+                    const content = load(detailResponse.data);
+                    item.author = content('meta[property="article:publisher"]').attr('content');
+                    const article = content('div[role="main"], .doc-content-area');
+                    article.find('.document-headings .fr-seal-meta').remove();
+                    item.description = article.html();
+                    return item;
+                }),
+            { concurrency: 3 }
+        );
+    }
 
     return {
         title: $('title').text(),

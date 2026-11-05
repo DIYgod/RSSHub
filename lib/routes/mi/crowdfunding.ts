@@ -1,14 +1,19 @@
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingDetailInfo, CrowdfundingList } from './types';
+import { renderCrowdfunding } from './templates/crowdfunding';
+import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
     path: '/crowdfunding',
     categories: ['shopping'],
     example: '/mi/crowdfunding',
-    name: '小米众筹',
+    name: '众筹',
     maintainers: ['DIYgod', 'nuomi1'],
     handler,
     features: {
@@ -29,30 +34,34 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: CrowdfundingList[]) => {
-    const result: Array<Promise<CrowdfundingDetailInfo>> = list.flatMap((section) => section.items.map((item) => utils.getCrowdfundingItem(item)));
-    return await Promise.all(result);
-};
+const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
+    pMap(
+        list,
+        (listItem) =>
+            cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
+                const detailItem = await utils.getCrowdfundingItem(listItem);
+                return getDataItem(listItem, detailItem);
+            }),
+        { concurrency: 6 }
+    );
 
-const getDataItem = (item: CrowdfundingDetailInfo): DataItem => ({
-    title: item.project_name,
-    description: utils.renderCrowdfunding(item),
-    link: `https://m.mi.com/crowdfunding/proddetail/${item.project_id}`,
-    image: item.big_image,
+const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
+    title: listItem.product_name,
+    description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
+    link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
+    image: listItem.img_url,
+    pubDate: parseDate(detailItem.start_time, 'X'),
     language: 'zh-CN',
 });
 
 async function handler(): Promise<Data> {
     const list = await utils.getCrowdfundingList();
-    const details = await getDetails(list);
-
-    const items: DataItem[] = details.map((item) => getDataItem(item));
+    const items = await getDataItems(list);
 
     return {
         title: '小米众筹',
         link: 'https://m.mi.com/crowdfunding/home',
         item: items,
-        allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
         language: 'zh-CN',
     };

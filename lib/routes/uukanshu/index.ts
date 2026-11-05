@@ -27,6 +27,8 @@ async function handler(ctx: Context) {
     });
 
     const $ = load(response);
+    const author = $('.booktag a[title^="作者："]').first().text() || undefined;
+    const category = $('.booktag span.blue').eq(1).text();
 
     return {
         title: `UU看书 ${$('h1.booktitle').text()}`,
@@ -40,6 +42,8 @@ async function handler(ctx: Context) {
                 return {
                     title: $item.text(),
                     link: `https://uukanshu.cc${$item.attr('href')}`,
+                    author,
+                    category: category ? [category] : [],
                 };
             })
             .toReversed(),

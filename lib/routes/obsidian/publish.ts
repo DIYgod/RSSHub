@@ -10,7 +10,7 @@ import { getTitle } from './utils';
 export const route: Route = {
     path: '/publish/:id',
     categories: ['blog'],
-    example: '/obsidian/publish/marshallontheroad',
+    example: '/obsidian/publish/obsidian',
     parameters: { id: '网站 id，由Publish持有者自定义' },
     features: {
         requireConfig: false,
@@ -39,7 +39,7 @@ async function handler(ctx) {
         title: 'Obsidian Publish',
         language: 'en-us' as const,
         item: items,
-        link: 'https://publish.obsidian.md/',
+        link: `https://publish.obsidian.md/${encodeURIComponent(id)}`,
     };
 }
 
@@ -52,18 +52,16 @@ async function fetchPage(id: string) {
             .text()
             .match(/preloadCache\s*=\s*f\("([^"]+)"\);/)?.[1] || '';
 
-    let preloadCacheResponse: Record<string, { frontmatter?: Record<string, string> }>;
-    try {
-        preloadCacheResponse = await ofetch(preloadCacheUrl, {
-            headers: {
-                'User-Agent': config.trueUA,
-                Referer: 'https://publish.obsidian.md/',
-                Origin: 'https://publish.obsidian.m/',
-            },
-        });
-    } catch {
-        preloadCacheResponse = {};
+    if (!preloadCacheUrl) {
+        throw new Error('The Publish page no longer exposes a public preload cache URL.');
     }
+    const preloadCacheResponse = await ofetch<Record<string, { frontmatter?: Record<string, string> }>>(preloadCacheUrl, {
+        headers: {
+            'User-Agent': config.trueUA,
+            Referer: 'https://publish.obsidian.md/',
+            Origin: 'https://publish.obsidian.md',
+        },
+    });
 
     const items: DataItem[] = Object.entries(preloadCacheResponse)
         .map(([postKey, post]) => {

@@ -4,9 +4,19 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { finishArticleItem } from '@/utils/wechat-mp';
+import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 import utils from './utils';
+
+const hasArticleUrl = (item) => {
+    try {
+        return ['http:', 'https:'].includes(new URL(item.url).protocol);
+    } catch {
+        return false;
+    }
+};
+
+const completeArticle = (item) => (new URL(item.link).hostname === 'mp.weixin.qq.com' ? finishArticleItem(item) : item);
 
 export const route: Route = {
     path: '/wechat/:wxid',
@@ -78,7 +88,11 @@ async function handler(ctx) {
     const articles = utils.flatten(response.data.value.articles);
     const newArticles = [...realTimeArticles, ...articles];
 
-    const items = newArticles.map((item) => ({
+    const accessibleArticles = newArticles.filter((item) => hasArticleUrl(item));
+    if (newArticles.length && !accessibleArticles.length) {
+        throw new Error('Newrank returned articles without usable URLs. Check NEWRANK_COOKIE and whether the account can access article links.');
+    }
+    let items = accessibleArticles.map((item) => ({
         id: item.id,
         title: item.title,
         description: '',
@@ -86,8 +100,16 @@ async function handler(ctx) {
         pubDate: item.publicTime,
     }));
 
-    // TODO: link is empty
-    await Promise.all(items.map((item) => finishArticleItem(item)));
+    const results = await Promise.allSettled(items.map((item) => completeArticle(item)));
+    items = results.flatMap((result) => {
+        if (result.status === 'fulfilled') {
+            return [result.value];
+        }
+        if (result.reason instanceof WeChatMpError && result.reason.message.startsWith('wechat-mp: deleted by author:')) {
+            return [];
+        }
+        throw result.reason;
+    });
 
     return {
         title: name + ' - 微信公众号',

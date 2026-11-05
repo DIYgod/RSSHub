@@ -1,16 +1,21 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://auto.hdu.edu.cn';
 
 export const fetchAutoNews = async (path: string, title: string): Promise<Data> => {
     const link = `${BASE_URL}/${path}`;
-    const response = await got(link);
-    const $ = load(response.data);
+    const response = await ofetch.raw<string, 'text'>(link, { responseType: 'text' });
+    if (response.url && new URL(response.url).hostname === 'webvpn.hdu.edu.cn') {
+        throw new Error('HDU automation notices redirect to WebVPN sign-in and are not available anonymously.');
+    }
+    const $ = load(response._data ?? '');
 
     const list = $('.rightlist')
         .toArray()
@@ -33,15 +38,16 @@ export const fetchAutoNews = async (path: string, title: string): Promise<Data> 
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async (): Promise<DataItem> => {
                 const { data } = await got(item.link);
                 const $detail = load(data);
                 const description = $detail('.wp_articlecontent').html();
                 return { ...item, description: description || item.description };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

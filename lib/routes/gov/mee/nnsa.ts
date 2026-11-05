@@ -8,11 +8,13 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywdt/hjyw' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '15');
+    const sourceLimit = getRouteLimit(ctx, 15);
+    const limit = ctx.req.query('sorted') === 'false' ? sourceLimit : Math.max(15, sourceLimit);
 
     const baseUrl = 'https://nnsa.mee.gov.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
@@ -21,8 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
-    let items: DataItem[] = $('a.cjcx_biaob, ul#div li a')
-        .slice(0, limit)
+    let items: DataItem[] = $('a.cjcx_biaob, ul#div li a, .inBd li a')
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -32,12 +33,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl, baseUrl).href) : undefined,
+                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl, targetUrl).href) : undefined,
                 language,
             };
 
             return processedItem;
         });
+
+    items = new Map(items.map((item) => [item.link, item])).values().toArray().slice(0, limit);
 
     items = await Promise.all(
         items.map((item) => {
@@ -50,7 +53,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('meta[name="ArticleTitle"]').attr('content') ?? item.title;
-                const description = $$('div.Custom_UnionStyle').html();
+                const content = $$('div.Custom_UnionStyle').length ? $$('div.Custom_UnionStyle') : $$('div.neiright_JPZ_GK_CP');
+                const description = content.html();
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
                 const categoryEls: Array<Cheerio<Element>> = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el)?.attr('content') ?? '').filter(Boolean))];
@@ -63,7 +67,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             name: $$authorEl.attr('content') ?? '',
                         };
                     });
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
@@ -73,9 +76,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: content.text(),
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 
@@ -94,7 +96,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('meta[name="SiteName"]').attr('content'),
         language,
@@ -246,8 +247,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['nnsa.mee.gov.cn/:category'],
-            target: '/nnsa/:category',
+            source: ['nnsa.mee.gov.cn/'],
+            target: '/nnsa',
         },
         {
             title: '要闻动态 - 时政要闻',

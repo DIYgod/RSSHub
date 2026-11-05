@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const CATEGORY_MAP = {
@@ -49,14 +51,17 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://finance.china.com';
-    const category = CATEGORY_MAP[ctx.req.param('category')] ?? CATEGORY_MAP.tuijian;
+    const category = ctx.req.param('category') ?? 'tuijian';
+    if (!Object.hasOwn(CATEGORY_MAP, category)) {
+        throw new InvalidParameterError(`Unknown finance category "${category}". Use ${Object.keys(CATEGORY_MAP).join(', ')}.`);
+    }
     const websiteUrl = `${baseUrl}/${category}`;
     const response = await got(websiteUrl);
     const data = response.data;
     const $ = load(data);
     const categoryTitle = $('.list-hd strong').text();
     const listCategory = `中华网-财经-${categoryTitle}新闻`;
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
     const detailsUrls = $('.item-con-inner')
         .toArray()
         .map((item) => {

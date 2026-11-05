@@ -1,9 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+const parsePublicationDate = (value: string | undefined) => {
+    const date = value ? parseDate(value) : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+};
 
 const rssDescription = '明日方舟期刊《回归线》 | 泰拉创作者联合会';
 const url = 'aneot.arktca.com';
@@ -44,8 +50,9 @@ async function handler(): Promise<Data> {
         .toArray()
         .map((item) => baseUrl + $(item).prop('href'));
 
-    const journalList = await Promise.all(
-        allUrlList.map(async (item) => {
+    const journalList = await pMap(
+        allUrlList,
+        async (item) => {
             const { data: response } = await got(item);
             const $$ = load(response);
             const regVol = /(?<=Vol. )\w+/;
@@ -58,55 +65,53 @@ async function handler(): Promise<Data> {
                 volume,
                 links,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
-    const journals = await Promise.all(
-        journalList.map(
-            async (item) =>
-                await Promise.all(
-                    item.links.map((link) =>
-                        cache.tryGet(link, async () => {
-                            const { data: response } = await got(link);
-                            const $$ = load(response);
+    const articles = journalList.flatMap((item) => item.links.map((link) => ({ link, volume: item.volume })));
+    const journals = await pMap(
+        articles,
+        ({ link, volume }) =>
+            cache.tryGet(link, async () => {
+                const { data: response } = await got(link);
+                const $$ = load(response);
 
-                            $$('div.ads-container').remove();
-                            const language = $$('html').prop('lang');
+                $$('div.ads-container').remove();
+                const language = $$('html').prop('lang');
 
-                            const pageTitle = $$('div.vp-page-title');
+                const pageTitle = $$('div.vp-page-title');
 
-                            const title = `Vol.${item.volume} ` + pageTitle.children('h1').text();
-                            const pageInfo = pageTitle.children('div.page-info');
+                const title = `Vol.${volume} ` + pageTitle.children('h1').text();
+                const pageInfo = pageTitle.children('div.page-info');
 
-                            const pageAuthorInfo = pageInfo.children('span.page-author-info');
-                            const author = pageAuthorInfo.find('span.page-author-item').text();
+                const pageAuthorInfo = pageInfo.children('span.page-author-info');
+                const author = pageAuthorInfo.find('span.page-author-item').text();
 
-                            const pageDateInfo = pageInfo.children('span.page-date-info');
-                            const date = pageDateInfo.children('meta').prop('content');
-                            const pubDate = parseDate(date);
+                const pageDateInfo = pageInfo.children('span.page-date-info');
+                const date = pageDateInfo.children('meta').prop('content');
+                const pubDate = parsePublicationDate(date);
 
-                            const pageCategoryInfo = pageInfo.find('span.page-category-info');
-                            const category = pageCategoryInfo.children('meta').prop('content');
+                const pageCategoryInfo = pageInfo.find('span.page-category-info');
+                const category = pageCategoryInfo.children('meta').prop('content');
 
-                            const article = $$('div.theme-hope-content');
-                            const description = article.html();
+                const article = $$('div.theme-hope-content');
+                const description = article.html();
 
-                            const comments = Number.parseInt($$('span.wl-num').text());
-                            return {
-                                title,
-                                language: language as Language,
-                                author,
-                                pubDate,
-                                category,
-                                description,
-                                comments,
-                                guid: link,
-                                link,
-                            };
-                        })
-                    )
-                )
-        )
+                const comments = Number.parseInt($$('span.wl-num').text());
+                return {
+                    title,
+                    language: language as Language,
+                    author,
+                    pubDate,
+                    category,
+                    description,
+                    comments,
+                    guid: link,
+                    link,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     const logoUrl = `${baseUrl}/logo.svg`;
@@ -120,6 +125,6 @@ async function handler(): Promise<Data> {
         image: logoUrl,
         author,
         language: 'zh-CN',
-        item: journals.flat(),
+        item: journals,
     };
 }

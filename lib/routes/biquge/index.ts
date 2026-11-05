@@ -7,6 +7,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const allowHost = new Set([
@@ -30,7 +31,7 @@ const allowHost = new Set([
 export const route: Route = {
     path: '/:url{.+}',
     categories: ['reading'],
-    example: '/biquge/http://www.biqu5200.net/0_7/',
+    example: '/biquge/https://www.b520.cc/0_7/',
     parameters: { url: '小说 Url，即对应小说详情页的 Url，可在地址栏中找到' },
     features: {
         antiCrawler: true,
@@ -41,15 +42,13 @@ export const route: Route = {
 
 #### 使用方法
 
-如订阅 [《大主宰》](http://www.biqu5200.net/0_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 \`http://www.biqu5200.net/0_7/\`。此时，路由为 [\`/biquge/http://www.biqu5200.net/0_7/\`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/)
-
-又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 \`https://www.shuquge.com/txt/70/index.html\`。此时，把末尾的 \`index.html\` 去掉，路由为 [\`/biquge/https://www.shuquge.com/txt/70/\`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
+如订阅 [《大主宰》](https://www.b520.cc/0_7/)，此时在 [b520.cc](https://www.b520.cc) 中查询得到对应小说详情页 URL 为 \`https://www.b520.cc/0_7/\`。此时，路由为 [\`/biquge/https://www.b520.cc/0_7/\`](https://rsshub.app/biquge/https://www.b520.cc/0_7/)
 
 #### 关于章节数
 
-路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 \`limit\` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0_7/) 并获取最新的 **10** 个章节。此时，路由为 [\`/biquge/http://www.biqu5200.net/0_7/?limit=10\`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/?limit=10)
+路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 \`limit\` 参数。如上面的例子：订阅 [《大主宰》](https://www.b520.cc/0_7/) 并指定最多获取最新的 **10** 个章节。此时，路由为 [\`/biquge/https://www.b520.cc/0_7/?limit=10\`](https://rsshub.app/biquge/https://www.b520.cc/0_7/?limit=10)
 
-需要注意的是，单次获取的所有章节更新时间统一设定为最新章节的更新时间。也就是说，获取最新的 **10** 个章节时，除了最新 **1** 个章节的更新时间是准确的（和网站一致的），其他 **9** 个章节的更新时间是不准确的。
+源站仅提供最新章节的更新时间，因此只有与源站最新章节信息匹配的条目包含更新时间，其他章节不提供时间。
 
 另外，若设置获取章节数目过多，可能会触发网站反爬，导致路由不可用。
 :::
@@ -76,30 +75,38 @@ async function handler(ctx) {
 
     const $ = load(iconv.decode(response.data, encoding));
     const author = $('meta[property="og:novel:author"]').attr('content');
-    const pubDate = timezone(parseDate($('meta[property="og:novel:update_time"]').attr('content')!), 8);
+    const latestChapterTitle = $('meta[property="og:novel:latest_chapter_name"]').attr('content');
+    const updateTime = $('meta[property="og:novel:update_time"]').attr('content');
+    const parsedDate = updateTime ? parseDate(updateTime) : undefined;
+    const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
+    const chapterLinks = new Set<string>();
 
     let items = $('dl dd a')
         .toArray()
         .toReversed()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 1)
+        .filter((item) => {
+            const href = $(item).attr('href');
+            if (!href) {
+                return false;
+            }
+            const url = new URL(href, currentUrl);
+            if (url.pathname === '/' || chapterLinks.has(url.href)) {
+                return false;
+            }
+            chapterLinks.add(url.href);
+            return true;
+        })
+        .slice(0, getRouteLimit(ctx, 1))
         .map((item): DataItem => {
             const $item = $(item);
 
-            let link: string;
-            const url = $item.attr('href');
-            if (url!.startsWith('http')) {
-                link = url!;
-            } else if (url!.startsWith('/')) {
-                link = `${rootUrl}${url}`;
-            } else {
-                link = `${currentUrl}/${url}`;
-            }
+            const link = new URL($item.attr('href')!, currentUrl).href;
 
             return {
                 title: $item.text(),
                 link,
                 author,
-                pubDate,
+                pubDate: $item.text() === latestChapterTitle ? pubDate : undefined,
             };
         });
 

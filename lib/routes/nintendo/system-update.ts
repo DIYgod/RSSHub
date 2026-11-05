@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/system-update',
@@ -33,7 +35,9 @@ async function handler() {
     const response = await got(url);
     const $ = load(response.data);
 
-    const list = $('.c-heading-lv3').toArray().slice(1, -2);
+    const list = $('h3')
+        .toArray()
+        .filter((heading) => /\d+年\d+月\d+日/.test($(heading).text()));
 
     return {
         title: 'Nintendo Switch 本体更新情報',
@@ -41,21 +45,21 @@ async function handler() {
         item: list.map((update) => {
             const $update = $(update);
             const heading = $update.text();
-            const matched_date = /(\d+)年(\d+)月(\d+)日/.exec(heading);
-            const update_info = $update.nextUntil('.c-heading-lv3');
-            const update_infos = update_info
+            const matchedDate = /(\d+)年(\d+)月(\d+)日/.exec(heading);
+            const updateInfo = $update.nextUntil('h3, h2');
+            const updateInfos = updateInfo
                 .toArray()
                 .map((element) => $(element).html())
                 .join('\n');
-            const matched_version = /(?:\d\.)+\d/.exec(heading);
+            const matchedVersion = /\d+(?:\.\d+)+/.exec(heading);
 
             return {
                 title: heading,
                 author: 'Nintendo',
-                description: update_infos,
-                link: url,
-                guid: `${url}#${matched_version![0]}`,
-                pubDate: new Date(Number.parseInt(matched_date![1]), Number.parseInt(matched_date![2]) - 1, Number.parseInt(matched_date![3])),
+                description: updateInfos,
+                link: `${url}#${matchedVersion![0]}`,
+                guid: `${url}#${matchedVersion![0]}`,
+                pubDate: timezone(parseDate(`${matchedDate![1]}-${matchedDate![2]}-${matchedDate![3]}`, 'YYYY-M-D'), 9),
             };
         }),
     };

@@ -1,13 +1,15 @@
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 import utils from './utils';
 
 async function getUsername(uid) {
-    // 获取用户信息
+    // Fetch the user profile.
     const response = await got({
         method: 'get',
         url: `https://www.lanqiao.cn/api/v2/users/${uid}/`,
@@ -45,7 +47,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const username = await getUsername(uid);
-    // 发起 HTTP GET 请求
+    // Fetch the source API response.
     const response = await got({
         method: 'get',
         url: `https://www.lanqiao.cn/api/v2/users/${uid}/courses/?type=published`,
@@ -54,35 +56,41 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.results; // response.data 为 HTTP GET 请求返回的数据对象
+    const data = response.data.results; // The source API response data.
 
     const md = new MarkdownIt();
-    const items = await Promise.all(
-        data.map((item) =>
-            cache.tryGet(`https://www.lanqiao.cn/api/v2/courses/${item.id}/`, async () => {
+    const items = await pMap(
+        data,
+        async (item: { id: number }) => {
+            const course = await cache.tryGet(`lanqiao:course:${item.id}`, async () => {
                 const courseResponse = await got({
                     method: 'get',
                     url: `https://www.lanqiao.cn/api/v2/courses/${item.id}/`,
                 });
-                const course = courseResponse.data;
-
-                item.title = course.name;
-                item.description = utils.courseDesc(course.picture_url, md.render(course.long_description));
-                item.author = course.teacher.name;
-                item.link = `https://www.lanqiao.cn/courses/${course.id}/`;
-                return item;
-            })
-        )
+                return courseResponse.data;
+            });
+            return {
+                id: String(item.id),
+                title: course.name,
+                description: utils.courseDesc(course.picture_url, md.render(course.long_description || course.description || '')),
+                author: course.teacher.name,
+                category: course.tags,
+                pubDate: course.open_time ? parseDate(course.open_time) : undefined,
+                updated: course.updated_time ? parseDate(course.updated_time) : undefined,
+                link: `https://www.lanqiao.cn/courses/${course.id}/`,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        // 源标题
+        // Feed title.
         title: `${username} 发布的课程`,
-        // 源链接
+        // Feed link.
         link: `https://www.lanqiao.cn/users/${uid}`,
-        // 源说明
+        // Feed description.
         description: `${username} 发布的课程`,
-        // 遍历此前获取的数据
+        // Return the collected entries.
         item: items,
     };
 }

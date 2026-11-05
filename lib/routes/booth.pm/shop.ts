@@ -8,7 +8,7 @@ import { isValidHost } from '@/utils/valid-host';
 export const route: Route = {
     path: '/shop/:subdomain',
     categories: ['shopping'],
-    example: '/booth.pm/shop/annn-boc0123',
+    example: '/booth.pm/shop/komado',
     parameters: { subdomain: 'Shop subdomain' },
     name: 'Shop',
     maintainers: ['KTachibanaM'],
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
             const item = JSON.parse($(element).attr('data-item')!);
             return {
                 title: item.name,
-                description: item.thumbnail_image_urls.map((url: string) => `<img src="${url.replace(/\/c\/[^/]+\//, '/').replace('_base_resized', '')}">`).join(''),
+                description: item.thumbnail_image_urls.map((url: string) => `<img src="${url}">`).join(''),
                 link: item.shop_item_url,
                 category: [item.category.name.en, item.category.name.ja],
             };

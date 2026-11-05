@@ -36,11 +36,12 @@ async function handler(ctx) {
         .map((ele) => {
             const $item = load(ele);
             const link = $item('.weui_media_title a').attr('href');
+            const date = $item('.weui_media_extra_info').attr('title');
             return {
                 title: $item('.weui_media_title a').text(),
                 description: $item('.weui_media_desc').text(),
                 link,
-                pubDate: timezone(parseDate($item('.weui_media_extra_info').attr('title')!), 8),
+                pubDate: date ? timezone(parseDate(date), 8) : undefined,
             };
         });
 

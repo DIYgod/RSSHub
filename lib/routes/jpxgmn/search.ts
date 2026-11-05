@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,8 +23,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { kw } = ctx.req.param();
-    const searchUrl = (await getOriginUrl()) + `/plus/search/index.asp?keyword=${kw}`;
-    const response = await ofetch.raw(searchUrl);
+    const searchUrl = new URL('/plus/search/index.asp', await getOriginUrl());
+    searchUrl.searchParams.set('keyword', kw);
+    const response = await ofetch.raw(searchUrl.href);
     const baseUrl = new URL(response.url).origin;
     const $ = load(response._data);
     const items = $('div.list div.list div.node p')
@@ -38,13 +40,13 @@ async function handler(ctx) {
     return {
         title: `极品性感美女搜索 - ${kw}`,
         link: response.url,
-        item: await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    item.description = await getArticleDesc(item.link);
-                    return item;
-                })
-            )
+        item: await pMap(
+            items,
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet(`jpxgmn:article:${item.link}`, () => getArticleDesc(item.link)),
+            }),
+            { concurrency: 3 }
         ),
     };
 }

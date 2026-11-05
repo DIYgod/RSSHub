@@ -85,7 +85,7 @@ export const route: Route = {
                     label: 'male rank',
                 },
                 {
-                    value: 'day_felame',
+                    value: 'day_female',
                     label: 'female rank',
                 },
                 {
@@ -130,7 +130,12 @@ export const route: Route = {
         date: 'format: `2018-4-25`',
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: 'Pixiv refresh token required for accessing the app API.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

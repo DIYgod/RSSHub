@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/board/:id',
@@ -42,7 +43,7 @@ async function handler(ctx: Context) {
 
                     return {
                         title: content('head title').text().trim(),
-                        pubDate: parseDate(content('body > div.container > div > div > section > div.gallview-tit-box > div > ul > li:nth-child(2)').text()),
+                        pubDate: timezone(parseDate(content('body > div.container > div > div > section > div.gallview-tit-box > div > ul > li:nth-child(2)').text(), 'YYYY.MM.DD HH:mm'), 9),
                         link: itemLink,
                         description: content('body > div.container > div > div > section > div.gall-thum-btm > div > div.thum-txt').html(),
                     };

@@ -1,13 +1,11 @@
 export interface Post {
-    id: number;
-    content: {
-        rendered: string;
-    };
-    date_gmt: string;
-    modified_gmt: string;
-    link: string;
-    categories: number[];
-    title: {
-        rendered: string;
-    };
+    title: string;
+    post_name: string;
+    author_name: string;
+    created_at?: number;
+    updated_at?: number;
+}
+
+export interface PostDetail extends Post {
+    content: string;
 }

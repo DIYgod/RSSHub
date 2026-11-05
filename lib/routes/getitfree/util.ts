@@ -199,7 +199,6 @@ const fetchData = async (url) => {
         logo: icon,
         subtitle: title.split(/【/, 1)[0],
         author: $('h1.logo a').prop('title'),
-        allowEmpty: true,
     };
 };
 

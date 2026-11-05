@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -18,12 +19,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['hacking8.com/index/:category', 'hacking8.com/'],
-            target: '/:category?',
-        },
-    ],
     name: '搜索',
     maintainers: ['nczitzk'],
     handler,
@@ -33,7 +28,7 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
 
     const rootUrl = 'https://i.hacking8.com';
-    const currentUrl = `${rootUrl}/search/?q=${keyword}`;
+    const currentUrl = `${rootUrl}/search/?${new URLSearchParams({ q: keyword })}`;
 
     const response = await got({
         method: 'get',
@@ -48,12 +43,14 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('div.link a');
+            const date = $item.parent().parent().find('td').first().text().trim();
+            const pubDate = date ? timezone(parseDate(date, 'YYYY年M月D日 HH:mm'), 8) : undefined;
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, rootUrl).href,
-                description: $item.find('div.media-body pre').text(),
-                pubDate: timezone(parseDate($item.parent().parent().find('td').first().text(), 'YYYY年M月D日 HH:mm'), 8),
+                description: html`<pre>${$item.find('div.media-body pre').text()}</pre>`.toString(),
+                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
                 category: $item
                     .parent()
                     .parent()

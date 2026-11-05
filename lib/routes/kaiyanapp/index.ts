@@ -26,8 +26,8 @@ async function handler() {
                 title: data.title,
                 link: videoUrl,
                 author: data.author.name,
-                description: `${data.description}<br/><img src="${data.cover.feed}" /><br/><video src="${videoUrl}" controls="controls"></video>`,
-                pubDate: parseDate(item.data.header.time),
+                description: `${data.description}<br/><video src="${videoUrl}" poster="${data.cover.feed}" controls="controls"></video>`,
+                pubDate: item.data.header.time !== undefined && item.data.header.time !== null ? parseDate(item.data.header.time) : undefined,
             };
         });
 

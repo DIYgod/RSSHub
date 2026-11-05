@@ -5,6 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import timezone from '@/utils/timezone';
@@ -20,7 +21,6 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'WEIBO_COOKIES',
-                optional: true,
                 description: '',
             },
         ],
@@ -69,7 +69,7 @@ async function handler(ctx) {
     }
 
     const uid = await cache.tryGet(
-        'weibo:user_bookmarks:login-user',
+        `weibo:user_bookmarks:login-user:${md5(config.weibo.cookies)}`,
         async () => {
             const _r = await got({
                 method: 'get',
@@ -85,6 +85,10 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
+
+    if (String(uid) !== ctx.req.param('uid')) {
+        throw new Error('The requested user does not match the configured Weibo Cookie account. Only the logged-in user can access their own bookmarks.');
+    }
 
     const containerData = await cache.tryGet(
         `weibo:user_bookmarks:index:${uid}`,

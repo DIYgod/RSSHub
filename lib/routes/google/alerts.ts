@@ -24,9 +24,9 @@ export const route: Route = {
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
-    const { data: response, url: link } = await got('https://www.google.com/alerts/preview', {
+    const { data: response } = await got('https://www.google.com/alerts/preview', {
         searchParams: {
-            params: `[null,[null,null,null,[null,"${keyword}","com",[null,"en","US"],null,null,null,0,0],null,3,[[null,1,"user@example.com",[null,null,20],2,"en-US",null,null,null,null,null,"0",null,null,"AB2Xq4hcilCERh73EFWJVHXx-io2lhh1EhC8UD8"]]],0]`,
+            params: `[null,[null,null,null,[null,${JSON.stringify(keyword)},"com",[null,"en","US"],null,null,null,0,0],null,3,[[null,1,"user@example.com",[null,null,20],2,"en-US",null,null,null,null,null,"0",null,null,"AB2Xq4hcilCERh73EFWJVHXx-io2lhh1EhC8UD8"]]],0]`,
         },
     });
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     return {
         title: `Google Alerts - ${keyword}`,
-        link,
+        link: 'https://www.google.com/alerts',
         item: items,
     };
 }

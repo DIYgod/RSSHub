@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -28,6 +29,7 @@ export const route: Route = {
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     name: '自动化学院',
     maintainers: ['Xm798'],
+    features: { requirePuppeteer: true },
     handler,
     description: `| 综合新闻 | 党委行政 | 人事 / 合作 | 研究生培养 | 本科生培养 | 学生工作 | 通知公告 | 学术信息 | 答辩公告 |
 | -------- | -------- | ----------- | ---------- | ---------- | -------- | -------- | -------- | -------- |
@@ -60,21 +62,26 @@ async function handler(ctx) {
             return info;
         });
 
-    const out = await Promise.all(
-        list.map(async (info) => {
+    const out = await pMap(
+        list,
+        async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
             const itemUrl = new URL(info.link!, host).href;
-            let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+            let description: string | undefined;
 
             if (getDescription) {
-                description = await cache.tryGet(itemUrl, async () => {
+                description = await cache.tryGet(`nuaa:cae:article:body:${itemUrl}`, async () => {
                     const arr = itemUrl.split('.');
                     const pageType = arr.at(-1);
                     if (pageType === 'htm' || pageType === 'html') {
                         const response = await got(itemUrl, gotConfig);
                         const $ = load(response.data);
-                        return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+                        const content = $('.wp_articlecontent');
+                        if (!content.length) {
+                            throw new Error('Article content was not found at ' + itemUrl);
+                        }
+                        return content.html() ?? undefined;
                     }
                     return '';
                 });
@@ -86,7 +93,8 @@ async function handler(ctx) {
                 description,
                 pubDate: parseDate(date),
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

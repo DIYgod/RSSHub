@@ -100,7 +100,7 @@ const getUrlIcon = (url: string, fallback?: boolean) => {
 // referenced from https://github.com/RSSNext/Follow/blob/dev/packages/utils/src/utils.ts
 const EPOCH = 1_712_546_615_000n; // follow repo created
 const MAX_TIMESTAMP_BITS = 41n; // Maximum number of bits typically used for timestamp
-export const isBizId = (id: string): boolean => {
+const isBizId = (id: string): boolean => {
     if (!id || !/^\d{13,19}$/.test(id)) {
         return false;
     }

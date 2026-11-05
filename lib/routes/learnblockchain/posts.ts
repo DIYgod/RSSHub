@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/posts/:cid/:sort?',
@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const data = response.data;
     const $ = load(data);
-    const list = $('div.stream-list section.stream-list-item');
+    const list = $('.blog-stream > article');
 
     return {
         title: `登链社区--${cid}`,
@@ -64,15 +64,20 @@ async function handler(ctx) {
         description: '登链社区',
         item: list.toArray().map((ite) => {
             const item = $(ite);
-            const json = {
-                title: item.find('h2.title').text().trim(),
-                description: item.find('div.excerpt').text().trim(),
-                pubDate: parseRelativeDate(item.find('.author li:nth-child(2)').text().replace('发布于', '').trim()),
-                link: item.find('h2.title a').attr('href')!.trim(),
-                author: item.find('.author li:nth-child(1)').text().trim(),
-            };
+            const date = item
+                .find('span')
+                .toArray()
+                .map((span) => $(span).text())
+                .find((text) => text.startsWith('发布于'))
+                ?.replace(/^发布于\s*/, '');
 
-            return json;
+            return {
+                title: item.find('h2 a').text(),
+                description: item.find('p').first().text(),
+                pubDate: date ? (/^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(`${date}T00:00:00+08:00`) : parseRelativeDate(date)) : undefined,
+                link: item.find('h2 a').attr('href'),
+                author: item.find('a:has(img) span').text(),
+            };
         }),
     };
 }

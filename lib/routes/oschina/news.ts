@@ -1,9 +1,12 @@
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, blogBaseUrl, getBlog, getBlogListCategory, getNews } from './utils';
+import { baseUrl, blogBaseUrl, getBlog, getBlogListCategory, getLimit, getNews } from './utils';
 
 const configs = {
     0: {
@@ -101,9 +104,22 @@ export const route: Route = {
     handler,
 };
 
+interface NewsListItem {
+    obj_title: string;
+    detail: string;
+    obj_type: number;
+    obj_id: number;
+    ident: string;
+    userVo: { id: number; name: string };
+    create_time: number;
+    image: string;
+}
+
+class ContentUnavailableError extends Error {}
+
 async function handler(ctx) {
     let { category = '0' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 30);
+    const limit = getLimit(ctx.req.query('limit'), 30);
 
     switch (category) {
         case 'all':
@@ -122,9 +138,12 @@ async function handler(ctx) {
     }
 
     const blogListCategory = await getBlogListCategory();
-    const config = blogListCategory.find((item) => item.id.toString() === category) ?? blogListCategory[0];
+    const config = blogListCategory.find((item) => item.id.toString() === category);
+    if (!config) {
+        throw new InvalidParameterError(`Unknown news category: ${category}`);
+    }
 
-    const response = await ofetch(`${baseUrl}/ApiHomeNew${config.apiPath}`, {
+    const response = await ofetch<{ result: NewsListItem[] }>(`${baseUrl}/ApiHomeNew${config.apiPath}`, {
         query: {
             page: 1,
             pageSize: limit,
@@ -144,20 +163,33 @@ async function handler(ctx) {
         image: item.image,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                if (item.objectType === 4) {
-                    const response = await getNews(item.detailId);
-                    item.description = response.code === 200 ? response.result.detail : item.description;
-                } else if (item.objectType === 3) {
-                    const response = await getBlog(item.detailId);
-                    item.description = response.code === 200 ? response.result.content : item.description;
+    const items = await pMap(
+        list,
+        async (item) => {
+            try {
+                const description = await cache.tryGet(`oschina:article:body:${item.guid}`, async () => {
+                    if (item.objectType === 4) {
+                        const response = await getNews(item.detailId);
+                        if (response.code === 200) {
+                            return response.result.detail;
+                        }
+                    } else if (item.objectType === 3) {
+                        const response = await getBlog(item.detailId);
+                        if (response.code === 200) {
+                            return response.result.content;
+                        }
+                    }
+                    throw new ContentUnavailableError('Article content is unavailable');
+                });
+                return { ...item, description };
+            } catch (error) {
+                if (error instanceof ContentUnavailableError) {
+                    return item;
                 }
-
-                return item;
-            })
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

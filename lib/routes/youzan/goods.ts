@@ -1,9 +1,18 @@
 import { load } from 'cheerio';
+import { escapeAttribute, escapeText } from 'entities';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+const parsePublicationDate = (value?: number): Date | undefined => {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
 
 export const route: Route = {
     path: '/goods/:id',
@@ -34,9 +43,9 @@ async function handler(ctx: Context) {
 
     const items = goods.map((good) => ({
         title: good.title,
-        description: `价格：${good.price}<br>${good.picture.map((picture) => `<img src="${picture.url}">`).join('')}`,
+        description: `价格：${escapeText(good.price)}<br>${good.picture.map((picture) => `<img src="${escapeAttribute(picture.url)}">`).join('')}`,
         link: `https://detail.youzan.com/show/goods?alias=${good.alias}`,
-        pubDate: parseDate(good.created_date_time),
+        pubDate: parsePublicationDate(good.created_date_time),
     }));
 
     return {

@@ -1,10 +1,25 @@
-import { load } from 'cheerio';
-import type { Text } from 'domhandler';
-
 import type { Data, Route } from '@/types';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { fetchBmkgApi } from './utils';
+
+interface EarthquakeResponse {
+    alert: {
+        info: Array<{
+            eventid: number;
+            date: string;
+            time: string;
+            latitude: string;
+            longitude: string;
+            magnitude: number;
+            depth: string;
+            area: string;
+            description: string;
+            instruction: string;
+        }>;
+    };
+}
 
 export const route: Route = {
     path: '/earthquake',
@@ -21,36 +36,30 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bmkg.go.id/', 'bmkg.go.id/gempabumi-terkini.html'],
+            source: ['bmkg.go.id/', 'bmkg.go.id/gempabumi/gempabumi-m5'],
         },
     ],
     name: 'Recent Earthquakes',
     maintainers: ['Shinanory'],
     handler,
-    url: 'bmkg.go.id/',
+    url: 'bmkg.go.id/gempabumi/gempabumi-m5',
 };
 
 async function handler(): Promise<Data> {
-    const url = 'https://www.bmkg.go.id/gempabumi-terkini.html';
-    const response = await got(url);
-    const $ = load(response.data);
-    const items = $('div .table-responsive tbody tr')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const td = $item.find('td').toArray() as Array<{ children: Text[] }>;
-            return {
-                title: `${td[2].children[0].data}|${td[3].children[0].data}|${td[4].children[0].data}|${td[5].children[0].data}|${td[6].children[0].data}`,
-                link: url,
-                pubDate: timezone(parseDate(`${td[1].children[0].data} ${td[1].children[2].data.slice(0, 8)}`, 'DD-MM-YY HH:mm:ss'), 7),
-            };
-        });
+    const url = 'https://www.bmkg.go.id/gempabumi/gempabumi-m5';
+    const response = await fetchBmkgApi<EarthquakeResponse>('/api/gempa/m5', url);
+    const items = response.alert.info.map((item) => ({
+        title: `${item.latitude}|${item.longitude}|${item.magnitude}|${item.depth}|${item.area}`,
+        link: `https://www.bmkg.go.id/gempabumi/${item.eventid}`,
+        description: `<p>${item.description}</p><p>${item.instruction}</p>`,
+        pubDate: timezone(parseDate(`${item.date} ${item.time}`, 'DD-MM-YY HH:mm:ss [WIB]'), 7),
+    }));
 
     return {
-        title: $('title').text(),
+        title: 'Gempa Bumi M 5,0+ - BMKG',
         link: url,
         description: '印尼气象气候和地球物理局 最近的地震(M ≥ 5.0) | BMKG earthquake',
         item: items,
-        language: 'in',
+        language: 'id',
     };
 }

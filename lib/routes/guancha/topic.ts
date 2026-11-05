@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/topic/:id/:order?',
     categories: ['new-media'],
     example: '/guancha/topic/110/1',
-    parameters: { id: '话题 id，可在URL中找到，默认为全部，即为 `0`', order: '排序参数，见下表' },
+    parameters: { id: '话题 id，可在 URL 中找到；使用 `0` 选择全部话题', order: '排序参数，见下表' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,8 +21,9 @@ export const route: Route = {
     radar: [
         {
             source: ['guancha.cn/'],
-            target: '/:category?',
+            target: '/topic/0',
         },
+        { source: ['user.guancha.cn/'], target: '/topic/0' },
     ],
     name: '风闻话题',
     maintainers: ['occupy5', 'nczitzk'],
@@ -42,7 +43,13 @@ async function handler(ctx) {
     const order = ctx.req.param('order') ?? '1';
 
     const rootUrl = 'https://user.guancha.cn';
-    const currentUrl = `${rootUrl}/${id === '0' ? 'main/index-list.json?' : 'topic/post-list?topic_id=' + id}&page=1&order=${order}`;
+    const url = new URL(id === '0' ? 'main/index-list.json' : 'topic/post-list', `${rootUrl}/`);
+    if (id !== '0') {
+        url.searchParams.set('topic_id', id);
+    }
+    url.searchParams.set('page', '1');
+    url.searchParams.set('order', order);
+    const currentUrl = url.href;
 
     const response = await got({
         method: 'get',
@@ -63,8 +70,8 @@ async function handler(ctx) {
         });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        items.map(async (item) => {
+            const article = await cache.tryGet(`guancha:topic:dated-article:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -72,20 +79,22 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = parseRelativeDate(content('.time1').text());
-                item.author = content('.user-main h4 a').first().text();
-                item.description = content('.article-txt-content').html();
-
-                return item;
-            })
-        )
+                const time = content('.time1').text();
+                return {
+                    pubDate: time ? parseRelativeDate(time) : undefined,
+                    author: content('.user-main h4 a').first().text(),
+                    description: content('.article-txt-content').html(),
+                };
+            });
+            return { ...item, ...article };
+        })
     );
 
     $('h1.title span').remove();
 
     return {
         title: `观察者网 - ${id === '0' ? '风闻' : $('h1.title').text()}`,
-        link: currentUrl,
+        link: id === '0' ? rootUrl : currentUrl,
         item: items,
     };
 }

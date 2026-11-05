@@ -5,6 +5,11 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/k',
     categories: ['traditional-media'],
+    radar: [
+        {
+            source: ['k.caixin.com/web', 'k.caixin.com/'],
+        },
+    ],
     example: '/caixin/k',
     parameters: {},
     features: {

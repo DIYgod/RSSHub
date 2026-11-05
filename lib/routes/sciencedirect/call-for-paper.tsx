@@ -67,7 +67,6 @@ async function handler(ctx) {
             author: `${cfp.journal.displayName} (IF: ${cfp.journal.impactFactor})`,
             link,
             description,
-            pubDate: cfp.submissionDeadline || '',
         };
     });
 

@@ -2,12 +2,15 @@ import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
@@ -15,11 +18,17 @@ const apiBase = 'https://api.blockbeats.cn';
 const apiPrefix = '/v2';
 const appKey = 'bb_demo_app';
 const appSecret = 'bb_demo_secret_2026_01';
+const originalAuthorPattern = /^(?:原文标题[：:][\s\S]*?)?原文作者[：:]\s*(\S[^\r\n]*)$/;
 
 type ApiQuery = Record<string, number | string | undefined>;
 
 type BlockBeatsItem = DataItem & {
     articleId: number;
+    image?: string;
+};
+
+type BlockBeatsArticleDetails = {
+    content?: string;
     image?: string;
 };
 
@@ -66,14 +75,32 @@ const fetchApi = (path: string, query: ApiQuery) => {
 const render = (data: { image?: string; description?: string }) => {
     const html = renderToString(<BlockBeatsDescription image={data.image} description={data.description} />);
     const $ = load(html, null, false);
+    let author: string | undefined;
 
-    $('img').each((_, e) => {
-        const $e = $(e);
-        const src = $e.attr('src');
-        $e.attr('src', src?.split('?', 1)[0]);
-    });
+    // Attribution headers precede the article; later quotations remain part of the body.
+    $.root()
+        .children()
+        .each((_, element) => {
+            const block = $(element);
+            const text = block.text().trim();
+            if (block.is('img, br') || !text) {
+                return;
+            }
+            if (!block.is('blockquote')) {
+                return false;
+            }
+            const match = originalAuthorPattern.exec(text);
+            if (match) {
+                author ||= match[1].trim();
+                block.remove();
+            } else if (/^原文标题[：:][^\r\n]+$/.test(text)) {
+                block.remove();
+            } else {
+                return false;
+            }
+        });
 
-    return $.html();
+    return { description: $.html(), author };
 };
 
 const BlockBeatsDescription = ({ image, description }: { image?: string; description?: string }) => (
@@ -100,6 +127,20 @@ const channelMap = {
         api: '/article/list',
     },
 };
+
+async function createArticleItem(item: BlockBeatsItem): Promise<BlockBeatsItem> {
+    const details = await cache.tryGet(`theblockbeats:article:v2:${item.link}`, async (): Promise<BlockBeatsArticleDetails> => {
+        const response = await fetchApi('/article/detail', { article_id: item.articleId });
+        return { content: response.data.content, image: response.data.img_url };
+    });
+    const rendered = render({ image: details.image || item.image, description: details.content || item.description || undefined });
+
+    return {
+        ...item,
+        description: rendered.description,
+        author: rendered.author || item.author,
+    };
+}
 
 export const route: Route = {
     path: '/:channel?/:original?',
@@ -147,14 +188,17 @@ export const route: Route = {
 
 | 全部 | 深度 | 精选 | 热点追踪 |
 | :--: | :--: | :--: | :------: |
-|      |  -2  |   1  |     2    |`,
+|   0  |   1  |   2  |     3    |`,
 };
 
 async function handler(ctx) {
     const { channel = 'newsflash', original } = ctx.req.param();
+    if (channel !== 'newsflash' && channel !== 'article') {
+        throw new InvalidParameterError('Invalid channel. Use newsflash or article.');
+    }
 
     const response = await fetchApi(channelMap[channel].api, {
-        limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+        limit: getRouteLimit(ctx, 20),
         original: channel === 'article' ? original : undefined,
     });
 
@@ -170,20 +214,14 @@ async function handler(ctx) {
     }));
 
     if (channel !== 'newsflash') {
-        list = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(`theblockbeats:${item.link}`, async () => {
-                    const response = await fetchApi('/article/detail', {
-                        article_id: item.articleId,
-                    });
-                    item.description = render({
-                        image: response.data.img_url || item.image,
-                        description: response.data.content || item.description,
-                    });
-                    return item;
-                })
-            )
-        );
+        try {
+            list = await pMap(list, createArticleItem, { concurrency: 3, stopOnError: false });
+        } catch (error) {
+            if (error instanceof AggregateError) {
+                throw new AggregateError(error.errors, `BlockBeats article details failed: ${error.errors.map(String).join('; ')}`, { cause: error });
+            }
+            throw error;
+        }
     }
 
     const items = list.map(({ author, category, description, image, link, pubDate, title }) => ({

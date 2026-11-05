@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const rootUrl = 'https://www.hellobtc.com';
 
@@ -39,13 +38,19 @@ async function handler() {
     const items = $('nav.js-nav')
         .find('div.item')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('h2').text(),
-            link: $(item).find('a').attr('href'),
-            description: $(item).find('div.sub').text(),
-            pubDate: timezone(parseDate($(item).find('span.date').text(), 'MM-DD HH:mm'), 8),
-        }))
-        .filter(Boolean);
+        .map((item) => {
+            const $item = $(item);
+            const link = $item.find('a').attr('href');
+            const date = $item.find('span.date').text();
+            const year = link ? new URL(link, rootUrl).pathname.match(/^\/news\/(\d{4})\d{2}\//)?.[1] : undefined;
+            return {
+                title: $(item).find('h2').text(),
+                link,
+                description: $(item).find('div.sub').text(),
+                pubDate: date && year ? parseDateInTimezone(`${year}-${date}`, 8) : undefined,
+            };
+        })
+        .filter((item) => item.title && item.link);
 
     return {
         title: '白话区块链 - 快讯',

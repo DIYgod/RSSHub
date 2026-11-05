@@ -52,22 +52,20 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    // 选择类名为“comment-body”的第一个元素
-                    item.description = $('.cj_xw_cong').first().html();
-
-                    // 上面每个列表项的每个属性都在此重用，
-                    // 并增加了一个新属性“description”
+                    // Preserve the legacy body and support the current article template.
+                    item.description = $('.cj_xw_cong').first().html() || $('.content_main').first().html();
+                    const pubDate = $('meta[name="PubDate"]').attr('content');
+                    if (pubDate) {
+                        item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss'), 8);
+                    }
                     return item;
                 })
             )
         );
 
         return {
-            // 源标题
             title: '中国国家博物馆资讯要闻',
-            // 源链接
             link: 'https://www.chnmuseum.cn/zx/xingnew/',
-            // 源文章
             item: items,
         };
     },

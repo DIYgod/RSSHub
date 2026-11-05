@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const $get = async (url: string, encoding = 'gb2312') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
+const $get = async (url: string) => new TextDecoder('gb2312').decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 const $trim = (str: string) => {
     let s = str.trim();
     s = s.startsWith('&nbsp;&nbsp;') ? s.slice(12) : s;

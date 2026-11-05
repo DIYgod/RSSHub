@@ -81,7 +81,7 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
     );
     const renderedPost = (
         <>
-            {post.last_replies && viewOptions.includeReplyCount && (
+            {post.replies !== undefined && viewOptions.includeReplyCount && (
                 <>
                     <small>{post.replies} 💬</small>
                     <br />
@@ -140,5 +140,5 @@ interface ChanPost {
     last_replies?: ChanPost[];
 }
 
-export type { CatalogApiReturn, ChanPost, ViewOptions };
-export { parseParams, processCatalog, renderPost };
+export type { CatalogApiReturn };
+export { parseParams, processCatalog };

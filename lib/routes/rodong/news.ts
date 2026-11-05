@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.rodong.rep.kp';
+const languages = { cn: 'zh-CN', en: 'en', ko: 'ko' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/news/:language?',
@@ -21,10 +22,9 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/en/index.php', 'rodong.rep.kp/ko/index.php', 'rodong.rep.kp/cn', 'rodong.rep.kp/en', 'rodong.rep.kp/ko'],
-            target: '/news',
-        },
+        { source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/cn'], target: '/news/cn' },
+        { source: ['rodong.rep.kp/en/index.php', 'rodong.rep.kp/en'], target: '/news/en' },
+        { source: ['rodong.rep.kp/ko/index.php', 'rodong.rep.kp/ko'], target: '/news/ko' },
     ],
     name: 'News',
     maintainers: ['TonyRL'],
@@ -37,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'ko' } = ctx.req.param();
-    const link = `${host}/${language}/index.php?MkBAMkAxQA==`;
+    const link = `${host}/${language}/index.php?MUBAMkAxQA==`;
     const { data: response } = await got(link);
 
     const $ = load(response);
@@ -59,8 +59,8 @@ async function handler(ctx) {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                $('.news_Title, .NewsDetail, .News_Detail, #moveNews').remove();
-                item.description = $('.col-sm-8').html();
+                $('.TitleP, .WriterP').remove();
+                item.description = $('#ContDIV').html();
 
                 return item;
             })
@@ -69,6 +69,7 @@ async function handler(ctx) {
 
     return {
         title: $('head title').text(),
+        language: languages[language],
         description: $('head meta[name="description"]').attr('content'),
         link,
         item: items,

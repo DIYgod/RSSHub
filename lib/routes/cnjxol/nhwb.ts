@@ -6,10 +6,14 @@ export const route: Route = {
     path: '/nhwb/:id?',
     categories: ['traditional-media'],
     example: '/cnjxol/nhwb',
-    parameters: { id: '编号，见下表，默认为全部' },
+    parameters: { id: '编号，见下表，默认为全部；也支持官网文件名，例如 `node_01.html`' },
     radar: [
         {
-            source: ['cnjxol.com/'],
+            source: ['nhwb.cnjxol.com/', 'nhwb.cnjxol.com/nhwbPaper/pc/layout/'],
+            target: '/nhwb',
+        },
+        {
+            source: ['nhwb.cnjxol.com/nhwbPaper/pc/layout/:yearMonth/:day/:id'],
             target: '/nhwb/:id',
         },
     ],

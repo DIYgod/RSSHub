@@ -1,4 +1,3 @@
-// lib/routes/resetera/thread.ts
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -22,10 +21,10 @@ const absolutize = (u?: string, root = BASE) => {
     return u;
 };
 
-// 提取 post-XXXX 楼层 id，便于排序/去重
+// Extract post IDs for sorting.
 const getPostId = (link?: string) => Number(link?.match(/post-(\d+)/)?.[1] || 0);
 
-// 从 srcset 中挑第一张 URL
+// Choose the first image from a srcset.
 const pickFromSrcset = (v?: string) =>
     v
         ? v
@@ -35,114 +34,84 @@ const pickFromSrcset = (v?: string) =>
         : undefined;
 
 const handler: Route['handler'] = async (ctx) => {
-    const { id } = ctx.req.param(); // 例如 1076160
+    const { id } = ctx.req.param();
     const threadRoot = `${BASE}/threads/${id}/`;
 
-    // 1) 抓首页，解析“最后一页”（扫描所有分页链接取最大）
-    const firstHtml = await ofetch<string>(threadRoot);
-    const $ = load(firstHtml);
+    const targetUrl = `${threadRoot}latest`;
+    const html = await ofetch<string>(targetUrl);
+    const $ = load(html);
 
-    let lastPage = 1;
-    $('a[href*="page-"]').each((_, a) => {
-        const h = $(a).attr('href') || '';
-        const m = h.match(/page-(\d+)/);
-        if (m) {
-            lastPage = Math.max(lastPage, Number(m[1]));
-        }
-    });
-
-    // 最新页 URL
-    const targetUrl = lastPage === 1 ? threadRoot : `${threadRoot}page-${lastPage}`;
-
-    // 2) 抓取倒数第 1、2 页并合并（首页已抓过，避免重复请求）
-    const pages = lastPage > 1 ? [lastPage - 1, lastPage] : [1];
-    const htmlMap = new Map<number, string>([[1, firstHtml]]);
-    const htmlList = await Promise.all(
-        pages.map(async (p) => {
-            if (htmlMap.has(p)) {
-                return htmlMap.get(p)!;
-            }
-            const html = await ofetch<string>(p === 1 ? threadRoot : `${threadRoot}page-${p}`);
-            htmlMap.set(p, html);
-            return html;
-        })
-    );
-
-    // 3) 解析两页帖子，去重
     const seen = new Set<string>();
-    const items = htmlList.flatMap((html) => {
-        const $$ = load(html);
-        return $$('article.message')
-            .toArray()
-            .map((el) => {
-                const $el = $$(el);
+    const items = $('article.message')
+        .toArray()
+        .map((el) => {
+            const $el = $(el);
 
-                // 作者
-                const author = $el.find('.message-author, .username, .message-name a, [itemprop="name"]').first().text().trim() || '';
+            // Author
+            const author = $el.find('.message-author, .username, .message-name a, [itemprop="name"]').first().text().trim() || '';
 
-                // 楼层直达链接（永久链接）
-                const perma = $el.find('.message-attribution-opposite a[href*="/post-"]').last().attr('href') || $el.find('a[href*="#post"]').last().attr('href') || '';
-                const link = perma ? absolutize(perma, threadRoot) : targetUrl;
-                if (!link || seen.has(link)) {
-                    return null;
-                }
-                seen.add(link);
+            // Permanent post link
+            const perma = $el.find('.message-attribution-opposite a[href*="/post-"]').last().attr('href') || $el.find('.message-attribution-opposite a[href*="#post"]').last().attr('href') || '';
+            const link = perma ? absolutize(perma, threadRoot) : targetUrl;
+            if (!link || seen.has(link)) {
+                return null;
+            }
+            seen.add(link);
 
-                // 时间
-                const timeEl = $el.find('time').first();
-                const dataTime = Number(timeEl.attr('data-time') || 0);
-                const pubDate = timeEl.attr('datetime') || (dataTime ? new Date(dataTime * 1000).toUTCString() : undefined);
+            // Publication time
+            const timeEl = $el.find('time').first();
+            const dataTime = Number(timeEl.attr('data-time') || 0);
+            const pubDate = timeEl.attr('datetime') || (dataTime ? new Date(dataTime * 1000).toUTCString() : undefined);
 
-                // 正文容器（就地处理）
-                const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper');
+            // Main post content
+            const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper');
 
-                // 去掉引用块（回复别人的引用）
-                $body.find('.bbCodeBlock--quote, blockquote.bbCodeBlock').remove();
-                // 展开剧透（移除标题，保留内容）
-                $body.find('.bbCodeBlock--spoiler .bbCodeBlock-title').remove();
+            // Remove quoted replies.
+            $body.find('.bbCodeBlock--quote, blockquote.bbCodeBlock').remove();
+            // Expand spoilers while preserving their content.
+            $body.find('.bbCodeBlock--spoiler .bbCodeBlock-title').remove();
 
-                // 收集图片（在去引用之后统计，避免“只有引用里有图”也被当作图帖）
-                const imgs = $body
-                    .find('img, picture source')
-                    .toArray()
-                    .map((node) => {
-                        const $n = $$(node);
-                        const src = $n.attr('src') || $n.attr('data-src') || $n.attr('data-original') || $n.attr('data-url') || pickFromSrcset($n.attr('srcset')) || pickFromSrcset($n.attr('data-srcset'));
-                        return absolutize(src || '', threadRoot);
-                    })
-                    .filter((u): u is string => !!u);
+            // Collect images after removing quotes.
+            const imgs = $body
+                .find('img, picture source')
+                .toArray()
+                .map((node) => {
+                    const $n = $(node);
+                    const src = $n.attr('src') || $n.attr('data-src') || $n.attr('data-original') || $n.attr('data-url') || pickFromSrcset($n.attr('srcset')) || pickFromSrcset($n.attr('data-srcset'));
+                    return absolutize(src || '', threadRoot);
+                })
+                .filter((u): u is string => !!u);
 
-                const hasImage = imgs.length > 0;
+            const hasImage = imgs.length > 0;
 
-                // 文字 HTML：移除图片再取 HTML
-                $body.find('img, picture').remove();
-                const textHtml = ($body.html() || '').trim();
+            // Render images separately from the post text.
+            $body.find('img, picture').remove();
+            const textHtml = ($body.html() || '').trim();
 
-                // 标题：作者 + 楼层号（若能取到）
-                const floor = $el.find('.message-attribution-opposite a').last().text().trim();
-                const title = author ? `${author}${floor ? ' - ' + floor : ''}` : floor || 'New post';
+            // Combine author and post number.
+            const floor = $el.find('.message-attribution-opposite a').last().text().trim();
+            const title = author ? `${author}${floor ? ' - ' + floor : ''}` : floor || 'New post';
 
-                // 描述：Source 链接 + 文字 + 图片
-                const imagesHtml = hasImage ? imgs.map((u) => `<p><img src="${u}" /></p>`).join('') : '';
-                const description = `
+            // Main content and images
+            const imagesHtml = hasImage ? imgs.map((u) => `<p><img src="${u}" /></p>`).join('') : '';
+            const description = `
                     <p><a href="${link}">🔗 Source post</a></p>
                     ${textHtml}${imagesHtml}
                 `;
 
-                return {
-                    title,
-                    link,
-                    guid: link,
-                    description,
-                    author,
-                    pubDate,
-                    category: hasImage ? ['image'] : undefined, // 有图打标签，供全局过滤使用
-                };
-            })
-            .filter((post) => post !== null);
-    });
+            return {
+                title,
+                link,
+                guid: link,
+                description,
+                author,
+                pubDate,
+                category: hasImage ? ['image'] : undefined,
+            };
+        })
+        .filter((post) => post !== null);
 
-    // 4) 显式排序：postId 降序；再按时间兜底
+    // Sort newest posts first, falling back to publication time.
     items.sort((a, b) => {
         const ida = getPostId(a.link);
         const idb = getPostId(b.link);
@@ -154,11 +123,7 @@ const handler: Route['handler'] = async (ctx) => {
         return tb - ta;
     });
 
-    // 5) 标题取“最新页”的 <h1>
-    const title =
-        load(htmlList.at(-1) ?? '')('h1')
-            .text()
-            .trim() || `ResetEra Thread ${id}`;
+    const title = $('h1').text().trim() || `ResetEra Thread ${id}`;
 
     return {
         title,
@@ -173,13 +138,13 @@ export const route: Route = {
     url: 'resetera.com',
     example: '/resetera/thread/1076160',
     parameters: {
-        id: 'Numeric thread ID at the end of the URL',
+        id: 'Numeric thread ID or the slug.ID identifier from the thread URL',
     },
     maintainers: ['ZEN-GUO'],
     categories: ['bbs'],
     radar: [
         {
-            source: ['resetera.com/threads/:slug.:id/'],
+            source: ['resetera.com/threads/:id/:page?'],
             target: '/thread/:id',
         },
     ],

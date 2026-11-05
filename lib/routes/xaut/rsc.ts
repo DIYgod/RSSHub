@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/rsc/:category?',
@@ -30,66 +32,79 @@ export const route: Route = {
 |   tzgg   |   gzdt   |`,
 };
 
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'author' | 'pubDate'>> {
+    if (new URL(link).hostname !== 'renshichu.xaut.edu.cn') {
+        return {};
+    }
+    const response = await got(link);
+    const content = load(response.body);
+    const form = content('form[name="_newscontent_fromname"]');
+    const description =
+        (form.children('.con_con').html() ?? '') +
+        form
+            .children('ul')
+            .toArray()
+            .map((attachment) => content.html(attachment))
+            .join('');
+    const author =
+        form
+            .children('h3')
+            .find('span')
+            .filter((_, span) => content(span).text().startsWith('作者：'))
+            .text()
+            .replace(/^作者：/, '') || undefined;
+    const rawDate = form
+        .find('h3 span:contains(时间)')
+        .text()
+        .replace(/^时间：/, '');
+    const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
+    return { description, author, pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined };
+}
+
 async function handler(ctx) {
     let category = ctx.req.param('category');
-    // 这里的category是个形参
-    const dic_html = { tzgg: 'tzgg.htm', gzdt: 'gzdt.htm' };
-    const dic_title = { tzgg: '通知公告', gzdt: '工作动态' };
+    const categoryPaths = { tzgg: 'tzgg.htm', gzdt: 'gzdt.htm' };
+    const categoryTitles = { tzgg: '通知公告', gzdt: '工作动态' };
 
-    // 设置默认值
-    if (dic_title[category] === undefined) {
+    if (categoryTitles[category] === undefined) {
         category = 'tzgg';
     }
 
     const response = await got({
         method: 'get',
-        url: 'http://renshichu.xaut.edu.cn/' + dic_html[category],
+        url: 'http://renshichu.xaut.edu.cn/' + categoryPaths[category],
     });
     const data = response.body;
     const $ = load(data);
 
-    // 这个列表指通知公告详情列表
     const list = $('.vsb-space.n_right .list .cleafix')
         .toArray()
+        .filter((item) => $(item).find('.list_wen a').first().attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
-            // 工作动态栏目里有一些是外链，这里做个判断
             const a = $item.find('.list_wen a').eq(0).attr('href');
-            const link = a!.startsWith('http') ? a : 'http://renshichu.xaut.edu.cn/' + a;
-            // 这里jquery比较长，引几个中间变量倒是方便阅读，但是我还是觉得不需要
+            const link = new URL(a!, 'http://renshichu.xaut.edu.cn/' + categoryPaths[category]).href;
             const title = $item.find('.list_wen a.tit').text();
+            const yearMonth = $item.find('.list_time .month').text();
+            const day = $item.find('.list_time .day').text();
+            const pubDate = yearMonth && day ? timezone(parseDate(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', true), 8) : undefined;
             return {
                 title,
                 link,
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
     return {
-        // 源标题
-        title: '西安理工大学人事处-' + dic_title[category],
-        // 源链接
+        title: '西安理工大学人事处-' + categoryTitles[category],
         link: 'http://renshichu.xaut.edu.cn',
-        // 源说明
-        description: '西安理工大学人事处-' + dic_title[category],
-        // 遍历此前获取的数据
-        item: await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    //  下面的if判断是否属于外链，使用切片的方式来判断，并不优雅，先用着吧
-                    if (item.link!.startsWith('http://renshichu')) {
-                        // 不属于外链
-                        const res = await got({
-                            method: 'get',
-                            url: item.link,
-                        });
-                        const content = load(res.body);
-                        item.description = content('.vsb-space form[name]').html();
-                        item.pubDate = parseDate(content('.vsb-space form[name] h3 span:contains(时间)').text().slice(3));
-                    } else {
-                        item.description = '这是一个外链("▔□▔)/("▔□▔)/所以你没法直接看到内容' + item.link;
-                    }
-                    return item;
-                })
-            )
+        description: '西安理工大学人事处-' + categoryTitles[category],
+        item: await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`xaut:rsc:detail:v4:${item.link}`, () => fetchDetail(item.link!));
+                return { ...item, description: detail.description, author: detail.author, pubDate: detail.pubDate ?? item.pubDate };
+            },
+            { concurrency: 3, stopOnError: false }
         ),
     };
 }

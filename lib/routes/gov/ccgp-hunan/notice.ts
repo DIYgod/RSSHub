@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/notice/:type?',
@@ -55,7 +56,7 @@ const flatten = (nodes: CategoryNode[]): Category[] => nodes.flatMap((node) => [
 
 async function handler(ctx: Context) {
     const { type = '项目信息' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const categories = await cache.tryGet('ccgp-hunan:categories', async () => {
         const response = await ofetch(`${rootUrl}/admin/category/home/categoryTreeFind?parentId=622707&siteId=160`);

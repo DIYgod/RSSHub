@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootURL = 'http://xg.swjtu.edu.cn';
 const listURL = {
@@ -15,40 +17,32 @@ const listURL = {
     xgzj: `${rootURL}/web/Home/NewsList?xvw34vmu=010e.shtml`,
 };
 
-const getItem = (item, cache) => {
+const getItem = async (item) => {
     const newsInfo = item.find('h4').find('a');
     const newsTime = item.find('span.ctxlist-time').text();
     const newsTitle = newsInfo.text();
     const link = `${rootURL}${newsInfo.attr('href')}`;
-    return cache.tryGet(link, async () => {
+    const details = await cache.tryGet(`swjtu:xg:article:${link}`, async () => {
         try {
             const resp = await got({
                 method: 'get',
                 url: link,
             });
             const $$ = load(resp.data);
-            let newsText = $$('.detail-content-text').html();
-            if (!newsText) {
-                newsText = '转发通知';
-            }
+            const newsText = $$('.detail-content-text').html();
             return {
-                title: newsTitle,
-                pubDate: parseDate(String(newsTime)),
-                link,
-                description: newsText,
+                description: newsText || undefined,
             };
         } catch (error) {
             if (error instanceof FetchError && error.statusCode === 404) {
                 return {
-                    title: newsTitle,
-                    pubDate: parseDate(String(newsTime)),
-                    link,
                     description: '',
                 };
             }
             throw error;
         }
     });
+    return { title: newsTitle, pubDate: newsTime ? timezone(parseDate(newsTime, 'YYYY-MM-DD'), 8) : undefined, link, ...details };
 };
 
 export const route: Route = {
@@ -97,17 +91,18 @@ async function handler(ctx) {
     const $ = load(resp.data);
     const list = $('div.right-side ul.block-ctxlist li');
 
-    const items = await Promise.all(
-        list.toArray().map((i) => {
+    const items = await pMap(
+        list.toArray(),
+        (i) => {
             const item = $(i);
-            return getItem(item, cache);
-        })
+            return getItem(item);
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: '西南交大-扬华素质网',
         link: pageURL,
         item: items,
-        allowEmpty: true,
     };
 }

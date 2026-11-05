@@ -1,8 +1,12 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
+import CaptchaError from '@/errors/types/captcha';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -44,22 +48,47 @@ async function handler() {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: parseDate($e.find('.Article_PublishDate').text()),
+                pubDate: $e.find('.Article_PublishDate').text() ? parseDate(`${$e.find('.Article_PublishDate').text()}T00:00:00+08:00`) : undefined,
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-
-                item.author = $('.arti_publisher').text().replace('发布者：', '');
-                item.description = $('.wp_articlecontent').html();
-
-                return item;
-            })
-        )
+    const out = await pMap(
+        list,
+        async (item) => {
+            const external = new URL(item.link!).hostname === 'mp.weixin.qq.com';
+            try {
+                const detail = await cache.tryGet(item.link!, async () => {
+                    const response = await ofetch.raw(item.link!, { responseType: 'text' });
+                    const html = response._data;
+                    if (html === undefined) {
+                        throw new Error(`No article response body was returned for ${item.link}.`);
+                    }
+                    const $ = load(html);
+                    const content = external ? $('#js_content') : $('.wp_articlecontent');
+                    if (external) {
+                        if (new URL(response.url).pathname === '/mp/wappoc_appmsgcaptcha' || (!content.length && $('script[src="https://captcha.gtimg.com/TCaptcha.js"]').length)) {
+                            throw new CaptchaError(`WeChat requires captcha verification for ${item.link}. Retry later or open the original article.`);
+                        }
+                        content.find('img[data-src]').each((_, image) => {
+                            $(image).attr('src', $(image).attr('data-src')).removeAttr('data-src');
+                        });
+                    }
+                    const timestamp = external ? /\bcreate_timestamp:\s*['"](\d+)['"]\s*\*\s*1/.exec(html)?.[1] : undefined;
+                    return {
+                        author: $('.arti_publisher').text().replace('发布者：', ''),
+                        description: content.html(),
+                        ...(timestamp && { pubDate: parseDate(Number(timestamp) * 1000) }),
+                    };
+                });
+                return { ...item, ...detail };
+            } catch (error) {
+                if (external && (error instanceof FetchError || error instanceof CaptchaError)) {
+                    return item;
+                }
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

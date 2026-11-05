@@ -1,11 +1,6 @@
-import { load } from 'cheerio';
+import type { Route } from '@/types';
 
-import { config } from '@/config';
-import type { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-// test url http://localhost:1200/asianfanfics/text-search/milklove
+import { getStories } from './utils';
 
 export const route: Route = {
     path: '/text-search/:keyword',
@@ -18,7 +13,7 @@ export const route: Route = {
     maintainers: ['KazooTTT'],
     radar: [
         {
-            source: ['www.asianfanfics.com/browse/text_search?q=:keyword'],
+            source: ['www.asianfanfics.com/browse/search'],
             target: '/text-search/:keyword',
         },
     ],
@@ -31,41 +26,10 @@ async function handler(ctx) {
     if (keyword.trim() === '') {
         throw new Error('关键词不能为空');
     }
-    const link = `https://www.asianfanfics.com/browse/text_search?q=${keyword}+`;
-
-    const response = await ofetch(link, {
-        headers: {
-            'user-agent': config.trueUA,
-        },
-    });
-    const $ = load(response);
-
-    const items: DataItem[] = $('.primary-container .excerpt')
-        .toArray()
-        .filter((element) => {
-            const $element = $(element);
-            return $element.find('.excerpt__title a').length > 0;
-        })
-        .map((element) => {
-            const $element = $(element);
-            const title = $element.find('.excerpt__title a').text();
-            const link = 'https://www.asianfanfics.com' + $element.find('.excerpt__title a').attr('href');
-            const author = $element.find('.excerpt__meta__name a').text().trim();
-            const pubDate = parseDate($element.find('time').attr('datetime') || '');
-            const description = $element.find('.excerpt__text').html();
-
-            return {
-                title,
-                link,
-                author,
-                pubDate,
-                description,
-            };
-        });
+    const data = await getStories(`https://www.asianfanfics.com/browse/search?q=${encodeURIComponent(keyword)}`);
 
     return {
         title: `Asianfanfics - 关键词：${keyword}`,
-        link,
-        item: items,
+        ...data,
     };
 }

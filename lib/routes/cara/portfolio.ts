@@ -1,9 +1,10 @@
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import type { PortfolioResponse } from './types';
-import { customFetch, fetchPortfolioItem, parseUserData } from './utils';
+import { customFetch, fetchPortfolioItem, getCacheKey, parseUserData } from './utils';
 
 export const route: Route = {
     path: '/portfolio/:user',
@@ -23,14 +24,14 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const user = ctx.req.param('user');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
     const userInfo = await parseUserData(user);
 
     const api = `${API_HOST}/profiles/portfolio?id=${userInfo.id}&take=${limit}`;
 
     const portfolioResponse = await customFetch<PortfolioResponse>(api);
 
-    const items = await Promise.all(portfolioResponse.data.map((item) => cache.tryGet(`${HOST}/post/${item.postId}`, async () => await fetchPortfolioItem(item))));
+    const items = await Promise.all(portfolioResponse.data.map((item) => cache.tryGet(getCacheKey(`post:${item.postId}`), async () => await fetchPortfolioItem(item))));
 
     return {
         title: `Portfolio - ${userInfo.name}`,

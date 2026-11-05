@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -28,14 +28,14 @@ async function handler(ctx) {
     const { topic } = ctx.req.param();
     const link = `https://www.bbc.com/news/topics/${topic}`;
 
-    const response = await ofetch(link);
+    const response = await ofetch(link, { allowH2: false });
     const $ = load(response);
 
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
     const pageProps = nextData.props.pageProps;
     const topicData = pageProps.page[pageProps.pageKey];
 
-    const list = topicData.sections[0].content.map((item) => ({
+    const list: Array<DataItem & { link: string }> = topicData.sections[0].content.map((item) => ({
         title: item.title,
         link: `https://www.bbc.com${item.href}`,
         description: item.description,

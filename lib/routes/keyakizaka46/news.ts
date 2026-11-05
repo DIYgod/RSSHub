@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/news',
     categories: ['new-media'],
     example: '/keyakizaka46/news',
-    name: 'Keyakizaka46 News 欅坂 46 新闻',
+    name: 'News 新闻',
     maintainers: ['crispgm'],
     handler,
 };
@@ -24,17 +24,18 @@ async function handler() {
     const $ = load(response);
 
     return {
-        allowEmpty: true,
         title: '欅坂46官网 NEWS',
-        link: 'http://www.keyakizaka46.com/news/',
+        link: 'https://www.keyakizaka46.com/s/k46o/news/list',
         item: $('div.keyaki-news div.box-news ul li')
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const sourceDate = $item.find('div.date').text().trim();
+                const date = sourceDate ? parseDate(sourceDate, 'YYYY.MM.DD', true) : undefined;
                 return {
                     title: $item.find('div.text a').text(),
                     link: $item.find('div.text a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('div.date').text()), 9),
+                    pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 9) : undefined,
                 };
             }),
     };

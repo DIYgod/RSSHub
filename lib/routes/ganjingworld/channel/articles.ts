@@ -5,8 +5,10 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import type { ApiResponse } from '../interfaces/api';
+import { getFeedLanguage, getLanguage } from '../utils';
 
 export const route: Route = {
     path: '/channel/articles/:id',
@@ -23,7 +25,7 @@ export const route: Route = {
     parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
-            source: ['ganjingworld.com'],
+            source: ['ganjingworld.com/channel/:id', 'www.ganjingworld.com/channel/:id'],
             target: '/channel/articles/:id',
         },
     ],
@@ -36,38 +38,40 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const url = `https://www.ganjingworld.com/channel/${id}?tab=articles`;
-    const apiUrl = `https://gw.ganjingworld.com/v1.1/content/get-by-channel?channel_id=${id}&content_type=News`;
-    // const apiUrl = `https://gw.ganjingworld.com/v1.1/content/get-by-channel?channel_id=1fcahpcut9t3gz4zIvYSJR7qd1cs0c&content_type=News`;
-
-    const parsed: ApiResponse = await ofetch<ApiResponse>(apiUrl);
+    const url = `https://www.ganjingworld.com/channel/${encodeURIComponent(id)}?tab=articles`;
+    const parsed = await ofetch<ApiResponse>('https://gw.ganjingworld.com/v1.1/content/get-by-channel', {
+        query: { channel_id: id, content_type: 'News' },
+    });
     if (parsed.data.list.length === 0) {
         throw new Error('No articles found for this channel. Please make sure the channel ID is correct and that the channel contains articles.');
     }
     const title = parsed.data.list[0].channel.name;
     const items = await Promise.all(
-        parsed.data.list.map((item) =>
-            cache.tryGet(item.id, async () => {
-                const pubDate = new Date(item.time_scheduled);
-                const fetchArticleUrl = `https://gw.ganjingworld.com/v1.1/content/query?lang=zh-TW&query=basic%2Cfull%2Ctranslations%2Clike%2Cshare%2Csave%2Cview%2Ctag_list&ids=${item.id}`;
-                const parsedArticle: ApiResponse = await ofetch<ApiResponse>(fetchArticleUrl);
+        parsed.data.list.map(async (item) => {
+            const description = await cache.tryGet(`ganjingworld:article:${item.id}`, async () => {
+                const parsedArticle = await ofetch<ApiResponse>('https://gw.ganjingworld.com/v1.1/content/query', {
+                    query: { lang: 'zh-TW', query: 'basic,full,translations,like,share,save,view,tag_list', ids: item.id },
+                });
+                return parsedArticle.data.list[0]?.text ?? '';
+            });
 
-                const description = parsedArticle.data.list[0]?.text ?? '';
-
-                return {
-                    title: item.title,
-                    link: `https://www.ganjingworld.com/news/${item.id}`,
-                    pubDate,
-                    description,
-                };
-            })
-        )
+            return {
+                title: item.title,
+                author: item.channel.name,
+                category: item.hashtags ?? undefined,
+                language: getLanguage(item.lang),
+                link: `https://www.ganjingworld.com/news/${item.id}`,
+                pubDate: Number.isFinite(item.time_scheduled) ? parseDate(item.time_scheduled) : undefined,
+                description,
+            };
+        })
     );
 
     return {
         title,
         link: url,
         description: `Articles from Ganjing World Channel ${title}`,
+        language: getFeedLanguage(parsed.data.list),
         item: items,
     };
 }

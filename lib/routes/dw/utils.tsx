@@ -2,7 +2,9 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -216,15 +218,16 @@ const processContent = (item, content) => {
     return item;
 };
 
-export const processItems = async (items) => {
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+export const processItems = async (items: Array<DataItem & { id: string | number; type: string }>) => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
                 const response = await got(`https://www.dw.com/graph-api/${item.language}/content/${item.type}/${item.id}`);
                 const content = response.data.data.content;
                 return processContent(item, content);
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
     return items;
 };

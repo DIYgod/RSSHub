@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getCategoryInfo, getPosts } from './utils';
 
@@ -24,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getRouteLimit(ctx, 10);
     const { cat = '8kasianidol' } = ctx.req.param();
     const categoryInfo = await getCategoryInfo(cat);
     const items = await getPosts(limit, { categories: categoryInfo.id });

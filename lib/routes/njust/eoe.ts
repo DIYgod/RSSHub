@@ -46,15 +46,15 @@ async function handler(ctx) {
 
     const html = await getContent(siteUrl, true);
     const $ = load(html);
-    const list = $('ul.news_ul').find('li');
+    const list = $('.news_list li.news:has(.news_title.line1)');
 
     return {
         title: info.title,
         link: siteUrl,
         item: list.toArray().map((item) => ({
-            title: $(item).find('a').attr('title')!.trim(),
-            pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), 8),
-            link: $(item).find('a').attr('href'),
+            title: $(item).find('.line1 a').attr('title') || $(item).find('.line1 a').text(),
+            pubDate: timezone(parseDate($(item).find('.line3').text(), 'YYYY-MM-DD'), 8),
+            link: new URL($(item).find('.line1 a').attr('href')!, siteUrl).href,
         })),
     };
 }

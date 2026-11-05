@@ -2,12 +2,13 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiBaseUrl, baseUrl, processItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const targetUrl: string = new URL(`column/${id}`, baseUrl).href;
     const listApiUrl: string = new URL('v1/categories/multi_content/list', apiBaseUrl).href;

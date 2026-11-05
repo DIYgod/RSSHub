@@ -4,13 +4,14 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import { getAudioType } from './index';
 import { renderDescription } from './templates/description';
 
-const audio_types = {
-    m3u8: 'x-mpegURL',
-    mp3: 'mpeg',
-    mp4: 'mp4',
-    m4a: 'mp4',
+const programDateFormatter = new Intl.DateTimeFormat('en', { timeZone: 'Asia/Shanghai', year: 'numeric', month: 'numeric', day: 'numeric' });
+
+const formatProgramDate = (time: number) => {
+    const { year, month, day } = Object.fromEntries(programDateFormatter.formatToParts(parseDate(time)).map(({ type, value }) => [type, value]));
+    return `${year}-${month}-${day}`;
 };
 
 export const route: Route = {
@@ -42,7 +43,8 @@ async function handler(ctx) {
     const KEY = 'f0fc4c668392f9f9a447e48584c214ee';
 
     const id = ctx.req.param('id');
-    const size = ctx.req.query('limit') ?? '100';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const size = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 100;
 
     const params = `columnId=${id}&pageNo=0&pageSize=${size}`;
 
@@ -59,6 +61,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: apiUrl,
+        allowH2: false,
         headers: {
             sign,
             timestamp,
@@ -73,11 +76,9 @@ async function handler(ctx) {
     const items = data.map((item) => {
         let enclosure_url = item.playUrlHigh ?? item.playUrlLow;
         enclosure_url = enclosure_url.endsWith('.m3u8') ? item.downloadUrl : enclosure_url;
-        const file_ext = new URL(enclosure_url).pathname.split('.').pop();
-        const enclosure_type = file_ext ? `audio/${audio_types[file_ext]}` : '';
+        const enclosure_type = getAudioType(enclosure_url);
 
-        const date = new Date(item.startTime);
-        const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const dateString = formatProgramDate(item.programDate ?? item.startTime);
 
         return {
             guid: item.id,

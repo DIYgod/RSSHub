@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 import { renderEshopUsDescription } from './templates/eshop-us';
 
@@ -43,6 +44,7 @@ async function handler(ctx) {
             title: item.title,
             description: renderEshopUsDescription(item),
             link: `https://www.nintendo.com${item.url}`,
+            pubDate: item.releaseDate ? parseDate(item.releaseDate) : undefined,
         })),
     };
 }

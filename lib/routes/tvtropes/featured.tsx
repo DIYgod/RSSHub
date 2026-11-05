@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
@@ -32,6 +33,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'today' } = ctx.req.param();
+    if (!Object.hasOwn(categories, category)) {
+        throw new InvalidParameterError(`Unsupported category "${category}", please choose from: ${Object.keys(categories).join(', ')}`);
+    }
 
     const rootUrl = 'https://tvtropes.org';
 
@@ -47,7 +51,10 @@ async function handler(ctx) {
 
     const content = load(detailResponse);
 
-    content('div.folderlabel').remove();
+    content('div.folderlabel[onclick="toggleAllFolders();"]').remove();
+    content('div.folderlabel[onclick^="togglefolder("]').each((_, element) => {
+        content(element).replaceWith(`<h2>${content(element).html()}</h2>`);
+    });
 
     content('div.lazy_load_img_box').each((_, el) => {
         const $el = content(el);

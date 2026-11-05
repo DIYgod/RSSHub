@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const homeUrl = 'https://bio.pku.edu.cn/homes/Index/news/21/21.html';
+const homeUrl = 'https://www.bio.pku.edu.cn/homes/Index/news/21/21.html';
 
-const baseUrl = 'https://bio.pku.edu.cn';
+const baseUrl = 'https://www.bio.pku.edu.cn';
 
 export const route: Route = {
     path: '/cls/announcement',
@@ -24,13 +25,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bio.pku.edu.cn/homes/Index/news/21/21.html', 'bio.pku.edu.cn/'],
+            source: ['www.bio.pku.edu.cn/homes/Index/news/21/21.html', 'www.bio.pku.edu.cn/'],
         },
     ],
     name: '生命科学学院通知公告',
     maintainers: ['william-swl'],
     handler,
-    url: 'bio.pku.edu.cn/homes/Index/news/21/21.html',
+    url: 'www.bio.pku.edu.cn/homes/Index/news/21/21.html',
 };
 
 async function handler() {
@@ -43,22 +44,24 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             return {
-                title: $($item).find('p').text().trim(),
-                pubDate: parseDate($($item).find('span.date').text()),
+                title: $($item).find('p').text(),
+                pubDate: $item.find('span.date').text() ? parseDate(`${$item.find('span.date').text().replaceAll('.', '-')}T00:00:00Z`) : undefined,
                 link: baseUrl + $($item).attr('href'),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`pku:cls:announcement:detail:v2:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description = $('div.page div.common_width div.col-md-9').first().html();
-                return item;
-            })
-        )
+                return { description: $('div.page div.common_width div.col-md-9').first().html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/clarification',
@@ -40,20 +41,24 @@ async function handler() {
 
     const $ = load(response.data);
 
-    let items = $('.list01 a[title]')
+    let items = $('section.list a[title]')
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): DataItem[] => {
             const $item = $(item);
 
-            return {
-                title: $item.text(),
-                link: $item.attr('href'),
-            };
+            const title = $item.attr('title');
+            const href = $item.attr('href');
+            if (!title || !href) {
+                return [];
+            }
+
+            return [{ title, link: new URL(href, rootUrl).href }];
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:details`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -61,12 +66,15 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('article').html();
-                item.pubDate = parseDate(content('meta[name="DC.Date"]').attr('datetime')!);
+                const description = content('article.cpArticle').html();
+                const date = content('meta[name="DC.Date"]').attr('content');
+                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
 
-                return item;
-            })
-        )
+                return { description, pubDate };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

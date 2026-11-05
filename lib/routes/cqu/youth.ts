@@ -37,13 +37,17 @@ async function handler(ctx: Context) {
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });
-    const cookies = await page.context().cookies();
-    const cookie = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
-    const response = await page.content();
-    await destroy();
+    let cookie: string;
+    let response: string;
+    try {
+        const cookies = await page.context().cookies();
+        cookie = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
-
     const links = $('.nwes_list a[target=_blank]')
         .toArray()
         .map((item) => ({

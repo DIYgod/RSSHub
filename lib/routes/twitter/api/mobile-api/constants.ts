@@ -22,6 +22,7 @@ const gqlMap = Object.fromEntries(graphQLEndpointsPlain.map((endpoint) => [endpo
 
 const gqlFeatures = JSON.stringify({
     android_graphql_skip_api_media_color_palette: false,
+    // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names
     blue_business_profile_image_shape_enabled: false,
     creator_subscriptions_subscription_count_enabled: false,
     creator_subscriptions_tweet_preview_api_enabled: true,

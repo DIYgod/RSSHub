@@ -32,7 +32,9 @@ export const route: Route = {
     maintainers: ['Chikit-L'],
     radar: [
         {
+            title: titles.tzgg,
             source: ['edu.cags.ac.cn/'],
+            target: '/edu/tzgg',
         },
     ],
     handler,

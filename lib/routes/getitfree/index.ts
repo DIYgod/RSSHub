@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr, rootUrl } from './util';
 
@@ -35,7 +36,7 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const filter = getSubPath(ctx).slice(1);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = Math.min(getRouteLimit(ctx, 50), 100);
 
     const filters = parseFilterStr(filter);
     const filtersWithPair = await bakeFiltersWithPair(filters);
@@ -65,8 +66,8 @@ export async function handler(ctx) {
             author: item._embedded.author.map((a) => a.name).join('/'),
             category: [...new Set(terminologies.flat().map((c) => c.name))],
             guid: item.guid?.rendered ?? item.guid,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
         };
     });
 

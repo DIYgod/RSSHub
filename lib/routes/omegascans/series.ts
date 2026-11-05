@@ -62,6 +62,7 @@ export const route: Route = {
 
         return {
             title: `Omega Scans - ${seriesTitle}`,
+            language: 'en' as const,
             link: seriesLink,
             image: 'https://omegascans.org/wetried_only.png',
             item: chapters.map((chapter) => ({

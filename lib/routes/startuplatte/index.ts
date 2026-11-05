@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import NotFoundError from '@/errors/types/not-found';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -44,42 +46,51 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = $('.post-header h2 a')
+    const list = $('article h2 a')
         .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
+        .map((element) => ({
+            id: Number($(element).closest('article').attr('id')?.replace('post-', '')),
+            title: $(element).text(),
+            link: $(element).attr('href'),
+        }));
 
-            return {
-                title: $item.text(),
-                link: $item.attr('href'),
-            };
-        });
+    const ids = list.map((item) => item.id);
+    const posts = ids.length
+        ? await cache.tryGet(`startuplatte:posts:v1:${ids.join(',')}`, () =>
+              ofetch<WordPressPost[]>(`${rootUrl}/wp-json/wp/v2/posts`, {
+                  query: { include: ids.join(','), per_page: ids.length, _embed: 'author,wp:term' },
+              })
+          )
+        : [];
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('.wp-post-navigation').remove();
-
-                item.category = content('.cat').text();
-                item.author = content('a[rel="author"]').text();
-                item.description = content('.post-entry').html();
-                item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2})","dateModified"/)[1]);
-
-                return item;
-            })
-        )
-    );
+    const items = list.map((item) => {
+        const post = posts.find((post) => post.id === item.id);
+        if (!post) {
+            throw new NotFoundError(`WordPress did not return article ${item.id}.`);
+        }
+        return {
+            title: item.title,
+            link: item.link,
+            description: post.content.rendered,
+            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+            author: post._embedded?.author?.map((author) => author.name).join(', '),
+            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+        };
+    });
 
     return {
-        title: $('title').text(),
+        title: $('title').text() || '創新拿鐵',
         link: currentUrl,
         item: items,
+    };
+}
+
+interface WordPressPost {
+    id: number;
+    date_gmt?: string;
+    content: { rendered: string };
+    _embedded?: {
+        author?: Array<{ name: string }>;
+        'wp:term'?: Array<Array<{ name: string }>>;
     };
 }

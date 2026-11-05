@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { categories } from './category-map';
 
@@ -87,28 +88,32 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h2 a');
+            const date = $item.find('[itemprop="datePublished"]').attr('content');
             return {
                 title: a.attr('title')!,
                 description: $item.find('.fl-post-grid-content').html()?.trim(),
                 link: a.attr('href'),
-                pubDate: $item.find('[itemprop="datePublished"]').length ? parseDate($item.find('[itemprop="datePublished"]').attr('content')!) : undefined,
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`mckinsey:article:${item.link}`, async () => {
                 const response = await ofetch(item.link!, {
                     headers,
                 });
                 const $ = load(response);
 
-                item.description = $('.ast-post-format-').html() || item.description;
-                item.guid = $('link[rel="shortlink"]').attr('href');
-
-                return item;
-            })
-        )
+                return {
+                    description: $('.ast-post-format-').html() || undefined,
+                    guid: $('link[rel="shortlink"]').attr('href'),
+                };
+            });
+            return { ...item, ...detail, description: detail.description || item.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

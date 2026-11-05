@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -25,6 +26,15 @@ export const route: Route = {
     handler,
 };
 
+async function getReleaseDescription(url: string): Promise<string | undefined | null> {
+    const details = await cache.tryGet(url, async () => {
+        const response = await got(url);
+        const $ = load(response.data);
+        return { description: $('.tc-tiddler-body').html() };
+    });
+    return details.description;
+}
+
 async function handler() {
     const tagListUrl = 'https://github.com/TiddlyWiki/TiddlyWiki5/releases.atom';
 
@@ -43,37 +53,29 @@ async function handler() {
             const $item = $(item);
             const text = $item.find('title').text();
             const date = $item.find('updated').text();
-            // 使用正则提取 v5.3.6 格式
+            const authors = $item
+                .find('author')
+                .toArray()
+                .map((author) => ({ name: $(author).find('name').text(), url: $(author).find('uri').text() || undefined }))
+                .filter((author) => author.name);
+            // Extract a version such as v5.3.6.
             const version = text.match(/v\d+\.\d+\.\d+/)?.[0];
             return {
                 version,
-                pubDate: parseDate(date),
+                pubDate: date ? parseDate(date) : undefined,
+                author: authors.length ? authors : undefined,
             };
         })
         .filter((item) => item.version);
 
-    const items = await Promise.all(
-        versionList.map((item) => {
-            const _version = item.version!.slice(1);
-            const url = `https://tiddlywiki.com/static/Release%2520${_version}.html`;
-            return cache.tryGet(url, async () => {
-                const response = await got({
-                    method: 'get',
-                    url,
-                });
-
-                const $ = load(response.data);
-
-                const description = $('.tc-tiddler-body').html();
-
-                return {
-                    title: item.version!,
-                    link: url,
-                    pubDate: item.pubDate,
-                    description,
-                };
-            });
-        })
+    const items = await pMap(
+        versionList,
+        async (item) => {
+            const version = item.version!.slice(1);
+            const url = `https://tiddlywiki.com/static/Release%2520${version}.html`;
+            return { title: item.version!, link: url, pubDate: item.pubDate, author: item.author, description: await getReleaseDescription(url) };
+        },
+        { concurrency: 3 }
     );
 
     return {

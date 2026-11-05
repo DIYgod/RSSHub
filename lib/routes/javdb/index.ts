@@ -34,7 +34,8 @@ export const route: Route = {
 | 0    | 1      | 2      | 3      |`,
     features: {
         nsfw: true,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
+        antiCrawler: true,
     },
 };
 

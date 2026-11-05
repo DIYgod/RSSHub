@@ -35,21 +35,13 @@ async function handler() {
     const data = response.data.data;
     const name = '健康界 [cn-healthcare] ';
     return {
-        // 源标题
         title: name,
-        // 源链接
         link: 'https://www.cn-healthcare.com',
-        // 源说明
         description: `${name} - RSS`,
-        // 遍历此前获取的数据
         item: data.datalist.map((item) => ({
-            // 文章标题
             title: item.title,
-            // 文章正文
             description: item.content,
-            // 文章发布时间
-            pubDate: parseDate(item.createdate),
-            // 文章链接
+            pubDate: parseDate(item.pubdate),
             link: `${baseUrl}${item.url}`,
         })),
     };

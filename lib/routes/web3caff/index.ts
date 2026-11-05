@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -34,7 +36,7 @@ async function handler(ctx) {
     let items = $('.list-grouped')
         .first()
         .find('.list-body')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -47,28 +49,30 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`web3caff:detail:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
-
                 const content = load(detailResponse.data);
-
                 content('.ss-inline-share-wrapper').remove();
-
-                item.description = content('.post-content').html();
-                item.author = content('.author-name .author-popup').text();
-                item.category = content('a[rel="category tag"]')
-                    .toArray()
-                    .map((tag) => $(tag).text());
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
-
-                return item;
-            })
-        )
+                const dateText = content('meta[property="article:published_time"]').attr('content');
+                const date = dateText ? parseDate(dateText) : undefined;
+                return {
+                    description: content('.post-content').html(),
+                    author: content('.author-name .author-popup').text(),
+                    category: content('a[rel="category tag"]')
+                        .toArray()
+                        .map((tag) => content(tag).text()),
+                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

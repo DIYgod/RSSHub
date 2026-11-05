@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 const baseIndexUrl = 'https://www.sice.uestc.edu.cn/index.htm';
-const host = 'https://www.sice.uestc.edu.cn/';
 
 export const route: Route = {
     path: '/sice',
@@ -33,34 +32,38 @@ export const route: Route = {
 };
 
 async function handler() {
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+    const { page, destroy } = await getPlaywrightPage(baseIndexUrl, {
+        closeTimeout: 0,
+        gotoConfig: { waitUntil: 'networkidle' },
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            });
+        },
     });
-    await page.goto(baseIndexUrl, {
-        waitUntil: 'networkidle',
-    });
-    const content = await page.content();
-    await context.close();
+    let content: string;
+    try {
+        content = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(content);
 
-    const out = $('.notice p')
+    const out = $('.tzlist li')
         .toArray()
+        .filter((item) => $(item).find('a[href]').attr('href'))
         .map((item) => {
             const $item = $(item);
-            const now = dayjs();
-            let date = dayjs(now.year() + '-' + $item.find('a.date').text());
-            if (now < date) {
-                date = dayjs(now.year() - 1 + '-' + $item.find('a.date').text());
-            }
+            const yearMonth = $item.find('time em').text().trim();
+            const day = $item.find('time span').text().trim();
+            const date = yearMonth && day ? parseDate(`${yearMonth.replace('.', '-')}-${day}`, 'YYYY-MM-DD', true) : undefined;
 
             return {
-                title: $item.find('a[href]').text(),
-                link: host + $item.find('a[href]').attr('href'),
-                pubDate: parseDate(date.toDate()),
+                title: $item.find('.txt p').text(),
+                link: new URL($item.find('a[href]').attr('href')!, baseIndexUrl).href,
+                pubDate: date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined,
             };
         });
 

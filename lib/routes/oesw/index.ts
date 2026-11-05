@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { convert } from 'html-to-text';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -41,7 +42,7 @@ Make sure to remove the \`?\` at the beginning from the query parameters!`,
                     .toArray()
                     .map((l) => $(l).text().trim())
                     .filter((l) => l.length);
-                const titles = [el.attribs['data-title2'].trim(), el.attribs['data-title'].trim()].filter((t) => t.length);
+                const titles = [el.attribs['data-title2'], el.attribs['data-title']].filter((title): title is string => Boolean(title));
                 const imageSrc = el.attribs['data-largesrc'];
                 const image = imageSrc.startsWith('/') ? SITE_URL + imageSrc : imageSrc;
 
@@ -51,10 +52,10 @@ Make sure to remove the \`?\` at the beginning from the query parameters!`,
                     guid: el.attribs.href + (count ? `#count-${count}` : ''),
                     title: (count ? `(${count}) ` : '') + titles.join(', '),
                     link: el.attribs.href,
-                    description: el.attribs['data-description'],
+                    description: el.attribs['data-description-long'] || el.attribs['data-description'],
                     category,
                     image,
-                    content: { html: el.attribs['data-description-long'], text: el.attribs['data-description-long'] },
+                    content: { text: convert(el.attribs['data-description-long'] || el.attribs['data-description'] || '') },
                     // no pubDate :(
                 } satisfies DataItem;
             });

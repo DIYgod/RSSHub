@@ -4,6 +4,8 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/latest',
@@ -34,7 +36,7 @@ async function handler(ctx): Promise<Data> {
         searchParams: {
             subject: '100990318;100990314;100990311',
             start: 0,
-            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
+            count: getRouteLimit(ctx, 20),
             type: '2',
             _: Date.now(),
         },
@@ -44,7 +46,7 @@ async function handler(ctx): Promise<Data> {
         title: e.desc,
         description: e.summ,
         link: e.link,
-        pubDate: parseDate(e.time),
+        pubDate: e.time ? timezone(parseDate(e.time, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
         category: e.tags.map((t) => t.name),
         nid: e.nid,
         attr: e.attr,
@@ -59,6 +61,13 @@ async function handler(ctx): Promise<Data> {
                 const { data } = await got(item.link);
                 const $ = load(data);
                 $('.loadingBox, .cons-pay-tip').remove();
+                const author = $('.cons-author-txt a')
+                    .toArray()
+                    .map((element) => $(element).text())
+                    .join(', ');
+                if (author) {
+                    item.author = author;
+                }
 
                 let content = $('#appContent').prop('outerHTML');
 

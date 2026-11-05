@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: '中国驻外使领馆',
-    url: 'ca.china-embassy.org',
+    url: 'ca.china-embassy.gov.cn',
     description: `支持国家列表
 
 加拿大 \`CA\`

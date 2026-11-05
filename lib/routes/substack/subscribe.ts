@@ -20,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Substack Subscription',
+    name: 'Subscription',
     maintainers: ['pseudoyu'],
     handler,
 };
@@ -47,6 +47,7 @@ async function handler(ctx) {
             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             guid: item.guid ?? '',
             author: item.creator ?? user,
+            image: item.enclosure?.type?.startsWith('image/') ? item.enclosure.url : undefined,
         })),
     };
 }

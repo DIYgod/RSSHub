@@ -62,7 +62,6 @@ async function handler() {
 
                 return {
                     title: `${publicationName} | Volume ${volume}, Issue ${number}`,
-                    author: '@y9c',
                     description: `<img src="${coverImg}" alt="${publicationName}">`,
                     link: address,
                     guid: `${address}#${volume}-${number}`,

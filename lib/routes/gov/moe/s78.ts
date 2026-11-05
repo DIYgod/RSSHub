@@ -41,10 +41,11 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const pubDate = $item.find('span').text();
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
 
@@ -56,6 +57,10 @@ async function handler(ctx) {
 
                 $('#moe-detail-page-set, #moeCode, .moe-detail-shuxing, h1').remove();
                 item.description = $('.moe-detail-box').html();
+                const pubDate = $('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate), 8);
+                }
 
                 return item;
             })

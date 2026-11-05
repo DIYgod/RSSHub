@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/zhongchou/:category?/:sort?/:status?',
@@ -73,9 +75,10 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:details`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -84,14 +87,17 @@ async function handler(ctx) {
 
                 const startTime = detailResponse.data.match(/realtime_sync\.pro_time\('(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', '\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}'\);/);
 
-                item.pubDate = startTime === null ? Date.parse((content('.start-time h3').text() || content('h3[start_time]').attr('start_time'))!) : Date.parse(startTime[1]);
+                const date = startTime?.[1] || content('.start-time h3').text() || content('h3[start_time]').attr('start_time');
+                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
 
-                item.author = content('span[data-nickname]').text();
-                item.description = `<img src="${content('#big_logo').attr('src')}"><br>` + content('.center-top').html() + content('#my_back_info').html() + content('#cont_match_htmlstr').html();
+                const author = content('span[data-nickname]').text();
+                const description = `<img src="${content('#big_logo').attr('src')}"><br>` + content('.center-top').html() + content('#my_back_info').html() + content('#cont_match_htmlstr').html();
 
-                return item;
-            })
-        )
+                return { description, pubDate, author };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -2,19 +2,21 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '9' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://dbaplus.cn';
     const targetUrl: string = new URL(`news-${id}-1.html`, baseUrl).href;
@@ -23,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
-    let items: DataItem[] = $('ul.media-list li.media')
+    let items: DataItem[] = $('.categeay .media-list > li.media')
         .slice(0, limit)
         .toArray()
         .map((el) => {
@@ -50,38 +52,28 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .replace('日', '');
             const linkUrl: string | undefined = $aEl.attr('href');
             const authorEls: Element[] = $el.find('span.user').toArray();
-            const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                const $authorEl: Cheerio<Element> = $(authorEl);
-
-                return {
-                    name: $authorEl.text(),
-                    url: undefined,
-                    avatar: undefined,
-                };
-            });
-            const upDatedStr: string | undefined = pubDateStr;
-
+            const authors: DataItem['author'] = authorEls.map((authorEl) => ({ name: $(authorEl).text().trim() })).filter((author) => author.name);
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl,
-                author: authors,
+                author: authors.length ? authors : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('div.mt10').text(),
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -91,36 +83,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h2.title').text();
-                const description: string | undefined =
-                    item.description +
-                    renderDescription({
-                        description: $$('div.new-detailed').html() ?? undefined,
-                    });
+                const article = $$('div.new-detailed').first();
+                article.find('script, style').remove();
+                const description = article.html() ?? item.description;
                 const pubDateStr: string | undefined = $$('span.time').first().text();
-                const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(',') ?? [];
                 const authorEls: Element[] = $$('span.user').toArray();
-                const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                    const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                    return {
-                        name: $$authorEl.text(),
-                        url: undefined,
-                        avatar: undefined,
-                    };
-                });
-                const upDatedStr: string | undefined = pubDateStr;
-
+                const authors: DataItem['author'] = authorEls.map((authorEl) => ({ name: $$(authorEl).text().trim() })).filter((author) => author.name);
                 const processedItem: DataItem = {
                     title,
                     description,
                     pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                    category: categories,
-                    author: authors,
+                    author: authors.length ? authors : undefined,
                     content: {
                         html: description,
-                        text: description,
+                        text: article.length ? article.text() : undefined,
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 
@@ -129,7 +106,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const description: string = $('meta[name="description"]').attr('content') ?? '';
@@ -139,7 +117,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('div.navbar-header img').attr('src'),
         author: description.split(/：/, 1)[0],
         language,
@@ -155,7 +132,7 @@ export const route: Route = {
     handler,
     example: '/dbaplus/news/9',
     parameters: {
-        category: {
+        id: {
             description: '分类，默认为 `9`，即全部，可在对应分类页 URL 中找到',
             options: [
                 {
@@ -281,14 +258,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['dbaplus.cn/news*'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const href: string = urlObj.href;
-                const id: string | undefined = href.match(/-(\d+)-\.html/)?.[1];
-
-                return `/dbaplus/news${id ? `/${id}` : ''}`;
-            },
+            source: ['dbaplus.cn/news-160-1.html'],
+            target: '/news/160',
         },
         {
             title: '全部',

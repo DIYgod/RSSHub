@@ -2,16 +2,42 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+interface ArticleDates {
+    '@type'?: string;
+    '@graph'?: ArticleDates | ArticleDates[];
+    datePublished?: string;
+    dateModified?: string;
+}
+
+const getArticleDates = ($: CheerioAPI) => {
+    for (const element of $('script[type="application/ld+json"]').toArray()) {
+        try {
+            const metadata: ArticleDates = JSON.parse($(element).text());
+            const graph = metadata['@graph'] ?? metadata;
+            const articles = Array.isArray(graph) ? graph : [graph];
+            const article = articles.find((entry) => entry?.['@type'] === 'NewsArticle');
+            if (article) {
+                return article;
+            }
+        } catch {
+            // Other structured data need not contain valid article dates.
+        }
+    }
+};
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'daily-news' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const detailLimit = getRouteLimit(ctx);
+    const limit = ctx.req.query('sorted') === 'false' && detailLimit !== undefined ? detailLimit : Math.max(30, getRouteLimit(ctx, 30));
 
     const baseUrl = 'https://www.expats.cz';
     const targetUrl: string = new URL(`czech-news/${category}`, baseUrl).href;
@@ -35,8 +61,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -48,8 +75,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 $$('div.promo-widget, div.eas').remove();
 
                 const title: string = $$('div.title h1').text();
-                const description = $$('div#expats-article-content').html();
-                const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
+                const articleContent = $$('div#expats-article-content');
+                articleContent.find('script, style').remove();
+                const description = articleContent.html();
+                const articleDates = getArticleDates($$);
+                const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content') ?? articleDates?.datePublished;
                 const categories: string[] = [$$('meta[property="article:section"]').attr('content') ?? ''];
                 const authorEls: Element[] = $$('span.written-by a').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => {
@@ -64,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
                 });
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
-                const upDatedStr: string | undefined = pubDateStr;
+                const upDatedStr: string | undefined = $$('meta[property="article:modified_time"]').attr('content') ?? articleDates?.dateModified;
 
                 const processedItem: DataItem = {
                     title,
@@ -74,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: articleContent.text(),
                     },
                     image,
                     banner: image,
@@ -87,7 +117,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -95,7 +126,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -177,7 +207,7 @@ To subscribe to [Daily News](https://www.expats.cz/czech-news/daily-news), where
 | [Daily News](https://www.expats.cz/czech-news/daily-news)     | [daily-news](https://rsshub.app/expats/czech-news/daily-news)         |
 | [Prague Guide](https://www.expats.cz/czech-news/prague-guide) | [prague-guide](https://rsshub.app/expats/czech-news/prague-guide)     |
 | [Culture](https://www.expats.cz/czech-news/culture-events)    | [culture-events](https://rsshub.app/expats/czech-news/culture-events) |
-| [Food & Drink](https://www.expats.cz/czech-news/food-drink)   | [food-drink](https://rsshub.app/expats/czech-news/food)               |
+| [Food & Drink](https://www.expats.cz/czech-news/food-drink)   | [food-drink](https://rsshub.app/expats/czech-news/food-drink)         |
 | [Expat Life](https://www.expats.cz/czech-news/expat-life)     | [expat-life](https://rsshub.app/expats/czech-news/expat-life)         |
 | [Housing](https://www.expats.cz/czech-news/housing)           | [housing](https://rsshub.app/expats/czech-news/housing)               |
 | [Education](https://www.expats.cz/czech-news/education)       | [education](https://rsshub.app/expats/czech-news/education)           |
@@ -201,71 +231,67 @@ To subscribe to [Daily News](https://www.expats.cz/czech-news/daily-news), where
     radar: [
         {
             source: ['www.expats.cz/czech-news/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/expats/czech-news${category ? `/${category}` : ''}`;
-            },
+            target: '/czech-news/:category',
         },
         {
             title: 'Daily News',
             source: ['www.expats.cz/czech-news/daily-news'],
-            target: '/expats/czech-news/daily-news',
+            target: '/czech-news/daily-news',
         },
         {
             title: 'Prague Guide',
             source: ['www.expats.cz/czech-news/prague-guide'],
-            target: '/expats/czech-news/prague-guide',
+            target: '/czech-news/prague-guide',
         },
         {
             title: 'Culture & Events',
             source: ['www.expats.cz/czech-news/culture-events'],
-            target: '/expats/czech-news/culture-events',
+            target: '/czech-news/culture-events',
         },
         {
             title: 'Food & Drink',
             source: ['www.expats.cz/czech-news/food-drink'],
-            target: '/expats/czech-news/food-drink',
+            target: '/czech-news/food-drink',
         },
         {
             title: 'Expat Life',
             source: ['www.expats.cz/czech-news/expat-life'],
-            target: '/expats/czech-news/expat-life',
+            target: '/czech-news/expat-life',
         },
         {
             title: 'Housing',
             source: ['www.expats.cz/czech-news/housing'],
-            target: '/expats/czech-news/housing',
+            target: '/czech-news/housing',
         },
         {
             title: 'Education',
             source: ['www.expats.cz/czech-news/education'],
-            target: '/expats/czech-news/education',
+            target: '/czech-news/education',
         },
         {
             title: 'Health',
             source: ['www.expats.cz/czech-news/health'],
-            target: '/expats/czech-news/health',
+            target: '/czech-news/health',
         },
         {
             title: 'Work',
             source: ['www.expats.cz/czech-news/work'],
-            target: '/expats/czech-news/work',
+            target: '/czech-news/work',
         },
         {
             title: 'Travel',
             source: ['www.expats.cz/czech-news/travel'],
-            target: '/expats/czech-news/travel',
+            target: '/czech-news/travel',
         },
         {
             title: 'Economy',
             source: ['www.expats.cz/czech-news/economy'],
-            target: '/expats/czech-news/economy',
+            target: '/czech-news/economy',
         },
         {
             title: 'Language',
             source: ['www.expats.cz/czech-news/language'],
-            target: '/expats/czech-news/language',
+            target: '/czech-news/language',
         },
     ],
     view: ViewType.Articles,

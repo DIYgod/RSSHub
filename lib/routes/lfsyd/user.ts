@@ -57,7 +57,7 @@ async function handler(ctx) {
         title: item.event_data.title,
         pubDate: parseDate(item.event_data.show_time * 1000),
         link: `${rootUrl}/tz/post/${item.event_data.post_id}`,
-        guid: item.event_data.title,
+        guid: `${rootUrl}/tz/post/${item.event_data.post_id}`,
         postId: item.event_data.post_id,
     }));
 

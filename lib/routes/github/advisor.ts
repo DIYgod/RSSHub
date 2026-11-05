@@ -23,7 +23,7 @@ export const route: Route = {
             source: ['github.com/advisories', 'github.com'],
         },
     ],
-    name: 'Github Advisory Database RSS',
+    name: 'Advisory Database RSS',
     maintainers: ['sd0ric4'],
     handler,
     description: `| Type       | Description | Explanation |
@@ -51,7 +51,8 @@ async function handler(ctx) {
     const { category, type } = ctx.req.param();
 
     const apiRootUrl = 'https://github.com/advisories';
-    const apiUrl = `${apiRootUrl}?query=type%3A${type}+ecosystem%3A${category}`;
+    const query = [type ? `type:${type}` : undefined, category ? `ecosystem:${category}` : undefined].filter(Boolean).join(' ');
+    const apiUrl = `${apiRootUrl}?${new URLSearchParams({ query })}`;
     const currentUrl = 'https://github.com/advisories';
 
     const response = await got({
@@ -90,7 +91,7 @@ async function handler(ctx) {
         )
     );
     return {
-        title: `GitHub Advisory Database RSS - ${category} - ${type}`,
+        title: ['GitHub Advisory Database RSS', category, type].filter(Boolean).join(' - '),
         link: currentUrl,
         item: items,
     };

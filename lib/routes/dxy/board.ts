@@ -1,7 +1,10 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { BoardInfo, PostListData } from './types';
 import { generateNonce, getPost, phoneBaseUrl, sign, webBaseUrl } from './utils';
@@ -10,8 +13,9 @@ export const route: Route = {
     path: '/bbs/board/:boardId',
     categories: ['bbs'],
     example: '/dxy/bbs/board/46',
-    parameters: { specialId: '板块 ID，可在对应板块页 URL 中找到' },
+    parameters: { boardId: '板块 ID，可在对应板块页 URL 中找到' },
     name: '板块',
+    features: { antiCrawler: true },
     maintainers: ['TonyRL'],
     radar: [
         {
@@ -28,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { boardId } = ctx.req.param();
-    const { limit = '20' } = ctx.req.query();
+    const limit = String(getRouteLimit(ctx, 20));
 
     const boardDetail = await cache.tryGet(`dxy:board:detail:${boardId}`, async () => {
         const detailParams = {
@@ -50,7 +54,7 @@ async function handler(ctx) {
     });
 
     const boardList = await cache.tryGet(
-        `dxy:board:list:${boardId}`,
+        `dxy:board:list:${boardId}:${limit}`,
         async () => {
             const listParams = {
                 boardId,
@@ -85,7 +89,7 @@ async function handler(ctx) {
         postId: item.postId,
     }));
 
-    const items = await Promise.all(list.map((item) => getPost(item)));
+    const items = await pMap(list, (item) => getPost(item), { concurrency: 3 });
 
     return {
         title: boardDetail.title,

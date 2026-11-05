@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, (async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem | undefined> => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -72,13 +72,13 @@ async function handler(ctx) {
                         comments.push(...c.replies);
                     }
                 }
-            }) as () => Promise<DataItem>)
+            })
         )
     );
 
     return {
         title: $('title').text() + ' - 最新回应',
         link: currentUrl,
-        item: items,
+        item: items.filter((item) => item !== undefined),
     };
 }

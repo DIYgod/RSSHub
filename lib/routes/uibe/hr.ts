@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hr/:category?/:type?',
@@ -29,7 +31,7 @@ export const route: Route = {
     description: `::: tip
 如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 \`http://hr.uibe.edu.cn/tzgg\`，其路由为 [\`/uibe/hr/tzgg\`](https://rsshub.app/uibe/hr/tzgg)
 
-如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 \`http://hr.uibe.edu.cn/jszp/zpxx\`，其路由为 [\`/uibe/hr/jszp/zpxx\`](https://rsshub.app/uibe/jszp/zpxx)
+如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 \`http://hr.uibe.edu.cn/jszp/zpxx\`，其路由为 [\`/uibe/hr/jszp/zpxx\`](https://rsshub.app/uibe/hr/jszp/zpxx)
 :::`,
 };
 
@@ -55,30 +57,30 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('p').text(),
-                link: `${currentUrl}/${$item.attr('href')}`,
+                link: new URL($item.attr('href')!, `${currentUrl}/`).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`uibe:hr:v4:${item.link}`, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
 
-                    const content = load(detailResponse.data);
+                const content = load(detailResponse.data);
 
-                    item.description = content('.gp-article').html();
-                    item.pubDate = parseDate(content('#shareTitle').next().text().replace('时间：', ''));
-                } catch {
-                    item.description = 'Not Found';
-                }
-
-                return item;
-            })
-        )
+                const pubDate = parseDate(content('#shareTitle').next().text().replace('时间：', '').trim(), 'YYYY-MM-DD', true);
+                return {
+                    description: content('.gp-article').html(),
+                    pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

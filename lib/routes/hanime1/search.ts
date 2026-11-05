@@ -8,7 +8,7 @@ async function handler(ctx) {
     const { params } = ctx.req.param();
     const baseUrl = 'https://hanime1.me';
 
-    // 提取参数
+    // Parse the search parameters.
     const searchParams = new URLSearchParams(params);
     const query = searchParams.get('query') || '';
     const genre = searchParams.get('genre') || '';
@@ -18,10 +18,15 @@ async function handler(ctx) {
     const year = searchParams.get('year') || '';
     const month = searchParams.get('month') || '';
 
-    let link = `${baseUrl}/search?query=${query}&genre=${genre}&broad=${broad}&sort=${sort}&year=${year}&month=${month}`;
-    for (const tag of tags) {
-        link += `&tags[]=${tag}`;
+    const searchUrl = new URL('/search', baseUrl);
+    const searchEntries = Object.entries({ query, genre, broad, sort, year, month });
+    for (const [name, value] of searchEntries) {
+        searchUrl.searchParams.set(name, value);
     }
+    for (const tag of tags) {
+        searchUrl.searchParams.append('tags[]', tag);
+    }
+    const link = searchUrl.href;
 
     const response = await ofetch(link, {
         headers: {
@@ -31,16 +36,15 @@ async function handler(ctx) {
     });
     const $ = load(response);
 
-    const target = '.content-padding-new .row.no-gutter';
+    const target = '.search-rows-wrapper .video-item-container[title], .content-padding-new .row.no-gutter .search-doujin-videos.hidden-xs, .search-rows-wrapper .home-rows-videos-wrapper > a[href^="https://hanime1.me/watch?"]';
 
     const items = $(target)
-        .find('.search-doujin-videos.hidden-xs') // 过滤掉重复的元素
         .toArray()
         .map((item) => {
             const element = $(item);
-            const title = element.attr('title');
-            const videoLink = element.find('a.overlay').attr('href');
-            const imageSrc = element.find('img[style*="object-fit: cover"]').attr('src'); // 选择缩略图
+            const title = element.attr('title') ?? element.find('.home-rows-videos-title').text();
+            const videoLink = element.is('a') ? element.attr('href') : element.find('a.video-link, a.overlay').attr('href');
+            const imageSrc = element.find('img.main-thumb, img[style*="object-fit: cover"], .video-card-inner img').attr('src'); // Select the thumbnail.
 
             return {
                 title: title!,
@@ -49,7 +53,7 @@ async function handler(ctx) {
             };
         });
 
-    // 最多显示三个标签
+    // Display up to three tags in the feed title.
     const maxTagsToShow = 3;
     const displayedTags = tags.slice(0, maxTagsToShow).join(', ') + (tags.length > maxTagsToShow ? ', ...' : '');
 

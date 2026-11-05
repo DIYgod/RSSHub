@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { collapseWhitespace } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -58,18 +57,17 @@ async function handler() {
     const seen = new Set();
     const items = list
         .filter((item) => {
-            const title = item.title.trim();
-            if (seen.has(title)) {
+            if (!item.link || seen.has(item.link)) {
                 return false;
             }
-            seen.add(title);
+            seen.add(item.link);
             return true;
         })
         .map((item) => ({
             title: item.title,
             description: item.description,
             link: item.link,
-            guid: collapseWhitespace(item.title) ?? undefined,
+            guid: item.link,
             pubDate: (item.date ?? item.startDate) ? parseDate(item.date ?? item.startDate) : undefined,
             category: item.tags?.json,
             image: item.image?.url,
@@ -78,7 +76,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         link,
-        image: `${link}/favicon.ico`,
+        image: `${baseUrl}/favicon.ico`,
         item: items,
     };
 }

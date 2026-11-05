@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -24,7 +25,7 @@ async function handler(ctx) {
 
     const { token, secret } = await getTokenAndSecret();
     const headers = {
-        cookie: token ? `t=${token}; r=${secret - 100}` : undefined,
+        cookie: token ? `t=${token}; r=${Number(secret) - 100}` : undefined,
     };
     const { data: response } = await got(url, {
         headers,
@@ -35,15 +36,16 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('a').first();
+            const a = $item.find('a');
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers,
@@ -57,8 +59,8 @@ async function handler(ctx) {
                 item.description = $('.news_center').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

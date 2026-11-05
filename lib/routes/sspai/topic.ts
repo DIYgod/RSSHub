@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,6 +28,15 @@ export const route: Route = {
     handler,
 };
 
+interface SourceArticle {
+    id: number;
+    title: string;
+    tags?: Array<{ title: string }>;
+    released_at: number;
+    author: { nickname: string };
+    topics: Array<{ title: string; intro: string }>;
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const api_url = `https://sspai.com/api/v1/articles?offset=0&limit=20&topic_id=${id}&sort=created_at&include_total=false`;
@@ -33,14 +44,15 @@ async function handler(ctx) {
         method: 'get',
         url: api_url,
     });
-    const list = response.data.list;
+    const list: SourceArticle[] = response.data.list;
     let topic_title = '';
     let topic_link = '';
     let topic_des = '';
-    const out = await Promise.all(
-        list.map((item) => {
+    const out = await pMap(
+        list,
+        async (item) => {
             const title = item.title;
-            const date = item.created_at;
+            const date = item.released_at;
             const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             const itemUrl = `https://sspai.com/post/${item.id}`;
             const author = item.author.nickname;
@@ -50,7 +62,7 @@ async function handler(ctx) {
                 topic_link = `https://sspai.com/topic/${id}`;
                 topic_des = item.topics[0].intro;
             }
-            return cache.tryGet(`sspai: ${item.id}`, async () => {
+            const resolvedValue1 = await cache.tryGet(`sspai:topic:body:v2:${item.id}`, async () => {
                 const response = await got(link);
                 let description = '';
                 const articleData = response.data.data;
@@ -60,16 +72,21 @@ async function handler(ctx) {
                 }
                 description += articleData.body;
 
-                const single = {
+                return { description };
+            });
+            {
+                const details = resolvedValue1;
+                return {
                     title,
                     link: itemUrl,
                     author,
-                    description,
-                    pubDate: parseDate(date * 1000),
+                    category: item.tags?.map((tag) => tag.title),
+                    pubDate: date ? parseDate(date * 1000) : undefined,
+                    ...details,
                 };
-                return single;
-            });
-        })
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

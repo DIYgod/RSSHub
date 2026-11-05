@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -95,14 +96,15 @@ async function handler(ctx: Context) {
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
     const itemsTemp: Array<{ title: string; link: string; pubDate: Date }> =
-        ssrData?.appContext?.initialProps?.sectionData?.articleList?.items?.map((item: { title: string; slug: string; publishTime: string }) => ({
+        (ssrData?.appContext?.initialProps?.sectionData?.articleList?.list ?? ssrData?.appContext?.initialProps?.sectionData?.articleList?.items)?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
             link: `${baseUrl}/zh-hans/help/${item.slug}`,
             pubDate: new Date(item.publishTime),
         })) || [];
 
-    const items = await Promise.all(
-        itemsTemp.map((item) =>
+    const items = await pMap(
+        itemsTemp,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
@@ -112,14 +114,13 @@ async function handler(ctx: Context) {
                     ...item,
                     description: content || '内容获取失败',
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: ssrData?.appContext?.serverSideProps?.sectionOutline?.title || 'Unknown',
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
         item: items,
-        allowEmpty: true,
     };
 }

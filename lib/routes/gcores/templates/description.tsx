@@ -11,6 +11,8 @@ type DescriptionImage = {
 type DescriptionMedia = {
     src?: string;
     type?: string;
+    embed?: boolean;
+    poster?: string;
 };
 
 type DescriptionProps = {
@@ -42,10 +44,10 @@ const Description = ({ images, audios, videos, intro, description }: Description
         )}
         {videos?.map((video, index) =>
             video?.src ? (
-                video?.type?.endsWith('taptap') ? (
+                video.embed ? (
                     <iframe key={`${video.src}-${index}`} src={video.src} frameborder="0" allowfullscreen></iframe>
                 ) : (
-                    <video key={`${video.src}-${index}`} controls>
+                    <video key={`${video.src}-${index}`} controls poster={video.poster}>
                         <source src={video.src} type={video.type} />
                         <object data={video.src}>
                             <embed src={video.src} />

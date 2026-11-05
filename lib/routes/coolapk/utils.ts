@@ -61,6 +61,11 @@ const parseTuwenFromRaw = (raw) =>
         }
     });
 
+const selectDynamics = (items) => {
+    const candidates = items.filter((item) => item.entityType !== 'sponsorCard' && item.url);
+    return candidates;
+};
+
 const parseDynamic = async (item) => {
     const pubDate = parseDate(item.dateline, 'X');
     if (item.entityType === 'sponsorCard' || !item.url) {
@@ -88,7 +93,10 @@ const parseDynamic = async (item) => {
                     const result = await ofetch(itemUrl, {
                         headers: getHeaders(),
                     });
-                    const message = '<p>' + result.data?.message.split('\n').join('<br>') + '</p>';
+                    if (!result.data) {
+                        return;
+                    }
+                    const message = '<p>' + result.data.message.split('\n').join('<br>') + '</p>';
                     const picArr = item.picArr.filter(Boolean).map((i) => `<img src="${i}">`); // 若无图片，item.picArr=[""]
                     return message + picArr.join('');
                 });
@@ -123,7 +131,7 @@ const parseDynamic = async (item) => {
                 });
 
                 if (!result.data) {
-                    return result.message;
+                    return;
                 }
 
                 const raw = JSON.parse(result.data.message_raw_output);
@@ -140,6 +148,10 @@ const parseDynamic = async (item) => {
             break;
     }
 
+    if (description === undefined) {
+        return;
+    }
+
     return {
         title,
         description,
@@ -147,7 +159,8 @@ const parseDynamic = async (item) => {
         link: `https://www.coolapk.com${item.url}`,
         // guid: itemUrl,
         author: item.username,
+        category: item.tags?.match(/#([^#]+)#/g)?.map((tag: string) => tag.slice(1, -1)),
     };
 };
 
-export default { get_app_token, base_url, getHeaders, parseDynamic, dynamicTpye };
+export default { get_app_token, base_url, getHeaders, parseDynamic, selectDynamics, dynamicTpye };

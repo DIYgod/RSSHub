@@ -24,7 +24,7 @@ export const route: Route = {
             source: ['nintendo.com/nintendo-direct/archive', 'nintendo.com/'],
         },
     ],
-    name: 'Nintendo Direct',
+    name: 'Direct',
     maintainers: ['HFO4'],
     handler,
     url: 'nintendo.com/nintendo-direct/archive',

@@ -2,18 +2,22 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
+const parseVideoDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? timezone(parseDate(date), 8) : parseRelativeDate(date));
+
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '18');
+    const limit = getRouteLimit(ctx, 18);
 
     const baseUrl = 'https://www.dgtle.com';
     const targetUrl: string = new URL('video', baseUrl).href;
@@ -58,19 +62,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             content: {
                 html: description,
-                text: description,
+                text: item.description,
             },
             image,
             banner: image,
             language,
-            enclosure_length: item.duration,
+            itunes_duration: item.duration ? item.duration.split(':').reduce((seconds: number, part: string) => seconds * 60 + Number(part), 0) : undefined,
         };
 
         return processedItem;
     });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -101,36 +106,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const linkUrl: string | undefined = $$('.title').attr('href');
                 const categoryEls: Element[] = $$('.category').toArray();
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                const authorEls: Element[] = $$('.author').toArray();
-                const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                    const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                    return {
-                        name: $$authorEl.text(),
-                        url: $$authorEl.attr('href'),
-                        avatar: $$authorEl.find('img').attr('src'),
-                    };
-                });
-                const guid: string = $$('.id').text();
-                const upDatedStr: string | undefined = pubDateStr;
 
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseRelativeDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseVideoDate(pubDateStr) : item.pubDate,
                     link: linkUrl ? new URL(linkUrl, baseUrl).href : item.link,
                     category: categories,
-                    author: authors,
                     doi: $$('meta[name="citation_doi"]').attr('content'),
-                    guid,
-                    id: guid,
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('h3.video-summary').text(),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseRelativeDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 
@@ -142,8 +131,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         enclosure_url: enclosureUrl,
                         enclosure_type: enclosureType,
                         enclosure_title: title,
-                        enclosure_length: item.enclosure_length,
-                        itunes_duration: item.enclosure_length,
+                        itunes_duration: item.itunes_duration,
                         itunes_item_image: image,
                     };
                 }
@@ -153,7 +141,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const author: string | undefined = $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined;
@@ -163,7 +152,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author,
         language,
         itunes_author: author,

@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
@@ -64,10 +66,15 @@ async function handler() {
                 const $ = load(response);
                 const content = $('article.article-content');
                 content.find('code-block').remove();
+                const pubDate = $('.article-meta li')
+                    .first()
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                 return {
                     title,
                     description: content.html(),
                     link,
+                    pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
                 };
             })
         )

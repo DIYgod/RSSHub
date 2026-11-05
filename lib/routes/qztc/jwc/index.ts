@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -68,7 +70,7 @@ async function handler(ctx) {
                 if (!link) {
                     link = '';
                 } else if (!link.startsWith('http')) {
-                    link = rootUrl.slice(0, -1) + link;
+                    link = new URL(link, rootUrl).href;
                 }
                 const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
 
@@ -87,29 +89,29 @@ async function handler(ctx) {
         })
         .filter((item) => item.title && item.link);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const newItem = {
-                    ...item,
-                    description: '',
-                };
-                if (host === new URL(item.link).hostname) {
-                    if (new URL(item.link).pathname.startsWith('/_upload')) {
-                        // 链接为一个文件，直接返回链接
-                        newItem.description = item.link;
-                    } else {
-                        const response = await ofetch(item.link);
-                        const $ = load(response);
-                        newItem.description = $('.wp_articlecontent').html() || '';
-                    }
-                } else {
-                    // 涉及到其他站点，不方便做统一的 html 解析，直接返回链接
-                    newItem.description = item.link;
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`qztc:jwc:article:v2:${item.link}`, async () => {
+                const url = new URL(item.link);
+                if (url.hostname !== host || url.pathname.startsWith('/_upload')) {
+                    return item.link;
                 }
-                return newItem;
-            })
-        )
+                try {
+                    const response = await ofetch(item.link);
+                    const $ = load(response);
+                    return $('.wp_articlecontent').html() ?? '';
+                } catch (error) {
+                    if (error instanceof FetchError && error.statusCode === 403) {
+                        // Keep the public listing metadata when a detail page forbids anonymous access.
+                        return;
+                    }
+                    throw error;
+                }
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

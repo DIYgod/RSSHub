@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -35,6 +36,9 @@ async function handler(ctx) {
     const rootUrl = 'https://gycpt.bphc.com.cn';
 
     const { caty = 'announcement' } = ctx.req.param();
+    if (caty !== 'announcement' && caty !== 'project') {
+        throw new InvalidParameterError('caty must be announcement or project.');
+    }
     const obj = mapping[`/${caty}`];
     const currentUrl = `${rootUrl}${obj.list}`;
 

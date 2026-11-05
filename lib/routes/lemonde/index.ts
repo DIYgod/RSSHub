@@ -4,6 +4,7 @@ import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const ROOT_URL = 'https://www.lemonde.fr';
 
@@ -87,7 +88,7 @@ async function handler(ctx): Promise<Data> {
     const feedTitle = channel.children('title').text();
     const feedLink = channel.children('link').text() || ROOT_URL;
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const items = $('item')
         .toArray()

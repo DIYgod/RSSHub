@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/project-zero-issues',
@@ -26,7 +27,7 @@ const statusMap = {
 
 async function handler(ctx) {
     const baseUrl = 'https://project-zero.issues.chromium.org';
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const response = await ofetch(`${baseUrl}/action/issues/list`, {
         method: 'POST',

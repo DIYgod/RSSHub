@@ -1,9 +1,11 @@
-import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-// Require necessary modules
-import got from '@/utils/got'; // a customised got
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:channel?',
@@ -34,63 +36,93 @@ export const route: Route = {
 | news | business   | opinion | sports | national | entertainment | photo\\_feature | feature | world | blog |`,
 };
 
+const baseUrl = 'https://ekantipur.com';
+
+const parseArticleDate = (date?: string) => {
+    if (!date) {
+        return;
+    }
+    const parsed = parseDate(date);
+    return /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(date) ? timezone(parsed, 5.75) : parsed;
+};
+
 async function handler(ctx) {
-    // Your logic here
-    // Defining base URL
-    const baseUrl = 'https://ekantipur.com';
-
-    // Retrive the channel parameter
     const { channel = 'news' } = ctx.req.param();
-
-    // Fetches content of the requested channel
-    const { data: response } = await got(`${baseUrl}/${channel}`);
-    const $ = load(response);
-
-    // Retrive articles
-    const list = $('article.normal')
-        // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
+    const response = await ofetch<{ html: string }>('https://api.ekantipur.com/kantipur/v4/web/category', {
+        method: 'POST',
+        responseType: 'json',
+        headers: { Referer: `${baseUrl}/${channel}` },
+        body: new URLSearchParams({
+            json: 'true',
+            deviceSource: 'desktop',
+            currentslug: channel,
+            offset: '0',
+            requestDate: '',
+            requestLastNewsDate: '',
+            enNews: '0',
+            hdnLN: '',
+        }),
+    });
+    if (typeof response.html !== 'string') {
+        throw new TypeError('The official category API did not provide its first-page news list.');
+    }
+    const $ = load(response.html);
+    const list = $('.category-description, article.op-essay .info')
         .toArray()
-        // We use the `map()` method to traverse the array and parse the data we need from each element.
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
-            const a = $item.find('a').first();
+        .map((element): DataItem & { link: string } => {
+            const content = $(element);
+            const anchor = content.find('h2 a, h3 a').first();
             return {
-                title: a.text(),
-                // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.
-                link: `${baseUrl}${a.attr('href')}`,
-                author: $item.find('div.author').text(),
+                title: anchor.text(),
+                link: new URL(anchor.attr('href')!, baseUrl).href,
+                author: content.find('.author-name, .author a').text(),
                 category: channel,
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
+                const response = await ofetch<string>(item.link);
                 const $ = load(response);
-
-                // Remove sponsor elements
-                $('a.static-sponsor').remove();
-                $('div.ekans-wrapper').remove();
-
-                // Fetch title from the article page
-                item.title = $('h1.eng-text-heading').text();
-                // Fetch article content from the article page
-                item.description = $('div.current-news-block').first().html();
-
-                // Every property of a list item defined above is reused here
-                // and we add a new property 'description'
-                return item;
-            })
-        )
+                const metadata = $('script[type="application/ld+json"]')
+                    .toArray()
+                    .flatMap((element) => JSON.parse($(element).text()))
+                    .find((data) => data['@type'] === 'NewsArticle');
+                const content = $('.news-section-wrap-story .news-inner-wrapper').first();
+                const cover = $('.image-section-wrap figure').first();
+                if (!content.length && !cover.length) {
+                    throw new Error('The official article page did not provide its main content.');
+                }
+                content.find('.saman-samachar, .saman-news-wrapper, script, style').remove();
+                content
+                    .add(cover)
+                    .find('img[data-src]')
+                    .each((_, element) => {
+                        $(element).attr('src', $(element).attr('data-src')!);
+                        $(element).removeAttr('data-src');
+                    });
+                const tags = $('.news-section-wrap-story a[href*="/tag/"]')
+                    .toArray()
+                    .map((element) => $(element).text());
+                const authors = metadata?.author ? (Array.isArray(metadata.author) ? metadata.author : [metadata.author]) : [];
+                return {
+                    ...item,
+                    title: metadata?.headline || item.title,
+                    author: authors.map((author) => author.name).join(' / ') || item.author,
+                    description: (cover.length ? $.html(cover) : '') + (content.html() || ''),
+                    pubDate: parseArticleDate(metadata?.datePublished),
+                    updated: parseArticleDate(metadata?.dateModified),
+                    category: tags.length ? tags : item.category,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        // channel title
         title: `Ekantipur - ${channel}`,
-        // channel link
         link: `${baseUrl}/${channel}`,
-        // each feed item
+        language: 'ne' as const,
         item: items,
     };
 }

@@ -33,14 +33,15 @@ function loadDetail(link: string) {
         const temp = $('body > div.container.mt40 > div > div > div.m-lg.text-center > div.m-b-sm')
             .text()
             .replaceAll(/[\n\r]/g, '');
-        const dateTime = temp.slice(temp.indexOf('发布时间') + 5, temp.indexOf('信息来源')).trim() + ':00';
+        const dateTime = temp.match(/发布时间[：:\s]*(\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?)/)?.[1];
+        const author = temp.match(/信息来源[：:](.*?)(?:阅读次数|$)/)?.[1]?.trim();
 
         return {
             title,
             description: introduce,
             link,
-            pubDate: timezone(parseDate(dateTime), 8),
-            author: temp.slice(temp.indexOf('信息来源') + 5, temp.indexOf('阅读次数')).trim(),
+            pubDate: dateTime ? timezone(parseDate(dateTime), 8) : undefined,
+            author: author || undefined,
         };
     });
 }
@@ -67,9 +68,9 @@ async function handler(ctx: Context) {
     const typeName = $('h3').text();
 
     return {
-        title: `河北省退伍军人事务厅 - ${typeName}`,
+        title: `河北省退役军人事务厅 - ${typeName}`,
         link: host,
-        description: `河北省退伍军人事务厅 - ${typeName} 更新提示`,
+        description: `河北省退役军人事务厅 - ${typeName} 更新提示`,
         item: items,
     };
 }

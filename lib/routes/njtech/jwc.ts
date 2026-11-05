@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -40,8 +41,9 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.includes('/article.jsp')) {
                     const response = await ofetch(item.link);
@@ -49,8 +51,8 @@ async function handler() {
                     return { ...item, description: $('#vsb_content').html() };
                 }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

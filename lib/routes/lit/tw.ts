@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -44,8 +45,9 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             item.link!.includes('xb2024info.jsp')
                 ? item
                 : cache.tryGet(item.link!, async () => {
@@ -60,8 +62,8 @@ async function handler(ctx: Context): Promise<Data> {
                       item.description = $('.v_news_content').html();
 
                       return item;
-                  })
-        )
+                  }),
+        { concurrency: 3 }
     );
 
     return {

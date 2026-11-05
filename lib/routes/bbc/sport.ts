@@ -28,7 +28,7 @@ async function handler(ctx) {
     const { sport } = ctx.req.param();
     const link = `https://www.bbc.com/sport/${sport}`;
 
-    const response = await ofetch(link);
+    const response = await ofetch(link, { allowH2: false });
     const $ = load(response);
 
     const initialData = extractInitialData($);

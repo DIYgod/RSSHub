@@ -11,7 +11,7 @@ export const route: Route = {
     parameters: { key: '搜索关键字', order: '排序方式, live_time 开播时间, online 人气' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,

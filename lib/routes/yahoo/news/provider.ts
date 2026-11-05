@@ -1,5 +1,7 @@
+import pMap from 'p-map';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { getArchive, getProviderList, parseItem, parseList } from './utils';
 
@@ -40,23 +42,25 @@ export const route: Route = {
 例如 hk.news.yahoo.com/yahoo\\_movies\\_hk\\_660-- 所有分類 /archive, \`yahoo_movies_hk_660\` 就是 ProviderId 。`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { region, providerId } = ctx.req.param();
     if (!['hk', 'tw'].includes(region)) {
         throw new InvalidParameterError(`Unknown region: ${region}`);
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const providerList = await getProviderList(region);
     const provider = providerList.find((p) => p.key === providerId);
 
     const response = await getArchive(region, limit, [], providerId);
     const list = parseList(region, response);
 
-    const items = await Promise.all(list.map((item) => parseItem(item)));
+    const items = await pMap(list, parseItem, { concurrency: 3 });
 
     return {
         title: `Yahoo 新聞 - ${provider?.title ?? ''}`,
+        language: region === 'hk' ? 'zh-HK' : 'zh-TW',
         link: provider?.link ?? `https://${region}.news.yahoo.com`,
         image: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo-1200x1200.png',
         item: items,

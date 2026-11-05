@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 const security_key = 'pianyuan-security_session_verify';
 const PHPSESSID_key = 'pianyuan-PHPSESSID';
@@ -16,7 +16,7 @@ const ProcessFeed = async (list, cache) => {
             const link = new URL(e, link_base).href;
             const single = await cache.tryGet(link, async () => {
                 const response = await request(link, cache);
-                const content = load(response.data);
+                const content = load(response._data);
                 const magnet = content('.btn-primary').attr('href');
                 const torrent_name = content('body > div.jumbotron.masthead > div > div > div.col-sm-10.col-md-10.col-lg-10.text-left > h1').text();
                 const name = content('body > div.jumbotron.masthead > div > div > div.col-sm-10.col-md-10.col-lg-10.text-left > h2 > a').text();
@@ -59,27 +59,22 @@ async function getCookie(cache) {
 
 async function request(link, cache) {
     const cookie = await getCookie(cache);
-    const response = await got({
-        method: 'get',
-        url: link,
+    const response = await ofetch.raw(link, {
         headers: {
             Cookie: cookie,
         },
     });
     // set cookie
-    const set_cookie = response.headers['set-cookie'];
-    if (set_cookie) {
-        for (const e of set_cookie) {
-            if (e.includes('security_session_verify')) {
-                cache.set(security_key, e.split(';', 1)[0]);
-            } else if (e.includes('PHPSESSID')) {
-                cache.set(PHPSESSID_key, e.split(';', 1)[0]);
-            } else if (e.includes('py_loginauth')) {
-                cache.set(loginauth_key, e.split(';', 1)[0]);
-            }
+    for (const e of response.headers.getSetCookie()) {
+        if (e.includes('security_session_verify')) {
+            cache.set(security_key, e.split(';', 1)[0]);
+        } else if (e.includes('PHPSESSID')) {
+            cache.set(PHPSESSID_key, e.split(';', 1)[0]);
+        } else if (e.includes('py_loginauth')) {
+            cache.set(loginauth_key, e.split(';', 1)[0]);
         }
     }
-    if (response.data.includes('会员登录后才能访问')) {
+    if (response._data.includes('会员登录后才能访问')) {
         throw new ConfigNotFoundError('pianyuan Cookie已失效');
     }
     return response;

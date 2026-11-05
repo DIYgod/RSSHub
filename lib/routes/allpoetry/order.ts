@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const orders = {
     newest: { path: 'poems', title: 'Newest' },
@@ -16,7 +17,7 @@ export const route: Route = {
     example: '/allpoetry/newest',
     parameters: { order: 'Ordering, `newest`, `famous` or `picks`, `newest` by default' },
     features: {
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
     },
     name: 'Poems',
@@ -30,10 +31,7 @@ async function handler(ctx: Context) {
     const host = 'https://allpoetry.com/';
     const link = host + path;
 
-    const { page, destroy } = await getPlaywrightPage(link);
-    await page.waitForSelector('#items-list .itm h1 a');
-    const html = await page.content();
-    await destroy();
+    const html = await ofetch(link);
 
     const $ = load(html);
 
@@ -41,7 +39,7 @@ async function handler(ctx: Context) {
         .toArray()
         .map((e) => {
             const $e = $(e);
-            const $title = $e.find('h1 a');
+            const $title = $e.find('h2 a');
             if (!$title.length) {
                 return null;
             }
@@ -54,6 +52,7 @@ async function handler(ctx: Context) {
                 description: $description.html(),
                 link: itemUrl,
                 author: $e.find('.item_username a').text(),
+                pubDate: parseDate($e.find('abbr.timeago').attr('title')!),
                 guid: itemUrl,
             };
         })

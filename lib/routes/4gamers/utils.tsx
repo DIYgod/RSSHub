@@ -78,4 +78,4 @@ const renderImages = (images) =>
         </>
     );
 
-export { getCategories, parseItem, parseList, renderDescription, renderImages };
+export { getCategories, parseItem, parseList };

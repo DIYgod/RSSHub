@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const items = response.data.data.map((item) => {
         const title = item.name;
-        const link = `https://izhongchou.taobao.com/dreamdetail.htm?id=${item.id}`;
+        const link = new URL(item.link, 'https://izhongchou.taobao.com').href;
         const description = renderToString(
             <>
                 <img src={item.image} />

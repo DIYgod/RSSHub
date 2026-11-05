@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import { BASE_URL, parseCompanyName, parseCompanyPosts } from './utils';
 
@@ -26,41 +26,34 @@ export const route: Route = {
     handler: async (ctx) => {
         const company_id = ctx.req.param('company_id');
 
-        // Puppeteer setup
-        const context = await playwright();
-        const page = await context.newPage();
-        await page.route('**/*', (route) => {
-            const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
-        });
-
         const url = new URL(`${BASE_URL}/company/${company_id}`);
+        const { page, destroy } = await getPlaywrightPage(url.href, { noGoto: true, closeTimeout: 0 });
+        try {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                return request.resourceType() === 'document' ? route.continue() : route.abort();
+            });
+            logger.http(`Requesting ${url.href}`);
+            await page.goto(url.href, { waitUntil: 'domcontentloaded' });
 
-        logger.http(`Requesting ${url.href}`);
-        await page.goto(url.href, {
-            waitUntil: 'domcontentloaded',
-        });
-
-        const response = await page.content();
-        await page.close();
-
-        const $ = load(response);
-        const companyName = parseCompanyName($);
-        const posts = parseCompanyPosts($);
-
-        await context.close();
-
-        return {
-            title: `LinkedIn - ${companyName}'s Posts`,
-            link: url.href,
-            description: `This feed gets ${companyName}'s posts from LinkedIn`,
-            item: posts.map((post) => ({
-                title: post.text,
-                description: post.text,
-                link: post.link,
-                pubDate: post.date,
-                updated: post.date,
-            })),
-        };
+            const pageContent = await page.content();
+            const $ = load(pageContent);
+            const companyName = parseCompanyName($);
+            const posts = parseCompanyPosts($);
+            return {
+                title: `LinkedIn - ${companyName}'s Posts`,
+                link: url.href,
+                description: `This feed gets ${companyName}'s posts from LinkedIn`,
+                item: posts.map((post) => ({
+                    title: post.text,
+                    description: post.text,
+                    link: post.link,
+                    pubDate: post.date,
+                    updated: post.date,
+                })),
+            };
+        } finally {
+            await destroy();
+        }
     },
 };

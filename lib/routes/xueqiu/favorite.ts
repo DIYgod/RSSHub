@@ -13,7 +13,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,

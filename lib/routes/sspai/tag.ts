@@ -1,3 +1,6 @@
+import { escape } from 'entities/escape';
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,27 +29,36 @@ export const route: Route = {
     handler,
 };
 
+interface SourceArticle {
+    id: number;
+    title: string;
+    tags?: Array<{ title: string }>;
+    summary: string;
+    released_at: number;
+    author: { nickname: string };
+}
+
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-    const keyword_encode = encodeURIComponent(decodeURIComponent(keyword));
-    const api_url = `https://sspai.com/api/v1/articles?offset=0&limit=50&has_tag=1&tag=${keyword_encode}&include_total=false`;
-    const host = `https://beta.sspai.com/tag/${keyword_encode}`;
+    const keywordEncode = encodeURIComponent(decodeURIComponent(keyword));
+    const apiUrl = `https://sspai.com/api/v1/articles?offset=0&limit=50&has_tag=1&tag=${keywordEncode}&include_total=false`;
+    const host = `https://beta.sspai.com/tag/${keywordEncode}`;
     const resp = await got({
         method: 'get',
-        url: api_url,
+        url: apiUrl,
         headers: {
             Referer: host,
         },
     });
-    const data = resp.data.list;
-    const items = await Promise.all(
-        data.map((item) => {
+    const data: SourceArticle[] = resp.data.list;
+    const items = await pMap(
+        data,
+        async (item) => {
             const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
-            let description;
-            const key = `sspai: ${item.id}`;
-            return cache.tryGet(key, async () => {
+            let description = '';
+            const key = `sspai:tag:body:v3:${item.id}`;
+            const resolvedValue1 = await cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link, headers: { Referer: host } });
-                // description = response.data.data.body;
                 const articleData = response.data.data;
                 const banner = articleData.promote_image;
                 if (banner) {
@@ -55,21 +67,27 @@ async function handler(ctx) {
 
                 if (articleData.body_extends) {
                     for (const ext of articleData.body_extends) {
-                        description += ext.body;
+                        description += `${ext.title ? `<h2>${escape(ext.title)}</h2>` : ''}${ext.body}`;
                     }
                 }
 
-                description += articleData.body;
+                description += articleData.body ?? '';
 
+                return { description: description || undefined };
+            });
+            {
+                const details = resolvedValue1;
                 return {
-                    title: item.title.trim(),
-                    description,
+                    title: item.title,
                     link: `https://sspai.com/post/${item.id}`,
                     pubDate: parseDate(item.released_at * 1000),
                     author: item.author.nickname,
+                    category: item.tags?.map((tag) => tag.title),
+                    description: details.description ?? item.summary,
                 };
-            });
-        })
+            }
+        },
+        { concurrency: 3 }
     );
     return {
         title: `#${keyword} - 少数派`,

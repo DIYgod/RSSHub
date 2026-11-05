@@ -4,7 +4,6 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 // 合并不同 subjectType 的 type 映射
 const getTypeNames = (subjectType) => {
@@ -84,25 +83,25 @@ export const route: Route = {
     parameters: {
         id: '用户 id, 在用户页面地址栏查看',
         subjectType: {
-            description: '全部类别: `空`、book: `1`、anime: `2`、music: `3`、game: `4`、real: `6`',
+            description: '全部类别: `all`、book: `1`、anime: `2`、music: `3`、game: `4`、real: `6`',
             options: [
-                { value: 'ALL', label: 'all' },
-                { value: 'book', label: '1' },
-                { value: 'anime', label: '2' },
-                { value: 'music', label: '3' },
-                { value: 'game', label: '4' },
-                { value: 'real', label: '6' },
+                { value: 'all', label: '全部' },
+                { value: '1', label: 'book' },
+                { value: '2', label: 'anime' },
+                { value: '3', label: 'music' },
+                { value: '4', label: 'game' },
+                { value: '6', label: 'real' },
             ],
         },
         type: {
-            description: '全部类别: `空`、想看: `1`、看过: `2`、在看: `3`、搁置: `4`、抛弃: `5`',
+            description: '全部状态: `all`、想看: `1`、看过: `2`、在看: `3`、搁置: `4`、抛弃: `5`',
             options: [
-                { value: 'ALL', label: 'all' },
-                { value: '想看', label: '1' },
-                { value: '看过', label: '2' },
-                { value: '在看', label: '3' },
-                { value: '搁置', label: '4' },
-                { value: '抛弃', label: '5' },
+                { value: 'all', label: '全部' },
+                { value: '1', label: '想看' },
+                { value: '2', label: '看过' },
+                { value: '3', label: '在看' },
+                { value: '4', label: '搁置' },
+                { value: '5', label: '抛弃' },
             ],
         },
     },
@@ -117,22 +116,22 @@ export const route: Route = {
     radar: [
         {
             source: ['bgm.tv/anime/list/:id'],
-            target: '/bangumi.tv/user/collections/:id/all/all',
+            target: '/user/collections/:id/all/all',
         },
         {
             source: ['bangumi.tv/anime/list/:id'],
-            target: '/bangumi.tv/user/collections/:id/all/all',
+            target: '/user/collections/:id/all/all',
         },
         {
             source: ['bgm.tv/anime/list/:id/wish'],
-            target: '/bangumi.tv/user/collections/:id/2/1',
+            target: '/user/collections/:id/2/1',
         },
         {
             source: ['bangumi.tv/anime/list/:id/wish'],
-            target: '/bangumi.tv/user/collections/:id/2/1',
+            target: '/user/collections/:id/2/1',
         },
     ],
-    name: 'Bangumi 用户收藏列表',
+    name: '用户收藏列表',
     maintainers: ['youyou-sudo', 'honue'],
     handler,
 };
@@ -199,7 +198,7 @@ async function handler(ctx) {
                 picUrl: item.subject.images.large,
             }),
             link: `https://bgm.tv/subject/${subjectId}`,
-            pubDate: timezone(parseDate(updateTime), 0),
+            pubDate: parseDate(updateTime),
         };
     });
     return {

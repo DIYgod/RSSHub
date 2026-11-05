@@ -38,8 +38,8 @@ async function handler(ctx: Context) {
     const threads = $('form table')
         .last()
         .find('tbody')
-        .toArray()
         .slice(1) // skip first empty row
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

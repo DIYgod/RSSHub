@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const baseUrl = 'https://jwc.henu.edu.cn';
 
@@ -29,6 +29,9 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type = 'tzgg' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError(`Invalid notice type: ${type}. Supported types: ${Object.keys(map).join(', ')}.`);
+    }
     const link = `${baseUrl}${map[type]}`;
 
     const response = await ofetch(link, {
@@ -43,10 +46,13 @@ async function handler(ctx: Context) {
         title: $('title').text(),
         item: $('.article-list li')
             .toArray()
-            .map((elem): DataItem => ({
-                link: new URL($('a', elem).attr('href')!, link).href,
-                title: $('.article-title', elem).text(),
-                pubDate: timezone(parseDate($('.article-date', elem).text()), 8),
-            })),
+            .map((elem): DataItem => {
+                const date = $('.article-date', elem).text();
+                return {
+                    link: new URL($('a', elem).attr('href')!, link).href,
+                    title: $('.article-title', elem).text(),
+                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                };
+            }),
     };
 }

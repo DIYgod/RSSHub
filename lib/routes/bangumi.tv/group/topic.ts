@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://bgm.tv';
 
@@ -37,25 +38,27 @@ async function handler(ctx) {
     const $ = load(html);
     const title = 'Bangumi - ' + $('.SecondaryNavTitle').text();
 
+    const list = $('.topic_list .topic')
+        .toArray()
+        .map((elem) => ({ elem, pubDate: timezone(parseDate($('.lastpost .time', elem).text()), 8) }));
+    const orderedList = list;
     const items = await Promise.all(
-        $('.topic_list .topic')
-            .toArray()
-            .map((elem) => {
-                const link = new URL($('.subject a', elem).attr('href')!, baseUrl).href;
-                return cache.tryGet(link, async () => {
-                    const html = await ofetch(link);
-                    const $ = load(html);
-                    const fullText = $('.postTopic .topic_content').html();
-                    const summary = 'Reply: ' + $('.posts', elem).text();
-                    return {
-                        link,
-                        title: $('.subject a', elem).attr('title')!,
-                        pubDate: parseDate($('.lastpost .time', elem).text()),
-                        description: fullText ? summary + '<br><br>' + fullText : summary,
-                        author: $('.author a', elem).text(),
-                    };
-                });
-            })
+        orderedList.map(({ elem, pubDate }) => {
+            const link = new URL($('.subject a', elem).attr('href')!, baseUrl).href;
+            return cache.tryGet(link, async () => {
+                const html = await ofetch(link);
+                const $ = load(html);
+                const fullText = $('.postTopic .topic_content').html();
+                const summary = 'Reply: ' + $('.posts', elem).text();
+                return {
+                    link,
+                    title: $('.subject a', elem).attr('title')!,
+                    pubDate,
+                    description: fullText ? summary + '<br><br>' + fullText : summary,
+                    author: $('.author a', elem).text(),
+                };
+            });
+        })
     );
 
     return {

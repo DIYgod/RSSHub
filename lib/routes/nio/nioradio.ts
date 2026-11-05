@@ -30,7 +30,7 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    name: 'NIO Radio',
+    name: 'Radio',
     maintainers: ['marcosteam'],
     handler: async (ctx) => {
         const { albumid } = ctx.req.param();
@@ -62,7 +62,7 @@ export const route: Route = {
             itunes_duration: podcast.duration / 1000,
             enclosure_url: podcast.aacPlayUrl192,
             enclosure_length: podcast.aacFileSize192,
-            enclosure_type: 'audio/x-m4a',
+            enclosure_type: 'audio/mp4',
         }));
         return {
             title: `NIO Radio - ${podcastName}`,

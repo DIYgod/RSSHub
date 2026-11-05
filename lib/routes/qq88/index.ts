@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -44,16 +45,18 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1];
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: parseDate($item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
+                pubDate: date ? parseDate(date) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -72,8 +75,8 @@ async function handler(ctx) {
                 });
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

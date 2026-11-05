@@ -36,12 +36,12 @@ async function handler(ctx) {
         link,
         item: itemList.toArray().map((element) => {
             const item = $(element);
-            const title = item.find('.beatmap-pack__name').text();
+            const title = item.find('.beatmap-pack-item-header__name, .beatmap-pack__name').text();
             const link = item.find('.beatmap-pack__header').attr('href');
             // Trying to get the description will return 429 (Too Many Requests).
             const description = item.find('.beatmap-pack__body').html();
-            const pubDate = parseDate(item.find('.beatmap-pack__date').text(), 'YYYY-MM-DD');
-            const author = item.find('.beatmap-pack__author--bold').text().trim();
+            const pubDate = parseDate(item.find('.beatmap-pack-item-header__date, .beatmap-pack__date').text(), 'YYYY-MM-DD');
+            const author = item.find('.beatmap-pack-item-header__details strong, .beatmap-pack__author--bold').text().trim();
 
             return {
                 title,

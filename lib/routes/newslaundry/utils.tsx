@@ -10,10 +10,10 @@ export const rootUrl = 'https://www.newslaundry.com';
 interface Collection {
     name: string;
     summary?: string;
-    items?: Array<{ story: any }>;
+    items?: Array<{ story?: any }>;
 }
 
-export async function fetchCollection(collectionSlug: string, customUrl?: string, skipFirstItem: boolean = false): Promise<Data> {
+export async function fetchCollection(collectionSlug: string, customUrl?: string): Promise<Data> {
     const apiUrl = `${rootUrl}/api/v1/collections/${collectionSlug}`;
     const currentUrl = customUrl || `${rootUrl}/${collectionSlug}`;
 
@@ -23,8 +23,7 @@ export async function fetchCollection(collectionSlug: string, customUrl?: string
         throw new Error('No articles found');
     }
 
-    // Skip first item if requested
-    const itemsToProcess = skipFirstItem ? response.items.slice(1) : response.items;
+    const itemsToProcess = response.items.filter((item) => item.story);
     const items = itemsToProcess.map((item) => processStory(item.story));
 
     return {
@@ -38,9 +37,13 @@ export async function fetchCollection(collectionSlug: string, customUrl?: string
     };
 }
 
+function flattenElements(elements: any[] = []): any[] {
+    return elements.flatMap((element) => (element.type === 'composite' ? flattenElements(element['story-elements']) : [element]));
+}
+
 function processStory(story: any): DataItem {
     const articleUrl = story.url;
-    const pubDate = story['published-at'] ? parseDate(story['published-at']) : null;
+    const pubDate = story['published-at'] ? parseDate(story['published-at']) : undefined;
 
     // Prepare data for template
     const heroImage = story['hero-image-s3-key'] ? `https://media.assettype.com/${story['hero-image-s3-key']}?auto=format%2Ccompress&fit=max&dpr=1.0&format=webp` : undefined;
@@ -49,8 +52,8 @@ function processStory(story: any): DataItem {
     const elements =
         story.cards?.flatMap(
             (card) =>
-                card?.['story-elements']
-                    ?.map((element) => {
+                flattenElements(card?.['story-elements'])
+                    .map((element) => {
                         if (element.type === 'text' && element.text) {
                             return {
                                 type: 'text',

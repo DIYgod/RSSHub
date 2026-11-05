@@ -1,5 +1,8 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiRootUrl, parseArticle, parseResult, rootUrl } from './utils';
 
@@ -28,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await ofetch(`${apiRootUrl}/api/v2/timeline/`, {
         query: {
@@ -39,7 +42,7 @@ async function handler(ctx) {
 
     const list = parseResult(response.results, limit);
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, parseArticle, { concurrency: 3 });
 
     return {
         title: 'UNTAG',

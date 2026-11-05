@@ -4,7 +4,14 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+const legacyColumns = {
+    '31266': 'sy/tzgg',
+    '32942': 'sy/tzgg',
+    '31530': 'xxjl/xsdt',
+};
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -18,20 +25,22 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     description: `路径处填写对应页面 URL 中 \`https://www.bast.net.cn/\` 后的字段。下面是两个例子。
 
-若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL <https://www.bast.net.cn/col/col31266> 中 \`https://www.bast.net.cn/\` 后的字段 \`col/col31266\` 作为路径填入。此时路由为 [\`/bast/col/col31266\`](https://rsshub.app/bast/col/col31266)
+若订阅 [通知公告](https://www.bast.net.cn/sy/tzgg/) 则将对应页面 URL <https://www.bast.net.cn/sy/tzgg/> 中 \`https://www.bast.net.cn/\` 后的字段 \`sy/tzgg\` 作为路径填入。此时路由为 [\`/bast/sy/tzgg\`](https://rsshub.app/bast/sy/tzgg)
 
-若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL <https://www.bast.net.cn/col/col31530> 中 \`https://www.bast.net.cn/\` 后的字段 \`col/col31530\` 作为路径填入。此时路由为 [\`/bast/col/col31530\`](https://rsshub.app/bast/col/col31530)
+若订阅 [学术动态](https://www.bast.net.cn/xxjl/xsdt/) 则将对应页面 URL <https://www.bast.net.cn/xxjl/xsdt/> 中 \`https://www.bast.net.cn/\` 后的字段 \`xxjl/xsdt\` 作为路径填入。此时路由为 [\`/bast/xxjl/xsdt\`](https://rsshub.app/bast/xxjl/xsdt)
 
-如果路由符合 \`/col/colXXXXX\` 的格式，可以由 [\`/bast/col/col31266\`](https://rsshub.app/bast/col/col31266) 精简为 [\`/bast/31266\`](https://rsshub.app/bast/31266)`,
+旧栏目 \`31266\`、\`32942\`（通知公告）和 \`31530\`（学术动态）以及 \`col/colXXXXX\` 格式继续兼容。其他栏目请使用当前网站路径。`,
     handler,
 };
 
 async function handler(ctx) {
     const colPath = ctx.req.param('path') ?? '32942';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.bast.net.cn';
-    const currentUrl = `${rootUrl}/${Number.isNaN(Number(colPath)) ? colPath : `col/col${colPath}`}/`;
+    const legacyId = colPath.match(/^(?:col\/col)?(\d+)\/?$/)?.[1];
+    const currentPath = legacyId ? (legacyColumns[legacyId] ?? `col/col${legacyId}`) : colPath;
+    const currentUrl = new URL(`${currentPath.replace(/\/$/, '')}/`, rootUrl).href;
 
     const response = await got({
         method: 'get',
@@ -60,8 +69,8 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.text().trim(),
-                link: $item.attr('href'),
+                title: $item.attr('title') || $item.text(),
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
@@ -78,7 +87,12 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="ArticleTitle"]').attr('content')!;
                     item.author = content('meta[name="contentSource"]').attr('content');
-                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')!), 8);
+                    const dateString =
+                        content('meta[name="pubdate"]').attr('content') ??
+                        content('.arctit p')
+                            .text()
+                            .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                    item.pubDate = dateString ? timezone(parseDate(dateString), 8) : undefined;
                     item.category = [content('meta[name="ColumnName"]').attr('content')!];
 
                     item.description = content('.arccont').html();

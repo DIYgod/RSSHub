@@ -1,11 +1,20 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
 
 const pageUrl = 'https://support.bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5';
+
+interface ArticleResponse {
+    article: {
+        title: string;
+        body: string;
+        edited_at: string;
+    };
+}
 
 export const route: Route = {
     path: '/release/5',
@@ -14,7 +23,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -22,70 +31,49 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5', 'bluestacks.com/'],
+            source: ['support.bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5', 'bluestacks.com/'],
         },
     ],
-    name: 'BlueStacks 5 Release Notes',
+    name: '5 Release Notes',
     maintainers: ['TonyRL'],
     handler,
-    url: 'bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5',
+    url: 'support.bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5',
 };
 
 async function handler() {
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(pageUrl, {
-        waitUntil: 'domcontentloaded',
-    });
-    const res = await page.evaluate(() => document.documentElement.getHTML());
-    await page.close();
-
-    const $ = load(res);
-
-    const list = $('div h3 a')
+    const apiUrl = 'https://support.bluestacks.com/api/v2/help_center/en-us/articles';
+    const { article } = await ofetch<ArticleResponse>(`${apiUrl}/360056960211.json`);
+    const $ = load(article.body);
+    const list = $('h3 a')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href'),
+                link: new URL($item.attr('href')!, pageUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                const page = await context.newPage();
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-                });
-                await page.goto(item.link!, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const res = await page.evaluate(() => document.documentElement.getHTML());
-                const $ = load(res);
-                await page.close();
-
-                item.description = $('div.article__body').html();
-                item.pubDate = parseDate($('div.meta time').attr('datetime')!);
+                const id = new URL(item.link!).pathname.match(/\/articles\/(\d+)/)?.[1];
+                if (!id) {
+                    throw new Error(`Unable to find the BlueStacks release article ID: ${item.link}`);
+                }
+                const { article } = await ofetch<ArticleResponse>(`${apiUrl}/${id}.json`);
+                item.description = article.body;
+                item.pubDate = parseDate(article.edited_at);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
-    await context.close();
-
     return {
-        title: $('.article__title').text().trim(),
-        description: $('meta[name=description]').text().trim(),
+        title: article.title,
         link: pageUrl,
-        image: $('link[rel="shortcut icon"]').attr('href'),
         item: items,
     };
 }

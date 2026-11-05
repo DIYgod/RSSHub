@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
@@ -11,9 +12,7 @@ const map = new Map([
     ['tzgg', { title: '中国科学技术大学信息科学技术学院 - 通知公告', id: '5142' }],
     ['zsgz', { title: '中国科学技术大学信息科学技术学院 - 招生工作', id: '5108' }],
 ]);
-
 const host = 'https://sist.ustc.edu.cn';
-
 export const route: Route = {
     path: '/sist/:type?',
     categories: ['university'],
@@ -41,7 +40,6 @@ export const route: Route = {
 | -------- | -------- |
 | tzgg     | zsgz     |`,
 };
-
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
     const info = map.get(type);
@@ -49,7 +47,6 @@ async function handler(ctx) {
         throw new InvalidParameterError('invalid type');
     }
     const id = info.id;
-
     const response = await got(`${host}/${id}/list.htm`);
     const $ = load(response.data);
     let items = $('div[portletmode=simpleList]')
@@ -60,29 +57,38 @@ async function handler(ctx) {
             const title = $item.find('.card-title > a').attr('title');
             let link = $item.find('.card-title > a').attr('href');
             link = link!.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate($item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
+            const published = $item.find('time').text().replace('发布时间：', '').trim();
+            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
             return {
                 title: title!,
                 pubDate,
                 link,
             };
         });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`ustc:sist:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
                 try {
                     const response = await got(item.link);
-                    const desc = load(response.data)('div.wp_articlecontent').html();
-                    item.description = desc;
+                    const $detail = load(response.data);
+                    $detail('.wp_articlecontent [pdfsrc]').each((_, el) => {
+                        const attachment = $detail(el);
+                        const title = attachment.attr('sudyfile-attr')?.match(/'title':'(.+?)'/)?.[1] ?? 'PDF';
+                        const attachmentUrl1 = new URL(attachment.attr('pdfsrc')!, item.link!).href;
+                        attachment.replaceWith($detail('<a>').attr('href', attachmentUrl1).text(title));
+                    });
+                    details.description = $detail('div.wp_articlecontent').html();
                 } catch {
-                    // intranet only contents
+                    // Retain the existing optional-detail fallback.
                 }
-                return item;
-            })
-        )
+                return details;
+            });
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: info.title,
         link: `${host}/${id}/list.htm`,

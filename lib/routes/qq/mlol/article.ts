@@ -1,11 +1,20 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+interface FeedInfo {
+    feedNews: {
+        body: { title: string; imgUrl: string; comCreateDate: string; commentID: string; nickName: string };
+        footer: { source: string; zoneGameId: string };
+    };
+    feedBase: { intent: string };
+}
 
 export const route: Route = {
     path: '/mlol/article/:uuid',
@@ -21,12 +30,13 @@ async function handler(ctx: Context) {
     const { uuid } = ctx.req.param();
     const url = `https://mlol.qt.qq.com/go/mlol_news/author_feeds?author_uuid=${uuid}`;
 
-    const response = await ofetch(url);
+    const response = await ofetch<{ data: { feedsInfo: FeedInfo[] } }>(url);
     const data = response.data.feedsInfo;
     const name = data[0].feedNews.footer.source;
 
-    const items = await Promise.all(
-        data.map((feed) => {
+    const items = await pMap(
+        data,
+        (feed) => {
             const body = feed.feedNews.body;
             const link = `https://mlol.qt.qq.com/go/mlol_news/varcache_article?is_lqt=true&docid=${body.commentID}`;
             const item = {
@@ -42,12 +52,13 @@ async function handler(ctx: Context) {
                 item.description = $('.article_content').html() ?? item.description;
                 return item;
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${name}的文章`,
-        link: url,
+        link: 'https://lol.qq.com/app/index.html',
         description: `${name}的文章`,
         item: items,
     };

@@ -1,14 +1,17 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
 import iconv from 'iconv-lite';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { id = 'RPJQWQYZ' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const ids = id?.split(/\//) ?? [];
     const titles: string[] = [];
@@ -25,7 +28,7 @@ export const handler = async (ctx) => {
     const author = '国家气候中心';
     const language: Language = 'zh';
 
-    const items = $('ul.img-con-new-con li img[id]')
+    const items = $('ul.img-con-new-con li img[id][src]')
         .toArray()
         .filter((item) => ids.length === 0 || ids.includes($(item).prop('id')))
         .slice(0, limit)
@@ -35,11 +38,11 @@ export const handler = async (ctx) => {
             const id = $item.prop('id');
             const title = $(`li[data-id="${id}"]`).text() || undefined;
             const image = new URL($item.prop('src')!, currentUrl).href;
-            const date =
-                image
-                    .match(/_(\d{4})(\d{2})(\d{2})_/)
-                    ?.slice(1, 4)
-                    .join('-') ?? new Date().toISOString().slice(0, 10);
+            const date = image
+                .match(/_(\d{4})(\d{2})(\d{2})_/)
+                ?.slice(1, 4)
+                .join('-');
+            const itemTitle = [title, date].filter(Boolean).join(' ');
 
             if (ids.length !== 0 && title) {
                 titles.push(title);
@@ -48,31 +51,30 @@ export const handler = async (ctx) => {
             const description = renderToString(
                 image ? (
                     <figure>
-                        <img alt={`${title} ${date}`} src={image} />
+                        <img alt={itemTitle} src={image} />
                     </figure>
                 ) : null
             );
-            const guid = `ncc-cma#${id}#${date}`;
+            const guid = date ? `ncc-cma#${id}#${date}` : image;
 
             return {
-                title: `${title} ${date}`,
+                title: itemTitle,
                 description,
-                pubDate: parseDate(date),
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
                 link: currentUrl,
-                category: [title!],
+                category: title ? [title] : undefined,
                 author,
                 guid,
                 id: guid,
                 content: {
                     html: description,
-                    text: description,
                 },
                 image,
                 banner: image,
                 language,
                 enclosure_url: image,
-                enclosure_type: `image/${image.split(/\./).pop()}`,
-                enclosure_title: `${title} ${date}`,
+                enclosure_type: getMimeType(new URL(image).pathname),
+                enclosure_title: itemTitle,
             };
         });
 
@@ -84,7 +86,6 @@ export const handler = async (ctx) => {
         description: $('title').text(),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author,
         language,
@@ -98,7 +99,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/ncc-cma/cmdp/image/RPJQWQYZ',
-    parameters: { category: '图片，默认为 RPJQWQYZ，即日平均气温距平，可在对应列表项 data-id 属性中找到' },
+    parameters: { id: '图片，默认为 RPJQWQYZ，即日平均气温距平，可在对应列表项 data-id 属性中找到' },
     description: `::: tip
 若订阅日平均气温距平，将其 data-id \`RPJQWQYZ\` 作为参数填入，此时路由为 [\`/ncc-cma/cmdp/image/RPJQWQYZ\`](https://rsshub.app/ncc-cma/cmdp/image/RPJQWQYZ)。
 
@@ -220,7 +221,7 @@ export const route: Route = {
         {
             title: '本月以来降水量',
             source: ['cmdp.ncc-cma.net/cn/index.htm'],
-            target: '/ncc-cma/cmdp/image/BYYLJSL',
+            target: '/cmdp/image/BYYLJSL',
         },
         {
             title: '本季以来降水量',

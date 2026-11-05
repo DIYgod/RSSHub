@@ -42,8 +42,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['www.gcores.com/'],
+            target: '/videos',
+        },
+        {
             source: ['www.gcores.com/videos'],
-            target: '/gcores/videos',
+            target: '/videos',
         },
     ],
     view: ViewType.Videos,

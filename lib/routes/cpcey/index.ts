@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://cpc.ey.gov.tw';
 
@@ -41,6 +43,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xwg';
+    if (!Object.hasOwn(typeMap, type)) {
+        throw new InvalidParameterError('Invalid type. Use xwg or xfzx.');
+    }
     const url = rootUrl + typeMap[type].url;
 
     const response = await got.get(url);
@@ -55,7 +60,7 @@ async function handler(ctx) {
             return {
                 link: rootUrl + $(item).find('a').attr('href'),
                 title: $(item).find('a').attr('title')!,
-                pubDate: parseDate(dateStr, 'YYYY/MM/DD'),
+                pubDate: timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8),
             };
         });
 

@@ -48,13 +48,12 @@ async function handler(ctx) {
 
     const items = response.history.map((item, index) => ({
         title: `${item.user.login} ${index === response.history.length - 1 ? 'created' : 'revised'} this gist`,
-        description: item.change_status.total ? `${item.change_status.additions} additions and ${item.change_status.deletions} deletions` : null,
+        description: item.change_status.total ? `${item.change_status.additions} additions and ${item.change_status.deletions} deletions` : undefined,
         link: `${host}/${gistId}/${item.version}`,
         pubDate: parseDate(item.committed_at), // e.g. 2022-09-02T11:09:56Z
     }));
 
     return {
-        allowEmpty: true,
         title: `${response.owner.login} / ${Object.values<any>(response.files)[0].filename}`,
         description: response.description,
         image: response.owner.avatar_url,

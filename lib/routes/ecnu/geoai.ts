@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -14,7 +15,7 @@ export const route: Route = {
     example: '/ecnu/geoai',
     radar: [
         {
-            source: ['geoai.ecnu.edu.cn'],
+            source: ['geoai.ecnu.edu.cn', 'geoai.ecnu.edu.cn/tzgg/list.htm'],
             target: '/geoai',
         },
     ],
@@ -32,21 +33,19 @@ export const route: Route = {
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    if (type(item.link) === 'htm') {
-                        const { data } = await got(item.link);
-                        const $ = load(data);
-                        const $read = $('div.wp_articlecontent');
-                        item.description = $read.html();
-                        return item;
-                    }
-                    // file to download
-                    item.description = '点击认证后访问内容';
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                if (type(item.link) === 'htm') {
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    const $read = $('div.wp_articlecontent');
+                    item.description = $read.html();
                     return item;
-                })
-            )
+                }
+                // file to download
+                item.description = '点击认证后访问内容';
+                return item;
+            })
         );
 
         return {

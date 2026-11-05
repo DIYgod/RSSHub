@@ -7,6 +7,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/next/:url',
@@ -30,7 +31,7 @@ async function handler(ctx: Context) {
     const $ = load(res);
 
     const list = $('.post-header')
-        .slice(0, 5)
+        .slice(0, Math.max(5, getRouteLimit(ctx, 5)))
         .toArray()
         .map((element) => {
             const each = $(element);
@@ -42,18 +43,20 @@ async function handler(ctx: Context) {
         });
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const storyDetail = await ofetch(item.link);
                 const $ = load(storyDetail);
+                const date = $('time').attr('datetime');
+                const pubDate = date ? parseDate(date) : undefined;
 
                 return {
-                    ...item,
-                    pubDate: parseDate($('time').attr('datetime')!),
+                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
                     description: $('.post-body').html(),
                 };
-            })
-        )
+            })),
+        }))
     );
 
     return {

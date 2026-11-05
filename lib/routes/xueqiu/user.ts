@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -159,13 +159,14 @@ async function handler(ctx) {
     const items = await pMap(
         data,
         async (item) => {
-            try {
-                return await cache.tryGet(item.target, async () => {
-                    // legal_user_visible 为 true 时列表已含完整内容，无需再请求详情
-                    if (item.legal_user_visible) {
-                        return buildListItem(item);
-                    }
+            // Complete list entries already contain the current content.
+            if (item.legal_user_visible) {
+                return buildListItem(item);
+            }
 
+            try {
+                // Only the raw detail is cached; list fields are assembled outside the cache.
+                const cachedDetail = await cache.tryGet(`xueqiu:user:detail:${item.id}`, async () => {
                     let detail: StatusDetail;
                     try {
                         detail = await ofetch(`${apiUrl}/statuses/show.json`, {
@@ -176,26 +177,27 @@ async function handler(ctx) {
                     } catch (error) {
                         const errorCode = error instanceof FetchError ? error.data?.error_code : undefined;
                         if (isPermanentError(errorCode)) {
-                            return buildListItem(item);
+                            return {};
                         }
                         throw error;
                     }
 
-                    const errorCode = detail.error_code;
-                    if (isPermanentError(errorCode)) {
-                        return buildListItem(item);
+                    // Cache an empty result only for permanent errors; throw otherwise so nothing is cached.
+                    if (isPermanentError(detail.error_code)) {
+                        return {};
                     }
-                    if (errorCode !== undefined) {
-                        throw new Error(`Xueqiu detail returned error code ${errorCode}`);
+                    if (detail.error_code !== undefined) {
+                        throw new Error(`Xueqiu detail returned error code ${detail.error_code}`);
                     }
-
-                    const detailItem = buildDetailItem(item, detail);
-                    if (!detailItem.description.trim()) {
+                    if (!buildDescription(detail).trim()) {
                         throw new Error('Xueqiu detail response is empty');
                     }
-                    return detailItem;
+                    return { detail };
                 });
+
+                return cachedDetail.detail ? buildDetailItem(item, cachedDetail.detail) : buildListItem(item);
             } catch {
+                // Transient failure: provide a fallback item without caching, retry next request.
                 return buildListItem(item);
             }
         },

@@ -4,15 +4,14 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-
-const dateRegex = /(20\d{2}).(\d{2})-(\d{2})/;
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://news.uestc.edu.cn';
 
 const map = {
-    academy: '/?n=UestcNews.Front.CategoryV2.Page&CatId=66',
-    culture: '/?n=UestcNews.Front.CategoryV2.Page&CatId=67',
-    announcement: '/?n=UestcNews.Front.CategoryV2.Page&CatId=68',
+    academy: '/xxgg/xs.htm',
+    culture: '/xxgg/wh.htm',
+    announcement: '/xxgg/gg.htm',
 };
 
 export const route: Route = {
@@ -38,17 +37,17 @@ export const route: Route = {
     maintainers: ['achjqz', 'mobyw'],
     handler,
     url: 'news.uestc.edu.cn/',
-    description: `| 学术    | 文化    | 公告         | 校内通知     |
-| ------- | ------- | ------------ | ------------ |
-| academy | culture | announcement | notification |`,
+    description: `| 学术    | 文化    | 公告         |
+| ------- | ------- | ------------ |
+| academy | culture | announcement |`,
 };
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'announcement';
-    const pageUrl = map[type];
-    if (!pageUrl) {
-        throw new InvalidParameterError('type not supported');
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Unsupported type. Use academy, culture, or announcement.');
     }
+    const pageUrl = map[type];
 
     const response = await got.get(baseUrl + pageUrl);
 
@@ -60,16 +59,16 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const newsTitle = $item.find('a').text().trim();
-            const newsLink = baseUrl + $item.find('a').attr('href');
-            const newsDate = parseDate($item.find('div.date-box-sm').text().replace(dateRegex, '$1-$2-$3'));
+            const newsTitle = $item.find('a').text();
+            const newsLink = new URL($item.find('a').attr('href')!, baseUrl + pageUrl).href;
+            const newsDate = parseDate($item.find('div.date-box-sm').text().trim(), 'YYYY.MM-DD', true);
             const newsDescription = $item.find('div.content').text().trim().replace('&nbsp;', '');
 
             return {
                 title: newsTitle,
                 link: newsLink,
                 description: newsDescription,
-                pubDate: newsDate,
+                pubDate: Number.isNaN(newsDate.getTime()) ? undefined : timezone(newsDate, 8),
             };
         });
 

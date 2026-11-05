@@ -16,7 +16,7 @@ export const route: Route = {
     parameters: { uid: '用户名' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -36,41 +36,42 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const link = `https://www.iqiyi.com/u/${uid}/videos`;
 
-    // Use Playwright because iqiyi page has a delay.
-    const context = await playwright();
     const data = await cache.tryGet(
         link,
         async () => {
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-            });
-            logger.http(`Requesting ${link}`);
-            await page.goto(link, {
-                waitUntil: 'domcontentloaded',
-            });
-            await page.waitForSelector('li.pic-txt-li');
-            const html = await page.content();
+            const context = await playwright();
+            try {
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                });
+                logger.http(`Requesting ${link}`);
+                await page.goto(link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                await page.waitForSelector('li.pic-txt-li');
+                const html = await page.content();
 
-            const $ = load(html);
-            const list = $('li.pic-txt-li');
+                const $ = load(html);
+                const list = $('li.pic-txt-li');
 
-            return {
-                title: $('title').text(),
-                link,
-                item: list.toArray().map((item) => ({
-                    title: $(item).attr('title')!,
-                    // description: `<img src="${$(item).find('.li-pic img').attr('src')}">`,
-                    pubDate: parseDate($(item).find('.li-sub span.sub-date').text(), 'YYYY-MM-DD'),
-                    link: $(item).find('.li-dec a').attr('href'),
-                })),
-            };
+                return {
+                    title: $('title').text(),
+                    link,
+                    item: list.toArray().map((item) => ({
+                        title: $(item).attr('title')!,
+                        // description: `<img src="${$(item).find('.li-pic img').attr('src')}">`,
+                        pubDate: parseDate($(item).find('.li-sub span.sub-date').text(), 'YYYY-MM-DD'),
+                        link: $(item).find('.li-dec a').attr('href'),
+                    })),
+                };
+            } finally {
+                await context.close();
+            }
         },
         config.cache.routeExpire,
         false
     );
-    await context.close();
-
     return data;
 }

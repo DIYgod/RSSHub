@@ -5,10 +5,11 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const sections = {
     zsgz: {
-        tzgg: { title: '招生工作 - 通知公告', path: '/zsgz/tzgg.htm' },
+        tzgg: { title: '招生工作 - 通知公告', path: '/tzgg/zsgz.htm' },
         xwsd: { title: '招生工作 - 新闻速递', path: '/zsgz/xwsd.htm' },
     },
     pygz: {
@@ -22,7 +23,7 @@ const sections = {
         pggz: { title: '学位工作 - 评估工作', path: '/xwgz/pggz.htm' },
     },
     xsgz: {
-        tzgg: { title: '学生工作 - 通知公告', path: '/xsgz/tzgg.htm' },
+        tzgg: { title: '学生工作 - 通知公告', path: '/tzgg/xsgz.htm' },
         xwsd: { title: '学生工作 - 新闻速递', path: '/xsgz/xwsd.htm' },
         xshd: { title: '学生工作 - 学生活动', path: '/xsgz/xshd.htm' },
         jzgz: { title: '学生工作 - 奖助工作', path: '/xsgz/jzgz.htm' },
@@ -79,8 +80,68 @@ export const route: Route = {
     maintainers: ['FrankFahey'],
     radar: [
         {
-            source: ['yjs.gmu.cn/:type/:subtype.htm', 'yjs.gmu.cn/'],
-            target: '/yjs/:type/:subtype',
+            source: ['yjs.gmu.cn/', 'yjs.gmu.cn/tzgg/zsgz.htm'],
+            target: '/yjs/zsgz/tzgg',
+        },
+        {
+            title: '培养工作 - 通知公告',
+            source: ['yjs.gmu.cn/pygz/tzgg.htm'],
+            target: '/yjs/pygz/tzgg',
+        },
+        {
+            title: '培养工作 - 规章制度',
+            source: ['yjs.gmu.cn/pygz/gzzd.htm'],
+            target: '/yjs/pygz/gzzd',
+        },
+        {
+            title: '学位工作 - 通知公告',
+            source: ['yjs.gmu.cn/xwgz/tzgg.htm'],
+            target: '/yjs/xwgz/tzgg',
+        },
+        {
+            title: '学位工作 - 导师管理',
+            source: ['yjs.gmu.cn/xwgz/dsgl.htm'],
+            target: '/yjs/xwgz/dsgl',
+        },
+        {
+            title: '学位工作 - 学位管理',
+            source: ['yjs.gmu.cn/xwgz/xwgl.htm'],
+            target: '/yjs/xwgz/xwgl',
+        },
+        {
+            title: '学位工作 - 评估工作',
+            source: ['yjs.gmu.cn/xwgz/pggz.htm'],
+            target: '/yjs/xwgz/pggz',
+        },
+        {
+            title: '学生工作 - 通知公告',
+            source: ['yjs.gmu.cn/tzgg/xsgz.htm'],
+            target: '/yjs/xsgz/tzgg',
+        },
+        {
+            title: '学生工作 - 学生活动',
+            source: ['yjs.gmu.cn/xsgz/xshd.htm'],
+            target: '/yjs/xsgz/xshd',
+        },
+        {
+            title: '学生工作 - 奖助工作',
+            source: ['yjs.gmu.cn/xsgz/jzgz.htm'],
+            target: '/yjs/xsgz/jzgz',
+        },
+        {
+            title: '下载中心 - 招生下载',
+            source: ['yjs.gmu.cn/xzzx/zsxz.htm'],
+            target: '/yjs/xzzx/zsxz',
+        },
+        {
+            title: '下载中心 - 培养下载',
+            source: ['yjs.gmu.cn/xzzx/pyxz.htm'],
+            target: '/yjs/xzzx/pyxz',
+        },
+        {
+            title: '下载中心 - 学位下载',
+            source: ['yjs.gmu.cn/xzzx/xwxz.htm'],
+            target: '/yjs/xzzx/xwxz',
         },
     ],
     handler,
@@ -101,7 +162,7 @@ export async function handler(ctx: Context) {
 
     const $ = load(response.data);
 
-    // 更新选择器以匹配研究生院网站的实际结构
+    // Read the article list for this graduate school section.
     const list = $('.n_listxx1 li');
 
     if (list.length === 0) {
@@ -114,53 +175,40 @@ export async function handler(ctx: Context) {
             const a = element.find('a');
             const dateText = element.find('span').text();
             const href = a.attr('href');
-            const itemTitle = a.text().trim();
+            const itemTitle = a.attr('title') || a.text();
 
             if (!href || !itemTitle) {
                 return null;
             }
 
-            const pubDate = parseDate(dateText);
-            if (!pubDate) {
-                return null;
-            }
+            const publicationDate = dateText ? parseDate(dateText) : undefined;
+            const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : undefined;
 
             const fullLink = new URL(href, link).href;
 
-            // Use cache.tryGet to cache the article content
-            return await cache.tryGet(`gmu:yjs:${fullLink}`, async () => {
-                try {
-                    const contentResponse = await got(fullLink);
-                    const content = load(contentResponse.data);
-
-                    // 获取新闻内容
-                    const articleContent = content('.v_news_content').html() || '暂无详细内容';
-
-                    return {
-                        title: itemTitle,
-                        link: fullLink,
-                        pubDate,
-                        description: articleContent,
-                    };
-                } catch {
-                    // 如果获取文章内容失败，返回基本信息
-                    return {
-                        title: itemTitle,
-                        link: fullLink,
-                        pubDate,
-                        description: '暂无详细内容',
-                    };
-                }
+            const detail = await cache.tryGet(`gmu:yjs:${fullLink}:content`, async () => {
+                const contentResponse = await got(fullLink);
+                const content = load(contentResponse.data);
+                const article = content('.v_news_content');
+                const description = article.length ? article.html() : new URL(fullLink).hostname === 'www.jxeea.cn' ? content('#zoom').html() : undefined;
+                return { description: description ?? undefined };
             });
+
+            return {
+                title: itemTitle,
+                link: fullLink,
+                pubDate,
+                ...detail,
+            };
         })
     );
 
-    const result = items.filter((item): item is { title: string; link: string; pubDate: Date; description: string } => item !== null);
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Date | undefined; description: string | undefined } => item !== null);
 
     return {
         title,
         link,
-        description: `广州医科大学研究生院 - ${title}`,
+        description: `赣南医科大学研究生院 - ${title}`,
         item: result,
     };
 }

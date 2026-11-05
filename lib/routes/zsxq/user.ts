@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { TopicsResponse, UserInfoResponse } from './types';
 import { customFetch, generateTopicDataItem } from './utils';
@@ -41,10 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
         throw new ConfigNotFoundError('该 RSS 源由于配置不正确而被禁用：令牌丢失。');
     }
 
-    let count = Number(ctx.req.query('limit')) || 20;
-    if (count > 30) {
-        count = 30;
-    }
+    const count = Math.min(getRouteLimit(ctx, 20), 30);
 
     const userInfo = await customFetch<UserInfoResponse>(`/users/${uid}`);
 

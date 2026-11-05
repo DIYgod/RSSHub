@@ -1,13 +1,15 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/live/:lang?',
     categories: ['finance'],
     example: '/futunn/live',
     parameters: {
-        category: {
+        lang: {
             description: '通知语言',
             default: 'Mandarin',
             options: [
@@ -28,6 +30,7 @@ export const route: Route = {
     },
     features: {
         supportRadar: true,
+        supportPodcast: true,
     },
     radar: [
         {
@@ -49,11 +52,14 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
     const lang = ctx.req.param('lang') ?? 'Mandarin';
+    if (!['Mandarin', 'Cantonese', 'English'].includes(lang)) {
+        throw new InvalidParameterError('lang must be Mandarin, Cantonese, or English.');
+    }
 
     const rootUrl = 'https://news.futunn.com';
-    const link = `${rootUrl}/main${lang === 'Mandarin' ? '' : lang === 'Cantonese' ? '/hk' : '/en'}/live`;
+    const link = `${rootUrl}${lang === 'Mandarin' ? '' : lang === 'Cantonese' ? '/hk' : '/en'}/main/live`;
     const apiUrl = `${rootUrl}/news-site-api/main/get-flash-list?pageSize=${limit}`;
 
     const response = await got({
@@ -65,7 +71,7 @@ async function handler(ctx) {
     });
 
     const items = response.data.data.data.news.map((item) => {
-        const audio = item.audioInfos.find((audio) => audio.language === lang);
+        const audio = item.audioInfos?.find((audio) => audio.language === lang && audio.audioUrl);
         return {
             title: item.title || item.content,
             description: item.content,
@@ -73,20 +79,22 @@ async function handler(ctx) {
             pubDate: parseDate(item.time * 1000),
             category: item.quote.map((quote) => quote.name),
             itunes_item_image: item.pic,
-            itunes_duration: audio.duration,
-            enclosure_url: audio.audioUrl,
-            enclosure_type: 'audio/mpeg',
-            media: {
-                content: {
-                    url: audio.audioUrl,
-                    type: 'audio/mpeg',
-                    duration: audio.duration,
-                    language: lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en',
+            ...(audio && {
+                itunes_duration: audio.audioDuration,
+                enclosure_url: audio.audioUrl,
+                enclosure_type: 'audio/mpeg',
+                media: {
+                    content: {
+                        url: audio.audioUrl,
+                        type: 'audio/mpeg',
+                        duration: audio.audioDuration,
+                        language: lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en',
+                    },
+                    thumbnail: {
+                        url: item.pic,
+                    },
                 },
-                thumbnail: {
-                    url: item.pic,
-                },
-            },
+            }),
         };
     });
 

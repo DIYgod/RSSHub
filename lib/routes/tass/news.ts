@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -37,7 +38,8 @@ const language: Language = 'en';
 async function handler(ctx) {
     const { category = 'politics' } = ctx.req.param();
 
-    const { data: categoryPage, url: link } = await got(`https://tass.com/${category}`);
+    const link = `https://tass.com/${category}`;
+    const { data: categoryPage } = await got(link);
     const $ = load(categoryPage);
 
     const sectionId = $('.container .section-page')
@@ -52,16 +54,17 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.newsList.map((item) => ({
+    const list: Array<{ title: string; description: string; link: string; pubDate: Date }> = response.newsList.map((item) => ({
         title: item.title,
         description: item.lead,
         link: `https://tass.com${item.link}`,
         pubDate: parseDate(item.date, 'X'),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`${item.link}:body:v2`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -71,11 +74,11 @@ async function handler(ctx) {
                     }
                 });
 
-                item.description = $('.news-header__lead').prop('outerHTML') + ($('.news-media').prop('outerHTML') ?? '') + $('.text-block').html();
-
-                return item;
-            })
-        )
+                return $('.news-header__lead').prop('outerHTML') + ($('.news-media').prop('outerHTML') ?? '') + $('.text-block').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

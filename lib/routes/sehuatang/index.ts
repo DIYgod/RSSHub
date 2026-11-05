@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const host = 'https://www.sehuatang.net/';
@@ -52,6 +54,7 @@ export const route: Route = {
     handler,
     features: {
         nsfw: true,
+        supportBT: true,
     },
     description: `**原创 BT 电影**
 
@@ -96,29 +99,36 @@ async function handler(ctx) {
     });
     const $ = load(response);
 
+    const limit = getRouteLimit(ctx, 25);
     const list = $('#threadlisttableid tbody[id^=normalthread]')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const hasCategory = $item.find('th em a').length;
+            const dateString = $item.find('td.by').find('em span span').attr('title');
             return {
-                title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
+                title: $item.find('a.xst').text(),
+                category: hasCategory ? [$item.find('th em a').text()] : undefined,
                 link: host + $item.find('a.xst').attr('href'),
-                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
+                pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
                 author: $item.find('td.by cite a').first().text(),
             };
         });
 
-    const out = await Promise.all(
-        list.map((info) =>
-            cache.tryGet(info.link!, async () => {
+    const out = await pMap(
+        list,
+        async (info) => {
+            const detail = await cache.tryGet(`${info.link}:details`, async () => {
                 const response = await ofetch(info.link!, {
                     headers,
                 });
 
                 const $ = load(response);
                 const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
+                if (!postMessage.length) {
+                    throw new Error(`No public post body was found at ${info.link}.`);
+                }
                 const images = $(postMessage).find('img');
                 for (const image of images) {
                     const file = $(image).attr('file');
@@ -142,8 +152,11 @@ async function handler(ctx) {
                 postMessage.append($(pattl));
                 $('em[onclick]').remove();
 
-                info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
+                const dateString = $('.authi em span').attr('title');
+                const detail: Partial<DataItem> = {
+                    description: postMessage.html()!.replaceAll('ignore_js_op', 'div'),
+                    pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
+                };
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -152,13 +165,15 @@ async function handler(ctx) {
                 const hasEnclosureUrl = isMag || torrent !== undefined;
                 if (hasEnclosureUrl) {
                     const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
-                    info.enclosure_url = enclosureUrl;
-                    info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
+                    detail.enclosure_url = enclosureUrl;
+                    detail.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }
 
-                return info;
-            })
-        )
+                return detail;
+            });
+            return { ...info, ...detail, pubDate: detail.pubDate ?? info.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

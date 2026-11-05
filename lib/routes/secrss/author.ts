@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -28,24 +29,32 @@ async function handler(ctx) {
     const author = ctx.req.param('author');
     const host = 'https://www.secrss.com';
     const res = await got(`${api}${author}`);
-    const dataArray = res.data.data.list;
+    const dataArray: Array<{
+        url: string;
+        title: string;
+        original_timestamp: number;
+        tag: string;
+    }> = res.data.data.list;
 
-    const items = await Promise.all(
-        dataArray.map((item) => {
+    const items = await pMap(
+        dataArray,
+        async (item) => {
             const itemUrl = `${host}${item.url}`;
-            return cache.tryGet(itemUrl, async () => {
+            const description = await cache.tryGet(`${itemUrl}:description`, async () => {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                const description = $('.article-body').html()!.trim();
-                return {
-                    title: item.title,
-                    link: itemUrl,
-                    pubDate: parseDate(item.original_timestamp, 'X'),
-                    description,
-                    category: item.tag,
-                };
+                return $('.article-body').html()!.trim();
             });
-        })
+            return {
+                title: item.title,
+                author,
+                link: itemUrl,
+                pubDate: parseDate(item.original_timestamp, 'X'),
+                description,
+                category: item.tag,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

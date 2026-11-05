@@ -1,6 +1,11 @@
+import { escapeAttribute, escapeText } from 'entities';
+import MarkdownIt from 'markdown-it';
+
 import { parseDate } from '@/utils/parse-date';
 
-export const eventTypeMapping = {
+const md = MarkdownIt({ html: true, linkify: true });
+
+const eventTypeMapping = {
     create: 'CreateEvent',
     delete: 'DeleteEvent',
     issuecomm: 'IssueCommentEvent',
@@ -31,13 +36,14 @@ function formatEventItem(event: any) {
             title = `${actor.login} pushed to ${repo.name}`;
             const branch = payload.ref ? payload.ref.replace('refs/heads/', '') : 'unknown';
             const commitCount = payload.size ? `${payload.size} commit(s) ` : '';
-            description = `Pushed ${commitCount}to ${branch} in ${repo.name}`;
+            description = escapeText(`Pushed ${commitCount}to ${branch} in ${repo.name}`);
 
-            if (payload.commits) {
-                link = payload.commits.at(-1).url.replace(/https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/commits\/(\d+)/, 'https://github.com/$1/$2/commit/$3');
-                description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
-            } else {
-                link = `https://github.com/${repo.name}/commit/${payload.head}`;
+            // Use the pre-push tip as the base to include the first pushed commit's changes.
+            link = `https://github.com/${repo.name}/compare/${payload.before}..${payload.head}`;
+
+            const latestCommit = payload.commits?.at(-1);
+            if (latestCommit) {
+                description += `<br><strong>Latest commit:</strong> ${escapeText(latestCommit.message)}`;
             }
             break;
         }
@@ -45,7 +51,7 @@ function formatEventItem(event: any) {
             title = `${actor.login} ${payload.action} a pull request in ${repo.name}`;
             if (payload.pull_request) {
                 link = payload.pull_request.url.replace(/https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/pulls\/(\d+)/, 'https://github.com/$1/$2/pull/$3');
-                description = `PR: ${link}`;
+                description = escapeText(`PR: ${link}`);
             } else {
                 link = `https://github.com/${repo.name}`;
                 description = 'PR: Unknown';
@@ -53,62 +59,62 @@ function formatEventItem(event: any) {
             break;
         case 'PullRequestReviewCommentEvent':
             title = `${actor.login} commented on a pull request review in ${repo.name}`;
-            description = `Comment: ${payload.comment?.body || 'No comment'}`;
+            description = payload.comment?.body ? md.render(payload.comment.body) : '';
             link = payload.comment?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'PullRequestReviewEvent':
             title = `${actor.login} reviewed a pull request in ${repo.name}`;
-            description = `${actor.login} ${payload.review?.state ?? 'operated'} the PR` + (payload.review?.body ? `: ${payload.review.body}` : '');
+            description = payload.review?.body ? md.render(payload.review.body) : '';
             link = payload.review?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'IssueCommentEvent':
             title = `${actor.login} commented on an issue in ${repo.name}`;
-            description = `Comment: ${payload.comment?.body || 'No comment'}`;
+            description = payload.comment?.body ? md.render(payload.comment.body) : '';
             link = payload.comment?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'IssuesEvent':
             title = `${actor.login} ${payload.action} an issue in ${repo.name}`;
-            description = `Issue: ${payload.issue?.title || 'Unknown'}`;
+            description = escapeText(`Issue: ${payload.issue?.title || 'Unknown'}`);
             link = payload.issue?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'CommitCommentEvent':
             title = `${actor.login} commented on a commit in ${repo.name}`;
-            description = `Comment: ${payload.comment?.body || 'No comment'}`;
+            description = payload.comment?.body ? md.render(payload.comment.body) : '';
             link = payload.comment?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'WatchEvent':
             title = `${actor.login} starred ${repo.name}`;
-            description = `Starred repository ${repo.name}`;
+            description = escapeText(`Starred repository ${repo.name}`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'ForkEvent':
             title = `${actor.login} forked ${repo.name}`;
-            description = `Forked repository ${repo.name}`;
+            description = escapeText(`Forked repository ${repo.name}`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'CreateEvent':
             title = `${actor.login} created ${payload.ref_type} in ${repo.name}`;
-            description = `Created ${payload.ref_type}: ${payload.ref || repo.name}`;
+            description = escapeText(`Created ${payload.ref_type}: ${payload.ref || repo.name}`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'DeleteEvent':
             title = `${actor.login} deleted ${payload.ref_type} in ${repo.name}`;
-            description = `Deleted ${payload.ref_type}: ${payload.ref}`;
+            description = escapeText(`Deleted ${payload.ref_type}: ${payload.ref}`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'ReleaseEvent':
             title = `${actor.login} released ${payload.release?.name || payload.release?.tag_name} in ${repo.name}`;
-            description = payload.release?.body || `Released ${payload.release?.tag_name}`;
+            description = payload.release?.body ? md.render(payload.release.body) : '';
             link = payload.release?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'PublicEvent':
             title = `${actor.login} made ${repo.name} public`;
-            description = `Repository ${repo.name} was made public`;
+            description = escapeText(`Repository ${repo.name} was made public`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'MemberEvent':
             title = `${actor.login} ${payload.action} as a member of ${repo.name}`;
-            description = `Member ${payload.action} in repository ${repo.name}`;
+            description = escapeText(`Member ${payload.action} in repository ${repo.name}`);
             link = `https://github.com/${repo.name}`;
             break;
         case 'GollumEvent': {
@@ -116,20 +122,20 @@ function formatEventItem(event: any) {
             description = '<ul>';
             const pages = payload.pages ?? [];
             for (const page of pages) {
-                description += `<li>Page <a href=${page.html_url}>${page.page_name}</a> ${page.action} ${page.summary ? `: ${page.summary}` : ''}</li>`;
+                description += `<li>Page <a href="${escapeAttribute(page.html_url)}">${escapeText(page.page_name)}</a> ${escapeText(page.action)} ${page.summary ? `: ${escapeText(page.summary)}` : ''}</li>`;
             }
             description += '</ul>';
             link = `https://github.com/${repo.name}`;
             break;
         }
         case 'DiscussionEvent':
-            title = `${actor.login} ${payload.action} a discussion ${repo.discussion?.title ?? ''} on ${repo.name}`;
-            description = payload.discussion?.body ?? 'Unknown';
+            title = `${actor.login} ${payload.action} a discussion ${payload.discussion?.title ?? ''} on ${repo.name}`;
+            description = payload.discussion?.body ? md.render(payload.discussion.body) : '';
             link = payload.discussion?.html_url || `https://github.com/${repo.name}`;
             break;
         default:
             title = `${actor.login} performed ${type} in ${repo?.name || 'unknown repository'}`;
-            description = `Activity type: ${type} ${JSON.stringify(event)}`;
+            description = escapeText(`Activity type: ${type} ${JSON.stringify(event)}`);
             link = repo ? `https://github.com/${repo.name}` : `https://github.com/${actor.login}`;
     }
 

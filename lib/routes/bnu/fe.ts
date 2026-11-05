@@ -1,73 +1,65 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/fe/:category',
     categories: ['university'],
     example: '/bnu/fe/18',
-    parameters: {},
+    parameters: { category: '分类编号，目前支持 `18`（培养动态）' },
     radar: [
         {
-            source: ['fe.bnu.edu.cn/pc/cms1info/list/1/:category'],
+            source: ['fe.bnu.edu.cn/jyjx/pydt/index.htm'],
+            target: '/fe/18',
         },
     ],
     name: '教育学部-培养动态',
     maintainers: ['etShaw-zh'],
     handler,
-    description: '`https://fe.bnu.edu.cn/pc/cms1info/list/1/18` 则对应为 \\`/bnu/fe/18',
+    description: '订阅教育学部当前网站的培养动态栏目。旧网站分类编号 `18` 保持兼容；其他旧分类编号尚未确认对应栏目。',
 };
 
 async function handler(ctx) {
     const { category } = ctx.req.param();
-    const apiUrl = 'https://fe.bnu.edu.cn/pc/cmscommon/nlist';
-    let response;
-    try {
-        // 发送 POST 请求
-        response = await got.post(apiUrl, {
-            headers: {
-                Accept: 'application/json, text/javascript, */*; q=0.01',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                Origin: 'https://fe.bnu.edu.cn',
-                Referer: 'https://fe.bnu.edu.cn/pc/cms1info/list/1/18',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: `columnid=${category}&page=1`, // POST 数据
+    if (category !== '18') {
+        throw new InvalidParameterError('The education faculty website has moved. Only category 18 (培养动态) is currently mapped to the new site.');
+    }
+    const link = 'https://fe.bnu.edu.cn/jyjx/pydt/index.htm';
+    const { data } = await got(link);
+    const $ = load(data);
+    const list = $('.people_list')
+        .toArray()
+        .map((element): DataItem => {
+            const $element = $(element);
+            const anchor = $element.find('a.people_list_a');
+            return {
+                title: anchor.text(),
+                link: new URL(anchor.attr('href')!, link).href,
+                pubDate: timezone(parseDate($element.find('.mian_div_icon_p01').text(), 'YYYY-MM-DD'), 8),
+            };
         });
-    } catch {
-        throw new Error('Failed to fetch data from API');
-    }
-    const jsonData = JSON.parse(response.body);
-    // 检查返回的 code
-    if (jsonData.code !== 0 || !jsonData.data) {
-        throw new Error('Invalid API response');
-    }
-
-    const list = jsonData.data.map((item) => ({
-        title: item.title,
-        link: `https://fe.bnu.edu.cn/html/1/news/${item.htmlpath}/n${item.newsid}.html`,
-        pubDate: parseDate(item.happendate, 'YYYY-MM-DD'),
-    }));
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-                item.author = '北京师范大学教育学部';
-                item.description = $('.news02_div').html() || '暂无详细内容';
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                item.description = $('.news02_div').html();
+                item.author = $('.mian_div_icon_p07').text();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
-
     return {
         title: '北京师范大学教育学部-培养动态',
-        link: 'https://fe.bnu.edu.cn/pc/cms1info/list/1/18',
+        link,
         description: '北京师范大学教育学部-培养动态最新通知',
-        item: out,
+        item: items,
     };
 }

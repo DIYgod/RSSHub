@@ -9,6 +9,7 @@ import memory from './memory';
 import redis from './redis';
 
 type GlobalCache = {
+    supportsAtomicClaims: boolean;
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
     has: (key: string) => Promise<boolean> | boolean;
     set: <T>(key: string, value?: string | T, maxAge?: number) => any;
@@ -20,6 +21,7 @@ type GlobalCache = {
 };
 
 const globalCache: GlobalCache = {
+    supportsAtomicClaims: false,
     get: () => null,
     has: () => false,
     set: () => null,
@@ -45,6 +47,7 @@ if (isWorker) {
 } else {
     switch (config.cache.type) {
         case 'redis': {
+            globalCache.supportsAtomicClaims = true;
             cacheModule = redis;
             cacheModule.init();
             const { redisClient } = cacheModule.clients;
@@ -104,6 +107,7 @@ if (isWorker) {
             };
             break;
         case 'memory': {
+            globalCache.supportsAtomicClaims = true;
             cacheModule = memory;
             cacheModule.init();
             const { memoryCache } = cacheModule.clients;

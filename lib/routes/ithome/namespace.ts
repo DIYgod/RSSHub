@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'iThome 台灣',
+    name: 'IT之家 / iThome',
     url: 'ithome.com',
-    lang: 'zh-TW',
+    lang: 'zh',
 };

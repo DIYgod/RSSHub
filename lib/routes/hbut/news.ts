@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/news/:type',
@@ -36,6 +36,9 @@ const map = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError(`Invalid news type: ${type}. Supported types: ${Object.keys(map).join(', ')}.`);
+    }
     const link = map[type];
 
     const response = await ofetch(link);
@@ -49,14 +52,14 @@ async function handler(ctx: Context) {
             .toArray()
             .map((elem) => {
                 const $elem = $(elem);
-                const [, monthDay, year] = $elem
+                const dateMatch = $elem
                     .find('.date')
                     .text()
-                    .match(/(\d{2}-\d{2})\s*(\d{4})/)!;
+                    .match(/(\d{2}-\d{2})\s*(\d{4})/);
                 return {
                     link: new URL($elem.attr('href')!, link).href,
                     title: $elem.find('h2, .tit').text().trim(),
-                    pubDate: timezone(parseDate(`${year}-${monthDay}`), 8),
+                    pubDate: dateMatch ? parseDateInTimezone(`${dateMatch[2]}-${dateMatch[1]}`, 8) : undefined,
                 };
             }),
     };

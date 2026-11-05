@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -34,12 +35,15 @@ const handler: Route['handler'] = async (ctx) => {
         case 'JP':
             return await ja(ctx);
         default:
-            throw [];
+            throw new InvalidParameterError('Unsupported server. Only JP is supported.');
     }
 };
 
 const ja: Route['handler'] = async (ctx) => {
     const { type = '0' } = ctx.req.param();
+    if (!Object.hasOwn(JP, type)) {
+        throw new InvalidParameterError('Unsupported news type. Use 0 (all), 1 (events), 2 (news), or 3 (maintenance).');
+    }
 
     const data = await ofetch<{ data: { rows: Array<{ id: number; content: string; summary: string; publishTime: number }> } }, 'json'>('https://api-web.bluearchive.jp/api/news/list', {
         query: {

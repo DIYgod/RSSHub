@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -101,7 +102,7 @@ const renderStoriesDescription = ({ ldMda, description, body }: StoryData) =>
                           case 'listicle':
                               return content.text ? <p>{raw(content.text)}</p> : null;
                           case 'pullquote':
-                              return content.quote ? <backquote>{raw(content.quote)}</backquote> : null;
+                              return content.quote ? <blockquote>{raw(content.quote)}</blockquote> : null;
                           case 'source':
                               return content.src ? <a href={content.src}>{content.src}</a> : null;
                           case 'video':
@@ -148,37 +149,40 @@ async function handler() {
     const currentUrl = 'https://www.nationalgeographic.com/pages/topic/latest-stories';
     const response = await got(currentUrl);
     const $ = load(response.data);
-    const items = await Promise.all(
-        findNatgeo($)
-            .page.content.hub.frms.flatMap((e) => e.mods)
-            .flatMap((m) => m.tiles?.filter((t) => t.ctas[0]?.text === 'natgeo.ctaText.read'))
-            .filter(Boolean)
-            .map((i) => ({
-                title: i.title,
-                link: i.ctas[0].url,
-                category: i.tags.map((t) => t.name),
-            }))
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    const mods = findNatgeo($).page.content.prismarticle.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
-                    const bodyTile = mods.find((m) => m.edgs[0].cmsType === 'ArticleBodyTile').edgs[0];
+    const list: DataItem[] = findNatgeo($)
+        .page.content.hub.frms.flatMap((e) => e.mods)
+        .flatMap((m) => m.tiles?.filter((t) => t.ctas[0]?.text === 'natgeo.ctaText.read'))
+        .filter(Boolean)
+        .map((i) => ({
+            title: i.title,
+            link: i.ctas[0].url,
+            category: i.tags.map((t) => t.name),
+        }));
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`nationalgeographic:article:v3:${item.link}`, async () => {
+                const response = await got(item.link!);
+                const $ = load(response.data);
+                const mods = findNatgeo($).page.content.prismarticle.frms.find((f) => f.cmsType === 'ArticleBodyFrame').mods;
+                const bodyTile = mods.find((m) => m.edgs[0].cmsType === 'ArticleBodyTile').edgs[0];
 
-                    item.author = bodyTile.cntrbGrp
-                        .flatMap((c) => c.contributors)
-                        .map((c) => c.displayName)
-                        .join(', ');
-                    item.description = renderStoriesDescription({
-                        ldMda: bodyTile.ldMda,
-                        description: bodyTile.dscrptn,
-                        body: bodyTile.bdy,
-                    });
-                    item.pubDate = parseDate(bodyTile.pbDt);
+                const author = bodyTile.cntrbGrp
+                    .flatMap((c) => c.contributors)
+                    .map((c) => c.displayName)
+                    .join(', ');
+                const description = renderStoriesDescription({
+                    ldMda: bodyTile.ldMda,
+                    description: bodyTile.dscrptn,
+                    body: bodyTile.bdy,
+                });
+                const pubDate = bodyTile.pbDt ? parseDate(bodyTile.pbDt) : undefined;
 
-                    return item;
-                })
-            )
+                return { author, description, pubDate };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

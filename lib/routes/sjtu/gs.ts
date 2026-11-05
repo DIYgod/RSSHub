@@ -1,17 +1,18 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/gs/:type/:num?',
     categories: ['university'],
-    example: '/sjtu/gs/enroll/59',
-    parameters: { type: '类别', num: '细分类别, 仅对`type`为`enroll`或`exchange`有效' },
+    example: '/sjtu/gs/xsjy',
+    parameters: { type: '类别', num: '细分类别, 仅对`type`为`exchange`有效' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,19 +26,27 @@ export const route: Route = {
             source: ['gs.sjtu.edu.cn/announcement/:type'],
             target: '/gs/:type',
         },
+        {
+            source: ['www.gs.sjtu.edu.cn/announcement/:type'],
+            target: '/gs/:type',
+        },
+        {
+            source: ['gs.sjtu.edu.cn/announcement/:type/:num'],
+            target: '/gs/:type/:num',
+        },
+        {
+            source: ['www.gs.sjtu.edu.cn/announcement/:type/:num'],
+            target: '/gs/:type/:num',
+        },
     ],
     name: '研究生通知公告',
     maintainers: ['dzx-dzx'],
     handler,
-    description: `| 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| work     | enroll   | train    | degree   | exchange | xsjy     |
+    description: `| 工作信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
+| -------- | -------- | -------- | -------- | -------- |
+| work     | train    | degree   | exchange | xsjy     |
 
-当\`type\`为\`enroll\`, \`num\`可选字段:
-
-| 58       | 59       | 60         | 61       | 62       |
-| -------- | -------- | ---------- | -------- | -------- |
-| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+招生信息已移至研究生招生网，请使用「研究生招生网招考信息」路由 \`/sjtu/yzb/zkxx/:type\`。
 
 当\`type\`为\`exchange\`, \`num\`可选字段:
 
@@ -68,30 +77,39 @@ async function handler(ctx) {
             const year = $item.find('.month').text().trim();
 
             return {
-                title: $item.find('.title').text().trim(),
+                title: $item.find('.title').text(),
                 link: `${$item.attr('href')!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
-                pubDate: timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8),
+                pubDate: year && day ? parseDate(`${year}-${day} +0000`, 'YYYY-MM-DD ZZ') : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate'>>(`sjtu:gs:details:v5:${item.link}`, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
-                    item.description = (await fetchArticle(item.link)).description;
-                } else {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-                    const content = load(detailResponse.data);
-
-                    item.description = content('.page-content').html();
+                    const article = await fetchArticle(item.link);
+                    return { description: article.description, pubDate: article.pubDate };
                 }
-
-                return item;
-            })
-        )
+                // Other sites, such as csc.edu.cn or jwc.sjtu.edu.cn, use their own page layout
+                if (new URL(item.link).hostname !== 'www.gs.sjtu.edu.cn') {
+                    return {};
+                }
+                try {
+                    const detailResponse = await got({ method: 'get', url: item.link });
+                    const content = load(detailResponse.data);
+                    return { description: content('.mce-content-body').html() };
+                } catch (error) {
+                    // Some notices are for logged-in students only and redirect to the jAccount login
+                    if (error instanceof FetchError && error.response?.url.startsWith('https://jaccount.sjtu.edu.cn/')) {
+                        return {};
+                    }
+                    throw error;
+                }
+            });
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

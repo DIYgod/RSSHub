@@ -1,24 +1,26 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import CaptchaError from '@/errors/types/captcha';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { getHeaders } from './utils';
 
 export const route: Route = {
-    path: '/haowen/fenlei/:name/:sort?',
+    path: '/haowen/fenlei/:name',
     categories: ['shopping'],
     example: '/smzdm/haowen/fenlei/shenghuodianqi',
-    parameters: { name: '分类名，可在 URL 中查看', sort: '排序方式，默认为最新' },
+    parameters: { name: '分类名，可在 URL 中查看' },
     features: {
         requireConfig: [
             {
                 name: 'SMZDM_COOKIE',
+                optional: true,
                 description: '什么值得买登录后的 Cookie 值',
             },
         ],
@@ -30,69 +32,75 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['post.smzdm.com/fenlei/:name'],
+            source: ['www.smzdm.com/fenlei/:name'],
             target: '/haowen/fenlei/:name',
         },
     ],
     name: '好文分类',
     maintainers: ['LogicJake'],
     handler,
-    description: `| 最新 | 周排行 | 月排行 |
-| ---- | ------ | ------ |
-| 0    | 7      | 30     |`,
 };
 
 async function handler(ctx) {
-    if (!config.smzdm.cookie) {
-        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
-    }
-
     const name = ctx.req.param('name');
-    const sort = ctx.req.param('sort') || '0';
+    const link = `https://www.smzdm.com/fenlei/${name}/`;
 
-    const link = sort === '0' ? `https://post.smzdm.com/fenlei/${name}/` : `https://post.smzdm.com/fenlei/${name}/hot_${sort}/`;
-
-    const response = await got.get(link, {
+    const response = await ofetch.raw(link, {
         headers: getHeaders(),
     });
-    const $ = load(response.data);
-    const title = $('div.crumbs.nav-crumbs').text().split('>').pop();
+    const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
+    const $ = load(response._data);
+    if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
+        throw new CaptchaError(`The category listing at ${link} requires a CAPTCHA.`);
+    }
+    const title = $('title').text().split('_', 1)[0];
 
-    const list = $('div.list.post-list')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('h2.item-name a').text(),
-                link: $item.find('h2.item-name a').attr('href'),
-                description: $item.find('.item-info').html(),
-                author: $item.find('.nickname').text(),
-                pubDate: timezone(parseDate($item.find('span.time').text(), ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8),
-            };
-        });
+    const payload = JSON.parse($('#__NUXT_DATA__').text());
+    const list: DataItem[] = payload
+        .filter((entry) => entry instanceof Object && 'article_title' in entry && 'article_no_format_date' in entry)
+        .map((entry) => ({
+            title: payload[entry.article_title],
+            link: payload[entry.article_url],
+            description: payload[entry.article_content],
+            image: payload[entry.article_pic],
+            category: [payload[entry.article_channel_name], ...(payload[entry.article_tag] ?? []).map((tag) => payload[payload[tag].article_title])],
+            pubDate: timezone(parseDate(payload[entry.article_no_format_date]), 8),
+        }));
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const response = await got(item.link, {
-                        headers: getHeaders(),
+    const out = await pMap(
+        list,
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!, {
+                        headers: {
+                            cookie,
+                        },
                     });
-                    const $ = load(response.data);
-                    item.description = $('article').html();
-                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!), 8);
-                    item.author = $('meta[property="og:author"]').attr('content')!;
-                } catch {
-                    // 404
+                    const $ = load(response);
+                    if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
+                        throw new CaptchaError(`The article at ${item.link} requires a CAPTCHA.`);
+                    }
+                    const description = $('article').html() ?? undefined;
+                    const releaseDate = $('meta[property="og:release_date"]').attr('content');
+                    const pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : undefined;
+                    const author = $('meta[property="og:author"]').attr('content');
+                    return { description, pubDate, author };
+                });
+                return { ...item, ...detail, description: detail.description ?? item.description, pubDate: detail.pubDate ?? item.pubDate };
+            } catch (error) {
+                if (!(error instanceof FetchError || error instanceof CaptchaError)) {
+                    throw error;
                 }
-
                 return item;
-            })
-        )
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${title}- 什么值得买好文分类`,
+        image: $('.avatar-img').attr('src'),
         link,
         item: out,
     };

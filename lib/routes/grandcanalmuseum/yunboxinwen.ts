@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { namespace } from './namespace';
 
@@ -31,7 +31,7 @@ export const route: Route = {
                 const $li = $a.find('li');
                 const title = $li.find('.title').text();
                 const dateText = $li.find('.time').text();
-                const pubDate = parseDate(dateText, 'YYYY-MM-DD');
+                const pubDate = dateText ? parseDateInTimezone(dateText.replaceAll(/[年月]/g, '-').replace('日', ''), 0) : undefined;
                 const href = $a.attr('href')!;
                 const link = new URL(href, baseUrl).href;
 

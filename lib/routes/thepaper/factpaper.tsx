@@ -1,11 +1,11 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/factpaper/:status?',
@@ -23,7 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['factpaper.cn/'],
-            target: '/factpaper/:status',
+            target: '/factpaper/:status?',
         },
     ],
     name: '明查',
@@ -49,16 +49,18 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.data.data.list.map((item) => ({
+    const list: DataItem[] = response.data.data.list.map((item) => ({
         title: item.title,
         guid: item.proveId,
         link: `${rootUrl}/detail?id=${item.proveId}`,
-        pubDate: timezone(parseDate(item.publishTime), 8),
+        pubDate: item.publishTime ? parseDate(`${item.publishTime.replace(' ', 'T')}+08:00`) : undefined,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'post',
                     url: `${apiRootUrl}/fact-check/front/proveInfo`,
@@ -69,12 +71,13 @@ async function handler(ctx) {
 
                 const data = detailResponse.data.data;
 
-                item.author = data.userName;
-                item.description = renderToString(<FactpaperDescription content={data.content} checkinfo={data.checkInfoList} finalCheckInfo={data.finalCheckInfo} />);
-
-                return item;
-            })
-        )
+                return {
+                    author: data.userName,
+                    description: renderToString(<FactpaperDescription content={data.content} checkinfo={data.checkInfoList} finalCheckInfo={data.finalCheckInfo} />),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -49,11 +49,14 @@ async function handler() {
                 title: $item.text(),
                 link: $item.attr('href'),
             };
-        });
+        })
+        // The page shows some posts in more than one section
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -62,13 +65,13 @@ async function handler() {
 
                 const ldJson = JSON.parse(content('script[type="application/ld+json"]').text())['@graph'].find((i) => i['@type'] === 'Article');
 
-                item.description = content('.content-repository-content').html();
-                item.pubDate = parseDate(ldJson.datePublished);
-                item.author = ldJson.author.name;
-
-                return item;
-            })
-        )
+                return {
+                    description: content('.content-repository-content').html(),
+                    pubDate: parseDate(ldJson.datePublished),
+                    author: ldJson.author.name,
+                };
+            })),
+        }))
     );
 
     return {

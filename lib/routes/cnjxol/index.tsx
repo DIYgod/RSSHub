@@ -7,6 +7,7 @@ import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const categories = {
     jxrb: '嘉兴日报',
@@ -17,10 +18,14 @@ export const route: Route = {
     path: '/jxrb/:id?',
     categories: ['traditional-media'],
     example: '/cnjxol/jxrb',
-    parameters: { id: '编号，见下表，默认为全部' },
+    parameters: { id: '编号，见下表，默认为全部；也支持官网文件名，例如 `node_01.html`' },
     radar: [
         {
-            source: ['cnjxol.com/'],
+            source: ['jxrb.cnjxol.com/', 'jxrb.cnjxol.com/jxrbPaper/pc/layout/'],
+            target: '/jxrb',
+        },
+        {
+            source: ['jxrb.cnjxol.com/jxrbPaper/pc/layout/:yearMonth/:day/:id'],
             target: '/jxrb/:id',
         },
     ],
@@ -53,7 +58,8 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const category = getSubPath(ctx).split('/', 2)[1];
-    const id = ctx.req.param('id');
+    const rawId = ctx.req.param('id');
+    const id = rawId?.match(/^node_(\d+)\.html$/)?.[1] ?? rawId;
 
     const rootUrl = `https://${category}.cnjxol.com`;
     const currentUrl = `${rootUrl}/${category}Paper/pc/layout`;
@@ -85,7 +91,7 @@ export async function handler(ctx) {
             .toArray()
             .map((a) => `${currentUrl}/${$(a).attr('href')}`.replaceAll('layout/../../../', ''));
     } else {
-        await Promise.all(
+        const articleLists = await Promise.all(
             $('#list li a')
                 .toArray()
                 .map(async (p) => {
@@ -96,13 +102,12 @@ export async function handler(ctx) {
 
                     const page = load(pageResponse.data);
 
-                    items.push(
-                        ...page('#articlelist .clearfix a')
-                            .toArray()
-                            .map((a) => `${currentUrl}/${page(a).attr('href')}`.replaceAll('layout/../../../', ''))
-                    );
+                    return page('#articlelist .clearfix a')
+                        .toArray()
+                        .map((a) => `${currentUrl}/${page(a).attr('href')}`.replaceAll('layout/../../../', ''));
                 })
         );
+        items = articleLists.flat();
     }
 
     items = await Promise.all(
@@ -120,7 +125,7 @@ export async function handler(ctx) {
                 return {
                     link: item,
                     title: content('#Title').text(),
-                    pubDate: parseDate(content('date').text()),
+                    pubDate: timezone(parseDate(content('date').text(), 'YYYY-MM-DD'), 8),
                     description: renderToString(
                         <>
                             {attachment ? raw(attachment) : null}

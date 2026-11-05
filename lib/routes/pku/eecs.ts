@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -42,23 +43,25 @@ async function handler(ctx) {
             return {
                 title: $item.find('.tit').text(),
                 link: new URL($item.attr('href')!, listUrl).href,
-                pubDate: parseDate($item.find('.date .mon').text() + '-' + $item.find('.date .day').text()),
+                pubDate: $item.find('.date .mon').text() && $item.find('.date .day').text() ? parseDate(`${$item.find('.date .mon').text()}-${$item.find('.date .day').text()}T00:00:00Z`) : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`pku:eecs:detail:v2:${item.link}`, async () => {
                 const detail = await got(item.link);
                 const $ = load(detail.data);
 
                 const content = $('.Section1');
                 content.find('[style]').removeAttr('style');
 
-                item.description = content.html();
-                return item;
-            })
-        )
+                return { description: content.html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

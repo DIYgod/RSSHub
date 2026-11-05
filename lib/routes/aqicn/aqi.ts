@@ -1,3 +1,5 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +48,11 @@ async function handler(ctx) {
         pm25: 'PM2.5',
         pm10: 'PM10',
     };
+    const pollutants = typeof pollution === 'string' ? pollution.split(',') : [];
+    const unsupported = pollutants.filter((pollutant) => !Object.hasOwn(pollutionType, pollutant));
+    if (unsupported.length) {
+        throw new InvalidParameterError(`Unsupported pollutant "${unsupported[0]}". Use pm25, pm10, o3, no2, so2, or co.`);
+    }
     const area = Number.isNaN(Number(city)) ? city : `@${city}`;
 
     const response = await got({
@@ -54,12 +61,14 @@ async function handler(ctx) {
     });
     const data = response.data;
     const pollutionDetailed =
-        pollution.length === 0
+        pollutants.length === 0
             ? ''
-            : pollution
-                  .split(',')
+            : pollutants
                   .map((item) => {
                       const historicData = data.historic[pollutionType[item]];
+                      if (!historicData || Object.keys(historicData).length === 0) {
+                          throw new NotFoundError(`AQICN does not provide ${pollutionType[item]} readings for "${city}". Choose a pollutant available on the station's official page.`);
+                      }
                       const pollutionValue = Array.isArray(historicData) ? historicData[0] : historicData[Object.keys(historicData)[0]];
                       return `${pollutionType[item].toUpperCase()}:<b>${pollutionValue}</b><br>`;
                   })

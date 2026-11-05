@@ -25,7 +25,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const feedId = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ?? 30; // 默认30条
+    const requestedLimit = Math.trunc(Number(ctx.req.query('limit')));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
 
     const rootUrl = 'https://api-panda.com/v4/';
     const apiUrl = `${rootUrl}articles?feeds=${feedId}&limit=${limit}&page=1&sort=popular`;
@@ -35,7 +36,7 @@ async function handler(ctx) {
     const items = data.map((item) => ({
         title: `${item.title} 🌟 ${item.source.likesCount}`,
         author: item.source.username,
-        pubDate: parseDate(item.source.createdAt),
+        pubDate: item.source.createdAt ? parseDate(item.source.createdAt) : undefined,
         link: item.source.targetUrl,
         description: item.description,
     }));

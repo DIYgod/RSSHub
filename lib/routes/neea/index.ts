@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -8,12 +10,12 @@ import timezone from '@/utils/timezone';
 
 function loadContent(link) {
     return cache.tryGet(link, async () => {
-        // 开始加载页面
+        // Fetch the article page.
         const response = await got.get(link);
         const $ = load(response.data);
-        // 获取标题
+        // Article title
         const title = $('#Content1 > div > ul > li > h1').text();
-        // 获取正文内容
+        // Article body
         const introduce = $('#ReportIDtext').html();
 
         return {
@@ -26,6 +28,9 @@ function loadContent(link) {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
+    if (!Object.hasOwn(typeDic, type)) {
+        throw new InvalidParameterError('Invalid exam type. Use one of the documented examination codes.');
+    }
     const host = `https://${type}.neea.edu.cn${typeDic[type].url}`;
     const response = await got({
         method: 'get',
@@ -36,21 +41,23 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('#ReportIDname > a').parent().parent().toArray();
 
-    const process = await Promise.all(
-        list.map(async (item) => {
-            const ReportIDname = $(item).find('#ReportIDname > a');
-            const ReportIDIssueTime = $(item).find('#ReportIDIssueTime');
-            const itemUrl = `https://${type}.neea.edu.cn` + $(ReportIDname).attr('href');
-            const time = ReportIDIssueTime.text();
+    const process = await pMap(
+        list,
+        async (item) => {
+            const reportName = $(item).find('#ReportIDname > a');
+            const issueTime = $(item).find('#ReportIDIssueTime');
+            const itemUrl = `https://${type}.neea.edu.cn` + $(reportName).attr('href');
+            const time = issueTime.text();
             const single = {
-                title: $(ReportIDname).text(),
+                title: $(reportName).text(),
                 link: itemUrl,
                 guid: itemUrl,
                 pubDate: timezone(parseDate(time), 8),
             };
             const other = await loadContent(itemUrl);
             return { ...single, ...other };
-        })
+        },
+        { concurrency: 6 }
     );
     return {
         title: `${typeDic[String(type)].title}动态`,
@@ -61,7 +68,7 @@ async function handler(ctx) {
 }
 
 const typeDic = {
-    // 国家教育考试
+    // National examinations
     gaokao: {
         url: '/html1/category/1507/1945-1.htm',
         title: '普通高考',
@@ -86,7 +93,7 @@ const typeDic = {
         url: '/html1/category/2210/313-1.htm',
         title: '同等学力申请硕士学位考试',
     },
-    // 社会证书考试
+    // Certificate examinations
     cet: {
         url: '/html1/category/16093/1124-1.htm',
         title: '全国四六级考试（CET）',

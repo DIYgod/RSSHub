@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -22,6 +24,17 @@ export const route: Route = {
     url: 'www.yilinzazhi.com',
 };
 
+async function fetchDescription(link: string): Promise<Pick<DataItem, 'description'>> {
+    const response = await got(link);
+    const $ = load(response.data);
+    const currentContainer = $('main > .catalog-container');
+    const catalogContainer = currentContainer.length ? currentContainer : $('.maglistbox');
+    if (!catalogContainer.length) {
+        throw new Error(`Issue catalog is unavailable at ${link}`);
+    }
+    return { description: catalogContainer.html()! };
+}
+
 async function handler(): Promise<Data> {
     const baseUrl = 'https://www.yilinzazhi.com/';
     const response = await got(baseUrl);
@@ -43,15 +56,20 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        contents.map((content) =>
-            cache.tryGet<DataItem>(content.link!, async () => {
-                const childRes = await got(content.link);
-                const $$ = load(childRes.data);
-                content.description = $$('.maglistbox').html()!;
-                return content;
-            })
-        )
+    const items = await pMap(
+        contents,
+        async (content) => {
+            try {
+                const detail = await cache.tryGet<Pick<DataItem, 'description'>>(`yilinzazhi:issue:${content.link}`, () => fetchDescription(content.link!));
+                return { ...content, description: detail.description };
+            } catch (error) {
+                if (error instanceof FetchError && (error.status === 404 || error.status === 429)) {
+                    return content;
+                }
+                throw error;
+            }
+        },
+        { concurrency: 3, stopOnError: false }
     );
     return {
         title: '意林杂志网',

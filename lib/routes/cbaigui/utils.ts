@@ -1,14 +1,16 @@
-import got from '@/utils/got';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
-const rootUrl = 'https://cbaigui.com';
-const apiSlug = 'wp-json/wp/v2';
+export const rootUrl = 'https://cbaigui.com';
+export const apiUrl = 'https://api-web.cbaigui.com/v1';
 
-const GetFilterId = async (type, name) => {
-    const filterApiUrl = new URL(`${apiSlug}/${type}?search=${name}`, rootUrl).href;
+interface Filter {
+    id: string | number;
+    name: string;
+}
 
-    const { data: filterResponse } = await got(filterApiUrl);
-
-    return filterResponse.findLast((f) => f.name === name)?.id ?? undefined;
-};
-
-export { apiSlug, GetFilterId, rootUrl };
+export async function getFilterId(type: 'attributes' | 'books', name: string) {
+    const url = `${apiUrl}/monster/${type}`;
+    const data = await cache.tryGet(url, async () => (await ofetch<{ data: Filter[] }>(url)).data);
+    return data.find((filter) => filter.name === name && (type === 'books' || String(filter.id).startsWith('a_')))?.id;
+}

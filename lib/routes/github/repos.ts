@@ -87,7 +87,6 @@ async function handler(ctx) {
             };
         });
     return {
-        allowEmpty: true,
         title: `${user}'s GitHub repositories`,
         link: `https://github.com/${user}`,
         item,

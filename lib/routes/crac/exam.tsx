@@ -3,6 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/exam',
@@ -20,7 +22,7 @@ export const route: Route = {
     maintainers: ['admxj'],
     radar: [
         {
-            source: ['www.crac.org.cn/*'],
+            source: ['zhipu.allspectrum.cn/CRAC/crac/pages/list_examMsg.html'],
             target: '/exam',
         },
     ],
@@ -28,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseUrl = 'http://82.157.138.16:8091/CRAC';
+    const baseUrl = 'https://zhipu.allspectrum.cn:9528/CRAC';
 
     const response = await got({
         method: 'post',
@@ -45,9 +47,9 @@ async function handler() {
             link,
             id: item.id,
             author: item.exam.organizer,
-            pubDate: item.createDate,
-            updated: item.updateDate,
-            startDate: item.exam.signUpStartDate,
+            pubDate: item.createDate ? timezone(parseDate(item.createDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+            updated: item.updateDate ? timezone(parseDate(item.updateDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+            startDate: item.exam.signUpStartDate ? timezone(parseDate(item.exam.signUpStartDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
             category: [item.examType],
             image: item.weixin,
             description: renderToString(<ExamDescription item={item} />),
@@ -55,7 +57,7 @@ async function handler() {
     });
     return {
         title: '考试信息-中国无线电协会业余无线电分会',
-        link: 'http://82.157.138.16:8091/CRAC/crac/pages/list_examMsg.html',
+        link: `${baseUrl}/crac/pages/list_examMsg.html`,
         item: list,
     };
 }
@@ -101,9 +103,7 @@ const ExamDescription = ({ item }: { item: any }) => (
             </tr>
             <tr>
                 <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">微信群二维码：</th>
-                <td>
-                    <img src={item.exam.weixin} style="width: auto;height: 100px;" />
-                </td>
+                <td>{item.exam.weixin && <img src={item.exam.weixin} style="width: auto;height: 100px;" />}</td>
                 <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;"></th>
                 <td></td>
             </tr>

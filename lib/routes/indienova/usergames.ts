@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -47,18 +48,20 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description = $('.cover-image').prop('outerHTML')! + $('.tab-container').html()! + $('.swiper-wrapper').prop('outerHTML') + $('.postcontent').html();
-                item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : null;
+                item.description = [$('.cover-image').prop('outerHTML'), $('.tab-container').html(), $('.swiper-wrapper').prop('outerHTML'), $('.postcontent').html()].join('');
+                const releaseDate = $('.gamedb-release').text().replaceAll(/[()]/g, '').trim();
+                item.pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,18 +33,18 @@ export const route: Route = {
 | 13291    | 13292    | 13293        | 13294    | 13295      | 13296    | 13297      | 13298      | 13299    |`,
     url: 'cc.nankai.edu.cn',
     handler: async (ctx) => {
-        // 从 URL 参数中获取通知分类
+        // Read the notice category from the route path.
         const { type = '13291' } = ctx.req.param();
         const baseUrl = 'https://cc.nankai.edu.cn';
         const { data: response } = await got(`${baseUrl}/${type}/list.htm`);
         const $ = load(response);
 
-        // 获取分类名称
+        // Read the category name.
         const categoryName = $('.accordion .selected a').text().trim() || '最新动态';
 
-        // 解析新闻列表
+        // Parse the notice list.
         const list = $('#wp_news_w49 table tr')
-            .slice(1) // 跳过表头
+            .slice(1) // Skip the header row.
             .toArray()
             .map((tr): DataItem | null => {
                 const $tr = $(tr);
@@ -53,60 +54,53 @@ export const route: Route = {
                     return null;
                 }
 
-                const title = cells.eq(1).text().trim();
+                const title = cells.eq(1).text();
                 const publisher = cells.eq(2).text().trim();
                 const dateStr = cells.eq(3).text().trim();
 
-                // 从onclick属性中提取链接
+                // Extract the link from the onclick attribute.
                 const onclick = $tr.attr('onclick');
                 let link = '';
                 if (onclick) {
                     const match = onclick.match(/window\.location\.href='([^']+)';/);
                     if (match) {
-                        link = match[1];
-                        if (!link.startsWith('http')) {
-                            link = `${baseUrl}${link}`;
-                        }
+                        link = new URL(match[1], `${baseUrl}/${type}/list.htm`).href;
                     }
                 }
 
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateStr), 8),
+                    pubDate: dateStr ? timezone(parseDate(dateStr), 8) : undefined,
                     author: publisher,
                 };
             })
-            .filter((item): item is DataItem => Boolean(item?.link)); // 过滤掉空项目和没有链接的项目
+            .filter((item): item is DataItem => Boolean(item?.link)); // Discard entries without a link.
 
-        // 获取每篇文章的详细内容
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    try {
-                        const { data: response } = await got(item.link);
-                        const $ = load(response);
-
-                        // 优化内容选择器逻辑，避免重复选择
-                        let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
-
-                        description ||= item.title;
-                        item.description = description;
-                    } catch {
-                        // 如果获取详细内容失败，返回基本信息
-                        item.description = item.title + ' (获取详细内容失败)';
+        // Fetch the article details.
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`nankai:cc:article:v3:${item.link}`, async () => {
+                    const { data: response } = await got(item.link);
+                    const $ = load(response);
+                    const description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
+                    if (!description) {
+                        throw new Error(`Could not find the computing notice content: ${item.link}`);
                     }
-                    return item;
-                })
-            )
+                    return { description };
+                });
+                return { ...item, ...detail };
+            },
+            { concurrency: 3 }
         );
 
         return {
-            // 源标题
+            // Feed title.
             title: `南开大学计算机学院-${categoryName}`,
-            // 源链接
+            // Feed link.
             link: `${baseUrl}/${type}/list.htm`,
-            // 源文章
+            // Feed items.
             item: items,
         };
     },

@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -31,26 +33,28 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.hangye-list-item .hy-title a')
-        .slice(0, 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .toArray()
         .map((item) => ({
             link: $(item).attr('href') ?? '',
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async (): Promise<DataItem> => {
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(`uisdc:hangye:v3:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
+                const pubDate = parseDate(content('.meta-time').attr('title') ?? '', 'YYYY-MM-DD HH:mm:ss', true);
 
                 return {
-                    title: content('.post-title').text().trim(),
+                    title: content('.post-title').text(),
                     link: item.link,
                     description: content('.article').html(),
-                    pubDate: timezone(parseDate(content('.meta-time').attr('title')!), 8),
+                    pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

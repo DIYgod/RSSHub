@@ -68,7 +68,7 @@ async function handler(): Promise<Data> {
                 title: `Kitty ${version}`,
                 description,
                 link: `${url}#${$section.attr('id')}`,
-                pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                pubDate: parseDate(`${dateStr}T00:00:00Z`),
                 guid: `kitty-${version}`,
             };
         })

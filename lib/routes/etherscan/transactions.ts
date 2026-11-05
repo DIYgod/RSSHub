@@ -5,6 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/transactions/:address',
@@ -43,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const { address } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 20);
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await ofetch<TxListResponse>('https://api.etherscan.io/v2/api', {
         query: {

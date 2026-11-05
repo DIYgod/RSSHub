@@ -1,8 +1,10 @@
+import { escapeText } from 'entities';
 import queryString from 'query-string';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/file/:user/:repo/:branch/:filepath{.+}',
@@ -49,10 +51,10 @@ async function handler(ctx) {
         const each = list[i];
         return {
             title: each.commit.message.split('\n', 1)[0],
-            description: `<pre>${each.commit.message}</pre>`,
+            description: `<pre>${escapeText(each.commit.message)}</pre>`,
             link: each.html_url,
             author: each.commit.author.name,
-            pubDate: new Date(each.commit.committer.date).toUTCString(),
+            pubDate: parseDate(each.commit.committer.date),
         };
     });
 

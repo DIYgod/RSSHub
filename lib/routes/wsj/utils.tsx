@@ -2,13 +2,29 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 
-const parseArticle = (item) =>
-    cache.tryGet(item.link, async () => {
+function parseArticleDate(value?: string) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+function mediaAttributes(attributes: Record<string, string>, names = ['src', 'alt', 'width', 'height']) {
+    return Object.fromEntries(names.filter((name) => attributes[name] !== undefined).map((name) => [name, attributes[name]]));
+}
+const parseArticle = async (
+    item: Pick<DataItem, 'title'> & {
+        link: string;
+    }
+) => ({
+    ...item,
+    ...(await cache.tryGet(`${item.link}:article-body`, async () => {
         // Fetch the AMP version
         const url = item.link.replace(/(?<=^https:\/\/\w+\.wsj\.com)/, '/amp');
         const response = await got({
@@ -18,97 +34,68 @@ const parseArticle = (item) =>
         });
         const html = response.data;
         const $ = load(html);
-
         // Summary
         const summary = $('head > meta[name="description"]').attr('content');
-
         // Metadata (categories & updatedAt)
         const updatedAt = $('meta[itemprop="dateModified"]').attr('content');
         const publishedAt = $('meta[itemprop="datePublished"]').attr('content');
         const author = $('.author > a[rel="author"]').text();
-
         const categories = $('meta[name="keywords"]')
-            .attr('content')!
-            .split(',')
-            .map((c) => c.trim());
-
+            .attr('content')
+            ?.split(',')
+            .map((c) => c.trim())
+            .filter(Boolean);
         const article = $('article');
-        item.subTitle = $('h2.sub-head').html();
-
-        // Remove podcast
-        article.find('.media-object-podcast').remove();
-
+        const subtitle = $('h2.sub-head').html();
         // Authors
-        article.find('.bylineWrap').each((i, e) => {
-            $(e)
-                .find('p')
-                .each((_, el) => {
-                    $(el).replaceWith($(el).html() ?? '');
-                });
+        article.find('.bylineWrap').remove();
+        // Preserve optional media attributes without interpolating them into HTML.
+        article.find('.bigTop-hero').each((_, element) => {
+            const image = $(element).find('amp-img').first();
+            const figure = $('<figure>');
+            if (image.length) {
+                const imageAttributes1 = mediaAttributes(image.attr() || {});
+                figure.append($('<img>').attr(imageAttributes1));
+            }
+            const caption = $('<figcaption>').text($(element).find('.imageCaption').text().trim());
+            caption.append(' ', $('<span>').text($(element).find('.imageCredit').text().trim()));
+            figure.append(caption);
+            $(element).replaceWith(figure);
         });
-
-        // Images
-        article.find('.bigTop-hero').each((i, e) => {
-            // console.log($(e).html());
-            const imgSrc = $(e).find('amp-img').attr('src');
-            const imgAlt = $(e).find('amp-img').attr('alt');
-            const figCaption = $(e).find('.imageCaption').text().trim();
-            const figCredit = $(e).find('.imageCredit').text().trim();
-            const fig = $(`<figure><img src="${imgSrc}" alt="${imgAlt}"><figcaption>${figCaption} <span>${figCredit}</span></figcaption></figure>`);
-            $(fig).insertBefore(e);
-            $(e).remove();
+        article.find('amp-img').each((_, element) => {
+            $(element).replaceWith($('<img>').attr(mediaAttributes(element.attribs)));
         });
-        article.find('amp-img').each((i, e) => {
-            const img = $(`<img width="${e.attribs.width}" height="${e.attribs.height}" src="${e.attribs.src}" alt="${e.attribs.alt}">`);
-
-            // Caption follows, no need to handle caption
-            $(img).insertBefore(e);
-            $(e).remove();
+        article.find('amp-iframe').each((_, element) => {
+            $(element).replaceWith($('<iframe>').attr(mediaAttributes(element.attribs, ['src', 'width', 'height'])));
         });
-
-        // iframes (youtube videos and interactive elements)
-        article.find('amp-iframe').each((i, e) => {
-            const iframe = $(`<iframe width="${e.attribs.width}" height="${e.attribs.height}" src="${e.attribs.src}">`);
-            $(iframe).insertBefore(e);
-            $(e).remove();
-        });
-
         // Remove unwanted DOMs
-        const unwanted_element_selectors = ['amp-ad', '.wsj-ad', 'h1', 'h2', '.zonedModule', '.snippet', '.newsletter-inset'];
-        for (const selector of unwanted_element_selectors) {
+        const unwantedElementSelectors = ['amp-ad', '.wsj-ad', 'h1', 'h2.sub-head', '.zonedModule', '.snippet', '.newsletter-inset'];
+        for (const selector of unwantedElementSelectors) {
             article.find(selector).each((i, e) => {
                 $(e).remove();
             });
         }
-
         // Paywall
         article.find('.paywall').each((i, e) => {
             // Caption follows, no need to handle caption
             $(e.childNodes).insertBefore(e);
             $(e).remove();
         });
-        item.article = article.html();
-        item.description = renderToString(<WsjDescription subTitle={item.subTitle} article={item.article} />);
-
+        const description = renderToString(<WsjDescription subtitle={subtitle ?? undefined} article={article.html() ?? undefined} />);
         return {
-            title: item.title,
-            pubDate: parseDate(publishedAt!),
-            updated: parseDate(updatedAt!),
+            pubDate: parseArticleDate(publishedAt),
+            updated: parseArticleDate(updatedAt),
             author,
-            link: item.link,
             summary,
-            description: item.description,
+            description,
             category: categories,
-            icon: 'https://s.wsj.net/media/wsj_launcher-icon-4x.png',
-            logo: 'https://vir.wsj.net/fp/assets/webpack4/img/wsj-logo-big-black.165e51cc.svg',
         };
-    });
-
+    })),
+});
 export { parseArticle };
-
-const WsjDescription = ({ subTitle, article }: { subTitle?: string; article?: string }) => (
+const WsjDescription = ({ subtitle, article }: { subtitle?: string; article?: string }) => (
     <div>
-        {subTitle ? raw(subTitle) : null}
+        {subtitle ? raw(subtitle) : null}
         {article ? raw(article) : null}
     </div>
 );

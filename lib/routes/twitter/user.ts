@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import logger from '@/utils/logger';
 
 import api from './api';
 import utils from './utils';
@@ -73,14 +72,10 @@ async function handler(ctx) {
 
     await api.init();
     const userInfo = await api.getUser(id);
-    let data;
-    try {
-        data = await (include_replies ? api.getUserTweetsAndReplies(id, params) : api.getUserTweets(id, params));
-        if (!include_rts) {
-            data = utils.excludeRetweet(data);
-        }
-    } catch (error) {
-        logger.error(error);
+    let data = await (include_replies ? api.getUserTweetsAndReplies(id, params) : api.getUserTweets(id, params));
+    const sourceCount = data.length;
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
@@ -88,13 +83,13 @@ async function handler(ctx) {
     return {
         title: `Twitter @${userInfo?.name}`,
         link: `https://x.com/${userInfo?.screen_name}`,
-        image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
+        image: profileImageUrl?.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item:
             data &&
             utils.ProcessFeed(ctx, {
                 data,
             }),
-        allowEmpty: true,
+        allowEmpty: !include_rts && sourceCount > 0 && data.length === 0,
     };
 }

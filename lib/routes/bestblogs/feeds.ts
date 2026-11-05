@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/feeds/:category?',
@@ -20,88 +21,43 @@ export const route: Route = {
     handler,
 };
 
-class APIRequest {
-    keyword?: string;
-    qualifiedFilter: string;
-    sourceId?: string;
-    category?: string;
-    timeFilter: string;
-    language: string;
-    userLanguage: string;
-    sortType: string;
-    currentPage: number;
-    pageSize: number;
-
-    constructor({ keyword = '', qualifiedFilter = 'true', sourceId = '', category = '', timeFilter = '1w', language = 'all', userLanguage = 'zh', sortType = 'default', currentPage = 1, pageSize = 10 } = {}) {
-        this.keyword = keyword;
-        this.qualifiedFilter = qualifiedFilter;
-        this.sourceId = sourceId;
-        this.category = category;
-        this.timeFilter = timeFilter;
-        this.language = language;
-        this.userLanguage = userLanguage;
-        this.sortType = sortType;
-        this.currentPage = currentPage;
-        this.pageSize = pageSize;
-    }
-
-    toJson(): string {
-        const requestBody = {
-            keyword: this.keyword,
-            qualifiedFilter: this.qualifiedFilter,
-            sourceId: this.sourceId,
-            category: this.category,
-            timeFilter: this.timeFilter,
-            language: this.language,
-            userLanguage: this.userLanguage,
-            sortType: this.sortType,
-            currentPage: this.currentPage,
-            pageSize: this.pageSize,
-        };
-
-        return JSON.stringify(requestBody);
-    }
-}
-
 async function handler(ctx) {
-    const defaultPageSize = 100;
-    const defaultTimeFilter = '1w';
     const { category = 'featured' } = ctx.req.param();
-
-    const apiRequest = new APIRequest({
-        category,
-        pageSize: defaultPageSize,
-        qualifiedFilter: category === 'featured' ? 'true' : 'false',
-        timeFilter: defaultTimeFilter,
-    });
-
-    const apiUrl = 'https://api.bestblogs.dev/api/resource/list';
-    const response = await ofetch(apiUrl, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: apiRequest.toJson(),
-    });
-
-    if (!response || !response.data || !response.data.dataList) {
-        throw new Error('Invalid API response: ' + JSON.stringify(response));
+    const rootUrl = 'https://www.bestblogs.dev';
+    let categoryCode = '';
+    if (category !== 'featured') {
+        const categories = await ofetch(`${rootUrl}/api/proxy/categories`);
+        categoryCode = categories.data.find((item) => item.alias === category)?.code || category;
     }
+    const response = await ofetch(`${rootUrl}/api/proxy/resources`, {
+        query: {
+            type: 'ARTICLE',
+            page: 1,
+            pageSize: getRouteLimit(ctx, 100),
+            category: categoryCode,
+            qualifiedFilter: category === 'featured' ? 'true' : 'false',
+            timeFilter: '1w',
+            language: 'all',
+            uiLang: 'zh',
+            sortType: 'default',
+        },
+    });
 
-    const articles = response.data.dataList;
-
-    const items = articles.map((article) => ({
+    if (!response.success || !response.data?.dataList) {
+        throw new Error(`Invalid Bestblogs API response: ${response.message || 'missing article list'}`);
+    }
+    const items = response.data.dataList.map((article) => ({
         title: article.title,
         link: article.url,
         description: article.summary,
-        pubDate: parseDate(article.publishDateTimeStr),
-        author: Array.isArray(article.authors) ? article.authors.map((author) => ({ name: author })) : [{ name: article.authors }],
+        pubDate: article.publishTimeStamp ? parseDate(article.publishTimeStamp) : undefined,
+        author: article.authors?.map((name) => ({ name })),
         category: article.category,
     }));
 
     return {
         title: 'Bestblogs.dev',
-        link: 'https://www.bestblogs.dev/feeds',
+        link: `${rootUrl}/explore?type=article`,
         item: items,
     };
 }

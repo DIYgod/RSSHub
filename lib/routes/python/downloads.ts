@@ -24,18 +24,17 @@ async function handler(ctx: Context) {
     return {
         title: 'cpython',
         link: 'https://www.python.org/',
-        item: $('.list-row-container.menu li')
+        item: $('.list-row-container.menu li:has(.release-number a[href])')
             .toArray()
             .map((el) => {
                 const $item = $(el);
                 const title = $item.find('span.release-number').text();
                 return {
                     title,
-                    description: title,
-                    link: $item.find('.release-enhancements a').attr('href'),
+                    link: new URL($item.find('.release-number a').attr('href')!, 'https://www.python.org').href,
                     pubDate: parseDate($item.find('.release-date').text()),
                 };
             })
-            .filter(({ title }) => title && (includePreRelease || !title.includes('rc'))),
+            .filter(({ title }) => title && (includePreRelease || !/\d(?:a|b|rc)\d/i.test(title))),
     };
 }

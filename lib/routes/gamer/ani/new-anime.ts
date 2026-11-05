@@ -18,10 +18,15 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    // Keep both native sources separate because Radar merges legacy rule arrays by index.
     radar: [
         {
+            source: ['ani.gamer.com.tw/animeVideo.php', 'ani.gamer.com.tw/animeRef.php'],
+            target: '/ani/new_anime',
+        },
+        {
             source: ['ani.gamer.com.tw/'],
-            target: '/new_anime',
+            target: '/ani/new_anime',
         },
     ],
     name: '動畫瘋 - 最後更新',

@@ -60,17 +60,15 @@ async function handler(ctx: Context) {
         });
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const detail = await cache.tryGet(`${item.link}:detail`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.description = content('.inner_content').html();
-                item.pubDate = parseRelativeDate(content('.inner_view_from').text());
-
-                return item;
-            })
-        )
+                return { description: content('.inner_content').html() ?? undefined, pubDate: parseRelativeDate(content('.inner_view_from').text()) };
+            });
+            return { ...item, ...detail };
+        })
     );
 
     return {

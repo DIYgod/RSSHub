@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 
 import { getData, getList } from './utils';
 
@@ -32,22 +31,9 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://web.stockedge.com/daily-updates?section=news';
     const apiPath = 'https://api.stockedge.com/Api/DailyDashboardApi/GetLatestNewsItems';
-    const apiInfo = 'https://api.stockedge.com/Api/SecurityDashboardApi/GetSecurityOverview';
 
     const data = await getData(apiPath);
-    const list = getList(data);
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.securityID) {
-                    return item;
-                }
-                const info = await getData(`${apiInfo}/${item.securityID}`);
-                item.description = item.description + '<br><br>' + info?.AboutCompanyText;
-                return item;
-            })
-        )
-    );
+    const items = getList(data);
 
     return {
         title: 'Stock Edge',

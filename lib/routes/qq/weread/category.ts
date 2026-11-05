@@ -56,28 +56,19 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
 
-    // 检查 category 是否是榜单，若否则全部为阿拉伯数字
     const isRank = /^\d+$/.test(category) ? 0 : 1;
+    const response = await ofetch(`https://weread.qq.com/web/bookListInCategory/${category}?maxIndex=0&rank=${isRank}`);
 
-    const LIMIT = category === 'all' ? 180 : 40;
-    const SIZE = 20;
-
-    const urls = Array.from({ length: Math.ceil((LIMIT + 1) / SIZE) }, (_, index) => `https://weread.qq.com/web/bookListInCategory/${category}?maxIndex=${index * SIZE}&rank=${isRank}`);
-
-    const responses = await Promise.all(urls.map((url) => ofetch(url)));
-
-    const results = responses.flatMap((response) =>
-        response.books.map((book) => {
-            const bookInfo = book.bookInfo;
-            return {
-                title: bookInfo.title,
-                description: `推荐值 ${bookInfo.newRating / 10}% ${bookInfo.newRatingDetail.title}|| ` + bookInfo.intro,
-                author: bookInfo.author,
-                guid: bookInfo.bookId,
-                itunes_item_image: bookInfo.cover,
-            };
-        })
-    );
+    const results = response.books.map((book) => {
+        const bookInfo = book.bookInfo;
+        return {
+            title: bookInfo.title,
+            description: `推荐值 ${bookInfo.newRating / 10}% ${bookInfo.newRatingDetail.title}|| ` + bookInfo.intro,
+            author: bookInfo.author,
+            guid: bookInfo.bookId,
+            itunes_item_image: bookInfo.cover,
+        };
+    });
 
     const title = categoryTitles[category] || '书籍列表';
     return {

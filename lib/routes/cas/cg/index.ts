@@ -4,12 +4,13 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cg/:caty?',
     categories: ['university'],
-    example: '/cas/cg/cgzhld',
+    example: '/cas/cg/zh',
     parameters: { caty: '分类，见下表，默认为工作动态' },
     features: {
         requireConfig: false,
@@ -27,13 +28,16 @@ export const route: Route = {
     name: '成果转化',
     maintainers: ['nczitzk'],
     handler,
-    description: `| 工作动态 | 科技成果转移转化亮点工作 |
-| -------- | ------------------------ |
-| zh       | cgzhld                   |`,
+    description: `| 工作动态 |
+| -------- |
+| zh       |
+
+原科技成果转移转化亮点工作栏目（\`cgzhld\`）已由来源网站下线。`,
 };
 
 async function handler(ctx) {
     const caty = ctx.req.param('caty') || 'zh';
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.cas.cn';
     const currentUrl = `${rootUrl}/cg/${caty}/`;
@@ -45,7 +49,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#content li')
         .not('.gl_line')
-        .slice(0, 15)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -65,7 +69,7 @@ async function handler(ctx) {
                 });
                 const content = load(detailResponse.data);
 
-                item.description = content('.TRS_Editor').html();
+                item.description = content('.TRS_Editor, .TRS_UEDITOR').first().html();
                 item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
 
                 return item;

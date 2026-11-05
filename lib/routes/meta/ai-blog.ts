@@ -20,7 +20,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit') || 12);
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 12;
     const link = 'https://ai.meta.com/blog/';
 
     const res = await ofetch(link, {
@@ -33,7 +34,7 @@ async function handler(ctx) {
         },
     });
     const $ = load(res);
-    const script = $('script:contains("DTSGInitialData"):first').text();
+    const script = $('script:contains("DTSGInitialData")').text();
     const serverJs = JSON.parse(script.match(/\(new ServerJS\(\)\)\.handle\((\{[\s\S]*?\})\);/)?.[1] || '{}');
 
     type ServerData = {
@@ -94,7 +95,7 @@ async function handler(ctx) {
             lsd: server.LSD.token,
             // jazoest: '',
             __spin_r: String(server.SiteData.__spin_r || ''),
-            __spin_b: String(server.SiteData.__spin_b || 'trunk'),
+            __spin_b: server.SiteData.__spin_b || 'trunk',
             __spin_t: spinT,
             fb_api_caller_class: 'RelayModern',
             fb_api_req_friendly_name: 'MetaAIBlogRecentPostSearchQuery',

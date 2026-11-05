@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
@@ -33,7 +35,7 @@ export const route: Route = {
 :::`,
 };
 
-const sortMap = new Map(Object.entries(MercariSort));
+const sortMap = new Map([...Object.entries(MercariSort), ['created_time', MercariSort.create_time], ['num_likes', MercariSort.like]]);
 const orderMap = new Map(Object.entries(MercariOrder));
 const statusMap = new Map([
     ['on_sale', MercariStatus.onsale],
@@ -92,7 +94,7 @@ async function handler(ctx) {
     const { keyword, sort, order, status, options } = parseSearchQuery(queryString);
     const searchItems = (await fetchSearchItems(sort, order, status, keyword, options)).items;
 
-    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => formatItemDetail(await fetchItemDetail(item.id, item.itemType)))));
+    const items = await pMap(searchItems, (item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => formatItemDetail(await fetchItemDetail(item.id, item.itemType))), { concurrency: 3 });
 
     return {
         title: `${keyword} の検索結果`,

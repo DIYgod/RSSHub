@@ -1,9 +1,11 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://jwb.shu.edu.cn/';
 const alias = new Map([
@@ -19,8 +21,12 @@ export const route: Route = {
     parameters: { type: '消息类型,默认为`notice`' },
     radar: [
         {
-            source: ['www.shu.edu.cn/index'],
-            target: '/:type?',
+            source: ['jwb.shu.edu.cn/index/tzgg.htm'],
+            target: '/jwb/notice',
+        },
+        {
+            source: ['jwb.shu.edu.cn/index/xw.htm'],
+            target: '/jwb/news',
         },
     ],
     name: '教务部',
@@ -30,6 +36,28 @@ export const route: Route = {
 | -------- | ---- | -------------- |
 | notice   | news | policy         |`,
 };
+
+function restorePdfContent($: CheerioAPI, link: string) {
+    $('.v_news_content script').each((_, element) => {
+        const script = $(element).html() || '';
+        const pdfPath = script.match(/showVsbpdfIframe\(["']([^"']+)["']/)?.[1];
+        if (!pdfPath) {
+            return;
+        }
+        const content = $('<div></div>');
+        content.append($('<a>PDF</a>').attr('href', new URL(pdfPath, link).href));
+        const pagesJson = script.match(/var\s+vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])/)?.[1];
+        const pages: unknown = pagesJson ? JSON.parse(pagesJson) : [];
+        if (Array.isArray(pages)) {
+            for (const page of pages) {
+                if (typeof page === 'string') {
+                    content.append($('<img>').attr('src', new URL(page, link).href));
+                }
+            }
+        }
+        $(element).replaceWith(content);
+    });
+}
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'notice';
@@ -47,17 +75,20 @@ async function handler(ctx) {
             date: $(ele).children('span').text(),
         }));
 
-    const all = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const all = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`shu:jwb:v3:${item.link}`, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
+                restorePdfContent($, item.link);
                 item.author = $('[id$=_lblUser]').text().trim();
-                item.pubDate = parseDate(item.date, 'YYYY年MM月DD日');
                 item.description = $('.v_news_content').html() || item.title;
-                return item;
-            })
-        )
+                return { description: item.description, author: item.author };
+            });
+            return { ...item, ...details, pubDate: timezone(parseDate(item.date, 'YYYY年MM月DD日'), 8) };
+        },
+        { concurrency: 3 }
     );
     return {
         title,

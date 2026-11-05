@@ -1,6 +1,14 @@
-import type { Route } from '@/types';
-import got from '@/utils/got';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
+
+const rootUrl = 'https://fuliba2023.net';
 
 export const route: Route = {
     path: '/latest',
@@ -27,24 +35,38 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { data: response } = await got('https://fuliba2023.net/wp-json/wp/v2/posts', {
-        searchParams: {
-            per_page: ctx.req.query('limit') ?? 100,
-            _embed: 1,
-        },
-    });
-    const items = response.map((item) => ({
-        title: item.title.rendered,
-        link: item.link,
-        guid: item.guid.rendered,
-        description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
-        author: item._embedded.author[0].name,
-    }));
+    // The WordPress REST API now answers 410 Gone, so read the latest posts from the home page
+    const response = await ofetch(rootUrl);
+    const $ = load(response);
+
+    const list = $('article.excerpt')
+        .slice(0, getRouteLimit(ctx, 20))
+        .toArray()
+        .map((item): DataItem => {
+            const $item = $(item);
+            const link = $item.find('header h2 a');
+            return {
+                title: link.attr('title') || link.text(),
+                link: new URL(link.attr('href')!, rootUrl).href,
+                pubDate: timezone(parseDate($item.find('.meta time').text()), 8),
+            };
+        });
+
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                item.description = content('article.article-content').html() ?? undefined;
+                return item;
+            }),
+        { concurrency: 5 }
+    );
 
     return {
         title: '福利吧',
-        link: 'https://fuliba2023.net',
+        link: rootUrl,
         item: items,
     };
 }

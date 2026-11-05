@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/wenjian/:pcodeJiguan?',
@@ -36,7 +36,7 @@ async function handler(ctx) {
     const link = 'http://sousuo.gov.cn/list.htm';
     const res = await got(link, {
         searchParams: {
-            n: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
+            n: getRouteLimit(ctx, 20),
             sort: 'pubtime',
             t: 'paper',
             pcodeJiguan: pcodeJiguan ?? '',
@@ -49,10 +49,11 @@ async function handler(ctx) {
         .toArray()
         .map((elem): DataItem => {
             const $elem = $(elem);
+            const date = $elem.find('td:nth-child(5)').text();
             return {
                 title: $elem.find('td:nth-child(2) > a').text(),
                 link: $elem.find('td:nth-child(2) > a').attr('href'),
-                pubDate: timezone(parseDate($elem.find('td:nth-child(5)').text()), 8),
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
             };
         });
 

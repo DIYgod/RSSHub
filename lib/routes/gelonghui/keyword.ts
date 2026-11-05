@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { parseItem } from './utils';
 
@@ -31,7 +32,7 @@ async function handler(ctx) {
         searchParams: {
             keyword,
             isVipArticle: false,
-            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
+            count: getRouteLimit(ctx, 20),
             page: 1,
             searchArea: 'all',
         },
@@ -49,7 +50,7 @@ async function handler(ctx) {
 
     return {
         title: `格隆汇 - 关键词 “${keyword}” 的文章`,
-        link: currentUrl,
+        link: `https://www.gelonghui.com/search?${new URLSearchParams({ keyword })}`,
         item: items,
         description: `找到关于 “ ${keyword} ”的文章，共${data.totalCount}个结果`,
     };

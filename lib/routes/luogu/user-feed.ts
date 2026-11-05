@@ -46,7 +46,6 @@ async function handler(ctx) {
         description: userInfo.description,
         image: userInfo.avatar,
         link: `https://www.luogu.com.cn/user/${uid}#activity`,
-        allowEmpty: true,
         item: data.map((item) => ({
             title: item.content,
             description: md.render(item.content),

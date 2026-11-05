@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -50,6 +51,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'rec', category = '所有' } = ctx.req.param();
+    if (!Object.hasOwn(typeToLabel, type)) {
+        throw new InvalidParameterError('Type must be rec or hot.');
+    }
+    if (!Object.hasOwn(categoryMap, category)) {
+        throw new InvalidParameterError(`Unknown creator category. Choose one of: ${Object.keys(categoryMap).join(', ')}.`);
+    }
     const baseUrl = 'https://afdian.com';
     const link = `${baseUrl}/api/creator/list`;
     const res = await got(link, {

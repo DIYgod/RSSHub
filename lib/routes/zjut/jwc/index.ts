@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,7 +23,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '浙江工业大学教务处',
+    name: '教务处',
     maintainers: ['zhullyb'],
     url: 'www.jwc.zjut.edu.cn',
     handler,
@@ -68,7 +69,9 @@ async function handler(ctx): Promise<Data> {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
+                const dateText = cheerioItem.find('.news_meta').text();
+                const date = dateText.trim() ? parseDate(dateText) : undefined;
+                const pubDate = date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
 
                 return {
                     title,
@@ -79,17 +82,16 @@ async function handler(ctx): Promise<Data> {
                 return {
                     title: '',
                     link: '',
-                    pubDate: Date.now(),
                 };
             }
         })
         .filter((item) => item.title && item.link);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`zjut:jwc:details:${item.link}`, async () => {
                 const newItem = {
-                    ...item,
                     description: '',
                 };
                 if (host === new URL(item.link).hostname) {
@@ -105,9 +107,11 @@ async function handler(ctx): Promise<Data> {
                     // 涉及到其他站点，不方便做统一的 html 解析，直接返回链接
                     newItem.description = item.link;
                 }
-                return newItem;
-            })
-        )
+                return newItem.description;
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

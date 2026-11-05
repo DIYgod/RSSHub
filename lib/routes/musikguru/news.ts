@@ -1,19 +1,26 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
+import timezonePlugin from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
+dayjs.extend(utc);
+dayjs.extend(timezonePlugin);
+
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://musikguru.de';
     const targetUrl: string = new URL('news/', baseUrl).href;
@@ -51,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('p.card-text').text(),
                 },
                 image,
                 banner: image,
@@ -61,43 +68,43 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const details = await cache.tryGet(`musikguru:details-v2:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('div.article h1').text();
                 const leadHtml = ($$('p.lead').html() ?? '') + ($$('div.lead').html() ?? '');
-                const description: string | undefined = item.description + renderDescription({ description: leadHtml || undefined });
+                const description: string | undefined = renderDescription({ description: leadHtml || undefined });
                 const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/, 1)?.[0];
                 const image: string | undefined = $$('div.article img').first().attr('src');
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD.MM.YYYY HH:mm'), 1) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(dayjs.tz(pubDateStr, 'DD.MM.YYYY HH:mm', 'Europe/Berlin').format()) : item.pubDate,
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('p.lead, div.lead').text(),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), 1) : item.updated,
                     language,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+            delete details.updated;
+            const description = `${item.description ?? ''}${details.description ?? ''}`;
+            return { ...item, ...details, description, content: { html: description, text: load(description).text() } };
+        },
+        { concurrency: 3 }
     );
 
     const logoSrc: string | undefined = $('a.navbar-brand img').attr('src');
@@ -107,7 +114,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('a.navbar-brand img').attr('alt'),
         language,
@@ -137,7 +143,7 @@ export const route: Route = {
     radar: [
         {
             source: ['musikguru.de/news'],
-            target: 'news',
+            target: '/news',
         },
     ],
     view: ViewType.Articles,

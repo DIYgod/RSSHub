@@ -1,10 +1,32 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+function parsePublicationDate(value: string) {
+    const date = parseDate(value.trim(), 'YYYY-MM-DD HH:mm:ss', true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+}
+
+async function fetchDetails(url: string) {
+    const response = await ofetch(url);
+    const $ = load(response);
+    const content = $('.v_news_content').first();
+    const attachments = $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"]')
+        .filter((_, link) => !$(link).closest('.v_news_content').length)
+        .toArray()
+        .map((link) => `<li>${$.html(link)}</li>`)
+        .join('');
+
+    return {
+        description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined,
+    };
+}
 
 export const route: Route = {
     path: '/zkb/:category',
@@ -24,23 +46,23 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const baseUrl = 'http://zkb.xynu.edu.cn/';
     const categoryList = new Set([
-        // 分类栏目
-        'zkzy', // 主考专业
-        'gzzd', // 规章制度
-        'sjkc', // 实践课程
-        'bylw', // 毕业论文
-        'xsxw', // 学士学位
-        'zkby', // 自考毕业
-        'zkjc', // 自考教材
-        'zkzn', // 自考指南
-        'lxwm', // 联系我们
-        // 首页板块
-        'zkzx', // 自考资讯
-        'bmzn', // 报名指南
-        'rcap', // 日程安排
-        'xsrm', // 新生入门
-        'zkmk', // 转考免考
-        'fxzl', // 复习资料
+        // Category navigation
+        'zkzy', // Exam majors
+        'gzzd', // Regulations
+        'sjkc', // Practical courses
+        'bylw', // Graduation thesis
+        'xsxw', // Bachelor degrees
+        'zkby', // Self-study graduation
+        'zkjc', // Self-study textbooks
+        'zkzn', // Self-study guide
+        'lxwm', // Contact information
+        // Homepage sections
+        'zkzx', // Self-study news
+        'bmzn', // Registration guide
+        'rcap', // Schedule
+        'xsrm', // New student guide
+        'zkmk', // Transfer and exemption
+        'fxzl', // Review materials
     ]);
     const { category } = ctx.req.param();
     const path = categoryList.has(category) ? `${category}.htm` : 'zkzx.htm';
@@ -48,18 +70,26 @@ async function handler(ctx: Context) {
     const response = await ofetch(baseUrl + path);
     const $ = load(response);
 
-    const items = $('.gg ul > li')
+    const list = $('.gg ul > li')
         .toArray()
         .map((item) => {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.text(),
-                description: a.text(),
+                title: a.attr('title') || a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parsePublicationDate($item.find('span').text()),
             };
         });
+
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link, () => fetchDetails(item.link));
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: $('title').text(),

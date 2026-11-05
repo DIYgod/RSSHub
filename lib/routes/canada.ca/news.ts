@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -54,6 +55,9 @@ async function handler(ctx) {
         fr: '/fr/nouvelles/recherche-avancee-de-nouvelles/resultats-de-nouvelles.html',
     };
     const path = pathMap[lang];
+    if (!Object.hasOwn(pathMap, lang)) {
+        throw new InvalidParameterError('Supported languages are en and fr.');
+    }
 
     const currentUrl = department ? `${baseUrl}${path}?dprtmnt=${department}` : `${baseUrl}${path}`;
 

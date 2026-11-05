@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -54,7 +55,7 @@ interface AuthorData {
 
 interface Post {
     _id: string;
-    authorsData: AuthorData[];
+    authorsData?: AuthorData[];
     canonical: boolean;
     isUpvotedByUser: boolean;
     numCoauthors: number;
@@ -76,33 +77,42 @@ interface CommunityBlogApiResponse {
     };
 }
 
+function getPublicationDate(publishedAt: string | undefined) {
+    const date = publishedAt ? parseDate(publishedAt) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx) {
     const { sort = 'trending' } = ctx.req.param();
-    const response = await ofetch<CommunityBlogApiResponse>(`https://huggingface.co/api/blog/community?sort=${sort}`);
-
-    const { posts } = response;
+    const { posts } = await ofetch<CommunityBlogApiResponse>(`https://huggingface.co/api/blog/community?sort=${sort}`);
 
     const lists = posts.map((item) => ({
         title: item.title,
         link: `https://huggingface.co${item.url}`,
-        pubDate: parseDate(item.publishedAt),
-        author: item.authorsData?.[0]?.fullname || item.authorsData?.[0]?.name || 'Unknown',
+        pubDate: getPublicationDate(item.publishedAt),
+        author: item.authorsData?.[0]?.fullname || item.authorsData?.[0]?.name,
         upvotes: item.upvotes,
         image: item.thumbnail ? new URL(item.thumbnail, 'https://huggingface.co').href : undefined,
     }));
 
-    const items: DataItem[] = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items: DataItem[] = await pMap(
+        lists,
+        async (item) => {
+            const details = await cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                $('.mb-4, .mb-6, .not-prose, h1').remove();
+                const content = $('.blog-content > .relative.overflow-clip').first();
+                if (!content.length) {
+                    throw new Error(`HuggingFace article content was not found at ${item.link}`);
+                }
+                content.find('.absolute.not-prose').remove();
                 return {
-                    ...item,
-                    description: $('.blog-content').html(),
+                    description: content.html(),
                 };
-            })
-        )
+            });
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

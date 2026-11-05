@@ -25,7 +25,7 @@ async function handler() {
 
     const $ = load(response);
     const birthday = $('span.titleHint').parent().html();
-    const today = $('input[name="LastSelectedDate"]').attr('value')!;
+    const today = $('input[name="LastSelectedDate"]').attr('value');
 
     return {
         title: '搜韵网 - 诗词日历',
@@ -34,8 +34,9 @@ async function handler() {
             {
                 title: poemResponse.Date,
                 link: currentUrl,
+                guid: today ? `sou-yun:calendar:${today}` : undefined,
                 description: `${poemResponse.Content.Text}<br>${birthday}<br>${wordResponse.Content.Text}`,
-                pubDate: timezone(parseDate(today), 8),
+                pubDate: today ? timezone(parseDate(today, 'YYYY-MM-DD'), 8) : undefined,
             },
         ],
     };

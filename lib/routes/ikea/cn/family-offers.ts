@@ -62,26 +62,13 @@ async function handler() {
     const familyPriceProductIds: string[][] = [];
     const productRequests: Array<Promise<any>> = [];
 
-    const familyPriceProductsLoadMore = async ({ pageIndex }) => {
-        const response = await familyPriceProductsRequest({ pageIndex });
-        const {
-            data: { productPage, products },
-        } = response.data;
+    const response = await familyPriceProductsRequest({ pageIndex: 1 });
+    for (const { id } of response.data.data.products) {
+        familyPriceProductIds.push(['ids', id]);
+    }
 
-        for (const { id } of products) {
-            familyPriceProductIds.push(['ids', id]);
-        }
-
-        if (productPage.end < productPage.total) {
-            await familyPriceProductsLoadMore({ pageIndex: pageIndex + 1 });
-        }
-        return;
-    };
-
-    await familyPriceProductsLoadMore({ pageIndex: 1 });
-
-    while (familyPriceProductIds.length) {
-        productRequests.push(productRequest(familyPriceProductIds.splice(0, 25)));
+    for (let i = 0; i < familyPriceProductIds.length; i += 25) {
+        productRequests.push(productRequest(familyPriceProductIds.slice(i, i + 25)));
     }
 
     const productResponses = await Promise.all(productRequests);

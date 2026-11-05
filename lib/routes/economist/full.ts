@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 const getArticleDetail = (link) =>
@@ -49,21 +52,30 @@ async function handler(ctx) {
     const endpoint = ctx.req.param('endpoint');
     const feed = await parser.parseURL(`https://www.economist.com/${endpoint}/rss.xml`);
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
-    const items = await Promise.all(
-        feed.items.slice(0, limit).map(async (item) => {
+    const limit = getRouteLimit(ctx, 30);
+    const sourceOrder = ctx.req.query('sorted') === 'false';
+    const candidates = feed.items.slice(0, Math.max(30, limit)).map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
+    const datesComplete = candidates.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    if (!sourceOrder && datesComplete) {
+        candidates.sort((first, second) => second.pubDate!.getTime() - first.pubDate!.getTime());
+    }
+    const selected = sourceOrder || datesComplete ? candidates.slice(0, limit) : candidates;
+    const items = await pMap(
+        selected,
+        async (item) => {
             const path = item.link!.slice(item.link!.lastIndexOf('/') + 1);
             const isNotCollection = !/^\d{4}-\d{2}-\d{2}$/.test(path);
-            const itemDetails = isNotCollection ? await getArticleDetail(item.link) : null;
+            const itemDetails = isNotCollection ? await getArticleDetail(item.link) : undefined;
             return {
                 title: item.title!,
                 description: isNotCollection ? itemDetails!.article : item.content,
                 link: item.link,
                 guid: item.guid,
                 pubDate: item.pubDate,
-                category: isNotCollection ? itemDetails!.categories : null,
+                category: isNotCollection ? itemDetails!.categories : undefined,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

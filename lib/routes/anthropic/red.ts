@@ -44,10 +44,14 @@ async function handler() {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                item.pubDate = parseDate($('d-article p').first().text().trim());
+                const publishedTime = $('meta[property="article:published_time"]').attr('content');
+                const legacyDate = $('d-article p').first();
+                const date = publishedTime || legacyDate.text().trim();
+                item.pubDate = date ? parseDate(date) : undefined;
                 $('h3:contains("Subscribe")').remove();
-                $('d-article p').first().remove();
-                const content = $('d-article');
+                legacyDate.remove();
+                const content = $('d-article').length ? $('d-article') : $('#main-content > div > article');
+                content.find('[class$="_Header"], [class$="_ConstellationPanelSlot"]').remove();
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');

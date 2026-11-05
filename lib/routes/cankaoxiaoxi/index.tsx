@@ -4,6 +4,7 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -47,7 +48,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id') ?? 'diyi';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://china.cankaoxiaoxi.com';
     const listApiUrl = `${rootUrl}/json/channel/${id}/list.json`;

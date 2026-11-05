@@ -1,8 +1,10 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { getArticleDescription, getPageData, type LuoguArticle } from './utils';
 
 export const route: Route = {
     path: '/user/blog/:name',
@@ -35,42 +37,25 @@ async function handler(ctx) {
 
     const blogBaseUrl = `https://www.luogu.com.cn/blog/${name}/`;
 
-    // Fetch the uid & title
-    const { uid: blogUid, title: blogTitle } = await cache.tryGet(blogBaseUrl, async () => {
-        const rsp = await ofetch(blogBaseUrl);
-        const $ = load(rsp);
-        const uid = $("meta[name='blog-uid']").attr('content');
-        const name = $("meta[name='blog-name']").attr('content');
-        return {
-            uid,
-            title: `${name} - 洛谷博客`,
-        };
-    });
-
-    const posts = (await ofetch(`https://www.luogu.com.cn/api/blog/lists?uid=${blogUid}`)).data.result.map((r) => ({
-        title: r.title,
-        link: `${blogBaseUrl}${r.identifier}`,
-        pubDate: new Date(r.postTime * 1000),
-    }));
-
-    // Get the full text
-    const item = await Promise.all(
-        posts.map((post) =>
-            cache.tryGet(post.link, async () => {
-                const rsp = await ofetch(post.link);
-                const $ = load(rsp);
-                return {
-                    title: post.title,
-                    link: post.link,
-                    pubDate: post.pubDate,
-                    description: $('#article-content').html(),
-                };
-            })
-        )
+    const response = await ofetch(blogBaseUrl, { responseType: 'text' });
+    const { articles, user } = getPageData<{ articles: { result: LuoguArticle[] }; user: { name: string } }>(response);
+    const item = await pMap(
+        articles.result,
+        async (article) => {
+            const link = `https://www.luogu.com/article/${article.lid}`;
+            return {
+                title: article.title,
+                link,
+                author: article.author.name,
+                pubDate: parseDate(article.time, 'X'),
+                description: await getArticleDescription(link),
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: blogTitle,
+        title: `${user.name} - 洛谷博客`,
         link: blogBaseUrl,
         item,
     };

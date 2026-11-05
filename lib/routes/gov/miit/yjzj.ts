@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.miit.gov.cn';
 
@@ -53,11 +54,14 @@ async function handler() {
     const $ = load(response.data.data.html);
     const list = $('ul > li')
         .toArray()
-        .map((item): DataItem & { link: string } => ({
-            title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-            pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD'),
-        }));
+        .map((item): DataItem & { link: string } => {
+            const pubDate = $(item).find('span').text();
+            return {
+                title: $(item).find('a').text(),
+                link: new URL($(item).find('a').attr('href')!, rootUrl).href,
+                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+            };
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -66,6 +70,10 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 item.description = content('#con_con').html();
+                const pubDate = content('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate), 8);
+                }
 
                 return item;
             })

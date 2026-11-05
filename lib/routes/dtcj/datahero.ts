@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -35,6 +36,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
+    if (category && !/^[1-9]\d*$/.test(category)) {
+        throw new InvalidParameterError('Invalid category. Provide a positive integer category ID or omit it for all categories.');
+    }
 
     const rootUrl = 'https://dtcj.com';
     const currentUrl = `${rootUrl}/api/v1/data_hero_informations?per=15&page=1&topic_id=${category}`;
@@ -68,7 +72,7 @@ async function handler(ctx) {
 
     return {
         title: `${category ? titles[category] : '全部'} - 数据侠专栏 | DT 财经`,
-        link: currentUrl,
+        link: rootUrl,
         item: items,
     };
 }

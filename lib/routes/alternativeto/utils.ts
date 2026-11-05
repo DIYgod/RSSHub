@@ -1,21 +1,5 @@
-import playwright from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 
-const baseURL = 'https://alternativeto.net';
+export const baseURL = 'https://alternativeto.net';
 
-const playwrightGet = (url, cache) =>
-    cache.tryGet(url, async () => {
-        const context = await playwright();
-        const page = await context.newPage();
-        await page.route('**/*', (route) => {
-            const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
-        });
-        await page.goto(url, {
-            waitUntil: 'domcontentloaded',
-        });
-        const html = await page.evaluate(() => document.documentElement.getHTML());
-        await context.close();
-        return html;
-    });
-
-export { baseURL, playwrightGet };
+export const get = (url: string) => ofetch<string>(url, { minVersion: 'TLSv1.3' });

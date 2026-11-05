@@ -4,6 +4,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/fd/:type',
@@ -30,15 +32,22 @@ export const route: Route = {
         const response = await ofetch(`https://fd.bjx.com.cn/${type}/`);
 
         const $ = load(response);
-        const typeName = $('div.box2 em:last-child').text();
         const list = $('div.cc-list-content ul li:nth-child(-n+20)')
             .toArray()
+            .slice(0, getRouteLimit(ctx))
             .map((item): DataItem => {
                 const each = $(item);
+                const sourceLink = each.find('a').attr('href')!;
+                const link = new URL(sourceLink);
+                if (link.hostname === 'news.bjx.com.cn' && link.pathname.startsWith('/html/')) {
+                    link.hostname = 'fd.bjx.com.cn';
+                    link.pathname = link.pathname.replace('/html/', '/news/');
+                }
                 return {
                     title: each.find('a').attr('title')!,
-                    link: each.find('a').attr('href'),
-                    pubDate: parseDate(each.find('span').text()),
+                    link: link.href,
+                    guid: sourceLink,
+                    pubDate: timezone(parseDate(each.find('span').text()), 8),
                 };
             });
 
@@ -48,14 +57,29 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    item.description = $('#article_cont').html()!;
+                    const content = $('#article_cont');
+                    if (!content.length) {
+                        throw new Error(`The article content is unavailable: ${item.link}`);
+                    }
+                    item.description = content.html()!;
+                    const date = $('.cc-headline .box p span').first().text();
+                    if (date) {
+                        item.pubDate = timezone(parseDate(date), 8);
+                    }
+                    const author = $('.cc-headline .box p > span')
+                        .filter((_, span) => $(span).text().startsWith('作者：'))
+                        .text();
+                    item.author = author ? author.replace(/^作者：/, '') : undefined;
+                    item.category = $('#key_word a')
+                        .toArray()
+                        .map((element) => $(element).text());
                     return item;
                 })
             )
         );
 
         return {
-            title: `北极星风力发电网${typeName}`,
+            title: $('title').text(),
             description: $('meta[name="Description"]').attr('content'),
             link: `https://fd.bjx.com.cn/${type}/`,
             item: items,

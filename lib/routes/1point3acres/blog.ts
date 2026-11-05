@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/blog/:category?',
@@ -65,7 +66,7 @@ async function handler(ctx) {
     const { data } = await got(`${rootUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             categories: category ? categoryMap[category].id : undefined,
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
+            per_page: getRouteLimit(ctx, 100),
         },
     });
 

@@ -1,13 +1,22 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseURL = 'https://www.tokeninsight.com/';
 const title = 'TokenInsight';
 const link = 'https://www.tokeninsight.com/';
+
+const getArticle = (url: string) =>
+    cache.tryGet(`tokeninsight:article:${url}`, async () => {
+        const response = await got(url);
+        const $ = load(response.data);
+        return { description: $('.detail_html_box').html() ?? '' };
+    });
 
 export const route: Route = {
     path: '/report/:lang?',
@@ -54,29 +63,20 @@ async function handler(ctx) {
         return response.data.reportList;
     };
 
-    const getReportInfomation = async (report) => {
+    const getReportInfomation = async (report): Promise<DataItem> => {
         const { publishDate, title, id } = report;
         const reportUrl = `${baseURL}${lang}/report/${id}`;
-        const description = await cache.tryGet(reportUrl, async () => {
-            const res = await got(reportUrl);
-            const $ = load(res.data);
-            const description = $('.detail_html_box').html();
-            return description ?? '';
-        });
+        const { description } = await getArticle(reportUrl);
         return {
-            // 文章标题
             title,
-            // 文章正文
             description,
-            // 文章发布时间
-            pubDate: parseDate(publishDate),
-            // 文章链接
+            pubDate: publishDate ? parseDate(publishDate) : undefined,
             link: reportUrl,
         };
     };
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
     const reports = (await getReports()).slice(0, limit);
-    const list = await Promise.all(reports.map((element) => getReportInfomation(element)));
+    const list = await pMap(reports, (element) => getReportInfomation(element), { concurrency: 3 });
     return {
         title: `${lang === 'zh' ? '报告' : 'Research'} | ${title}`,
         link: `${link}${lang}/report`,

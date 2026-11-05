@@ -1,9 +1,13 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwb/:type?',
@@ -32,8 +36,11 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { type = 'jwtz' } = ctx.req.param();
+    if (!['jxdt', 'jwtz', 'jytz', 'sjtz', 'cyxy', 'tsjy', 'yznb', 'zsxx', 'cggg'].includes(type)) {
+        throw new InvalidParameterError('Invalid notification type. Use one of the types documented for this route.');
+    }
     const url = `https://jwb.dgut.edu.cn/tzgg/${type}.htm`;
     const baseurl = 'https://jwb.dgut.edu.cn/';
 
@@ -46,13 +53,15 @@ async function handler(ctx) {
             const $a = $li.find('a.con');
             return {
                 title: $a.find('.tit').text(),
-                pubDate: parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`),
+                pubDate: timezone(parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`), 8),
                 link: `${baseurl}${$a.attr('href')}`,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const ordered = list;
+    const items = await pMap(
+        ordered,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
@@ -61,14 +70,13 @@ async function handler(ctx) {
                     ...item,
                     description: $('div.v_news_content').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
         link: url,
-        allowEmpty: true,
         item: items,
     };
 }

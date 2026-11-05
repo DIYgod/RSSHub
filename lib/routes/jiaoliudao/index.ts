@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -22,15 +23,15 @@ async function handler(ctx) {
     const baseUrl = 'https://www.jiaoliudao.com';
     const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            per_page: getRouteLimit(ctx, 30),
         },
     });
 
     const items = data.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
-        updated: parseDate(item.modified_gmt),
+        pubDate: parseGmtDate(item.date_gmt),
+        updated: parseGmtDate(item.modified_gmt),
         link: item.link,
     }));
 
@@ -40,4 +41,8 @@ async function handler(ctx) {
         link: baseUrl,
         item: items,
     };
+}
+
+function parseGmtDate(value?: string): Date | undefined {
+    return value && Number.isFinite(parseDate(value, 'YYYY-MM-DDTHH:mm:ss', true).getTime()) ? parseDate(`${value}Z`) : undefined;
 }

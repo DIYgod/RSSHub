@@ -36,9 +36,14 @@ async function handler(ctx) {
         url: `https://api.zhihu.com/pins/${id}/moments?limit=10&offset=0`,
     });
 
+    if (!Array.isArray(data)) {
+        throw new TypeError('Zhihu pins API returned an invalid data list');
+    }
+
     return {
-        title: `${data[0].target.author.name}的知乎想法`,
+        title: `${data.length ? data[0].target.author.name : id}的知乎想法`,
         link: `https://www.zhihu.com/people/${id}/pins`,
         item: generateData(data),
+        allowEmpty: data.length === 0,
     };
 }

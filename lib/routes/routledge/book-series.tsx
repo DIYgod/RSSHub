@@ -64,8 +64,8 @@ async function handler(ctx) {
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const description = await cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
                 const isbn = $('meta[property="books:isbn"]').attr('content');
@@ -81,10 +81,10 @@ async function handler(ctx) {
                 description.find('button.accordion-button').contents().unwrap();
                 description.find('.fa-shopping-cart').parent().parent().remove();
 
-                item.description = renderDescription(image, description.html());
-                return item;
-            })
-        )
+                return renderDescription(image, description.html());
+            });
+            return { ...item, description };
+        })
     );
 
     return {

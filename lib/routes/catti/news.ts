@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 type NewsCategory = {
     title: string;
@@ -41,10 +42,10 @@ const handler: Route['handler'] = async (ctx) => {
     // Map through each list item to extract details
     const contentLinkList = listItems.toArray().map((element) => {
         const date = $(element).find('span.ui-right-time').text();
-        const title = $(element).find('a').attr('title')!;
+        const title = $(element).find('a').attr('title') || $(element).find('.ui-card-title').text();
         const relativeLink = $(element).find('a').attr('href')!;
         const absoluteLink = `https://www.catticenter.com${relativeLink}`;
-        const formattedDate = parseDate(date);
+        const formattedDate = timezone(parseDate(date, 'YYYY-MM-DD'), 8);
         return {
             date: formattedDate,
             title,
@@ -57,9 +58,9 @@ const handler: Route['handler'] = async (ctx) => {
         description: NEWS_TYPES[category].description,
         link: BASE_URL,
         image: 'https://www.catticenter.com/img/applogo.png',
-        item: (await Promise.all(
+        item: await Promise.all(
             contentLinkList.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const CONTENT_SELECTOR = 'div.ui-article-cont';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
@@ -73,23 +74,22 @@ const handler: Route['handler'] = async (ctx) => {
                         guid: item.link,
                         id: item.link,
                         image: 'https://www.catticenter.com/img/applogo.png',
-                        content,
+                        content: { html: content },
                         updated: item.date,
                         language: 'zh-CN',
                     };
                 })
             )
-        )) as DataItem[],
+        ),
         allowEmpty: true,
         language: 'zh-CN',
-        feedLink: 'https://rsshub.app/ruankao/news',
-        id: 'https://rsshub.app/ruankao/news',
+        id: BASE_URL,
     };
 };
 
 export const route: Route = {
     path: '/news/:category',
-    name: 'CATTI 考试消息',
+    name: '考试消息',
     maintainers: ['PrinOrange'],
     description: `| Category | 标题     | 描述                 |
 | -------- | -------- | -------------------- |

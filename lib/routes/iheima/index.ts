@@ -28,16 +28,19 @@ async function handler() {
     const content = JSON.parse(response.body);
     const list = content.contents;
 
-    const items = list.map((item) => ({
-        title: item.title,
-        link: item.url,
-        pubDate: parseDate(item.published),
-        description: item.content,
-    }));
+    const items = list.map((item) => {
+        const date = item.published ? parseDate(item.published) : undefined;
+        return {
+            title: item.title,
+            link: item.url,
+            pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+            description: item.content,
+        };
+    });
 
     return {
         title: '推荐',
-        link: baseUrl,
+        link: 'https://www.iheima.com/',
         item: items,
     };
 }

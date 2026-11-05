@@ -1,12 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://junhe.com';
     const currentUrl = new URL('legal-updates', rootUrl).href;
@@ -30,8 +32,9 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -52,18 +55,18 @@ export const handler = async (ctx) => {
                 item.language = language;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
-    const image = new URL($('a.site-logo img').prop('src')!, rootUrl).href;
+    const imageSrc = $('a.site-logo img').prop('src');
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
 
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: '君合律师事务所',
         language,
@@ -91,7 +94,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['/legal-updates'],
+            source: ['junhe.com/legal-updates'],
             target: '/legal-updates',
         },
     ],

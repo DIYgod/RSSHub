@@ -1,14 +1,15 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import playwright from '@/utils/playwright';
-import { setCookies } from '@/utils/playwright-utils';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import type { PostListResponse, UserInfoResponse } from './types';
-import { getCookieString, getHeaders, parseItem } from './utils';
+import { getHeaders, parseItem } from './utils';
 
 export const route: Route = {
     path: '/:creator',
@@ -26,7 +27,7 @@ export const route: Route = {
                 optional: true,
             },
         ],
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         nsfw: true,
     },
 };
@@ -56,36 +57,17 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const postListResponse = await ofetch<PostListResponse>(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() });
-
-    const context = await playwright();
-    const page = await context.newPage();
-
-    const cookieString = getCookieString();
-    if (cookieString) {
-        await setCookies(page, cookieString, '.fanbox.cc');
+    let posts = postListResponse.body.posts.map((post) => ({ ...post, publishedTime: post.publishedDatetime ? parseDate(post.publishedDatetime).getTime() : NaN }));
+    const hasDates = posts.every((post) => Number.isFinite(post.publishedTime));
+    const sorted = ctx.req.query('sorted') !== 'false';
+    if (sorted && hasDates) {
+        posts = posts.toSorted((a, b) => b.publishedTime - a.publishedTime);
     }
-
-    await page.route('**/*', (route) => {
-        const request = route.request();
-
-        if (request.url().startsWith('https://api.fanbox.cc/post.info')) {
-            route.continue();
-            return;
-        }
-
-        request.resourceType() === 'document' ? route.continue() : route.abort();
-    });
-    await page.goto('https://www.fanbox.cc/', {
-        waitUntil: 'domcontentloaded',
-    });
-
-    let items: DataItem[];
-    try {
-        items = await Promise.all(postListResponse.body.posts.map((i) => parseItem(page, i)));
-    } finally {
-        await page.close();
-        await context.close();
+    const detailLimit = getRouteLimit(ctx);
+    if (detailLimit !== undefined && (!sorted || hasDates)) {
+        posts = posts.slice(0, detailLimit);
     }
+    const items: DataItem[] = await pMap(posts, (post) => parseItem(post), { concurrency: 3 });
 
     return {
         title,

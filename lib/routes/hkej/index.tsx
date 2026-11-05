@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,6 +35,19 @@ export const route: Route = {
 | 全部新闻 | 港股直擊 | 香港財經 | 地產新聞 | 中國財經 | 國際財經      | 時事脈搏 | 即巿股評 | 重要通告     | 港交所通告 |`,
 };
 
+function getArticleLink(href: string | undefined, baseUrl: string) {
+    if (!href) {
+        throw new Error('The Hong Kong Economic Journal listing is missing an article link.');
+    }
+    const url = new URL(href, baseUrl);
+    const articlePath = url.pathname.match(/^(.+\/article\/\d+)(?:\/.*)?$/)?.[1];
+    if (!articlePath) {
+        throw new Error(`The Hong Kong Economic Journal listing has an invalid article link: ${url.href}`);
+    }
+    url.pathname = articlePath;
+    return url.href;
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'index';
     const baseUrl = 'https://www.hkej.com';
@@ -52,7 +66,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: baseUrl + $item.attr('href')!.slice(0, $item.attr('href')!.lastIndexOf('/')),
+                link: getArticleLink($item.attr('href'), baseUrl),
             };
         });
 
@@ -69,9 +83,11 @@ async function handler(ctx) {
             </>
         );
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap<DataItem & { link: string }, DataItem>(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`hkej:article-details:${item.link}`, async () => {
                 const article = await ofetch(item.link, { headers: { cookie: cookies } });
                 const content = load(article);
 
@@ -87,7 +103,7 @@ async function handler(ctx) {
                 const ldJson = content('script[type="application/ld+json"]:contains("NewsArticle")').text();
                 const pubDate = ldJson.match(/"datePublished": ?"?([^",]+)/)?.[1];
 
-                item.category = [
+                const category = [
                     ...new Set(
                         content('p.info span.cate a, #related-articles-wrapper a font')
                             .toArray()
@@ -95,12 +111,14 @@ async function handler(ctx) {
                             .filter(Boolean)
                     ),
                 ];
-                item.description = renderDesc(articleImg, content('div#article-content').html());
-                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
-
-                return item;
-            })
-        )
+                return {
+                    category,
+                    description: renderDesc(articleImg, content('div#article-content').html()),
+                    pubDate: pubDate ? parseDate(pubDate) : undefined,
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

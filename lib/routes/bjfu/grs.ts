@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -30,13 +31,13 @@ export const route: Route = {
     url: 'graduate.bjfu.edu.cn/',
 };
 
-async function handler() {
+async function handler(ctx) {
     const url = 'http://graduate.bjfu.edu.cn/pygl/pydt/index.html';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
     const list = $('.itemList li')
-        .slice(0, 11)
+        .slice(0, getRouteLimit(ctx, 11))
         .toArray()
         .map((e): DataItem => {
             const element = $(e);

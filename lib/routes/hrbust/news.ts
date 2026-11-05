@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -30,12 +31,80 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.hrbust.edu.cn/:category.htm'],
-            target: '/news/:category',
+            source: ['news.hrbust.edu.cn/lgyw.htm'],
+            target: '/news/lgyw',
+        },
+        {
+            source: ['news.hrbust.edu.cn/xwdd.htm'],
+            target: '/news/xwdd',
+        },
+        {
+            source: ['news.hrbust.edu.cn/twbd.htm'],
+            target: '/news/twbd',
+        },
+        {
+            source: ['news.hrbust.edu.cn/zhenew.htm'],
+            target: '/news/zhenew',
+        },
+        {
+            source: ['news.hrbust.edu.cn/jxky.htm'],
+            target: '/news/jxky',
+        },
+        {
+            source: ['news.hrbust.edu.cn/ycdt.htm'],
+            target: '/news/ycdt',
+        },
+        {
+            source: ['news.hrbust.edu.cn/xskc.htm'],
+            target: '/news/xskc',
+        },
+        {
+            source: ['news.hrbust.edu.cn/jlhz.htm'],
+            target: '/news/jlhz',
+        },
+        {
+            source: ['news.hrbust.edu.cn/xstd.htm'],
+            target: '/news/xstd',
+        },
+        {
+            source: ['news.hrbust.edu.cn/zsjy.htm'],
+            target: '/news/zsjy',
+        },
+        {
+            source: ['news.hrbust.edu.cn/djsz.htm'],
+            target: '/news/djsz',
+        },
+        {
+            source: ['news.hrbust.edu.cn/zxbf.htm'],
+            target: '/news/zxbf',
+        },
+        {
+            source: ['news.hrbust.edu.cn/lgrw.htm'],
+            target: '/news/lgrw',
+        },
+        {
+            source: ['news.hrbust.edu.cn/lgxb.htm'],
+            target: '/news/lgxb',
+        },
+        {
+            source: ['news.hrbust.edu.cn/mtlg.htm'],
+            target: '/news/mtlg',
+        },
+        {
+            source: ['news.hrbust.edu.cn/jzlt.htm'],
+            target: '/news/jzlt',
+        },
+        {
+            source: ['news.hrbust.edu.cn/rczp.htm'],
+            target: '/news/rczp',
+        },
+        {
+            source: ['news.hrbust.edu.cn/xkjs.htm'],
+            target: '/news/xkjs',
         },
         {
             source: ['news.hrbust.edu.cn/'],
-            target: '/news/',
+            target: '/news',
         },
     ],
     view: ViewType.Notifications,
@@ -64,8 +133,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.startsWith(rootUrl)) {
                     item.description = '本文需跳转，请点击原文链接后阅读';
@@ -87,14 +157,14 @@ async function handler(ctx) {
                 const newsContent = content('div.v_news_content') || '解析正文失败';
                 const listAttachments = content('ul[style="list-style-type:none;"] a');
                 let listAttachmentsHtml = '';
-                listAttachments.each((_, a_element) => {
-                    listAttachmentsHtml += '<br />' + content(a_element).prop('outerHTML');
+                listAttachments.each((_, attachment) => {
+                    listAttachmentsHtml += '<br />' + content(attachment).prop('outerHTML');
                 });
 
                 item.description = newsContent + listAttachmentsHtml;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

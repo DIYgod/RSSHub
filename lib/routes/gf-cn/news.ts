@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const titles = {
@@ -24,7 +25,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['sunborngame.com/:category', 'sunborngame.com/'],
+            source: ['gf-cn.sunborngame.com/News', 'gf-cn.sunborngame.com/'],
+            target: '/news',
         },
     ],
     name: '情报局',
@@ -40,7 +42,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://gf-cn.sunborngame.com';
     const apiRootUrl = 'https://gfcn-webserver.sunborngame.com';
-    const apiUrl = `${apiRootUrl}/website/news_list/${category}?page=0&limit=${ctx.req.query('limit') ?? 50}`;
+    const apiUrl = `${apiRootUrl}/website/news_list/${category}?page=0&limit=${getRouteLimit(ctx, 50)}`;
     const currentUrl = `${rootUrl}/News`;
 
     const response = await got({

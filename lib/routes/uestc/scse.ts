@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 const baseIndexUrl = 'https://www.scse.uestc.edu.cn/index.htm';
 const host = 'https://www.scse.uestc.edu.cn/';
-
 const prefixes = {
     1012: '【办公室】',
     1013: '【组织人事】',
@@ -20,7 +21,21 @@ const prefixes = {
     1020: '【创新创业】',
     1022: '【安全工作】',
 };
-
+async function getCategoryDates(page: Page, categoryUrl: string): Promise<Record<string, string>> {
+    await page.goto(categoryUrl, { waitUntil: 'networkidle' });
+    const sourceContent1 = await page.content();
+    const $ = load(sourceContent1);
+    const notices = $('.text-list li').toArray();
+    if (!notices.length) {
+        throw new Error(`Unable to read notice publication dates from ${categoryUrl}`);
+    }
+    return Object.fromEntries(
+        notices.map((item) => {
+            const $item = $(item);
+            return [new URL($item.find('a[href]').attr('href')!, categoryUrl).href, $item.find('.date').text().trim()];
+        })
+    );
+}
 export const route: Route = {
     path: '/scse',
     categories: ['university'],
@@ -44,75 +59,74 @@ export const route: Route = {
     handler,
     url: 'scse.uestc.edu.cn/',
 };
-
 async function handler() {
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+    const { page, destroy } = await getPlaywrightPage(baseIndexUrl, {
+        closeTimeout: 0,
+        gotoConfig: { waitUntil: 'networkidle' },
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+            });
+        },
     });
-    await page.goto(baseIndexUrl, {
-        waitUntil: 'networkidle',
-    });
-    const content = await page.content();
-    await context.close();
+    try {
+        const sourceContent2 = await page.content();
+        const $ = load(sourceContent2);
+        const sections = $('.s2-lswitch .i-list').slice(1).toArray();
+        const sectionItems = await pMap(
+            sections,
+            async (section) => {
+                const $section = $(section);
+                const categoryUrl = new URL($section.children('a[href]').attr('href')!, host).href;
+                let categoryDates: Promise<Record<string, string>> | undefined;
+                return await pMap(
+                    $section.find('li').toArray(),
+                    async (item) => {
+                        const $item = $(item);
+                        let newsTitle = $item
+                            .find('a[href]')
+                            .contents()
+                            .filter((index, element) => element.nodeType === 3)
+                            .text();
+                        const newsLink = new URL($item.find('a[href]').attr('href')!, host).href;
+                        const { date } = await cache.tryGet(`uestc:scse:date:v1:${newsLink}`, async () => {
+                            categoryDates ??= getCategoryDates(page, categoryUrl);
+                            return { date: (await categoryDates)[newsLink] };
+                        });
+                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YYYY-MM-DD', true) : undefined;
+                        let prefix = '【其他】';
+                        for (const code in prefixes) {
+                            if (newsLink.search('info/' + code) === -1) {
+                                continue;
+                            }
+                            prefix = prefixes[code];
+                            break;
+                        }
+                        newsTitle = prefix + newsTitle;
+                        return {
+                            title: newsTitle,
+                            link: newsLink,
+                            pubDate: parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                        };
+                    },
+                    { concurrency: 3 }
+                );
+            },
+            { concurrency: 1 }
+        );
+        return {
+            title: '计算机学院通知',
+            link: baseIndexUrl,
+            description: '电子科技大学计算机科学与工程学院通知',
+            item: sectionItems.flat(),
+        };
+    } finally {
+        await destroy();
+    }
+}
 
-    const $ = load(content);
-
-    const iList = $('.s2-lswitch .i-list');
-    let firstFlag = true;
-    const items: any[] = [];
-    iList.each((_, element) => {
-        if (firstFlag) {
-            firstFlag = false;
-            return; // skip the first section "最新公告"
-        }
-        const liList = $(element).find('li');
-        liList.each((i, el) => {
-            items.push(el);
-        });
-    });
-
-    const out = $(items)
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const now = dayjs();
-            let date = dayjs(now.year() + '-' + $item.find('a span').text());
-            if (now < date) {
-                date = dayjs(now.year() - 1 + '-' + $item.find('a span').text());
-            }
-            let newsTitle = $item
-                .find('a[href]')
-                .contents()
-                .filter((index, element) => element.nodeType === 3)
-                .text();
-            const newsLink = host + $item.find('a[href]').attr('href');
-            const newsPubDate = parseDate(date.toDate());
-
-            let prefix = '【其他】';
-            for (const code in prefixes) {
-                if (newsLink.search('info/' + code) === -1) {
-                    continue;
-                }
-
-                prefix = prefixes[code];
-                break;
-            }
-            newsTitle = prefix + newsTitle;
-
-            return {
-                title: newsTitle,
-                link: newsLink,
-                pubDate: newsPubDate,
-            };
-        });
-
-    return {
-        title: '计算机学院通知',
-        link: baseIndexUrl,
-        description: '电子科技大学计算机科学与工程学院通知',
-        item: out,
-    };
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
 }

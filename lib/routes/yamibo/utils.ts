@@ -1,6 +1,6 @@
 import type { Cheerio } from 'cheerio';
 import type { Element } from 'domhandler';
-import { JSDOM } from 'jsdom';
+import { escapeAttribute } from 'entities';
 
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
@@ -9,98 +9,73 @@ import timezone from '@/utils/timezone';
 
 export const bbsOrigin = 'https://bbs.yamibo.com';
 
-export function getDate(date: string): Date {
-    return timezone(parseDate(date), 8);
+export function getDate(value: string | undefined): Date | undefined {
+    if (!value) {
+        return;
+    }
+
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
 }
 
-export async function fetchThread(
-    tid: string,
-    options?: {
-        ordertype?: string;
-        _dsign?: string;
-    },
-    retry = 0
-): Promise<{
-    link: string;
-    data?: string;
-}> {
-    const { auth, salt } = config.yamibo;
-    const params = new URLSearchParams();
-    params.set('mod', 'viewthread');
-    params.set('tid', tid);
+type ThreadOptions = { ordertype?: string };
+type ThreadData = { link: string; data: string };
+
+export async function fetchThread(tid: string, options?: ThreadOptions): Promise<ThreadData> {
+    const params = new URLSearchParams({ mod: 'viewthread', tid });
     if (options?.ordertype) {
         params.set('ordertype', options.ordertype);
     }
-    if (options?._dsign) {
-        params.set('_dsign', options._dsign);
-    }
-    const link = `https://bbs.yamibo.com/forum.php?${params.toString()}`;
-
+    const link = `${bbsOrigin}/forum.php?${params}`;
+    const { auth, salt } = config.yamibo;
     const headers: HeadersInit = {};
-
     if (auth && salt) {
         headers.cookie = `EeqY_2132_saltkey=${salt}; EeqY_2132_auth=${auth}`;
     }
-
     const data = await ofetch<string>(link, { headers });
+    return { link, data };
+}
 
-    // sometimes may trigger anti-crawling measures
-    if (data.startsWith('<script type="text/javascript">') && retry <= 3) {
-        let script = data.match(/<script type="text\/javascript">([\s\S]*?)<\/script>/)![1];
-        script = script.replace(/= location;|=location;/, '=fakeLocation;');
-        script = script.replace('location.replace', 'foo');
-        script = script.replace('location.assign', 'foo');
-        script = script.replace(/location\[[^\]]*\]\(/, 'foo(');
-        script = script.replace(/location\[[^\]]*\]=/, 'window.locationValue=');
-        script = script.replace('location.href=', 'window.locationValue=');
-        script = script.replace('location=', 'window.locationValue=');
-        const dom = new JSDOM(
-            `<script>
-                function foo(value) { window.locationValue = value; };
-                fakeLocation = { href: '', replace: foo, assign: foo };
-                Object.defineProperty(fakeLocation, 'href', {
-                    set: function (value) {
-                        window.locationValue = value;
-                    }
-                });
-                ${script}
-            </script>`,
-            {
-                runScripts: 'dangerously',
-            }
-        );
-        const locationValue = dom.window.locationValue;
-        if (locationValue) {
-            const searchParams = new URLSearchParams(locationValue);
-            const _dsign = searchParams.get('_dsign');
-            if (_dsign) {
-                options = {
-                    ...options,
-                    _dsign,
-                };
-            }
-        }
-        return await fetchThread(tid, options, retry + 1);
+function resolveImageUrl(src: string | undefined) {
+    if (!src || !URL.canParse(src, `${bbsOrigin}/`)) {
+        return;
     }
 
-    return {
-        link,
-        data,
-    };
+    const url = new URL(src, `${bbsOrigin}/`);
+    return ['http:', 'https:'].includes(url.protocol) ? url.href : undefined;
+}
+
+function getEditingPanels($item: Cheerio<Element>) {
+    return $item.find('i.pstatus').filter((_, element) => /^\s*本帖最后由 .*? 于 \d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2} 编辑\s*$/.test($item.find(element).text()));
+}
+
+export function getUpdated($item: Cheerio<Element>) {
+    const calendar = getEditingPanels($item)
+        .first()
+        .text()
+        .match(/\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}/)?.[0];
+    return getDate(calendar);
 }
 
 export function generateDescription($item: Cheerio<Element>, postId: string) {
     const content = $item.find(`#postmessage_${postId}`).parent();
+    getEditingPanels($item).remove();
     content.find('img').each((_, img) => {
-        const src = img.attribs.zoomfile ?? img.attribs.src;
-        img.attribs.src = `${bbsOrigin}/${src}`;
+        const src = resolveImageUrl(img.attribs.zoomfile ?? img.attribs.src ?? img.attribs.file);
+        if (src) {
+            img.attribs.src = src;
+        } else {
+            content.find(img).remove();
+        }
     });
     let description = content.html() ?? '';
 
     const images = $item.find('.pattl img').toArray();
     for (const img of images) {
-        const src = img.attribs.zoomfile ?? img.attribs.src;
-        description += `<img src="${bbsOrigin}/${src}" />`;
+        const src = resolveImageUrl(img.attribs.zoomfile ?? img.attribs.src ?? img.attribs.file);
+        if (src) {
+            description += `<img src="${escapeAttribute(src)}" />`;
+        }
     }
 
     return description;

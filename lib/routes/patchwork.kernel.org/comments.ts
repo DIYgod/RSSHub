@@ -43,6 +43,7 @@ async function handler(ctx: Context) {
     });
 
     return {
+        language: 'en' as const,
         title: `${name} - Comments`,
         link: `https://patchwork.kernel.org/patch/${id}/`,
         item: data.map((item) => ({

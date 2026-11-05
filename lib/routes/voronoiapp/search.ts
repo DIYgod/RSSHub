@@ -9,12 +9,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.voronoiapp.com/explore'],
-            // 新版本中貌似不再支持 function 形式的 target
-            target: (_, url) => {
-                const parsedURL = new URL(url);
-                const keyword = parsedURL.searchParams.get('search');
-                return `/voronoiapp/search/${keyword}`;
-            },
+            target: '/search/:keyword',
         },
     ],
     example: '/voronoiapp/search/china',

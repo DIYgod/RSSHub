@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,39 +35,53 @@ export const route: Route = {
 
 async function handler(ctx) {
     const caty = ctx.req.param('caty');
-    // 主页
+    // Fetch the category page.
     const baseurl = `http://www.npc.gov.cn/npc/c2/${caty}/`;
     const response = await got(baseurl);
     const data = response.data;
     const $ = load(data);
     const title = $('title').text();
-    // 获取每条的链接
+    // Extract article links.
     const links = $('.clist a')
         .toArray()
-        .map((item) => new URL($(item).attr('href')!, baseurl).href);
-    // 获取标题、日期、内容
-    const items = await Promise.all(
-        links.map((link) =>
-            cache.tryGet(link, async () => {
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const dateText = $item.next('span').text();
+            return {
+                title: $item.text(),
+                link: new URL($item.attr('href')!, baseurl).href,
+                pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+            };
+        });
+    // Fetch article metadata and content.
+    const items = await pMap<DataItem & { link: string }, DataItem>(
+        links,
+        (item) => {
+            const { link } = item;
+            if (new URL(link).pathname.endsWith('.pdf')) {
+                return { ...item, enclosure_url: link, enclosure_type: 'application/pdf' };
+            }
+            return cache.tryGet(link, async () => {
                 const response = await got(link);
                 const data = response.data;
                 const $ = load(data);
                 const title = $('title').text().replace('_中国人大网', '');
                 const time = $('script:contains("fbrq")')
                     .text()
-                    .match(/fbrq = "(.*?)"/)![1];
+                    .match(/fbrq = "(.*?)"/)?.[1];
                 const description = $('#Zoom').html();
 
                 return {
                     title,
                     link,
                     description,
-                    pubDate: timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), 8),
+                    pubDate: time ? timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), 8) : item.pubDate,
                 };
-            })
-        )
+            });
+        },
+        { concurrency: 3 }
     );
-    // 整合
+    // Build the feed.
     return {
         title,
         link: baseurl,

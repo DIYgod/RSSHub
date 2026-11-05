@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cyber/tzgg',
@@ -36,38 +39,36 @@ async function handler() {
     const { data: response } = await got(link);
     const $ = load(response);
 
-    const list = $('#wp_news_w6 ul.wp_article_list li.list_item')
+    const list = $('.col_news_list .news_list .news')
         .toArray()
         .map((item) => {
             const e = $(item);
-            const a = e.find('.Article_Title a');
-            const title = a.text().trim();
+            const a = e.find('.news_title a');
+            const title = a.text();
             const href = a.attr('href');
-            const dateText = e.find('.Article_PublishDate').text().trim();
+            const dateText = e.find('.news_meta').text().trim();
 
             return {
                 title,
                 link: new URL(href || '', host).href,
-                pubDate: parseDate(dateText),
+                pubDate: dateText ? timezone(parseDate(dateText, 'YYYY.MM.DD'), 8) : undefined,
                 description: '',
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
+    const out = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await recoverArticle(
+                cache.tryGet(`seu:cyber:article-v4:${item.link}`, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
-
-                    item.description = $('.wp_articlecontent').html() || $('.article-content').html() || $('.main-text').html() || $('article').html() || '';
-
-                    return item;
-                } catch {
-                    return item;
-                }
-            })
-        )
+                    return { description: $('.wp_articlecontent').html() || $('.article-content').html() || $('.main-text').html() || $('article').html() || '' };
+                })
+            )),
+        }),
+        { concurrency: 3 }
     );
 
     return {
@@ -76,4 +77,15 @@ async function handler() {
         description: '东南大学网络空间安全学院通知公告RSS',
         item: out,
     };
+}
+
+async function recoverArticle<T>(promise: Promise<T>) {
+    try {
+        return await promise;
+    } catch (error) {
+        if (error instanceof FetchError) {
+            return { description: '' };
+        }
+        throw error;
+    }
 }

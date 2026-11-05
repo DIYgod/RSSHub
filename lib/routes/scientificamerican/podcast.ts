@@ -1,19 +1,21 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import type { Context } from 'hono';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
-import type { Data, DataItem, Language, Route } from '@/types';
-import { ViewType } from '@/types';
+import { type Data, type DataItem, type Language, type Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
+type ArticleDetails = Omit<DataItem, 'title' | 'link' | 'pubDate'>;
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '12');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 12;
 
     const baseUrl = 'https://www.scientificamerican.com';
     const targetUrl: string = new URL(`podcast${id ? `/${id}` : 's'}/`, baseUrl).href;
@@ -55,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
               let processedItem: DataItem = {
                   title,
                   description,
-                  pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                  pubDate: pubDate ? parseDate(pubDate) : undefined,
                   link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                   category: categories,
                   author: authors,
@@ -68,14 +70,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
                   image,
                   banner: image,
-                  updated: updated ? timezone(parseDate(updated), 8) : undefined,
+                  updated: updated ? parseDate(updated) : undefined,
                   language,
               };
 
               const enclosureUrl: string | undefined = item.media_url;
 
               if (enclosureUrl) {
-                  const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                  const enclosureType = getMimeType(new URL(enclosureUrl, baseUrl).pathname);
 
                   processedItem = {
                       ...processedItem,
@@ -90,99 +92,97 @@ export const handler = async (ctx: Context): Promise<Data> => {
           })
         : [];
 
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
+    items = await pMap(
+        items,
+        async (item) => {
+            if (!item.link) {
+                return item;
+            }
+
+            const resolvedValue1 = await cache.tryGet<ArticleDetails>(`scientificamerican:article:v2:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link!);
+
+                const detailData: string | undefined = detailResponse.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
+                const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll(String.raw`\\`, '\\')) : undefined;
+
+                if (!parsedDetailData) {
+                    return {};
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
+                const articleData = parsedDetailData.initialData.article;
 
-                    const detailData: string | undefined = detailResponse.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll(String.raw`\\`, '\\')) : undefined;
-
-                    if (!parsedDetailData) {
-                        return item;
-                    }
-
-                    const articleData = parsedDetailData.initialData.article;
-
-                    const title: string = articleData.title;
-                    const image: string | undefined = articleData.image_url;
-                    const description: string = renderDescription({
-                        images: image
-                            ? [
-                                  {
-                                      src: image,
-                                      alt: articleData.image_alt_text || title,
-                                      width: articleData.image_width,
-                                      height: articleData.image_height,
-                                  },
-                              ]
-                            : undefined,
-                        intro: articleData.summary,
-                        content: articleData.content,
-                    });
-                    const pubDate: number | string = articleData.published_at_date_time;
-                    const categories: string[] = [...new Set([articleData.display_category, articleData.primary_category, articleData.subcategory, ...(articleData.categories ?? []), articleData.podcast_series_name])];
-                    const authors: DataItem['author'] = articleData.authors.map((author) => ({
-                        name: author.name,
-                        url: author.url ? new URL(author.url, baseUrl).href : undefined,
-                        avatar: author.picture_file,
-                    }));
-                    const guid = `scientificamerican-${articleData.id}`;
-                    const updated: number | string = articleData.updated_at_date_time ?? pubDate;
-
-                    let processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
-                        category: categories,
-                        author: authors,
-                        doi: articleData.article_doi,
-                        guid,
-                        id: guid,
-                        content: {
-                            html: description,
-                            text: articleData.summary ?? description,
-                        },
-                        image,
-                        banner: image,
-                        updated: updated ? timezone(parseDate(updated), 8) : undefined,
-                        language,
-                    };
-
-                    const enclosureUrl: string | undefined = articleData.media_url;
-
-                    if (enclosureUrl) {
-                        const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
-
-                        processedItem = {
-                            ...processedItem,
-                            enclosure_url: enclosureUrl,
-                            enclosure_type: enclosureType,
-                            enclosure_title: title,
-                            itunes_item_image: image,
-                        };
-                    }
-
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
+                const title: string = articleData.title;
+                const image: string | undefined = articleData.image_url;
+                const description: string = renderDescription({
+                    images: image
+                        ? [
+                              {
+                                  src: image,
+                                  alt: articleData.image_alt_text || title,
+                                  width: articleData.image_width,
+                                  height: articleData.image_height,
+                              },
+                          ]
+                        : undefined,
+                    intro: articleData.summary,
+                    content: articleData.content,
                 });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
+                const pubDate: number | string = articleData.published_at_date_time;
+                const categories: string[] = [...new Set([articleData.display_category, articleData.primary_category, articleData.subcategory, ...(articleData.categories ?? []), articleData.podcast_series_name])];
+                const authors: DataItem['author'] = articleData.authors.map((author) => ({
+                    name: author.name,
+                    url: author.url ? new URL(author.url, baseUrl).href : undefined,
+                    avatar: author.picture_file,
+                }));
+                const guid = `scientificamerican-${articleData.id}`;
+                const updated: number | string = articleData.updated_at_date_time ?? pubDate;
+
+                let processedItem: ArticleDetails = {
+                    description,
+                    category: categories,
+                    author: authors,
+                    doi: articleData.article_doi,
+                    guid,
+                    id: guid,
+                    content: {
+                        html: description,
+                        text: articleData.summary ?? description,
+                    },
+                    image,
+                    banner: image,
+                    updated: updated ? parseDate(updated) : undefined,
+                    language,
+                };
+
+                const enclosureUrl: string | undefined = articleData.media_url;
+
+                if (enclosureUrl) {
+                    const enclosureType = getMimeType(new URL(enclosureUrl, baseUrl).pathname);
+
+                    processedItem = {
+                        ...processedItem,
+                        enclosure_url: enclosureUrl,
+                        enclosure_type: enclosureType,
+                        enclosure_title: title,
+                        itunes_item_image: image,
+                    };
+                }
+
+                return processedItem;
+            });
+            {
+                const details = resolvedValue1;
+                return { ...item, ...details, ...(details.enclosure_url && { enclosure_title: item.title }) };
+            }
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -217,28 +217,12 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
         antiCrawler: false,
         supportRadar: true,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['www.scientificamerican.com/podcasts/', 'www.scientificamerican.com/podcast/:id'],
-            target: (params) => {
-                const id: string = params.id;
-
-                return `/scientificamerican/podcast${id ? `/${id}` : ''}`;
-            },
-        },
-        {
-            title: 'Science Quickly',
-            source: ['www.scientificamerican.com/podcast/science-quickly/'],
-            target: '/podcast/science-quickly',
-        },
-        {
-            title: 'Uncertain',
-            source: ['www.scientificamerican.com/podcast/science-talk/'],
-            target: '/podcast/science-talk',
-        },
+        { source: ['www.scientificamerican.com/podcasts/'], target: '/podcast' },
+        { source: ['www.scientificamerican.com/podcast/:id'], target: '/podcast/:id' },
     ],
     view: ViewType.Articles,
 

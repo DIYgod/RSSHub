@@ -6,7 +6,7 @@ import type { BrowserContext } from 'patchright';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
 
 export const BASE_URL = 'https://www.dailypush.dev';
@@ -22,17 +22,17 @@ export interface ArticleItem {
     dailyPushUrl?: string;
 }
 
-const allowedRequestTypes = new Set(['document']);
+const allowedRequestTypes = new Set(['document', 'script', 'xhr', 'fetch']);
 
 async function preparePage(page: Page) {
-    await page.route('**/*', (route) => {
+    await page.route('**/*', async (route) => {
         const request = route.request();
         if (allowedRequestTypes.has(request.resourceType())) {
-            route.continue();
+            await route.continue();
             return;
         }
 
-        route.abort();
+        await route.abort();
     });
 }
 
@@ -92,12 +92,6 @@ function extractAuthor(article: Cheerio<Element>): DataItem['author'] {
     switch (contentSpans.length) {
         case 3:
             // Structure: author, date, reading time
-            if (contentSpans[0].includes(',')) {
-                const authors: DataItem['author'] = contentSpans[0].split(',').map((author) => ({
-                    name: author.trim(),
-                }));
-                return authors;
-            }
             return contentSpans[0];
         case 2: {
             // Two cases:
@@ -250,13 +244,31 @@ function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string)
  * Parse all articles from the page
  */
 export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
+    const publishedDates = new Map<string, string>();
+    $('script[type="application/ld+json"]').each((_, el) => {
+        const metadata = JSON.parse($(el).text());
+        if (metadata['@type'] !== 'ItemList') {
+            return;
+        }
+        const entries = metadata.itemListElement ?? [];
+        for (const { item } of entries) {
+            if (item.url && item.datePublished) {
+                publishedDates.set(item.url, item.datePublished);
+            }
+        }
+    });
+
     return $('article')
         .toArray()
         .map((articleEl) => {
             const article = $(articleEl);
             return parseArticle(article, $, baseUrl);
         })
-        .filter((parsed): parsed is ArticleItem => parsed !== null);
+        .filter((parsed): parsed is ArticleItem => parsed !== null)
+        .map((item) => {
+            const published = publishedDates.get(item.link);
+            return published ? { ...item, pubDate: parseDate(published) } : item;
+        });
 }
 
 /**

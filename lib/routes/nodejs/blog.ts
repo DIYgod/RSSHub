@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -64,7 +65,8 @@ async function handler(ctx) {
             const $article = load(article);
 
             const author = $article('footer p').text();
-            const pubDate = parseDate($article('footer time').attr('datetime')!);
+            const date = $article('footer time').attr('datetime');
+            const pubDate = date ? parseDate(date) : undefined;
 
             const title = $article('a[aria-label]').prop('aria-label');
             const href = $article('a[aria-label]').attr('href');
@@ -77,9 +79,11 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`nodejs:article-body:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -87,10 +91,16 @@ async function handler(ctx) {
 
                 const $content = load(detailResponse.data);
 
-                item.description = $content('main').html();
-                return item;
-            })
-        )
+                const $main = $content('main');
+                $main.children('h1, section').remove();
+                $main
+                    .children('div')
+                    .filter((_, element) => $content(element).children('[aria-hidden="true"], a[class*="crossLink"]').length > 0)
+                    .remove();
+                return $main.html();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

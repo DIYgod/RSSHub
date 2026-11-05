@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -16,7 +17,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -32,55 +33,53 @@ async function handler() {
     const response = await got(host);
     const pageHtml = response.data;
     const $ = load(pageHtml);
-    const groupLists = $('div.m-panel-card-link ul li')
+    const groupLists = $('main .m-panel-card-02__item a[href^="/products/"]')
         .toArray()
         .map((el) => ({
-            groupName: $('a', el).text().trim(),
-            groupURL: baseUrl + $('a', el).attr('href'),
+            groupName: $('.m-panel-card-02__title', el).text().trim(),
+            groupURL: new URL($(el).attr('href')!, baseUrl).href,
         }));
 
-    const lists = await Promise.all(
-        groupLists.map((productGroup) =>
-            cache.tryGet(productGroup.groupURL, async () => {
+    const lists = await pMap(
+        groupLists,
+        async (productGroup) => {
+            const products = await cache.tryGet(`resonac:product-list:v1:${productGroup.groupURL}`, async () => {
                 const strUrl = productGroup.groupURL;
                 const response = await got(strUrl);
                 const $ = load(response.data);
                 const item = $('dt.m-toggle__title div span a')
                     .toArray()
-                    .map((el): DataItem & { group: string } => ({
+                    .map((el): DataItem => ({
                         title: $('b', el).text().trim(),
                         link: baseUrl + $(el).attr('href'),
-                        group: productGroup.groupName,
                     }));
                 return item;
-            })
-        )
+            });
+            return products.map((item) => ({ ...item, category: [productGroup.groupName] }));
+        },
+        { concurrency: 3 }
     );
 
-    const fullList = lists.flat(); // flatten array
+    const fullList = new Map(lists.flat().map((item) => [item.link, item])).values().toArray();
     // fullList = fullList.filter((item) => item.title !== 'Empty');
 
-    const items = await Promise.all(
-        fullList.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    const thisTitle = item.title + ' | ' + item.group;
-                    item.title = thisTitle;
-                    item.description = $('main div.str-section').html();
-                    return item;
-                } catch (error) {
-                    return (error as Error).message;
-                }
-            })
-        )
+    const items = await pMap(
+        fullList,
+        async (item) => {
+            const description = await cache.tryGet(`resonac:product-body:v1:${item.link}`, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
+                return $('main div.str-section').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: 'Resonac_Products',
         link: baseUrl,
         description: 'Resonac_Products',
-        item: items as DataItem[],
+        item: items,
     };
 }

@@ -3,6 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { fetchArticle } from './utils';
 
@@ -29,7 +30,7 @@ async function handler(ctx) {
     const $ = load(res);
     const list = $('#waterfall-container .pin_demo > a')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
+        .slice(0, getRouteLimit(ctx, 15))
         .map((a) => ({
             title: $(a).text(),
             link: $(a).attr('href'),

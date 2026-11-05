@@ -42,11 +42,12 @@ async function handler(ctx) {
             .map((item) => {
                 const $item = $(item);
                 const versionNumberLink = $item.find('.version-number a');
+                const date = $item.find('relative-time, gf-relative-time').attr('datetime');
 
                 return {
                     title: versionNumberLink.text(),
                     description: $item.find('.version-changelog').text().trim(),
-                    pubDate: parseDate($item.find('gf-relative-time').attr('datetime')!),
+                    pubDate: date ? parseDate(date) : undefined,
                     link: versionNumberLink.attr('href'),
                 };
             }),

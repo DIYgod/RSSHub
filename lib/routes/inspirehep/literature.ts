@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { LiteratureResponse } from './types';
 import { baseUrl, parseLiterature } from './utils';
@@ -10,18 +11,12 @@ export const route: Route = {
     parameters: { q: 'Search keyword' },
     name: 'Literature Search',
     maintainers: ['TonyRL'],
-    radar: [
-        {
-            source: ['inspirehep.net/literature'],
-            target: (_params, url) => `/inspirehep/literature/${new URL(url).searchParams.get('q')}`,
-        },
-    ],
     handler,
 };
 
 async function handler(ctx) {
     const q = ctx.req.param('q');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const response = await ofetch<LiteratureResponse>(`${baseUrl}/api/literature`, {
         query: {
@@ -36,7 +31,7 @@ async function handler(ctx) {
 
     return {
         title: 'Literature Search - INSPIRE',
-        link: `${baseUrl}/literature?sort=mostrecent&size=${limit}&page=1&q=${q}`,
+        link: `${baseUrl}/literature?sort=mostrecent&size=${limit}&page=1&q=${encodeURIComponent(q)}`,
         item: items,
     };
 }

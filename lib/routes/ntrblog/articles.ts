@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import Parser from 'rss-parser';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-type CustomItem = { issued: string };
-const parser = new Parser<any, CustomItem>({
+type CustomItem = { issued?: string; author?: string };
+const parser = new Parser<object, CustomItem>({
     customFields: {
         item: ['issued'],
     },
@@ -39,22 +40,24 @@ async function handler(): Promise<Data> {
     const rsp = await got('https://ntrblog.com/atom.xml');
     const feed = await parser.parseString(rsp.data);
 
-    const items = await Promise.all(
-        feed.items.map((item) => {
+    const items = await pMap(
+        feed.items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
-            return cache.tryGet(item.link, async () => {
+            const content = await cache.tryGet(`ntrblog:article:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 const content = $('div.article-body');
                 content.find('#twitter-widget-1').remove();
                 content.find('[id^="ldblog_related_articles_"]').remove();
                 content.find('#ad2').remove();
-                item.content = `<div lang="ja">${content.html()}</div>`;
-                return item;
+                return `<div lang="ja">${content.html()}</div>`;
             });
-        })
+            return { ...item, content };
+        },
+        { concurrency: 3 }
     );
 
     return {

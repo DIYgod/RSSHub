@@ -20,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '过早客',
+    name: '首页',
     maintainers: ['xiaoshame'],
     handler,
     url: 'guozaoke.com/',
@@ -49,16 +49,16 @@ async function handler() {
             const url = $item.find('h3.title a').attr('href');
             const author = $item.find('span.username a').text();
             const lastTouched = $item.find('span.last-touched').text();
-            const pubDate = parseRelativeDate(lastTouched);
+            const updated = lastTouched ? parseRelativeDate(lastTouched) : undefined;
             const link = url ? url.split('#', 1)[0] : undefined;
-            return link ? { title, link, author, pubDate } : undefined;
+            return link ? { title, link, author, updated } : undefined;
         })
         .filter((item) => item !== undefined);
 
     const out = await pMap(
         items,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => {
+            const article = await cache.tryGet(`guozaoke:article:${item.link}`, async () => {
                 const url = `https://www.guozaoke.com${item.link}`;
                 const res = await got({
                     method: 'get',
@@ -69,6 +69,11 @@ async function handler() {
                 });
 
                 const $ = load(res.data);
+                const createdTime = $('.topic-detail > .ui-header .created-time')
+                    .first()
+                    .text()
+                    .replace(/^发表于\s*/, '');
+                const pubDate = createdTime ? parseRelativeDate(createdTime) : undefined;
                 let content = $('div.ui-content').html();
                 content = content ? content.trim() : '';
                 const comments = $('.reply-item').map((i, el) => {
@@ -85,9 +90,10 @@ async function handler() {
                         content += '<br>' + item.author + ': ' + item.comment;
                     }
                 }
-                item.description = content;
-                return item;
-            }),
+                return { description: content, pubDate };
+            });
+            return { ...item, ...article };
+        },
         { concurrency: 2 }
     );
 

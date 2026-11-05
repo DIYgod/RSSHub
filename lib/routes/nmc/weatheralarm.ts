@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,28 +44,30 @@ async function handler(ctx) {
             province,
         },
     });
-    const list = response.data.page.list.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.page.list.map((item) => ({
         title: item.title,
         link: `http://www.nmc.cn${item.url}`,
         pubDate: timezone(parseDate(item.issuetime), 8),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`nmc:alarm:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description =
+                return (
                     $('#icon').html() +
                     $('#alarmtext')
                         .toArray()
                         .map((i) => $(i).html())
-                        .join('');
-
-                return item;
-            })
-        )
+                        .join('')
+                );
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

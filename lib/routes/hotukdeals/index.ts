@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -23,6 +24,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     let type = ctx.req.param('type');
+    if (!['highlights', 'hot', 'new', 'discussed'].includes(type)) {
+        throw new InvalidParameterError('Invalid type: expected highlights, hot, new, or discussed.');
+    }
     if (type === 'highlights') {
         type = '';
     }

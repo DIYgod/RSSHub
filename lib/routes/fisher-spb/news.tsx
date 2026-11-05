@@ -80,6 +80,7 @@ async function handler() {
     return {
         title: $('head > title').text().trim(),
         link: rootUrl,
+        language: 'ru' as const,
         item: items,
     };
 }

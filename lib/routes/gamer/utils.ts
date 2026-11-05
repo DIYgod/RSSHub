@@ -1,12 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const fetchItem = <T extends { link: string }>(item: T) =>
-    cache.tryGet(item.link, async () => {
+export const fetchItem = async <T extends { link: string }>(item: T) => ({
+    ...item,
+    ...(await cache.tryGet(`${item.link}#creation-body`, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
         const content = $('#article_content, .card'); // .card is a login wall
@@ -26,8 +28,9 @@ export const fetchItem = <T extends { link: string }>(item: T) =>
                 .join('')
         );
 
-        return { ...item, description: content.html() };
-    });
+        return { description: content.html() };
+    })),
+});
 
 export const ProcessFeed = async (url: string) => {
     const response = await ofetch(url);
@@ -49,7 +52,7 @@ export const ProcessFeed = async (url: string) => {
             };
         });
 
-    const items = await Promise.all(list.map((item) => fetchItem(item)));
+    const items = await pMap(list, (item) => fetchItem(item), { concurrency: 3 });
 
     return { title, items };
 };

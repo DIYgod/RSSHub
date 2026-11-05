@@ -58,7 +58,8 @@ async function handler(ctx) {
         category = `ac/${category}`;
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
 
     const queryString = convertToQueryString(category);
     const currentUrl = new URL(`newsclass.aspx${queryString}`, rootUrl).href;

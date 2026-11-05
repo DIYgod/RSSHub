@@ -1,4 +1,3 @@
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 type ImageItem = {
@@ -18,7 +17,12 @@ export const renderImages = ({ summary, images }: ImagesRenderOptions): string =
         <>
             {summary ? (
                 <>
-                    {raw(summary.replaceAll('\n', '<br>'))}
+                    {summary.split('\n').map((line, index) => (
+                        <>
+                            {index ? <br /> : null}
+                            {line}
+                        </>
+                    ))}
                     <br />
                 </>
             ) : null}

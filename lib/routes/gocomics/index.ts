@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:name',
@@ -26,7 +27,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const baseUrl = 'https://www.gocomics.com';
     const { name } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 5);
+    const limit = getRouteLimit(ctx, 5);
     const url = `${baseUrl}/${name}`;
 
     const response = await ofetch(url);

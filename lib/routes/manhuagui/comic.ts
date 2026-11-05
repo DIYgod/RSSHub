@@ -1,17 +1,12 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import LZString from 'lz-string';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
-let baseUrl = '';
-
-const getChapters = ($) => {
-    let time_mark = 100;
-    // 用于一次更新多个新章节的排序
-    let new_time_mark = 0;
-    const result: Array<{ link: string; title?: string; pub_date: Date; num: string; category: string }> = [];
+const getChapters = ($: CheerioAPI, baseUrl: string, latestChapterLink?: string, updateDate?: Date) => {
+    const result: Array<{ link: string; title?: string; pubDate?: Date; num: string; category: string; isNew: boolean }> = [];
     $('h4').each((_, ele) => {
         const categoryName = $(ele).text();
         let nextEle = ele.next;
@@ -24,31 +19,26 @@ const getChapters = ($) => {
         for (const ul of $(nextEle).children('ul').toArray().toReversed()) {
             for (const li of $(ul).children('li').toArray()) {
                 const a = $(li).children('a');
-                // 通过操作发布时间来对章节进行排序,如果是刚刚更新的单行本或者番外,保留最新更新时间
-                let pDate = new Date(new Date($.pubDate).getTime() - time_mark++ * 1000);
-                if (a.find('em').length > 0) {
-                    // 对更新的章节也进行排序
-                    pDate = new Date(new Date($.pubDate).getTime() - new_time_mark++ * 1000);
-                    $.newChapterCnt++;
-                }
+                const link = new URL(a.attr('href')!, baseUrl).href;
                 result.push({
-                    link: new URL(a.attr('href'), baseUrl).href,
+                    link,
                     title: a.attr('title'),
-                    pub_date: pDate,
+                    pubDate: link === latestChapterLink ? updateDate : undefined,
                     num: a.find('i').text(),
                     category: categoryName,
+                    isNew: a.find('em').length > 0,
                 });
             }
         }
     });
-    return result;
+    return result.toSorted((a, b) => Number(b.isNew) - Number(a.isNew));
 };
 
 export const route: Route = {
     path: ['/comic/:id/:chapterCnt?', '/:domain?/comic/:id/:chapterCnt?'],
     categories: ['anime'],
     example: '/manhuagui/comic/22942/5',
-    parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为0，返回所有章节' },
+    parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为0，返回所有章节', domain: '域名，可选 mhgui、twmanhuagui；不填或其他值默认使用 www.manhuagui.com' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -71,20 +61,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, domain } = ctx.req.param();
-    if (domain === 'mhgui') {
-        baseUrl = 'https://www.mhgui.com';
-    } else if (domain === 'twmanhuagui') {
-        baseUrl = 'https://tw.manhuagui.com';
-    } else {
-        baseUrl = 'https://www.manhuagui.com';
-    }
+    const baseUrl = domain === 'mhgui' ? 'https://www.mhgui.com' : domain === 'twmanhuagui' ? 'https://tw.manhuagui.com' : 'https://www.manhuagui.com';
 
     const chapterCnt = Number(ctx.req.param('chapterCnt') || 0);
     const { data } = await got(`${baseUrl}/comic/${id}/`);
-    const $ = Object.assign(load(data), { pubDate: new Date(0), newChapterCnt: 0 });
+    const $ = load(data);
 
-    if ($('#__VIEWSTATE').length > 0) {
-        const n = LZString.decompressFromBase64($('#__VIEWSTATE').val() as string);
+    const viewState = $('#__VIEWSTATE').attr('value');
+    if (viewState) {
+        const n = LZString.decompressFromBase64(viewState);
         if (n) {
             $('#erroraudit_show').replaceWith(n);
             $('#__VIEWSTATE').remove();
@@ -93,8 +78,8 @@ async function handler(ctx) {
 
     const bookTitle = $('.book-title > h1').text();
     const bookIntro = $('#intro-all').text();
-    // 处理已下架的漫画
-    if ($('.status > span').text().indexOf('已下架') > 0) {
+    // Return the source notice for unavailable manga.
+    if ($('.status > span').text().includes('已下架')) {
         return {
             title: `看漫画 - ${bookTitle} 已下架`,
             link: `${baseUrl}/comic/${id}/`,
@@ -103,21 +88,19 @@ async function handler(ctx) {
         };
     }
     const coverImgSrc = $('.book-cover img').attr('src');
-    // 对最新更新的章节增加了pubDate
-    const reg = /最近[于於].+更新至/;
-    const pub_date_str = $('.status > span')
-        .text()
-        .match(reg)![0]
-        .replace(/最近[于於] \[/, '')
-        .replace('] 更新至', '');
-    // 为了能在闭包内访问到这个日期而不是每次需要处理这个最近更新日期
-    $.pubDate = parseDate(pub_date_str);
-    $.newChapterCnt = 0;
-    const chapters = getChapters($);
+    const updateStatus = $('.status > span')
+        .filter((_, element) => /最近[于於]/.test($(element).text()))
+        .first();
+    const dateText = updateStatus.text().match(/最近[于於]\s*\[([^\]]+)\]/)?.[1];
+    const updateDate = dateText ? parseDateInTimezone(dateText, 0) : undefined;
+    const latestChapterHref = updateStatus.find('a').attr('href');
+    const latestChapterLink = latestChapterHref ? new URL(latestChapterHref, baseUrl).href : undefined;
+    const chapters = getChapters($, baseUrl, latestChapterLink, updateDate);
+    const newChapterCnt = chapters.filter((chapter) => chapter.isNew).length;
     const genResult = (chapter) => ({
         link: chapter.link,
         title: chapter.title,
-        pubDate: chapter.pub_date,
+        pubDate: chapter.pubDate,
         category: chapter.category,
         description: `
             <h1>${chapter.num}</h1>
@@ -127,7 +110,7 @@ async function handler(ctx) {
     const items = chapters.map((element) => genResult(element));
     let itemsLen = items.length;
     if (chapterCnt > 0) {
-        itemsLen = Math.max(chapterCnt, $.newChapterCnt);
+        itemsLen = Math.max(chapterCnt, newChapterCnt);
     }
 
     return {

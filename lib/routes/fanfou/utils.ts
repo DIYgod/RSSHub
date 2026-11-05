@@ -3,15 +3,10 @@ import Fanfou from 'fanfou-sdk';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
-let fanfouClient: Fanfou;
-let authed = false;
+let authPromise: Promise<Fanfou> | undefined;
 
-export const getFanfou = async () => {
-    if (authed) {
-        return fanfouClient;
-    }
-
-    fanfouClient = new Fanfou({
+const createClient = async () => {
+    const fanfouClient = new Fanfou({
         consumerKey: config.fanfou.consumer_key,
         consumerSecret: config.fanfou.consumer_secret,
         username: config.fanfou.username,
@@ -25,6 +20,19 @@ export const getFanfou = async () => {
     await fanfouClient.xauth();
     logger.info('Fanfou login success.');
 
-    authed = true;
     return fanfouClient;
+};
+
+const authenticateClient = async () => {
+    try {
+        return await createClient();
+    } catch (error) {
+        authPromise = undefined;
+        throw error;
+    }
+};
+
+export const getFanfou = () => {
+    authPromise ??= authenticateClient();
+    return authPromise;
 };

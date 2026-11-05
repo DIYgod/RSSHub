@@ -1,9 +1,7 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+
+import { apiBaseUrl, apiHeaders, getArticles, getLimit, processArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -18,58 +16,22 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['panewslab.com/'],
-        },
-    ],
+    radar: [{ source: ['www.panewslab.com/zh/series/:id'], target: '/topic/:id' }],
     name: '专题',
     maintainers: ['nczitzk'],
     handler,
-    url: 'panewslab.com/',
+    url: 'www.panewslab.com/zh/series/:id',
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-
-    const rootUrl = 'https://panewslab.com';
-    const apiUrl = `${rootUrl}/webapi/subject/articles?Rn=${ctx.req.query('limit') ?? 25}&LId=1&sid=${id}&tw=0`;
-    const currentUrl = `${rootUrl}/zh/topiclist/${id}.html`;
-
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    let items = response.data.data.map((item) => ({
-        title: item.title,
-        author: item.author.name,
-        pubDate: parseDate(item.publishTime * 1000),
-        link: `${rootUrl}/zh/articledetails/${item.id}.html`,
-        description: `<blockquote>${item.desc}</blockquote>`,
-        category: item.tags,
-    }));
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                item.description += content('#txtinfo').html();
-
-                return item;
-            })
-        )
-    );
-
+    const series = await ofetch<{ name: string; desc: string; cover: string }>(`${apiBaseUrl}/series/${id}`, { headers: apiHeaders });
+    const articles = await getArticles({ seriesId: id, take: getLimit(ctx.req.query('limit'), 25) });
     return {
-        title: `PANews - ${id}`,
-        link: currentUrl,
-        item: items,
+        title: `PANews - ${series.name}`,
+        description: series.desc,
+        image: series.cover,
+        link: `${rootUrl}/zh/series/${id}`,
+        item: await processArticles(articles),
     };
 }

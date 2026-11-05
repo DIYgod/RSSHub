@@ -1,14 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { Article } from './constants';
 import { Language, Parameter, SUPPORTED_LANGUAGES } from './constants';
-import { fetchArticles, getArticleContentLink, getArticleLink, getHandlerLanguage, isValidLanguage, parseInteger } from './utils';
+import { fetchArticles, getArticleContentLink, getArticleLink, getHandlerLanguage, isValidLanguage } from './utils';
 
 export const route: Route = {
     path: `/wutheringwaves/news/:${Parameter.Language}?`,
@@ -25,6 +26,7 @@ export const route: Route = {
         {
             title: 'Wuthering Waves — Game announcements, news and events',
             source: ['wutheringwaves.kurogames.com/en/main/news', 'wutheringwaves.kurogames.com/en/main'],
+            target: '/wutheringwaves/news/en',
         },
     ],
     maintainers: ['goestav', 'enpitsulin'],
@@ -43,10 +45,10 @@ Language codes for the \`${Parameter.Language}\` parameter:
 | Deutsch  | de           |
     `,
     async handler(ctx) {
-        const limitParam = ctx.req.query(Parameter.Limit);
         const languageParam = ctx.req.param(Parameter.Language);
 
-        const limit = parseInteger(limitParam, 30);
+        const limit = getRouteLimit(ctx, 30);
+        const sourceLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
         const language = languageParam || Language.Chinese;
 
         if (!isValidLanguage(language)) {
@@ -54,29 +56,27 @@ Language codes for the \`${Parameter.Language}\` parameter:
         }
 
         const articles = await fetchArticles(language);
-        const filteredArticles = articles.filter((a) => a.articleType !== 0).slice(0, limit);
+        const filteredArticles = articles.filter((a) => a.articleType !== 0).slice(0, sourceLimit);
 
-        const item = await Promise.all(
-            filteredArticles.map((article) => {
+        const item = await pMap(
+            filteredArticles,
+            async (article) => {
                 const contentUrl = getArticleContentLink(language, article.articleId);
                 const item: DataItem = {
                     title: article.articleTitle,
-                    pubDate: timezone(parseDate(article.createTime), 8),
+                    pubDate: article.createTime ? parseDateInTimezone(article.createTime, 8) : undefined,
                     link: getArticleLink(language, article.articleId),
                 };
 
-                return cache.tryGet(`wutheringwaves:${language}:${article.articleId}`, async () => {
+                const { articleContent } = await cache.tryGet(`wutheringwaves:body:v2:${language}:${article.articleId}`, async () => {
                     const articleDetails = await ofetch<Article>(contentUrl, { query: { t: Date.now() } });
                     // Article content may not always be available, e.g: https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2596
-                    const articleContent = articleDetails.articleContent ?? '';
-
-                    const $ = load(articleContent);
-
-                    item.description = $.html() ?? article.articleDesc ?? '';
-
-                    return item;
+                    return { articleContent: articleDetails.articleContent ?? '' };
                 });
-            })
+                const description = articleContent ? load(articleContent).html() : (article.articleDesc ?? '');
+                return { ...item, description };
+            },
+            { concurrency: 3 }
         );
 
         const title = language === Language.Chinese ? '《鸣潮》— 游戏公告、新闻和活动' : 'Wuthering Waves - Announcements, News and Events';

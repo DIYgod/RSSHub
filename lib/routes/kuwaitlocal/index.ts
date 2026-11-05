@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,36 +40,51 @@ async function handler(ctx): Promise<Data> {
     const $ = load(response);
     const list = $('a.ggrid')
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): Array<DataItem & { link: string }> => {
             const $item = $(item);
-            return {
-                title: $item.find('.txt').text().trim(),
-                link: $item.attr('href'),
-            };
+            const href = $item.attr('href');
+            if (!href) {
+                return [];
+            }
+            return [
+                {
+                    title: $item.find('.txt').text(),
+                    link: new URL(href, url).href,
+                },
+            ];
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`kuwaitlocal:article:v3:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.pubDate = parseDate($('.single_news_meta span').eq(0).text().trim());
-                item.category = $('.tags .tag')
+                const date = $('.single_news_meta span').eq(0).text().trim();
+                const category = $('.tags .tag')
                     .toArray()
                     .map((item) => $(item).text().trim());
                 $('[id^=div-gpt-ad]').remove();
                 $('.tags_sec2, .tags_sec, .comment').remove();
-                item.description = $('.single_news_img').html()! + $('#news_description').html()!;
-
-                return item;
-            })
-        )
+                const articleBody = $('#news_description').html();
+                if (!articleBody) {
+                    throw new Error(`Cannot find article content on ${item.link}`);
+                }
+                return {
+                    pubDate: date ? parseDate(date) : undefined,
+                    category,
+                    description: ($('.single_news_img').html() ?? '') + articleBody,
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: $('head title').text().trim(),
-        description: $('head meta[name="description"]').attr('content')!.trim(),
+        title: $('head title').text(),
+        description: $('head meta[name="description"]').attr('content')?.trim(),
         link: url,
         item: items,
         language: 'en',

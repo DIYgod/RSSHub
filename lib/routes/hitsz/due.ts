@@ -1,9 +1,21 @@
 import { load } from 'cheerio';
+import { html } from 'hono/html';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+function parsePublicationDate(value?: string) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+}
 
 export const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
@@ -41,27 +53,22 @@ export const handler = async (ctx) => {
 
     // 修改：将 query 参数改为 path 参数（PR评论要求：Use path parameter instead of search query）
     const { type = 'all' } = ctx.req.param(); // 从路径参数获取，默认值 'all'
-    const validTypes = Object.keys(categoryGroups);
-    const validType = validTypes.includes(type) ? type : 'all'; // 容错：无效类型默认走 all
+    if (type !== 'all' && !Object.hasOwn(categoryGroups, type)) {
+        throw new InvalidParameterError('Unknown teaching-office group. Use all, teaching, studentStatus, teachingSupport, or education.');
+    }
+    const validType = type;
 
     // 根据类型选择对应栏目组
     const categories = validType === 'all' ? Object.values(categoryGroups).flat() : categoryGroups[validType];
 
     // 并发抓取所有栏目的第一页
     // 修复 ESLint：替换 .catch(() => null) 为带日志的try/catch
-    const pagePromises = categories.map(async (category) => {
-        const pageUrl = new URL(`${category}.htm`, baseUrl).href;
-        try {
-            return await got(pageUrl);
-        } catch {
-            return null;
-        }
-    });
+    const pagePromises = categories.map((category) => got(new URL(`${category}.htm`, baseUrl).href));
     const pageResponses = await Promise.all(pagePromises);
 
     // 提取所有文章链接
     // 修复：用flatMap替代for循环+push（同步逻辑优化）
-    const articlePromises = pageResponses.flatMap((response, i) => {
+    const articlePromises: Array<DataItem & { link: string }> = pageResponses.flatMap((response, i) => {
         if (!response) {
             return [];
         }
@@ -85,25 +92,55 @@ export const handler = async (ctx) => {
                 return {
                     title,
                     link: new URL(linkUrl, baseUrl).href,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
+                    pubDate: parsePublicationDate(pubDateStr),
                     category,
-                    description: title, // 使用标题作为描述
+                    // 使用标题作为描述
                 };
             })
             .filter(Boolean); // 过滤 null 项
     });
 
     // 获取所有文章详情
-    const allResolvedItems = articlePromises.filter(Boolean);
+    const uniqueItems = new Map<string, DataItem & { link: string }>();
+    for (const item of articlePromises) {
+        const existing = uniqueItems.get(item.link);
+        if (existing) {
+            const previous = Array.isArray(existing.category) ? existing.category : existing.category ? [existing.category] : [];
+            const current = Array.isArray(item.category) ? item.category : item.category ? [item.category] : [];
+            existing.category = [...new Set([...previous, ...current])];
+        } else {
+            uniqueItems.set(item.link, item);
+        }
+    }
+    const allResolvedItems = uniqueItems.values().toArray();
 
     // 排序和截取
     const filteredItems = allResolvedItems.filter((item) => !item.title.includes('统一身份认证平台'));
+
+    const detailedItems = await pMap(
+        filteredItems,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const content = $('.v_news_content').html() ?? $('.wp_articlecontent').html() ?? '';
+                const attachments = $('.page-main-fj a[href]')
+                    .toArray()
+                    .filter((element) => $(element).attr('href'))
+                    .map((element) => String(html`<p><a href="${new URL($(element).attr('href')!, item.link).href}">${$(element).text()}</a></p>`))
+                    .join('');
+                return { description: content + attachments || undefined };
+            })),
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         title: '哈尔滨工业大学（深圳）教务部-教务学务与学位管理-所有栏目新闻汇总',
         description: '哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总，包括教务管理、考务管理、注册管理、选课管理、成绩管理、学籍管理、教学信息化、奖助学金、本科生新闻、硕士学位培养、博士学位培养等',
         link: 'http://due.hitsz.edu.cn/jwxw/jwgl.htm',
-        item: filteredItems,
+        item: detailedItems,
         author: '哈尔滨工业大学（深圳）教务部',
     };
 };
@@ -170,7 +207,7 @@ export const route: Route = {
     radar: [
         {
             source: ['due.hitsz.edu.cn/jwxw/jwgl.htm'],
-            target: '/hitsz/due/general',
+            target: '/due/general',
         },
     ],
 };

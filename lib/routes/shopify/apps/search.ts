@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { FetchError } from 'ofetch';
 
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import { baseURL } from './const';
 
@@ -13,35 +15,52 @@ export const route: Route = {
     name: 'App store search',
     maintainers: ['PrintNow'],
     handler,
-    radar: [
-        {
-            source: ['apps.shopify.com/search'],
-            target: (_params, url) => {
-                const searchParams = new URL(url).searchParams;
-                if (!searchParams.has('q')) {
-                    return '';
-                }
-                return `/shopify/apps/search/${searchParams.get('q')}`;
-            },
-        },
-    ],
+    radar: [],
+    features: { requirePuppeteer: true },
 };
+
+async function loadSearch(q: string): Promise<string> {
+    try {
+        const response = await got.get(`${baseURL}/search`, {
+            searchParams: {
+                q,
+            },
+            headers: {
+                accept: 'text/html, application/xhtml+xml',
+                'accept-language': 'en-US;q=0.9',
+                'turbo-frame': 'search_page',
+                dnt: '1',
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (!(error instanceof FetchError) || error.response?.status !== 429) {
+            throw error;
+        }
+        const url = new URL('/search', baseURL);
+        url.searchParams.set('q', q);
+        const { page, destroy } = await getPlaywrightPage('about:blank', { noGoto: true, javaScriptEnabled: false, closeTimeout: 0 });
+        try {
+            await page.setExtraHTTPHeaders({ 'turbo-frame': 'search_page', 'accept-language': 'en-US;q=0.9' });
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                return request.resourceType() === 'document' && new URL(request.url()).hostname === new URL(baseURL).hostname ? route.continue() : route.abort();
+            });
+            const response = await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            if (!response?.ok()) {
+                throw new Error(`Shopify App Store search returned HTTP ${response?.status() ?? 'unknown'}`, { cause: error });
+            }
+            return await page.content();
+        } finally {
+            await destroy();
+        }
+    }
+}
 
 async function handler(ctx: Context): Promise<Data> {
     const { q = '' } = ctx.req.param();
-    const response = await got.get(`${baseURL}/search`, {
-        searchParams: {
-            q,
-        },
-        headers: {
-            accept: 'text/html, application/xhtml+xml',
-            'accept-language': 'en-US;q=0.9',
-            'turbo-frame': 'search_page',
-            dnt: '1',
-        },
-    });
-
-    const htmlContent = await response.data;
+    const htmlContent = await loadSearch(q);
     const $ = load(htmlContent);
 
     const items = $('.search-results-component div[data-controller="app-card"]')
@@ -80,7 +99,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `Search results for "${q}" – Shopify App Store`,
         link: `https://apps.shopify.com/search?q=${q}`,
         // description: `Search results for "${q}" – Shopify App Store`,
-        allowEmpty: true,
         language: 'en-us',
         item: items,
     };

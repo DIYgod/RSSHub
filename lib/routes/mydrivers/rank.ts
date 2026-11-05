@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -35,7 +36,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { range = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    if (!['0', '1', '2'].includes(range)) {
+        throw new InvalidParameterError('Invalid ranking range. Use 0 for the last 24 hours, 1 for this week, or 2 for this month.');
+    }
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 10;
 
     const currentUrl = new URL('newsclass.aspx?tid=1001', rootUrl).href;
 
@@ -45,7 +50,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('a')
+    let items = $('.news_title a')
         .toArray()
         .filter((item) => /\/\d+\.html?/.test($(item).prop('href')!))
         .slice(0, limit)

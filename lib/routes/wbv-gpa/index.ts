@@ -22,8 +22,11 @@ Filtering by state is done client-side.`,
     },
     radar: [
         {
-            // wbv-gpa.at/wohnungen is equivalent to wbv-gpa.at/angebote/wohnungen
-            source: [`${SITE_URL}/wohnungen/`, `${BASE_URL}/:category`],
+            source: ['www.wbv-gpa.at/wohnungen/'],
+            target: '/wohnungen',
+        },
+        {
+            source: ['www.wbv-gpa.at/angebote/:category'],
             target: '/:category',
         },
     ],
@@ -45,7 +48,7 @@ Filtering by state is done client-side.`,
                 const title = $el
                     .find('.objects__list__rows__item__info__cell:not(.desktop_only):not(.objects__list__rows__item__info__cell--link)')
                     .toArray()
-                    .map((el) => $(el).text().trim())
+                    .map((el) => $(el).text())
                     .join(', ');
                 const description = $el
                     .find('.objects__list__rows__item__info__cell.desktop_only:not(.objects__list__rows__item__info__cell--link)')
@@ -62,7 +65,6 @@ Filtering by state is done client-side.`,
             title,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
-            allowEmpty: true,
             item: items,
             link,
         } satisfies Data;

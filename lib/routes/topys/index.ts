@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,8 +31,14 @@ export const route: Route = {
 | ---- | ---- | ---- | ---- | ---- | ---- |`,
 };
 
+function parsePubDate(value?: number) {
+    return typeof value === 'number' && Number.isFinite(value) ? parseDate(value * 1000) : undefined;
+}
+
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 16;
 
     const rootUrl = 'https://www.topys.cn';
     const currentUrl = `${rootUrl}${keyword ? `/search/${keyword}` : '/api/web/article/get_article_list'}`;
@@ -46,18 +53,18 @@ async function handler(ctx) {
               url: currentUrl,
               json: {
                   istop_time: 0,
-                  size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 16,
+                  size: limit,
               },
           });
 
-    let items = keyword
+    let items: DataItem[] = keyword
         ? response.data.match(/id:(\d+),title:"(.*?)",keyword:"(.*?)",istop_time:(\d+),thumb/g).map((item) => {
               const matches = item.match(/id:(\d+),title:"(.*)",keyword:"(.*)",istop_time:(\d+),thumb/);
               return {
                   title: matches[2],
                   category: matches[3].split(','),
                   link: `${rootUrl}/article/${matches[1]}`,
-                  pubDate: parseDate(matches[4] * 1000),
+                  pubDate: parsePubDate(Number(matches[4])),
               };
           })
         : response.data.data.map((item) => ({
@@ -65,12 +72,13 @@ async function handler(ctx) {
               author: item.editor,
               category: item.keyword.split(','),
               link: `${rootUrl}/article/${item.id}`,
-              pubDate: parseDate(item.istop_time * 1000),
+              pubDate: parsePubDate(item.istop_time),
           }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`topys:detail:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -78,12 +86,19 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('.article-content').html();
-                item.author ??= content('.author-name p').first().text();
+                return {
+                    description: content('.article-content').html(),
+                    author: content('.author-name p').first().text(),
+                };
+            });
 
-                return item;
-            })
-        )
+            return {
+                ...item,
+                description: detail.description,
+                author: item.author ?? detail.author,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

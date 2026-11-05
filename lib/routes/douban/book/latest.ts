@@ -53,7 +53,7 @@ async function handler(ctx) {
             const rate = rating.value ? `${rating.value}分` : null_rating_reason;
             const img = `<img src="${pic.normal}">`;
             const info = card_subtitle;
-            const description = `${img}<br>${title}<br><br>${info}<br><br>${cards[0]?.content ?? ''}<br><br>${rate}`;
+            const description = `${img}<br>${info}<br><br>${cards[0]?.content ?? ''}<br><br>${rate}`;
 
             return {
                 title,

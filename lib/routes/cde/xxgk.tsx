@@ -1,8 +1,10 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import utils from './utils';
 
@@ -13,6 +15,7 @@ const xxgkMap = {
             title: '优先审评公示',
             url: `${baseUrl}/main/xxgk/listpage/2f78f372d351c6851af7431c7710a731`,
             endPoint: '/priority/getPriorityApprovalList',
+            idField: 'pridCODE',
             form: {
                 pageSize: 50,
                 pageNum: 1,
@@ -26,6 +29,7 @@ const xxgkMap = {
             title: '突破性治疗公示',
             url: `${baseUrl}/main/xxgk/listpage/da6efd086c099b7fc949121166f0130c`,
             endPoint: '/breakthrough/getBreakthroughCureList',
+            idField: 'bcnidCODE',
             form: {
                 pageSize: 50,
                 pageNum: 1,
@@ -39,6 +43,7 @@ const xxgkMap = {
             title: '临床试验默示许可',
             url: `${baseUrl}/main/xxgk/listpage/4b5255eb0a84820cef4ca3e8b6bbe20c`,
             endPoint: '/xxgk/getCliniCalList',
+            idField: 'nidCODE',
             form: {
                 pageSize: 50,
                 pageNum: 1,
@@ -71,6 +76,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
+    if (!Object.hasOwn(xxgkMap.xxgk, category)) {
+        throw new NotFoundError('Invalid CDE disclosure category. Use priorityApproval, breakthroughCure, or cliniCal.');
+    }
 
     const { data } = await got.post(`${baseUrl}/main${xxgkMap.xxgk[category].endPoint}`, {
         form: xxgkMap.xxgk[category].form,
@@ -98,8 +106,8 @@ async function handler(ctx) {
 
         return {
             title: item.drgnamecn,
-            guid: item.acceptid,
-            pubDate: item.endNoticeDate ? parseDate(item.endNoticeDate) : null,
+            guid: item[xxgkMap.xxgk[category].idField],
+            pubDate: item.noticeDate ? timezone(parseDate(item.noticeDate, 'YYYY-MM-DD'), 8) : undefined,
             description,
             link: xxgkMap.xxgk[category].url,
         };

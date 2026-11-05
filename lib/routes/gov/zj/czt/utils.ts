@@ -30,7 +30,7 @@ const flatten = (nodes: CategoryNode[], parentName?: string): FlatCategory[] =>
             name: parentName ? `${parentName} - ${node.name}` : node.name,
             code: node.code,
         },
-        ...(node.children?.length ? flatten(node.children, node.name) : []),
+        ...(node.children?.length ? flatten(node.children, parentName ? `${parentName} - ${node.name}` : node.name) : []),
     ]);
 
 export const getCategories = () =>

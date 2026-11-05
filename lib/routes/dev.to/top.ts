@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/top/:period',
@@ -29,6 +31,18 @@ export const route: Route = {
     url: 'dev.to/top',
 };
 
+interface TopArticle {
+    title: string;
+    path: string;
+    published_at_int: number;
+    user: {
+        name: string;
+        username: string;
+        profile_image_90: string;
+    };
+    tag_list: string[];
+}
+
 async function handler(ctx): Promise<Data> {
     const period = ctx.req.param('period');
     const baseUrl = 'https://dev.to';
@@ -53,18 +67,25 @@ async function handler(ctx): Promise<Data> {
             break;
     }
 
-    const publishedDate = date.toISOString();
-    const apiUrl = `https://dev.to/search/feed_content?per_page=15&sort_by=public_reactions_count&sort_direction=desc&approved=&class_name=Article&published_at%5Bgte%5D=${encodeURIComponent(publishedDate)}`;
+    const publishedDate = period === 'infinity' ? '' : `&published_at%5Bgte%5D=${encodeURIComponent(date.toISOString())}`;
+    const apiUrl = `https://dev.to/search/feed_content?per_page=15&sort_by=public_reactions_count&sort_direction=desc&approved=&class_name=Article${publishedDate}`;
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
 
     const data = response.data;
+    const entries: TopArticle[] = [...data.result];
+    if (ctx.req.query('sorted') !== 'false') {
+        entries.sort((a, b) => b.published_at_int - a.published_at_int);
+    }
+    const limit = getRouteLimit(ctx);
+    const selected = limit ? entries.slice(0, limit) : entries;
 
     // Fetch content for each article
-    const items = await Promise.all(
-        data.result.map((item) => {
+    const items = await pMap(
+        selected,
+        (item) => {
             const articleUrl = `${baseUrl}${item.path}`;
             return cache.tryGet(articleUrl, async (): Promise<DataItem> => {
                 const articleResponse = await got(articleUrl);
@@ -92,7 +113,8 @@ async function handler(ctx): Promise<Data> {
                     image: coverImage,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

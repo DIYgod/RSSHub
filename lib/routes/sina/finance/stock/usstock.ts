@@ -1,6 +1,9 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { parseArticle } from '../../utils';
 
@@ -34,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { cids = '57045' } = ctx.req.param();
-    const { limit = '50' } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 50);
     const { data: response } = await got('https://interface.sina.cn/pc_api/public_news_data.d.json', {
         searchParams: {
             cids,
@@ -50,14 +53,14 @@ async function handler(ctx) {
             _: Date.now(),
         },
     });
-    const list = response.data.map((item) => ({
+    const list = response.data.map((item): DataItem & { link: string } => ({
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.ctime, 'X'),
+        pubDate: item.ctime ? parseDate(item.ctime, 'X') : undefined,
         author: item.media,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, parseArticle, { concurrency: 3 });
 
     return {
         title: '美股|美股行情|美股新闻 - 新浪财经',

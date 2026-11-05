@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/events',
@@ -22,7 +23,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://houxu.app';
-    const apiUrl = `${rootUrl}/api/1/events?limit=${ctx.req.query('limit') ?? 50}`;
+    const apiUrl = `${rootUrl}/api/1/events?limit=${getRouteLimit(ctx, 50)}`;
     const currentUrl = `${rootUrl}/events`;
 
     const response = await got({

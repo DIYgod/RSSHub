@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -21,8 +22,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['swpu.edu.cn/'],
-            target: '',
+            title: '信息学院 - 学院新闻',
+            source: ['www.swpu.edu.cn/is/xydt/xyxw.htm'],
+            target: '/is/xyxw',
+        },
+        {
+            title: '信息学院 - 通知公告',
+            source: ['www.swpu.edu.cn/is/xydt/tzgg.htm'],
+            target: '/is/tzgg',
         },
     ],
     name: '信息学院',
@@ -33,6 +40,27 @@ export const route: Route = {
 | ---- | -------- | -------- | -------- | -------- | -------- |
 | 代码 | xyxw     | tzgg     | jyjx     | xsgz     | zsjy     |`,
 };
+
+async function getArticle(link: string): Promise<Pick<DataItem, 'author' | 'description'>> {
+    const details: Pick<DataItem, 'author' | 'description'> = {};
+    const res = await got(link);
+    const $ = load(res.data);
+    if (!$('title').text().startsWith('系统提示')) {
+        const content = $('.v_news_content');
+        details.description = content.html();
+        const author = content
+            .closest('form')
+            .find('h3 + div')
+            .text()
+            .match(/作者：([\s\S]*?)编辑：/)?.[1]
+            .trim();
+        if (author) {
+            details.author = author;
+        }
+    }
+
+    return details;
+}
 
 async function handler(ctx): Promise<Data> {
     const url = `https://www.swpu.edu.cn/is/xydt/${ctx.req.param('code')}.htm`;
@@ -45,35 +73,19 @@ async function handler(ctx): Promise<Data> {
 
     const items = $('tr[height="20"]')
         .toArray()
-        .map((elem): DataItem => ({
-            title: $('a[title]', elem).text().trim(),
-            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), 8),
+        .map((elem): DataItem & { link: string } => ({
+            title: $('a[title]', elem).text(),
+            pubDate: $('span[class^="timestyle"]', elem).text().trim() ? timezone(parseDate($('span[class^="timestyle"]', elem).text(), 'YYYY/MM/DD'), 8) : undefined,
             link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
         }));
 
-    const out = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const res = await got(item.link);
-                const $ = load(res.data);
-                if ($('title').text().startsWith('系统提示')) {
-                    item.author = '系统';
-                    item.description = '无权访问';
-                } else {
-                    item.author = '学院';
-                    item.description = $('.v_news_content').html();
-                    for (const elem of $('.v_news_content p')) {
-                        if ($(elem).css('text-align') !== 'right') {
-                            continue;
-                        }
-
-                        item.author = $(elem).text();
-                        break;
-                    }
-                }
-                return item;
-            })
-        )
+    const out = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`swpu:is:article:v3:${item.link}`, () => getArticle(item.link))),
+        }),
+        { concurrency: 3 }
     );
 
     return {

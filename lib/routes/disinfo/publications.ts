@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -39,19 +41,26 @@ async function handler() {
 
     const $ = load(response.data);
 
+    const publications = await ofetch<Array<{ link: string; date_gmt: string; modified_gmt: string }>>(`${rootUrl}/wp-json/wp/v2/publication`, { query: { per_page: 12, _fields: 'link,date_gmt,modified_gmt' } });
+    const publicationDates = new Map(publications.map((publication) => [publication.link, publication]));
+
     const list = $('.elementor-heading-title a')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const publication = publicationDates.get($item.attr('href')!);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
+                pubDate: publication?.date_gmt ? parseDate(`${publication.date_gmt}Z`) : undefined,
+                updated: publication?.modified_gmt ? parseDate(`${publication.modified_gmt}Z`) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -61,18 +70,15 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 content('.wp-block-spacer').remove();
-                content('.elementor-widget-container p').eq(0).remove();
 
                 content('img').each((_, el) => {
                     content(el).attr('src', content(el).attr('data-lazy-src'));
                 });
 
                 item.description = content('.elementor-widget-theme-post-content').html();
-                item.pubDate = parseDate(content('meta[property="article:modified_time"]').attr('content')!);
-
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

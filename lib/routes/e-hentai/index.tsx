@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/category/:category?/:needTorrents?/:needImages?',
@@ -42,9 +44,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['e-hentai.org/:category', 'e-hentai.org/'],
-            target: '/category/:category',
+            source: ['e-hentai.org/'],
+            target: '/category',
         },
+        ...['doujinshi', 'manga', 'artistcg', 'gamecg', 'western', 'non-h', 'imageset', 'cosplay', 'asianporn', 'misc', 'popular'].map((category) => ({
+            source: [`e-hentai.org/${category}`],
+            target: `/category/${category}`,
+        })),
     ],
     handler,
 };
@@ -56,7 +62,7 @@ export async function handler(ctx) {
     const needImages = /t|y/i.test(ctx.req.param('needImages') ?? 'true');
 
     const rootUrl = 'https://e-hentai.org';
-    const currentUrl = `${rootUrl}/${id ? (what === 'search' ? `?${id}` : what === 'category' ? id : `${what}/${id}`) : what}`;
+    const currentUrl = `${rootUrl}/${id ? (what === 'search' ? `?${id}` : what === 'category' ? id : `${what}/${id}`) : ''}`;
 
     const response = await got({
         method: 'get',
@@ -67,17 +73,20 @@ export async function handler(ctx) {
 
     $('.itd').parent().remove();
 
+    const defaultLimit = needImages ? 15 : 25;
+    const limit = getRouteLimit(ctx, defaultLimit);
     let items = $('table.gltc tbody tr')
-        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
+        .slice(1, Math.max(defaultLimit, limit) + 1)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const published = parseDateInTimezone($item.find('div.ir').prev().text(), 0);
 
             return {
                 title: $item.find('div.glink').text(),
                 author: $item.find('td.glhide div a').text(),
                 link: $item.find('td.glname a').attr('href'),
-                pubDate: parseDate($item.find('div.ir').prev().text()),
+                pubDate: Number.isFinite(published.getTime()) ? published : undefined,
                 category: $item
                     .find('div.gt')
                     .toArray()
@@ -87,13 +96,20 @@ export async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map(async (item) => {
-            if (item.enclosure_url) {
-                let forms = '',
-                    torrents: any = await cache.get(item.enclosure_url);
+    const sorted = ctx.req.query('sorted') !== 'false';
+    const datedItems = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    if (sorted && datedItems) {
+        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+    }
+    if (!sorted || datedItems) {
+        items = items.slice(0, limit);
+    }
 
-                if (!torrents) {
+    items = await pMap(
+        items,
+        async (item) => {
+            if (item.enclosure_url) {
+                const torrentData = await cache.tryGet(`e-hentai:torrents:${item.enclosure_url}`, async () => {
                     const torrentResponse = await got({
                         method: 'get',
                         url: item.enclosure_url,
@@ -101,26 +117,20 @@ export async function handler(ctx) {
 
                     const torrent = load(torrentResponse.data);
 
-                    torrent('h1, input[name="torrent_info"]').remove();
-                    forms = torrent('form').parent().html() ?? '';
-
-                    torrents = torrent('table tbody tr td a')
+                    const torrents = torrent('table tbody tr td a')
                         .toArray()
                         .map((t) => {
                             const $t = torrent(t);
                             return { link: $t.attr('href'), title: $t.text() };
                         });
-                    cache.set(item.enclosure_url, torrents ?? '');
-                }
-                item.description += forms;
-                item.enclosure_url = torrents[0].link;
+                    return { torrents };
+                });
+                item.enclosure_url = torrentData.torrents[0].link;
                 item.enclosure_type = 'application/x-bittorrent';
             }
 
             if (needImages) {
-                let images: any = await cache.get(item.link!);
-
-                if (!images) {
+                const images = await cache.tryGet(`e-hentai:images:${item.link}`, async () => {
                     const imageResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -128,24 +138,31 @@ export async function handler(ctx) {
 
                     const content = load(imageResponse.data);
 
-                    images = await Promise.all(
-                        content('.gdtm a')
-                            .toArray()
-                            .map((i) =>
-                                cache.tryGet(content(i).attr('href')!, async () => {
-                                    const imageResponse = await got({
-                                        method: 'get',
-                                        url: content(i).attr('href'),
-                                    });
+                    const imagePages = content('#gdt a[href]')
+                        .toArray()
+                        .map((i) => content(i).attr('href')!);
+                    if (!imagePages.length) {
+                        throw new Error(`No public image pages were found for ${item.link}. Please check the original gallery.`);
+                    }
+                    return pMap(
+                        imagePages,
+                        (imagePage) =>
+                            cache.tryGet(imagePage, async () => {
+                                const imageResponse = await got({
+                                    method: 'get',
+                                    url: imagePage,
+                                });
 
-                                    const image = load(imageResponse.data);
-
-                                    return image('#img').attr('src')!;
-                                })
-                            )
+                                const image = load(imageResponse.data);
+                                const imageUrl = image('#img').attr('src');
+                                if (!imageUrl) {
+                                    throw new Error(`No public image was found on ${imagePage}. Please check the original image page.`);
+                                }
+                                return imageUrl;
+                            }),
+                        { concurrency: 3 }
                     );
-                    cache.set(item.link!, images);
-                }
+                });
                 item.description += renderToString(
                     <>
                         {images.map((image) => (
@@ -157,7 +174,8 @@ export async function handler(ctx) {
                 );
             }
             return item;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

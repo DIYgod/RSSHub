@@ -1,13 +1,24 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
+
+const getPublicationDate = (html: string) => {
+    const timestamp = html.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1];
+    if (!timestamp) {
+        return;
+    }
+    const date = timezone(parseDate(timestamp, 'YYYY年MM月DD日HH:mm', true), 8);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
 
 export const route: Route = {
     path: '/:site?/:category{.+}?',
@@ -22,7 +33,7 @@ async function handler(ctx) {
     const { category: requestedCategory = site === 'www' ? '59476' : '' } = ctx.req.param();
     const category = site === 'cpc' && requestedCategory === '24h' ? '64093/64387' : requestedCategory;
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     if (!isValidHost(site)) {
         throw new InvalidParameterError('Invalid site');
@@ -55,24 +66,33 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const detailPage = await fetchPage(item.link!);
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate'>>(`people:detail:v4:${item.link}`, async () => {
+                const detailPage = await fetchPage(item.link!);
+                detailPage.$('.paper_num, #rwb_tjyd').remove();
 
-                    detailPage.$('.paper_num, #rwb_tjyd').remove();
+                const mainContent = detailPage.$('#rwb_zw').length ? detailPage.$('#rwb_zw').first() : detailPage.$('#rm_txt_zw').first();
 
-                    item.description = detailPage.$('#rwb_zw, #rm_txt_zw, .rm_txt_con, .show_text').first().html();
-                    item.pubDate = timezone(parseDate(detailPage.html.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), 8);
-                } catch (error) {
-                    item.description = String(error);
-                }
-
-                return item;
-            })
-        )
+                return {
+                    description: (mainContent.length ? mainContent.html() : detailPage.$('.rm_txt_con, .show_text').first().html()) ?? undefined,
+                    pubDate: getPublicationDate(detailPage.html),
+                };
+            });
+            return { ...item, description: detail.description, pubDate: detail.pubDate };
+        },
+        { concurrency: 3, stopOnError: false }
     );
+
+    for (const item of items) {
+        const date = item.pubDate === undefined || item.pubDate === null ? undefined : parseDate(item.pubDate);
+        if (date && Number.isFinite(date.getTime())) {
+            item.pubDate = date;
+        } else {
+            delete item.pubDate;
+        }
+    }
 
     return {
         title: $('title').text(),

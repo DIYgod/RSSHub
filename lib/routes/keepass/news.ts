@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -29,25 +31,26 @@ async function handler(ctx) {
                 pubDate: parseDate($elem.next().next('small').text().split('.', 1)[0]),
             };
         })
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
+        .slice(0, getRouteLimit(ctx, 10));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                if (!item.link!.startsWith('https://keepass.info/')) {
-                    return item;
-                }
-
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (!item.link!.startsWith('https://keepass.info/')) {
+                return item;
+            }
+            const description = await cache.tryGet(`keepass:body:${item.link}`, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
                 $('.sectionheader').remove();
                 $('.laytablews > tbody> tr:nth-child(1) > td:nth-child(2) > p').first().remove();
 
-                item.description = $('.laytablews > tbody> tr:nth-child(1) > td:nth-child(2)').html();
-                return item;
-            })
-        )
+                return $('.laytablews > tbody> tr:nth-child(1) > td:nth-child(2)').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

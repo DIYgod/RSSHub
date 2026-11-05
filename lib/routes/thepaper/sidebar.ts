@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -39,7 +41,11 @@ async function handler(ctx) {
     const sidebarUrlData = await ofetch(sidebarUrl);
     const list = sidebarUrlData.data[sec];
 
-    const items = await Promise.all(list.filter((item) => item.contId).map((item) => utils.ProcessItem(item, ctx)));
+    const items = await pMap(
+        list.filter((item) => item.contId),
+        (item) => utils.ProcessItem(item, ctx),
+        { concurrency: 3 }
+    );
     return {
         title: `澎湃新闻 - ${sections[sec] ?? sec}`,
         item: items,

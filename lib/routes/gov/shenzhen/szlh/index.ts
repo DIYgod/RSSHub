@@ -58,7 +58,8 @@ async function handler(ctx) {
             const a = $item.find('a');
 
             // Extract the date from <i>
-            const date = a.find('i').text();
+            const date = a.find('i').text().trim();
+            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
 
             // Remove <i> to get only the visible text
             const textOnly = a.find('i').remove().end().text();
@@ -66,7 +67,7 @@ async function handler(ctx) {
             return {
                 title: textOnly,
                 link: a.attr('href'),
-                pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 0),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 

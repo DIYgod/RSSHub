@@ -1,25 +1,27 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, parseItem, parsePost } from './utils';
 
-const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined;
+const handler = async (ctx): Promise<Data> => {
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
 
     const pageResponse = await ofetch(`${baseUrl}/wp-json/wp/v2/pages/89173`);
     const postsResponse = await parsePost(limit, undefined);
 
     const pageInfo = pageResponse.yoast_head_json;
+    const image = pageInfo.og_image?.[0]?.url;
     const items = parseItem(postsResponse);
 
     return {
         title: pageInfo.title,
         description: pageInfo.og_site_name,
-        image: pageInfo.og_image[0].url,
-        logo: pageInfo.og_image[0].url,
-        icon: pageInfo.og_image[0].url,
+        image,
+        logo: image,
+        icon: image,
         link: pageInfo.canonical,
-        lang: 'zh-TW',
+        language: 'zh-TW',
         item: items,
     };
 };

@@ -34,7 +34,7 @@ async function handler(ctx): Promise<Data> {
 
     const url = 'https://hb1jt3kre9-dsn.algolia.net/1/indexes/*/queries';
 
-    const items = await cache.tryGet(`skeb:search:${keyword}`, async () => {
+    const items = await cache.tryGet(`skeb:search:v2:${keyword}`, async () => {
         const data = await ofetch(url, {
             method: 'POST',
             headers: {

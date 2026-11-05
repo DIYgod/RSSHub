@@ -21,7 +21,8 @@ export const route: Route = {
     name: '文章',
     radar: [
         {
-            source: ['www.elecfans.com'],
+            source: ['www.elecfans.com/article/:atype'],
+            target: '/article/:atype',
         },
     ],
     maintainers: ['tian051011'],

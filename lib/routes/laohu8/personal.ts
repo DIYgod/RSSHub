@@ -42,9 +42,10 @@ async function handler(ctx) {
 
     const items = data.map((item) => ({
         title: item.title,
+        author: item.author?.name,
         description: String(item.htmlText).replaceAll('\n', '<br><br>'),
         link: `${rootUrl}/post/${item.id}`,
-        pubDate: parseDate(item.gmtCreate),
+        pubDate: item.gmtCreate === undefined || item.gmtCreate === null ? undefined : parseDate(item.gmtCreate),
     }));
 
     return {

@@ -13,6 +13,8 @@ const handler = async () => {
         xmlMode: true,
     });
 
+    const sourceDate = $('pubDate').text();
+    const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
     const description = $('item').first().find('description');
 
     const $$ = load(description.text());
@@ -27,7 +29,7 @@ const handler = async () => {
             return {
                 title: area,
                 description: degree,
-                pubDate: parseDate($('pubDate').text()),
+                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
                 link: pageUrl,
                 guid: `${$('guid').text()}#${area}`,
             };

@@ -1,10 +1,21 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+async function getOptionalPublicationDate(link: string): Promise<Date | undefined> {
+    try {
+        return await getPublicationDate(link);
+    } catch {
+        // The original route retains listing metadata if the dedicated date lookup fails.
+        return;
+    }
+}
 
 const baseUrl = 'https://jwc.jiangnan.edu.cn';
 
@@ -37,7 +48,7 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['fuzy112'],
     features: { antiCrawler: true },
-    description: `| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
+    description: `| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjx     |
 | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
 
@@ -47,10 +58,22 @@ export const route: Route = {
     handler,
 };
 
+const getPublicationDate = (link: string) =>
+    cache.tryGet(`jiangnan:publication:${link}`, async () => {
+        const html = await ofetch(link);
+        const $ = load(html);
+        const date = $('form[name="_newscontent_fromname"] .zw-other')
+            .text()
+            .match(/时间[：:]\s*(\d{4}-\d{2}-\d{2})/)?.[1];
+        return date ? parseDate(`${date}T00:00:00+08:00`) : undefined;
+    });
+
 async function handler(ctx: Context) {
     const { type = 'all' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError(`Unknown notice category: ${type}. Choose ${Object.keys(map).join(', ')}.`);
+    }
     const link = `${baseUrl}${map[type]}`;
-    const date = new Date();
 
     const response = await ofetch(link, {
         headers: {
@@ -63,19 +86,31 @@ async function handler(ctx: Context) {
     const items = $('.pg-list>ul>li')
         .slice(0, 10)
         .toArray()
-        .map((elem) => {
-            const foodTime = $('span.food-time', elem).text();
-            const pubDate = timezone(parseDate(`${date.getFullYear()}-${foodTime}`), 8);
+        .map((elem): DataItem | null => {
+            const title = $('a', elem).attr('title');
+            if (!title) {
+                return null;
+            }
             return {
                 link: new URL($('a', elem).attr('href')!, link).href,
-                title: $('a', elem).attr('title'),
-                pubDate: pubDate > date ? timezone(parseDate(`${date.getFullYear() - 1}-${foodTime}`), 8) : pubDate,
+                title,
             };
-        }) as DataItem[];
+        })
+        .filter((item) => item !== null);
+
+    const datedItems = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            // An unavailable full date must not turn a month/day into a guessed year.
+            pubDate: await getOptionalPublicationDate(item.link!),
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         link,
         title: $('title').text(),
-        item: items,
+        item: datedItems,
     };
 }

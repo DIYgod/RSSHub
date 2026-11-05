@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -25,12 +26,9 @@ async function handler() {
     const rootUrl = 'https://getdr.com/最新詐騙情報';
     const apiUrl = 'https://public-api.wordpress.com/rest/v1.1/sites/demogetdr.wordpress.com/posts';
 
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
+    const posts = await fetchPosts(apiUrl);
 
-    const list = response.data.posts.map((item) => ({
+    const list = posts.map((item) => ({
         link: item.URL,
         title: item.title,
         author: item.author.name,
@@ -63,4 +61,16 @@ async function handler() {
         link: rootUrl,
         item: items,
     };
+}
+
+async function fetchPosts(apiUrl: string) {
+    try {
+        const response = await got(apiUrl);
+        return response.data.posts;
+    } catch (error) {
+        if (error instanceof FetchError && error.statusCode === 403 && error.data?.data?.error === 'unauthorized' && error.data.data.reason === 'unauthenticated') {
+            throw new Error("GETDR's original WordPress blog is private. Its articles are unavailable to anonymous requests.", { cause: error });
+        }
+        throw error;
+    }
 }

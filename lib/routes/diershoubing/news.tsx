@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const renderDesc = (data: { description: string; type: string; acontent: any }) => renderToString(<DiershoubingDescription {...data} />);
 
@@ -32,7 +33,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { data } = await got(`https://api.diershoubing.com:5001/feed/tag/?pn=0&rn=${ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20}&tag_type=0&src=ios`);
+    const limit = getRouteLimit(ctx, 20);
+    const { data } = await got(`https://api.diershoubing.com:5001/feed/tag/?pn=0&rn=${limit}&tag_type=0&src=ios`);
 
     const items = data.feeds.map((item) => {
         let acontent;

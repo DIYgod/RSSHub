@@ -1,9 +1,49 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+const feedLanguages = new Map<string, Language>([
+    // Arabic's valid language tag is absent from the shared Language union.
+    ['ar', 'ar' as Language],
+    ['de', 'de'],
+    ['en', 'en'],
+    ['es', 'es'],
+    ['fr', 'fr'],
+    ['it', 'it'],
+    ['ja', 'ja'],
+    ['pt', 'pt'],
+    ['ru', 'ru'],
+    ['zh', 'zh'],
+    ['zh-CN', 'zh-CN'],
+]);
+
+async function getArticle(link: string): Promise<Partial<DataItem>> {
+    const detailResponse = await got({
+        method: 'get',
+        url: link,
+    });
+
+    const content = load(detailResponse.data);
+
+    content('.si-detail__content .si-grid').remove();
+    content('.si-detail__content .si-teaser, .article-main .teaser-wide-card').remove();
+    content('.show-for-sr, time, address, .si-detail__translation').remove();
+
+    content('.si-detail__content picture').each((_, el) => {
+        content(el).html(`<img src="${content(el).find('source').first().attr('srcset')}">`);
+    });
+
+    const description = content('.si-detail__content, .article-main').first().html();
+    const author = content('meta[name="author"]').attr('content');
+    const guid = detailResponse.data.match(/content_id: "(.*)",/)?.[1];
+
+    return { description, author, guid };
+}
 
 export const route: Route = {
     path: '/:language?/:category?',
@@ -43,57 +83,38 @@ async function handler(ctx) {
     let $ = load(response.data);
 
     const title = $('title').text();
+    const feedLanguage = feedLanguages.get($('html').attr('lang') ?? '');
 
-    const fragmentResponse = await got({
-        method: 'get',
-        url: `${rootUrl}${$('main div[data-fragment-placeholder]').attr('data-fragment-placeholder')}`,
-    });
+    const fragmentPath = $('main div[data-fragment-placeholder]').attr('data-fragment-placeholder');
+    if (fragmentPath) {
+        const fragmentResponse = await got({
+            method: 'get',
+            url: new URL(fragmentPath, rootUrl).href,
+        });
+        $ = load(fragmentResponse.data);
+    }
 
-    $ = load(fragmentResponse.data);
-
-    let items = $('.si-teaser__link')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+    const currentTemplate = $('.page-main .teaser-wide-card').length > 0;
+    let items = $(currentTemplate ? '.page-main .teaser-wide-card' : '.si-teaser__link')
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.find(currentTemplate ? 'time' : '.si-teaser__date').attr('datetime');
 
             return {
-                link: `${rootUrl}${$item.attr('href')}`,
-                title: $item.find('.si-teaser__title').text(),
-                pubDate: parseDate($item.find('.si-teaser__date').attr('datetime')!),
+                link: new URL(currentTemplate ? $item.find('.teaser-wide-card__link').attr('href')! : $item.attr('href')!, rootUrl).href,
+                title: $item.find(currentTemplate ? '.teaser-wide-card__title' : '.si-teaser__title').text(),
+                pubDate: date ? parseDate(date) : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('.si-detail__content .si-grid').remove();
-                content('.si-detail__content .si-teaser').remove();
-                content('.show-for-sr, time, address, .si-detail__translation').remove();
-
-                content('picture').each((_, el) => {
-                    content(el).html(`<img src="${content(el).find('source').first().attr('srcset')}">`);
-                });
-
-                item.description = content('.si-detail__content').html();
-                item.author = content('meta[name="author"]').attr('content');
-                item.guid = detailResponse.data.match(/content_id: "(.*)",/)[1];
-
-                return item;
-            })
-        )
-    );
+    items = await pMap(items, async (item) => ({ ...item, ...(await cache.tryGet(`swissinfo:article:${item.link}`, () => getArticle(item.link!))) }), { concurrency: 3 });
 
     return {
         title,
         link: currentUrl,
+        language: feedLanguage,
         item: items,
     };
 }

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -39,6 +40,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { tag, type, option } = ctx.req.param();
+    if (type !== '1' && type !== '2') {
+        throw new InvalidParameterError('Invalid type: use 1 for latest articles or 2 for popular articles.');
+    }
     const needFullText = option === 'fulltext';
 
     const baseUrl = 'https://www.pingwest.com';

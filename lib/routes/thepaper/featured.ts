@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -40,12 +41,12 @@ async function handler(ctx) {
     const data = JSON.parse(nextData);
     const list = [...data.props.pageProps.data.list, ...data.props.pageProps.topData.recommendImg];
 
-    const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
+    const items = await pMap(list, (item) => utils.ProcessItem(item, ctx), { concurrency: 3 });
     return {
         title: '澎湃新闻 - 首页头条',
         link: 'https://m.thepaper.cn',
         item: items,
         itunes_author: '澎湃新闻',
-        image: utils.ExtractLogo(response),
+        image: utils.ExtractLogo($),
     };
 }

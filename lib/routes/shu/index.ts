@@ -1,4 +1,5 @@
-import { load } from 'cheerio'; // cheerio@1.0.0
+import { load } from 'cheerio';
+import pMap from 'p-map'; // cheerio@1.0.0
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -70,20 +71,23 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`shu:shunews:v3:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
                 const content = load(detailResponse.data);
 
-                item.description = content('#vsb_content .v_news_content').html() || item.description;
+                item.description = content('#vsb_content .v_news_content, #vsb_content_500 .v_news_content').html() || item.description;
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

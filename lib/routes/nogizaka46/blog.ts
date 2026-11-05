@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const rootUrl = 'https://www.nogizaka46.com';
 
@@ -20,6 +20,10 @@ export const route: Route = {
     radar: [
         {
             source: ['blog.nogizaka46.com/s/n46/diary/MEMBER'],
+            target: '/blog',
+        },
+        {
+            source: ['www.nogizaka46.com/s/n46/diary/MEMBER'],
             target: '/blog',
         },
     ],
@@ -86,7 +90,6 @@ async function handler(ctx) {
     const list = JSON.parse(response.data.slice(4).slice(0, -2)).data;
 
     return {
-        allowEmpty: true,
         title: '乃木坂46 公式ブログ',
         link: 'https://www.nogizaka46.com/s/n46/diary/MEMBER',
         item:
@@ -94,7 +97,7 @@ async function handler(ctx) {
             list.map((item) => ({
                 title: item.title,
                 link: item.link,
-                pubDate: parseDate(item.date),
+                pubDate: item.date ? parseDateInTimezone(item.date, 9) : undefined,
                 author: item.name,
                 description: item.text,
                 guid: rootUrl + new URL(item.link).pathname,

@@ -49,6 +49,7 @@ async function handler() {
                 title,
                 link,
                 pubDate,
+                updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
                 description: rendered,
             };
         }),

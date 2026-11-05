@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -30,6 +31,9 @@ export const route: Route = {
 
 async function handler() {
     const cookie = config.btbyr.cookies;
+    if (!cookie) {
+        throw new ConfigNotFoundError('BTBYR_COOKIE is required to access the BTBYR funbox.');
+    }
     const url = config.btbyr.host || 'https://bt.byr.cn/';
     const response = await ofetch(`${url}log.php?action=funbox`, {
         headers: {

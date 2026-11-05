@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -35,21 +36,29 @@ async function handler() {
             const a = $item.find('.column-news-title a');
 
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 pubDate: timezone(parseDate($item.find('.column-news-date').text()), 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async (): Promise<Pick<DataItem, 'description' | 'author'>> => {
                 const detail = await ofetch(item.link);
                 const $detail = load(detail);
-                item.description = $detail('.wp_articlecontent').html();
-                return item;
-            })
-        )
+                const author = $detail('.arti-metas span')
+                    .toArray()
+                    .map((span) => $detail(span).text().trim())
+                    .find((text) => text.startsWith('作者：'))
+                    ?.replace(/^作者：/, '')
+                    .trim();
+                return { description: $detail('.wp_articlecontent').html(), author: author || undefined };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

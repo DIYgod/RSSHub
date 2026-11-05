@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
-import { baseURL, playwrightGet } from './utils';
+import { baseURL, get } from './utils';
 
 export const route: Route = {
     path: '/software/:name/:routeParams?',
@@ -12,7 +11,7 @@ export const route: Route = {
     parameters: { name: 'Software name', routeParams: 'Filters of software type' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -35,21 +34,20 @@ async function handler(ctx) {
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     const link = `https://alternativeto.net/software/${name}/?${query.toString()}`;
 
-    // use Playwright due to the obstacle by cloudflare challenge
-    const html = await playwrightGet(link, cache);
+    const html = await get(link);
     const $ = load(html);
 
     return {
-        title: $('.Heading_h1___Cf5Y').text().trim(),
-        description: $('.intro-text').text().trim(),
+        title: $('h1').contents().first().text(),
+        description: $('.intro-text').text(),
         link,
-        item: $('.AppListItem_appInfo__h9cWP')
+        item: $('[data-testid^="item-"]')
             .toArray()
             .map((element) => {
                 const item = $(element);
-                const title = item.find('.Heading_h2___LwQD').text().trim();
-                const link = `${baseURL}${item.find('.Heading_h2___LwQD a').attr('href')}`;
-                const description = item.find('.AppListItem_description__wtODK').text().trim();
+                const title = item.find('h2').text();
+                const link = `${baseURL}${item.find('[data-testid="app-header"] a').attr('href')}`;
+                const description = item.find('[data-testid="main-app-info"] p').text();
 
                 return {
                     title,

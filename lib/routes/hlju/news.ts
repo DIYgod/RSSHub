@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -34,8 +36,40 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hdxw.hlju.edu.cn/:category.htm', 'hdxw.hlju.edu.cn/'],
-            target: '/news/:category',
+            source: ['hdxw.hlju.edu.cn/'],
+            target: '/news',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/hdyw.htm'],
+            target: '/news/hdyw',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/jjxy.htm'],
+            target: '/news/jjxy',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/rwfc.htm'],
+            target: '/news/rwfc',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/xwdt.htm'],
+            target: '/news/xwdt',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/jxky.htm'],
+            target: '/news/jxky',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/xyjw.htm'],
+            target: '/news/xyjw',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/jlhz.htm'],
+            target: '/news/jlhz',
+        },
+        {
+            source: ['hdxw.hlju.edu.cn/cxcy.htm'],
+            target: '/news/cxcy',
         },
     ],
     name: '新闻网',
@@ -51,86 +85,68 @@ async function handler(ctx) {
     const response = await ofetch(listUrl);
     const $ = load(response);
 
-    // 从页面自动获取栏目名称
+    // Read the category name from the listing.
     const categoryName = $('.bgtitle_list').text().trim() || '黑大要闻';
 
-    // 查找所有新闻链接 - 匹配 info/ 路径的链接，使用 map 而不是 push
+    // Extract the first page of article links.
     const list = $('a[href*="info/"]')
         .toArray()
         .map((element) => {
             const item = $(element);
             const link = item.attr('href');
-            const title = item.text().trim();
+            const title = item.text();
 
-            if (!title || !link || title.length < 5) {
+            if (!title.trim() || !link) {
                 return null;
             }
 
-            // 查找日期信息 - 在同一行或附近
-            const parent = item.parent();
-            const dateMatch = parent.text().match(/(\d{4})\/(\d{2})\/(\d{2})/);
+            // Read the publication date from the same table row.
+            const row = item.closest('tr');
+            const parent = row.length ? row : item.parent();
+            const dateMatch = parent.text().match(/(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})日?/);
 
             return {
                 title,
-                link: link.startsWith('http') ? link : `${baseUrl}/${link}`,
-                pubDate: dateMatch ? parseDate(dateMatch[0].replaceAll('/', '-')) : undefined,
+                link: new URL(link, listUrl).href,
+                pubDate: dateMatch ? parseDateInTimezone(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`, 8) : undefined,
             } satisfies DataItem;
         })
         .filter((item): item is NonNullable<typeof item> => item !== null);
 
-    // 限制返回数量并去重
-    const uniqueList = list.filter((item, index, arr) => arr.findIndex((i) => i.link === item.link) === index).slice(0, 15);
+    const limit = getRouteLimit(ctx, 15);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit);
+    const uniqueList = list.filter((item, index, arr) => arr.findIndex((i) => i.link === item.link) === index).slice(0, candidateLimit);
 
-    // 获取每篇文章的详细内容
-    const items = await Promise.all(
-        uniqueList.map((item) =>
-            cache.tryGet(item.link, async () => {
-                // 跳过外部链接
-                if (!item.link.includes('hdxw.hlju.edu.cn')) {
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        description: '外部链接，请点击查看原文',
-                        pubDate: item.pubDate,
-                    };
-                }
+    const items = await pMap(
+        uniqueList,
+        async (item) => {
+            if (new URL(item.link).hostname !== new URL(baseUrl).hostname) {
+                return item;
+            }
 
+            const details = await cache.tryGet(`hlju:article-details:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $detail = load(detailResponse);
-
-                // 提取文章内容 - 只使用主要内容选择器
                 const content = $detail('.v_news_content');
-                let description: string;
-
-                if (content.length > 0) {
-                    // 清理内容
-                    content.find('style, .print, .share').remove();
-                    description = content.html() || '';
-                } else {
-                    description = '内容获取失败，请点击查看原文';
+                content.find('style, .print, .share').remove();
+                const description = content.html();
+                if (!description?.trim()) {
+                    throw new Error(`The Heilongjiang University article has no main content: ${item.link}`);
                 }
 
-                // 提取精确的发布时间
-                let pubDate = item.pubDate;
-                const timeElement = $detail('.timestyle110144');
-                if (timeElement.length > 0) {
-                    const timeText = timeElement.text().trim();
-                    const timeMatch = timeText.match(/(\d{4}[-/]\d{2}[-/]\d{2})\s*(\d{2}:\d{2}(?::\d{2})?)/);
-                    if (timeMatch) {
-                        const dateStr = timeMatch[1].replaceAll('/', '-');
-                        const timeStr = timeMatch[2];
-                        pubDate = parseDate(`${dateStr} ${timeStr}`);
-                    }
-                }
-
+                const timeMatch = $detail('.timestyle110144')
+                    .text()
+                    .match(/(\d{4}[-/]\d{2}[-/]\d{2})\s*(\d{2}:\d{2}(?::\d{2})?)/);
+                const pubDate = timeMatch ? parseDateInTimezone(`${timeMatch[1].replaceAll('/', '-')} ${timeMatch[2]}`, 8) : undefined;
                 return {
-                    title: item.title,
-                    link: item.link,
-                    description: description || '无法获取文章内容，请点击查看原文',
-                    pubDate,
+                    description,
+                    ...(pubDate && !Number.isNaN(pubDate.getTime()) && { pubDate }),
                 };
-            })
-        )
+            });
+
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

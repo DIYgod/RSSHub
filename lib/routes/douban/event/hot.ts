@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/event/hot/:locationId',
@@ -19,6 +21,14 @@ export const route: Route = {
     handler,
 };
 
+const getPubDate = (dateText?: string): Date | undefined => {
+    if (!dateText || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateText)) {
+        return undefined;
+    }
+    const date = timezone(parseDate(dateText, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
 async function handler(ctx) {
     const { locationId = 0 } = ctx.req.param();
     const referer = 'https://m.douban.com/app_topic/event_hot';
@@ -32,9 +42,10 @@ async function handler(ctx) {
     });
 
     return {
+        sortItems: false,
         title: `豆瓣同城-热门活动-${locationId}`,
         link: referer,
-        item: response.data.subject_collection_items.map(({ title, url, cover, subtype, info, price_range }) => {
+        item: response.data.subject_collection_items.map(({ title, url, cover, subtype, info, price_range, date }) => {
             const description = `<img src="${cover.url}"><br>
               ${info}/${subtype}/${price_range}
             `;
@@ -42,6 +53,7 @@ async function handler(ctx) {
             return {
                 title,
                 description,
+                pubDate: getPubDate(date),
                 link: url,
             };
         }),

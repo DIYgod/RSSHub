@@ -65,7 +65,6 @@ async function handler(ctx) {
     const data = response.data.data.repository.stargazers.edges.toReversed();
 
     return {
-        allowEmpty: true,
         title: `${user}/${repo}’s stargazers`,
         link: host,
         item: data.map((follower) => ({

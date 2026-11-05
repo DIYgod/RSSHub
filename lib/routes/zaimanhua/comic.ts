@@ -19,6 +19,21 @@ interface ComicDetailResponse {
         comicInfo: {
             title: string;
             comicPy: string;
+            statusTagList?: Array<{
+                tagName: string;
+            }>;
+            authorsTagList?: Array<{
+                tagName: string;
+            }>;
+            cateTagList?: Array<{
+                tagName: string;
+            }>;
+            zoneTagList?: Array<{
+                tagName: string;
+            }>;
+            themeTagList?: Array<{
+                tagName: string;
+            }>;
             chapterList: Array<{
                 title: string;
                 data: Chapter[];
@@ -57,7 +72,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['manhua.zaimanhua.com/details', 'manhua.zaimanhua.com/details/:id'],
+            source: ['manhua.zaimanhua.com/details/:id'],
             target: '/comic/:id',
         },
     ],
@@ -87,7 +102,7 @@ async function handler(ctx) {
     const response = await ofetch<ComicDetailResponse>(currentComicUrl, { headers });
 
     const comicInfo = response.data.comicInfo;
-    const status = comicInfo.chapterList[0].title; // 更新状态
+    const status = comicInfo.statusTagList?.[0]?.tagName;
     const data = comicInfo.chapterList[0].data;
     const comicPy = comicInfo.comicPy;
     const comicTitle = comicInfo.title;
@@ -97,22 +112,25 @@ async function handler(ctx) {
             // 当前漫画章节内容的 API
             const chapterUrl = `${baseUrl}/api/v1/comic2/chapter/detail?comic_id=${id}&chapter_id=${item.chapter_id}`;
 
-            return await cache.tryGet(chapterUrl, async () => {
-                // 获取章节内容
+            const pageUrls = await cache.tryGet(`${chapterUrl}:pages`, async () => {
                 const chapterResponse = await ofetch<ChapterDetailResponse>(chapterUrl, { headers });
-
-                const chapterData = chapterResponse.data;
-                const description = renderComic(chapterData.chapterInfo.page_url || []);
-
-                return {
-                    title: `[${status}] | ${comicTitle} - ${item.chapter_title}`,
-                    category: [status],
-                    image: chapterData.chapterInfo.page_url?.[0] || '',
-                    link: `${baseUrl}/view/${comicPy}/${id}/${item.chapter_id}`,
-                    pubDate: parseDate(item.updatetime * 1000),
-                    description,
-                };
+                return chapterResponse.data.chapterInfo.page_url || [];
             });
+
+            return {
+                title: `${status ? `[${status}] | ` : ''}${comicTitle} - ${item.chapter_title}`,
+                category: [
+                    ...(status ? [status] : []),
+                    ...(comicInfo.cateTagList ?? []).map((tag) => tag.tagName),
+                    ...(comicInfo.zoneTagList ?? []).map((tag) => tag.tagName),
+                    ...(comicInfo.themeTagList ?? []).map((tag) => tag.tagName),
+                ],
+                author: comicInfo.authorsTagList?.map((tag) => tag.tagName).join(', '),
+                image: pageUrls[0] || '',
+                link: `${baseUrl}/view/${comicPy}/${id}/${item.chapter_id}`,
+                pubDate: parseDate(item.updatetime * 1000),
+                description: renderComic(pageUrls),
+            };
         },
         { concurrency: 3 }
     );

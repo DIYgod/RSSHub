@@ -28,8 +28,8 @@ async function handler(ctx: Context): Promise<Data> {
             const date = $(titleEle).parent().next().find('td').text().split('-', 1)[0];
 
             return {
-                title: $(titleEle).attr('title')?.trim() || '',
-                link: $(titleEle).find('a').attr('href') || '',
+                title: $(titleEle).find('a').attr('title') || $(titleEle).find('a').text(),
+                link: new URL($(titleEle).find('a').attr('href') || '', url).href,
                 pubDate: date ? timezone(date, 8) : undefined,
             };
         });

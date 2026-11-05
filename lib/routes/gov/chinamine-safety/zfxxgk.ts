@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 import { fetchData, processItems, rootUrl } from './util';
 
@@ -210,7 +212,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'fdzdgknr/tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
+    // Detail timestamps can refine the dates on the list page.
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
     const currentUrl = new URL(`zfxxgk/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
 
@@ -219,15 +223,16 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('ul#ogi-list li a, div#ogi-list dd a')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const pubDate = $item.parent().find('span').text();
 
             return {
                 title: $item.contents().first().text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
-                pubDate: parseDate($item.parent().find('span').text()),
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
             };
         });
 

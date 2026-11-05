@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 import { apiTopicUrl, processItems, rootUrl } from './util';
@@ -30,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const currentUrl = new URL(category ?? '', rootUrl).href;
 
@@ -56,9 +57,9 @@ async function handler(ctx) {
             rootUrl,
         }),
         author: item.siteNameDisplay,
-        category: [...(item.entityList.map((c) => c.name) ?? []), ...(item.tagList.map((c) => c.name) ?? [])],
+        category: [...(item.entityList?.map((c) => c.name) ?? []), ...(item.tagList?.map((c) => c.name) ?? [])],
         guid: item.uid,
-        pubDate: parseDate(item.publishDate),
+        pubDate: item.publishDate ? parseDate(item.publishDate) : undefined,
     }));
 
     items = await processItems(items);

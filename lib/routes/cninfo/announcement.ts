@@ -45,6 +45,8 @@ const plateMap = {
     fund: 'fund',
 };
 
+const announcementDateFormatter = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' });
+
 async function handler(ctx: Context) {
     const { column, code, orgId, category = 'all', search: searchKey = '' } = ctx.req.param();
     const plate = plateMap[column] ?? '';
@@ -80,12 +82,13 @@ async function handler(ctx: Context) {
         title: `${announcementsList.at(-1)?.secName ?? ''}公告-巨潮资讯`,
         link: url,
         item: announcementsList.map((item) => {
-            const announcementTime = parseDate(item.announcementTime).toISOString().slice(0, 10);
+            const pubDate = parseDate(item.announcementTime);
+            const announcementTime = announcementDateFormatter.format(pubDate);
 
             return {
                 title: item.announcementTitle,
                 link: `http://www.cninfo.com.cn/new/disclosure/detail?plate=${plate}&orgId=${orgId}&stockCode=${code}&announcementId=${item.announcementId}&announcementTime=${announcementTime}`,
-                pubDate: parseDate(item.announcementTime),
+                pubDate,
             };
         }),
     };

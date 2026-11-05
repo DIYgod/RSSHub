@@ -9,7 +9,7 @@ function parseJSONP(jsonpData) {
 
         return JSON.parse(jsonString);
     } catch (error_) {
-        const error = new Error(`Failed to convert jsonp to json. ${(error_ as Error).message}`);
+        const error = new Error(`Failed to convert jsonp to json. ${error_ instanceof Error ? error_.message : error_}`);
         throw error;
     }
 }

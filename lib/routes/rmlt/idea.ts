@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -29,20 +30,22 @@ async function handler() {
             link: $(item).attr('href')!,
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
+                const date = content('.date').text().trim();
                 return {
                     ...item,
                     title: content('.article-title').text(),
                     description: content('.article-content').html(),
-                    pubDate: timezone(parseDate(content('.date').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), 8) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,7 +1,15 @@
+# cf dev, cf build, and cf deploy read cloudflare.config.ts and wrangler.config.ts instead of this file.
+# It is kept for lib/worker.test.ts, which runs the Worker with Wrangler's unstable_dev.
+# Keep it in sync with cloudflare.config.ts.
 name = "rsshub"
 main = "dist-worker/worker.mjs"
-compatibility_date = "2025-06-17"
-compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2026-09-01"
+# No nodejs_compat needed, read https://developers.cloudflare.com/workers/runtime-apis/nodejs/#get-started
+compatibility_flags = ["global_fetch_strictly_public"]
+
+find_additional_modules = true
+base_dir = "dist-worker/modules"
+rules = [{ type = "Data", globs = ["data_files/**"], fallthrough = true }]
 
 # Serve static assets from lib/assets
 assets = { directory = "lib/assets" }
@@ -21,11 +29,28 @@ enabled = true
 [browser]
 binding = "BROWSER"
 
+# Share Browser Run sessions across requests and Worker isolates.
+[[durable_objects.bindings]]
+name = "BROWSER_SESSIONS"
+class_name = "BrowserSession"
+
+[[migrations]]
+tag = "browser-session-v1"
+new_sqlite_classes = ["BrowserSession"]
+
 # KV namespace for caching (auto-provisioned on first deploy)
 [[kv_namespaces]]
 binding = "CACHE"
 
+# PLAYWRIGHT_WS_ENDPOINT takes priority over BROWSER; use a matching Playwright version.
+# Optional service binding when the WebSocket server is another Worker on this account.
+# [[services]]
+# binding = "PLAYWRIGHT_SERVICE"
+# service = "your-playwright-service"
+
 [vars]
+# Only use the service binding for this endpoint origin.
+# PLAYWRIGHT_SERVICE_ORIGIN = "https://your-playwright-service.example.com"
 # Environment variables can be set here or via wrangler secret
 # DEBUG_INFO = "false"
 

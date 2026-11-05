@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/events',
-    name: 'Link3 Events',
+    name: 'Events',
     url: 'link3.to',
     maintainers: ['cxheng315'],
     example: '/link3/events',

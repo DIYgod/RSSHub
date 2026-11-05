@@ -26,6 +26,7 @@ async function handler(ctx: Context) {
     return {
         title: `${id}'s participations`,
         link,
+        language: 'en' as const,
         item: $('.card')
             .toArray()
             .map((item) => {

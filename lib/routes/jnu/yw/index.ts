@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,26 +30,31 @@ async function handler(ctx: Context) {
 
     const list = $('li.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('h4.news_title a');
+            const date = $item
+                .find('.news_time')
+                .text()
+                .match(/\d{4}-\d{1,2}-\d{1,2}/)?.[0];
             return {
                 title: a.text(),
-                link: a.attr('href')!,
+                link: new URL(a.attr('href')!, link).href,
                 description: $item.find('.news_abstract').text().trim(),
-                pubDate: timezone(parseDate($item.find('.news_time').text().replace('发布日期：', ''), 'YYYY-MM-DD'), 8),
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 item.description = $('.article').html() ?? item.description;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

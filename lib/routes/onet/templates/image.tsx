@@ -10,14 +10,14 @@ type ImageProps = {
 const ImageFigure = ({ url, alt, caption, author }: ImageProps) => (
     <figure>
         <img src={url} alt={alt} />
-        <figcation>
+        <figcaption>
             {caption ? (
                 <>
                     <cite>{caption}</cite> -{' '}
                 </>
             ) : null}
             {author}
-        </figcation>
+        </figcaption>
     </figure>
 );
 

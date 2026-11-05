@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -18,7 +20,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     name: 'Category',
@@ -30,7 +32,7 @@ export const route: Route = {
 
 | Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
 | -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
-| politics | cross-strait | business | society | science & tech | culture | sports |`,
+| politics | cross-strait | business | society | sci-tech       | culture | sports |`,
 };
 
 async function handler(ctx) {
@@ -45,21 +47,34 @@ async function handler(ctx) {
         form: {
             action: 4,
             category,
-            pageidx: 2,
+            pageidx: 1,
             pagesize: 50,
         },
     });
 
-    const list = response.data.ResultData.Items.map((item) => ({
-        title: item.HeadLine,
-        link: item.PageUrl,
-        category: item.ClassName,
-        pubDate: timezone(parseDate(item.CreateTime), 8),
-    }));
+    let list: DataItem[] = response.data.ResultData.Items.map((item) => {
+        const pubDate = item.CreateTime ? timezone(parseDate(item.CreateTime), 8) : undefined;
+        return {
+            title: item.HeadLine,
+            link: item.PageUrl,
+            category: item.ClassName,
+            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+        };
+    });
+    const limit = getRouteLimit(ctx, 50);
+    const nativeOrder = ctx.req.query('sorted') === 'false';
+    const allDated = list.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    if (!nativeOrder && allDated) {
+        list = list.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+    }
+    if (nativeOrder || allDated) {
+        list = list.slice(0, limit);
+    }
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`focustaiwan:article-body:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -73,30 +88,34 @@ async function handler(ctx) {
 
                 const image = content('meta[property="og:image"]').attr('content');
                 const paragraph = content('.paragraph').html();
-                const matches = detailResponse.data.match(/var pAudio_url = "(.*)\.mp3";/);
+                const matches = detailResponse.data.match(/var pAudio_url = "([^" ]+\.mp3)";/);
 
-                if (matches) {
-                    item.enclosure_url = matches[1];
-                    item.enclosure_type = 'audio/mpeg';
-                    item.itunes_item_image = image;
-                }
-
-                item.description = renderToString(
+                const description = renderToString(
                     <>
                         <img src={image} />
                         <div>{paragraph ? raw(paragraph) : null}</div>
                     </>
                 );
 
-                return item;
-            })
-        )
+                return {
+                    description,
+                    ...(matches && {
+                        enclosure_url: matches[1],
+                        enclosure_type: 'audio/mpeg',
+                        itunes_item_image: image,
+                    }),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: response.data.ResultData.MetaData.Title,
-        link: response.data.ResultData.MetaData.CanonicalUrl,
+        link: response.data.ResultData.MetaData.CanonicalUrl || `${rootUrl}/${category}`,
         item: items,
+        language: 'en' as const,
         itunes_author: 'Focus Taiwan',
         image: 'https://imgcdn.cna.com.tw/Eng/website/img/default.png',
     };

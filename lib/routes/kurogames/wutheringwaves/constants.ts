@@ -13,7 +13,6 @@ export enum Language {
 
 /** Route parameters. */
 export enum Parameter {
-    Limit = 'limit',
     Language = 'language',
 }
 

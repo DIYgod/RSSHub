@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     return {
         title: map.get(type)!.title,
-        link: `${host}${id}`,
+        link: rootUrl,
         item: items,
     };
 }

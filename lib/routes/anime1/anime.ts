@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: 'anime/:category/:name',
+    path: '/anime/:category/:name',
     name: 'Anime',
     url: 'anime1.me',
     maintainers: ['cxheng315'],

@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 
-import { fetchHacktivityEdges, parseItem } from './utils';
+import { fetchHacktivityEdges, parseItems } from './utils';
 
 export const route: Route = {
     path: '/search/:search',
@@ -22,7 +22,7 @@ async function handler(ctx: Context) {
 
     return {
         title: 'HackerOne Hacker Activity',
-        link: `https://hackerone.com/hacktivity?querystring=${search}`,
-        item: edges.map((item) => parseItem(item)),
+        link: `https://hackerone.com/hacktivity?${new URLSearchParams({ querystring: search })}`,
+        item: await parseItems(edges),
     };
 }

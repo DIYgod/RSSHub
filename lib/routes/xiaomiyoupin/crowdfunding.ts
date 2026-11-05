@@ -1,14 +1,18 @@
-import type { Route } from '@/types';
-import got from '@/utils/got';
+import pMap from 'p-map';
 
-import { renderGoods } from './templates/goods';
+import { renderCrowdfunding } from '@/routes/mi/templates/crowdfunding';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
-const base_url = 'https://m.xiaomiyoupin.com';
+import type { CrowdfundingBatchListItem, GoodsDetailItem } from './types';
+import utils from './utils';
+
 export const route: Route = {
     path: '/crowdfunding',
     categories: ['shopping'],
     example: '/xiaomiyoupin/crowdfunding',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,51 +26,42 @@ export const route: Route = {
             source: ['xiaomiyoupin.com/'],
         },
     ],
-    name: '小米有品众筹',
-    maintainers: ['bigfei'],
+    name: '众筹',
+    maintainers: ['bigfei', 'nuomi1'],
     handler,
     url: 'xiaomiyoupin.com/',
+    view: ViewType.Notifications,
 };
 
-async function handler() {
-    const resp = await got('https://home.mi.com/lasagne/page/5');
-    const site_url = resp.data.redirect.location;
+const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
+    pMap(
+        list,
+        (listItem) =>
+            cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${utils.getCrowdfundingGid(listItem)}`, async () => {
+                const detailItem = await utils.getCrowdfundingItem(listItem);
+                return getDataItem(listItem, detailItem);
+            }),
+        { concurrency: 6 }
+    );
 
-    const urlParams = new URLSearchParams(site_url);
-    const pageid = urlParams.get('pageid');
-    const sign = urlParams.get('sign');
+const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): DataItem => ({
+    title: utils.getCrowdfundingName(listItem),
+    description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
+    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingGid(listItem)}`,
+    image: utils.getCrowdfundingImage(listItem),
+    pubDate: parseDate(detailItem.crowdFunding.startTime, 'X'),
+    language: 'zh-CN',
+});
 
-    // 1. fetchPageData
-    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
-        headers: {
-            accept: '*/*',
-        },
-    });
-    const crowd_funding_floor = pageData.data.data.floors.find((floor) => floor.module_key === 'crowding');
-    const query_list = crowd_funding_floor.query_list;
+async function handler(): Promise<Data> {
+    const { list, jumpUrl } = await utils.getCrowdfundingList();
+    const items = await getDataItems(list);
 
-    // 2. fetchFloorDetailData
-    const floor_detail_data = await got.post(`${base_url}/mtop/navi/venue/batch?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
-        json: {
-            query_list,
-        },
-    });
-
-    const goodsList = floor_detail_data.data.data.result_list[0].list;
-    const items = goodsList.map((e) => {
-        const goods = e.value.goods;
-        return {
-            title: goods.name,
-            guid: `xiaomiyoupin:${goods.gid}`,
-            description: renderGoods(goods),
-            link: goods.jump_url,
-            pubDate: new Date(goods.fist_release_time * 1000).toUTCString(),
-        };
-    });
     return {
         title: '小米有品众筹',
-        link: site_url,
-        description: '小米有品众筹',
+        link: jumpUrl,
         item: items,
+        image: 'https://cnbj1.fds.api.xiaomi.com/mijia-m/trade_common/yp_logo.png',
+        language: 'zh-CN',
     };
 }

@@ -2,11 +2,12 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/central/:group/:artifact',
-    name: 'Maven Central Feed',
+    name: 'Central Feed',
     maintainers: ['chrisis58'],
     description: 'Get the latest versions of a Maven artifact from Maven Central Repository.',
     url: 'central.sonatype.com/',
@@ -23,7 +24,7 @@ export const route: Route = {
     radar: [
         {
             source: ['central.sonatype.com/artifact/:group/:artifact/:suffix', 'central.sonatype.com/artifact/:group/:artifact'],
-            target: '/maven/central/:group/:artifact',
+            target: '/central/:group/:artifact',
         },
     ],
     features: {
@@ -55,7 +56,7 @@ const DATE_REGEX = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
 async function handler(ctx) {
     const group = ctx.req.param('group');
     const artifact = ctx.req.param('artifact');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     // (org.springframework, spring-core) -> org/springframework/spring-core
     const identifier = `${group.replaceAll('.', '/')}/${artifact}`;
@@ -98,7 +99,7 @@ async function handler(ctx) {
             const match = rawText.match(DATE_REGEX);
             let pubDate: Date | undefined;
             if (match) {
-                pubDate = parseDate(match[1], 'YYYY-MM-DD HH:mm');
+                pubDate = parseDateInTimezone(match[1], 0);
             }
 
             const category = UNSTABLE_VERSION_REGEX.test(version) ? 'Unstable' : 'Stable';

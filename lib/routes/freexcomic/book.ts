@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const jjmhw = 'http://www.jjmhw.cc';
 
@@ -22,7 +24,7 @@ const getLatestAddress = () =>
 
 const handler = async (ctx) => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit')) || 10;
+    const limit = getRouteLimit(ctx, 10);
     const addresses = await getLatestAddress();
     const link = `${addresses[0]}book/${id}`;
 
@@ -42,8 +44,9 @@ const handler = async (ctx) => {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
@@ -56,8 +59,8 @@ const handler = async (ctx) => {
                 item.description = comicpage.html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

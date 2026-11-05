@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -30,13 +31,13 @@ export const route: Route = {
 
 \`Item id\` is the field between \`itch.io\` and \`/devlog\` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is \`https://teamterrible.itch.io/the-baby-in-yellow/devlog\`, where the field between \`itch.io\` and \`/devlog\` is \`the-baby-in-yellow\`.
 
-So the route is [\`/itch/devlogs/teamterrible/the-baby-in-yellow\`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).`,
+So the route is [\`/itch/devlog/teamterrible/the-baby-in-yellow\`](https://rsshub.app/itch/devlog/teamterrible/the-baby-in-yellow).`,
 };
 
 async function handler(ctx) {
     const user = ctx.req.param('user') ?? '';
     const id = ctx.req.param('id') ?? '';
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     if (!isValidHost(user)) {
         throw new InvalidParameterError('Invalid user');
     }
@@ -59,13 +60,14 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: timezone(parseDate($item.text()), 8),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`itch:devlog-details:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -75,18 +77,20 @@ async function handler(ctx) {
 
                 const infoJson = content('script[type="application/ld+json"]:contains("@type":"BlogPosting")');
                 const info = JSON.parse(content(infoJson).text());
-                item.author = info.author.name;
-                item.pubDate = info.datePublished;
-                item.description = renderDescription({
-                    images: content('.post_image')
-                        .toArray()
-                        .map((e) => content(e).attr('src')!),
-                    description: content('.post_body').html() ?? undefined,
-                });
-
-                return item;
-            })
-        )
+                const date = info.datePublished ? parseDate(info.datePublished) : undefined;
+                return {
+                    author: info.author.name,
+                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                    description: renderDescription({
+                        images: content('.post_image')
+                            .toArray()
+                            .map((e) => content(e).attr('src')!),
+                        description: content('.post_body').html() ?? undefined,
+                    }),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { getArticleContent, getArticlePubDate } from './utils';
 
 const host = 'https://ylxx.szftedu.cn/xx_5828/xydt_5829/bxfbx_6371/';
 const baseLink = 'https://ylxx.szftedu.cn';
@@ -28,31 +31,37 @@ export const route: Route = {
     description: '',
 };
 
+async function getArticle(link: string): Promise<Partial<DataItem>> {
+    const trueLink = link.startsWith('http') ? link : baseLink + link;
+    const response = await got(trueLink);
+    const $ = load(response.data);
+    const item: Partial<DataItem> = { description: link.startsWith('http') ? await getArticleContent($, trueLink) : $('div.TRS_Editor').html() };
+    const articleDate = link.startsWith('http') ? await getArticlePubDate($) : undefined;
+    const date = $('#publish_time').first().text().trim();
+    if (articleDate) {
+        item.pubDate = articleDate;
+    } else if (date) {
+        item.pubDate = timezone(parseDate(date), 8);
+    }
+    return item;
+}
+
 async function handler() {
     const link = host;
     const response = await got(link);
     const $ = load(response.data);
     const lists = $('div.pagenews04 div ul li')
         .toArray()
-        .map((el): DataItem => ({
-            title: $('a', el).text(),
-            link: $('a', el).attr('href'),
-            pubDate: timezone(parseDate($('span[class=canedit]', el).text()), 8),
-        }));
+        .map((el): DataItem => {
+            const date = $('span[class=canedit]', el).text().trim();
+            return {
+                title: $('a', el).text(),
+                link: $('a', el).attr('href'),
+                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+            };
+        });
 
-    const items = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const thisUrl = item.link;
-                const trueLink = thisUrl!.includes('http') ? thisUrl : baseLink + thisUrl;
-                const response = await got(trueLink);
-                const $ = load(response.data);
-                item.description = thisUrl!.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
-                item.pubDate = timezone(parseDate($('#publish_time').first().text()), 8);
-                return item;
-            })
-        )
-    );
+    const items = await pMap(lists, async (item) => ({ ...item, ...(await cache.tryGet(`szftedu:dongtai:article:${item.link}`, () => getArticle(item.link!))) }), { concurrency: 3 });
 
     return {
         title: '园岭小学动态',

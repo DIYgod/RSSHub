@@ -19,46 +19,48 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hospital.nju.edu.cn/ggtz/index.html'],
+            source: ['hospital.nju.edu.cn/xwgg/ggtz/index.html'],
         },
     ],
     name: '校医院',
     maintainers: ['ret-1'],
     handler,
-    url: 'hospital.nju.edu.cn/ggtz/index.html',
+    url: 'hospital.nju.edu.cn/xwgg/ggtz/index.html',
 };
 
+interface HospitalNotice {
+    title: string;
+    summary?: string;
+    url: string;
+    username?: string;
+    releasetime?: number;
+}
+
+const url = 'https://hospital.nju.edu.cn/xwgg/ggtz/index.html';
+
 async function handler() {
-    const category_dict = {
-        ggtz: '公告通知',
-    };
-
-    const items = await Promise.all(
-        Object.keys(category_dict).map(async () => {
-            const response = await got('https://hospital.nju.edu.cn/ggtz/index.html');
-
-            const data = response.data;
-            const $ = load(data);
-            const script = $('div .wrapper').find('script').eq(1).text();
-
-            const start = script.indexOf('[');
-            const end = script.lastIndexOf(']');
-            const t = JSON.parse(script.slice(start, end + 1));
-
-            // only read first page
-            return t[0].infolist.map((item) => ({
-                title: item.title,
-                description: item.summary,
-                link: item.url,
-                author: item.username,
-                pubDate: parseDate(item.releasetime, 'x'),
-            }));
-        })
-    );
+    const response = await got(url);
+    const $ = load(response.data);
+    const script = $('script')
+        .toArray()
+        .map((element) => $(element).text())
+        .find((source) => /\bvar\s+dataList\s*=/.test(source));
+    const serialized = script?.match(/\bdataList\s*=\s*(\[.*?\]);/s)?.[1];
+    if (!serialized) {
+        throw new Error('The hospital announcement page does not contain its notice data.');
+    }
+    const pages: Array<{ infolist: HospitalNotice[] }> = JSON.parse(serialized);
+    const items = pages[0].infolist.map((item) => ({
+        title: item.title,
+        description: item.summary,
+        link: new URL(item.url, url).href,
+        author: item.username,
+        pubDate: item.releasetime === undefined ? undefined : parseDate(item.releasetime, 'x'),
+    }));
 
     return {
         title: '校医院-公告通知',
-        link: 'https://hospital.nju.edu.cn/ggtz/index.html',
-        item: items[0],
+        link: url,
+        item: items,
     };
 }

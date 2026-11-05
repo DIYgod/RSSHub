@@ -24,20 +24,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['imagemagick.org/script/download.php', 'imagemagick.org/script', 'imagemagick.org/'],
+            source: ['imagemagick.org/download', 'imagemagick.org/changelog', 'imagemagick.org/script/download.php', 'imagemagick.org/script', 'imagemagick.org/'],
         },
     ],
     name: 'Changelog',
     maintainers: ['nczitzk'],
     handler,
-    url: 'imagemagick.org/script/download.php',
+    url: 'imagemagick.org/download',
 };
 
 async function handler() {
     const rootUrl = 'https://imagemagick.org';
-    const currentUrl = `${rootUrl}/script/download.php`;
-    const logUrl = 'https://github.com/ImageMagick/Website/blob/main/ChangeLog.md';
-    const rawLogUrl = 'https://raw.githubusercontent.com/ImageMagick/Website/main/ChangeLog.md';
+    const currentUrl = `${rootUrl}/download/`;
+    const logUrl = 'https://github.com/ImageMagick/Website/blob/main/docs/changelog/index.md';
+    const rawLogUrl = 'https://raw.githubusercontent.com/ImageMagick/Website/main/docs/changelog/index.md';
 
     const response = await got({
         method: 'get',
@@ -55,14 +55,16 @@ async function handler() {
 
             let description = '';
             $item.nextUntil('h2').each((_, el) => {
-                description += $(el).html();
+                description += $(el).prop('outerHTML');
             });
+
+            const date = title.match(/- (\d{4}-\d{2}-\d{2})/)?.[1];
 
             return {
                 title,
                 description,
                 link: `${logUrl}#${title.replaceAll(/\s+/g, '-').replaceAll('.', '')}`,
-                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)![1]),
+                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
             };
         });
 

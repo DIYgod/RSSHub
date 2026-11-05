@@ -58,6 +58,7 @@ async function handler(ctx) {
         description,
         pubDate: timezone(parseDate(end_date), 8),
         link: appUrl,
+        guid: end_date ? `${appUrl}#${end_date}` : undefined,
     };
 
     return {

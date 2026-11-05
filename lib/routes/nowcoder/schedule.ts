@@ -50,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: item.name,
                 description: `<table>${desc}</table>`,
-                pubDate: parseDate(item.createTime),
+                pubDate: item.createTime ? parseDate(item.createTime) : undefined,
                 link: `https://www.nowcoder.com/school/schedule/${item.id}`,
             };
         }),

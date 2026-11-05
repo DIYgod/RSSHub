@@ -1,17 +1,10 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const source = [
-    'isabelle-dev.sketis.net/phame/',
-    'isabelle-dev.sketis.net/phame/blog/',
-    'isabelle-dev.sketis.net/phame/blog/view/:blog/',
-    'isabelle-dev.sketis.net/phame/post/',
-    'isabelle-dev.sketis.net/phame/post/view/:post_id/:post_title/',
-];
+const source = ['isabelle-dev.sketis.net/phame/', 'isabelle-dev.sketis.net/phame/blog/'];
 
 export const route: Route = {
     path: '/isabelle-dev/blog/:blog',
@@ -37,6 +30,10 @@ export const route: Route = {
             source,
             target: '/isabelle-dev/blog/2',
         },
+        {
+            source: ['isabelle-dev.sketis.net/phame/blog/view/:blog/'],
+            target: '/isabelle-dev/blog/:blog',
+        },
     ],
     name: 'Isabelle Development Blogs',
     url: 'isabelle-dev.sketis.net',
@@ -55,7 +52,11 @@ export const route: Route = {
                 const item = $(item_);
                 const title = item.find('.remarkup-header').first();
                 const subtitle = item.find('.phui-document-summary-subtitle').first();
-                const date = (subtitle.find('strong').first()[0].nextSibling as Text).data.slice(4); // parse starts after ' on '
+                const dateNode = subtitle.find('strong').first()[0].nextSibling;
+                if (dateNode?.nodeType !== 3) {
+                    throw new Error('Cannot find the post date in the blog summary');
+                }
+                const date = dateNode.data.slice(4); // parse starts after ' on '
                 return {
                     title: title.text(),
                     // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.

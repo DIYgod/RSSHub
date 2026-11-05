@@ -95,7 +95,7 @@ async function handler(ctx) {
                 return {
                     title: `${index + 1}: ${$name.text()}`,
                     author,
-                    description: `<figure><img src="${imageLink}" alt="test"/><figcaption><span>${description}</span></figcaption></figure><br/>${firstInfo}<br/>Author: ${author}<br/>Publisher: ${publisher}`,
+                    description: `<figure><img src="${imageLink}" alt="test"/><figcaption><span>${description}</span></figcaption></figure><br/>${firstInfo}<br/>Publisher: ${publisher}`,
                     link: primaryLink,
                 };
             });

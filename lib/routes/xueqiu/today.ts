@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/today',
@@ -13,7 +14,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -31,7 +32,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const size = ctx.req.query('limit') ?? '20';
+    const size = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://xueqiu.com';
     const currentUrl = `${rootUrl}/today`;
@@ -59,8 +60,9 @@ async function handler(ctx) {
     });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+        items.map(async (item) => ({
+            ...item,
+            description: await cache.tryGet(`xueqiu:today:description:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -68,14 +70,10 @@ async function handler(ctx) {
                         Cookie: token,
                     },
                 });
-
                 const content = load(detailResponse.data);
-
-                item.description = content('.article__bd__detail').html();
-
-                return item;
-            })
-        )
+                return content('.article__bd__detail').html();
+            }),
+        }))
     );
 
     return {

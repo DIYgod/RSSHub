@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -42,8 +43,9 @@ async function handler(ctx) {
     const response = await got(baseUrl + data.wh.jwc.columns[column].url);
     const $ = load(response.data);
     const items = $('.articleul li');
-    const out = await Promise.all(
-        items.map(async (index, item) => {
+    const out = await pMap(
+        items.toArray(),
+        async (item, _index) => {
             const $item = $(item);
             const anchor = $item.find('a');
             const dateElement = $item.find('div:last-of-type');
@@ -62,7 +64,8 @@ async function handler(ctx) {
                 pubDate,
                 author,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

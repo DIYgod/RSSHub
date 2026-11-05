@@ -1,10 +1,9 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Data, DataItem, Language, Route } from '@/types';
-import { ViewType } from '@/types';
+import { type Data, type DataItem, type Language, type Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -13,7 +12,8 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
 
     const domain = 'surfshark.com';
     const baseUrl = `https://${domain}`;
@@ -52,7 +52,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             });
 
             const pubDateEl: Cheerio<Element> = $el.find('span.js-date');
-            const pubDateStr: string | undefined = `${pubDateEl.attr('data-year')}-${pubDateEl.attr('data-month')}-${pubDateEl.attr('data-day')}`;
+            const dateParts = ['data-year', 'data-month', 'data-day'].map((attribute) => pubDateEl.attr(attribute));
+            const pubDateStr = dateParts.every(Boolean) ? dateParts.join('-') : undefined;
 
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.dg-blog-breadcrumbs a').toArray();
@@ -79,30 +80,30 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: parseDate(pubDateStr),
+                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl,
                 category: categories,
                 author: authors,
                 content: {
                     html: description,
-                    text: description,
                 },
                 image,
                 banner: image,
-                updated: parseDate(upDatedStr),
+                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const resolvedValue1 = await cache.tryGet(`surfshark:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!, {
                     headers,
                 });
@@ -134,27 +135,27 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 });
                 const upDatedStr: string | undefined = $$('meta[property="article:modified_time"]').attr('content');
 
-                const processedItem: DataItem = {
-                    title,
+                return {
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                     author: authors,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
+                    content: { html: description },
                     image,
                     banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
+                    updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 };
             });
-        })
+            {
+                const detail = resolvedValue1;
+                return {
+                    ...item,
+                    ...detail,
+                    pubDate: detail.pubDate ?? item.pubDate,
+                    updated: detail.updated ?? item.updated,
+                };
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -162,7 +163,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -254,41 +254,6 @@ To subscribe to [Cybersecurity](https://surfshark.com/blog/cybersecurity), where
             title: 'All',
             source: ['surfshark.com/blog'],
             target: '/blog',
-        },
-        {
-            title: 'Cybersecurity',
-            source: ['surfshark.com/blog/cybersecurity'],
-            target: '/blog/cybersecurity',
-        },
-        {
-            title: 'All things VPN',
-            source: ['surfshark.com/blog/all-things-vpn'],
-            target: '/blog/all-things-vpn',
-        },
-        {
-            title: 'Internet censorship',
-            source: ['surfshark.com/blog/internet-censorship'],
-            target: '/blog/internet-censorship',
-        },
-        {
-            title: 'Entertainment',
-            source: ['surfshark.com/blog/entertainment'],
-            target: '/blog/entertainment',
-        },
-        {
-            title: 'Expert Insights',
-            source: ['surfshark.com/blog/expert-insights'],
-            target: '/blog/expert-insights',
-        },
-        {
-            title: 'Video',
-            source: ['surfshark.com/blog/video'],
-            target: '/blog/video',
-        },
-        {
-            title: 'News',
-            source: ['surfshark.com/blog/news'],
-            target: '/blog/news',
         },
     ],
     view: ViewType.Articles,

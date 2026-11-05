@@ -1,14 +1,21 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { HOST, LINK, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, PRIVATE_IMG, PUBLIC_IMG } from './constant';
 import { getI18nGameInfo, getI18nType } from './utils';
+
+type PostListItem = {
+    post: { post_id: string; content: string; subject: string; created_at: number; has_cover: boolean };
+    cover_list?: CoverItem[];
+};
 
 const getEventList = async ({ type, gids, size, language }) => {
     const query = new URLSearchParams({
@@ -24,20 +31,24 @@ const getEventList = async ({ type, gids, size, language }) => {
             'X-Rpc-Language': language,
         },
     });
-    const list = res?.data?.data?.list || [];
+    if (res.data.retcode !== 0) {
+        throw new Error(`HoYoLAB announcement API returned ${res.data.retcode}: ${res.data.message}`);
+    }
+    const list: PostListItem[] = res.data.data.list;
     return list;
 };
 
 const replaceImgDomain = (content) => content.replaceAll(PRIVATE_IMG, () => PUBLIC_IMG);
 
-const getPostContent = (list, { language }) =>
-    Promise.all(
-        list.map(async (row) => {
+const getPostContent = (list: PostListItem[], { language }) =>
+    pMap(
+        list,
+        async (row) => {
             const post = row.post;
-            const post_id = post.post_id;
+            const postId = post.post_id;
             const query = new URLSearchParams({
-                post_id,
-                language, // language为了区分缓存，对接口并无意义
+                post_id: postId,
+                language, // Distinguish cached article translations; the API uses the language header.
             }).toString();
             const url = `${HOST}${POST_FULL}?${query}`;
             return await cache.tryGet(url, async () => {
@@ -48,6 +59,9 @@ const getPostContent = (list, { language }) =>
                         'X-Rpc-Language': language,
                     },
                 });
+                if (res.data.retcode !== 0) {
+                    throw new Error(`HoYoLAB article API returned ${res.data.retcode}: ${res.data.message}`);
+                }
                 const author = res?.data?.data?.post?.user?.nickname || '';
                 let content = res?.data?.data?.post?.post?.content || '';
                 if (content === language || !content) {
@@ -59,18 +73,15 @@ const getPostContent = (list, { language }) =>
                     content: replaceImgDomain(content),
                 });
                 return {
-                    // 文章标题
                     title: post.subject,
-                    // 文章链接
-                    link: `${LINK}/article/${post_id}`,
-                    // 文章正文
+                    link: `${LINK}/article/${postId}`,
                     description,
-                    // 文章发布日期
                     pubDate: parseDate(post.created_at * 1000),
                     author,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
 export const route: Route = {
@@ -116,30 +127,29 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    try {
-        const { type, gids, language } = ctx.req.param();
-        const params = {
-            type,
-            gids,
-            language,
-            size: Number.parseInt(ctx.req.query('limit')) || 15,
-        };
-        const gameInfo = await getI18nGameInfo(gids, language);
-        const typeInfo = await getI18nType(language);
-        const list = await getEventList(params);
-        const items = await getPostContent(list, params);
-        return {
-            title: `HoYoLAB-${gameInfo.name}-${typeInfo[type].title}`,
-            link: `${LINK}/circles/${gids}/${OFFICIAL_PAGE_TYPE[gids]}/official?page_type=${OFFICIAL_PAGE_TYPE[gids]}&page_sort=${typeInfo[type].sort}`,
-            item: items,
-            image: gameInfo.icon,
-            icon: gameInfo.icon,
-            logo: gameInfo.icon,
-        };
-    } catch (error) {
-        logger.error(error);
-        return null;
+    const { type, gids, language } = ctx.req.param();
+    if (!['1', '2', '3'].includes(type) || !/^\d+$/.test(gids) || !/^[a-z]{2}-[a-z]{2}$/.test(language)) {
+        throw new InvalidParameterError('Invalid announcement type, game ID, or language: use type 1, 2, or 3, a nonnegative integer game ID, and a locale such as zh-cn or en-us.');
     }
+    const params = {
+        type,
+        gids,
+        language,
+        size: getRouteLimit(ctx, 15),
+    };
+    const gameInfo = await getI18nGameInfo(gids, language);
+    const typeInfo = await getI18nType(language);
+    const list = await getEventList(params);
+    const items = await getPostContent(list, params);
+    return {
+        title: `HoYoLAB-${gameInfo.name}-${typeInfo[type].title}`,
+        link: `${LINK}/circles/${gids}/${OFFICIAL_PAGE_TYPE[gids]}/official?page_type=${OFFICIAL_PAGE_TYPE[gids]}&page_sort=${typeInfo[type].sort}`,
+        item: items,
+        language: (language === 'zh-cn' ? 'zh-CN' : language === 'zh-tw' ? 'zh-TW' : language.split('-', 1)[0]) as Language,
+        image: gameInfo.icon,
+        icon: gameInfo.icon,
+        logo: gameInfo.icon,
+    };
 }
 
 type CoverItem = {

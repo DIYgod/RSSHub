@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,45 +45,51 @@ async function handler(ctx) {
 
     const { data: response } = await got(currentUrl);
 
-    const list = response.list
+    const colName = response.list.find((item) => item.newstype === 0)?.colName ?? '';
+
+    const list: Array<DataItem & { link: string; description: string }> = response.list
         .filter((i) => i.newstype === 0) // Remove special report (专题) and articles from Guangzhou Converged Media Center (新花城).
-        .map((item) => ({
-            title: item.title,
-            description: renderToString(
-                <>
-                    {item.picBig ? (
-                        <>
-                            <img src={item.picBig} />
-                            <br />
-                        </>
-                    ) : null}
-                </>
-            ),
-            pubDate: timezone(parseDate(item.publishtime), 8),
-            link: item.shareUrl,
-            colName: item.colName,
-            author: item.arthorName,
-        }));
+        .map((item) => {
+            const pubDate = item.publishtime ? timezone(parseDate(item.publishtime), 8) : undefined;
+            return {
+                title: item.title,
+                description: renderToString(
+                    <>
+                        {item.picBig ? (
+                            <>
+                                <img src={item.picBig} />
+                                <br />
+                            </>
+                        ) : null}
+                    </>
+                ),
+                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                link: item.shareUrl,
+                category: item.colName ? [item.colName] : undefined,
+                author: item.arthorName,
+            };
+        });
 
-    let colName = '';
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const body = await cache.tryGet(`gzdaily:body:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
                 const content = load(detailResponse.data);
-                colName = colName === '' ? item.colName : colName;
+                let description = '';
                 if (content('.abstract').text()) {
                     content('.abstract').find('span').remove();
-                    item.description += '<blockquote>' + content('.abstract').text() + '</blockquote>';
+                    description += renderToString(<blockquote>{content('.abstract').text()}</blockquote>);
                 }
-                item.description += content('.article').html() ?? '';
-                return item;
-            })
-        )
+                description += content('.article').html() ?? '';
+                return { description };
+            });
+            return { ...item, description: item.description + body.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

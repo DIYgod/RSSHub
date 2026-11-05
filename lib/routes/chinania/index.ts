@@ -4,10 +4,11 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
     const { category = 'xiehuidongtai/xiehuitongzhi' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const rootUrl = 'https://www.chinania.org.cn';
     const currentUrl = new URL(`html/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
@@ -65,7 +66,6 @@ export const handler = async (ctx) => {
         description: title.split(/-/, 1)[0]?.trim(),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $("meta[name='keywords']").prop('content'),
         language,
@@ -144,11 +144,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.chinania.org.cn/html/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return category ? `/${category}` : '';
-            },
+            target: '/:category',
         },
         {
             title: '协会动态 - 协会动态',

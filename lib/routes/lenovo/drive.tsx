@@ -46,11 +46,12 @@ export async function handler(ctx): Promise<Data> {
         title: `${item.DriverName} ${item.Version}`,
         link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
         description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
-        pubDate: timezone(parseDate(item.CreateTime), 8),
+        pubDate: item.CreateTime ? timezone(parseDate(item.CreateTime), 8) : undefined,
     }));
 
     return {
         title: `${response.data.driverSerious[0].NodeCode} 驱动`,
+        link: `https://newsupport.lenovo.com.cn/driveList.html?selName=${encodeURIComponent(selName)}`,
         item: items,
         language: 'zh-CN',
     };

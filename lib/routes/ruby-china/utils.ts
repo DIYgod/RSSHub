@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -11,22 +12,26 @@ async function loadAndParseTopic(link: string) {
     const response = await ofetch(link);
     const $ = load(response);
 
+    const date = $('.topic-detail .timeago').attr('title');
+
     return {
-        title: $('.topic-detail .title').text(),
-        link,
-        author: $('.topic-detail .user-name').text(),
-        guid: link,
+        author: $('.topic-detail .user-name[data-author="true"]').text(),
         description: $('.topic-detail .card-body').html(),
-        pubDate: parseDate($('.topic-detail .timeago').attr('title')!),
+        pubDate: date ? parseDate(date) : undefined,
     };
 }
 
 export function processTopics2Feed(list: Element[]) {
-    return Promise.all(
-        list.map((item) => {
-            const itemUrl = new URL(load(item)('.title a').attr('href')!, RUBY_CHINA_HOST).href;
+    return pMap(
+        list,
+        async (item) => {
+            const $ = load(item);
+            const titleElement = $('.title a');
+            const itemUrl = new URL(titleElement.attr('href')!, RUBY_CHINA_HOST).href;
+            const detail = await cache.tryGet(itemUrl, () => loadAndParseTopic(itemUrl));
 
-            return cache.tryGet(itemUrl, () => loadAndParseTopic(itemUrl));
-        })
+            return { ...detail, title: titleElement.attr('title') || titleElement.text(), link: itemUrl, guid: itemUrl };
+        },
+        { concurrency: 3 }
     );
 }

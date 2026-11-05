@@ -60,7 +60,7 @@ async function handler() {
 
     return {
         title: $('head title').text(),
-        decription: $('meta[name=description]').attr('content'),
+        description: $('meta[name=description]').attr('content'),
         link: currentUrl,
         item: items,
     };

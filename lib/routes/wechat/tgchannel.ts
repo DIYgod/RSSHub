@@ -4,7 +4,7 @@ import type { AnyNode } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { finishArticleItem } from '@/utils/wechat-mp';
+import { finishArticleItem, normalizeUrl } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/tgchannel/:id/:mpName?/:searchQueryType?',
@@ -41,13 +41,13 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const mpName = ctx.req.param('mpName') ?? '';
     let searchQueryType = ctx.req.param('searchQueryType') ?? '0';
-    if (searchQueryType !== '0' && searchQueryType !== '1' && searchQueryType !== '2') {
+    if (!['0', '1', '2'].includes(searchQueryType)) {
         searchQueryType = '0';
     }
     searchQueryType = +searchQueryType; // 将字符串转换为数字
 
     const channelUrl = `https://t.me/s/${id}`;
-    const searchQuery = mpName && searchQueryType ? (searchQueryType === 2 ? `?q=%23${mpName}` : `?q=${mpName}`) : '';
+    const searchQuery = mpName && searchQueryType ? `?q=${encodeURIComponent(searchQueryType === 2 ? `#${mpName}` : mpName)}` : '';
     const { data } = await got.get(`${channelUrl}${searchQuery}`);
     const $ = load(data);
     const list = $('.tgme_widget_message_wrap').slice(-20);
@@ -62,10 +62,12 @@ async function handler(ctx) {
                 if (highlightMarks) {
                     for (const mark of highlightMarks) {
                         const $mark = $(mark);
-                        const markInnerHtml = $mark.html() as string;
-                        $mark.replaceWith(markInnerHtml);
+                        $mark.replaceWith($mark.contents());
                     }
-                    $item = $($item.html() as string); // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    const itemHtml = $item.html();
+                    if (itemHtml !== null) {
+                        $item = $(itemHtml); // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    }
                 }
             }
 
@@ -163,11 +165,13 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
-                // guid: link,
+                guid: link,
             };
 
             if (link !== undefined) {
                 try {
+                    single.link = normalizeUrl(link);
+                    single.guid = single.link;
                     return await finishArticleItem(single);
                 } catch {
                     single.description = $item.find('.tgme_widget_message_text').html();
@@ -177,11 +181,10 @@ async function handler(ctx) {
         })
     );
 
-    out.reverse();
     return {
         title: mpName || $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
-        item: out.filter(Boolean),
+        item: out.toReversed().filter(Boolean),
         allowEmpty: !!mpName,
     };
 }

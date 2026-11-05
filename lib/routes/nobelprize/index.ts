@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:caty?',
@@ -41,12 +40,11 @@ async function handler(ctx: Context) {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('h3 a');
-            const title = a.text().trim();
+            const title = a.text();
 
             return {
                 title,
                 link: a.attr('href'),
-                pubDate: parseDate(`${title.match(/(\d{4})/)![1]}-01-01T00:00:00Z`),
                 description: $item.find('.card-prize--laureates').html(),
             };
         });

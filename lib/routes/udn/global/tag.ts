@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/global/tag/:tag?',
@@ -43,17 +43,21 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.lists.map((item) => ({
-        title: item.title,
-        author: item.author?.title,
-        pubDate: timezone(parseDate(item.time?.dateTime), 8),
-        link: item.url,
-        category: item.hash?.map((h) => h.title),
-    }));
+    let items: Array<DataItem & { link: string }> = response.data.lists.map((item) => {
+        const pubDate = item.time?.dateTime ? parseDate(item.time.dateTime) : undefined;
+        return {
+            title: item.title,
+            author: item.author?.title,
+            pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+            link: item.url,
+            category: item.hash?.map((h) => h.title),
+        };
+    });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`udn:global:tag:v3:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -68,11 +72,11 @@ async function handler(ctx) {
                     .map((e) => content.html(e))
                     .join('');
 
-                item.description = mainImage + articleBodyHtml;
-
-                return item;
-            })
-        )
+                return { description: mainImage + articleBodyHtml };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

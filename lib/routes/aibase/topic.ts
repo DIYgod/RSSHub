@@ -2,13 +2,14 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { buildApiUrl, processItems, rootUrl } from './util';
 
 export const handler = async (ctx) => {
     const { id, filter = 'id' } = ctx.req.param();
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const currentUrl = new URL(id ? `topic/${id}` : 'discover', rootUrl).href;
 
@@ -104,11 +105,7 @@ export const route: Route = {
     radar: [
         {
             source: ['top.aibase.com/topic/:id'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/topic${id ? `/${id}` : ''}`;
-            },
+            target: '/topic/:id?',
         },
         {
             title: 'AI',

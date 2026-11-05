@@ -3,6 +3,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -26,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const name = ctx.req.param('name') ?? 'i';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
+    const limit = getRouteLimit(ctx, 50);
     if (!isValidHost(name)) {
         throw new InvalidParameterError('Invalid name');
     }
@@ -69,7 +70,7 @@ async function handler(ctx) {
                 .map((video) => `<video src="${video.originUrl}" poster="${video.video_img_url}" controls="controls"></video>`)
                 .join('') +
             item.post.content,
-        pubDate: parseDate(item.post.publishTime),
+        pubDate: Number.isFinite(item.post.publishTime) ? parseDate(item.post.publishTime) : undefined,
         author: item.post.blogInfo.blogNickName,
         category: item.post.tag.split(','),
     }));

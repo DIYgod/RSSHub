@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -47,19 +48,20 @@ async function handler() {
     const verguetungOptions = response.fields['custom.verguetung'].options;
 
     const items = jobPostings.map((job) => {
-        const pubDate = parseDate(job.createdOn, 'YYYY-MM-DDTHH:mm:ssZ');
+        const pubDate = job.createdOn ? parseDate(job.createdOn, 'YYYY-MM-DDTHH:mm:ssZ') : undefined;
 
         // Resolve Institution label.
         const institutionLabel = findLabel(job.custom.bereich, bereichOptions);
-        const RemunerationGroupLabel = findLabel(job.custom.verguetung, verguetungOptions);
+        const remunerationGroupLabel = findLabel(job.custom.verguetung, verguetungOptions);
 
-        const description = renderDescription(institutionLabel, RemunerationGroupLabel, job);
+        const description = renderDescription(institutionLabel, remunerationGroupLabel, job);
 
         return {
             title: job.title,
             link: job.url,
             description,
             pubDate,
+            updated: job.modifiedOn ? parseDate(job.modifiedOn) : undefined,
         };
     });
 
@@ -70,14 +72,14 @@ async function handler() {
     };
 }
 
-const renderDescription = (institutionLabel: string, RemunerationGroupLabel: string, job): string =>
+const renderDescription = (institutionLabel: string, remunerationGroupLabel: string, job): string =>
     renderToString(
         <>
             <p>
                 <strong>Institution:</strong> {institutionLabel}
             </p>
             <p>
-                <strong>Remuneration:</strong> {RemunerationGroupLabel}
+                <strong>Remuneration:</strong> {remunerationGroupLabel}
             </p>
             <p>
                 <strong>Application deadline:</strong> {job.endsOn}
@@ -88,21 +90,22 @@ const renderDescription = (institutionLabel: string, RemunerationGroupLabel: str
             <p>
                 <strong>About us:</strong>
             </p>
-            {job.custom?.das_sind_wir || ''}
+            {raw(job.custom?.das_sind_wir || '')}
             <br />
             <p>
                 <strong>Your qualifications:</strong>
             </p>
-            {job.custom?.das_sind_sie || ''}
+            {raw(job.custom?.das_sind_sie || '')}
             <br />
             <p>
                 <strong>Benefits:</strong>
             </p>
-            {job.custom?.das_ist_unser_angebot || ''}
+            {raw(job.custom?.das_ist_unser_angebot || '')}
             <br />
             <p>
-                <strong>Contact:</strong> {job.custom?.kontakt || ''}
+                <strong>Contact:</strong>
             </p>
+            {raw(job.custom?.kontakt || '')}
         </>
     );
 
@@ -112,11 +115,11 @@ export const route: Route = {
     url: 'lmu.de',
     example: '/lmu/jobs',
     maintainers: ['StarDxxx'],
-    categories: ['university', 'study'],
+    categories: ['university'],
     radar: [
         {
             source: ['www.lmu.de/en/about-lmu/working-at-lmu/job-portal/academic-staff/'],
-            target: '/lmu/jobs',
+            target: '/jobs',
         },
     ],
     description: 'RSS feed for LMU academic staff job openings.',
