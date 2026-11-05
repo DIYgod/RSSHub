@@ -6,35 +6,31 @@ import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const baseUrl = 'http://www.qstheory.cn';
 
-export const getItem = async (item: DataItem): Promise<DataItem> => {
+export const getItem = async (item: DataItem, useArticleTitle = false): Promise<DataItem> => {
     const response = await ofetch(item.link!);
     const $ = load(response);
 
-    const appellation = $('.appellation').text();
-    const authorMatch = appellation.match(/作者[：:]\s*(.+)/);
-    const sourceMatch = appellation.match(/来源[：:]\s*(.+)/);
-    let author: string | undefined;
-
-    if (authorMatch) {
-        author = authorMatch[1];
-    } else if (sourceMatch && !sourceMatch[1].includes('《求是》') && !sourceMatch[1].includes('《红旗文稿》')) {
-        author = sourceMatch[1];
-    }
-
+    const author = $('.appellation')
+        .toArray()
+        .map((el) =>
+            $(el)
+                .text()
+                .match(/作者[：:]\s*(.+)/)?.[1]
+                .replaceAll(/\s+/g, ' ')
+                .trim()
+        )
+        .find(Boolean);
     if (author) {
-        const cleanedAuthor = author.replaceAll('\u{00A0}', ' ').replaceAll(/\s+/g, ' ').trim();
-        if (cleanedAuthor) {
-            item.author = cleanedAuthor;
-        }
+        item.author = author;
     }
 
-    const h1 = $('h1').text();
-    const h2 = $('h2').text();
-    const hasH1 = /\S/.test(h1);
-    const hasH2 = /\S/.test(h2);
-    const title = hasH1 ? (hasH2 ? `${h1} ${h2}` : h1) : item.title;
-    if (title) {
-        item.title = title;
+    if (useArticleTitle) {
+        // Article header: the title and the optional subtitle right after it
+        const $title = $('.inner > h1').first();
+        const title = [$title.text(), $title.next('h2').text()].filter((text) => /\S/.test(text)).join(' ');
+        if (title) {
+            item.title = title;
+        }
     }
 
     $('.fs-text, .fs-pinglun, .hidden-xs').remove();

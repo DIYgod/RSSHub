@@ -140,7 +140,8 @@ async function handler(ctx) {
             return true;
         });
 
-    const items = await pMap(list, (item) => cache.tryGet(item.link, () => getItem(item)), { concurrency: 3 });
+    // The category route caches the same articles under their link with list titles
+    const items = await pMap(list, (item) => cache.tryGet(`qstheory:magazine:${item.link}`, () => getItem(item, true)), { concurrency: 3 });
 
     const title = isLatest ? $('head title').text() : $$('h1').text() || $$('head title').text();
     const issueCover = $$('.highlight img').first().attr('src');
