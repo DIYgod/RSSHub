@@ -2040,6 +2040,7 @@ export type RoutePath =
   | `/keep/user/:id`
   | `/keepass/`
   | `/keio/ridership`
+  | `/keke.app/:category?`
   | `/kelownacapnews/:type`
   | `/kemono/:source?/:id?/:type?`
   | `/kemono/:source/:id/dms`

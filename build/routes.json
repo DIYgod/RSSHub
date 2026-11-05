@@ -79255,6 +79255,102 @@
       "name": "京王電鉄"
     }
   },
+  "keke.app": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/keke.app/latest",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `latest`",
+            "default": "latest",
+            "options": [
+              {
+                "value": "latest",
+                "label": "最近更新"
+              },
+              {
+                "value": "movie",
+                "label": "电影"
+              },
+              {
+                "value": "series",
+                "label": "连续剧"
+              },
+              {
+                "value": "anime",
+                "label": "动漫"
+              },
+              {
+                "value": "variety",
+                "label": "综艺纪录"
+              },
+              {
+                "value": "short",
+                "label": "短剧"
+              },
+              {
+                "value": "hot-movie",
+                "label": "近期热门电影"
+              },
+              {
+                "value": "hot-series",
+                "label": "近期热门剧集"
+              },
+              {
+                "value": "hot-jpkr",
+                "label": "近期热门日韩剧"
+              },
+              {
+                "value": "hot-western",
+                "label": "近期热门欧美剧"
+              },
+              {
+                "value": "hot-hktw",
+                "label": "近期热门港台剧"
+              },
+              {
+                "value": "hot-cn",
+                "label": "近期热播国产剧"
+              },
+              {
+                "value": "hot-anime",
+                "label": "热播动漫"
+              },
+              {
+                "value": "hot-variety",
+                "label": "热播综艺纪录"
+              }
+            ]
+          }
+        },
+        "features": {
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.keke1.app/"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "name": "分类",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "index.ts",
+        "module": "() => import('@/routes/keke.app/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "可可影视",
+    "url": "www.keke1.app",
+    "lang": "zh-CN"
+  },
   "kelownacapnews": {
     "routes": {
       "/:type": {

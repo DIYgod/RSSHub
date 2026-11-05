@@ -30765,6 +30765,19 @@
       }
     ]
   },
+  "keke1.app": {
+    "_name": "可可影视",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/keke.app",
+        "source": [
+          "/"
+        ],
+        "target": "/keke.app/latest"
+      }
+    ]
+  },
   "kelownacapnews.com": {
     "_name": "Kelowna Capital News",
     ".": [
