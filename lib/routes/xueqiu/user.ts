@@ -38,7 +38,7 @@ export const route: Route = {
 | 0      | 2    | 4    | 9    | 11   |`,
 };
 
-interface Status {
+interface Status extends Pick<StatusDetail, 'image_info_list' | 'retweeted_status'> {
     id: number;
     target: string;
     created_at: number;
@@ -47,6 +47,7 @@ interface Status {
     description?: string;
     mark?: number;
     legal_user_visible?: boolean;
+    truncated?: boolean;
     user?: { screen_name?: string; profile_image_url?: string; photo_domain?: string };
 }
 
@@ -54,10 +55,11 @@ interface StatusDetail {
     text?: string;
     description?: string;
     error_code?: number | string;
-    image_info_list?: Array<{ filename?: string }>;
+    image_info_list?: Array<{ filename?: string }> | null;
     retweeted_status?: {
-        user?: { screen_name?: string };
+        user?: { screen_name?: string } | null;
         text?: string;
+        description?: string;
     };
 }
 
@@ -65,17 +67,6 @@ interface StatusDetail {
 const permanentErrorCodes = new Set(['20210']);
 
 const stripHtml = (html: string): string => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
-
-// Build a feed item from the timeline list data alone (no detail request).
-const buildListItem = (item: Status) => {
-    const description = item.text || item.description || '';
-    return {
-        title: item.title || stripHtml(description),
-        description,
-        pubDate: parseDate(item.created_at),
-        link: rootUrl + item.target,
-    };
-};
 
 const buildTitle = (item: Status, detail: StatusDetail): string => {
     if (item.title) {
@@ -86,17 +77,31 @@ const buildTitle = (item: Status, detail: StatusDetail): string => {
 
 const buildDescription = (detail: StatusDetail): string => {
     let text = detail.text?.trim() ? detail.text : detail.description || '';
-    const images = detail.image_info_list ?? [];
+    const images = Array.isArray(detail.image_info_list) ? detail.image_info_list : [];
     for (const img of images) {
         if (img?.filename) {
             text += `<br><img src="https://xqimg.imedao.com/${img.filename}">`;
         }
     }
-    if (detail.retweeted_status?.text) {
-        text += `<blockquote>${detail.retweeted_status.user?.screen_name ?? ''}:&nbsp;${detail.retweeted_status.text}</blockquote>`;
+    const retweet = detail.retweeted_status;
+    const retweetText = retweet?.text?.trim() ? retweet.text : retweet?.description;
+    if (retweetText) {
+        text += `<blockquote>${retweet?.user?.screen_name ?? ''}:&nbsp;${retweetText}</blockquote>`;
     }
     return text;
 };
+
+// For long posts, and for reposts of long posts, the timeline leaves `text` empty and only sends a shortened `description`.
+// Everywhere else the timeline text matches show.json, so the detail request can be skipped.
+const hasFullText = (item: Status): boolean => item.truncated === false && Boolean(item.text?.trim()) && (!item.retweeted_status || Boolean(item.retweeted_status.text?.trim()));
+
+// Build a feed item from the timeline list data alone (no detail request).
+const buildListItem = (item: Status) => ({
+    title: item.title || stripHtml(item.text || item.description || ''),
+    description: buildDescription(item),
+    pubDate: parseDate(item.created_at),
+    link: rootUrl + item.target,
+});
 
 const isPermanentError = (errorCode?: number | string): boolean => errorCode !== undefined && permanentErrorCodes.has(String(errorCode));
 
@@ -160,7 +165,7 @@ async function handler(ctx) {
         data,
         async (item) => {
             // Complete list entries already contain the current content.
-            if (item.legal_user_visible) {
+            if (item.legal_user_visible || hasFullText(item)) {
                 return buildListItem(item);
             }
 
