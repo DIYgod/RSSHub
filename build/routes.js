@@ -24528,6 +24528,105 @@ export default {
     "url": "utgd.net",
     "lang": "zh-CN"
   },
+  "viva-la-vita": {
+    "routes": {
+      "/featured": {
+        "path": "/featured",
+        "name": "精华帖子",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/viva-la-vita/featured",
+        "maintainers": [
+          "0zheermao0"
+        ],
+        "description": "对应论坛“精华”，仅返回加精主题，按加精日期倒序排列，不是置顶主题。读取榜单前 20 个主题，跳过首帖不可见的主题，包含首帖正文及最新 5 条公开评论（新到旧，不含首帖及系统事件）。评论缓存 5 分钟，无需登录。主题链接、GUID 和发布时间在各路由中保持一致，不因排名、加精、编辑或回复而生成新条目；新增评论只更新原条目内容。是否重新通知以及跨订阅去重取决于阅读器。",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "bbs.viva-la-vita.org/",
+              "bbs.viva-la-vita.org/all"
+            ],
+            "target": "/featured"
+          }
+        ],
+        "location": "featured.ts",
+        "module": () => import('@/routes/viva-la-vita/featured.ts')
+      },
+      "/hot": {
+        "path": "/hot",
+        "name": "热门帖子",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/viva-la-vita/hot",
+        "maintainers": [
+          "0zheermao0"
+        ],
+        "description": "对应论坛“热门”，按评论总数倒序排列，为全站累计热门榜，不是近期热度榜。读取榜单前 20 个主题，跳过首帖不可见的主题，包含首帖正文及最新 5 条公开评论（新到旧，不含首帖及系统事件）。评论缓存 5 分钟，无需登录。主题链接、GUID 和发布时间在各路由中保持一致，不因排名、加精、编辑或回复而生成新条目；新增评论只更新原条目内容。是否重新通知以及跨订阅去重取决于阅读器。",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "bbs.viva-la-vita.org/",
+              "bbs.viva-la-vita.org/all"
+            ],
+            "target": "/hot"
+          }
+        ],
+        "location": "hot.ts",
+        "module": () => import('@/routes/viva-la-vita/hot.ts')
+      },
+      "/latest": {
+        "path": "/latest",
+        "name": "最新帖子",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/viva-la-vita/latest",
+        "maintainers": [
+          "0zheermao0"
+        ],
+        "description": "按主题创建时间倒序排列。读取榜单前 20 个主题，跳过首帖不可见的主题，包含首帖正文及最新 5 条公开评论（新到旧，不含首帖及系统事件）。评论缓存 5 分钟，无需登录。主题链接、GUID 和发布时间在各路由中保持一致，不因排名、加精、编辑或回复而生成新条目；新增评论只更新原条目内容。是否重新通知以及跨订阅去重取决于阅读器。",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "bbs.viva-la-vita.org/",
+              "bbs.viva-la-vita.org/all",
+              "bbs.viva-la-vita.org/d/:id"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "location": "latest.ts",
+        "module": () => import('@/routes/viva-la-vita/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "生如夏花论坛",
+    "url": "bbs.viva-la-vita.org",
+    "lang": "zh-CN"
+  },
   "wellcee": {
     "routes": {
       "/rent/:city/:district?": {

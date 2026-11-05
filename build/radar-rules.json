@@ -6584,6 +6584,39 @@
       }
     ]
   },
+  "viva-la-vita.org": {
+    "_name": "生如夏花论坛",
+    "bbs": [
+      {
+        "title": "精华帖子",
+        "docs": "https://docs.rsshub.app/routes/viva-la-vita",
+        "source": [
+          "/",
+          "/all"
+        ],
+        "target": "/viva-la-vita/featured"
+      },
+      {
+        "title": "热门帖子",
+        "docs": "https://docs.rsshub.app/routes/viva-la-vita",
+        "source": [
+          "/",
+          "/all"
+        ],
+        "target": "/viva-la-vita/hot"
+      },
+      {
+        "title": "最新帖子",
+        "docs": "https://docs.rsshub.app/routes/viva-la-vita",
+        "source": [
+          "/",
+          "/all",
+          "/d/:id"
+        ],
+        "target": "/viva-la-vita/latest"
+      }
+    ]
+  },
   "wellcee.com": {
     "_name": "Wellcee 唯心所寓",
     "www": [

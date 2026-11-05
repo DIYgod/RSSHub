@@ -2042,6 +2042,15 @@
   "/utgd/topic/:topic?": [
     "nczitzk"
   ],
+  "/viva-la-vita/featured": [
+    "0zheermao0"
+  ],
+  "/viva-la-vita/hot": [
+    "0zheermao0"
+  ],
+  "/viva-la-vita/latest": [
+    "0zheermao0"
+  ],
   "/wellcee/rent/:city/:district?": [
     "TonyRL"
   ],
