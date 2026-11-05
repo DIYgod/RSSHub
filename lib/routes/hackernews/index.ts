@@ -191,16 +191,21 @@ async function handler(ctx) {
                 item.description = item.currentComment;
             }
 
+            const upvotes = /^\d+$/.test(String(item.upvotes)) ? Number(item.upvotes) : undefined;
+
             return {
                 guid: item.guid,
                 title: item.title,
                 category: item.category,
                 author: item.author,
                 pubDate: item.pubDate,
-                description: item.description,
+                // Rows without a score (e.g. comments on /threads, job posts) get no points line
+                description: upvotes === undefined ? item.description : `<p>Points: ${upvotes}</p>${item.description}`,
                 link: type === 'sources' ? (item.origin ?? item.link) : item.link,
+                // The HN discussion page, which `sources` items no longer use as their link. Job posts take no comments
+                commentsUrl: item.comments === '' && !item.currentComment ? undefined : item.link,
                 comments: /^\d+$/.test(String(item.comments)) ? Number(item.comments) : item.comments === 'discuss' ? 0 : undefined,
-                upvotes: /^\d+$/.test(String(item.upvotes)) ? Number(item.upvotes) : undefined,
+                upvotes,
             };
         },
         { concurrency: 3 }

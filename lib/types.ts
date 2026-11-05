@@ -64,7 +64,10 @@ export type DataItem = {
     media?: Record<string, Record<string, string>>;
     upvotes?: number;
     downvotes?: number;
+    /** Comment count. */
     comments?: number;
+    /** URL of the item's comments page, rendered as the RSS 2.0 `<comments>` element. */
+    commentsUrl?: string;
     attachments?: Array<{
         url: string;
         mime_type: string;
