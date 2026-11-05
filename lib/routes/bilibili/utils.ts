@@ -5,6 +5,7 @@ import { config } from '@/config';
 import type cacheModule from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
+import type { Page } from '@/utils/playwright';
 
 import { renderDescription } from './templates/description';
 import type { MediaResult, ResultResponse, SeasonResult } from './types';
@@ -305,6 +306,11 @@ export function getVideoUrl(bvid?: string): string | undefined {
 }
 export const getLiveUrl = (roomId?: string) => (roomId ? `https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}` : undefined);
 
+// Bilibili web pages ask the API for machine-translated titles and descriptions
+// when the browser language is not Chinese, e.g. the en-US default of headless Chromium.
+// The `always_translate=0` cookie keeps the original text.
+const disableAutoTranslate = (page: Page) => page.context().addCookies([{ name: 'always_translate', value: '0', domain: '.bilibili.com', path: '/' }]);
+
 export default {
     lsid,
     _uuid,
@@ -321,4 +327,5 @@ export default {
     renderUGCDescription,
     renderOGVDescription,
     getVideoUrl,
+    disableAutoTranslate,
 };
