@@ -202,8 +202,8 @@ async function handler(ctx) {
                 // Rows without a score (e.g. comments on /threads, job posts) get no points line
                 description: upvotes === undefined ? item.description : `<p>Points: ${upvotes}</p>${item.description}`,
                 link: type === 'sources' ? (item.origin ?? item.link) : item.link,
-                // The HN discussion page, which `sources` items no longer use as their link
-                commentsUrl: item.link,
+                // The HN discussion page, which `sources` items no longer use as their link. Job posts take no comments
+                commentsUrl: item.comments === '' && !item.currentComment ? undefined : item.link,
                 comments: /^\d+$/.test(String(item.comments)) ? Number(item.comments) : item.comments === 'discuss' ? 0 : undefined,
                 upvotes,
             };
