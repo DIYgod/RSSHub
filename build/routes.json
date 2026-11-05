@@ -15612,6 +15612,47 @@
     ],
     "lang": "en"
   },
+  "instagram": {
+    "routes": {
+      "/:category/:key": {
+        "path": "/:category/:key",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/instagram/user/stefaniejoosten",
+        "parameters": {
+          "category": "Feed category, see table below",
+          "key": "Username / Hashtag name"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "INSTAGRAM_COOKIE",
+              "optional": true,
+              "description": "Instagram cookie, only `sessionid` and `ds_user_id` are required."
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "User",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "description": "| User Posts | Current stories | Highlighted stories | Hashtag |\n| ---------- | --------------- | ------------------- | ------- |\n| user       | stories         | highlights          | tags    |\n\nStories, highlights and hashtags require a cookie.",
+        "location": "index.ts",
+        "module": "() => import('@/routes/instagram/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Instagram",
+    "url": "www.instagram.com",
+    "description": "::: tip\nIt's highly recommended to deploy with Redis cache enabled.\n:::",
+    "lang": "en"
+  },
   "iwara": {
     "routes": {
       "/users/:username/:type?": {
@@ -154134,47 +154175,6 @@
     "name": "南方周末",
     "url": "www.infzm.com",
     "lang": "zh-CN"
-  },
-  "instagram": {
-    "routes": {
-      "/:category/:key": {
-        "path": "/:category/:key",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/instagram/user/stefaniejoosten",
-        "parameters": {
-          "category": "Feed category, see table below",
-          "key": "Username / Hashtag name"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "INSTAGRAM_COOKIE",
-              "optional": true,
-              "description": "Instagram cookie, only `sessionid` and `ds_user_id` are required."
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "User",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "description": "| User Posts | Current stories | Highlighted stories | Hashtag |\n| ---------- | --------------- | ------------------- | ------- |\n| user       | stories         | highlights          | tags    |\n\nStories, highlights and hashtags require a cookie.",
-        "location": "index.ts",
-        "module": "() => import('@/routes/instagram/index.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "Instagram",
-    "url": "www.instagram.com",
-    "description": "::: tip\nIt's highly recommended to deploy with Redis cache enabled.\n:::",
-    "lang": "en"
   },
   "iplaysoft": {
     "routes": {
