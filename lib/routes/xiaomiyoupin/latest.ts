@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { GoodsDetailItem, NewProductBatchListItem } from './types';
+import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -33,25 +33,25 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     pMap(
         list,
         (listItem) =>
-            cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductGid(listItem)}`, async () => {
+            cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductId(listItem)}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
             }),
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): DataItem => {
-    const pubDate = utils.getNewProductFirstReleaseTime(listItem);
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => {
+    const releaseTime = utils.isCommonListItem(listItem) ? listItem.value.goods.fist_release_time : undefined;
     return {
-        title: utils.getNewProductName(listItem),
+        title: utils.isCommonListItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
         description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-        link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductGid(listItem)}`,
-        image: utils.getNewProductImage(listItem),
-        pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
+        link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
+        image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
+        pubDate: releaseTime ? parseDate(releaseTime, 'X') : undefined,
         language: 'zh-CN',
     };
 };

@@ -1,11 +1,11 @@
 import pMap from 'p-map';
 
+import { renderCrowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { renderCrowdfunding } from './templates/crowdfunding';
 import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
@@ -49,7 +49,7 @@ const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDet
     title: listItem.product_name,
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
-    image: listItem.img_url,
+    image: listItem.img_url_small,
     pubDate: parseDate(detailItem.start_time, 'X'),
     language: 'zh-CN',
 });
