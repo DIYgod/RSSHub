@@ -11619,6 +11619,40 @@
   },
   "4chan": {
     "routes": {
+      "/:board/thread/:threadId/:routeParams?": {
+        "path": "/:board/thread/:threadId/:routeParams?",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/4chan/g/thread/105076684",
+        "parameters": {
+          "board": "4chan board",
+          "threadId": "Thread ID, the number in the thread URL",
+          "routeParams": "extra parameters, see the table above"
+        },
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Thread",
+        "maintainers": [
+          "Hash6232"
+        ],
+        "radar": [
+          {
+            "source": [
+              "boards.4chan.org/:board/thread/:threadId",
+              "boards.4chan.org/:board/thread/:threadId/*"
+            ]
+          }
+        ],
+        "description": "Returns one feed item per post in the thread. The original post links to the thread; replies link to `#p<post number>`. The OP's reply count is exposed as `comments` in Atom, and thread state such as sticky, closed, bump limit, image limit, and archived is exposed in the feed description.\n\n| Key              | Description                          | Accepts                | Defaults to |\n| ---------------- | ------------------------------------ | ---------------------- | ----------- |\n| `revealSpoilers` | Don't wrap images tagged as spoilers | `0`/`1`/`true`/`false` | `false`     |",
+        "location": "thread.tsx",
+        "module": "() => import('@/routes/4chan/thread.tsx')"
+      },
       "/:board/catalog/:routeParams?": {
         "path": "/:board/catalog/:routeParams?",
         "categories": [
@@ -11648,7 +11682,7 @@
             "target": "/:board/catalog"
           }
         ],
-        "description": "Specify options (in the format of query string) in parameter `routeParams` to control extra features for threads\n\n| Key               | Description                                      | Accepts                | Defaults to |\n| ----------------- | ------------------------------------------------ | ---------------------- | ----------- |\n| `showReplyCount`  | Show number of replies of each thread in catalog | `0`/`1`/`true`/`false` | `false`     |\n| `showLastReplies` | Show last 5 replies of each thread               | `0`/`1`/`true`/`false` | `false`     |\n| `revealSpoilers`  | Don't wrap images tagged as spoilers             | `0`/`1`/`true`/`false` | `false`     |\n| `excludeSticky`   | Filter out sticky threads                        | `0`/`1`/`true`/`false` | `false`     |\n| `minReplies`      | Minimum replies per thread                       | Integer                | None        |\n| `maxReplies`      | Maximum replies per thread                       | Integer                | None        |",
+        "description": "Specify options (in the format of query string) in parameter `routeParams` to control extra features for threads\n\n| Key               | Description                                      | Accepts                | Defaults to |\n| ----------------- | ------------------------------------------------ | ---------------------- | ----------- |\n| `showReplyCount`  | Show number of replies of each thread in catalog | `0`/`1`/`true`/`false` | `false`     |\n| `showLastReplies` | Show last 5 replies of each thread               | `0`/`1`/`true`/`false` | `false`     |\n| `showThreadFeed`  | Add a per-thread feed link to each item          | `0`/`1`/`true`/`false` | `false`     |\n| `revealSpoilers`  | Don't wrap images tagged as spoilers             | `0`/`1`/`true`/`false` | `false`     |\n| `excludeSticky`   | Filter out sticky threads                        | `0`/`1`/`true`/`false` | `false`     |\n| `minReplies`      | Minimum replies per thread                       | Integer                | None        |\n| `maxReplies`      | Maximum replies per thread                       | Integer                | None        |",
         "location": "catalog.tsx",
         "module": "() => import('@/routes/4chan/catalog.tsx')"
       }

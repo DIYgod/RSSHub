@@ -3119,6 +3119,15 @@
     "_name": "4chan",
     "boards": [
       {
+        "title": "Thread",
+        "docs": "https://docs.rsshub.app/routes/4chan",
+        "source": [
+          "/:board/thread/:threadId",
+          "/:board/thread/:threadId/*"
+        ],
+        "target": "/4chan/:board/thread/:threadId/:routeParams?"
+      },
+      {
         "title": "Board's catalog",
         "docs": "https://docs.rsshub.app/routes/4chan",
         "source": [

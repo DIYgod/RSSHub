@@ -980,6 +980,9 @@
   "/zyw/hot/:site?": [
     "nczitzk"
   ],
+  "/4chan/:board/thread/:threadId/:routeParams?": [
+    "Hash6232"
+  ],
   "/4chan/:board/catalog/:routeParams?": [
     "heisenshark"
   ],

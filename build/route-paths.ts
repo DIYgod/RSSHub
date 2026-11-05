@@ -63,6 +63,7 @@ export type RoutePath =
   | `/423down/:category{.+}?`
   | `/4399/forums/:mtag`
   | `/4chan/:board/catalog/:routeParams?`
+  | `/4chan/:board/thread/:threadId/:routeParams?`
   | `/4gamers/`
   | `/4gamers/category/:category`
   | `/4gamers/tag/:tag`
