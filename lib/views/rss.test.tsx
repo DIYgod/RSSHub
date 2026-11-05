@@ -136,6 +136,35 @@ describe('RSS view', () => {
         expect(html).toContain('<enclosure url="https://example.com/cover.png" length="0" type="image/png"');
     });
 
+    it('renders the comments element only for items with a comments URL', async () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Comments',
+                    item: [
+                        {
+                            title: 'Discussed',
+                            link: 'https://example.com/article',
+                            commentsUrl: 'https://example.com/item?id=1&p=2',
+                            comments: 12,
+                        },
+                        {
+                            title: 'Count only',
+                            link: 'https://example.com/other',
+                            comments: 3,
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html.match(/<comments>/g)).toHaveLength(1);
+        expect(html).toContain('<comments>https://example.com/item?id=1&amp;p=2</comments>');
+        const feed = await new Parser().parseString(html);
+        expect(feed.items[0].comments).toBe('https://example.com/item?id=1&p=2');
+        expect(feed.items[1].comments).toBeUndefined();
+    });
+
     it('does not let hono hoist feed titles and links as document metadata', () => {
         const html = String(
             <probe>
