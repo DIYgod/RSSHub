@@ -1,7 +1,4 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import got from '@/utils/got';
 
 export const route: Route = {
     path: '/:store',
@@ -26,37 +23,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+function handler(ctx) {
     const store = ctx.req.param('store');
-
-    const rootUrl = 'https://www.shopback.com.tw';
-    const currentUrl = `${rootUrl}/${store}`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    const $ = load(response.data);
-
-    $('table').remove();
-
-    const items = $('div[data-content-name]')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-
-            return {
-                title: $item.attr('data-content-name')!,
-                author: $item.attr('data-content-merchant'),
-                description: `<p>${$item.find('.mb-3').text()}</p>`,
-                link: `${rootUrl}/login?redirect=/redirect/alink/${$item.attr('data-content-id')}`,
-            };
-        });
-
-    return {
-        title: `${$('h1').text()} - ShopBack`,
-        link: currentUrl,
-        item: items,
-    };
+    return ctx.set('redirect', `/shopback/cashback/${store}${new URL(ctx.req.url).search}`);
 }
