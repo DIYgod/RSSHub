@@ -29,6 +29,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 {html`<title>${item.title}</title>`}
                 {item.description ? <content type="html">{item.description}</content> : item.content?.text ? <content type="text">{item.content.text}</content> : <content src={item.link} type="text/html" />}
                 <Link href={item.link} />
+                {item.links?.map((link) => (
+                    <Link rel={link.rel} href={link.url} type={link.type} title={link.title} />
+                ))}
                 {getItemAttachments(item).map((attachment) => (
                     <Link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
                 ))}

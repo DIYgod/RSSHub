@@ -72,6 +72,17 @@ export type DataItem = {
         size_in_bytes?: number;
         duration_in_seconds?: number;
     }>;
+    /**
+     * Additional links for this item, rendered as Atom <link> elements.
+     * `type` is a MIME type (e.g. `application/atom+xml`).
+     * RSS and JSON views ignore this field.
+     */
+    links?: Array<{
+        url: string;
+        rel: string;
+        type?: string;
+        title?: string;
+    }>;
     // oxlint-disable-next-line anti-slop/no-unsafe-dictionary-type
     _extra?: Record<string, any> & {
         links?: Array<{
