@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { toSchemaItems } from '@/routes/mi/types';
+
 // Response schemas mirror the upstream JSON shape, which nests deeper than the lint limit allows.
 // oxlint-disable unicorn/max-nested-calls
 
@@ -19,28 +21,30 @@ const NewProductListGoodsSchema = z.object({
 // The route always normalizes `startTime` with the floor start time before building items.
 export type NewProductListItem = z.infer<typeof NewProductListGoodsSchema> & { startTime: number };
 
+const NewProductListEntrySchema = z.object({
+    type: z.literal('goods'),
+    value: z.object({
+        goods: NewProductListGoodsSchema,
+    }),
+});
+
+const NewProductFloorSchema = z.object({
+    dynamicData: z
+        .array(
+            z.object({
+                // Entries of other types are skipped.
+                list: z.array(z.unknown()).transform((list) => toSchemaItems(list, NewProductListEntrySchema)),
+            })
+        )
+        .optional(),
+    moduleKey: z.literal('car_product_list_new'),
+    startTime: z.number(),
+});
+
 export const NewProductListResponseSchema = DataResponseSchema(
     z.object({
-        floors: z.array(
-            z.object({
-                dynamicData: z
-                    .array(
-                        z.object({
-                            list: z.array(
-                                z.object({
-                                    type: z.string(),
-                                    value: z.object({
-                                        goods: NewProductListGoodsSchema,
-                                    }),
-                                })
-                            ),
-                        })
-                    )
-                    .optional(),
-                moduleKey: z.string(),
-                startTime: z.number(),
-            })
-        ),
+        // Only the new product floors are kept, so the other home page floors cannot fail the response.
+        floors: z.array(z.unknown()).transform((floors) => toSchemaItems(floors, NewProductFloorSchema)),
     })
 );
 

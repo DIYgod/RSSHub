@@ -5,6 +5,19 @@ import { z } from 'zod';
 
 const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
 
+/**
+ * Parse entries one by one and skip the ones that do not match, so an unexpected entry never breaks the whole list.
+ *
+ * @param {unknown[]} items - Raw entries.
+ * @param {z.ZodType} schema - Entry schema.
+ * @returns {Array} Parsed entries that match the schema.
+ */
+export const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
+    items.flatMap((item) => {
+        const result = schema.safeParse(item);
+        return result.success ? [result.data] : [];
+    });
+
 // Crowdfunding
 
 // List
@@ -99,7 +112,7 @@ const NewProductGoodsSchema = z.object({
 
 const NewProductDetailItemSchema = z.object({
     goodsInfo: z.object({
-        goodsList: z.array(NewProductGoodsSchema),
+        goodsList: z.array(NewProductGoodsSchema).optional(),
     }),
     product: z.object({
         sellPointList: z.array(z.string()),

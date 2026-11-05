@@ -27,7 +27,7 @@ const CrowdfundingSchema = z
         /** Project image */
         image: z.string(),
         /** Project sell point list */
-        sellPointList: z.array(z.string()).nonempty().optional(),
+        sellPointList: z.array(z.string()).optional(),
         /** Project sell point */
         sellPoint: z.string().optional(),
         /** Crowdfunding price */
@@ -41,7 +41,7 @@ const CrowdfundingSchema = z
         /** Shipping info */
         sendInfo: z.string(),
         /** Support tier list */
-        supportList: z.array(SupportSchema).nonempty(),
+        supportList: z.array(SupportSchema),
     })
     .refine((value) => Number(value.sellPointList !== undefined) + Number(value.sellPoint !== undefined) === 1, {
         message: 'Exactly one of sellPointList and sellPoint must be provided',
@@ -56,7 +56,7 @@ const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding 
     <>
         <img src={crowdfunding.image} />
         <br />
-        {crowdfunding.sellPointList && (
+        {crowdfunding.sellPointList && crowdfunding.sellPointList.length > 0 && (
             <>
                 <ol>
                     {crowdfunding.sellPointList.map((point) => (

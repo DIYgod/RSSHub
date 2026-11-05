@@ -1,18 +1,11 @@
 import { z } from 'zod';
 
+import { toSchemaItems } from '@/routes/mi/types';
+
 // Response schemas mirror the upstream JSON shape, which nests deeper than the lint limit allows.
 // oxlint-disable unicorn/max-nested-calls
 
 const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
-
-const ListResultSchema = <Schema extends z.ZodType>(result: Schema) => z.object({ list: z.array(result) });
-
-// Entries are validated one by one, so an unexpected entry never breaks the whole list.
-const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
-    items.flatMap((item) => {
-        const result = schema.safeParse(item);
-        return result.success ? [result.data] : [];
-    });
 
 // Homepage
 
@@ -23,21 +16,22 @@ const HomepageFloorEntrySchema = z.object({
     }),
 });
 
+const HomepageFloorSchema = z.object({
+    data: z
+        .object({
+            items: z.array(z.unknown()).optional(),
+        })
+        .transform((data) => ({
+            items: toSchemaItems(data.items ?? [], HomepageFloorEntrySchema),
+        })),
+    module_key: z.string(),
+});
+
 export const HomepageResponseSchema = DataResponseSchema(
     z.object({
         homepage: z.object({
-            floors: z.array(
-                z.object({
-                    data: z
-                        .object({
-                            items: z.array(z.unknown()).optional(),
-                        })
-                        .transform((data) => ({
-                            items: toSchemaItems(data.items ?? [], HomepageFloorEntrySchema),
-                        })),
-                    module_key: z.string(),
-                })
-            ),
+            // The route reads a single floor, so a floor of another shape must not fail the response.
+            floors: z.array(z.unknown()).transform((floors) => toSchemaItems(floors, HomepageFloorSchema)),
         }),
     })
 );
@@ -56,7 +50,7 @@ export const VenuePageResponseSchema = DataResponseSchema(
     z.object({
         floors: z.array(
             z.object({
-                query_list: z.array(VenueQuerySchema),
+                query_list: z.array(VenueQuerySchema).optional(),
             })
         ),
     })
@@ -64,11 +58,11 @@ export const VenuePageResponseSchema = DataResponseSchema(
 
 // List
 
-const BaseListItemSchema = z.object({
-    type: z.string(),
+export const CommonListItemSchema = z.object({
+    type: z.literal('goods'),
     value: z.object({
         goods: z.object({
-            fist_release_time: z.number(),
+            fist_release_time: z.number().optional(),
             gid: z.number(),
             img_square: z.string(),
             name: z.string(),
@@ -76,11 +70,10 @@ const BaseListItemSchema = z.object({
     }),
 });
 
-export const CommonListItemSchema = BaseListItemSchema.extend({
-    type: z.literal('goods'),
-});
-
 export type CommonListItem = z.infer<typeof CommonListItemSchema>;
+
+// The list itself is checked loosely; its entries are parsed one by one.
+const ListResultSchema = z.object({ list: z.array(z.unknown()) });
 
 export const GenericListResponseSchema = <Result extends z.ZodType>(result: Result) =>
     DataResponseSchema(
@@ -108,19 +101,11 @@ const CrowdfundingListItemSchema = z.union([
 
 export type CrowdfundingListItem = z.infer<typeof CrowdfundingListItemSchema>;
 
-export const CrowdfundingListSchema = z
-    .union([
-        // crowd-funding
-        ListResultSchema(BaseListItemSchema),
-        // reservation with goodsInfo
-        VenueReservationListItemSchema,
-        // reservation without goodsInfo, skipped
-        z.object({ goodsType: z.number(), id: z.string() }),
-    ])
-    .transform((result) => {
-        const listResult = ListResultSchema(BaseListItemSchema).safeParse(result);
-        return listResult.success ? toSchemaItems(listResult.data.list, CommonListItemSchema) : toSchemaItems([result], VenueReservationListItemSchema);
-    });
+export const CrowdfundingListSchema = z.unknown().transform((result) => {
+    // crowd-funding results hold a list of goods; reservation results are single entries, skipped when they have no goods
+    const listResult = ListResultSchema.safeParse(result);
+    return listResult.success ? toSchemaItems(listResult.data.list, CommonListItemSchema) : toSchemaItems([result], VenueReservationListItemSchema);
+});
 
 // NewProduct
 
@@ -139,14 +124,7 @@ const NewProductListItemSchema = z.union([
 
 export type NewProductListItem = z.infer<typeof NewProductListItemSchema>;
 
-export const NewProductListSchema = ListResultSchema(
-    z.union([
-        // leek-super
-        VenueBannerListItemSchema,
-        // leek-selective
-        BaseListItemSchema,
-    ])
-).transform((result) => toSchemaItems(result.list, NewProductListItemSchema));
+export const NewProductListSchema = ListResultSchema.transform((result) => toSchemaItems(result.list, NewProductListItemSchema));
 
 // Detail
 
@@ -165,7 +143,7 @@ const BaseDetailItemSchema = z.object({
                 .object({
                     price: z.number(),
                 })
-                .nullable(),
+                .nullish(),
         }),
     }),
     productInfo: z.record(
@@ -181,7 +159,7 @@ const BaseDetailItemSchema = z.object({
                         price: z.number(),
                     })
                 )
-                .nullable(),
+                .nullish(),
             price: z.number(),
             singlePrice: z
                 .array(
@@ -189,7 +167,7 @@ const BaseDetailItemSchema = z.object({
                         price: z.number(),
                     })
                 )
-                .nullable(),
+                .nullish(),
         })
     ),
 });
@@ -213,7 +191,7 @@ export const CrowdfundingDetailItemSchema = BaseDetailItemSchema.extend({
                     img: z.string(),
                 }),
             })
-            .nullable(),
+            .nullish(),
     }),
 });
 

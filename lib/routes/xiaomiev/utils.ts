@@ -26,9 +26,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
         method: 'POST',
         schema: NewProductListResponseSchema,
     });
-    const items = response.data.floors
-        .filter((floor) => floor.moduleKey === 'car_product_list_new')
-        .flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.filter((item) => item.type === 'goods').map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
+    const items = response.data.floors.flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
     const list = dedupeByKey(items, (item) => item.itemId);
     return list;
 };

@@ -92,7 +92,7 @@ const getVenueQueryList = async (pageId: string, sign: string, resolvers: string
         },
         schema: VenuePageResponseSchema,
     });
-    const queryList = response.data.floors.flatMap((floor) => floor.query_list).filter((query) => resolvers.includes(query.resolver));
+    const queryList = response.data.floors.flatMap((floor) => floor.query_list ?? []).filter((query) => resolvers.includes(query.resolver));
     return queryList;
 };
 

@@ -111,7 +111,7 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
     endTime: parseDate(detailItem.end_time, 'X'),
     sendInfo: detailItem.send_info,
     supportList: detailItem.support_list.map((support) => ({
-        image: support.goods_list.at(0)!.goods_image,
+        image: support.goods_list[0]?.goods_image ?? '',
         name: support.name,
         price: support.price,
         description: support.support_desc,
@@ -128,7 +128,7 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
 const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
     image: listItem.img,
     sellPointList: detailItem.product.sellPointList,
-    goodsList: [...detailItem.goodsInfo.goodsList, ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({
+    goodsList: [...(detailItem.goodsInfo.goodsList ?? []), ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({
         image: goods.imgUrl,
         name: goods.name,
         marketPrice: goods.marketPrice,

@@ -16,9 +16,9 @@ const NewProductSchema = z.object({
     /** Product image */
     image: z.string(),
     /** Sell point list */
-    sellPointList: z.array(z.string()).nonempty(),
+    sellPointList: z.array(z.string()),
     /** Product list */
-    goodsList: z.array(GoodsSchema).nonempty(),
+    goodsList: z.array(GoodsSchema),
 });
 
 export type NewProduct = z.infer<typeof NewProductSchema>;

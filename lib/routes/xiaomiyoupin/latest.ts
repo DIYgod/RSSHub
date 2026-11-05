@@ -44,14 +44,17 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
-    title: utils.isCommonListItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
-    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
-    image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
-    pubDate: utils.isCommonListItem(listItem) ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
-    language: 'zh-CN',
-});
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => {
+    const releaseTime = utils.isCommonListItem(listItem) ? listItem.value.goods.fist_release_time : undefined;
+    return {
+        title: utils.isCommonListItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
+        description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
+        link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
+        image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
+        pubDate: releaseTime ? parseDate(releaseTime, 'X') : undefined,
+        language: 'zh-CN',
+    };
+};
 
 async function handler(): Promise<Data> {
     const { list, jumpUrl } = await utils.getNewProductList();
