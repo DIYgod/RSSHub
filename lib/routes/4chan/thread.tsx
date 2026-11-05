@@ -69,7 +69,6 @@ const handler = async (ctx: Context) => {
         title: subject ? `4chan's /${board}/ - ${subject}` : `4chan's /${board}/ - Thread #${threadId}`,
         link: threadUrl,
         description: threadState.length > 0 ? threadState.join(' · ') : undefined,
-        sortItems: false,
         item,
     };
 };
@@ -77,7 +76,7 @@ const handler = async (ctx: Context) => {
 export const route: Route = {
     path: '/:board/thread/:threadId/:routeParams?',
     categories: ['bbs'],
-    example: '/4chan/g/thread/110119143',
+    example: '/4chan/g/thread/105076684',
     parameters: {
         board: '4chan board',
         threadId: 'Thread ID, the number in the thread URL',
@@ -94,7 +93,7 @@ export const route: Route = {
     maintainers: ['Hash6232'],
     radar: [
         {
-            source: ['boards.4chan.org/:board/thread/:threadId'],
+            source: ['boards.4chan.org/:board/thread/:threadId', 'boards.4chan.org/:board/thread/:threadId/*'],
         },
     ],
     description: `Returns one feed item per post in the thread. The original post links to the thread; replies link to \`#p<post number>\`. The OP's reply count is exposed as \`comments\` in Atom, and thread state such as sticky, closed, bump limit, image limit, and archived is exposed in the feed description.
