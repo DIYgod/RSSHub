@@ -180,6 +180,8 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
         closeTimeout: browserCloseTimeout,
         noGoto: true,
         onBeforeLoad: async (page) => {
+            // Applied before the configured cookie so that BILIBILI_COOKIE_* can still override it
+            await utils.disableAutoTranslate(page);
             if (cookie) {
                 await applyCookie(page, cookie);
             }
