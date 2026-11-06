@@ -147,7 +147,8 @@ const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
             }
 
             const title = buildTitle(xy);
-            const signature = buildArticleSignature(title, xy.content);
+            const isGenericOrMedia = xy.type === '图片' || /^(?:图片|短讯|快讯|广告)$/.test(xy.title?.trim() ?? '');
+            const signature = isGenericOrMedia ? undefined : buildArticleSignature(title, xy.content);
 
             if (xy.id && seenIds.has(xy.id)) {
                 continue;
