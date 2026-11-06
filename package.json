@@ -70,7 +70,7 @@
         "@bbob/preset-html5": "4.4.1",
         "@googleapis/youtube": "40.0.2",
         "@honeybadger-io/js": "6.17.0",
-        "@hono/node-server": "2.1.5",
+        "@hono/node-server": "2.1.6",
         "@hono/zod-openapi": "1.6.3",
         "@jocmp/mercury-parser": "3.1.2",
         "@notionhq/client": "5.30.0",
