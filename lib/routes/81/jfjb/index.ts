@@ -213,7 +213,7 @@ export const handler = async (ctx) => {
         link,
         item: items.slice(0, limit),
         sortItems: false,
-        image: targetPages[0]?.paperImg ?? latestPaper.paperImg ?? 'http://www.81.cn/favicon.png',
+        image: targetPages[0].paperImg || latestPaper.paperImg,
         language: 'zh-CN' as const,
     };
 };
