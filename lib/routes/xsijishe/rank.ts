@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
@@ -8,7 +7,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 
-import { baseUrl, browserResourceTypes, toBrowserCookies } from './utils';
+import { baseUrl, browserResourceTypes, isBlockedRequest, toBrowserCookies } from './utils';
 
 const rankSelector = '.nex_recon_lists';
 
@@ -48,8 +47,7 @@ async function fetchPortal(url: string) {
             },
         });
     } catch (error) {
-        // Cloudflare answers non-browser clients with a challenge page.
-        if (!(error instanceof FetchError) || (error.status !== 403 && error.status !== 429)) {
+        if (!isBlockedRequest(error)) {
             throw error;
         }
     }

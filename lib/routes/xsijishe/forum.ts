@@ -1,5 +1,4 @@
 import { type CheerioAPI, load } from 'cheerio';
-import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -11,7 +10,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 
-import { baseUrl, browserResourceTypes, toBrowserCookies } from './utils';
+import { baseUrl, browserResourceTypes, isBlockedRequest, toBrowserCookies } from './utils';
 
 type ForumSource = {
     cookie: string;
@@ -104,7 +103,7 @@ async function fetchForumDocument(link: string, selector: string, source: ForumS
                 return $;
             }
         } catch (error) {
-            if (!(error instanceof FetchError) || (error.status !== 403 && error.status !== 429)) {
+            if (!isBlockedRequest(error)) {
                 throw error;
             }
         }
