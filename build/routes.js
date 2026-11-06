@@ -36,6 +36,48 @@ export default {
         ],
         "location": "81rc/index.ts",
         "module": () => import('@/routes/81/81rc/index.ts')
+      },
+      "/jfjb/:page?": {
+        "path": "/jfjb/:page?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/81/jfjb",
+        "parameters": {
+          "page": "版面编号，如 `01`、`1`、`01版` 或 `第1版`；使用 `all` 或留空获取全部版面"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.81.cn/szb_223187/szblb/index.html",
+              "www.81.cn/szb_223187/szblb",
+              "www.81.cn/szb_223187/szbxq/index.html",
+              "www.81.cn/szb_223187/szbxq",
+              "81.cn/szb_223187/szblb/index.html",
+              "81.cn/szb_223187/szblb",
+              "81.cn/szb_223187/szbxq/index.html",
+              "81.cn/szb_223187/szbxq"
+            ],
+            "target": "/jfjb"
+          }
+        ],
+        "name": "解放军报",
+        "maintainers": [
+          "zhangsan-xyz"
+        ],
+        "url": "www.81.cn/szb_223187/szblb/index.html",
+        "description": "获取当日《解放军报》数字报（电子版）的全部文章或指定版面文章。如订阅 **01 版**，路由为 `/81/jfjb/01`（亦支持 `/81/jfjb/第1版`）。如需按栏目过滤（如 **军营观察**），可使用通用参数 `/81/jfjb?filter_category=军营观察`。",
+        "location": "jfjb/index.ts",
+        "module": () => import('@/routes/81/jfjb/index.ts')
       }
     },
     "apiRoutes": {},
@@ -44,7 +86,7 @@ export default {
     "categories": [
       "government"
     ],
-    "description": "",
+    "description": "中国军网是中央军委批准的中国人民解放军唯一新闻门户网站。",
     "lang": "zh-CN"
   },
   "121": {
