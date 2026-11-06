@@ -121,7 +121,7 @@
         "oxc-parser": "0.156.0",
         "p-map": "7.1.1",
         "pac-proxy-agent": "9.1.0",
-        "patchright": "1.64.2",
+        "patchright": "1.64.3",
         "postal-mime": "4.2.0",
         "query-string": "10.0.0",
         "rate-limiter-flexible": "11.2.3",

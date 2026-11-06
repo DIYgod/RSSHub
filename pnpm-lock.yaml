@@ -362,8 +362,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(supports-color@10.2.2)
       patchright:
-        specifier: 1.64.2
-        version: 1.64.2
+        specifier: 1.64.3
+        version: 1.64.3
       postal-mime:
         specifier: 4.2.0
         version: 4.2.0
@@ -5145,13 +5145,13 @@ packages:
   parseley@0.13.1:
     resolution: {integrity: sha512-uNBJZzmb60l6p6VWLTmevizNAGnE0xoSf1n0B4q3ntegDNzcS68NRCcBDZTcyXHxt2XhBChsCuqj4M+nChvE/A==}
 
-  patchright-core@1.64.2:
-    resolution: {integrity: sha512-j7Hsw8XThZfiGlNPGJZtX4ERLLi4cval4ihCdOScwBgWqElCT4MWQSDmV/Tuuartgy9/a8DColg4gTAtJ27nPQ==}
+  patchright-core@1.64.3:
+    resolution: {integrity: sha512-AikBjQ6CcsEtk7pJGlZ7ITxIInVd0a8HWPtuGjx2Y0Ogb88sj1wqICiYFz4du6fbaLQStLNEnWCmYm5uODsEzQ==}
     engines: {node: '>=20'}
     hasBin: true
 
-  patchright@1.64.2:
-    resolution: {integrity: sha512-7bUwQelki5xWotiQUm0J6SfYlUboxtHdBgUfn7rt0+8Pwk/6A7Z5nRoewPRDg9nmiak9ECBF9rmiaBIVzljEag==}
+  patchright@1.64.3:
+    resolution: {integrity: sha512-DjdhKOHRMW2RcvCJJ4MW9B4Mn7dh4Tu5IAkeiYgmoMfVdG6w2klfNdw0Ci8F/jibp870EIfJhzyN14GN6jDVPg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -10414,11 +10414,11 @@ snapshots:
       leac: 0.7.0
       peberminta: 0.10.0
 
-  patchright-core@1.64.2: {}
+  patchright-core@1.64.3: {}
 
-  patchright@1.64.2:
+  patchright@1.64.3:
     dependencies:
-      patchright-core: 1.64.2
+      patchright-core: 1.64.3
 
   path-exists@4.0.0: {}
 
