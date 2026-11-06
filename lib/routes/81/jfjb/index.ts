@@ -115,30 +115,12 @@ const matchPage = (page: PaperPage, req: string): boolean => {
     return page.paperBk === trimmed || page.paperBk.includes(trimmed);
 };
 
-export const handler = async (ctx) => {
-    const requestedPage = ctx.req.param('page');
-    const limit = getRouteLimit(ctx, 100);
-
-    const latestPaper = await getLatestPaperInfo();
-    const paperData = latestPaper.paperData;
-
-    const editionData = await fetchEditionData(paperData);
-    if (!editionData?.paperInfo || editionData.paperInfo.length === 0) {
-        throw new Error(`No paper edition data found for Liberation Army Daily on ${paperData}`);
-    }
-
-    const { paperInfo } = editionData;
-    const targetPages = !requestedPage || requestedPage === 'all' ? paperInfo : paperInfo.filter((p) => matchPage(p, requestedPage));
-
-    if (targetPages.length === 0) {
-        throw new InvalidParameterError(`Liberation Army Daily page '${requestedPage}' not found in today's edition`);
-    }
-
+const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
     const seenTitles = new Set<string>();
     const seenIds = new Set<number>();
     const items: DataItem[] = [];
 
-    for (const page of targetPages) {
+    for (const page of pages) {
         const pubDate = timezone(parseDate(page.paperData, 'YYYY-MM-DD', true), 8);
         const articles = page.xyList ?? [];
         for (const xy of articles) {
@@ -173,6 +155,10 @@ export const handler = async (ctx) => {
         }
     }
 
+    return items;
+};
+
+const resolveFeedMetadata = (targetPages: PaperPage[], requestedPage: string | undefined, paperData: string) => {
     const singleSelectedPage = targetPages.length === 1 ? targetPages[0] : undefined;
     let sectionTitle = '';
     if (singleSelectedPage) {
@@ -181,12 +167,37 @@ export const handler = async (ctx) => {
         sectionTitle = ` - ${requestedPage}`;
     }
 
-    const feedTitle = `解放军报${sectionTitle} - ${paperData}`;
-    const feedLink = singleSelectedPage?.webUrl ?? `http://www.81.cn/szb_223187/szblb/index.html?paperNumber=01&paperName=jfjb&paperDate=${paperData}`;
+    return {
+        title: `解放军报${sectionTitle} - ${paperData}`,
+        link: singleSelectedPage?.webUrl ?? `http://www.81.cn/szb_223187/szblb/index.html?paperNumber=01&paperName=jfjb&paperDate=${paperData}`,
+    };
+};
+
+export const handler = async (ctx) => {
+    const requestedPage = ctx.req.param('page');
+    const limit = getRouteLimit(ctx, 100);
+
+    const latestPaper = await getLatestPaperInfo();
+    const paperData = latestPaper.paperData;
+
+    const editionData = await fetchEditionData(paperData);
+    if (!editionData?.paperInfo || editionData.paperInfo.length === 0) {
+        throw new Error(`No paper edition data found for Liberation Army Daily on ${paperData}`);
+    }
+
+    const { paperInfo } = editionData;
+    const targetPages = !requestedPage || requestedPage === 'all' ? paperInfo : paperInfo.filter((p) => matchPage(p, requestedPage));
+
+    if (targetPages.length === 0) {
+        throw new InvalidParameterError(`Liberation Army Daily page '${requestedPage}' not found in today's edition`);
+    }
+
+    const items = parseArticlesFromPages(targetPages);
+    const { title, link } = resolveFeedMetadata(targetPages, requestedPage, paperData);
 
     return {
-        title: feedTitle,
-        link: feedLink,
+        title,
+        link,
         item: items.slice(0, limit),
         sortItems: false,
         image: targetPages[0]?.paperImg ?? latestPaper.paperImg ?? 'http://www.81.cn/favicon.png',
