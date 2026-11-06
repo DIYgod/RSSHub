@@ -47,13 +47,13 @@ const apiMapCategory = (category) => {
     }
 };
 
-// decrypt base64 encoded AES-256-ECB data, the key is the md5 hex string of the secret
-const decrypt = (data: string, secret: string) => {
+// decrypt base64 encoded AES-256-ECB data, the key is the md5 hex string of the seed
+const decrypt = (data: string, seed: string) => {
     // decode base64
     const encryptedWordArray = CryptoJS.enc.Base64.parse(data);
 
     // to md5 hex string , this string must be 32 bytes , because it is used as key for AES-256
-    const md5HexStr = CryptoJS.MD5(secret).toString(); // hex 字串
+    const md5HexStr = CryptoJS.MD5(seed).toString(); // hex 字串
 
     // convert string to WordArray that can be used as key for AES
     const key = CryptoJS.enc.Utf8.parse(md5HexStr); // 32 bytes => AES-256
@@ -123,16 +123,17 @@ const processApiItems = async (apiPath: string) => {
     apiPath = apiPath.replace(/\?$/, '');
     const domains = await getApiDomains();
 
-    let lastError: unknown;
-    for (const domain of domains) {
+    const tryDomain = async (index: number) => {
         try {
-            // eslint-disable-next-line no-await-in-loop
-            return await fetchApi(`https://${domain}${apiPath}`);
+            return await fetchApi(`https://${domains[index]}${apiPath}`);
         } catch (error) {
-            lastError = error;
+            if (index + 1 < domains.length) {
+                return tryDomain(index + 1);
+            }
+            throw new Error(`Failed to fetch 18comic API ${apiPath} from all domains: ${error instanceof Error ? error.message : error}`, { cause: error });
         }
-    }
-    throw new Error(`Failed to fetch 18comic API ${apiPath} from all domains: ${lastError instanceof Error ? lastError.message : lastError}`);
+    };
+    return tryDomain(0);
 };
 
 const ProcessItems = async (ctx, currentUrl, rootUrl) => {
