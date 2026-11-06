@@ -115,7 +115,23 @@ const matchPage = (page: PaperPage, req: string): boolean => {
     return page.paperNumber === num || page.paperNumber.replace(/^0+/, '') === pageNumMatch[1];
 };
 
-const normalizeContent = (content?: string): string => (content ? content.replaceAll(/<[^>]+>/g, '').replaceAll(/\s+/g, '') : '');
+const buildArticleSignature = (title: string, content?: string): string | undefined => (title && content ? `${title}:::${content.slice(0, 200)}` : undefined);
+
+const formatArticleItem = (xy: ArticleItem, page: PaperPage, index: number, pubDate: ReturnType<typeof timezone>): DataItem => {
+    const title = buildTitle(xy);
+    const content = xy.content && /\S/.test(xy.content) ? xy.content : undefined;
+    const author = extractAuthor(xy);
+    const link = xy.id ? `http://www.81.cn/szb_223187/szbxq/index.html?paperName=jfjb&paperDate=${page.paperData}&paperNumber=${page.paperNumber}&articleid=${xy.id}` : `${page.webUrl}#article-${page.paperNumber}-${index + 1}`;
+
+    return {
+        title,
+        description: content,
+        link,
+        pubDate,
+        author,
+        category: [page.paperBk, `${page.paperNumber}版`],
+    };
+};
 
 const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
     const seenIds = new Set<number>();
@@ -131,8 +147,7 @@ const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
             }
 
             const title = buildTitle(xy);
-            const textSignature = normalizeContent(xy.content);
-            const signature = title && textSignature ? `${title}:::${textSignature}` : undefined;
+            const signature = buildArticleSignature(title, xy.content);
 
             if (xy.id && seenIds.has(xy.id)) {
                 continue;
@@ -148,20 +163,7 @@ const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
                 seenSignatures.add(signature);
             }
 
-            const content = xy.content && /\S/.test(xy.content) ? xy.content : undefined;
-            const author = extractAuthor(xy);
-            const link = xy.id
-                ? `http://www.81.cn/szb_223187/szbxq/index.html?paperName=jfjb&paperDate=${page.paperData}&paperNumber=${page.paperNumber}&articleid=${xy.id}`
-                : `${page.webUrl}#article-${page.paperNumber}-${index + 1}`;
-
-            items.push({
-                title,
-                description: content,
-                link,
-                pubDate,
-                author,
-                category: [page.paperBk, `${page.paperNumber}版`],
-            });
+            items.push(formatArticleItem(xy, page, index, pubDate));
         }
     }
 
