@@ -1,3 +1,5 @@
+import { load } from 'cheerio';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -115,7 +117,15 @@ const matchPage = (page: PaperPage, req: string): boolean => {
     return page.paperNumber === num || page.paperNumber.replace(/^0+/, '') === pageNumMatch[1];
 };
 
-const buildArticleSignature = (title: string, content?: string): string | undefined => (title && content ? `${title}:::${content.slice(0, 200)}` : undefined);
+// Cross-page continuations repeat the same article under a new id, sometimes with different markup.
+// Compare the full text so independent articles that share a headline and opening markup are kept.
+const buildArticleSignature = (title: string, content?: string): string | undefined => {
+    if (!title || !content) {
+        return undefined;
+    }
+    const text = load(content).text().replaceAll(/\s+/g, '');
+    return text ? `${title}:::${text}` : undefined;
+};
 
 const formatArticleItem = (xy: ArticleItem, page: PaperPage, index: number, pubDate: ReturnType<typeof timezone>): DataItem => {
     const title = buildTitle(xy);
