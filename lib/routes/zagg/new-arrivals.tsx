@@ -1,15 +1,27 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
-const host = 'https://www.zagg.com/en_us';
+const host = 'https://zagg.com/en-us';
+
+interface Product {
+    title: string;
+    handle: string;
+    published_at: string;
+    vendor: string;
+    product_type: string;
+    body_html: string;
+    variants: Array<{ title: string }>;
+    images: Array<{ src: string }>;
+}
+
 export const route: Route = {
     path: '/new-arrivals/:query?',
     categories: ['shopping'],
-    example: '/zagg/new-arrivals/brand=164&cat=3038,3041',
-    parameters: { query: 'query, search page querystring' },
+    example: '/zagg/new-arrivals/vendor=ZAGG,InvisibleShield&product_type=cases',
+    parameters: { query: 'query string, `vendor` and `product_type`, comma separated' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,55 +33,47 @@ export const route: Route = {
     name: 'New Arrivals',
     maintainers: ['IvanWng97'],
     handler,
-    description: 'For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`',
+    description: 'Filter by vendor (`ZAGG`, `InvisibleShield`, `ZAGG Custom`...) and product type (`cases`, `screen protectors`, `tablet keyboards`...), e.g. `vendor=ZAGG&product_type=cases,tablet cases`',
 };
 
 async function handler(ctx) {
-    const query = ctx.req.param('query');
-    const params = new URLSearchParams(query);
-    const brands = params.get('brand');
-    const categories = params.get('cat');
+    const params = new URLSearchParams(ctx.req.param('query'));
+    const vendors = params.get('vendor')?.split(',');
+    const types = params.get('product_type')?.split(',');
 
-    const url = `${host}/new-arrivals`;
-    const response = await got({
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-        },
-        method: 'post',
-        url,
-        searchParams: {
-            cat: categories,
-            brand: brands,
-        },
+    const url = `${host}/collections/new-arrivals`;
+    const response = await ofetch<{ products: Product[] }>(`${url}/products.json`, {
+        query: { limit: 250 },
     });
-    const products = response.data.products;
-
-    const $ = load(products);
-    const list = $('.item.product.product-item')
-        .toArray()
-        .map((element) => {
-            const data: DataItem = { title: '' };
-            const details = $(element).find('.product.details-box').html();
-            data.link = $(element).find('.product-item-link').eq(0).attr('href');
-            data.title = $(element).find('.product-item-link').text();
-            const regex = /(https.*?)\?/;
-            const imgUrl = $(element).find('img').eq(0).attr('data-src')!.match(regex)![1];
-            const img = renderToString(
-                <div>
-                    <img src={imgUrl} />
-                </div>
-            );
-            data.description = details + img;
-            return data;
-        });
+    const list: DataItem[] = response.products
+        .filter((product) => (!vendors || vendors.includes(product.vendor)) && (!types || types.includes(product.product_type)))
+        .map((product) => ({
+            title: product.title,
+            link: `${host}/products/${product.handle}`,
+            pubDate: parseDate(product.published_at),
+            category: [product.vendor, product.product_type],
+            description:
+                product.body_html +
+                renderToString(
+                    <div>
+                        Variant:
+                        <br />
+                        {product.variants.map((variant) => (
+                            <>
+                                {variant.title}
+                                <br />
+                            </>
+                        ))}
+                        {product.images.map((image) => (
+                            <img src={image.src} />
+                        ))}
+                    </div>
+                ),
+        }));
     return {
         title: 'Zagg - New Arrivals',
-        link: response.url,
+        link: url,
         description: 'Zagg - New Arrivals',
-        item: list.map((item) => ({
-            title: item.title,
-            description: item.description,
-            link: item.link,
-        })),
+        item: list,
     };
 }
