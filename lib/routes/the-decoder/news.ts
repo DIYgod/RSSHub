@@ -29,12 +29,13 @@ export const route: Route = {
     path: '/news',
     categories: ['new-media'],
     example: '/the-decoder/news',
-    name: 'News (full text)',
+    name: 'News',
     maintainers: ['ljh12138164'],
-    description: 'Full-text AI news and analysis, including inline images and videos. Fetches the latest 30 articles by default. Use the common `limit` parameter to request up to 100 articles.',
+    description:
+        'Full English news and analysis from the official WordPress API, including images and videos. The official RSS feed only contains excerpts. Fetches the latest 30 articles by default; use the common `limit` parameter for up to 100 articles.',
     zh: {
-        name: '新闻（全文）',
-        description: '订阅 AI 新闻与分析全文，保留正文中的图片和视频。默认获取最新 30 篇文章，可通过通用参数 `limit` 调整数量，最多 100 篇。',
+        name: '新闻',
+        description: '官方 RSS 只提供摘要。本路由通过官方 WordPress API 获取英文新闻与分析全文，保留正文中的图片和视频。默认获取最新 30 篇，可通过通用参数 `limit` 调整，最多 100 篇。',
     },
     radar: [{ source: ['the-decoder.com/', 'the-decoder.com/artificial-intelligence-news/'] }],
     handler,
