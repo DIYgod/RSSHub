@@ -49,6 +49,9 @@ const resolveLink = (href: string | undefined, base: string) => {
 
 const isArticleUrl = (url: string) => /content_\d+\.html(?:[?#].*)?$/.test(url);
 
+// Empty placeholders like `<h3 class="subtitle"></h3>` should not end up in titles
+const hasText = (text?: string | null): text is string => Boolean(text && /\S/.test(text));
+
 const removeComments = ($element: Cheerio<any>) => {
     $element
         .contents()
@@ -73,9 +76,9 @@ const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string):
             }
             seen.add(link);
             const attrTitle = $(element).attr('title');
-            const rawTitle = attrTitle && /\S/.test(attrTitle) ? attrTitle : $(element).text();
+            const title = hasText(attrTitle) ? attrTitle : $(element).text();
             return {
-                title: /\S/.test(rawTitle) ? rawTitle : undefined,
+                title: hasText(title) ? title : undefined,
                 link,
                 category: categoryName ? [categoryName] : undefined,
             };
@@ -83,95 +86,77 @@ const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string):
 };
 
 const getArticleDetails = async (article: ArticleLink, pubDate?: Date): Promise<DataItem> => {
-    try {
-        const details = await cache.tryGet<ArticleDetails>(`cntheory:paper:${article.link}`, async () => {
-            const page = await getPage(article.link);
-            const $ = load(page.data);
+    const details = await cache.tryGet<ArticleDetails>(`cntheory:paper:${article.link}`, async () => {
+        const page = await getPage(article.link);
+        const $ = load(page.data);
 
-            const h1Title = $('#news_content h1').text();
-            const subtitle = $('#news_content .subtitle').text();
-            const headline = $('#news_content .headline').text();
-            const documentTitle = $('title').text();
+        const h1Title = $('#news_content h1').text();
+        const headline = $('#news_content .headline').text();
+        const subtitle = $('#news_content .subtitle').text();
 
-            let title = '';
-            if (/\S/.test(h1Title)) {
-                title = h1Title;
-            } else if (article.title && /\S/.test(article.title)) {
-                title = article.title;
-            } else if (/\S/.test(documentTitle)) {
-                title = documentTitle;
+        let title = hasText(h1Title) ? h1Title : article.title;
+        if (hasText(headline)) {
+            title = title ? `${headline} ${title}` : headline;
+        }
+        if (hasText(subtitle)) {
+            title = title ? (/^\s*——/.test(subtitle) ? `${title}${subtitle}` : `${title} ${subtitle}`) : subtitle;
+        }
+
+        const content = $('cms-content#content, cms-content, #content').first();
+
+        // Resolve relative links and images in content
+        content.find('img').each((_, element) => {
+            const src = $(element).attr('src');
+            if (!src) {
+                return;
             }
-
-            if (/\S/.test(headline)) {
-                title = title ? `${headline} ${title}` : headline;
+            const resolved = resolveLink(src, article.link);
+            if (!resolved) {
+                return;
             }
-            if (/\S/.test(subtitle)) {
-                title = title ? (/^\s*——/.test(subtitle) ? `${title}${subtitle}` : `${title} ${subtitle}`) : subtitle;
+            $(element).attr('src', resolved);
+        });
+        content.find('a').each((_, element) => {
+            const href = $(element).attr('href');
+            if (!href) {
+                return;
             }
-
-            const content = $('cms-content#content, cms-content, #content').first();
-
-            // Resolve relative links and images in content
-            content.find('img').each((_, element) => {
-                const src = $(element).attr('src');
-                if (!src) {
-                    return;
-                }
-                const resolved = resolveLink(src, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('src', resolved);
-            });
-            content.find('a').each((_, element) => {
-                const href = $(element).attr('href');
-                if (!href) {
-                    return;
-                }
-                const resolved = resolveLink(href, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('href', resolved);
-            });
-
-            removeComments(content);
-            content.find('script, style').remove();
-
-            const authorCandidate = $('.datesource')
-                .toArray()
-                .map((element) =>
-                    $(element)
-                        .text()
-                        .replace(/\s*字数.*$/, '')
-                        .trim()
-                )
-                .find((text) => text && !text.includes('《 学习时报 》') && !text.includes('《学习时报》'));
-
-            const contentHtml = content.html();
-
-            return {
-                title: /\S/.test(title) ? title : undefined,
-                description: contentHtml && /\S/.test(contentHtml) ? contentHtml : undefined,
-                author: authorCandidate || undefined,
-            };
+            const resolved = resolveLink(href, article.link);
+            if (!resolved) {
+                return;
+            }
+            $(element).attr('href', resolved);
         });
 
+        removeComments(content);
+        content.find('script, style').remove();
+
+        const authorCandidate = $('.datesource')
+            .toArray()
+            .map((element) =>
+                $(element)
+                    .text()
+                    .replace(/\s*字数.*$/, '')
+                    .trim()
+            )
+            .find((text) => text && !text.includes('《 学习时报 》') && !text.includes('《学习时报》'));
+
+        const contentHtml = content.html();
+
         return {
-            ...details,
-            title: details.title || article.title || article.link,
-            link: article.link,
-            pubDate,
-            category: article.category,
+            title,
+            description: hasText(contentHtml) ? contentHtml : undefined,
+            author: authorCandidate || undefined,
         };
-    } catch {
-        return {
-            title: article.title || article.link,
-            link: article.link,
-            pubDate,
-            category: article.category,
-        };
-    }
+    });
+
+    return {
+        ...details,
+        title: details.title ?? article.link,
+        link: article.link,
+        pubDate,
+        category: article.category,
+    };
 };
 
 const parseEditionDate = (firstNodeUrl: string) => {
@@ -222,7 +207,7 @@ const fetchTargetArticles = async (targetNodes: NodeLink[], limit: number): Prom
             const node$ = load(nodeRes.data);
             return getArticleLinks(node$, nodeRes.url, node.name);
         },
-        { concurrency, stopOnError: false }
+        { concurrency }
     );
 
     const targetArticles: ArticleLink[] = [];
@@ -301,7 +286,7 @@ async function handler(ctx) {
         throw new Error(`No articles found for Study Times ${requestedId ?? 'paper'}`);
     }
 
-    const items = await pMap(targetArticles, (article) => getArticleDetails(article, editionDate), { concurrency, stopOnError: false });
+    const items = await pMap(targetArticles, (article) => getArticleDetails(article, editionDate), { concurrency });
 
     const feedTitle = `学习时报${selectedNode ? ` - ${selectedNode.name}` : ''}${dateString ? ` - ${dateString}` : ''}`;
 
