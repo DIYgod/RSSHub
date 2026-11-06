@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
-import { defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
+import { defaultDomain, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/album/:id',
@@ -39,9 +39,7 @@ async function handler(ctx) {
     const rootUrl = getRootUrl(domain);
     const currentUrl = `${rootUrl}/album/${id}`;
 
-    const apiUrl = `${getApiUrl()}/album?id=${id}`;
-
-    const apiResult = await processApiItems(apiUrl);
+    const apiResult = await processApiItems(`/album?id=${id}`);
 
     const category = apiResult.tags;
     const author = apiResult.author.join(', ');
@@ -69,8 +67,7 @@ async function handler(ctx) {
         results = await Promise.all(
             apiResult.series.map((item, index) =>
                 cache.tryGet(`18comic:album:${item.id}`, async () => {
-                    const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
-                    const chapterResult = await processApiItems(chapterApiUrl);
+                    const chapterResult = await processApiItems(`/chapter?id=${item.id}`);
                     const result: DataItem = { title: '' };
                     const chapterNum = index + 1;
                     result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
