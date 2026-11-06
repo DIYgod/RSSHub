@@ -71,7 +71,7 @@ async function handler(ctx) {
                     .eq(0)
                     .text()
                     .trim()
-                    .replaceAll(/[\t\n]/g, '');
+                    .replaceAll(/\p{Cc}/gu, '');
                 const data = metadata.startsWith('[') ? JSON.parse(metadata)[0] : JSON.parse(metadata);
                 // e.g. https://udn.com/news/story/7331/6576320
                 const content = $('.article-content__editor');
@@ -95,7 +95,7 @@ async function handler(ctx) {
                     description += body.html();
                 }
 
-                if (data.publisher.name.includes('轉角國際 udn Global')) {
+                if (data.publisher?.name?.includes('轉角國際 udn Global')) {
                     // Global news
                     description = $('.story_body_content')
                         .html()!
@@ -105,9 +105,9 @@ async function handler(ctx) {
                 }
 
                 return {
-                    author: [{ name: $('.article-content__author').text().match('中央社')?.at(0) }, { name: data.publisher.name.match('轉角國際 udn Global')?.at(0) }, data.author].filter((e) => e.name),
+                    author: [{ name: $('.article-content__author').text().match('中央社')?.at(0) }, { name: data.publisher?.name?.match('轉角國際 udn Global')?.at(0) }, data.author].filter((e) => e?.name),
                     description,
-                    category: [data.articleSection, vip ? $('.article-head li.breadcrumb__item:last > b').text() : $("meta[name='subsection']").attr('content'), ...data.keywords.split(',')],
+                    category: [data.articleSection, vip ? $('.article-head li.breadcrumb__item:last > b').text() : $("meta[name='subsection']").attr('content'), ...(data.keywords?.split(',') ?? [])],
                 };
             });
 
