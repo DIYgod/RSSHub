@@ -108,41 +108,51 @@ const extractAuthor = (xy: ArticleItem): string | undefined => {
 const matchPage = (page: PaperPage, req: string): boolean => {
     const trimmed = req.trim();
     const pageNumMatch = trimmed.match(/^第?(\d{1,2})版?$/);
-    if (pageNumMatch) {
-        const num = pageNumMatch[1].padStart(2, '0');
-        return page.paperNumber === num || page.paperNumber.replace(/^0+/, '') === pageNumMatch[1];
+    if (!pageNumMatch) {
+        return false;
     }
-    return page.paperBk === trimmed || page.paperBk.includes(trimmed);
+    const num = pageNumMatch[1].padStart(2, '0');
+    return page.paperNumber === num || page.paperNumber.replace(/^0+/, '') === pageNumMatch[1];
 };
 
+const normalizeContent = (content?: string): string => (content ? content.replaceAll(/<[^>]+>/g, '').replaceAll(/\s+/g, '') : '');
+
 const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
-    const seenTitles = new Set<string>();
     const seenIds = new Set<number>();
+    const seenSignatures = new Set<string>();
     const items: DataItem[] = [];
 
     for (const page of pages) {
         const pubDate = timezone(parseDate(page.paperData, 'YYYY-MM-DD', true), 8);
         const articles = page.xyList ?? [];
-        for (const xy of articles) {
-            const title = buildTitle(xy);
-            const isGenericTitle = /^(?:图片|短讯|快讯|广告)$/.test(xy.title?.trim() ?? '');
+        for (const [index, xy] of articles.entries()) {
+            if (!xy.id && !xy.content && !xy.title) {
+                continue;
+            }
 
-            if (isGenericTitle) {
-                if (xy.id && seenIds.has(xy.id)) {
-                    continue;
-                }
-            } else if (seenTitles.has(title)) {
+            const title = buildTitle(xy);
+            const textSignature = normalizeContent(xy.content);
+            const signature = title && textSignature ? `${title}:::${textSignature}` : undefined;
+
+            if (xy.id && seenIds.has(xy.id)) {
+                continue;
+            }
+            if (signature && seenSignatures.has(signature)) {
                 continue;
             }
 
             if (xy.id) {
                 seenIds.add(xy.id);
             }
-            seenTitles.add(title);
+            if (signature) {
+                seenSignatures.add(signature);
+            }
 
             const content = xy.content && /\S/.test(xy.content) ? xy.content : undefined;
             const author = extractAuthor(xy);
-            const link = xy.id ? `http://www.81.cn/szb_223187/szbxq/index.html?paperName=jfjb&paperDate=${page.paperData}&paperNumber=${page.paperNumber}&articleid=${xy.id}` : page.webUrl;
+            const link = xy.id
+                ? `http://www.81.cn/szb_223187/szbxq/index.html?paperName=jfjb&paperDate=${page.paperData}&paperNumber=${page.paperNumber}&articleid=${xy.id}`
+                : `${page.webUrl}#article-${page.paperNumber}-${index + 1}`;
 
             items.push({
                 title,
@@ -209,7 +219,7 @@ export const route: Route = {
     path: '/jfjb/:page?',
     categories: ['traditional-media'],
     example: '/81/jfjb',
-    parameters: { page: '版面编号或名称，如 `01`、`第1版` 或 `要闻`；使用 `all` 或留空获取全部版面' },
+    parameters: { page: '版面编号，如 `01`、`1`、`01版` 或 `第1版`；使用 `all` 或留空获取全部版面' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -238,5 +248,6 @@ export const route: Route = {
     maintainers: ['zhangsan-xyz'],
     handler,
     url: 'www.81.cn/szb_223187/szblb/index.html',
-    description: '获取当日《解放军报》数字报（电子版）的全部文章或指定版面文章。如订阅 **01 版**，路由为 `/81/jfjb/01`（亦支持 `/81/jfjb/第1版`）；订阅 **军营观察**，路由为 `/81/jfjb/军营观察`。',
+    description:
+        '获取当日《解放军报》数字报（电子版）的全部文章或指定版面文章。如订阅 **01 版**，路由为 `/81/jfjb/01`（亦支持 `/81/jfjb/第1版`）。如需按栏目过滤（如 **军营观察**），可使用通用参数 `/81/jfjb?filter_category=军营观察`。',
 };
