@@ -72,9 +72,10 @@ const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string):
                 return [];
             }
             seen.add(link);
-            const title = ($(element).attr('title') || $(element).text()).replaceAll(/\s+/g, ' ').trim();
+            const attrTitle = $(element).attr('title');
+            const rawTitle = attrTitle && /\S/.test(attrTitle) ? attrTitle : $(element).text();
             return {
-                title: title || undefined,
+                title: /\S/.test(rawTitle) ? rawTitle : undefined,
                 link,
                 category: categoryName ? [categoryName] : undefined,
             };
@@ -87,16 +88,25 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Date): Promise<
             const page = await getPage(article.link);
             const $ = load(page.data);
 
-            const h1Title = $('#news_content h1').text().replaceAll(/\s+/g, ' ').trim();
-            const subtitle = $('#news_content .subtitle').text().replaceAll(/\s+/g, ' ').trim();
-            const headline = $('#news_content .headline').text().replaceAll(/\s+/g, ' ').trim();
+            const h1Title = $('#news_content h1').text();
+            const subtitle = $('#news_content .subtitle').text();
+            const headline = $('#news_content .headline').text();
+            const documentTitle = $('title').text();
 
-            let title = h1Title || article.title || $('title').text().trim();
-            if (headline) {
-                title = `${headline} ${title}`;
+            let title = '';
+            if (/\S/.test(h1Title)) {
+                title = h1Title;
+            } else if (article.title && /\S/.test(article.title)) {
+                title = article.title;
+            } else if (/\S/.test(documentTitle)) {
+                title = documentTitle;
             }
-            if (subtitle) {
-                title = subtitle.startsWith('——') ? `${title}${subtitle}` : `${title} ${subtitle}`;
+
+            if (/\S/.test(headline)) {
+                title = title ? `${headline} ${title}` : headline;
+            }
+            if (/\S/.test(subtitle)) {
+                title = title ? (/^\s*——/.test(subtitle) ? `${title}${subtitle}` : `${title} ${subtitle}`) : subtitle;
             }
 
             const content = $('cms-content#content, cms-content, #content').first();
@@ -138,9 +148,11 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Date): Promise<
                 )
                 .find((text) => text && !text.includes('《 学习时报 》') && !text.includes('《学习时报》'));
 
+            const contentHtml = content.html();
+
             return {
-                title: title || undefined,
-                description: content.html()?.trim(),
+                title: /\S/.test(title) ? title : undefined,
+                description: contentHtml && /\S/.test(contentHtml) ? contentHtml : undefined,
                 author: authorCandidate || undefined,
             };
         });
