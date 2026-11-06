@@ -11483,6 +11483,39 @@
       "name": "殷墟博物馆"
     }
   },
+  "zagg": {
+    "routes": {
+      "/new-arrivals/:query?": {
+        "path": "/new-arrivals/:query?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/zagg/new-arrivals/vendor=ZAGG,InvisibleShield&product_type=cases",
+        "parameters": {
+          "query": "query string, `vendor` and `product_type`, comma separated"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "New Arrivals",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "Filter by vendor (`ZAGG`, `InvisibleShield`, `ZAGG Custom`...) and product type (`cases`, `screen protectors`, `tablet keyboards`...), e.g. `vendor=ZAGG&product_type=cases,tablet cases`",
+        "location": "new-arrivals.tsx",
+        "module": "() => import('@/routes/zagg/new-arrivals.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Zagg",
+    "url": "zagg.com",
+    "lang": "en"
+  },
   "zaozao": {
     "routes": {
       "/article/:type?": {
@@ -131923,39 +131956,6 @@
     "url": "yystv.cn",
     "lang": "zh-CN"
   },
-  "zagg": {
-    "routes": {
-      "/new-arrivals/:query?": {
-        "path": "/new-arrivals/:query?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/zagg/new-arrivals/brand=164&cat=3038,3041",
-        "parameters": {
-          "query": "query, search page querystring"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "New Arrivals",
-        "maintainers": [
-          "IvanWng97"
-        ],
-        "description": "For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`",
-        "location": "new-arrivals.tsx",
-        "module": "() => import('@/routes/zagg/new-arrivals.tsx')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "Zagg",
-    "url": "zagg.com",
-    "lang": "en"
-  },
   "zaker": {
     "routes": {
       "/channel/:id?": {
@@ -174201,304 +174201,6 @@
     "url": "www.google.com",
     "lang": "en"
   },
-  "youtube": {
-    "routes": {
-      "/community/:handle": {
-        "path": "/community/:handle",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/community/@JFlaMusic",
-        "parameters": {
-          "handle": "YouTube handles or channel id"
-        },
-        "name": "Community Posts",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "community.tsx",
-        "module": "() => import('@/routes/youtube/community.tsx')"
-      },
-      "/c/:username/:embed?": {
-        "path": "/c/:username/:embed?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/c/YouTubeCreators",
-        "parameters": {
-          "username": "YouTube custom URL",
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/c/:id"
-            ],
-            "target": "/c/:id"
-          }
-        ],
-        "name": "Custom URL",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "custom.ts",
-        "module": "() => import('@/routes/youtube/custom.ts')"
-      },
-      "/charts/:category?/:country?/:embed?": {
-        "path": "/charts/:category?/:country?/:embed?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/charts",
-        "parameters": {
-          "category": "Chart, see table below, default to `TopVideos`",
-          "country": "Country Code, see table below, default to global",
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "name": "Music Charts",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "description": "Chart\n\n| Top artists | Top songs | Top music videos | Trending       |\n| ----------- | --------- | ---------------- | -------------- |\n| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |\n\nCountry Code\n\n| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |\n| --------- | --------- | ------- | ------- | ------- | ------ | ------ |\n| ar        | au        | at      | be      | bo      | br     | ca     |\n\n| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |\n| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |\n| cl    | co       | cr         | cz      | dk      | do                 | ec      |\n\n| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |\n| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |\n| eg    | sv          | ee      | fi      | fr     | de      | gt        |\n\n| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |\n| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |\n| hn       | hu      | is      | in    | id        | ie      | il     | it    |\n\n| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |\n| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |\n| jp    | ke    | lu         | mx     | nl          | nz          | ni        |\n\n| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |\n| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |\n| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |\n\n| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |\n| ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |\n| ru     | sa           | rs     | za           | kr          | es    | se     | ch          |\n\n| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |\n| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |\n| tz       | tr     | ug     | ua      | ae                   | gb             | us            |\n\n| Uruguay | Zimbabwe |\n| ------- | -------- |\n| uy      | zw       |",
-        "location": "charts.ts",
-        "module": "() => import('@/routes/youtube/charts.ts')"
-      },
-      "/subscriptions/:embed?": {
-        "path": "/subscriptions/:embed?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/subscriptions",
-        "parameters": {
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": ""
-            },
-            {
-              "name": "YOUTUBE_CLIENT_ID",
-              "description": ""
-            },
-            {
-              "name": "YOUTUBE_CLIENT_SECRET",
-              "description": ""
-            },
-            {
-              "name": "YOUTUBE_REFRESH_TOKEN",
-              "description": ""
-            }
-          ]
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/feed/subscriptions",
-              "www.youtube.com/feed/channels"
-            ],
-            "target": "/subscriptions"
-          }
-        ],
-        "name": "Subscriptions",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "www.youtube.com/feed/subscriptions",
-        "location": "subscriptions.ts",
-        "module": "() => import('@/routes/youtube/subscriptions.ts')"
-      },
-      "/channel/:id/:routeParams?": {
-        "path": "/channel/:id/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ",
-        "parameters": {
-          "id": "YouTube channel id",
-          "routeParams": "Extra parameters, see the table below"
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/channel/:id"
-            ],
-            "target": "/channel/:id"
-          }
-        ],
-        "name": "Channel with id",
-        "maintainers": [
-          "DIYgod",
-          "pseudoyu"
-        ],
-        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::\n\n::: tip\nYouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.\n:::",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "location": "channel.ts",
-        "module": "() => import('@/routes/youtube/channel.ts')"
-      },
-      "/live/:username/:embed?": {
-        "path": "/live/:username/:embed?",
-        "categories": [
-          "live"
-        ],
-        "view": 3,
-        "example": "/youtube/live/@GawrGura",
-        "parameters": {
-          "username": "YouTube handle or channel id",
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/:username/streams",
-              "www.youtube.com/channel/:username/streams"
-            ],
-            "target": "/live/:username"
-          }
-        ],
-        "name": "Live",
-        "maintainers": [
-          "sussurr127",
-          "ouuan"
-        ],
-        "description": "::: tip\nEvery stream is categorized as `live`, `upcoming` or `completed`, so a single state can be picked out with the `filter_category` and `filterout_category` [common parameters](https://docs.rsshub.app/guide/parameters#filtering). For example, `/youtube/live/@GawrGura?filterout_category=completed` only tracks streams that are live or about to start.\n:::",
-        "location": "live.ts",
-        "module": "() => import('@/routes/youtube/live.ts')"
-      },
-      "/playlist/:id/:embed?": {
-        "path": "/playlist/:id/:embed?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 3,
-        "example": "/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z",
-        "parameters": {
-          "id": "YouTube playlist id",
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Playlist",
-        "maintainers": [
-          "HenryQW"
-        ],
-        "location": "playlist.ts",
-        "module": "() => import('@/routes/youtube/playlist.ts')"
-      },
-      "/shows/:username": {
-        "path": "/shows/:username",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/shows/@LinusTechTips",
-        "parameters": {
-          "username": "YouTube handle or channel id"
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/:username/shows",
-              "www.youtube.com/channel/:username/shows"
-            ],
-            "target": "/shows/:username"
-          }
-        ],
-        "name": "Shows",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "shows.ts",
-        "module": "() => import('@/routes/youtube/shows.ts')"
-      },
-      "/user/:username/:routeParams?": {
-        "path": "/user/:username/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 3,
-        "example": "/youtube/user/@JFlaMusic",
-        "parameters": {
-          "username": "YouTuber handle with @",
-          "routeParams": "Extra parameters, see the table below"
-        },
-        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/user/:username",
-              "www.youtube.com/:username",
-              "www.youtube.com/:username/videos"
-            ],
-            "target": "/user/:username"
-          }
-        ],
-        "name": "Channel with user handle",
-        "maintainers": [
-          "DIYgod",
-          "pseudoyu"
-        ],
-        "location": "user.ts",
-        "module": "() => import('@/routes/youtube/user.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "YouTube",
-    "url": "youtube.com",
-    "lang": "en"
-  },
   "twitter": {
     "routes": {
       "/trends/:woeid?": {
@@ -174876,6 +174578,304 @@
     "name": "X (Twitter)",
     "url": "x.com",
     "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                               | Description                                                                                                                              | Accepts                | Defaults to                               |\n| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------------------------------------- |\n| `readable`                        | Enable readable layout                                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`                  | Display author name in bold                                                                                                              | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`               | Show author name in title                                                                                                                | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorAsTitleOnly`           | Show only author name as title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInDesc`                | Show author name in description (RSS body)                                                                                               | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc`    | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description)     | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`          | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`     | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply`    | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`          | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `useRetweetDate`                  | Use the time of the retweet as its publication date, instead of the original tweet's date                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showLikesCountInTitle`           | Prefix the title with the tweet's like count when available, for example `[1567] Tweet text`                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeReplyContext`             | Prepend up to five available parent replies from the API response, oldest first; unavailable parents are omitted without extra API calls | `0`/`1`/`true`/`false` | `false`                                   |\n| `addLinkForPics`                  | Add clickable links for Tweet pictures                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`      | Show timestamp in description                                                                                                            | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`               | Show quoted tweet in title                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                     | Width of Tweet pictures                                                                                                                  | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                    | Height of Tweet pictures                                                                                                                 | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`              | Size of author's avatar                                                                                                                  | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`        | Size of quoted tweet's author's avatar                                                                                                   | Integer                | `24`                                      |\n| `includeReplies`                  | Include replies, only available in `/twitter/user`                                                                                       | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                      | Include retweets, only available in `/twitter/user`                                                                                      | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                     | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                           | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                               | Unspecified/Integer    | Unspecified                               |\n| `onlyMedia`                       | Only get tweets with a media                                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `mediaNumber `                    | Number the medias                                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForSubscriberOnly`      | Use \"🔒\" as prefix for subscriber-only posts                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForSubscriberOnly`     | Use \"\\[Subscribers Only]\" as prefix for subscriber-only posts                                                                            | `0`/`1`/`true`/`false` | `true`                                    |\n| `showFullPrefixForSubscriberOnly` | Use \"🔒 \\[Subscribers Only]\" as prefix for subscriber-only posts                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using `TWITTER_AUTH_TOKEN` (recommended): Configure a comma-separated list of `auth_token` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n~~- Using `TWITTER_USERNAME` `TWITTER_PASSWORD` and `TWITTER_AUTHENTICATION_SECRET`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.\n\n- Using `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.\n- OPTIONAL: Using `TWITTER_ACCESS_TOKEN` and `TWITTER_ACCESS_SECRET`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.",
+    "lang": "en"
+  },
+  "youtube": {
+    "routes": {
+      "/community/:handle": {
+        "path": "/community/:handle",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/community/@JFlaMusic",
+        "parameters": {
+          "handle": "YouTube handles or channel id"
+        },
+        "name": "Community Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "community.tsx",
+        "module": "() => import('@/routes/youtube/community.tsx')"
+      },
+      "/c/:username/:embed?": {
+        "path": "/c/:username/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/c/YouTubeCreators",
+        "parameters": {
+          "username": "YouTube custom URL",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/c/:id"
+            ],
+            "target": "/c/:id"
+          }
+        ],
+        "name": "Custom URL",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "custom.ts",
+        "module": "() => import('@/routes/youtube/custom.ts')"
+      },
+      "/charts/:category?/:country?/:embed?": {
+        "path": "/charts/:category?/:country?/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/charts",
+        "parameters": {
+          "category": "Chart, see table below, default to `TopVideos`",
+          "country": "Country Code, see table below, default to global",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "name": "Music Charts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "description": "Chart\n\n| Top artists | Top songs | Top music videos | Trending       |\n| ----------- | --------- | ---------------- | -------------- |\n| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |\n\nCountry Code\n\n| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |\n| --------- | --------- | ------- | ------- | ------- | ------ | ------ |\n| ar        | au        | at      | be      | bo      | br     | ca     |\n\n| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |\n| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |\n| cl    | co       | cr         | cz      | dk      | do                 | ec      |\n\n| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |\n| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |\n| eg    | sv          | ee      | fi      | fr     | de      | gt        |\n\n| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |\n| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |\n| hn       | hu      | is      | in    | id        | ie      | il     | it    |\n\n| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |\n| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |\n| jp    | ke    | lu         | mx     | nl          | nz          | ni        |\n\n| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |\n| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |\n| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |\n\n| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |\n| ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |\n| ru     | sa           | rs     | za           | kr          | es    | se     | ch          |\n\n| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |\n| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |\n| tz       | tr     | ug     | ua      | ae                   | gb             | us            |\n\n| Uruguay | Zimbabwe |\n| ------- | -------- |\n| uy      | zw       |",
+        "location": "charts.ts",
+        "module": "() => import('@/routes/youtube/charts.ts')"
+      },
+      "/subscriptions/:embed?": {
+        "path": "/subscriptions/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/subscriptions",
+        "parameters": {
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_CLIENT_ID",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_CLIENT_SECRET",
+              "description": ""
+            },
+            {
+              "name": "YOUTUBE_REFRESH_TOKEN",
+              "description": ""
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/feed/subscriptions",
+              "www.youtube.com/feed/channels"
+            ],
+            "target": "/subscriptions"
+          }
+        ],
+        "name": "Subscriptions",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.youtube.com/feed/subscriptions",
+        "location": "subscriptions.ts",
+        "module": "() => import('@/routes/youtube/subscriptions.ts')"
+      },
+      "/channel/:id/:routeParams?": {
+        "path": "/channel/:id/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ",
+        "parameters": {
+          "id": "YouTube channel id",
+          "routeParams": "Extra parameters, see the table below"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/channel/:id"
+            ],
+            "target": "/channel/:id"
+          }
+        ],
+        "name": "Channel with id",
+        "maintainers": [
+          "DIYgod",
+          "pseudoyu"
+        ],
+        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::\n\n::: tip\nYouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.\n:::",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "channel.ts",
+        "module": "() => import('@/routes/youtube/channel.ts')"
+      },
+      "/live/:username/:embed?": {
+        "path": "/live/:username/:embed?",
+        "categories": [
+          "live"
+        ],
+        "view": 3,
+        "example": "/youtube/live/@GawrGura",
+        "parameters": {
+          "username": "YouTube handle or channel id",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/:username/streams",
+              "www.youtube.com/channel/:username/streams"
+            ],
+            "target": "/live/:username"
+          }
+        ],
+        "name": "Live",
+        "maintainers": [
+          "sussurr127",
+          "ouuan"
+        ],
+        "description": "::: tip\nEvery stream is categorized as `live`, `upcoming` or `completed`, so a single state can be picked out with the `filter_category` and `filterout_category` [common parameters](https://docs.rsshub.app/guide/parameters#filtering). For example, `/youtube/live/@GawrGura?filterout_category=completed` only tracks streams that are live or about to start.\n:::",
+        "location": "live.ts",
+        "module": "() => import('@/routes/youtube/live.ts')"
+      },
+      "/playlist/:id/:embed?": {
+        "path": "/playlist/:id/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 3,
+        "example": "/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z",
+        "parameters": {
+          "id": "YouTube playlist id",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Playlist",
+        "maintainers": [
+          "HenryQW"
+        ],
+        "location": "playlist.ts",
+        "module": "() => import('@/routes/youtube/playlist.ts')"
+      },
+      "/shows/:username": {
+        "path": "/shows/:username",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/shows/@LinusTechTips",
+        "parameters": {
+          "username": "YouTube handle or channel id"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/:username/shows",
+              "www.youtube.com/channel/:username/shows"
+            ],
+            "target": "/shows/:username"
+          }
+        ],
+        "name": "Shows",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "shows.ts",
+        "module": "() => import('@/routes/youtube/shows.ts')"
+      },
+      "/user/:username/:routeParams?": {
+        "path": "/user/:username/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 3,
+        "example": "/youtube/user/@JFlaMusic",
+        "parameters": {
+          "username": "YouTuber handle with @",
+          "routeParams": "Extra parameters, see the table below"
+        },
+        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/user/:username",
+              "www.youtube.com/:username",
+              "www.youtube.com/:username/videos"
+            ],
+            "target": "/user/:username"
+          }
+        ],
+        "name": "Channel with user handle",
+        "maintainers": [
+          "DIYgod",
+          "pseudoyu"
+        ],
+        "location": "user.ts",
+        "module": "() => import('@/routes/youtube/user.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "YouTube",
+    "url": "youtube.com",
     "lang": "en"
   },
   "economist": {

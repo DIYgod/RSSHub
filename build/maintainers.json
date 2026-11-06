@@ -968,6 +968,9 @@
   "/yinxubwg/exhibitionIndex/:type": [
     "magazian"
   ],
+  "/zagg/new-arrivals/:query?": [
+    "IvanWng97"
+  ],
   "/zaozao/article/:type?": [
     "shaomingbo"
   ],
@@ -9424,9 +9427,6 @@
     "HaitianLiu",
     "yy4382"
   ],
-  "/zagg/new-arrivals/:query?": [
-    "IvanWng97"
-  ],
   "/zaker/channel/:id?": [
     "LogicJake",
     "kt286",
@@ -12868,36 +12868,6 @@
   "/google/play/:id/:lang?": [
     "surwall"
   ],
-  "/youtube/community/:handle": [
-    "TonyRL"
-  ],
-  "/youtube/c/:username/:embed?": [
-    "TonyRL"
-  ],
-  "/youtube/charts/:category?/:country?/:embed?": [
-    "TonyRL"
-  ],
-  "/youtube/subscriptions/:embed?": [
-    "TonyRL"
-  ],
-  "/youtube/channel/:id/:routeParams?": [
-    "DIYgod",
-    "pseudoyu"
-  ],
-  "/youtube/live/:username/:embed?": [
-    "sussurr127",
-    "ouuan"
-  ],
-  "/youtube/playlist/:id/:embed?": [
-    "HenryQW"
-  ],
-  "/youtube/shows/:username": [
-    "TonyRL"
-  ],
-  "/youtube/user/:username/:routeParams?": [
-    "DIYgod",
-    "pseudoyu"
-  ],
   "/twitter/trends/:woeid?": [
     "sakamossan"
   ],
@@ -12940,6 +12910,36 @@
     "yindaheng98",
     "Rongronggg9",
     "CaoMeiYouRen",
+    "pseudoyu"
+  ],
+  "/youtube/community/:handle": [
+    "TonyRL"
+  ],
+  "/youtube/c/:username/:embed?": [
+    "TonyRL"
+  ],
+  "/youtube/charts/:category?/:country?/:embed?": [
+    "TonyRL"
+  ],
+  "/youtube/subscriptions/:embed?": [
+    "TonyRL"
+  ],
+  "/youtube/channel/:id/:routeParams?": [
+    "DIYgod",
+    "pseudoyu"
+  ],
+  "/youtube/live/:username/:embed?": [
+    "sussurr127",
+    "ouuan"
+  ],
+  "/youtube/playlist/:id/:embed?": [
+    "HenryQW"
+  ],
+  "/youtube/shows/:username": [
+    "TonyRL"
+  ],
+  "/youtube/user/:username/:routeParams?": [
+    "DIYgod",
     "pseudoyu"
   ],
   "/economist/global-business-review/:language?": [
