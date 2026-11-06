@@ -16,7 +16,9 @@ const defaultDomain = 'jmcomic1.me';
 // list of address: https://jmcomic2.bet
 const allowDomain = new Set(['18comic.vip', '18comic.org', 'jmcomic.me', 'jmcomic1.me', 'jm-comic3.art', 'jm-comic.club', 'jm-comic2.ark']);
 
-const apiDomain = 'www.cdnhth.cc';
+// the API domains change often, the current list is published at apiDomainServer (AES encrypted)
+const apiDomainServer = 'https://rup4a04-c01.tos-ap-southeast-1.bytepluses.com/newsvr-2025.txt';
+const fallbackApiDomains = ['www.cdnhjk.net', 'www.cdnutc.cc', 'www.cdngwc.net', 'www.cdngwc.club'];
 
 const getRootUrl = (domain) => {
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
@@ -45,30 +47,13 @@ const apiMapCategory = (category) => {
     }
 };
 
-const getApiUrl = () => `https://${apiDomain}`;
-
-// using api to fetch data
-const processApiItems = async (apiUrl: string) => {
-    apiUrl = apiUrl.replace(/\?$/, '');
-    // get timestamp using javascript native api
-    const ts = Date.now();
-    const tokenParam = `${ts},1.7.5`;
-    // md5 from {token ts + "18comicAPP"
-    let token = `${ts}18comicAPP`;
-    token = md5(token);
-
-    const response = await got(apiUrl, {
-        headers: {
-            token,
-            tokenparam: tokenParam,
-        },
-    });
-
+// decrypt base64 encoded AES-256-ECB data, the key is the md5 hex string of the seed
+const decrypt = (data: string, seed: string) => {
     // decode base64
-    const encryptedWordArray = CryptoJS.enc.Base64.parse(response.data.data);
+    const encryptedWordArray = CryptoJS.enc.Base64.parse(data);
 
     // to md5 hex string , this string must be 32 bytes , because it is used as key for AES-256
-    const md5HexStr = CryptoJS.MD5(ts + '185Hcomic3PAPP7R').toString(); // hex 字串
+    const md5HexStr = CryptoJS.MD5(seed).toString(); // hex 字串
 
     // convert string to WordArray that can be used as key for AES
     const key = CryptoJS.enc.Utf8.parse(md5HexStr); // 32 bytes => AES-256
@@ -84,11 +69,71 @@ const processApiItems = async (apiUrl: string) => {
         padding: CryptoJS.pad.Pkcs7,
     });
 
-    // convert the decrypted WordArray to a UTF-8 string , the result is a JSON string
-    const resultJson = decrypted.toString(CryptoJS.enc.Utf8);
+    // convert the decrypted WordArray to a UTF-8 string
+    return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
+const getApiDomains = () =>
+    cache.tryGet(
+        '18comic:api-domains',
+        async () => {
+            let domains: string[] = [];
+            try {
+                const response = await got(apiDomainServer);
+                const { Server } = JSON.parse(decrypt(String(response.body).trim(), 'diosfjckwpqpdfjkvnqQjsik'));
+                domains = Server.filter((domain) => typeof domain === 'string' && /^[\w.-]+$/.test(domain));
+            } catch {
+                // use the fallback domains
+            }
+            return [...new Set([...domains, ...fallbackApiDomains])];
+        },
+        config.cache.contentExpire,
+        false
+    );
+
+const fetchApi = async (apiUrl: string) => {
+    // get timestamp using javascript native api
+    const ts = Date.now();
+    const tokenParam = `${ts},1.7.5`;
+    // md5 from {token ts + "18comicAPP"
+    let token = `${ts}18comicAPP`;
+    token = md5(token);
+
+    const response = await got(apiUrl, {
+        headers: {
+            token,
+            tokenparam: tokenParam,
+        },
+    });
+
+    const data = response.data?.data;
+    if (typeof data !== 'string' || !data) {
+        throw new Error(`Invalid API response from ${apiUrl}`);
+    }
+
+    // the result is a JSON string
+    const resultJson = decrypt(data, ts + '185Hcomic3PAPP7R');
 
     const result = JSON.parse(resultJson);
     return result;
+};
+
+// using api to fetch data, try each API domain until one works
+const processApiItems = async (apiPath: string) => {
+    apiPath = apiPath.replace(/\?$/, '');
+    const domains = await getApiDomains();
+
+    const tryDomain = async (index: number) => {
+        try {
+            return await fetchApi(`https://${domains[index]}${apiPath}`);
+        } catch (error) {
+            if (index + 1 < domains.length) {
+                return tryDomain(index + 1);
+            }
+            throw new Error(`Failed to fetch 18comic API ${apiPath} from all domains: ${error instanceof Error ? error.message : error}`, { cause: error });
+        }
+    };
+    return tryDomain(0);
 };
 
 const ProcessItems = async (ctx, currentUrl, rootUrl) => {
@@ -154,4 +199,4 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     };
 };
 
-export { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems, ProcessItems };
+export { apiMapCategory, defaultDomain, getRootUrl, processApiItems, ProcessItems };
