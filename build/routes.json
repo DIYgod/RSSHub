@@ -47725,7 +47725,7 @@
         ],
         "example": "/cntheory/paper",
         "parameters": {
-          "id": "板块，默认为全部"
+          "id": "版块或版面编号，默认为全部，如 `国内大局` 或 `01`；使用 `all` 或留空获取全部版面"
         },
         "features": {
           "requireConfig": false,
@@ -47735,18 +47735,35 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "radar": [
+          {
+            "source": [
+              "paper.studytimes.cn",
+              "paper.studytimes.cn/cntheory"
+            ],
+            "target": "/paper"
+          },
+          {
+            "source": [
+              "paper.studytimes.cn/cntheory/:yearMonth/:day/node_:id.html"
+            ],
+            "target": "/paper/:id"
+          }
+        ],
         "name": "学习时报",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "zhangsan-xyz"
         ],
-        "description": "如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。",
-        "location": "paper.tsx",
-        "module": "() => import('@/routes/cntheory/paper.tsx')"
+        "url": "paper.studytimes.cn/cntheory",
+        "description": "获取当日《学习时报》数字报的全部文章或指定版面文章。如订阅 **01 版：国内大局**，路由为 `/cntheory/paper/国内大局` 或 `/cntheory/paper/01`。",
+        "location": "paper.ts",
+        "module": "() => import('@/routes/cntheory/paper.ts')"
       }
     },
     "apiRoutes": {},
     "name": "理论网",
-    "url": "paper.cntheory.com",
+    "url": "paper.studytimes.cn",
     "lang": "zh-CN"
   },
   "cnu": {

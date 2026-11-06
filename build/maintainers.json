@@ -3416,7 +3416,8 @@
     "nczitzk"
   ],
   "/cntheory/paper/:id?": [
-    "nczitzk"
+    "nczitzk",
+    "zhangsan-xyz"
   ],
   "/cnu/iec": [
     "liueic"

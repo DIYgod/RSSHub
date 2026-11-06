@@ -17359,6 +17359,28 @@
       }
     ]
   },
+  "studytimes.cn": {
+    "_name": "理论网",
+    "paper": [
+      {
+        "title": "学习时报",
+        "docs": "https://docs.rsshub.app/routes/cntheory",
+        "source": [
+          "/",
+          "/cntheory"
+        ],
+        "target": "/cntheory/paper"
+      },
+      {
+        "title": "学习时报",
+        "docs": "https://docs.rsshub.app/routes/cntheory",
+        "source": [
+          "/cntheory/:yearMonth/:day/node_:id.html"
+        ],
+        "target": "/cntheory/paper/:id"
+      }
+    ]
+  },
   "cnu.edu.cn": {
     "_name": "首都师范大学",
     "iec": [
