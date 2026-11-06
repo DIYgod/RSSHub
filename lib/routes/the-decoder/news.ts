@@ -29,9 +29,13 @@ export const route: Route = {
     path: '/news',
     categories: ['new-media'],
     example: '/the-decoder/news',
-    name: 'News',
+    name: 'News (full text)',
     maintainers: ['ljh12138164'],
-    description: 'Full-text articles, including inline images and videos. Returns the latest 30 articles by default; use the common `limit` parameter for up to 100 articles.',
+    description: 'Full-text AI news and analysis, including inline images and videos. Fetches the latest 30 articles by default. Use the common `limit` parameter to request up to 100 articles.',
+    zh: {
+        name: '新闻（全文）',
+        description: '订阅 AI 新闻与分析全文，保留正文中的图片和视频。默认获取最新 30 篇文章，可通过通用参数 `limit` 调整数量，最多 100 篇。',
+    },
     radar: [{ source: ['the-decoder.com/', 'the-decoder.com/artificial-intelligence-news/'] }],
     handler,
 };
