@@ -5664,6 +5664,40 @@ export default {
     "url": "public.tableau.com",
     "lang": "en"
   },
+  "the-decoder": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/the-decoder/news",
+        "name": "News",
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full English news and analysis from the official WordPress API, including images and videos. The official RSS feed only contains excerpts. Fetches the latest 30 articles by default; use the common `limit` parameter for up to 100 articles.",
+        "zh": {
+          "name": "新闻",
+          "description": "官方 RSS 只提供摘要。本路由通过官方 WordPress API 获取英文新闻与分析全文，保留正文中的图片和视频。默认获取最新 30 篇，可通过通用参数 `limit` 调整，最多 100 篇。"
+        },
+        "radar": [
+          {
+            "source": [
+              "the-decoder.com/",
+              "the-decoder.com/artificial-intelligence-news/"
+            ]
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/the-decoder/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "The Decoder",
+    "url": "the-decoder.com",
+    "lang": "en"
+  },
   "trendingpapers": {
     "routes": {
       "/papers/:category?/:time?/:cited?": {
@@ -18156,7 +18190,7 @@ export default {
         },
         "name": "Illust",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -18212,7 +18246,7 @@ export default {
         },
         "name": "Hot",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -18268,7 +18302,7 @@ export default {
         },
         "name": "Manga",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -23109,7 +23143,7 @@ export default {
         "name": "User timeline",
         "maintainers": [
           "siygle",
-          "SnowAgar25",
+          "Tsuyumi25",
           "HanaokaYuzu"
         ],
         "location": "user-timeline.ts",
@@ -24066,7 +24100,7 @@ export default {
         },
         "name": "Works and Creators",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -24163,7 +24197,7 @@ export default {
         },
         "name": "Search Results",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "Get the search results for works on Skeb",
         "location": "search.ts",
@@ -24195,7 +24229,7 @@ export default {
         },
         "name": "Creator Works",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -24236,7 +24270,7 @@ export default {
         },
         "name": "Following Creators",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -24277,7 +24311,7 @@ export default {
         },
         "name": "Following Works",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -24318,7 +24352,7 @@ export default {
         },
         "name": "Friend Works",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -101397,7 +101431,7 @@ export default {
         },
         "name": "Category",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "::: tip\n`https://www.pixivision.net/zh-tw/c/interview` → `/pixivision/zh-tw/interview`\n:::",
         "radar": [
@@ -139788,7 +139822,7 @@ export default {
         },
         "name": "Category",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -139819,7 +139853,7 @@ export default {
         },
         "name": "最新記事",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -139895,7 +139929,7 @@ export default {
         },
         "name": "Navigation",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "| 殿堂 | 動畫  | VR | 漫畫  | 音聲  | CG・イラスト |\n| ---- | ----- | -- | ----- | ----- | ------------ |\n| best | video | vr | comic | voice | cg           |",
         "location": "navigation.ts",
@@ -139921,7 +139955,7 @@ export default {
         },
         "name": "動画カテゴリー",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -139955,7 +139989,7 @@ export default {
         },
         "name": "AVメーカー",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -139989,7 +140023,7 @@ export default {
         },
         "name": "Search",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "location": "search.ts",
         "module": () => import('@/routes/chikubi/search.ts')
@@ -140014,7 +140048,7 @@ export default {
         },
         "name": "Tag",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -170199,7 +170233,7 @@ export default {
         },
         "name": "Novel Series",
         "maintainers": [
-          "SnowAgar25",
+          "Tsuyumi25",
           "keocheung"
         ],
         "radar": [
@@ -170277,7 +170311,7 @@ export default {
         "name": "User Novels",
         "maintainers": [
           "TonyRL",
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "| 小說類型 Novel Type | full\\_content | PIXIV\\_REFRESHTOKEN | 返回內容 Content |\n| ------------------- | ------------- | ------------------- | ---------------- |\n| Non R18             | false         | 不需要 Not Required | 簡介 Basic info  |\n| Non R18             | true          | 不需要 Not Required | 全文 Full text   |\n| R18                 | false         | 需要 Required       | 簡介 Basic info  |\n| R18                 | true          | 需要 Required       | 全文 Full text   |\n\nDefault value for `full_content` is `false` if not specified.\n\nExample:\n\n- `/pixiv/user/novels/79603797` → 簡介 Basic info\n- `/pixiv/user/novels/79603797/true` → 全文 Full text",
         "location": "novels.ts",
@@ -170517,7 +170551,7 @@ export default {
         "name": "なろう小説 API の更新履歴",
         "url": "dev.syosetu.com",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -170551,7 +170585,7 @@ export default {
         "name": "Novel Updates",
         "maintainers": [
           "eternasuno",
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "radar": [
           {
@@ -170699,7 +170733,7 @@ export default {
         "name": "R18 Rankings",
         "url": "syosetu.com/site/group",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "| Period  | Description       | 説明             |\n| ------- | ----------------- | ---------------- |\n| daily   | Daily Ranking     | 日間ランキング   |\n| weekly  | Weekly Ranking    | 週間ランキング   |\n| monthly | Monthly Ranking   | 月間ランキング   |\n| quarter | Quarterly Ranking | 四半期ランキング |\n| yearly  | Yearly Ranking    | 年間ランキング   |\n\n| Novel Type | Description      | 説明   |\n| ---------- | ---------------- | ------ |\n| total      | All Works        | 総合   |\n| t          | Short Stories    | 短編   |\n| r          | Ongoing Series   | 連載中 |\n| er         | Completed Series | 完結済 |\n\n::: tip\nCombine Period and Novel Type with `_`.\nFor example: `daily_total`, `weekly_r`, `monthly_er`\n:::",
         "radar": [
@@ -170911,7 +170945,7 @@ export default {
         },
         "name": "Search",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "location": "search.ts",
         "module": () => import('@/routes/syosetu/search.ts')
@@ -173357,7 +173391,7 @@ export default {
         "name": "Rankings",
         "url": "yomou.syosetu.com/rank/top",
         "maintainers": [
-          "SnowAgar25"
+          "Tsuyumi25"
         ],
         "description": "| Keyword | Description                           | 説明                        |\n| ------- | ------------------------------------- | --------------------------- |\n| list    | Overall Ranking                       | 総合ランキング              |\n| genre   | Genre Ranking                         | ジャンル別ランキング        |\n| isekai  | Isekai/Reincarnation/Transfer Ranking | 異世界転生 / 転移ランキング |\n\n| Period  | Description       |\n| ------- | ----------------- |\n| daily   | Daily Ranking     |\n| weekly  | Weekly Ranking    |\n| monthly | Monthly Ranking   |\n| quarter | Quarterly Ranking |\n| yearly  | Yearly Ranking    |\n\n| Type  | Description      |\n| ----- | ---------------- |\n| total | All Works        |\n| t     | Short Stories    |\n| r     | Ongoing Series   |\n| er    | Completed Series |\n\n::: warning\nPlease note that novel type options may vary depending on the ranking category.\n\nランキングの種類によって、小説タイプが異なる場合がございますのでご注意ください。\n:::\n\n::: danger 注意事項\nThe \"注目度ランキング\" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.\n\n「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。\n:::\n\n::: tip 異世界転生 / 転移ランキングについて (Isekai)\nWhen multiple works have the same points, their order may differ from syosetu's ranking as syosetu randomizes the order for works with identical points.\n\n集計の結果、同じポイントの作品が複数存在する場合、Syosetu ではランダムで順位が決定されるため、本 Route の順位と異なる場合があります。\n:::",
         "radar": [

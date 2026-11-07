@@ -477,6 +477,9 @@
   "/tableau/viz-of-the-day": [
     "KaiyoungYu"
   ],
+  "/the-decoder/news": [
+    "ljh12138164"
+  ],
   "/trendingpapers/papers/:category?/:time?/:cited?": [
     "CookiePieWw"
   ],
@@ -1545,13 +1548,13 @@
     "TonyRL"
   ],
   "/skebetter/illust/:type": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skebetter/:type": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skebetter/manga/:order": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/sorrycc/": [
     "KarasuShin"
@@ -1939,7 +1942,7 @@
   ],
   "/misskey/users/notes/:username/:routeParams?": [
     "siygle",
-    "SnowAgar25",
+    "Tsuyumi25",
     "HanaokaYuzu"
   ],
   "/myfans/user/:username": [
@@ -2009,22 +2012,22 @@
     "ocleo1"
   ],
   "/skeb/:category": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skeb/search/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skeb/works/:username": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skeb/following_creators/:username": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skeb/following_works/:username": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/skeb/friend_works/:username": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/techflowpost/express": [
     "nczitzk"
@@ -6970,7 +6973,7 @@
     "nczitzk"
   ],
   "/pixivision/:lang/:category?": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/piyao/jrpy": [
     "Fatpandac"
@@ -10140,25 +10143,25 @@
     "xyqfer"
   ],
   "/chikubi/category/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/nipple-video-category/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/nipple-video-maker/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/search/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/chikubi/tag/:keyword": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/cna/web/:id?": [
     "dzx-dzx"
@@ -12764,12 +12767,12 @@
     "DIYgod"
   ],
   "/pixiv/novel/series/:id": [
-    "SnowAgar25",
+    "Tsuyumi25",
     "keocheung"
   ],
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/ryo.lu/journal/:lang?": [
     "TonyRL"
@@ -12787,20 +12790,20 @@
     "nczitzk"
   ],
   "/syosetu/dev": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/syosetu/:ncode": [
     "eternasuno",
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/syosetu/rankingr18/:sub/:type": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/syosetu/search/:sub/:query": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/syosetu/ranking/:listType/:type": [
-    "SnowAgar25"
+    "Tsuyumi25"
   ],
   "/taptap/topic/:id/:type?/:sort?/:lang?": [
     "hoilc",

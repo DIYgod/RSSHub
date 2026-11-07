@@ -3387,6 +3387,7 @@ export type RoutePath =
   | `/tfc-taiwan/`
   | `/tfc-taiwan/category/:category`
   | `/tgbus/list/:category`
+  | `/the-decoder/news`
   | `/the/:filter{.+}?`
   | `/theatlantic/:category`
   | `/theatlantic/author/:id`
