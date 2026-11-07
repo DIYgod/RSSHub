@@ -92,28 +92,42 @@ const getCookie = (disableConfig = false) => {
     return anonymousCookiePromise;
 };
 
-const getRenderData = (uid) => {
-    const key = 'bili-web-render-data';
-    return cache.tryGet(key, async () => {
-        const cookie = await getCookie();
-        const { data: response } = await got(`https://space.bilibili.com/${uid}`, {
+// An anonymous visitor cookie made the way the web page makes one, without a browser: buvid3 and
+// buvid4 from the fingerprint endpoint and a bili_ticket from the ticket endpoint. The risk control
+// of the video list API lets it through far more often than buvid3 alone, while space.bilibili.com
+// now answers plain requests and fresh browsers with a 412 proof-of-work challenge.
+const getVisitorCookie = () =>
+    cache.tryGet<string>('bili-visitor-cookie', async () => {
+        const { data: fingerResponse } = await got('https://api.bilibili.com/x/frontend/finger/spi', {
             headers: {
                 Referer: 'https://www.bilibili.com/',
-                Cookie: cookie,
             },
         });
-        const $ = load(response);
-        const innerText = $('#__RENDER_DATA__').first().text() || '{}';
-        const renderData = JSON.parse(decodeURIComponent(innerText));
-        const accessId = renderData.access_id;
-        return accessId;
+        const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
+        const now = Math.floor(Date.now() / 1000);
+        const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
+
+        try {
+            const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
+                headers: {
+                    Referer: 'https://www.bilibili.com/',
+                },
+            });
+            const ticket = ticketResponse.data?.ticket;
+            if (ticket) {
+                cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${(ticketResponse.data.created_at ?? now) + (ticketResponse.data.ttl ?? 3 * 24 * 60 * 60)}`);
+            }
+        } catch (error) {
+            logger.warn(`Failed to get a Bilibili web ticket for the visitor cookie: ${error}`);
+        }
+
+        return cookies.join('; ');
     });
-};
 
 const getWbiVerifyString = () => {
     const key = 'bili-wbi-verify-string';
     return cache.tryGet(key, async () => {
-        const cookie = await getCookie();
+        const cookie = getConfiguredCookie() ?? (await getVisitorCookie());
         const { data: navResponse } = await got('https://api.bilibili.com/x/web-interface/nav', {
             headers: {
                 Referer: 'https://www.bilibili.com/',
@@ -389,6 +403,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 export default {
     getCookie,
     getConfiguredCookie,
+    getVisitorCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,
@@ -398,7 +413,6 @@ export default {
     getCidFromId,
     getAidFromBvid,
     getArticleDataFromCvid,
-    getRenderData,
     getVideoSubtitle,
     getVideoSubtitleAttachment,
 };
