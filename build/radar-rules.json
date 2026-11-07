@@ -32029,6 +32029,27 @@
       }
     ]
   },
+  "lvshunmuseum.cn": {
+    "_name": "Lvshun Museum",
+    ".": [
+      {
+        "title": "Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/lvshunmuseum",
+        "source": [
+          "/Exhibition/"
+        ],
+        "target": "/lvshunmuseum/exhibition"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/lvshunmuseum",
+        "source": [
+          "/news/"
+        ],
+        "target": "/lvshunmuseum/news"
+      }
+    ]
+  },
   "m-78.jp": {
     "_name": "円谷ステーション",
     ".": [

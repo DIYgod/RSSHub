@@ -83029,6 +83029,61 @@
     "url": "ltn.com.tw",
     "lang": "zh-TW"
   },
+  "lvshunmuseum": {
+    "routes": {
+      "/exhibition/:type?": {
+        "path": "/exhibition/:type?",
+        "categories": [
+          "travel"
+        ],
+        "example": "/lvshunmuseum/exhibition/temporary",
+        "parameters": {
+          "type": "Exhibition type, supported values: all（陈列展览）、basic（基本陈列）、temporary（临时陈列）、export（输出陈列）、import（引进陈列）、exchange（展览交流）. Default: all（all exhibitions）."
+        },
+        "name": "Exhibitions",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "lvshunmuseum.cn/Exhibition/"
+            ],
+            "target": "/exhibition"
+          }
+        ],
+        "location": "exhibition.tsx",
+        "module": "() => import('@/routes/lvshunmuseum/exhibition.tsx')"
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "travel"
+        ],
+        "example": "/lvshunmuseum/news",
+        "name": "News",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "lvshunmuseum.cn/news/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts",
+        "module": "() => import('@/routes/lvshunmuseum/news.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Lvshun Museum",
+    "url": "lvshunmuseum.cn",
+    "zh": {
+      "name": "旅顺博物馆"
+    }
+  },
   "lvv2": {
     "routes": {
       "/news/:channel/:sort?": {

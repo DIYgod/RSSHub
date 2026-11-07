@@ -5839,6 +5839,12 @@
   "/ltn/def/:channel{.+}?": [
     "TonyRL"
   ],
+  "/lvshunmuseum/exhibition/:type?": [
+    "magazian"
+  ],
+  "/lvshunmuseum/news": [
+    "magazian"
+  ],
   "/lvv2/news/:channel/:sort?": [
     "Fatpandac"
   ],
