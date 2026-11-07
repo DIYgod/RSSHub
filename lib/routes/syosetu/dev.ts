@@ -19,7 +19,7 @@ export const route: Route = {
     },
     name: 'なろう小説 API の更新履歴',
     url: 'dev.syosetu.com',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {

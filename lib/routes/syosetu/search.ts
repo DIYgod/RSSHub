@@ -35,7 +35,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
 };
 

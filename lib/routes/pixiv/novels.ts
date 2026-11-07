@@ -55,7 +55,7 @@ refresh_token after Pixiv login, required for accessing R18 novels
         },
     ],
     name: 'User Novels',
-    maintainers: ['TonyRL', 'SnowAgar25'],
+    maintainers: ['TonyRL', 'Tsuyumi25'],
     handler,
     description: `| 小說類型 Novel Type | full\\_content | PIXIV\\_REFRESHTOKEN | 返回內容 Content |
 | ------------------- | ------------- | ------------------- | ---------------- |

@@ -26,7 +26,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Category',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     description: `::: tip
 \`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
 :::`,

@@ -123,7 +123,7 @@ export const route: Route = {
     },
     name: 'Rankings',
     url: 'yomou.syosetu.com/rank/top',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     description: `| Keyword | Description                           | 説明                        |
 | ------- | ------------------------------------- | --------------------------- |

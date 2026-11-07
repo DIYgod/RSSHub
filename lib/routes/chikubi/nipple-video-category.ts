@@ -18,7 +18,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: '動画カテゴリー',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {

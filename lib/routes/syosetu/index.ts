@@ -23,7 +23,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Novel Updates',
-    maintainers: ['eternasuno', 'SnowAgar25'],
+    maintainers: ['eternasuno', 'Tsuyumi25'],
     handler,
     radar: [
         {

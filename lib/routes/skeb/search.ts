@@ -20,7 +20,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Search Results',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     description: 'Get the search results for works on Skeb',
 };
