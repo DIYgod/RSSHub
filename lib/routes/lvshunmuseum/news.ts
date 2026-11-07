@@ -34,8 +34,6 @@ export const route: Route = {
             .map((el): DataItem => {
                 const $item = $(el);
                 const url = new URL($item.find('a').attr('href')!, baseUrl);
-                // // Drop the empty searchKey query so that the link stays canonical
-                // url.searchParams.delete('searchKey');
 
                 return {
                     // The title in the list page is truncated, the full title is taken from the detail page
