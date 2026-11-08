@@ -211,6 +211,7 @@ async function handler(ctx) {
         image: artistInfo.profileUrl,
         link: `https://www.mymusicfive.com/${username}?viewType=sheet&orderBy=createdAt`,
         item: items,
+        allowEmpty: Boolean(freeOnly),
     };
 }
 
