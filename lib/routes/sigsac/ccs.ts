@@ -290,9 +290,10 @@ function createItem({ title, linkTitle, author, pageUrl, cycle, seenLinks }: { t
     seenLinks.add(link);
 
     return {
-        title: cycle ? `[${cycle}] ${title}` : title,
+        title,
         author,
         link,
+        category: cycle ? [cycle] : undefined,
     };
 }
 
