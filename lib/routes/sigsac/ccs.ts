@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -40,7 +41,7 @@ type YearPage = { pageUrl: string; html: string } | { pageUrl: string; json: Acc
 export const route: Route = {
     path: '/ccs/:year?',
     categories: ['journal'],
-    example: '/sigsac/ccs/2026',
+    example: '/sigsac/ccs',
     radar: [
         {
             source: ['sigsac.org/ccs.html', 'sigsac.org/'],
@@ -66,7 +67,6 @@ async function handler(ctx: Context): Promise<Data> {
         link: url,
         description: 'The ACM Conference on Computer and Communications Security (CCS) Accepted Papers',
         item: items,
-        allowEmpty: true,
     };
 }
 
@@ -75,11 +75,11 @@ function getYears(ctx: Context): number[] {
     const yearParam = ctx.req.param('year');
 
     if (yearParam !== undefined) {
-        if (!/^\d{4}$/.test(yearParam)) {
-            return [];
-        }
         const year = Number(yearParam);
-        return year >= minYear && year <= maxYear ? [year] : [];
+        if (!/^\d{4}$/.test(yearParam) || year < minYear || year > maxYear) {
+            throw new InvalidParameterError(`year must be a 4-digit year between ${minYear} and ${maxYear}`);
+        }
+        return [year];
     }
 
     return Array.from({ length: maxYear - minYear + 1 }, (_, index) => minYear + index);
