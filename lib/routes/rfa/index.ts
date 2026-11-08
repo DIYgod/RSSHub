@@ -97,7 +97,7 @@ async function handler(ctx: Context) {
             const website = Object.values<any>(story.websites)[0];
             return {
                 title: story.headlines.basic,
-                description: story.description.basic,
+                description: story.description?.basic,
                 link: new URL(website.website_url, baseUrl).href,
                 pubDate: story.display_date ? parseDate(story.display_date) : undefined,
                 author: story.credits?.by?.map((author) => author.name).join(', '),
