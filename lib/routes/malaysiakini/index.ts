@@ -212,7 +212,7 @@ async function getPublicArticleDetails(link: string) {
     const { data } = await got(link);
     const $ = load(data);
     const teaser = $('.article-paywall').first();
-    const content = teaser.length ? teaser : $('article.article-content .details').first();
+    const content = teaser.text().trim() ? teaser : $('article.article-content .details').first();
     content.find('script, style, .advertisement, .ad-center').remove();
     const body = content.html();
     if (!body || !content.text().trim()) {
