@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/user/sheets/:username/:iso?/:freeOnly?',
     categories: ['shopping'],
-    example: '/mymusicsheet/user/sheets/HalcyonMusic/USD/1',
+    example: '/mymusicsheet/user/sheets/HalcyonMusic/USD',
     parameters: {
         username: 'Username, can be found in the URL',
         iso: 'ISO 4217 currency code for displaying prices, defaults to `USD`',
