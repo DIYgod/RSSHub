@@ -74,7 +74,7 @@ async function handler(ctx): Promise<Data> {
                 const content = load(detailResponse.data);
                 item.title = content('h1', '.main-article').text();
                 item.description = content('section.article-content').html();
-                const info = content('span', '.props-of-title');
+                const info = content('span', '.props-of-title').not('#original-tag');
                 item.author = info.eq(0).text();
                 item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), 8);
                 return item;
