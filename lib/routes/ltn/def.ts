@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -92,7 +93,10 @@ async function handler(ctx: Context) {
                 content.find('img[data-src]').each((_, img) => {
                     $(img).attr('src', $(img).attr('data-src')!).removeAttr('data-src');
                 });
-                content.find('iframe[src^="https://www.youtube.com/embed/"]').removeAttr('allow');
+                content.find('iframe[src^="https://www.youtube.com/embed/"]').each((_, iframe) => {
+                    const videoId = new URL($(iframe).attr('src')!).pathname.split('/').pop();
+                    $(iframe).replaceWith(renderYoutube(true, videoId, undefined, undefined));
+                });
 
                 return content.html()?.trim();
             }),

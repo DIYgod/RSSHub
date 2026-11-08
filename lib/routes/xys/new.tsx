@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 import { escapeText } from 'entities';
-import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -130,4 +130,4 @@ async function handler(ctx) {
     };
 }
 
-const renderDescription = (youTube: string): string => renderToString(<>{youTube ? <iframe width="560" height="315" src={`https://www.youtube-nocookie.com/embed/${youTube}`} frameborder="0" allowfullscreen></iframe> : null}</>);
+const renderDescription = (youTube: string): string => (youTube ? renderYoutube(true, youTube, undefined, undefined) : '');
