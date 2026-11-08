@@ -4435,20 +4435,6 @@
       }
     ]
   },
-  "mymusicfive.com": {
-    "_name": "mymusic5 (MyMusicSheet)",
-    ".": [
-      {
-        "title": "User Sheets",
-        "docs": "https://docs.rsshub.app/routes/mymusicsheet",
-        "source": [
-          "/:username/*",
-          "/:username"
-        ],
-        "target": "/mymusicsheet/user/sheets/:username"
-      }
-    ]
-  },
   "nanhua.net": {
     "_name": "南华期货",
     "www": [
@@ -41583,59 +41569,6 @@
       }
     ]
   },
-  "psyche.co": {
-    "_name": "Psyche",
-    ".": [
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/therapeia"
-        ],
-        "target": "/psyche/topic/therapeia"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/eudaimonia"
-        ],
-        "target": "/psyche/topic/eudaimonia"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/poiesis"
-        ],
-        "target": "/psyche/topic/poiesis"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/ideas"
-        ],
-        "target": "/psyche/type/ideas"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/guides"
-        ],
-        "target": "/psyche/type/guides"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/films"
-        ],
-        "target": "/psyche/type/films"
-      }
-    ]
-  },
   "publico.es": {
     "_name": "Público",
     ".": [
@@ -61849,115 +61782,6 @@
       }
     ]
   },
-  "twreporter.org": {
-    "_name": "報導者",
-    ".": [
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/:category"
-        ],
-        "target": "/twreporter/category/:category"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/world"
-        ],
-        "target": "/twreporter/category/world"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/humanrights"
-        ],
-        "target": "/twreporter/category/humanrights"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/politics-and-society"
-        ],
-        "target": "/twreporter/category/politics_and_society"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/health"
-        ],
-        "target": "/twreporter/category/health"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/environment"
-        ],
-        "target": "/twreporter/category/environment"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/econ"
-        ],
-        "target": "/twreporter/category/econ"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/culture"
-        ],
-        "target": "/twreporter/category/culture"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/education"
-        ],
-        "target": "/twreporter/category/education"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/podcast"
-        ],
-        "target": "/twreporter/category/podcast"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/opinion"
-        ],
-        "target": "/twreporter/category/opinion"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/photography"
-        ],
-        "target": "/twreporter/category/photos_section"
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/"
-        ],
-        "target": "/twreporter/newest"
-      }
-    ]
-  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
@@ -63261,6 +63085,20 @@
       }
     ]
   },
+  "mymusicfive.com": {
+    "_name": "mymusic5 (MyMusicSheet)",
+    ".": [
+      {
+        "title": "User Sheets",
+        "docs": "https://docs.rsshub.app/routes/mymusicsheet",
+        "source": [
+          "/:username/*",
+          "/:username"
+        ],
+        "target": "/mymusicsheet/user/sheets/:username"
+      }
+    ]
+  },
   "pixiv.net": {
     "_name": "pixiv",
     "www": [
@@ -63319,6 +63157,59 @@
           "/en/users/:id"
         ],
         "target": "/pixiv/user/novels/:id/true"
+      }
+    ]
+  },
+  "psyche.co": {
+    "_name": "Psyche",
+    ".": [
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/therapeia"
+        ],
+        "target": "/psyche/topic/therapeia"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/eudaimonia"
+        ],
+        "target": "/psyche/topic/eudaimonia"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/poiesis"
+        ],
+        "target": "/psyche/topic/poiesis"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/ideas"
+        ],
+        "target": "/psyche/type/ideas"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/guides"
+        ],
+        "target": "/psyche/type/guides"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/films"
+        ],
+        "target": "/psyche/type/films"
       }
     ]
   },
@@ -63938,6 +63829,115 @@
           "/app/:id"
         ],
         "target": "/taptap/intl/review/:id"
+      }
+    ]
+  },
+  "twreporter.org": {
+    "_name": "報導者",
+    ".": [
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/:category"
+        ],
+        "target": "/twreporter/category/:category"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/world"
+        ],
+        "target": "/twreporter/category/world"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/humanrights"
+        ],
+        "target": "/twreporter/category/humanrights"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/politics-and-society"
+        ],
+        "target": "/twreporter/category/politics_and_society"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/health"
+        ],
+        "target": "/twreporter/category/health"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/environment"
+        ],
+        "target": "/twreporter/category/environment"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/econ"
+        ],
+        "target": "/twreporter/category/econ"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/culture"
+        ],
+        "target": "/twreporter/category/culture"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/education"
+        ],
+        "target": "/twreporter/category/education"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/podcast"
+        ],
+        "target": "/twreporter/category/podcast"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/opinion"
+        ],
+        "target": "/twreporter/category/opinion"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/photography"
+        ],
+        "target": "/twreporter/category/photos_section"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/"
+        ],
+        "target": "/twreporter/newest"
       }
     ]
   },

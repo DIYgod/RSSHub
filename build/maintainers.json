@@ -1454,9 +1454,6 @@
     "EsuRt",
     "queensferryme"
   ],
-  "/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?": [
-    "Freddd13"
-  ],
   "/nanhua/index-research/:category?": [
     "pseudoyu"
   ],
@@ -1806,10 +1803,6 @@
   "/facebook/reels/:id": [
     "TonyRL"
   ],
-  "/fanbox/:creator": [
-    "KarasuShin",
-    "pseudoyu"
-  ],
   "/fansly/user/:username": [
     "TonyRL"
   ],
@@ -2067,12 +2060,6 @@
     "TonyRL"
   ],
   "/wellcee/support-city": [
-    "TonyRL"
-  ],
-  "/zuvio/student5/:board?": [
-    "TonyRL"
-  ],
-  "/zuvio/student5/boards": [
     "TonyRL"
   ],
   "/fanfou/home_timeline": [
@@ -7073,12 +7060,6 @@
   ],
   "/psnine/trade": [
     "betta-cyber"
-  ],
-  "/psyche/topic/:topic": [
-    "emdoe"
-  ],
-  "/psyche/type/:type": [
-    "emdoe"
   ],
   "/publico/ciencias/:subsection?": [
     "adrianrico97"
@@ -12358,12 +12339,6 @@
   "/touhougarakuta/:language/:type": [
     "ttyfly"
   ],
-  "/twreporter/category/:category": [
-    "emdoe"
-  ],
-  "/twreporter/newest": [
-    "emdoe"
-  ],
   "/vocus/publication/:id": [
     "Maecenas"
   ],
@@ -12758,6 +12733,9 @@
     "nczitzk",
     "hyoban"
   ],
+  "/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?": [
+    "Freddd13"
+  ],
   "/pixiv/user/bookmarks/:id": [
     "EYHN"
   ],
@@ -12780,6 +12758,12 @@
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
     "Tsuyumi25"
+  ],
+  "/psyche/topic/:topic": [
+    "emdoe"
+  ],
+  "/psyche/type/:type": [
+    "emdoe"
   ],
   "/ryo.lu/journal/:lang?": [
     "TonyRL"
@@ -12833,6 +12817,16 @@
     "TonyRL",
     "ETiV"
   ],
+  "/twreporter/category/:category": [
+    "emdoe"
+  ],
+  "/twreporter/newest": [
+    "emdoe"
+  ],
+  "/fanbox/:creator": [
+    "KarasuShin",
+    "pseudoyu"
+  ],
   "/google/album/:id": [
     "hoilc"
   ],
@@ -12877,6 +12871,12 @@
   ],
   "/google/play/:id/:lang?": [
     "surwall"
+  ],
+  "/zuvio/student5/boards": [
+    "TonyRL"
+  ],
+  "/zuvio/student5/:board?": [
+    "TonyRL"
   ],
   "/twitter/trends/:woeid?": [
     "sakamossan"

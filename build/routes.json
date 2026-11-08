@@ -17044,50 +17044,6 @@
     "url": "mittrchina.com",
     "lang": "zh-CN"
   },
-  "mymusicsheet": {
-    "routes": {
-      "/user/sheets/:username/:iso?/:freeOnly?": {
-        "path": "/user/sheets/:username/:iso?/:freeOnly?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/mymusicsheet/user/sheets/HalcyonMusic/USD",
-        "parameters": {
-          "username": "Username, can be found in the URL",
-          "iso": "ISO 4217 currency code for displaying prices, defaults to `USD`",
-          "freeOnly": "Only return free scores, any value to enable"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "mymusicfive.com/:username/*",
-              "mymusicfive.com/:username"
-            ],
-            "target": "/user/sheets/:username"
-          }
-        ],
-        "name": "User Sheets",
-        "maintainers": [
-          "Freddd13"
-        ],
-        "description": "Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.",
-        "location": "usersheets.tsx",
-        "module": "() => import('@/routes/mymusicsheet/usersheets.tsx')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "mymusic5 (MyMusicSheet)",
-    "url": "mymusicfive.com",
-    "lang": "en"
-  },
   "nanhua": {
     "routes": {
       "/index-research/:category?": {
@@ -21215,42 +21171,6 @@
     "url": "www.facebook.com",
     "lang": "en"
   },
-  "fanbox": {
-    "routes": {
-      "/:creator": {
-        "path": "/:creator",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/fanbox/official",
-        "parameters": {
-          "creator": "fanbox user name"
-        },
-        "maintainers": [
-          "KarasuShin",
-          "pseudoyu"
-        ],
-        "name": "Creator",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "FANBOX_SESSION_ID",
-              "description": "Required for private posts. Can be found in browser DevTools -> Application -> Cookies -> https://www.fanbox.cc -> FANBOXSESSID",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "nsfw": true
-        },
-        "location": "index.ts",
-        "module": "() => import('@/routes/fanbox/index.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "fanbox",
-    "url": "www.fanbox.cc",
-    "lang": "zh-CN"
-  },
   "fansly": {
     "routes": {
       "/user/:username": {
@@ -24821,60 +24741,6 @@
       "other"
     ],
     "lang": "zh-CN"
-  },
-  "zuvio": {
-    "routes": {
-      "/student5/:board?": {
-        "path": "/student5/:board?",
-        "categories": [
-          "bbs"
-        ],
-        "example": "/zuvio/student5/34",
-        "parameters": {
-          "board": "看板 ID，空为全站文章，可在看板 URL 或下方路由找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "校園話題",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "student5.ts",
-        "module": "() => import('@/routes/zuvio/student5.ts')"
-      },
-      "/student5/boards": {
-        "path": "/student5/boards",
-        "categories": [
-          "bbs"
-        ],
-        "example": "/zuvio/student5/boards",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "看板列表",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "boards.ts",
-        "module": "() => import('@/routes/zuvio/boards.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "Zuvio",
-    "url": "irs.zuvio.com.tw",
-    "lang": "zh-TW"
   },
   "fanfou": {
     "routes": {
@@ -102744,96 +102610,6 @@
       "game"
     ]
   },
-  "psyche": {
-    "routes": {
-      "/topic/:topic": {
-        "path": "/topic/:topic",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/psyche/topic/therapeia",
-        "parameters": {
-          "topic": "Topic"
-        },
-        "radar": [
-          {
-            "source": [
-              "psyche.co/therapeia"
-            ],
-            "target": "/topic/therapeia"
-          },
-          {
-            "source": [
-              "psyche.co/eudaimonia"
-            ],
-            "target": "/topic/eudaimonia"
-          },
-          {
-            "source": [
-              "psyche.co/poiesis"
-            ],
-            "target": "/topic/poiesis"
-          }
-        ],
-        "name": "Topics",
-        "maintainers": [
-          "emdoe"
-        ],
-        "description": "Supported categories: Therapeia, Eudaimonia, and Poiesis.",
-        "location": "topic.ts",
-        "module": "() => import('@/routes/psyche/topic.ts')"
-      },
-      "/type/:type": {
-        "path": "/type/:type",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/psyche/type/ideas",
-        "parameters": {
-          "type": "Type"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "psyche.co/ideas"
-            ],
-            "target": "/type/ideas"
-          },
-          {
-            "source": [
-              "psyche.co/guides"
-            ],
-            "target": "/type/guides"
-          },
-          {
-            "source": [
-              "psyche.co/films"
-            ],
-            "target": "/type/films"
-          }
-        ],
-        "name": "Types",
-        "maintainers": [
-          "emdoe"
-        ],
-        "description": "Supported types: Ideas, Guides, and Films.",
-        "location": "type.ts",
-        "module": "() => import('@/routes/psyche/type.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "Psyche",
-    "url": "psyche.co",
-    "lang": "en"
-  },
   "publico": {
     "routes": {
       "/ciencias/:subsection?": {
@@ -165154,142 +164930,6 @@
     ],
     "lang": "ja"
   },
-  "twreporter": {
-    "routes": {
-      "/category/:category": {
-        "path": "/category/:category",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/twreporter/category/world",
-        "parameters": {
-          "category": "Category"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "twreporter.org/:category"
-            ]
-          },
-          {
-            "source": [
-              "twreporter.org/categories/world"
-            ],
-            "target": "/category/world"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/humanrights"
-            ],
-            "target": "/category/humanrights"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/politics-and-society"
-            ],
-            "target": "/category/politics_and_society"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/health"
-            ],
-            "target": "/category/health"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/environment"
-            ],
-            "target": "/category/environment"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/econ"
-            ],
-            "target": "/category/econ"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/culture"
-            ],
-            "target": "/category/culture"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/education"
-            ],
-            "target": "/category/education"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/podcast"
-            ],
-            "target": "/category/podcast"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/opinion"
-            ],
-            "target": "/category/opinion"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/photography"
-            ],
-            "target": "/category/photos_section"
-          }
-        ],
-        "name": "分類",
-        "maintainers": [
-          "emdoe"
-        ],
-        "url": "twreporter.org/",
-        "location": "category.ts",
-        "module": "() => import('@/routes/twreporter/category.ts')"
-      },
-      "/newest": {
-        "path": "/newest",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/twreporter/newest",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "twreporter.org/"
-            ]
-          }
-        ],
-        "name": "最新",
-        "maintainers": [
-          "emdoe"
-        ],
-        "url": "twreporter.org/",
-        "location": "newest.ts",
-        "module": "() => import('@/routes/twreporter/newest.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "報導者",
-    "url": "twreporter.org",
-    "lang": "zh-TW"
-  },
   "vocus": {
     "routes": {
       "/publication/:id": {
@@ -169980,6 +169620,50 @@
     "url": "bbs.hupu.com",
     "lang": "zh-CN"
   },
+  "mymusicsheet": {
+    "routes": {
+      "/user/sheets/:username/:iso?/:freeOnly?": {
+        "path": "/user/sheets/:username/:iso?/:freeOnly?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/mymusicsheet/user/sheets/HalcyonMusic/USD",
+        "parameters": {
+          "username": "Username, can be found in the URL",
+          "iso": "ISO 4217 currency code for displaying prices, defaults to `USD`",
+          "freeOnly": "Only return free scores, any value to enable"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mymusicfive.com/:username/*",
+              "mymusicfive.com/:username"
+            ],
+            "target": "/user/sheets/:username"
+          }
+        ],
+        "name": "User Sheets",
+        "maintainers": [
+          "Freddd13"
+        ],
+        "description": "Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.",
+        "location": "usersheets.tsx",
+        "module": "() => import('@/routes/mymusicsheet/usersheets.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "mymusic5 (MyMusicSheet)",
+    "url": "mymusicfive.com",
+    "lang": "en"
+  },
   "pixiv": {
     "routes": {
       "/user/bookmarks/:id": {
@@ -170381,6 +170065,96 @@
     "name": "pixiv",
     "url": "www.pixiv.net",
     "lang": "ja"
+  },
+  "psyche": {
+    "routes": {
+      "/topic/:topic": {
+        "path": "/topic/:topic",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/topic/therapeia",
+        "parameters": {
+          "topic": "Topic"
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/therapeia"
+            ],
+            "target": "/topic/therapeia"
+          },
+          {
+            "source": [
+              "psyche.co/eudaimonia"
+            ],
+            "target": "/topic/eudaimonia"
+          },
+          {
+            "source": [
+              "psyche.co/poiesis"
+            ],
+            "target": "/topic/poiesis"
+          }
+        ],
+        "name": "Topics",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported categories: Therapeia, Eudaimonia, and Poiesis.",
+        "location": "topic.ts",
+        "module": "() => import('@/routes/psyche/topic.ts')"
+      },
+      "/type/:type": {
+        "path": "/type/:type",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/type/ideas",
+        "parameters": {
+          "type": "Type"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/ideas"
+            ],
+            "target": "/type/ideas"
+          },
+          {
+            "source": [
+              "psyche.co/guides"
+            ],
+            "target": "/type/guides"
+          },
+          {
+            "source": [
+              "psyche.co/films"
+            ],
+            "target": "/type/films"
+          }
+        ],
+        "name": "Types",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported types: Ideas, Guides, and Films.",
+        "location": "type.ts",
+        "module": "() => import('@/routes/psyche/type.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Psyche",
+    "url": "psyche.co",
+    "lang": "en"
   },
   "ryo.lu": {
     "routes": {
@@ -173876,6 +173650,178 @@
     "description": "::: warning\n由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。\n:::",
     "lang": "zh-CN"
   },
+  "twreporter": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/twreporter/category/world",
+        "parameters": {
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "twreporter.org/:category"
+            ]
+          },
+          {
+            "source": [
+              "twreporter.org/categories/world"
+            ],
+            "target": "/category/world"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/humanrights"
+            ],
+            "target": "/category/humanrights"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/politics-and-society"
+            ],
+            "target": "/category/politics_and_society"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/health"
+            ],
+            "target": "/category/health"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/environment"
+            ],
+            "target": "/category/environment"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/econ"
+            ],
+            "target": "/category/econ"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/culture"
+            ],
+            "target": "/category/culture"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/education"
+            ],
+            "target": "/category/education"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/podcast"
+            ],
+            "target": "/category/podcast"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/opinion"
+            ],
+            "target": "/category/opinion"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/photography"
+            ],
+            "target": "/category/photos_section"
+          }
+        ],
+        "name": "分類",
+        "maintainers": [
+          "emdoe"
+        ],
+        "url": "twreporter.org/",
+        "location": "category.ts",
+        "module": "() => import('@/routes/twreporter/category.ts')"
+      },
+      "/newest": {
+        "path": "/newest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/twreporter/newest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "twreporter.org/"
+            ]
+          }
+        ],
+        "name": "最新",
+        "maintainers": [
+          "emdoe"
+        ],
+        "url": "twreporter.org/",
+        "location": "newest.ts",
+        "module": "() => import('@/routes/twreporter/newest.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "報導者",
+    "url": "twreporter.org",
+    "lang": "zh-TW"
+  },
+  "fanbox": {
+    "routes": {
+      "/:creator": {
+        "path": "/:creator",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/fanbox/official",
+        "parameters": {
+          "creator": "fanbox user name"
+        },
+        "maintainers": [
+          "KarasuShin",
+          "pseudoyu"
+        ],
+        "name": "Creator",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FANBOX_SESSION_ID",
+              "description": "Required for private posts. Can be found in browser DevTools -> Application -> Cookies -> https://www.fanbox.cc -> FANBOXSESSID",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "nsfw": true
+        },
+        "location": "index.ts",
+        "module": "() => import('@/routes/fanbox/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "fanbox",
+    "url": "www.fanbox.cc",
+    "lang": "zh-CN"
+  },
   "google": {
     "routes": {
       "/album/:id": {
@@ -174293,6 +174239,60 @@
     "name": "Google",
     "url": "www.google.com",
     "lang": "en"
+  },
+  "zuvio": {
+    "routes": {
+      "/student5/boards": {
+        "path": "/student5/boards",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/zuvio/student5/boards",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "看板列表",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "boards.ts",
+        "module": "() => import('@/routes/zuvio/boards.ts')"
+      },
+      "/student5/:board?": {
+        "path": "/student5/:board?",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/zuvio/student5/34",
+        "parameters": {
+          "board": "看板 ID，空为全站文章，可在看板 URL 或下方路由找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "校園話題",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "student5.ts",
+        "module": "() => import('@/routes/zuvio/student5.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Zuvio",
+    "url": "irs.zuvio.com.tw",
+    "lang": "zh-TW"
   },
   "twitter": {
     "routes": {
