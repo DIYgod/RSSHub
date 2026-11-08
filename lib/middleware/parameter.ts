@@ -381,7 +381,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         // handle description
                         if (config.openai.inputOption === 'description' && item.description) {
                             const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
-                                const description = convert(item.description!);
+                                const description = convert(item.description!, { selectors: [{ selector: 'img', format: 'skip' }] });
                                 const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
                                 return md.render(descriptionMd);
                             });
@@ -413,7 +413,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                             }
 
                             const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
-                                const description = convert(item.description!);
+                                const description = convert(item.description!, { selectors: [{ selector: 'img', format: 'skip' }] });
                                 const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
                                 return md.render(descriptionMd);
                             });

@@ -1,4 +1,5 @@
 import { Context } from 'hono';
+import { http, HttpResponse } from 'msw';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -499,6 +500,46 @@ describe('multi parameter', () => {
 });
 
 describe('openai', () => {
+    it.each(['description', 'both'])('excludes images from the AI input in %s mode while preserving the original images', async (inputOption) => {
+        const { default: server } = await import('@/setup.test');
+        const inputs: string[] = [];
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', async ({ request }) => {
+                const body = (await request.json()) as { messages: Array<{ role: string; content: string }> };
+                inputs.push(body.messages.find((message) => message.role === 'user')!.content);
+                return HttpResponse.json({ choices: [{ message: { content: '**Processed** [Read more](https://example.com/read)' } }] });
+            })
+        );
+
+        const originalInput = config.openai.inputOption;
+        config.openai.inputOption = inputOption;
+        try {
+            const result = await runMiddleware(
+                {
+                    link: 'https://example.com',
+                    item: [
+                        {
+                            title: 'Title',
+                            link: `https://example.com/ai-images-${inputOption}`,
+                            description: '<p>Article text <a href="https://example.com/read">Read more</a></p><img src="https://cdn.example.com/one.jpg"><img src="https://cdn.example.com/two.jpg" alt="Screenshot">',
+                        },
+                    ],
+                },
+                { chatgpt: 'true' }
+            );
+
+            expect(inputs).toHaveLength(inputOption === 'both' ? 2 : 1);
+            expect(inputs.at(-1)).toBe('Article text Read more [https://example.com/read]');
+            const [processed, original] = result.item[0].description.split('<hr/><br/>', 2);
+            expect(processed).toContain('<strong>Processed</strong>');
+            expect(processed).toContain('<a href="https://example.com/read">Read more</a>');
+            expect(original).toContain('<img src="https://cdn.example.com/one.jpg"');
+            expect(original).toContain('<img src="https://cdn.example.com/two.jpg" alt="Screenshot"');
+        } finally {
+            config.openai.inputOption = originalInput;
+        }
+    });
+
     it('processes both title and description', async () => {
         config.openai.inputOption = 'both';
         const responseWithGpt = await app.request('/test/gpt?chatgpt=true');
