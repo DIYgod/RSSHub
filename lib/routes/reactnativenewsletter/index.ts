@@ -31,35 +31,21 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const archiveUrls = [
-        ...new Set(
-            $('.campaign__list__year script[src*="generate-js"]')
-                .toArray()
-                .map((script) => new URL($(script).attr('src')!, baseUrl).href)
-        ),
-    ];
-
-    const archives = await Promise.all(archiveUrls.map((url) => ofetch<string>(url)));
-
-    const list = archives
-        .flatMap((archive) => {
-            const $$ = load(JSON.parse(archive.match(/document\.write\((".*")\);/s)![1]));
-            return $$('.campaign')
-                .toArray()
-                .map((item) => {
-                    const $item = $$(item);
-                    const a = $item.find('a');
-                    const href = a.attr('href');
-                    if (!href) {
-                        throw new Error('React Native Newsletter issue link is missing');
-                    }
-                    const date = $item.text().split(' - ', 1)[0];
-                    return {
-                        title: a.text(),
-                        link: new URL(href, baseUrl).href,
-                        pubDate: date ? parseDate(`${date} +0000`, 'MM/DD/YYYY ZZ') : undefined,
-                    };
-                });
+    const list = $('.campaign')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const href = a.attr('href');
+            if (!href) {
+                throw new Error('React Native Newsletter issue link is missing');
+            }
+            const date = $item.text().split(' - ', 1)[0];
+            return {
+                title: a.text(),
+                link: new URL(href, baseUrl).href,
+                pubDate: date ? parseDate(`${date} +0000`, 'MM/DD/YYYY ZZ') : undefined,
+            };
         })
         .toSorted((a, b) => (b.pubDate?.valueOf() ?? 0) - (a.pubDate?.valueOf() ?? 0))
         .slice(0, getRouteLimit(ctx, 20));
