@@ -20415,7 +20415,7 @@
         docs:"https://docs.rsshub.app/routes/sigsac",
         source:[ "/ccs.html",
           "/" ],
-        target:"/sigsac/ccs" } ] },
+        target:"/sigsac/ccs/:year?" } ] },
   "simpleinfo.cc":{ _name:"簡訊設計",
     blog:[ { title:"志祺七七",
         docs:"https://docs.rsshub.app/routes/simpleinfo",

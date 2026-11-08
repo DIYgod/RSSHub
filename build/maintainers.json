@@ -7839,8 +7839,9 @@
   "/sicau/zsjy/:category?": [
     "nczitzk"
   ],
-  "/sigsac/ccs": [
-    "ZeddYu"
+  "/sigsac/ccs/:year?": [
+    "ZeddYu",
+    "yuguorui"
   ],
   "/simonsfoundation/articles": [
     "emdoe"

@@ -111242,8 +111242,8 @@ export default {
   },
   "sigsac": {
     "routes": {
-      "/ccs": {
-        "path": "/ccs",
+      "/ccs/:year?": {
+        "path": "/ccs/:year?",
         "categories": [
           "journal"
         ],
@@ -111258,10 +111258,14 @@ export default {
         ],
         "name": "The ACM Conference on Computer and Communications Security",
         "maintainers": [
-          "ZeddYu"
+          "ZeddYu",
+          "yuguorui"
         ],
         "url": "sigsac.org/ccs.html",
-        "description": "Return results from 2020",
+        "description": "Return accepted papers from 2020 through the current year + 1. Specify a year in the path to return a single year.",
+        "parameters": {
+          "year": "4-digit year, for example `2026`. Without it, all available years from 2020 through the current year + 1 are returned."
+        },
         "location": "ccs.ts",
         "module": () => import('@/routes/sigsac/ccs.ts')
       }

@@ -44075,7 +44075,7 @@
           "/ccs.html",
           "/"
         ],
-        "target": "/sigsac/ccs"
+        "target": "/sigsac/ccs/:year?"
       }
     ]
   },

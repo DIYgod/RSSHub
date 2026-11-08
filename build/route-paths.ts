@@ -3141,7 +3141,7 @@ export type RoutePath =
   | `/sicau/jk/:gid/:typeId/:sortType/:token`
   | `/sicau/yan/:category?`
   | `/sicau/zsjy/:category?`
-  | `/sigsac/ccs`
+  | `/sigsac/ccs/:year?`
   | `/simonsfoundation/articles`
   | `/simonsfoundation/recommend`
   | `/simpleinfo/:category?`
