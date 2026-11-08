@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/user/sheets/:username/:iso?/:freeOnly?',
     categories: ['shopping'],
-    example: '/mymusicsheet/user/sheets/HalcyonMusic/USD',
+    example: '/mymusicsheet/user/sheets/HalcyonMusic/USD/1',
     parameters: {
         username: 'Username, can be found in the URL',
         iso: 'ISO 4217 currency code for displaying prices, defaults to `USD`',
@@ -211,6 +211,7 @@ async function handler(ctx) {
         image: artistInfo.profileUrl,
         link: `https://www.mymusicfive.com/${username}?viewType=sheet&orderBy=createdAt`,
         item: items,
+        allowEmpty: Boolean(freeOnly),
     };
 }
 
