@@ -1,9 +1,11 @@
 import { type CheerioAPI, load } from 'cheerio';
 import { decodeHTML } from 'entities/decode';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import { config } from '@/config';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -133,7 +135,7 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
                 }
 
                 if (item.mediaType === 'video' && item.metadata?.platform === 'youtube' && item.metadata.videoId) {
-                    return <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${item.metadata.videoId}`} frameborder="0" allowfullscreen></iframe>;
+                    return raw(renderYoutube(true, item.metadata.videoId, undefined, undefined));
                 }
 
                 return null;

@@ -5,6 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -112,7 +113,7 @@ const renderSubpages = (subpages): string =>
                     }
                     case 'video_block': {
                         const videoId = page.source?.split('&', 1)[0];
-                        blocks.push(<iframe key={`video-${index}`} id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${videoId}`} frameborder="0" allowfullscreen></iframe>);
+                        blocks.push(<div key={`video-${index}`}>{raw(renderYoutube(true, videoId, undefined, undefined))}</div>);
 
                         break;
                     }

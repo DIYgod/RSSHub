@@ -1,5 +1,7 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -227,7 +229,7 @@ const MymusicSheetDescription = ({
     };
 }) => (
     <div class="item-description">
-        {youtubeId ? <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0`} frameborder="0" allowfullscreen></iframe> : null}
+        {youtubeId ? raw(renderYoutube(true, youtubeId, undefined, undefined)) : null}
         {content.musicName ? <p>Music Name: {content.musicName}</p> : null}
         {content.musicMemo ? <p>Music Memo: {content.musicMemo}</p> : null}
         {content.musicianName ? <p>Musician Name: {content.musicianName}</p> : null}
