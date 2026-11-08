@@ -41,11 +41,11 @@ async function handler(ctx): Promise<Data> {
         // Profile not found, continue without it
     }
 
-    const positions = await ofetch<Position[]>(`${DATA_API}/positions`, {
+    const { data: positions } = await ofetch<{ data: Position[] }>(`${DATA_API}/positions`, {
         query: {
             user: address,
             limit: 50,
-            sortBy: 'CURRENT',
+            sortBy: 'CURRENT_VALUE',
             sortDirection: 'DESC',
         },
     });
@@ -53,18 +53,18 @@ async function handler(ctx): Promise<Data> {
     const displayName = profile?.name || profile?.pseudonym || address;
 
     const items = positions.map((pos) => ({
-        guid: pos.asset,
-        title: pos.title || `Position #${pos.conditionId.slice(0, 8)}`,
+        guid: pos.token_id,
+        title: pos.title || `Position #${pos.condition_id.slice(0, 8)}`,
         description: `
-            <p><strong>Outcome:</strong> ${escape(pos.outcome || `#${pos.outcomeIndex}`)}</p>
-            <p><strong>Size:</strong> ${pos.size.toLocaleString()}</p>
-            <p><strong>Avg Price:</strong> $${pos.avgPrice.toFixed(4)}</p>
-            <p><strong>Current Price:</strong> $${pos.curPrice.toFixed(4)}</p>
-            <p><strong>Current Value:</strong> $${pos.currentValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>PnL:</strong> ${pos.cashPnl >= 0 ? '+' : ''}$${pos.cashPnl.toFixed(2)} (${pos.percentPnl >= 0 ? '+' : ''}${pos.percentPnl.toFixed(1)}%)</p>
+            <p><strong>Outcome:</strong> ${escape(pos.outcome || `#${pos.outcome_index}`)}</p>
+            <p><strong>Size:</strong> ${pos.current_size.toLocaleString()}</p>
+            <p><strong>Avg Price:</strong> $${pos.avg_price.toFixed(4)}</p>
+            <p><strong>Current Price:</strong> $${pos.current_price.toFixed(4)}</p>
+            <p><strong>Current Value:</strong> $${pos.current_value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p><strong>PnL:</strong> ${pos.unrealized_pnl >= 0 ? '+' : ''}$${pos.unrealized_pnl.toFixed(2)} (${pos.percent_pnl >= 0 ? '+' : ''}${pos.percent_pnl.toFixed(1)}%)</p>
             <img src="${escape(pos.icon)}" alt="${escape(pos.title || 'Position')}" style="max-width: 100%;">
         `,
-        link: pos.eventSlug ? `https://polymarket.com/event/${pos.eventSlug}` : pos.slug ? `https://polymarket.com/event/${pos.slug}` : 'https://polymarket.com',
+        link: pos.event_slug ? `https://polymarket.com/event/${pos.event_slug}` : pos.slug ? `https://polymarket.com/event/${pos.slug}` : 'https://polymarket.com',
         author: displayName,
     }));
 

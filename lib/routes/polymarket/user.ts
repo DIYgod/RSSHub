@@ -42,7 +42,7 @@ async function handler(ctx): Promise<Data> {
         // Profile not found, continue without it
     }
 
-    const activity = await ofetch<Activity[]>(`${DATA_API}/activity`, {
+    const { data: activity } = await ofetch<{ data: Activity[] }>(`${DATA_API}/activity`, {
         query: {
             user: address,
             limit: 50,
@@ -67,17 +67,17 @@ async function handler(ctx): Promise<Data> {
         const typeLabel = `${typeEmoji[act.type] || '📝'} ${act.type}`;
 
         return {
-            guid: [address.toLowerCase(), act.transactionHash, act.asset, act.type, act.side, act.timestamp, act.size, act.price].join(':'),
-            title: act.title ? `${act.title} - ${act.outcome || `Outcome ${act.outcomeIndex}`}` : typeLabel,
+            guid: [address.toLowerCase(), act.transaction_hash, act.token_id, act.type, act.side, act.timestamp, act.size, act.price].join(':'),
+            title: act.title ? `${act.title} - ${act.outcome || `Outcome ${act.outcome_index}`}` : typeLabel,
             description: `
                 <p><strong>Type:</strong> ${escape(typeLabel)}</p>
                 ${act.side ? `<p><strong>Side:</strong> ${escape(act.side)}</p>` : ''}
                 ${act.price === undefined ? '' : `<p><strong>Price:</strong> $${act.price.toFixed(4)}</p>`}
                 ${act.size === undefined ? '' : `<p><strong>Size:</strong> ${act.size.toLocaleString()}</p>`}
-                ${act.usdcSize === undefined ? '' : `<p><strong>USDC:</strong> $${act.usdcSize.toLocaleString()}</p>`}
+                ${act.usdc_size === undefined ? '' : `<p><strong>USDC:</strong> $${act.usdc_size.toLocaleString()}</p>`}
                 ${act.icon ? `<img src="${escape(act.icon)}" alt="${escape(act.title || 'Market')}" style="max-width: 100%;">` : ''}
             `,
-            link: act.eventSlug ? `https://polymarket.com/event/${act.eventSlug}` : act.slug ? `https://polymarket.com/event/${act.slug}` : 'https://polymarket.com',
+            link: act.event_slug ? `https://polymarket.com/event/${act.event_slug}` : act.slug ? `https://polymarket.com/event/${act.slug}` : 'https://polymarket.com',
             pubDate: parseDate(act.timestamp * 1000),
             author: displayName,
         };
