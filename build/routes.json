@@ -95572,7 +95572,8 @@
         "example": "/nytimes/rss/HomePage",
         "parameters": {
           "cat": {
-            "description": "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url."
+            "description": "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url.",
+            "default": "HomePage"
           }
         },
         "features": {
@@ -146005,7 +146006,7 @@
           "EsuRt",
           "howfool"
         ],
-        "description": "| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |\n| :------: | :------: | :------: | :--------: | :------------: | :------: |\n|    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |",
+        "description": "| 政务联播 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |\n| :------: | :------: | :------: | :--------: | :------------: | :------: |\n|    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |",
         "location": "news/index.ts",
         "module": "() => import('@/routes/gov/cn/news/index.ts')"
       },
