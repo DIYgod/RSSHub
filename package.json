@@ -160,7 +160,7 @@
         "@cloudflare/vitest-plugin": "1.5.1",
         "@cloudflare/workers-types": "5.20261103.1",
         "@eslint/js": "10.0.1",
-        "@j178/prek": "0.5.9",
+        "@j178/prek": "0.5.10",
         "@mswjs/interceptors": "0.45.11",
         "@oxlint/plugins": "1.90.0",
         "@stylistic/eslint-plugin": "5.10.0",
