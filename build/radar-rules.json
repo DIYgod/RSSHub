@@ -52500,26 +52500,6 @@
         ],
         "target": "/aljazeera/arabic/tag/:id"
       }
-    ],
-    "chinese": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/aljazeera",
-        "source": [
-          "/:category",
-          "/"
-        ],
-        "target": "/aljazeera/chinese/:category"
-      },
-      {
-        "title": "Tag",
-        "docs": "https://docs.rsshub.app/routes/aljazeera",
-        "source": [
-          "/tag/:id",
-          "/"
-        ],
-        "target": "/aljazeera/chinese/tag/:id"
-      }
     ]
   },
   "amd.com": {

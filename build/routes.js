@@ -135347,7 +135347,7 @@ export default {
           "language": "Language, see below, arabic by default, as Arabic",
           "category": "Category, can be found in URL, homepage by default"
         },
-        "description": "Language\n\n| Arabic | Chinese | English |\n| ------ | ------- | ------- |\n| arabic | chinese | english |\n\n::: tip\nIf you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is `english` and whose path is `economy`, you can get the route as [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)\n\nIf you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language `chinese` and path `news/political`, you can get the route as [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)\n:::",
+        "description": "Language\n\n| Arabic | English |\n| ------ | ------- |\n| arabic | english |\n\n::: tip\nIf you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is `english` and whose path is `economy`, you can get the route as [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)\n:::",
         "radar": [
           {
             "source": [
@@ -135362,13 +135362,6 @@ export default {
               "www.aljazeera.net/"
             ],
             "target": "/arabic/:category"
-          },
-          {
-            "source": [
-              "chinese.aljazeera.net/:category",
-              "chinese.aljazeera.net/"
-            ],
-            "target": "/chinese/:category"
           }
         ],
         "name": "News",
@@ -135387,7 +135380,7 @@ export default {
         "parameters": {
           "language": "Language, see below, arabic by default, as Arabic"
         },
-        "description": "Language\n\n| Arabic | Chinese | English |\n| ------ | ------- | ------- |\n| arabic | chinese | english |\n\n::: tip\nThere is no RSS source for Al Jazeera Chinese, returning homepage content by default\n:::",
+        "description": "Language\n\n| Arabic | English |\n| ------ | ------- |\n| arabic | english |",
         "radar": [
           {
             "source": [
@@ -135421,7 +135414,7 @@ export default {
           "language": "Language, see below, arabic by default, as Arabic",
           "id": "Tag id, can be found in URL"
         },
-        "description": "Language\n\n| Arabic | Chinese | English |\n| ------ | ------- | ------- |\n| arabic | chinese | english |\n\n::: tip\nIf you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is `english` and whose path is `science-and-technology`, you can get the route as [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)\n:::",
+        "description": "Language\n\n| Arabic | English |\n| ------ | ------- |\n| arabic | english |\n\n::: tip\nIf you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is `english` and whose path is `science-and-technology`, you can get the route as [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)\n:::",
         "radar": [
           {
             "source": [
@@ -135436,13 +135429,6 @@ export default {
               "www.aljazeera.net/"
             ],
             "target": "/arabic/tag/:id"
-          },
-          {
-            "source": [
-              "chinese.aljazeera.net/tag/:id",
-              "chinese.aljazeera.net/"
-            ],
-            "target": "/chinese/tag/:id"
           }
         ],
         "name": "Tag",
