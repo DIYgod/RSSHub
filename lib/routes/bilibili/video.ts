@@ -156,7 +156,11 @@ async function applyCookie(page: Page, cookie: string) {
     }
 }
 
-async function requestVideoList(uid: string, cookie: string, wbiVerifyString: string): Promise<VideoListResponse> {
+async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
+    // The API takes a visitor cookie instead of the w_webid from the space page, which now sits
+    // behind a 412 proof-of-work challenge for plain requests.
+    const cookie = cache.getConfiguredCookie() ?? (await cache.getVisitorCookie());
+    const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
     const dmImgInter = utils.getDmImgInter();
 
@@ -168,33 +172,10 @@ async function requestVideoList(uid: string, cookie: string, wbiVerifyString: st
             Cookie: cookie,
         },
     });
-
-    return response.data;
-}
-
-async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
-    // The API takes a visitor cookie instead of the w_webid from the space page, which now sits
-    // behind a 412 proof-of-work challenge for plain requests.
-    const configuredCookie = cache.getConfiguredCookie();
-    const wbiVerifyString = await cache.getWbiVerifyString();
-    let data = await requestVideoList(uid, configuredCookie ?? (await cache.getVisitorCookie()), wbiVerifyString);
-    if (data.code === -352 && configuredCookie === undefined) {
-        // The risk control has turned the shared visitor cookie away. Try once more with a new one,
-        // which also replaces it for the requests that follow.
-        const cookie = await cache.renewVisitorCookie();
-        if (cookie) {
-            logger.warn('[bilibili/video] video list API answered -352, retrying with a new visitor cookie');
-            data = await requestVideoList(uid, cookie, wbiVerifyString);
-        }
-    }
-
+    const data = response.data;
     if (data.code) {
         logger.error(JSON.stringify(data.data));
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
-    }
-
-    if (!data.data) {
-        throw new Error('Bilibili video list API response does not contain video list data');
     }
 
     return data.data;
