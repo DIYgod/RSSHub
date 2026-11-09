@@ -96,73 +96,99 @@ const getCookie = (disableConfig = false) => {
 // buvid4 from the fingerprint endpoint and a bili_ticket from the ticket endpoint. The risk control
 // of the video list API lets it through far more often than buvid3 alone, while space.bilibili.com
 // now answers plain requests and fresh browsers with a 412 proof-of-work challenge.
-const getVisitorCookie = () =>
-    cache.tryGet<string>('bili-visitor-cookie', async () => {
-        const { data: fingerResponse } = await got('https://api.bilibili.com/x/frontend/finger/spi', {
+const createVisitorCookie = async () => {
+    const { data: fingerResponse } = await got('https://api.bilibili.com/x/frontend/finger/spi', {
+        headers: {
+            Referer: 'https://www.bilibili.com/',
+        },
+    });
+    const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
+    const now = Math.floor(Date.now() / 1000);
+    const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
+
+    try {
+        const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
             headers: {
                 Referer: 'https://www.bilibili.com/',
             },
         });
-        const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
-        const now = Math.floor(Date.now() / 1000);
-        const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
-
-        try {
-            const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
-                headers: {
-                    Referer: 'https://www.bilibili.com/',
-                },
-            });
-            const ticket = ticketResponse.data?.ticket;
-            if (ticket) {
-                cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${(ticketResponse.data.created_at ?? now) + (ticketResponse.data.ttl ?? 3 * 24 * 60 * 60)}`);
-            }
-        } catch (error) {
-            logger.warn(`Failed to get a Bilibili web ticket for the visitor cookie: ${error}`);
+        const ticket = ticketResponse.data?.ticket;
+        if (ticket) {
+            cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${(ticketResponse.data.created_at ?? now) + (ticketResponse.data.ttl ?? 3 * 24 * 60 * 60)}`);
         }
+    } catch (error) {
+        logger.warn(`Failed to get a Bilibili web ticket for the visitor cookie: ${error}`);
+    }
 
-        return cookies.join('; ');
-    });
+    return cookies.join('; ');
+};
+
+const visitorCookieKey = 'bili-visitor-cookie';
+// One visitor cookie serves every request for at most this long, and using it does not renew it: a
+// busy instance sends hundreds of requests an hour, and the risk control turns a cookie that has
+// served them for most of a day away with -352 more and more often.
+const visitorCookieMaxAge = 30 * 60;
+
+const getVisitorCookie = () => cache.tryGet<string>(visitorCookieKey, createVisitorCookie, visitorCookieMaxAge, false);
+
+// Replaces the shared visitor cookie after the risk control has turned it away, at most once a minute
+// for the whole instance: when the risk control turns every cookie away, a failed request must not
+// cost three more. Returns nothing when another request has just renewed it.
+const renewVisitorCookie = async (): Promise<string | undefined> => {
+    if (!(await cache.globalCache.claim('bili-visitor-cookie-renewal', 60))) {
+        return;
+    }
+
+    const cookie = await createVisitorCookie();
+    await cache.set(visitorCookieKey, cookie, visitorCookieMaxAge);
+    return cookie;
+};
 
 const getWbiVerifyString = () => {
     const key = 'bili-wbi-verify-string';
-    return cache.tryGet(key, async () => {
-        const cookie = getConfiguredCookie() ?? (await getVisitorCookie());
-        const { data: navResponse } = await got('https://api.bilibili.com/x/web-interface/nav', {
-            headers: {
-                Referer: 'https://www.bilibili.com/',
-                Cookie: cookie,
-            },
-        });
-        const imgUrl = navResponse.data.wbi_img.img_url;
-        const subUrl = navResponse.data.wbi_img.sub_url;
-        const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.', 1)[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.', 1)[0];
-        // const { body: spaceResponse } = await got('https://space.bilibili.com/1', {
-        //     headers: {
-        //         Referer: 'https://www.bilibili.com/',
-        //         Cookie: cookie,
-        //     },
-        // });
-        // const jsUrl = 'https:' + spaceResponse.match(/[^"]*9.space[^"]*/);
-        const jsUrl = 'https://s1.hdslb.com/bfs/seed/laputa-header/bili-header.umd.js';
-        const { body: jsResponse } = await got(jsUrl, {
-            headers: {
-                Referer: 'https://space.bilibili.com/1',
-            },
-        });
-        // const array = [
-        //     46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57,
-        //     62, 11, 36, 20, 34, 44, 52,
-        // ];
-        const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
-        const o: any[] = [];
-        for (const t of array) {
-            if (r.charAt(t)) {
-                o.push(r.charAt(t));
+    // Bilibili rotates the WBI keys, so a busy instance must not keep the cached ones alive by using them
+    return cache.tryGet(
+        key,
+        async () => {
+            const cookie = getConfiguredCookie() ?? (await getVisitorCookie());
+            const { data: navResponse } = await got('https://api.bilibili.com/x/web-interface/nav', {
+                headers: {
+                    Referer: 'https://www.bilibili.com/',
+                    Cookie: cookie,
+                },
+            });
+            const imgUrl = navResponse.data.wbi_img.img_url;
+            const subUrl = navResponse.data.wbi_img.sub_url;
+            const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.', 1)[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.', 1)[0];
+            // const { body: spaceResponse } = await got('https://space.bilibili.com/1', {
+            //     headers: {
+            //         Referer: 'https://www.bilibili.com/',
+            //         Cookie: cookie,
+            //     },
+            // });
+            // const jsUrl = 'https:' + spaceResponse.match(/[^"]*9.space[^"]*/);
+            const jsUrl = 'https://s1.hdslb.com/bfs/seed/laputa-header/bili-header.umd.js';
+            const { body: jsResponse } = await got(jsUrl, {
+                headers: {
+                    Referer: 'https://space.bilibili.com/1',
+                },
+            });
+            // const array = [
+            //     46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57,
+            //     62, 11, 36, 20, 34, 44, 52,
+            // ];
+            const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
+            const o: any[] = [];
+            for (const t of array) {
+                if (r.charAt(t)) {
+                    o.push(r.charAt(t));
+                }
             }
-        }
-        return o.join('').slice(0, 32);
-    });
+            return o.join('').slice(0, 32);
+        },
+        config.cache.contentExpire,
+        false
+    );
 };
 
 const getPublicUserCard = (uid) =>
@@ -404,6 +430,7 @@ export default {
     getCookie,
     getConfiguredCookie,
     getVisitorCookie,
+    renewVisitorCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,
