@@ -11,13 +11,9 @@ export const route: Route = {
     },
     description: `Language
 
-| Arabic | Chinese | English |
-| ------ | ------- | ------- |
-| arabic | chinese | english |
-
-::: tip
-There is no RSS source for Al Jazeera Chinese, returning homepage content by default
-:::`,
+| Arabic | English |
+| ------ | ------- |
+| arabic | english |`,
     radar: [
         {
             source: ['www.aljazeera.com/xml/rss/all.xml', 'www.aljazeera.com/'],

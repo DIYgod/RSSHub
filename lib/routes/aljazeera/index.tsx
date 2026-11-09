@@ -13,10 +13,6 @@ const languages = {
         rootUrl: 'https://www.aljazeera.net',
         rssUrl: 'rss',
     },
-    chinese: {
-        rootUrl: 'https://chinese.aljazeera.net',
-        rssUrl: undefined,
-    },
     english: {
         rootUrl: 'https://www.aljazeera.com',
         rssUrl: 'xml/rss/all.xml',
@@ -45,14 +41,12 @@ export const route: Route = {
     },
     description: `Language
 
-| Arabic | Chinese | English |
-| ------ | ------- | ------- |
-| arabic | chinese | english |
+| Arabic | English |
+| ------ | ------- |
+| arabic | english |
 
 ::: tip
 If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is \`english\` and whose path is \`economy\`, you can get the route as [\`/aljazeera/english/economy\`](https://rsshub.app/aljazeera/english/economy)
-
-If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language \`chinese\` and path \`news/political\`, you can get the route as [\`/aljazeera/chinese/news/political\`](https://rsshub.app/aljazeera/chinese/news/political)
 :::`,
     radar: [
         {
@@ -62,10 +56,6 @@ If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.n
         {
             source: ['www.aljazeera.net/:category', 'www.aljazeera.net/'],
             target: '/arabic/:category',
-        },
-        {
-            source: ['chinese.aljazeera.net/:category', 'chinese.aljazeera.net/'],
-            target: '/chinese/:category',
         },
     ],
     name: 'News',
