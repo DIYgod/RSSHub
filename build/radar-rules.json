@@ -282,20 +282,6 @@
       }
     ]
   },
-  "bbcnewslabs.co.uk": {
-    "_name": "BBC News Labs",
-    ".": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/bbcnewslabs",
-        "source": [
-          "/",
-          "/rdnewslabs/news/"
-        ],
-        "target": "/bbcnewslabs/news"
-      }
-    ]
-  },
   "binance.com": {
     "_name": "Binance",
     "www": [

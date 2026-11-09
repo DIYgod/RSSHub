@@ -111,9 +111,6 @@
   "/bandbbs/:watch_type?/:list_type?": [
     "hoilc"
   ],
-  "/bbcnewslabs/news": [
-    "elxy"
-  ],
   "/bestblogs/feeds/:category?": [
     "zhenlohuang"
   ],

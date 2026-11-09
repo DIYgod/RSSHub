@@ -1314,45 +1314,6 @@
     "url": "bandbbs.cn",
     "lang": "zh-CN"
   },
-  "bbcnewslabs": {
-    "routes": {
-      "/news": {
-        "path": "/news",
-        "categories": [
-          "programming"
-        ],
-        "example": "/bbcnewslabs/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "bbcnewslabs.co.uk/",
-              "www.bbc.co.uk/rdnewslabs/news/"
-            ]
-          }
-        ],
-        "name": "News",
-        "maintainers": [
-          "elxy"
-        ],
-        "url": "www.bbc.co.uk/rdnewslabs/news/",
-        "location": "news.ts",
-        "module": "() => import('@/routes/bbcnewslabs/news.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "BBC News Labs",
-    "url": "www.bbc.co.uk/rdnewslabs",
-    "lang": "en"
-  },
   "bestblogs": {
     "routes": {
       "/feeds/:category?": {
