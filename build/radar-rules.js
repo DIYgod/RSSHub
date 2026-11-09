@@ -16709,7 +16709,7 @@
     ".":[ { title:"Accepted papers",
         docs:"https://docs.rsshub.app/routes/ndss-symposium",
         source:[ "/" ],
-        target:"/ndss-symposium/ndss" } ] },
+        target:"/ndss-symposium/ndss/:abstract?" } ] },
   "neatdownloadmanager.com":{ _name:"Neat Download Manager",
     ".":[ { title:"Download",
         docs:"https://docs.rsshub.app/routes/neatdownloadmanager",

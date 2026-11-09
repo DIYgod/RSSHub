@@ -35961,7 +35961,7 @@
         "source": [
           "/"
         ],
-        "target": "/ndss-symposium/ndss"
+        "target": "/ndss-symposium/ndss/:abstract?"
       }
     ]
   },

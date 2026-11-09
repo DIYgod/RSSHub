@@ -89879,13 +89879,18 @@
   },
   "ndss-symposium": {
     "routes": {
-      "/ndss": {
-        "path": "/ndss",
+      "/ndss/:abstract?": {
+        "path": "/ndss/:abstract?",
         "categories": [
           "journal"
         ],
         "example": "/ndss-symposium/ndss",
-        "parameters": {},
+        "parameters": {
+          "abstract": {
+            "description": "Set to `1` to fetch abstracts for every accepted paper. The default `0` returns titles and authors only.",
+            "default": "0"
+          }
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -89903,10 +89908,11 @@
         ],
         "name": "Accepted papers",
         "maintainers": [
-          "ZeddYu"
+          "ZeddYu",
+          "yuguorui"
         ],
         "url": "ndss-symposium.org/",
-        "description": "Accepted papers from the latest symposium and workshop pages.",
+        "description": "Set `abstract` to `1` to include paper abstracts, taken from the detailed program page or, when a paper is missing there, from its own page.",
         "location": "ndss.ts",
         "module": "() => import('@/routes/ndss-symposium/ndss.ts')"
       }
