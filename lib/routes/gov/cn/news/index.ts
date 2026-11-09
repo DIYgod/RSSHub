@@ -27,7 +27,7 @@ export const route: Route = {
     name: '政府新闻',
     maintainers: ['EsuRt', 'howfool'],
     handler,
-    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |
+    description: `| 政务联播 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |
 | :------: | :------: | :------: | :--------: | :------------: | :------: |
 |    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |`,
 };
@@ -37,12 +37,8 @@ async function handler(ctx) {
     const originDomain = 'https://www.gov.cn';
     let url = '';
     let title = '';
-    let list: Cheerio<Element>;
     switch (uid) {
         case 'bm':
-            url = `${originDomain}/lianbo/bumen/index.htm`;
-            title = '中国政府网 - 部门政务';
-            break;
         case 'yw':
         case 'gd':
             return getLatestNews(uid, originDomain);
@@ -61,13 +57,7 @@ async function handler(ctx) {
     }
     const listData = await got.get(url);
     const $ = load(listData.data);
-    if (url.includes('zhengcelibrary')) {
-        list = $('.dys_middle_result_content_item');
-    } else if (url.includes('bumen')) {
-        list = $('.infolist li');
-    } else {
-        list = $('.news_box .list li:not(.line)');
-    }
+    const list: Cheerio<Element> = url.includes('zhengcelibrary') ? $('.dys_middle_result_content_item') : $('.news_box .list li:not(.line)');
 
     return {
         title,
@@ -131,8 +121,9 @@ async function handler(ctx) {
     };
 }
 
-async function getLatestNews(uid: 'yw' | 'gd', originDomain: string) {
-    const link = new URL('/yaowen/liebiao/', originDomain).href;
+async function getLatestNews(uid: 'bm' | 'yw' | 'gd', originDomain: string) {
+    // 部门政务 was folded into 政务联播, which publishes the same JSON list as 要闻.
+    const link = new URL(uid === 'bm' ? '/lianbo/' : '/yaowen/liebiao/', originDomain).href;
     const articles = await ofetch<Array<{ TITLE: string; URL: string; DOCRELPUBTIME?: string }>>(new URL('YAOWENLIEBIAO.json', link).href);
     // The official page displays the first 20 records from this JSON list.
     const items = await pMap(
@@ -150,7 +141,7 @@ async function getLatestNews(uid: 'yw' | 'gd', originDomain: string) {
         { concurrency: 3 }
     );
     return {
-        title: `中国政府网 - ${uid === 'yw' ? '新闻要闻' : '滚动新闻'}`,
+        title: `中国政府网 - ${{ bm: '政务联播', yw: '新闻要闻', gd: '滚动新闻' }[uid]}`,
         link,
         item: items,
     };
