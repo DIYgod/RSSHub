@@ -170,53 +170,49 @@ function uniqueLink(href: string | undefined, pageUrl: string, title: string, se
 }
 
 async function getProgramAbstracts(programUrl: string | undefined) {
-    const abstracts = new Map<string, string>();
     if (!programUrl) {
         logger.warn('NDSS: could not determine the detailed program URL; falling back to per-paper detail pages.');
-        return abstracts;
+        return new Map<string, string>();
     }
 
     try {
-        const { html } = await cache.tryGet(
+        const entries = await cache.tryGet(
             programUrl,
             async () => {
                 const response = await got(programUrl);
-                return { html: String(response.body ?? '') };
+                const $ = load(String(response.body ?? ''));
+                const parsed = new Map<string, string>();
+                $('li.list-group-item').each((_, element) => {
+                    const $item = $(element);
+                    const $paper = $item.find('a[href*="/ndss-paper/"]').first();
+                    const $abstract = $item.find('[id^="pid"]').first();
+                    if (!$paper.text().trim() || !$abstract.length) {
+                        return;
+                    }
+
+                    const description = cleanDescription($, $abstract);
+                    if (!description) {
+                        return;
+                    }
+
+                    const titleKey = normalizeTitle($paper.text());
+                    if (titleKey && !parsed.has(titleKey)) {
+                        parsed.set(titleKey, description);
+                    }
+                });
+                return Object.fromEntries(parsed);
             },
             detailTtl
         );
-        if (!html) {
-            logger.warn('NDSS: detailed program page ' + programUrl + ' returned no HTML; falling back to per-paper detail pages.');
-            return abstracts;
-        }
 
-        const $ = load(html);
-        $('li.list-group-item').each((_, element) => {
-            const $item = $(element);
-            const $paper = $item.find('a[href*="/ndss-paper/"]').first();
-            const $abstract = $item.find('[id^="pid"]').first();
-            if (!$paper.text().trim() || !$abstract.length) {
-                return;
-            }
-
-            const description = cleanDescription($, $abstract);
-            if (!description) {
-                return;
-            }
-
-            const titleKey = normalizeTitle($paper.text());
-            if (titleKey && !abstracts.has(titleKey)) {
-                abstracts.set(titleKey, description);
-            }
-        });
-
+        const abstracts = new Map(Object.entries(entries));
         if (abstracts.size === 0) {
             logger.warn('NDSS: no abstracts found on detailed program page ' + programUrl + '; falling back to per-paper detail pages.');
         }
         return abstracts;
     } catch (error) {
         logger.warn('NDSS: failed to load detailed program page ' + programUrl + ': ' + errorText(error) + '; falling back to per-paper detail pages.');
-        return abstracts;
+        return new Map<string, string>();
     }
 }
 
