@@ -2,6 +2,7 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -54,8 +55,7 @@ export const route: Route = {
     maintainers: ['ZeddYu', 'yuguorui'],
     handler,
     url: 'ndss-symposium.org/',
-    description:
-        'The first request with the abstract parameter set to 1 can take several minutes because it may fetch hundreds of paper pages. Warm the cache with an external cron job or systemd timer before adding this feed to FreshRSS. The warm-up job should request only this RSSHub NDSS URL and must not contain signature codes or credentials.',
+    description: 'Set `abstract` to `1` to include paper abstracts, taken from the detailed program page or, when a paper is missing there, from its own page.',
 };
 
 async function handler(ctx: Context): Promise<Data> {
@@ -70,10 +70,14 @@ async function handler(ctx: Context): Promise<Data> {
 
     if (ctx.req.param('abstract') === '1') {
         const abstracts = await getProgramAbstracts(state.programUrl);
-        items = await mapBatches(items, detailConcurrency, async (item) => ({
-            ...item,
-            description: abstracts.get(normalizeTitle(item.title)) ?? (await getPaperAbstract(item)),
-        }));
+        items = await pMap(
+            items,
+            async (item) => ({
+                ...item,
+                description: abstracts.get(normalizeTitle(item.title)) ?? (await getPaperAbstract(item)),
+            }),
+            { concurrency: detailConcurrency }
+        );
     }
 
     return {
@@ -284,12 +288,3 @@ function normalizeTitle(title: string) {
 }
 
 const errorText = (cause: unknown) => (cause instanceof Error ? cause.message : String(cause));
-
-async function mapBatches<T, R>(items: T[], size: number, mapper: (item: T) => Promise<R>): Promise<R[]> {
-    const results: R[] = [];
-    for (let index = 0; index < items.length; index += size) {
-        // oxlint-disable-next-line no-await-in-loop -- bounded batches are intentional
-        results.push(...(await Promise.all(items.slice(index, index + size).map((item) => mapper(item)))));
-    }
-    return results;
-}
