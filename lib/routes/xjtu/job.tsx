@@ -102,6 +102,9 @@ async function handler(ctx) {
                 author: article.publisher || undefined,
                 category: article.category?.name ? [article.category.name] : undefined,
             };
+            if (!item.link.startsWith(baseUrl)) {
+                return item;
+            }
             return mapResolvedValue(
                 cache.tryGet(`xjtu:job:content:v1:${item.link}`, async () => {
                     const detail = await ofetch<{
