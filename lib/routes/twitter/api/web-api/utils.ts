@@ -7,12 +7,14 @@ import undici from 'undici';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
+import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 
 import { getClientTransactionId } from './client-transaction-id';
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
+import cookieFetch from './cookie-fetch';
 // import login from './login';
 
 export type ApiParams = Record<string, string | number | boolean | undefined>;
@@ -27,8 +29,20 @@ const token2Cookie = async (token) => {
     const jar = new CookieJar();
     await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
-        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
-        if (token) {
+        const agent = isWorker ? undefined : proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
+        if (isWorker) {
+            const response = await cookieFetch(token ? 'https://x.com' : 'https://x.com/narendramodi?mx=2', jar);
+            if (!response.ok) {
+                throw new Error(`Twitter cookie initialization failed: HTTP ${response.status}`);
+            }
+            const data = await response.text();
+            if (!token) {
+                const gt = data.match(/document\.cookie="gt=(\d+)/)?.[1];
+                if (gt) {
+                    jar.setCookieSync(`gt=${gt}`, 'https://x.com');
+                }
+            }
+        } else if (token) {
             await ofetch('https://x.com', {
                 dispatcher: agent,
             });
@@ -44,7 +58,10 @@ const token2Cookie = async (token) => {
         const cookie = JSON.stringify(jar.serializeSync());
         cache.set(`twitter:cookie:${token}`, cookie);
         return cookie;
-    } catch {
+    } catch (error) {
+        if (isWorker) {
+            throw error;
+        }
         // ignore
         return '';
     }
@@ -101,13 +118,13 @@ export const twitterGot = async (
     let dispatchers:
         | {
               jar: CookieJar;
-              agent: CookieAgent | ProxyAgent;
+              agent: CookieAgent | ProxyAgent | undefined;
           }
         | undefined;
     if (cookie) {
         logger.debug('twitter debug: got twitter cookie');
         const jar = CookieJar.deserializeSync(JSON.parse(cookie));
-        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
+        const agent = isWorker ? undefined : proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
         if (proxy.dispatcher) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
         }
@@ -128,49 +145,34 @@ export const twitterGot = async (
           )
         : {};
 
-    // Use undici.fetch directly instead of ofetch.raw to preserve the CookieAgent
-    // dispatcher. Two layers drop it in the normal path:
-    //   1. ofetch does not forward `dispatcher` to its internal fetch() call
-    //   2. wrappedFetch (request-rewriter) does `new Request(input, init)` which
-    //      discards non-standard options like `dispatcher`
-    // Additionally, setting `cookie` header manually doesn't work either because
-    // the Fetch spec treats `cookie` as a forbidden header name, so
-    // `new Request()` silently strips it.
-    // The only way to send cookies via CookieAgent is to call undici.fetch with
-    // the dispatcher option directly.
-    //
-    // Because undici.fetch is the standard Fetch API and does not support ofetch's
-    // `onResponse` callback, the rate-limit and auth error handling that was
-    // previously in `onResponse` is now inlined below.
+    // Node needs undici.fetch to preserve CookieAgent's dispatcher; Workers manage cookies explicitly.
     const pathname = new URL(url).pathname;
     const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname, options?.refreshTransactionId) : undefined;
-    const response = await undici.fetch(requestUrl, {
-        headers: {
-            authority: 'x.com',
-            accept: '*/*',
-            'accept-language': 'en-US,en;q=0.9',
-            authorization: bearerToken,
-            'cache-control': 'no-cache',
-            'content-type': 'application/json',
-            dnt: '1',
-            pragma: 'no-cache',
-            referer: 'https://x.com/',
-            'x-twitter-active-user': 'yes',
-            'x-twitter-client-language': 'en',
-            'x-csrf-token': jsonCookie.ct0,
-            ...(auth?.token
-                ? {
-                      'x-twitter-auth-type': 'OAuth2Session',
-                  }
-                : {
-                      'x-guest-token': jsonCookie.gt,
-                  }),
-            ...(clientTransactionId && {
-                'x-client-transaction-id': clientTransactionId,
-            }),
-        },
-        dispatcher: dispatchers?.agent,
-    });
+    const headers = {
+        authority: 'x.com',
+        accept: '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        authorization: bearerToken,
+        'cache-control': 'no-cache',
+        'content-type': 'application/json',
+        dnt: '1',
+        pragma: 'no-cache',
+        referer: 'https://x.com/',
+        'x-twitter-active-user': 'yes',
+        'x-twitter-client-language': 'en',
+        'x-csrf-token': jsonCookie.ct0,
+        ...(auth?.token
+            ? {
+                  'x-twitter-auth-type': 'OAuth2Session',
+              }
+            : {
+                  'x-guest-token': jsonCookie.gt,
+              }),
+        ...(clientTransactionId && {
+            'x-client-transaction-id': clientTransactionId,
+        }),
+    };
+    const response = isWorker ? await cookieFetch(requestUrl, dispatchers?.jar, headers) : await undici.fetch(requestUrl, { headers, dispatcher: dispatchers?.agent });
 
     let responseData: any;
     try {
