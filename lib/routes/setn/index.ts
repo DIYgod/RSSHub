@@ -144,7 +144,7 @@ async function handler(ctx) {
 
                 content('#gad_setn_innity_oop_1x1').remove();
 
-                item.title = content('h1').text();
+                item.title = content('h1').text() || content('[itemprop="headline"]').text();
                 item.author =
                     authors
                         .map((author) => author.name)
@@ -153,12 +153,12 @@ async function handler(ctx) {
                 item.category = [head?.articleSection ?? content('meta[property="article:section"]').attr('content'), ...(content('meta[name="news_keywords"]').attr('content')?.split(',') ?? [])].filter(
                     (value): value is string => typeof value === 'string' && value.length > 0
                 );
-                const clock = content('.article_time_box')
+                const clock = content('.article_time_box, .pageDate')
                     .text()
-                    .match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+                    .match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}(?::\d{2})?/)?.[0];
                 const publishedTime = clock ?? content('meta[property="article:published_time"]').attr('content');
                 if (publishedTime) {
-                    item.pubDate = clock ? timezone(parseDate(clock, 'YYYY/MM/DD HH:mm:ss'), 8) : parseDate(publishedTime);
+                    item.pubDate = clock ? timezone(parseDate(clock, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm']), 8) : parseDate(publishedTime);
                 }
                 item.description = content('.article_content_area').first().html() ?? content('.content-p, article').first().html();
 
