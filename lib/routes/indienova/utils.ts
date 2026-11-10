@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://indienova.com';
@@ -26,13 +26,13 @@ const parseItem = async (item) => {
 
     item.description = $('.single-post').html();
     item.author = $('.header-info > a').text();
-    const pubDate = $('.header-info')
+    const info = $('.header-info')
         .contents()
         .filter((_, el) => el.nodeType === 3)
-        .text()
-        .trim()
-        .match(/(\d{4}-\d{2}-\d{2})/)?.[0];
-    item.pubDate = pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined;
+        .text();
+    const pubDate = info.match(/\d{4}-\d{2}-\d{2}|\d{2}-\d{2} \d{2}:\d{2}/)?.[0];
+    const ago = info.match(/\d+ \S+前/)?.[0];
+    item.pubDate = pubDate ? timezone(parseDate(pubDate, ['YYYY-MM-DD', 'MM-DD HH:mm']), 8) : ago ? parseRelativeDate(ago) : undefined;
 
     return item;
 };
