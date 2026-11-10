@@ -38,7 +38,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(`gov:moa:szcpxx:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                 const contentId = $$('meta[name="contentid"]').prop('content');
                 const guid = contentId ? `moa-${contentId}` : item.link;
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
                 const pubDate = $$('meta[name="PubDate"]').prop('content');
                 if (pubDate) {
