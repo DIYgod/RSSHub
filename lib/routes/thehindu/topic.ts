@@ -53,15 +53,15 @@ async function handler(ctx): Promise<Data> {
         list,
         async (item) => ({
             ...item,
-            ...(await cache.tryGet(item.link!, async () => {
+            ...(await cache.tryGet(`thehindu:details:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                $('.position-relative, .articleblock-container, .article-ad, .comments-shares').remove();
-                const published = $('meta[itemprop="datePublished"]').attr('content');
+                $('.position-relative, .articleblock-container, .article-ad, .comments-shares, .also-read').remove();
+                const published = $('meta[property="article:published_time"]').attr('content');
                 const modified = $('meta[itemprop="dateModified"]').attr('content');
                 return {
-                    description: ($('h2.sub-title').prop('outerHTML') ?? '') + ($('div.article-picture').html() ?? '') + ($('div[itemprop="articleBody"]').html() ?? ''),
+                    description: ($('h2.sub-title').prop('outerHTML') ?? '') + ($('div.article-picture').html() ?? '') + ($('div.schemaDiv').html() ?? ''),
                     pubDate: published ? parseDate(published) : undefined,
                     updated: modified ? parseDate(modified) : undefined,
                     category: $('meta[property="article:tag"]')
