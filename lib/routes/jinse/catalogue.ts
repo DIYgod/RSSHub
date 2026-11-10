@@ -66,7 +66,7 @@ async function handler(ctx) {
 
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
-        link: item.extra.topic_url.replace(/\/\/(?:www\.|m\.)?jinse\.com(?:\.cn)?(?=\/)/, '//www.jinse.com.cn'),
+        link: item.extra.topic_url.replace(/\/\/(?:www\.|m\.)?jinse\.(?:com(?:\.cn)?|cn)(?=\/)/, '//www.jinse.com.cn'),
         description: renderDescription({
             images:
                 item.extra.thumbnails_pics.length > 0
