@@ -103,6 +103,14 @@ describe('Worker Integration Tests', () => {
             expect(items[0].content_html).not.toContain('onclick=');
         });
 
+        it('should convert Chinese variants with opencc', async () => {
+            const response = await worker.fetch('/test/opencc?format=json&opencc=t2s');
+            expect(response.status).toBe(200);
+            const { items } = (await response.json()) as JsonFeed;
+            expect(items[0].title).toBe('小可爱');
+            expect(items[0].content_html).toBe('宇宙无敌');
+        });
+
         it('should apply image hotlink templates', async () => {
             const query = new URLSearchParams({
                 format: 'json',

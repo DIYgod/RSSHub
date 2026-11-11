@@ -12,7 +12,6 @@ import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
-import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
 
 const md = markdownit({
@@ -439,7 +438,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         // opencc
-        if (!isWorker && ctx.req.query('opencc')) {
+        if (ctx.req.query('opencc')) {
             const { simplecc } = await import('simplecc-wasm');
             for (const item of data.item) {
                 item.title = simplecc(item.title ?? item.link, ctx.req.query('opencc')!);
