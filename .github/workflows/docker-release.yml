@@ -45,6 +45,8 @@ jobs:
                   sudo systemctl restart zramswap
                   swapon
               background: true
+              # ZRAM only eases memory pressure; an apt outage must not block the release
+              continue-on-error: true
 
             - name: Prepare
               run: |
