@@ -34868,6 +34868,20 @@
       }
     ]
   },
+  "mistral.ai": {
+    "_name": "Mistral AI",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/mistral",
+        "source": [
+          "/news",
+          "/news/rss"
+        ],
+        "target": "/mistral/news"
+      }
+    ]
+  },
   "mit.edu": {
     "_name": "Massachusetts Institute of Technology (MIT)",
     "scratch": [

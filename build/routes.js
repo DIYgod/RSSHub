@@ -86932,6 +86932,51 @@ export default {
     "url": "missav.ws",
     "lang": "en"
   },
+  "mistral": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/mistral/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mistral.ai/news",
+              "mistral.ai/news/rss"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "url": "mistral.ai/news",
+        "location": "news.ts",
+        "module": () => import('@/routes/mistral/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Mistral AI",
+    "url": "mistral.ai",
+    "description": "The official Mistral news RSS (`https://mistral.ai/news/rss`) only contains short summaries. Routes here fetch the full article text.",
+    "lang": "en",
+    "zh": {
+      "name": "Mistral AI",
+      "description": "Mistral 官方新闻 RSS（`https://mistral.ai/news/rss`）只包含简短摘要，此处的路由会抓取文章全文。"
+    }
+  },
   "mit": {
     "routes": {
       "/ocw-top": {

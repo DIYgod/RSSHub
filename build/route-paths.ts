@@ -2349,6 +2349,7 @@ export type RoutePath =
   | `/misskon/posts/:routeParams?`
   | `/misskon/tag/:tag`
   | `/misskon/top/:k`
+  | `/mistral/news`
   | `/mit/csail/news`
   | `/mit/hanlab/blog`
   | `/mit/ocw-top`
