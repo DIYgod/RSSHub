@@ -1,4 +1,4 @@
-﻿import { load } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
