@@ -31,7 +31,6 @@ interface FinderSearchParams {
     sortBy: string;
     productType: string;
     limit: number;
-    apiKey: string;
     genres?: string;
     releaseType?: string;
     releaseYearMin?: string;
@@ -87,13 +86,10 @@ export async function handler(ctx) {
 
     const { data: currentResponse } = await got(currentUrl);
 
-    const apiKey = currentResponse.match(/apiKey=(.*?)&/)[1];
-
     const searchParams: FinderSearchParams = {
         sortBy: `-${sorts[sort].id}`,
         productType: types[type].id,
         limit,
-        apiKey,
     };
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();
