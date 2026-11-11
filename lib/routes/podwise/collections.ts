@@ -21,13 +21,13 @@ export const route: Route = {
         const response = await ofetch(link);
         const $ = load(response);
         const seen = new Set<string>();
-        const items = $('main a.group[href*="/collections/"]')
+        const items = $('main article:has(a[href*="/collections/"])')
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {
                     title: $item.find('h2, h3').first().text(),
-                    link: new URL($item.attr('href')!, link).href,
+                    link: new URL($item.find('a[href*="/collections/"]').attr('href')!, link).href,
                     description: $item.find('p').first().text(),
                 };
             })
