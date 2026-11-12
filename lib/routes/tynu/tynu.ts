@@ -20,7 +20,7 @@ async function getArticleItem(item: DataItem & { link: string }): Promise<DataIt
     const detail = await cache.tryGet<Pick<DataItem, 'description'>>(item.link, async () => {
         const response = await got(item.link);
         const $ = load(response.data);
-        return { description: $('#vsb_content').html() + ($('.content ul').not('.btm-cate').html() || '') };
+        return { description: $('.v_news_content').html() + ($('.content ul').not('.btm-cate').html() || '') };
     });
     return { ...item, description: detail.description };
 }
@@ -52,9 +52,9 @@ async function handler() {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.find('h3').text(),
+                title: $item.find('.content_list_txt h3').text(),
                 link: new URL($item.find($('a')).attr('href')!, baseUrl).href,
-                pubDate: getPublicationDate($item.find('.content_list_time').text()),
+                pubDate: getPublicationDate($item.find('.content_list_time').text().replaceAll(/\s/g, '')),
             };
         });
 
