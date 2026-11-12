@@ -24246,6 +24246,19 @@
       }
     ]
   },
+  "groq.com": {
+    "_name": "Groq",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/groq",
+        "source": [
+          "/blog"
+        ],
+        "target": "/groq/blog"
+      }
+    ]
+  },
   "gs.com": {
     "_name": "Goldman Sachs",
     "developer": [

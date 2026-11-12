@@ -1584,6 +1584,7 @@ export type RoutePath =
   | `/grist/featured`
   | `/grist/series/:series`
   | `/grist/topic/:topic`
+  | `/groq/blog`
   | `/grubstreet/`
   | `/grupoanimal/estados`
   | `/grupoanimal/politica`
