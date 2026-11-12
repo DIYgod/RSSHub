@@ -12,11 +12,11 @@ import cache from './cache';
 import utils, { getVideoUrl } from './utils';
 
 export const route: Route = {
-    path: '/user/video/:uid/:embed?',
+    path: '/user/video/:uid/:embed?/:charging?',
     categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭',charging: '充电专属筛选：默认为0 为不筛选，1 为非充电专属视频，2 为仅充电专属视频' },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -46,6 +46,7 @@ interface VideoItem {
     length: string;
     pic: string;
     title: string;
+    is_charging_arc?: boolean;
 }
 
 interface VideoListData {
@@ -277,6 +278,10 @@ async function handler(ctx: Context) {
     const embed = !ctx.req.param('embed');
     const data = await getVideoList(uid!);
     const videos = data.list?.vlist ?? [];
+    const charging = ctx.req.param('charging') ?? '0';
+    if (!['0', '1', '2'].includes(charging)) {
+        throw new Error('charging 参数只能是 0、1 或 2');
+    }
 
     let name = videos[0]?.author || uid;
     let face: string | undefined;
@@ -297,26 +302,35 @@ async function handler(ctx: Context) {
         logo: face ?? undefined,
         icon: face ?? undefined,
         item: await Promise.all(
-            videos.map(async (item) => {
-                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
-                return {
-                    title: item.title,
-                    description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
-                    pubDate: new Date(item.created * 1000).toUTCString(),
-                    link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-                    author: name,
-                    comments: item.comment,
-                    attachments: item.bvid
-                        ? [
-                              {
-                                  url: getVideoUrl(item.bvid),
-                                  mime_type: 'text/html',
-                                  duration_in_seconds: parseDuration(item.length),
-                              },
-                              ...subtitles,
-                          ]
-                        : undefined,
-                };
+            videos
+                .filter((item) => {
+                    if (charging === '0') {
+                        return true;
+                    }
+            
+                    const isCharging = item.is_charging_arc === true;
+                    return charging === '2' ? isCharging : !isCharging;
+                })
+                .map(async (item) => {
+                    const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                    return {
+                        title: item.title,
+                        description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
+                        pubDate: new Date(item.created * 1000).toUTCString(),
+                        link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
+                        author: name,
+                        comments: item.comment,
+                        attachments: item.bvid
+                            ? [
+                                  {
+                                      url: getVideoUrl(item.bvid),
+                                      mime_type: 'text/html',
+                                      duration_in_seconds: parseDuration(item.length),
+                                  },
+                                  ...subtitles,
+                              ]
+                            : undefined,
+                    };
             })
         ),
     };
