@@ -200,6 +200,22 @@ describe('parseDateRange', () => {
     // English formats
     // --------------------------------------------------------
     describe('English formats', () => {
+        it.each([
+            'JAN 1, 2025 – JUN 30, 2025',
+            'january 1, 2025 – june 30, 2025',
+            '1 JAN. 2025 – 30 JUN. 2025',
+            '1 january 2025 – 30 june 2025',
+            'jAnUaRy 1 to JUNE 30, 2025',
+            'JAN 1, 2025 to june 30',
+            '1 JAN - 30 june 2025',
+            '1 january 2025 - 30 JUN',
+        ])('ignores English month capitalization in %s', (input) => {
+            expect(parseDateRange(input)).toEqual({
+                startDate: '2025-01-01',
+                endDate: '2025-06-30',
+            });
+        });
+
         it('parses abbreviated month name ranges (MDY)', () => {
             expect(parseDateRange('Jan 1, 2025 – Jun 30, 2025')).toEqual({
                 startDate: '2025-01-01',
