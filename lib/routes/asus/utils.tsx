@@ -151,11 +151,10 @@ export const getDrivers = async (productInfo: ProductInfo, language: Language, o
  * Files without a title (e.g. motherboard BIOS) fall back to `fallbackPrefix` plus the version.
  */
 export const getFileTitle = (file: SupportFile, fallbackPrefix: string) => {
-    const version = file.Version.trim();
     if (!file.Title) {
-        return `${fallbackPrefix} ${version}`;
+        return `${fallbackPrefix} ${file.Version}`;
     }
-    return file.Title.includes(version) ? file.Title : `${file.Title} ${version}`;
+    return file.Title.includes(file.Version) ? file.Title : `${file.Title} ${file.Version}`;
 };
 
 // Most download URLs are paths on the ASUS CDN, but some (e.g. Microsoft Store apps) are absolute.
@@ -166,14 +165,13 @@ const getFileName = (url: string) => new URL(url).pathname.split('/').pop() || u
 export const renderFileDescription = (file: SupportFile, language: Language) => {
     const globalUrl = file.DownloadUrl.Global ? toDownloadUrl(file.DownloadUrl.Global, globalDownloadOrigin) : undefined;
     const chinaUrl = file.DownloadUrl.China ? toDownloadUrl(file.DownloadUrl.China, chinaDownloadOrigin) : undefined;
-    const version = file.Version.trim();
 
     return renderToString(
         language === 'zh' ? (
             <>
                 <p>更新信息：</p>
                 {raw(file.Description ?? '')}
-                <p>版本: {version}</p>
+                <p>版本: {file.Version}</p>
                 <p>大小: {file.FileSize}</p>
                 {file.sha256 ? <p>SHA-256: {file.sha256}</p> : null}
                 {chinaUrl || globalUrl ? (
@@ -191,7 +189,7 @@ export const renderFileDescription = (file: SupportFile, language: Language) => 
                 </p>
                 {raw(file.Description ?? '')}
                 <p>
-                    <b>Version:</b> {version}
+                    <b>Version:</b> {file.Version}
                 </p>
                 <p>
                     <b>Size:</b> {file.FileSize}
