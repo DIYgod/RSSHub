@@ -37,7 +37,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: card.find('h2').text(),
                 link: new URL(card.attr('data-post-key')!, link).href,
-                pubDate: date ? parseDate(date) : undefined,
+                pubDate: date ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00Z` : date) : undefined,
                 category: category ? [category] : undefined,
             };
         });
