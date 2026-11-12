@@ -16,7 +16,7 @@ export const route: Route = {
     categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭',charging: '充电专属筛选：默认为0 为不筛选，1 为非充电专属视频，2 为仅充电专属视频' },
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭', charging: '充电专属筛选：默认为0 为不筛选，1 为非充电专属视频，2 为仅充电专属视频' },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -307,7 +307,7 @@ async function handler(ctx: Context) {
                     if (charging === '0') {
                         return true;
                     }
-            
+
                     const isCharging = item.is_charging_arc === true;
                     return charging === '2' ? isCharging : !isCharging;
                 })
@@ -331,7 +331,7 @@ async function handler(ctx: Context) {
                               ]
                             : undefined,
                     };
-            })
+                })
         ),
     };
 }
