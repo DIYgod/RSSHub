@@ -1,5 +1,6 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { JSDOM } from 'jsdom';
 import { describe, expect, it } from 'vitest';
 
 import Atom from '@/views/atom';
@@ -30,6 +31,9 @@ describe('Atom view', () => {
                                 content: {
                                     url: 'https://example.com/video.mp4',
                                 },
+                                thumbnail: {
+                                    url: 'https://example.com/thumbnail.jpg',
+                                },
                             },
                             upvotes: 12,
                             downvotes: 1,
@@ -49,7 +53,9 @@ describe('Atom view', () => {
 
         expect(html).toContain('<icon>https://example.com/icon.png</icon>');
         expect(html).toContain('<logo>https://example.com/logo.png</logo>');
-        expect(html).toContain('media:content');
+        const { document } = new JSDOM(html, { contentType: 'application/xml' }).window;
+        expect(document.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0]?.getAttribute('url')).toBe('https://example.com/video.mp4');
+        expect(document.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0]?.getAttribute('url')).toBe('https://example.com/thumbnail.jpg');
         expect(html).toContain('term="News"');
         expect(html).toContain('term="Tech"');
         expect(html).toContain('rsshub:upvotes');

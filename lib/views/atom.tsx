@@ -10,7 +10,7 @@ const Link: FC<Record<string, string | number | undefined>> = (props) =>
         .map(([name, value]) => html` ${name}="${value}"`)} />`;
 
 const RSS: FC<{ data: Data }> = ({ data }) => (
-    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xml:lang={data.language || 'en'}>
+    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xmlns:media={data.item?.some((item) => item.media) ? 'http://search.yahoo.com/mrss/' : undefined} xml:lang={data.language || 'en'}>
         {html`<title>${data.title || 'RSSHub'}</title>`}
         <Link rel="alternate" href={data.link || 'https://docs.rsshub.app'} />
         <Link rel="self" href={data.atomlink} type="application/atom+xml" />
