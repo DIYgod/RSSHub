@@ -126,8 +126,10 @@ const containsKeyword = (text: string, keywords: string[], wholeWord = false): b
  * @returns Formatted date string in 'YYYY-MM-DD', or undefined if unrecognised.
  */
 const parseEnglishMonthDate = (raw: string, yearHint?: number): string | undefined => {
+    const normalized = raw.replace(new RegExp(EN_MONTHS_PATTERN, 'i'), (month) => month[0].toUpperCase() + month.slice(1).toLowerCase());
+
     // MDY full: "Jan 1, 2025" / "January 1st 2025"
-    const mdyFull = raw.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?[ ,]+(\\d{4})$`, 'i'));
+    const mdyFull = normalized.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?[ ,]+(\\d{4})$`, 'i'));
     if (mdyFull) {
         const d = dayjs(`${mdyFull[1].replace('.', '')} ${mdyFull[2]} ${mdyFull[3]}`, ['MMMM D YYYY', 'MMM D YYYY']);
         if (d.isValid()) {
@@ -136,7 +138,7 @@ const parseEnglishMonthDate = (raw: string, yearHint?: number): string | undefin
     }
 
     // MDY partial: "Jan 1" / "January 1st" (needs yearHint)
-    const mdyPartial = raw.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?$`, 'i'));
+    const mdyPartial = normalized.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?$`, 'i'));
     if (mdyPartial && yearHint) {
         const d = dayjs(`${mdyPartial[1].replace('.', '')} ${mdyPartial[2]} ${yearHint}`, ['MMMM D YYYY', 'MMM D YYYY']);
         if (d.isValid()) {
@@ -145,7 +147,7 @@ const parseEnglishMonthDate = (raw: string, yearHint?: number): string | undefin
     }
 
     // DMY full: "1 Jan 2025" / "1st January 2025"
-    const dmyFull = raw.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})\\s+(\\d{4})$`, 'i'));
+    const dmyFull = normalized.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})\\s+(\\d{4})$`, 'i'));
     if (dmyFull) {
         const d = dayjs(`${dmyFull[2].replace('.', '')} ${dmyFull[1]} ${dmyFull[3]}`, ['MMMM D YYYY', 'MMM D YYYY']);
         if (d.isValid()) {
@@ -154,7 +156,7 @@ const parseEnglishMonthDate = (raw: string, yearHint?: number): string | undefin
     }
 
     // DMY partial: "1 Jan" / "1st January" (needs yearHint)
-    const dmyPartial = raw.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})$`, 'i'));
+    const dmyPartial = normalized.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})$`, 'i'));
     if (dmyPartial && yearHint) {
         const d = dayjs(`${dmyPartial[2].replace('.', '')} ${dmyPartial[1]} ${yearHint}`, ['MMMM D YYYY', 'MMM D YYYY']);
         if (d.isValid()) {
