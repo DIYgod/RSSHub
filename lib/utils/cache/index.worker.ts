@@ -89,21 +89,16 @@ export default {
             throw new TypeError('Cache key must be a string');
         }
         if (cacheModule.status.available) {
-            let v = await cacheModule.get(key, refresh);
+            const v = await cacheModule.get(key, refresh);
             if (v) {
-                let parsed;
                 try {
-                    parsed = JSON.parse(v);
+                    return JSON.parse(v) as T;
                 } catch {
-                    parsed = null;
+                    return v as T;
                 }
-                if (parsed) {
-                    v = parsed;
-                }
-                return v as T;
             }
             const value = await getValueFunc();
-            await cacheModule.set(key, value, maxAge);
+            await cacheModule.set(key, JSON.stringify(value), maxAge);
             return value;
         }
         // Fallback: always call getValueFunc if the cache is not available.

@@ -164,19 +164,13 @@ export default {
         if (typeof key !== 'string') {
             throw new TypeError('Cache key must be a string');
         }
-        let v = await cacheModule.get(key, refresh);
+        const v = await cacheModule.get(key, refresh);
         if (v) {
-            let parsed;
             try {
-                parsed = JSON.parse(v);
+                return JSON.parse(v) as T;
             } catch {
-                parsed = null;
+                return v as T;
             }
-            if (parsed) {
-                v = parsed;
-            }
-
-            return v as T;
         }
         const value = await getValueFunc();
         cacheModule.set(key, JSON.stringify(value), maxAge);
