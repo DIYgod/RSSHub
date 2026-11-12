@@ -34824,6 +34824,19 @@ export default {
               "www.asus.com/:region/networking-iot-servers/:productLine/:series/:model"
             ],
             "target": "/bios/:model"
+          },
+          {
+            "source": [
+              "rog.asus.com/laptops/:series/:model/*",
+              "rog.asus.com/motherboards/:series/:model/*",
+              "rog.asus.com/gaming-handhelds/:series/:model/*",
+              "rog.asus.com/desktops/:series/:model/*",
+              "rog.asus.com/:region/laptops/:series/:model/*",
+              "rog.asus.com/:region/motherboards/:series/:model/*",
+              "rog.asus.com/:region/gaming-handhelds/:series/:model/*",
+              "rog.asus.com/:region/desktops/:series/:model/*"
+            ],
+            "target": "/bios/:model"
           }
         ],
         "name": "BIOS",
@@ -34831,8 +34844,78 @@ export default {
           "Fatpandac"
         ],
         "url": "www.asus.com",
+        "description": "Lists every BIOS and firmware download ASUS publishes for the product, such as BIOS installers, EZ Flash images and ROG keyboard or USB-PD firmware tools.",
         "location": "bios.tsx",
         "module": () => import('@/routes/asus/bios.tsx')
+      },
+      "/driver/:model/:lang?/:os?": {
+        "path": "/driver/:model/:lang?/:os?",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/asus/driver/ROG-Flow-Z13-2025",
+        "parameters": {
+          "model": "Model name or product-page slug, e.g. `PRIME-X570-PRO` or `ROG-Flow-Z13-2025`",
+          "lang": {
+            "description": "Language, provide access routes for other parts of the world",
+            "options": [
+              {
+                "label": "Chinese",
+                "value": "zh"
+              },
+              {
+                "label": "Global",
+                "value": "en"
+              }
+            ],
+            "default": "en"
+          },
+          "os": "Operating system ID, e.g. `52` for Windows 11 64-bit or `45` for Windows 10 64-bit. Defaults to the first operating system ASUS lists for the product"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.asus.com/displays-desktops/:productLine/:series/:model",
+              "www.asus.com/laptops/:productLine/:series/:model",
+              "www.asus.com/motherboards-components/:productLine/:series/:model",
+              "www.asus.com/networking-iot-servers/:productLine/:series/:model",
+              "www.asus.com/:region/displays-desktops/:productLine/:series/:model",
+              "www.asus.com/:region/laptops/:productLine/:series/:model",
+              "www.asus.com/:region/motherboards-components/:productLine/:series/:model",
+              "www.asus.com/:region/networking-iot-servers/:productLine/:series/:model"
+            ],
+            "target": "/driver/:model"
+          },
+          {
+            "source": [
+              "rog.asus.com/laptops/:series/:model/*",
+              "rog.asus.com/motherboards/:series/:model/*",
+              "rog.asus.com/gaming-handhelds/:series/:model/*",
+              "rog.asus.com/desktops/:series/:model/*",
+              "rog.asus.com/:region/laptops/:series/:model/*",
+              "rog.asus.com/:region/motherboards/:series/:model/*",
+              "rog.asus.com/:region/gaming-handhelds/:series/:model/*",
+              "rog.asus.com/:region/desktops/:series/:model/*"
+            ],
+            "target": "/driver/:model"
+          }
+        ],
+        "name": "Driver",
+        "maintainers": [
+          "regulad"
+        ],
+        "url": "www.asus.com",
+        "description": "Lists the drivers and utilities ASUS publishes for the product on one operating system. If an `os` ID is not available for the product, the error message lists the IDs that are.",
+        "location": "driver.ts",
+        "module": () => import('@/routes/asus/driver.ts')
       },
       "/gpu-tweak": {
         "path": "/gpu-tweak",

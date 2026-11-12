@@ -2583,6 +2583,9 @@
   "/asus/bios/:model/:lang?": [
     "Fatpandac"
   ],
+  "/asus/driver/:model/:lang?/:os?": [
+    "regulad"
+  ],
   "/asus/gpu-tweak": [
     "TonyRL"
   ],
