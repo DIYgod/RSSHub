@@ -8,6 +8,7 @@ process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
 const { default: parameter } = await import('@/middleware/parameter');
+const { default: cache } = await import('@/utils/cache');
 
 const parser = new Parser();
 
@@ -746,6 +747,48 @@ const makeImageData = () => ({
 });
 
 describe('show_image', () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it.each([undefined, 'true'])('removes fulltext images with enclosure=%s', async (enclosure) => {
+        const fulltext =
+            '<p>Full article content replacing the original summary.</p><img src="https://example.com/full.png"><picture><source srcset="https://example.com/full.webp"><img src="https://example.com/full.png"></picture><video src="https://example.com/full.mp4" poster="https://example.com/poster.jpg"></video><audio src="https://example.com/full.mp3"></audio>';
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: fulltext });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext', show_image: 'false', enclosure });
+        const item = data.item[0];
+        expect(item.description).toContain('<p>Full article content replacing the original summary.</p>');
+        expect(item.description).not.toMatch(/<img|<picture|poster=/);
+        expect(item.description).toContain('<video src="https://example.com/full.mp4"></video>');
+        expect(item.description).toContain('<audio src="https://example.com/full.mp3"></audio>');
+        expect(item.attachments.every((attachment) => !attachment.mime_type.startsWith('image/'))).toBe(true);
+        if (enclosure === 'true') {
+            expect(item.attachments).toEqual(
+                expect.arrayContaining([
+                    { url: 'https://example.com/full.mp4', mime_type: 'video/mp4' },
+                    { url: 'https://example.com/full.mp3', mime_type: 'audio/mpeg' },
+                ])
+            );
+        }
+    });
+
+    it('keeps fulltext images by default', async () => {
+        const fulltext = '<p>Full article content replacing the original summary.</p><img src="https://example.com/full.png">';
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: fulltext });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext' });
+        expect(data.item[0].description).toBe(fulltext);
+    });
+
+    it('keeps the filtered summary when fulltext is too short', async () => {
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: '<p>Short</p>' });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext', show_image: 'false' });
+        expect(data.item[0].description).toContain('<p>Text</p>');
+        expect(data.item[0].description).not.toMatch(/<img|<picture|poster=/);
+    });
+
     it('removes pictures and artwork while retaining text, video and audio', async () => {
         const data = await runMiddleware(makeImageData(), { show_image: 'false' });
         expect(data.image).toBeUndefined();

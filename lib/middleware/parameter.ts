@@ -18,6 +18,11 @@ const md = markdownit({
     html: true,
 });
 
+const removeImages = ($: CheerioAPI) => {
+    $('img, picture').remove();
+    $('video[poster]').removeAttr('poster');
+};
+
 const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl?: string) => {
     const $elem = $(elem);
 
@@ -124,8 +129,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 $('script').remove();
                 if (hideImages) {
-                    $('img, picture').remove();
-                    $('video[poster]').removeAttr('poster');
+                    removeImages($);
                 }
 
                 $('img').each((_, ele) => {
@@ -365,8 +369,16 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 item.author = author || parsed_result?.author;
                 item.description = parsed_result && parsed_result.content.length > 40 ? decodeHTMLStrict(parsed_result.content) : description;
-                if (extractEnclosures && parsed_result?.content.length > 40 && item.description) {
-                    item.attachments = extractAttachments(load(item.description), item, hideImages);
+                if ((!hideImages && !extractEnclosures) || !(parsed_result?.content.length > 40) || !item.description) {
+                    return;
+                }
+                const $ = load(item.description);
+                if (hideImages) {
+                    removeImages($);
+                    item.description = $('body').html()!;
+                }
+                if (extractEnclosures) {
+                    item.attachments = extractAttachments($, item, hideImages);
                 }
             });
             await Promise.all(tasks);
