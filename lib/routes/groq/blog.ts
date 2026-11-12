@@ -14,7 +14,11 @@ export const route: Route = {
     example: '/groq/blog',
     name: 'Blog',
     maintainers: ['ljh12138164'],
-    description: 'Full articles from the Groq blog, including news listed on the blog page. Fetches up to 20 entries by default.',
+    description: 'Full articles from the Groq blog, including news listed on the blog page. Follows the page order and fetches 20 entries by default. Use the common `limit` parameter to adjust the count.',
+    zh: {
+        name: '博客',
+        description: '获取 Groq 官方博客及该页面所列新闻的英文全文。按页面顺序默认获取 20 篇，可通过通用参数 `limit` 调整。',
+    },
     radar: [{ source: ['groq.com/blog'] }],
     handler,
 };
