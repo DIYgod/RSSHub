@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -28,33 +28,28 @@ async function handler(ctx: Context) {
     }
     const roomData = JSON.parse(roomDataJson);
 
-    if (!roomData.isOn) {
-        throw new Error(`Huya room ${id} is currently offline. The feed will have an item when the streamer goes live.`);
-    }
-
-    if (!Number.isFinite(Number(roomData.liveId)) || Number(roomData.liveId) <= 0) {
-        throw new Error(`Huya room ${id} did not provide a valid live stream identity.`);
-    }
-    const startTime = Number(roomData.startTime);
-    const date = Number.isFinite(startTime) && startTime > 0 ? parseDate(startTime, 'X') : undefined;
-    const pubDate = date && Number.isFinite(date.getTime()) ? date : undefined;
-
-    let item;
+    const item: DataItem[] = [];
     if (roomData.isOn) {
-        item = [
-            {
-                title: roomData.introduction,
-                description: `<img src="${roomData.screenshot}">`,
-                guid: pubDate ? `${roomData.liveId}:${roomData.startTime}` : String(roomData.liveId),
-                pubDate,
-                link: url,
-            },
-        ];
+        if (!Number.isFinite(Number(roomData.liveId)) || Number(roomData.liveId) <= 0) {
+            throw new Error(`Huya room ${id} did not provide a valid live stream identity.`);
+        }
+        const startTime = Number(roomData.startTime);
+        const date = Number.isFinite(startTime) && startTime > 0 ? parseDate(startTime, 'X') : undefined;
+        const pubDate = date && Number.isFinite(date.getTime()) ? date : undefined;
+
+        item.push({
+            title: roomData.introduction,
+            description: `<img src="${roomData.screenshot}">`,
+            guid: pubDate ? `${roomData.liveId}:${roomData.startTime}` : String(roomData.liveId),
+            pubDate,
+            link: url,
+        });
     }
 
     return {
         title: `${$('.host-name').text()}的虎牙直播`,
         link: url,
         item,
+        allowEmpty: true,
     };
 }

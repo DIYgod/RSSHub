@@ -53,12 +53,15 @@ async function handler(ctx) {
                 const res = await got(item.link);
                 const doc = load(res.data);
                 const dateScript = doc('script[type="application/ld+json"]').first().text();
-                const metadata = JSON.parse(dateScript) as {
-                    '@graph'?: Array<{ '@type'?: string; datePublished?: string; dateModified?: string }>;
-                    datePublished?: string;
-                    dateModified?: string;
-                };
-                const article = metadata['@graph']?.find((record) => record['@type'] === 'NewsArticle') ?? metadata;
+                let article: { '@graph'?: Array<{ '@type'?: string; datePublished?: string; dateModified?: string }>; datePublished?: string; dateModified?: string } = {};
+                if (dateScript) {
+                    try {
+                        const metadata = JSON.parse(dateScript);
+                        article = metadata['@graph']?.find((record) => record['@type'] === 'NewsArticle') ?? metadata;
+                    } catch {
+                        // Some pages omit or truncate their structured data; fall back to the listing date.
+                    }
+                }
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
