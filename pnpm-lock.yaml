@@ -290,8 +290,8 @@ importers:
         specifier: 10.1.4
         version: 10.1.4(supports-color@10.2.2)
       header-generator:
-        specifier: 2.1.89
-        version: 2.1.89
+        specifier: 2.1.90
+        version: 2.1.90
       hono:
         specifier: 4.13.17
         version: 4.13.17
@@ -4111,8 +4111,8 @@ packages:
     resolution: {integrity: sha512-5/LvxarRKbGCA5LJ+ha2aV1iVm7/aALIW4PzeXnQR5dyXiNMWbeA4UOBnqERInLfH/xSFp0ZREcxodUzxhEw2Q==}
     engines: {node: '>=22'}
 
-  generative-bayesian-network@2.1.89:
-    resolution: {integrity: sha512-oP5D5PsWpbM30dyAGPsyyZ4jogQA2aopy8TStSyCAtLRz85msdbh0l5tJ70pgeEXnQkaPWMhhvgxd7/qoss0FA==}
+  generative-bayesian-network@2.1.90:
+    resolution: {integrity: sha512-XPUGFdXU76Q2bAtyjSluG7RwjiSv1T35foIfem780+TGQTG5LsUDusuAhcjRU/NZQwoxrunvYXW4dXSpQCF9Cw==}
 
   get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -4205,8 +4205,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  header-generator@2.1.89:
-    resolution: {integrity: sha512-FQL09ESlBWbHpG1lC0l3Au0uXHkje7d2z65o3lhbK1nR4bqIayAa0UT+i32hsXFZbE4vu8J4DMqPDm/MGCrpvg==}
+  header-generator@2.1.90:
+    resolution: {integrity: sha512-efrmYAQVC+ZOdIdF19f6R5zbFXDtXH0WkpE1J02bhMK1GvciciWuvQIvupnqnN3H+roxTrk7AcUxalVjRmIiqg==}
     engines: {node: '>=16.0.0'}
 
   headers-polyfill@5.0.1:
@@ -9088,7 +9088,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  generative-bayesian-network@2.1.89:
+  generative-bayesian-network@2.1.90:
     dependencies:
       adm-zip: 0.6.1
       tslib: 2.8.1
@@ -9209,10 +9209,10 @@ snapshots:
 
   he@1.2.0: {}
 
-  header-generator@2.1.89:
+  header-generator@2.1.90:
     dependencies:
       browserslist: 4.28.9
-      generative-bayesian-network: 2.1.89
+      generative-bayesian-network: 2.1.90
       ow: 0.28.2
       tslib: 2.8.1
 
