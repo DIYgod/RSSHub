@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { id } = ctx.req.param();
-    const html = await ofetch<string>(`https://javtiful.com/channel/${id}`);
+    const html = await ofetch<string>(`https://javtiful.com/en/channel/${id}`);
     const $ = load(html);
     const items: DataItem[] = $('article.video-card:not(.video-card--partner)')
         .toArray()
