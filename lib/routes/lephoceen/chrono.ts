@@ -42,7 +42,8 @@ export const route: Route = {
                     category: [$item.find('.feed-card-badge').text().trim()],
                     image: $item.find('img').attr('src'),
                 };
-            });
+            })
+            .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
         // The list only shows relative times, so read the date from each page.
         const items = await Promise.all(
