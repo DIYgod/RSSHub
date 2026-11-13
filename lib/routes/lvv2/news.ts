@@ -68,7 +68,8 @@ async function handler(ctx) {
             link: new URL($(item).find('h3.title > a.title').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
             pubDate: timezone(parseDate($(item).find('a.dateline > time').attr('datetime')!), 8),
         }))
-        .filter((item) => item.title !== '');
+        .filter((item) => item.title !== '')
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await pMap(
         list,

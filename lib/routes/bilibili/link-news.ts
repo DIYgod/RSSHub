@@ -53,11 +53,14 @@ async function handler(ctx) {
         description: `bilibili ${productTitle}公告`,
         item:
             data &&
-            data.map((item) => ({
-                title: item.title,
-                description: `${item.mark}<br><img src="${item.cover_url}">`,
-                pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
-                link: item.announce_link ?? `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`,
-            })),
+            data
+                .filter((item, index, items) => items.findIndex((candidate) => candidate.id === item.id) === index)
+                .map((item) => ({
+                    title: item.title,
+                    description: `${item.mark}<br><img src="${item.cover_url}">`,
+                    pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
+                    link: item.announce_link || `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`,
+                    guid: `bilibili-link-news-${item.id}`,
+                })),
     };
 }

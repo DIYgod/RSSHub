@@ -22,7 +22,8 @@ export const parseList = ($: CheerioAPI, baseUrl: string): Array<DataItem & { li
                 category: $item.find('a[href*="/c/"]').first().text(),
                 pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
 export const parseItems = (list: Array<DataItem & { link: string }>) =>
     pMap(

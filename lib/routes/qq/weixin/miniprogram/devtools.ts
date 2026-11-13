@@ -40,9 +40,10 @@ async function handler() {
                         .map((element) => $.html(element))
                         .join(''),
                 pubDate: version ? timezone(parseDate(version[1], 'YYMMDD'), 8) : date ? timezone(parseDate(date.replaceAll('.', '-')), 8) : undefined,
-                link: link + $item.find('a.header-anchor').attr('href'),
+                link: $item.attr('id') ? `${link}#${$item.attr('id')}` : link,
             };
-        });
+        })
+        .filter((item) => item.link !== link);
 
     return {
         title: name,

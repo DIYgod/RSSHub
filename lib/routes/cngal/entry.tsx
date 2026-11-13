@@ -38,11 +38,12 @@ async function handler(ctx) {
     return {
         title: `CnGal - ${data.name} 的动态`,
         link: `https://www.cngal.org/entries/index/${entryId}`,
-        item: data.newsOfEntry.map((item) => ({
+        item: data.newsOfEntry.map((item, index) => ({
             title: item.title,
             description: renderDescription(item),
             pubDate: parseDate(item.happenedTime),
             link: item.link,
+            guid: `cngal-${entryId}-${item.articleId ?? index}`,
         })),
     };
 }

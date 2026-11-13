@@ -98,6 +98,6 @@ async function handler(ctx) {
     return {
         title: `财联社 - ${title}`,
         link: currentUrl,
-        item: items,
+        item: items.filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index),
     };
 }
