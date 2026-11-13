@@ -44,12 +44,13 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.data.replies;
+    const data = response.data.data?.replies ?? [];
 
     return {
         title: `${name} 的 评论`,
         link,
         description: `${name} 的评论`,
+        allowEmpty: true,
         item: data.map((item) => ({
             title: `${item.member.uname} : ${item.content.message}`,
             description: `${item.member.uname} : ${item.content.message}`,
