@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -31,6 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'shutup10';
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://www.oo-software.com';
     const currentUrl = `${rootUrl}/en/${id}/changelog`;
@@ -42,7 +44,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = $('.content h4')
+    const items = $('.changelog__content h4, .content h4')
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -62,7 +65,10 @@ async function handler(ctx) {
             };
         });
 
-    items[0].enclosure_url = $('.banner-inlay').find('a').attr('href');
+    const downloadLink = $('a[href*="/download/current/"]').first().attr('href');
+    if (items[0] && downloadLink) {
+        items[0].enclosure_url = new URL(downloadLink, rootUrl).href;
+    }
 
     return {
         title: $('title').text(),
