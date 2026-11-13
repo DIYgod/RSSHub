@@ -41,6 +41,19 @@ export const route: Route = {
     description: 'Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)',
     name: 'Inbox',
     maintainers: ['kt286'],
+    features: {
+        requireConfig: [
+            {
+                name: 'EMAIL_CONFIG_*',
+                description: 'IMAP account settings, see [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     handler,
 };
 

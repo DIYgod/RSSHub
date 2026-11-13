@@ -29,7 +29,6 @@ export const route: Route = {
             {
                 name: 'GELBOORU_API_KEY',
                 description: 'Gelbooru 偶尔会开启 API 认证，需配合 `GELBOORU_USER_ID`，从 `https://gelbooru.com/index.php?page=account&s=options` 获取',
-                optional: true,
             },
             {
                 name: 'GELBOORU_USER_ID',

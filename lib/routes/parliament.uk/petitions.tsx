@@ -72,8 +72,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const feedImage = $('meta[property="og:image"]').prop('content');
 
     return {
-        title: $('h1.page-title').text(),
-        description: $('meta[property="twitter:description"]').prop('content'),
+        title: $('h1').first().text() || $('title').text(),
+        description: $('meta[name="twitter:description"]').prop('content'),
         link: targetUrl,
         item: items,
         image: feedImage,

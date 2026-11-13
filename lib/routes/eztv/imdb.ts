@@ -27,16 +27,14 @@ async function handler(ctx: Context) {
         throw new InvalidParameterError('imdb_id must be a positive numeric IMDb ID without the tt prefix, for example 6048596');
     }
 
-    const response = await ofetch('https://eztv.it/api/get-torrents', { query: { imdb_id: imdbId } });
+    const rootUrl = 'https://eztvx.to';
+    const response = await ofetch(`${rootUrl}/api/get-torrents`, { query: { imdb_id: imdbId } });
 
     const torrents = response.torrents_count === 0 ? [] : response.torrents;
-    if (torrents.some((item) => !item.torrent_url)) {
-        throw new Error('EZTV API returned torrents without torrent_url, so feed item links cannot be populated.');
-    }
 
     return {
         title: `EZTV's Torrents of IMDB ID: ${imdbId}`,
-        link: 'https://eztv.it',
+        link: rootUrl,
         description: `EZTV's Torrents of IMDB ID: ${imdbId}`,
         item: torrents.map((item) => ({
             title: item.title,
@@ -44,7 +42,11 @@ async function handler(ctx: Context) {
             enclosure_url: item.magnet_url,
             enclosure_type: 'application/x-bittorrent',
             pubDate: parseDate(item.date_released_unix, 'X'),
-            link: item.torrent_url,
+            link: `${rootUrl}/ep/${item.id}/${item.filename
+                .replace(/\.[^.]+$/, '')
+                .toLowerCase()
+                .replaceAll(/[^a-z\d]+/g, '-')
+                .replaceAll(/^-|-$/g, '')}/`,
         })),
     };
 }
