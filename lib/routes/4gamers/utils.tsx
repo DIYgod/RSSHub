@@ -46,6 +46,8 @@ const parseItem = async (item) => {
                         return '';
                     case 'RawHtmlSection':
                         return section.html;
+                    case 'EmbedPollSection':
+                        return section.rawHtml;
                     case 'ImageGroupSection':
                         return renderImages(section.items);
                     default:
