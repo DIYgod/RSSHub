@@ -1,18 +1,8 @@
-// journals form AAAS publishing group
-//
-// science:        Science
-// sciadv:         Science Advances
-// sciimmunol:     Science Immunology
-// scirobotics:    Science Robotics
-// signaling:      Science Signaling
-// stm:            Science Translational Medicine
-import { load } from 'cheerio';
-
 import type { Language, Route } from '@/types';
-import got from '@/utils/got';
-import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
-import { baseUrl, fetchDesc, getItem } from './utils';
+import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/current/:journal?',
@@ -21,8 +11,8 @@ export const route: Route = {
     parameters: { journal: 'Short name for a journal' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: true,
@@ -51,34 +41,28 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { journal = 'science' } = ctx.req.param();
-    const pageURL = `${baseUrl}/toc/${journal}/current`;
-
-    const { data: pageResponse } = await got(pageURL, {
-        headers: {
-            cookie: 'cookiePolicy=iaccept;',
-        },
-    });
-    const $ = load(pageResponse);
-    const pageTitleName = $('head > title').text();
-
-    const list = $('.toc__section .card')
-        .toArray()
-        .map((item) => getItem(item, $));
-
-    const { page, destroy } = await getPlaywrightPage('about:blank', { noGoto: true, closeTimeout: 0 });
-    let items;
-    try {
-        items = await fetchDesc(list, page);
-    } finally {
-        await destroy();
-    }
+    const feedUrl = `https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=${journal}`;
+    const feed = await parser.parseURL(feedUrl);
 
     return {
-        title: `${pageTitleName} | Current Issue`,
-        description: `Current Issue of ${pageTitleName}`,
+        title: feed.title ?? `${journal} | Current Issue`,
+        description: feed.description,
         image: `${baseUrl}/apple-touch-icon.png`,
-        link: pageURL,
+        link: feed.link ?? `${baseUrl}/toc/${journal}/current`,
         language: 'en-us' as const satisfies Language,
-        item: items,
+        item: feed.items
+            .map((item) => {
+                const date = item.isoDate ?? item.pubDate;
+                return {
+                    title: item.title ?? '',
+                    link: item.link,
+                    guid: item.guid ?? item.id,
+                    description: item.content ?? item.contentSnippet,
+                    pubDate: date ? parseDate(date) : undefined,
+                    author: item.creator ?? item.author,
+                    category: item.categories,
+                };
+            })
+            .filter((item) => item.title),
     };
 }

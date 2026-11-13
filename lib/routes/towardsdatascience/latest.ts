@@ -1,10 +1,6 @@
-import { load } from 'cheerio';
-import pMap from 'p-map';
-
-import type { DataItem, Language, Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/latest',
@@ -20,63 +16,26 @@ export const route: Route = {
     url: 'towardsdatascience.com/latest',
     handler,
 };
+
 async function handler() {
-    const baseUrl = 'https://towardsdatascience.com/latest';
-    const feedLang: Language = 'en';
-    const feedDescription = 'Latest articles from Towards Data Science';
-    const response = await ofetch('https://medium.com/towards-data-science/latest?posts=true', {
-        headers: {
-            accept: 'application/json',
-        },
-    });
-    const data = JSON.parse(response.slice(16));
-    const list: Array<
-        DataItem & {
-            freediumLink: string;
-        }
-    > = data.payload.posts.map(
-        (
-            item
-        ): DataItem & {
-            freediumLink: string;
-        } => {
-            const title = item.title;
-            const link = `https://towardsdatascience.com/${item.uniqueSlug}`;
-            const freediumLink = `https://freedium.cfd/https://towardsdatascience.com/${item.uniqueSlug}`;
-            const author = data.payload.references.User[item.creatorId].name;
-            const pubDate = typeof item.createdAt === 'number' && Number.isFinite(item.createdAt) ? parseDate(item.createdAt) : undefined;
-            return {
-                title,
-                link,
-                freediumLink,
-                author,
-                pubDate,
-            };
-        }
-    );
-    const items = await pMap(
-        list,
-        async (item) => {
-            const description = await cache.tryGet(`towardsdatascience:body:${item.freediumLink}`, async () => {
-                const response = await ofetch(item.freediumLink);
-                const $ = load(response);
-                return $('div.main-content').first().html();
-            });
-            const metadata = omitInternalField(item, 'freediumLink');
-            return { ...metadata, description };
-        },
-        { concurrency: 3 }
-    );
+    const feed = await parser.parseURL('https://medium.com/feed/towards-data-science');
+
     return {
         title: 'Towards Data Science - Latest',
-        language: feedLang,
-        description: feedDescription,
-        link: baseUrl,
-        item: items,
+        language: 'en' as const,
+        description: 'Latest articles from Towards Data Science',
+        link: 'https://towardsdatascience.com/latest',
+        image: feed.image?.url,
+        item: feed.items
+            .map((item) => ({
+                title: item.title ?? '',
+                link: item.link,
+                guid: item.guid ?? item.id,
+                description: item.content ?? item.contentSnippet,
+                author: item.creator ?? item.author,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                category: item.categories,
+            }))
+            .filter((item) => item.title),
     };
-}
-function omitInternalField<T extends object, K extends keyof T>(item: T, key: K): Omit<T, K> {
-    const metadata = { ...item };
-    delete metadata[key];
-    return metadata;
 }

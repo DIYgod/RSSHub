@@ -1,7 +1,7 @@
 import type { Language, Route } from '@/types';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/',
@@ -19,25 +19,20 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.weekendhk.com';
-    const response = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
-        searchParams: {
-            per_page: Math.min(getRouteLimit(ctx, 100), 100),
-        },
-    });
+    const feed = await parser.parseURL(`${baseUrl}/feed/`);
 
-    const items = response.data.map((item) => {
-        const dateText = item.date_gmt;
-        const calendar = typeof dateText === 'string' ? parseDate(dateText.replace(/(?:Z|[+-]\d{2}:?\d{2})$/i, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true) : undefined;
-        const date = calendar && Number.isFinite(calendar.getTime()) ? parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(dateText) ? dateText : `${dateText}Z`) : undefined;
-        return {
-            title: item.title.rendered,
+    const items = feed.items
+        .slice(0, Math.min(getRouteLimit(ctx, 100), 100))
+        .map((item) => ({
+            title: item.title ?? '',
             link: item.link,
-            guid: item.guid.rendered,
-            description: item.content.rendered,
-            pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
-            author: item.creator_editor,
-        };
-    });
+            guid: item.guid,
+            description: item.content ?? item.contentSnippet,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            author: item.creator ?? item.author,
+            category: item.categories,
+        }))
+        .filter((item) => item.title);
 
     return {
         title: '新假期周刊',

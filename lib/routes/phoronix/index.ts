@@ -8,6 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 dayjs.extend(utc);
@@ -25,6 +26,8 @@ type ArticleItem = {
     title?: string;
     pubDate?: string;
     category?: string | string[];
+    content?: string;
+    contentSnippet?: string;
 };
 
 const feedFetch = async () => {
@@ -154,17 +157,35 @@ export const route: Route = {
 async function handler(ctx) {
     const { category, topic } = ctx.req.param();
     let feed;
-    switch (category) {
-        case 'category':
-        case 'news_topic':
-            feed = await legacyFetch(category, topic);
-            break;
-        case 'rss':
-            feed = await feedFetch();
-            break;
-        default:
-            feed = category ? await tryFetch(category, topic) : await feedFetch();
-            break;
+    try {
+        switch (category) {
+            case 'category':
+            case 'news_topic':
+                feed = await legacyFetch(category, topic);
+                break;
+            case 'rss':
+                feed = await feedFetch();
+                break;
+            default:
+                feed = category ? await tryFetch(category, topic) : await feedFetch();
+                break;
+        }
+    } catch {
+        feed = await feedFetch();
+    }
+
+    if (feed.item.some((item) => item.content || item.contentSnippet)) {
+        return {
+            ...feed,
+            item: feed.item.map((item) => ({
+                title: item.title,
+                link: item.link,
+                description: item.content ?? item.contentSnippet,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                author: item.creator,
+                category: item.category,
+            })),
+        };
     }
 
     const list: ArticleItem[] = feed.item;
