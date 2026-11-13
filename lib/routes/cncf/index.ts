@@ -47,7 +47,8 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($item.find('span.post-archive__item_date').text().split('|', 1)[0]), 0),
                 description: $item.find('div.post-archive__excerpt').html() ?? undefined,
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await pMap(
         list,
