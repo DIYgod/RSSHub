@@ -257,6 +257,8 @@ export type RoutePath =
   | `/arcteryx/outlet/:country/:gender`
   | `/arcteryx/regear/new-arrivals`
   | `/arena/leaderboard/:category?`
+  | `/arm/blog/:topic?`
+  | `/arm/news/:topic?`
   | `/artstation/:handle`
   | `/arxiv/:query`
   | `/asahi/:genre?/:category?`

@@ -136071,6 +136071,115 @@ export default {
     "url": "arcteryx.com",
     "lang": "en"
   },
+  "arm": {
+    "routes": {
+      "/blog/:topic?": {
+        "path": "/blog/:topic?",
+        "name": "Blog",
+        "url": "newsroom.arm.com/blog",
+        "example": "/arm/blog",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "topic": "Topic slug from `https://newsroom.arm.com/topics/:topic`. Omit or use `all` for all topics."
+        },
+        "description": "Full-text blog posts from Arm Newsroom via the WordPress REST API. Returns up to 20 entries by default and supports the common `limit` parameter (up to 100).\n\n| Topic | Slug |\n| --- | --- |\n| Artificial Intelligence (AI) | `artificial-intelligence` |\n| Automotive and autonomous machines | `automotive-autonomous-machines` |\n| Cloud computing | `cloud-computing` |\n| Company news | `company` |\n| Gaming | `gaming` |\n| High-performance computing | `hpc` |\n| Internet of Things (IoT) | `internet-of-things` |\n| Investor news | `investor` |\n| Network infrastructure | `network-infrastructure` |\n| PCs and laptops | `pc-laptops` |\n| Reports | `reports` |\n| Robotics | `robotics` |\n| Security | `security` |\n| Silicon | `silicon` |\n| Smartphones | `smartphones` |\n| Software | `software` |\n| Sustainability and social impact | `sustainability-and-social-impact` |\n| Wearables | `wearables` |",
+        "zh": {
+          "name": "博客",
+          "parameters": {
+            "topic": "官网专题 slug（对应 `https://newsroom.arm.com/topics/:topic`），留空或填 `all` 表示全部专题。"
+          },
+          "description": "通过官方 WordPress REST API 获取 Arm Newsroom 官方博客（`/blog/`）全文内容。默认返回最多 20 篇，可通过通用参数 `limit` 调整（最大 100）。\n\n| 专题 | Slug |\n| --- | --- |\n| 人工智能（AI） | `artificial-intelligence` |\n| 汽车与自动驾驶 | `automotive-autonomous-machines` |\n| 云计算 | `cloud-computing` |\n| 公司新闻 | `company` |\n| 游戏 | `gaming` |\n| 高性能计算（HPC） | `hpc` |\n| 物联网（IoT） | `internet-of-things` |\n| 投资者新闻 | `investor` |\n| 网络基础设施 | `network-infrastructure` |\n| PC 与笔记本 | `pc-laptops` |\n| 报告 | `reports` |\n| 机器人 | `robotics` |\n| 安全 | `security` |\n| 芯片与硅技术 | `silicon` |\n| 智能手机 | `smartphones` |\n| 软件 | `software` |\n| 可持续发展与社会影响 | `sustainability-and-social-impact` |\n| 可穿戴设备 | `wearables` |"
+        },
+        "radar": [
+          {
+            "source": [
+              "newsroom.arm.com/blog",
+              "newsroom.arm.com/blog/:slug"
+            ],
+            "target": "/blog"
+          },
+          {
+            "source": [
+              "newsroom.arm.com/topics/:topic"
+            ],
+            "target": "/blog/:topic"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "blog.ts",
+        "module": () => import('@/routes/arm/blog.ts')
+      },
+      "/news/:topic?": {
+        "path": "/news/:topic?",
+        "name": "News",
+        "url": "newsroom.arm.com/news",
+        "example": "/arm/news",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "topic": "Topic slug from `https://newsroom.arm.com/topics/:topic`. Omit or use `all` for all topics."
+        },
+        "description": "Full-text press releases and official news from Arm Newsroom via the WordPress REST API. Returns up to 20 entries by default and supports the common `limit` parameter (up to 100).\n\n| Topic | Slug |\n| --- | --- |\n| Artificial Intelligence (AI) | `artificial-intelligence` |\n| Automotive and autonomous machines | `automotive-autonomous-machines` |\n| Cloud computing | `cloud-computing` |\n| Company news | `company` |\n| Gaming | `gaming` |\n| High-performance computing | `hpc` |\n| Internet of Things (IoT) | `internet-of-things` |\n| Investor news | `investor` |\n| Network infrastructure | `network-infrastructure` |\n| PCs and laptops | `pc-laptops` |\n| Reports | `reports` |\n| Robotics | `robotics` |\n| Security | `security` |\n| Silicon | `silicon` |\n| Smartphones | `smartphones` |\n| Software | `software` |\n| Sustainability and social impact | `sustainability-and-social-impact` |\n| Wearables | `wearables` |",
+        "zh": {
+          "name": "新闻稿",
+          "parameters": {
+            "topic": "官网专题 slug（对应 `https://newsroom.arm.com/topics/:topic`），留空或填 `all` 表示全部专题。"
+          },
+          "description": "通过官方 WordPress REST API 获取 Arm Newsroom 官方新闻稿与公告（`/news/`）全文内容。默认返回最多 20 篇，可通过通用参数 `limit` 调整（最大 100）。\n\n| 专题 | Slug |\n| --- | --- |\n| 人工智能（AI） | `artificial-intelligence` |\n| 汽车与自动驾驶 | `automotive-autonomous-machines` |\n| 云计算 | `cloud-computing` |\n| 公司新闻 | `company` |\n| 游戏 | `gaming` |\n| 高性能计算（HPC） | `hpc` |\n| 物联网（IoT） | `internet-of-things` |\n| 投资者新闻 | `investor` |\n| 网络基础设施 | `network-infrastructure` |\n| PC 与笔记本 | `pc-laptops` |\n| 报告 | `reports` |\n| 机器人 | `robotics` |\n| 安全 | `security` |\n| 芯片与硅技术 | `silicon` |\n| 智能手机 | `smartphones` |\n| 软件 | `software` |\n| 可持续发展与社会影响 | `sustainability-and-social-impact` |\n| 可穿戴设备 | `wearables` |"
+        },
+        "radar": [
+          {
+            "source": [
+              "newsroom.arm.com/news",
+              "newsroom.arm.com/news/:slug",
+              "newsroom.arm.com/"
+            ],
+            "target": "/news"
+          },
+          {
+            "source": [
+              "newsroom.arm.com/topics/:topic"
+            ],
+            "target": "/news/:topic"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "news.ts",
+        "module": () => import('@/routes/arm/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Arm",
+    "url": "arm.com",
+    "lang": "en"
+  },
   "asahi": {
     "routes": {
       "/area/:id": {

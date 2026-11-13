@@ -9791,6 +9791,12 @@
   "/arcteryx/outlet/:country/:gender": [
     "IvanWng97"
   ],
+  "/arm/blog/:topic?": [
+    "ljh12138164"
+  ],
+  "/arm/news/:topic?": [
+    "ljh12138164"
+  ],
   "/asahi/area/:id": [
     "nczitzk"
   ],
