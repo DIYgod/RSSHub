@@ -33,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Use a keyword, cat_report/<category>, or tag_report/<tag>.');
     }
 
-    let searchId: number | undefined = undefined;
+    let searchId: number | undefined;
 
     if (taxonomy && keyword) {
         const apiSearchUrl = new URL(`${apiSlug}/${taxonomy}`, baseUrl).href;

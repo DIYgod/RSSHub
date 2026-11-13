@@ -20,9 +20,6 @@ allowBuilds:
     wrangler: true
 
 overrides:
-    '@oxc-parser/binding-wasm32-wasip1>@emnapi/core': '2.0.0-beta.2'
-    '@oxc-parser/binding-wasm32-wasip1>@emnapi/runtime': '2.0.0-beta.2'
-    'browserslist@4.28.9>caniuse-lite': '1.0.30001810'
     'cheerio>domhandler': '^6.0.1'
     'cheerio>domutils': '^4.0.2'
     'cheerio>parse5': '^8.1.0'
@@ -35,7 +32,6 @@ overrides:
     'google-play-scraper>ramda': '^0.32.0'
     'google-play-scraper>tough-cookie': '^6.0.0'
     hasown: 'npm:@nolyfill/hasown@^1'
-    'header-generator>browserslist': '4.28.9'
     htmlparser2: '^12.0.0'
     'rss-parser@3.13.0>entities': '^9.0.0'
     'rss-parser@3.13.0>xml2js': '^0.6.2'

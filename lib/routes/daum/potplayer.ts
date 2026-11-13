@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             continue;
         }
         const version = versionMatch[1];
-        let pubDateStr: string | undefined = undefined;
+        let pubDateStr: string | undefined;
 
         // Extract dates without treating dotted version numbers as calendar dates.
         const specificDateMatch = headerLine.match(/(\d{4}\/\d{1,2}\/\d{1,2})/); // YYYY/MM/DD format
