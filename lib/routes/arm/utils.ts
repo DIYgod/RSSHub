@@ -59,11 +59,12 @@ const api = <T>(endpoint: string, query: Record<string, string | number>) =>
         query,
     });
 
-const cleanText = (value: string) =>
+const decodeText = (value: string) =>
     decodeHTML(value)
         .replaceAll(/[\u{200B}-\u{200D}\u{FEFF}]/gu, '')
-        .replaceAll('\u{00A0}', ' ')
-        .trim();
+        .replaceAll('\u{00A0}', ' ');
+
+const cleanText = (value: string) => decodeText(value).trim();
 
 const mediaStem = (url: string) => {
     const pathname = new URL(url, BASE_URL).pathname;
@@ -141,7 +142,7 @@ const toDataItem = (post: WpPost): DataItem => {
     const featuredUrl = featured?.source_url?.replace(/^http:\/\//, 'https://');
 
     return {
-        title: cleanText(post.title.rendered),
+        title: decodeText(post.title.rendered),
         link: post.link,
         description: renderBody(post, featured),
         pubDate: parseDate(`${post.date_gmt}Z`),
@@ -236,7 +237,6 @@ export const fetchNewsroomData = async (
         link: topic?.link ?? options.baseLink,
         description: SITE_DESCRIPTION,
         language: 'en',
-        ...(topic && { allowEmpty: true }),
         item: posts.map((post) => toDataItem(post)),
     };
 };
