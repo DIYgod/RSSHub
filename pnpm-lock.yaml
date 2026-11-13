@@ -398,8 +398,8 @@ importers:
         specifier: 0.8.0
         version: 0.8.0
       teleproto:
-        specifier: 1.232.1
-        version: 1.232.1
+        specifier: 1.233.0
+        version: 1.233.0
       title:
         specifier: 4.0.1
         version: 4.0.1
@@ -5610,8 +5610,8 @@ packages:
     resolution: {integrity: sha512-MFO/QzvtAOmJbkhOaCTvbGcFN9L9b+JunIsDwaKljSOdcLMea3NJ1k9Usz/rjdfSXTq4dfzfeS7W4p4YOAAHeA==}
     engines: {node: '>=18'}
 
-  teleproto@1.232.1:
-    resolution: {integrity: sha512-39fQMS12G+yyGqRmcwRrAzPMGiyOKGDM8sU9eS2ubSzG6UD13X+qnebr/EPmToJ3TqkLlnJuxFJGG69k+jToFg==}
+  teleproto@1.233.0:
+    resolution: {integrity: sha512-7Ck4Jou40a1agacJWZkK7sTsXnyWzLUAMHwktlnqpBT4mmBzHsLwXskEEDeuTuEz6lMygw9FjYyD1m0MlgoS0A==}
     engines: {node: '>=18'}
 
   text-hex@1.0.0:
@@ -10938,7 +10938,7 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teleproto@1.232.1:
+  teleproto@1.233.0:
     dependencies:
       big-integer: 1.6.52
       buffer: 6.0.3
