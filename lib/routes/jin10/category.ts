@@ -183,7 +183,7 @@ async function handler(ctx) {
                     classify: `[${id}]`,
                 },
             });
-            return response.data.filter((item) => item.type !== 1);
+            return response.data.filter((item) => item.type !== 1 && (item.data.content || item.data.vip_title));
         },
         config.cache.routeExpire,
         false
