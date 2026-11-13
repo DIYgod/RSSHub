@@ -5,6 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import { fetchGoogleNews } from '@/utils/google-news';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -344,39 +345,58 @@ async function handler(ctx) {
         // Fallback to arc outboundfeeds if API fails
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 
-        const arcResponse = await ofetch(arcUrl, {
-            headers: browserHeaders,
-        });
-        if (arcResponse.wireitems?.length) {
-            const items = arcResponse.wireitems
-                .map((item) => {
-                    const story = item.templates.find((t) => t.template === 'story_with_image')?.story;
-                    if (!story) {
-                        return null;
-                    }
+        try {
+            const arcResponse = await ofetch(arcUrl, {
+                headers: browserHeaders,
+            });
+            if (arcResponse.wireitems?.length) {
+                const items = arcResponse.wireitems
+                    .map((item) => {
+                        const story = item.templates.find((t) => t.template === 'story_with_image')?.story;
+                        if (!story) {
+                            return null;
+                        }
 
-                    return {
-                        title: story.hed,
-                        link: item.templates.find((t) => t.template === 'story_with_image')?.template_action?.url,
-                        guid: story.usn,
-                        pubDate: parseDate(story.updated_at),
-                        updated: parseDate(story.updated_at),
-                        description: story.lede,
-                        author: story.authors?.map((author) => author.name).join(', '),
-                        category: [arcResponse.analytics?.topic_channel, arcResponse.analytics?.topic_sub_channel].filter(Boolean),
-                    };
-                })
-                .filter(Boolean);
+                        return {
+                            title: story.hed,
+                            link: item.templates.find((t) => t.template === 'story_with_image')?.template_action?.url,
+                            guid: story.usn,
+                            pubDate: parseDate(story.updated_at),
+                            updated: parseDate(story.updated_at),
+                            description: story.lede,
+                            author: story.authors?.map((author) => author.name).join(', '),
+                            category: [arcResponse.analytics?.topic_channel, arcResponse.analytics?.topic_sub_channel].filter(Boolean),
+                        };
+                    })
+                    .filter(Boolean);
 
-            return {
-                title: arcResponse.analytics?.title || `${arcResponse.wire_name} | Reuters`,
-                description: arcResponse.analytics?.content_title,
-                image: 'https://www.reuters.com/pf/resources/images/reuters/logo-vertical-default-512x512.png?d=116',
-                link: arcResponse.canonical_action?.url || `https://www.reuters.com${section_id}`,
-                category: [arcResponse.analytics?.topic_channel, arcResponse.analytics?.topic_sub_channel].filter(Boolean),
-                item: items.slice(0, limit),
-            };
+                return {
+                    title: arcResponse.analytics?.title || `${arcResponse.wire_name} | Reuters`,
+                    description: arcResponse.analytics?.content_title,
+                    image: 'https://www.reuters.com/pf/resources/images/reuters/logo-vertical-default-512x512.png?d=116',
+                    link: arcResponse.canonical_action?.url || `https://www.reuters.com${section_id}`,
+                    category: [arcResponse.analytics?.topic_channel, arcResponse.analytics?.topic_sub_channel].filter(Boolean),
+                    item: items.slice(0, limit),
+                };
+            }
+        } catch {
+            // Fall through to Google News when the ARC feed is unavailable.
         }
-        return null;
+        const feed = await fetchGoogleNews(`site:reuters.com ${category} ${topic}`.trim());
+        return {
+            title: `${topic || category} | Reuters`,
+            description: `Reuters ${category}${topic ? ` / ${topic}` : ''}`,
+            image: 'https://www.reuters.com/pf/resources/images/reuters/logo-vertical-default-512x512.png?d=116',
+            link: `https://www.reuters.com${section_id}`,
+            item: feed.items
+                .map((item) => ({
+                    title: item.title ?? '',
+                    link: item.link,
+                    description: item.content ?? item.contentSnippet,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                }))
+                .filter((item) => item.title)
+                .slice(0, limit),
+        };
     }
 }

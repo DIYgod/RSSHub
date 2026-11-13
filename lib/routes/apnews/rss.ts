@@ -1,5 +1,6 @@
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { fetchGoogleNews } from '@/utils/google-news';
 import parser from '@/utils/rss-parser';
 
 import { fetchArticle } from './utils';
@@ -39,7 +40,12 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'index' } = ctx.req.param();
     const url = `${HOME_PAGE}/${category}.rss`;
-    const res = await parser.parseURL(url);
+    let res;
+    try {
+        res = await parser.parseURL(url);
+    } catch {
+        res = await fetchGoogleNews(category === 'index' ? 'site:apnews.com' : `site:apnews.com ${category}`);
+    }
 
     const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res.items;
 
