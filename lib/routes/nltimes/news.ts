@@ -1,23 +1,20 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import { fetchGoogleNews } from '@/utils/google-news';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import parser from '@/utils/rss-parser';
 
-const map = new Map([
-    ['top-stories', { title: 'NL Times -- Top Stories', suffix: '/top-stories' }],
-    ['health', { title: 'NL Times -- Health', suffix: '/categories/health' }],
-    ['crime', { title: 'NL Times -- Crime', suffix: '/categories/crime' }],
-    ['politics', { title: 'NL Times -- Politics', suffix: '/categories/politics' }],
-    ['business', { title: 'NL Times -- Business', suffix: '/categories/business' }],
-    ['tech', { title: 'NL Times -- Tech', suffix: '/categories/tech' }],
-    ['culture', { title: 'NL Times -- Culture', suffix: '/categories/culture' }],
-    ['sports', { title: 'NL Times -- Sports', suffix: '/categories/sports' }],
-    ['weird', { title: 'NL Times -- Weird', suffix: '/categories/weird' }],
-    ['1-1-2', { title: 'NL Times -- 1-1-2', suffix: '/categories/1-1-2' }],
-]);
+const categories = {
+    'top-stories': 'Top Stories',
+    health: 'Health',
+    crime: 'Crime',
+    politics: 'Politics',
+    business: 'Business',
+    tech: 'Tech',
+    culture: 'Culture',
+    sports: 'Sports',
+    weird: 'Weird',
+    '1-1-2': '1-1-2',
+};
 
 export const route: Route = {
     path: '/news/:category?',
@@ -48,76 +45,26 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top-stories';
-    const selectedCategory = map.get(category);
-    if (!selectedCategory) {
-        throw new Error(`Unknown NL Times category: ${category}. Expected one of: ${map.keys().toArray().join(', ')}.`);
+    const categoryName = categories[category];
+    if (!categoryName) {
+        throw new Error(`Unknown NL Times category: ${category}. Expected one of: ${Object.keys(categories).join(', ')}.`);
     }
-    const suffix = selectedCategory.suffix;
 
-    const rootUrl = 'https://www.nltimes.nl';
-    const apiUrl = rootUrl + suffix;
-
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    const $ = load(response.data);
-
-    const list = $('.news-card')
-        .slice(0, 10)
-        .toArray()
-        .map((elem) => {
-            const item = {
-                link: $(elem).children('.news-card__title').first().children('a').first().attr('href'),
-                title: $(elem).children('.news-card__title').first().children('a').first().text(),
-                date: $(elem).children('.news-card__date').first().text(),
-                category: $(elem)
-                    .children('.news-card__categories')
-                    .first()
-                    .children('a')
-                    .toArray()
-                    .map((elem) => $(elem).text()),
-            };
-            return item;
-        });
-
-    const ProcessFeed = (data) => {
-        const $ = load(data);
-
-        return $('.news-article--body').html();
-    };
-
-    const items = await Promise.all(
-        list.map((item) => {
-            const title = item.title;
-            const date = timezone(parseDate(item.date, 'D MMMM YYYY - HH:mm'), 1); // Central European Time
-            const link = rootUrl + item.link;
-            const category = item.category;
-
-            return cache.tryGet(link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: link,
-                });
-
-                const description = ProcessFeed(response.data);
-                return {
-                    title,
-                    category,
-                    description,
-                    pubDate: date,
-                    link,
-                };
-            });
-        })
-    );
+    const feed = category === 'top-stories' ? await parser.parseURL('https://nltimes.nl/rss.xml') : await fetchGoogleNews(`site:nltimes.nl ${categoryName}`);
 
     return {
-        title: map.get(category)!.title,
+        title: `NL Times -- ${categoryName}`,
         language: 'en' as const,
-        link: apiUrl,
-        description: map.get(category)!.title,
-        item: items,
+        link: category === 'top-stories' ? 'https://nltimes.nl/' : `https://nltimes.nl/categories/${category}`,
+        description: `NL Times -- ${categoryName}`,
+        item: feed.items
+            .map((item) => ({
+                title: item.title ?? '',
+                link: item.link,
+                description: item.content ?? item.contentSnippet,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                category: item.categories,
+            }))
+            .filter((item) => item.title),
     };
 }
