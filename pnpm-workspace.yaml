@@ -20,8 +20,6 @@ allowBuilds:
     wrangler: true
 
 overrides:
-    '@oxc-parser/binding-wasm32-wasip1>@emnapi/core': '2.0.0-beta.2'
-    '@oxc-parser/binding-wasm32-wasip1>@emnapi/runtime': '2.0.0-beta.2'
     'cheerio>domhandler': '^6.0.1'
     'cheerio>domutils': '^4.0.2'
     'cheerio>parse5': '^8.1.0'
