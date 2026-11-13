@@ -27,7 +27,7 @@ const findMainIds = (data: readonly Racer[], searchKey?: string): MainIdsResult 
     if (!searchKey) {
         return { name: undefined, racer2: undefined, racer3: undefined };
     }
-    const recurse = (currentList: readonly Racer[], parentMainId: string | undefined = undefined, grandParentMainId: string | undefined = undefined): MainIdsResult => {
+    const recurse = (currentList: readonly Racer[], parentMainId?: string, grandParentMainId?: string): MainIdsResult => {
         for (const item of currentList) {
             const isMatch = item.mainId === searchKey || item.name === searchKey;
 
