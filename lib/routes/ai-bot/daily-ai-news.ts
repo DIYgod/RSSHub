@@ -92,7 +92,7 @@ async function handler(): Promise<Data> {
     return {
         title: '每日AI资讯 | AI工具集',
         link: 'https://ai-bot.cn/daily-ai-news/',
-        item: items,
+        item: items.filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index),
     };
 }
 
