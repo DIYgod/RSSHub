@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
@@ -66,8 +65,7 @@ interface MuseumData {
 }
 
 function getPageData(html: string) {
-    const $ = load(html);
-    const data: MuseumData = JSON.parse($('#__NEXT_DATA__').text());
+    const data: MuseumData = JSON.parse(html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s)?.[1] ?? '');
     const pageData = data.props?.pageProps?.__TEMPLATE_QUERY_DATA__;
     if (!pageData) {
         throw new Error('New Museum page data is unavailable');

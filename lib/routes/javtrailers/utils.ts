@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -51,8 +49,11 @@ const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map
 
 const getPageData = async <T>(url: string, key: 'cast' | 'category' | 'studio' | 'video'): Promise<T> => {
     const html = await ofetch(url, { responseType: 'text' });
-    const $ = load(html);
-    const payload: PayloadValue[] = JSON.parse($('#__NUXT_DATA__').text());
+    const nuxtData = html.match(/<script[^>]*id="__NUXT_DATA__"[^>]*>(.*?)<\/script>/s)?.[1];
+    if (!nuxtData) {
+        throw new Error(`The public page ${url} no longer contains Nuxt data.`);
+    }
+    const payload: PayloadValue[] = JSON.parse(nuxtData);
     const index = payload.findIndex((entry) => entry && typeof entry === 'object' && !Array.isArray(entry) && Object.hasOwn(entry, key) && (key === 'video' || Object.hasOwn(entry, 'videos')));
     if (index === -1) {
         throw new Error(`The public page ${url} no longer contains ${key} data.`);

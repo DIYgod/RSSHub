@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import cache from '@/utils/cache';
@@ -64,11 +63,7 @@ async function formatActivity(item: Activity) {
     const link = `${HOST}/event/${item.id}`;
     const detail = await cache.tryGet(`showstart:details:v2:${link}`, async () => {
         const pageSource1 = await ofetch(link, { responseType: 'text' });
-        const $ = load(pageSource1);
-        const script = $('script')
-            .toArray()
-            .map((element) => $(element).html() || '')
-            .find((source) => source.startsWith('window.__NUXT__='));
+        const script = pageSource1.match(/<script>(window\.__NUXT__=[\s\S]*?)<\/script>/)?.[1];
         if (!script) {
             throw new Error('ShowStart event page is missing its public detail data');
         }

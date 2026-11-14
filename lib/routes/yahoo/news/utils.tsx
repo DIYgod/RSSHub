@@ -1,7 +1,7 @@
-import { type CheerioAPI, load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
+import { load } from 'cheerio';
 
 import { config } from '@/config';
+import { renderYoutube } from '@/routes/youtube/utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -111,32 +111,6 @@ const parseList = (region, response) =>
         pubDate: item.published_at ? parseDate(item.published_at, 'X') : item.pubDate ? parseDate(item.pubDate) : undefined,
         author: item.provider_name ?? item.provider?.displayName ?? item.publisher,
     }));
-function getStructuredData(content: CheerioAPI) {
-    return content('script[type="application/ld+json"]')
-        .toArray()
-        .flatMap((element) => {
-            try {
-                const data = JSON.parse(content(element).text());
-                const entries = Array.isArray(data) ? data : [data];
-                return entries.flatMap((entry) => (entry && typeof entry === 'object' ? [entry, ...(Array.isArray(entry['@graph']) ? entry['@graph'] : [])] : []));
-            } catch {
-                return [];
-            }
-        })
-        .filter((entry) => entry && typeof entry === 'object');
-}
-function parseArticleDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
-}
-function parseArticleImage(value?: string) {
-    if (typeof value === 'string' && URL.canParse(value) && ['http:', 'https:'].includes(new URL(value).protocol)) {
-        return value;
-    }
-}
 function getYoutubeVideoId(value: string | undefined) {
     if (!value || !URL.canParse(value)) {
         return;
@@ -161,7 +135,10 @@ async function fetchItem(link: string) {
         },
     });
     const $ = load(response);
-    const ldJson = getStructuredData($).find((entry) => entry['@type'] === 'NewsArticle') ?? {};
+    const ldJsonEle = $('script[type="application/ld+json"]')
+        .toArray()
+        .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'));
+    const ldJson = JSON.parse((ldJsonEle && $(ldJsonEle).text()) || '{}');
     const author = ldJson.author?.name;
     const body = $('.atoms').length ? $('.atoms') : $('.article-detail').length ? $('.article-detail') : $('.bodyItems-wrapper');
     body.find('noscript, .recommendation-contents, .text-gandalf, [id^="sda-inbody-"], [data-testid="inarticle-ad"]').remove();
@@ -193,19 +170,7 @@ async function fetchItem(link: string) {
         if (!videoId) {
             return;
         }
-        $ele.replaceWith(
-            renderToString(
-                <iframe
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                    frameborder="0"
-                    allow="encrypted-media; picture-in-picture; web-share"
-                    allowfullscreen
-                    referrerpolicy="strict-origin-when-cross-origin"
-                ></iframe>
-            )
-        );
+        $ele.replaceWith(renderYoutube(true, videoId));
     });
     return {
         description: body
@@ -213,23 +178,20 @@ async function fetchItem(link: string) {
             .map((ele) => $(ele).html())
             .join(''),
         author,
-        image: parseArticleImage(ldJson.image?.url),
-        category:
-            typeof ldJson.articleSection === 'string' && ldJson.articleSection
-                ? [ldJson.articleSection, ...(Array.isArray(ldJson.keywords) ? ldJson.keywords : typeof ldJson.keywords === 'string' ? [ldJson.keywords] : [])]
-                : ldJson.keywords,
-        pubDate: parseArticleDate(ldJson.datePublished),
-        updated: parseArticleDate(ldJson.dateModified),
+        image: ldJson.image?.url,
+        category: ldJson.articleSection ? [ldJson.articleSection, ...(ldJson.keywords ?? [])] : ldJson.keywords,
+        pubDate: ldJson.datePublished ? parseDate(ldJson.datePublished) : undefined,
+        updated: ldJson.dateModified ? parseDate(ldJson.dateModified) : undefined,
     };
 }
 const parseItem = async (item) => {
     const details = await cache.tryGet(`yahoo:news:article:v5:${item.link}`, () => fetchItem(item.link));
     return {
         ...item,
-        description: details.description ?? item.description,
+        description: details.description,
         author: details.author ?? item.author,
-        image: details.image ?? item.image,
-        category: details.category ?? item.category,
+        image: details.image,
+        category: details.category,
         pubDate: details.pubDate ?? item.pubDate,
         updated: details.updated ?? item.updated,
     };

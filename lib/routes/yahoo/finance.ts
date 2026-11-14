@@ -15,8 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const topic = ctx.req.param('topic') ?? 'latest-news';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const limit = Number(ctx.req.query('limit')) || 20;
     const data = await getFinanceTopic('https://finance.yahoo.com', topic, limit);
     return { ...data, language: 'en' as const };
 }

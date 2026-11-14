@@ -47,11 +47,7 @@ async function handler(ctx) {
         url: listUrl,
     });
 
-    const $categories = load(listResponse.data);
-    const categoryPath = $categories('span')
-        .filter((_, element) => $categories(element).text() === category)
-        .next('a[rel="tag"]')
-        .attr('href');
+    const categoryPath = listResponse.data.split(`<span>${category}</span><a href="`)[1]?.split('"', 1)[0];
     if (!categoryPath) {
         throw new InvalidParameterError(`Category "${category}" was not found. Choose a category listed on ${listUrl}.`);
     }

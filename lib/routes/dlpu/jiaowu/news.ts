@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -89,12 +88,7 @@ async function handler(ctx: Context) {
         (item) =>
             cache.tryGet(item.link!, async () => {
                 const articlePage = await ofetch<string>(item.link!, { headers });
-                const $ = load(articlePage);
-                const script = $('script')
-                    .toArray()
-                    .map((element) => $(element).text())
-                    .find((text) => articleRootPattern.test(text));
-                const data = script?.slice(script.search(articleRootPattern)).match(/\bdata:\s*(\{[^\r\n]+\}),\r?\n/)?.[1];
+                const data = articlePage.slice(articlePage.search(articleRootPattern)).match(/\bdata:\s*(\{[^\r\n]+\}),\r?\n/)?.[1];
                 if (!data) {
                     throw new Error('The official article page did not provide its content data.');
                 }

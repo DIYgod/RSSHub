@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -37,8 +35,7 @@ function generateRssData(item: Product, productUrl: string): DataItem {
 
 export async function getProductList(pageUrl: string, productUrl: string): Promise<DataItem[]> {
     const response = await ofetch<string>(pageUrl);
-    const $ = load(response);
-    const state = $('#__NEXT_DATA__').text();
+    const state = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s)?.[1];
     if (!state) {
         throw new Error('The Arc’teryx catalog page did not contain its product data.');
     }

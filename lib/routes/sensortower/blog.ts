@@ -59,8 +59,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const $ = load(response.data);
-    const data = JSON.parse($('#__NEXT_DATA__').text()).props.pageProps.pageData.page;
+    const data = JSON.parse(response.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)[1]).props.pageProps.pageData.page;
     const links: string[] = data.contents.flatMap((content) => content.collection?.itemsConnection?.items?.map((item) => item.link?.href).filter(Boolean) ?? []);
     const list = [...new Set(links)].map((link) => ({ link: new URL(link, currentUrl).href }));
 
