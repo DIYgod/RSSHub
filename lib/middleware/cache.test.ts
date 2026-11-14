@@ -217,6 +217,34 @@ describe('cache middleware error handling', () => {
 });
 
 describe('cache request variants', () => {
+    it('does not serve cached summaries for fulltext requests, or full text for summary requests', async () => {
+        vi.stubEnv('CACHE_TYPE', 'memory');
+        vi.stubEnv('CACHE_EXPIRE', '300');
+        vi.resetModules();
+        const { default: middleware } = await import('./cache');
+        const request = async (query = '') => {
+            const ctx = new Context(new Request(`https://rsshub.example/articles${query}`), { env: {}, path: '/articles' });
+            await middleware(ctx, () => {
+                if (ctx.get('data')) {
+                    return Promise.resolve();
+                }
+                const description = ctx.req.query('fulltext') === 'true' ? 'Full article' : 'Summary';
+                ctx.set('data', { title: 'Feed', item: [{ title: 'Article', description }] });
+                return Promise.resolve();
+            });
+            return { description: ctx.get('data').item[0].description, status: ctx.res.headers.get('RSSHub-Cache-Status') };
+        };
+
+        try {
+            expect(await request()).toEqual({ description: 'Summary', status: null });
+            expect(await request('?fulltext=true')).toEqual({ description: 'Full article', status: null });
+            expect(await request('?fulltext=false')).toEqual({ description: 'Summary', status: 'HIT' });
+            expect(await request('?fulltext=true')).toEqual({ description: 'Full article', status: 'HIT' });
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
     it('keeps source-order selections separate from date-order selections', async () => {
         vi.stubEnv('CACHE_TYPE', 'memory');
         vi.stubEnv('CACHE_EXPIRE', '300');

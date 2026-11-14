@@ -50,15 +50,20 @@ const getCookie = (disableConfig = false) => {
     if (anonymousCookiePromise) {
         return anonymousCookiePromise;
     }
-    anonymousCookiePromise = (async () => {
+    anonymousCookiePromise = fetchAnonymousCookie();
+    return anonymousCookiePromise;
+};
+
+async function fetchAnonymousCookie() {
+    try {
         try {
             return await getVisitorCookie();
         } catch (error) {
             logger.warn(`Failed to build a Bilibili visitor cookie, falling back to Playwright: ${error}`);
         }
-        const key = 'bili-cookie';
-        try {
-            return await cache.tryGet<string>(key, async () => {
+        return await cache.tryGet<string>(
+            'bili-cookie',
+            async () => {
                 const url = 'https://space.bilibili.com/1/dynamic';
                 const timeout = 12000;
                 const { page, destroy } = await getPlaywrightPage(url, {
@@ -89,45 +94,61 @@ const getCookie = (disableConfig = false) => {
                 } finally {
                     await destroy();
                 }
-            });
-        } finally {
-            anonymousCookiePromise = undefined;
-        }
-    })();
-    return anonymousCookiePromise;
-};
+            },
+            undefined,
+            false
+        );
+    } finally {
+        anonymousCookiePromise = undefined;
+    }
+}
 
 // An anonymous visitor cookie made the way the web page makes one, without a browser: buvid3 and
 // buvid4 from the fingerprint endpoint and a bili_ticket from the ticket endpoint. The risk control
 // of the video list API lets it through far more often than buvid3 alone, while space.bilibili.com
 // now answers plain requests and fresh browsers with a 412 proof-of-work challenge.
-const getVisitorCookie = () =>
-    cache.tryGet<string>('bili-visitor-cookie', async () => {
-        const { data: fingerResponse } = await got('https://api.bilibili.com/x/frontend/finger/spi', {
+const getVisitorCookie = async () => {
+    const key = 'bili-visitor-cookie:v2';
+    const cached = await cache.get(key, false);
+    if (cached) {
+        return cached;
+    }
+
+    const { data: fingerResponse } = await got('https://api.bilibili.com/x/frontend/finger/spi', {
+        headers: {
+            Referer: 'https://www.bilibili.com/',
+        },
+    });
+    const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
+    const now = Math.floor(Date.now() / 1000);
+    const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
+    let ttl = Math.min(config.cache.contentExpire, 300);
+
+    try {
+        const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
             headers: {
                 Referer: 'https://www.bilibili.com/',
             },
         });
-        const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
-        const now = Math.floor(Date.now() / 1000);
-        const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
-
-        try {
-            const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
-                headers: {
-                    Referer: 'https://www.bilibili.com/',
-                },
-            });
-            const ticket = ticketResponse.data?.ticket;
-            if (ticket) {
-                cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${(ticketResponse.data.created_at ?? now) + (ticketResponse.data.ttl ?? 3 * 24 * 60 * 60)}`);
+        const ticket = ticketResponse.data?.ticket;
+        if (ticket) {
+            const expires = Number(ticketResponse.data.created_at ?? now) + Number(ticketResponse.data.ttl ?? 3 * 24 * 60 * 60);
+            const remaining = Math.floor(expires - Date.now() / 1000);
+            if (Number.isFinite(remaining) && remaining > 0) {
+                cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${expires}`);
+                ttl = Math.min(config.cache.contentExpire, remaining);
             }
-        } catch (error) {
-            logger.warn(`Failed to get a Bilibili web ticket for the visitor cookie: ${error}`);
         }
+    } catch (error) {
+        logger.warn(`Failed to get a Bilibili web ticket for the visitor cookie: ${error}`);
+    }
 
-        return cookies.join('; ');
-    });
+    const cookie = cookies.join('; ');
+    if (ttl > 0) {
+        await cache.set(key, cookie, ttl);
+    }
+    return cookie;
+};
 
 const getWbiVerifyString = () => {
     const key = 'bili-wbi-verify-string';
@@ -231,8 +252,10 @@ const getCidFromId = (aid, pid, bvid) => {
     return cache.tryGet(key, async () => {
         const cookie = await getCookie();
         const { data } = await got(`https://api.bilibili.com/x/player/pagelist?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
-            referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
-            Cookie: cookie,
+            headers: {
+                Referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
+                Cookie: cookie,
+            },
         });
         if (data.code !== 0) {
             throw new Error(`Bilibili page list request failed: code = ${data.code}, message = ${data.message}`);

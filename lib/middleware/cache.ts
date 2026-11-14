@@ -26,7 +26,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const sortedQuery = ctx.req.query('sorted');
     const sorted = sortedQuery === undefined ? '' : sortedQuery === 'false' ? ':sorted=false' : ':sorted=true';
     const filtered = hasItemFilters(ctx) ? ':filtered' : '';
-    const requestKey = h64ToString(requestPath + format + limit + sorted + filtered);
+    const fulltext = ctx.req.query('fulltext') === 'true' ? ':fulltext=true' : '';
+    const requestKey = h64ToString(requestPath + format + limit + sorted + filtered + fulltext);
     const key = 'rsshub:koa-redis-cache:' + requestKey;
     const controlKey = 'rsshub:path-requested:' + requestKey;
 
