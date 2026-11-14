@@ -141,6 +141,76 @@ const toValidTimestamp = (pubDate?: DataItem['pubDate']) => {
     return Number.isFinite(time) ? time : 0;
 };
 
+interface BlogEntry {
+    item: DataItem;
+    timestamp: number;
+    hasMainBody: boolean;
+}
+
+const toSanityEntry = (post: CohereBlogPost, link: string): BlogEntry => {
+    const categories = [...new Set((post.tags ?? []).flat().filter((tag): tag is string => Boolean(tag?.trim())))];
+    const authors = (post.authors ?? []).filter((author): author is string => Boolean(author?.trim()));
+    const image = resolveSafeUrl(post.ogUrl ?? undefined) ?? resolveSafeUrl(post.heroUrl ?? undefined);
+    const rawPubDate = parseBlogDate(post.date);
+    const timestamp = toValidTimestamp(rawPubDate);
+    const { html: description, hasMainBody } = renderDescription(post);
+
+    return {
+        timestamp,
+        hasMainBody,
+        item: {
+            title: post.title,
+            link,
+            description,
+            pubDate: timestamp ? rawPubDate : undefined,
+            author: authors.length ? authors.join(', ') : undefined,
+            category: categories.length ? categories : undefined,
+            image,
+        },
+    };
+};
+
+const toGhostEntry = (post: GhostPost, link: string, includeBody: boolean): BlogEntry => {
+    const categories = [...new Set((post.tags ?? []).filter((tag) => tag.visibility !== 'internal' && tag.name && !tag.name.startsWith('#')).map((tag) => tag.name!.trim()))];
+    const authors = (post.authors ?? []).map((author) => author.name?.trim()).filter((name): name is string => Boolean(name));
+    const image = resolveSafeUrl(post.og_image ?? undefined) ?? resolveSafeUrl(post.feature_image ?? undefined);
+    const rawPubDate = parseBlogDate(post.published_at);
+    const timestamp = toValidTimestamp(rawPubDate);
+    const pubDate = timestamp ? rawPubDate : undefined;
+    const author = authors.length ? authors.join(', ') : undefined;
+    const category = categories.length ? categories : undefined;
+
+    const description = includeBody ? renderGhostDescription(post) : undefined;
+    return {
+        timestamp,
+        hasMainBody: description?.hasMainBody ?? false,
+        item: {
+            title: post.title,
+            link,
+            description: description?.html,
+            pubDate,
+            author,
+            category,
+            image,
+        },
+    };
+};
+
+const mergeGhostEntry = (existing: BlogEntry, incoming: BlogEntry) => {
+    existing.item.title ||= incoming.item.title;
+    if (!existing.hasMainBody && (incoming.hasMainBody || (!existing.item.description && incoming.item.description))) {
+        existing.item.description = incoming.item.description;
+        existing.hasMainBody = incoming.hasMainBody;
+    }
+    if (!existing.item.pubDate && incoming.item.pubDate) {
+        existing.item.pubDate = incoming.item.pubDate;
+        existing.timestamp = incoming.timestamp;
+    }
+    existing.item.author ||= incoming.item.author;
+    existing.item.category ||= incoming.item.category;
+    existing.item.image ||= incoming.item.image;
+};
+
 export const route: Route = {
     path: '/blog',
     name: 'Blog',
@@ -210,82 +280,26 @@ async function handler(ctx: Context): Promise<Data> {
         }),
     ]);
 
-    const byLink = new Map<string, { item: DataItem; timestamp: number; hasMainBody: boolean }>();
+    const byLink = new Map<string, BlogEntry>();
 
     const sanityPosts = sanityRes.result ?? [];
     for (const post of sanityPosts) {
         const link = normalizeBlogLink(post.slug);
-        if (byLink.has(link)) {
-            continue;
+        if (!byLink.has(link)) {
+            byLink.set(link, toSanityEntry(post, link));
         }
-        const categories = [...new Set((post.tags ?? []).flat().filter((tag): tag is string => Boolean(tag?.trim())))];
-        const authors = (post.authors ?? []).filter((author): author is string => Boolean(author?.trim()));
-        const image = resolveSafeUrl(post.ogUrl ?? undefined) ?? resolveSafeUrl(post.heroUrl ?? undefined);
-        const rawPubDate = parseBlogDate(post.date);
-        const timestamp = toValidTimestamp(rawPubDate);
-        const { html: description, hasMainBody } = renderDescription(post);
-
-        byLink.set(link, {
-            timestamp,
-            hasMainBody,
-            item: {
-                title: post.title,
-                link,
-                description,
-                pubDate: timestamp ? rawPubDate : undefined,
-                author: authors.length ? authors.join(', ') : undefined,
-                category: categories.length ? categories : undefined,
-                image,
-            },
-        });
     }
 
     const ghostPosts = ghostRes.posts ?? [];
     for (const post of ghostPosts) {
         const link = normalizeBlogLink(post.slug);
-        const categories = [...new Set((post.tags ?? []).filter((tag) => tag.visibility !== 'internal' && tag.name && !tag.name.startsWith('#')).map((tag) => tag.name!.trim()))];
-        const authors = (post.authors ?? []).map((author) => author.name?.trim()).filter((name): name is string => Boolean(name));
-        const image = resolveSafeUrl(post.og_image ?? undefined) ?? resolveSafeUrl(post.feature_image ?? undefined);
-        const rawPubDate = parseBlogDate(post.published_at);
-        const timestamp = toValidTimestamp(rawPubDate);
-        const pubDate = timestamp ? rawPubDate : undefined;
-        const author = authors.length ? authors.join(', ') : undefined;
-        const category = categories.length ? categories : undefined;
-
         const existing = byLink.get(link);
+        const entry = toGhostEntry(post, link, !existing?.hasMainBody);
         if (existing) {
-            existing.item.title ||= post.title;
-            if (!existing.hasMainBody) {
-                const ghostDescription = renderGhostDescription(post);
-                if (ghostDescription.hasMainBody || (!existing.item.description && ghostDescription.html)) {
-                    existing.item.description = ghostDescription.html;
-                    existing.hasMainBody = ghostDescription.hasMainBody;
-                }
-            }
-            if (!existing.item.pubDate && pubDate) {
-                existing.item.pubDate = pubDate;
-                existing.timestamp = timestamp;
-            }
-            existing.item.author ||= author;
-            existing.item.category ||= category;
-            existing.item.image ||= image;
-            continue;
+            mergeGhostEntry(existing, entry);
+        } else {
+            byLink.set(link, entry);
         }
-
-        const { html: description, hasMainBody } = renderGhostDescription(post);
-        byLink.set(link, {
-            timestamp,
-            hasMainBody,
-            item: {
-                title: post.title,
-                link,
-                description,
-                pubDate,
-                author,
-                category,
-                image,
-            },
-        });
     }
 
     const items = byLink

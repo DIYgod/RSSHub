@@ -189,9 +189,10 @@ const renderEmbedHtml = (rawHtml?: string) => {
     return html ? raw(html) : null;
 };
 
-const renderSpecialBlock = (block: SanityBlock) => {
-    switch (block._type) {
-        case 'image': {
+const blockRenderers = new Map<string, (block: SanityBlock) => Node>([
+    [
+        'image',
+        (block) => {
             const url = resolveSafeUrl(block.url);
             if (!url) {
                 return null;
@@ -203,26 +204,33 @@ const renderSpecialBlock = (block: SanityBlock) => {
                     {caption.length ? <figcaption>{caption}</figcaption> : null}
                 </figure>
             );
-        }
-        case 'codeBlock':
-            return block.code ? (
+        },
+    ],
+    [
+        'codeBlock',
+        (block) =>
+            block.code ? (
                 <pre>
                     <code class={block.language ? `language-${block.language}` : undefined}>{block.code}</code>
                 </pre>
-            ) : null;
-        case 'latex': {
+            ) : null,
+    ],
+    [
+        'latex',
+        (block) => {
             const latex = block.body?.trim();
             return latex ? (
                 <pre>
                     <code class="language-latex">{latex}</code>
                 </pre>
             ) : null;
-        }
-        case 'tableBlock':
-            return renderTableBlock(block.rows);
-        case 'embedHTML':
-            return renderEmbedHtml(block.html);
-        case 'quoteBlock': {
+        },
+    ],
+    ['tableBlock', (block) => renderTableBlock(block.rows)],
+    ['embedHTML', (block) => renderEmbedHtml(block.html)],
+    [
+        'quoteBlock',
+        (block) => {
             const quote = renderBlocks(block.portableQuoteBody);
             if (!quote.length) {
                 return null;
@@ -234,8 +242,11 @@ const renderSpecialBlock = (block: SanityBlock) => {
                     {author.length ? <cite>{author}</cite> : null}
                 </blockquote>
             );
-        }
-        case 'embeddedVideo': {
+        },
+    ],
+    [
+        'embeddedVideo',
+        (block) => {
             const poster = resolveSafeUrl(block.posterUrl);
             if (block.playbackId) {
                 return (
@@ -249,12 +260,18 @@ const renderSpecialBlock = (block: SanityBlock) => {
                     <img src={poster} alt="" />
                 </figure>
             ) : null;
-        }
-        case 'audioEmbed': {
+        },
+    ],
+    [
+        'audioEmbed',
+        (block) => {
             const audioUrl = resolveSafeUrl(block.audioUrl);
             return audioUrl ? <audio controls src={audioUrl}></audio> : null;
-        }
-        case 'youtube': {
+        },
+    ],
+    [
+        'youtube',
+        (block) => {
             const url = resolveSafeUrl(block.url);
             if (!url) {
                 return null;
@@ -267,18 +284,23 @@ const renderSpecialBlock = (block: SanityBlock) => {
                     <a href={url}>{url}</a>
                 </p>
             );
-        }
-        case 'divider':
-            return <hr />;
-        case 'ctaButtons': {
+        },
+    ],
+    ['divider', () => <hr />],
+    [
+        'ctaButtons',
+        (block) => {
             const ctas = [block.primaryCta, block.secondaryCta].flatMap((cta) => {
                 const href = resolveSafeUrl(cta?.url);
                 const label = cta?.label?.trim();
                 return href && label ? [<a href={href}>{label}</a>] : [];
             });
             return ctas.length ? <p>{ctas.flatMap((cta, index) => (index === 0 ? [cta] : [' · ', cta]))}</p> : null;
-        }
-        case 'blogFaqSection': {
+        },
+    ],
+    [
+        'blogFaqSection',
+        (block) => {
             const items = (block.items ?? []).flatMap((faq) => {
                 const question = faq.question?.trim();
                 const answer = renderBlocks(faq.answer);
@@ -302,11 +324,11 @@ const renderSpecialBlock = (block: SanityBlock) => {
                     {items}
                 </>
             );
-        }
-        default:
-            return null;
-    }
-};
+        },
+    ],
+]);
+
+const renderSpecialBlock = (block: SanityBlock) => blockRenderers.get(block._type)?.(block) ?? null;
 
 const ListView = ({ list }: { list: ListNode }) => {
     const children = list.children.map((child) =>
@@ -324,50 +346,56 @@ const ListView = ({ list }: { list: ListNode }) => {
     return list.tag === 'ol' ? <ol>{children}</ol> : <ul>{children}</ul>;
 };
 
+type ListStack = Array<{ list: ListNode; level: number }>;
+
+const closeListsTo = (listStack: ListStack, targetLevel: number) => {
+    while (listStack.length > 0 && listStack.at(-1)!.level > targetLevel) {
+        listStack.pop();
+    }
+};
+
+const appendListItem = (block: SanityBlock, listStack: ListStack, out: Node[]) => {
+    const tag = block.listItem === 'number' ? 'ol' : 'ul';
+    const level = Math.max(block.level ?? 1, 1);
+    const { nodes } = renderSpans(block.children, block.markDefs);
+
+    closeListsTo(listStack, level);
+
+    const currentTop = listStack.at(-1);
+    if (currentTop && currentTop.level === level && currentTop.list.tag !== tag) {
+        closeListsTo(listStack, level - 1);
+    }
+
+    while (listStack.length < level) {
+        const list: ListNode = { tag, children: [] };
+        const parent = listStack.at(-1)?.list;
+        if (parent) {
+            const lastChild = parent.children.at(-1);
+            if (lastChild && !('tag' in lastChild)) {
+                lastChild.children.push(list);
+            } else {
+                parent.children.push(list);
+            }
+        } else {
+            out.push(<ListView list={list} />);
+        }
+        listStack.push({ list, level: listStack.length + 1 });
+    }
+
+    listStack.at(-1)!.list.children.push({ content: nodes, children: [] });
+};
+
 function renderBlocks(blocks: SanityBlock[] = []): Node[] {
     const out: Node[] = [];
-    const listStack: Array<{ list: ListNode; level: number }> = [];
-
-    const closeListsTo = (targetLevel: number) => {
-        while (listStack.length > 0 && listStack.at(-1)!.level > targetLevel) {
-            listStack.pop();
-        }
-    };
+    const listStack: ListStack = [];
 
     for (const block of blocks) {
         if (block._type === 'block' && block.listItem) {
-            const tag = block.listItem === 'number' ? 'ol' : 'ul';
-            const level = Math.max(block.level ?? 1, 1);
-            const { nodes } = renderSpans(block.children, block.markDefs);
-
-            closeListsTo(level);
-
-            const currentTop = listStack.at(-1);
-            if (currentTop && currentTop.level === level && currentTop.list.tag !== tag) {
-                closeListsTo(level - 1);
-            }
-
-            while (listStack.length < level) {
-                const list: ListNode = { tag, children: [] };
-                const parent = listStack.at(-1)?.list;
-                if (parent) {
-                    const lastChild = parent.children.at(-1);
-                    if (lastChild && !('tag' in lastChild)) {
-                        lastChild.children.push(list);
-                    } else {
-                        parent.children.push(list);
-                    }
-                } else {
-                    out.push(<ListView list={list} />);
-                }
-                listStack.push({ list, level: listStack.length + 1 });
-            }
-
-            listStack.at(-1)!.list.children.push({ content: nodes, children: [] });
+            appendListItem(block, listStack, out);
             continue;
         }
 
-        closeListsTo(0);
+        closeListsTo(listStack, 0);
 
         if (block._type === 'block') {
             const { nodes, isEmpty } = renderSpans(block.children, block.markDefs);
