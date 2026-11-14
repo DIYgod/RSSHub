@@ -13,7 +13,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/forum/:id?',
     categories: ['bbs'],
-    example: '/right/forum/31',
+    example: '/right/forum/171',
     parameters: { id: '板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)' },
     features: {
         requireConfig: false,

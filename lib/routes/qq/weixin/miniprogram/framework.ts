@@ -35,9 +35,10 @@ async function handler() {
                     .map((element) => $.html(element))
                     .join(''),
                 pubDate: date ? timezone(parseDate(date.replaceAll('.', '-')), 8) : undefined,
-                link: link + $item.find('a.header-anchor').attr('href'),
+                link: $item.attr('id') ? `${link}#${$item.attr('id')}` : link,
             };
-        });
+        })
+        .filter((item) => item.link !== link);
 
     return {
         title: name,

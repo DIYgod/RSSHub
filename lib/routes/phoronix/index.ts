@@ -2,12 +2,14 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 dayjs.extend(utc);
@@ -26,12 +28,13 @@ type ArticleItem = {
     pubDate?: string;
     category?: string | string[];
 };
+type Listing = Omit<Data, 'item'> & { item: Array<{ link: string }> };
 
 const feedFetch = async () => {
     const feedStr = await ofetch(rssUrl);
     const feed = await parser.parseString(feedStr);
     return {
-        title: feed.title,
+        title: feed.title ?? 'Phoronix',
         link: feed.link,
         description: feed.description,
         item: feed.items,
@@ -56,11 +59,11 @@ const feedFetch = async () => {
     };
 };
 
-const webFetchCb = (response) => {
-    const $ = load(response.body);
+const webFetchCb = (html: string, url: string): Listing => {
+    const $ = load(html);
     return {
         title: $('title').text(),
-        link: response.url,
+        link: url,
         description: $('meta[name="Description"]').attr('content'),
         item: [
             ...new Set(
@@ -75,17 +78,16 @@ const webFetchCb = (response) => {
         icon: 'https://www.phoronix.com/android-chrome-192x192.png',
         image: 'https://www.phoronix.com/android-chrome-192x192.png',
         logo: 'https://www.phoronix.com/phxcms7-css/phoronix.png',
-        category: $('meta[name="keywords"]').attr('content')!.split(', '),
     };
 };
 
 const webFetch = (url) =>
-    cache.tryGet(`${webArticlesCacheKey}:${url}`, async () => {
+    cache.tryGet<Listing | '404'>(`${webArticlesCacheKey}:${url}`, async () => {
         try {
-            return webFetchCb(await got(url));
+            const response = await ofetch.raw<string, 'text'>(url, { responseType: 'text' });
+            return webFetchCb(response._data!, response.url);
         } catch (error) {
-            const err = error as { name: string; response: { statusCode: number } };
-            if ((err.name === 'HTTPError' || err.name === 'FetchError') && err.response.statusCode === 404) {
+            if (error instanceof FetchError && error.status === 404) {
                 return '404';
             }
             throw error;
@@ -105,11 +107,11 @@ const legacyFetch = async (page, queryOrItem) => {
 
     let response;
     const webUrl = await cache.tryGet(`${redirectCacheKey}:${legacyUrl.href}`, async () => {
-        response = await got(legacyUrl.href);
+        response = await ofetch.raw<string, 'text'>(legacyUrl.href, { responseType: 'text' });
         return response.url;
     });
     if (response) {
-        const feed = webFetchCb(response);
+        const feed = webFetchCb(response._data!, webUrl);
         cache.set(`${webArticlesCacheKey}:${webUrl}`, feed);
         return feed;
     }
@@ -153,23 +155,30 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category, topic } = ctx.req.param();
-    let feed;
-    switch (category) {
-        case 'category':
-        case 'news_topic':
-            feed = await legacyFetch(category, topic);
-            break;
-        case 'rss':
-            feed = await feedFetch();
-            break;
-        default:
-            feed = category ? await tryFetch(category, topic) : await feedFetch();
-            break;
+    if (!category || category === 'rss') {
+        const feed = await feedFetch();
+        return {
+            ...feed,
+            item: feed.item
+                .filter((item) => item.title && item.link)
+                .map((item) => ({
+                    title: item.title!,
+                    link: item.link,
+                    description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                    author: item.creator,
+                    category: item.categories,
+                })),
+        };
     }
 
-    const list: ArticleItem[] = feed.item;
-    const articles = list.filter((item): item is ArticleItem & { link: string } => typeof item.link === 'string' && item.link.length > 0);
-    feed.item = await pMap(
+    const feed = category === 'category' || category === 'news_topic' ? await legacyFetch(category, topic) : await tryFetch(category, topic);
+    if (feed === '404') {
+        throw new Error(`Phoronix category or topic not found: ${[category, topic].filter(Boolean).join('/')}`);
+    }
+
+    const articles: Array<ArticleItem & { link: string }> = feed.item;
+    const items = await pMap(
         articles,
         (item) =>
             cache.tryGet(`${articleCacheKey}:${item.link}`, async () => {
@@ -280,5 +289,5 @@ async function handler(ctx) {
         { concurrency: 3 }
     );
 
-    return feed;
+    return { ...feed, item: items };
 }

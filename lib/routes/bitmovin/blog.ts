@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { fetchGoogleNews } from '@/utils/google-news';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -32,11 +33,28 @@ export const route: Route = {
 
 async function handler(ctx) {
     const apiUrl = `${baseUrl}/wp-json/wp/v2`;
-    const { data } = await got(`${apiUrl}/posts`, {
-        searchParams: {
-            per_page: getRouteLimit(ctx, 100),
-        },
-    });
+    let data;
+    try {
+        ({ data } = await got(`${apiUrl}/posts`, {
+            searchParams: {
+                per_page: getRouteLimit(ctx, 100),
+            },
+        }));
+    } catch {
+        const feed = await fetchGoogleNews('site:bitmovin.com/blog');
+        return {
+            title: 'Blog - Bitmovin',
+            link: `${baseUrl}/blog/`,
+            item: feed.items
+                .map((item) => ({
+                    title: item.title ?? '',
+                    description: item.content ?? item.contentSnippet,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                    link: item.link,
+                }))
+                .filter((item) => item.title),
+        };
+    }
 
     const items = data.map((item) => ({
         title: item.title.rendered,

@@ -32,6 +32,9 @@ async function handler(ctx) {
     if (!aid) {
         aid = await cache.getAidFromBvid(bvid);
     }
+    if (!aid) {
+        throw new Error(`Bilibili did not return the video ID for ${bvid}.`);
+    }
 
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;
     const cookie = await cache.getCookie();
@@ -44,13 +47,21 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.data.replies;
+    const { code, message, data } = response.data;
+    if (code !== 0 || !data) {
+        throw new Error(`Bilibili comment request failed: code = ${code}, message = ${message}`);
+    }
+    const { replies } = data;
+    if (replies !== null && !Array.isArray(replies)) {
+        throw new TypeError('Bilibili returned an invalid comment list.');
+    }
 
     return {
         title: `${name} 的 评论`,
         link,
         description: `${name} 的评论`,
-        item: data.map((item) => ({
+        allowEmpty: true,
+        item: (replies ?? []).map((item) => ({
             title: `${item.member.uname} : ${item.content.message}`,
             description: `${item.member.uname} : ${item.content.message}`,
             pubDate: new Date(item.ctime * 1000).toUTCString(),

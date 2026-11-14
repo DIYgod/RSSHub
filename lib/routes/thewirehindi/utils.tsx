@@ -1,43 +1,16 @@
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
-
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
-const renderDescription = (excerpt, image, altText, content) =>
-    renderToString(
-        <>
-            {excerpt ? <>{raw(excerpt)}</> : null}
-            <br />
-            <br />
-            {image ? (
-                <>
-                    <img src={image} alt={altText} style="max-width: 100%; height: auto;" />
-                    <br />
-                    <br />
-                </>
-            ) : null}
-            {content ? <>{raw(content)}</> : null}
-        </>
-    );
-
-export function mapPostToItem(post): DataItem {
-    const featuredMedia = post._embedded?.['wp:featuredmedia']?.find((v) => v.id === post.featured_media);
-    const image = featuredMedia?.source_url;
-    const altText = featuredMedia?.alt_text || featuredMedia?.title?.rendered || 'Featured Image';
+export function mapFeedItem(item): DataItem {
+    const image = item.enclosure?.url;
     return {
-        title: post.title.rendered,
-        description: renderDescription(post.excerpt.rendered, image, altText, post.content.rendered),
-        link: post.link,
-        pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
-        updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
+        title: item.title ?? '',
+        description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
+        link: item.link,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
         itunes_item_image: image,
         image,
-        author: post._embedded?.author?.map((v) => ({
-            name: v.name,
-            url: v.link,
-            avatar: v.avatar_urls?.['96'] || v.avatar_urls?.['48'] || v.avatar_urls?.['24'],
-        })),
-        category: post._embedded?.['wp:term']?.flat().map((v) => v.name),
+        author: item.creator ?? item.author,
+        category: item.categories,
     };
 }

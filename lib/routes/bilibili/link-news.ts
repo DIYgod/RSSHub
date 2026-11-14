@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { distinguishDuplicateGuids } from '@/utils/distinguish-duplicate-guids';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -46,18 +47,19 @@ async function handler(ctx) {
         },
     });
     const data = response.data.data.items;
+    const link = `https://link.bilibili.com/p/eden/news#/?tab=${product}&tag=all&page_no=1`;
+    const items = data?.map((item) => ({
+        title: item.title,
+        description: `${item.mark}<br><img src="${item.cover_url}">`,
+        pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
+        link: item.announce_link || (item.id === undefined || item.id === null ? undefined : `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`),
+        sourceId: item.id?.toString(),
+    }));
 
     return {
         title: `bilibili ${productTitle}公告`,
-        link: `https://link.bilibili.com/p/eden/news#/?tab=${product}&tag=all&page_no=1`,
+        link,
         description: `bilibili ${productTitle}公告`,
-        item:
-            data &&
-            data.map((item) => ({
-                title: item.title,
-                description: `${item.mark}<br><img src="${item.cover_url}">`,
-                pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
-                link: item.announce_link ?? `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`,
-            })),
+        item: items && distinguishDuplicateGuids(items, 'bilibili-link-news-', link),
     };
 }

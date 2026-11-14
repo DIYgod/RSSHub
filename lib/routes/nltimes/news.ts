@@ -1,23 +1,56 @@
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
 
-const map = new Map([
-    ['top-stories', { title: 'NL Times -- Top Stories', suffix: '/top-stories' }],
-    ['health', { title: 'NL Times -- Health', suffix: '/categories/health' }],
-    ['crime', { title: 'NL Times -- Crime', suffix: '/categories/crime' }],
-    ['politics', { title: 'NL Times -- Politics', suffix: '/categories/politics' }],
-    ['business', { title: 'NL Times -- Business', suffix: '/categories/business' }],
-    ['tech', { title: 'NL Times -- Tech', suffix: '/categories/tech' }],
-    ['culture', { title: 'NL Times -- Culture', suffix: '/categories/culture' }],
-    ['sports', { title: 'NL Times -- Sports', suffix: '/categories/sports' }],
-    ['weird', { title: 'NL Times -- Weird', suffix: '/categories/weird' }],
-    ['1-1-2', { title: 'NL Times -- 1-1-2', suffix: '/categories/1-1-2' }],
-]);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const baseUrl = 'https://nltimes.nl';
+const categories = {
+    'top-stories': 'Top Stories',
+    health: 'Health',
+    crime: 'Crime',
+    politics: 'Politics',
+    business: 'Business',
+    tech: 'Tech',
+    culture: 'Culture',
+    sports: 'Sports',
+    weird: 'Weird',
+    '1-1-2': '1-1-2',
+};
+
+const parsePublicationDate = (value?: string) => {
+    if (!value?.trim()) {
+        return;
+    }
+    const text = value.trim().replace(/^\w+, /, '');
+    const format = 'D MMMM YYYY - HH:mm';
+    if (Number.isFinite(parseDate(text, format, 'en', true).getTime())) {
+        return dayjs.tz(text, format, 'Europe/Amsterdam').toDate();
+    }
+    return parseDate(value);
+};
+
+const fetchArticle = (link: string) =>
+    cache.tryGet(`nltimes:body:${link}`, async () => {
+        const html = await ofetch<string, 'text'>(link, { responseType: 'text' });
+        const $ = load(html);
+        const description = $('.news-article--body').html() ?? $('meta[property="og:description"]').attr('content');
+        if (!description) {
+            throw new Error(`NL Times did not return article content for ${link}.`);
+        }
+        return description;
+    });
 
 export const route: Route = {
     path: '/news/:category?',
@@ -48,76 +81,76 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top-stories';
-    const selectedCategory = map.get(category);
-    if (!selectedCategory) {
-        throw new Error(`Unknown NL Times category: ${category}. Expected one of: ${map.keys().toArray().join(', ')}.`);
+    const categoryName = categories[category];
+    if (!Object.hasOwn(categories, category)) {
+        throw new InvalidParameterError(`Unknown NL Times category: ${category}. Expected one of: ${Object.keys(categories).join(', ')}.`);
     }
-    const suffix = selectedCategory.suffix;
 
-    const rootUrl = 'https://www.nltimes.nl';
-    const apiUrl = rootUrl + suffix;
-
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    const $ = load(response.data);
-
-    const list = $('.news-card')
-        .slice(0, 10)
-        .toArray()
-        .map((elem) => {
-            const item = {
-                link: $(elem).children('.news-card__title').first().children('a').first().attr('href'),
-                title: $(elem).children('.news-card__title').first().children('a').first().text(),
-                date: $(elem).children('.news-card__date').first().text(),
-                category: $(elem)
-                    .children('.news-card__categories')
-                    .first()
-                    .children('a')
-                    .toArray()
-                    .map((elem) => $(elem).text()),
-            };
-            return item;
-        });
-
-    const ProcessFeed = (data) => {
-        const $ = load(data);
-
-        return $('.news-article--body').html();
+    const link = category === 'top-stories' ? `${baseUrl}/top-stories` : `${baseUrl}/categories/${category}`;
+    const data = {
+        title: `NL Times -- ${categoryName}`,
+        language: 'en' as const,
+        link,
+        description: `NL Times -- ${categoryName}`,
     };
+    if (category === 'top-stories') {
+        const feed = await parser.parseURL(`${baseUrl}/rss.xml`);
+        return {
+            ...data,
+            item: feed.items
+                .map((item) => ({
+                    title: item.title ?? '',
+                    link: item.link,
+                    description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
+                    pubDate: parsePublicationDate(item.pubDate),
+                    category: item.categories,
+                }))
+                .filter((item) => item.title),
+        };
+    }
 
-    const items = await Promise.all(
-        list.map((item) => {
-            const title = item.title;
-            const date = timezone(parseDate(item.date, 'D MMMM YYYY - HH:mm'), 1); // Central European Time
-            const link = rootUrl + item.link;
-            const category = item.category;
-
-            return cache.tryGet(link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: link,
-                });
-
-                const description = ProcessFeed(response.data);
-                return {
-                    title,
-                    category,
-                    description,
-                    pubDate: date,
-                    link,
-                };
-            });
+    const html = await ofetch<string, 'text'>(link, { responseType: 'text' });
+    const $ = load(html);
+    const list = $('.news-card')
+        .toArray()
+        .flatMap((entry) => {
+            const card = $(entry);
+            const heading = card.find('.news-card__title a').first();
+            const href = heading.attr('href');
+            if (!href) {
+                return [];
+            }
+            const url = new URL(href, baseUrl);
+            if (url.origin !== baseUrl) {
+                return [];
+            }
+            const date = card.find('time').first().attr('datetime') ?? card.find('.news-card__date').first().text();
+            return {
+                title: heading.text(),
+                link: url.href,
+                pubDate: parsePublicationDate(date),
+                description: card.find('.news-card__summary, .news-card__intro, .news-card__description').first().text(),
+                category: card
+                    .find('.news-card__categories a')
+                    .toArray()
+                    .map((tag) => $(tag).text()),
+            };
         })
-    );
+        .filter((item) => item.title)
+        .slice(0, getRouteLimit(ctx, 10));
 
     return {
-        title: map.get(category)!.title,
-        language: 'en' as const,
-        link: apiUrl,
-        description: map.get(category)!.title,
-        item: items,
+        ...data,
+        item: await pMap(
+            list,
+            async (item) => {
+                try {
+                    return { ...item, description: await fetchArticle(item.link) };
+                } catch {
+                    return item;
+                }
+            },
+            { concurrency: 3 }
+        ),
     };
 }

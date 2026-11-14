@@ -105,7 +105,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
             // handle pubDate
             if (item.pubDate) {
-                item.pubDate = new Date(item.pubDate).toUTCString();
+                const date = new Date(item.pubDate);
+                item.pubDate = Number.isNaN(date.getTime()) ? undefined : date.toUTCString();
             }
 
             // handle link

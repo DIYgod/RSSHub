@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/topic/:id',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/jin10/topic/396',
+    example: '/jin10/topic/397',
     parameters: { id: 'N' },
     features: {
         requireConfig: false,

@@ -153,7 +153,7 @@ async function handler(ctx) {
         )
     );
 
-    const description = $('meta[name="description"]').prop('content').trim();
+    const description = $('meta[name="description"]').prop('content')?.trim() ?? '';
     const icon = new URL('favicon', rootUrl).href;
 
     return {
@@ -164,7 +164,7 @@ async function handler(ctx) {
         language: 'zh-CN' as const satisfies Language,
         icon,
         logo: icon,
-        subtitle: $('meta[name="keywords"]').prop('content').trim(),
+        subtitle: $('meta[name="keywords"]').prop('content')?.trim(),
         author: $('meta[name="author"]').prop('content'),
     };
 }

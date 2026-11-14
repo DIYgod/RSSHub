@@ -182,7 +182,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             };
 
             return processedItem;
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.guid === item.guid) === index);
 
     return {
         title: $('title').text(),

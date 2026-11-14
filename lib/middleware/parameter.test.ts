@@ -467,6 +467,18 @@ describe('mess parameter', () => {
         expect(parsed.items[0].pubDate).toBe('Mon, 31 Dec 2018 16:00:00 GMT');
         expect(parsed.items[0].link).toBe('https://github.com/DIYgod/RSSHub/issues/0');
     });
+
+    it('drops invalid pubDate', async () => {
+        const result = await runMiddleware(
+            {
+                title: 'Test',
+                link: 'https://example.com',
+                item: [{ title: 'Invalid date', pubDate: 'Invalid Date' }],
+            },
+            {}
+        );
+        expect(result.item[0].pubDate).toBeUndefined();
+    });
 });
 
 describe('opencc', () => {

@@ -1,24 +1,26 @@
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
+import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
-const baseApiUrl = 'https://api.hashnode.com';
-const renderDescription = (image, brief) =>
-    renderToString(
-        <>
-            <img src={image} />
-            {brief ? <>{raw(brief)}</> : null}
-        </>
-    );
+const apiUrl = 'https://gql-beta.hashnode.com/';
+const slugPattern = /^[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?$/i;
+
+type Publication = { title: string; url: string; domainInfo: { hashnodeSubdomain: string } };
+type UserResponse = {
+    data?: { user?: { publications: { edges: Array<{ node: Publication }> } } };
+    errors?: Array<{ message: string; extensions?: { code?: string } }>;
+};
 
 export const route: Route = {
     path: '/blog/:username',
     categories: ['blog'],
-    example: '/hashnode/blog/inklings',
-    parameters: { username: '博主名称，用户头像 URL 中找到' },
+    example: '/hashnode/blog/philnash',
+    parameters: { username: 'Hashnode 用户名，或 hashnode.dev 前面的博客子域名' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -36,60 +38,93 @@ export const route: Route = {
     maintainers: ['hnrainll'],
     handler,
     url: 'hashnode.dev/',
-    description: `::: tip
-username 为博主用户名，而非\`xxx.hashnode.dev\`中\`xxx\`所代表的 blog 地址。
-:::`,
+    description: '用户名与博客子域名相同或账号只关联一个博客时，可以直接使用用户名。账号关联多个博客且子域名不匹配时，请使用所需博客的 Hashnode 子域名。',
 };
 
-async function handler(ctx) {
-    const username = ctx.req.param('username');
-    if (!username) {
-        return null;
-    }
-
-    const query = /* GraphQL */ `
-    {
-        user(username: "${username}") {
-            publication {
-                posts{
-                    slug
-                    title
-                    brief
-                    coverImage
-                    dateAdded
-                }
-            }
-        }
-    }
-    `;
-
-    const userUrl = `https://${username}.hashnode.dev`;
-    const response = await got({
+async function findPublication(username: string) {
+    const response = await ofetch<UserResponse>(apiUrl, {
         method: 'POST',
-        url: baseApiUrl,
-        headers: {
-            Referer: userUrl,
-            'Content-type': 'application/json',
+        body: {
+            query: /* GraphQL */ `
+                query BlogForUser($username: String!) {
+                    user(username: $username) {
+                        publications(first: 20) {
+                            edges {
+                                node {
+                                    title
+                                    url
+                                    domainInfo {
+                                        hashnodeSubdomain
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: { username },
         },
-        body: JSON.stringify({ query }),
     });
+    const error = response.errors?.find((entry) => entry.extensions?.code !== 'NOT_FOUND');
+    if (error) {
+        throw new Error(`Hashnode could not resolve ${username}: ${error.message}`);
+    }
+    const publications = response.data?.user?.publications.edges.map(({ node }) => node) ?? [];
+    const match = publications.find((publication) => publication.domainInfo?.hashnodeSubdomain?.toLowerCase() === username);
+    if (match || publications.length <= 1) {
+        return match ?? publications[0];
+    }
+    throw new InvalidParameterError(
+        `Hashnode user "${username}" has multiple publications. Use the blog's hashnode.dev subdomain: ${publications
+            .map((publication) => publication.domainInfo?.hashnodeSubdomain)
+            .filter(Boolean)
+            .join(', ')}.`
+    );
+}
 
-    const publication = response.data.data.user.publication;
-    if (!publication) {
-        return null;
+async function handler(ctx: Context) {
+    const username = ctx.req.param('username')?.toLowerCase();
+    if (!username || !slugPattern.test(username)) {
+        throw new InvalidParameterError('Use a Hashnode username or blog subdomain, without the domain suffix.');
     }
 
-    const list = publication.posts;
+    const publication = await findPublication(username);
+    const subdomain = publication?.domainInfo?.hashnodeSubdomain || username;
+    if (!slugPattern.test(subdomain)) {
+        throw new Error(`Hashnode did not return a valid blog subdomain for "${username}".`);
+    }
+
+    const oldUrl = `https://${username}.hashnode.dev`;
+    const url = `https://${subdomain}.hashnode.dev`;
+    const response = await ofetch.raw<string, 'text'>(`${url}/rss.xml`, { responseType: 'text', redirect: 'manual', ignoreResponseError: true });
+    if (response.status === 404) {
+        throw new NotFoundError(`Hashnode did not find a public blog for "${username}". Use the blog's hashnode.dev subdomain.`);
+    }
+    if (!response.ok || !response._data) {
+        throw new Error(`Hashnode blog "${subdomain}" did not return an RSS feed (HTTP ${response.status}).`);
+    }
+    const feed = await parser.parseString(response._data);
+
     return {
-        title: `Hashnode by ${username}`,
-        link: userUrl,
-        item: list
-            .map((item) => ({
+        title: feed.title ?? publication?.title ?? `Hashnode by ${username}`,
+        description: feed.description,
+        link: feed.link ?? url,
+        image: feed.image?.url,
+        item: feed.items.flatMap((item) => {
+            const link = item.link && URL.parse(item.link, url);
+            if (!item.title || !link || !['http:', 'https:'].includes(link.protocol)) {
+                return [];
+            }
+            const slug = link.pathname.split('/').findLast(Boolean);
+            return {
                 title: item.title,
-                description: renderDescription(item.coverImage, item.brief),
-                pubDate: parseDate(item.dateAdded),
-                link: `${userUrl}/${item.slug}`,
-            }))
-            .filter((item) => item !== ''),
+                link: link.href,
+                guid: slug ? `${oldUrl}/${slug}` : undefined,
+                description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
+                author: item.creator ?? username,
+                pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
+                category: item.categories,
+            };
+        }),
     };
 }

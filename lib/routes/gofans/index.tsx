@@ -42,13 +42,15 @@ async function handler(ctx) {
         },
     });
 
-    const items = response.data.map((item) => ({
-        title: `「${item.price === '0.00' ? '免费' : '降价'}」-「${item.kind === 1 ? 'macOS' : 'iOS'}」${item.name}`,
-        description: renderToString(<GofansDescription icon={item.icon} originalPrice={item.original_price} price={item.price} kind={item.kind} description={item.description.replaceAll('\n', '<br>')} />),
-        pubDate: parseDate(item.updated_at, 'X'),
-        link: new URL(`/app/${item.uuid}`, baseUrl).href,
-        category: item.primary_genre_name,
-    }));
+    const items = response.data
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.uuid === item.uuid) === index)
+        .map((item) => ({
+            title: `「${item.price === '0.00' ? '免费' : '降价'}」-「${item.kind === 1 ? 'macOS' : 'iOS'}」${item.name}`,
+            description: renderToString(<GofansDescription icon={item.icon} originalPrice={item.original_price} price={item.price} kind={item.kind} description={item.description.replaceAll('\n', '<br>')} />),
+            pubDate: parseDate(item.updated_at, 'X'),
+            link: new URL(`/app/${item.uuid}`, baseUrl).href,
+            category: item.primary_genre_name,
+        }));
 
     return {
         title: '最新限免 / 促销应用',

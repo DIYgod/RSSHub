@@ -60,7 +60,8 @@ async function handler(ctx) {
                 link: $item.find('a').attr('href'),
                 pubDate: new Date($item.find('time').attr('datetime')!),
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     items = await Promise.all(
         items.map((item) => {
