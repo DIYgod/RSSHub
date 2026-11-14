@@ -18,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const feed = await parser.parseURL('https://medium.com/feed/towards-data-science');
+    const feed = await parser.parseURL('https://towardsdatascience.com/feed/');
 
     return {
         title: 'Towards Data Science - Latest',
@@ -31,7 +31,7 @@ async function handler() {
                 title: item.title ?? '',
                 link: item.link,
                 guid: item.guid ?? item.id,
-                description: item.content ?? item.contentSnippet,
+                description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
                 author: item.creator ?? item.author,
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 category: item.categories,

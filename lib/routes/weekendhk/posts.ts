@@ -27,7 +27,7 @@ async function handler(ctx) {
             title: item.title ?? '',
             link: item.link,
             guid: item.guid,
-            description: item.content ?? item.contentSnippet,
+            description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             author: item.creator ?? item.author,
             category: item.categories,

@@ -14,7 +14,7 @@ export const route: Route = {
     path: '/forum/:id?',
     categories: ['bbs'],
     example: '/right/forum/171',
-    parameters: { id: '板块 id，可在板块页 URL 中找到，默认为小米 / 红米无线路由器及网络设备' },
+    parameters: { id: '板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '171';
+    const id = ctx.req.param('id') ?? '31';
     const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://www.right.com.cn';

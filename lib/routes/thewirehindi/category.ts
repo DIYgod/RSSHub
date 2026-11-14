@@ -57,22 +57,22 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { category } = ctx.req.param();
-    const categoryData = categories.find((cat) => cat.value === category);
+    const categoryData = categories.find((cat) => cat.value === category || cat.label === category);
 
     if (!categoryData) {
         throw new Error(`Category "${category}" not found`);
     }
 
-    const feed = await parser.parseURL(`https://thewirehindi.com/category/${category}/feed/`);
+    const categoryUrl = `https://thewirehindi.com/?cat=${categoryData.id}`;
+    const feed = await parser.parseURL(`${categoryUrl}&feed=rss2`);
     const items = feed.items.map((item) => mapFeedItem(item)).filter((item) => item.title);
 
     return {
         title: `The Wire Hindi - ${categoryData.label}`,
-        link: `https://thewirehindi.com/category/${category}/`,
+        link: feed.link ?? categoryUrl,
         item: items,
         description: `Latest news from The Wire Hindi - ${categoryData.label} category`,
         logo: 'https://thewirehindi.com/wp-content/uploads/2023/05/cropped-The-wire-32x32.jpeg',
         language: 'hi',
-        allowEmpty: true,
     };
 }
