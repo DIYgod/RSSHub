@@ -185,9 +185,6 @@
   "/codefather/questions/:sort?": [
     "JackyST0"
   ],
-  "/cohere/blog": [
-    "Loongphy"
-  ],
   "/cowlevel/element/:id": [
     "hoilc"
   ],
@@ -3442,6 +3439,10 @@
   "/cognition/blog": [
     "Loongphy",
     "ttttmr"
+  ],
+  "/cohere/blog": [
+    "Loongphy",
+    "ljh12138164"
   ],
   "/cointelegraph/": [
     "pseudoyu"

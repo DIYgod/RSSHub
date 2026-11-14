@@ -2184,45 +2184,6 @@ export default {
     "url": "www.codefather.cn",
     "description": "编程导航是一个编程学习交流社区，由程序员鱼皮创建，提供学习路线、项目教程、求职攻略、技术交流等内容。"
   },
-  "cohere": {
-    "routes": {
-      "/blog": {
-        "path": "/blog",
-        "name": "Blog",
-        "url": "cohere.com/blog",
-        "maintainers": [
-          "Loongphy"
-        ],
-        "example": "/cohere/blog",
-        "description": "Cohere is a platform for building AI applications.",
-        "categories": [
-          "blog"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "cohere.com"
-            ]
-          }
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/cohere/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Cohere",
-    "url": "cohere.com",
-    "lang": "en"
-  },
   "cowlevel": {
     "routes": {
       "/element/:id": {
@@ -48114,6 +48075,60 @@ export default {
       }
     },
     "apiRoutes": {}
+  },
+  "cohere": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "cohere.com/blog",
+        "maintainers": [
+          "Loongphy",
+          "ljh12138164"
+        ],
+        "example": "/cohere/blog",
+        "parameters": {},
+        "description": "Full-text articles from the Cohere Blog (merging both official CMS sources), including key takeaways, formulas, FAQs, code blocks, tables, and embedded media. Fetches 20 entries by default; use the common `limit` query parameter (1-100) to adjust.",
+        "zh": {
+          "name": "博客",
+          "parameters": {},
+          "description": "合并读取 Cohere 官方博客双 CMS 接口获取英文全文，包含要点总结、公式、FAQ 问答、代码块、表格与内嵌媒体。默认获取 20 篇，可通过通用 `limit` 参数（1-100）调整条数。"
+        },
+        "categories": [
+          "blog"
+        ],
+        "view": 0,
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cohere.com/blog",
+              "cohere.com/blog/:slug"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/cohere/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Cohere",
+    "url": "cohere.com",
+    "lang": "en",
+    "description": "Enterprise AI platform building frontier foundation models, retrieval systems, and agentic workspaces.",
+    "zh": {
+      "name": "Cohere",
+      "description": "Cohere 是专注于企业级大语言模型、检索系统与智能体工作区的 AI 平台。"
+    }
   },
   "cointelegraph": {
     "routes": {

@@ -520,19 +520,6 @@
       }
     ]
   },
-  "cohere.com": {
-    "_name": "Cohere",
-    ".": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/cohere",
-        "source": [
-          "/"
-        ],
-        "target": "/cohere/blog"
-      }
-    ]
-  },
   "cowlevel.net": {
     "_name": "奶牛关",
     ".": [
@@ -17556,6 +17543,20 @@
           "/blog"
         ],
         "target": "/cognition/blog"
+      }
+    ]
+  },
+  "cohere.com": {
+    "_name": "Cohere",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/cohere",
+        "source": [
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/cohere/blog"
       }
     ]
   },
