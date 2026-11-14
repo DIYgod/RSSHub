@@ -3239,6 +3239,47 @@ export default {
     ],
     "lang": "en"
   },
+  "hashnode": {
+    "routes": {
+      "/blog/:username": {
+        "path": "/blog/:username",
+        "categories": [
+          "blog"
+        ],
+        "example": "/hashnode/blog/philnash",
+        "parameters": {
+          "username": "Hashnode 用户名，或 hashnode.dev 前面的博客子域名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hashnode.dev/"
+            ]
+          }
+        ],
+        "name": "用户博客",
+        "maintainers": [
+          "hnrainll"
+        ],
+        "url": "hashnode.dev/",
+        "description": "用户名与博客子域名相同或账号只关联一个博客时，可以直接使用用户名。账号关联多个博客且子域名不匹配时，请使用所需博客的 Hashnode 子域名。",
+        "location": "blog.tsx",
+        "module": () => import('@/routes/hashnode/blog.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Hashnode",
+    "url": "hashnode.dev",
+    "lang": "en"
+  },
   "home-assistant": {
     "routes": {
       "/hacs/repositories": {
@@ -3843,77 +3884,6 @@ export default {
     "apiRoutes": {},
     "name": "LikeShop",
     "url": "likeshop.me",
-    "lang": "en"
-  },
-  "link3": {
-    "routes": {
-      "/events": {
-        "path": "/events",
-        "name": "Events",
-        "url": "link3.to",
-        "maintainers": [
-          "cxheng315"
-        ],
-        "example": "/link3/events",
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "link3.to/events"
-            ],
-            "target": "/events"
-          }
-        ],
-        "location": "events.ts",
-        "module": () => import('@/routes/link3/events.ts')
-      },
-      "/profile/:handle": {
-        "path": "/profile/:handle",
-        "name": "Profile",
-        "url": "link3.to",
-        "maintainers": [
-          "cxheng315"
-        ],
-        "example": "/link3/profile/synfutures_defi",
-        "parameters": {
-          "handle": "Profile handle"
-        },
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "link3.to/:handle"
-            ],
-            "target": "/profile/:handle"
-          }
-        ],
-        "location": "profile.ts",
-        "module": () => import('@/routes/link3/profile.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Link3",
-    "url": "link3.to",
     "lang": "en"
   },
   "lizhi": {
@@ -6017,6 +5987,39 @@ export default {
     "url": "www.abmedia.io",
     "lang": "zh-TW"
   },
+  "abskoop": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/abskoop",
+        "radar": [
+          {
+            "source": [
+              "ahhhhfs.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "存档列表",
+        "maintainers": [
+          "zhenhappy"
+        ],
+        "url": "ahhhhfs.com/",
+        "features": {
+          "nsfw": true
+        },
+        "location": "index.ts",
+        "module": () => import('@/routes/abskoop/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "A 姐分享",
+    "url": "www.ahhhhfs.com",
+    "lang": "zh-TW"
+  },
   "acg17": {
     "routes": {
       "/post/all": {
@@ -6727,45 +6730,6 @@ export default {
     "name": "Bing",
     "url": "cn.bing.com",
     "lang": "zh-CN"
-  },
-  "bitmovin": {
-    "routes": {
-      "/blog": {
-        "path": "/blog",
-        "categories": [
-          "programming"
-        ],
-        "example": "/bitmovin/blog",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "bitmovin.com/blog",
-              "bitmovin.com/"
-            ]
-          }
-        ],
-        "name": "Blog",
-        "maintainers": [
-          "elxy"
-        ],
-        "url": "bitmovin.com/blog",
-        "location": "blog.ts",
-        "module": () => import('@/routes/bitmovin/blog.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Bitmovin",
-    "url": "bitmovin.com",
-    "lang": "en"
   },
   "bnext": {
     "routes": {
@@ -8020,47 +7984,6 @@ export default {
     "url": "hackmd.io",
     "lang": "en"
   },
-  "hashnode": {
-    "routes": {
-      "/blog/:username": {
-        "path": "/blog/:username",
-        "categories": [
-          "blog"
-        ],
-        "example": "/hashnode/blog/inklings",
-        "parameters": {
-          "username": "博主名称，用户头像 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "hashnode.dev/"
-            ]
-          }
-        ],
-        "name": "用户博客",
-        "maintainers": [
-          "hnrainll"
-        ],
-        "url": "hashnode.dev/",
-        "description": "::: tip\nusername 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。\n:::",
-        "location": "blog.tsx",
-        "module": () => import('@/routes/hashnode/blog.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "hashnode",
-    "url": "hashnode.dev",
-    "lang": "en"
-  },
   "hn.plus": {
     "routes": {
       "/konek/newest": {
@@ -8383,29 +8306,6 @@ export default {
     "name": "IDOLY PRIDE 偶像荣耀",
     "url": "idolypride.jp",
     "lang": "ja"
-  },
-  "iheima": {
-    "routes": {
-      "/recommend": {
-        "path": "/recommend",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/iheima/recommend",
-        "url": "www.iheima.com",
-        "name": "推荐",
-        "maintainers": [
-          "p3psi-boo"
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/iheima/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "i黑马网",
-    "url": "www.iheima.com",
-    "description": "",
-    "lang": "zh-CN"
   },
   "ippa": {
     "routes": {
@@ -10661,6 +10561,160 @@ export default {
     "url": "web.stockedge.com",
     "lang": "en"
   },
+  "thewirehindi": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/thewirehindi/category/bharat",
+        "parameters": {
+          "category": {
+            "description": "Category name",
+            "options": [
+              {
+                "value": "interview",
+                "label": "इंटरव्यू"
+              },
+              {
+                "value": "audio",
+                "label": "ऑडियो"
+              },
+              {
+                "value": "kala-sahitya",
+                "label": "कला-साहित्य"
+              },
+              {
+                "value": "campus",
+                "label": "कैंपस"
+              },
+              {
+                "value": "covid-19",
+                "label": "कोविड-19"
+              },
+              {
+                "value": "jan-ki-baat",
+                "label": "जन की बात"
+              },
+              {
+                "value": "duniya",
+                "label": "दुनिया"
+              },
+              {
+                "value": "north-east",
+                "label": "नॉर्थ ईस्ट"
+              },
+              {
+                "value": "prasangik",
+                "label": "प्रासंगिक"
+              },
+              {
+                "value": "bharat",
+                "label": "भारत"
+              },
+              {
+                "value": "media",
+                "label": "मीडिया"
+              },
+              {
+                "value": "media-bol",
+                "label": "मीडिया बोल"
+              },
+              {
+                "value": "rajneeti",
+                "label": "राजनीति"
+              },
+              {
+                "value": "vichar",
+                "label": "विचार"
+              },
+              {
+                "value": "vigyan",
+                "label": "विज्ञान"
+              },
+              {
+                "value": "vishesh",
+                "label": "विशेष"
+              },
+              {
+                "value": "video",
+                "label": "वीडियो"
+              },
+              {
+                "value": "samaj",
+                "label": "समाज"
+              },
+              {
+                "value": "ham-bhi-bharat",
+                "label": "हम भी भारत"
+              },
+              {
+                "value": "hamare-bare-mein",
+                "label": "हमारे बारे में"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "thewirehindi.com/category/:category"
+            ]
+          }
+        ],
+        "name": "Category",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "url": "thewirehindi.com/",
+        "location": "category.ts",
+        "module": () => import('@/routes/thewirehindi/category.ts')
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/thewirehindi",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "thewirehindi.com/"
+            ]
+          }
+        ],
+        "name": "Latest News",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "url": "thewirehindi.com/",
+        "location": "index.ts",
+        "module": () => import('@/routes/thewirehindi/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "The Wire Hindi",
+    "url": "thewirehindi.com",
+    "lang": "hi"
+  },
   "thwiki": {
     "routes": {
       "/calendar/:before?/:after?": {
@@ -10703,6 +10757,35 @@ export default {
     "name": "THBWiki",
     "url": "thwiki.cc",
     "lang": "zh-CN"
+  },
+  "towardsdatascience": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "blog"
+        ],
+        "example": "/towardsdatascience/latest",
+        "radar": [
+          {
+            "source": [
+              "towardsdatascience.com/"
+            ]
+          }
+        ],
+        "name": "Latest articles",
+        "maintainers": [
+          "mintyfrankie"
+        ],
+        "url": "towardsdatascience.com/latest",
+        "location": "latest.ts",
+        "module": () => import('@/routes/towardsdatascience/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Towards Data Science",
+    "url": "towardsdatascience.com",
+    "lang": "en"
   },
   "tqyb": {
     "routes": {
@@ -11824,6 +11907,45 @@ export default {
     "url": "www.aicaijing.com",
     "lang": "zh-CN"
   },
+  "bitmovin": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/bitmovin/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bitmovin.com/blog",
+              "bitmovin.com/"
+            ]
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "elxy"
+        ],
+        "url": "bitmovin.com/blog",
+        "location": "blog.ts",
+        "module": () => import('@/routes/bitmovin/blog.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Bitmovin",
+    "url": "bitmovin.com",
+    "lang": "en"
+  },
   "bse": {
     "routes": {
       "/:category?/:keyword?": {
@@ -12299,8 +12421,7 @@ export default {
           "requireConfig": [
             {
               "name": "GELBOORU_API_KEY",
-              "description": "Gelbooru 偶尔会开启 API 认证，需配合 `GELBOORU_USER_ID`，从 `https://gelbooru.com/index.php?page=account&s=options` 获取",
-              "optional": true
+              "description": "Gelbooru 偶尔会开启 API 认证，需配合 `GELBOORU_USER_ID`，从 `https://gelbooru.com/index.php?page=account&s=options` 获取"
             },
             {
               "name": "GELBOORU_USER_ID",
@@ -13021,160 +13142,6 @@ export default {
     "url": "themoviedb.org",
     "description": "::: tip\nRefer to <https://developers.themoviedb.org/3/getting-started/languages> for the language parameter in the route.\n:::",
     "lang": "en"
-  },
-  "thewirehindi": {
-    "routes": {
-      "/category/:category": {
-        "path": "/category/:category",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/thewirehindi/category/bharat",
-        "parameters": {
-          "category": {
-            "description": "Category name",
-            "options": [
-              {
-                "value": "interview",
-                "label": "इंटरव्यू"
-              },
-              {
-                "value": "audio",
-                "label": "ऑडियो"
-              },
-              {
-                "value": "kala-sahitya",
-                "label": "कला-साहित्य"
-              },
-              {
-                "value": "campus",
-                "label": "कैंपस"
-              },
-              {
-                "value": "covid-19",
-                "label": "कोविड-19"
-              },
-              {
-                "value": "jan-ki-baat",
-                "label": "जन की बात"
-              },
-              {
-                "value": "duniya",
-                "label": "दुनिया"
-              },
-              {
-                "value": "north-east",
-                "label": "नॉर्थ ईस्ट"
-              },
-              {
-                "value": "prasangik",
-                "label": "प्रासंगिक"
-              },
-              {
-                "value": "bharat",
-                "label": "भारत"
-              },
-              {
-                "value": "media",
-                "label": "मीडिया"
-              },
-              {
-                "value": "media-bol",
-                "label": "मीडिया बोल"
-              },
-              {
-                "value": "rajneeti",
-                "label": "राजनीति"
-              },
-              {
-                "value": "vichar",
-                "label": "विचार"
-              },
-              {
-                "value": "vigyan",
-                "label": "विज्ञान"
-              },
-              {
-                "value": "vishesh",
-                "label": "विशेष"
-              },
-              {
-                "value": "video",
-                "label": "वीडियो"
-              },
-              {
-                "value": "samaj",
-                "label": "समाज"
-              },
-              {
-                "value": "ham-bhi-bharat",
-                "label": "हम भी भारत"
-              },
-              {
-                "value": "hamare-bare-mein",
-                "label": "हमारे बारे में"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "thewirehindi.com/category/:category"
-            ]
-          }
-        ],
-        "name": "Category",
-        "maintainers": [
-          "Rjnishant530"
-        ],
-        "url": "thewirehindi.com/",
-        "location": "category.ts",
-        "module": () => import('@/routes/thewirehindi/category.ts')
-      },
-      "/": {
-        "path": "/",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/thewirehindi",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "thewirehindi.com/"
-            ]
-          }
-        ],
-        "name": "Latest News",
-        "maintainers": [
-          "Rjnishant530"
-        ],
-        "url": "thewirehindi.com/",
-        "location": "index.ts",
-        "module": () => import('@/routes/thewirehindi/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "The Wire Hindi",
-    "url": "thewirehindi.com",
-    "lang": "hi"
   },
   "aliresearch": {
     "routes": {
@@ -15907,7 +15874,7 @@ export default {
           "finance"
         ],
         "view": 0,
-        "example": "/jin10/topic/396",
+        "example": "/jin10/topic/397",
         "parameters": {
           "id": "N"
         },
@@ -16620,6 +16587,19 @@ export default {
         "maintainers": [
           "kt286"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "EMAIL_CONFIG_*",
+              "description": "IMAP account settings, see [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "location": "imap.ts",
         "module": () => import('@/routes/mail/imap.ts')
       },
@@ -16642,6 +16622,19 @@ export default {
         "maintainers": [
           "kt286"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "EMAIL_CONFIG_*",
+              "description": "IMAP account settings, see [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
         "location": "imap.ts",
         "module": () => import('@/routes/mail/imap.ts')
       }
@@ -27436,32 +27429,6 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
-  "4ksj": {
-    "routes": {
-      "/:id?": {
-        "path": "/:id?",
-        "name": "分类",
-        "url": "4ksj.com",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "example": "/4ksj/4k-uhd-1",
-        "parameters": {
-          "id": "分类 id，默认为最新4K电影"
-        },
-        "description": "::: tip\n若订阅 [最新 4K 电影](https://www.4ksj.com/4k-uhd-1.html)，网址为 `https://www.4ksj.com/4k-uhd-1.html`。截取 `https://www.4ksj.com/` 到末尾 `.html` 的部分 `4k-uhd-1` 作为参数，此时路由为 [`/4ksj/4k-uhd-1`](https://rsshub.app/4ksj/4k-uhd-1)。\n\n若订阅子分类 [Dolby Vision 动作 4K 电影](https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html)，网址为 `https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html`。截取 `https://www.4ksj.com/forum-` 到末尾 `.html` 的部分 `4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1` 作为参数，此时路由为 [`/4ksj/4k-uhd-s7-display-3-dytypes-1-1`](https://rsshub.app/4ksj/4k-uhd-s7-display-3-dytypes-1-1)。\n:::",
-        "categories": [
-          "multimedia"
-        ],
-        "location": "forum.tsx",
-        "module": () => import('@/routes/4ksj/forum.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "4k 世界",
-    "url": "4ksj.com",
-    "lang": "zh-CN"
-  },
   "50forum": {
     "routes": {
       "/": {
@@ -28747,64 +28714,6 @@ export default {
     "ja": {
       "name": "ABC店舗"
     }
-  },
-  "abskoop": {
-    "routes": {
-      "/nsfw": {
-        "path": "/nsfw",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/abskoop/nsfw",
-        "radar": [
-          {
-            "source": [
-              "ahhhhfs.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "存档列表 - NSFW",
-        "maintainers": [
-          "zhenhappy"
-        ],
-        "url": "ahhhhfs.com/",
-        "features": {
-          "nsfw": true
-        },
-        "location": "nsfw.ts",
-        "module": () => import('@/routes/abskoop/nsfw.ts')
-      },
-      "/": {
-        "path": "/",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/abskoop",
-        "radar": [
-          {
-            "source": [
-              "ahhhhfs.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "存档列表",
-        "maintainers": [
-          "zhenhappy"
-        ],
-        "url": "ahhhhfs.com/",
-        "features": {
-          "nsfw": true
-        },
-        "location": "index.ts",
-        "module": () => import('@/routes/abskoop/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "A 姐分享",
-    "url": "www.ahhhhfs.com",
-    "lang": "zh-TW"
   },
   "academia": {
     "routes": {
@@ -37084,44 +36993,6 @@ export default {
     "url": "bcg.com",
     "lang": "en"
   },
-  "bdys": {
-    "routes": {
-      "/:caty?/:type?/:area?/:year?/:order?": {
-        "path": "/:caty?/:type?/:area?/:year?/:order?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/bdys",
-        "parameters": {
-          "caty": "影视类型，见下表，默认为 `all` 即不限",
-          "type": "资源分类，见下表，默认为 `all` 即不限",
-          "area": "制片地区，见下表，默认为 `all` 即不限",
-          "year": "上映时间，此处填写年份不小于2000，默认为 `all` 即不限",
-          "order": "影视排序，见下表，默认为更新时间"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "首页",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "#### 资源分类\n\n| 不限 | 电影 | 电视剧 |\n| ---- | ---- | ------ |\n| all  | 0    | 1      |\n\n#### 影视类型\n\n| 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |\n| ---- | ------- | ------ | ---- | ------ | ------ |\n| all  | dongzuo | aiqing | xiju | kehuan | kongbu |\n\n| 战争      | 武侠  | 魔幻   | 剧情   | 动画    | 惊悚     |\n| --------- | ----- | ------ | ------ | ------- | -------- |\n| zhanzheng | wuxia | mohuan | juqing | donghua | jingsong |\n\n| 3D | 灾难   | 悬疑   | 警匪    | 文艺  | 青春     |\n| -- | ------ | ------ | ------- | ----- | -------- |\n| 3D | zainan | xuanyi | jingfei | wenyi | qingchun |\n\n| 冒险    | 犯罪   | 纪录 | 古装     | 奇幻   | 国语  |\n| ------- | ------ | ---- | -------- | ------ | ----- |\n| maoxian | fanzui | jilu | guzhuang | qihuan | guoyu |\n\n| 综艺   | 历史  | 运动    | 原创压制   |\n| ------ | ----- | ------- | ---------- |\n| zongyi | lishi | yundong | yuanchuang |\n\n| 美剧  | 韩剧  | 国产电视剧 | 日剧 | 英剧   | 德剧 |\n| ----- | ----- | ---------- | ---- | ------ | ---- |\n| meiju | hanju | guoju      | riju | yingju | deju |\n\n| 俄剧 | 巴剧 | 加剧  | 西剧    | 意大利剧 | 泰剧  |\n| ---- | ---- | ----- | ------- | -------- | ----- |\n| eju  | baju | jiaju | spanish | yidaliju | taiju |\n\n| 港台剧    | 法剧 | 澳剧 |\n| --------- | ---- | ---- |\n| gangtaiju | faju | aoju |\n\n#### 制片地区\n\n| 大陆 | 中国香港 | 中国台湾 |\n| ---- | -------- | -------- |\n\n| 美国 | 英国 | 日本 | 韩国 | 法国 |\n| ---- | ---- | ---- | ---- | ---- |\n\n| 印度 | 德国 | 西班牙 | 意大利 | 澳大利亚 |\n| ---- | ---- | ------ | ------ | -------- |\n\n| 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |\n| ------ | ---- | ---- | ---- | ------ | ------ |\n\n#### 影视排序\n\n| 更新时间 | 豆瓣评分 |\n| -------- | -------- |\n| 0        | 1        |",
-        "location": "index.tsx",
-        "module": () => import('@/routes/bdys/index.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "哔嘀影视",
-    "url": "52bdys.com",
-    "description": "::: tip\n哔嘀影视有多个备用域名，路由默认使用域名 `https://bdys01.com`。若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 `https://bde4.icu`，则在所有哔嘀影视路由最后加上 `?domain=bde4.icu` 即可，此时路由为 [`/bdys?domain=bde4.icu`](https://rsshub.app/bdys?domain=bde4.icu)\n:::",
-    "lang": "zh-CN"
-  },
   "beijingprice": {
     "routes": {
       "/:category{.+}?": {
@@ -39098,47 +38969,6 @@ export default {
     "name": "BT影视",
     "url": "www.btbtla.com",
     "description": "BT 影视的页面内容，最近更新列表，视频种子列表。"
-  },
-  "btzj": {
-    "routes": {
-      "/:category?": {
-        "path": "/:category?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/btzj",
-        "parameters": {
-          "category": "分类，可在对应分类页 URL 中找到，默认为首页"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "btbtt20.com/"
-            ]
-          }
-        ],
-        "name": "分类",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "btbtt20.com/",
-        "description": "::: tip\n分类页中域名末尾到 `.htm` 前的字段即为对应分类，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm) `https://www.btbtt20.com/forum-index-fid-951.htm` 中域名末尾到 `.htm` 前的字段为 `forum-index-fid-951`，所以路由应为 [`/btzj/forum-index-fid-951`](https://rsshub.app/btzj/forum-index-fid-951)\n\n部分分类页，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm)、[剧集](https://www.btbtt20.com/forum-index-fid-950.htm) 等，提供了更复杂的分类筛选。你可以将选项选中后，获得结果分类页 URL 中分类参数，构成路由。如选中分类 [高清电影 - 年份：2021 - 地区：欧美](https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm) `https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm` 中域名末尾到 `.htm` 前的字段为 `forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0`，所以路由应为 [`/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0`](https://rsshub.app/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0)\n:::\n\n基础分类如下：\n\n| 交流                | 电影                | 剧集                | 高清电影             |\n| ------------------- | ------------------- | ------------------- | -------------------- |\n| forum-index-fid-975 | forum-index-fid-951 | forum-index-fid-950 | forum-index-fid-1183 |\n\n| 音乐                | 动漫                | 游戏                | 综艺                 |\n| ------------------- | ------------------- | ------------------- | -------------------- |\n| forum-index-fid-953 | forum-index-fid-981 | forum-index-fid-955 | forum-index-fid-1106 |\n\n| 图书                 | 美图                | 站务              | 科技                |\n| -------------------- | ------------------- | ----------------- | ------------------- |\n| forum-index-fid-1151 | forum-index-fid-957 | forum-index-fid-2 | forum-index-fid-952 |\n\n| 求助                 | 音轨字幕             |\n| -------------------- | -------------------- |\n| forum-index-fid-1187 | forum-index-fid-1191 |\n\n::: tip\nBT 之家的域名会变更，本路由以 `https://www.btbtt20.com` 为默认域名，若该域名无法访问，可以通过在路由后方加上 `?domain=<域名>` 指定路由访问的域名。如指定域名为 `https://www.btbtt15.com`，则在 `/btzj` 后加上 `?domain=btbtt15.com` 即可，此时路由为 [`/btzj?domain=btbtt15.com`](https://rsshub.app/btzj?domain=btbtt15.com)\n\n如果加入了分类参数，直接在分类参数后加入 `?domain=<域名>` 即可。如指定分类 [剧集](https://www.btbtt20.com/forum-index-fid-950.htm) `https://www.btbtt20.com/forum-index-fid-950.htm` 并指定域名为 `https://www.btbtt15.com`，即在 `/btzj/forum-index-fid-950` 后加上 `?domain=btbtt15.com`，此时路由为 [`/btzj/forum-index-fid-950?domain=btbtt15.com`](https://rsshub.app/btzj/forum-index-fid-950?domain=btbtt15.com)\n\n目前，你可以选择的域名有 `btbtt10-20.com` 共 10 个，或 `88btbbt.com`，该站也提供了专用网址查询工具。详见 [此贴](https://www.btbtt20.com/thread-index-fid-2-tid-4550191.htm)\n:::",
-        "location": "index.tsx",
-        "module": () => import('@/routes/btzj/index.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "BT 之家",
-    "url": "btbtt20.com",
-    "lang": "zh-CN"
   },
   "buaa": {
     "routes": {
@@ -42661,45 +42491,6 @@ export default {
     "apiRoutes": {},
     "name": "华中师范大学",
     "url": "www.ccnu.edu.cn",
-    "lang": "zh-CN"
-  },
-  "ccreports": {
-    "routes": {
-      "/article": {
-        "path": "/article",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/ccreports/article",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.ccreports.com.cn/"
-            ]
-          }
-        ],
-        "name": "要闻",
-        "maintainers": [
-          "EsuRt",
-          "Fatpandac"
-        ],
-        "url": "www.ccreports.com.cn/",
-        "location": "index.ts",
-        "module": () => import('@/routes/ccreports/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "消费者报道",
-    "url": "www.ccreports.com.cn",
     "lang": "zh-CN"
   },
   "cczu": {
@@ -56184,40 +55975,6 @@ export default {
   },
   "eastday": {
     "routes": {
-      "/24/:category?": {
-        "path": "/24/:category?",
-        "categories": [
-          "traditional-media"
-        ],
-        "example": "/eastday/24",
-        "parameters": {
-          "category": "分类，见下表，默认为社会"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "mini.eastday.com/"
-            ],
-            "target": "/24"
-          }
-        ],
-        "name": "24 小时热闻",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "mini.eastday.com/",
-        "description": "| 推荐 | 社会 | 娱乐 | 国际 | 军事 |\n| ---- | ---- | ---- | ---- | ---- |\n\n| 养生 | 汽车 | 体育 | 财经 | 游戏 |\n| ---- | ---- | ---- | ---- | ---- |\n\n| 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |\n| ---- | ---- | ---- | ---- | ---- | ---- |",
-        "location": "24.ts",
-        "module": () => import('@/routes/eastday/24.ts')
-      },
       "/portrait": {
         "path": "/portrait",
         "categories": [
@@ -61464,44 +61221,6 @@ export default {
     "name": "遊戲基地 Gamebase",
     "url": "news.gamebase.com.tw",
     "lang": "zh-TW"
-  },
-  "gamegene": {
-    "routes": {
-      "/news": {
-        "path": "/news",
-        "categories": [
-          "game"
-        ],
-        "example": "/gamegene/news",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "news.gamegene.cn/news"
-            ]
-          }
-        ],
-        "name": "资讯",
-        "maintainers": [
-          "lone1y-51"
-        ],
-        "url": "news.gamegene.cn/news",
-        "location": "news.ts",
-        "module": () => import('@/routes/gamegene/news.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "游戏基因",
-    "url": "gamegene.cn",
-    "lang": "zh-CN"
   },
   "gamer520": {
     "routes": {
@@ -72498,6 +72217,29 @@ export default {
     "url": "iguoguo.net",
     "lang": "zh-CN"
   },
+  "iheima": {
+    "routes": {
+      "/recommend": {
+        "path": "/recommend",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/iheima/recommend",
+        "url": "www.iheima.com",
+        "name": "推荐",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/iheima/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "i黑马网",
+    "url": "www.iheima.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "iiilab": {
     "routes": {
       "/": {
@@ -81913,40 +81655,6 @@ export default {
     ],
     "lang": "zh-CN"
   },
-  "lightnovel": {
-    "routes": {
-      "/:keywords/:security_key?": {
-        "path": "/:keywords/:security_key?",
-        "categories": [
-          "anime"
-        ],
-        "example": "/lightnovel/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0",
-        "parameters": {
-          "keywords": "关键字，可以模糊匹配，但最好精确匹配",
-          "security_key": "cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值"
-        },
-        "radar": [
-          {
-            "source": [
-              "lightNovel.us/"
-            ],
-            "target": "/:keywords/:security_key"
-          }
-        ],
-        "name": "文章更新阅读",
-        "maintainers": [
-          "nightmare-mio"
-        ],
-        "url": "lightNovel.us/",
-        "location": "light-novel.ts",
-        "module": () => import('@/routes/lightnovel/light-novel.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "轻之国度",
-    "url": "lightNovel.us",
-    "lang": "zh-CN"
-  },
   "lineageos": {
     "routes": {
       "/changes": {
@@ -91140,49 +90848,6 @@ export default {
     "name": "New Yorker",
     "url": "newyorker.com",
     "lang": "en"
-  },
-  "newzmz": {
-    "routes": {
-      "/:id?/:downLinkType?": {
-        "path": "/:id?/:downLinkType?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/newzmz/qEzRyY3v",
-        "parameters": {
-          "id": "剧集 id，可在剧集下载页 URL 中找到",
-          "downLinkType": "下载链接类型，默认为磁力链"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "newzmz.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "指定剧集",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "newzmz.com/",
-        "description": "::: tip\n[雪国列车 (剧版)](https://nzmz.xyz/details-qEzRyY3v.html) 的下载页 URL 为 `https://v.ys99.xyz/view/qEzRyY3v.html`，即剧集 id 为 `qEzRyY3v`\n:::",
-        "location": "index.ts",
-        "module": () => import('@/routes/newzmz/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "NEW 字幕组",
-    "url": "newzmz.com",
-    "lang": "zh-CN"
   },
   "nextapple": {
     "routes": {
@@ -102468,12 +102133,12 @@ export default {
   },
   "producthunt": {
     "routes": {
-      "/today": {
-        "path": "/today",
+      "/feed": {
+        "path": "/feed",
         "categories": [
           "other"
         ],
-        "example": "/producthunt/today",
+        "example": "/producthunt/feed",
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -102482,6 +102147,36 @@ export default {
           "supportPodcast": false,
           "supportScihub": false
         },
+        "name": "Official Feed",
+        "maintainers": [
+          "miaoyafeng",
+          "Fatpandac"
+        ],
+        "url": "www.producthunt.com/feed/",
+        "location": "feed.ts",
+        "module": () => import('@/routes/producthunt/feed.ts')
+      },
+      "/today": {
+        "path": "/today",
+        "categories": [
+          "other"
+        ],
+        "example": "/producthunt/today",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PRODUCTHUNT_ACCESS_TOKEN",
+              "description": "Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.",
         "radar": [
           {
             "source": [
@@ -105706,7 +105401,7 @@ export default {
         "categories": [
           "bbs"
         ],
-        "example": "/right/forum/31",
+        "example": "/right/forum/171",
         "parameters": {
           "id": "板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)"
         },
@@ -107265,8 +106960,8 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": true
@@ -107285,7 +106980,7 @@ export default {
           "y9c",
           "TonyRL"
         ],
-        "description": "|  Short name |    Full name of the journal    | Route                                                                          |\n| :---------: | :----------------------------: | ------------------------------------------------------------------------------ |\n|   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |\n|    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |\n|  sciimmunol |       Science Immunology       | [/science/current/sciimmunol](https://rsshub.app/science/current/sciimmunol)   |\n| scirobotics |        Science Robotics        | [/science/current/scirobotics](https://rsshub.app/science/current/scirobotics) |\n|  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |\n|     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |\n\n- Using route (`/science/current/` + \"short name for a journal\") to get current issue of a journal from AAAS.\n- Leaving it empty (`/science/current`) to get update from Science.",
+        "description": "|  Short name |    Full name of the journal    | Route                                                                          |\n| :---------: | :----------------------------: | ------------------------------------------------------------------------------ |\n|   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |\n|    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |\n|  sciimmunol |       Science Immunology       | [/science/current/sciimmunol](https://rsshub.app/science/current/sciimmunol)   |\n| scirobotics |        Science Robotics        | [/science/current/scirobotics](https://rsshub.app/science/current/scirobotics) |\n|  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |\n|     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |\n\n- Using route (`/science/current/` + \"short name for a journal\") to get current issue of a journal from AAAS.\n- Leaving it empty (`/science/current`) to get update from Science.\n- Abstracts are included when available from Crossref.",
         "location": "current.ts",
         "module": () => import('@/routes/science/current.ts')
       },
@@ -121026,35 +120721,6 @@ export default {
     "url": "www.toutiao.com",
     "lang": "zh-CN"
   },
-  "towardsdatascience": {
-    "routes": {
-      "/latest": {
-        "path": "/latest",
-        "categories": [
-          "blog"
-        ],
-        "example": "/towardsdatascience/latest",
-        "radar": [
-          {
-            "source": [
-              "towardsdatascience.com/"
-            ]
-          }
-        ],
-        "name": "Latest articles",
-        "maintainers": [
-          "mintyfrankie"
-        ],
-        "url": "towardsdatascience.com/latest",
-        "location": "latest.ts",
-        "module": () => import('@/routes/towardsdatascience/latest.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Towards Data Science",
-    "url": "towardsdatascience.com",
-    "lang": "en"
-  },
   "tpre": {
     "routes": {
       "/cqzr": {
@@ -125573,451 +125239,6 @@ export default {
     "name": "Western Digital",
     "url": "support.wdc.com",
     "lang": "en"
-  },
-  "wdfxw": {
-    "routes": {
-      "/bookfree/:id?": {
-        "path": "/bookfree/:id?",
-        "name": "免费区",
-        "url": "www.wdfxw.net",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "example": "/wdfxw/bookfree",
-        "parameters": {
-          "id": {
-            "description": "分类，默认为空，即全部，可在对应分类页 URL 中找到",
-            "options": [
-              {
-                "label": "全部",
-                "value": ""
-              },
-              {
-                "label": "行业标准",
-                "value": "00002"
-              },
-              {
-                "label": "国家标准GB",
-                "value": "00001"
-              },
-              {
-                "label": "国外标准",
-                "value": "00003"
-              },
-              {
-                "label": "监理资料",
-                "value": "00004"
-              },
-              {
-                "label": "施工组织设计",
-                "value": "00005"
-              },
-              {
-                "label": "土木工程毕业设计论文",
-                "value": "00006"
-              },
-              {
-                "label": "机械类毕业设计论文",
-                "value": "00007"
-              },
-              {
-                "label": "小学课件教学资料",
-                "value": "00008"
-              },
-              {
-                "label": "初中课件教学资料",
-                "value": "00009"
-              },
-              {
-                "label": "高中课件教学资料",
-                "value": "00010"
-              },
-              {
-                "label": "工作计划个人总结",
-                "value": "00011"
-              },
-              {
-                "label": "中学小学教案导学案与教学设计",
-                "value": "00012"
-              },
-              {
-                "label": "作文大全",
-                "value": "00013"
-              },
-              {
-                "label": "幼儿教育",
-                "value": "00014"
-              },
-              {
-                "label": "论文",
-                "value": "00015"
-              },
-              {
-                "label": "财务管理",
-                "value": "00016"
-              },
-              {
-                "label": "管理信息化",
-                "value": "00017"
-              },
-              {
-                "label": "行业分类",
-                "value": "00018"
-              },
-              {
-                "label": "合同样本",
-                "value": "00019"
-              },
-              {
-                "label": "品质管理",
-                "value": "00020"
-              },
-              {
-                "label": "企业管理",
-                "value": "00021"
-              },
-              {
-                "label": "人力资源",
-                "value": "00022"
-              },
-              {
-                "label": "生产管理",
-                "value": "00023"
-              },
-              {
-                "label": "市场营销",
-                "value": "00024"
-              },
-              {
-                "label": "制度表格",
-                "value": "00025"
-              },
-              {
-                "label": "行业资料",
-                "value": "00026"
-              },
-              {
-                "label": "国家标准",
-                "value": "00027"
-              },
-              {
-                "label": "软件教程",
-                "value": "00028"
-              },
-              {
-                "label": "标准汇编",
-                "value": "00029"
-              },
-              {
-                "label": "其他",
-                "value": "00030"
-              },
-              {
-                "label": "职业资格考试",
-                "value": "00031"
-              },
-              {
-                "label": "股票证券行业研究报告(研报）",
-                "value": "00032"
-              },
-              {
-                "label": "基金申请",
-                "value": "00033"
-              },
-              {
-                "label": "教师资格证考试资料",
-                "value": "00034"
-              },
-              {
-                "label": "专利说明书",
-                "value": "00035"
-              }
-            ]
-          }
-        },
-        "description": "::: tip\n订阅 [行业标准](https://www.wdfxw.net/bookfree-00002.html)，其源网址为 `https://www.wdfxw.net/bookfree-00002.html`，请参考该 URL 指定部分构成参数，此时路由为 [`/wdfxw/bookfree/00002`](https://rsshub.app/wdfxw/bookfree/00002)。\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n| 分类                                                                      | ID                                               |\n| ------------------------------------------------------------------------- | ------------------------------------------------ |\n| [全部](https://www.wdfxw.net/bookfree.html)                               | [<无>](https://rsshub.app/wdfxw/bookfree)        |\n| [行业标准](https://www.wdfxw.net/bookfree-00002.html)                     | [00002](https://rsshub.app/wdfxw/bookfree/00002) |\n| [国家标准 GB](https://www.wdfxw.net/bookfree-00001.html)                  | [00001](https://rsshub.app/wdfxw/bookfree/00001) |\n| [国外标准](https://www.wdfxw.net/bookfree-00003.html)                     | [00003](https://rsshub.app/wdfxw/bookfree/00003) |\n| [监理资料](https://www.wdfxw.net/bookfree-00004.html)                     | [00004](https://rsshub.app/wdfxw/bookfree/00004) |\n| [施工组织设计](https://www.wdfxw.net/bookfree-00005.html)                 | [00005](https://rsshub.app/wdfxw/bookfree/00005) |\n| [土木工程毕业设计论文](https://www.wdfxw.net/bookfree-00006.html)         | [00006](https://rsshub.app/wdfxw/bookfree/00006) |\n| [机械类毕业设计论文](https://www.wdfxw.net/bookfree-00007.html)           | [00007](https://rsshub.app/wdfxw/bookfree/00007) |\n| [小学课件教学资料](https://www.wdfxw.net/bookfree-00008.html)             | [00008](https://rsshub.app/wdfxw/bookfree/00008) |\n| [初中课件教学资料](https://www.wdfxw.net/bookfree-00009.html)             | [00009](https://rsshub.app/wdfxw/bookfree/00009) |\n| [高中课件教学资料](https://www.wdfxw.net/bookfree-00010.html)             | [00010](https://rsshub.app/wdfxw/bookfree/00010) |\n| [工作计划个人总结](https://www.wdfxw.net/bookfree-00011.html)             | [00011](https://rsshub.app/wdfxw/bookfree/00011) |\n| [中学小学教案导学案与教学设计](https://www.wdfxw.net/bookfree-00012.html) | [00012](https://rsshub.app/wdfxw/bookfree/00012) |\n| [作文大全](https://www.wdfxw.net/bookfree-00013.html)                     | [00013](https://rsshub.app/wdfxw/bookfree/00013) |\n| [幼儿教育](https://www.wdfxw.net/bookfree-00014.html)                     | [00014](https://rsshub.app/wdfxw/bookfree/00014) |\n| [论文](https://www.wdfxw.net/bookfree-00015.html)                         | [00015](https://rsshub.app/wdfxw/bookfree/00015) |\n| [财务管理](https://www.wdfxw.net/bookfree-00016.html)                     | [00016](https://rsshub.app/wdfxw/bookfree/00016) |\n| [管理信息化](https://www.wdfxw.net/bookfree-00017.html)                   | [00017](https://rsshub.app/wdfxw/bookfree/00017) |\n| [行业分类](https://www.wdfxw.net/bookfree-00018.html)                     | [00018](https://rsshub.app/wdfxw/bookfree/00018) |\n| [合同样本](https://www.wdfxw.net/bookfree-00019.html)                     | [00019](https://rsshub.app/wdfxw/bookfree/00019) |\n| [品质管理](https://www.wdfxw.net/bookfree-00020.html)                     | [00020](https://rsshub.app/wdfxw/bookfree/00020) |\n| [企业管理](https://www.wdfxw.net/bookfree-00021.html)                     | [00021](https://rsshub.app/wdfxw/bookfree/00021) |\n| [人力资源](https://www.wdfxw.net/bookfree-00022.html)                     | [00022](https://rsshub.app/wdfxw/bookfree/00022) |\n| [生产管理](https://www.wdfxw.net/bookfree-00023.html)                     | [00023](https://rsshub.app/wdfxw/bookfree/00023) |\n| [市场营销](https://www.wdfxw.net/bookfree-00024.html)                     | [00024](https://rsshub.app/wdfxw/bookfree/00024) |\n| [制度表格](https://www.wdfxw.net/bookfree-00025.html)                     | [00025](https://rsshub.app/wdfxw/bookfree/00025) |\n| [行业资料](https://www.wdfxw.net/bookfree-00026.html)                     | [00026](https://rsshub.app/wdfxw/bookfree/00026) |\n| [国家标准](https://www.wdfxw.net/bookfree-00027.html)                     | [00027](https://rsshub.app/wdfxw/bookfree/00027) |\n| [软件教程](https://www.wdfxw.net/bookfree-00028.html)                     | [00028](https://rsshub.app/wdfxw/bookfree/00028) |\n| [标准汇编](https://www.wdfxw.net/bookfree-00029.html)                     | [00029](https://rsshub.app/wdfxw/bookfree/00029) |\n| [其他](https://www.wdfxw.net/bookfree-00030.html)                         | [00030](https://rsshub.app/wdfxw/bookfree/00030) |\n| [职业资格考试](https://www.wdfxw.net/bookfree-00031.html)                 | [00031](https://rsshub.app/wdfxw/bookfree/00031) |\n| [股票证券行业研究报告 (研报）](https://www.wdfxw.net/bookfree-00032.html) | [00032](https://rsshub.app/wdfxw/bookfree/00032) |\n| [基金申请](https://www.wdfxw.net/bookfree-00033.html)                     | [00033](https://rsshub.app/wdfxw/bookfree/00033) |\n| [教师资格证考试资料](https://www.wdfxw.net/bookfree-00034.html)           | [00034](https://rsshub.app/wdfxw/bookfree/00034) |\n| [专利说明书](https://www.wdfxw.net/bookfree-00035.html)                   | [00035](https://rsshub.app/wdfxw/bookfree/00035) |\n\n</details>",
-        "categories": [
-          "reading"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.wdfxw.net"
-            ],
-            "target": "/bookfree"
-          },
-          {
-            "title": "全部",
-            "source": [
-              "www.wdfxw.net/bookfree.html"
-            ],
-            "target": "/bookfree"
-          },
-          {
-            "title": "行业标准",
-            "source": [
-              "www.wdfxw.net/bookfree-00002.html"
-            ],
-            "target": "/bookfree/00002"
-          },
-          {
-            "title": "国家标准GB",
-            "source": [
-              "www.wdfxw.net/bookfree-00001.html"
-            ],
-            "target": "/bookfree/00001"
-          },
-          {
-            "title": "国外标准",
-            "source": [
-              "www.wdfxw.net/bookfree-00003.html"
-            ],
-            "target": "/bookfree/00003"
-          },
-          {
-            "title": "监理资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00004.html"
-            ],
-            "target": "/bookfree/00004"
-          },
-          {
-            "title": "施工组织设计",
-            "source": [
-              "www.wdfxw.net/bookfree-00005.html"
-            ],
-            "target": "/bookfree/00005"
-          },
-          {
-            "title": "土木工程毕业设计论文",
-            "source": [
-              "www.wdfxw.net/bookfree-00006.html"
-            ],
-            "target": "/bookfree/00006"
-          },
-          {
-            "title": "机械类毕业设计论文",
-            "source": [
-              "www.wdfxw.net/bookfree-00007.html"
-            ],
-            "target": "/bookfree/00007"
-          },
-          {
-            "title": "小学课件教学资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00008.html"
-            ],
-            "target": "/bookfree/00008"
-          },
-          {
-            "title": "初中课件教学资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00009.html"
-            ],
-            "target": "/bookfree/00009"
-          },
-          {
-            "title": "高中课件教学资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00010.html"
-            ],
-            "target": "/bookfree/00010"
-          },
-          {
-            "title": "工作计划个人总结",
-            "source": [
-              "www.wdfxw.net/bookfree-00011.html"
-            ],
-            "target": "/bookfree/00011"
-          },
-          {
-            "title": "中学小学教案导学案与教学设计",
-            "source": [
-              "www.wdfxw.net/bookfree-00012.html"
-            ],
-            "target": "/bookfree/00012"
-          },
-          {
-            "title": "作文大全",
-            "source": [
-              "www.wdfxw.net/bookfree-00013.html"
-            ],
-            "target": "/bookfree/00013"
-          },
-          {
-            "title": "幼儿教育",
-            "source": [
-              "www.wdfxw.net/bookfree-00014.html"
-            ],
-            "target": "/bookfree/00014"
-          },
-          {
-            "title": "论文",
-            "source": [
-              "www.wdfxw.net/bookfree-00015.html"
-            ],
-            "target": "/bookfree/00015"
-          },
-          {
-            "title": "财务管理",
-            "source": [
-              "www.wdfxw.net/bookfree-00016.html"
-            ],
-            "target": "/bookfree/00016"
-          },
-          {
-            "title": "管理信息化",
-            "source": [
-              "www.wdfxw.net/bookfree-00017.html"
-            ],
-            "target": "/bookfree/00017"
-          },
-          {
-            "title": "行业分类",
-            "source": [
-              "www.wdfxw.net/bookfree-00018.html"
-            ],
-            "target": "/bookfree/00018"
-          },
-          {
-            "title": "合同样本",
-            "source": [
-              "www.wdfxw.net/bookfree-00019.html"
-            ],
-            "target": "/bookfree/00019"
-          },
-          {
-            "title": "品质管理",
-            "source": [
-              "www.wdfxw.net/bookfree-00020.html"
-            ],
-            "target": "/bookfree/00020"
-          },
-          {
-            "title": "企业管理",
-            "source": [
-              "www.wdfxw.net/bookfree-00021.html"
-            ],
-            "target": "/bookfree/00021"
-          },
-          {
-            "title": "人力资源",
-            "source": [
-              "www.wdfxw.net/bookfree-00022.html"
-            ],
-            "target": "/bookfree/00022"
-          },
-          {
-            "title": "生产管理",
-            "source": [
-              "www.wdfxw.net/bookfree-00023.html"
-            ],
-            "target": "/bookfree/00023"
-          },
-          {
-            "title": "市场营销",
-            "source": [
-              "www.wdfxw.net/bookfree-00024.html"
-            ],
-            "target": "/bookfree/00024"
-          },
-          {
-            "title": "制度表格",
-            "source": [
-              "www.wdfxw.net/bookfree-00025.html"
-            ],
-            "target": "/bookfree/00025"
-          },
-          {
-            "title": "行业资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00026.html"
-            ],
-            "target": "/bookfree/00026"
-          },
-          {
-            "title": "国家标准",
-            "source": [
-              "www.wdfxw.net/bookfree-00027.html"
-            ],
-            "target": "/bookfree/00027"
-          },
-          {
-            "title": "软件教程",
-            "source": [
-              "www.wdfxw.net/bookfree-00028.html"
-            ],
-            "target": "/bookfree/00028"
-          },
-          {
-            "title": "标准汇编",
-            "source": [
-              "www.wdfxw.net/bookfree-00029.html"
-            ],
-            "target": "/bookfree/00029"
-          },
-          {
-            "title": "其他",
-            "source": [
-              "www.wdfxw.net/bookfree-00030.html"
-            ],
-            "target": "/bookfree/00030"
-          },
-          {
-            "title": "职业资格考试",
-            "source": [
-              "www.wdfxw.net/bookfree-00031.html"
-            ],
-            "target": "/bookfree/00031"
-          },
-          {
-            "title": "股票证券行业研究报告(研报）",
-            "source": [
-              "www.wdfxw.net/bookfree-00032.html"
-            ],
-            "target": "/bookfree/00032"
-          },
-          {
-            "title": "基金申请",
-            "source": [
-              "www.wdfxw.net/bookfree-00033.html"
-            ],
-            "target": "/bookfree/00033"
-          },
-          {
-            "title": "教师资格证考试资料",
-            "source": [
-              "www.wdfxw.net/bookfree-00034.html"
-            ],
-            "target": "/bookfree/00034"
-          },
-          {
-            "title": "专利说明书",
-            "source": [
-              "www.wdfxw.net/bookfree-00035.html"
-            ],
-            "target": "/bookfree/00035"
-          }
-        ],
-        "view": 0,
-        "location": "bookfree.tsx",
-        "module": () => import('@/routes/wdfxw/bookfree.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "WDFXW文档分享网",
-    "url": "wdfxw.net",
-    "description": "",
-    "lang": "zh"
   },
   "web3caff": {
     "routes": {
@@ -135166,115 +134387,6 @@ export default {
     "url": "8world.com",
     "lang": "zh-CN"
   },
-  "95mm": {
-    "routes": {
-      "/category/:category": {
-        "path": "/category/:category",
-        "categories": [
-          "picture"
-        ],
-        "example": "/95mm/category/1",
-        "parameters": {
-          "category": "集合，见下表"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "95mm.org/"
-            ]
-          }
-        ],
-        "name": "集合",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "95mm.org/",
-        "description": "| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |\n| -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |\n| 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |",
-        "location": "category.ts",
-        "module": () => import('@/routes/95mm/category.ts')
-      },
-      "/tab/:tab?": {
-        "path": "/tab/:tab?",
-        "categories": [
-          "picture"
-        ],
-        "example": "/95mm/tab/热门",
-        "parameters": {
-          "tab": "分类，见下表，默认为最新"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "95mm.org/"
-            ]
-          }
-        ],
-        "name": "分类",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "95mm.org/",
-        "description": "| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |",
-        "location": "tab.ts",
-        "module": () => import('@/routes/95mm/tab.ts')
-      },
-      "/tag/:tag": {
-        "path": "/tag/:tag",
-        "categories": [
-          "picture"
-        ],
-        "example": "/95mm/tag/黑丝",
-        "parameters": {
-          "tag": "标签，可在对应标签页中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "95mm.org/"
-            ]
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "95mm.org/",
-        "location": "tag.ts",
-        "module": () => import('@/routes/95mm/tag.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "MM 范",
-    "url": "95mm.org",
-    "lang": "zh-CN"
-  },
   "9to5": {
     "routes": {
       "/:subsite/:tag?": {
@@ -144088,113 +143200,6 @@ export default {
     "url": "furaffinity.net",
     "lang": "en"
   },
-  "furstar": {
-    "routes": {
-      "/artists/:lang?": {
-        "path": "/artists/:lang?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/furstar/artists/cn",
-        "parameters": {
-          "lang": "语言, 留空为jp, 支持cn, en"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "furstar.jp/"
-            ],
-            "target": "/artists"
-          }
-        ],
-        "name": "画师列表",
-        "maintainers": [
-          "NeverBehave"
-        ],
-        "url": "furstar.jp/",
-        "location": "artists.ts",
-        "module": () => import('@/routes/furstar/artists.ts')
-      },
-      "/archive/:lang?": {
-        "path": "/archive/:lang?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/furstar/archive/cn",
-        "parameters": {
-          "lang": "语言, 留空为jp, 支持cn, en"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "furstar.jp/:lang/archive.php",
-              "furstar.jp/archive.php"
-            ],
-            "target": "/archive/:lang"
-          }
-        ],
-        "name": "已经出售的角色列表",
-        "maintainers": [
-          "NeverBehave"
-        ],
-        "location": "archive.ts",
-        "module": () => import('@/routes/furstar/archive.ts')
-      },
-      "/characters/:lang?": {
-        "path": "/characters/:lang?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/furstar/characters/cn",
-        "parameters": {
-          "lang": "语言, 留空为jp, 支持cn, en"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "furstar.jp/:lang",
-              "furstar.jp/"
-            ],
-            "target": "/characters/:lang"
-          }
-        ],
-        "name": "最新售卖角色列表",
-        "maintainers": [
-          "NeverBehave"
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/furstar/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Furstar",
-    "url": "furstar.jp",
-    "lang": "ja"
-  },
   "gamer": {
     "routes": {
       "/ani/anime/:sn": {
@@ -144882,92 +143887,6 @@ export default {
     "apiRoutes": {},
     "name": "格隆汇",
     "url": "gelonghui.com",
-    "lang": "zh-CN"
-  },
-  "getitfree": {
-    "routes": {
-      "/category/:id{.+}?": {
-        "path": "/category/:id{.+}?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/getitfree/category/pc",
-        "parameters": {
-          "id": "分类，见下表，可在对应分类页中找到，默认为所有类别"
-        },
-        "radar": [
-          {
-            "source": [
-              "getitfree.cn/category/:id"
-            ],
-            "target": "/category/:id"
-          }
-        ],
-        "name": "分类",
-        "maintainers": [
-          "sanmmm",
-          "nczitzk"
-        ],
-        "url": "getitfree.cn",
-        "description": "::: tip\n可以叠加使用得到分类结果并集，如 [`/getitfree/category/pc,android`](https://rsshub.app/getitfree/category/pc,android)\n\n亦可与标签组合使用，如 [`/getitfree/category/pc/tag/ai`](https://rsshub.app/getitfree/category/pc/tag/ai)\n:::\n\n| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 正版折扣 |\n| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |\n|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |",
-        "location": "index.ts",
-        "module": () => import('@/routes/getitfree/index.ts')
-      },
-      "/search/:keyword": {
-        "path": "/search/:keyword",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/getitfree/search/windows",
-        "parameters": {
-          "keyword": "关键字"
-        },
-        "radar": [
-          {
-            "source": [
-              "getitfree.cn/"
-            ]
-          }
-        ],
-        "name": "搜索",
-        "maintainers": [
-          "sanmmm",
-          "nczitzk"
-        ],
-        "url": "getitfree.cn",
-        "location": "search.ts",
-        "module": () => import('@/routes/getitfree/search.ts')
-      },
-      "/tag/:id{.+}?": {
-        "path": "/tag/:id{.+}?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/getitfree/tag/ai",
-        "parameters": {
-          "id": "标签，见下表，可在对应标签页中找到，默认为所有标签"
-        },
-        "radar": [
-          {
-            "source": [
-              "getitfree.cn/tag/:id"
-            ],
-            "target": "/tag/:id"
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "getitfree.cn",
-        "description": "::: tip\n可以叠加使用得到标签结果并集，如 [`/getitfree/tag/ai,office`](https://rsshub.app/getitfree/tag/ai,office)\n:::\n\n| AI | Android | DVD | GIF | iCloud |\n| -- | ------- | --- | --- | ------ |\n\n| ICON | iOS | iPhone | Leawo | Mac |\n| ---- | --- | ------ | ----- | --- |\n\n| Markdown | OCR | Office | Office 办公 | PDF |\n| -------- | --- | ------ | ----------- | --- |\n\n| PDF 转换 | Windows | 下载 | 书签管理 | 健康 |\n| -------- | ------- | ---- | -------- | ---- |\n\n| 全平台 | 办公软件 | 加密保护 | 卸载 / 清理 / 优化 | 卸载清理 |\n| ------ | -------- | -------- | ------------------ | -------- |\n\n| 图像处理 | 图片 / 编辑 / 管理 | 壁纸 | 备份 / 恢复 / 加密 | 备份恢复 |\n| -------- | ------------------ | ---- | ------------------ | -------- |\n\n| 字体 | 学习 | 密码管理 | 导航 | 开始菜单 |\n| ---- | ---- | -------- | ---- | -------- |\n\n| 录屏截图 | 影音 / 刻录 / 转换 | 投屏镜像 | 提醒 | 摄影 |\n| -------- | ------------------ | -------- | ---- | ---- |\n\n| 播放器 | 收藏夹 | 效率工具 | 数据传输 | 数据恢复 |\n| ------ | ------ | -------- | -------- | -------- |\n\n| 数据擦除 | 文件管理 | 文档 / 转换 / 压缩 | 文档扫描 | 日历 |\n| -------- | -------- | ------------------ | -------- | ---- |\n\n| 杀毒防护 | 查重 | 正版特惠 | 水印 | 清理优化 |\n| -------- | ---- | -------- | ---- | -------- |\n\n| 滤镜 | 硬件外设 | 硬盘 / 分区 / 驱动 | 硬盘检测 | 稍后阅读 |\n| ---- | -------- | ------------------ | -------- | -------- |\n\n| 笔记 | 系统工具 | 素材 | 网络 / 安全 / 传输 | 网络安全 |\n| ---- | -------- | ---- | ------------------ | -------- |\n\n| 色彩 | 视频剪辑 | 视频转换 | 记账 | 设计 |\n| ---- | -------- | -------- | ---- | ---- |\n\n| 软件卸载 | 远程控制 | 音乐 | 音频 | 驱动 |\n| -------- | -------- | ---- | ---- | ---- |",
-        "location": "tag.ts",
-        "module": () => import('@/routes/getitfree/tag.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "正版中国",
-    "url": "getitfree.cn",
     "lang": "zh-CN"
   },
   "gov/ah": {
