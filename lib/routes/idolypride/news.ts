@@ -1,8 +1,15 @@
+import Parser from 'rss-parser';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+const parser = new Parser<object, { updated?: string }>({
+    customFields: {
+        item: ['updated'],
+    },
+});
 
 export const route: Route = {
     path: '/news',
@@ -30,28 +37,18 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got({
-        method: 'get',
-        url: 'https://idolypride.jp/wp-json/wp/v2/news',
-    });
-    const list = response.data;
+    const response = await got('https://idolypride.jp/?feed=atom&post_type=news');
+    const feed = await parser.parseString(response.data);
 
     return {
         title: '偶像荣耀-新闻',
         link: 'https://idolypride.jp/news',
-        item: list.map((item) => {
-            const title = item.title.rendered;
-            const link = item.link;
-            const pubDate = timezone(parseDate(item.date_gmt), 0);
-            const rendered = item.content.rendered;
-
-            return {
-                title,
-                link,
-                pubDate,
-                updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
-                description: rendered,
-            };
-        }),
+        item: feed.items.map((item) => ({
+            title: item.title!,
+            link: item.link,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            updated: item.updated ? parseDate(item.updated) : undefined,
+            description: item.content,
+        })),
     };
 }
