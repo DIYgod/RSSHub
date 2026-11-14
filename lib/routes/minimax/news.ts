@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 
+import { renderFallbackDescription } from './templates/description';
 import {
     DEFAULT_LIMIT,
     DETAIL_CONCURRENCY,
@@ -43,17 +44,6 @@ interface NewsApiResponse {
     data?: NewsApiItem[];
 }
 
-const buildFallbackDescription = (summary?: string, coverUrl?: string): string => {
-    const $ = load('', null, false);
-    if (coverUrl) {
-        $.root().append($('<img alt="">').attr('src', coverUrl));
-    }
-    if (summary) {
-        $.root().append($('<p></p>').text(summary));
-    }
-    return $.html() || '';
-};
-
 const resolveNewsLink = (item: NewsApiItem, baseUrl: string): string => {
     if (item.contentType === CONTENT_TYPE_EXTERNAL && item.externalLink) {
         const external = resolveAbsoluteUrl(item.externalLink, baseUrl);
@@ -74,7 +64,7 @@ const fetchNewsDetail = (item: NewsApiItem, link: string, baseUrl: string): Prom
         return Promise.resolve({
             title: item.title,
             link,
-            description: buildFallbackDescription(item.summary, image),
+            description: renderFallbackDescription(item.summary, image),
             pubDate,
             author: 'MiniMax',
             category: category?.length ? category : undefined,
@@ -102,7 +92,7 @@ const fetchNewsDetail = (item: NewsApiItem, link: string, baseUrl: string): Prom
         const result: DataItem = {
             title: item.title,
             link,
-            description: hasRenderableContent(description) ? description : buildFallbackDescription(item.summary, image),
+            description: hasRenderableContent(description) ? description : renderFallbackDescription(item.summary, image),
             pubDate,
             author: 'MiniMax',
             category: category?.length ? category : undefined,

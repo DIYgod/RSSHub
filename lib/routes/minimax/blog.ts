@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -7,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getRouteLimit } from '@/utils/route-limit';
 
+import { renderFallbackDescription } from './templates/description';
 import { DEFAULT_LIMIT, DETAIL_CONCURRENCY, fetchHtml, hasRenderableContent, LANG_PARAM_EN, LANG_PARAM_ZH, normalizeRichContent, resolveAbsoluteUrl, resolveLocaleConfig, toValidDate, unwrapNextImageUrl } from './utils';
 
 const ARTICLE_LD_TYPES = new Set(['NewsArticle', 'BlogPosting', 'Article']);
@@ -77,6 +79,28 @@ const extractArticleJsonLd = ($: CheerioAPI) => {
     };
 };
 
+const extractBlogCategories = ($header: Cheerio<Element>, $: CheerioAPI): string[] => [
+    ...new Set(
+        $header
+            .find('span[class*="rounded-"]')
+            .toArray()
+            .map((span) => $(span).text().trim())
+            .filter((tag) => Boolean(tag) && !tag.toLowerCase().startsWith('by '))
+    ),
+];
+
+const extractBlogBody = ($article: Cheerio<Element>, $: CheerioAPI, baseUrl: string): string => {
+    const $prose = $article.find('.prose').first();
+    if ($prose.length > 0) {
+        return normalizeRichContent($prose, $, baseUrl);
+    }
+    if ($article.length > 0) {
+        $article.find('header').remove();
+        return normalizeRichContent($article, $, baseUrl);
+    }
+    return '';
+};
+
 const fetchBlogDetail = (card: BlogCardMeta, baseUrl: string) =>
     cache.tryGet(`minimax:blog:${card.link}`, async () => {
         const html = await fetchHtml(card.link);
@@ -86,34 +110,20 @@ const fetchBlogDetail = (card: BlogCardMeta, baseUrl: string) =>
         const $header = $article.find('header').first();
 
         const title = $header.find('h1').first().text() || card.title || jsonLd.headline || '';
-        const categories = [
-            ...new Set(
-                $header
-                    .find('span[class*="rounded-"]')
-                    .toArray()
-                    .map((span) => $(span).text().trim())
-                    .filter((tag) => Boolean(tag) && !tag.toLowerCase().startsWith('by '))
-            ),
-        ];
-
+        const categories = extractBlogCategories($header, $);
         const headerDate = $header.find('time').first().text().trim();
         const pubDate = toValidDate(jsonLd.datePublished) ?? toValidDate(headerDate || card.listDate);
         const ogImage = unwrapNextImageUrl($('meta[property="og:image"]').attr('content'), baseUrl);
         const image = ogImage ?? unwrapNextImageUrl(jsonLd.image, baseUrl) ?? card.listImage;
 
-        const $prose = $article.find('.prose').first();
-        let description = '';
-        if ($prose.length > 0) {
-            description = normalizeRichContent($prose, $, baseUrl);
-        } else if ($article.length > 0) {
-            $article.find('header').remove();
-            description = normalizeRichContent($article, $, baseUrl);
-        }
+        const bodyHtml = extractBlogBody($article, $, baseUrl);
+        const summary = $('meta[name="description"]').attr('content')?.trim();
+        const description = hasRenderableContent(bodyHtml) ? bodyHtml : renderFallbackDescription(summary);
 
         const item: DataItem = {
             title,
             link: card.link,
-            description: hasRenderableContent(description) ? description : title,
+            description,
             pubDate,
             author: jsonLd.author,
             category: categories.length > 0 ? categories : undefined,

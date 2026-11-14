@@ -5,6 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import { renderArticleVideo } from './templates/description';
+
 export const DETAIL_CONCURRENCY = 5;
 export const DEFAULT_LIMIT = 20;
 
@@ -16,7 +18,7 @@ export interface LocaleConfig {
     titleSuffix: string;
 }
 
-const LOCALE_CONFIGS: Record<'zh' | 'en', LocaleConfig> = {
+const LOCALE_CONFIGS = {
     zh: {
         langKey: 'zh-CN',
         baseUrl: 'https://www.minimax.cn',
@@ -31,7 +33,7 @@ const LOCALE_CONFIGS: Record<'zh' | 'en', LocaleConfig> = {
         feedLanguage: 'en',
         titleSuffix: 'en',
     },
-};
+} as const satisfies Record<'zh' | 'en', LocaleConfig>;
 
 export const LANG_PARAM_EN = {
     description: 'Site language edition (`en` for `minimax.io`, `zh-CN` for `minimax.cn`).',
@@ -107,26 +109,43 @@ export const toValidDate = (value: string | number | undefined): Date | undefine
     return Number.isNaN(parsed.getTime()) ? undefined : parsed;
 };
 
-const walkJsonForArticleVideos = (node: unknown, urls: string[]) => {
-    if (!node || typeof node !== 'object') {
+interface RscVideoCandidate {
+    type?: string;
+    props?: {
+        src?: string;
+    };
+}
+
+const isRecordObject = (value: unknown): value is RscVideoCandidate => Boolean(value && typeof value === 'object');
+
+const readArticleVideoSrc = (candidate: RscVideoCandidate): string | undefined => (candidate.type === 'ArticleVideo' && typeof candidate.props?.src === 'string' ? candidate.props.src : undefined);
+
+const collectRscRowArticleVideos = (rowBody: string, urls: string[]) => {
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(rowBody);
+    } catch {
         return;
     }
-    if (Array.isArray(node)) {
-        for (const item of node) {
-            walkJsonForArticleVideos(item, urls);
+    const stack: unknown[] = [parsed];
+    while (stack.length > 0) {
+        const current = stack.pop();
+        if (!isRecordObject(current)) {
+            continue;
         }
-        return;
-    }
-    const record = node as { type?: unknown; props?: { src?: unknown } };
-    if (record.type === 'ArticleVideo' && typeof record.props?.src === 'string') {
-        urls.push(record.props.src);
-    }
-    for (const val of Object.values(record)) {
-        walkJsonForArticleVideos(val, urls);
+        if (Array.isArray(current)) {
+            stack.push(...current);
+            continue;
+        }
+        const videoSrc = readArticleVideoSrc(current);
+        if (videoSrc) {
+            urls.push(videoSrc);
+        }
+        stack.push(...Object.values(current));
     }
 };
 
-export const extractRscVideoUrls = ($: CheerioAPI, baseUrl: string): string[] => {
+const collectNextFChunks = ($: CheerioAPI): string => {
     const chunks: string[] = [];
     $('script').each((_, el) => {
         const text = $(el).text();
@@ -144,8 +163,31 @@ export const extractRscVideoUrls = ($: CheerioAPI, baseUrl: string): string[] =>
             }
         }
     });
+    return chunks.join('');
+};
 
-    const combined = chunks.join('');
+const advanceNextFRow = (buf: Buffer, pos: number, urls: string[]): number => {
+    const colonIdx = buf.indexOf(0x3a, pos);
+    if (colonIdx === -1) {
+        return -1;
+    }
+    const prefix = buf.subarray(colonIdx + 1, colonIdx + 24).toString('utf8');
+    const textFrame = /^T([0-9a-f]+),/.exec(prefix);
+    if (textFrame) {
+        const nextPos = colonIdx + 1 + textFrame[0].length + Number.parseInt(textFrame[1], 16);
+        return Number.isFinite(nextPos) && nextPos > pos ? nextPos : -1;
+    }
+    const newlineIdx = buf.indexOf(0x0a, colonIdx + 1);
+    const endIdx = newlineIdx === -1 ? buf.length : newlineIdx;
+    const rowBody = buf.subarray(colonIdx + 1, endIdx).toString('utf8');
+    if (rowBody.startsWith('[') || rowBody.startsWith('{')) {
+        collectRscRowArticleVideos(rowBody, urls);
+    }
+    return newlineIdx === -1 ? buf.length : newlineIdx + 1;
+};
+
+export const extractRscVideoUrls = ($: CheerioAPI, baseUrl: string): string[] => {
+    const combined = collectNextFChunks($);
     if (!combined.includes('ArticleVideo')) {
         return [];
     }
@@ -154,33 +196,8 @@ export const extractRscVideoUrls = ($: CheerioAPI, baseUrl: string): string[] =>
     // Parse Next.js RSC Flight stream: T<hexLen>, rows carry byte-counted raw text with no trailing newline
     const buf = Buffer.from(combined, 'utf8');
     let pos = 0;
-    while (pos < buf.length) {
-        const colonIdx = buf.indexOf(0x3a, pos);
-        if (colonIdx === -1) {
-            break;
-        }
-        const prefix = buf.subarray(colonIdx + 1, colonIdx + 24).toString('utf8');
-        const textFrame = /^T([0-9a-f]+),/.exec(prefix);
-        if (textFrame) {
-            const byteLen = Number.parseInt(textFrame[1], 16);
-            const nextPos = colonIdx + 1 + textFrame[0].length + byteLen;
-            if (!Number.isFinite(nextPos) || nextPos <= pos) {
-                break;
-            }
-            pos = nextPos;
-            continue;
-        }
-        const newlineIdx = buf.indexOf(0x0a, colonIdx + 1);
-        const endIdx = newlineIdx === -1 ? buf.length : newlineIdx;
-        const rowBody = buf.subarray(colonIdx + 1, endIdx).toString('utf8');
-        if (rowBody.startsWith('[') || rowBody.startsWith('{')) {
-            try {
-                walkJsonForArticleVideos(JSON.parse(rowBody), rawUrls);
-            } catch {
-                // Skip non-JSON flight lines
-            }
-        }
-        pos = newlineIdx === -1 ? buf.length : newlineIdx + 1;
+    while (pos !== -1 && pos < buf.length) {
+        pos = advanceNextFRow(buf, pos, rawUrls);
     }
 
     return rawUrls.map((u) => resolveAbsoluteUrl(u, baseUrl)).filter((u): u is string => Boolean(u));
@@ -208,8 +225,7 @@ export const normalizeRichContent = ($root: Cheerio<Element>, $: CheerioAPI, bas
             const $container = $(el).parent();
             const $target = $container.length > 0 && $container[0] !== $root[0] && $container.children().length === 1 ? $container : $(el);
             if (videoUrl) {
-                const $video = $('<video controls></video>').attr('src', videoUrl);
-                $target.replaceWith($video);
+                $target.replaceWith(renderArticleVideo(videoUrl));
             } else {
                 $target.remove();
             }
