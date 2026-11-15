@@ -90,7 +90,7 @@ async function handler(ctx) {
     const items = list.map((item) => {
         const $item = $(item);
 
-        const title = $item.find('.gPFEn').text();
+        const title = $item.find('.gPFEn, .JtKRv').text();
         const anchor = $item.find('a.WwrzSb').first();
         const newsUrl = new URL(anchor.attr('href')!, baseUrl).href;
         const timestamp = $item.find('time').attr('datetime');
