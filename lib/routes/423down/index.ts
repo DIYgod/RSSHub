@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
 
     const language = $('html').prop('lang') as Language;
 
-    let items = $('ul.excerpt li')
+    let items = $('div.content ul.excerpt li')
         .toArray()
         .filter((item) => {
             const $item = $(item);
