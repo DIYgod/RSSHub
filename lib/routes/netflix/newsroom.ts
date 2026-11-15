@@ -129,6 +129,10 @@ const render = (node) => {
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
             return `<h6>${innerHTML}</h6>`;
         }
+        case 'blockquote': {
+            const innerHTML = node.content?.map((c) => render(c)).join('') || '';
+            return `<blockquote>${innerHTML}</blockquote>`;
+        }
         case 'hr':
             return '<hr>';
         case 'text': {
@@ -150,6 +154,9 @@ const render = (node) => {
                     case 'strikethrough':
                         text = `<s>${text}</s>`;
                         break;
+                    case 'superscript':
+                        text = `<sup>${text}</sup>`;
+                        break;
                     default:
                         throw new Error(`Unhandled mark type: ${mark.type}`);
                 }
@@ -163,14 +170,15 @@ const render = (node) => {
         }
 
         case 'embedded-asset-block': {
-            const file = Object.values<any>(node.data?.file)[0];
+            const data = node.data.target?.fields ?? node.data;
+            const file = Object.values<any>(data.file)[0];
             if (!file || !file.url) {
                 return '';
             }
 
             const url = file.url.startsWith('//') ? 'https:' + file.url : file.url;
             const contentType = file.contentType || '';
-            const title = Object.values<string>(node.data?.title)[0] || '';
+            const title = Object.values<string>(data.title)[0] || '';
             if (contentType.startsWith('image/')) {
                 return `<img src="${escapeUTF8(url)}" alt="${escapeUTF8(title)}">`;
             }
@@ -196,9 +204,9 @@ const render = (node) => {
             return innerHTML;
         }
         case 'embedded-entry-inline': {
-            const embedLink = node.data.embedLink;
+            const embedLink = node.data.embedLink ?? Object.values<string>(node.data.target.fields.embedLink)[0];
             if (embedLink.startsWith('https://www.youtube.com/') || embedLink.startsWith('https://youtu.be/')) {
-                const youtubeId = node.data.embedLink.split('youtube.com/watch?v=', 2)[1]?.split('&', 1)[0] || node.data.embedLink.split('youtu.be/', 2)[1]?.split('?', 1)[0];
+                const youtubeId = embedLink.split('youtube.com/watch?v=', 2)[1]?.split('&', 1)[0] || embedLink.split('youtu.be/', 2)[1]?.split('?', 1)[0];
                 return renderYoutube(youtubeId);
             }
             return `<a href="${escapeUTF8(embedLink)}" target="_blank" rel="noopener noreferrer">${escapeUTF8(node.data.title ?? embedLink)}</a>`;
