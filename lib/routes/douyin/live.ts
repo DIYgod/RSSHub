@@ -82,7 +82,7 @@ function parseRoomScript(script: string) {
 }
 
 function parseRoomHtml(html: string) {
-    for (const [, script] of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) {
+    for (const [, script] of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)) {
         const data = parseRoomScript(script);
         if (data) {
             return data;
