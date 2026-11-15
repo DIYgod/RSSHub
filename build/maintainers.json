@@ -5963,6 +5963,12 @@
   "/minhangmuseum/interim": [
     "magazian"
   ],
+  "/minimax/blog/:lang?": [
+    "ljh12138164"
+  ],
+  "/minimax/news/:lang?": [
+    "ljh12138164"
+  ],
   "/missav/new": [
     "TonyRL"
   ],

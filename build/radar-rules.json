@@ -34821,6 +34821,60 @@
       }
     ]
   },
+  "minimax.io": {
+    "_name": "MiniMax",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/blog",
+          "/blog",
+          "/blog/:slug",
+          "/blog/:slug"
+        ],
+        "target": "/minimax/blog"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/news",
+          "/news",
+          "/news/:slug",
+          "/news/:slug"
+        ],
+        "target": "/minimax/news"
+      }
+    ]
+  },
+  "minimax.cn": {
+    "_name": "MiniMax",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/blog",
+          "/blog",
+          "/blog/:slug",
+          "/blog/:slug"
+        ],
+        "target": "/minimax/blog/zh-CN"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/news",
+          "/news",
+          "/news/:slug",
+          "/news/:slug"
+        ],
+        "target": "/minimax/news/zh-CN"
+      }
+    ]
+  },
   "missav.ws": {
     "_name": "MissAV",
     ".": [
