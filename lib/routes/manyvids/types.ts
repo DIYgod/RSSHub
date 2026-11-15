@@ -1,39 +1,3 @@
-export interface UserProfile {
-    createdAt: string;
-    displayName: string;
-    profileId: string;
-    urlHandle: string;
-    userId: string;
-    legacyUserId: string;
-    userStatus: string;
-    userType: string;
-    avatar: string;
-    bio: string;
-    description: string;
-    dob: string;
-    identification: string;
-    location: string;
-    orientation: string;
-    currentRank: number;
-    bodyType: string;
-    hairColor: string;
-    ethnicity: string;
-    poAddress: string;
-    poCity: string;
-    poName: string;
-    poZip: string;
-    portrait: string;
-    shortLinkUrl: string;
-    profession: string;
-    socLnkFacebook: string;
-    socLnkInstagram: string;
-    socLnkReddit: string;
-    socLnkTwitter: string;
-    socLnkYoutube: string;
-    profileType: string;
-    hasPremiumMembership: boolean;
-}
-
 interface Avatar {
     url: string;
 }

@@ -1,10 +1,9 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import type { UserProfile, Videos } from './types';
+import type { Videos } from './types';
 
 export const route: Route = {
     path: '/profile/vids/:uid',
@@ -23,8 +22,6 @@ export const route: Route = {
     },
 };
 
-const getProfileById = (uid: string) => cache.tryGet<UserProfile>(`manyvids:profile:${uid}`, () => ofetch<UserProfile>(`https://www.manyvids.com/bff/profile/profiles/${uid}`));
-
 const render = ({ poster, src }: { poster: string; src: string }) =>
     renderToString(
         <video controls preload="metadata" poster={poster}>
@@ -35,10 +32,10 @@ const render = ({ poster, src }: { poster: string; src: string }) =>
 async function handler(ctx) {
     const { uid } = ctx.req.param();
 
-    const profile = await getProfileById(uid);
     const videos = await ofetch<Videos>(`https://www.manyvids.com/bff/store/videos/${uid}/`, {
         query: { page: 1 },
     });
+    const { creator } = videos.data[0];
 
     const items = videos.data.map((v) => ({
         title: v.title,
@@ -48,10 +45,9 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `${profile.displayName}'s Profile - Porn vids, Pics & More | ManyVids - ManyVids`,
-        link: `https://www.manyvids.com/Profile/${uid}/${profile.urlHandle}/Store/Videos`,
-        image: profile.avatar,
-        description: profile.bio,
+        title: `${creator.stageName}'s Profile - Porn vids, Pics & More | ManyVids - ManyVids`,
+        link: `https://www.manyvids.com/Profile/${uid}/${creator.slug}/Store/Videos`,
+        image: creator.avatar.url,
         item: items,
     };
 }
