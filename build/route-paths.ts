@@ -2321,8 +2321,6 @@ export type RoutePath =
   | `/miniflux/default/:parameters?`
   | `/miniflux/entry/:feeds/:parameters?`
   | `/miniflux/subscription/:parameters?`
-  | `/minimax/blog/:lang?`
-  | `/minimax/news/:lang?`
   | `/mirror/:id`
   | `/mirrormedia/`
   | `/mirrormedia/category/:category`
