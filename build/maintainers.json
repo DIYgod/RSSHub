@@ -983,6 +983,9 @@
   "/zread/trending": [
     "DIYgod"
   ],
+  "/zuiyou/user/:mid": [
+    "DIYgod"
+  ],
   "/zyw/hot/:site?": [
     "nczitzk"
   ],
@@ -1117,6 +1120,15 @@
   ],
   "/aliresearch/information/:type?": [
     "nczitzk"
+  ],
+  "/arcteryx/regear/new-arrivals": [
+    "IvanWng97"
+  ],
+  "/arcteryx/new-arrivals/:country/:gender": [
+    "IvanWng97"
+  ],
+  "/arcteryx/outlet/:country/:gender": [
+    "IvanWng97"
   ],
   "/artstation/:handle": [
     "TonyRL"
@@ -1253,6 +1265,12 @@
     "KTachibanaM",
     "AiraNadih"
   ],
+  "/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": [
+    "nczitzk"
+  ],
+  "/fantia/user/:id": [
+    "nczitzk"
+  ],
   "/fediverse/timeline/:account": [
     "DIYgod",
     "pseudoyu"
@@ -1345,6 +1363,15 @@
     "FlashWingShadow",
     "Fatpandac",
     "pseudoyu"
+  ],
+  "/javtrailers/casts/:cast": [
+    "TonyRL"
+  ],
+  "/javtrailers/categories/:category": [
+    "TonyRL"
+  ],
+  "/javtrailers/studios/:studio": [
+    "TonyRL"
   ],
   "/jin10/category/:id": [
     "laampui"
@@ -1450,6 +1477,9 @@
   ],
   "/nanhua/report/:type1/:type2": [
     "TonyRL"
+  ],
+  "/newmuseum/exhibitions/:state?": [
+    "chazeon"
   ],
   "/odaily/newsflash": [
     "nczitzk"
@@ -1782,6 +1812,22 @@
   "/discord/search/:guildId/:routeParams": [
     "NekoAria"
   ],
+  "/douyin/hashtag/:cid/:routeParams?": [
+    "TonyRL"
+  ],
+  "/douyin/live/:rid/:showTime?": [
+    "TonyRL"
+  ],
+  "/douyin/user/:uid/:routeParams?": [
+    "Max-Tortoise",
+    "Rongronggg9"
+  ],
+  "/douyin/collection": [
+    "DIYgod"
+  ],
+  "/douyin/likes/:uid": [
+    "DIYgod"
+  ],
   "/facebook/group/:id": [
     "TonyRL"
   ],
@@ -1832,6 +1878,34 @@
   ],
   "/hackerone/search/:search": [
     "imlonghao"
+  ],
+  "/hk01/channel/:id?": [
+    "hoilc",
+    "Fatpandac",
+    "nczitzk"
+  ],
+  "/hk01/hot": [
+    "hoilc",
+    "Fatpandac",
+    "nczitzk"
+  ],
+  "/hk01/issue/:id?": [
+    "hoilc",
+    "Fatpandac",
+    "nczitzk"
+  ],
+  "/hk01/latest": [
+    "5upernova-heng"
+  ],
+  "/hk01/tag/:id?": [
+    "hoilc",
+    "Fatpandac",
+    "nczitzk"
+  ],
+  "/hk01/zone/:id?": [
+    "hoilc",
+    "Fatpandac",
+    "nczitzk"
   ],
   "/kuaidi100/track/:number/:id/:phone?": [
     "NeverBehave"
@@ -1994,6 +2068,21 @@
   ],
   "/sgcc/95598/blackoutNotice/:adcode": [
     "ocleo1"
+  ],
+  "/showstart/artist/:id": [
+    "lchtao26"
+  ],
+  "/showstart/brand/:id": [
+    "lchtao26"
+  ],
+  "/showstart/event/:cityCode/:showStyle?": [
+    "lchtao26"
+  ],
+  "/showstart/search/:type/:keyword?": [
+    "lchtao26"
+  ],
+  "/showstart/site/:siteId": [
+    "lchtao26"
   ],
   "/skeb/:category": [
     "Tsuyumi25"
@@ -3734,6 +3823,9 @@
   "/dedao/knowledge/:topic?/:type?": [
     "nczitzk"
   ],
+  "/dedao/user/:id/:type?": [
+    "nczitzk"
+  ],
   "/dedao/articles/:id?": [
     "Jacky-Chen-Pro"
   ],
@@ -3742,9 +3834,6 @@
     "pseudoyu"
   ],
   "/dedao/list/:category?": [
-    "nczitzk"
-  ],
-  "/dedao/user/:id/:type?": [
     "nczitzk"
   ],
   "/deepl/blog/:lang?": [
@@ -3927,22 +4016,6 @@
   ],
   "/dorohedoro/news": [
     "nczitzk"
-  ],
-  "/douyin/hashtag/:cid/:routeParams?": [
-    "TonyRL"
-  ],
-  "/douyin/user/:uid/:routeParams?": [
-    "Max-Tortoise",
-    "Rongronggg9"
-  ],
-  "/douyin/collection": [
-    "DIYgod"
-  ],
-  "/douyin/likes/:uid": [
-    "DIYgod"
-  ],
-  "/douyin/live/:rid/:showTime?": [
-    "TonyRL"
   ],
   "/dpm/exhibitions/:type?": [
     "magazian"
@@ -4253,12 +4326,6 @@
   ],
   "/fanqienovel/page/:bookId": [
     "TonyRL"
-  ],
-  "/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": [
-    "nczitzk"
-  ],
-  "/fantia/user/:id": [
-    "nczitzk"
   ],
   "/fanxinzhui/": [
     "nczitzk"
@@ -6248,9 +6315,6 @@
   "/neu/yz/:type": [
     "paintstar"
   ],
-  "/newmuseum/exhibitions/:state?": [
-    "chazeon"
-  ],
   "/newrank/douyin/:dyid": [
     "lessmoe"
   ],
@@ -7011,14 +7075,6 @@
   ],
   "/producereport/:category{.+}?": [
     "nczitzk"
-  ],
-  "/producthunt/feed": [
-    "miaoyafeng",
-    "Fatpandac"
-  ],
-  "/producthunt/today": [
-    "miaoyafeng",
-    "Fatpandac"
   ],
   "/proletar/:type?/:id?": [
     "nczitzk"
@@ -9562,9 +9618,6 @@
   "/zuel/notice": [
     "nczitzk"
   ],
-  "/zuiyou/user/:mid": [
-    "DIYgod"
-  ],
   "/zxcs/novel/:type": [
     "liaochuan"
   ],
@@ -9746,15 +9799,6 @@
     "zoenglinghou",
     "mjysci",
     "TonyRL"
-  ],
-  "/arcteryx/regear/new-arrivals": [
-    "IvanWng97"
-  ],
-  "/arcteryx/new-arrivals/:country/:gender": [
-    "IvanWng97"
-  ],
-  "/arcteryx/outlet/:country/:gender": [
-    "IvanWng97"
   ],
   "/arm/blog/:topic?": [
     "ljh12138164"
@@ -11097,34 +11141,6 @@
   "/hfut/xc/notice/:type?": [
     "batemax"
   ],
-  "/hk01/channel/:id?": [
-    "hoilc",
-    "Fatpandac",
-    "nczitzk"
-  ],
-  "/hk01/hot": [
-    "hoilc",
-    "Fatpandac",
-    "nczitzk"
-  ],
-  "/hk01/issue/:id?": [
-    "hoilc",
-    "Fatpandac",
-    "nczitzk"
-  ],
-  "/hk01/latest": [
-    "5upernova-heng"
-  ],
-  "/hk01/tag/:id?": [
-    "hoilc",
-    "Fatpandac",
-    "nczitzk"
-  ],
-  "/hk01/zone/:id?": [
-    "hoilc",
-    "Fatpandac",
-    "nczitzk"
-  ],
   "/homes/chintai/:pref/:city/:page?": [
     "pseudoyu"
   ],
@@ -11365,15 +11381,6 @@
     "nczitzk",
     "DIYgod",
     "junfengP"
-  ],
-  "/javtrailers/casts/:cast": [
-    "TonyRL"
-  ],
-  "/javtrailers/categories/:category": [
-    "TonyRL"
-  ],
-  "/javtrailers/studios/:studio": [
-    "TonyRL"
   ],
   "/jewishmuseum/exhibitions": [
     "chazeon"
@@ -12015,21 +12022,6 @@
   ],
   "/scu/scupi": [
     "sitdownkevin"
-  ],
-  "/showstart/artist/:id": [
-    "lchtao26"
-  ],
-  "/showstart/brand/:id": [
-    "lchtao26"
-  ],
-  "/showstart/event/:cityCode/:showStyle?": [
-    "lchtao26"
-  ],
-  "/showstart/search/:type/:keyword?": [
-    "lchtao26"
-  ],
-  "/showstart/site/:siteId": [
-    "lchtao26"
   ],
   "/sina/sports/:type": [
     "nczitzk"
@@ -12716,6 +12708,14 @@
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
     "Tsuyumi25"
+  ],
+  "/producthunt/feed": [
+    "miaoyafeng",
+    "Fatpandac"
+  ],
+  "/producthunt/today": [
+    "miaoyafeng",
+    "Fatpandac"
   ],
   "/psyche/topic/:topic": [
     "emdoe"

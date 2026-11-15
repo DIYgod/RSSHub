@@ -3569,6 +3569,50 @@
       }
     ]
   },
+  "arcteryx.com": {
+    "_name": "Arcteryx",
+    "www.resale": [
+      {
+        "title": "Regear New Arrivals",
+        "docs": "https://docs.rsshub.app/routes/arcteryx",
+        "source": [
+          "/collections/new-arrivals",
+          "/"
+        ],
+        "target": "/arcteryx/regear/new-arrivals"
+      }
+    ],
+    "regear": [
+      {
+        "title": "Regear New Arrivals",
+        "docs": "https://docs.rsshub.app/routes/arcteryx",
+        "source": [
+          "/"
+        ],
+        "target": "/arcteryx/regear/new-arrivals"
+      }
+    ],
+    ".": [
+      {
+        "title": "New Arrivals",
+        "docs": "https://docs.rsshub.app/routes/arcteryx",
+        "source": [
+          "/:country/en/c/:gender/new-arrivals"
+        ],
+        "target": "/arcteryx/new-arrivals/:country/:gender"
+      }
+    ],
+    "outlet": [
+      {
+        "title": "Outlet",
+        "docs": "https://docs.rsshub.app/routes/arcteryx",
+        "source": [
+          "/:country/en/c/:gender"
+        ],
+        "target": "/arcteryx/outlet/:country/:gender"
+      }
+    ]
+  },
   "artstation.com": {
     "_name": "ArtStation",
     "www": [
@@ -3955,6 +3999,19 @@
       }
     ]
   },
+  "fantia.jp": {
+    "_name": "Fantia",
+    ".": [
+      {
+        "title": "User Posts",
+        "docs": "https://docs.rsshub.app/routes/fantia",
+        "source": [
+          "/fanclubs/:id"
+        ],
+        "target": "/fantia/user/:id"
+      }
+    ]
+  },
   "fffdm.com": {
     "_name": "风之动漫",
     "www": [
@@ -4247,6 +4304,35 @@
           "/user/:uid"
         ],
         "target": "/ixigua/user/video/:uid"
+      }
+    ]
+  },
+  "javtrailers.com": {
+    "_name": "JavTrailers",
+    ".": [
+      {
+        "title": "Casts",
+        "docs": "https://docs.rsshub.app/routes/javtrailers",
+        "source": [
+          "/casts/:cast"
+        ],
+        "target": "/javtrailers/casts/:cast"
+      },
+      {
+        "title": "Categories",
+        "docs": "https://docs.rsshub.app/routes/javtrailers",
+        "source": [
+          "/categories/:category"
+        ],
+        "target": "/javtrailers/categories/:category"
+      },
+      {
+        "title": "Studios",
+        "docs": "https://docs.rsshub.app/routes/javtrailers",
+        "source": [
+          "/studios/:studio"
+        ],
+        "target": "/javtrailers/studios/:studio"
       }
     ]
   },
@@ -5548,6 +5634,37 @@
       }
     ]
   },
+  "douyin.com": {
+    "_name": "抖音直播",
+    ".": [
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/hashtag/:cid"
+        ],
+        "target": "/douyin/hashtag/:cid"
+      },
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/douyin/user/:uid"
+      }
+    ],
+    "live": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/:rid"
+        ],
+        "target": "/douyin/live/:rid/:showTime?"
+      }
+    ]
+  },
   "facebook.com": {
     "_name": "Facebook",
     "www": [
@@ -5708,6 +5825,65 @@
           "/hacktivity"
         ],
         "target": "/hackerone/hacktivity"
+      }
+    ]
+  },
+  "hk01.com": {
+    "_name": "香港 01",
+    ".": [
+      {
+        "title": "子栏目",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/channel/:id",
+          "/"
+        ],
+        "target": "/hk01/channel/:id?"
+      },
+      {
+        "title": "热门",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/hot",
+          "/"
+        ],
+        "target": "/hk01/hot"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/issue/:id",
+          "/"
+        ],
+        "target": "/hk01/issue/:id?"
+      },
+      {
+        "title": "即時",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/latest",
+          "/"
+        ],
+        "target": "/hk01/latest"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/hk01/tag/:id?"
+      },
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/hk01",
+        "source": [
+          "/zone/:id",
+          "/"
+        ],
+        "target": "/hk01/zone/:id?"
       }
     ]
   },
@@ -6392,6 +6568,35 @@
           "/osgweb/blackoutNotice"
         ],
         "target": "/sgcc/95598/blackoutNotice/:adcode"
+      }
+    ]
+  },
+  "showstart.com": {
+    "_name": "秀动网",
+    "www": [
+      {
+        "title": "按音乐人 - 演出更新",
+        "docs": "https://docs.rsshub.app/routes/showstart",
+        "source": [
+          "/artist/:id"
+        ],
+        "target": "/showstart/artist/:id"
+      },
+      {
+        "title": "按厂牌 - 演出更新",
+        "docs": "https://docs.rsshub.app/routes/showstart",
+        "source": [
+          "/host/:id"
+        ],
+        "target": "/showstart/brand/:id"
+      },
+      {
+        "title": "按场地 - 演出更新",
+        "docs": "https://docs.rsshub.app/routes/showstart",
+        "source": [
+          "/venue/:siteId"
+        ],
+        "target": "/showstart/site/:siteId"
       }
     ]
   },
@@ -20124,37 +20329,6 @@
       }
     ]
   },
-  "douyin.com": {
-    "_name": "抖音直播",
-    ".": [
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/hashtag/:cid"
-        ],
-        "target": "/douyin/hashtag/:cid"
-      },
-      {
-        "title": "博主",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/user/:uid"
-        ],
-        "target": "/douyin/user/:uid"
-      }
-    ],
-    "live": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/:rid"
-        ],
-        "target": "/douyin/live/:rid/:showTime?"
-      }
-    ]
-  },
   "dpm.org.cn": {
     "_name": "The Palace Museum",
     "www": [
@@ -21670,19 +21844,6 @@
           "/page/:bookId"
         ],
         "target": "/fanqienovel/page/:bookId"
-      }
-    ]
-  },
-  "fantia.jp": {
-    "_name": "Fantia",
-    ".": [
-      {
-        "title": "User Posts",
-        "docs": "https://docs.rsshub.app/routes/fantia",
-        "source": [
-          "/fanclubs/:id"
-        ],
-        "target": "/fantia/user/:id"
       }
     ]
   },
@@ -41508,19 +41669,6 @@
       }
     ]
   },
-  "producthunt.com": {
-    "_name": "Product Hunt",
-    "www": [
-      {
-        "title": "Top Products Launching Today",
-        "docs": "https://docs.rsshub.app/routes/producthunt",
-        "source": [
-          "/"
-        ],
-        "target": "/producthunt/today"
-      }
-    ]
-  },
   "playstation.com": {
     "_name": "PlayStation Store",
     "www": [
@@ -52293,50 +52441,6 @@
       }
     ]
   },
-  "arcteryx.com": {
-    "_name": "Arcteryx",
-    "www.resale": [
-      {
-        "title": "Regear New Arrivals",
-        "docs": "https://docs.rsshub.app/routes/arcteryx",
-        "source": [
-          "/collections/new-arrivals",
-          "/"
-        ],
-        "target": "/arcteryx/regear/new-arrivals"
-      }
-    ],
-    "regear": [
-      {
-        "title": "Regear New Arrivals",
-        "docs": "https://docs.rsshub.app/routes/arcteryx",
-        "source": [
-          "/"
-        ],
-        "target": "/arcteryx/regear/new-arrivals"
-      }
-    ],
-    ".": [
-      {
-        "title": "New Arrivals",
-        "docs": "https://docs.rsshub.app/routes/arcteryx",
-        "source": [
-          "/:country/en/c/:gender/new-arrivals"
-        ],
-        "target": "/arcteryx/new-arrivals/:country/:gender"
-      }
-    ],
-    "outlet": [
-      {
-        "title": "Outlet",
-        "docs": "https://docs.rsshub.app/routes/arcteryx",
-        "source": [
-          "/:country/en/c/:gender"
-        ],
-        "target": "/arcteryx/outlet/:country/:gender"
-      }
-    ]
-  },
   "arm.com": {
     "_name": "Arm",
     "newsroom": [
@@ -57867,65 +57971,6 @@
       }
     ]
   },
-  "hk01.com": {
-    "_name": "香港 01",
-    ".": [
-      {
-        "title": "子栏目",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/channel/:id",
-          "/"
-        ],
-        "target": "/hk01/channel/:id?"
-      },
-      {
-        "title": "热门",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/hot",
-          "/"
-        ],
-        "target": "/hk01/hot"
-      },
-      {
-        "title": "专题",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/issue/:id",
-          "/"
-        ],
-        "target": "/hk01/issue/:id?"
-      },
-      {
-        "title": "即時",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/latest",
-          "/"
-        ],
-        "target": "/hk01/latest"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/tag/:id",
-          "/"
-        ],
-        "target": "/hk01/tag/:id?"
-      },
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/hk01",
-        "source": [
-          "/zone/:id",
-          "/"
-        ],
-        "target": "/hk01/zone/:id?"
-      }
-    ]
-  },
   "homes.co.jp": {
     "_name": "LIFULL HOME'S",
     "www": [
@@ -58697,35 +58742,6 @@
           "/"
         ],
         "target": "/javdb/video_codes/:code/:filter?"
-      }
-    ]
-  },
-  "javtrailers.com": {
-    "_name": "JavTrailers",
-    ".": [
-      {
-        "title": "Casts",
-        "docs": "https://docs.rsshub.app/routes/javtrailers",
-        "source": [
-          "/casts/:cast"
-        ],
-        "target": "/javtrailers/casts/:cast"
-      },
-      {
-        "title": "Categories",
-        "docs": "https://docs.rsshub.app/routes/javtrailers",
-        "source": [
-          "/categories/:category"
-        ],
-        "target": "/javtrailers/categories/:category"
-      },
-      {
-        "title": "Studios",
-        "docs": "https://docs.rsshub.app/routes/javtrailers",
-        "source": [
-          "/studios/:studio"
-        ],
-        "target": "/javtrailers/studios/:studio"
       }
     ]
   },
@@ -60332,35 +60348,6 @@
           "/index/tzgg.htm"
         ],
         "target": "/scu/xg/notice"
-      }
-    ]
-  },
-  "showstart.com": {
-    "_name": "秀动网",
-    "www": [
-      {
-        "title": "按音乐人 - 演出更新",
-        "docs": "https://docs.rsshub.app/routes/showstart",
-        "source": [
-          "/artist/:id"
-        ],
-        "target": "/showstart/artist/:id"
-      },
-      {
-        "title": "按厂牌 - 演出更新",
-        "docs": "https://docs.rsshub.app/routes/showstart",
-        "source": [
-          "/host/:id"
-        ],
-        "target": "/showstart/brand/:id"
-      },
-      {
-        "title": "按场地 - 演出更新",
-        "docs": "https://docs.rsshub.app/routes/showstart",
-        "source": [
-          "/venue/:siteId"
-        ],
-        "target": "/showstart/site/:siteId"
       }
     ]
   },
@@ -62798,6 +62785,19 @@
           "/en/users/:id"
         ],
         "target": "/pixiv/user/novels/:id/true"
+      }
+    ]
+  },
+  "producthunt.com": {
+    "_name": "Product Hunt",
+    "www": [
+      {
+        "title": "Top Products Launching Today",
+        "docs": "https://docs.rsshub.app/routes/producthunt",
+        "source": [
+          "/"
+        ],
+        "target": "/producthunt/today"
       }
     ]
   },

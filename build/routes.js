@@ -11733,6 +11733,31 @@ export default {
     "url": "zread.ai",
     "lang": "zh-CN"
   },
+  "zuiyou": {
+    "routes": {
+      "/user/:mid": {
+        "path": "/user/:mid",
+        "name": "用户动态",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "example": "/zuiyou/user/298793092",
+        "parameters": {
+          "mid": "用户 ID，即最右分享主页链接中 `mid` 参数的值。"
+        },
+        "description": "订阅用户公开分享主页首屏中的动态，包括文字、图片和视频。",
+        "location": "user.tsx",
+        "module": () => import('@/routes/zuiyou/user.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "最右",
+    "url": "www.izuiyou.com",
+    "lang": "zh-CN"
+  },
   "zyw": {
     "routes": {
       "/hot/:site?": {
@@ -13220,6 +13245,116 @@ export default {
     "name": "阿里研究院",
     "url": "aliresearch.com",
     "lang": "zh-CN"
+  },
+  "arcteryx": {
+    "routes": {
+      "/regear/new-arrivals": {
+        "path": "/regear/new-arrivals",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/arcteryx/regear/new-arrivals",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.resale.arcteryx.com/collections/new-arrivals",
+              "www.resale.arcteryx.com/"
+            ]
+          },
+          {
+            "source": [
+              "regear.arcteryx.com/"
+            ]
+          }
+        ],
+        "name": "Regear New Arrivals",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "url": "www.resale.arcteryx.com/collections/new-arrivals",
+        "location": "regear-new-arrivals.tsx",
+        "module": () => import('@/routes/arcteryx/regear-new-arrivals.tsx')
+      },
+      "/new-arrivals/:country/:gender": {
+        "path": "/new-arrivals/:country/:gender",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/arcteryx/new-arrivals/us/mens",
+        "parameters": {
+          "country": "country",
+          "gender": "gender"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "arcteryx.com/:country/en/c/:gender/new-arrivals"
+            ]
+          }
+        ],
+        "name": "New Arrivals",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "Country\n\n| United States | Canada | United Kingdom |\n| ------------- | ------ | -------------- |\n| us            | ca     | gb             |\n\ngender\n\n| male | female |\n| ---- | ------ |\n| mens | womens |\n\n::: tip\nParameter `country` can be found within the url of `Arcteryx` website.\n:::",
+        "location": "new-arrivals.ts",
+        "module": () => import('@/routes/arcteryx/new-arrivals.ts')
+      },
+      "/outlet/:country/:gender": {
+        "path": "/outlet/:country/:gender",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/arcteryx/outlet/us/mens",
+        "parameters": {
+          "country": "country",
+          "gender": "gender"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "outlet.arcteryx.com/:country/en/c/:gender"
+            ]
+          }
+        ],
+        "name": "Outlet",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "Country\n\n| United States | Canada | United Kingdom |\n| ------------- | ------ | -------------- |\n| us            | ca     | gb             |\n\ngender\n\n| male | female |\n| ---- | ------ |\n| mens | womens |\n\n::: tip\nParameter `country` can be found within the url of `Arcteryx` website.\n:::",
+        "location": "outlet.ts",
+        "module": () => import('@/routes/arcteryx/outlet.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Arcteryx",
+    "url": "arcteryx.com",
+    "lang": "en"
   },
   "artstation": {
     "routes": {
@@ -14713,6 +14848,268 @@ export default {
     "name": "EVERIA.CLUB",
     "url": "everia.club"
   },
+  "fantia": {
+    "routes": {
+      "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": {
+        "path": "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/fantia/search/posts/all/daily",
+        "parameters": {
+          "type": {
+            "description": "Type, see the table below, `posts` by default",
+            "options": [
+              {
+                "value": "fanclubs",
+                "label": "クリエイター"
+              },
+              {
+                "value": "posts",
+                "label": "投稿"
+              },
+              {
+                "value": "products",
+                "label": "商品"
+              },
+              {
+                "value": "commissions",
+                "label": "コミッション"
+              }
+            ],
+            "default": "posts"
+          },
+          "caty": {
+            "description": "Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default",
+            "options": [
+              {
+                "value": "all",
+                "label": "すべてのクリエイター"
+              },
+              {
+                "value": "illust",
+                "label": "イラスト"
+              },
+              {
+                "value": "comic",
+                "label": "漫画"
+              },
+              {
+                "value": "cosplay",
+                "label": "コスプレ"
+              },
+              {
+                "value": "youtuber",
+                "label": "YouTuber・配信者"
+              },
+              {
+                "value": "vtuber",
+                "label": "Vtuber"
+              },
+              {
+                "value": "voice",
+                "label": "音声作品・ASMR"
+              },
+              {
+                "value": "voiceactor",
+                "label": "声優・歌い手"
+              },
+              {
+                "value": "idol",
+                "label": "アイドル"
+              },
+              {
+                "value": "anime",
+                "label": "アニメ・映像・写真"
+              },
+              {
+                "value": "3d",
+                "label": "3D"
+              },
+              {
+                "value": "game",
+                "label": "ゲーム制作"
+              },
+              {
+                "value": "music",
+                "label": "音楽"
+              },
+              {
+                "value": "novel",
+                "label": "小説"
+              },
+              {
+                "value": "doll",
+                "label": "ドール"
+              },
+              {
+                "value": "art",
+                "label": "アート・デザイン"
+              },
+              {
+                "value": "program",
+                "label": "プログラム"
+              },
+              {
+                "value": "handmade",
+                "label": "創作・ハンドメイド"
+              },
+              {
+                "value": "history",
+                "label": "歴史・評論・情報"
+              },
+              {
+                "value": "railroad",
+                "label": "鉄道・旅行・ミリタリー"
+              },
+              {
+                "value": "shop",
+                "label": "ショップ"
+              },
+              {
+                "value": "other",
+                "label": "その他"
+              }
+            ],
+            "default": "all"
+          },
+          "period": {
+            "description": "Ranking period, see the table below, empty by default. Rankings cannot be combined with a keyword or a custom search order.",
+            "options": [
+              {
+                "value": "daily",
+                "label": "デイリー"
+              },
+              {
+                "value": "weekly",
+                "label": "ウィークリー"
+              },
+              {
+                "value": "monthly",
+                "label": "マンスリー"
+              },
+              {
+                "value": "all",
+                "label": "全期間"
+              }
+            ],
+            "default": ""
+          },
+          "order": {
+            "description": "Sorting, see the table below, `更新の新しい順` by default",
+            "options": [
+              {
+                "value": "updater",
+                "label": "更新の新しい順"
+              },
+              {
+                "value": "update_old",
+                "label": "更新の古い順"
+              },
+              {
+                "value": "newer",
+                "label": "投稿の新しい順"
+              },
+              {
+                "value": "create_old",
+                "label": "投稿の古い順"
+              },
+              {
+                "value": "popular",
+                "label": "お気に入り数順"
+              }
+            ],
+            "default": "updater"
+          },
+          "rating": {
+            "description": "Rating, see the table below, `すべて` by default",
+            "options": [
+              {
+                "value": "all",
+                "label": "すべて"
+              },
+              {
+                "value": "general",
+                "label": "一般のみ"
+              },
+              {
+                "value": "adult",
+                "label": "R18 のみ"
+              }
+            ],
+            "default": "all"
+          },
+          "keyword": "Keyword, empty by default"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FANTIA_COOKIE",
+              "optional": true,
+              "description": "The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "name": "Search",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "Type\n\n| クリエイター | 投稿  | 商品     | コミッション |\n| ------------ | ----- | -------- | ------------ |\n| fanclubs     | posts | products | commissions  |\n\nCategory\n\n| 分类                   | 分类名     |\n| ---------------------- | ---------- |\n| イラスト               | illust     |\n| 漫画                   | comic      |\n| コスプレ               | cosplay    |\n| YouTuber・配信者       | youtuber   |\n| Vtuber                 | vtuber     |\n| 音声作品・ASMR         | voice      |\n| 声優・歌い手           | voiceactor |\n| アイドル               | idol       |\n| アニメ・映像・写真     | anime      |\n| 3D                     | 3d         |\n| ゲーム制作             | game       |\n| 音楽                   | music      |\n| 小説                   | novel      |\n| ドール                 | doll       |\n| アート・デザイン       | art        |\n| プログラム             | program    |\n| 創作・ハンドメイド     | handmade   |\n| 歴史・評論・情報       | history    |\n| 鉄道・旅行・ミリタリー | railroad   |\n| ショップ               | shop       |\n| その他                 | other      |\n\nRanking period\n\n| デイリー | ウィークリー | マンスリー | 全期間 |\n| -------- | ------------ | ---------- | ------ |\n| daily    | weekly       | monthly    | all    |\n\nSorting\n\n| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |\n| -------------- | ------------ | -------------- | ------------ | -------------- |\n| updater        | update\\_old  | newer          | create\\_old  | popular        |\n\nRating\n\n| すべて | 一般のみ | R18 のみ |\n| ------ | -------- | -------- |\n| all    | general  | adult    |",
+        "location": "search.ts",
+        "module": () => import('@/routes/fantia/search.ts')
+      },
+      "/user/:id": {
+        "path": "/user/:id",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/fantia/user/3498",
+        "parameters": {
+          "id": "User id, can be found in user profile URL"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FANTIA_COOKIE",
+              "optional": true,
+              "description": "The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "fantia.jp/fanclubs/:id"
+            ]
+          }
+        ],
+        "name": "User Posts",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "user.ts",
+        "module": () => import('@/routes/fantia/user.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Fantia",
+    "url": "fantia.jp",
+    "lang": "ja"
+  },
   "fediverse": {
     "routes": {
       "/timeline/:account": {
@@ -15831,6 +16228,99 @@ export default {
     "name": "西瓜视频",
     "url": "ixigua.com",
     "lang": "zh-CN"
+  },
+  "javtrailers": {
+    "routes": {
+      "/casts/:cast": {
+        "path": "/casts/:cast",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/casts/hibiki-otsuki",
+        "parameters": {
+          "cast": "Cast name, can be found in the URL of the cast page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/casts/:cast"
+            ],
+            "target": "/casts/:cast"
+          }
+        ],
+        "name": "Casts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "javtrailers.com/casts",
+        "features": {
+          "nsfw": true,
+          "requirePuppeteer": false
+        },
+        "location": "casts.ts",
+        "module": () => import('@/routes/javtrailers/casts.ts')
+      },
+      "/categories/:category": {
+        "path": "/categories/:category",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/categories/hi-def",
+        "parameters": {
+          "category": "Category name, can be found in the URL of the category page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/categories/:category"
+            ]
+          }
+        ],
+        "name": "Categories",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "javtrailers.com/categories",
+        "features": {
+          "nsfw": true,
+          "requirePuppeteer": false
+        },
+        "location": "categories.ts",
+        "module": () => import('@/routes/javtrailers/categories.ts')
+      },
+      "/studios/:studio": {
+        "path": "/studios/:studio",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/javtrailers/studios/s1-no-1-style",
+        "parameters": {
+          "studio": "Studio name, can be found in the URL of the studio page"
+        },
+        "radar": [
+          {
+            "source": [
+              "javtrailers.com/studios/:studio"
+            ],
+            "target": "/studios/:studio"
+          }
+        ],
+        "name": "Studios",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "features": {
+          "nsfw": true,
+          "requirePuppeteer": false
+        },
+        "location": "studios.ts",
+        "module": () => import('@/routes/javtrailers/studios.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "JavTrailers",
+    "url": "javtrailers.com",
+    "lang": "ja"
   },
   "jin10": {
     "routes": {
@@ -17049,6 +17539,59 @@ export default {
     "name": "南华期货",
     "url": "mall.nanhua.net",
     "lang": "zh-CN"
+  },
+  "newmuseum": {
+    "routes": {
+      "/exhibitions/:state?": {
+        "path": "/exhibitions/:state?",
+        "categories": [
+          "travel"
+        ],
+        "example": "/newmuseum/exhibitions",
+        "parameters": {
+          "state": {
+            "description": "Exhibition status from the exhibition overview",
+            "default": "current",
+            "options": [
+              {
+                "value": "current",
+                "label": "Current exhibitions and long-term commissions"
+              },
+              {
+                "value": "upcoming",
+                "label": "Upcoming exhibitions"
+              },
+              {
+                "value": "past",
+                "label": "Past exhibitions"
+              },
+              {
+                "value": "online",
+                "label": "Online exhibitions"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Exhibitions",
+        "maintainers": [
+          "chazeon"
+        ],
+        "location": "exhibitions.ts",
+        "module": () => import('@/routes/newmuseum/exhibitions.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "New Museum",
+    "url": "www.newmuseum.org",
+    "lang": "en"
   },
   "odaily": {
     "routes": {
@@ -20936,6 +21479,167 @@ export default {
     "url": "discord.com",
     "lang": "en"
   },
+  "douyin": {
+    "routes": {
+      "/hashtag/:cid/:routeParams?": {
+        "path": "/hashtag/:cid/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douyin/hashtag/1592824105719812",
+        "parameters": {
+          "cid": "标签 ID，可在标签页面 URL 中找到",
+          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "douyin.com/hashtag/:cid"
+            ],
+            "target": "/hashtag/:cid"
+          }
+        ],
+        "name": "标签",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "hashtag.ts",
+        "module": () => import('@/routes/douyin/hashtag.ts')
+      },
+      "/live/:rid/:showTime?": {
+        "path": "/live/:rid/:showTime?",
+        "categories": [
+          "live"
+        ],
+        "example": "/douyin/live/685317364746",
+        "parameters": {
+          "rid": "直播间 id, 可在主播直播间页 URL 中找到",
+          "showTime": "是否在标题后添加本场首次检测时间，0/1/true/false，默认 false。"
+        },
+        "description": "优先读取公开页面中的直播状态，必要时使用 Playwright 读取页面或直播间接口。showTime 开启时，标题后显示 RSSHub 本场首次检测时间（UTC+8），并非源站实际开播时刻，也不会作为 pubDate。时间按本场真实 room ID 缓存 30 天，重复读取不会延长有效期。内存缓存重启或清除缓存会重置记录，建议使用 Redis 保持记录稳定。",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "live.douyin.com/:rid"
+            ]
+          }
+        ],
+        "name": "直播间开播",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "live.ts",
+        "module": () => import('@/routes/douyin/live.ts')
+      },
+      "/user/:uid/:routeParams?": {
+        "path": "/user/:uid/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao",
+        "parameters": {
+          "uid": "uid，可在用户页面 URL 中找到",
+          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "douyin.com/user/:uid"
+            ],
+            "target": "/user/:uid"
+          }
+        ],
+        "name": "博主",
+        "maintainers": [
+          "Max-Tortoise",
+          "Rongronggg9"
+        ],
+        "location": "user.ts",
+        "module": () => import('@/routes/douyin/user.ts')
+      },
+      "/collection": {
+        "path": "/collection",
+        "name": "收藏的视频",
+        "example": "/douyin/collection",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "DOUYIN_COOKIE",
+              "description": "对应允许用于订阅的本人账号。"
+            }
+          ]
+        },
+        "description": "订阅 DOUYIN\\_COOKIE 对应账号收藏的视频首屏。收藏夹、音乐、合集和短剧不在此路由范围内。发布时间为视频原始发布时间，收藏时间没有公开提供。",
+        "location": "collection.ts",
+        "module": () => import('@/routes/douyin/collection.ts')
+      },
+      "/likes/:uid": {
+        "path": "/likes/:uid",
+        "name": "喜欢的视频",
+        "example": "/douyin/likes/self",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "uid": "用户页面 URL 中的 sec_user_id，或者 self 表示 DOUYIN_COOKIE 对应的登录账号。"
+        },
+        "features": {
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "DOUYIN_COOKIE",
+              "optional": true,
+              "description": "订阅自己的喜欢列表时必须配置；其他用户的列表须对当前账号公开。"
+            }
+          ]
+        },
+        "description": "只读取喜欢列表的首屏。设为私密的列表仅对应账号能够访问。发布时间为视频原始发布时间，点赞时间没有公开提供。",
+        "location": "likes.ts",
+        "module": () => import('@/routes/douyin/likes.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "抖音直播",
+    "url": "douyin.com",
+    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
+    "lang": "zh-CN"
+  },
   "facebook": {
     "routes": {
       "/group/:id": {
@@ -21595,6 +22299,182 @@ export default {
       "other"
     ],
     "lang": "en"
+  },
+  "hk01": {
+    "routes": {
+      "/channel/:id?": {
+        "path": "/channel/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/channel/391",
+        "parameters": {
+          "id": "子栏目 id, 可在 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/channel/:id",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "子栏目",
+        "maintainers": [
+          "hoilc",
+          "Fatpandac",
+          "nczitzk"
+        ],
+        "location": "channel.ts",
+        "module": () => import('@/routes/hk01/channel.ts')
+      },
+      "/hot": {
+        "path": "/hot",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/hot",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/hot",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "热门",
+        "maintainers": [
+          "hoilc",
+          "Fatpandac",
+          "nczitzk"
+        ],
+        "url": "hk01.com/hot",
+        "location": "hot.ts",
+        "module": () => import('@/routes/hk01/hot.ts')
+      },
+      "/issue/:id?": {
+        "path": "/issue/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/issue/649",
+        "parameters": {
+          "id": "专题 id, 可在 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/issue/:id",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "专题",
+        "maintainers": [
+          "hoilc",
+          "Fatpandac",
+          "nczitzk"
+        ],
+        "location": "issue.ts",
+        "module": () => import('@/routes/hk01/issue.ts')
+      },
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/latest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/latest",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "即時",
+        "maintainers": [
+          "5upernova-heng"
+        ],
+        "url": "hk01.com/latest",
+        "location": "latest.ts",
+        "module": () => import('@/routes/hk01/latest.ts')
+      },
+      "/tag/:id?": {
+        "path": "/tag/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/tag/2787",
+        "parameters": {
+          "id": "标签 id, 可在 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/tag/:id",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "标签",
+        "maintainers": [
+          "hoilc",
+          "Fatpandac",
+          "nczitzk"
+        ],
+        "location": "tag.ts",
+        "module": () => import('@/routes/hk01/tag.ts')
+      },
+      "/zone/:id?": {
+        "path": "/zone/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hk01/zone/11",
+        "parameters": {
+          "id": "栏目 id, 可在 URL 中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "hk01.com/zone/:id",
+              "hk01.com/"
+            ]
+          }
+        ],
+        "name": "栏目",
+        "maintainers": [
+          "hoilc",
+          "Fatpandac",
+          "nczitzk"
+        ],
+        "location": "zone.ts",
+        "module": () => import('@/routes/hk01/zone.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "香港 01",
+    "url": "hk01.com",
+    "lang": "zh-HK"
   },
   "kuaidi100": {
     "routes": {
@@ -23911,6 +24791,189 @@ export default {
     "categories": [
       "forecast"
     ],
+    "lang": "zh-CN"
+  },
+  "showstart": {
+    "routes": {
+      "/artist/:id": {
+        "path": "/artist/:id",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/showstart/artist/301783",
+        "parameters": {
+          "id": "音乐人 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.showstart.com/artist/:id"
+            ]
+          }
+        ],
+        "name": "按音乐人 - 演出更新",
+        "maintainers": [
+          "lchtao26"
+        ],
+        "description": "::: tip\n音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)\n:::",
+        "location": "artist.ts",
+        "module": () => import('@/routes/showstart/artist.ts')
+      },
+      "/brand/:id": {
+        "path": "/brand/:id",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/showstart/brand/34707",
+        "parameters": {
+          "id": "厂牌 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.showstart.com/host/:id"
+            ]
+          }
+        ],
+        "name": "按厂牌 - 演出更新",
+        "maintainers": [
+          "lchtao26"
+        ],
+        "description": "::: tip\n厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)\n:::",
+        "location": "brand.ts",
+        "module": () => import('@/routes/showstart/brand.ts')
+      },
+      "/event/:cityCode/:showStyle?": {
+        "path": "/event/:cityCode/:showStyle?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/showstart/event/571/3",
+        "parameters": {
+          "cityCode": "演出城市 (编号)",
+          "showStyle": "演出风格 (编号)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "按城市 - 演出更新",
+        "maintainers": [
+          "lchtao26"
+        ],
+        "description": "::: tip\n\n- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)\n\n- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: [https://rsshub.app/showstart/search/style/ 摇滚](https://rsshub.app/showstart/search/style/摇滚)\n\n:::",
+        "location": "event.ts",
+        "module": () => import('@/routes/showstart/event.ts')
+      },
+      "/search/:type/:keyword?": {
+        "path": "/search/:type/:keyword?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/showstart/search/live",
+        "parameters": {
+          "keyword": "搜索关键词",
+          "type": {
+            "description": "类别",
+            "options": [
+              {
+                "value": "event",
+                "label": "演出"
+              },
+              {
+                "value": "artist",
+                "label": "音乐人"
+              },
+              {
+                "value": "site",
+                "label": "场地"
+              },
+              {
+                "value": "brand",
+                "label": "厂牌"
+              },
+              {
+                "value": "city",
+                "label": "城市"
+              },
+              {
+                "value": "style",
+                "label": "风格"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "演出搜索",
+        "maintainers": [
+          "lchtao26"
+        ],
+        "location": "search.ts",
+        "module": () => import('@/routes/showstart/search.ts')
+      },
+      "/site/:siteId": {
+        "path": "/site/:siteId",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/showstart/site/3583",
+        "parameters": {
+          "siteId": "演出场地 (编号)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.showstart.com/venue/:siteId"
+            ]
+          }
+        ],
+        "name": "按场地 - 演出更新",
+        "maintainers": [
+          "lchtao26"
+        ],
+        "description": "::: tip\n\n- 演出场地 ID 查询: `/showstart/search/site/:keyword`, 如: [https://rsshub.app/showstart/search/site/ 酒球会](https://rsshub.app/showstart/search/site/酒球会)\n\n:::",
+        "location": "site.ts",
+        "module": () => import('@/routes/showstart/site.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "秀动网",
+    "url": "www.showstart.com",
     "lang": "zh-CN"
   },
   "skeb": {
@@ -52144,6 +53207,32 @@ export default {
         "location": "knowledge.tsx",
         "module": () => import('@/routes/dedao/knowledge.tsx')
       },
+      "/user/:id/:type?": {
+        "path": "/user/:id/:type?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og",
+        "parameters": {
+          "id": "用户 id，可在对应用户主页 URL 中找到",
+          "type": "类型，见下表，默认为`0`，即动态"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "用户主页",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "| 动态 | 书评 | 视频 |\n| ---- | ---- | ---- |\n| 0    | 7    | 12   |",
+        "location": "user.tsx",
+        "module": () => import('@/routes/dedao/user.tsx')
+      },
       "/articles/:id?": {
         "path": "/articles/:id?",
         "categories": [
@@ -52226,32 +53315,6 @@ export default {
         "url": "igetget.com/",
         "location": "list.ts",
         "module": () => import('@/routes/dedao/list.ts')
-      },
-      "/user/:id/:type?": {
-        "path": "/user/:id/:type?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og",
-        "parameters": {
-          "id": "用户 id，可在对应用户主页 URL 中找到",
-          "type": "类型，见下表，默认为`0`，即动态"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "用户主页",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "| 动态 | 书评 | 视频 |\n| ---- | ---- | ---- |\n| 0    | 7    | 12   |",
-        "location": "user.tsx",
-        "module": () => import('@/routes/dedao/user.tsx')
       }
     },
     "apiRoutes": {},
@@ -54893,167 +55956,6 @@ export default {
     "name": "Dorohedoro",
     "url": "dorohedoro.net",
     "lang": "ja"
-  },
-  "douyin": {
-    "routes": {
-      "/hashtag/:cid/:routeParams?": {
-        "path": "/hashtag/:cid/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douyin/hashtag/1592824105719812",
-        "parameters": {
-          "cid": "标签 ID，可在标签页面 URL 中找到",
-          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "douyin.com/hashtag/:cid"
-            ],
-            "target": "/hashtag/:cid"
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "hashtag.ts",
-        "module": () => import('@/routes/douyin/hashtag.ts')
-      },
-      "/user/:uid/:routeParams?": {
-        "path": "/user/:uid/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao",
-        "parameters": {
-          "uid": "uid，可在用户页面 URL 中找到",
-          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "douyin.com/user/:uid"
-            ],
-            "target": "/user/:uid"
-          }
-        ],
-        "name": "博主",
-        "maintainers": [
-          "Max-Tortoise",
-          "Rongronggg9"
-        ],
-        "location": "user.ts",
-        "module": () => import('@/routes/douyin/user.ts')
-      },
-      "/collection": {
-        "path": "/collection",
-        "name": "收藏的视频",
-        "example": "/douyin/collection",
-        "categories": [
-          "social-media"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "features": {
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "requireConfig": [
-            {
-              "name": "DOUYIN_COOKIE",
-              "description": "对应允许用于订阅的本人账号。"
-            }
-          ]
-        },
-        "description": "订阅 DOUYIN\\_COOKIE 对应账号收藏的视频首屏。收藏夹、音乐、合集和短剧不在此路由范围内。发布时间为视频原始发布时间，收藏时间没有公开提供。",
-        "location": "collection.ts",
-        "module": () => import('@/routes/douyin/collection.ts')
-      },
-      "/likes/:uid": {
-        "path": "/likes/:uid",
-        "name": "喜欢的视频",
-        "example": "/douyin/likes/self",
-        "categories": [
-          "social-media"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "parameters": {
-          "uid": "用户页面 URL 中的 sec_user_id，或者 self 表示 DOUYIN_COOKIE 对应的登录账号。"
-        },
-        "features": {
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "requireConfig": [
-            {
-              "name": "DOUYIN_COOKIE",
-              "optional": true,
-              "description": "订阅自己的喜欢列表时必须配置；其他用户的列表须对当前账号公开。"
-            }
-          ]
-        },
-        "description": "只读取喜欢列表的首屏。设为私密的列表仅对应账号能够访问。发布时间为视频原始发布时间，点赞时间没有公开提供。",
-        "location": "likes.ts",
-        "module": () => import('@/routes/douyin/likes.ts')
-      },
-      "/live/:rid/:showTime?": {
-        "path": "/live/:rid/:showTime?",
-        "categories": [
-          "live"
-        ],
-        "example": "/douyin/live/685317364746",
-        "parameters": {
-          "rid": "直播间 id, 可在主播直播间页 URL 中找到",
-          "showTime": "是否在标题后添加本场首次检测时间，0/1/true/false，默认 false。"
-        },
-        "description": "优先读取公开页面中的直播状态，必要时使用 Playwright 读取页面或直播间接口。showTime 开启时，标题后显示 RSSHub 本场首次检测时间（UTC+8），并非源站实际开播时刻，也不会作为 pubDate。时间按本场真实 room ID 缓存 30 天，重复读取不会延长有效期。内存缓存重启或清除缓存会重置记录，建议使用 Redis 保持记录稳定。",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "live.douyin.com/:rid"
-            ]
-          }
-        ],
-        "name": "直播间开播",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "live.ts",
-        "module": () => import('@/routes/douyin/live.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "抖音直播",
-    "url": "douyin.com",
-    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
-    "lang": "zh-CN"
   },
   "dpm": {
     "routes": {
@@ -58498,268 +59400,6 @@ export default {
       "reading"
     ],
     "lang": "zh-CN"
-  },
-  "fantia": {
-    "routes": {
-      "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": {
-        "path": "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?",
-        "categories": [
-          "picture"
-        ],
-        "view": 2,
-        "example": "/fantia/search/posts/all/daily",
-        "parameters": {
-          "type": {
-            "description": "Type, see the table below, `posts` by default",
-            "options": [
-              {
-                "value": "fanclubs",
-                "label": "クリエイター"
-              },
-              {
-                "value": "posts",
-                "label": "投稿"
-              },
-              {
-                "value": "products",
-                "label": "商品"
-              },
-              {
-                "value": "commissions",
-                "label": "コミッション"
-              }
-            ],
-            "default": "posts"
-          },
-          "caty": {
-            "description": "Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default",
-            "options": [
-              {
-                "value": "all",
-                "label": "すべてのクリエイター"
-              },
-              {
-                "value": "illust",
-                "label": "イラスト"
-              },
-              {
-                "value": "comic",
-                "label": "漫画"
-              },
-              {
-                "value": "cosplay",
-                "label": "コスプレ"
-              },
-              {
-                "value": "youtuber",
-                "label": "YouTuber・配信者"
-              },
-              {
-                "value": "vtuber",
-                "label": "Vtuber"
-              },
-              {
-                "value": "voice",
-                "label": "音声作品・ASMR"
-              },
-              {
-                "value": "voiceactor",
-                "label": "声優・歌い手"
-              },
-              {
-                "value": "idol",
-                "label": "アイドル"
-              },
-              {
-                "value": "anime",
-                "label": "アニメ・映像・写真"
-              },
-              {
-                "value": "3d",
-                "label": "3D"
-              },
-              {
-                "value": "game",
-                "label": "ゲーム制作"
-              },
-              {
-                "value": "music",
-                "label": "音楽"
-              },
-              {
-                "value": "novel",
-                "label": "小説"
-              },
-              {
-                "value": "doll",
-                "label": "ドール"
-              },
-              {
-                "value": "art",
-                "label": "アート・デザイン"
-              },
-              {
-                "value": "program",
-                "label": "プログラム"
-              },
-              {
-                "value": "handmade",
-                "label": "創作・ハンドメイド"
-              },
-              {
-                "value": "history",
-                "label": "歴史・評論・情報"
-              },
-              {
-                "value": "railroad",
-                "label": "鉄道・旅行・ミリタリー"
-              },
-              {
-                "value": "shop",
-                "label": "ショップ"
-              },
-              {
-                "value": "other",
-                "label": "その他"
-              }
-            ],
-            "default": "all"
-          },
-          "period": {
-            "description": "Ranking period, see the table below, empty by default. Rankings cannot be combined with a keyword or a custom search order.",
-            "options": [
-              {
-                "value": "daily",
-                "label": "デイリー"
-              },
-              {
-                "value": "weekly",
-                "label": "ウィークリー"
-              },
-              {
-                "value": "monthly",
-                "label": "マンスリー"
-              },
-              {
-                "value": "all",
-                "label": "全期間"
-              }
-            ],
-            "default": ""
-          },
-          "order": {
-            "description": "Sorting, see the table below, `更新の新しい順` by default",
-            "options": [
-              {
-                "value": "updater",
-                "label": "更新の新しい順"
-              },
-              {
-                "value": "update_old",
-                "label": "更新の古い順"
-              },
-              {
-                "value": "newer",
-                "label": "投稿の新しい順"
-              },
-              {
-                "value": "create_old",
-                "label": "投稿の古い順"
-              },
-              {
-                "value": "popular",
-                "label": "お気に入り数順"
-              }
-            ],
-            "default": "updater"
-          },
-          "rating": {
-            "description": "Rating, see the table below, `すべて` by default",
-            "options": [
-              {
-                "value": "all",
-                "label": "すべて"
-              },
-              {
-                "value": "general",
-                "label": "一般のみ"
-              },
-              {
-                "value": "adult",
-                "label": "R18 のみ"
-              }
-            ],
-            "default": "all"
-          },
-          "keyword": "Keyword, empty by default"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "FANTIA_COOKIE",
-              "optional": true,
-              "description": "The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "name": "Search",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "description": "Type\n\n| クリエイター | 投稿  | 商品     | コミッション |\n| ------------ | ----- | -------- | ------------ |\n| fanclubs     | posts | products | commissions  |\n\nCategory\n\n| 分类                   | 分类名     |\n| ---------------------- | ---------- |\n| イラスト               | illust     |\n| 漫画                   | comic      |\n| コスプレ               | cosplay    |\n| YouTuber・配信者       | youtuber   |\n| Vtuber                 | vtuber     |\n| 音声作品・ASMR         | voice      |\n| 声優・歌い手           | voiceactor |\n| アイドル               | idol       |\n| アニメ・映像・写真     | anime      |\n| 3D                     | 3d         |\n| ゲーム制作             | game       |\n| 音楽                   | music      |\n| 小説                   | novel      |\n| ドール                 | doll       |\n| アート・デザイン       | art        |\n| プログラム             | program    |\n| 創作・ハンドメイド     | handmade   |\n| 歴史・評論・情報       | history    |\n| 鉄道・旅行・ミリタリー | railroad   |\n| ショップ               | shop       |\n| その他                 | other      |\n\nRanking period\n\n| デイリー | ウィークリー | マンスリー | 全期間 |\n| -------- | ------------ | ---------- | ------ |\n| daily    | weekly       | monthly    | all    |\n\nSorting\n\n| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |\n| -------------- | ------------ | -------------- | ------------ | -------------- |\n| updater        | update\\_old  | newer          | create\\_old  | popular        |\n\nRating\n\n| すべて | 一般のみ | R18 のみ |\n| ------ | -------- | -------- |\n| all    | general  | adult    |",
-        "location": "search.ts",
-        "module": () => import('@/routes/fantia/search.ts')
-      },
-      "/user/:id": {
-        "path": "/user/:id",
-        "categories": [
-          "picture"
-        ],
-        "view": 2,
-        "example": "/fantia/user/3498",
-        "parameters": {
-          "id": "User id, can be found in user profile URL"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "FANTIA_COOKIE",
-              "optional": true,
-              "description": "The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "fantia.jp/fanclubs/:id"
-            ]
-          }
-        ],
-        "name": "User Posts",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "location": "user.ts",
-        "module": () => import('@/routes/fantia/user.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Fantia",
-    "url": "fantia.jp",
-    "lang": "ja"
   },
   "fanxinzhui": {
     "routes": {
@@ -90686,59 +91326,6 @@ export default {
     "url": "neunews.neu.edu.cn",
     "lang": "zh-CN"
   },
-  "newmuseum": {
-    "routes": {
-      "/exhibitions/:state?": {
-        "path": "/exhibitions/:state?",
-        "categories": [
-          "travel"
-        ],
-        "example": "/newmuseum/exhibitions",
-        "parameters": {
-          "state": {
-            "description": "Exhibition status from the exhibition overview",
-            "default": "current",
-            "options": [
-              {
-                "value": "current",
-                "label": "Current exhibitions and long-term commissions"
-              },
-              {
-                "value": "upcoming",
-                "label": "Upcoming exhibitions"
-              },
-              {
-                "value": "past",
-                "label": "Past exhibitions"
-              },
-              {
-                "value": "online",
-                "label": "Online exhibitions"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Exhibitions",
-        "maintainers": [
-          "chazeon"
-        ],
-        "location": "exhibitions.ts",
-        "module": () => import('@/routes/newmuseum/exhibitions.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "New Museum",
-    "url": "www.newmuseum.org",
-    "lang": "en"
-  },
   "newrank": {
     "routes": {
       "/douyin/:dyid": {
@@ -102304,75 +102891,6 @@ export default {
       "new-media"
     ],
     "description": "",
-    "lang": "en"
-  },
-  "producthunt": {
-    "routes": {
-      "/feed": {
-        "path": "/feed",
-        "categories": [
-          "other"
-        ],
-        "example": "/producthunt/feed",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Official Feed",
-        "maintainers": [
-          "miaoyafeng",
-          "Fatpandac"
-        ],
-        "url": "www.producthunt.com/feed/",
-        "location": "feed.ts",
-        "module": () => import('@/routes/producthunt/feed.ts')
-      },
-      "/today": {
-        "path": "/today",
-        "categories": [
-          "other"
-        ],
-        "example": "/producthunt/today",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "PRODUCTHUNT_ACCESS_TOKEN",
-              "description": "Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "description": "Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.",
-        "radar": [
-          {
-            "source": [
-              "www.producthunt.com/"
-            ]
-          }
-        ],
-        "name": "Top Products Launching Today",
-        "maintainers": [
-          "miaoyafeng",
-          "Fatpandac"
-        ],
-        "url": "www.producthunt.com/",
-        "location": "today.tsx",
-        "module": () => import('@/routes/producthunt/today.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Product Hunt",
-    "url": "www.producthunt.com",
-    "description": "> 官方 Feed 地址为: <https://www.producthunt.com/feed>",
     "lang": "en"
   },
   "proletar": {
@@ -132902,31 +133420,6 @@ export default {
     "url": "wap.zuel.edu.cn",
     "lang": "zh-CN"
   },
-  "zuiyou": {
-    "routes": {
-      "/user/:mid": {
-        "path": "/user/:mid",
-        "name": "用户动态",
-        "categories": [
-          "social-media"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "example": "/zuiyou/user/298793092",
-        "parameters": {
-          "mid": "用户 ID，即最右分享主页链接中 `mid` 参数的值。"
-        },
-        "description": "订阅用户公开分享主页首屏中的动态，包括文字、图片和视频。",
-        "location": "user.tsx",
-        "module": () => import('@/routes/zuiyou/user.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "最右",
-    "url": "www.izuiyou.com",
-    "lang": "zh-CN"
-  },
   "zxcs": {
     "routes": {
       "/novel/:type": {
@@ -135261,116 +135754,6 @@ export default {
     "apiRoutes": {},
     "name": "AP News",
     "url": "apnews.com",
-    "lang": "en"
-  },
-  "arcteryx": {
-    "routes": {
-      "/regear/new-arrivals": {
-        "path": "/regear/new-arrivals",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/arcteryx/regear/new-arrivals",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.resale.arcteryx.com/collections/new-arrivals",
-              "www.resale.arcteryx.com/"
-            ]
-          },
-          {
-            "source": [
-              "regear.arcteryx.com/"
-            ]
-          }
-        ],
-        "name": "Regear New Arrivals",
-        "maintainers": [
-          "IvanWng97"
-        ],
-        "url": "www.resale.arcteryx.com/collections/new-arrivals",
-        "location": "regear-new-arrivals.tsx",
-        "module": () => import('@/routes/arcteryx/regear-new-arrivals.tsx')
-      },
-      "/new-arrivals/:country/:gender": {
-        "path": "/new-arrivals/:country/:gender",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/arcteryx/new-arrivals/us/mens",
-        "parameters": {
-          "country": "country",
-          "gender": "gender"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "arcteryx.com/:country/en/c/:gender/new-arrivals"
-            ]
-          }
-        ],
-        "name": "New Arrivals",
-        "maintainers": [
-          "IvanWng97"
-        ],
-        "description": "Country\n\n| United States | Canada | United Kingdom |\n| ------------- | ------ | -------------- |\n| us            | ca     | gb             |\n\ngender\n\n| male | female |\n| ---- | ------ |\n| mens | womens |\n\n::: tip\nParameter `country` can be found within the url of `Arcteryx` website.\n:::",
-        "location": "new-arrivals.ts",
-        "module": () => import('@/routes/arcteryx/new-arrivals.ts')
-      },
-      "/outlet/:country/:gender": {
-        "path": "/outlet/:country/:gender",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/arcteryx/outlet/us/mens",
-        "parameters": {
-          "country": "country",
-          "gender": "gender"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "outlet.arcteryx.com/:country/en/c/:gender"
-            ]
-          }
-        ],
-        "name": "Outlet",
-        "maintainers": [
-          "IvanWng97"
-        ],
-        "description": "Country\n\n| United States | Canada | United Kingdom |\n| ------------- | ------ | -------------- |\n| us            | ca     | gb             |\n\ngender\n\n| male | female |\n| ---- | ------ |\n| mens | womens |\n\n::: tip\nParameter `country` can be found within the url of `Arcteryx` website.\n:::",
-        "location": "outlet.ts",
-        "module": () => import('@/routes/arcteryx/outlet.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Arcteryx",
-    "url": "arcteryx.com",
     "lang": "en"
   },
   "arm": {
@@ -151731,182 +152114,6 @@ export default {
     "url": "hfut.edu.cn",
     "lang": "zh-CN"
   },
-  "hk01": {
-    "routes": {
-      "/channel/:id?": {
-        "path": "/channel/:id?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/channel/391",
-        "parameters": {
-          "id": "子栏目 id, 可在 URL 中找到"
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/channel/:id",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "子栏目",
-        "maintainers": [
-          "hoilc",
-          "Fatpandac",
-          "nczitzk"
-        ],
-        "location": "channel.ts",
-        "module": () => import('@/routes/hk01/channel.ts')
-      },
-      "/hot": {
-        "path": "/hot",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/hot",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/hot",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "热门",
-        "maintainers": [
-          "hoilc",
-          "Fatpandac",
-          "nczitzk"
-        ],
-        "url": "hk01.com/hot",
-        "location": "hot.ts",
-        "module": () => import('@/routes/hk01/hot.ts')
-      },
-      "/issue/:id?": {
-        "path": "/issue/:id?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/issue/649",
-        "parameters": {
-          "id": "专题 id, 可在 URL 中找到"
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/issue/:id",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "专题",
-        "maintainers": [
-          "hoilc",
-          "Fatpandac",
-          "nczitzk"
-        ],
-        "location": "issue.ts",
-        "module": () => import('@/routes/hk01/issue.ts')
-      },
-      "/latest": {
-        "path": "/latest",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/latest",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/latest",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "即時",
-        "maintainers": [
-          "5upernova-heng"
-        ],
-        "url": "hk01.com/latest",
-        "location": "latest.ts",
-        "module": () => import('@/routes/hk01/latest.ts')
-      },
-      "/tag/:id?": {
-        "path": "/tag/:id?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/tag/2787",
-        "parameters": {
-          "id": "标签 id, 可在 URL 中找到"
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/tag/:id",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "hoilc",
-          "Fatpandac",
-          "nczitzk"
-        ],
-        "location": "tag.ts",
-        "module": () => import('@/routes/hk01/tag.ts')
-      },
-      "/zone/:id?": {
-        "path": "/zone/:id?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/hk01/zone/11",
-        "parameters": {
-          "id": "栏目 id, 可在 URL 中找到"
-        },
-        "radar": [
-          {
-            "source": [
-              "hk01.com/zone/:id",
-              "hk01.com/"
-            ]
-          }
-        ],
-        "name": "栏目",
-        "maintainers": [
-          "hoilc",
-          "Fatpandac",
-          "nczitzk"
-        ],
-        "location": "zone.ts",
-        "module": () => import('@/routes/hk01/zone.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "香港 01",
-    "url": "hk01.com",
-    "lang": "zh-HK"
-  },
   "homes": {
     "routes": {
       "/chintai/:pref/:city/:page?": {
@@ -154648,99 +154855,6 @@ export default {
     "name": "JAVLibrary",
     "url": "javlibrary.com",
     "lang": "en"
-  },
-  "javtrailers": {
-    "routes": {
-      "/casts/:cast": {
-        "path": "/casts/:cast",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/javtrailers/casts/hibiki-otsuki",
-        "parameters": {
-          "cast": "Cast name, can be found in the URL of the cast page"
-        },
-        "radar": [
-          {
-            "source": [
-              "javtrailers.com/casts/:cast"
-            ],
-            "target": "/casts/:cast"
-          }
-        ],
-        "name": "Casts",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "javtrailers.com/casts",
-        "features": {
-          "nsfw": true,
-          "requirePuppeteer": false
-        },
-        "location": "casts.ts",
-        "module": () => import('@/routes/javtrailers/casts.ts')
-      },
-      "/categories/:category": {
-        "path": "/categories/:category",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/javtrailers/categories/hi-def",
-        "parameters": {
-          "category": "Category name, can be found in the URL of the category page"
-        },
-        "radar": [
-          {
-            "source": [
-              "javtrailers.com/categories/:category"
-            ]
-          }
-        ],
-        "name": "Categories",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "javtrailers.com/categories",
-        "features": {
-          "nsfw": true,
-          "requirePuppeteer": false
-        },
-        "location": "categories.ts",
-        "module": () => import('@/routes/javtrailers/categories.ts')
-      },
-      "/studios/:studio": {
-        "path": "/studios/:studio",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/javtrailers/studios/s1-no-1-style",
-        "parameters": {
-          "studio": "Studio name, can be found in the URL of the studio page"
-        },
-        "radar": [
-          {
-            "source": [
-              "javtrailers.com/studios/:studio"
-            ],
-            "target": "/studios/:studio"
-          }
-        ],
-        "name": "Studios",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "features": {
-          "nsfw": true,
-          "requirePuppeteer": false
-        },
-        "location": "studios.ts",
-        "module": () => import('@/routes/javtrailers/studios.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "JavTrailers",
-    "url": "javtrailers.com",
-    "lang": "ja"
   },
   "jewishmuseum": {
     "routes": {
@@ -161058,189 +161172,6 @@ export default {
     "apiRoutes": {},
     "name": "四川大学",
     "url": "www.scu.edu.cn",
-    "lang": "zh-CN"
-  },
-  "showstart": {
-    "routes": {
-      "/artist/:id": {
-        "path": "/artist/:id",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/showstart/artist/301783",
-        "parameters": {
-          "id": "音乐人 ID"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.showstart.com/artist/:id"
-            ]
-          }
-        ],
-        "name": "按音乐人 - 演出更新",
-        "maintainers": [
-          "lchtao26"
-        ],
-        "description": "::: tip\n音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)\n:::",
-        "location": "artist.ts",
-        "module": () => import('@/routes/showstart/artist.ts')
-      },
-      "/brand/:id": {
-        "path": "/brand/:id",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/showstart/brand/34707",
-        "parameters": {
-          "id": "厂牌 ID"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.showstart.com/host/:id"
-            ]
-          }
-        ],
-        "name": "按厂牌 - 演出更新",
-        "maintainers": [
-          "lchtao26"
-        ],
-        "description": "::: tip\n厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)\n:::",
-        "location": "brand.ts",
-        "module": () => import('@/routes/showstart/brand.ts')
-      },
-      "/event/:cityCode/:showStyle?": {
-        "path": "/event/:cityCode/:showStyle?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/showstart/event/571/3",
-        "parameters": {
-          "cityCode": "演出城市 (编号)",
-          "showStyle": "演出风格 (编号)"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "按城市 - 演出更新",
-        "maintainers": [
-          "lchtao26"
-        ],
-        "description": "::: tip\n\n- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)\n\n- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: [https://rsshub.app/showstart/search/style/ 摇滚](https://rsshub.app/showstart/search/style/摇滚)\n\n:::",
-        "location": "event.ts",
-        "module": () => import('@/routes/showstart/event.ts')
-      },
-      "/search/:type/:keyword?": {
-        "path": "/search/:type/:keyword?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/showstart/search/live",
-        "parameters": {
-          "keyword": "搜索关键词",
-          "type": {
-            "description": "类别",
-            "options": [
-              {
-                "value": "event",
-                "label": "演出"
-              },
-              {
-                "value": "artist",
-                "label": "音乐人"
-              },
-              {
-                "value": "site",
-                "label": "场地"
-              },
-              {
-                "value": "brand",
-                "label": "厂牌"
-              },
-              {
-                "value": "city",
-                "label": "城市"
-              },
-              {
-                "value": "style",
-                "label": "风格"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "演出搜索",
-        "maintainers": [
-          "lchtao26"
-        ],
-        "location": "search.ts",
-        "module": () => import('@/routes/showstart/search.ts')
-      },
-      "/site/:siteId": {
-        "path": "/site/:siteId",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/showstart/site/3583",
-        "parameters": {
-          "siteId": "演出场地 (编号)"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.showstart.com/venue/:siteId"
-            ]
-          }
-        ],
-        "name": "按场地 - 演出更新",
-        "maintainers": [
-          "lchtao26"
-        ],
-        "description": "::: tip\n\n- 演出场地 ID 查询: `/showstart/search/site/:keyword`, 如: [https://rsshub.app/showstart/search/site/ 酒球会](https://rsshub.app/showstart/search/site/酒球会)\n\n:::",
-        "location": "site.ts",
-        "module": () => import('@/routes/showstart/site.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "秀动网",
-    "url": "www.showstart.com",
     "lang": "zh-CN"
   },
   "sina": {
@@ -169398,6 +169329,75 @@ export default {
     "name": "pixiv",
     "url": "www.pixiv.net",
     "lang": "ja"
+  },
+  "producthunt": {
+    "routes": {
+      "/feed": {
+        "path": "/feed",
+        "categories": [
+          "other"
+        ],
+        "example": "/producthunt/feed",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Official Feed",
+        "maintainers": [
+          "miaoyafeng",
+          "Fatpandac"
+        ],
+        "url": "www.producthunt.com/feed/",
+        "location": "feed.ts",
+        "module": () => import('@/routes/producthunt/feed.ts')
+      },
+      "/today": {
+        "path": "/today",
+        "categories": [
+          "other"
+        ],
+        "example": "/producthunt/today",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PRODUCTHUNT_ACCESS_TOKEN",
+              "description": "Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.",
+        "radar": [
+          {
+            "source": [
+              "www.producthunt.com/"
+            ]
+          }
+        ],
+        "name": "Top Products Launching Today",
+        "maintainers": [
+          "miaoyafeng",
+          "Fatpandac"
+        ],
+        "url": "www.producthunt.com/",
+        "location": "today.tsx",
+        "module": () => import('@/routes/producthunt/today.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Product Hunt",
+    "url": "www.producthunt.com",
+    "description": "> 官方 Feed 地址为: <https://www.producthunt.com/feed>",
+    "lang": "en"
   },
   "psyche": {
     "routes": {
