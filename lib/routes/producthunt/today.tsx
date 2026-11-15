@@ -155,7 +155,7 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
 function parseTransport(html: string) {
     return (
         html
-            .matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)
+            .matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)
             .toArray()
             .map((script) => script[1])
             .filter((text) => text.includes('ApolloSSRDataTransport'))
