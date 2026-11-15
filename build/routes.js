@@ -9199,6 +9199,41 @@ export default {
     "url": "macmenubar.com",
     "lang": "en"
   },
+  "manyvids": {
+    "routes": {
+      "/profile/vids/:uid": {
+        "path": "/profile/vids/:uid",
+        "radar": [
+          {
+            "source": [
+              "www.manyvids.com/Profile/:uid/:handle/Store/*",
+              "www.manyvids.com/Profile/:uid/:handle/Store"
+            ]
+          }
+        ],
+        "parameters": {
+          "uid": "User ID, can be found in the URL."
+        },
+        "name": "Creator Videos",
+        "example": "/manyvids/profile/vids/1001213004",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "location": "video.tsx",
+        "module": () => import('@/routes/manyvids/video.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "ManyVids",
+    "url": "www.manyvids.com",
+    "categories": [
+      "multimedia"
+    ],
+    "lang": "en"
+  },
   "metmuseum": {
     "routes": {
       "/exhibitions/:state?": {
@@ -16692,41 +16727,6 @@ export default {
     "apiRoutes": {},
     "name": "Manus",
     "url": "manus.im",
-    "lang": "en"
-  },
-  "manyvids": {
-    "routes": {
-      "/profile/vids/:uid": {
-        "path": "/profile/vids/:uid",
-        "radar": [
-          {
-            "source": [
-              "www.manyvids.com/Profile/:uid/:handle/Store/*",
-              "www.manyvids.com/Profile/:uid/:handle/Store"
-            ]
-          }
-        ],
-        "parameters": {
-          "uid": "User ID, can be found in the URL."
-        },
-        "name": "Creator Videos",
-        "example": "/manyvids/profile/vids/1001213004",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "features": {
-          "nsfw": true
-        },
-        "location": "video.tsx",
-        "module": () => import('@/routes/manyvids/video.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "ManyVids",
-    "url": "www.manyvids.com",
-    "categories": [
-      "multimedia"
-    ],
     "lang": "en"
   },
   "marginnote": {
@@ -86722,6 +86722,181 @@ export default {
     "url": "minhangmuseum.shmh.gov.cn",
     "zh": {
       "name": "上海市闵行区博物馆"
+    }
+  },
+  "minimax": {
+    "routes": {
+      "/blog/:lang?": {
+        "path": "/blog/:lang?",
+        "name": "Blog",
+        "url": "minimax.io/blog",
+        "example": "/minimax/blog",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "lang": {
+            "description": "Site language edition (`en` for `minimax.io`, `zh-CN` for `minimax.cn`).",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English (minimax.io)"
+              },
+              {
+                "value": "zh-CN",
+                "label": "中文 (minimax.cn)"
+              }
+            ]
+          }
+        },
+        "description": "Full-text official blog and research articles from MiniMax (`minimax.io/blog` by default, or `minimax.cn/blog` with `zh-CN`). Supports the common `limit` parameter.",
+        "zh": {
+          "name": "博客",
+          "parameters": {
+            "lang": {
+              "description": "站点语言版本（默认 `en` 对应英文站 `minimax.io`，`zh-CN` 对应中文站 `minimax.cn`）。",
+              "default": "en",
+              "options": [
+                {
+                  "value": "en",
+                  "label": "English (minimax.io)"
+                },
+                {
+                  "value": "zh-CN",
+                  "label": "中文 (minimax.cn)"
+                }
+              ]
+            }
+          },
+          "description": "获取 MiniMax 官方博客与技术研究文章全文（默认英文站 `minimax.io/blog`，传入 `zh-CN` 可切换至中文站 `minimax.cn/blog`），支持通用 `limit` 参数。"
+        },
+        "radar": [
+          {
+            "source": [
+              "minimax.io/blog",
+              "www.minimax.io/blog",
+              "minimax.io/blog/:slug",
+              "www.minimax.io/blog/:slug"
+            ],
+            "target": "/blog"
+          },
+          {
+            "source": [
+              "minimax.cn/blog",
+              "www.minimax.cn/blog",
+              "minimax.cn/blog/:slug",
+              "www.minimax.cn/blog/:slug"
+            ],
+            "target": "/blog/zh-CN"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "blog.ts",
+        "module": () => import('@/routes/minimax/blog.ts')
+      },
+      "/news/:lang?": {
+        "path": "/news/:lang?",
+        "name": "News",
+        "url": "minimax.io/news",
+        "example": "/minimax/news",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "lang": {
+            "description": "Site language edition (`en` for `minimax.io`, `zh-CN` for `minimax.cn`).",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English (minimax.io)"
+              },
+              {
+                "value": "zh-CN",
+                "label": "中文 (minimax.cn)"
+              }
+            ]
+          }
+        },
+        "description": "Full-text official news and announcements from MiniMax (`minimax.io/news` by default, or `minimax.cn/news` with `zh-CN`), supporting both modern and legacy article layouts and the common `limit` parameter.",
+        "zh": {
+          "name": "新闻",
+          "parameters": {
+            "lang": {
+              "description": "站点语言版本（默认 `en` 对应英文站 `minimax.io`，`zh-CN` 对应中文站 `minimax.cn`）。",
+              "default": "en",
+              "options": [
+                {
+                  "value": "en",
+                  "label": "English (minimax.io)"
+                },
+                {
+                  "value": "zh-CN",
+                  "label": "中文 (minimax.cn)"
+                }
+              ]
+            }
+          },
+          "description": "获取 MiniMax 官方新闻、公告与生态动态全文（默认英文站 `minimax.io/news`，传入 `zh-CN` 可切换至中文站 `minimax.cn/news`），支持通用 `limit` 参数。"
+        },
+        "radar": [
+          {
+            "source": [
+              "minimax.io/news",
+              "www.minimax.io/news",
+              "minimax.io/news/:slug",
+              "www.minimax.io/news/:slug"
+            ],
+            "target": "/news"
+          },
+          {
+            "source": [
+              "minimax.cn/news",
+              "www.minimax.cn/news",
+              "minimax.cn/news/:slug",
+              "www.minimax.cn/news/:slug"
+            ],
+            "target": "/news/zh-CN"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "news.ts",
+        "module": () => import('@/routes/minimax/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "MiniMax",
+    "url": "minimax.io",
+    "lang": "en",
+    "description": "Official blog posts, research updates, and company news from MiniMax.",
+    "zh": {
+      "name": "MiniMax",
+      "description": "MiniMax（稀宇科技）官方博客、技术研究与新闻动态。"
     }
   },
   "missav": {

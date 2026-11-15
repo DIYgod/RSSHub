@@ -787,6 +787,9 @@
   "/macmenubar/recently/:category?": [
     "5upernova-heng"
   ],
+  "/manyvids/profile/vids/:uid": [
+    "TonyRL"
+  ],
   "/metmuseum/exhibitions/:state?": [
     "chazeon"
   ],
@@ -1421,9 +1424,6 @@
   ],
   "/manus/blog": [
     "cscnk52"
-  ],
-  "/manyvids/profile/vids/:uid": [
-    "TonyRL"
   ],
   "/marginnote/tag/:id?": [
     "nczitzk"
@@ -5962,6 +5962,12 @@
   ],
   "/minhangmuseum/interim": [
     "magazian"
+  ],
+  "/minimax/blog/:lang?": [
+    "ljh12138164"
+  ],
+  "/minimax/news/:lang?": [
+    "ljh12138164"
   ],
   "/missav/new": [
     "TonyRL"

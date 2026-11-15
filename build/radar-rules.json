@@ -2460,6 +2460,20 @@
       }
     ]
   },
+  "manyvids.com": {
+    "_name": "ManyVids",
+    "www": [
+      {
+        "title": "Creator Videos",
+        "docs": "https://docs.rsshub.app/routes/manyvids",
+        "source": [
+          "/Profile/:uid/:handle/Store/*",
+          "/Profile/:uid/:handle/Store"
+        ],
+        "target": "/manyvids/profile/vids/:uid"
+      }
+    ]
+  },
   "microsoft.com": {
     "_name": "Microsoft",
     "microsoftedge": [
@@ -4396,20 +4410,6 @@
           "/blog/:slug"
         ],
         "target": "/manus/blog"
-      }
-    ]
-  },
-  "manyvids.com": {
-    "_name": "ManyVids",
-    "www": [
-      {
-        "title": "Creator Videos",
-        "docs": "https://docs.rsshub.app/routes/manyvids",
-        "source": [
-          "/Profile/:uid/:handle/Store/*",
-          "/Profile/:uid/:handle/Store"
-        ],
-        "target": "/manyvids/profile/vids/:uid"
       }
     ]
   },
@@ -34818,6 +34818,60 @@
           "/weixin/interim/list.htm"
         ],
         "target": "/minhangmuseum/interim"
+      }
+    ]
+  },
+  "minimax.io": {
+    "_name": "MiniMax",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/blog",
+          "/blog",
+          "/blog/:slug",
+          "/blog/:slug"
+        ],
+        "target": "/minimax/blog"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/news",
+          "/news",
+          "/news/:slug",
+          "/news/:slug"
+        ],
+        "target": "/minimax/news"
+      }
+    ]
+  },
+  "minimax.cn": {
+    "_name": "MiniMax",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/blog",
+          "/blog",
+          "/blog/:slug",
+          "/blog/:slug"
+        ],
+        "target": "/minimax/blog/zh-CN"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/minimax",
+        "source": [
+          "/news",
+          "/news",
+          "/news/:slug",
+          "/news/:slug"
+        ],
+        "target": "/minimax/news/zh-CN"
       }
     ]
   },
