@@ -61,10 +61,7 @@ export const route: Route = {
 const getPublicationDate = (link: string) =>
     cache.tryGet(`jiangnan:publication:${link}`, async () => {
         const html = await ofetch(link);
-        const $ = load(html);
-        const date = $('form[name="_newscontent_fromname"] .zw-other')
-            .text()
-            .match(/时间[：:]\s*(\d{4}-\d{2}-\d{2})/)?.[1];
+        const date = html.match(/时间[：:]\s*(\d{4}-\d{2}-\d{2})/)?.[1];
         return date ? parseDate(`${date}T00:00:00+08:00`) : undefined;
     });
 

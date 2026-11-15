@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -50,7 +49,7 @@ async function handler(ctx: Context) {
         },
     });
 
-    const csrfToken = load(initalResponse)('meta[name="csrf-token"]').attr('content');
+    const csrfToken = initalResponse.match(/name="csrf-token" content="(.*?)"\s?\/>/)?.[1];
     if (!csrfToken) {
         throw new Error('Fantia did not provide the CSRF token required by its post API. Check that the homepage is accessible and that the configured cookie is valid.');
     }

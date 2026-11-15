@@ -1,4 +1,3 @@
-import { type CheerioAPI, load } from 'cheerio';
 import { decodeHTML } from 'entities/decode';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -56,8 +55,7 @@ async function handler(): Promise<Data> {
         throw new Error('Product Hunt’s Today list is unavailable. /producthunt/feed provides the general feed.', { cause: error });
     }
 
-    const $ = load(response);
-    const data = parseTransport($).flatMap((snapshot) => snapshot.events ?? []);
+    const data = parseTransport(response).flatMap((snapshot) => snapshot.events ?? []);
     const todayList = data.find((event) => event.type === 'next' && event.value?.data?.homefeed)?.value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0')?.node;
     if (!todayList) {
         throw new Error('Product Hunt did not return the Today list. /producthunt/feed provides the general feed.');
@@ -90,7 +88,7 @@ async function handler(): Promise<Data> {
                         responseType: 'text',
                         headers: { 'User-Agent': config.trueUA },
                     });
-                    const post = findPost(parseTransport(load(response)), postSlug);
+                    const post = findPost(parseTransport(response), postSlug);
                     if (!post) {
                         throw new Error(`Product Hunt launch metadata was not found for ${postSlug}.`);
                     }
@@ -154,38 +152,18 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
         </>
     );
 
-function parseTransport($: CheerioAPI) {
-    return $('script:contains("ApolloSSRDataTransport")')
-        .toArray()
-        .flatMap((script) => {
-            const match = $(script)
-                .text()
-                .match(/\.push\(([\s\S]+)\)\s*;?$/);
-            if (!match) {
-                return [];
-            }
+function parseTransport(html: string) {
+    return (
+        html
+            .matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)
+            .toArray()
+            .map((script) => script[1])
+            .filter((text) => text.includes('ApolloSSRDataTransport'))
+            .map((text) => text.match(/\.push\(([\s\S]+)\)\s*;?$/)?.[1])
+            .filter((json) => json !== undefined)
             // The transport is JSON with occasional unquoted undefined values.
-            let json = '';
-            let quoted = false;
-            let escaped = false;
-            for (let i = 0; i < match[1].length; i++) {
-                const char = match[1][i];
-                if (!quoted && match[1].startsWith('undefined', i)) {
-                    json += 'null';
-                    i += 8;
-                    continue;
-                }
-                json += char;
-                if (escaped) {
-                    escaped = false;
-                } else if (quoted && char === '\\') {
-                    escaped = true;
-                } else if (char === '"') {
-                    quoted = !quoted;
-                }
-            }
-            return [JSON.parse(json)];
-        });
+            .map((json) => JSON.parse(json.replaceAll(/"(?:[^"\\]|\\.)*"|undefined/g, (token) => (token === 'undefined' ? 'null' : token))))
+    );
 }
 
 function findPost(value, slug: string): (DescriptionProps & { user?: { name?: string } }) | undefined {

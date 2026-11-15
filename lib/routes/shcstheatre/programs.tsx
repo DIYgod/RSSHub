@@ -142,15 +142,7 @@ async function handler() {
             const link = new URL($(elem).attr('href')!, url);
             return cache.tryGet(`shcstheatre:program-v2:${link.href}`, async () => {
                 const detailResponse = await got(link.href);
-                const content = load(detailResponse.data);
-                const programData = content('script')
-                    .toArray()
-                    .map((script) =>
-                        content(script)
-                            .text()
-                            .match(/var r\s*=\s*(\{[^\r\n]*\});/)
-                    )
-                    .find(Boolean)?.[1];
+                const programData = detailResponse.data.match(/var r\s*=\s*(\{[^\r\n]*\});/)?.[1];
                 if (!programData) {
                     throw new Error(`Unable to find public program data at ${link.href}`);
                 }

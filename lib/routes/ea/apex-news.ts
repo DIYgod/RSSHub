@@ -90,8 +90,7 @@ function getPublishingDate(value?: string) {
 
 async function getPageData<T>(url: string): Promise<T> {
     const response = await ofetch(url, { responseType: 'text' });
-    const $ = load(response);
-    const data = $('#__NEXT_DATA__').text();
+    const data = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1];
     if (!data) {
         throw new Error('The EA page no longer contains its public news data. Please check the original page.');
     }

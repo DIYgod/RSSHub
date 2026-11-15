@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -140,8 +139,7 @@ const ProcessItems = (items, ctx) => {
                     url: item.link,
                 });
 
-                const $ = load(detailResponse.data);
-                const payload = $('script#__NEXT_DATA__').text();
+                const payload = detailResponse.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)?.[1];
                 if (!payload) {
                     throw new Error(`The Hong Kong 01 article is missing its source data: ${item.link}`);
                 }

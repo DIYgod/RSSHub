@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -25,12 +24,8 @@ const extractImageUrl = (value?: string) => value?.match(/"url":"(.*?)"/)?.[1];
 const getVideoUrl = (link: string) =>
     cache.tryGet(`dedao:video:${link}`, async () => {
         const response = await ofetch(link);
-        const $ = load(response);
-        const state = $('script')
-            .toArray()
-            .map((script) => $(script).text())
-            .find((script) => script.includes('window.__INITIAL_STATE__'));
-        const videoUrl = state ? JSON.parse(state.replace(/^\s*window\.__INITIAL_STATE__\s*=\s*/, '').replace(/;\s*$/, '')).noteDetail?.video?.video_url : undefined;
+        const state = response.match(/window\.__INITIAL_STATE__\s*=\s*(\{.+?\});<\/script>/s)?.[1];
+        const videoUrl = state ? JSON.parse(state).noteDetail?.video?.video_url : undefined;
         if (!videoUrl) {
             throw new Error(`No public video playback URL found on ${link}.`);
         }

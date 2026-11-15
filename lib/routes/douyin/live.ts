@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
@@ -84,11 +82,12 @@ function parseRoomScript(script: string) {
 }
 
 function parseRoomHtml(html: string) {
-    const $ = load(html);
-    return $('script')
-        .toArray()
-        .map((script) => parseRoomScript($(script).text()))
-        .find((data) => data !== undefined);
+    for (const [, script] of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)) {
+        const data = parseRoomScript(script);
+        if (data) {
+            return data;
+        }
+    }
 }
 
 async function getEnterResponse(page: Page) {
