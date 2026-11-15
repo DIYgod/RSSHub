@@ -84,6 +84,7 @@ const renderArticle = (asset, link: string) => {
         const placeholder = asset.bodyPlaceholders[id!];
         switch (placeholder?.type) {
             case 'callout':
+            case 'domainListing':
             case 'relatedStory':
                 $el.replaceWith('');
                 break;
