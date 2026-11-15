@@ -135,7 +135,7 @@ const renderDescription = (img: string | undefined): string | undefined =>
     img
         ? renderToString(
               <>
-                  <img src={img} />
+                  <img src={new URL(img, baseUrl).href} />
                   <br />
               </>
           )
