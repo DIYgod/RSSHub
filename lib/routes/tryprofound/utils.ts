@@ -1,7 +1,7 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { escapeAttribute, escapeText } from 'entities';
+import { escapeAttribute } from 'entities';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -19,50 +19,19 @@ interface ResearchAuthor {
     avatar?: string;
 }
 
-interface ResearchItemBase {
+// The Research Hub also lists LinkedIn posts (`researchSocialPost`) and e-books (`researchEbook`); only blog articles are used.
+export interface ResearchArticle {
     _id: string;
+    _type: 'researchArticle';
     title: string;
     href?: string;
+    url?: string;
+    slug?: string;
     publicationDate?: string;
     authors?: ResearchAuthor[];
     tags?: ResearchTag[];
-}
-
-interface ResearchArticle extends ResearchItemBase {
-    _type: 'researchArticle';
-    slug?: string;
-    url?: string;
     coverImage?: string;
 }
-
-interface ResearchSocialPost extends ResearchItemBase {
-    _type: 'researchSocialPost';
-    excerpt?: string;
-    researchSocialPostChannel?: {
-        label?: string;
-        slug?: string;
-    };
-}
-
-interface ResearchEbook extends ResearchItemBase {
-    _type: 'researchEbook';
-    subtitle?: string;
-}
-
-export type ResearchItem = ResearchArticle | ResearchSocialPost | ResearchEbook;
-
-export const typeLabels: Record<ResearchItem['_type'], string> = {
-    researchArticle: 'Article',
-    researchSocialPost: 'Post',
-    researchEbook: 'E-book',
-};
-
-// The site reserves these `?filter=` values for content types; every other value is a tag slug.
-export const typeFilters = new Map<string, { type: ResearchItem['_type']; label: string }>([
-    ['article', { type: 'researchArticle', label: 'Articles' }],
-    ['post', { type: 'researchSocialPost', label: 'Posts' }],
-    ['ebook', { type: 'researchEbook', label: 'E-books' }],
-]);
 
 const flightChunkPattern = /self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g;
 
@@ -125,13 +94,14 @@ const extractJsonArray = (text: string, key: string): string | undefined => {
     return undefined;
 };
 
-export const fetchResearchItems = async (): Promise<ResearchItem[]> => {
+export const fetchResearchArticles = async (): Promise<ResearchArticle[]> => {
     const html = await ofetch(researchUrl, { responseType: 'text' });
     const json = extractJsonArray(decodeFlightData(html), '"researchItems":[');
     if (!json) {
         throw new Error(`Could not find research items on ${researchUrl}. The page structure may have changed.`);
     }
-    return JSON.parse(json) as ResearchItem[];
+    const items = JSON.parse(json) as Array<{ _type: string }>;
+    return items.filter((item): item is ResearchArticle => item._type === 'researchArticle');
 };
 
 // Decodes Cloudflare's email obfuscation (`/cdn-cgi/l/email-protection#<hex>`).
@@ -188,11 +158,3 @@ export const fetchArticleContent = (link: string): Promise<string> =>
     });
 
 export const renderImage = (src: string, alt: string) => `<figure><img src="${escapeAttribute(src)}" alt="${escapeAttribute(alt)}"></figure>`;
-
-export const renderText = (text: string) =>
-    text
-        .split(/\n+/)
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .map((line) => `<p>${escapeText(line)}</p>`)
-        .join('');

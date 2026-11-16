@@ -9,23 +9,21 @@ import logger from '@/utils/logger';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import type { ResearchItem } from './utils';
-import { fetchArticleContent, fetchResearchItems, renderImage, renderText, researchUrl, rootUrl, typeFilters, typeLabels } from './utils';
+import type { ResearchArticle } from './utils';
+import { fetchArticleContent, fetchResearchArticles, renderImage, researchUrl, rootUrl } from './utils';
 
 const DEFAULT_LIMIT = 20;
 const DETAIL_CONCURRENCY = 5;
-const blogPrefix = `${rootUrl}/blog/`;
 
-const tagOptions = [
+const filterOptions = [
+    { value: 'all', label: 'All Research' },
     { value: 'answer-engines', label: 'Answer Engines' },
     { value: 'industry-verticals', label: 'Industry Verticals' },
     { value: 'personal-agents', label: 'Personal Agents' },
 ];
 
-const filterOptions = [{ value: 'all', label: 'All Research' }, ...[...typeFilters].map(([value, { label }]) => ({ value, label })), ...tagOptions];
-
-const resolveLink = (item: ResearchItem): string | undefined => {
-    const path = item._type === 'researchArticle' ? (item.href ?? item.url ?? (item.slug ? `/blog/${item.slug}` : undefined)) : item.href;
+const resolveLink = (article: ResearchArticle): string | undefined => {
+    const path = article.href ?? article.url ?? (article.slug ? `/blog/${article.slug}` : undefined);
     return path ? new URL(path, rootUrl).href : undefined;
 };
 
@@ -42,76 +40,48 @@ const fetchFullText = async (link: string): Promise<string | undefined> => {
     }
 };
 
-const renderDescription = async (item: ResearchItem, link: string): Promise<string> => {
-    const fullText = link.startsWith(blogPrefix) ? await fetchFullText(link) : undefined;
-    switch (item._type) {
-        case 'researchArticle':
-            return (item.coverImage ? renderImage(item.coverImage, item.title) : '') + (fullText ?? '');
-        case 'researchSocialPost':
-            return fullText ?? renderText(item.excerpt ?? '');
-        case 'researchEbook':
-            return renderText(item.subtitle ?? '');
-        default:
-            return '';
-    }
-};
-
-const toDataItem = async (item: ResearchItem, link: string): Promise<DataItem> => {
-    const authors = (item.authors ?? []).map((author) => author.fullName?.trim()).filter(Boolean);
+const toDataItem = async (article: ResearchArticle, link: string): Promise<DataItem> => {
+    const authors = (article.authors ?? []).map((author) => author.fullName?.trim()).filter(Boolean);
+    const coverImage = article.coverImage ? renderImage(article.coverImage, article.title) : '';
     return {
-        title: item.title,
+        title: article.title,
         link,
-        description: await renderDescription(item, link),
-        pubDate: item.publicationDate ? parseDate(item.publicationDate) : undefined,
+        description: coverImage + ((await fetchFullText(link)) ?? ''),
+        pubDate: article.publicationDate ? parseDate(article.publicationDate) : undefined,
         author: authors.length > 0 ? authors.join(', ') : undefined,
-        category: [typeLabels[item._type], ...(item.tags ?? []).map((tag) => tag.label)].filter(Boolean),
-        image: item._type === 'researchArticle' ? item.coverImage : undefined,
+        category: (article.tags ?? []).map((tag) => tag.label),
+        image: article.coverImage,
     };
-};
-
-const matchesFilter = (item: ResearchItem, filter: string | undefined): boolean => {
-    if (!filter) {
-        return true;
-    }
-    const typeFilter = typeFilters.get(filter);
-    return typeFilter ? item._type === typeFilter.type : (item.tags ?? []).some((tag) => tag.slug === filter);
 };
 
 async function handler(ctx: Context): Promise<Data> {
     const rawFilter = ctx.req.param('filter');
     const filter = rawFilter && rawFilter !== 'all' ? rawFilter : undefined;
-    const researchItems = await fetchResearchItems();
+    const articles = await fetchResearchArticles();
 
-    const filtered = researchItems.filter((item) => matchesFilter(item, filter));
+    const filtered = filter ? articles.filter((article) => (article.tags ?? []).some((tag) => tag.slug === filter)) : articles;
     if (filter && filtered.length === 0) {
-        const tagSlugs = [...new Set(researchItems.flatMap((item) => (item.tags ?? []).map((tag) => tag.slug)))];
-        throw new InvalidParameterError(`Unknown or empty filter "${filter}". Use one of: all, ${[...typeFilters.keys(), ...tagSlugs].join(', ')}.`);
+        const tagSlugs = [...new Set(articles.flatMap((article) => (article.tags ?? []).map((tag) => tag.slug)))];
+        throw new InvalidParameterError(`Unknown or empty filter "${filter}". Use one of: all, ${tagSlugs.join(', ')}.`);
     }
 
-    // Links double as GUIDs, so drop entries without a link and merge duplicates.
-    const entries = new Map<string, ResearchItem>();
-    for (const item of filtered) {
-        const link = resolveLink(item);
-        if (!link) {
-            continue;
-        }
-        const existing = entries.get(link);
-        // The same blog post can be listed both as a post and as an article; keep the article entry.
-        if (!existing || (existing._type !== 'researchArticle' && item._type === 'researchArticle')) {
-            entries.set(link, item);
+    // Links double as GUIDs, so drop entries without a link and keep the first of any duplicates.
+    const entries = new Map<string, ResearchArticle>();
+    for (const article of filtered) {
+        const link = resolveLink(article);
+        if (link && !entries.has(link)) {
+            entries.set(link, article);
         }
     }
 
     const limited = [...entries].slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
-    const items = await pMap(limited, ([link, item]) => toDataItem(item, link), { concurrency: DETAIL_CONCURRENCY });
+    const items = await pMap(limited, ([link, article]) => toDataItem(article, link), { concurrency: DETAIL_CONCURRENCY });
 
-    const tagLabel = filter && !typeFilters.has(filter) ? filtered.flatMap((item) => item.tags ?? []).find((tag) => tag.slug === filter)?.label : undefined;
-    const filterLabel = filter ? (typeFilters.get(filter)?.label ?? tagLabel ?? filter) : undefined;
+    const filterLabel = filter ? filtered.flatMap((article) => article.tags ?? []).find((tag) => tag.slug === filter)?.label : undefined;
 
     return {
         title: filterLabel ? `Profound Research - ${filterLabel}` : 'Profound Research',
-        // The site only filters by tag through `?filter=`; type values show every item there.
-        link: tagLabel ? `${researchUrl}?filter=${encodeURIComponent(filter!)}` : researchUrl,
+        link: filter ? `${researchUrl}?filter=${encodeURIComponent(filter)}` : researchUrl,
         description: 'Research, data studies and analysis from the Profound team on AI search and answer engines.',
         language: 'en',
         item: items,
@@ -128,14 +98,13 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     parameters: {
         filter: {
-            description:
-                'Filter by content type (`article`, `post`, `ebook`) or by tag slug as used in `https://www.tryprofound.com/research?filter=<slug>` (e.g. `answer-engines`, `industry-verticals`, `personal-agents`). Omit or use `all` for everything.',
+            description: 'Tag slug as used in `https://www.tryprofound.com/research?filter=<slug>` (e.g. `answer-engines`, `industry-verticals`, `personal-agents`). Omit or use `all` for every article.',
             default: 'all',
             options: filterOptions,
         },
     },
     description:
-        "Items from Profound's Research Hub. Articles include the full text from the Profound blog; LinkedIn posts use the excerpt shown on the Research Hub and e-books use their subtitle. Fetches 20 entries by default; supports the common `limit` parameter.",
+        "Full-text research articles from Profound's Research Hub, fetched from the Profound blog. LinkedIn posts and e-books listed on the hub are not included. Fetches 20 entries by default; supports the common `limit` parameter.",
     radar: [
         {
             source: ['www.tryprofound.com/research'],
