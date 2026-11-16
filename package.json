@@ -68,7 +68,7 @@
         "@bbob/html": "4.4.1",
         "@bbob/plugin-helper": "4.4.1",
         "@bbob/preset-html5": "4.4.1",
-        "@googleapis/youtube": "40.0.2",
+        "@googleapis/youtube": "40.1.0",
         "@honeybadger-io/js": "6.17.1",
         "@hono/node-server": "2.1.8",
         "@hono/zod-openapi": "1.6.3",
