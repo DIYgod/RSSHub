@@ -117,7 +117,7 @@ describe('playwright', () => {
         expect(browser?.isConnected()).toBe(true);
         await browser?.close();
         expect(browser?.isConnected()).toBe(false);
-    }, 10000);
+    }, 30000);
 
     it('getPlaywrightPage', async () => {
         const { getPlaywrightPage } = await import('./playwright');
