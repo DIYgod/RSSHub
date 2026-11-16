@@ -12292,6 +12292,9 @@
   "/touhougarakuta/:language/:type": [
     "ttyfly"
   ],
+  "/tryprofound/research/:filter?": [
+    "Rjnishant530"
+  ],
   "/vocus/publication/:id": [
     "Maecenas"
   ],

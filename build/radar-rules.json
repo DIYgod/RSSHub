@@ -61560,6 +61560,19 @@
       }
     ]
   },
+  "tryprofound.com": {
+    "_name": "Profound",
+    "www": [
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/tryprofound",
+        "source": [
+          "/research"
+        ],
+        "target": "/tryprofound/research"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [

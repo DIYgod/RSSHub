@@ -3503,6 +3503,7 @@ export type RoutePath =
   | `/trendingpapers/papers/:category?/:time?/:cited?`
   | `/tribalfootball/`
   | `/trow/portal`
+  | `/tryprofound/research/:filter?`
   | `/tsdm39/bd/:type?`
   | `/tsinghua/career`
   | `/tsinghua/info/:type`
