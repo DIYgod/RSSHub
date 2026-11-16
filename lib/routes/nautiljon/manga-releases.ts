@@ -83,7 +83,7 @@ async function handler() {
         const $item = $(item);
         const releaseDate = $item.attr('data-planning-date') ?? $item.find('td').first().text();
 
-        const a = $item.find('td.p_titre').find('a.sim').first();
+        const a = $item.find('td.p_titre a').first();
         const img = $item.find('a[data-preview-image], a[im]').first();
         const image = img.attr('data-preview-image') ?? img.attr('im') ?? $item.find('img').first().attr('src');
 
