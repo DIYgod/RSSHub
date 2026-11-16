@@ -90,6 +90,7 @@ export type RoutePath =
   | `/78dm/:category{.+}?`
   | `/7gogo/user/:username`
   | `/7mmtv/:language?/:category?/:type?`
+  | `/80lv/articles/:category?`
   | `/81/81rc/:category{.+}?`
   | `/81/jfjb/:page?`
   | `/8264/list/:id?`

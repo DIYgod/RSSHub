@@ -52238,6 +52238,156 @@
       }
     ]
   },
+  "80.lv": {
+    "_name": "80 Level",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/",
+          "/articles"
+        ],
+        "target": "/80lv/articles"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/news"
+        ],
+        "target": "/80lv/articles/news"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/interview"
+        ],
+        "target": "/80lv/articles/interview"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/game-development"
+        ],
+        "target": "/80lv/articles/game-development"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/gamedev"
+        ],
+        "target": "/80lv/articles/gamedev"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/environment-art"
+        ],
+        "target": "/80lv/articles/environment-art"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/character-art"
+        ],
+        "target": "/80lv/articles/character-art"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/vfx"
+        ],
+        "target": "/80lv/articles/vfx"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/props"
+        ],
+        "target": "/80lv/articles/props"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/animation"
+        ],
+        "target": "/80lv/articles/animation"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/materials"
+        ],
+        "target": "/80lv/articles/materials"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/tech"
+        ],
+        "target": "/80lv/articles/tech"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/events"
+        ],
+        "target": "/80lv/articles/events"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/digest"
+        ],
+        "target": "/80lv/articles/digest"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/feature"
+        ],
+        "target": "/80lv/articles/feature"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/marketplace"
+        ],
+        "target": "/80lv/articles/marketplace"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/game-biz-institute"
+        ],
+        "target": "/80lv/articles/game-biz-institute"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/80lv",
+        "source": [
+          "/articles/80-level-china"
+        ],
+        "target": "/80lv/articles/80-level-china"
+      }
+    ]
+  },
   "aeon.co": {
     "_name": "AEON",
     ".": [

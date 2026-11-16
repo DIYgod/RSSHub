@@ -135014,6 +135014,319 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "80lv": {
+    "routes": {
+      "/articles/:category?": {
+        "path": "/articles/:category?",
+        "name": "Articles",
+        "url": "80.lv/articles",
+        "example": "/80lv/articles",
+        "categories": [
+          "game"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "category": {
+            "description": "Category slug from `https://80.lv/articles/:category` (`all` or omitted for all articles; supports `news`, `interview`, `game-development`, `environment-art`, `tech`, `vfx`, `80-level-china`, etc.).",
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "label": "All Articles"
+              },
+              {
+                "value": "news",
+                "label": "News"
+              },
+              {
+                "value": "interview",
+                "label": "Interviews"
+              },
+              {
+                "value": "game-development",
+                "label": "Game Development"
+              },
+              {
+                "value": "gamedev",
+                "label": "Gamedev"
+              },
+              {
+                "value": "environment-art",
+                "label": "Environment Art"
+              },
+              {
+                "value": "character-art",
+                "label": "Character Art"
+              },
+              {
+                "value": "vfx",
+                "label": "VFX"
+              },
+              {
+                "value": "props",
+                "label": "Props"
+              },
+              {
+                "value": "animation",
+                "label": "Animation"
+              },
+              {
+                "value": "materials",
+                "label": "Materials"
+              },
+              {
+                "value": "tech",
+                "label": "Tech"
+              },
+              {
+                "value": "events",
+                "label": "Events"
+              },
+              {
+                "value": "digest",
+                "label": "Digest"
+              },
+              {
+                "value": "feature",
+                "label": "Feature"
+              },
+              {
+                "value": "marketplace",
+                "label": "Marketplace"
+              },
+              {
+                "value": "game-biz-institute",
+                "label": "GBI"
+              },
+              {
+                "value": "80-level-china",
+                "label": "80 Level China"
+              }
+            ]
+          }
+        },
+        "description": "Full-text articles from 80 Level covering game development, environment/character art, VFX, tech, and developer interviews. Fetches 20 entries by default; supports the common `limit` query parameter (1-100).",
+        "zh": {
+          "name": "文章",
+          "parameters": {
+            "category": {
+              "description": "分类标识（对应 `https://80.lv/articles/:category`，默认 `all` 或留空为全部文章；支持 `news`、`interview`、`game-development`、`environment-art`、`tech`、`vfx`、`80-level-china` 等）。",
+              "default": "all",
+              "options": [
+                {
+                  "value": "all",
+                  "label": "All Articles"
+                },
+                {
+                  "value": "news",
+                  "label": "News"
+                },
+                {
+                  "value": "interview",
+                  "label": "Interviews"
+                },
+                {
+                  "value": "game-development",
+                  "label": "Game Development"
+                },
+                {
+                  "value": "gamedev",
+                  "label": "Gamedev"
+                },
+                {
+                  "value": "environment-art",
+                  "label": "Environment Art"
+                },
+                {
+                  "value": "character-art",
+                  "label": "Character Art"
+                },
+                {
+                  "value": "vfx",
+                  "label": "VFX"
+                },
+                {
+                  "value": "props",
+                  "label": "Props"
+                },
+                {
+                  "value": "animation",
+                  "label": "Animation"
+                },
+                {
+                  "value": "materials",
+                  "label": "Materials"
+                },
+                {
+                  "value": "tech",
+                  "label": "Tech"
+                },
+                {
+                  "value": "events",
+                  "label": "Events"
+                },
+                {
+                  "value": "digest",
+                  "label": "Digest"
+                },
+                {
+                  "value": "feature",
+                  "label": "Feature"
+                },
+                {
+                  "value": "marketplace",
+                  "label": "Marketplace"
+                },
+                {
+                  "value": "game-biz-institute",
+                  "label": "GBI"
+                },
+                {
+                  "value": "80-level-china",
+                  "label": "80 Level China"
+                }
+              ]
+            }
+          },
+          "description": "获取 80 Level 官方文章全文（涵盖游戏开发、环境与角色美术、VFX、图形技术及开发者专访）。默认获取 20 篇，支持通用 `limit` 参数（1-100）。"
+        },
+        "radar": [
+          {
+            "source": [
+              "80.lv/",
+              "80.lv/articles"
+            ],
+            "target": "/articles"
+          },
+          {
+            "source": [
+              "80.lv/articles/news"
+            ],
+            "target": "/articles/news"
+          },
+          {
+            "source": [
+              "80.lv/articles/interview"
+            ],
+            "target": "/articles/interview"
+          },
+          {
+            "source": [
+              "80.lv/articles/game-development"
+            ],
+            "target": "/articles/game-development"
+          },
+          {
+            "source": [
+              "80.lv/articles/gamedev"
+            ],
+            "target": "/articles/gamedev"
+          },
+          {
+            "source": [
+              "80.lv/articles/environment-art"
+            ],
+            "target": "/articles/environment-art"
+          },
+          {
+            "source": [
+              "80.lv/articles/character-art"
+            ],
+            "target": "/articles/character-art"
+          },
+          {
+            "source": [
+              "80.lv/articles/vfx"
+            ],
+            "target": "/articles/vfx"
+          },
+          {
+            "source": [
+              "80.lv/articles/props"
+            ],
+            "target": "/articles/props"
+          },
+          {
+            "source": [
+              "80.lv/articles/animation"
+            ],
+            "target": "/articles/animation"
+          },
+          {
+            "source": [
+              "80.lv/articles/materials"
+            ],
+            "target": "/articles/materials"
+          },
+          {
+            "source": [
+              "80.lv/articles/tech"
+            ],
+            "target": "/articles/tech"
+          },
+          {
+            "source": [
+              "80.lv/articles/events"
+            ],
+            "target": "/articles/events"
+          },
+          {
+            "source": [
+              "80.lv/articles/digest"
+            ],
+            "target": "/articles/digest"
+          },
+          {
+            "source": [
+              "80.lv/articles/feature"
+            ],
+            "target": "/articles/feature"
+          },
+          {
+            "source": [
+              "80.lv/articles/marketplace"
+            ],
+            "target": "/articles/marketplace"
+          },
+          {
+            "source": [
+              "80.lv/articles/game-biz-institute"
+            ],
+            "target": "/articles/game-biz-institute"
+          },
+          {
+            "source": [
+              "80.lv/articles/80-level-china"
+            ],
+            "target": "/articles/80-level-china"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "articles.ts",
+        "module": () => import('@/routes/80lv/articles.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "80 Level",
+    "url": "80.lv",
+    "lang": "en",
+    "description": "Digital art, game development breakdowns, industry news, and technical interviews from 80 Level.",
+    "zh": {
+      "name": "80 Level",
+      "description": "80 Level 游戏美术、图形技术、行业资讯与开发者专访平台。"
+    }
+  },
   "8world": {
     "routes": {
       "/:category?": {
