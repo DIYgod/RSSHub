@@ -199,8 +199,8 @@ importers:
         specifier: 4.4.1
         version: 4.4.1
       '@googleapis/youtube':
-        specifier: 40.0.2
-        version: 40.0.2(supports-color@10.2.2)
+        specifier: 40.1.0
+        version: 40.1.0(supports-color@10.2.2)
       '@honeybadger-io/js':
         specifier: 6.17.1
         version: 6.17.1
@@ -1109,8 +1109,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@googleapis/youtube@40.0.2':
-    resolution: {integrity: sha512-kbm+3uRcezP5skGBIBAaQKDRzla+LQWh9rRXbTyzpuXxBmJQKKLHkZMBwvYwkWQ5+RiVgEvLBvPPgs3FTiu3PA==}
+  '@googleapis/youtube@40.1.0':
+    resolution: {integrity: sha512-4Us55+JmmRRQ0jHdFVo+E30xWSEpdMyzEJWT2e/R0p3mVKl6H5kVGkB5gDbgVHOEip6ooCCHrbixI5m8JmP7Ow==}
     engines: {node: '>=22.0.0'}
 
   '@honeybadger-io/core@6.12.1':
@@ -6643,7 +6643,7 @@ snapshots:
     optionalDependencies:
       '@noble/hashes': 2.4.0
 
-  '@googleapis/youtube@40.0.2(supports-color@10.2.2)':
+  '@googleapis/youtube@40.1.0(supports-color@10.2.2)':
     dependencies:
       googleapis-common: 9.3.1(supports-color@10.2.2)
     transitivePeerDependencies:
