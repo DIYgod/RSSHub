@@ -102,6 +102,8 @@ export type Data = {
     link?: string;
     item?: DataItem[];
     allowEmpty?: boolean;
+    /** Keep the feed out of shared response caches. */
+    private?: boolean;
     /** Default publication-date sorting preference; the common sorted parameter takes precedence. */
     sortItems?: boolean;
     image?: string;

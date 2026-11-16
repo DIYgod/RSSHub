@@ -87,7 +87,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         await next();
 
         const data: Data = ctx.get('data');
-        if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data) {
+        if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data && !data.private) {
             data.lastBuildDate = new Date().toUTCString();
             ctx.set('data', data);
             const body = JSON.stringify(data);

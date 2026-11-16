@@ -41,6 +41,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     }
 
     const data: Data = ctx.get('data');
+    if (data?.private) {
+        ctx.header('Cache-Control', 'private, no-store');
+    }
     if (!data || ctx.res.headers.get('ETag')) {
         return;
     }

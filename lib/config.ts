@@ -188,6 +188,7 @@ type ConfigEnvKeys =
     | 'NHENTAI_PASSWORD'
     | 'NOTION_TOKEN'
     | 'ONLYFANS_COOKIE'
+    | 'PARALLEL_SEARCH_QUERY'
     | 'PATREON_SESSION_ID'
     | 'PIANYUAN_COOKIE'
     | 'PIXABAY_KEY'
@@ -618,6 +619,7 @@ export type Config = {
     pianyuan: {
         cookie?: string;
     };
+    parallelSearchQuery?: string;
     pixabay: {
         key?: string;
     };
@@ -1174,6 +1176,7 @@ const calculateValue = () => {
         pianyuan: {
             cookie: envs.PIANYUAN_COOKIE,
         },
+        parallelSearchQuery: envs.PARALLEL_SEARCH_QUERY?.trim(),
         pixabay: {
             key: envs.PIXABAY_KEY,
         },
