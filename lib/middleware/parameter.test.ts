@@ -4,6 +4,7 @@ import type { AddressInfo } from 'node:net';
 
 import { Context } from 'hono';
 import { http, HttpResponse } from 'msw';
+import { RE2JS } from 're2js';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -772,6 +773,55 @@ describe('filter-engine', () => {
         const response = await freshApp.request('/test/1?filter=abc(%3F%3Ddef)');
         expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/somethingelse/);
+    });
+});
+
+const makeData = (description = 'Desc') => ({
+    link: 'https://example.com',
+    item: [1, 2, 3].map((i) => ({ title: `Item ${i}`, description, author: 'Author', category: ['Category'] })),
+});
+
+describe('filter limits', () => {
+    const filters = ['filter', 'filter_title', 'filter_description', 'filter_author', 'filter_category', 'filterout', 'filterout_title', 'filterout_description', 'filterout_author', 'filterout_category'];
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it.each(filters)('rejects too long %s', async (filter) => {
+        await expect(runMiddleware(makeData(), { [filter]: 'a'.repeat(1024) })).resolves.toBeDefined();
+        await expect(runMiddleware(makeData(), { [filter]: 'a'.repeat(1025) })).rejects.toThrow('longer than 1024 characters');
+    });
+
+    it.each(filters)('rejects too complex %s', async (filter) => {
+        await expect(runMiddleware(makeData(), { [filter]: '.{0,100}[0-9]' })).resolves.toBeDefined();
+        await expect(runMiddleware(makeData(), { [filter]: '.{0,1000}.{0,100}[0-9]' })).rejects.toThrow('too complex');
+    });
+
+    it('responds with an error', async () => {
+        const response = await app.request(`/test/brief?filter=${encodeURIComponent('.{0,1000}'.repeat(20) + '[0-9]')}`);
+        expect(response.status).toBe(503);
+        expect(await response.text()).toMatch(/InvalidParameterError: Invalid filter: too complex/);
+    });
+
+    it('rejects filter too complex for the text', async () => {
+        const short = makeData('a'.repeat(10000));
+        const long = makeData('a'.repeat(100000));
+        await expect(runMiddleware(short, { filter_description: '.{0,400}[0-9]' })).resolves.toBeDefined();
+        await expect(runMiddleware(long, { filter_description: '.{0,400}[0-9]' })).rejects.toThrow('too complex for this feed');
+    });
+
+    it('rejects filter taking too long', async () => {
+        let now = 0;
+        vi.spyOn(Date, 'now').mockImplementation(() => (now += 600));
+        await expect(runMiddleware(makeData(), { filterout: 'Nothing' })).rejects.toThrow('takes too long');
+    });
+
+    it('compiles each filter once', async () => {
+        const compile = vi.spyOn(RE2JS, 'compile');
+        const result = await runMiddleware(makeData(), { filter_title: 'Item', filter_description: 'Desc', filterout: 'Item 2' });
+        expect(result.item.map((item) => item.title)).toEqual(['Item 1', 'Item 3']);
+        expect(compile).toHaveBeenCalledTimes(3);
     });
 });
 

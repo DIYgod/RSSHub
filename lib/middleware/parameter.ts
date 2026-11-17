@@ -11,10 +11,17 @@ import { RE2JS } from 're2js';
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+// filters run synchronously, and matching with re2 costs up to program size * text length
+const MAX_FILTER_LENGTH = 1024;
+const MAX_FILTER_PROGRAM_SIZE = 2048;
+const MAX_FILTER_STEPS = 2 ** 24; // program size * text length of a single match
+const MAX_FILTER_TIME = 1000; // milliseconds spent on all filters of a request
 
 const md = markdownit({
     html: true,
@@ -237,17 +244,49 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         // filter
         const engine = config.feature.filter_regex_engine;
-        const makeRegex = (str: string) => {
+        const compileRegex = (str: string) => {
+            if (str.length > MAX_FILTER_LENGTH) {
+                throw new InvalidParameterError(`Invalid filter: longer than ${MAX_FILTER_LENGTH} characters.`);
+            }
             // default: case_senstivie = true
             const insensitive = ctx.req.query('filter_case_sensitive') === 'false';
             switch (engine) {
                 case 'regexp':
                     return new RegExp(str, insensitive ? 'i' : '');
-                case 're2':
-                    return RE2JS.compile(str, insensitive ? RE2JS.CASE_INSENSITIVE : 0);
+                case 're2': {
+                    const regex = RE2JS.compile(str, insensitive ? RE2JS.CASE_INSENSITIVE : 0);
+                    // counted repetition is expanded at compile time, e.g. `.{0,1000}` takes 2000 instructions
+                    if (regex.programSize() > MAX_FILTER_PROGRAM_SIZE) {
+                        throw new InvalidParameterError('Invalid filter: too complex, please simplify it.');
+                    }
+                    return regex;
+                }
                 default:
                     throw new Error(`Invalid Engine Value: ${engine}, please check your config.`);
             }
+        };
+        // compile each filter once per request instead of once per item
+        const regexes = new Map<string, ReturnType<typeof compileRegex>>();
+        const makeRegex = (str: string) => {
+            let regex = regexes.get(str);
+            if (!regex) {
+                regex = compileRegex(str);
+                regexes.set(str, regex);
+            }
+            return regex;
+        };
+        const filterStart = Date.now();
+        const testRegex = (regex: ReturnType<typeof compileRegex>, str: string) => {
+            if (Date.now() - filterStart > MAX_FILTER_TIME) {
+                throw new InvalidParameterError('Invalid filter: takes too long on this feed, please simplify it.');
+            }
+            if (regex instanceof RE2JS) {
+                if (regex.programSize() * str.length > MAX_FILTER_STEPS) {
+                    throw new InvalidParameterError('Invalid filter: too complex for this feed, please simplify it.');
+                }
+                return regex.matcher(str).find();
+            }
+            return regex.test(str);
         };
 
         if (ctx.req.query('filter')) {
@@ -258,10 +297,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const description = item.description || title;
                 const author = getAuthorString(item);
                 const category = Array.isArray(item.category) ? item.category : [];
-                const isFilter =
-                    regex instanceof RE2JS
-                        ? regex.matcher(title).find() || regex.matcher(description).find() || regex.matcher(author).find() || category.some((c) => regex.matcher(c).find())
-                        : title.match(regex) || description.match(regex) || author.match(regex) || category.some((c) => c.match(regex));
+                const isFilter = testRegex(regex, title) || testRegex(regex, description) || testRegex(regex, author) || category.some((c) => testRegex(regex, c));
 
                 return isFilter;
             });
@@ -278,19 +314,19 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (ctx.req.query('filter_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filter_title')!);
-                    isFilter = titleRegex instanceof RE2JS ? titleRegex.matcher(title).find() : titleRegex.test(title);
+                    isFilter = testRegex(titleRegex, title);
                 }
                 if (ctx.req.query('filter_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filter_description')!);
-                    isFilter &&= descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : descriptionRegex.test(description);
+                    isFilter &&= testRegex(descriptionRegex, description);
                 }
                 if (ctx.req.query('filter_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filter_author')!);
-                    isFilter &&= authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : authorRegex.test(author);
+                    isFilter &&= testRegex(authorRegex, author);
                 }
                 if (ctx.req.query('filter_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filter_category')!);
-                    isFilter &&= category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.some((c) => testRegex(categoryRegex, c));
                 }
 
                 return isFilter;
@@ -307,19 +343,19 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filterout_title') || ctx.req.query('filterout')!);
-                    isFilter = titleRegex instanceof RE2JS ? !titleRegex.matcher(title).find() : !titleRegex.test(title);
+                    isFilter = !testRegex(titleRegex, title);
                 }
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
-                    isFilter &&= descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description);
+                    isFilter &&= !testRegex(descriptionRegex, description);
                 }
                 if (ctx.req.query('filterout_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filterout_author')!);
-                    isFilter &&= authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author);
+                    isFilter &&= !testRegex(authorRegex, author);
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter &&= category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.every((c) => !testRegex(categoryRegex, c));
                 }
 
                 return isFilter;
