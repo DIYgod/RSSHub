@@ -15,8 +15,10 @@ function isMediumUrl(url: URL) {
 }
 
 async function fetchArticle(url: string, cookie: string, redirects = 0): Promise<string> {
+    // the session is only sent to Medium, and only a Medium host may keep it through a redirect
+    const sessionCookie = cookie && isMediumUrl(new URL(url)) ? cookie : '';
     const response = await ofetch.raw<string, 'text'>(url, {
-        headers: cookie && isMediumUrl(new URL(url)) ? { cookie } : {},
+        headers: sessionCookie ? { cookie: sessionCookie } : {},
         redirect: 'manual',
         responseType: 'text',
     });
@@ -29,7 +31,7 @@ async function fetchArticle(url: string, cookie: string, redirects = 0): Promise
         if (!['https:', 'http:'].includes(next.protocol)) {
             throw new Error('The Medium article source returned an unsupported redirect.');
         }
-        return fetchArticle(next.href, cookie, redirects + 1);
+        return fetchArticle(next.href, sessionCookie, redirects + 1);
     }
     return response._data ?? '';
 }
