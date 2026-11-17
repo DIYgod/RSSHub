@@ -1,5 +1,4 @@
 import { type CheerioAPI, load } from 'cheerio';
-import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
@@ -7,6 +6,7 @@ import pMap from 'p-map';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { jsx } from '@/utils/jsx';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';

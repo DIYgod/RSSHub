@@ -4,7 +4,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
-import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
@@ -12,6 +11,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { jsx } from '@/utils/jsx';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {

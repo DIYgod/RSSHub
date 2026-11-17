@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
-import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { jsx } from '@/utils/jsx';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';

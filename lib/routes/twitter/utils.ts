@@ -1,6 +1,6 @@
-import { createElement } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { createElement } from '@/utils/jsx';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
