@@ -15,7 +15,7 @@ beforeEach(() => {
     config.playwrightWSEndpoint = undefined;
     mocks.goto.mockResolvedValue(undefined);
     mocks.newPage.mockResolvedValue({ goto: mocks.goto });
-    mocks.newContext.mockResolvedValue({ newPage: mocks.newPage, close: mocks.contextClose });
+    mocks.newContext.mockResolvedValue({ newPage: mocks.newPage, on: vi.fn(), close: mocks.contextClose });
     mocks.launch.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
     mocks.connect.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
     mocks.cloudConnect.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
@@ -65,8 +65,8 @@ describe('Worker browser lifecycle', () => {
     it('isolates simultaneous requests and cleans up only their own context', async () => {
         useSessionCoordinator();
         const contexts = [
-            { newPage: mocks.newPage, close: vi.fn() },
-            { newPage: mocks.newPage, close: vi.fn() },
+            { newPage: mocks.newPage, on: vi.fn(), close: vi.fn() },
+            { newPage: mocks.newPage, on: vi.fn(), close: vi.fn() },
         ];
         mocks.newContext.mockResolvedValueOnce(contexts[0]).mockResolvedValueOnce(contexts[1]);
         const pages = await Promise.all([getPlaywrightPage('about:blank', { noGoto: true }), getPlaywrightPage('about:blank', { noGoto: true })]);

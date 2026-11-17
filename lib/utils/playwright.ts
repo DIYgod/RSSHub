@@ -4,6 +4,7 @@ import { chromium } from 'patchright';
 import { config } from '@/config';
 
 import logger from './logger';
+import { limitContentLength } from './playwright-utils';
 import proxy from './proxy';
 
 type GotoOptions = Parameters<Page['goto']>[1];
@@ -114,6 +115,7 @@ const launchBrowser = async (proxyOptions: ProxyOptions, javaScriptEnabled?: boo
     }
     try {
         const context = await browser.newContext(getContextOptions(javaScriptEnabled));
+        context.on('page', limitContentLength);
         return { browser, context };
     } catch (error) {
         await browser.close();

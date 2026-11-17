@@ -55,4 +55,24 @@ const getCookies = async (page, domainFilter?: string) => {
     return parseCookieArray(cookies, domainFilter);
 };
 
-export { constructCookieArray, getCookies, parseCookieArray, setCookies };
+// upper bound on the size of a rendered document that is parsed further
+const MAX_CONTENT_LENGTH = 4 * 1024 * 1024;
+
+/**
+ * Make `page.content()` reject when the rendered document is too large.
+ *
+ * @param page Browser Page object
+ * @return {void}
+ */
+const limitContentLength = (page) => {
+    const content = page.content.bind(page);
+    page.content = async (...args) => {
+        const html = await content(...args);
+        if (html.length > MAX_CONTENT_LENGTH) {
+            throw new Error(`${page.url()} rendered to ${html.length} characters, which is too large to parse`);
+        }
+        return html;
+    };
+};
+
+export { constructCookieArray, getCookies, limitContentLength, parseCookieArray, setCookies };

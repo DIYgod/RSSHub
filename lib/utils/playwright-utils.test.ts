@@ -2,7 +2,7 @@ import type { BrowserContext } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import playwright from '@/utils/playwright';
-import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/playwright-utils';
+import { constructCookieArray, getCookies, limitContentLength, parseCookieArray, setCookies } from '@/utils/playwright-utils';
 
 let context: BrowserContext | null = null;
 
@@ -99,4 +99,17 @@ describe('browser cookie utils', () => {
         });
         expect((await getCookies(page, 'example.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(cookieStrAll.split('; ').toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
+});
+
+describe('limitContentLength', () => {
+    it.each([
+        ['returns a document at the limit', 4 * 1024 * 1024, true],
+        ['rejects a document over the limit', 4 * 1024 * 1024 + 1, false],
+    ])('%s', async (_, length, accepted) => {
+        const html = 'x'.repeat(length);
+        const page = { content: vi.fn(() => Promise.resolve(html)), url: () => 'https://rsshub.test/' };
+        limitContentLength(page);
+
+        await (accepted ? expect(page.content()).resolves.toBe(html) : expect(page.content()).rejects.toThrow(`https://rsshub.test/ rendered to ${length} characters`));
+    });
 });

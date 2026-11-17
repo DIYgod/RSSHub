@@ -24,6 +24,7 @@ const createBrowserMocks = () => {
         close: vi.fn(() => Promise.resolve()),
         cookies: vi.fn(),
         newPage: vi.fn(() => Promise.resolve(mockPage)),
+        on: vi.fn(),
     };
 
     mockBrowser = {
@@ -138,6 +139,18 @@ describe('playwright', () => {
         expect(browser?.isConnected()).toBe(false);
         context = null;
     }, 45000);
+
+    it('limits the length of page.content()', async () => {
+        const { default: playwright } = await import('./playwright');
+        context = await playwright();
+        const page = await context.newPage();
+
+        await page.setContent('<p>small</p>');
+        expect(await page.content()).toContain('<p>small</p>');
+
+        await page.evaluate(() => document.body.append('x'.repeat(5 * 1024 * 1024)));
+        await expect(page.content()).rejects.toThrow('too large to parse');
+    }, 10000);
 });
 
 describe('getPlaywrightPage (mocked)', () => {
