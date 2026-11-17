@@ -99,13 +99,8 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/news/s.jsonp?${sectorsUrl}&${categoriesUrl}`;
     const response = await ofetch(currentUrl, { responseType: 'text' });
 
-    const $ = load(
-        response
-            .match(/"html":"(.*)","relatedUrl"/)![1]
-            .replaceAll(/\\u([\dA-Fa-f]{4})/g, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
-            .replaceAll(String.raw`\n`, '')
-            .replaceAll(String.raw`\/`, '/')
-    );
+    // decode the JSON string with the JSON parser so an escaped backslash stays a backslash (`\\u003C` is text, not `<`)
+    const $ = load(JSON.parse(`"${response.match(/"html":"(.*)","relatedUrl"/)![1]}"`));
 
     const list = $('.list-ui__title')
         .slice(0, 10)
@@ -113,7 +108,7 @@ async function handler(ctx: Context) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.text(),
+                title: $item.text().trim(),
                 link: new URL($item.attr('href')!, rootUrl).href,
                 pubDate: parseDate($item.parent().find('time').attr('datetime')!),
             };
