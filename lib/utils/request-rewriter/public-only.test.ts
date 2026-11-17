@@ -7,6 +7,7 @@ import type { AddressInfo } from 'node:net';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { config } from '@/config';
+import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 
 import { publicLookup, publicOnly } from './public-only';
@@ -66,6 +67,12 @@ describe('ofetch publicOnly', () => {
     it.each(['127.0.0.1', 'localhost'])('refuses %s', async (hostname) => {
         await expect(ofetch(`http://${hostname}:${port}/`, { retry: 0, publicOnly: true })).rejects.toThrow('non-public address');
         expect(handler).not.toHaveBeenCalled();
+    });
+
+    it('is passed through by got', async () => {
+        await expect(got(`http://127.0.0.1:${port}/`, { retry: 0, publicOnly: true })).rejects.toThrow('non-public address');
+        expect(handler).not.toHaveBeenCalled();
+        await expect(got(`http://127.0.0.1:${port}/`, { retry: 0 })).resolves.toMatchObject({ body: 'internal' });
     });
 
     it('is off by default', async () => {

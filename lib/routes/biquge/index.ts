@@ -62,7 +62,8 @@ export const route: Route = {
 async function handler(ctx) {
     const currentUrl = ctx.req.param('url');
     const rootUrl = currentUrl.split('/').slice(0, 3).join('/');
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.has(new URL(rootUrl).hostname)) {
+    const { protocol, hostname } = new URL(rootUrl);
+    if (!config.feature.allow_user_supply_unsafe_domain && (!['http:', 'https:'].includes(protocol) || !allowHost.has(hostname))) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
@@ -90,7 +91,8 @@ async function handler(ctx) {
                 return false;
             }
             const url = new URL(href, currentUrl);
-            if (url.pathname === '/' || chapterLinks.has(url.href)) {
+            // only follow links on the site itself
+            if (!['http:', 'https:'].includes(url.protocol) || url.hostname !== hostname || url.pathname === '/' || chapterLinks.has(url.href)) {
                 return false;
             }
             chapterLinks.add(url.href);

@@ -114,9 +114,14 @@ async function handler(ctx: Context) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
                 pubDate: parseDate($item.parent().find('time').attr('datetime')!),
             };
+        })
+        // only follow links on the site itself
+        .filter((item) => {
+            const { protocol, hostname } = new URL(item.link);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'fashionnetwork.com' || hostname.endsWith('.fashionnetwork.com'));
         });
 
     const items = await Promise.all(

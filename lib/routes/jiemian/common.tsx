@@ -33,7 +33,7 @@ export const handler = async (ctx): Promise<Data> => {
     for (const el of links) {
         const item = $(el);
         const href = item.prop('href');
-        const link = href ? (href.startsWith('/') ? new URL(href, rootUrl).href : href) : undefined;
+        const link = href ? new URL(href, rootUrl).href : undefined;
 
         if (link && /\/(?:article|video)\/\w+\.html/.test(link)) {
             items.set(link, {
@@ -72,7 +72,16 @@ export const parseCardList = (html: string) => {
         });
 };
 
+// only follow links on the site itself
+const isSiteLink = (link: string) => {
+    const { protocol, hostname } = new URL(link, rootUrl);
+    return ['http:', 'https:'].includes(protocol) && (hostname === 'jiemian.com' || hostname.endsWith('.jiemian.com'));
+};
+
 export const fetchArticle = async (item) => {
+    if (!item.link || !isSiteLink(item.link)) {
+        return item;
+    }
     const details = await cache.tryGet(`${item.link}:article`, async () => {
         const detailResponse = await ofetch(item.link);
 

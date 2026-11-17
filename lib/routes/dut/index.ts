@@ -157,6 +157,11 @@ async function handler(ctx) {
         items,
         (item) =>
             cache.tryGet(item.link!, async () => {
+                const { protocol, hostname } = new URL(item.link!);
+                // only follow links on the site itself
+                if (!['http:', 'https:'].includes(protocol) || (hostname !== 'dlut.edu.cn' && !hostname.endsWith('.dlut.edu.cn'))) {
+                    return item;
+                }
                 try {
                     const detailResponse = await got({
                         method: 'get',

@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderIndexDescription } from './templates/index';
-import { domainValidation } from './utils';
+import { domainValidation, isSiteLink } from './utils';
 
 export const route: Route = {
     path: '/author/:uid/:lang?',
@@ -57,10 +57,11 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.video-title').text(),
-                link: $item.find('a').attr('href'),
+                link: new URL($item.find('a').attr('href')!, siteUrl).href,
                 poster: $item.find('.img-responsive').attr('src'),
             };
-        });
+        })
+        .filter((item) => isSiteLink(item.link!, domain));
 
     items = await Promise.all(
         items.map((item) =>

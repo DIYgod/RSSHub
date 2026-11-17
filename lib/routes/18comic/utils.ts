@@ -99,7 +99,9 @@ const fetchApi = async (apiUrl: string) => {
     let token = `${ts}18comicAPP`;
     token = md5(token);
 
+    // the API domains come from a remote list
     const response = await got(apiUrl, {
+        publicOnly: true,
         headers: {
             token,
             tokenparam: tokenParam,
@@ -151,10 +153,12 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
 
             return {
                 title: $item.text().trim(),
-                link: `${rootUrl}${$item.prev().find('a').attr('href')}`,
+                link: new URL($item.prev().find('a').attr('href')!, rootUrl).href,
                 guid: `18comic:${$item.prev().find('a').attr('href')}`,
             };
-        });
+        })
+        // only follow links on the site itself
+        .filter((item) => new URL(item.link!).origin === new URL(rootUrl).origin);
 
     items = await Promise.all(
         items.map((item) =>

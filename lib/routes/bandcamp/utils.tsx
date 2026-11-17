@@ -9,7 +9,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const getRelease = (link: string) =>
     cache.tryGet(link, async (): Promise<DataItem> => {
-        const detailResponse = await got(link, { minVersion: 'TLSv1.3' });
+        // releases can be on an artist's own domain
+        const detailResponse = await got(link, { minVersion: 'TLSv1.3', publicOnly: true });
         const content = load(detailResponse.data);
         const data = JSON.parse(content('[data-tralbum]').attr('data-tralbum')!);
         const image = content('#tralbumArt img').attr('src');

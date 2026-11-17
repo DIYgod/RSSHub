@@ -42,6 +42,15 @@ export const route: Route = {
 > **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
 };
 
+// only follow links on the site itself
+const isSiteItem = (item: DataItem) => {
+    if (!item.link) {
+        return false;
+    }
+    const { protocol, hostname } = new URL(item.link);
+    return ['http:', 'https:'].includes(protocol) && (hostname === 'bendibao.com' || hostname.endsWith('.bendibao.com'));
+};
+
 async function handler(ctx) {
     const city = ctx.req.param('city');
     if (!isValidHost(city)) {
@@ -70,9 +79,10 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: link && new URL(link, rootUrl).href,
             };
-        });
+        })
+        .filter((item) => isSiteItem(item));
 
     // Cities share 2 sets of ui.
     //
@@ -98,9 +108,10 @@ async function handler(ctx) {
 
                 return {
                     title: $item.text(),
-                    link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
+                    link: link && new URL(link, rootUrl).href,
                 };
-            });
+            })
+            .filter((item) => isSiteItem(item));
     }
 
     items = await Promise.all(

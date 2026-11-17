@@ -48,15 +48,24 @@ interface ArticleRecord {
     subNm?: string;
 }
 
+// only follow links on the site itself
+export const isSiteLink = (link: string) => {
+    const { protocol, hostname } = new URL(link);
+    return ['http:', 'https:'].includes(protocol) && (hostname === 'cs.com.cn' || hostname.endsWith('.cs.com.cn'));
+};
+
 export async function getCurrentItems($: CheerioAPI, currentUrl: string): Promise<Array<DataItem & { link: string }>> {
     const pageScripts = $('script:not([src])')
         .toArray()
         .map((script) => $(script).text())
         .join('\n');
+    const { origin } = new URL(currentUrl);
     const guideUrls = $('script[src]')
         .toArray()
         .map((script) => $(script).attr('src')!)
-        .filter((src) => /\/js\/\d+\/mi4_page_articles_guide\.js$/.test(src));
+        .filter((src) => /\/js\/\d+\/mi4_page_articles_guide\.js$/.test(src))
+        // only follow scripts on the site itself
+        .filter((src) => new URL(src, currentUrl).origin === origin);
     const batches = await Promise.all(
         guideUrls.map(async (src) => {
             const guideUrl = new URL(src, currentUrl).href;

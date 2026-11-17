@@ -77,7 +77,9 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (/bast\.net\.cn/.test(item.link!)) {
+                const { protocol, hostname } = new URL(item.link!);
+                // only follow links on the site itself
+                if (['http:', 'https:'].includes(protocol) && (hostname === 'bast.net.cn' || hostname.endsWith('.bast.net.cn'))) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

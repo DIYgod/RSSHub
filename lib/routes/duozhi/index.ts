@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 title,
                 description,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
                 author: authors,
                 content: {
@@ -99,6 +99,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
         items,
         (item) => {
             if (!item.link) {
+                return item;
+            }
+            // only follow links on the site itself
+            const { protocol, hostname } = new URL(item.link);
+            if (!['http:', 'https:'].includes(protocol) || (hostname !== 'duozhi.com' && !hostname.endsWith('.duozhi.com'))) {
                 return item;
             }
 

@@ -38,9 +38,14 @@ async function handler(ctx: Context) {
 
             return {
                 title: a.text(),
-                link: `${rootUrl}${a.attr('href')}`,
+                link: new URL(a.attr('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('.time-ago').attr('data-value')!),
             };
+        })
+        // only follow links on the site itself
+        .filter((item) => {
+            const { protocol, hostname } = new URL(item.link);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'fashionnetwork.com' || hostname.endsWith('.fashionnetwork.com'));
         });
 
     const items = await Promise.all(

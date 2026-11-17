@@ -57,6 +57,11 @@ export const handler = async (ctx) => {
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
             };
+        })
+        // only follow links on the site itself
+        .filter((item) => {
+            const { protocol, hostname } = new URL(item.link!);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'fashionnetwork.cn' || hostname.endsWith('.fashionnetwork.cn'));
         });
 
     items = await pMap(

@@ -45,12 +45,14 @@ async function handler(ctx) {
             .toArray()
             .map((element) => $(element).attr('href')!),
         ...clientItems.map((item) => item.page_url),
-    ];
+    ]
+        .map((url) => new URL(url, link))
+        .filter((url) => ['http:', 'https:'].includes(url.protocol));
 
     const items = await pMap(
         urls.slice(0, limit),
         async (url) => {
-            const itemLink = new URL(url, link).href;
+            const itemLink = url.href;
             return { ...(await getRelease(itemLink)), link: itemLink };
         },
         { concurrency: 3 }

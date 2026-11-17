@@ -166,8 +166,13 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
+                link: new URL(link!, rootUrl).href,
             };
+        })
+        .filter((item) => {
+            // only follow links on the site itself
+            const { protocol, hostname } = new URL(item.link!);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'chinawriter.com.cn' || hostname.endsWith('.chinawriter.com.cn'));
         })
         .filter((item) => {
             const link = item.link!.replace(/^https?:/, '');

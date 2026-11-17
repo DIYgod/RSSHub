@@ -155,7 +155,12 @@ const gdgov = async (info, ctx) => {
         return link;
     });
 
-    const links = Array.isArray(lists) ? lists : lists.toArray();
+    const rootHostname = new URL(rootUrl).hostname;
+    const links = (Array.isArray(lists) ? lists : lists.toArray()).filter((link: string) => {
+        const { protocol, hostname } = new URL(link);
+        // only follow links on the site itself when the list is limited to it
+        return ['http:', 'https:'].includes(protocol) && (listInclude !== 'site' || pathname.startsWith('gkmlpt') || hostname === rootHostname);
+    });
     const items = await Promise.all(
         links.map((link) => {
             const idLink = new URL(link);
@@ -192,7 +197,7 @@ const gdgov = async (info, ctx) => {
             }
             return cache.tryGet(link, async () => {
                 // Fetch the article page.
-                const { data: res } = await got(link);
+                const { data: res } = await got(link, { publicOnly: true });
                 const content = load(res);
 
                 // Extract the article source.

@@ -58,10 +58,12 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.parent().attr('href')}`,
+                link: new URL($item.parent().attr('href')!, rootUrl).href,
                 guid: `https://18comic.org${$item.parent().attr('href')}`,
             };
-        });
+        })
+        // only follow links on the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
     const items = await Promise.all(
         new Map(list.map((item) => [item.guid, item]))

@@ -158,10 +158,12 @@ async function handler(ctx) {
 
                 // Extract enclosure: rmdown.com (fetch page for magnet) | magnet from 哈希校验 | copyLink
                 const rmdownLink = readTpc.find('a[href*="rmdown.com/link.php"]').attr('href');
-                const enclosureHref = rmdownLink?.startsWith('http') ? rmdownLink : rmdownLink ? `https://www.rmdown.com/${rmdownLink}` : null;
+                const rmdownUrl = rmdownLink ? new URL(rmdownLink, 'https://www.rmdown.com/') : null;
+                // the link is user-written, only follow it on rmdown.com
+                const enclosureHref = rmdownUrl && ['http:', 'https:'].includes(rmdownUrl.protocol) && (rmdownUrl.hostname === 'rmdown.com' || rmdownUrl.hostname.endsWith('.rmdown.com')) ? rmdownUrl.href : null;
 
                 if (enclosureHref) {
-                    const rmdownPage = await cache.tryGet(`2048:rmdown:${enclosureHref}`, () => ofetch(enclosureHref));
+                    const rmdownPage = await cache.tryGet(`2048:rmdown:${enclosureHref}`, () => ofetch(enclosureHref, { publicOnly: true }));
                     const btihMatch = rmdownPage.match(/Code:\s*([a-fA-F0-9]{40})/);
                     const magnetUrl = btihMatch ? `magnet:?xt=urn:btih:${btihMatch[1]}` : null;
                     if (magnetUrl) {
