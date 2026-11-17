@@ -176,6 +176,7 @@ type ConfigEnvKeys =
     | 'MIHOYO_COOKIE'
     | 'MINIFLUX_INSTANCE'
     | 'MINIFLUX_TOKEN'
+    | 'MISSKEY_API_HOST'
     | 'MISSKEY_ACCESS_TOKEN'
     | 'MIXI2_AUTH_TOKEN'
     | 'MIXI2_AUTH_KEY'
@@ -583,6 +584,7 @@ export type Config = {
         token?: string;
     };
     misskey: {
+        apiHost: string;
         accessToken?: string;
     };
     mixi2: {
@@ -1139,6 +1141,7 @@ const calculateValue = () => {
             token: envs.MINIFLUX_TOKEN || '',
         },
         misskey: {
+            apiHost: envs.MISSKEY_API_HOST || 'misskey.io',
             accessToken: envs.MISSKEY_ACCESS_TOKEN,
         },
         mixi2: {

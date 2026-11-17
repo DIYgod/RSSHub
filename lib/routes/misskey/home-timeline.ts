@@ -44,6 +44,11 @@ Examples:
                     Visit the specified site's settings page to obtain an access token. E.g. https://misskey.io/settings/api
                 `,
             },
+            {
+                name: 'MISSKEY_API_HOST',
+                optional: true,
+                description: 'Domain of the instance that issued `MISSKEY_ACCESS_TOKEN`, without `http://` or `https://` protocol header. The token is only sent to this instance. Default: `misskey.io`',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -72,8 +77,9 @@ async function handler(ctx) {
     }
 
     const site = ctx.req.param('site');
-    if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+    // avoid sending API token to other sites
+    if (site !== config.misskey.apiHost) {
+        throw new ConfigNotFoundError(`RSS for this domain is disabled unless 'MISSKEY_API_HOST' is set to the instance that issued 'MISSKEY_ACCESS_TOKEN'.`);
     }
 
     // docs on: https://misskey.io/api-doc#tag/notes/operation/notes___timeline
