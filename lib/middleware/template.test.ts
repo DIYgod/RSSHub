@@ -58,6 +58,37 @@ describe('template middleware', () => {
 
         expect(result).toBe('Hello');
         expect(ctx.html).toHaveBeenCalled();
+        expect(ctx.header).toHaveBeenCalledWith('Content-Security-Policy', expect.stringContaining('sandbox'));
+
+        config.debugInfo = originalDebug;
+    });
+
+    it.each([
+        ['false', 'debug.json', {}],
+        ['false', '0.debug.html', {}],
+        ['secret', 'debug.json', {}],
+        ['secret', '0.debug.html', {}],
+        ['secret', 'debug.json', { debug: 'wrong' }],
+        ['secret', '0.debug.html', { debug: 'wrong' }],
+    ])('ignores debug formats when debugInfo=%s (format=%s, query %o)', async (debugInfo, format, query: Record<string, string>) => {
+        const originalDebug = config.debugInfo;
+        config.debugInfo = debugInfo;
+
+        const ctx = createCtx({ format, ...query }, { item: [{ description: 'Hello' }] }, { json: { ok: true } });
+        await template(ctx, async () => {});
+
+        expect(ctx.json).not.toHaveBeenCalled();
+        expect(ctx.html).not.toHaveBeenCalled();
+
+        config.debugInfo = originalDebug;
+    });
+
+    it('allows debug formats with the debug secret', async () => {
+        const originalDebug = config.debugInfo;
+        config.debugInfo = 'secret';
+
+        const ctx = createCtx({ format: '0.debug.html', debug: 'secret' }, { item: [{ description: 'Hello' }] });
+        expect(await template(ctx, async () => {})).toBe('Hello');
 
         config.debugInfo = originalDebug;
     });

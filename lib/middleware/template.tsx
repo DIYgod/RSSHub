@@ -22,14 +22,17 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const data: Data = ctx.get('data');
     const outputType = ctx.req.query('format') || config.format;
 
-    // only enable when debugInfo=true
-    if (config.debugInfo) {
+    // only enable when DEBUG_INFO=true, or when the request carries the configured debug secret
+    const debugEnabled = !!config.debugInfo && config.debugInfo !== 'false' && (config.debugInfo === 'true' || config.debugInfo === ctx.req.query('debug'));
+    if (debugEnabled) {
         if (outputType === 'debug.json') {
             return ctx.json(ctx.get('json') || { message: 'plugin does not set debug json' });
         }
 
         if (/\d+\.debug\.html$/.test(outputType)) {
             const index = Number.parseInt(outputType.match(/(\d+)\.debug\.html$/)?.[1] || '0');
+            // the description is upstream HTML, so show it in an opaque origin without scripts
+            ctx.header('Content-Security-Policy', "sandbox; default-src 'none'; img-src * data:; media-src *; style-src 'unsafe-inline'");
             return ctx.html(data?.item?.[index]?.description || `data.item[${index}].description not found`);
         }
     }
