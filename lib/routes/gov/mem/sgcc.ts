@@ -62,8 +62,8 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
-            const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
-            const link = new URL(`${category}/${$item.prop('href')!.replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
+            // plain string replacement: `category` comes from the request and must not be compiled into a RegExp
+            const link = new URL(`${category}/${$item.prop('href')!.replace(/\.\//, '')}`, currentUrl).href.replace(`/sgcc/${category}/...`, '');
 
             const pathname = new URL(link).pathname;
             const mimeType = (getMimeType(pathname) ?? getMimeType(pathname, documentMimeTypes))?.split(';', 1)[0];
