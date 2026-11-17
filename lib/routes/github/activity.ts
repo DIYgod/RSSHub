@@ -7,8 +7,6 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parser = new Parser();
-
 export const route: Route = {
     path: '/activity/:user',
     name: 'User Activities',
@@ -41,7 +39,7 @@ export const route: Route = {
         // <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/8266075?s=30&amp;v=4"/>
         const rawImage = raw.match(/<media:thumbnail height="30" width="30" url="(.+?)"/)?.[1];
         const image = rawImage ? decodeXML(rawImage) : undefined;
-        const feed = await parser.parseString(raw);
+        const feed = await new Parser().parseString(raw);
         return {
             title: `${user}'s GitHub activities`,
             link: feed.link,

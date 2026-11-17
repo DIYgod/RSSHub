@@ -7,11 +7,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 type CustomItem = { issued?: string; author?: string };
-const parser = new Parser<object, CustomItem>({
-    customFields: {
-        item: ['issued'],
-    },
-});
 
 export const route: Route = {
     path: '/articles',
@@ -37,6 +32,11 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
+    const parser = new Parser<object, CustomItem>({
+        customFields: {
+            item: ['issued'],
+        },
+    });
     const rsp = await got('https://ntrblog.com/atom.xml');
     const feed = await parser.parseString(rsp.data);
 

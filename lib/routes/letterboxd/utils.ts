@@ -13,16 +13,15 @@ type LetterboxdItem = {
     'letterboxd:memberLike': string;
 };
 
-const parser = new Parser<object, LetterboxdItem>({
-    customFields: {
-        item: ['letterboxd:filmTitle', 'letterboxd:watchedDate', 'letterboxd:rewatch', 'letterboxd:memberRating', 'letterboxd:memberLike'],
-    },
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
-
 export async function getData(username: string, title: string) {
+    const parser = new Parser<object, LetterboxdItem>({
+        customFields: {
+            item: ['letterboxd:filmTitle', 'letterboxd:watchedDate', 'letterboxd:rewatch', 'letterboxd:memberRating', 'letterboxd:memberLike'],
+        },
+        headers: {
+            'User-Agent': config.ua,
+        },
+    });
     const feedUrl = `https://letterboxd.com/${username}/rss/`;
     const feed = await cache.tryGet(feedUrl, async () => parser.parseString(await ofetch(feedUrl, { responseType: 'text' })));
 

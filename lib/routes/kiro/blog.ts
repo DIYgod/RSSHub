@@ -13,7 +13,6 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
-const parser = new Parser();
 const parseCalendarDate = (value: string): Date | undefined => {
     const date = parseDate(value.trim(), ['MMM D, YYYY', 'MMMM D, YYYY'], 'en', true);
     return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
@@ -31,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const publicationDates = new Map<string, Date>();
     const feedLink = $('link[rel="alternate"][type="application/rss+xml"]').attr('href');
     if (feedLink) {
-        const feed = await parser.parseString(await ofetch(new URL(feedLink, baseUrl).href, { responseType: 'text' }));
+        const feed = await new Parser().parseString(await ofetch(new URL(feedLink, baseUrl).href, { responseType: 'text' }));
         for (const entry of feed.items) {
             if (!(entry.link && entry.isoDate)) {
                 continue;

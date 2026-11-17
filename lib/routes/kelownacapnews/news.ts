@@ -5,8 +5,6 @@ import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parser = new Parser();
-
 export const route: Route = {
     path: '/:type',
     categories: ['new-media'],
@@ -52,7 +50,7 @@ export const route: Route = {
         if (!feedLink) {
             throw new Error('Kelowna Capital News did not provide a category RSS feed. Check that the requested news category still exists.');
         }
-        const feed = await parser.parseString(await ofetch(new URL(feedLink, response.url).href, { responseType: 'text' }));
+        const feed = await new Parser().parseString(await ofetch(new URL(feedLink, response.url).href, { responseType: 'text' }));
         const items: DataItem[] = feed.items.map((item) => ({
             title: item.title ?? '',
             link: item.link,

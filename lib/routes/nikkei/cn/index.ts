@@ -9,16 +9,6 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const parser = new Parser({
-    customFields: {
-        item: ['magnet'],
-    },
-    headers: {
-        'User-Agent': config.ua,
-    },
-    defaultRSS: 0.9,
-});
-
 export const route: Route = {
     path: '/cn/*',
     name: '中文版新闻',
@@ -72,6 +62,15 @@ async function handler(ctx) {
     let $;
 
     if (isOfficialRSS) {
+        const parser = new Parser({
+            customFields: {
+                item: ['magnet'],
+            },
+            headers: {
+                'User-Agent': config.ua,
+            },
+            defaultRSS: 0.9,
+        });
         officialFeed = await parser.parseURL(currentUrl);
         items = officialFeed.items.slice(0, limit).map((item) => ({
             title: item.title,

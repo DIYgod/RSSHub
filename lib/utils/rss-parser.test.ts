@@ -88,4 +88,18 @@ describe('rss-parser', () => {
             expect(result.items).toHaveLength(1);
         });
     }
+
+    it('does not carry state from one document to the next', async () => {
+        const planted = '<rss version="2.0"><channel><title>Planted</title><item><title>Planted item</title></item>';
+        await parser.parseString(`${rssXml}text after the root`);
+        const [open, victim, close] = await Promise.allSettled([
+            parser.parseString(`${planted}<a><b><_>1</_><a><_>1</_></a>`),
+            parser.parseString(`<?xml version="1.0" encoding="UTF-8"?>${rssXml}`),
+            parser.parseString('></a></channel></rss>'),
+        ]);
+
+        expect(victim).toMatchObject({ status: 'fulfilled', value: { title: 'Test' } });
+        expect(open.status).toBe('rejected');
+        expect(close.status).toBe('rejected');
+    });
 });
