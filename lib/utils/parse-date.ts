@@ -38,24 +38,29 @@ interface UnitPattern {
     regExp: RegExp;
 }
 
+// No date is anywhere near this long, and Day.js takes quadratic time to look for a word token (`MMM`, `A`...)
+const MAX_DATE_LENGTH = 256;
+
 // === Pre-compiled Regular Expressions ===
 
+// The lookbehinds pin each greedy `.*` / `\d+` to the start of its run. They match the same text without them,
+// but a run that fails to match is then retried from every offset inside it, which takes quadratic time.
 const REGEX_JUST_NOW = /^(?:just\s?now|刚刚|剛剛)$/i;
-const REGEX_AGO = /(.*)(?:ago|前)$/i;
-const REGEX_IN = /^in\s*(.*)|(.*)(?:later|after|[后後])$/i;
-const REGEX_STICKY_AMPM = /(\d+)\s*(a|p)m$/i;
+const REGEX_AGO = /(?<!.)(.*)(?:ago|前)$/i;
+const REGEX_IN = /^in\s*(.*)|(?<!.)(.*)(?:later|after|[后後])$/i;
+const REGEX_STICKY_AMPM = /(?<!\d)(\d+)\s*(a|p)m$/i;
 const REGEX_IS_PM = /下午|晚上|晚|pm|p\.m\./i;
 const REGEX_IS_AM = /上午|凌晨|早|晨|am|a\.m\./i;
 
 const UNIT_PATTERNS: UnitPattern[] = [
-    { unit: 'years', regExp: /(\d+)\s*(?:年|y(?:(?:ea)?rs?)?)/i },
-    { unit: 'months', regExp: /(\d+)\s*(?:[个個]?月|mo(?:n(?:th)?s?)?)/i },
-    { unit: 'weeks', regExp: /(\d+)\s*(?:周|[个個]?星期|w(?:(?:ee)?ks?)?)/i },
-    { unit: 'days', regExp: /(\d+)\s*(?:天|日|d(?:ay)?s?)/i },
-    { unit: 'hours', regExp: /(\d+)\s*(?:[个個]?(?:小?时|[時点點])|h(?:(?:ou)?r)?s?)/i },
+    { unit: 'years', regExp: /(?<!\d)(\d+)\s*(?:年|y(?:(?:ea)?rs?)?)/i },
+    { unit: 'months', regExp: /(?<!\d)(\d+)\s*(?:[个個]?月|mo(?:n(?:th)?s?)?)/i },
+    { unit: 'weeks', regExp: /(?<!\d)(\d+)\s*(?:周|[个個]?星期|w(?:(?:ee)?ks?)?)/i },
+    { unit: 'days', regExp: /(?<!\d)(\d+)\s*(?:天|日|d(?:ay)?s?)/i },
+    { unit: 'hours', regExp: /(?<!\d)(\d+)\s*(?:[个個]?(?:小?时|[時点點])|h(?:(?:ou)?r)?s?)/i },
     // The lookahead keeps the bare `m` from also matching the `mo` of a month
-    { unit: 'minutes', regExp: /(\d+)\s*(?:分[鐘钟]?|m(?:in(?:ute)?)?s?(?![a-z]))/i },
-    { unit: 'seconds', regExp: /(\d+)\s*(?:秒[鐘钟]?|s(?:ec(?:ond)?)?s?)/i },
+    { unit: 'minutes', regExp: /(?<!\d)(\d+)\s*(?:分[鐘钟]?|m(?:in(?:ute)?)?s?(?![a-z]))/i },
+    { unit: 'seconds', regExp: /(?<!\d)(\d+)\s*(?:秒[鐘钟]?|s(?:ec(?:ond)?)?s?)/i },
 ];
 
 const CN_NUM_MAP = new Map([
@@ -195,6 +200,7 @@ const parseDuration = (str: string): plugin.Duration => {
 
 /**
  * A wrapper around `dayjs()` to parse standard date formats.
+ * Strings longer than `MAX_DATE_LENGTH` are not parsed and give an Invalid Date.
  *
  * @param date - The date input (string, number, or Date object).
  * @param format - Optional Day.js format string(s) or config object.
@@ -202,8 +208,13 @@ const parseDuration = (str: string): plugin.Duration => {
  * @param strict - Optional strict flag when a locale is given.
  * @returns A native JavaScript Date object.
  */
-export const parseDate = (date: string | number | Date, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date =>
-    (typeof localeOrStrict === 'string' ? dayjs(date, format, localeOrStrict, strict) : dayjs(date, format, localeOrStrict)).toDate();
+export const parseDate = (date: string | number | Date, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date => {
+    if (typeof date === 'string' && date.length > MAX_DATE_LENGTH) {
+        return new Date(NaN);
+    }
+
+    return (typeof localeOrStrict === 'string' ? dayjs(date, format, localeOrStrict, strict) : dayjs(date, format, localeOrStrict)).toDate();
+};
 
 /**
  * Processes a date string composed of a semantic keyword and an optional time component.
@@ -295,6 +306,10 @@ const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalConte
 export const parseRelativeDate = (date: string, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date => {
     if (!date) {
         return new Date();
+    }
+
+    if (date.length > MAX_DATE_LENGTH) {
+        return parseDate(date, format, localeOrStrict, strict);
     }
 
     const normalized = normalize(date);

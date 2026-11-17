@@ -3,7 +3,7 @@ import weekday from 'dayjs/plugin/weekday.js';
 import MockDate from 'mockdate';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { parseRelativeDate } from './parse-date';
+import { parseDate, parseRelativeDate } from './parse-date';
 
 dayjs.extend(weekday);
 
@@ -202,5 +202,24 @@ describe('parseRelativeDate', () => {
             const raw = '2026-01-01T00:00:00';
             expect(p(raw)).toBe(new Date(raw).getTime());
         });
+
+        it('reads a duration from the last line only', () => {
+            expect(p('2 days left\n3 hours ago')).toBe(NOW_TIMESTAMP - 3 * hour);
+            expect(p('2 days left\r\n3小时后')).toBe(NOW_TIMESTAMP + 3 * hour);
+        });
+
+        it.each(['1'.repeat(20000) + '前', '1'.repeat(20000), 'b'.repeat(40000), '今天' + '1'.repeat(20000)])('does not spend quadratic time on long input', (str) => {
+            const started = performance.now();
+            expect(p(str)).toBeNaN();
+            expect(performance.now() - started).toBeLessThan(500);
+        });
+    });
+});
+
+describe('parseDate', () => {
+    it('does not spend quadratic time on long input', () => {
+        const started = performance.now();
+        expect(parseDate('1'.repeat(100000), 'MMM D, YYYY').getTime()).toBeNaN();
+        expect(performance.now() - started).toBeLessThan(500);
     });
 });
