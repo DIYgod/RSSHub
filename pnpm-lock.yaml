@@ -202,8 +202,8 @@ importers:
         specifier: 40.1.0
         version: 40.1.0(supports-color@10.2.2)
       '@honeybadger-io/js':
-        specifier: 6.17.1
-        version: 6.17.1
+        specifier: 6.17.2
+        version: 6.17.2
       '@hono/node-server':
         specifier: 2.1.8
         version: 2.1.8(hono@4.13.18)
@@ -1083,12 +1083,12 @@ packages:
     resolution: {integrity: sha512-4Us55+JmmRRQ0jHdFVo+E30xWSEpdMyzEJWT2e/R0p3mVKl6H5kVGkB5gDbgVHOEip6ooCCHrbixI5m8JmP7Ow==}
     engines: {node: '>=22.0.0'}
 
-  '@honeybadger-io/core@6.12.1':
-    resolution: {integrity: sha512-0ulPjQctUgMnU3Cd8cY7Q2Q0DtgIpXK4QbOHT+sj+LLGTg0biuzS/kX6f7DSfHnoKQUgi/huEu/TNrNzG8Lscg==}
+  '@honeybadger-io/core@6.12.2':
+    resolution: {integrity: sha512-GMa49Dn5tKKjAjkYq/IhFwBnwQh3rsjK8ysIU8o6XsGmcWrqC0hmAcH41npaX1KVlUK/1zjTfjVFLIvS5Sn3Bg==}
     engines: {node: '>=14'}
 
-  '@honeybadger-io/js@6.17.1':
-    resolution: {integrity: sha512-miSd9MDYLUePlet5jJcGiAuUbLJT5aXsnPkySm1Gr0XpoJfMXfGqFqTnkTTdrZy08FK8K0huKTQgMZSzX4MJJg==}
+  '@honeybadger-io/js@6.17.2':
+    resolution: {integrity: sha512-Uxcyl94+km1T8JflgEVJtkXCFuhUfS2g1VvHkTHuBe/q5JJsXmt+NbajgZYXlitz5kzFhgBvDYcxl15V0bcBPw==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
@@ -6588,14 +6588,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@honeybadger-io/core@6.12.1':
+  '@honeybadger-io/core@6.12.2':
     dependencies:
       json-nd: 1.0.0
       stacktrace-parser: 0.1.11
 
-  '@honeybadger-io/js@6.17.1':
+  '@honeybadger-io/js@6.17.2':
     dependencies:
-      '@honeybadger-io/core': 6.12.1
+      '@honeybadger-io/core': 6.12.2
       '@types/aws-lambda': 8.10.164
       '@types/express': 5.0.6
 
