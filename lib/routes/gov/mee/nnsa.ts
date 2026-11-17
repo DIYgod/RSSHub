@@ -17,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = ctx.req.query('sorted') === 'false' ? sourceLimit : Math.max(15, sourceLimit);
 
     const baseUrl = 'https://nnsa.mee.gov.cn';
-    const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
+    const targetUrl = `${baseUrl}/${category.endsWith('/') ? category : `${category}/`}`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);

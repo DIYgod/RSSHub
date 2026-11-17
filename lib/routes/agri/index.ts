@@ -14,7 +14,7 @@ export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://www.agri.cn';
-    const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.endsWith('/') ? category : `${category}/`}`;
 
     const { data: response } = await got(currentUrl);
 

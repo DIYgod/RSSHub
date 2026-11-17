@@ -73,7 +73,7 @@ async function handler(ctx) {
 
     const rootUrl = 'http://www.cfmmc.com';
     const apiUrl = new URL('servlet/json', rootUrl).href;
-    const currentUrl = new URL(id.endsWith('/') ? id : `${id}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${id.endsWith('/') ? id : `${id}/`}`;
 
     const { data: currentResponse } = await got(currentUrl);
 

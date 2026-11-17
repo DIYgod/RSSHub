@@ -14,7 +14,7 @@ export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.78dm.net';
-    const currentUrl = new URL(category.includes('/') && !category.endsWith('.html') ? `${category}.html` : category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.includes('/') && !category.endsWith('.html') ? `${category}.html` : category}`;
 
     const { data: response } = await got(currentUrl);
 

@@ -87,7 +87,7 @@ async function dealChannel(suburl, selectors) {
     const { channelTitleSelector, listSelector, titleSelector, dateSelector, channelTitleText } = selectors;
 
     // Keep a trailing slash so dealLink can resolve relative URLs.
-    const url = suburl.startsWith('http') ? suburl : hostUrl + suburl;
+    const url = hostUrl + suburl;
     const response = await got.get(url);
     const $ = load(response.data);
 

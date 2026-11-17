@@ -33,7 +33,7 @@ async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 
-    const currentUrl = new URL(category ?? '', rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
 
     const { data: currentResponse } = await got(currentUrl);
 

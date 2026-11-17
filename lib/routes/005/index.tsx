@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://005.tv';
-    const currentUrl = new URL(category ? `${category}/` : '', rootUrl).href;
+    const currentUrl = `${rootUrl}/${category ? `${category}/` : ''}`;
 
     const { data: response } = await got(currentUrl);
 

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const baseUrl = 'http://www.fangchan.com';
     const apiBaseUrl = 'http://news.fangchan.com';
-    const targetUrl: string = new URL(id.endsWith('/') ? id : `${id}/`, baseUrl).href;
+    const targetUrl = `${baseUrl}/${id.endsWith('/') ? id : `${id}/`}`;
     const apiUrl: string = new URL(`api/${id.endsWith('/') ? id.replace(/\/$/, '') : id}.json`, apiBaseUrl).href;
 
     const targetResponse = await ofetch(targetUrl);

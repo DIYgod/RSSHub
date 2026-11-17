@@ -40,7 +40,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.bast.net.cn';
     const legacyId = colPath.match(/^(?:col\/col)?(\d+)\/?$/)?.[1];
     const currentPath = legacyId ? (legacyColumns[legacyId] ?? `col/col${legacyId}`) : colPath;
-    const currentUrl = new URL(`${currentPath.replace(/\/$/, '')}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${currentPath.replace(/\/$/, '')}/`;
 
     const response = await got({
         method: 'get',

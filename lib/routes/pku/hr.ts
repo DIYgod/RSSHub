@@ -52,7 +52,7 @@ async function getArticle(item: DataItem) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category')?.replaceAll('-', '/');
-    const currentUrl = category ? new URL(`${category}/index.htm`, rootUrl).href : rootUrl;
+    const currentUrl = category ? `${rootUrl}${category}/index.htm` : rootUrl;
     const response = await got(currentUrl);
     const $ = load(response.data);
     const list = $(category ? 'ul.talentUl > li' : 'ul.mode1Ul > li')

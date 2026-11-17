@@ -148,7 +148,7 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 40);
 
     const rootUrl = 'http://www.chinawriter.com.cn';
-    const currentUrl = `${new URL(id ?? '', rootUrl).href}/`;
+    const currentUrl = `${rootUrl}/${id ?? ''}/`;
 
     const { data: response } = await got(currentUrl);
 

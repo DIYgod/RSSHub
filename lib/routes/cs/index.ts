@@ -241,8 +241,8 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.cs.com.cn';
-    const categoryPath = currentCategoryPaths[category] ?? (category.endsWith('/') || category.endsWith('.html') ? category : `${category}/`);
-    const currentUrl = new URL(categoryPath, rootUrl).href;
+    const categoryPath = currentCategoryPaths[category] ?? `/${category.endsWith('/') || category.endsWith('.html') ? category : `${category}/`}`;
+    const currentUrl = `${rootUrl}${categoryPath}`;
 
     const { data: response } = await got(currentUrl, {
         responseType: 'buffer',

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://www.duozhi.com';
-    const targetUrl: string = new URL(category && category.endsWith('/') ? category : category ? `${category}/` : '', baseUrl).href;
+    const targetUrl = `${baseUrl}/${category && category.endsWith('/') ? category : category ? `${category}/` : ''}`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
