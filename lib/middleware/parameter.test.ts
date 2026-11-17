@@ -807,6 +807,8 @@ describe('filter limits', () => {
     it('rejects filter too complex for the text', async () => {
         const short = makeData('a'.repeat(10000));
         const long = makeData('a'.repeat(100000));
+        // only the step limit is under test here, not the time limit
+        vi.spyOn(Date, 'now').mockReturnValue(0);
         await expect(runMiddleware(short, { filter_description: '.{0,400}[0-9]' })).resolves.toBeDefined();
         await expect(runMiddleware(long, { filter_description: '.{0,400}[0-9]' })).rejects.toThrow('too complex for this feed');
     });
