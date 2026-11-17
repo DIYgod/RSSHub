@@ -36,6 +36,12 @@ declare module 'ofetch' {
          * @default false
          */
         publicOnly?: boolean;
+        /**
+         * Largest response body to accept, in bytes after `Content-Encoding` is decoded,
+         * for a download that is known to be larger than the default
+         * @default config.requestMaxResponseSize (`REQUEST_MAX_RESPONSE_SIZE`, 16 MiB)
+         */
+        maxResponseSize?: number;
     }
 }
 

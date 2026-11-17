@@ -11,6 +11,7 @@ import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header
 import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
+import limitResponseSize from '@/utils/request-rewriter/limit-response-size';
 import { publicLookup, publicOnly as publicOnlyInterceptor } from '@/utils/request-rewriter/public-only';
 
 const limiter = new RateLimiterMemory({
@@ -114,7 +115,7 @@ export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
 
 const wrappedFetch: typeof undici.fetch = async (
     input: RequestInfo,
-    init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion; credentialHeaders?: string[]; publicOnly?: boolean }
+    init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion; credentialHeaders?: string[]; publicOnly?: boolean; maxResponseSize?: number }
 ) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
@@ -191,12 +192,15 @@ const wrappedFetch: typeof undici.fetch = async (
     await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
 
     if (interceptors.length > 0) {
-        return undici.fetch(request, {
-            ...options,
-            dispatcher: (options.dispatcher ?? init?.dispatcher ?? undici.getGlobalDispatcher()).compose(...interceptors),
-        });
+        return limitResponseSize(
+            await undici.fetch(request, {
+                ...options,
+                dispatcher: (options.dispatcher ?? init?.dispatcher ?? undici.getGlobalDispatcher()).compose(...interceptors),
+            }),
+            init?.maxResponseSize
+        );
     }
-    return undici.fetch(request, options);
+    return limitResponseSize(await undici.fetch(request, options), init?.maxResponseSize);
 };
 
 export default wrappedFetch;

@@ -1,12 +1,15 @@
 import { once } from 'node:events';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
+import zlib from 'node:zlib';
 
 import { Hono } from 'hono';
 import { contextStorage } from 'hono/context-storage';
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
 import undici from 'undici';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
+
+import { config } from '@/config';
 
 import wrappedFetch, { useCustomHeader } from './fetch';
 
@@ -198,5 +201,65 @@ describe('wrappedFetch credentialHeaders', () => {
         await wrappedFetch(`${service}/?to=${other}/landing`, { headers: init.headers });
 
         expect(received.at(-1)).toEqual([`${other}/landing`, 'secret', 'kept']);
+    });
+});
+
+describe('wrappedFetch maxResponseSize', () => {
+    const limit = config.requestMaxResponseSize;
+    let server: http.Server;
+    let origin: string;
+
+    beforeAll(async () => {
+        server = http.createServer((req, res) => {
+            const url = new URL(req.url!, 'http://localhost');
+            if (url.pathname === '/redirect') {
+                res.writeHead(302, { location: `/${url.search}` }).end();
+                return;
+            }
+            const body = Buffer.alloc(Number(url.searchParams.get('size')), 'x');
+            res.writeHead(Number(url.searchParams.get('status') ?? 200), { 'content-encoding': 'br', 'set-cookie': ['a=1', 'b=2'] }).end(zlib.brotliCompressSync(body));
+        });
+        await once(server.listen(0, '127.0.0.1'), 'listening');
+        origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+    });
+
+    afterAll(() => {
+        server.close();
+    });
+
+    test('returns a body that decodes to the limit', async () => {
+        const response = await wrappedFetch(`${origin}/redirect?size=${limit}`);
+
+        expect(response).toBeInstanceOf(undici.Response);
+        expect(response.url).toBe(`${origin}/?size=${limit}`);
+        expect(response.redirected).toBe(true);
+        expect(response.type).toBe('basic');
+        expect(response.headers.getSetCookie()).toEqual(['a=1', 'b=2']);
+        expect(await response.text()).toHaveLength(limit);
+    });
+
+    test.each([404, 999])('keeps the status %d', async (status) => {
+        const response = await wrappedFetch(`${origin}/?size=2&status=${status}`);
+
+        expect(response.status).toBe(status);
+        expect(response.ok).toBe(false);
+        expect(await response.text()).toBe('xx');
+    });
+
+    test('fails a body that decodes to more than the limit', async () => {
+        const response = await wrappedFetch(`${origin}/?size=${limit + 1}`);
+
+        await expect(response.text()).rejects.toThrow(`Response body is larger than ${limit} bytes`);
+    });
+
+    test('can be set for a request', async () => {
+        // wrappedFetch is typed as undici.fetch, whose init has no maxResponseSize
+        const raised = { method: 'GET', maxResponseSize: limit + 1 };
+        const lowered = { method: 'GET', maxResponseSize: 10 };
+        const larger = await wrappedFetch(`${origin}/?size=${limit + 1}`, raised);
+        const smaller = await wrappedFetch(`${origin}/?size=11`, lowered);
+
+        expect(await larger.text()).toHaveLength(limit + 1);
+        await expect(smaller.text()).rejects.toThrow('Response body is larger than 10 bytes');
     });
 });

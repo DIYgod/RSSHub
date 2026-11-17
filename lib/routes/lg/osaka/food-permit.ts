@@ -50,7 +50,7 @@ const fetchRows = async (): Promise<Row[]> => {
     if (!href) {
         throw new Error('lg/osaka/food-permit: no CSV link on the 食品営業許可施設一覧 page');
     }
-    const buf: ArrayBuffer = await ofetch(new URL(href, PAGE).href, { responseType: 'arrayBuffer' });
+    const buf: ArrayBuffer = await ofetch(new URL(href, PAGE).href, { responseType: 'arrayBuffer', maxResponseSize: 32 * 1024 * 1024 });
     return csvRecords(decodeText(buf));
 };
 

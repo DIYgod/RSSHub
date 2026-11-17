@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { config } from '@/config';
+
 const fetchMock = vi.fn<(request: Request) => Promise<Response>>(() => Promise.resolve(new Response('ok')));
 
 // The module captures the global fetch at import time, so stub before importing
@@ -74,6 +76,23 @@ describe('worker fetch wrapper', () => {
         });
 
         expect(lastRequest().headers.has('x-prefer-proxy')).toBe(false);
+    });
+
+    it('fails a body that is larger than the limit', async () => {
+        const wrappedFetch = await loadWrappedFetch();
+        const limit = config.requestMaxResponseSize;
+
+        fetchMock.mockResolvedValueOnce(new Response('x'.repeat(limit), { status: 201, headers: { 'x-custom': 'kept' } }));
+        const response = await wrappedFetch('https://example.com/page');
+        expect(response.status).toBe(201);
+        expect(response.headers.get('x-custom')).toBe('kept');
+        expect(await response.text()).toHaveLength(limit);
+
+        fetchMock.mockResolvedValueOnce(new Response('x'.repeat(limit + 1)));
+        await expect((await wrappedFetch('https://example.com/page')).text()).rejects.toThrow(`Response body is larger than ${limit} bytes`);
+
+        fetchMock.mockResolvedValueOnce(new Response('x'.repeat(limit + 1)));
+        expect(await (await wrappedFetch('https://example.com/page', { maxResponseSize: limit + 1 })).text()).toHaveLength(limit + 1);
     });
 });
 

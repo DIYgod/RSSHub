@@ -4,6 +4,7 @@ import { config } from '@/config';
 import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import fetchWithPlaywrightRetry from '@/utils/playwright-fetch';
+import limitResponseSize from '@/utils/request-rewriter/limit-response-size';
 
 // Static browser headers (Chrome-like fingerprint)
 const STATIC_BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36';
@@ -68,7 +69,7 @@ const fetchWithSafeRedirect = async (request: Request, credentialHeaders: string
     throw new TypeError('Too many redirects');
 };
 
-const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit & { credentialHeaders?: string[] }): Promise<Response> => {
+const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit & { credentialHeaders?: string[]; maxResponseSize?: number }): Promise<Response> => {
     const request = new Request(input, init);
 
     const requestUrl = new URL(request.url);
@@ -107,7 +108,7 @@ const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit & { cre
 
     await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
     const credentialHeaders = [...CREDENTIAL_HEADERS, ...(init?.credentialHeaders ?? [])];
-    return fetchWithPlaywrightRetry(request, (request) => fetchWithSafeRedirect(request, credentialHeaders));
+    return limitResponseSize(await fetchWithPlaywrightRetry(request, (request) => fetchWithSafeRedirect(request, credentialHeaders)), init?.maxResponseSize);
 };
 
 export default wrappedFetch;

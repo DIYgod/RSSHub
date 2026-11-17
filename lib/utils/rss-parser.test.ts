@@ -3,6 +3,7 @@ import zlib from 'node:zlib';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
 
+import { config } from '@/config';
 import parser from '@/utils/rss-parser';
 
 const rssXml = '<rss version="2.0"><channel><title>Test</title><item><title>Item</title></item></channel></rss>';
@@ -101,5 +102,28 @@ describe('rss-parser', () => {
         expect(victim).toMatchObject({ status: 'fulfilled', value: { title: 'Test' } });
         expect(open.status).toBe('rejected');
         expect(close.status).toBe('rejected');
+    });
+
+    it.each([
+        ['compressed', 'br', (body: Buffer) => zlib.brotliCompressSync(body)],
+        ['uncompressed', 'identity', (body: Buffer) => body],
+    ])('rejects a %s feed that is larger than the limit', async (_, encoding, encode) => {
+        const { default: server } = await import('@/setup.test');
+        const limit = config.requestMaxResponseSize;
+        server.use(
+            http.get('http://rsshub.test/rss-large', ({ request }) => {
+                const size = Number(new URL(request.url).searchParams.get('size'));
+                const body = encode(Buffer.from(rssXml.padEnd(size)));
+                return HttpResponse.arrayBuffer(toArrayBuffer(body), {
+                    headers: {
+                        'content-type': 'application/xml',
+                        'content-encoding': encoding,
+                    },
+                });
+            })
+        );
+
+        expect((await parser.parseURL(`http://rsshub.test/rss-large?size=${limit}`)).title).toBe('Test');
+        await expect(parser.parseURL(`http://rsshub.test/rss-large?size=${limit + 1}`)).rejects.toThrow(`Response body is larger than ${limit} bytes`);
     });
 });

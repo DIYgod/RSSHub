@@ -29,6 +29,7 @@ const createParser = () =>
         headers: {
             'User-Agent': config.ua,
         },
+        maxResponseSize: config.requestMaxResponseSize,
     });
 
 export default {

@@ -192,7 +192,7 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
 
 patchedDependencies:
-  rss-parser@3.13.0: afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d
+  rss-parser@3.13.0: d3b437d9ea808e15477c5ecaa98ac5d051d806ee6809e75e30d27200308a0a6f
 
 importers:
 
@@ -386,7 +386,7 @@ importers:
         version: 1.5.4
       rss-parser:
         specifier: 3.13.0
-        version: 3.13.0(patch_hash=afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d)
+        version: 3.13.0(patch_hash=d3b437d9ea808e15477c5ecaa98ac5d051d806ee6809e75e30d27200308a0a6f)
       sanitize-html:
         specifier: 2.18.2
         version: 2.18.2
@@ -10738,7 +10738,7 @@ snapshots:
       fsevents: 2.3.3
     optional: true
 
-  rss-parser@3.13.0(patch_hash=afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d):
+  rss-parser@3.13.0(patch_hash=d3b437d9ea808e15477c5ecaa98ac5d051d806ee6809e75e30d27200308a0a6f):
     dependencies:
       entities: 9.0.0
       xml2js: 0.6.2
