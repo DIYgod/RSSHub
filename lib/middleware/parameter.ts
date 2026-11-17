@@ -15,6 +15,7 @@ import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
 import markdownit from '@/utils/markdown-it';
+import { parse as parseFulltext } from '@/utils/mercury';
 import ofetch from '@/utils/ofetch';
 
 // filters run synchronously, and matching with re2 costs up to program size * text length
@@ -72,6 +73,29 @@ const getAiCompletion = async (prompt: string, text: string) => {
 // the content cache is shared by every route and client, so key the completion on what it is
 // generated from (prompt + text) rather than on item.link, which any feed can reuse with other text
 const getAiCacheKey = (type: 'title' | 'description', prompt: string, text: string) => `openai:${type}:${createHash('sha256').update(prompt).update('\0').update(text).digest('hex')}`;
+
+// the same limit Mercury applies to the pages it fetches itself
+const FULLTEXT_MAX_LENGTH = 5 * 1024 * 1024;
+
+// bound the download time and decoded size of the page
+const getFulltextHtml = async (link: string) => {
+    const signal = AbortSignal.timeout(config.requestTimeout);
+    const { body, headers } = await ofetch.raw(link, { responseType: 'stream', signal, publicOnly: true });
+    const contentType = headers.get('content-type');
+    if (contentType && !/html|text|xml/i.test(contentType)) {
+        await body?.cancel();
+        throw new Error(`Content of ${link} does not appear to be text`);
+    }
+    const chunks = body!.pipeThrough(new TextDecoderStream(), { signal });
+    let html = '';
+    for await (const chunk of chunks) {
+        html += chunk;
+        if (html.length > FULLTEXT_MAX_LENGTH) {
+            throw new Error(`Content of ${link} is too large`);
+        }
+    }
+    return html;
+};
 
 const getAuthorString = (item: DataItem) => {
     let author = '';
@@ -401,19 +425,13 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
-                            const { default: Parser } = await import('@jocmp/mercury-parser');
                             // the link comes from upstream content: refuse non-public destinations
-                            const res = await ofetch(link, { publicOnly: true });
-                            if (typeof res !== 'string') {
+                            const html = await getFulltextHtml(link);
+                            if (!html) {
                                 // mercury would fetch the link again itself when given an empty document
                                 return;
                             }
-                            const result = await Parser.parse(link, {
-                                html: load(res).html(),
-                                // mercury follows "next page" links with its own client, which has no destination check
-                                fetchAllPages: false,
-                            });
-                            return result;
+                            return await parseFulltext(link, html);
                         } catch {
                             // no-empty
                         }

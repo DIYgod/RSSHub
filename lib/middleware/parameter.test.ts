@@ -6,7 +6,7 @@ import { Context } from 'hono';
 import { http, HttpResponse } from 'msw';
 import { RE2JS } from 're2js';
 import Parser from 'rss-parser';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import server from '@/setup.test';
 
@@ -410,6 +410,10 @@ describe('wrong_path', () => {
 });
 
 describe('fulltext_mode', () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     it('fulltext', async () => {
         const response = await app.request('/test/1?mode=fulltext');
         expect(response.status).toBe(200);
@@ -440,6 +444,54 @@ describe('fulltext_mode', () => {
         } finally {
             server.close();
         }
+    });
+
+    describe('with pages on test hosts', () => {
+        // the msw hosts do not resolve, so let item links through to them
+        beforeEach(() => {
+            config.feature.allow_user_supply_unsafe_domain = true;
+        });
+        afterEach(() => {
+            config.feature.allow_user_supply_unsafe_domain = false;
+        });
+
+        it('replaces the description with the parsed page', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext', () => HttpResponse.html(`<article>${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(10)}</article>`)));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toContain('Lorem ipsum');
+        });
+
+        it('keeps the description when the page is not text', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-pdf', () => HttpResponse.text('%PDF-1.4 '.repeat(10), { headers: { 'content-type': 'application/pdf' } })));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-pdf' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toBe('Description');
+        });
+
+        it('keeps the description when the page is too large', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-large', () => HttpResponse.html(`<article>${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(100000)}</article>`)));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-large' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toBe('Description');
+        });
+
+        it('keeps the description and answers other requests when the page takes too long to parse', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-slow', () => HttpResponse.html('<p>'.repeat(50000))));
+            const timeout = AbortSignal.timeout.bind(AbortSignal);
+            vi.spyOn(AbortSignal, 'timeout').mockImplementation((ms) => timeout(Math.min(ms, 1000)));
+
+            let ticks = 0;
+            const interval = setInterval(() => ticks++, 50);
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-slow' }] }, { mode: 'fulltext' });
+            clearInterval(interval);
+            expect(data.item[0].description).toBe('Description');
+            expect(ticks).toBeGreaterThan(5);
+        });
     });
 });
 
