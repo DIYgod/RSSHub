@@ -183,7 +183,7 @@
         "cf": "1.0.0-beta.31",
         "discord-api-types": "0.38.59",
         "domhandler": "6.0.1",
-        "eslint": "10.14.0",
+        "eslint": "10.15.0",
         "eslint-nibble": "9.1.1",
         "eslint-plugin-n": "18.5.0",
         "eslint-plugin-regexp": "3.3.3",
