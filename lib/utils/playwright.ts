@@ -61,7 +61,7 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined): ProxyOpti
 };
 
 // Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation)
-const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
+const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0'];
 
 const getLaunchOptions = (proxyOptions: ProxyOptions): LaunchOptions => ({
     args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
@@ -99,7 +99,6 @@ const toBrowserlessCDPLaunchOptions = (proxyOptions: ProxyOptions): BrowserlessC
 
 const getContextOptions = (javaScriptEnabled?: boolean): BrowserContextOptions => ({
     ...(javaScriptEnabled !== undefined && { javaScriptEnabled }),
-    ignoreHTTPSErrors: true,
     userAgent: config.ua,
 });
 

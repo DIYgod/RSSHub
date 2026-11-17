@@ -361,6 +361,37 @@ describe('getPlaywrightPage (mocked)', () => {
         expect(contextOptions.userAgent).not.toMatch(/HeadlessChrome/i);
     });
 
+    it('keeps certificate validation enabled for a local browser', async () => {
+        resetMocks();
+        launch.mockResolvedValue(mockBrowser);
+        mockBrowser.close.mockResolvedValue(undefined);
+
+        const getPlaywrightPage = await loadPlaywright();
+        await getPlaywrightPage('https://example.com', { noGoto: true });
+        const certificateArg = expect.stringContaining('--ignore-certificate-errors');
+        expect(launch).toHaveBeenCalledWith(expect.objectContaining({ args: expect.not.arrayContaining([certificateArg]) }));
+        expect(mockBrowser.newContext.mock.calls[0][0].ignoreHTTPSErrors).toBeUndefined();
+    });
+
+    it.each([
+        ['PLAYWRIGHT_WS_ENDPOINT', connect],
+        ['PLAYWRIGHT_CDP_ENDPOINT', connectOverCDP],
+    ] as const)('keeps certificate validation enabled with %s', async (endpointVar, connector) => {
+        resetMocks();
+        connect.mockResolvedValue(mockBrowser);
+        connectOverCDP.mockResolvedValue(mockBrowser);
+        mockBrowser.close.mockResolvedValue(undefined);
+        process.env[endpointVar] = 'ws://localhost:3000/?token=abc';
+
+        const getPlaywrightPage = await loadPlaywright();
+        await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
+
+        const launchOptions = JSON.parse(new URL(connector.mock.calls[0][0]).searchParams.get('launch') || '{}');
+        expect(launchOptions.args ?? []).not.toContainEqual(expect.stringContaining('--ignore-certificate-errors'));
+        expect(launchOptions.ignoreHTTPSErrors).toBeUndefined();
+        expect(mockBrowser.newContext.mock.calls[0][0].ignoreHTTPSErrors).toBeUndefined();
+    });
+
     it('supports extending the browser auto close timeout', async () => {
         vi.useFakeTimers();
         try {

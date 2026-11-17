@@ -45,7 +45,7 @@ describe('Worker browser lifecycle', () => {
         expect(mocks.launch).not.toHaveBeenCalled();
         expect(mocks.sessionFetch).not.toHaveBeenCalled();
         expect(mocks.cloudConnect).not.toHaveBeenCalled();
-        expect(mocks.newContext).toHaveBeenCalledWith({ ignoreHTTPSErrors: true, javaScriptEnabled: false });
+        expect(mocks.newContext).toHaveBeenCalledWith({ javaScriptEnabled: false });
         await Promise.all([destroy(), destroy()]);
         expect(mocks.contextClose).toHaveBeenCalledOnce();
         expect(mocks.close).toHaveBeenCalledOnce();

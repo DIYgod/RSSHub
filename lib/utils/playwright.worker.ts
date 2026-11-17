@@ -72,7 +72,6 @@ const launchBrowser = async (options: { javaScriptEnabled?: boolean; useConfigur
     }
     try {
         const context = await browser.newContext({
-            ignoreHTTPSErrors: true,
             ...(options.javaScriptEnabled !== undefined && { javaScriptEnabled: options.javaScriptEnabled }),
         });
         context.on('page', limitContentLength);
