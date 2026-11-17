@@ -672,6 +672,7 @@ export type RoutePath =
   | `/cjlu/yjsy/:cate`
   | `/claude/blog`
   | `/claude/code/changelog`
+  | `/claude/dev/blog`
   | `/clickme/:site/:grouping/:name`
   | `/cline/blog`
   | `/cloudflare/blog`

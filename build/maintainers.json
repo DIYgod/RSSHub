@@ -3389,6 +3389,9 @@
   "/claude/code/changelog": [
     "rmaced0"
   ],
+  "/claude/dev/blog": [
+    "rmaced0"
+  ],
   "/clickme/:site/:grouping/:name": [
     "hoilc"
   ],

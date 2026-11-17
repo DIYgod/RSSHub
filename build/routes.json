@@ -47100,6 +47100,39 @@
         ],
         "location": "code-changelog.ts",
         "module": "() => import('@/routes/claude/code-changelog.ts')"
+      },
+      "/dev/blog": {
+        "path": "/dev/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/claude/dev/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "claude.dev/",
+              "claude.dev/blog/"
+            ],
+            "target": "/dev/blog"
+          }
+        ],
+        "name": "Developer Blog",
+        "maintainers": [
+          "rmaced0"
+        ],
+        "url": "claude.dev",
+        "description": "Full-text articles from claude.dev, the blog where Anthropic developers write about building with Claude and Claude Code.",
+        "location": "dev-blog.ts",
+        "module": "() => import('@/routes/claude/dev-blog.ts')"
       }
     },
     "apiRoutes": {},

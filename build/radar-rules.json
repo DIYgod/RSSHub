@@ -16994,6 +16994,20 @@
       }
     ]
   },
+  "claude.dev": {
+    "_name": "Claude",
+    ".": [
+      {
+        "title": "Developer Blog",
+        "docs": "https://docs.rsshub.app/routes/claude",
+        "source": [
+          "/",
+          "/blog/"
+        ],
+        "target": "/claude/dev/blog"
+      }
+    ]
+  },
   "cline.bot": {
     "_name": "cline",
     ".": [
