@@ -5,8 +5,10 @@ import { HTMLParser } from 'teleproto/extensions/html.js';
 import { returnBigInt } from 'teleproto/Helpers.js';
 import { getDisplayName } from 'teleproto/Utils.js';
 
+import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
@@ -50,13 +52,14 @@ function getMessageMediaUrl(requestUrl: string, username: string, messageId: num
     const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
     const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
     const url = new URL(request.origin);
-    url.pathname = `${prefix.replace(/\/+$/, '')}/telegram/media/${username}/${messageId}`;
-    for (const key of ['key', 'code']) {
-        const value = request.searchParams.get(key);
-        if (value) {
-            url.searchParams.set(key, value);
-        }
+    url.pathname = `/telegram/media/${username}/${messageId}`;
+    if (config.accessKey) {
+        // The feed is cached and shared by every client allowed to read it, so it must not carry the requester's own
+        // key or code; the access code of the media path itself is the same for all of them and only opens that path.
+        // The reverse proxy strips the prefix before access control sees the path, so the code is computed without it.
+        url.searchParams.set('code', md5(url.pathname + config.accessKey));
     }
+    url.pathname = prefix.replace(/\/+$/, '') + url.pathname;
     return url.href;
 }
 

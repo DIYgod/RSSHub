@@ -156,7 +156,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 MTProto connections can use a SOCKS4/5 \`PROXY_URI\` (for example, \`socks5://127.0.0.1:1080\`) or the dedicated \`TELEGRAM_PROXY_HOST\`, \`TELEGRAM_PROXY_PORT\`, and \`TELEGRAM_PROXY_SECRET\` MTProxy settings, which take precedence. HTTP proxies only apply to the public web feed; use a SOCKS or MTProxy endpoint for authenticated MTProto feeds.
 When MTProto hits a flood wait or gives no response within \`REQUEST_TIMEOUT\`, the route falls back to the public web feed. Other MTProto errors fail the feed. Cloudflare Workers deployments always use the public web feed.
 
-When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set its \`X-Forwarded-Prefix\` request header to that prefix so Telegram media links include it. Access-control \`key\` and \`code\` parameters are preserved in these media links.
+When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set its \`X-Forwarded-Prefix\` request header to that prefix so Telegram media links include it. When \`ACCESS_KEY\` is set, each media link carries the access \`code\` of its own path, never the requester's \`key\` or \`code\`.
 :::`,
 };
 

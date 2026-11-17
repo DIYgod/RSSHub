@@ -16,6 +16,8 @@ export const handler = async (ctx: Context) => {
     const limit = getRouteLimit(ctx, 50);
 
     const queryString = Object.entries(ctx.req.query())
+        // access-control credentials must not reach the upstream site or the cached feed
+        .filter(([key]) => key !== 'key' && key !== 'code')
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
         .join('&');
 

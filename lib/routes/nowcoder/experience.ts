@@ -34,6 +34,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const params = new URLSearchParams(ctx.req.query());
+    // access-control credentials must not reach the upstream site or the cached feed
+    params.delete('key');
+    params.delete('code');
     params.append('tagId', ctx.req.param('tagId'));
 
     const link = new URL('/discuss/experience/json', host);

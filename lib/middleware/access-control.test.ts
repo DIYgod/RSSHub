@@ -1,10 +1,35 @@
 import { Hono } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import type * as TelegramClientModule from '@/routes/telegram/tglib/client';
 import md5 from '@/utils/md5';
 import type { WeiboOAuthState } from '@/utils/weibo-oauth';
 
 process.env.NODE_NAME = 'mock';
+
+// MTProto cannot be reached in tests: stand in for the Telegram client with one channel holding one photo post
+vi.mock('@/routes/telegram/tglib/client', async (importOriginal) => {
+    const { Api } = await import('teleproto');
+    const { returnBigInt } = await import('teleproto/Helpers.js');
+    const channel = new Api.Channel({ id: returnBigInt(1), title: 'Some channel', photo: new Api.ChatPhotoEmpty(), date: 1_767_225_600 });
+    const photoPost = {
+        id: 42,
+        message: 'hello',
+        text: 'hello',
+        entities: [],
+        date: 1_767_225_600,
+        peerId: new Api.PeerChannel({ channelId: channel.id }),
+        media: new Api.MessageMediaPhoto({ photo: new Api.PhotoEmpty({ id: returnBigInt(7) }) }),
+    };
+    return {
+        ...(await importOriginal<typeof TelegramClientModule>()),
+        getClient: () => ({
+            getInputEntity: () => new Api.InputPeerChannel({ channelId: channel.id, accessHash: returnBigInt(2) }),
+            getEntity: () => channel,
+            getMessages: () => [photoPost],
+        }),
+    };
+});
 
 async function checkBlock(response) {
     expect(response.status).toBe(403);
@@ -13,6 +38,7 @@ async function checkBlock(response) {
 
 afterEach(() => {
     delete process.env.ACCESS_KEY;
+    delete process.env.TELEGRAM_SESSION;
     vi.resetModules();
 });
 
@@ -46,6 +72,28 @@ describe('access-control', () => {
 
         const response332 = await app.request(`/test/2?code=${code}`);
         expect(response332.status).toBe(200);
+    });
+
+    it('telegram media links carry the access code of their own path, not the requester credential', async () => {
+        const key = '1L0veRSSHub';
+        const channelPath = '/telegram/channel/some_channel';
+        const mediaPath = '/telegram/media/some_channel/42';
+        process.env.ACCESS_KEY = key;
+        process.env.TELEGRAM_SESSION = 'unused';
+        const app = (await import('@/app')).default;
+
+        // the key holder fills the route cache, the code holder reads the cached feed
+        const ownerFeed = await (await app.request(`${channelPath}?key=${key}&format=json`)).text();
+        const guestResponse = await app.request(`${channelPath}?code=${md5(channelPath + key)}&format=json`);
+        expect(guestResponse.status).toBe(200);
+        const guestFeed = await guestResponse.text();
+
+        for (const feed of [ownerFeed, guestFeed]) {
+            expect(feed).not.toContain(`key=${key}`);
+            expect(feed).not.toContain(`code=${md5(channelPath + key)}`);
+            expect(feed).toContain(`${mediaPath}?code=${md5(mediaPath + key)}`);
+        }
+        expect((await app.request(`${mediaPath}?code=${md5(mediaPath + key)}`)).status).not.toBe(403);
     });
 });
 
