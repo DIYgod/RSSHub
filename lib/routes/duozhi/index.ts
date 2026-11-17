@@ -26,6 +26,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('div.post-item')
+        // entries are siblings; one nested in another would only read the same subtree again
+        .not('div.post-item div.post-item')
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -46,13 +48,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                       ]
                     : undefined,
             });
-            const pubDateStr: string | undefined = $el.find('div.post-attr').text().split(/\|/, 1)[0]?.trim();
+            const attrText: string = $el.find('div.post-attr').first().text();
+            const pubDateStr: string | undefined = attrText.split(/\|/, 1)[0]?.trim();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('span.post-tag a.link-tag').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const authors: DataItem['author'] = $el
-                .find('div.post-attr')
-                .text()
+            const authors: DataItem['author'] = attrText
                 .split(/by/)
                 ?.pop()
                 ?.split(/\s+/)
