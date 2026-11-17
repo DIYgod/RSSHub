@@ -83,6 +83,26 @@ describe('serialized script data', () => {
         await expect(evaluateScriptData('window.__DATA__=[Array(6000),Array(6000)];', '__DATA__')).rejects.toThrow('complexity limit');
     });
 
+    it('accepts a larger complexity budget from the caller', async () => {
+        const source = `window.__DATA__=[${'0,'.repeat(6000)}];`;
+        await expect(evaluateScriptData(source, '__DATA__')).rejects.toThrow('complexity limit');
+        await expect(evaluateScriptData<number[]>(source, '__DATA__', 20000)).resolves.toHaveLength(6000);
+        await expect(evaluateScriptData(source, '__DATA__', 12000)).rejects.toThrow('complexity limit');
+    });
+
+    it('reads seroval cross-referenced output and rejects code in its place', async () => {
+        const source =
+            ';0x000000c4;((self.$R=self.$R||{})["server-fn:0"]=[],($R=>$R[0]={code:"OK",data:$R[1]=[$R[2]={title:"Post",pinned:!0,author:$R[3]={name:"A"}},$R[4]={title:"Next",pinned:!1,author:$R[3]}]})($R["server-fn:0"]))';
+        await expect(evaluateScriptData(source, '$R["server-fn:0"][0]')).resolves.toEqual({
+            code: 'OK',
+            data: [
+                { title: 'Post', pinned: true, author: { name: 'A' } },
+                { title: 'Next', pinned: false, author: { name: 'A' } },
+            ],
+        });
+        await expect(evaluateScriptData(source.replace('"Next"', 'Buffer.call.call(Buffer)'), '$R["server-fn:0"][0]')).rejects.toThrow('Unsupported script data expression');
+    });
+
     it('does not call unrelated application code or access the host global object', async () => {
         const fetchSpy = vi.fn();
         vi.stubGlobal('fetch', fetchSpy);

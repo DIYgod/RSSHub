@@ -161,7 +161,7 @@ const readProperty = (object: DataValue, key: string): DataValue => {
 };
 
 /** Reads serialized data with a limited AST vocabulary; it never executes JavaScript. */
-const readScriptData = async <T>(source: string, target: string[], argumentIndex?: number): Promise<T> => {
+const readScriptData = async <T>(source: string, target: string[], argumentIndex?: number, stepLimit = maxSteps): Promise<T> => {
     const root: Scope = { values: Object.create(null) };
     const poisonedAssignments = new WeakSet<Node>();
     let steps = 0;
@@ -169,7 +169,7 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
     let callbackValue: DataValue;
 
     const step = (depth: number) => {
-        if (++steps > maxSteps || depth > maxDepth) {
+        if (++steps > stepLimit || depth > maxDepth) {
             throw new UnsafePropertyError('Script data exceeds the parsing complexity limit');
         }
     };
@@ -499,9 +499,9 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
     return value as T;
 };
 
-export const evaluateScriptData = async <T = unknown>(source: string, target: string): Promise<T> => {
+export const evaluateScriptData = async <T = unknown>(source: string, target: string, stepLimit = maxSteps): Promise<T> => {
     const path = await targetPath(target);
-    return readScriptData<T>(source, path);
+    return readScriptData<T>(source, path, undefined, stepLimit);
 };
 
 /** Extracts a serialized callback argument without invoking the callback or any external function. */
