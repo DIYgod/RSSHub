@@ -5,6 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { fetchWithPage } from '@/utils/playwright-request';
 
 const rootUrl = 'https://www.baozimh.com';
 
@@ -41,7 +42,7 @@ async function handler(ctx): Promise<Data> {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/comic/${name}`;
 
-    const { page, context, destroy } = await getPlaywrightPage(url, {
+    const { page, destroy } = await getPlaywrightPage(url, {
         closeTimeout: 0,
         onBeforeLoad: allowPageRequests,
     });
@@ -84,11 +85,11 @@ async function handler(ctx): Promise<Data> {
             combinedList,
             (item) =>
                 cache.tryGet(item.link!, async () => {
-                    const detailResponse = await context.request.get(item.link!);
-                    if (!detailResponse.ok()) {
-                        throw new Error(`Unable to fetch comic chapter (${detailResponse.status()}): ${item.link}`);
+                    const detailResponse = await fetchWithPage(page, item.link!);
+                    if (!detailResponse.ok) {
+                        throw new Error(`Unable to fetch comic chapter (${detailResponse.status}): ${item.link}`);
                     }
-                    const html = await detailResponse.text();
+                    const html = detailResponse.text;
                     const $ = load(html);
                     item.description = renderToString(
                         <>
