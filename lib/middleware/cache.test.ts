@@ -217,6 +217,76 @@ describe('cache middleware error handling', () => {
 });
 
 describe('cache request variants', () => {
+    it.each([
+        // XXH64('/test/attacker-feed:00000005053110ivwwvq') === XXH64('/test/1:rss')
+        ['a format forged to collide under a non-cryptographic hash', '/test/attacker-feed?format=00000005053110ivwwvq', '/test/1', 'Test 1'],
+        ['query values that spell the rest of the path', '/test/a?format=b&limit=rss', '/test/a:b', 'Test a:b'],
+    ])('does not share an entry with another path through %s', async (_, crafted, victim, title) => {
+        vi.stubEnv('CACHE_TYPE', 'memory');
+        vi.stubEnv('CACHE_EXPIRE', '300');
+        vi.resetModules();
+        const app = (await import('@/app')).default;
+
+        try {
+            await app.request(crafted);
+            const response = await app.request(victim);
+            const parsed = await parser.parseString(await response.text());
+
+            expect(response.headers.get('rsshub-cache-status')).toBeNull();
+            expect(parsed.title).toBe(title);
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
+    it('keeps requests that differ in origin, forwarded prefix or route query separate', async () => {
+        vi.stubEnv('CACHE_TYPE', 'memory');
+        vi.stubEnv('CACHE_EXPIRE', '300');
+        vi.resetModules();
+        const { default: middleware } = await import('./cache');
+        const { default: cacheModule } = await import('@/utils/cache/index');
+        cacheModule.clients.memoryCache?.clear();
+        let fetches = 0;
+        const fetcher = (ctx: Context) => {
+            if (!ctx.get('data')) {
+                fetches++;
+                // Like routes that build links from the request or forward their query upstream.
+                const { origin, searchParams } = new URL(ctx.req.url);
+                const prefix = ctx.req.header('x-forwarded-prefix') ?? '';
+                ctx.set('data', { title: 'Feed', item: [{ title: `${prefix}:${searchParams.get('domain')}`, link: `${origin}/entry` }] });
+            }
+            return Promise.resolve();
+        };
+        const request = async (url: string, headers: Record<string, string> = {}) => {
+            const ctx = new Context(new Request(url, { headers }), { env: {}, path: '/inputs' });
+            await middleware(ctx, () => fetcher(ctx));
+            return ctx;
+        };
+
+        try {
+            const first = await request('https://rsshub.example/inputs?domain=a&brief=100');
+            const sameInputs = await request('https://rsshub.example/inputs?brief=200&domain=a');
+            const otherOrigin = await request('https://attacker.example/inputs?domain=a');
+            const otherPrefix = await request('https://rsshub.example/inputs?domain=a', { 'x-forwarded-prefix': '/rss' });
+            const otherQuery = await request('https://rsshub.example/inputs?domain=b');
+            const otherQueryHit = await request('https://rsshub.example/inputs?domain=b');
+
+            expect(sameInputs.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(sameInputs.get('data')).toEqual(first.get('data'));
+            expect(otherOrigin.res.headers.get('RSSHub-Cache-Status')).toBeNull();
+            expect(otherOrigin.get('data').item[0].link).toBe('https://attacker.example/entry');
+            expect(otherPrefix.res.headers.get('RSSHub-Cache-Status')).toBeNull();
+            expect(otherPrefix.get('data').item[0].title).toBe('/rss:a');
+            expect(otherQuery.res.headers.get('RSSHub-Cache-Status')).toBeNull();
+            expect(otherQuery.get('data').item[0].title).toBe(':b');
+            expect(otherQueryHit.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(first.get('data').item[0].link).toBe('https://rsshub.example/entry');
+            expect(fetches).toBe(4);
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
     it('does not serve cached summaries for fulltext requests, or full text for summary requests', async () => {
         vi.stubEnv('CACHE_TYPE', 'memory');
         vi.stubEnv('CACHE_EXPIRE', '300');

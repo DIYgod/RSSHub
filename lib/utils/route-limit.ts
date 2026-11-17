@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-const itemFilters = ['filter', 'filter_title', 'filter_description', 'filter_author', 'filter_category', 'filterout', 'filterout_title', 'filterout_description', 'filterout_author', 'filterout_category', 'filter_time'];
+export const itemFilters = ['filter', 'filter_title', 'filter_description', 'filter_author', 'filter_category', 'filterout', 'filterout_title', 'filterout_description', 'filterout_author', 'filterout_category', 'filter_time'];
 
 export const hasItemFilters = (ctx: Context) => itemFilters.some((key) => ctx.req.query(key));
 
