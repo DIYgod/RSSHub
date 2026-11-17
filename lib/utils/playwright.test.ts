@@ -416,4 +416,28 @@ describe('getPlaywrightPage (mocked)', () => {
             vi.useRealTimers();
         }
     });
+
+    it('still closes a browser whose caller owns the lifetime but never reaches destroy', async () => {
+        vi.useFakeTimers();
+        try {
+            resetMocks();
+            launch.mockResolvedValue(mockBrowser);
+            mockBrowser.close.mockResolvedValue(undefined);
+
+            const getPlaywrightPage = await loadPlaywright();
+            const close = mockBrowser.close;
+            await getPlaywrightPage('https://example.com', {
+                closeTimeout: 0,
+                noGoto: true,
+            });
+
+            await vi.advanceTimersByTimeAsync(299999);
+            expect(close).not.toHaveBeenCalled();
+
+            await vi.advanceTimersByTimeAsync(1);
+            expect(close).toHaveBeenCalled();
+        } finally {
+            vi.useRealTimers();
+        }
+    });
 });

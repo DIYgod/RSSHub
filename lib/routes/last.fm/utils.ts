@@ -19,6 +19,8 @@ const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch
 const staticOrigins = new Set([baseUrl, 'https://cdn.jsdelivr.net', 'https://www.googletagmanager.com', 'https://cdn.snigelweb.com', 'https://a.pub.network', 'https://fonts.googleapis.com']);
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const timeZoneError = 'Last.fm did not provide a valid display time zone. Configure LASTFM_API_KEY to use the official API.';
+// four steps may wait 30 seconds each
+const browserCloseTimeout = 130000;
 
 function isPublicRequestAllowed(request: Request, pagePath: string) {
     const url = new URL(request.url());
@@ -73,7 +75,7 @@ function addRecentGuids(items: DataItem[]) {
 export async function getPublicTracks(user: string, type: 'recent' | 'loved'): Promise<Data> {
     const pagePath = `/user/${encodeURIComponent(user)}/${type === 'recent' ? 'library' : 'loved'}`;
     const link = `${baseUrl}${pagePath}`;
-    const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });
+    const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: browserCloseTimeout });
     try {
         await page.route('**/*', (request) => (isPublicRequestAllowed(request.request(), pagePath) ? request.continue() : request.abort()));
         const response = await page.goto(link, { waitUntil: 'domcontentloaded' });

@@ -82,9 +82,11 @@ const launchBrowser = async (options: { javaScriptEnabled?: boolean; useConfigur
     }
 };
 
+// upper bound on how long a browser stays open when the caller owns its lifetime
+const MAX_CLOSE_TIMEOUT = 300000;
+
 const cleanup = ({ browser, context }: Awaited<ReturnType<typeof launchBrowser>>, timeout = 30000) => {
     let closing: Promise<void> | undefined;
-    let timer: ReturnType<typeof setTimeout> | undefined;
     const destroy = () => {
         clearTimeout(timer);
         return (closing ??= (async () => {
@@ -103,11 +105,9 @@ const cleanup = ({ browser, context }: Awaited<ReturnType<typeof launchBrowser>>
             }
         })());
     };
-    if (timeout !== 0) {
-        timer = setTimeout(() => {
-            void destroy().catch(() => logger.warn('Playwright browser cleanup failed'));
-        }, timeout);
-    }
+    const timer = setTimeout(() => {
+        void destroy().catch(() => logger.warn('Playwright browser cleanup failed'));
+    }, timeout || MAX_CLOSE_TIMEOUT);
     return destroy;
 };
 
@@ -122,7 +122,7 @@ export default async function outPlaywright() {
 export const getPlaywrightPage = async (
     url: string,
     instanceOptions: {
-        // Set to zero only when the caller always awaits destroy() in finally.
+        // Set to zero only when the caller always awaits destroy() in finally; the browser is still closed after MAX_CLOSE_TIMEOUT.
         closeTimeout?: number;
         gotoConfig?: GotoOptions;
         javaScriptEnabled?: boolean;

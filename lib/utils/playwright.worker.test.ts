@@ -176,6 +176,14 @@ describe('Worker browser lifecycle', () => {
         expect(mocks.close).toHaveBeenCalledOnce();
     });
 
+    it('still closes a shared page whose explicit cleanup is never reached', async () => {
+        await getPlaywrightPage('https://example.com', { noGoto: true, closeTimeout: 0 });
+        await vi.advanceTimersByTimeAsync(299999);
+        expect(mocks.close).not.toHaveBeenCalled();
+        await vi.advanceTimersByTimeAsync(1);
+        expect(mocks.close).toHaveBeenCalledOnce();
+    });
+
     it.each(['context', 'page', 'callback'])('cleans up a failed %s initialization', async (stage) => {
         useSessionCoordinator();
         const failure = new Error('Initialization failed');

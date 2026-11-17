@@ -128,12 +128,13 @@ const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaun
     return endpointURL.href;
 };
 
+// upper bound on how long a browser stays open when the caller owns its lifetime
+const MAX_CLOSE_TIMEOUT = 300000;
+
 const scheduleClose = (browser: Browser, timeout = 30000) =>
-    timeout === 0
-        ? undefined
-        : setTimeout(() => {
-              void browser.close();
-          }, timeout);
+    setTimeout(() => {
+        void browser.close();
+    }, timeout || MAX_CLOSE_TIMEOUT);
 
 /**
  * @returns Playwright browser context (native `newPage()` shares state across calls)
@@ -153,7 +154,7 @@ export const setBrowserBinding = (_binding: any) => {};
 export const getPlaywrightPage = async (
     url: string,
     instanceOptions: {
-        // Set to zero only when the caller always awaits destroy() in finally.
+        // Set to zero only when the caller always awaits destroy() in finally; the browser is still closed after MAX_CLOSE_TIMEOUT.
         closeTimeout?: number;
         gotoConfig?: GotoOptions;
         noGoto?: boolean;
