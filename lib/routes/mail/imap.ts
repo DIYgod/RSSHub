@@ -100,6 +100,7 @@ async function handler(ctx) {
 
     const mails: FetchMessageObject[] = [];
     let items;
+    let uidValidity: bigint | undefined;
     try {
         const lock = await client.getMailboxLock(folder);
         try {
@@ -107,6 +108,7 @@ async function handler(ctx) {
             if (!mailbox) {
                 throw new Error(`Failed to open mailbox ${folder}`);
             }
+            uidValidity = mailbox.uidValidity;
             if (mailbox.exists) {
                 const matching = recipient
                     ? await client.search({ or: [{ to: recipient }, { cc: recipient }, { bcc: recipient }, ...deliveryHeaders.map((header) => ({ header: { [header]: recipient } }))] }, { uid: true })
@@ -128,7 +130,8 @@ async function handler(ctx) {
             parsedMails
                 .filter(({ parsed }) => !recipient || hasRecipient(parsed, recipient))
                 .map(({ item, parsed }) =>
-                    cache.tryGet(`mail:${email}:${folder}:${item.envelope?.messageId || item.uid}`, () => {
+                    // Message-ID is written by the sender and may repeat; only UIDVALIDITY + UID identify one message
+                    cache.tryGet(`mail:${email}:${folder}:${uidValidity}:${item.uid}`, () => {
                         let description = parsed.html || parsed.text?.replaceAll('\n', '<br>') || '';
                         if (parsed.attachments.length) {
                             description += `<h3>Attachments (${parsed.attachments.length})</h3>`;
