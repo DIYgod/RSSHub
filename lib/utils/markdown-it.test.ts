@@ -9,6 +9,26 @@ const md = MarkdownIt({ html: true });
 const table = '|a'.repeat(148) + '\n' + '|:-:'.repeat(148) + '\n' + '|\n'.repeat(442) + '\n';
 const cells = (html: string) => html.split('<td').length - 1;
 
+// counts the lines that quotes look ahead over and that do not start with `>`
+const lookAhead = (text: string, factory: typeof MarkdownIt = MarkdownIt) => {
+    const counted = factory();
+    let lines = 0;
+    counted.block.ruler.before(
+        'fence',
+        'count',
+        (state) => {
+            if (state.parentType === 'blockquote') {
+                lines++;
+            }
+            return false;
+        },
+        { alt: ['blockquote'] }
+    );
+    return { html: counted.render(text), lines };
+};
+const quotes = (n: number) => 'a\n>>\n'.repeat(n);
+const strip = (html: string) => html.replaceAll(/<[^>]*>|\s/g, '');
+
 describe('markdown-it', () => {
     it.each([
         '',
@@ -26,6 +46,9 @@ describe('markdown-it', () => {
         '|a'.repeat(30) + '\n' + '|-'.repeat(30) + '\n' + ('|'.repeat(31) + '\n').repeat(30) + '\n',
         'The [archive][archive], the [list] and ![an image][list], then the [archive] again and [nothing].\n\n[archive]: https://example.org/archive "All issues"\n[list]: https://example.org/list',
         '[[a]] [b [a]] [a][] [a]: [a](b)\n\n[a]: https://example.org/',
+        // quotes, nested, lazy and in lists
+        'text\n\n> quote\n> second line\n>> nested\n> back\nlazy\n\n- > in a list\n  > two\n\n> # heading\n> - item\n>\n> ```\n> code\n> ```\n\n',
+        '> ' + 'a long quote\n> '.repeat(3000) + '\n\ntext\n',
     ])('renders ordinary text as markdown-it does: %#', (text) => {
         expect(md.render(text)).toBe(Original({ html: true }).render(text));
         expect(md.render(text.repeat(50))).toBe(Original({ html: true }).render(text.repeat(50)));
@@ -90,6 +113,23 @@ describe('markdown-it', () => {
             expect(html.split(url).length - 1).toBe(Math.floor(limit / (url.length + length)));
             expect(html).toContain(use.repeat(uses - Math.floor(limit / (url.length + length))).trim() + '</p>');
         }
+    });
+
+    it('limits the lines that the quotes of a text look ahead over', () => {
+        for (const n of [2000, 25000]) {
+            const { lines } = lookAhead(quotes(n));
+            expect(lines).toBeGreaterThan(0);
+            // looked ahead over once to count them, then by markdown-it
+            expect(lines).toBeLessThanOrEqual(2 * 64 * 2 * n);
+        }
+        // without the limit
+        expect(lookAhead(quotes(500), Original).lines).toBeGreaterThan((500 * 500) / 4);
+    });
+
+    it('keeps the text of quotes after the limit', () => {
+        const text = quotes(2000) + '> ' + 'last quote\n> '.repeat(10);
+        expect(strip(lookAhead(text).html)).toBe(strip(Original().render(text)));
+        expect(lookAhead(text).html).toContain('<p>last quote');
     });
 
     it('limits what parse() returns as well', () => {

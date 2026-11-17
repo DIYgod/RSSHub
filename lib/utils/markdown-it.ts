@@ -67,12 +67,76 @@ const limitReferences = (md: Markdown) => {
     });
 };
 
+// How many lines all quotes of a text may look ahead over, per line of the text, and at least.
+const BLOCKQUOTE_LINES_PER_LINE = 64;
+const MIN_BLOCKQUOTE_LINES = 1024;
+
 /**
- * `MarkdownIt()` for text that users of the upstream have written, which must not render to far more than they wrote.
+ * The line before which markdown-it's blockquote rule stops looking ahead: an empty line, a line after a `>` with nothing
+ * else, or a line that starts another block. Other lines are lazy continuation lines and do not stop it.
+ */
+const quoteEnd = (state: StateBlock, startLine: number, endLine: number) => {
+    const terminators = state.md.block.ruler.getRules('blockquote');
+    const parentType = state.parentType;
+    state.parentType = 'blockquote';
+    let lastLineEmpty = false;
+    let line = startLine;
+    for (; line < endLine; line++) {
+        const pos = state.bMarks[line] + state.tShift[line];
+        const max = state.eMarks[line];
+        if (pos >= max) {
+            break;
+        }
+        if (state.src.codePointAt(pos) === 0x3e && state.sCount[line] >= state.blkIndent) {
+            lastLineEmpty = state.skipSpaces(pos + 1) >= max;
+            continue;
+        }
+        if (lastLineEmpty || terminators.some((terminator) => terminator(state, line, endLine, true))) {
+            break;
+        }
+    }
+    state.parentType = parentType;
+    return line;
+};
+
+/**
+ * Before it parses a quote, markdown-it looks ahead for its end, and a lazy continuation line keeps it going. In
+ * `a\n>>\n` repeated, every quote looks ahead to the end of the text and then only keeps its first line, so the time
+ * grows with the square of the length: 40 KB take 2 s.
+ *
+ * All quotes of a text together may look ahead over a multiple of its lines. When that is used up, a quote ends after
+ * as many lines as are left, but at least one, and the next line that starts with `>` starts the next quote.
+ */
+const limitBlockquoteLines = (md: Markdown) => {
+    const ruler = md.block.ruler;
+    const { fn: blockquote, alt } = ruler.__rules__[ruler.__find__('blockquote')];
+    const linesLeft = new WeakMap<StateBlock, number>();
+
+    ruler.at(
+        'blockquote',
+        (state, startLine, endLine, silent) => {
+            // the rule is tried at every line, and the silent run only checks for a `>` without looking ahead
+            const isQuote = blockquote(state, startLine, endLine, true);
+            if (silent || !isQuote) {
+                return isQuote;
+            }
+            const lines = linesLeft.get(state) ?? Math.max(state.lineMax, MIN_BLOCKQUOTE_LINES) * BLOCKQUOTE_LINES_PER_LINE;
+            const window = startLine + Math.max(Math.min(endLine - startLine, lines), 1);
+            linesLeft.set(state, lines - (quoteEnd(state, startLine, window) - startLine));
+            return blockquote(state, startLine, window, silent);
+        },
+        { alt }
+    );
+};
+
+/**
+ * `MarkdownIt()` for text that users of the upstream have written, which must not render to far more than they wrote,
+ * or take much longer to render than its length.
  */
 const markdownIt = (...args: Parameters<typeof MarkdownIt>) =>
     MarkdownIt(...args)
         .use(limitTableCells)
-        .use(limitReferences);
+        .use(limitReferences)
+        .use(limitBlockquoteLines);
 
 export default markdownIt;
