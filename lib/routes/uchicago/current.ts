@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -49,7 +50,7 @@ async function handler(ctx) {
         gotoConfig: { waitUntil: 'domcontentloaded' },
         onBeforeLoad: configurePage,
     });
-    let tasks: Array<Promise<DataItem>> = [];
+    let tasks: Promise<DataItem[]> | undefined;
     try {
         const response = await page.evaluate(() => document.documentElement.getHTML());
         const cookies = await getCookies(page);
@@ -63,45 +64,48 @@ async function handler(ctx) {
                 title: '',
             }));
 
-        tasks = list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const page = await context.newPage();
-                try {
-                    await setCookies(page, cookies, 'journals.uchicago.edu');
-                    await configurePage(page);
-                    logger.http(`Requesting ${item.link}`);
-                    await page.goto(item.link, {
-                        waitUntil: 'domcontentloaded',
-                        referer: link,
-                    });
-                    const response = await page.evaluate(() => document.documentElement.getHTML());
-                    const $ = load(response);
+        tasks = pMap(
+            list,
+            (item) =>
+                cache.tryGet(item.link, async () => {
+                    const page = await context.newPage();
+                    try {
+                        await setCookies(page, cookies, 'journals.uchicago.edu');
+                        await configurePage(page);
+                        logger.http(`Requesting ${item.link}`);
+                        await page.goto(item.link, {
+                            waitUntil: 'domcontentloaded',
+                            referer: link,
+                        });
+                        const response = await page.evaluate(() => document.documentElement.getHTML());
+                        const $ = load(response);
 
-                    item.title = $('head title').text();
-                    item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
-                    item.doi = $('head meta[scheme="doi"]').attr('content');
-                    item.author = $('.author-name span')
-                        .toArray()
-                        .map((author) => $(author).text())
-                        .join(', ');
+                        item.title = $('head title').text();
+                        item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
+                        item.doi = $('head meta[scheme="doi"]').attr('content');
+                        item.author = $('.author-name span')
+                            .toArray()
+                            .map((author) => $(author).text())
+                            .join(', ');
 
-                    $('.figure__image').each((_, elem) => {
-                        if (!elem.attribs['data-lg-src']) {
-                            return;
-                        }
+                        $('.figure__image').each((_, elem) => {
+                            if (!elem.attribs['data-lg-src']) {
+                                return;
+                            }
 
-                        $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
-                        delete elem.attribs['data-lg-src'];
-                    });
+                            $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
+                            delete elem.attribs['data-lg-src'];
+                        });
 
-                    item.description = $('.article__body').html();
-                    return item;
-                } finally {
-                    await page.close();
-                }
-            })
+                        item.description = $('.article__body').html();
+                        return item;
+                    } finally {
+                        await page.close();
+                    }
+                }),
+            { concurrency: 3, stopOnError: false }
         );
-        const items = await Promise.all(tasks);
+        const items = await tasks;
         return {
             title: $('head title').text(),
             description: $('.jumbotron-journal-info').text(),
@@ -111,7 +115,7 @@ async function handler(ctx) {
             language: $('html').attr('lang') as Language,
         };
     } finally {
-        await Promise.allSettled(tasks);
+        await Promise.allSettled([tasks]);
         await destroy();
     }
 }

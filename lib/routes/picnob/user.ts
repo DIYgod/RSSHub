@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -87,8 +88,9 @@ async function handler(ctx) {
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link, async () => {
                     if (item.slideOrVideo) {
                         const page = await context.newPage();
@@ -102,6 +104,7 @@ async function handler(ctx) {
                         });
                         logger.http(`Requesting ${item.link}`);
                         const html = await page.content();
+                        await page.close();
                         const $ = load(html);
 
                         const media = $('.slide-item').length
@@ -124,8 +127,8 @@ async function handler(ctx) {
                     }
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

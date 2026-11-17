@@ -1,6 +1,7 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 import type { BrowserContext } from 'patchright';
 
 import type { DataItem } from '@/types';
@@ -273,14 +274,15 @@ export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
 
 /**
  * Enhance items with full summaries from dailypush article pages.
- * Uses the provided context; opens a new tab per URL (document requests only). Caller must close the context.
+ * Uses the provided context; opens a new tab per URL (document requests only), a few at a time. Caller must close the context.
  */
 export async function enhanceItemsWithSummaries(context: BrowserContext, items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems = await Promise.all(
-        itemsWithUrl.map((item) =>
+    const enhancedItems = await pMap(
+        itemsWithUrl,
+        (item) =>
             cache.tryGet(item.dailyPushUrl!, async () => {
                 try {
                     const html = await fetchPageHtml(context, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
@@ -294,8 +296,8 @@ export async function enhanceItemsWithSummaries(context: BrowserContext, items: 
                 }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 5 }
     );
 
     return [...enhancedItems, ...itemsWithoutUrl];
