@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -87,7 +88,7 @@ async function handler() {
                 });
                 if (comments && comments.length > 0) {
                     for (const item of comments) {
-                        content += '<br>' + item.author + ': ' + item.comment;
+                        content += '<br>' + escapeText(item.author) + ': ' + escapeText(item.comment);
                     }
                 }
                 return { description: content, pubDate };
