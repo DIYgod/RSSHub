@@ -12,6 +12,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'datalist' } = ctx.req.param();
@@ -71,7 +72,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = await pMap(
         items,
         async (item) => {
-            if (!item.link) {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'fangchan.com')) {
                 return item;
             }
 

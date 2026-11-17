@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { isValidHost } from '@/utils/valid-host';
+import { isOnSite, isValidHost } from '@/utils/valid-host';
 
 const shortcuts = {
     potd: 'picture/browse/potd/',
@@ -68,7 +68,7 @@ async function handler(ctx) {
             const link = $item.attr('href')!;
 
             return {
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: new URL(link, currentUrl).href,
                 title: '',
             };
         });
@@ -76,6 +76,11 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'myfigurecollection.net')) {
+                    return item;
+                }
+
                 try {
                     const detailResponse = await got({
                         method: 'get',

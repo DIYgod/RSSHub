@@ -8,6 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getCookies, setCookies } from '@/utils/playwright-utils';
+import { isOnSite } from '@/utils/valid-host';
 
 const configurePage = async (page: Page) => {
     await page.route('**/*', async (route) => {
@@ -60,14 +61,18 @@ async function handler(ctx) {
         const list = $('.issue-item__title')
             .toArray()
             .map((item): DataItem & { link: string } => ({
-                link: `${baseUrl}${$(item).find('a').attr('href')}`,
+                link: new URL($(item).find('a').attr('href')!, baseUrl).href,
                 title: '',
             }));
 
         tasks = pMap(
             list,
-            (item) =>
-                cache.tryGet(item.link, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'journals.uchicago.edu')) {
+                    return item;
+                }
+                return cache.tryGet(item.link, async () => {
                     const page = await context.newPage();
                     try {
                         await setCookies(page, cookies, 'journals.uchicago.edu');
@@ -102,7 +107,8 @@ async function handler(ctx) {
                     } finally {
                         await page.close();
                     }
-                }),
+                });
+            },
             { concurrency: 3, stopOnError: false }
         );
         const items = await tasks;

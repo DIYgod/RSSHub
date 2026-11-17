@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/goutongjiaoliu',
@@ -51,8 +52,12 @@ async function handler() {
             });
         const items = await pMap(
             list,
-            (item) =>
-                cache.tryGet(item.link!, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'pbc.gov.cn')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
                     await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
                     await page.waitForSelector('#zoom');
                     const detailContent = await page.content();
@@ -61,7 +66,8 @@ async function handler() {
                     const dateText = content('.hui12').eq(5).text().trim();
                     item.pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
                     return item;
-                }),
+                });
+            },
             { concurrency: 1 }
         );
         return {

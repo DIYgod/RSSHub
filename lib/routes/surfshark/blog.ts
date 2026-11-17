@@ -7,6 +7,7 @@ import { type Data, type DataItem, type Language, type Route, ViewType } from '@
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -81,7 +82,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 title,
                 description,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
                 author: authors,
                 content: {
@@ -100,7 +101,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = await pMap(
         items,
         async (item) => {
-            if (!item.link) {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, domain)) {
                 return item;
             }
 

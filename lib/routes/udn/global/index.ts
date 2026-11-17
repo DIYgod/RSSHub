@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isOnSite } from '@/utils/valid-host';
 
 const categoriesConf = {
     hot: {
@@ -72,7 +73,7 @@ async function handler(ctx) {
                 const rawLink = a.attr('href')!.split('?', 1)[0];
                 return {
                     title: config.titleExtractor(a),
-                    link: rawLink.startsWith('http') ? rawLink : `${rootUrl}${rawLink}`,
+                    link: new URL(rawLink, currentUrl).href,
                 };
             });
 
@@ -91,6 +92,11 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'udn.com')) {
+                return item;
+            }
+
             const detail = await cache.tryGet(`udn:global:v3:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',

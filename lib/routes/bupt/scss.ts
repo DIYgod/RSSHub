@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/scss/tzgg',
@@ -68,8 +69,12 @@ async function handler() {
         const orderedList = list;
         const entries = orderedList;
         const items = await Promise.all(
-            entries.map((item) =>
-                cache.tryGet(item.link, async () => {
+            entries.map((item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'bupt.edu.cn')) {
+                    return item;
+                }
+                return cache.tryGet(item.link, async () => {
                     const detailResponse = await fetchWithPage(page, item.link, { timeout: 12000 });
                     const detailContent = detailResponse.text;
                     const content = load(detailContent);
@@ -79,8 +84,8 @@ async function handler() {
                     item.pubDate = timezone(parseDate(item.pubDateRaw), 8);
 
                     return item;
-                })
-            )
+                });
+            })
         );
 
         return {

@@ -9,6 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const rootUrl = 'https://zhxy.hubu.edu.cn';
 const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
@@ -93,6 +94,10 @@ const fetchFeed = async (ctx, page?: Page) => {
     items = await pMap(
         items,
         async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'hubu.edu.cn')) {
+                return item;
+            }
             const detail = await cache.tryGet(`hubu:content:${item.link}`, async () => {
                 const detailResponse = await fetchHtml(item.link, page);
                 const $$ = load(detailResponse);

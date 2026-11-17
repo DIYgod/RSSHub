@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
 const sites = {
     cn: { url: 'https://www.cbre.com.cn/insights', language: 'zh-CN', name: '中国' },
@@ -73,6 +74,10 @@ async function handler(ctx) {
         await page.waitForSelector(selector, { state: 'attached' });
         const src = await page.locator(selector).first().getAttribute('src');
         const iframeUrl = new URL(src!, config.url);
+        // only follow links on the site itself
+        if (!isOnSite(iframeUrl.href, 'cbre.com.cn', 'cbre.com.hk')) {
+            throw new Error('CBRE research results are no longer embedded from the CBRE site.');
+        }
         const resultsPath = iframeUrl.pathname.split('/').at(-1);
         const [response] = await Promise.all([
             page.waitForResponse((response) => {

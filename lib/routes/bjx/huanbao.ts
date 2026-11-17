@@ -7,6 +7,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 import { fetchBjxPage, getBjxPage } from './utils';
 
@@ -54,7 +55,8 @@ async function handler() {
         items = await pMap(
             // Limit concurrent article requests to avoid per-IP throttling.
             items,
-            (item) => fetchPage(item.link, context.request),
+            // only follow links on the site itself
+            (item) => (isOnSite(item.link, 'bjx.com.cn') ? fetchPage(item.link, context.request) : item),
             { concurrency: 3 }
         );
 
@@ -87,6 +89,10 @@ const fetchPage = (link: string, context: APIRequestContext) =>
                     continue;
                 }
                 const sublink = new URL($a.attr('href')!, link).href;
+                // only follow links on the site itself
+                if (!isOnSite(sublink, 'bjx.com.cn')) {
+                    continue;
+                }
                 /* eslint-disable no-await-in-loop */
                 const html = await fetchBjxPage(sublink, context);
                 pages.push(load(html));

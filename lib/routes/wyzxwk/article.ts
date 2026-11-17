@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/article/:id?',
@@ -90,10 +91,11 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const href = $item.attr('href');
 
             return {
                 title: $item.text(),
-                link: $item.attr('href'),
+                link: href ? new URL(href, currentUrl).href : undefined,
             };
         });
 
@@ -103,7 +105,8 @@ async function handler(ctx) {
             ...item,
             ...(await cache.tryGet(item.link!, async () => {
                 const detail: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
-                if (item.link!.indexOf('wyzxwk.com') > 0) {
+                // only follow links on the site itself
+                if (isOnSite(item.link, 'wyzxwk.com')) {
                     try {
                         const detailResponse = await got({
                             method: 'get',

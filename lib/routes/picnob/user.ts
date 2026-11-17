@@ -7,6 +7,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/user/:id/:type?',
@@ -81,7 +82,7 @@ async function handler(ctx) {
                 return {
                     title,
                     description: `<img src="${isVideo ? image.attr('data-src') : fullImage.href}"><br>${content}`,
-                    link: `${baseUrl}${coverLink}`,
+                    link: new URL(coverLink!, baseUrl).href,
                     guid: coverLink?.split('/', 3)?.[2],
                     pubDate: parseRelativeDate($item.find('.time .txt').text()),
                     slideOrVideo: $item.find('.corner').length,
@@ -92,7 +93,8 @@ async function handler(ctx) {
             list,
             (item) =>
                 cache.tryGet(item.link, async () => {
-                    if (item.slideOrVideo) {
+                    // only follow links on the site itself
+                    if (item.slideOrVideo && isOnSite(item.link, 'picnob.com')) {
                         const page = await context.newPage();
                         await page.route('**/*', (route) => {
                             const request = route.request();

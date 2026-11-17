@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/yjsy/:path{.+}?',
@@ -47,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
+                link: new URL(link!, currentUrl).href,
             };
         });
 
@@ -55,7 +56,8 @@ async function handler(ctx) {
         items,
         (item) =>
             cache.tryGet(item.link!, async () => {
-                if (/yjsy\.nenu\.edu\.cn/.test(item.link!)) {
+                // only follow links on the site itself
+                if (isOnSite(item.link, 'yjsy.nenu.edu.cn')) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

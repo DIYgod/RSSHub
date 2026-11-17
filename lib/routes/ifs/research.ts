@@ -7,6 +7,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://ifs.org.uk';
 const sections = {
@@ -38,6 +39,10 @@ function parseCalendarDate(value: string) {
 }
 
 async function getItem(item: DataItem, page: Page) {
+    // only follow links on the site itself
+    if (!isOnSite(item.link, 'ifs.org.uk')) {
+        return item;
+    }
     const detail = await cache.tryGet(`ifs:article-detail:${item.link}`, async () => {
         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('main .c-single-header');

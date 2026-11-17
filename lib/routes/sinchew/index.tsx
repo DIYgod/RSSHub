@@ -8,6 +8,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/',
@@ -49,7 +50,7 @@ export async function handler(ctx) {
 
             return {
                 title: $item.attr('data-title')!,
-                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: new URL(link!, currentUrl).href,
                 pubDate: date ? timezone(parseDate(date), 8) : undefined,
             };
         });
@@ -57,6 +58,11 @@ export async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(`sinchew:article:v2:${item.link}`, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'sinchew.com.my')) {
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

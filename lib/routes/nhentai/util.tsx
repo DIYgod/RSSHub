@@ -7,6 +7,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -113,7 +114,13 @@ const getSimple = async (url) => {
         .map((ele) => parseSimpleDetail($(ele)));
 };
 
-const getDetails = (cache, simples, limit) => Promise.all(simples.slice(0, limit).map((simple) => cache.tryGet(simple.link, () => getDetail(simple))));
+const getDetails = (cache, simples, limit) =>
+    Promise.all(
+        simples.slice(0, limit).map((simple) =>
+            // only follow links on the site itself
+            isOnSite(simple.link, 'nhentai.net') ? cache.tryGet(simple.link, () => getDetail(simple)) : simple
+        )
+    );
 
 const getTorrents = async (cache, simples, limit) => {
     if (!config.nhentai || !config.nhentai.username || !config.nhentai.password) {

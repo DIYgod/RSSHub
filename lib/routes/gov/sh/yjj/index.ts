@@ -5,6 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/yjj/:path{.+}?',
@@ -53,13 +54,18 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
-                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: new URL(link!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'yjj.sh.gov.cn')) {
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

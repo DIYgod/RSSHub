@@ -11,6 +11,7 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import { setCookies } from '@/utils/playwright-utils';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
@@ -74,8 +75,12 @@ async function handler(ctx): Promise<Data> {
     try {
         out = await pMap(
             list,
-            (item) =>
-                cache.tryGet(item.link, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'pnas.org')) {
+                    return item;
+                }
+                return cache.tryGet(item.link, async () => {
                     const page = await context.newPage();
                     let res: string;
                     try {
@@ -130,7 +135,8 @@ async function handler(ctx): Promise<Data> {
                     );
 
                     return item;
-                }),
+                });
+            },
             { concurrency: 3, stopOnError: false }
         );
     } finally {

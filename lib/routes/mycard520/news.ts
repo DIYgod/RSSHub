@@ -9,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'cardgame' } = ctx.req.param();
@@ -42,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 title,
                 description,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 content: {
                     html: description,
                     text: description,
@@ -60,11 +61,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
         await pMap(
             items,
             (item) => {
-                if (!item.link) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'mycard520.com.tw')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
                     const $$pageBox: Cheerio<Element> = $$('div.page_box');

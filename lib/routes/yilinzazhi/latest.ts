@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 const articleSelector = '.article-main > .article-content, .blkContainerSblk.collectionContainer';
 
@@ -137,7 +138,7 @@ async function fetchCatalog(stage: Stage, currentYear: number, baseUrl: string):
                 const yearType = currentYear + href.slice(4, 5);
                 return {
                     title: $$(aTag).text(),
-                    link: `${baseUrl}${currentYear}/yl${yearType}/${href}`,
+                    link: new URL(href, `${baseUrl}${currentYear}/yl${yearType}/`).href,
                 };
             });
         return { title, tables };
@@ -179,6 +180,10 @@ async function handler(): Promise<Data> {
         const items = await pMap(
             contents,
             async (target) => {
+                // only follow links on the site itself
+                if (!isOnSite(target.link, 'yilinzazhi.com')) {
+                    return target;
+                }
                 try {
                     const detail = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`yilinzazhi:article:v2:${target.link}`, () => fetchDescription(target.link!, source));
                     return { ...target, description: detail.description, author: detail.author };

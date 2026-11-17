@@ -8,6 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://www.ebrun.com';
 
@@ -27,6 +28,10 @@ export const route: Route = {
 };
 
 function getItem(item: DataItem, page: Page) {
+    // only follow links on the site itself
+    if (!isOnSite(item.link, 'ebrun.com')) {
+        return item;
+    }
     return cache.tryGet(item.link!, async () => {
         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('.post-text-title');

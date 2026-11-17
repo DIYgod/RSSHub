@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const MAP = {
     news: '6277',
@@ -85,10 +86,10 @@ async function handler(ctx) {
     const entries = list.toArray().map((item): DataItem => {
         const $item = $(item);
         const a = $item.find('a');
-        const link = a.attr('href');
+        const href = a.attr('href');
         return {
             title: a.attr('title')!,
-            link: link!.startsWith('http') ? link : `${baseUrl}${link}`,
+            link: new URL(href!, link).href,
             pubDate: $item.find('div[style]').text() ? timezone(parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'), 8) : undefined,
         };
     });
@@ -96,6 +97,11 @@ async function handler(ctx) {
     const out = await pMap(
         entries,
         async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'upc.edu.cn')) {
+                return item;
+            }
+
             const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`upc:jsj:detail:${item.link}`, async () => {
                 const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
 

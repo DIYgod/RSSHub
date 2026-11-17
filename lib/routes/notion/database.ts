@@ -124,6 +124,7 @@ async function handler(ctx) {
                             const response = await got({
                                 method: 'get',
                                 url: articleLink,
+                                publicOnly: true,
                             });
                             const $ = load(response.body);
                             const articleAuthor = $('meta[name="author"]').attr('content');

@@ -5,6 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -65,7 +66,8 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (/news\.futunn\.com/.test(item.link)) {
+                // only follow links on the site itself
+                if (isOnSite(item.link, 'news.futunn.com')) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://www.chengdu.gov.cn';
 const link = `${baseUrl}/cdsrmzf/c169603/list.shtml`;
@@ -29,6 +30,10 @@ export const route: Route = {
 };
 
 function getItem(item: DataItem, page: Page) {
+    // only follow links on the site itself
+    if (!isOnSite(item.link, 'chengdu.gov.cn')) {
+        return item;
+    }
     return cache.tryGet(item.link!, async () => {
         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('.detail_content');

@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const targetUrl = 'https://jwc.cupl.edu.cn/tz/tzgg.htm';
 const allowedRequestTypes = new Set(['document', 'script', 'xhr', 'fetch']);
@@ -66,8 +67,12 @@ export const route: Route = {
 
             const items = await pMap(
                 list,
-                (item) =>
-                    cache.tryGet(item.link!, async () => {
+                (item) => {
+                    // only follow links on the site itself
+                    if (!isOnSite(item.link, 'cupl.edu.cn')) {
+                        return item;
+                    }
+                    return cache.tryGet(item.link!, async () => {
                         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
                         await page.waitForSelector('.v_news_content', { state: 'attached' });
                         const detailHtml = await page.content();
@@ -84,7 +89,8 @@ export const route: Route = {
                             ...item,
                             description: `${$('.v_news_content').html() ?? ''}${attachments.length ? `<ul>${attachments.join('')}</ul>` : ''}`,
                         };
-                    }),
+                    });
+                },
                 { concurrency: 1 }
             );
 

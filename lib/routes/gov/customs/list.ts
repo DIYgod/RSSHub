@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 import { host, playwrightGet } from './utils';
 
@@ -92,8 +93,12 @@ async function handler(ctx) {
 
         const out = await pMap(
             list,
-            (info) =>
-                cache.tryGet(info.link, async () => {
+            (info) => {
+                // only follow links on the site itself
+                if (!isOnSite(info.link, 'customs.gov.cn')) {
+                    return { title: info.title, link: info.link, pubDate: info.date };
+                }
+                return cache.tryGet(info.link, async () => {
                     if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
                         return { title: info.title, link: info.link, pubDate: info.date };
                     }
@@ -113,7 +118,8 @@ async function handler(ctx) {
                         author: $('meta[name="ContentSource"]').attr('content') || undefined,
                         pubDate: date || info.date,
                     };
-                }),
+                });
+            },
             { concurrency: 3 }
         );
 

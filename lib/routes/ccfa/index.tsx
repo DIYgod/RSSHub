@@ -8,6 +8,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx) => {
     const { type = '1' } = ctx.req.param();
@@ -38,7 +39,8 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (!item.link!.includes('ccfa.org.cn')) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'ccfa.org.cn')) {
                     return item;
                 }
 

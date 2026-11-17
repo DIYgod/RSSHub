@@ -4,6 +4,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { isOnSite } from '@/utils/valid-host';
 
 import { ContentFetcher } from './utils';
 
@@ -42,7 +43,7 @@ async function handler(ctx: Context) {
                 const link = $item.attr('href')!;
                 return {
                     title: $item.text(),
-                    link: link.includes('http') ? link : `${rootUrl}/bbs/${link}`,
+                    link: new URL(link, `${rootUrl}/bbs/`).href,
                 };
             })
             .filter((item) => {
@@ -56,6 +57,10 @@ async function handler(ctx: Context) {
         const items = await pMap(
             list,
             async (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'muchong.com')) {
+                    return item;
+                }
                 const details = await cache.tryGet(item.link, async () => {
                     const detailResponse = await fetcher.fetch(item.link);
                     const content = load(typeof detailResponse === 'string' ? detailResponse : decoder.decode(detailResponse));

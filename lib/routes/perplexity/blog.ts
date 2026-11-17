@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
     const page = await context.newPage();
@@ -126,11 +127,12 @@ async function handler(ctx: Context) {
         const resultItems = await pMap(
             items.slice(0, limit),
             async (item) => {
-                if (!item.link) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'perplexity.ai')) {
                     return item;
                 }
 
-                return await cache.tryGet<DataItem>(item.link, async () => {
+                return await cache.tryGet<DataItem>(item.link!, async () => {
                     const contentHtml = await readContentPage(context, item.link!);
 
                     const $content = load(contentHtml);

@@ -8,6 +8,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:node',
@@ -75,6 +76,10 @@ async function handler(ctx) {
         const items = await pMap(
             list,
             async (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'ycwb.com')) {
+                    return { item, nodeLinks: [] };
+                }
                 let details: ArticleDetails;
                 try {
                     details = await cache.tryGet(`ycwb:article:v4:${item.link}`, () => fetchArticleDetails(item.link, browserFallback.getContent));

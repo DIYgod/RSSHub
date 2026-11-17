@@ -8,6 +8,7 @@ import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/zszcgd/:category?',
@@ -59,8 +60,12 @@ async function handler(ctx: Context) {
         const limit = getRouteLimit(ctx);
         const selected = ordered.slice(0, limit);
         const items = await Promise.all(
-            selected.map((item) =>
-                cache.tryGet(item.link!, async () => {
+            selected.map((item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'chsi.com.cn')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
                     const detailResponse = await fetchWithPage(page, item.link!);
                     if (!detailResponse.ok) {
                         throw new Error(`Failed to fetch CHSI policy article: HTTP ${detailResponse.status}`);
@@ -75,8 +80,8 @@ async function handler(ctx: Context) {
                         author,
                         description: content('.list').html(),
                     };
-                })
-            )
+                });
+            })
         );
 
         return {

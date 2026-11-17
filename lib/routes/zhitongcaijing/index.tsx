@@ -10,6 +10,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 const ids = {
     recommend: {
@@ -170,7 +171,7 @@ async function handler(ctx) {
 
         const list: Array<DataItem & { link: string }> = data.data.slice(0, limit).map((item) => ({
             title: item.title,
-            link: `${rootUrl}${item.url}`,
+            link: new URL(item.url, rootUrl).href,
             description: item.digest,
             author: item.author_info.author_name,
             pubDate: parseDate((item.create_time ?? Number.parseInt(item.original_time)) * 1000),
@@ -180,6 +181,10 @@ async function handler(ctx) {
         const items = await pMap(
             list,
             async (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'zhitongcaijing.com')) {
+                    return item;
+                }
                 try {
                     const detail = await cache.tryGet(`zhitongcaijing:article:v1:${item.link}`, async () => {
                         let source: string;

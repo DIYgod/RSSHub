@@ -7,6 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 const defaultRootUrl = 'https://www.setn.com';
 
@@ -115,7 +116,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: link.startsWith('http') ? link : `${Object.hasOwn(rootUrls, category) ? rootUrls[category] : defaultRootUrl}${link}`,
+                link: new URL(link, currentUrl).href,
             };
         });
 
@@ -123,6 +124,11 @@ async function handler(ctx) {
         items,
         (item) =>
             cache.tryGet(`setn:category-v5:${item.link}`, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'setn.com')) {
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

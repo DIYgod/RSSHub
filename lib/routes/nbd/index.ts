@@ -8,6 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 async function settleQueueRequest(request: Promise<unknown>): Promise<void> {
     try {
@@ -149,6 +150,10 @@ async function handler(ctx) {
         const items = await pMap(
             list,
             (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'nbd.com.cn')) {
+                    return item;
+                }
                 const pending = (async () => {
                     const detail = await cache.tryGet(`nbd:article:v3:${item.link}`, async () => {
                         const detailResponse = await source.getBody(item.link!);

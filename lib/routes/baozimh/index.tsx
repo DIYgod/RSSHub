@@ -6,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
+import { isOnSite } from '@/utils/valid-host';
 
 const rootUrl = 'https://www.baozimh.com';
 
@@ -57,7 +58,7 @@ async function handler(ctx): Promise<Data> {
             .toArray()
             .map((item): DataItem => {
                 const title = $(item).find('span').text();
-                const link = rootUrl + $(item).find('a').attr('href');
+                const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
 
                 return {
                     title,
@@ -72,7 +73,7 @@ async function handler(ctx): Promise<Data> {
             .toArray()
             .map((item): DataItem => {
                 const title = $(item).find('span').text();
-                const link = rootUrl + $(item).find('a').attr('href');
+                const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
 
                 return {
                     title,
@@ -83,8 +84,12 @@ async function handler(ctx): Promise<Data> {
 
         const items = await pMap(
             combinedList,
-            (item) =>
-                cache.tryGet(item.link!, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'baozimh.com')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
                     const detailResponse = await fetchWithPage(page, item.link!);
                     if (!detailResponse.ok) {
                         throw new Error(`Unable to fetch comic chapter (${detailResponse.status}): ${item.link}`);
@@ -103,7 +108,8 @@ async function handler(ctx): Promise<Data> {
                     );
 
                     return item;
-                }),
+                });
+            },
             { concurrency: 3 }
         );
 

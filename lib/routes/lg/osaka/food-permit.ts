@@ -4,6 +4,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
 import { csvRecords, decodeText, isoDate, type PermitExtra, type Row } from '../utils';
 
@@ -43,14 +44,15 @@ const coords = (raw: Row) => {
 const fetchRows = async (): Promise<Row[]> => {
     const html: string = await ofetch(PAGE);
     const $ = load(html);
-    const href = $('a[href$=".csv"]')
+    const link = $('a[href$=".csv"]')
         .toArray()
-        .map((a) => $(a).attr('href')!)
-        .find((h) => h.includes('city.osaka.lg.jp'));
-    if (!href) {
+        .map((a) => new URL($(a).attr('href')!, PAGE).href)
+        // only follow links on the site itself
+        .find((h) => isOnSite(h, 'city.osaka.lg.jp'));
+    if (!link) {
         throw new Error('lg/osaka/food-permit: no CSV link on the 食品営業許可施設一覧 page');
     }
-    const buf: ArrayBuffer = await ofetch(new URL(href, PAGE).href, { responseType: 'arrayBuffer', maxResponseSize: 32 * 1024 * 1024 });
+    const buf: ArrayBuffer = await ofetch(link, { responseType: 'arrayBuffer', maxResponseSize: 32 * 1024 * 1024 });
     return csvRecords(decodeText(buf));
 };
 

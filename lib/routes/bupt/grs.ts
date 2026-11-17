@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/grs',
@@ -61,8 +62,12 @@ async function handler() {
         const orderedList = list;
         const entries = orderedList;
         const out = await Promise.all(
-            entries.map((item) =>
-                cache.tryGet(item.link!, async () => {
+            entries.map((item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'bupt.edu.cn')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
                     const response = await fetchWithPage(page, item.link!, { timeout: 12000 });
                     const detail = response.text;
                     const $ = load(detail);
@@ -72,8 +77,8 @@ async function handler() {
                         description: $('.v_news_content').html(),
                         author: $('.bbt span:contains("作者：")').text().replace('作者：', ''),
                     };
-                })
-            )
+                });
+            })
         );
 
         return {

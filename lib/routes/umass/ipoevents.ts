@@ -7,6 +7,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import { isOnSite } from '@/utils/valid-host';
 
 import { SourceClient } from './utils';
 
@@ -35,18 +36,21 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('a.text-md');
                 const link = new URL(a.attr('href')!, baseUrl).href;
-                const { pubDate } = await cache.tryGet(`umass:ipo:event-date:v1:${link}`, async () => {
-                    const sourceContent1 = await source.get(link);
-                    const $article = load(sourceContent1);
-                    const date = $article('.date-wrapper')
-                        .text()
-                        .match(/^\s*([A-Za-z]+ \d{1,2}, \d{4} \d{1,2}:\d{2} [ap]m)\b/)?.[1];
-                    if (!date) {
-                        return {};
-                    }
-                    const parsedDate = parseDate(date, 'MMMM D, YYYY h:mm a', true);
-                    return { pubDate: Number.isNaN(parsedDate.getTime()) ? undefined : dayjs.tz(date, 'MMMM D, YYYY h:mm a', 'America/New_York').toDate() };
-                });
+                // only follow links on the site itself
+                const { pubDate } = isOnSite(link, 'umass.edu')
+                    ? await cache.tryGet(`umass:ipo:event-date:v1:${link}`, async () => {
+                          const sourceContent1 = await source.get(link);
+                          const $article = load(sourceContent1);
+                          const date = $article('.date-wrapper')
+                              .text()
+                              .match(/^\s*([A-Za-z]+ \d{1,2}, \d{4} \d{1,2}:\d{2} [ap]m)\b/)?.[1];
+                          if (!date) {
+                              return {};
+                          }
+                          const parsedDate = parseDate(date, 'MMMM D, YYYY h:mm a', true);
+                          return { pubDate: Number.isNaN(parsedDate.getTime()) ? undefined : dayjs.tz(date, 'MMMM D, YYYY h:mm a', 'America/New_York').toDate() };
+                      })
+                    : { pubDate: undefined };
                 return {
                     title: a.text(),
                     description: $item.find('.summary').html(),

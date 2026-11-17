@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import { isOnSite } from '@/utils/valid-host';
 
 import { SourceClient } from './utils';
 
@@ -31,13 +32,16 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('.event__title a');
                 const link = new URL(a.attr('href')!, baseUrl).href;
-                const { pubDate } = await cache.tryGet(`umass:ece:event-date:v1:${link}`, async () => {
-                    const sourceContent1 = await source.get(link);
-                    const $article = load(sourceContent1);
-                    const datetime = $article('time[datetime]').first().attr('datetime');
-                    const date = datetime ? parseDate(datetime) : undefined;
-                    return { pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined };
-                });
+                // only follow links on the site itself
+                const { pubDate } = isOnSite(link, 'umass.edu')
+                    ? await cache.tryGet(`umass:ece:event-date:v1:${link}`, async () => {
+                          const sourceContent1 = await source.get(link);
+                          const $article = load(sourceContent1);
+                          const datetime = $article('time[datetime]').first().attr('datetime');
+                          const date = datetime ? parseDate(datetime) : undefined;
+                          return { pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined };
+                      })
+                    : { pubDate: undefined };
                 return {
                     title: a.text(),
                     link,

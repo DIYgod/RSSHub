@@ -9,6 +9,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 export const BASE_URL = 'https://www.dailypush.dev';
 
@@ -224,7 +225,7 @@ function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string)
 
     const footer = article.find('.flex.items-center.justify-between.gap-4.flex-wrap');
     const summaryLink = footer.find('a[href*="/article/"]').attr('href');
-    const dailyPushUrl = summaryLink ? `${baseUrl}${summaryLink}` : undefined;
+    const dailyPushUrl = summaryLink ? new URL(summaryLink, baseUrl).href : undefined;
 
     const pubDate = extractPubDate(article);
 
@@ -282,8 +283,12 @@ export async function enhanceItemsWithSummaries(context: BrowserContext, items: 
 
     const enhancedItems = await pMap(
         itemsWithUrl,
-        (item) =>
-            cache.tryGet(item.dailyPushUrl!, async () => {
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.dailyPushUrl, 'dailypush.dev')) {
+                return item;
+            }
+            return cache.tryGet(item.dailyPushUrl!, async () => {
                 try {
                     const html = await fetchPageHtml(context, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
                     const $ = load(html);
@@ -296,7 +301,8 @@ export async function enhanceItemsWithSummaries(context: BrowserContext, items: 
                 }
 
                 return item;
-            }),
+            });
+        },
         { concurrency: 5 }
     );
 

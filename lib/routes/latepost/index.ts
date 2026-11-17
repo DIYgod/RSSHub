@@ -9,6 +9,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 /**
  * Convert an array into a dictionary object.
@@ -131,6 +132,11 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
     const items = await pMap(
         list,
         async (item) => {
+            const category = item.category.filter((category): category is string => Boolean(category));
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'latepost.com')) {
+                return { ...item, category, guid: `latepost-${item.guid}`, pubDate: item.pubDate ? timezone(item.pubDate, 8) : undefined };
+            }
             const article = await cache.tryGet(`latepost:article:${item.link}`, async () => {
                 const detailResponse = await requestData(page, item.link);
 
@@ -177,7 +183,7 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
                 title: item.title ?? article.title,
                 description: article.description,
                 author: article.author,
-                category: item.category.filter((category): category is string => Boolean(category)),
+                category,
                 guid: `latepost-${item.guid}`,
                 pubDate: article.pubDate ?? (item.pubDate ? timezone(item.pubDate, 8) : undefined),
                 comments: article.comments,
