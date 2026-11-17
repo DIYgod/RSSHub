@@ -163,7 +163,7 @@
         "@j178/prek": "0.5.10",
         "@mswjs/interceptors": "0.45.12",
         "@oxlint/plugins": "1.93.0",
-        "@stylistic/eslint-plugin": "5.10.0",
+        "@stylistic/eslint-plugin": "6.0.0",
         "@types/crypto-js": "4.2.2",
         "@types/eslint": "9.6.1",
         "@types/etag": "1.8.4",
@@ -219,7 +219,7 @@
     "engines": {
         "node": "^24.15.0 || ^26.13.0"
     },
-    "packageManager": "pnpm@12.18.0",
+    "packageManager": "pnpm@12.21.0",
     "magpie": {
         "name": "RSSHub",
         "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+UlNTSHViPC90aXRsZT48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmQ2YTYiIHJ4PSI3LjYzNiIvPjxwYXRoIGZpbGw9IiNmZjg1NDkiIGQ9Ik0uMTQyIDYuMTZRLjAwMiA2Ljg3NSAwIDcuNjM1djguNzI4QTcuNjM2IDcuNjM2IDAgMCAwIDcuNjM2IDI0aDguNzI4YTcuNyA3LjcgMCAwIDAgMS40NzctLjE0MiAxMy4yNiAxMy4yNiAwIDAgMCAxLjI1LTUuNjRjMC03LjM1LTUuOTU5LTEzLjMwOS0xMy4zMS0xMy4zMDlhMTMuMjUgMTMuMjUgMCAwIDAtNS42NCAxLjI1Ii8+PGNpcmNsZSBjeD0iNS43MjciIGN5PSIxOC4yNzMiIHI9IjQuOTY0IiBmaWxsPSIjZmYyOTAwIi8+PC9zdmc+",
