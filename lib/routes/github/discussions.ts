@@ -97,8 +97,8 @@ async function handler(ctx) {
             },
             json: {
                 query: `
-                {
-                    repository(owner: "${user}", name: "${repo}") {
+                query ($user: String!, $repo: String!) {
+                    repository(owner: $user, name: $repo) {
                         discussionCategories(first: 25) {
                             nodes {
                                 id,
@@ -108,6 +108,7 @@ async function handler(ctx) {
                     }
                   }
                 `,
+                variables: { user, repo },
             },
         });
         const categoryItem = response.data.data.repository.discussionCategories.nodes.find((item) => item.name === category);
@@ -122,8 +123,8 @@ async function handler(ctx) {
         },
         json: {
             query: `
-            {
-                repository(owner: "${user}", name: "${repo}") {
+            query ($user: String!, $repo: String!) {
+                repository(owner: $user, name: $repo) {
                     discussions(${filters}) {
                         nodes {
                             title,
@@ -141,6 +142,7 @@ async function handler(ctx) {
                 }
               }
             `,
+            variables: { user, repo },
         },
     });
 

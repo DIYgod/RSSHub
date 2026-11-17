@@ -46,19 +46,20 @@ async function handler(ctx) {
         },
         json: {
             query: /* GraphQL */ `
-            {
-                repository(owner: "${user}", name: "${repo}") {
-                  stargazers(last: 10) {
-                    edges {
-                      node {
-                        login
-                        avatarUrl
-                      }
+                query ($user: String!, $repo: String!) {
+                    repository(owner: $user, name: $repo) {
+                        stargazers(last: 10) {
+                            edges {
+                                node {
+                                    login
+                                    avatarUrl
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             `,
+            variables: { user, repo },
         },
     });
 
