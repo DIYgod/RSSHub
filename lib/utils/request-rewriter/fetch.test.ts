@@ -2,6 +2,8 @@ import { once } from 'node:events';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
 
+import { Hono } from 'hono';
+import { contextStorage } from 'hono/context-storage';
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
 import undici from 'undici';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -111,6 +113,31 @@ describe('wrappedFetch', () => {
         const dispatcher = undici.getGlobalDispatcher();
         const optionsKey = Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'options')!;
         expect(dispatcher[optionsKey].connect.preferH2).toBe(true);
+    });
+
+    test('does not let one incoming request hold back the outgoing requests of another', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(new undici.Response('ok')));
+
+        const app = new Hono();
+        app.use(contextStorage());
+        app.get('/many', async (ctx) => {
+            await Promise.all(Array.from({ length: 30 }, () => wrappedFetch('http://example.com/many')));
+            return ctx.text('many');
+        });
+        app.get('/one', async (ctx) => {
+            await wrappedFetch('http://example.com/one');
+            return ctx.text('one');
+        });
+
+        const many = app.request('/many');
+        await app.request('/one');
+        // /one was queued behind at most the places /many may hold at once, not behind all 30
+        expect(fetchSpy.mock.calls.length).toBeLessThan(20);
+
+        await many;
+        expect(fetchSpy).toHaveBeenCalledTimes(31);
+
+        fetchSpy.mockRestore();
     });
 });
 

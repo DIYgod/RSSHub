@@ -1,6 +1,7 @@
 import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
+import { tryGetContext } from 'hono/context-storage';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import type { Agent, Dispatcher, RequestInfo, RequestInit } from 'undici';
 import undici, { Request } from 'undici';
@@ -18,9 +19,49 @@ const limiter = new RateLimiterMemory({
     execEvenly: true,
 });
 
+const maxQueueSize = 4800;
+
 const limiterQueue = new RateLimiterQueue(limiter, {
-    maxQueueSize: 4800,
+    maxQueueSize,
 });
+
+// The queue is first-in-first-out and shared by the whole process, so one incoming request may only
+// hold a few places in it at a time. Otherwise a route following a long upstream list makes the
+// outgoing requests of every other route wait until the last item of that list has been requested.
+const maxPlacesPerRequest = limiter.points;
+const places = new WeakMap<object, { held: number; waiting: Array<() => void> }>();
+
+const removeToken = async () => {
+    const ctx = tryGetContext();
+    if (!ctx) {
+        return limiterQueue.removeTokens(1);
+    }
+    let place = places.get(ctx);
+    if (!place) {
+        place = { held: 0, waiting: [] };
+        places.set(ctx, place);
+    }
+    if (place.held < maxPlacesPerRequest) {
+        place.held++;
+    } else if (place.waiting.length < maxQueueSize) {
+        const { waiting } = place;
+        await new Promise<void>((resolve) => {
+            waiting.push(resolve);
+        });
+    } else {
+        throw new Error(`Number of requests reached it's maximum ${maxQueueSize}`);
+    }
+    try {
+        return await limiterQueue.removeTokens(1);
+    } finally {
+        const next = place.waiting.shift();
+        if (next) {
+            next();
+        } else {
+            place.held--;
+        }
+    }
+};
 
 undici.setGlobalDispatcher(
     new undici.Agent({
@@ -146,7 +187,7 @@ const wrappedFetch: typeof undici.fetch = async (
         (interceptor): interceptor is Dispatcher.DispatcherComposeInterceptor => !!interceptor
     );
 
-    await limiterQueue.removeTokens(1);
+    await removeToken();
     await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
 
     if (interceptors.length > 0) {
