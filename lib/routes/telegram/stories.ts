@@ -92,6 +92,10 @@ async function handler(ctx: Context): Promise<Data | Response> {
         throw new NotFoundError();
     }
     const peer = await c.getInputEntity(username);
+    if (peer instanceof Api.InputPeerSelf) {
+        // only other peers' stories are served
+        throw new NotFoundError();
+    }
     if (story) {
         const storyItem = await getStory(peer, Number(story));
         await configureMiddlewares(ctx);

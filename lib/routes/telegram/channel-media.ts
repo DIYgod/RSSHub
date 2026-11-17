@@ -6,6 +6,7 @@ import { returnBigInt as bigInt } from 'teleproto/Helpers.js';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cacheModule from '@/utils/cache/index';
 import { isWorker } from '@/utils/is-worker';
@@ -252,6 +253,10 @@ async function handler(ctx: Context) {
     const client = await getClient();
     const { entityName, messageId } = ctx.req.param();
     const entity = await client.getInputEntity(entityName);
+    // only channel posts are served
+    if (!(entity instanceof Api.InputPeerChannel)) {
+        throw new NotFoundError(`${entityName} is not a channel`);
+    }
     const msgs = await client.getMessages(entity, {
         ids: [Number(messageId)],
     });
