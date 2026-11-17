@@ -2,7 +2,7 @@ import type { BrowserContext } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import playwright from '@/utils/playwright';
-import { constructCookieArray, getCookies, limitContentLength, parseCookieArray, setCookies } from '@/utils/playwright-utils';
+import { constructCookieArray, getCookies, limitContentLength, limitNavigation, parseCookieArray, setCookies } from '@/utils/playwright-utils';
 
 let context: BrowserContext | null = null;
 
@@ -112,4 +112,32 @@ describe('limitContentLength', () => {
 
         await (accepted ? expect(page.content()).resolves.toBe(html) : expect(page.content()).rejects.toThrow(`https://rsshub.test/ rendered to ${length} characters`));
     });
+});
+
+describe('limitNavigation', () => {
+    it.each(['https://rsshub.test/a', 'http://rsshub.test/a', 'about:blank'])('opens %s', async (url) => {
+        const goto = vi.fn((_url: string, _options?: object) => Promise.resolve(null));
+        const page = { goto };
+        limitNavigation(page);
+
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        expect(goto).toHaveBeenCalledWith(url, { waitUntil: 'domcontentloaded' });
+    });
+
+    it.each(['file:///etc/hostname', 'FILE:///etc/hostname', 'chrome://version', 'view-source:https://rsshub.test/', 'data:text/html,a'])('refuses %s', async (url) => {
+        const goto = vi.fn((_url: string, _options?: object) => Promise.resolve(null));
+        const page = { goto };
+        limitNavigation(page);
+
+        await expect(page.goto(url)).rejects.toThrow('only web pages are opened');
+        expect(goto).not.toHaveBeenCalled();
+    });
+
+    it('is applied to pages of the browser context', async () => {
+        context = await playwright();
+        const page = await context.newPage();
+
+        await expect(page.goto('file:///etc/hostname')).rejects.toThrow('only web pages are opened');
+        await page.goto('about:blank');
+    }, 45000);
 });

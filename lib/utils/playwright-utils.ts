@@ -75,4 +75,22 @@ const limitContentLength = (page) => {
     };
 };
 
-export { constructCookieArray, getCookies, limitContentLength, parseCookieArray, setCookies };
+/**
+ * Make `page.goto()` open only web pages. Routes navigate to links taken from upstream pages, and a `file:` link would
+ * otherwise tell the requester whether a local path exists.
+ *
+ * @param page Browser Page object
+ * @return {void}
+ */
+const limitNavigation = (page) => {
+    const goto = page.goto.bind(page);
+    page.goto = (url: string, ...args) => {
+        const { protocol } = new URL(url);
+        if (!['http:', 'https:', 'about:'].includes(protocol)) {
+            return Promise.reject(new Error(`page.goto: only web pages are opened, not ${protocol} URLs`));
+        }
+        return goto(url, ...args);
+    };
+};
+
+export { constructCookieArray, getCookies, limitContentLength, limitNavigation, parseCookieArray, setCookies };

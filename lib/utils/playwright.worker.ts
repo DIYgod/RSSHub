@@ -8,7 +8,7 @@ import { config } from '@/config';
 
 import logger from './logger';
 import { connectRemotePlaywright } from './playwright-remote.worker';
-import { limitContentLength } from './playwright-utils';
+import { limitContentLength, limitNavigation } from './playwright-utils';
 
 export { setPlaywrightServiceBinding } from './playwright-remote.worker';
 
@@ -75,6 +75,7 @@ const launchBrowser = async (options: { javaScriptEnabled?: boolean; useConfigur
             ...(options.javaScriptEnabled !== undefined && { javaScriptEnabled: options.javaScriptEnabled }),
         });
         context.on('page', limitContentLength);
+        context.on('page', limitNavigation);
         return { browser, context };
     } catch (error) {
         await browser.close();
