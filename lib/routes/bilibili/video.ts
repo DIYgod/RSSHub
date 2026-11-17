@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
@@ -273,9 +274,12 @@ async function getVideoList(uid: string): Promise<VideoListData> {
 async function handler(ctx: Context) {
     const isJsonFeed = ctx.req.query('format') === 'json';
 
-    const uid = ctx.req.param('uid');
+    const uid = ctx.req.param('uid')!;
+    if (!/^\d+$/.test(uid)) {
+        throw new InvalidParameterError('Invalid uid');
+    }
     const embed = !ctx.req.param('embed');
-    const data = await getVideoList(uid!);
+    const data = await getVideoList(uid);
     const videos = data.list?.vlist ?? [];
 
     let name = videos[0]?.author || uid;

@@ -64,7 +64,7 @@ const parseStatuses = (data) =>
     });
 
 async function getAccountStatuses(site, account_id, only_media) {
-    const statuses_url = `https://${site}/api/v1/accounts/${account_id}/statuses?only_media=${only_media}`;
+    const statuses_url = `https://${site}/api/v1/accounts/${encodeURIComponent(account_id)}/statuses?only_media=${only_media}`;
     const statuses_response = await got({
         method: 'get',
         url: statuses_url,

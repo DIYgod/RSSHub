@@ -4,6 +4,7 @@ import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -67,12 +68,22 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let queryParams: ParsedQuery = {};
+    const queryParams: ParsedQuery = {};
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];
     } else {
-        queryParams = queryString.parse(path);
+        // only the documented keys, fid and typeid
+        const { fid, typeid } = queryString.parse(path);
+        const documented = Object.entries({ fid, typeid });
+        for (const [key, value] of documented) {
+            if (typeof value === 'string' && /^\d+$/.test(value)) {
+                queryParams[key] = value;
+            }
+        }
+    }
+    if (!queryParams.fid) {
+        throw new InvalidParameterError('Invalid path');
     }
     queryParams.mod = 'forumdisplay';
     queryParams.orderby = 'dateline';

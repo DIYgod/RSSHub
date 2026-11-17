@@ -44,7 +44,7 @@ async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? '2';
     const filter = ctx.req.param('filter') ?? '1';
 
-    const currentUrl = `${category === 'censored' ? '' : category}?vft=${filter}&vst=${sort}`;
+    const currentUrl = `${category === 'censored' ? '' : encodeURIComponent(category)}?vft=${encodeURIComponent(filter)}&vst=${encodeURIComponent(sort)}`;
 
     const categories = {
         censored: '有碼',
