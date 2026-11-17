@@ -66,7 +66,7 @@ async function handler(ctx) {
     } else {
         results = await Promise.all(
             apiResult.series.map((item, index) =>
-                cache.tryGet(`18comic:album:${item.id}`, async () => {
+                cache.tryGet(`18comic:album:${item.id}:${rootUrl}`, async () => {
                     const chapterResult = await processApiItems(`/chapter?id=${item.id}`);
                     const result: DataItem = { title: '' };
                     const chapterNum = index + 1;

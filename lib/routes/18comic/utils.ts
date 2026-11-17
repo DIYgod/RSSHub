@@ -162,7 +162,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(`${item.guid}:${rootUrl}`, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);

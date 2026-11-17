@@ -70,7 +70,7 @@ async function handler(ctx) {
             .values()
             .toArray()
             .map((item) =>
-                cache.tryGet(item.guid, async () => {
+                cache.tryGet(`${item.guid}:${rootUrl}`, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

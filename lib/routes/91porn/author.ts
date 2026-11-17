@@ -65,7 +65,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(`91porn:${lang}:${new URL(item.link!).searchParams.get('viewkey')}`, async () => {
+            cache.tryGet(`91porn:${lang}:${new URL(item.link!).searchParams.get('viewkey')}:${domain}`, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
