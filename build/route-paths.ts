@@ -2040,6 +2040,7 @@ export type RoutePath =
   | `/keyakizaka46/blog`
   | `/keyakizaka46/news`
   | `/keylol/:path`
+  | `/kimi/blog`
   | `/kimlaw/thesis`
   | `/kiro/blog`
   | `/kiro/changelog`
