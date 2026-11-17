@@ -8,13 +8,24 @@ import type { MisskeyNote, MisskeyUser } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 
-const renderText = (text: string) =>
-    text.split('\n').map((line, index) => (
+// upper bounds on how much of one API response is rendered
+const maxNotes = 100; // the largest `limit` the notes endpoints accept
+const maxFiles = 16; // the most files Misskey attaches to one note
+const maxLines = 500;
+
+const renderText = (text: string) => {
+    const lines = text.split('\n');
+    // keep the first lines as they are and fold the remainder into the last one
+    if (lines.length > maxLines) {
+        lines.push(lines.splice(maxLines - 1).join(' '));
+    }
+    return lines.map((line, index) => (
         <>
             {index > 0 ? <br /> : null}
             {line}
         </>
     ));
+};
 
 const renderDescription = ({ reply, text, files }) =>
     renderToString(
@@ -25,7 +36,7 @@ const renderDescription = ({ reply, text, files }) =>
                 </blockquote>
             ) : null}
             {text ? <p>{renderText(text)}</p> : null}
-            {(files ?? []).map((file) => (
+            {(files ?? []).slice(0, maxFiles).map((file) => (
                 <>
                     <br />
                     {file.type.includes('image') ? (
@@ -50,7 +61,7 @@ const renderDescription = ({ reply, text, files }) =>
     );
 
 const parseNotes = (data: MisskeyNote[], site: string, simplifyAuthor: boolean = false) =>
-    data.map((item: MisskeyNote) => {
+    data.slice(0, maxNotes).map((item: MisskeyNote) => {
         const isRenote = item.renote && Object.keys(item.renote).length > 0;
         const isReply = item.reply && Object.keys(item.reply).length > 0;
         const noteToUse = isRenote && item.renote ? item.renote : item;
