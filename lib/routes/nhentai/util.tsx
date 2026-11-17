@@ -125,7 +125,14 @@ const getTorrents = async (cache, simples, limit) => {
     }
     return getTorrentWithCookie(cache, simples, cookie, limit);
 };
-const getTorrentWithCookie = (cache, simples, cookie, limit) => Promise.all(simples.slice(0, limit).map((simple) => cache.tryGet(simple.link + 'download', () => getTorrent(simple, cookie))));
+const getTorrentWithCookie = (cache, simples, cookie, limit) =>
+    Promise.all(
+        simples
+            // only send the session cookie to the site itself
+            .filter((simple) => new URL(simple.link).origin === baseUrl)
+            .slice(0, limit)
+            .map((simple) => cache.tryGet(simple.link + 'download', () => getTorrent(simple, cookie)))
+    );
 
 const parseSimpleDetail = ($ele) => {
     const link = new URL($ele.attr('href'), baseUrl).href;

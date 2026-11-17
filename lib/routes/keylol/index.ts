@@ -117,7 +117,9 @@ async function handler(ctx) {
                 author: $item.find('td.by-author cite').text(),
                 pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
             };
-        });
+        })
+        // only send the cookie to the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
     items = await Promise.all(
         items.map(async (item) => {

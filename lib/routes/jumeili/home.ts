@@ -43,6 +43,8 @@ export const route: Route = {
 :::`,
 };
 
+const siteHosts = new Set(['www.jumeili.cn', 'jumeili.cn']);
+
 async function handler(ctx) {
     const baseUrl = 'https://www.jumeili.cn';
     const column = ctx.req.param('column') ?? 0;
@@ -75,22 +77,29 @@ async function handler(ctx) {
         const cookieHash = createHash('sha256').update(cookie).digest('hex');
         items = await pMap(
             items,
-            async (item) => ({
-                ...item,
-                description:
-                    (await cache.tryGet(`jumeili:article:${cookieHash}:${item.link}`, async () => {
-                        const article = await ofetch(item.link, {
-                            headers: {
-                                'user-agent': config.trueUA,
-                                accept: 'application/json, text/javascript, */*; q=0.01',
-                                cookie,
-                            },
-                        });
-                        const $ = load(article);
+            async (item) => {
+                const { protocol, hostname } = new URL(item.link);
+                // only send the cookie to the site itself; other links keep the preview
+                if (protocol !== 'https:' || !siteHosts.has(hostname)) {
+                    return item;
+                }
+                return {
+                    ...item,
+                    description:
+                        (await cache.tryGet(`jumeili:article:${cookieHash}:${item.link}`, async () => {
+                            const article = await ofetch(item.link, {
+                                headers: {
+                                    'user-agent': config.trueUA,
+                                    accept: 'application/json, text/javascript, */*; q=0.01',
+                                    cookie,
+                                },
+                            });
+                            const $ = load(article);
 
-                        return $('#Cnt-Main-Article-JML').html() ?? '';
-                    })) || item.description,
-            }),
+                            return $('#Cnt-Main-Article-JML').html() ?? '';
+                        })) || item.description,
+                };
+            },
             { concurrency: 3 }
         );
     }

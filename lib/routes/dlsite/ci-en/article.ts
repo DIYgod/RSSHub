@@ -66,7 +66,9 @@ async function handler(ctx) {
                 title: $item.find('.e-title').text() || $item.text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
-        });
+        })
+        // only send the cookie to the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
     items = await pMap(
         items,

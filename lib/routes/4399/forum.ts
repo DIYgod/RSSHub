@@ -53,10 +53,12 @@ async function handler(ctx: Context) {
             const $item = $(item).parent();
             return {
                 title: $item.find('div.title').text() + '    ---------------最后回复->' + $item.find('.rtime span').text() + ':' + $item.find('.rtime a').text().trim(),
-                link: baseUrl + $item.find('.thread_link').attr('href'),
+                link: new URL($item.find('.thread_link').attr('href')!, baseUrl).href,
                 author: $item.find('.author').text(),
             };
-        });
+        })
+        // the detail request carries the configured cookie, so it must not leave my.4399.com
+        .filter((item) => new URL(item.link).origin === baseUrl);
 
     const items = await Promise.all(
         list.map((item) =>
