@@ -1,8 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 
+const containerFetch = vi.fn((_request: Request, _port?: number) => Promise.resolve(new Response('ok')));
+
 // Stands in for the real class: like it, startAndWaitForPorts() leaves a running container alone
 vi.mock('@cloudflare/containers', () => ({
     Container: class {
+        containerFetch = containerFetch;
         envVars?: Record<string, string>;
         runningWith?: Record<string, string>;
         destroy() {
@@ -44,5 +47,15 @@ describe('container worker', () => {
         await container.startWithEnvVars({ NODE_ENV: 'production', ACCESS_KEY: 'new' });
         expect(destroy).toHaveBeenCalledTimes(3);
         expect(container.runningWith).toEqual({ NODE_ENV: 'production', ACCESS_KEY: 'new' });
+    });
+
+    it('does not let the client choose the container port', async () => {
+        const { RSSHubContainer } = await import('@/container');
+        const container = new RSSHubContainer({} as never, {} as never);
+
+        const request = new Request('https://rsshub.test/metrics', { headers: { 'cf-container-target-port': '9464' } });
+        await container.fetch(request);
+
+        expect(containerFetch).toHaveBeenCalledExactlyOnceWith(request, 1200);
     });
 });

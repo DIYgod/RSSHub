@@ -11,8 +11,7 @@ export class RSSHubContainer extends Container {
     sleepAfter = '10m';
     enableInternet = true;
 
-    // A running container keeps the env vars it was started with (startOptions are only used by an actual start),
-    // so replace it when the config in KV no longer matches them, otherwise e.g. a new ACCESS_KEY is not enforced
+    // a running container keeps the env vars it was started with, so replace it when the config in KV changes
     async startWithEnvVars(envVars: Record<string, string>): Promise<void> {
         const current = this.envVars ?? {};
         const changed = Object.keys(current).length !== Object.keys(envVars).length || Object.entries(envVars).some(([name, value]) => current[name] !== value);
@@ -25,6 +24,11 @@ export class RSSHubContainer extends Container {
         }
 
         await this.startAndWaitForPorts();
+    }
+
+    // always target the port RSSHub listens on
+    fetch(request: Request): Promise<Response> {
+        return this.containerFetch(request, this.defaultPort);
     }
 }
 
