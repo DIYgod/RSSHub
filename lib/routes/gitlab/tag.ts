@@ -28,12 +28,13 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { namespace, project, host = 'gitlab.com' } = ctx.req.param();
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(new URL(`https://${host}/`).hostname)) {
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(host)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     const encodedNamespace = encodeURIComponent(namespace);
-    const data = await ofetch(`https://${host}/api/v4/projects/${encodedNamespace}%2F${project}/repository/tags`);
+    const encodedProject = encodeURIComponent(project);
+    const data = await ofetch(`https://${host}/api/v4/projects/${encodedNamespace}%2F${encodedProject}/repository/tags`);
 
     return {
         title: `${project} - Tags - Gitlab`,

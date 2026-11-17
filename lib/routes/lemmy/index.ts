@@ -69,7 +69,7 @@ async function handler(ctx) {
     }
     const instance = community.split('@', 2)[1];
     const allowedDomain = ['lemmy.world', 'lemm.ee', 'lemmy.ml', 'sh.itjust.works', 'feddit.de', 'hexbear.net', 'beehaw.org', 'lemmynsfw.com', 'lemmy.ca', 'programming.dev'];
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowedDomain.includes(new URL(`http://${instance}/`).hostname)) {
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowedDomain.includes(instance)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 

@@ -84,7 +84,7 @@ async function handler(ctx) {
     const rootUrl = `https://www.${domain}`;
     const westernUrl = `https://www.${westernDomain}`;
 
-    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(new URL(`https://${domain}/`).hostname) || !allowDomain.has(new URL(`https://${westernDomain}/`).hostname))) {
+    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(domain) || !allowDomain.has(westernDomain))) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
