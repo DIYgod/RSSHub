@@ -57,7 +57,10 @@ async function handler(ctx: Context): Promise<Data> {
                 const $ = load(response);
 
                 const content = $('.prose');
-                content.find('script, style, button').remove();
+                // Drop interactive UI, the mobile copy of each diagram and inactive tab panels
+                content.find('script, style, button, [role="tablist"], [role="tabpanel"][hidden], .art-diagram-narrow').remove();
+                // Figure labels are separated from captions by CSS only
+                content.find('figcaption > b:first-child').after(' · ');
 
                 item.description = content.html() || item.description;
 
