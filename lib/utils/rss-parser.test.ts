@@ -1,7 +1,7 @@
 import zlib from 'node:zlib';
 
 import { http, HttpResponse } from 'msw';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, onTestFinished } from 'vitest';
 
 import { config } from '@/config';
 import parser from '@/utils/rss-parser';
@@ -109,7 +109,13 @@ describe('rss-parser', () => {
         ['uncompressed', 'identity', (body: Buffer) => body],
     ])('rejects a %s feed that is larger than the limit', async (_, encoding, encode) => {
         const { default: server } = await import('@/setup.test');
-        const limit = config.requestMaxResponseSize;
+        // a smaller limit than the default keeps the test fast
+        const limit = 1024 * 1024;
+        const defaultLimit = config.requestMaxResponseSize;
+        config.requestMaxResponseSize = limit;
+        onTestFinished(() => {
+            config.requestMaxResponseSize = defaultLimit;
+        });
         server.use(
             http.get('http://rsshub.test/rss-large', ({ request }) => {
                 const size = Number(new URL(request.url).searchParams.get('size'));

@@ -205,7 +205,15 @@ describe('wrappedFetch credentialHeaders', () => {
 });
 
 describe('wrappedFetch maxResponseSize', () => {
-    const limit = config.requestMaxResponseSize;
+    // a smaller limit than the default keeps the test fast
+    const limit = 1024 * 1024;
+    const defaultLimit = config.requestMaxResponseSize;
+    beforeEach(() => {
+        config.requestMaxResponseSize = limit;
+    });
+    afterEach(() => {
+        config.requestMaxResponseSize = defaultLimit;
+    });
     let server: http.Server;
     let origin: string;
 
