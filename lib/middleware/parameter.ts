@@ -99,6 +99,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const handleItem = (item: DataItem) => {
+            // A fixed message, so a stray cached value returned as an item never ends up on the error page
+            if (typeof item !== 'object' || item === null) {
+                throw new TypeError('Feed items must be objects');
+            }
             // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
             item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
