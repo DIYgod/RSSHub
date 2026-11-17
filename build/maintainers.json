@@ -167,9 +167,6 @@
   "/chromium/project-zero-issues": [
     "hellodword"
   ],
-  "/chub/characters": [
-    "flameleaf"
-  ],
   "/chuhaibiji/": [
     "8430177"
   ],
@@ -178,12 +175,6 @@
     "hillerliao",
     "laampui",
     "nczitzk"
-  ],
-  "/codefather/posts/:category?/:sort?": [
-    "JackyST0"
-  ],
-  "/codefather/questions/:sort?": [
-    "JackyST0"
   ],
   "/cowlevel/element/:id": [
     "hoilc"
@@ -247,19 +238,6 @@
   "/geekbang/column/:cid": [
     "fengchang"
   ],
-  "/getdailyart/:language?": [
-    "zphw"
-  ],
-  "/gitlab/explore/:type?/:host?": [
-    "imlonghao",
-    "zoenglinghou"
-  ],
-  "/gitlab/release/:namespace/:project/:host?": [
-    "zoenglinghou"
-  ],
-  "/gitlab/tag/:namespace/:project/:host?": [
-    "zoenglinghou"
-  ],
   "/grupoanimal/estados": [
     "Slayer015"
   ],
@@ -293,9 +271,6 @@
   "/itslaw/judgements/:conditions": [
     "harveyqiu"
   ],
-  "/jetbrains/youtrack/comments/:issueId": [
-    "NekoAria"
-  ],
   "/jma/wxchart/:type?": [
     "TonyRL"
   ],
@@ -314,9 +289,6 @@
   ],
   "/kzo.moe/": [
     "CoderTonyChan"
-  ],
-  "/lens/profile/:handle": [
-    "DIYgod"
   ],
   "/likeshop/:site": [
     "nickyfoto"
@@ -362,11 +334,6 @@
   "/miniflux/subscription/:parameters?": [
     "emdoe",
     "DIYgod"
-  ],
-  "/mirror/:id": [
-    "fifteen42",
-    "rde9",
-    "nczitzk"
   ],
   "/nio/nioradio/:albumid": [
     "marcosteam"
@@ -560,8 +527,17 @@
   "/bnext/": [
     "johan456789"
   ],
+  "/chub/characters": [
+    "flameleaf"
+  ],
   "/cn-healthcare/index": [
     "qnloft"
+  ],
+  "/codefather/posts/:category?/:sort?": [
+    "JackyST0"
+  ],
+  "/codefather/questions/:sort?": [
+    "JackyST0"
   ],
   "/crossbell/feeds/following/:characterId": [
     "DIYgod"
@@ -612,8 +588,21 @@
     "HankChow",
     "Konano"
   ],
+  "/getdailyart/:language?": [
+    "zphw"
+  ],
   "/gitcode/commits/:owner/:repo/:branch?": [
     "JiZhi-Error"
+  ],
+  "/gitlab/explore/:type?/:host?": [
+    "imlonghao",
+    "zoenglinghou"
+  ],
+  "/gitlab/tag/:namespace/:project/:host?": [
+    "zoenglinghou"
+  ],
+  "/gitlab/release/:namespace/:project/:host?": [
+    "zoenglinghou"
   ],
   "/gocn/jobs": [
     "AtlanCI",
@@ -667,6 +656,9 @@
   "/jamesclear/3-2-1": [
     "Rjnishant530"
   ],
+  "/jetbrains/youtrack/comments/:issueId": [
+    "NekoAria"
+  ],
   "/jiaoliudao/": [
     "TonyRL"
   ],
@@ -678,6 +670,9 @@
   ],
   "/komiic/comic/:id": [
     "NekoAria"
+  ],
+  "/lens/profile/:handle": [
+    "DIYgod"
   ],
   "/loongarch/post/:type?": [
     "ladeng07",
@@ -704,6 +699,11 @@
   ],
   "/microsoft/mcr/product/*": [
     "margani"
+  ],
+  "/mirror/:id": [
+    "fifteen42",
+    "rde9",
+    "nczitzk"
   ],
   "/miui/community/user/:uid": [
     "abc1763613206"
@@ -4592,15 +4592,8 @@
   "/github/branches/:user/:repo": [
     "max-arnold"
   ],
-  "/github/comments/:user/:repo/:number?": [
-    "TonyRL",
-    "FliegendeWurst"
-  ],
   "/github/contributors/:user/:repo/:order?/:anon?": [
     "zoenglinghou"
-  ],
-  "/github/discussion/:user/:repo/:state?/:category?": [
-    "waynzh"
   ],
   "/github/file/:user/:repo/:branch/:filepath{.+}": [
     "zengxs"
@@ -4611,16 +4604,8 @@
   "/github/gist/:gistId": [
     "TonyRL"
   ],
-  "/github/issue/:user/:repo/:state?/:labels?": [
-    "HenryQW",
-    "AndreyMZ"
-  ],
   "/github/notifications": [
     "zhzy0077"
-  ],
-  "/github/pull/:user/:repo/:state?/:labels?": [
-    "hashman",
-    "TonyRL"
   ],
   "/github/repos/:user/:type?/:sort?": [
     "DIYgod"
@@ -4633,6 +4618,21 @@
   ],
   "/github/starred_repos/:user": [
     "LanceZhu"
+  ],
+  "/github/comments/:user/:repo/:number?": [
+    "TonyRL",
+    "FliegendeWurst"
+  ],
+  "/github/discussion/:user/:repo/:state?/:category?": [
+    "waynzh"
+  ],
+  "/github/issue/:user/:repo/:state?/:labels?": [
+    "HenryQW",
+    "AndreyMZ"
+  ],
+  "/github/pull/:user/:repo/:state?/:labels?": [
+    "hashman",
+    "TonyRL"
   ],
   "/github/org_event/:org/:types?": [
     "mslxl"

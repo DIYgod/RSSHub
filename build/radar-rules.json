@@ -497,29 +497,6 @@
       }
     ]
   },
-  "codefather.cn": {
-    "_name": "编程导航",
-    "www": [
-      {
-        "title": "帖子",
-        "docs": "https://docs.rsshub.app/routes/codefather",
-        "source": [
-          "/",
-          "/"
-        ],
-        "target": "/codefather/posts"
-      },
-      {
-        "title": "问答",
-        "docs": "https://docs.rsshub.app/routes/codefather",
-        "source": [
-          "/qa",
-          "/"
-        ],
-        "target": "/codefather/questions"
-      }
-    ]
-  },
   "cowlevel.net": {
     "_name": "奶牛关",
     ".": [
@@ -814,19 +791,6 @@
       }
     ]
   },
-  "gitlab.com": {
-    "_name": "GitLab",
-    ".": [
-      {
-        "title": "Explore",
-        "docs": "https://docs.rsshub.app/routes/gitlab",
-        "source": [
-          "/explore/projects/:type"
-        ],
-        "target": "/gitlab/explore/:type"
-      }
-    ]
-  },
   "grupoanimal.mx": {
     "_name": "Grupo Animal",
     "www": [
@@ -898,19 +862,6 @@
           "/:lang/news"
         ],
         "target": "/isct/news/:lang"
-      }
-    ]
-  },
-  "jetbrains.com": {
-    "_name": "JetBrains",
-    "youtrack": [
-      {
-        "title": "YouTrack Issue Comments",
-        "docs": "https://docs.rsshub.app/routes/jetbrains",
-        "source": [
-          "/issue/:issueId"
-        ],
-        "target": "/jetbrains/youtrack/comments/:issueId"
       }
     ]
   },
@@ -989,19 +940,6 @@
           "/ResearchResults"
         ],
         "target": "/ke/researchResults"
-      }
-    ]
-  },
-  "hey.xyz": {
-    "_name": "Lens",
-    ".": [
-      {
-        "title": "Profile",
-        "docs": "https://docs.rsshub.app/routes/lens",
-        "source": [
-          "/u/:handle"
-        ],
-        "target": "/lens/profile/:handle"
       }
     ]
   },
@@ -1706,6 +1644,29 @@
       }
     ]
   },
+  "codefather.cn": {
+    "_name": "编程导航",
+    "www": [
+      {
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/routes/codefather",
+        "source": [
+          "/",
+          "/"
+        ],
+        "target": "/codefather/posts"
+      },
+      {
+        "title": "问答",
+        "docs": "https://docs.rsshub.app/routes/codefather",
+        "source": [
+          "/qa",
+          "/"
+        ],
+        "target": "/codefather/questions"
+      }
+    ]
+  },
   "crossbell.io": {
     "_name": "Crossbell",
     ".": [
@@ -1868,6 +1829,19 @@
       }
     ]
   },
+  "gitlab.com": {
+    "_name": "GitLab",
+    ".": [
+      {
+        "title": "Explore",
+        "docs": "https://docs.rsshub.app/routes/gitlab",
+        "source": [
+          "/explore/projects/:type"
+        ],
+        "target": "/gitlab/explore/:type"
+      }
+    ]
+  },
   "gocn.vip": {
     "_name": "GoCN",
     ".": [
@@ -2013,6 +1987,19 @@
       }
     ]
   },
+  "jetbrains.com": {
+    "_name": "JetBrains",
+    "youtrack": [
+      {
+        "title": "YouTrack Issue Comments",
+        "docs": "https://docs.rsshub.app/routes/jetbrains",
+        "source": [
+          "/issue/:issueId"
+        ],
+        "target": "/jetbrains/youtrack/comments/:issueId"
+      }
+    ]
+  },
   "jiaoliudao.com": {
     "_name": "交流岛资源网",
     ".": [
@@ -2049,6 +2036,19 @@
           "/comic/:id"
         ],
         "target": "/komiic/comic/:id"
+      }
+    ]
+  },
+  "hey.xyz": {
+    "_name": "Lens",
+    ".": [
+      {
+        "title": "Profile",
+        "docs": "https://docs.rsshub.app/routes/lens",
+        "source": [
+          "/u/:handle"
+        ],
+        "target": "/lens/profile/:handle"
       }
     ]
   },
@@ -23150,15 +23150,6 @@
         "target": "/github/branches/:user/:repo"
       },
       {
-        "title": "Issue / Pull Request comments",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:user/:repo/:type",
-          "/:user/:repo/:type/:number"
-        ],
-        "target": "/github/comments/:user/:repo/:number?"
-      },
-      {
         "title": "Repo Contributors",
         "docs": "https://docs.rsshub.app/routes/github",
         "source": [
@@ -23166,16 +23157,6 @@
           "/:user/:repo"
         ],
         "target": "/github/contributors/:user/:repo"
-      },
-      {
-        "title": "Repo Discussions",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:user/:repo/discussions",
-          "/:user/:repo/discussions/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/discussion/:user/:repo"
       },
       {
         "title": "File Commits",
@@ -23194,32 +23175,12 @@
         "target": "/github/user/followers/:user"
       },
       {
-        "title": "Repo Issues",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:user/:repo/issues",
-          "/:user/:repo/issues/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/issue/:user/:repo"
-      },
-      {
         "title": "Notifications",
         "docs": "https://docs.rsshub.app/routes/github",
         "source": [
           "/notifications"
         ],
         "target": "/github/notifications"
-      },
-      {
-        "title": "Repo Pull Requests",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:user/:repo/pulls",
-          "/:user/:repo/pulls/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/pull/:user/:repo"
       },
       {
         "title": "User Repo",
@@ -23245,6 +23206,45 @@
           "/:user"
         ],
         "target": "/github/starred_repos/:user"
+      },
+      {
+        "title": "Issue / Pull Request comments",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:user/:repo/:type",
+          "/:user/:repo/:type/:number"
+        ],
+        "target": "/github/comments/:user/:repo/:number?"
+      },
+      {
+        "title": "Repo Discussions",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:user/:repo/discussions",
+          "/:user/:repo/discussions/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/discussion/:user/:repo"
+      },
+      {
+        "title": "Repo Issues",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:user/:repo/issues",
+          "/:user/:repo/issues/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/issue/:user/:repo"
+      },
+      {
+        "title": "Repo Pull Requests",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:user/:repo/pulls",
+          "/:user/:repo/pulls/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/pull/:user/:repo"
       },
       {
         "title": "Organization Event",
