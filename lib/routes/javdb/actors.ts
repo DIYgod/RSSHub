@@ -47,7 +47,7 @@ async function handler(ctx) {
     const addonTags = ctx.req.query('addon_tags') ?? '';
 
     const finalTags = addonTags && filter ? `${filter},${addonTags}` : `${filter}${addonTags}`;
-    const currentUrl = `/actors/${id}${finalTags ? `?t=${finalTags}` : ''}`;
+    const currentUrl = `/actors/${encodeURIComponent(id)}${finalTags ? `?t=${finalTags}` : ''}`;
 
     const filters = {
         '': '',

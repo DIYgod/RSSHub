@@ -35,7 +35,7 @@ async function handler(ctx) {
     const fileUrl = `https://github.com/${user}/${repo}/commits/${branch}/${filepath}`;
 
     const headers = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};
-    const res = await got.get(`https://api.github.com/repos/${user}/${repo}/commits`, {
+    const res = await got.get(`https://api.github.com/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/commits`, {
         searchParams: queryString.stringify({
             sha: branch,
             path: filepath,

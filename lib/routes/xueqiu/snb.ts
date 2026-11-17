@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const url = 'https://xueqiu.com/p/' + id;
+    const url = 'https://xueqiu.com/p/' + encodeURIComponent(id);
 
     const response = await got(url, {
         headerGeneratorOptions: PRESETS.MODERN_ANDROID,

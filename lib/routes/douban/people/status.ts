@@ -559,7 +559,7 @@ async function getFullTextItems(items: Array<{ status: FullTextStatus }>) {
 
 async function handler(ctx) {
     const userid = ctx.req.param('userid');
-    const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${userid}`;
+    const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${encodeURIComponent(userid)}`;
     const items = await cache.tryGet(
         `douban:timeline:${userid}:${md5(config.douban.cookie || 'visitor')}`,
         async () => {

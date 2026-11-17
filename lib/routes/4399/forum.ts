@@ -41,7 +41,7 @@ async function handler(ctx: Context) {
         throw new ConfigNotFoundError('4399 forum RSS is disabled due to the lack of GAME_4399 config');
     }
 
-    const response = await ofetch(`${baseUrl}/forums/${mtag}`, {
+    const response = await ofetch(`${baseUrl}/forums/${encodeURIComponent(mtag)}`, {
         headers: { Cookie: cookie },
     });
     const $ = load(response);

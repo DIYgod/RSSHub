@@ -58,7 +58,7 @@ function generateCollectionItem(item: CollectionItem): DataItem & { link: string
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const apiPath = `https://api.zhihu.com/people/${id}/collections`;
+    const apiPath = `https://api.zhihu.com/people/${encodeURIComponent(id)}/collections`;
 
     const response = await got(apiPath, {
         headers: {

@@ -133,7 +133,7 @@ export function processCreator(creator: Creator): DataItem | null {
 }
 
 export async function getFollowingsItems(username: string, path: 'friend_works' | 'following_works' | 'following_creators'): Promise<DataItem[]> {
-    const url = `${baseUrl}/api/users/${username.replace('@', '')}/followings`;
+    const url = `${baseUrl}/api/users/${encodeURIComponent(username.replace('@', ''))}/followings`;
 
     const followings_data = await cache.tryGet(
         `skeb:followings_data:${username}`,

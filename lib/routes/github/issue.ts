@@ -59,7 +59,7 @@ async function handler(ctx) {
     const limit = Math.max(100, Number.parseInt(ctx.req.query('limit') ?? '') || 100);
 
     const host = `https://github.com/${user}/${repo}/issues`;
-    const url = `https://api.github.com/repos/${user}/${repo}/issues`;
+    const url = `https://api.github.com/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues`;
 
     const headers =
         config.github && config.github.access_token

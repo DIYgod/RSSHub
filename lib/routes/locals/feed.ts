@@ -240,7 +240,7 @@ function extractCommunityInfo(html: string, community: string) {
 }
 
 function fetchContentPage(community: string, session: string) {
-    return cache.tryGet(`locals:content-page:${community}`, () => ofetch(`${rootUrl}/${community}/feed?mode=content`, { headers: getRequestHeaders(session) }));
+    return cache.tryGet(`locals:content-page:${community}`, () => ofetch(`${rootUrl}/${encodeURIComponent(community)}/feed?mode=content`, { headers: getRequestHeaders(session) }));
 }
 
 function resolveActionIds(community: string, session: string) {

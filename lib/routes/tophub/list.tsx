@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const link = `https://tophub.today/n/${id}`;
+    const link = `https://tophub.today/n/${encodeURIComponent(id)}`;
     const response = await ofetch(link, {
         headers: {
             Cookie: config.tophub?.cookie ?? '',

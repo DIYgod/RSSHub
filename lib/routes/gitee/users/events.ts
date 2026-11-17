@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const username = ctx.req.param('username');
 
-    const apiUrl = `https://gitee.com/api/v5/users/${username}/events/public`;
+    const apiUrl = `https://gitee.com/api/v5/users/${encodeURIComponent(username)}/events/public`;
     const limit = getRouteLimit(ctx, 100);
     const response = await cache.tryGet(
         `${apiUrl}:${limit}`,

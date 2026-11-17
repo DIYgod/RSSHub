@@ -47,7 +47,7 @@ Note: This route does not support Radar auto-detection because the post ID is in
             throw new InvalidParameterError('postId must be a positive post ID prefixed with post-, for example post-5909830');
         }
         const baseUrl = 'https://f95zone.to';
-        const link = `${baseUrl}/threads/${thread}/#${postId}`;
+        const link = `${baseUrl}/threads/${encodeURIComponent(thread)}/#${postId}`;
 
         const response = await ofetch(link, {
             headers: {

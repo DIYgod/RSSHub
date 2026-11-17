@@ -47,7 +47,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
     handler: async (ctx) => {
         const { thread } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
-        const threadLink = `${baseUrl}/threads/${thread}/`;
+        const threadLink = `${baseUrl}/threads/${encodeURIComponent(thread)}/`;
 
         const headers = {
             ...(config.f95zone.cookie && { cookie: config.f95zone.cookie }),

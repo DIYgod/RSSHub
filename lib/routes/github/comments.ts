@@ -180,7 +180,7 @@ async function handler(ctx) {
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {
-    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues/comments`, {
         headers,
         query: {
             sort: 'updated',
@@ -233,7 +233,7 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         return singleIssueGraphql(ctx, user, repo, number, Math.min(limit, 100), headers);
     }
 
-    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues/${number}`, {
         headers,
     });
     const issue = response._data;

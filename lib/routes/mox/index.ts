@@ -105,7 +105,7 @@ function getDescription(content: string): string {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
-    const currentUrl = `${rootUrl}${category ? `/l/${category}` : ''}`;
+    const currentUrl = `${rootUrl}${category ? `/l/${encodeURIComponent(category)}` : ''}`;
 
     const cookie = config.mox.cookie;
     const page = await getPage(currentUrl, cookie);

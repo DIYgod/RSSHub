@@ -44,7 +44,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=0&limit=20`,
+        url: `https://www.zhihu.com/api/v4/collections/${encodeURIComponent(id)}/items?offset=0&limit=20`,
         headers: {
             ...header,
             cookie: config.zhihu.cookies,
@@ -68,7 +68,7 @@ async function handler(ctx) {
                     cache.tryGet(`https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`, async () => {
                         const response = await got({
                             method: 'get',
-                            url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`,
+                            url: `https://www.zhihu.com/api/v4/collections/${encodeURIComponent(id)}/items?offset=${offset}&limit=20`,
                             headers: {
                                 ...header,
                                 cookie: config.zhihu.cookies,

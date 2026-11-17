@@ -40,7 +40,7 @@ async function handler(ctx) {
               };
 
     const host = 'https://gist.github.com';
-    const apiUrl = `https://api.github.com/gists/${gistId}`;
+    const apiUrl = `https://api.github.com/gists/${encodeURIComponent(gistId)}`;
 
     const { data: response } = await got(apiUrl, {
         headers,

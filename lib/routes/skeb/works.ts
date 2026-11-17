@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
         throw new ConfigNotFoundError('Skeb works RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const url = `${baseUrl}/api/users/${username.replace('@', '')}/works`;
+    const url = `${baseUrl}/api/users/${encodeURIComponent(username.replace('@', ''))}/works`;
 
     await ensureRequestKey(url);
 

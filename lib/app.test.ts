@@ -1,9 +1,11 @@
+import { http, HttpResponse } from 'msw';
 import Parser from 'rss-parser';
 import undici from 'undici';
 import { describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
 import { config } from '@/config';
+import server from '@/setup.test';
 
 describe('index', () => {
     it('exports app entrypoint', () => {
@@ -28,6 +30,23 @@ describe('request-rewriter', () => {
             throw new TypeError('the rewriter did not call undici fetch with a Request');
         }
         expect(request.headers.get('user-agent')).toMatch(/Chrome/);
+    });
+});
+
+describe('route parameters', () => {
+    it('should keep a decoded path parameter inside its upstream path segment', async () => {
+        const requestedPaths: string[] = [];
+        server.use(
+            http.get('https://api.github.com/*', ({ request }) => {
+                requestedPaths.push(new URL(request.url).pathname);
+                return HttpResponse.json([]);
+            })
+        );
+
+        // Hono decodes %2F, so the route must re-encode :user before building the API URL
+        await app.request('/github/repos/..%2Fuser');
+
+        expect(requestedPaths).toEqual(['/users/..%2Fuser/repos']);
     });
 });
 

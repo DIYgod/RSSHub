@@ -42,7 +42,7 @@ async function handler(ctx) {
     const filter = ctx.req.param('filter') ?? '';
     const sort = ctx.req.param('sort') ?? '0';
 
-    const currentUrl = `/lists/${id}?lst=${sort}${filter && filter !== 'none' ? `&f=${filter}` : ''}`;
+    const currentUrl = `/lists/${encodeURIComponent(id)}?lst=${sort}${filter && filter !== 'none' ? `&f=${filter}` : ''}`;
 
     const filters = {
         '': '',

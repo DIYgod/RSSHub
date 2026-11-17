@@ -36,7 +36,7 @@ async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const cookieString = config.saraba1st.cookie ?? '';
     const host = config.saraba1st.host;
-    const res = await got(`${host}/2b/${tid}.html`, {
+    const res = await got(`${host}/2b/${encodeURIComponent(tid)}.html`, {
         headers: {
             Cookie: cookieString,
         },

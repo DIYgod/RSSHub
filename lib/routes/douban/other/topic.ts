@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const link = `https://www.douban.com/gallery/topic/${id}/?sort=${sort}`;
 
-    const api = `https://m.douban.com/rexxar/api/v2/gallery/topic/${id}/items?sort=${sort}&start=0&count=10&status_full_text=1`;
+    const api = `https://m.douban.com/rexxar/api/v2/gallery/topic/${encodeURIComponent(id)}/items?sort=${sort}&start=0&count=10&status_full_text=1`;
     const response = await got({
         method: 'GET',
         url: api,

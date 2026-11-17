@@ -43,7 +43,7 @@ async function handler(ctx) {
     }
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/users/${user}/repos`,
+        url: `https://api.github.com/users/${encodeURIComponent(user)}/repos`,
         searchParams: {
             type,
             sort,

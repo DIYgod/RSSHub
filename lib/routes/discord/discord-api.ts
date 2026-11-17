@@ -15,7 +15,7 @@ const apiUrl = `${baseUrl}/api/v10`;
 
 export const getGuild = (guildId, authorization) =>
     cache.tryGet(`discord:guilds:${guildId}`, () =>
-        ofetch<RESTGetAPIGuildResult>(`${apiUrl}/guilds/${guildId}`, {
+        ofetch<RESTGetAPIGuildResult>(`${apiUrl}/guilds/${encodeURIComponent(guildId)}`, {
             headers: {
                 authorization,
             },
@@ -24,7 +24,7 @@ export const getGuild = (guildId, authorization) =>
 
 export const getChannel = (channelId, authorization) =>
     cache.tryGet(`discord:channels:${channelId}`, () =>
-        ofetch<RESTGetAPIChannelResult>(`${apiUrl}/channels/${channelId}`, {
+        ofetch<RESTGetAPIChannelResult>(`${apiUrl}/channels/${encodeURIComponent(channelId)}`, {
             headers: {
                 authorization,
             },
@@ -35,7 +35,7 @@ export const getChannelMessages = (channelId, authorization, limit = 100) =>
     cache.tryGet(
         `discord:channels:${channelId}:messages:${limit}`,
         () =>
-            ofetch<RESTGetAPIChannelMessagesResult>(`${apiUrl}/channels/${channelId}/messages`, {
+            ofetch<RESTGetAPIChannelMessagesResult>(`${apiUrl}/channels/${encodeURIComponent(channelId)}/messages`, {
                 headers: {
                     authorization,
                 },
@@ -80,7 +80,7 @@ export const searchGuildMessages = (guildId: string, authorization: string, para
                 has: params.has?.length ? params.has : undefined,
             };
 
-            const response = await ofetch.raw<SearchGuildMessagesResult & { retry_after?: number }>(`${apiUrl}/guilds/${guildId}/messages/search`, {
+            const response = await ofetch.raw<SearchGuildMessagesResult & { retry_after?: number }>(`${apiUrl}/guilds/${encodeURIComponent(guildId)}/messages/search`, {
                 headers: { authorization },
                 query: queryParams,
             });

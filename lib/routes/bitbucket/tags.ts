@@ -37,7 +37,7 @@ async function handler(ctx) {
     }
     const response = await got({
         method: 'get',
-        url: `https://api.bitbucket.org/2.0/repositories/${workspace}/${repo_slug}/refs/tags/`,
+        url: `https://api.bitbucket.org/2.0/repositories/${encodeURIComponent(workspace)}/${encodeURIComponent(repo_slug)}/refs/tags/`,
         searchParams: queryString.stringify({
             sort: '-target.date',
         }),

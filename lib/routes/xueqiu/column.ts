@@ -37,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const pageUrl = `${baseUrl}/${id}/column`;
+    const pageUrl = `${baseUrl}/${encodeURIComponent(id)}/column`;
 
     const configuredCookie = config.xueqiu.cookies;
     if (!configuredCookie) {

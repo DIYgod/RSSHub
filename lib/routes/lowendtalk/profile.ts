@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
     }
 
     const baseUrl = 'https://lowendtalk.com';
-    const link = `${baseUrl}/profile/${type}/${username}`;
+    const link = `${baseUrl}/profile/${encodeURIComponent(type)}/${encodeURIComponent(username)}`;
     const response = await ofetch(link, { headers: { cookie: config.lowendtalk.cookie } });
     const $ = load(response);
 
