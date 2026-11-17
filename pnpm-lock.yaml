@@ -432,9 +432,6 @@ importers:
       uuid:
         specifier: 14.0.3
         version: 14.0.3
-      vm2:
-        specifier: 3.12.2
-        version: 3.12.2
       winston:
         specifier: 3.19.0
         version: 3.19.0
@@ -3241,10 +3238,6 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  acorn-walk@8.3.5:
-    resolution: {integrity: sha512-HEHNfbars9v4pgpW6SO1KSPkfoS0xVOM/9UzkJltjlsHZmJasxg8aXkuZa7SMf8vKGIBhpUsPluQSqhJFCqebw==}
-    engines: {node: '>=0.4.0'}
-
   acorn@8.19.0:
     resolution: {integrity: sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==}
     engines: {node: '>=0.4.0'}
@@ -6012,11 +6005,6 @@ packages:
       jsdom:
         optional: true
 
-  vm2@3.12.2:
-    resolution: {integrity: sha512-LRHt4xU6eXshlZEcSZVrTehLGxRDjHvjmFPGwEp4xGpZX61QzH6Xm9wK2nU7XAp36V1w2xILAL1LwxVkgD1Ipw==}
-    engines: {node: '>=6.0'}
-    hasBin: true
-
   w3c-xmlserializer@6.0.0:
     resolution: {integrity: sha512-4Nsy8K5Tr6SPDH9jhKJOHf7ChDrc1zufZTVSF7x72hwuEXBqxqk9G6cK+K2NRUtB3iELRJqjXb4JPDMBjMTl2Q==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
@@ -8173,10 +8161,6 @@ snapshots:
       acorn: 8.19.0
 
   acorn-jsx@5.3.2(acorn@8.19.0):
-    dependencies:
-      acorn: 8.19.0
-
-  acorn-walk@8.3.5:
     dependencies:
       acorn: 8.19.0
 
@@ -11284,11 +11268,6 @@ snapshots:
       jsdom: 31.0.1(@noble/hashes@2.4.0)
     transitivePeerDependencies:
       - msw
-
-  vm2@3.12.2:
-    dependencies:
-      acorn: 8.19.0
-      acorn-walk: 8.3.5
 
   w3c-xmlserializer@6.0.0:
     dependencies:

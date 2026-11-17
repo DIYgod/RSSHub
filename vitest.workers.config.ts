@@ -68,7 +68,6 @@ export default defineConfig({
         alias: {
             'dotenv/config': path.resolve('./lib/shims/dotenv-config.ts'),
             jsdom: path.resolve('./lib/shims/jsdom.ts'),
-            vm2: path.resolve('./lib/shims/vm2.ts'),
         },
     },
     test: {

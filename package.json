@@ -143,7 +143,6 @@
         "ufo": "1.6.4",
         "undici": "8.12.4",
         "uuid": "14.0.3",
-        "vm2": "3.12.2",
         "winston": "3.19.0",
         "x-client-transaction-id": "0.3.3",
         "xxhash-wasm": "1.1.0",
