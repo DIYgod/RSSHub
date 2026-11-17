@@ -1,5 +1,6 @@
 import '@/utils/request-rewriter';
 
+import type dns from 'node:dns';
 import { once } from 'node:events';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
@@ -12,16 +13,28 @@ import ofetch from '@/utils/ofetch';
 
 import { publicLookup, publicOnly } from './public-only';
 
+vi.mock('node:dns', async (importOriginal) => {
+    const original = await importOriginal<typeof dns>();
+    const lookup = (hostname: string, options: { all?: boolean }, callback: (...args: unknown[]) => void) =>
+        hostname === 'fake-ip.test' ? (options.all ? callback(null, [{ address: '198.18.0.5', family: 4 }]) : callback(null, '198.18.0.5', 4)) : original.lookup(hostname, options, callback);
+    return { ...original, default: { ...original, lookup }, lookup };
+});
+
 const lookup = (hostname: string, all: boolean) => new Promise((resolve, reject) => publicLookup(hostname, { all }, (error, address) => (error ? reject(error) : resolve(address))));
 
 describe('publicLookup', () => {
-    it.each(['localhost', '0.0.0.0', '10.0.0.1', '100.64.0.1', '127.0.0.1', '169.254.169.254', '172.16.0.1', '192.168.0.1', '255.255.255.255', '::', '::1', '::ffff:127.0.0.1', 'fd00::1', 'fe80::1'])(
+    it.each(['localhost', '0.0.0.0', '10.0.0.1', '100.64.0.1', '127.0.0.1', '169.254.169.254', '172.16.0.1', '192.168.0.1', '255.255.255.255', '198.18.0.1', '::', '::1', '::ffff:127.0.0.1', 'fd00::1', 'fe80::1'])(
         'refuses %s',
         async (hostname) => {
             await expect(lookup(hostname, false)).rejects.toThrow('non-public address');
             await expect(lookup(hostname, true)).rejects.toThrow('non-public address');
         }
     );
+
+    it('accepts a host name that fake-IP DNS answers', async () => {
+        await expect(lookup('fake-ip.test', false)).resolves.toBe('198.18.0.5');
+        await expect(lookup('fake-ip.test', true)).resolves.toEqual([expect.objectContaining({ address: '198.18.0.5' })]);
+    });
 
     it.each(['1.1.1.1', '172.32.0.1', '::ffff:1.1.1.1', '2606:4700:4700::1111'])('accepts %s', async (hostname) => {
         await expect(lookup(hostname, false)).resolves.toBe(hostname);

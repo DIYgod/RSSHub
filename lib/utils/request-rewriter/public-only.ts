@@ -1,6 +1,6 @@
 import { lookup } from 'node:dns';
 import type { LookupFunction } from 'node:net';
-import { BlockList, isIPv6 } from 'node:net';
+import { BlockList, isIP, isIPv6 } from 'node:net';
 
 import type { Dispatcher } from 'undici';
 
@@ -29,7 +29,13 @@ for (const [network, prefix] of [
     blockList.addSubnet(network, prefix, 'ipv6');
 }
 
+// fake-IP DNS (Clash, Surge and the like) answers every host name with an address from this range, and the proxy behind it
+// connects to the real one, so it only counts as non-public when it is requested directly
+const fakeIpList = new BlockList();
+fakeIpList.addSubnet('198.18.0.0', 15, 'ipv4');
+
 const isBlocked = (address: string) => blockList.check(address, isIPv6(address) ? 'ipv6' : 'ipv4');
+const isFakeIp = (address: string) => fakeIpList.check(address, isIPv6(address) ? 'ipv6' : 'ipv4');
 
 /**
  * `dns.lookup` that fails when the host name resolves to a non-public address.
@@ -37,7 +43,12 @@ const isBlocked = (address: string) => blockList.check(address, isIPv6(address) 
  */
 export const publicLookup: LookupFunction = (hostname, options, callback) =>
     lookup(hostname, options, (error, address, family) => {
-        const blocked = !error && [address].flat().some((item) => isBlocked(typeof item === 'string' ? item : item.address));
+        const blocked =
+            !error &&
+            [address].flat().some((item) => {
+                const resolved = typeof item === 'string' ? item : item.address;
+                return isBlocked(resolved) && (isIP(hostname) !== 0 || !isFakeIp(resolved));
+            });
         callback(blocked ? new Error(`Refused to request ${hostname}: non-public address`) : error, address, family);
     });
 
