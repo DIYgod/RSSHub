@@ -168,9 +168,11 @@ async function handler(ctx) {
         article.find('.inline-embeded-article').remove();
         article.find('.relatedArticles').remove();
         if (item.inline_attachments) {
+            // index by url once per article; reversed so that the first attachment with a given url wins
+            const inlineAttachments = new Map<string | undefined, { description?: string }>(item.inline_attachments.toReversed().map((inlineAttachment) => [inlineAttachment.url, inlineAttachment]));
             article.find('.inlineImage').each((_, el) => {
                 const inlineImageSrc = $(el).attr('src');
-                const inlineAttachment = item.inline_attachments.find((inlineAttachment) => inlineAttachment.url === inlineImageSrc);
+                const inlineAttachment = inlineAttachments.get(inlineImageSrc);
                 if (!(inlineAttachment && inlineAttachment.description)) {
                     return;
                 }
