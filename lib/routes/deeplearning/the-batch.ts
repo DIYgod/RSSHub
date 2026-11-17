@@ -26,6 +26,9 @@ const parseFlightData = (buf: Buffer) => {
             end = buf.indexOf(0x0a, colon);
             value = buf.toString('utf8', colon + 1, end);
         }
+        if (end < i) {
+            throw new Error('Unterminated row in flight payload');
+        }
         rows.set(id, value);
         i = end + 1;
     }

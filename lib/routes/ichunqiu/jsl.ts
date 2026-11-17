@@ -38,6 +38,9 @@ export const evaluateJsl = (source: string): string => {
         }
         if (char === "'") {
             const end = source.indexOf("'", pos + 1);
+            if (end === -1) {
+                throw new Error(`Unterminated string at ${pos} in JSL expression`);
+            }
             const value = source.slice(pos + 1, end);
             pos = end + 1;
             return value;
