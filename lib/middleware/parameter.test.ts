@@ -1,3 +1,7 @@
+import { once } from 'node:events';
+import nodeHttp from 'node:http';
+import type { AddressInfo } from 'node:net';
+
 import { Context } from 'hono';
 import { http, HttpResponse } from 'msw';
 import Parser from 'rss-parser';
@@ -411,6 +415,31 @@ describe('fulltext_mode', () => {
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].content).not.toBe(undefined);
     }, 60000);
+
+    it('skips item links on local addresses', async () => {
+        const handler = vi.fn((_req: nodeHttp.IncomingMessage, res: nodeHttp.ServerResponse) => res.end('<html><body><p>Local page</p></body></html>'));
+        const server = nodeHttp.createServer(handler);
+        await once(server.listen(0, '127.0.0.1'), 'listening');
+        const { port } = server.address() as AddressInfo;
+        try {
+            const result = await runMiddleware(
+                {
+                    title: 'Fulltext',
+                    link: 'https://github.com/DIYgod/RSSHub',
+                    item: [
+                        { title: 'Title1', description: 'Description1', link: `http://127.0.0.1:${port}/page` },
+                        { title: 'Title2', description: 'Description2', link: `http://localhost:${port}/page` },
+                    ],
+                },
+                { mode: 'fulltext' }
+            );
+            expect(handler).not.toHaveBeenCalled();
+            expect(result.item[0].description).toBe('Description1');
+            expect(result.item[1].description).toBe('Description2');
+        } finally {
+            server.close();
+        }
+    });
 });
 
 describe('complicated_description', () => {

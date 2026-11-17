@@ -366,10 +366,16 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         // if parser failed, return default description and not report error
                         try {
                             const { default: Parser } = await import('@jocmp/mercury-parser');
-                            const res = await ofetch(link);
-                            const $ = load(res);
+                            // the link comes from upstream content: refuse non-public destinations
+                            const res = await ofetch(link, { publicOnly: true });
+                            if (typeof res !== 'string') {
+                                // mercury would fetch the link again itself when given an empty document
+                                return;
+                            }
                             const result = await Parser.parse(link, {
-                                html: $.html(),
+                                html: load(res).html(),
+                                // mercury follows "next page" links with its own client, which has no destination check
+                                fetchAllPages: false,
                             });
                             return result;
                         } catch {
