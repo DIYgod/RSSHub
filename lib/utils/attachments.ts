@@ -2,6 +2,8 @@ import type { CheerioAPI } from 'cheerio';
 import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem } from '@/types';
+import type { LinkResolver } from '@/utils/link-resolver';
+import { createLinkResolver } from '@/utils/link-resolver';
 
 type Attachment = NonNullable<DataItem['attachments']>[number];
 
@@ -57,7 +59,7 @@ export const getItemAttachments = (item: DataItem): Attachment[] => {
     return attachments;
 };
 
-export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = false): Attachment[] => {
+export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = false, resolveLink: LinkResolver = createLinkResolver()): Attachment[] => {
     const attachments = getItemAttachments(item);
     const seen = new Set(attachments.map((attachment) => attachment.url));
     // Prefer playable media when a reader supports only one enclosure.
@@ -70,7 +72,7 @@ export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = f
         }
         let url: URL;
         try {
-            url = new URL(source, item.link);
+            url = new URL(resolveLink(source, item.link));
         } catch {
             continue;
         }

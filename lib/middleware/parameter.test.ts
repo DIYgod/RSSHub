@@ -691,6 +691,38 @@ describe('parameter middleware branches', () => {
         await expect(runMiddleware(data, { brief: '10' })).rejects.toThrow('Invalid parameter brief');
     });
 
+    it('does not repeat a long base url in any number of relative links', async () => {
+        const padding = 'a'.repeat(20000);
+
+        // relative links of one description
+        const description = await runMiddleware({ link: 'https://example.com', item: [{ title: 'hostile', link: `https://example.com/?${padding}`, description: '<a href="#"></a>'.repeat(10000) }] }, {});
+        expect(description.item[0].description.startsWith(`<a href="https://example.com/?${padding}#"></a>`)).toBe(true);
+        expect(description.item[0].description.endsWith('<a href="#"></a>')).toBe(true);
+        expect(JSON.stringify(description).length).toBeLessThan(5 * 1024 * 1024);
+
+        // the descriptions of one feed share the budget
+        const descriptions = await runMiddleware(
+            { link: 'https://example.com', item: Array.from({ length: 100 }, (_, index) => ({ title: 'hostile', link: `https://example.com/${index}?${padding}`, description: '<a href="#"></a>'.repeat(100) })) },
+            {}
+        );
+        expect(JSON.stringify(descriptions).length).toBeLessThan(7 * 1024 * 1024);
+
+        // the links of its items
+        const links = await runMiddleware({ link: `https://example.com/?${padding}`, item: Array.from({ length: 10000 }, () => ({ title: 'hostile', link: '#' })) }, {});
+        expect(links.item[0].link).toBe(`https://example.com/?${padding}#`);
+        expect(links.item.at(-1).link).toBe('#');
+        expect(JSON.stringify(links).length).toBeLessThan(5 * 1024 * 1024);
+
+        // what is left relative is not resolved for the attachments either
+        const attachments = await runMiddleware(
+            { link: 'https://example.com', item: [{ title: 'hostile', link: `https://example.com/${padding}/`, description: Array.from({ length: 10000 }, (_, index) => `<a href="${index}.mp3"></a>`).join('') }] },
+            { enclosure: 'true' }
+        );
+        expect(attachments.item[0].attachments[0].url).toBe(`https://example.com/${padding}/0.mp3`);
+        expect(attachments.item[0].attachments.length).toBeLessThan(10000);
+        expect(JSON.stringify(attachments).length).toBeLessThan(9 * 1024 * 1024);
+    });
+
     it('processes openai description and title', async () => {
         const originalInput = config.openai.inputOption;
 

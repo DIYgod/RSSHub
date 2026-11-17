@@ -14,6 +14,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
+import type { LinkResolver } from '@/utils/link-resolver';
+import { createLinkResolver } from '@/utils/link-resolver';
 import markdownit from '@/utils/markdown-it';
 import { parse as parseFulltext } from '@/utils/mercury';
 import ofetch from '@/utils/ofetch';
@@ -33,7 +35,7 @@ const removeImages = ($: CheerioAPI) => {
     $('video[poster]').removeAttr('poster');
 };
 
-const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl?: string) => {
+const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, resolveLink: LinkResolver, baseUrl?: string) => {
     const $elem = $(elem);
 
     if (baseUrl) {
@@ -41,7 +43,7 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
             const oldAttr = $elem.attr(attr);
             if (oldAttr) {
                 // e.g. <video><source src="https://example.com"></video> should leave <video> unchanged
-                $elem.attr(attr, new URL(oldAttr, baseUrl).href);
+                $elem.attr(attr, resolveLink(oldAttr, baseUrl));
             }
         } catch {
             // no-empty
@@ -135,6 +137,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             delete data.image;
         }
 
+        // one budget for every link this feed resolves, see @/utils/link-resolver
+        const resolveLink = createLinkResolver();
+
         const handleItem = (item: DataItem) => {
             // A fixed message, so a stray cached value returned as an item never ends up on the error page
             if (typeof item !== 'object' || item === null) {
@@ -157,7 +162,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
-                item.link = new URL(item.link, baseUrl).href;
+                item.link = resolveLink(item.link, baseUrl);
             }
 
             // handle description
@@ -203,15 +208,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
                 // https://www.w3schools.com/tags/att_href.asp
                 $('a, area').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'href', baseUrl);
+                    resolveRelativeLink($, elem, 'href', resolveLink, baseUrl);
                     // $(elem).attr('rel', 'noreferrer');  // currently no such a need
                 });
                 // https://www.w3schools.com/tags/att_src.asp
                 $('img, video, audio, source, iframe, embed, track').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'src', baseUrl);
+                    resolveRelativeLink($, elem, 'src', resolveLink, baseUrl);
                 });
                 $('video[poster]').each((_, elem) => {
-                    resolveRelativeLink($, elem, 'poster', baseUrl);
+                    resolveRelativeLink($, elem, 'poster', resolveLink, baseUrl);
                 });
                 $('img, iframe').each((_, elem) => {
                     if (!$(elem).attr('referrerpolicy')) {
@@ -220,7 +225,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 });
 
                 if (extractEnclosures) {
-                    item.attachments = extractAttachments($, item, hideImages);
+                    item.attachments = extractAttachments($, item, hideImages, resolveLink);
                 }
 
                 item.description = $('body').html() + '' + (config.suffix || '');
@@ -449,7 +454,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.description = $('body').html()!;
                 }
                 if (extractEnclosures) {
-                    item.attachments = extractAttachments($, item, hideImages);
+                    item.attachments = extractAttachments($, item, hideImages, resolveLink);
                 }
             });
             await Promise.all(tasks);
