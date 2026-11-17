@@ -51,9 +51,10 @@ async function handler(ctx) {
         .map((element) => {
             const child = $(element).children();
             const published = $(element).find('.date').text().trim();
+            const href = type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href');
             const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
-                link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
+                link: href ? new URL(href, noticeUrl).href : undefined,
                 pubDate: published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined,
             };
             return info;

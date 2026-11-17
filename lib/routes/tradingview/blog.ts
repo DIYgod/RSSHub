@@ -108,7 +108,7 @@ async function handler(ctx) {
 
             return {
                 title,
-                link: $item.find('a.articles-grid-link').prop('href'),
+                link: new URL($item.find('a.articles-grid-link').prop('href')!, rootUrl).href,
                 description: renderDescription({
                     image: {
                         src: $item.find('div.articles-grid-img img').prop('src'),

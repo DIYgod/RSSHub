@@ -49,7 +49,7 @@ async function handler() {
             const datetime = $item.find('time[datetime]').attr('datetime');
             return {
                 title: a.text(),
-                link,
+                link: new URL(link, baseUrl).href,
                 pubDate: datetime ? parseDate(datetime) : undefined,
                 category: $item
                     .find('.category-header-name a')

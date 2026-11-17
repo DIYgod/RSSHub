@@ -59,7 +59,7 @@ async function handler(ctx) {
             const bookTitle = bookContent('p.tit').text();
             const bookImageRelative = bookContent('div.work_img img').prop('src') || '';
             const bookImageUrl = bookImageRelative ? baseUrl + bookImageRelative : '';
-            const bookDetailUrl = bookContent('li.work_block').prop('data-route');
+            const bookDetailUrl = new URL(bookContent('li.work_block').prop('data-route'), baseUrl).href;
 
             const { processedDescription, publishDate } = await cache.tryGet(`${bookDetailUrl}:details`, async () => {
                 const detailResponse = await got(bookDetailUrl);

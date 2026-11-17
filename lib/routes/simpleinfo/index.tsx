@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
             const $item = $(item);
             return {
                 title: $item.find('.title').text(),
-                link: $item.find('a').first().attr('href'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
                 category: $item.find('.category').text(),
             };
         });

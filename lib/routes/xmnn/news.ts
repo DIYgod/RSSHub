@@ -93,7 +93,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h1').text(),
-                link: $item.prop('href')!,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 description: $item.find('div.abstract').html(),
                 author: sourceAuthor ? [{ name: sourceAuthor }] : undefined,
                 pubDate: parsePublicationDate($item.find('div.time').text()),

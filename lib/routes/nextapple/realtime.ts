@@ -45,7 +45,7 @@ async function handler(ctx) {
     const items = await pMap(
         $('article.infScroll').toArray(),
         (item) => {
-            const link = $(item).find('.post-title').attr('href');
+            const link = new URL($(item).find('.post-title').attr('href')!, currentUrl).href;
             return cache.tryGet(`${link}:article-content`, async () => {
                 const response = await got(link);
                 const $ = load(response.data);

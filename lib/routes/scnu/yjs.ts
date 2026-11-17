@@ -39,9 +39,10 @@ async function handler() {
 
     const items = list.toArray().map((item) => {
         const $item = $(item);
+        const href = $item.attr('href');
         return {
             title: $item.text(),
-            link: $item.attr('href'),
+            link: href ? new URL(href, link).href : undefined,
         };
     });
     const detailedItems = await pMap(
