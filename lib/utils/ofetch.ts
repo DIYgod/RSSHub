@@ -25,6 +25,17 @@ declare module 'ofetch' {
          * Only applied to successful (2xx) responses with a body.
          */
         schema?: ZodType;
+        /**
+         * Names of custom request headers that carry a credential, e.g. `X-Auth-Token`.
+         * They are dropped when a redirect leaves the origin, like `Authorization` and `Cookie` always are
+         */
+        credentialHeaders?: string[];
+        /**
+         * Set to true to refuse loopback, private and other non-public addresses, including redirects to them.
+         * For URLs taken from upstream content. No effect when `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` is enabled
+         * @default false
+         */
+        publicOnly?: boolean;
     }
 }
 

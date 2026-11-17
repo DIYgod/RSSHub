@@ -1,6 +1,10 @@
+import { once } from 'node:events';
+import http from 'node:http';
+import type { AddressInfo } from 'node:net';
+
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
 import undici from 'undici';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import wrappedFetch, { useCustomHeader } from './fetch';
 
@@ -107,5 +111,65 @@ describe('wrappedFetch', () => {
         const dispatcher = undici.getGlobalDispatcher();
         const optionsKey = Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'options')!;
         expect(dispatcher[optionsKey].connect.preferH2).toBe(true);
+    });
+});
+
+describe('wrappedFetch credentialHeaders', () => {
+    const received: Array<[string, string | undefined, string | undefined]> = [];
+    const listen = async () => {
+        const server = http.createServer((req, res) => {
+            received.push([`http://${req.headers.host}${req.url}`, req.headers['x-auth-token'] as string | undefined, req.headers['x-custom'] as string | undefined]);
+            const location = new URL(req.url!, 'http://localhost').searchParams.get('to');
+            res.writeHead(location ? 302 : 200, location ? { location } : {}).end('ok');
+        });
+        await once(server.listen(0, '127.0.0.1'), 'listening');
+        return server;
+    };
+    let servers: http.Server[];
+    let service: string;
+    let other: string;
+    const init = { headers: { 'X-Auth-Token': 'secret', 'X-Custom': 'kept' }, credentialHeaders: ['X-Auth-Token'] };
+
+    beforeAll(async () => {
+        servers = await Promise.all([listen(), listen()]);
+        [service, other] = servers.map((server) => `http://127.0.0.1:${(server.address() as AddressInfo).port}`);
+    });
+
+    afterEach(() => {
+        received.length = 0;
+    });
+
+    afterAll(() => {
+        for (const server of servers) {
+            server.close();
+        }
+    });
+
+    test('drops them when a redirect leaves the origin', async () => {
+        const response = await wrappedFetch(`${service}/?to=${other}/landing`, init);
+
+        expect(await response.text()).toBe('ok');
+        expect(received).toEqual([
+            [`${service}/?to=${other}/landing`, 'secret', 'kept'],
+            [`${other}/landing`, undefined, 'kept'],
+        ]);
+    });
+
+    test('does not restore them when a redirect returns to the origin', async () => {
+        await wrappedFetch(`${service}/?to=${encodeURIComponent(`${other}/?to=${service}/back`)}`, init);
+
+        expect(received.at(-1)).toEqual([`${service}/back`, undefined, 'kept']);
+    });
+
+    test('keeps them when a redirect stays on the origin', async () => {
+        await wrappedFetch(`${service}/?to=/moved`, init);
+
+        expect(received.at(-1)).toEqual([`${service}/moved`, 'secret', 'kept']);
+    });
+
+    test('keeps them across redirects when not named', async () => {
+        await wrappedFetch(`${service}/?to=${other}/landing`, { headers: init.headers });
+
+        expect(received.at(-1)).toEqual([`${other}/landing`, 'secret', 'kept']);
     });
 });

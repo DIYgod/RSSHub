@@ -33,6 +33,7 @@ const processFeed = async () => {
             ...headers,
             'x-jike-refresh-token': refreshToken,
         },
+        credentialHeaders: ['x-jike-refresh-token'],
     });
     cache.set('XIAOYUZHOU_TOKEN', tokenUpdated.data['x-jike-refresh-token']);
 
@@ -43,6 +44,7 @@ const processFeed = async () => {
             ...headers,
             'x-jike-access-token': tokenUpdated.data['x-jike-access-token'],
         },
+        credentialHeaders: ['x-jike-access-token'],
         json: {},
     });
 

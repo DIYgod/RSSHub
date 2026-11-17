@@ -37,7 +37,7 @@ async function handler(ctx) {
     const { link, key } = discourseConfig as { link: string; key: string };
     const sessionKey = md5(key);
 
-    const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } });
+    const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key }, credentialHeaders: ['User-Api-Key'] });
     let items = response.notifications.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((e) => ({
         title: e.fancy_title ?? e.data.badge_name,
         link: `${link}/${Object.hasOwn(e.data, 'badge_id') ? `badges/${e.data.badge_id}/${e.data.badge_slug}?username=${e.data.username}` : `t/topic/${e.topic_id}/${e.post_number}`}`,
@@ -53,7 +53,7 @@ async function handler(ctx) {
                 if (e.original_post_id) {
                     const postLink = `${link}/posts/${e.original_post_id}.json`;
                     const cooked = await cache.tryGet(`discourse:post:${sessionKey}:${postLink}`, async () => {
-                        const { cooked } = await ofetch(postLink, { headers: { 'User-Api-Key': key } });
+                        const { cooked } = await ofetch(postLink, { headers: { 'User-Api-Key': key }, credentialHeaders: ['User-Api-Key'] });
                         return cooked;
                     });
                     return { ...e, description: cooked };
@@ -63,7 +63,12 @@ async function handler(ctx) {
         );
     }
 
-    const { about } = await cache.tryGet(`discourse:about:${sessionKey}:${link}`, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
+    const { about } = await cache.tryGet(
+        `discourse:about:${sessionKey}:${link}`,
+        async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key }, credentialHeaders: ['User-Api-Key'] }),
+        config.cache.routeExpire,
+        false
+    );
     return {
         title: `${about.title} - Notifications`,
         description: about.description,

@@ -77,6 +77,7 @@ async function handler(ctx) {
 
     const response = await got.get(`${instance}/v1/feeds`, {
         headers: { 'X-Auth-Token': token },
+        credentialHeaders: ['X-Auth-Token'],
     });
 
     const subscription: any[] = [];

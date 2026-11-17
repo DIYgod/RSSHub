@@ -10,6 +10,7 @@ import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header
 import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
+import { publicLookup, publicOnly as publicOnlyInterceptor } from '@/utils/request-rewriter/public-only';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -29,12 +30,30 @@ undici.setGlobalDispatcher(
 
 const http1Only: Dispatcher.DispatcherComposeInterceptor = (dispatch) => (opts, handler) => dispatch({ ...opts, allowH2: false } as Dispatcher.DispatchOptions, handler);
 
-const tlsAgents = new Map<SecureVersion, Agent>();
-const getTlsAgent = (minVersion: SecureVersion) => {
-    let agent = tlsAgents.get(minVersion);
+// undici only drops Authorization, Proxy-Authorization and Cookie when a redirect leaves the origin,
+// credentials in custom headers have to be dropped here, once per hop
+const dropCredentialHeaders =
+    (origin: string, names: string[]): Dispatcher.DispatcherComposeInterceptor =>
+    (dispatch) => {
+        const credentialHeaders = new Set(names.map((name) => name.toLowerCase()));
+        let crossOrigin = false;
+        return (opts, handler) => {
+            crossOrigin ||= new URL(opts.origin!).origin !== origin;
+            if (!crossOrigin) {
+                return dispatch(opts, handler);
+            }
+            const headers = Object.fromEntries(Object.entries(opts.headers as Record<string, string | string[]>).filter(([name]) => !credentialHeaders.has(name.toLowerCase())));
+            return dispatch({ ...opts, headers }, handler);
+        };
+    };
+
+const agents = new Map<string, Agent>();
+const getAgent = (minVersion?: SecureVersion, publicOnly?: boolean) => {
+    const key = `${minVersion}:${publicOnly}`;
+    let agent = agents.get(key);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily } });
-        tlsAgents.set(minVersion, agent);
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily, lookup: publicOnly ? publicLookup : undefined } });
+        agents.set(key, agent);
     }
     return agent;
 };
@@ -52,9 +71,13 @@ export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
     });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion }) => {
+const wrappedFetch: typeof undici.fetch = async (
+    input: RequestInfo,
+    init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion; credentialHeaders?: string[]; publicOnly?: boolean }
+) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
+    const publicOnly = !!init?.publicOnly && !config.feature.allow_user_supply_unsafe_domain;
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
@@ -115,17 +138,21 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
     }
 
-    if (init?.minVersion && !options.dispatcher && !init.dispatcher) {
-        options.dispatcher = getTlsAgent(init.minVersion);
+    if ((init?.minVersion || publicOnly) && !options.dispatcher && !init?.dispatcher) {
+        options.dispatcher = getAgent(init?.minVersion, publicOnly);
     }
+
+    const interceptors = [init?.allowH2 === false && http1Only, publicOnly && publicOnlyInterceptor, !!init?.credentialHeaders?.length && dropCredentialHeaders(new URL(request.url).origin, init.credentialHeaders)].filter(
+        (interceptor): interceptor is Dispatcher.DispatcherComposeInterceptor => !!interceptor
+    );
 
     await limiterQueue.removeTokens(1);
     await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
 
-    if (init?.allowH2 === false) {
+    if (interceptors.length > 0) {
         return undici.fetch(request, {
             ...options,
-            dispatcher: (options.dispatcher ?? init.dispatcher ?? undici.getGlobalDispatcher()).compose(http1Only),
+            dispatcher: (options.dispatcher ?? init?.dispatcher ?? undici.getGlobalDispatcher()).compose(...interceptors),
         });
     }
     return undici.fetch(request, options);

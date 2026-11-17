@@ -186,6 +186,7 @@ async function handler(ctx) {
                     headers: {
                         'X-Auth-Token': token,
                     },
+                    credentialHeaders: ['X-Auth-Token'],
                 });
 
                 return response.data.entries;
@@ -250,6 +251,7 @@ async function handler(ctx) {
 
         const response = await got.get(`${instance}/v1/entries?${parameters}`, {
             headers: { 'X-Auth-Token': token },
+            credentialHeaders: ['X-Auth-Token'],
         });
 
         const entries = response.data.entries;
@@ -290,6 +292,7 @@ async function handler(ctx) {
                 'Content-Type': 'application/json',
                 'X-Auth-Token': token,
             },
+            credentialHeaders: ['X-Auth-Token'],
             json: {
                 entry_ids: entriesID,
                 status: mark,

@@ -41,6 +41,7 @@ async function handler(ctx) {
         (
             await got(url, {
                 headers: key ? { 'User-Api-Key': key } : {},
+                credentialHeaders: ['User-Api-Key'],
             })
         ).data
     );
