@@ -393,21 +393,14 @@ const pruneEmptyContainers = ($root: Cheerio<Element>, $: CheerioAPI) => {
     });
 };
 
-export const normalizeContentContainer = ($container: Cheerio<Element>, $: CheerioAPI, baseUrl: string): string => {
+export const normalizeContentContainer = ($container: Cheerio<Element>, $: CheerioAPI, baseUrl: string): { bodyHtml: string; hasContent: boolean } => {
     if ($container.length === 0) {
-        return '';
+        return { bodyHtml: '', hasContent: false };
     }
     pruneChromeAndDuplicates($container, $);
     convertCustomMarkdownAndLatex($container, $, baseUrl);
     sanitizeLinksAndMedia($container, $, baseUrl);
     pruneEmptyContainers($container, $);
-    return ($container.html() || '').trim();
-};
-
-export const hasRenderableContent = (html: string): boolean => {
-    if (!html) {
-        return false;
-    }
-    const $ = load(html, null, false);
-    return Boolean($.text().trim()) || $('img, video, audio, table, iframe, svg, math').length > 0;
+    const hasContent = Boolean($container.text().trim()) || $container.find('img, video, audio, table, iframe, svg, math').length > 0;
+    return { bodyHtml: ($container.html() || '').trim(), hasContent };
 };

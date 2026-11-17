@@ -15,20 +15,18 @@ export const renderArticleDescription = (bodyHtml: string, coverUrl?: string): s
     );
 };
 
-export const renderFallbackDescription = (summary: string | undefined, title: string, link: string, coverUrl?: string): string =>
-    renderToString(
+export const renderFallbackDescription = (summary: string | undefined, coverUrl?: string): string | undefined => {
+    if (!summary && !coverUrl) {
+        return undefined;
+    }
+    return renderToString(
         <>
             {coverUrl ? (
                 <figure>
                     <img src={coverUrl} alt="" />
                 </figure>
             ) : null}
-            {summary ? (
-                <p>{summary}</p>
-            ) : (
-                <p>
-                    <a href={link}>{title}</a>
-                </p>
-            )}
+            {summary ? <p>{summary}</p> : null}
         </>
     );
+};

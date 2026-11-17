@@ -9,19 +9,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderArticleDescription, renderFallbackDescription } from './templates/description';
-import {
-    BLOG_LIST_URL,
-    DEFAULT_LIMIT,
-    DETAIL_CONCURRENCY,
-    type EntrySourceKind,
-    extractBlogEntries,
-    hasRenderableContent,
-    hydrateNextSuspenseSlots,
-    MAX_LIMIT,
-    normalizeContentContainer,
-    type ParsedBlogEntry,
-    SITE_URL,
-} from './utils';
+import { BLOG_LIST_URL, DEFAULT_LIMIT, DETAIL_CONCURRENCY, type EntrySourceKind, extractBlogEntries, hydrateNextSuspenseSlots, MAX_LIMIT, normalizeContentContainer, type ParsedBlogEntry, SITE_URL } from './utils';
 
 const EXTERNAL_SCRAPE_KINDS = new Set<EntrySourceKind>(['github', 'huggingface', 'github-pages']);
 
@@ -34,11 +22,11 @@ const extractKimiDetail = (html: string, link: string) => {
 
     const $section = $('main section.pb-20').first();
     const $target = $section.length > 0 ? $section : $('main').first();
-    const bodyHtml = normalizeContentContainer($target, $, link);
+    const content = normalizeContentContainer($target, $, link);
 
     return {
         title,
-        bodyHtml,
+        ...content,
     };
 };
 
@@ -47,27 +35,27 @@ const extractExternalDetail = (html: string, entry: ParsedBlogEntry) => {
     const metaSummary = $('meta[name="description"]').attr('content')?.trim() || $('meta[property="og:description"]').attr('content')?.trim();
 
     if (entry.kind === 'github') {
-        const bodyHtml = normalizeContentContainer($('article.markdown-body').first(), $, entry.link);
-        return { bodyHtml, metaSummary };
+        const content = normalizeContentContainer($('article.markdown-body').first(), $, entry.link);
+        return { ...content, metaSummary };
     }
 
     if (entry.kind === 'huggingface') {
-        const bodyHtml = normalizeContentContainer($('main .prose').first(), $, entry.link);
-        return { bodyHtml, metaSummary };
+        const content = normalizeContentContainer($('main .prose').first(), $, entry.link);
+        return { ...content, metaSummary };
     }
 
     if (entry.kind === 'github-pages') {
-        const bodyHtml = normalizeContentContainer($('body').first(), $, entry.link);
-        return { bodyHtml, metaSummary };
+        const content = normalizeContentContainer($('body').first(), $, entry.link);
+        return { ...content, metaSummary };
     }
 
-    return { bodyHtml: '', metaSummary };
+    return { bodyHtml: '', hasContent: false, metaSummary };
 };
 
 const fetchInternalEntry = async (entry: ParsedBlogEntry): Promise<DataItem> => {
     const html = await ofetch<string>(entry.link);
-    const { title: detailTitle, bodyHtml } = extractKimiDetail(html, entry.link);
-    const description = hasRenderableContent(bodyHtml) ? renderArticleDescription(bodyHtml, entry.image) : renderFallbackDescription(entry.summary, detailTitle || entry.title, entry.link, entry.image);
+    const { title: detailTitle, bodyHtml, hasContent } = extractKimiDetail(html, entry.link);
+    const description = hasContent ? renderArticleDescription(bodyHtml, entry.image) : renderFallbackDescription(entry.summary, entry.image);
 
     return {
         title: detailTitle || entry.title,
@@ -82,7 +70,7 @@ const fetchInternalEntry = async (entry: ParsedBlogEntry): Promise<DataItem> => 
 const buildExternalFallbackItem = (entry: ParsedBlogEntry, metaSummary?: string): DataItem => ({
     title: entry.title,
     link: entry.link,
-    description: renderFallbackDescription(entry.summary || metaSummary, entry.title, entry.link, entry.image),
+    description: renderFallbackDescription(entry.summary || metaSummary, entry.image),
     pubDate: entry.pubDate,
     author: 'Kimi',
     image: entry.image,
@@ -90,8 +78,8 @@ const buildExternalFallbackItem = (entry: ParsedBlogEntry, metaSummary?: string)
 
 const fetchExternalEntry = async (entry: ParsedBlogEntry): Promise<DataItem> => {
     const html = await ofetch<string>(entry.link);
-    const { bodyHtml, metaSummary } = extractExternalDetail(html, entry);
-    if (!hasRenderableContent(bodyHtml)) {
+    const { bodyHtml, hasContent, metaSummary } = extractExternalDetail(html, entry);
+    if (!hasContent) {
         return buildExternalFallbackItem(entry, metaSummary);
     }
 
