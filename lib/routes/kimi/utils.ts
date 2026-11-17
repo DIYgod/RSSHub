@@ -393,7 +393,7 @@ const pruneEmptyContainers = ($root: Cheerio<Element>, $: CheerioAPI) => {
     });
 };
 
-export const normalizeContentContainer = ($container: Cheerio<Element>, $: CheerioAPI, baseUrl: string): { bodyHtml: string; hasContent: boolean } => {
+export const normalizeContentContainer = ($container: Cheerio<Element>, $: CheerioAPI, baseUrl: string) => {
     if ($container.length === 0) {
         return { bodyHtml: '', hasContent: false };
     }
