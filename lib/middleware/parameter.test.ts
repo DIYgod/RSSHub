@@ -1,6 +1,9 @@
 import { Context } from 'hono';
+import { http, HttpResponse } from 'msw';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import server from '@/setup.test';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
@@ -636,6 +639,30 @@ describe('parameter middleware branches', () => {
         config.openai.inputOption = 'title';
         const titleResult = await runMiddleware(titleData, { chatgpt: 'true' });
         expect(titleResult.item[0].title).toContain('AI processed content.');
+
+        config.openai.inputOption = originalInput;
+    });
+
+    it('does not share openai results between items with the same link', async () => {
+        // echo the input so the test can tell which text a completion was made from
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', async ({ request }) => {
+                const body = (await request.json()) as { messages: Array<{ content: string }> };
+                return HttpResponse.json({ choices: [{ message: { content: `AI: ${body.messages[1].content}` } }] });
+            })
+        );
+        const originalInput = config.openai.inputOption;
+        config.openai.inputOption = 'both';
+
+        const link = `https://example.com/${Date.now()}/shared`;
+        const first = await runMiddleware({ link: 'https://example.com', item: [{ title: 'First title', description: 'First description', link }] }, { chatgpt: 'true' });
+        const second = await runMiddleware({ link: 'https://example.com', item: [{ title: 'Second title', description: 'Second description', link }] }, { chatgpt: 'true' });
+
+        expect(first.item[0].title).toBe('AI: First title');
+        expect(first.item[0].description).toContain('AI: First description');
+        expect(second.item[0].title).toBe('AI: Second title');
+        expect(second.item[0].description).toContain('AI: Second description');
+        expect(second.item[0].description).not.toContain('First description');
 
         config.openai.inputOption = originalInput;
     });

@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -59,6 +61,10 @@ const getAiCompletion = async (prompt: string, text: string) => {
 
     return response.choices[0].message.content;
 };
+
+// the content cache is shared by every route and client, so key the completion on what it is
+// generated from (prompt + text) rather than on item.link, which any feed can reuse with other text
+const getAiCacheKey = (type: 'title' | 'description', prompt: string, text: string) => `openai:${type}:${createHash('sha256').update(prompt).update('\0').update(text).digest('hex')}`;
 
 const getAuthorString = (item: DataItem) => {
     let author = '';
@@ -396,7 +402,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     try {
                         // handle description
                         if (config.openai.inputOption === 'description' && item.description) {
-                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                            const description = await cache.tryGet(getAiCacheKey('description', config.openai.promptDescription, item.description), async () => {
                                 const description = convert(item.description!);
                                 const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
                                 return md.render(descriptionMd);
@@ -408,7 +414,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         }
                         // handle title
                         else if (config.openai.inputOption === 'title' && item.title) {
-                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                            const title = await cache.tryGet(getAiCacheKey('title', config.openai.promptTitle, item.title), async () => {
                                 const title = convert(item.title!);
                                 return await getAiCompletion(config.openai.promptTitle, title);
                             });
@@ -419,7 +425,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         }
                         // handle both
                         else if (config.openai.inputOption === 'both' && item.title && item.description) {
-                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                            const title = await cache.tryGet(getAiCacheKey('title', config.openai.promptTitle, item.title), async () => {
                                 const title = convert(item.title!);
                                 return await getAiCompletion(config.openai.promptTitle, title);
                             });
@@ -428,7 +434,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                                 item.title = title + '';
                             }
 
-                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                            const description = await cache.tryGet(getAiCacheKey('description', config.openai.promptDescription, item.description), async () => {
                                 const description = convert(item.description!);
                                 const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
                                 return md.render(descriptionMd);
