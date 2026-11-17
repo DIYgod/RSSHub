@@ -117,6 +117,51 @@ describe('template middleware', () => {
         config.titleLengthLimit = originalLimit;
     });
 
+    it('removes control characters from every field', async () => {
+        const pubDate = new Date(0);
+        const data = {
+            title: 'Feed\u{0008}',
+            description: 'About\u{0008}',
+            link: 'https://example.com/\u{0008}',
+            item: [
+                {
+                    title: 'Tab\tbed\u{0008} title',
+                    description: 'Body\u{0008}\u{FFFE}',
+                    link: 'https://example.com/item\u{0008}',
+                    author: 'Author\u{0008}',
+                    category: ['Tag\u{0008}'],
+                    guid: 'id\u{0008}',
+                    pubDate,
+                    content: { text: 'Text\u{0008}' },
+                    media: { content: { url: 'https://example.com/media\u{0008}' } },
+                    attachments: [{ url: 'https://example.com/file\u{0008}', mime_type: 'audio/mpeg' }],
+                },
+            ],
+        };
+        const ctx = createCtx({ format: 'rss' }, data);
+        await template(ctx, async () => {});
+
+        expect(data).toEqual({
+            title: 'Feed',
+            description: 'About',
+            link: 'https://example.com/',
+            item: [
+                {
+                    title: 'Tab bed title',
+                    description: 'Body',
+                    link: 'https://example.com/item',
+                    author: 'Author',
+                    category: ['Tag'],
+                    guid: 'id',
+                    pubDate,
+                    content: { text: 'Text' },
+                    media: { content: { url: 'https://example.com/media' } },
+                    attachments: [{ url: 'https://example.com/file', mime_type: 'audio/mpeg' }],
+                },
+            ],
+        });
+    });
+
     it('clears invalid dates for non-rss formats', async () => {
         const data = {
             title: 'Test',

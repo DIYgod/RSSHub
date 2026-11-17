@@ -6,6 +6,25 @@ import cacheModule from '@/utils/cache/index';
 import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import { Atom, json, RSS, rss3 } from '@/utils/render';
 
+// https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
+// https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
+// remove unicode control characters, escaping does not make them valid in XML
+// see #14940 #14943 #15262
+// oxlint-disable-next-line no-control-regex
+const controlCharacters = /[\u{0000}-\u{0009}\v\f\u{000E}-\u{001F}\u{007F}\u{200B}\u{FFFE}\u{FFFF}]/gu;
+
+const removeControlCharacters = <T,>(value: T): T => {
+    if (typeof value === 'string') {
+        return value.replaceAll(controlCharacters, '') as T;
+    }
+    if (Array.isArray(value) || (value && Object.getPrototypeOf(value) === Object.prototype)) {
+        for (const key of Object.keys(value)) {
+            value[key] = removeControlCharacters(value[key]);
+        }
+    }
+    return value;
+};
+
 const middleware: MiddlewareHandler = async (ctx, next) => {
     // Set RSS <ttl> (minute) according to the availability of cache
     // * available: max(config.cache.routeExpire / 60, 1)
@@ -56,15 +75,6 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     }
                 }
 
-                if (item.description) {
-                    // https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
-                    // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
-                    // remove unicode control characters
-                    // see #14940 #14943 #15262
-                    // oxlint-disable-next-line no-control-regex
-                    item.description = item.description.replaceAll(/[\u{0000}-\u{0009}\v\f\u{000E}-\u{001F}\u{007F}\u{200B}\u{FFFF}]/gu, '');
-                }
-
                 if (Array.isArray(item.author)) {
                     for (const a of item.author) {
                         a.name = collapseWhitespace(a.name) || '';
@@ -97,6 +107,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
             }
         }
+
+        // any field may carry upstream text into the feed, not only item.description
+        removeControlCharacters(data);
     }
 
     const currentDate = new Date();
