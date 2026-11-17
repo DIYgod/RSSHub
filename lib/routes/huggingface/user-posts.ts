@@ -1,7 +1,6 @@
-import MarkdownIt from 'markdown-it';
-
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

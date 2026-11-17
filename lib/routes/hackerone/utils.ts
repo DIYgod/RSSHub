@@ -1,11 +1,11 @@
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const markdownIt = new MarkdownIt();
+const markdownIt = MarkdownIt();
 
 const query = /* GraphQL */ `
     query HacktivitySearchQuery($queryString: String!, $from: Int, $size: Int, $sort: SortInput!) {

@@ -1,8 +1,7 @@
-import markdownit from 'markdown-it';
-
 import type { NamespacesType } from '@/registry';
 import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
+import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

@@ -1,7 +1,7 @@
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

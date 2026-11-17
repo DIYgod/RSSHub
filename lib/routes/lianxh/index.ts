@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import markdownit from 'markdown-it';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';

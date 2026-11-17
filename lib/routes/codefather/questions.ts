@@ -1,11 +1,10 @@
-import MarkdownIt from 'markdown-it';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const markdown = new MarkdownIt({ breaks: true, linkify: true });
+const markdown = MarkdownIt({ breaks: true, linkify: true });
 
 interface QaUser {
     userName?: string;

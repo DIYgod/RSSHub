@@ -1,6 +1,5 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Data, Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

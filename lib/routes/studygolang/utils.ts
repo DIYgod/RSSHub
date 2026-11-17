@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const md = MarkdownIt({

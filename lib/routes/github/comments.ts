@@ -1,10 +1,10 @@
 import { escapeAttribute, escapeText } from 'entities';
-import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';

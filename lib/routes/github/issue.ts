@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
 import queryString from 'query-string';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 
 const md = MarkdownIt({

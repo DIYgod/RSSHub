@@ -1,6 +1,6 @@
 import { escapeAttribute, escapeText } from 'entities';
-import MarkdownIt from 'markdown-it';
 
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 
 const md = MarkdownIt({ html: true, linkify: true });

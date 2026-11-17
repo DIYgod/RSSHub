@@ -1,13 +1,13 @@
 import { html } from 'hono/html';
-import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const apiUrl = 'https://api.lens.xyz/graphql';
 const lensNamespace = '0x1aA55B9042f08f45825dC4b651B64c9F98Af4615';
-const markdown = new MarkdownIt();
+const markdown = MarkdownIt();
 
 type Media = { __typename?: string; item: string; cover?: string; altTag?: string; title?: string };
 type Metadata = { content?: string; title?: string; tags?: string[]; image?: Media; video?: Media; audio?: Media; asset?: Media; attachments?: Media[]; raw?: string };

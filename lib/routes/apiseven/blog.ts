@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';

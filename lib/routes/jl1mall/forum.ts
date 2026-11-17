@@ -1,15 +1,15 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import MarkdownIt from 'markdown-it';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
-const markdown = new MarkdownIt({ html: true, linkify: true });
+const markdown = MarkdownIt({ html: true, linkify: true });
 
 type Racer = {
     mainId?: string;

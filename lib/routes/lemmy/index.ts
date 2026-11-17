@@ -1,11 +1,10 @@
-import MarkdownIt from 'markdown-it';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 
 const md = MarkdownIt({ html: true });

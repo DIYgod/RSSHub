@@ -1,13 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
 

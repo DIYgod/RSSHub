@@ -6,7 +6,6 @@ import type { Element } from 'domhandler';
 import { decodeHTMLStrict } from 'entities';
 import type { MiddlewareHandler } from 'hono';
 import { convert } from 'html-to-text';
-import markdownit from 'markdown-it';
 import { RE2JS } from 're2js';
 import sanitizeHtml from 'sanitize-html';
 
@@ -15,6 +14,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
+import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 
 // filters run synchronously, and matching with re2 costs up to program size * text length

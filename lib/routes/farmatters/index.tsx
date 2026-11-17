@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

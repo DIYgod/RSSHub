@@ -1,7 +1,6 @@
-import MarkdownIt from 'markdown-it';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';

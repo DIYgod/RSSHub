@@ -1,9 +1,9 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';

@@ -1,7 +1,6 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 
 import { getUserInfoFromUID } from './utils';

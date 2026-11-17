@@ -1,11 +1,10 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://konek.hn.plus';
-const markdown = new MarkdownIt({ html: false, linkify: true, breaks: true });
+const markdown = MarkdownIt({ html: false, linkify: true, breaks: true });
 
 interface Post {
     id: number;

@@ -1,11 +1,11 @@
 import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import type { ChildNode, Element } from 'domhandler';
-import MarkdownIt from 'markdown-it';
 
+import MarkdownIt from '@/utils/markdown-it';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const markdownRenderer = new MarkdownIt({ html: false, linkify: true });
+const markdownRenderer = MarkdownIt({ html: false, linkify: true });
 
 export const SITE_URL = 'https://www.kimi.com';
 export const BLOG_LIST_URL = `${SITE_URL}/en/blog/`;
