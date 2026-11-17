@@ -2,6 +2,7 @@ import { html } from 'hono/html';
 import type { FC } from 'hono/jsx';
 
 import type { Data } from '@/types';
+import { getMediaAttributes } from '@/utils/attachments';
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
     const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
@@ -61,7 +62,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         {item.media &&
                             Object.entries(item.media).map(([key, value]) => {
                                 const Tag = `media:${key}`;
-                                return <Tag {...value} />;
+                                return <Tag {...getMediaAttributes(value)} />;
                             })}
                     </item>
                 ))}

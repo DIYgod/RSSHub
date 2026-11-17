@@ -37,6 +37,12 @@ export const getImageMimeType = (image: string) => {
     }
 };
 
+// Only primitive values of an `item.media` entry may become attributes of the `<media:*>` element.
+// The entry comes from the route (and often straight from upstream JSON), so an object-valued key such as
+// `dangerouslySetInnerHTML` or `children` must not reach hono's JSX, which would write it into the feed unescaped.
+export const getMediaAttributes = (value: unknown): Record<string, string | number> =>
+    Object.fromEntries(Object.entries(value && typeof value === 'object' ? value : {}).filter((entry): entry is [string, string | number] => entry[0] !== 'children' && (typeof entry[1] === 'string' || typeof entry[1] === 'number')));
+
 export const getItemAttachments = (item: DataItem): Attachment[] => {
     const attachments = [...(item.attachments || [])];
     if (item.enclosure_url && attachments.every((attachment) => attachment.url !== item.enclosure_url)) {

@@ -2,7 +2,7 @@ import { html } from 'hono/html';
 import type { FC } from 'hono/jsx';
 
 import type { Data } from '@/types';
-import { getItemAttachments } from '@/utils/attachments';
+import { getItemAttachments, getMediaAttributes } from '@/utils/attachments';
 
 const Link: FC<Record<string, string | number | undefined>> = (props) =>
     html`<link${Object.entries(props)
@@ -48,7 +48,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 {item.media &&
                     Object.entries(item.media).map(([key, value]) => {
                         const Tag = `media:${key}`;
-                        return <Tag {...value} />;
+                        return <Tag {...getMediaAttributes(value)} />;
                     })}
                 {item.upvotes ? <rsshub:upvotes>{item.upvotes}</rsshub:upvotes> : ''}
                 {item.downvotes ? <rsshub:downvotes>{item.downvotes}</rsshub:downvotes> : ''}

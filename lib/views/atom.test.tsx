@@ -128,4 +128,32 @@ describe('Atom view', () => {
 
         expect(html).toMatch(/^<probe><\/head><feed/);
     });
+
+    it('renders only primitive media values as attributes', () => {
+        const html = renderToString(
+            <Atom
+                data={{
+                    title: 'Feed',
+                    item: [
+                        {
+                            title: 'Item',
+                            link: 'https://example.com/item',
+                            media: {
+                                content: {
+                                    url: 'https://example.com/a.jpg',
+                                    width: 250,
+                                    children: 'child',
+                                    dangerouslySetInnerHTML: { __html: '<injected/>' },
+                                } as any,
+                            },
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html).toContain('<media:content url="https://example.com/a.jpg" width="250"></media:content>');
+        expect(html).not.toContain('<injected/>');
+        expect(html).not.toContain('child');
+    });
 });
