@@ -6,6 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/fg/:category{.+}?',
@@ -59,8 +60,12 @@ async function handler(ctx) {
         });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        items.map((item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'suzhou.gov.cn')) {
+                return item;
+            }
+            return cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -73,8 +78,8 @@ async function handler(ctx) {
                 item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
 
                 return item;
-            })
-        )
+            });
+        })
     );
 
     if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
