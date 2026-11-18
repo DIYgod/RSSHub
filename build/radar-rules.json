@@ -60197,6 +60197,24 @@
           "/"
         ],
         "target": "/openai/cookbook"
+      },
+      {
+        "title": "Developers Blog",
+        "docs": "https://docs.rsshub.app/routes/openai",
+        "source": [
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/openai/developers/blog"
+      },
+      {
+        "title": "Developers Blog",
+        "docs": "https://docs.rsshub.app/routes/openai",
+        "source": [
+          "/zh-Hans/blog",
+          "/zh-Hans/blog/:slug"
+        ],
+        "target": "/openai/developers/blog/zh-Hans"
       }
     ]
   },
