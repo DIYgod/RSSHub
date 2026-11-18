@@ -3,9 +3,8 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.nanhua.net';
 
@@ -48,7 +47,7 @@ async function handler(ctx: Context) {
     const items: DataItem[] = response.recordList.map((item) => ({
         title: item.subject,
         link: new URL(item.href, baseUrl).href,
-        pubDate: timezone(parseDate(item.createTime), 8),
+        pubDate: parseDate(item.createTime, 8),
         author: item.author,
     }));
 

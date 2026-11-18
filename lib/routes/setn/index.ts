@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const defaultRootUrl = 'https://www.setn.com';
@@ -164,7 +163,7 @@ async function handler(ctx) {
                     .match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}(?::\d{2})?/)?.[0];
                 const publishedTime = clock ?? content('meta[property="article:published_time"]').attr('content');
                 if (publishedTime) {
-                    item.pubDate = clock ? timezone(parseDate(clock, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm']), 8) : parseDate(publishedTime);
+                    item.pubDate = clock ? parseDate(clock, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm'], 8) : parseDate(publishedTime);
                 }
                 item.description = content('.article_content_area').first().html() ?? content('.content-p, article').first().html();
 

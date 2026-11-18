@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -73,15 +73,7 @@ async function handler(ctx) {
 
                 if (ldJson.audio) {
                     article.itunes_item_image = ldJson.audio.thumbnailUrl;
-                    // TODO: Use Temporal.Duration when https://tc39.es/proposal-temporal/ is GA
-                    const durationMatch = ldJson.audio.duration?.match(/P0DT(\d+)H(\d+)M(\d+)S/);
-                    if (durationMatch) {
-                        let seconds = 0;
-                        for (const part of durationMatch.slice(1)) {
-                            seconds = seconds * 60 + Number.parseInt(part);
-                        }
-                        article.itunes_duration = seconds;
-                    }
+                    article.itunes_duration = ldJson.audio.duration ? Temporal.Duration.from(ldJson.audio.duration).total('seconds') : undefined;
                     article.enclosure_url = ldJson.audio.contentUrl;
                     article.enclosure_type = 'audio/mpeg';
                 }

@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchPage } from './ct2-waap';
 import { namespace } from './namespace';
@@ -52,7 +51,7 @@ export const route: Route = {
                 return {
                     title: $el.find('.cont h3').text(),
                     link,
-                    pubDate: timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8),
+                    pubDate: parseDate(dateStr, 'YYYY/MM/DD', 8),
                 };
             });
 

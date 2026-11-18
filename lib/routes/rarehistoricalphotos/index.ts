@@ -1,6 +1,6 @@
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://rarehistoricalphotos.com';
 
@@ -34,7 +34,7 @@ async function handler(ctx) {
         title: item.title.rendered,
         description: item.content.rendered,
         link: item.link,
-        pubDate: item.date_gmt ? parseDateInTimezone(item.date_gmt, 0) : undefined,
+        pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
     }));
 
     return {

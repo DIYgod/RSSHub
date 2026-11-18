@@ -1,12 +1,9 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -57,11 +54,13 @@ export const route: Route = {
             } else {
                 // extend_field_starttime may differ from the fullDuration, usually 1 day earlier, so parse fullDuration first, then fallback to extend_field_starttime and extend_field_endtime if fullDuration is not available
                 const formMap = article.formMap;
-                startDate = dayjs(formMap.extend_field_starttime).format('YYYY-MM-DD');
-                endDate = dayjs(formMap.extend_field_endtime).format('YYYY-MM-DD');
+                const start = parseDate(formMap.extend_field_starttime);
+                const end = parseDate(formMap.extend_field_endtime);
+                startDate = start && formatDate(start, 'YYYY-MM-DD');
+                endDate = end && formatDate(end, 'YYYY-MM-DD');
             }
 
-            const pubDate = timezone(parseDate(item.pubTime), 8);
+            const pubDate = parseDate(item.pubTime, 8);
             const title = item.listTitle;
             const imgUrl = `https:${item.listImage}`;
 

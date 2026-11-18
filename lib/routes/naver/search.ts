@@ -3,8 +3,7 @@ import { decodeHTML } from 'entities';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:category/:keyword',
@@ -125,7 +124,7 @@ function extractVideoItem(segment: string) {
     return buildVideoResult(title, link, viewCount, duration, author, pubDate);
 }
 
-function buildVideoResult(title: string, link: string, viewCount: string, duration: string, author: string, pubDate: Date | undefined) {
+function buildVideoResult(title: string, link: string, viewCount: string, duration: string, author: string, pubDate: Temporal.Instant | undefined) {
     return {
         title,
         link,
@@ -238,23 +237,23 @@ function cleanText(text: string): string {
     return decodeHTML(parseEmbeddedString(text)).replaceAll('<mark>', '').replaceAll('</mark>', '');
 }
 
-function parseKoreanRelativeTime(timeText: string): Date | undefined {
+function parseKoreanRelativeTime(timeText: string): Temporal.Instant | undefined {
     if (!timeText) {
         return;
     }
 
     if (/^\d{4}[.-]\d{2}[.-]\d{2}\.?$/.test(timeText)) {
-        return timezone(parseDate(timeText, ['YYYY.MM.DD.', 'YYYY.MM.DD', 'YYYY-MM-DD']), 9);
+        return parseDate(timeText, ['YYYY.MM.DD.', 'YYYY.MM.DD', 'YYYY-MM-DD'], 9);
     }
 
     // Try absolute date formats first (e.g. "2025.12.01.", "2026-05-13T23:15:00+09:00")
     const absDate = parseDate(timeText);
-    if (!Number.isNaN(absDate.getTime())) {
+    if (absDate) {
         return absDate;
     }
 
     if (timeText === '방금') {
-        return parseDate(Date.now());
+        return parseDate(Temporal.Now.instant().epochMilliseconds);
     }
 
     const match = timeText.match(/(\d+)\s*(시간|[분일주])\s*(?:전|이내)/);
@@ -262,7 +261,7 @@ function parseKoreanRelativeTime(timeText: string): Date | undefined {
         return;
     }
 
-    const now = Date.now();
+    const now = Temporal.Now.instant().epochMilliseconds;
     const num = Number(match[1]);
     const unit = match[2];
 

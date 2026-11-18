@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -56,13 +55,12 @@ function parseEpochDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
         return;
     }
-    const date = parseDate(value * 1000);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value * 1000);
 }
 
 function parseEventDate(value?: number) {
     const date = parseEpochDate(value);
-    return date ? dayjs(date).format('YYYY-MM-DD') : undefined;
+    return date ? formatDate(date, 'YYYY-MM-DD') : undefined;
 }
 
 function exhibitionLink(value: string | undefined, fallback: string) {

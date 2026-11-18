@@ -5,7 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/most/:type?/:time?',
@@ -35,7 +35,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $(`#${time}Items div.most-read-item-box div.cg-title`)
         .toArray()
-        .map((item): DataItem & { pubDate: Date } => {
+        .map((item): DataItem => {
             const a = $(item).find('a');
             return {
                 title: a.text(),

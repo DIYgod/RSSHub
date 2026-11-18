@@ -5,7 +5,7 @@ import { ridershipItem } from '@/routes/tokyometro/utils';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const OPERATOR = '東京都交通局';
 const DATASET = 't000018d0000000030'; // 地下鉄関連情報 各駅乗降人員一覧

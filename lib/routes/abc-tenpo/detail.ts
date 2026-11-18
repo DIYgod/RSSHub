@@ -5,8 +5,7 @@ import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parse
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://www.abc-tenpo.com';
 
@@ -115,7 +114,7 @@ const parseDetail = (html: string, id: string): DataItem | null => {
         title: clean(ogTitle.split('｜', 1)[0]) ?? ogTitle,
         link,
         guid: link,
-        pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+        pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
         description: [raw.notes, summarize(extra)].filter(Boolean).join(' / '),
         _extra: extra,
     };

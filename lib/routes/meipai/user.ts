@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:uid',
@@ -44,7 +44,7 @@ async function handler(ctx: Context) {
     const limit = getRouteLimit(ctx, 20);
 
     const urlType = 'medias/user_timeline.json';
-    const now = String(Date.now());
+    const now = String(Temporal.Now.instant().epochMilliseconds);
     const params = {
         build: '16601',
         channel: '8888',

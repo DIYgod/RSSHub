@@ -2,10 +2,9 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -55,7 +54,7 @@ async function handler() {
                 return {
                     title,
                     link: new URL($item.attr('href')!, baseUrl).href,
-                    pubDate: timezone(parseDate($item.find('i').text()), 8),
+                    pubDate: parseDate($item.find('i').text(), 8),
                 };
             })
             .filter((item) => item !== null);

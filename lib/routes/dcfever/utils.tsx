@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://www.dcfever.com';
 
@@ -13,7 +12,7 @@ const parseTradeDate = (value: string) => {
     if (!value) {
         return;
     }
-    return /^\d{4}-\d{2}-\d{2}/.test(value) ? timezone(parseDate(value), 8) : parseRelativeDate(value.replaceAll('小時', '小时'));
+    return /^\d{4}-\d{2}-\d{2}/.test(value) ? parseDate(value, 8) : parseRelativeDate(value.replaceAll('小時', '小时'));
 };
 
 const renderTradeDescription = (info, description, photo, details) =>

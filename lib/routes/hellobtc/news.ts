@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.hellobtc.com';
 
@@ -47,7 +47,7 @@ async function handler() {
                 title: $(item).find('h2').text(),
                 link,
                 description: $(item).find('div.sub').text(),
-                pubDate: date && year ? parseDateInTimezone(`${year}-${date}`, 8) : undefined,
+                pubDate: date && year ? parseDate(`${year}-${date}`, 8) : undefined,
             };
         })
         .filter((item) => item.title && item.link);

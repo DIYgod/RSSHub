@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:path{.+}?',
@@ -66,7 +65,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link,
-                pubDate: timezone(parseDate($item.find('span.fr').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('span.fr').text(), 'YYYY-MM-DD', 8),
             };
         });
 

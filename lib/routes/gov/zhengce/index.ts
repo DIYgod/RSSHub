@@ -4,9 +4,8 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -129,8 +128,8 @@ export async function handler(ctx) {
                 item.guid = manuscriptId ? `gov-zhengce-${manuscriptId}` : item.link;
                 const published = content('meta[name="firstpublishedtime"]').prop('content');
                 const modified = content('meta[name="lastmodifiedtime"]').prop('content');
-                item.pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined;
-                item.updated = modified ? timezone(parseDate(modified, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined;
+                item.pubDate = published ? parseDate(published, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
+                item.updated = modified ? parseDate(modified, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
 
                 return item;
             })

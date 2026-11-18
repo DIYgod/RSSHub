@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { comic, indexComic, indexInterview, interview, novel, uncategorized } from './json2html';
 
@@ -42,8 +42,7 @@ function parsePubDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}+09:00`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}+09:00`);
 }
 async function handler(ctx: Context) {
     const { language, type } = ctx.req.param();

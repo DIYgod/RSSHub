@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://ugs.hrbeu.edu.cn';
 
@@ -262,7 +261,7 @@ async function handler(ctx) {
             return {
                 title: $e.find('a').attr('title')!,
                 link: new URL($e.find('a').attr('href')!, baseUrl).href,
-                pubDate: $e.find('.date').text() ? timezone(parseDate($e.find('.date').text()), 8) : undefined,
+                pubDate: $e.find('.date').text() ? parseDate($e.find('.date').text(), 8) : undefined,
             };
         });
 

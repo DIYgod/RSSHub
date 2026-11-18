@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 import { getFullText } from './utils';
 
@@ -184,7 +183,7 @@ async function handler(ctx) {
                         ? relativeTime
                             ? parseRelativeDate(relativeTime) // PubDates of posts in 'fengwen' are in an informal format.
                             : undefined
-                        : timezone(parseDate(dateMatch[1]), 8);
+                        : parseDate(dateMatch[1], 8);
 
                 const description = (await getFullText(content, link)) || content('.article-txt-content').html();
                 const author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();

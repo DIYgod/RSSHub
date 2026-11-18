@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwc.shmtu.edu.cn';
 
@@ -72,7 +71,7 @@ async function handler(ctx) {
             const $item = $(item);
             const href = $item.find('a[href]').attr('href');
             const title = $item.find('.news_title .ttbox').text();
-            return href && title ? { title, link: new URL(href, host).href, pubDate: timezone(parseDate($item.find('.news_time').text()), 8) } : [];
+            return href && title ? { title, link: new URL(href, host).href, pubDate: parseDate($item.find('.news_time').text(), 8) } : [];
         });
 
     const result = await processFeed(list, cache);

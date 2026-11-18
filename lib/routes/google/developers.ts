@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://developers.googleblog.com';
 
@@ -54,7 +54,13 @@ async function handler(ctx: Context) {
             const dateCategory = $(element).find('.search-result__eyebrow').text();
             const [date, category] = dateCategory.split(' / ', 2);
             const calendar = date?.replace(/^(\d{4})(?:年|년\s*)(\d{1,2})(?:月|월\s*)(\d{1,2})(?:日|일)$/, '$1-$2-$3');
-            const publicationDate = calendar ? parseDate(`${calendar} UTC`) : undefined;
+            const publicationDate = calendar
+                ? (parseDate(calendar) ??
+                  parseDate(
+                      calendar.replace(/^([a-z])([a-z]{2})[a-z]*\.?/i, (_, first, rest) => first.toUpperCase() + rest.toLowerCase()),
+                      'MMM D, YYYY'
+                  ))
+                : undefined;
             const titleElement = $(element).find('.search-result__title a');
             const title = titleElement.text();
             const link = titleElement.attr('href');
@@ -63,7 +69,7 @@ async function handler(ctx: Context) {
             return {
                 title,
                 link: `${baseUrl}${link}`,
-                pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
+                pubDate: publicationDate,
                 description: summary,
                 author: 'Google',
                 category: [category],

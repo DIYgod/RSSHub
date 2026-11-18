@@ -5,8 +5,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const searchCode = '17da70961a7';
 const dataTypeId = '107';
@@ -29,7 +28,9 @@ const getMonthBoundary = (yearValue: string | null, monthValue: string | null, e
         return '';
     }
 
-    return end ? timezone(new Date(year, month, 1), 8).getTime() - 1 : timezone(new Date(year, month - 1, 1), 8).getTime();
+    const start = Temporal.PlainDate.from({ year, month, day: 1 }).toZonedDateTime('+08:00');
+
+    return end ? start.add({ months: 1 }).epochMilliseconds - 1 : start.epochMilliseconds;
 };
 
 const buildSearchRequest = (advance?: string) => {
@@ -114,7 +115,7 @@ const normalizeSearchItem = (item): DataItem => {
         link: item.url,
         description: item.summary || item.content,
         ...(item.time && {
-            pubDate: timezone(parseDate(item.time, 'YYYY-MM-DD HH:mm:ss'), 8),
+            pubDate: parseDate(item.time, 'YYYY-MM-DD HH:mm:ss', 8),
         }),
     };
 };

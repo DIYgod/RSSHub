@@ -3,7 +3,7 @@ import type { CheerioAPI } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export async function fetchDataItemCached(link: string, processor: (articleContent: string) => DataItem): Promise<DataItem> {
     const page = await cache.tryGet<string>(`yystv:article:${link}`, () => ofetch(link));

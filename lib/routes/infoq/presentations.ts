@@ -6,9 +6,8 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -54,12 +53,12 @@ export const handler = async (ctx) => {
             const link = new URL(a.prop('href')!, rootUrl).href;
             const guid = `infoq-${$item.prop('data-path').replace(/^\//, '')}`;
             const length = $item.find('div.card__length').text() || undefined;
-            const calendarDate = parseDate($item.find('span.card__date span').text().trim(), 'MMM DD, YYYY', true);
+            const calendarDate = parseDateStrict($item.find('span.card__date span').text().trim(), 'MMM DD, YYYY', 0);
 
             return {
                 title,
                 description,
-                pubDate: Number.isFinite(calendarDate.getTime()) ? timezone(calendarDate, 0) : undefined,
+                pubDate: calendarDate,
                 link,
                 category: $item
                     .find('div.card__topics')
@@ -128,16 +127,11 @@ export const handler = async (ctx) => {
                     .map((script) => JSON.parse($$(script).text()))
                     .find((metadata) => metadata['@type'] === 'NewsArticle');
                 const published = articleMetadata?.datePublished;
-                const calendarDate = parseDate($$('p.date').text().trim(), 'MMM DD, YYYY', true);
+                const calendarDate = parseDateStrict($$('p.date').text().trim(), 'MMM DD, YYYY', 0);
                 item.pubDate =
-                    typeof published === 'string' &&
-                    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/.test(published) &&
-                    Number.isFinite(parseDate(published.slice(0, 10), 'YYYY-MM-DD', true).getTime()) &&
-                    Number.isFinite(parseDate(published).getTime())
+                    typeof published === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/.test(published) && parseDateStrict(published.slice(0, 10), 'YYYY-MM-DD') && parseDate(published)
                         ? parseDate(published)
-                        : Number.isFinite(calendarDate.getTime())
-                          ? timezone(calendarDate, 0)
-                          : undefined;
+                        : calendarDate;
                 item.link = $$('meta[property="og:url"]').prop('content');
                 item.category = topicsStr ? JSON.parse(topicsStr).map((t) => t.name) : $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.author = $$('ul.authors a.author__link')

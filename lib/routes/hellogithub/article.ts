@@ -1,8 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const sorts = {
     hot: '热门',
@@ -55,12 +55,12 @@ async function handler(ctx) {
         link: `${rootUrl}/article/${item.aid}`,
         author: item.author,
         guid: item.aid,
-        pubDate: item.publish_at ? parseDateInTimezone(item.publish_at, 8) : undefined,
+        pubDate: item.publish_at ? parseDate(item.publish_at, 8) : undefined,
     }));
 
     const sorted = ctx.req.query('sorted') !== 'false';
-    const datesAvailable = items.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
-    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime()).slice(0, limit) : items.slice(0, sorted ? Math.max(20, limit) : limit);
+    const datesAvailable = items.every((item) => item.pubDate !== undefined);
+    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit) : items.slice(0, sorted ? Math.max(20, limit) : limit);
 
     return {
         title: `HelloGithub - ${sorts[sort]}文章`,

@@ -3,7 +3,7 @@ import iconv from 'iconv-lite';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, fixImage, fixVideo } from './utils';
 

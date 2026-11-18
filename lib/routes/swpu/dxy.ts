@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function getArticle(link: string): Promise<Partial<DataItem>> {
     const item: Partial<DataItem> = {};
@@ -93,7 +92,7 @@ async function handler(ctx): Promise<Data> {
             const publishedAt = date.match(currentPath ? /\d{4}-\d{1,2}-\d{1,2}/ : /\d{4}年\d{1,2}月\d{1,2}日/)?.[0];
             return {
                 title: news ? $('p:first-child', anchor).text() : anchor.text(),
-                pubDate: publishedAt ? timezone(parseDate(publishedAt, currentPath ? 'YYYY-MM-DD' : 'YYYY年MM月DD日'), 8) : undefined,
+                pubDate: publishedAt ? parseDate(publishedAt, currentPath ? 'YYYY-MM-DD' : 'YYYY年MM月DD日', 8) : undefined,
                 link: new URL(anchor.attr('href')!, url).href,
             };
         });

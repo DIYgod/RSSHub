@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -35,7 +34,7 @@ async function handler() {
             const $item = $(item);
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
-            const pubDate = timezone(parseDate($item.find('.font_ts').text()), 8);
+            const pubDate = parseDate($item.find('.font_ts').text(), 8);
 
             const article = await cache.tryGet(`tongshang:article:v2:${itemUrl}`, async () => {
                 const response = await ofetch(itemUrl);

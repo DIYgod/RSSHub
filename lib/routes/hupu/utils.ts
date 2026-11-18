@@ -3,16 +3,15 @@ import { type CheerioAPI, load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
-export function extractForumThreadDates($: CheerioAPI): Map<string, Date> {
+export function extractForumThreadDates($: CheerioAPI): Map<string, Temporal.Instant> {
     const prefix = 'window.$$data=';
     const script = $('script')
         .toArray()
         .map((element) => $(element).text().trim())
         .find((content) => content.startsWith(prefix));
-    const dates = new Map<string, Date>();
+    const dates = new Map<string, Temporal.Instant>();
     if (!script) {
         return dates;
     }
@@ -27,7 +26,7 @@ export function extractForumThreadDates($: CheerioAPI): Map<string, Date> {
         }
 
         const date = parseDate(thread.createdAt);
-        if (Number.isFinite(date.getTime())) {
+        if (date) {
             dates.set(thread.url, date);
         }
     }
@@ -251,13 +250,13 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
 
             // Extract matchId from __NEXT_DATA__
             let matchId: string | null = null;
-            let detailPubDate: Date | undefined;
+            let detailPubDate: Temporal.Instant | undefined;
             try {
                 const nextData = extractNextData<ThreadNextData>(html, item.link);
                 const timestamp = nextData.props?.pageProps?.detail?.thread?.createdAt;
                 if (typeof timestamp === 'number' && Number.isFinite(timestamp) && timestamp > 0) {
                     const date = parseDate(timestamp);
-                    if (Number.isFinite(date.getTime())) {
+                    if (date) {
                         detailPubDate = date;
                     }
                 }
@@ -272,8 +271,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
 
             const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
             const pubDateString = content('.second-line-user-info span:not([class])').text();
-            const fullDate = pubDateString ? parseDate(pubDateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], true) : undefined;
-            const pubDate = [item.pubDate, detailPubDate, fullDate && Number.isFinite(fullDate.getTime()) ? timezone(fullDate, 8) : undefined].find((date) => date instanceof Date && Number.isFinite(date.getTime()));
+            const fullDate = pubDateString ? parseDateStrict(pubDateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8) : undefined;
+            const pubDate = [item.pubDate, detailPubDate, fullDate].find((date) => date instanceof Temporal.Instant);
             const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                 .toArray()
                 .map((c) => content(c).text())

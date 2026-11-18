@@ -112,9 +112,9 @@ export const route: Route = {
 };
 
 const getLastSixMonths = (): string[] => {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1; // 0-based to 1-based
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const currentYear = now.year;
+    const currentMonth = now.month;
     return Array.from({ length: 6 }, (_, i) => {
         let month = currentMonth - (i + 1);
         let year = currentYear;

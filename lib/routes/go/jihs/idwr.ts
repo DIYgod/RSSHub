@@ -6,12 +6,11 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const { year = new Date().getFullYear() } = ctx.req.param();
+    const { year = Temporal.Now.zonedDateTimeISO('UTC').year } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://id-info.jihs.go.jp';
@@ -34,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description = $pEl.html();
             const pubDateStr: string | undefined = $pEl.text().match(/〔(\d{4}年\d{1,2}月\d{1,2}日)発行〕/)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
-            const pubDate = pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY年M月D日'), 9) : undefined;
+            const pubDate = pubDateStr ? parseDate(pubDateStr, 'YYYY年M月D日', 9) : undefined;
 
             let processedItem: DataItem = {
                 title,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/epaper/:id?',
@@ -86,8 +85,7 @@ const getPublicationDate = (value: string) => {
         return;
     }
     const normalized = value.trim().replace(/^(\d{4}年\d{1,2}月\d{1,2}日)\s+星期[一二三四五六日天]$/, '$1');
-    const date = parseDate(normalized, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY年M月D日'], true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(normalized, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY年M月D日'], 8);
 };
 const getArticleDetails = async (url: string): Promise<ArticleDetails> => {
     const page = await getPage(url);

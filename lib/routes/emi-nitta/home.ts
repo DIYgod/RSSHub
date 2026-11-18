@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type',
@@ -44,7 +43,7 @@ const config = {
 const getDate = (o: Cheerio<any>) => {
     const match = /(\d{4}\.\d+\.\d+)/.exec(o.text());
     const date = match ? match[1] : o.attr('datetime');
-    return date ? timezone(parseDate(date), 9) : undefined;
+    return date ? (parseDate(date, 9) ?? parseDate(date, 'YYYY.M.D', 9)) : undefined;
 };
 
 async function handler(ctx: Context) {

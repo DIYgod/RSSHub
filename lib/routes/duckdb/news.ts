@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -32,12 +31,12 @@ async function handler() {
 
     const list = $('.postpreview')
         .toArray()
-        .map((item): DataItem & { link: string; pubDate: Date } => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('h3').text(),
                 link: new URL($item.find('a.blocklink').attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY-MM-DD'), 0),
+                pubDate: parseDate($item.find('.date').text(), 'YYYY-MM-DD', 0),
                 author: $item.find('.author').text().trim(),
             };
         });

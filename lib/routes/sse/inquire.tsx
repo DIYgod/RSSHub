@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/inquire',
@@ -45,7 +45,7 @@ async function handler() {
             stockcode: '',
             extWTFL: '',
             order: 'createTime|desc,stockcode|asc',
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Referer: refererUrl,
@@ -55,7 +55,7 @@ async function handler() {
     const items = response.data.result.map((item) => ({
         title: item.docTitle,
         description: renderToString(<SseInquireDescription item={item} />),
-        pubDate: item.createTime ? parseDateInTimezone(item.createTime, 8) : undefined,
+        pubDate: item.createTime ? parseDate(item.createTime, 8) : undefined,
         link: `https://${item.docURL}`,
         category: item.extWTFL ? [item.extWTFL] : undefined,
     }));

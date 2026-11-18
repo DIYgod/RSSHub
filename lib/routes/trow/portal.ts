@@ -2,15 +2,13 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function parsePortalDate(sourceDate: string) {
     if (!sourceDate.trim()) {
         return;
     }
-    const date = parseDate(sourceDate, 'YYYY-MM-DD, HH:mm');
-    return Number.isFinite(date.valueOf()) ? timezone(date, 8) : undefined;
+    return parseDate(sourceDate, 'YYYY-MM-DD, HH:mm', 8);
 }
 
 export const route: Route = {

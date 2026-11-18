@@ -3,8 +3,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     '1010580020': '技术变更',
@@ -50,12 +49,12 @@ async function handler(ctx) {
         },
     });
 
-    const list: Array<DataItem & { documentId: number; link: string; pubDate: Date }> = response.data.data.map((item) => ({
+    const list: Array<DataItem & { documentId: number; link: string; pubDate: Temporal.Instant }> = response.data.data.map((item) => ({
         title: item.title,
         id: String(item.id),
         documentId: item.id,
         link: `https://open.dewu.com/#/declaration/read?articleId=${item.id}`,
-        pubDate: timezone(parseDate(item.publishTime), 8),
+        pubDate: parseDate(item.publishTime, 8),
     }));
     const selected = list;
     const result = await pMap(

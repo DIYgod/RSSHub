@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
@@ -93,14 +92,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                     category: categories,
                     author: authors,
                     content: {
                         html: description,
                         text: $$('div.detail-content').text(),
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                    updated: upDatedStr ? parseDate(upDatedStr, 8) : undefined,
                 };
 
                 return processedItem;

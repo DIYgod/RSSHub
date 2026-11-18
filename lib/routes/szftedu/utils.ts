@@ -1,8 +1,8 @@
 import type { CheerioAPI } from 'cheerio';
 import type { Node } from 'oxc-parser';
 
-import { parseDate } from '@/utils/parse-date';
 import { parseScriptSource } from '@/utils/parse-js';
+import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 const getProperty = (node: Node | undefined, name: string): Node | undefined => {
@@ -50,7 +50,7 @@ const getCreateTimes = (node: Node): string[] => {
     }
 };
 
-export const getArticlePubDate = async ($: CheerioAPI): Promise<Date | undefined> => {
+export const getArticlePubDate = async ($: CheerioAPI): Promise<Temporal.Instant | undefined> => {
     const source = $('script')
         .toArray()
         .map((element) => $(element).text())
@@ -70,8 +70,7 @@ export const getArticlePubDate = async ($: CheerioAPI): Promise<Date | undefined
     if (!Number.isSafeInteger(timestamp)) {
         return undefined;
     }
-    const date = parseDate(timestamp * 1000);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(timestamp * 1000);
 };
 
 const getVideoUrl = (node: Node | undefined, articleUrl: string): string | undefined => {

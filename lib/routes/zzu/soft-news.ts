@@ -6,7 +6,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/soft/news/:type?',
@@ -45,11 +45,10 @@ function parsePublishedDate(value?: string) {
         return;
     }
     const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    if (!Number.isFinite(parseDate(calendarDate, 'YYYY-MM-DD', true).getTime())) {
+    if (!parseDateStrict(calendarDate, 'YYYY-MM-DD')) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 async function handler(ctx: Context) {
     const { type = 'xyxw' } = ctx.req.param();

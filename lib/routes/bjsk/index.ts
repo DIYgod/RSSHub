@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.bjsk.org.cn';
 
@@ -44,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.attr('title')!,
                 link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY.MM.DD'), 8),
+                pubDate: parseDate($item.find('.time').text(), 'YYYY.MM.DD', 8),
             };
         });
     const selectedList = list;

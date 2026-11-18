@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const handler = async (ctx) => {
     const { category = 'zxfb' } = ctx.req.param();
@@ -22,7 +21,7 @@ const handler = async (ctx) => {
 
     const topNewsList = newsList.slice(0, limit).map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.brief, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseDate(item.brief, 'YYYY-MM-DD HH:mm:ss', 8),
         link: item.link_add,
     }));
 

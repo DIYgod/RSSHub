@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const migratedCategories = new Map([
     ['110', 'xwzx1/gg.htm'],
@@ -114,7 +113,7 @@ async function handler(ctx) {
                     const dateText = content('.article-sm span').first().text() || (universityArticle ? content('.con-tit .shfffff span').first().text() : '');
                     const date = dateText.match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/)?.[0];
                     if (date) {
-                        detail.pubDate = timezone(parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD'), 8);
+                        detail.pubDate = parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD', 8);
                     }
                     return detail;
                 }),

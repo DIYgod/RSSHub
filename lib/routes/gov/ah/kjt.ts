@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'kjzx/tzgg' } = ctx.req.param();
@@ -33,7 +32,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: a.prop('href'),
                 language,
             };
@@ -52,7 +51,7 @@ export const handler = async (ctx) => {
                 item.description = description;
                 const pubDate = $$('meta[name="PubDate"]').prop('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.category = [
                     ...new Set([
@@ -69,7 +68,7 @@ export const handler = async (ctx) => {
                     text: $$('div.wzcon').text(),
                 };
                 const updated = $$('meta[name="HtmlGenerateTime"]').prop('content');
-                item.updated = updated ? timezone(parseDate(updated), 8) : undefined;
+                item.updated = updated ? parseDate(updated, 8) : undefined;
                 item.language = language;
 
                 return item;

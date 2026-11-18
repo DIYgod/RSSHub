@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 // Adapted from the university news route.
 
@@ -116,9 +115,8 @@ function parsePublicationDate(value: string | undefined) {
         return;
     }
     const calendarDate = /^\d{4}-\d{2}-\d{2}$/.test(value.trim());
-    const date = calendarDate ? parseDate(value.trim(), 'YYYY-MM-DD', true) : parseDate(value);
     // UTC midnight encodes a calendar day, not a source publication instant.
-    return Number.isFinite(date.getTime()) ? timezone(date, calendarDate ? 0 : 8) : undefined;
+    return calendarDate ? parseDateStrict(value.trim(), 'YYYY-MM-DD') : parseDate(value, 8);
 }
 
 async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {

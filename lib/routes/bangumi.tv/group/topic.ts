@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://bgm.tv';
 
@@ -40,7 +39,7 @@ async function handler(ctx) {
 
     const list = $('.topic_list .topic')
         .toArray()
-        .map((elem) => ({ elem, pubDate: timezone(parseDate($('.lastpost .time', elem).text()), 8) }));
+        .map((elem) => ({ elem, pubDate: parseDate($('.lastpost .time', elem).text(), 8) }));
     const orderedList = list;
     const items = await Promise.all(
         orderedList.map(({ elem, pubDate }) => {

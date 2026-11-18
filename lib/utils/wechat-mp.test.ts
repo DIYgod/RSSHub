@@ -4,6 +4,7 @@ import Parser from 'rss-parser';
 import { afterEach, assert, describe, expect, it } from 'vitest';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { toInstant } from '@/utils/time';
 import { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl, WeChatMpError } from '@/utils/wechat-mp';
 
 const { toggleWerror, ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
@@ -22,7 +23,7 @@ const expectedItem = {
 };
 
 // date from the cache will be an ISO8601 string, so normalize both sides before comparing
-const compareDate = (date1: Date | string | undefined, date2: Date | string | undefined) => date1 !== undefined && date2 !== undefined && new Date(date1).getTime() === new Date(date2).getTime();
+const compareDate = (date1: Temporal.Instant | string | undefined, date2: Temporal.Instant | string | undefined) => date1 !== undefined && date2 !== undefined && toInstant(date1)!.equals(toInstant(date2)!);
 const genScriptHtmlStr = (script: string) => `
     <html lang="">
         <script type="text/javascript" nonce="123456789">
@@ -35,7 +36,7 @@ const testFetchArticleFinishArticleItem = async (path: string, { setMpNameAsAuth
     const httpsUrl = `https://mp.weixin.qq.com/rsshub_test${path}`;
     const httpUrl = 'http' + httpsUrl.slice(5);
 
-    const expectedDate = new Date(ct * 1000);
+    const expectedDate = Temporal.Instant.fromEpochMilliseconds(ct * 1000);
 
     const expectedItem_ = {
         ...expectedItem,

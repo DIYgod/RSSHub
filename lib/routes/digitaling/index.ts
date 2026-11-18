@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index',
@@ -38,7 +37,7 @@ async function handler() {
                     author: $('#avatar_by').parent().find('h3 a').text(),
                     link: itemUrl,
                     description: $('#article_con').html(),
-                    pubDate: timezone(parseDate($('#edit_url').parent().children().last().text()), 8),
+                    pubDate: parseDate($('#edit_url').parent().children().last().text(), 8),
                 };
             }),
         { concurrency: 3 }

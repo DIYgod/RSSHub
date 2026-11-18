@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const rootUrl = 'https://projectjav.com';

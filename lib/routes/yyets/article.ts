@@ -4,8 +4,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseURL = 'https://yysub.net';
 
@@ -60,7 +59,14 @@ async function handler(ctx) {
                 title: $e.find('h3 a').text(),
                 link: `${baseURL}${$e.find('h3 a').attr('href')}`,
                 author: $e.find('p a').text(),
-                pubDate: timezone(parseDate($e.find('p').eq(2).text()), 8),
+                pubDate: parseDate(
+                    $e
+                        .find('p')
+                        .eq(2)
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)?.[0] ?? '',
+                    8
+                ),
             };
         });
 

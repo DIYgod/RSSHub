@@ -2,8 +2,8 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { parseArticle } from '../../utils';
 
@@ -47,10 +47,10 @@ async function handler(ctx) {
             type: 'std_news,std_slide,std_video',
             pageSize: limit,
             cTime: '1483200000',
-            tm: Date.now(),
+            tm: Temporal.Now.instant().epochMilliseconds,
             up: '0',
             action: '0',
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
     });
     const list = response.data.map((item): DataItem & { link: string } => ({

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yzxc.ustb.edu.cn';
 const url = `${host}/tzgg/index.htm`;
@@ -61,7 +60,7 @@ async function handler() {
                 }
                 return { description };
             });
-            return { title: titleText, link: itemUrl, pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined, ...details };
+            return { title: titleText, link: itemUrl, pubDate: time ? parseDate(time, 'YYYY-MM-DD', 8) : undefined, ...details };
         },
         { concurrency: 3 }
     );

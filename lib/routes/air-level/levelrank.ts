@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rank/:status?',
@@ -63,7 +62,7 @@ async function handler(ctx) {
             link: currentUrl,
             description: table,
             guid: pubTime,
-            pubDate: timezone(parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss'), 8),
+            pubDate: parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss', 8),
         },
     ];
     return {

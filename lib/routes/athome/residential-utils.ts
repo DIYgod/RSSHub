@@ -38,7 +38,7 @@ const ALLOWED_RESOURCES = new Set(['document', 'script', 'xhr', 'fetch']);
 
 /** One list page, rendered until its SSR state is attached. A page that never settles is an error, never an empty feed. */
 export const fetchAthomeList = async (url: string): Promise<string> => {
-    const startedAt = Date.now();
+    const startedAt = performance.now();
     const { page, destroy } = await getPlaywrightPage(url, {
         gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT },
         onBeforeLoad: async (p) => {
@@ -46,7 +46,7 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
         },
     });
     try {
-        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: Math.max(3000, LIST_DEADLINE_MS - (Date.now() - startedAt)) });
+        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: Math.max(3000, LIST_DEADLINE_MS - (performance.now() - startedAt)) });
         return await page.content();
     } catch (error) {
         let blocked = false;
@@ -55,7 +55,7 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
         } catch {
             // The page may already be gone; the message below still names the failure.
         }
-        logger.warn(`athome: ${url} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
+        logger.warn(`athome: ${url} failed after ${performance.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
         throw new Error(
             blocked
                 ? `athome: the site's authentication page did not resolve within ${LIST_DEADLINE_MS}ms; reduce polling frequency`

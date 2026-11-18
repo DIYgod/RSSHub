@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -43,7 +42,7 @@ async function handler(/* ctx*/): Promise<Data> {
             return {
                 title: $('h2 > a', ele).text(),
                 link: $('h2 > a', ele).attr('href'),
-                pubDate: date ? parseDateInTimezone(date, 0) : undefined,
+                pubDate: date ? parseDate(date, 0) : undefined,
                 author: $('.author-name', ele).text(),
             };
         });

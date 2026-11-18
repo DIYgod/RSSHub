@@ -4,10 +4,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
 
@@ -112,7 +111,7 @@ async function handler(ctx) {
 
             return {
                 title: a.attr('title') ?? titleMap.get(cate) ?? '中量大研究生院通知',
-                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), 8),
+                pubDate: parseDate(timeStr, 'YYYY/MM/DD', 8),
                 link: `${host}${route}`,
                 description: '',
             };

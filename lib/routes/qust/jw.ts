@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jw.qust.edu.cn/';
 
@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: itemTitle,
                 link: itemUrl,
-                pubDate: linkElement.find('.sj .p1').text() ? parseDateInTimezone(linkElement.find('.sj .p1').text(), 8) : undefined,
+                pubDate: linkElement.find('.sj .p1').text() ? parseDate(linkElement.find('.sj .p1').text(), 8) : undefined,
             };
         });
 

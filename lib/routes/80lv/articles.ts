@@ -5,8 +5,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderArticleDescription } from './templates/description';
 import { API_BASE_URL, type ArticleDetail, type ArticleListItem, type ArticleListResponse, CATEGORY_NAME_MAP, CATEGORY_OPTIONS, DEFAULT_LIMIT, DETAIL_CONCURRENCY, MAX_LIMIT, pickImageUrl, SITE_URL } from './utils';
@@ -35,7 +35,7 @@ const extractTags = (detail: ArticleDetail, listItem: ArticleListItem): string[]
 const resolveCoverImage = (detail: ArticleDetail, listItem: ArticleListItem): string | undefined =>
     pickImageUrl(listItem.image) ?? pickImageUrl(listItem.preview) ?? pickImageUrl(detail.image) ?? pickImageUrl(detail.meta?.['og-og:image']?.content);
 
-const resolvePubDate = (detail: ArticleDetail, listItem: ArticleListItem): Date | undefined => {
+const resolvePubDate = (detail: ArticleDetail, listItem: ArticleListItem): Temporal.Instant | undefined => {
     const rawDate = detail.meta?.['article-article:published_time']?.content ?? detail.aside?.date ?? listItem.date;
     return rawDate ? parseDate(rawDate) : undefined;
 };

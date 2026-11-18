@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xinwen/tujie/:caty',
@@ -57,7 +56,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse);
 
                 item.description = content('div.pages_content').html();
-                item.pubDate = timezone(parseDate(content('div.pages-date').text().split('来源：', 1)[0]), 8);
+                item.pubDate = parseDate(content('div.pages-date').text().split('来源：', 1)[0], 8);
 
                 return item;
             })

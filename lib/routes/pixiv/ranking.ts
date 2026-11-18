@@ -1,8 +1,9 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import getRanking from './api/get-ranking';
 import { getToken } from './token';
@@ -154,7 +155,10 @@ async function handler(ctx) {
     }
 
     const mode = alias[ctx.req.param('mode')] ?? ctx.req.param('mode');
-    const date = ctx.req.param('date') ? new Date(ctx.req.param('date')) : new Date();
+    const date = ctx.req.param('date') ? parseDate(ctx.req.param('date'))?.toZonedDateTimeISO('UTC') : Temporal.Now.zonedDateTimeISO('UTC');
+    if (!date) {
+        throw new InvalidParameterError('Invalid date, the format is `2018-4-25`');
+    }
 
     const token = await getToken();
     if (!token) {
@@ -165,7 +169,7 @@ async function handler(ctx) {
 
     const illusts = response.data.illusts;
 
-    const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 `;
+    const dateStr = formatDate(date, 'YYYY年M月D日 ');
 
     return {
         title: (ctx.req.param('date') ? dateStr : '') + titles[mode],

@@ -5,8 +5,7 @@ import iconv from 'iconv-lite';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const base = 'https://sexinsex.net';
 const section = '/bbs/forumdisplay.php?fid=';
@@ -47,7 +46,7 @@ function parseContent(buffer: ArrayBuffer) {
     return {
         author,
         description: $('body').html(),
-        pubDate: regRes ? timezone(parseDate(regRes[0]), 8) : undefined,
+        pubDate: regRes ? parseDate(regRes[0], 8) : undefined,
     };
 }
 

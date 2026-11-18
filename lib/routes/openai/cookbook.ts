@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cookbook',
@@ -92,7 +91,7 @@ async function handler() {
         .map((item) => decodeAstroValue(item))
         .filter((item): item is AstroValue & CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)
         .filter((item) => !item.archived)
-        .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        .toSorted((a, b) => compareDates(b.date, a.date));
 
     const items = await pMap(
         articles.slice(0, 30),
@@ -101,7 +100,7 @@ async function handler() {
             const dataItem: DataItem = {
                 title: item.title,
                 link,
-                pubDate: item.date ? (/^\d{4}-\d{2}-\d{2}$/.test(item.date) ? timezone(parseDate(item.date, 'YYYY-MM-DD'), 0) : parseDate(item.date)) : undefined,
+                pubDate: item.date ? (/^\d{4}-\d{2}-\d{2}$/.test(item.date) ? parseDate(item.date, 'YYYY-MM-DD', 0) : parseDate(item.date)) : undefined,
                 category: item.tags ?? [],
                 description: item.description,
             };

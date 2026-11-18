@@ -9,8 +9,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
@@ -46,7 +46,7 @@ const createNonce = (length = 16) => {
 const cleanQuery = (query: ApiQuery) => Object.fromEntries(Object.entries(query).filter((entry): entry is [string, number | string] => entry[1] !== undefined));
 
 const buildSignedHeaders = (path: string, query: Record<string, number | string>) => {
-    const timestamp = Date.now().toString();
+    const timestamp = Temporal.Now.instant().epochMilliseconds.toString();
     const nonce = createNonce();
     const canonicalQuery = Object.keys(query)
         .toSorted((a, b) => a.localeCompare(b))

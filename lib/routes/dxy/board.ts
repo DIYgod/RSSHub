@@ -37,7 +37,7 @@ async function handler(ctx) {
     const boardDetail = await cache.tryGet(`dxy:board:detail:${boardId}`, async () => {
         const detailParams = {
             boardId,
-            timestamp: Date.now(),
+            timestamp: Temporal.Now.instant().epochMilliseconds,
             noncestr: generateNonce(8, 'number'),
         };
 
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 orderType: '1',
                 pageNum: '1',
                 pageSize: limit,
-                timestamp: Date.now(),
+                timestamp: Temporal.Now.instant().epochMilliseconds,
                 noncestr: generateNonce(8, 'number'),
             };
 

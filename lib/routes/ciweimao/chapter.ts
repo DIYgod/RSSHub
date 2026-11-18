@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -54,7 +53,7 @@ async function handler(ctx) {
             return {
                 chapterLocked: $item.find('h3 i.icon-lock').length > 0,
                 title: $item.find('h3').text(),
-                pubDate: timezone(parseDate($item.find('p').text().replace('发布于 ', '')), 8),
+                pubDate: parseDate($item.find('p').text().replace('发布于 ', ''), 8),
                 link: $item.attr('href'),
             };
         });

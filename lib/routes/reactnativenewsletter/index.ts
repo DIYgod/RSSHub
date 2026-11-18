@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -47,7 +47,7 @@ async function handler(ctx: Context): Promise<Data> {
                 pubDate: date ? parseDate(`${date} +0000`, 'MM/DD/YYYY ZZ') : undefined,
             };
         })
-        .toSorted((a, b) => (b.pubDate?.valueOf() ?? 0) - (a.pubDate?.valueOf() ?? 0))
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
         .slice(0, getRouteLimit(ctx, 20));
 
     const items = await pMap(

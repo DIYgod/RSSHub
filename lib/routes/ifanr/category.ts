@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const PATH_LIST = {
     早报: 'ifanrnews',
@@ -39,8 +39,7 @@ export const route: Route = {
 };
 
 function parseTimestamp(value: number | string) {
-    const date = value ? parseDate(value, 'X') : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+    return value ? parseDate(value, 'X') : undefined;
 }
 
 async function handler(ctx) {

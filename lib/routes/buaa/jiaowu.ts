@@ -6,8 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jiaowu.buaa.edu.cn/';
 const menus = new Map([
@@ -61,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: $link.find('p, h5').text(),
                 link: new URL(href, currentUrl).href,
-                pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         })
         .filter((item) => item !== undefined);

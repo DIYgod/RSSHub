@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/central/:group/:artifact',
@@ -97,9 +97,9 @@ async function handler(ctx) {
 
             // Date format: 2024-09-22 04:19
             const match = rawText.match(DATE_REGEX);
-            let pubDate: Date | undefined;
+            let pubDate: Temporal.Instant | undefined;
             if (match) {
-                pubDate = parseDateInTimezone(match[1], 0);
+                pubDate = parseDate(match[1], 0);
             }
 
             const category = UNSTABLE_VERSION_REGEX.test(version) ? 'Unstable' : 'Stable';
@@ -113,7 +113,7 @@ async function handler(ctx) {
             };
         })
         .filter((item) => !!item && item.pubDate !== undefined)
-        .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
         .slice(0, limit);
 
     return {

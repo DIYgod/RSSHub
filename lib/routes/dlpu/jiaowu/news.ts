@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jiaowu/news/:type?',
@@ -78,10 +77,10 @@ async function handler(ctx: Context) {
     const list: DataItem[] = response.data.datas.datas.map((item) => ({
         link: `${baseUrl}/engine2/d/${item.id}/${engineInstanceId}/0/${appId}?t=${typeId}&p=${pageId}`,
         title: item.title,
-        pubDate: timezone(parseDate(item.publishTime), 8),
+        pubDate: parseDate(item.publishTime, 8),
     }));
     if (ctx.req.query('sorted') !== 'false') {
-        list.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     const items = await pMap(
         list.slice(0, getRouteLimit(ctx, 10)),

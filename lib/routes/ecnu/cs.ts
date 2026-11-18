@@ -4,8 +4,7 @@ import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cs',
@@ -27,7 +26,7 @@ export const route: Route = {
         const links = $('div#wp_news_w6 ul.data-list > li')
             .toArray()
             .map((el): DataItem & { link: string } => ({
-                pubDate: timezone(parseDate($(el).find('span').text()), 8),
+                pubDate: parseDate($(el).find('span').text(), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));

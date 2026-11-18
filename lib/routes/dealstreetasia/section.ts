@@ -4,7 +4,7 @@ import type { Data, Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
 // import playwright from '@/utils/playwright';
-// import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/section/:section',
@@ -45,7 +45,7 @@ async function fetchPage(section: string): Promise<Data> {
         title: item.title || 'No Title',
         link: item.uri ? `https://www.dealstreetasia.com${item.uri}` : '',
         description: item.excerpt || '', // Default to empty string if undefined
-        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : '',
+        pubDate: item.post_date ? parseDate(item.post_date) : '',
         category: item.sections.nodes.map((section) => section.name),
         image: item.featuredImage?.node?.mediaItemUrl.replace(/\?.*$/, ''), // Use .replace to sanitize the image URL
     }));

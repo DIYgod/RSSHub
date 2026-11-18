@@ -6,8 +6,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/district/:category?',
@@ -79,7 +78,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const pubDateText = $('span#articleTime').text().trim();
-                item.pubDate = pubDateText ? timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+                item.pubDate = pubDateText ? parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
 
                 item.description = $('div.TRS_Editor').html() || $('#articleText .TRS_UEDITOR').html();
                 return item;

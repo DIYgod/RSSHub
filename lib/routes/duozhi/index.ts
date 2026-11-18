@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -85,12 +84,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()))) {
-        items.sort((a, b) => parseDate(b.pubDate!).getTime() - parseDate(a.pubDate!).getTime());
+    } else if (items.every((item) => item.pubDate)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         // List dates have day precision; include the entire boundary day before detail timestamps are sorted.
         const boundaryDate = items[limit - 1]?.pubDate;
         if (boundaryDate) {
-            items = items.filter((item) => parseDate(item.pubDate!).getTime() >= parseDate(boundaryDate).getTime());
+            items = items.filter((item) => Temporal.Instant.compare(item.pubDate as Temporal.Instant, boundaryDate as Temporal.Instant) >= 0);
         }
     } else {
         items = items.slice(0, Math.max(30, limit));
@@ -151,7 +150,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                     category: categories,
                     author: authors,
                     content: {

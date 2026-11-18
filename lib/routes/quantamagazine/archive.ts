@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 interface WordpressPost {
     title: { rendered: string };
@@ -107,7 +107,7 @@ export const handler = async (ctx) => {
                     description: contents,
                     link: item.link,
                     guid: item.link,
-                    pubDate: parseDateInTimezone(item.date_gmt, 0),
+                    pubDate: parseDate(item.date_gmt, 0),
                 };
             }),
         { concurrency: 3 }

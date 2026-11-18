@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -67,7 +66,7 @@ export const route = {
                     url: `${apiUrl}${config.endpoint}`,
                     searchParams: {
                         ...config.query,
-                        _: Date.now(),
+                        _: Temporal.Now.instant().epochMilliseconds,
                     },
                 });
 
@@ -77,7 +76,7 @@ export const route = {
                 return list.map((item) => {
                     const title = item.title;
                     const itemLink = item.fullurl;
-                    const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
+                    const pubDate = parseDate(item.publishtime * 1000); // Unix timestamp in seconds, convert to milliseconds
                     const startDate = item.start_time.split(' ', 1)[0];
                     const endDate = item.end_time.split(' ', 1)[0];
                     const fullDuration = item.display_time;

@@ -1,7 +1,3 @@
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import type { z } from 'zod';
 
 import NotFoundError from '@/errors/types/not-found';
@@ -9,7 +5,7 @@ import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate } from '@/utils/time';
 
 import type { CommonListItem, CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem, VenueQuery } from './types';
 import {
@@ -25,12 +21,6 @@ import {
 } from './types';
 
 // Common
-
-dayjs.extend(localizedFormat);
-dayjs.extend(timezone);
-dayjs.extend(utc);
-
-const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('ll');
 
 /**
  * Check whether a list item is a common list item, which nests the goods data under `value.goods`.
@@ -236,9 +226,9 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
     sellPointList: toSellPointList(detailItem.goodsInfo),
     price: String((detailItem.priceInfo.priceInfo.onHandPrice?.price ?? detailItem.priceInfo.priceInfo.marketPrice) / 100),
     marketPrice: String(detailItem.priceInfo.priceInfo.marketPrice / 100),
-    startTime: parseDate(detailItem.crowdFunding.startTime, 'X'),
-    endTime: parseDate(detailItem.crowdFunding.endTime, 'X'),
-    sendInfo: `预计${formatDate(parseDate(detailItem.crowdFunding.estimateSendtime, 'X'))}前发货`,
+    startTime: Temporal.Instant.fromEpochMilliseconds(detailItem.crowdFunding.startTime * 1000),
+    endTime: Temporal.Instant.fromEpochMilliseconds(detailItem.crowdFunding.endTime * 1000),
+    sendInfo: `预计${formatDate(Temporal.Instant.fromEpochMilliseconds(detailItem.crowdFunding.estimateSendtime * 1000), 'YYYY年M月D日', 'Asia/Shanghai')}前发货`,
     supportList: toSupportList(detailItem),
 });
 

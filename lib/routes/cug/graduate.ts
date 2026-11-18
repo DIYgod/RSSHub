@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function isExpiredCertificate(error: unknown): error is Error {
     return error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
@@ -26,7 +25,7 @@ function parseArticle(item: DataItem, content: string): DataItem {
               .text()
               .match(/发稿时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)?.[1];
     if (pubDate) {
-        item.pubDate = timezone(parseDate(pubDate, isAdmissions ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD HH:mm'), 8);
+        item.pubDate = parseDate(pubDate, isAdmissions ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD HH:mm', 8);
     }
     return item;
 }
@@ -62,7 +61,7 @@ async function handler() {
             return {
                 title: a.attr('title') || a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.time').text(), 'YYYY-MM-DD', 8),
             };
         });
     const pending: DataItem[] = [];

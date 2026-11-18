@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/mp/:xpt',
@@ -50,7 +49,7 @@ function decryptImageUrl(cipherText) {
 }
 
 function createAuthToken() {
-    const t = Date.now();
+    const t = Temporal.Now.instant().epochMilliseconds;
     const e = 't' + t;
     return 'v1' + t + CryptoJS.HmacSHA1(e, '439642a904ef43d092d45509cdc4391c').toString();
 }
@@ -64,7 +63,7 @@ async function fetchArticle(item) {
         $('.original-title, .lookall-box').remove();
         article.author = $('span[data-role="original-link"] a').text();
         const published = $('meta[itemprop="datePublished"]').attr('content');
-        article.pubDate = published ? parseDateInTimezone(published, 8) : undefined;
+        article.pubDate = published ? parseDate(published, 8) : undefined;
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {
             const videoSrc = $('script')
@@ -163,14 +162,14 @@ async function handler(ctx) {
                 SUV: suv,
                 itssohu: 'true',
                 reqtype: 'pc',
-                t: Date.now(),
+                t: Temporal.Now.instant().epochMilliseconds,
             })
                 .map(([key, value]) => `${key}=${value}`)
                 .join('; '),
         },
         body: {
-            pvId: CBDRenderConst.COMMONCONFIG.pvId || `${Date.now()}_${randomString(7)}`,
-            pageId: `${Date.now()}_${defaultSUV?.slice(0, -5)}_${randomString(3)}`,
+            pvId: CBDRenderConst.COMMONCONFIG.pvId || `${Temporal.Now.instant().epochMilliseconds}_${randomString(7)}`,
+            pageId: `${Temporal.Now.instant().epochMilliseconds}_${defaultSUV?.slice(0, -5)}_${randomString(3)}`,
             mainContent: {
                 productType: contentData.businessType || '13',
                 productId: contentData.id || '324',
@@ -195,7 +194,7 @@ async function handler(ctx) {
                         innerTag: renderData.param.data2.reqParam.content.innerTag || 'work',
                         spm: renderData.param.data2.reqParam.content.spm || 'smpc.channel_248.block3_308_hHsK47_2_fd',
                         page: 1,
-                        requestId: `${Date.now()}${randomString(7)}_${contentData.id}`,
+                        requestId: `${Temporal.Now.instant().epochMilliseconds}${randomString(7)}_${contentData.id}`,
                     },
                     adInfo: {},
                     context: {

@@ -7,9 +7,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderBookDescription } from './templates/book';
 
@@ -86,16 +85,16 @@ async function handler(ctx) {
                 author,
                 category: [isVip ? 'VIP' : '', ...(category?.split(/\s/) ?? [])].filter(Boolean),
                 guid: `jjwxc-${id}#${chapterId}`,
-                pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(chapterUpdatedTime) ? timezone(parseDate(chapterUpdatedTime), 8) : undefined,
+                pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(chapterUpdatedTime) ? parseDate(chapterUpdatedTime, 8) : undefined,
                 isVip,
                 isLock,
             };
         });
 
     items = items.toReversed();
-    const datesKnown = items.every((item) => item.pubDate instanceof Date && !Number.isNaN(item.pubDate.getTime()));
+    const datesKnown = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
     }
     if (ctx.req.query('sorted') === 'false' || datesKnown) {
         items = items.slice(0, limit);

@@ -3,9 +3,9 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import rssParser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { parseArticle, rootUrl } from './utils';
 

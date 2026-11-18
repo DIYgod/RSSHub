@@ -1,8 +1,5 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezonePlugin from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
@@ -11,13 +8,10 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
-
-dayjs.extend(utc);
-dayjs.extend(timezonePlugin);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
@@ -88,7 +82,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(dayjs.tz(pubDateStr, 'DD.MM.YYYY HH:mm', 'Europe/Berlin').format()) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 'DD.MM.YYYY HH:mm', 'Europe/Berlin') : item.pubDate,
                     content: {
                         html: description,
                         text: $$('p.lead, div.lead').text(),

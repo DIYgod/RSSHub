@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:params',
@@ -65,7 +64,7 @@ async function handler(ctx) {
                 }
                 const releaseDate = $el.find('.search_released').text().trim();
                 return {
-                    pubDate: /^\d{1,2} [A-Z]{3}, \d{4}$/i.test(releaseDate) ? timezone(parseDate(releaseDate, 'D MMM, YYYY'), 0) : undefined,
+                    pubDate: /^\d{1,2} [A-Z]{3}, \d{4}$/i.test(releaseDate) ? parseDate(releaseDate, 'D MMM, YYYY', 0) : undefined,
                     title: $el.find('span.title').text(),
                     link: $el.attr('href'),
                     description: desc.replaceAll('\n', '<br>'),

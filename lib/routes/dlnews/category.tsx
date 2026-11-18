@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates } from '@/utils/time';
 
 import { getList } from './utils';
 
@@ -40,7 +41,7 @@ async function handler(ctx: Context): Promise<Data> {
     const limit = ctx.req.query('sorted') === 'false' ? Math.min(15, requestedLimit) : 15;
     const list = await getList(nativeCategory, limit);
     if (ctx.req.query('sorted') !== 'false') {
-        list.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     const items = list.slice(0, getRouteLimit(ctx, 15));
 

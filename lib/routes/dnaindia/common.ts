@@ -4,8 +4,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function getArticleDates($: CheerioAPI) {
     const chunks = $('script')
@@ -88,7 +87,7 @@ export async function handler(ctx) {
                 const dateMatch = timeText.match(/Updated\s*:([\w\s,:]+)/);
                 let time = dateMatch ? dateMatch[1].trim() : '';
                 time = time.replace(/\s+IST$/, '');
-                const updated = time ? timezone(parseDate(time), 5.5) : undefined;
+                const updated = time ? parseDate(time, 'MMM D, YYYY, hh:mm A', 5.5) : undefined;
                 const articleDates = getArticleDates($);
                 // Get author information
                 const authorMeta = $('meta[name="author"]').attr('content');

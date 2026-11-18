@@ -4,9 +4,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/byt/:time?',
@@ -57,7 +56,7 @@ async function handler(ctx: Context) {
                     ...item,
                     description: content('#detail_content').html(),
                     author: content('.detail_tit_source').text().replace('来源：', ''),
-                    pubDate: timezone(parseDate(content('meta[property="og:release_date"]').attr('content')!), 8),
+                    pubDate: parseDate(content('meta[property="og:release_date"]').attr('content')!, 8),
                 };
             })
         )

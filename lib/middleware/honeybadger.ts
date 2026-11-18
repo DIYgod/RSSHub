@@ -16,9 +16,9 @@ if (config.honeybadger.apiKey) {
 }
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
-    const time = Date.now();
+    const time = performance.now();
     await next();
-    if (config.honeybadger.apiKey && Date.now() - time >= config.errorTrackingRouteTimeout) {
+    if (config.honeybadger.apiKey && performance.now() - time >= config.errorTrackingRouteTimeout) {
         Honeybadger.notify(new Error('Route Timeout'), {
             context: { name: getRouteNameFromPath(ctx.req.path) },
         });

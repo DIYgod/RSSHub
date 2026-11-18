@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://www.dykszx.cn';
 
@@ -51,7 +50,7 @@ async function handler(ctx) {
                     title: newsContent.title || item.children[0].children[0].data,
                     description: newsContent.content,
                     link: newsContent.newsPage,
-                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss', 8),
                 };
             });
         })

@@ -789,6 +789,7 @@
             }
         ],
 
+        "unicorn-js/prefer-temporal": ["error", { "checkDateNow": true, "checkReferences": true }],
         "unicorn/prefer-top-level-await": "off",
         // "unicorn/prevent-abbreviations": "off",
         "unicorn-js/single-line-block-comment-style": ["error", "single-line"],

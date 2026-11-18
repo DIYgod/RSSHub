@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.br-klassik.de';
 
@@ -50,7 +49,7 @@ export const getArticle = ({ link, title, description }: DataItem) =>
         const authorDate = $('.br-authordate').text().trim();
         const dateMatch = authorDate.match(/\d{2}\.\d{2}\.\d{4}/);
         const publishedTime = $('meta[property="article:published_time"]').attr('content');
-        const pubDate = publishedTime ? parseDate(publishedTime) : dateMatch ? timezone(parseDate(dateMatch[0], 'DD.MM.YYYY'), 1) : undefined;
+        const pubDate = publishedTime ? parseDate(publishedTime) : dateMatch ? parseDate(dateMatch[0], 'DD.MM.YYYY', 1) : undefined;
         const authorMatch = authorDate.match(/von\s+(\S.*)$/);
         const author = authorMatch ? authorMatch[1] : undefined;
 

@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -49,7 +49,7 @@ async function handler(ctx) {
         .flatMap((v) => v.cs)
         .map((c) => ({
             title: c.cN,
-            pubDate: parseDateInTimezone(c.uT, 8),
+            pubDate: parseDate(c.uT, 8),
             link: `https://vipreader.qidian.com/chapter/${id}/${c.id}`,
         }));
 

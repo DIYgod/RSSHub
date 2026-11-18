@@ -126,7 +126,7 @@ export interface NovelList {
         title: string;
         description: string;
         author: string;
-        pubDate: Date;
+        pubDate: Temporal.Instant | undefined;
         link: string;
         category: string[];
     }>;

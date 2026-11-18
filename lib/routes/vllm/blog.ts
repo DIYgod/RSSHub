@@ -8,9 +8,9 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { renderFallbackDescription } from './templates/description';
 
@@ -29,7 +29,7 @@ interface FeedEntry {
     title: string;
     link: string;
     summary: string;
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
     author?: string;
     category?: string[];
 }

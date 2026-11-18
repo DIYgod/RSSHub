@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const map = new Map([
     ['tzgg', { title: '中国科学技术大学信息科学技术学院 - 通知公告', id: '5142' }],
@@ -58,7 +57,7 @@ async function handler(ctx) {
             let link = $item.find('.card-title > a').attr('href');
             link = link!.startsWith('/') ? host + link : link;
             const published = $item.find('time').text().replace('发布时间：', '').trim();
-            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
+            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: title!,
                 pubDate,

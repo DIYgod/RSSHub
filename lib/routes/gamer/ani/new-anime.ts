@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ani/new_anime',
@@ -43,7 +42,7 @@ async function handler() {
         title: `${item.title} ${item.volume}`,
         description: `<img src="${item.cover}">`,
         link: `${rootUrl}/animeVideo.php?sn=${item.videoSn}`,
-        pubDate: timezone(parseDate(`${item.upTime} ${item.upTimeHours}`, 'MM/DD HH:mm'), 8),
+        pubDate: parseDate(`${item.upTime} ${item.upTimeHours}`, 'MM/DD HH:mm', 8),
     }));
 
     return {

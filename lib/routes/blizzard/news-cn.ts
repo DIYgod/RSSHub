@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news-cn/:category?',
@@ -58,7 +57,7 @@ const parsers = {
                     title: $item.find('.content-title').text(),
                     link: $item.find('.fill-link').attr('href'),
                     description: $item.find('.content-intro').text(),
-                    pubDate: timezone(parseDate($item.find('.content-date').text()), 8),
+                    pubDate: parseDate($item.find('.content-date').text(), 8),
                     image: $item.find('.item-pic').attr('src'),
                 };
             }),

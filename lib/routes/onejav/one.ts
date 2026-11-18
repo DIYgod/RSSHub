@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type/:key?',
@@ -100,13 +99,13 @@ async function handler(ctx: Context) {
                     .find('p.subtitle.is-6 > a')
                     .attr('href')
                     ?.match(/^\/(\d{4}\/\d{2}\/\d{2})\/?$/)?.[1];
-                const pubDate = datePath ? timezone(parseDate(datePath, 'YYYY/MM/DD', 'en', true), 0) : undefined;
+                const pubDate = datePath ? parseDateStrict(datePath, 'YYYY/MM/DD', 0) : undefined;
                 const torrentHref = $item.find('p.control.is-expanded > a').attr('href');
 
                 return {
                     title: `【${$title.text()}】${$item.find('div.card-content.is-flex > h5 > span').text()}`,
                     description: `<img src="${$item.find('img').attr('src')}"/><br/>Desc: ${$item.find('p.level.has-text-grey-dark').text()}`,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     link: $title.attr('href'),
                     category: $item
                         .find('.tag')

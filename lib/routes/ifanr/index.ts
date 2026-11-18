@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index',
@@ -41,8 +41,7 @@ interface FeedArticle {
 }
 
 function parseTimestamp(value: number | string) {
-    const date = value ? parseDate(value, 'X') : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+    return value ? parseDate(value, 'X') : undefined;
 }
 
 async function handler() {

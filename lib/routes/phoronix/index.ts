@@ -1,7 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
@@ -9,11 +6,8 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { parseDate } from '@/utils/time';
 
 const redirectCacheKey = 'phoronix:redirect';
 const webArticlesCacheKey = 'phoronix:web-articles';
@@ -216,20 +210,10 @@ async function handler(ctx) {
                               // Michael Larabel lives in Indiana, USA, so we assume TZ=America/Indiana/Indianapolis
                               // https://www.phoronix.com/review/phoronix_office_2014
                               // Here we use the trick to take daylight saving into account.
-                              dayjs
-                                  // If we don't append "UTC" at the end,
-                                  // dayjs.utc() may still parse the date in the platform (local) timezone.
-                                  // E.g., if the platform timezone is UTC+8, then:
-                                  // > dayjs.utc('2 Dec 2023').toString()
-                                  // 'Fri, 01 Dec 2023 16:00:00 GMT'
-                                  // > dayjs.utc('2 Dec 2023 UTC').toString()
-                                  // 'Sat, 02 Dec 2023 00:00:00 GMT'
-                                  // Append "UTC" at the end to explicitly prohibit the weird behavior.
-                                  .utc(`${pubDateReadable} 08:00 UTC`)
-                                  .tz('America/Indiana/Indianapolis', true)
+                              parseDate(`${pubDateReadable} 08:00`, 'D MMMM YYYY HH:mm', 'America/Indiana/Indianapolis')
                             : // date, time, and timezone (including daylight saving)
-                              dayjs(pubDateReadable);
-                        if (!pubDate.isValid()) {
+                              parseDate(pubDateReadable, 'D MMMM YYYY h:mm A', 'America/Indiana/Indianapolis');
+                        if (!pubDate) {
                             pubDate = pubDateReadable;
                         }
                     }

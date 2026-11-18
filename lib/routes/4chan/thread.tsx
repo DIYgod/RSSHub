@@ -5,7 +5,7 @@ import { FetchError } from 'ofetch';
 import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ChanPost } from './utils';
 import { parseParams, renderPost } from './utils';

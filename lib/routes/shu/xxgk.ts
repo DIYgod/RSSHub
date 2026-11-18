@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeType = {
     dwjlxm: { title: '上海大学信息公开网-信息公开栏目-国际合作与交流-对外交流项目', url: 'https://xxgk.shu.edu.cn/xxgklm/gjhzyjl1/dwjlxm.htm' }, // 对外交流项目
@@ -69,7 +68,7 @@ async function handler(ctx) {
             return {
                 title, // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
-                pubDate: timezone(parseDate(pubDate, 'YYYY/MM/DD'), 8), // 解析日期
+                pubDate: parseDate(pubDate, 'YYYY/MM/DD', 8), // 解析日期
                 description: '', // 初始化描述
             };
         });

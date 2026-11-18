@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -25,8 +25,7 @@ function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(`${value} +08:00`, `${format} Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${value} +08:00`, `${format} Z`);
 }
 
 async function handler() {

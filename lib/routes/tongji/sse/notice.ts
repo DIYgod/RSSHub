@@ -7,8 +7,7 @@ import cache from '@/utils/cache';
 // params:
 // type: notification type
 import got from '@/utils/got'; // get web content
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import getArticle from './_article';
 
@@ -57,7 +56,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.data-list-time').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.data-list-time').text(), 'YYYY-MM-DD', 8),
             };
         });
 

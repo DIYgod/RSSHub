@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -51,7 +50,7 @@ async function handler() {
             const linkRaw = $(item).find('a').attr('href');
             const link = linkRaw!.startsWith('http') ? linkRaw : new URL(linkRaw!, `${baseUrl}/zsxw`).href;
             const pubDate = $(item).find('span').text();
-            return { title, link, pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) };
+            return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8) };
         });
 
     const itemsWithContent = await pMap(items, async (item) => ({ ...item, ...(await cache.tryGet(`tongji:yjs:article:${item.link}`, () => getNoticeContent(item.link!))) }), { concurrency: 3 });

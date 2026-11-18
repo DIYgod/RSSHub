@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xna',

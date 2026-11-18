@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/new-books/:category?',
@@ -43,7 +42,7 @@ async function handler(ctx) {
                     link: title.attr('href'),
                     author: author.text().trim(),
                     description: `${cover ? `<img src="${cover}">` : ''}${book.find('.introduce').html() || ''}`,
-                    pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
                 };
             }),
     };

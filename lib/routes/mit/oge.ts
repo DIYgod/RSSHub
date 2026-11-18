@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/oge/:type?/:name?',
@@ -62,7 +61,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: date.trim() ? timezone(parseDate(date.trim()), 0) : undefined,
+                pubDate: date.trim() ? parseDate(date.trim(), 'MMMM D, YYYY', 0) : undefined,
                 author: author?.trim(),
             };
         });

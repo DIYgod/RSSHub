@@ -1,15 +1,11 @@
 import { type CheerioAPI, load } from 'cheerio';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/posts',
@@ -32,20 +28,17 @@ function parsePubDate(value?: string) {
     }
 
     const calendar = value.match(/^(今天|昨天|前天)\s+(\d{1,2}:\d{2})$/);
-    let date: Date;
     if (calendar) {
-        const sourceDay = dayjs()
-            .utcOffset(8)
-            .subtract(calendar[1] === '昨天' ? 1 : calendar[1] === '前天' ? 2 : 0, 'day')
-            .format('YYYY-MM-DD');
-        date = parseDate(`${sourceDay} ${calendar[2]} +08:00`, 'YYYY-MM-DD HH:mm Z');
-    } else if (/[年日月]/.test(value)) {
-        const sourceDate = value.includes('年') ? value : `${dayjs().utcOffset(8).year()}年${value}`;
-        date = parseDate(`${sourceDate} +08:00`, 'YYYY年M月D日 HH:mm Z');
-    } else {
-        date = parseRelativeDate(value);
+        const sourceDay = Temporal.Now.plainDateISO('+08:00')
+            .subtract({ days: calendar[1] === '昨天' ? 1 : calendar[1] === '前天' ? 2 : 0 })
+            .toString();
+        return parseDate(`${sourceDay} ${calendar[2]} +08:00`, 'YYYY-MM-DD HH:mm Z');
     }
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    if (/[年日月]/.test(value)) {
+        const sourceDate = value.includes('年') ? value : `${Temporal.Now.plainDateISO('+08:00').year}年${value}`;
+        return parseDate(`${sourceDate} +08:00`, 'YYYY年M月D日 HH:mm Z');
+    }
+    return parseRelativeDate(value);
 }
 
 function getDescription(content: CheerioAPI) {

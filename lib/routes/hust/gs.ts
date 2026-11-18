@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'xwdt' } = ctx.req.param();
@@ -26,11 +25,11 @@ export const handler = async (ctx) => {
 
             const a = $item.find('a');
             const link = a.prop('href');
-            const pubDate = parseDate($item.find('span.time').text().trim(), 'YYYY-MM-DD', true);
+            const pubDate = parseDateStrict($item.find('span.time').text().trim(), 'YYYY-MM-DD', 8);
 
             return {
                 title: a.text(),
-                pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                pubDate,
                 link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
             };
         });

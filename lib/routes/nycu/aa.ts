@@ -4,15 +4,15 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
-function parseRocDate(dateStr: string): Date | undefined {
+function parseRocDate(dateStr: string): Temporal.Instant | undefined {
     const match = dateStr.match(/^(\d{2,4})-(\d{2})-(\d{2})$/);
     if (!match) {
         return;
     }
     const year = Number(match[1]) + (match[1].length < 4 ? 1911 : 0);
-    return parseDateInTimezone(`${year}-${match[2]}-${match[3]}`, 8);
+    return parseDate(`${year}-${match[2]}-${match[3]}`, 8);
 }
 
 async function handler(ctx: Context): Promise<Data> {

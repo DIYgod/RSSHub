@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -6,30 +5,33 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { baseUrl, fetchUserDate } from './utils';
 
 const renderDescription = (posts) =>
     renderToString(
         <>
-            {posts.map((post) => (
-                <>
-                    {(post.struct?.items ?? []).map((item) => {
-                        if (item.type === 'text' || item.type === 'link') {
-                            return <span>{raw((item.content ?? '').replaceAll('\n', '<br>'))}</span>;
-                        }
-                        if (item.type === 'url') {
-                            return <a href={item.url}>{item.content}</a>;
-                        }
-                        return null;
-                    })}
-                    <br />
-                    {dayjs(post.publish_time_timestamp, 'X').format('YYYY-MM-DD HH:mm:ss')}
-                    <hr />
-                </>
-            ))}
+            {posts.map((post) => {
+                const publishTime = parseDate(post.publish_time_timestamp, 'X');
+                return (
+                    <>
+                        {(post.struct?.items ?? []).map((item) => {
+                            if (item.type === 'text' || item.type === 'link') {
+                                return <span>{raw((item.content ?? '').replaceAll('\n', '<br>'))}</span>;
+                            }
+                            if (item.type === 'url') {
+                                return <a href={item.url}>{item.content}</a>;
+                            }
+                            return null;
+                        })}
+                        <br />
+                        {publishTime && formatDate(publishTime, 'YYYY-MM-DD HH:mm:ss')}
+                        <hr />
+                    </>
+                );
+            })}
         </>
     );
 

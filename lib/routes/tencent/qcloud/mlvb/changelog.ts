@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/qcloud/mlvb/changelog',
@@ -39,7 +39,7 @@ async function handler() {
                     .map((el) => $.html(el))
                     .join(''),
                 link: `${url}#${$item.attr('id')}`,
-                pubDate: date ? parseDateInTimezone(date[1].replaceAll('.', '-'), 8) : undefined,
+                pubDate: date ? parseDate(date[1].replaceAll('.', '-'), 8) : undefined,
                 guid: $item.text(),
             };
         });

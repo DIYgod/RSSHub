@@ -8,9 +8,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
@@ -159,8 +158,8 @@ async function handler(ctx) {
     const items = response.data.data.map((item) => {
         item.link = item.url;
         item.author = item.authors.map((author) => author.name).join(', ');
-        item.pubDate = timezone(parseDate(item.firstPublished), 3);
-        item.updated = timezone(parseDate(item.lastUpdate), 3);
+        item.pubDate = parseDate(item.firstPublished, 3);
+        item.updated = parseDate(item.lastUpdate, 3);
         item.category = item.categories.map((itemCategory) => itemCategory.name);
         const contents = item.contents;
         const $ = load(contents);

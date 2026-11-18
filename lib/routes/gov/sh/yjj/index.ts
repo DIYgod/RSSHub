@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -49,11 +48,11 @@ async function handler(ctx) {
 
             const link = $item.attr('href');
             const date = $item.next().text().trim();
-            const pubDate = date ? timezone(parseDate(date, ['YYYY.MM.DD', 'YYYY-MM-DD'], true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, ['YYYY.MM.DD', 'YYYY-MM-DD'], 8) : undefined;
 
             return {
                 title: $item.text(),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 link: new URL(link!, currentUrl).href,
             };
         });
@@ -74,10 +73,10 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 const date = (content('meta[name="pubdate"]').attr('content') || content('meta[name="PubDate"]').attr('content'))?.replaceAll('∶', ':');
-                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
+                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
 
                 item.description = content('#ivs_content').html();
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
+                item.pubDate = pubDate ?? item.pubDate;
 
                 return item;
             })

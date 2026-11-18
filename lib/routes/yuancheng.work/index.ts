@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:caty?',
@@ -29,9 +28,9 @@ function parseGmtDate(value: string | undefined) {
     if (!value) {
         return;
     }
-    const date = parseDate(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true);
-    if (Number.isFinite(date.getTime())) {
-        return timezone(date, 0);
+    const date = parseDateStrict(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 0);
+    if (date) {
+        return date;
     }
 }
 async function handler(ctx: Context) {

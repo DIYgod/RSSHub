@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://ic.buaa.edu.cn';
 
@@ -69,7 +68,7 @@ async function getList(url: string) {
             return {
                 title: $link.find('h4').text(),
                 link: new URL(href, url).href,
-                pubDate: year ? timezone(parseDate(`${year}-${$item.find('.time big').text()}`, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: year ? parseDate(`${year}-${$item.find('.time big').text()}`, 'YYYY-MM-DD', 8) : undefined,
             };
         })
         .filter((item) => item !== undefined);

@@ -3,8 +3,7 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 import type { Route } from '@/types';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -41,11 +40,11 @@ async function handler() {
                 return;
             }
             const dateText = $item.find('.post-time').text();
-            const date = dateText ? parseDate(dateText, 'YYYY-MM-DD') : undefined;
+            const date = dateText ? parseDate(dateText, 'YYYY-MM-DD', 0) : undefined;
             return {
                 title: $item.find('a').first().text(),
                 link: new URL(href, baseUrl).href,
-                pubDate: date && !Number.isNaN(date.getTime()) ? timezone(date, 0) : undefined,
+                pubDate: date,
                 author: $item.find('.tag').first().text(),
             };
         })

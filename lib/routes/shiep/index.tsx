@@ -8,8 +8,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { config } from './config';
 import { radar } from './radar';
@@ -85,7 +84,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title') || $item.find('h3').text() || $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, host).href,
-                pubDate: match ? timezone(parseDate(match[0], 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: match ? parseDate(match[0], 'YYYY-MM-DD', 8) : undefined,
             };
         });
 

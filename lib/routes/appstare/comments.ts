@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const country = ctx.req.param('country');
@@ -13,7 +14,7 @@ export const handler = async (ctx) => {
             <div style="font-size: 1.2em; color: #FFD700;">${'⭐️'.repeat(Math.floor(item.rating))}</div>
             <p>${item.review}</p>
         `,
-        pubDate: new Date(item.date).toUTCString(),
+        pubDate: parseDate(item.date),
     }));
 
     const link = `https://appstare.net/data/app/comment/${appid}/${country}`;

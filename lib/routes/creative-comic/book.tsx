@@ -2,9 +2,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { apiHost, decrypt, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getRealKey, getUuid } from './utils';
 
@@ -75,8 +74,8 @@ async function handler(ctx) {
                 return {
                     title: [c.vol_name, c.name].filter(Boolean).join(' - '),
                     description: renderChapterDescription(pages, c.image1),
-                    pubDate: c.online_at ? timezone(parseDate(c.online_at), 8) : undefined,
-                    updated: c.updated_at ? timezone(parseDate(c.updated_at), 8) : undefined,
+                    pubDate: c.online_at ? parseDate(c.online_at, 8) : undefined,
+                    updated: c.updated_at ? parseDate(c.updated_at, 8) : undefined,
                     link: `https://www.creative-comic.tw/reader_comic/${c.id}`,
                     author: book.author.map((author) => author.name).join(', '),
                     category: book.tags.map((tag) => tag.name),

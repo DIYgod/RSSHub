@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -29,7 +29,7 @@ async function handler() {
         .map((item) => ({
             title: $(item).children('h2').text(),
             link: baseUrl + $(item).attr('href'),
-            pubDate: parseDate($(item).children('h3').text()),
+            pubDate: parseDate($(item).children('h3').text(), 'MMMM D, YYYY'),
             description: $(item).children('p').text(),
         }));
     return {

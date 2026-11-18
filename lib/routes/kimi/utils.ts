@@ -2,8 +2,7 @@ import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import type { ChildNode, Element } from 'domhandler';
 
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const markdownRenderer = MarkdownIt({ html: false, linkify: true });
 
@@ -33,7 +32,7 @@ export interface ParsedBlogEntry {
     link: string;
     summary: string;
     image?: string;
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
     kind: EntrySourceKind;
 }
 
@@ -93,20 +92,6 @@ const classifySourceKind = (urlStr: string): EntrySourceKind => {
         return 'github-pages';
     }
     return 'external';
-};
-
-const HAS_EXPLICIT_TIMEZONE_RE = /(?:Z|[+-]\d{2}:?\d{2})$/i;
-
-export const toValidDate = (rawDate: string | undefined): Date | undefined => {
-    const trimmed = rawDate?.trim();
-    if (!trimmed) {
-        return undefined;
-    }
-    const parsed = parseDate(trimmed);
-    if (Number.isNaN(parsed.getTime())) {
-        return undefined;
-    }
-    return HAS_EXPLICIT_TIMEZONE_RE.test(trimmed) ? parsed : timezone(parsed, 8);
 };
 
 const findBalancedJsonObject = (text: string, markerPos: number): string | undefined => {
@@ -228,7 +213,7 @@ export const extractBlogEntries = (html: string): ParsedBlogEntry[] => {
             link,
             summary: item.description?.trim() ?? '',
             image: unwrapImageUrl(item.image, SITE_URL),
-            pubDate: toValidDate(item.date),
+            pubDate: item.date ? parseDate(item.date, 8) : undefined,
             kind: classifySourceKind(link),
         });
     }

@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ixigua.com';
 
@@ -11,8 +11,7 @@ const parsePublishTime = (value?: number | string | null) => {
     if (!value && value !== 0) {
         return;
     }
-    const date = parseDate(value, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 'X');
 };
 
 export const route: Route = {

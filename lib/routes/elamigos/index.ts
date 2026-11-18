@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/games',
@@ -50,7 +50,7 @@ async function handler(ctx: any) {
     };
 }
 
-function toNeutralDate(input: string): Date {
+function toNeutralDate(input: string): Temporal.Instant | undefined {
     const [day, month, year] = input.split('.').map(Number);
     return parseDate(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T00:00:00Z`);
 }
@@ -129,7 +129,7 @@ async function processGameItem(game: { title: string; link: string; pubDate: str
     return {
         title: game.title,
         link: game.link,
-        pubDate: toNeutralDate(game.pubDate).toUTCString(),
+        pubDate: toNeutralDate(game.pubDate),
         description: contentHtml,
     };
 }

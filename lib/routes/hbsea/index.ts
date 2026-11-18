@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id',
@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('b').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 item.description = content('.text-content').html();
                 const date = content('meta[name="PubDate"]').attr('content');
                 if (date) {
-                    item.pubDate = parseDateInTimezone(date, 8);
+                    item.pubDate = parseDate(date, 8);
                 }
                 return item;
             }),

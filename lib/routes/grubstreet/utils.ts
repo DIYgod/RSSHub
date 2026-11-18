@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 async function loadContent(link) {
     const response = await got(link);
@@ -70,9 +70,9 @@ const getData = async (ctx, url, title, description) => {
     const data = response.data;
 
     const limit = getRouteLimit(ctx, 25);
-    const datesKnown = data.articles.every((article) => article.date && Number.isFinite(parseDate(article.date).getTime()));
+    const datesKnown = data.articles.every((article) => article.date && parseDate(article.date));
     if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        data.articles.sort((a, b) => Number(parseDate(b.date)) - Number(parseDate(a.date)));
+        data.articles.sort((a, b) => compareDates(parseDate(b.date), parseDate(a.date)));
     }
     const list = data.articles.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(25, limit));
     const result = await processFeed(list, cache);

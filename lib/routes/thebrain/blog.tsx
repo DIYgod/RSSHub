@@ -11,8 +11,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -25,8 +25,10 @@ const parseCalendarDate = (value: string | undefined) => {
     if (month === -1) {
         return;
     }
-    const timestamp = Date.UTC(Number(match[3]), month, Number(match[2]));
-    return parseDate(new Date(timestamp));
+    return Temporal.PlainDate.from({ year: Number(match[3]), month: month + 1, day: 1 })
+        .add({ days: Number(match[2]) - 1 })
+        .toZonedDateTime('UTC')
+        .toInstant();
 };
 
 function parseRedirectPath(refresh: string | undefined) {

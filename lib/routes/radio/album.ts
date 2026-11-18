@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getAudioType } from './index';
 import { renderDescription } from './templates/description';
@@ -49,7 +48,7 @@ async function handler(ctx) {
             productId: '1605403829833195520',
             providerCode: '25010',
             referer: 'https://ytweb.radio.cn/',
-            timestamp: String(Date.now()),
+            timestamp: String(Temporal.Now.instant().epochMilliseconds),
             version: '4.0.0',
         },
         body: new URLSearchParams({
@@ -76,7 +75,7 @@ async function handler(ctx) {
             title: item.name,
             link: `${rootUrl}/share/albumPlay?correlateId=${item.id}&columnId=${id}`,
             description: renderDescription({ enclosure_url, enclosure_type }),
-            pubDate: timezone(parseDate(item.createTime), 8),
+            pubDate: parseDate(item.createTime, 8),
             enclosure_url,
             enclosure_type,
             enclosure_length: item.fileSize,

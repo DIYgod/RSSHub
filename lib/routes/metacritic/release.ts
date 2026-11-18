@@ -2,7 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { toTitleCase } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const platformIds = {
     ps5: '1500000128',
@@ -90,7 +90,7 @@ export async function handler(ctx) {
             title: `${metascore === 'tbd' ? '' : `[${metascore}] `}${item.title}`,
             link: `https://www.metacritic.com/game/${item.slug}/`,
             description: [item.image && `<img src="https://www.metacritic.com/a/img/catalog${item.image.bucketPath}">`, item.description, `Metascore: ${metascore} <br> User Score: ${userscore}`].filter(Boolean).join('<br>'),
-            pubDate: item.releaseDate ? parseDateInTimezone(item.releaseDate, 0) : undefined,
+            pubDate: item.releaseDate ? parseDate(item.releaseDate, 0) : undefined,
             category: [...(item.genres ?? []), ...(item.platforms ?? [])].map((c) => c.name),
         };
     });

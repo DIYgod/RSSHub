@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -107,7 +106,7 @@ async function handler(ctx) {
         return {
             title: item.drgnamecn,
             guid: item[xxgkMap.xxgk[category].idField],
-            pubDate: item.noticeDate ? timezone(parseDate(item.noticeDate, 'YYYY-MM-DD'), 8) : undefined,
+            pubDate: item.noticeDate ? parseDate(item.noticeDate, 'YYYY-MM-DD', 8) : undefined,
             description,
             link: xxgkMap.xxgk[category].url,
         };

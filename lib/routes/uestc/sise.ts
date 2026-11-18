@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://sise.uestc.edu.cn/';
@@ -98,11 +97,11 @@ async function handler(ctx) {
                           };
                       })
                     : { date: undefined };
-                const parsedDate = date ? parseDate(date, 'YYYY-MM-DD', true) : undefined;
+                const parsedDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                 return {
                     title: newsTitle,
                     link: newsLink,
-                    pubDate: parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                    pubDate: parsedDate,
                 };
             },
             { concurrency: 1 }

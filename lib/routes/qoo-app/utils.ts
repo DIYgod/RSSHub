@@ -1,7 +1,6 @@
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const appsUrl = 'https://apps.qoo-app.com';
 const newsUrl = 'https://news.qoo-app.com';
@@ -37,7 +36,7 @@ const extractNotes = ($) =>
             const $item = $(item);
             const title = $item.find('.qoo-note-view .content-title').text();
             const author = $item.find('cite.name').text();
-            const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8);
+            const pubDate = parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8);
             $item.find('cite.name, time, footer, .qoo-note-view .content-title').remove();
             return {
                 title,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface AppArticle {
     content: string;
@@ -39,7 +38,7 @@ const handler = async (ctx) => {
                 return {
                     title: a.text(),
                     link: linkStr,
-                    pubDate: published ? timezone(parseDate(published), 8) : undefined,
+                    pubDate: published ? parseDate(published, 8) : undefined,
                 };
             }
         );

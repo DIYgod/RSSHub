@@ -70,7 +70,7 @@ const PAC_REFRESH_INTERVAL = 60 * 60 * 1000;
 let pacRefreshAt = 0;
 
 const getPacResolver = async (pacAgent: PacProxyAgent<string>) => {
-    if (!pacAgent.resolver || Date.now() > pacRefreshAt) {
+    if (!pacAgent.resolver || performance.now() > pacRefreshAt) {
         try {
             await pacAgent.getResolver();
         } catch (error) {
@@ -78,7 +78,7 @@ const getPacResolver = async (pacAgent: PacProxyAgent<string>) => {
                 throw error;
             }
         }
-        pacRefreshAt = Date.now() + PAC_REFRESH_INTERVAL;
+        pacRefreshAt = performance.now() + PAC_REFRESH_INTERVAL;
     }
     return pacAgent.resolver!;
 };

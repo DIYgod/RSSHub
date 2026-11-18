@@ -4,7 +4,7 @@
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ApiResponse } from '../interfaces/api';
 import { getFeedLanguage, getLanguage } from '../utils';

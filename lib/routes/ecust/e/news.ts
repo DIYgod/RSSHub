@@ -3,9 +3,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getNotices, getPreviewUrl, type Notice } from './utils';
 
@@ -16,8 +15,7 @@ const getPublicationDate = (item: Notice) => {
     if (!value) {
         return;
     }
-    const date = timezone(parseDate(value), 8);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 8);
 };
 
 export const route: Route = {
@@ -59,9 +57,9 @@ async function handler(ctx) {
         detailUrl: new URL(item.dataUrl, baseUrl).href,
     }));
     const preserveSourceOrder = ctx.req.query('sorted') === 'false';
-    const datesComplete = candidates.every(({ item }) => Number.isFinite(item.pubDate?.getTime()));
+    const datesComplete = candidates.every(({ item }) => item.pubDate !== undefined);
     if (!preserveSourceOrder && datesComplete) {
-        candidates.sort((a, b) => (b.item.pubDate?.getTime() ?? 0) - (a.item.pubDate?.getTime() ?? 0));
+        candidates.sort((a, b) => (b.item.pubDate?.epochMilliseconds ?? 0) - (a.item.pubDate?.epochMilliseconds ?? 0));
     }
     const requestedLimit = getRouteLimit(ctx, 20);
     const detailLimit = preserveSourceOrder || datesComplete ? requestedLimit : Math.max(20, requestedLimit);

@@ -1,7 +1,7 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { apiMapCategory, defaultDomain, getRootUrl, processApiItems } from './utils';
@@ -73,7 +73,7 @@ async function handler(ctx) {
                     updated: parseDate(item.update_at),
                 };
                 const apiResult = await processApiItems(`/album?id=${item.id}`);
-                result.pubDate = new Date(apiResult.addtime * 1000);
+                result.pubDate = parseDate(apiResult.addtime, 'X');
                 const tags = apiResult.tags.map((tag) => tag);
                 result.category = tags;
                 result.author = apiResult.author.map((a) => a).join(', ');

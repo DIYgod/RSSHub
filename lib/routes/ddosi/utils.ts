@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type Post = {
     title: { rendered: string };

@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -43,7 +42,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
@@ -74,7 +73,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
                 item.author = $$('div.author a').text();
                 item.content = {
                     html: description,

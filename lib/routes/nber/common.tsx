@@ -7,8 +7,7 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface WorkingPaper {
     title: string;
@@ -36,7 +35,7 @@ export async function handler(ctx) {
                 const publishedAt = $('meta[name="citation_publication_date"]').attr('content');
                 return {
                     author: $('meta[name="dcterms.creator"]').attr('content'),
-                    pubDate: publishedAt ? timezone(parseDate(publishedAt, 'YYYY/MM/DD'), 0) : undefined,
+                    pubDate: publishedAt ? parseDate(publishedAt, 'YYYY/MM/DD', 0) : undefined,
                     doi: $('meta[name="citation_doi"]').attr('content'),
                     description: renderToString(
                         <>

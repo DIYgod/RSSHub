@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -36,8 +35,7 @@ function parsePublicationDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 9);
+    return parseDate(value, 'YYYY.MM.DD', 9);
 }
 
 async function handler(ctx) {
@@ -55,7 +53,7 @@ async function handler(ctx) {
     let items = $('.p-news__list .p-news__item a')
         .slice(0, Math.max(30, limit))
         .toArray()
-        .map((item): DataItem & { link: string; pubDate: Date | undefined } => {
+        .map((item): DataItem & { link: string; pubDate: Temporal.Instant | undefined } => {
             const $item = $(item);
 
             return {
@@ -65,8 +63,8 @@ async function handler(ctx) {
             };
         });
 
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
-        items.sort((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime());
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate !== undefined)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
         items = items.slice(0, limit);
     } else if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);

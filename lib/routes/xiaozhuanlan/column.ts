@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     linkify: true,
@@ -52,7 +52,7 @@ async function handler(ctx) {
                 title: $item.find('h3').text(),
                 link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
                 author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

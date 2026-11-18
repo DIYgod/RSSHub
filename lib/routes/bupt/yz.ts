@@ -3,10 +3,9 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -86,7 +85,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $item.attr('title') ?? ($item.find('h3, font, .bt').text() || $item.text()).trim(),
                     link: new URL($item.attr('href')!, college.url).href,
-                    pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
+                    pubDate: date ? parseDate(date, 'YYYY-M-D', 8) : undefined,
                 };
             })
             .filter((item) => item.pubDate);

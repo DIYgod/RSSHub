@@ -9,20 +9,18 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate, toInstant } from '@/utils/time';
 
 function parseForumDate(value: string, offset?: number) {
-    const date = parseDate(value);
-    return offset !== undefined && /^\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?$/.test(value.trim()) ? timezone(date, offset) : date;
+    return offset !== undefined && /^\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?$/.test(value.trim()) ? parseDate(value, offset) : parseDate(value);
 }
 
 function selectItems(items: DataItem[], ctx: Context) {
     const limit = getRouteLimit(ctx, 5);
-    const hasDates = items.every((item) => item.pubDate && !Number.isNaN(new Date(item.pubDate).getTime()));
+    const hasDates = items.every((item) => item.pubDate && toInstant(item.pubDate));
     if (ctx.req.query('sorted') !== 'false' && hasDates) {
-        items.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     return ctx.req.query('sorted') === 'false' || hasDates ? items.slice(0, limit) : items;
 }

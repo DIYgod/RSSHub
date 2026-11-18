@@ -6,7 +6,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.javlibrary.com';
 const defaultMode = '1';
@@ -17,8 +17,7 @@ const parseSourceDate = (value: string) => {
     if (!value.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 };
 const renderDescription = ({ cover, info, comment, videos, thumbs }) =>
     renderToString(

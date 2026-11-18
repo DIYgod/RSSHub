@@ -109,10 +109,10 @@ const isBizId = (id: string): boolean => {
 
     // Extract the timestamp assuming it's in the most significant bits after the sign bit
     const timestamp = (snowflake >> (63n - MAX_TIMESTAMP_BITS)) + EPOCH;
-    const date = new Date(Number(timestamp));
+    const year = Temporal.Instant.fromEpochMilliseconds(Number(timestamp)).toZonedDateTimeISO('UTC').year;
 
     // Check if the date is reasonable (between 2024 and 2050)
-    if (date.getFullYear() >= 2024 && date.getFullYear() <= 2050) {
+    if (year >= 2024 && year <= 2050) {
         // Additional validation: check if the ID is not larger than the maximum possible value
         const maxPossibleId = (1n << 63n) - 1n; // Maximum possible 63-bit value
         if (snowflake <= maxPossibleId) {

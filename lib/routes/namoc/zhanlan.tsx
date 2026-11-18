@@ -6,9 +6,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -67,7 +65,7 @@ export const route: Route = {
                     const detailHtml = await ofetch(link);
                     const $detail = load(detailHtml);
                     const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
-                    const pubDate = pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined;
+                    const pubDate = pubDateStr ? parseDate(pubDateStr, 8) : undefined;
 
                     const description = renderToString(
                         <div>

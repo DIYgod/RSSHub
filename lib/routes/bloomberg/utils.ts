@@ -3,7 +3,7 @@ import { destr } from 'destr';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderAudioMedia } from './templates/audio-media';
 import { renderChartMedia } from './templates/chart-media';

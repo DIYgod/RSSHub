@@ -6,8 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://my.4399.com';
 
@@ -76,7 +75,7 @@ async function handler(ctx: Context) {
                 return {
                     ...item,
                     description: content('div.host_content.j-thread-content').html(),
-                    pubDate: timeText && (timeText.endsWith('前') ? parseRelativeDate(timeText) : timezone(parseDate(timeText), 8)),
+                    pubDate: timeText && (timeText.endsWith('前') ? parseRelativeDate(timeText) : parseDate(timeText, 8)),
                 };
             })
         )

@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const newsCategories = {
     xwrd: { id: 12, name: '新闻热点' },
@@ -66,7 +65,7 @@ const getNewsItems = async (category: { id: number; name: string }) => {
             return {
                 title: item.title,
                 link,
-                pubDate: item.releaseDate ? timezone(parseDate(item.releaseDate), 8) : undefined,
+                pubDate: item.releaseDate ? parseDate(item.releaseDate, 8) : undefined,
                 author: item.publisher || undefined,
                 category: item.category?.name ? [item.category.name] : undefined,
                 ...detail,
@@ -98,7 +97,7 @@ const getRecruitmentItems = async (positionType: number) => {
                 }
                 return { description: data.object.recruitmentinfo.content };
             });
-            return { title: item.title, link, pubDate: item.startTime ? timezone(parseDate(item.startTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined, ...detail };
+            return { title: item.title, link, pubDate: item.startTime ? parseDate(item.startTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined, ...detail };
         },
         { concurrency: 3 }
     );

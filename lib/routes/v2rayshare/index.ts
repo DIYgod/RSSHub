@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got'; // Shared request helper.
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -44,6 +43,5 @@ function parsePublicationDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DDTHH:mm:ss', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value, 'YYYY-MM-DDTHH:mm:ss', 0);
 }

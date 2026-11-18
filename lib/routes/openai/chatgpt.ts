@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/chatgpt/release-notes',
@@ -49,11 +48,11 @@ async function handler() {
                     const text = $h1.text().trim();
 
                     const dateMatch = text.match(/(\w+\s+\d+(?:st|nd|rd|th)?,?\s+\d{4})/i);
-                    let pubDate: Date | undefined;
+                    let pubDate: Temporal.Instant | undefined;
                     if (dateMatch) {
                         const dateStr = dateMatch[1].replaceAll(/(\d)(st|nd|rd|th)\b/gi, '$1').replace(/,\s*/, ' ');
-                        const parsedDate = timezone(parseDate(dateStr, ['MMMM D YYYY', 'MMM D YYYY'], 'en', true), 0);
-                        if (!Number.isNaN(parsedDate.getTime())) {
+                        const parsedDate = parseDateStrict(dateStr, ['MMMM D YYYY', 'MMM D YYYY'], 0);
+                        if (parsedDate) {
                             pubDate = parsedDate;
                         }
                     }
@@ -72,7 +71,7 @@ async function handler() {
                     const description = content;
 
                     return {
-                        guid: `${articleUrl}#${pubDate ? pubDate.getTime() : text}`,
+                        guid: `${articleUrl}#${pubDate ? pubDate.epochMilliseconds : text}`,
                         title,
                         link: articleUrl,
                         pubDate,

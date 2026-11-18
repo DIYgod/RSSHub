@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/schedule/:propertyId?/:typeId?',
@@ -31,7 +31,7 @@ async function handler(ctx) {
     const propertyId = ctx.req.param('propertyId') ?? 0;
     const typeId = ctx.req.param('typeId') ?? 0;
 
-    const link = `https://www.nowcoder.com/school/schedule/data?token=&query=&typeId=${typeId}&propertyId=${propertyId}&onlyFollow=false&_=${Date.now()}`;
+    const link = `https://www.nowcoder.com/school/schedule/data?token=&query=&typeId=${typeId}&propertyId=${propertyId}&onlyFollow=false&_=${Temporal.Now.instant().epochMilliseconds}`;
     const responseBody = (await got(link)).data;
     if (responseBody.code !== 0) {
         throw new Error(`接口错误，错误代码:${responseBody.code},错误原因:${responseBody.msg}`);

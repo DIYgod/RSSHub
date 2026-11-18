@@ -6,8 +6,7 @@ import CaptchaError from '@/errors/types/captcha';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getHeaders } from './utils';
 
@@ -67,7 +66,7 @@ async function handler(ctx) {
         author: item.nickname,
         image: item.pic_url,
         category: item.channel_name,
-        pubDate: timezone(parseDate(item.publish_time), 8),
+        pubDate: parseDate(item.publish_time, 8),
     }));
 
     const out = await pMap(
@@ -91,7 +90,7 @@ async function handler(ctx) {
                     const releaseDate = $('meta[property="og:release_date"]').attr('content');
 
                     const description = content.html() ?? undefined;
-                    const pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : undefined;
+                    const pubDate = releaseDate ? parseDate(releaseDate, 8) : undefined;
                     const author = $('meta[property="og:author"]').attr('content');
 
                     return { description, pubDate, author };

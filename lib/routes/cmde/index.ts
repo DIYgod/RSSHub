@@ -4,9 +4,8 @@ import type { BrowserContext } from 'patchright';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const rootURL = 'https://www.cmde.org.cn';
@@ -76,7 +75,7 @@ async function handler(ctx) {
                     const html = await getPageHtml(context, item.link, '.text');
                     const $ = load(html);
                     item.description = $('.text').html();
-                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8);
+                    item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')!, 8);
                     return item;
                 });
             },

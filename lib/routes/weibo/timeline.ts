@@ -8,7 +8,6 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { createWeiboOAuthState } from '@/utils/weibo-oauth';
 
@@ -144,7 +143,7 @@ async function handler(ctx) {
 
                 const formatExtended = weiboUtils.formatExtended(ctx, item, uid);
                 let description = formatExtended.description;
-                const pubDate = isDataOK ? parseDate(data.created_at) : parseDate(item.created_at);
+                const pubDate = isDataOK ? weiboUtils.parseCreatedAt(data.created_at) : weiboUtils.parseCreatedAt(item.created_at);
 
                 // 视频的处理
                 if (displayVideo === '1') {

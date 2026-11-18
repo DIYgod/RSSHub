@@ -4,9 +4,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/youth/:category',
@@ -78,7 +77,7 @@ async function handler(ctx: Context) {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateText), 8),
+                    pubDate: parseDate(dateText, 8),
                     author: authorText?.startsWith('拟稿人：') ? authorText.slice(4) : undefined,
                     description: newsText.html() + $detail.html(attedText),
                 };

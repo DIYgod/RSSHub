@@ -4,7 +4,7 @@ import { FetchError } from 'ofetch';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export async function getArticle(item: DataItem): Promise<DataItem | undefined> {
     if (!item.link) {
@@ -33,6 +33,6 @@ export async function getArticle(item: DataItem): Promise<DataItem | undefined> 
         ...item,
         description: detail.description,
         author: item.author || detail.author,
-        pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : item.pubDate,
+        pubDate: pubDate ?? item.pubDate,
     };
 }

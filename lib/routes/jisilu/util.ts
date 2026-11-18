@@ -5,8 +5,7 @@ import type { Element } from 'domhandler';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.jisilu.cn';
 
@@ -39,7 +38,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
 
             return {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                 link,
                 category: $item
                     .find('span.aw-question-tags a, a.aw-topic-name')
@@ -91,14 +90,14 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                     return {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                         link: item.link,
                         category: item.category,
                         author,
                         content: {
                             html: description,
                         },
-                        updated: updatedStr ? timezone(parseDate(updatedStr), 8) : item.updated,
+                        updated: updatedStr ? parseDate(updatedStr, 8) : item.updated,
                     };
                 });
             })

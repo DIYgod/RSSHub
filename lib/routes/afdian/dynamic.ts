@@ -1,6 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dynamic/:uid?',
@@ -37,7 +38,7 @@ async function handler(ctx) {
             title,
             description: [content, pics.map((url) => `<img src="${url}"/>`).join('')].filter((str) => !!str).join('<br/>'),
             link: `${baseUrl}/p/${post_id}`,
-            pubDate: new Date(Number(publish_time) * 1000).toUTCString(),
+            pubDate: parseDate(publish_time, 'X'),
         };
     });
     return {

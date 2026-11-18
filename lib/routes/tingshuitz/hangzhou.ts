@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hangzhou',
@@ -49,7 +49,7 @@ async function handler() {
             const publishedDate = $item.find('.published').text();
             return {
                 title: $item.find('.title').text(),
-                pubDate: publishedDate.trim() ? parseDate(new Date(publishedDate)) : undefined,
+                pubDate: publishedDate.trim() ? parseDate(publishedDate) : undefined,
                 link: `http://www.hzwgc.com${$item.find('.btn-read').attr('href')}`,
             };
         }),

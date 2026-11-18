@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { sorts, types } from './util';
 
@@ -169,7 +169,7 @@ export async function handler(ctx) {
         ),
         category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
-        pubDate: item.releaseDate ? parseDateInTimezone(item.releaseDate, 0) : undefined,
+        pubDate: item.releaseDate ? parseDate(item.releaseDate, 0) : undefined,
         upvotes: item.criticScoreSummary?.positiveCount ? Number(item.criticScoreSummary?.positiveCount) : 0,
         downvotes: item.criticScoreSummary?.negativeCount ? Number(item.criticScoreSummary?.negativeCount) : 0,
         comments: item.criticScoreSummary?.reviewCount ? Number(item.criticScoreSummary?.reviewCount) : 0,

@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function extractPublicationText(value: string): string | undefined {
     for (const marker of value.matchAll(/时间：/g)) {
@@ -47,7 +46,7 @@ function loadDetail(link: string) {
             title,
             description: introduce,
             link,
-            pubDate: dateTime ? timezone(parseDate(dateTime, ['YYYY年M月D日 HH:mm:ss', 'YYYY年M月D日 HH:mm']), 8) : undefined,
+            pubDate: dateTime ? parseDate(dateTime, ['YYYY年M月D日 HH:mm:ss', 'YYYY年M月D日 HH:mm'], 8) : undefined,
             author: info.match(/来源：\s*(.*)/)?.[1],
         };
     });

@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const config = {
     latest: {
@@ -60,7 +59,7 @@ async function handler(ctx: Context) {
             title: item.sTitle,
             description: (banner ? `<img src="${banner}">` : '') + item.sContent,
             link: `https://bh3.mihoyo.com/news/${item.sChanId[0]}/${item.iInfoId}`,
-            pubDate: timezone(parseDate(item.dtStartTime), 8),
+            pubDate: parseDate(item.dtStartTime, 8),
             category: item.sCategoryName,
             image: ext[`${item.sChanId[0]}_0`]?.[0]?.url,
         };

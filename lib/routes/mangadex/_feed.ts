@@ -4,6 +4,7 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import { parseDate } from '@/utils/time';
 
 import constants from './_constants';
 import { getFilteredLanguages } from './_profile';
@@ -203,7 +204,7 @@ const getMangaChapters = async (id: string, lang?: string | string[], limit?: nu
     return chapters.map((chapter) => ({
         title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
         link: `${constants.API.MANGA_CHAPTERS}${chapter.id}`,
-        pubDate: new Date(chapter.attributes.publishAt),
+        pubDate: parseDate(chapter.attributes.publishAt),
     }));
 };
 

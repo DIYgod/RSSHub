@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -42,9 +41,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY-MM-DD', 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : undefined,
+                updated: upDatedStr ? parseDate(upDatedStr, 'YYYY-MM-DD', 8) : undefined,
                 language,
             };
 

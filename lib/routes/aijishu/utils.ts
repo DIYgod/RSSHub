@@ -3,7 +3,7 @@ import { FetchError } from 'ofetch';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const rootUrl = 'https://community.aijishu.com';
 
@@ -30,7 +30,7 @@ const parseArticle = (item) => {
             title: item.title || item.object.title,
             link: articleUrl,
             description: desc,
-            pubDate: d1.toString() === 'Invalid Date' ? d2 : d1,
+            pubDate: d1 ?? d2,
         };
         return article_item;
     });

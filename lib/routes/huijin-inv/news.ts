@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const BASE_URL = 'https://www.huijin-inv.cn';
 
@@ -46,7 +45,7 @@ async function handler(): Promise<Data> {
             const item = $(listItem);
             const title = item.find('h1').text();
             const pubDate = `${item.find('span.year').text()}.${item.find('span.day').text()}`;
-            const date = /^\d{4}\.\d{2}\.\d{2}$/.test(pubDate) ? parseDate(pubDate, 'YYYY.MM.DD', true) : undefined;
+            const date = /^\d{4}\.\d{2}\.\d{2}$/.test(pubDate) ? parseDateStrict(pubDate, 'YYYY.MM.DD', 8) : undefined;
             const href = item.find('a').attr('href');
             if (!href) {
                 throw new Error('Huijin returned a news item without an article URL.');
@@ -56,7 +55,7 @@ async function handler(): Promise<Data> {
             return {
                 title,
                 link,
-                pubDate: date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined,
+                pubDate: date,
                 description,
             };
         });

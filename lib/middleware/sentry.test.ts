@@ -60,7 +60,7 @@ describe('sentry middleware', () => {
         expect(infoSpy).toHaveBeenCalledWith('Sentry inited.');
 
         const ctx = makeContext();
-        const nowSpy = vi.spyOn(Date, 'now');
+        const nowSpy = vi.spyOn(performance, 'now');
         nowSpy.mockReturnValueOnce(0).mockReturnValueOnce(100);
 
         await middleware(ctx, async () => {});

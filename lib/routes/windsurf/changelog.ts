@@ -5,27 +5,24 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 function parseCalendarDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'MMMM D, YYYY', 'en', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'MMMM D, YYYY', 0);
 }
 function parseLegacyPublicationDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    if (/^\d{4}-\d{2}-\d{2}/.test(value) && !Number.isFinite(parseDate(value.slice(0, 10), 'YYYY-MM-DD', true).getTime())) {
+    if (/^\d{4}-\d{2}-\d{2}/.test(value) && !parseDateStrict(value.slice(0, 10), 'YYYY-MM-DD')) {
         return;
     }
     const calendarDate = /^[a-z]+ \d{1,2}, \d{4}$/i.test(value);
-    const date = calendarDate ? parseDate(value, 'MMMM D, YYYY', 'en', true) : parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return calendarDate ? parseDateStrict(value, 'MMMM D, YYYY') : parseDate(value);
 }
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 100);

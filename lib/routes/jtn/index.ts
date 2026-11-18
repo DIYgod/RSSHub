@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -33,7 +32,7 @@ async function handler() {
             return {
                 title,
                 link: itemUrl,
-                pubDate: timezone(parseDate($item.find('.icon-line3-clock').parent().text()), 8),
+                pubDate: parseDate($item.find('.icon-line3-clock').parent().text(), 8),
                 description: await cache.tryGet(`jtn:article:${itemUrl}`, async () => {
                     const response = await ofetch(itemUrl);
                     const $d = load(response);

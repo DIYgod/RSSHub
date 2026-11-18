@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://paper.people.com.cn/rmrb/pc/';
 const indexUrl = `${rootUrl}layout/index.html`;
@@ -25,11 +24,9 @@ type PaperArticle = DataItem & {
 
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
-const parseCalendarDate = (date: string) => {
+const parseCalendarDate = (date: string) =>
     // UTC midnight represents the source calendar day, not its publication time.
-    const parsed = timezone(parseDate(date, 'YYYY年MM月DD日', true), 0);
-    return Number.isFinite(parsed.getTime()) ? parsed : undefined;
-};
+    parseDateStrict(date, 'YYYY年MM月DD日', 0);
 
 const getEditionDate = (url: string) => {
     const match = url.match(/\/(\d{4})(\d{2})\/(\d{2})\//);
@@ -63,7 +60,7 @@ const getPages = async () => {
     return pages;
 };
 
-const getArticles = async (page: PaperPage, pubDate: Date): Promise<PaperArticle[]> => {
+const getArticles = async (page: PaperPage, pubDate: Temporal.Instant): Promise<PaperArticle[]> => {
     const html = await ofetch<string>(page.url);
     const $ = load(html);
     return $('.news-list a[href]')

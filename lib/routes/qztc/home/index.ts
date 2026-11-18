@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.qztc.edu.cn/';
 
@@ -54,28 +53,20 @@ async function handler(ctx) {
             const cheerioItem = $(item);
             const a = cheerioItem.find('a');
 
-            try {
-                const title = a.attr('title') || '';
-                let link = a.attr('href');
-                if (!link) {
-                    link = '';
-                } else if (!link.startsWith('http')) {
-                    link = rootUrl.slice(0, -1) + link;
-                }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
-
-                return {
-                    title,
-                    link,
-                    pubDate,
-                };
-            } catch {
-                return {
-                    title: '',
-                    link: '',
-                    pubDate: Date.now(),
-                };
+            const title = a.attr('title') || '';
+            let link = a.attr('href');
+            if (!link) {
+                link = '';
+            } else if (!link.startsWith('http')) {
+                link = rootUrl.slice(0, -1) + link;
             }
+            const pubDate = parseDate(cheerioItem.find('.news_meta').text(), 8);
+
+            return {
+                title,
+                link,
+                pubDate,
+            };
         })
         .filter((item) => item.title && item.link);
 

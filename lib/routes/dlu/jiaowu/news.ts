@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc1.dlu.edu.cn/';
 
@@ -32,7 +31,7 @@ async function handler() {
                 return {
                     link,
                     title: a.attr('title')!,
-                    pubDate: timezone(parseDate(article('td[height="28"]').text(), 'YYYY年MM月DD日 HH:mm'), 8),
+                    pubDate: parseDate(article('td[height="28"]').text(), 'YYYY年MM月DD日 HH:mm', 8),
                     description: article('form[name="_newscontent_fromname"] > div > *:not(table)')
                         .toArray()
                         .map((it) => article(it).html())

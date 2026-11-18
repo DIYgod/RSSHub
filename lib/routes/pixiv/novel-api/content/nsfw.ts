@@ -3,8 +3,8 @@ import queryString from 'query-string';
 
 import cache from '@/utils/cache';
 import { evaluateScriptCallback } from '@/utils/evaluate-script';
-import { parseDate } from '@/utils/parse-date';
 import { parseScriptSource } from '@/utils/parse-js';
+import { parseDate } from '@/utils/time';
 
 import { maskHeader } from '../../constants';
 import got from '../../pixiv-got';

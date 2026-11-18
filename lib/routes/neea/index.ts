@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function loadContent(link) {
     return cache.tryGet(link, async () => {
@@ -52,7 +51,7 @@ async function handler(ctx) {
                 title: $(reportName).text(),
                 link: itemUrl,
                 guid: itemUrl,
-                pubDate: timezone(parseDate(time), 8),
+                pubDate: parseDate(time, 8),
             };
             const other = await loadContent(itemUrl);
             return { ...single, ...other };

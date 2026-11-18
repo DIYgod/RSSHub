@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.cnca.gov.cn';
 
@@ -30,7 +29,7 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
@@ -45,8 +44,8 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
                 item.description = $('.detail_messge').html();
                 item.author = $('#source').text();
                 const dateText = $('meta[name="PubDate"]').attr('content');
-                const date = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm') : undefined;
-                item.pubDate = date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : item.pubDate;
+                const date = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm', 8) : undefined;
+                item.pubDate = date ?? item.pubDate;
 
                 return item;
             });

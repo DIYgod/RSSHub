@@ -19,6 +19,7 @@ import { createLinkResolver } from '@/utils/link-resolver';
 import markdownit from '@/utils/markdown-it';
 import { parse as parseFulltext } from '@/utils/mercury';
 import ofetch from '@/utils/ofetch';
+import { compareDates, toInstant, toRFC822 } from '@/utils/time';
 
 // filters run synchronously, and matching with re2 costs up to program size * text length
 const MAX_FILTER_LENGTH = 1024;
@@ -29,6 +30,8 @@ const MAX_FILTER_TIME = 1000; // milliseconds spent on all filters of a request
 const md = markdownit({
     html: true,
 });
+
+const toEpochMilliseconds = (date: DataItem['pubDate']) => (date && toInstant(date)?.epochMilliseconds) || 0;
 
 const removeImages = ($: CheerioAPI) => {
     $('img, picture').remove();
@@ -128,7 +131,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         // sort items
         const sorted = ctx.req.query('sorted');
         if (sorted === undefined ? data.sortItems !== false : sorted !== 'false') {
-            data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+            data.item = data.item.toSorted((a: DataItem, b: DataItem) => compareDates(b.pubDate, a.pubDate));
         }
 
         const hideImages = ctx.req.query('show_image') === 'false';
@@ -151,8 +154,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
             // handle pubDate
             if (item.pubDate) {
-                const date = new Date(item.pubDate);
-                item.pubDate = Number.isNaN(date.getTime()) ? undefined : date.toUTCString();
+                const instant = toInstant(item.pubDate);
+                item.pubDate = instant && toRFC822(instant);
             }
 
             // handle link
@@ -304,9 +307,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             }
             return regex;
         };
-        const filterStart = Date.now();
+        const filterStart = performance.now();
         const testRegex = (regex: ReturnType<typeof compileRegex>, str: string) => {
-            if (Date.now() - filterStart > MAX_FILTER_TIME) {
+            if (performance.now() - filterStart > MAX_FILTER_TIME) {
                 throw new InvalidParameterError('Invalid filter: takes too long on this feed, please simplify it.');
             }
             if (regex instanceof RE2JS) {
@@ -392,11 +395,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         if (ctx.req.query('filter_time')) {
-            const now = Date.now();
+            const now = Temporal.Now.instant().epochMilliseconds;
             data.item = data.item.filter(({ pubDate }) => {
                 let isFilter = true;
                 try {
-                    isFilter = !pubDate || now - new Date(pubDate).getTime() <= Number.parseInt(ctx.req.query('filter_time')!) * 1000;
+                    isFilter = !pubDate || now - toEpochMilliseconds(pubDate) <= Number.parseInt(ctx.req.query('filter_time')!) * 1000;
                 } catch {
                     // no-empty
                 }

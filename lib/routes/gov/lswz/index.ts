@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'html/xinwen/index' } = ctx.req.param();
@@ -40,7 +39,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('a').text(),
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
@@ -61,7 +60,7 @@ export const handler = async (ctx) => {
 
                 item.title = title || item.title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
                 item.author = $$('meta[name="ContentSource"]').prop('content')?.trim() ?? undefined;
                 item.content = {
                     html: description,

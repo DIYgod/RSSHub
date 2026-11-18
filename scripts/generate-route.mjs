@@ -15,7 +15,7 @@ async function checkSource(url, fetcher) {
 }
 
 function renderRoute(options) {
-    const imports = ["import type { Route } from '@/types';", "import { parseDate } from '@/utils/parse-date';"];
+    const imports = ["import type { Route } from '@/types';", "import { parseDate } from '@/utils/time';"];
     let body;
     if (options.template === 'api') {
         imports.push("import ofetch from '@/utils/ofetch';");

@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export async function fetchMain(url: string, dataElement: string) {
     const response = await ofetch(url);
@@ -43,7 +42,7 @@ export function fetchDetail(list: Array<{ href?: string; publishDate: string }>,
             });
             return {
                 ...article,
-                pubDate: item.publishDate ? timezone(parseDate(item.publishDate, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: item.publishDate ? parseDate(item.publishDate, 'YYYY-MM-DD', 8) : undefined,
             };
         },
         { concurrency: 3 }

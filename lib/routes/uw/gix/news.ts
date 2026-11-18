@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const gixBaseURL = 'https://gixnetwork.org';
 
@@ -69,10 +69,8 @@ async function handler(ctx) {
             const content = $item.find('header').find('h2').find('a');
             const time = $item.find('header').find('span.h4').text();
 
-            const timestamp = Date.parse(time);
-
             return {
-                pubDate: Number.isFinite(timestamp) ? parseDate(timestamp) : undefined,
+                pubDate: parseDate(time),
                 link: content.attr('href'),
                 title: '',
             };

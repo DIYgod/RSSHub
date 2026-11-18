@@ -1,16 +1,10 @@
-import 'dayjs/locale/fr.js';
-
 import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(localizedFormat);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?',
@@ -74,7 +68,7 @@ function extractItem(a: Cheerio<any>, language: string) {
     const dateMatch = language === 'fr' ? description.match(/(\d{1,2} [a-zéû]+\.? \d{4})/i) : description.match(/([A-Z][a-z]+\.? \d{1,2}, \d{4})/);
 
     const pubDateStr = dateMatch ? dateMatch[1].trim() : '';
-    const pubDate = parseDate(pubDateStr);
+    const pubDate = parseDate(language === 'fr' ? pubDateStr : pubDateStr.replace(/^(\S+) (\d+),/, '$2 $1'));
 
     const imgEl = a.find('img').first();
     const src = imgEl.attr('src');

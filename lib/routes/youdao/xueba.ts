@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type Note = {
     type: 'note' | 'notebook';
@@ -19,8 +19,7 @@ function parsePublishedDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 export const route: Route = {
     path: '/xueba',

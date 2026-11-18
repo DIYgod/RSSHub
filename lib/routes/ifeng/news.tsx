@@ -6,9 +6,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:path{.+}?',
@@ -36,8 +35,7 @@ type ListedNews = Omit<DataItem, 'description'> & { link: string; description?: 
 const isParagraph = (entry: string | ContentAttachment): entry is string => String(entry) === entry;
 
 function parseNewsDate(value: string) {
-    const date = value?.trim() ? parseDate(value.trim(), 'YYYY-MM-DD HH:mm:ss', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return value?.trim() ? parseDateStrict(value.trim(), 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 }
 
 async function handler(ctx) {

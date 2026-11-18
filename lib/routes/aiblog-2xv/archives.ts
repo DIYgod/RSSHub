@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/archives',
@@ -52,7 +52,7 @@ async function handler(ctx) {
                         title: $title.text(),
                         link: $link.attr('href') || '',
                         // 解析发布时间和更新时间（根据页面结构调整选择器，若存在则启用）
-                        pubDate: parseDate($dateMeta.eq(0).attr('title') || ''),
+                        pubDate: parseDate($dateMeta.eq(0).attr('title') || '', 'YYYY-MM-DD HH:mm:ss ZZ'),
                         author: $post.find('.archive-meta span').last().text(),
                         description: '',
                     };

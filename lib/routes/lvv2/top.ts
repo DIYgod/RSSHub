@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderOutlink } from './templates/outlink';
 
@@ -74,7 +73,7 @@ async function handler(ctx) {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 
-                const pubDate = timezone(parseDate(content('time').attr('datetime')!), 8);
+                const pubDate = parseDate(content('time').attr('datetime')!, 8);
                 const author = content('a.author').text();
                 const link = content('h2.title > a.title').attr('href');
                 const description =

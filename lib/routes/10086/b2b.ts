@@ -6,8 +6,7 @@ import { Agent } from 'undici';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const types = {
     PROCUREMENT: '招标采购公告',
@@ -66,7 +65,7 @@ async function handler(ctx: Context) {
     const items = response.data.content.map((item) => ({
         title: item.name,
         link: `${baseUrl}/#/noticeDetail?publishId=${item.id}&publishUuid=${item.uuid}&publishType=${item.publishType}&publishOneType=${item.publishOneType}`,
-        pubDate: timezone(parseDate(item.publishDate), 8),
+        pubDate: parseDate(item.publishDate, 8),
         category: [item.publishOneType_dictText, item.companyTypeName],
     }));
 

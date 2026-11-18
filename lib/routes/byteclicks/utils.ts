@@ -5,8 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'https://byteclicks.com';
 
@@ -19,7 +18,7 @@ export const parseList = ($: CheerioAPI) =>
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('.meta-item.primary em').text(), 'YYYY.MM.DD'), 8),
+                pubDate: parseDate($item.find('.meta-item.primary em').text(), 'YYYY.MM.DD', 8),
                 category: $item.find('.cate-tag').text(),
             };
         });

@@ -5,8 +5,7 @@ import { CookieJar } from 'tough-cookie';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -69,7 +68,7 @@ const getArticleList = (html): DataItem[] =>
             return {
                 title: $item.find('a').text(),
                 link: baseUrl + $item.find('a').attr('href'),
-                pubDate: publishedAt ? timezone(parseDate(publishedAt, 'YYYY-MM-DD'), 0) : undefined,
+                pubDate: publishedAt ? parseDate(publishedAt, 'YYYY-MM-DD', 0) : undefined,
             };
         });
 

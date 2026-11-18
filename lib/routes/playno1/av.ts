@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { cookieJar, processArticle } from './utils';
 
@@ -52,7 +51,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('h3 a').attr('title')!,
                 link: $item.find('h3 a').attr('href'),
-                pubDate: timezone(parseDate($item.find('.fire_left').text()), 8),
+                pubDate: parseDate($item.find('.fire_left').text(), 8),
                 author: $item
                     .find('.fire_right')
                     .text()

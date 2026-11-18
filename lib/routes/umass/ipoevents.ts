@@ -1,18 +1,13 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import dayjsTimezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { SourceClient } from './utils';
 
-dayjs.extend(utc);
-dayjs.extend(dayjsTimezone);
 export const route: Route = {
     path: '/amherst/ipoevents',
     categories: ['university'],
@@ -47,8 +42,7 @@ async function handler() {
                           if (!date) {
                               return {};
                           }
-                          const parsedDate = parseDate(date, 'MMMM D, YYYY h:mm a', true);
-                          return { pubDate: Number.isNaN(parsedDate.getTime()) ? undefined : dayjs.tz(date, 'MMMM D, YYYY h:mm a', 'America/New_York').toDate() };
+                          return { pubDate: parseDateStrict(date, 'MMMM D, YYYY h:mm a', 'America/New_York') };
                       })
                     : { pubDate: undefined };
                 return {

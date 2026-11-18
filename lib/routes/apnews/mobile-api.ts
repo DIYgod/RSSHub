@@ -2,8 +2,8 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { fetchArticle, fetchScreen, removeDuplicateByKey } from './utils';
 
@@ -77,7 +77,7 @@ async function handler(ctx) {
         'link'
     ) as DataItem[];
 
-    const list = deduplicatedItems.toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate)).slice(0, getRouteLimit(ctx, 20));
+    const list = deduplicatedItems.toSorted((a, b) => compareDates(b!.pubDate, a!.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

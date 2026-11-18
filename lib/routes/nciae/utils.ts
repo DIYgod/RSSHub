@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://nciae.edu.cn';
 
@@ -23,7 +23,7 @@ export async function fetchList(path: string, title: string) {
                 .match(/(\d{4})年(\d{2})月(\d{2})日/);
             return {
                 title: $item.text(),
-                pubDate: date ? parseDateInTimezone(`${date[1]}-${date[2]}-${date[3]}`, 8) : undefined,
+                pubDate: date ? parseDate(`${date[1]}-${date[2]}-${date[3]}`, 8) : undefined,
                 link: new URL($item.attr('href')!, url).href,
             };
         });
@@ -39,7 +39,7 @@ export async function fetchList(path: string, title: string) {
                     .text()
                     .match(/(\d{4})年(\d{2})月(\d{2})日\s+(\d{2}:\d{2})/);
                 if (published) {
-                    item.pubDate = parseDateInTimezone(`${published[1]}-${published[2]}-${published[3]} ${published[4]}`, 8);
+                    item.pubDate = parseDate(`${published[1]}-${published[2]}-${published[3]} ${published[4]}`, 8);
                 }
 
                 item.description = $detail('#vsb_content').html();

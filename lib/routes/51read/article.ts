@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article/:id',
@@ -51,7 +50,7 @@ async function handler(ctx) {
     if (updateTime) {
         const latestItem = item.find((chapter) => chapter.link === latestChapter);
         if (latestItem) {
-            latestItem.pubDate = timezone(parseDate(updateTime, 'YYYY-MM-DD HH:mm'), 8);
+            latestItem.pubDate = parseDate(updateTime, 'YYYY-MM-DD HH:mm', 8);
         }
     }
 

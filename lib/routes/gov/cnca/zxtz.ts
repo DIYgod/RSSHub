@@ -12,5 +12,5 @@ export const route: Route = {
 };
 
 function handler() {
-    return getFeed(`zwxx/tz/${new Date().getFullYear()}`, '通知');
+    return getFeed(`zwxx/tz/${Temporal.Now.zonedDateTimeISO('UTC').year}`, '通知');
 }

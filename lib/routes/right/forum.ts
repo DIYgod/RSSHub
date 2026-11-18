@@ -6,9 +6,8 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/forum/:id?',
@@ -80,7 +79,7 @@ async function handler(ctx) {
                 return {
                     author: content('.authi').first().text(),
                     description: content('.t_f').first().html(),
-                    pubDate: timezone(parseDate(content('.authi em').first().text().replace('发表于 ', '')), 8),
+                    pubDate: parseDate(content('.authi em').first().text().replace('发表于 ', ''), 8),
                     category: content('.ptg a')
                         .toArray()
                         .map((a) => content(a).text()),

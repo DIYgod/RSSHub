@@ -1,13 +1,6 @@
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
-
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { parseDate, toISOString } from '@/utils/time';
 
 const pacificTime = 'America/Los_Angeles';
 
@@ -25,11 +18,9 @@ type Post = {
 };
 
 export async function fetchFeaturedPosts(token: string): Promise<DataItem[]> {
-    const today = dayjs().tz(pacificTime);
-    const date = today.format('YYYY-MM-DD');
-    const tomorrow = today.add(1, 'day').format('YYYY-MM-DD');
-    const after = dayjs.tz(date, pacificTime).toISOString();
-    const before = dayjs.tz(tomorrow, pacificTime).toISOString();
+    const today = Temporal.Now.zonedDateTimeISO(pacificTime).startOfDay();
+    const after = toISOString(today.toInstant());
+    const before = toISOString(today.add({ days: 1 }).startOfDay().toInstant());
 
     const result = await ofetch<{ data?: { posts: { edges: Array<{ node: Post }> } }; errors?: Array<{ message: string }> }>('https://api.producthunt.com/v2/api/graphql', {
         method: 'POST',

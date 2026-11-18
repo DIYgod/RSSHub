@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'latest' } = ctx.req.param();
@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('a').attr('title') ?? $item.find('a').text(),
-                pubDate: parseDateInTimezone($item.find('span').text().trim(), 8),
+                pubDate: parseDate($item.find('span').text().trim(), 8),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
                 if (!date || !href || !title) {
                     return [];
                 }
-                return [{ title, pubDate: parseDateInTimezone(date, 8), link: new URL(href.startsWith('/sse/') ? href.slice(4) : href, rootUrl).href }];
+                return [{ title, pubDate: parseDate(date, 8), link: new URL(href.startsWith('/sse/') ? href.slice(4) : href, rootUrl).href }];
             })
             .slice(0, limit);
     }

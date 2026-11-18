@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const jwcGot = got.extend({ allowH2: false });
 
@@ -47,7 +46,7 @@ async function handler() {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'https://jwc.ouc.edu.cn').href,
-                pubDate: timezone(parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD', 8),
             };
         });
 

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';
@@ -62,7 +63,7 @@ async function handler(ctx) {
             data.map((item) => ({
                 title: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
                 description: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
-                pubDate: new Date(item.live_time.replace(' ', 'T') + '+08:00').toUTCString(),
+                pubDate: parseDate(item.live_time, 8),
                 guid: `https://live.bilibili.com/${item.roomid} ${item.live_time}`,
                 link: `https://live.bilibili.com/${item.roomid}`,
             })),

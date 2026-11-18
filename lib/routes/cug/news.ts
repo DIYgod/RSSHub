@@ -1,17 +1,12 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
-
-dayjs.extend(utc);
 
 export const route: Route = {
     path: '/news',
@@ -30,7 +25,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const host = 'https://esearch.cug.edu.cn';
-    const now = dayjs().utcOffset(8);
+    const now = Temporal.Now.zonedDateTimeISO('+08:00');
 
     const responses = await Promise.all(
         [0, 1].map((day) =>
@@ -52,8 +47,8 @@ async function handler(ctx) {
                     fragmentSize: 40,
                     rangeFilter: [
                         {
-                            start: now.subtract(day + 1, 'day').format('YYYY-MM-DD HH:mm:ss'),
-                            end: now.subtract(day, 'day').format('YYYY-MM-DD HH:mm:ss'),
+                            start: formatDate(now.subtract({ days: day + 1 }), 'YYYY-MM-DD HH:mm:ss'),
+                            end: formatDate(now.subtract({ days: day }), 'YYYY-MM-DD HH:mm:ss'),
                             fieldName: 'publishTime',
                         },
                     ],
@@ -67,12 +62,12 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.title,
             link: item.url.replace('http:', 'https:'),
-            pubDate: timezone(parseDate(item.publishTime), 8),
+            pubDate: parseDate(item.publishTime, 8),
             author: item.seedInfo?.seedName,
             description: item.html,
         }));
 
-    const articles = ctx.req.query('sorted') === 'false' ? results : [...results].sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+    const articles = ctx.req.query('sorted') === 'false' ? results : [...results].sort((a, b) => (b.pubDate?.epochMilliseconds ?? NaN) - (a.pubDate?.epochMilliseconds ?? NaN));
     const limit = getRouteLimit(ctx);
     const out = await Promise.all(
         articles.slice(0, limit).map((item) =>

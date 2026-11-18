@@ -3,9 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const mentionPattern = /<\u{2267}\u{2746}>\{"name":"(.*?)","uid":"\d+","at":"1"\}<\/\u{2266}\u{2746}>/gu;
 
@@ -16,10 +15,10 @@ const extractImageUrl = (value?: string) => value?.match(/"url":"(.*?)"/)?.[1];
 const parseNoteDate = (value: string) => {
     const date = value.replace(/\s*编辑$/, '');
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        return timezone(parseDate(date, 'YYYY-MM-DD'), 8);
+        return parseDate(date, 'YYYY-MM-DD', 8);
     }
     if (/^\d{2}-\d{2}$/.test(date)) {
-        return timezone(parseDate(date, 'MM-DD'), 8);
+        return parseDate(date, 'MM-DD', 8);
     }
     return date ? parseRelativeDate(date) : undefined;
 };

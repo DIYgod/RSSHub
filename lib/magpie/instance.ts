@@ -124,7 +124,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
     };
 
     const run = () => {
-        startedAt = Date.now();
+        startedAt = performance.now();
         child = spawn(process.execPath, [options.serverFile], {
             cwd: options.dataDir,
             env: { ...process.env, ...env, RSSHUB_MAGPIE_HOST: '1' },
@@ -139,7 +139,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
             child = undefined;
             remember(`RSSHub exited (${signal ?? `code ${code}`})`);
             // a server that ran a while had a failure of its own, not one at start
-            failures = Date.now() - startedAt > 60000 ? 1 : failures + 1;
+            failures = performance.now() - startedAt > 60000 ? 1 : failures + 1;
             if (failures >= MAX_FAILURES) {
                 gaveUp = true;
                 return;
@@ -153,7 +153,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
         if (await answers(url('/healthz'))) {
             return;
         }
-        if (gaveUp || Date.now() > deadline) {
+        if (gaveUp || performance.now() > deadline) {
             const why = recent.slice(-8).join('\n');
             throw new Error(`RSSHub isn't answering at ${origin}.${why ? `\nIts last log lines:\n${why}` : ''}`);
         }
@@ -175,7 +175,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
             failures = 0;
             run();
         }
-        return waitFor(Date.now() + READY_TIMEOUT, signal);
+        return waitFor(performance.now() + READY_TIMEOUT, signal);
     };
 
     return { origin, env, url, ready };

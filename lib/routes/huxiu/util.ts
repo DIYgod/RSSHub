@@ -5,7 +5,7 @@ import { getMimeType } from 'hono/utils/mime';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -86,8 +86,7 @@ const parsePublicationDate = (value: string | number | undefined) => {
     if (!Number.isFinite(timestamp) || timestamp <= 0) {
         return;
     }
-    const date = parseDate(timestamp, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(timestamp, 'X');
 };
 
 const normalizeText = (value?: string) => {
@@ -374,7 +373,7 @@ const generateNonce = () => {
  * @returns {string} signature - The calculated signature value.
  */
 const generateSignature = () => {
-    const timestamp = Math.round(Date.now() / 1000).toString();
+    const timestamp = Math.round(Temporal.Now.instant().epochMilliseconds / 1000).toString();
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();

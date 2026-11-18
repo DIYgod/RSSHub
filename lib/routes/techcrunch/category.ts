@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -38,7 +38,7 @@ async function handler(ctx) {
                 rendered: $.html(),
             }),
             link: item.link,
-            pubDate: date ? parseDateInTimezone(date, 0) : undefined,
+            pubDate: date ? parseDate(date, 0) : undefined,
             author: head.author,
             category: [...new Set<string>([...(article?.articleSection ?? []), ...(article?.keywords ?? [])])].map((category) => $('<span>').html(category).text()),
         };

@@ -6,9 +6,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
@@ -31,7 +30,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('strong').text(),
-                pubDate: $item.find('div.list-dated').text().split(/\|/).pop()?.trim() ? timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()!), 9) : undefined,
+                pubDate: $item.find('div.list-dated').text().split(/\|/).pop()?.trim() ? parseDate($item.find('div.list-dated').text().split(/\|/).pop()!, 9) : undefined,
                 link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,

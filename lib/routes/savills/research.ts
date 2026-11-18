@@ -3,9 +3,8 @@ import { escapeAttribute } from 'entities';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const sites = {
     cn: { host: 'www.savills.com.cn', region: 'China', language: 'zh-CN', name: '中国' },
@@ -66,7 +65,7 @@ async function handler(ctx) {
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: date ? (/^\d{4}-\d{2}-\d{2}$/.test(date) ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : parseDate(date)) : undefined,
+                pubDate: date ? (/^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YYYY-MM-DD', 8) : parseDate(date)) : undefined,
                 category: card
                     .find('.sv-card-meta__data, .sv-tag')
                     .toArray()

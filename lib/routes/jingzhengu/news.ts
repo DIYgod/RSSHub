@@ -1,8 +1,7 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import type { NewsDetail, NewsInfo } from './types';
 import { sign } from './utils';
@@ -27,7 +26,7 @@ async function handler() {
 
     const payload = new Map<string, number | string>([
         ['pageNo', 1],
-        ['middleware', String(Date.now())],
+        ['middleware', String(Temporal.Now.instant().epochMilliseconds)],
     ]);
     const response = await ofetch<NewsInfo>(`${baseUrl}/news/makeNewsInfo`, {
         method: 'POST',
@@ -44,7 +43,7 @@ async function handler() {
                 title: article.title,
                 description: article.summary,
                 link,
-                pubDate: timezone(parseDate(article.addDate, 'YYYY-MM-DD HH:mm:ss'), 8),
+                pubDate: parseDate(article.addDate, 'YYYY-MM-DD HH:mm:ss', 8),
                 author: article.author,
                 id: String(article.id),
             };
@@ -52,7 +51,7 @@ async function handler() {
             return cache.tryGet(link, async () => {
                 const payload = new Map<string, number | string>([
                     ['id', article.id],
-                    ['middleware', String(Date.now())],
+                    ['middleware', String(Temporal.Now.instant().epochMilliseconds)],
                 ]);
 
                 const detail = await ofetch<NewsDetail>(`${baseUrl}/news/makeNewsDetail`, {

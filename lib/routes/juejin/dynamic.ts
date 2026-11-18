@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getShortMsgDescription } from './utils';
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
         const { target_type: targetType, target_data: targetData, action, time } = entry; // Actions: 0 publish article, 1 like article, 2 publish pin, 3 like pin, 4 follow user, 5 follow tag.
         let title: string;
         let description: string | undefined;
-        let pubDate: Date | undefined;
+        let pubDate: Temporal.Instant | undefined;
         let author: string | undefined;
         let link: string | undefined;
         let category: string[] | undefined;

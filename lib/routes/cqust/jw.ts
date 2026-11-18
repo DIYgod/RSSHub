@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jw/:type?',
@@ -46,7 +45,7 @@ async function handler(ctx: Context) {
                 const $item = $(item);
                 return {
                     title: $item.find('a').text(),
-                    pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
                     link: new URL($item.find('a').attr('href')!, host).href,
                 };
             }),

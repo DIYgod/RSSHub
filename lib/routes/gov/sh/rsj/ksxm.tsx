@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -71,7 +70,7 @@ async function handler() {
             const cells = $(row).children('td');
             const title = cells.eq(1).find('a');
             const published = copyElements(cells.eq(3)).children().remove().end().text().trim();
-            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = published ? parseDateStrict(published, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: title.attr('title') || title.text(),
                 link: new URL(title.attr('href')!, url).href,
@@ -82,7 +81,7 @@ async function handler() {
                         .filter(({ index, value }) => index >= 2 && index !== 3 && value)
                 ),
                 category: [cells.eq(0).text()],
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

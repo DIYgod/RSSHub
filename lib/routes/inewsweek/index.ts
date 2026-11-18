@@ -4,8 +4,7 @@ import iconv from 'iconv-lite';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'http://news.inewsweek.cn';
 
@@ -65,8 +64,7 @@ async function handler(ctx) {
                     const editor = $('div.editor').text();
                     const published = editor.match(/\b\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\b/)?.[0];
                     const author = published ? editor.slice(0, editor.indexOf(published)).trim() || undefined : undefined;
-                    const date = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', true) : undefined;
-                    const time = date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+                    const time = published ? parseDateStrict(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
                     return {
                         description: fullText,
                         author,

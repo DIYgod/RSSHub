@@ -4,7 +4,7 @@ import { html } from 'hono/html';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getPublicTracks } from './utils';
 

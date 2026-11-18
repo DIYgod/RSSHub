@@ -4,8 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/daily',
@@ -63,7 +62,7 @@ async function handler() {
                         ...getStoryContent(storyJson.body),
                         link: storyJson.url,
                         image: storyJson.image,
-                        pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : timezone(parseDate(latest.date, 'YYYYMMDD'), 8),
+                        pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : parseDate(latest.date, 'YYYYMMDD', 8),
                     };
                 } catch (error) {
                     logger.debug(`Failed to fetch story detail: ${storyUrl} - ${error instanceof Error ? error.message : String(error)}`);

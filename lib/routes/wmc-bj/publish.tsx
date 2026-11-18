@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     path: '/publish/:category{.+}?',
@@ -44,7 +44,7 @@ async function handler(ctx) {
     const timestamp = (img.attr('data-id') || img.attr('src'))?.match(/_(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\d{3}(?:\.|$)/);
     const sourceDate = timestamp ? `${timestamp[1]}-${timestamp[2]}-${timestamp[3]}T${timestamp[4]}:${timestamp[5]}:${timestamp[6]}Z` : undefined;
     const date = sourceDate ? parseDate(sourceDate) : undefined;
-    const pubDate = date && Number.isFinite(date.getTime()) && date.toISOString().replace('.000Z', 'Z') === sourceDate ? date : undefined;
+    const pubDate = date && toISOString(date).replace('.000Z', 'Z') === sourceDate ? date : undefined;
     const categories = $('ol.breadcrumb li')
         .slice(2)
         .toArray()

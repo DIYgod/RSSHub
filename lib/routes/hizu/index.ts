@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const titles = {
     '5dd92265e4b0bf88dd8c1175': '热点',
@@ -89,8 +89,7 @@ function parseUpdatedDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 async function handler(ctx) {
@@ -114,8 +113,8 @@ async function handler(ctx) {
         pubDate: item.published ? parseDate(item.published) : undefined,
     }));
 
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => Number.isFinite(item.pubDate?.getTime()))) {
-        items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate !== undefined)) {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         items = items.slice(0, limit);
     } else if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);

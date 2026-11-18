@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const link = 'https://computer.hdu.edu.cn';
 const host = 'https://computer.hdu.edu.cn/6769/list.htm';

@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { appsUrl, createPageFetcher } from '../utils';
 
@@ -46,7 +45,7 @@ async function handler(ctx) {
                     title: $item.find('.content-title').text() || $item.find('.description').text(),
                     link: $item.find('a.link-wrap').attr('href'),
                     description: $item.find('.description').text(),
-                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
                     author: $item.find('cite.name').text(),
                 };
             });

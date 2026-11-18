@@ -4,9 +4,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.chinanews.com.cn';
 
@@ -16,7 +15,7 @@ function getPubDate(content: CheerioAPI) {
     if (!date) {
         return;
     }
-    return timezone(parseDate(date.replaceAll(/[年月]/g, '-').replace('日', '')), 8);
+    return parseDate(date.replaceAll(/[年月]/g, '-').replace('日', ''), 8);
 }
 
 function getAuthor(content: CheerioAPI) {

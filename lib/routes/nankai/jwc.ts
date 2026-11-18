@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -55,7 +54,7 @@ export const route: Route = {
                 return {
                     title: $link.text(),
                     link,
-                    pubDate: day && monthYear ? timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8) : undefined,
+                    pubDate: day && monthYear ? parseDate(fullDate, 'YYYY/MM/DD', 8) : undefined,
                 };
             })
             .filter((item) => item.link); // Discard entries without a link.
@@ -73,7 +72,7 @@ export const route: Route = {
                     const publishTimeText = $('.page-news-souse').text();
                     const timeMatch = publishTimeText.match(/发布时间：(\d{4}-\d{2}-\d{2})/);
                     if (timeMatch) {
-                        detail.pubDate = timezone(parseDate(timeMatch[1]), 8);
+                        detail.pubDate = parseDate(timeMatch[1], 8);
                     }
 
                     // Extract the article body.

@@ -3,9 +3,9 @@ import { Buffer } from 'node:buffer';
 import { config } from '@/config';
 import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -45,12 +45,11 @@ const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
 };
 
-const getPublicationDate = (value?: string | number | null): Date | undefined => {
+const getPublicationDate = (value?: string | number | null): Temporal.Instant | undefined => {
     if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
         return undefined;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 };
 
 export const handler = async (ctx) => {

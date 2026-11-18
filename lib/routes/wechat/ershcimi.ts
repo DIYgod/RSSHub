@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -41,7 +40,7 @@ async function handler(ctx) {
                 title: $item('.weui_media_title a').text(),
                 description: $item('.weui_media_desc').text(),
                 link,
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 

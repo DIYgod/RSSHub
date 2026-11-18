@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ningborsjnotice/:colId?',
@@ -37,7 +37,7 @@ export const route: Route = {
             return {
                 title: `宁波人社公告-${noticeCate}:${title.text()}`,
                 link: href ? new URL(href, url).href : undefined,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 author: '宁波市人力资源和社会保障局',
             };
         });

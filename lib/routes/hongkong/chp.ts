@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     title: {
@@ -129,7 +128,7 @@ async function handler(ctx) {
 
         return {
             link,
-            pubDate: item.PublishDate ? timezone(parseDate(item.PublishDate), 8) : undefined,
+            pubDate: item.PublishDate ? parseDate(item.PublishDate, 8) : undefined,
             description: item[`Content_${language}`] ?? '',
             title: sanitizeHtml(item[`Title_${language}`] ?? '', { allowedTags: [], allowedAttributes: {} }),
         };

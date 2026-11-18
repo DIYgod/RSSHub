@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Articles } from './types';
 import { processImage, withZhihuClient } from './utils';

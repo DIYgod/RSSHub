@@ -2,10 +2,9 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -62,7 +61,7 @@ async function handler() {
                     title: $link.text().trim(),
                     link,
                     pubDateRaw: rawDate,
-                    pubDate: timezone(parseDate(rawDate, 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate(rawDate, 'YYYY-MM-DD', 8),
                 };
             })
             .filter((item) => item !== null);
@@ -81,7 +80,7 @@ async function handler() {
                     const newsContent = content('.v_news_content');
 
                     item.description = newsContent.html();
-                    item.pubDate = timezone(parseDate(item.pubDateRaw), 8);
+                    item.pubDate = parseDate(item.pubDateRaw, 8);
 
                     return item;
                 });

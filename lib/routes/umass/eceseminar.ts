@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { SourceClient } from './utils';
@@ -39,7 +39,7 @@ async function handler() {
                           const $article = load(sourceContent1);
                           const datetime = $article('time[datetime]').first().attr('datetime');
                           const date = datetime ? parseDate(datetime) : undefined;
-                          return { pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined };
+                          return { pubDate: date };
                       })
                     : { pubDate: undefined };
                 return {

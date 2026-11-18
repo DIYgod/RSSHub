@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/www/:category?',
@@ -56,7 +55,7 @@ async function handler(ctx) {
                 const $item = $(item);
 
                 const link = new URL($item.attr('href')!, rootUrl).href;
-                const pubDate = parseDate($item.closest('.news_box').find('.news_meta').text().trim(), 'YYYY-MM-DD');
+                const pubDate = parseDate($item.closest('.news_box').find('.news_meta').text().trim(), 'YYYY-MM-DD', 8);
 
                 const cacheIn = await cache.tryGet(`sqmc:body:v2:${link}`, async () => {
                     const detailResponse = await got({
@@ -73,7 +72,7 @@ async function handler(ctx) {
                 return {
                     title: $item.attr('title') || $item.text(),
                     link,
-                    pubDate: timezone(pubDate, 8),
+                    pubDate,
                     ...cacheIn,
                 };
             },

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const getAritlces = async (category, url, cache) => {
     const { data } = await got(url);
@@ -20,7 +19,7 @@ const getAritlces = async (category, url, cache) => {
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
+                pubDate: parseDate($item.find('span.time').text(), 8),
                 category,
             };
         })

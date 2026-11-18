@@ -4,9 +4,8 @@ import iconv from 'iconv-lite';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { original = 'false' } = ctx.req.param();
@@ -31,7 +30,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('h6 a').text(),
-                pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
+                pubDate: parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D'], 8),
                 link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
                 language,
@@ -53,7 +52,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 const publishedTime = $$('div.r_time, div.article_top > div.time').first().text();
-                item.pubDate = publishedTime ? timezone(parseDate(publishedTime, 'YYYY/M/D HH:mm'), 8) : undefined;
+                item.pubDate = publishedTime ? parseDate(publishedTime, 'YYYY/M/D HH:mm', 8) : undefined;
                 item.author = $$('div.author, div.article_author').first().text().trim();
                 item.content = {
                     html: description,

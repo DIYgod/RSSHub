@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -47,7 +46,7 @@ async function handler() {
             const dateSpan = item.find('span.date');
             const day = dateSpan.find('span.day').text();
             const year = dateSpan.find('span.year').text();
-            const pubDate = year && day ? timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8) : undefined;
+            const pubDate = year && day ? parseDate(`${year}-${day}`, 'YYYY-MM-DD', 8) : undefined;
 
             const categoryName = item.find('span.name').text().trim();
             return {

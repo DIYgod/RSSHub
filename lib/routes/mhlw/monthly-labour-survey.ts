@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/monthly-labour-survey',
@@ -30,7 +29,7 @@ const parseJapaneseDate = (text: string) => {
         // oxlint-disable-next-line regexp/no-obscure-range
         .replaceAll(/[０-９]/g, (c) => String.fromCodePoint(c.codePointAt(0)! - 0xfee0))
         .replace(/^令和(\d+)年/, (_, year) => `${Number(year) + 2018}年`);
-    return parseDate(normalized, 'YYYY年M月D日');
+    return parseDate(normalized, 'YYYY年M月D日', 9);
 };
 
 async function fetchPage(url: string) {
@@ -78,7 +77,7 @@ async function handler(ctx: Context) {
                 content.find('.prt-topContents, .prt-linkNavi, .prt-plugin').remove();
                 return {
                     title: /\S/.test(title) ? title : undefined,
-                    pubDate: timezone(parseJapaneseDate(dateText), 9),
+                    pubDate: parseJapaneseDate(dateText),
                     description: content.html()?.trim(),
                 };
             });

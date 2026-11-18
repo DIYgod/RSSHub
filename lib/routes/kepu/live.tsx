@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/live',
@@ -76,8 +75,8 @@ async function handler(ctx) {
         description: item.desc,
         author: item.company,
         guid: item.id,
-        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), 8),
-        updated: timezone(parseDate(item.live_end_time ?? item.end_time), 8),
+        pubDate: parseDate(item.live_start_time ?? item.start_time, 8),
+        updated: parseDate(item.live_end_time ?? item.end_time, 8),
         itunes_item_image: new URL(item.cover, apiRootUrl).href,
         comments: item.display_comment ?? 0,
     }));

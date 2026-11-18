@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://verfgh.baden-wuerttemberg.de';
 const listUrl = `${rootUrl}/presse-und-service/pressemitteilungen/`;
@@ -89,7 +88,7 @@ function parsePublicationDate(value?: string) {
         return;
     }
 
-    const date = parseDate(value, 'YYYY-MM-DD', true);
+    const date = parseDateStrict(value, 'YYYY-MM-DD', 0);
     // Preserve the source calendar day without inferring a publication time.
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return date;
 }

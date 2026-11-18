@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/rsc/:category?',
@@ -57,8 +56,8 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
         .find('h3 span:contains(时间)')
         .text()
         .replace(/^时间：/, '');
-    const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
-    return { description, author, pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined };
+    const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
+    return { description, author, pubDate };
 }
 
 async function handler(ctx) {
@@ -87,11 +86,11 @@ async function handler(ctx) {
             const title = $item.find('.list_wen a.tit').text();
             const yearMonth = $item.find('.list_time .month').text();
             const day = $item.find('.list_time .day').text();
-            const pubDate = yearMonth && day ? timezone(parseDate(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = yearMonth && day ? parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title,
                 link,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
     return {

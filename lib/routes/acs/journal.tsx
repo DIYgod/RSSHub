@@ -5,8 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/journal/:id',

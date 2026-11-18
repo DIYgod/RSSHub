@@ -1,7 +1,7 @@
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://konek.hn.plus';
 const markdown = MarkdownIt({ html: false, linkify: true, breaks: true });

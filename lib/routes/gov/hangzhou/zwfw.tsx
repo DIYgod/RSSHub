@@ -7,9 +7,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { analyzer, crawler } from './zjzwfw';
 
@@ -235,7 +234,7 @@ async function handler() {
             const $item = $(item);
             const title = $item.find('a').first().text();
             const dateText = $item.find('span').first().text();
-            const time = dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined;
+            const time = dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined;
             const a = $item.find('a').first().attr('href');
             const fullUrl = new URL(a!, host).href;
 
@@ -273,7 +272,7 @@ async function handler() {
                     }
                     const pubDate = content('meta[name="PubDate"]').attr('content');
                     if (pubDate) {
-                        item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm'), 8);
+                        item.pubDate = parseDate(pubDate, 'YYYY-MM-DD HH:mm', 8);
                     }
                     return item;
                 }),

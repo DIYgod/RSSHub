@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import getCookie from '../utils/pypasswaf';
 
@@ -59,8 +59,7 @@ function parsePublicationDate(value?: string) {
         return;
     }
     // The calendar label has no offset; do not assign an unverified timezone.
-    const date = parseDate(value, 'YYYY-MM-DD', true);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(value, 'YYYY-MM-DD');
 }
 
 async function handler(ctx) {

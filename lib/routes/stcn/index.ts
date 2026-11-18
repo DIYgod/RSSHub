@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'yw' } = ctx.req.param();
@@ -48,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm', 'HH:mm']), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm', 'HH:mm'], 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
@@ -58,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm', 'HH:mm']), 8) : undefined,
+                updated: upDatedStr ? parseDate(upDatedStr, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm', 'HH:mm'], 8) : undefined,
                 language,
             };
 
@@ -96,14 +95,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                     category: categories,
                     author: authors,
                     content: {
                         html: description,
                         text: $$('div.detail-content').text(),
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                    updated: upDatedStr ? parseDate(upDatedStr, 8) : undefined,
                 };
 
                 return processedItem;

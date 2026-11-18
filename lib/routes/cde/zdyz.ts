@@ -4,9 +4,8 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -88,7 +87,7 @@ async function handler(ctx) {
     const selected = !sorted || hasDates ? records.slice(0, limit) : records;
     const list = selected.map((item): DataItem & { link: string } => ({
         title: item.title,
-        pubDate: item.issueDate ? timezone(parseDate(item.issueDate), 8) : undefined,
+        pubDate: item.issueDate ? parseDate(item.issueDate, 8) : undefined,
         link: item.externalLinks,
     }));
 

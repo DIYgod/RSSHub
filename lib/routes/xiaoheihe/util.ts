@@ -41,7 +41,7 @@ const checksum = (data) =>
     ) % 100;
 
 export const calculate = (url, timestamp = 0, nonce = '') => {
-    timestamp ||= Math.trunc(Date.now() / 1000);
+    timestamp ||= Math.trunc(Temporal.Now.instant().epochMilliseconds / 1000);
     nonce ||= md5(Math.random().toString()).toString('hex').toUpperCase();
 
     const { pathname } = new URL(url);

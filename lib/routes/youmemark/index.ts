@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:userid',
@@ -37,8 +37,7 @@ const parseBookmarkDate = (value: string) => {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(value, 'YYYY-MM-DD');
 };
 
 async function handler(ctx): Promise<Data> {

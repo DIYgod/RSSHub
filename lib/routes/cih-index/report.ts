@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/report/list/:report?',
@@ -53,7 +52,7 @@ async function handler(ctx) {
         return {
             title: info.reportTitle,
             link: `${baseUrl}/report/detail/${info.reportId}.html`,
-            pubDate: timezone(parseDate(info.addTime), 8),
+            pubDate: parseDate(info.addTime, 8),
             category: [...new Set([...info.reportClassTagDtoList.map((t) => t.tag), ...(info.keywordList || [])])],
             description: `${info.context}<br>${images}`,
             image: `${info.coverFigureUrl}/200`,

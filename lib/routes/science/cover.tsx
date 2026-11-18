@@ -12,7 +12,7 @@ import type { Route } from '@/types';
 // signaling:      Science Signaling
 // stm:            Science Translational Medicine
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl } from './utils';
 

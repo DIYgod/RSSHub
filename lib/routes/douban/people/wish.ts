@@ -4,6 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/people/:userid/wish',
@@ -59,7 +60,7 @@ async function handler(ctx) {
                 title,
                 description: `${info.find('.intro').text()}<br><img src="${itemPicUrl}">`,
                 link: url,
-                pubDate: new Date(day),
+                pubDate: parseDate(day),
             };
         });
 

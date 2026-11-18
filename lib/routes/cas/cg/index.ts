@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cg/:caty?',
@@ -70,7 +69,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.TRS_Editor, .TRS_UEDITOR').first().html();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
 
                 return item;
             })

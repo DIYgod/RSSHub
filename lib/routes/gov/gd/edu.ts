@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -107,8 +106,7 @@ async function handler(ctx: Context) {
 }
 
 function getPublicationDate(dateText: string | undefined) {
-    const date = dateText ? parseDate(dateText) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+    return dateText ? parseDate(dateText, 8) : undefined;
 }
 
 function getWechatArticle(link: string) {
@@ -132,7 +130,7 @@ function getWechatArticle(link: string) {
         return {
             description: fixArticleContent(content),
             author: $('meta[name="author"]').attr('content') || $('#js_name').text().trim() || undefined,
-            pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
         };
     });
 }

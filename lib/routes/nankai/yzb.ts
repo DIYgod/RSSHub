@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yzb/:type?',
@@ -57,7 +56,7 @@ export const route: Route = {
                 return {
                     title: $a.text(),
                     link,
-                    pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
+                    pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
                 };
             })
             .filter((item) => item.link);

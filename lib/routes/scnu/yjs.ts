@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -59,7 +58,7 @@ async function handler() {
                               .toArray()
                               .map((element) => article(element).text().trim())
                               .filter(Boolean);
-                          return { description: article('.article').html() ?? undefined, ...(category.length && { category }), pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined };
+                          return { description: article('.article').html() ?? undefined, ...(category.length && { category }), pubDate: date ? parseDate(date, 'YYYY-MM-DD HH:mm:ss', 8) : undefined };
                       })),
                   }
                 : item,

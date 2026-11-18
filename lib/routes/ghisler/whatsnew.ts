@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/whatsnew',
@@ -26,7 +25,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const title = $item.find('h3').text().replaceAll(/\s+/g, ' ');
-            const pubDate = timezone(parseDate($item.find('b').text().split(':', 1)[0], 'MMMM D, YYYY'), 0);
+            const pubDate = parseDate($item.find('b').text().split(':', 1)[0], 'MMMM D, YYYY', 0);
             const body = $item;
             body.find('h3, a[name]:not([href])').remove();
             body.find('p').first().find('b').first().remove();

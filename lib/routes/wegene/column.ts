@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/column/:type/:category',
@@ -41,7 +41,7 @@ async function handler(ctx: Context) {
             return {
                 title: item.title,
                 link: `https://www.wegene.com/crowdsourcing/details/${item.id}`,
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
                 author: item.user.user_name,
                 description: item.description,
             };

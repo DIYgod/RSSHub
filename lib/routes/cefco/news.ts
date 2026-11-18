@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/research/news',
@@ -37,7 +36,7 @@ async function handler() {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('dd.clamp').text(),
-                pubDate: timezone(parseDate($item.find('dd.time').text(), 'YYYY/MM/DD'), 8),
+                pubDate: parseDate($item.find('dd.time').text(), 'YYYY/MM/DD', 8),
                 image: $item.find('a.imgbox img').attr('src') ? new URL($item.find('a.imgbox img').attr('src')!, baseUrl).href : undefined,
             };
         });

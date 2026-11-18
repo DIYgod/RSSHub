@@ -5,8 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zw/projectList',
@@ -59,7 +58,7 @@ async function handler() {
                     description: renderToString(<ProjectListDescription item={item} notice={notice.message} />),
                     link: url,
                     guid: `cdzjryb:zw:projectList:${item[0]}`,
-                    pubDate: timezone(parseDate(item[8]), 8),
+                    pubDate: parseDate(item[8], 8),
                 };
             })
         )

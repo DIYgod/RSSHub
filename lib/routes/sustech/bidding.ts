@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bidding',
@@ -49,7 +49,7 @@ async function handler() {
             const a = $item.find('li > a');
             const href = a.attr('href');
             const title = a.text();
-            return href && title ? { pubDate: itemPubdate ? parseDateInTimezone(itemPubdate, 8) : undefined, title, link: new URL(href, link).href } : [];
+            return href && title ? { pubDate: itemPubdate ? parseDate(itemPubdate, 8) : undefined, title, link: new URL(href, link).href } : [];
         });
     const items = await pMap(
         list,

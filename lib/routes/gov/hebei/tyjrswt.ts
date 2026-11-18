@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tyjrswt/:type',
@@ -40,7 +39,7 @@ function loadDetail(link: string) {
             title,
             description: introduce,
             link,
-            pubDate: dateTime ? timezone(parseDate(dateTime), 8) : undefined,
+            pubDate: dateTime ? parseDate(dateTime, 8) : undefined,
             author: author || undefined,
         };
     });

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://www.bmie.neu.edu.cn';
 
@@ -115,7 +114,7 @@ async function handler(ctx) {
                 return { description: $('.entry').html(), date, author: auhor };
             });
             const description = data.description;
-            const pubDate = data.date ? timezone(parseDate(data.date), 8) : undefined;
+            const pubDate = data.date ? parseDate(data.date, 8) : undefined;
             const author = data.author;
             const result = {
                 title: title!,

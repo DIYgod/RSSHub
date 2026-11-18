@@ -126,13 +126,13 @@ describe('playwright', () => {
         const page = playwright.page;
         context = playwright.context;
         const browser = context.browser();
-        const startTime = Date.now();
+        const startTime = performance.now();
 
         const html = await page.evaluate(() => document.body.getHTML());
         expect(html.length).toBeGreaterThan(0);
 
         expect(browser?.isConnected()).toBe(true);
-        const sleepTime = 31 * 1000 - (Date.now() - startTime);
+        const sleepTime = 31 * 1000 - (performance.now() - startTime);
         if (sleepTime > 0) {
             await wait(sleepTime);
         }

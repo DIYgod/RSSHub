@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jyt/tzgg',
@@ -72,7 +71,7 @@ async function handler(ctx) {
                 return {
                     ...item,
                     author,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : item.pubDate,
                     description: $$('.trs_editor_view').html() || $$('.TRS_UEDITOR').html(),
                 };
             })

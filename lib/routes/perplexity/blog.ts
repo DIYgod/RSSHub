@@ -6,8 +6,8 @@ import type { BrowserContext } from 'patchright';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
@@ -137,7 +137,7 @@ async function handler(ctx: Context) {
 
                     const $content = load(contentHtml);
 
-                    let pubDate: string | number | Date | undefined = item.pubDate ?? undefined;
+                    let pubDate: string | number | Temporal.Instant | undefined = item.pubDate ?? undefined;
                     if (!pubDate) {
                         const timeEl = $content('time[datetime]').first();
                         if (timeEl.length) {

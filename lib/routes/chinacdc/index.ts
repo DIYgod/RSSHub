@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -54,9 +53,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             let pubDate;
 
             if (dateMatch) {
-                pubDate = timezone(parseDate(dateMatch[0]), 8);
+                pubDate = parseDate(dateMatch[0], 8);
             } else {
-                pubDate = spanText ? timezone(parseDate(spanText), 8) : undefined;
+                pubDate = spanText ? parseDate(spanText, 8) : undefined;
             }
 
             const description: string = renderDescription({
@@ -90,7 +89,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     if (requestedLimit && limit > 0 && ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 
@@ -118,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
 
                     const detailDate = $$('span.fb em').text();
-                    const pubDate = detailDate ? timezone(parseDate(detailDate), 8) : item.pubDate;
+                    const pubDate = detailDate ? parseDate(detailDate, 8) : item.pubDate;
 
                     return {
                         title: detailTitle || item.title, // Use original title as fallback

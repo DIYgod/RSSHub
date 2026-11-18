@@ -9,7 +9,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface MailConfig {
     username: string;
@@ -142,7 +142,7 @@ async function handler(ctx) {
                         return Promise.resolve({
                             title: item.envelope?.subject,
                             description,
-                            pubDate: item.envelope?.date ? parseDate(item.envelope.date) : undefined,
+                            pubDate: item.envelope?.date ? parseDate(typeof item.envelope.date === 'string' ? item.envelope.date : item.envelope.date.getTime()) : undefined,
                             author: parsed.from?.name || getAddresses(parsed.from ? [parsed.from] : [])[0],
                             guid: `mail:${email}:${folder}:${item.envelope?.messageId || item.uid}`,
                         });

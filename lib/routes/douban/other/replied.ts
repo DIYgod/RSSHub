@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/replied/:uid',
@@ -64,16 +65,14 @@ async function handler(ctx) {
 
                         const comments = JSON.parse(match[1] + '}]');
 
-                        let latest = new Date(0),
-                            description,
-                            pubDate,
-                            author;
+                        let latest: Temporal.Instant | undefined, description, pubDate, author;
 
                         while (comments.length > 0) {
                             const c = comments.shift();
-                            if (c.author.uid === ctx.req.param('uid') && new Date(c.create_time) > new Date(latest)) {
-                                latest = new Date(c.create_time + ' GMT+8');
-                                pubDate = latest.toUTCString();
+                            const createTime = parseDate(c.create_time, 8);
+                            if (c.author.uid === ctx.req.param('uid') && createTime && (!latest || Temporal.Instant.compare(createTime, latest) > 0)) {
+                                latest = createTime;
+                                pubDate = latest;
                                 description = c.text;
                                 author = c.author.name;
                             } else if (c.replies.length > 0) {

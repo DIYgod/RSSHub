@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bbs/hot',
@@ -63,7 +62,7 @@ async function handler() {
                         description: $('.post-card:first-child .content').html(),
                         link: url,
                         guid: url,
-                        pubDate: timezone(parseDate(date, '发表于YYYY-MM-DD HH:mm:ss'), 8),
+                        pubDate: parseDate(date, '发表于YYYY-MM-DD HH:mm:ss', 8),
                     };
                 } catch {
                     return {

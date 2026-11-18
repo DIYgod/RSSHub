@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -40,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 language,
             };
@@ -48,9 +47,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    const datesKnown = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const datesKnown = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        items.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit));
 

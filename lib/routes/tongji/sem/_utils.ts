@@ -2,11 +2,10 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
-export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Date }>> {
+export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Temporal.Instant | undefined }>> {
     const pageUrl: string = url;
 
     const response = await got.get(pageUrl, {
@@ -31,7 +30,7 @@ export async function getNotifByPage(url): Promise<Array<{ title: string; link: 
         return {
             title: title!,
             link: new URL(href!, pageUrl).href,
-            pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), 8),
+            pubDate: parseDate(time, 'YYYY-MM-DD', 8),
         };
     });
 }

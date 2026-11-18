@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type_id',
@@ -48,7 +47,7 @@ async function handler(ctx) {
             return {
                 title: $$('a').text(),
                 link: itemUrl,
-                pubDate: timezone(parseDate($$('.news_meta').text()), 8),
+                pubDate: parseDate($$('.news_meta').text(), 8),
             };
         });
 

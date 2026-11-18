@@ -7,9 +7,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'Industry/Comment' } = ctx.req.param();
@@ -36,9 +35,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY-MM-DD', 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : undefined,
+                updated: upDatedStr ? parseDate(upDatedStr, 'YYYY-MM-DD', 8) : undefined,
                 language,
             };
 
@@ -67,13 +66,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     let processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY-MM-DD', 8) : item.pubDate,
                         author: authors,
                         content: {
                             html: description,
                             text: $$('div.news div.content').text(),
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 'YYYY-MM-DD', 8) : item.updated,
                         language,
                     };
 

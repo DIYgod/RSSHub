@@ -4,9 +4,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/latest',
@@ -36,11 +35,11 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const day = $item.find('.pic em').text();
             const yearMonth = $item.find('.pic span').contents().last().text();
-            const pubDate = parseDate(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], true);
+            const pubDate = parseDateStrict(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], 8);
             return {
                 title: $item.find('.txt h3').text(),
                 link: new URL($item.attr('href')!, link).href,
-                pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                pubDate,
             };
         })
         .slice(0, getRouteLimit(ctx, 10));

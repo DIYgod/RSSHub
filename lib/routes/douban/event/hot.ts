@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/event/hot/:locationId',
@@ -21,12 +20,11 @@ export const route: Route = {
     handler,
 };
 
-const getPubDate = (dateText?: string): Date | undefined => {
+const getPubDate = (dateText?: string): Temporal.Instant | undefined => {
     if (!dateText || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateText)) {
         return undefined;
     }
-    const date = timezone(parseDate(dateText, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(dateText, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0);
 };
 
 async function handler(ctx) {

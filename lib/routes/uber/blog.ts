@@ -6,8 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.uber.com';
 const engineeringUrl = `${baseUrl}/us/en/blog/engineering`;
@@ -132,7 +132,7 @@ function getArticle(item: ArticleSummary): Promise<DataItem> {
             ...item,
             title: $header.find('h1').text() || item.title,
             description: $content.html() ?? $('meta[name="description"]').attr('content'),
-            pubDate: published ? parseDate(published) : undefined,
+            pubDate: published ? parseDate(published, 'MMMM D, YYYY') : undefined,
             author: authors.join(', ') || undefined,
             category: categories.length > 0 ? categories : undefined,
             image: $('meta[property="og:image"]').attr('content'),

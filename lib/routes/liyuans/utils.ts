@@ -1,5 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export async function fetchThreads(kind?: 'forum' | 'topic' | 'user', id?: string) {
     const rootUrl = 'https://forums.liyuans.com';

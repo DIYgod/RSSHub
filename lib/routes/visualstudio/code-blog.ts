@@ -6,8 +6,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/code/blog',
@@ -103,8 +103,8 @@ async function handler(): Promise<Data> {
                 title,
                 link,
                 description: detail.description,
-                pubDate: item.pubDate && Number.isFinite(Date.parse(item.pubDate)) ? parseDate(item.pubDate) : undefined,
-                updated: modifiedDates.get(link) && Number.isFinite(Date.parse(modifiedDates.get(link)!)) ? parseDate(modifiedDates.get(link)!) : undefined,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                updated: modifiedDates.get(link) ? parseDate(modifiedDates.get(link)!) : undefined,
                 author: item.author ?? item.creator,
                 category: categories.get(link),
             };

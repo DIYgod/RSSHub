@@ -6,8 +6,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const apiUrl = 'https://frodo.douban.com/api/v2/tv/coming_soon';
 const apiKey = '0dad551ec0f84ed02907ff5c42e8ec70';
@@ -69,7 +68,7 @@ const signRequest = async (url: string, ts: string, method = 'GET'): Promise<str
 
 const getPubDateText = (pubdate?: string[]): string | undefined => pubdate?.[0];
 
-const getPubDate = (pubdate?: string[]): Date | undefined => {
+const getPubDate = (pubdate?: string[]): Temporal.Instant | undefined => {
     const pubDateText = getPubDateText(pubdate);
     if (!pubDateText) {
         return undefined;
@@ -79,8 +78,7 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
     if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(datePart)) {
         return undefined;
     }
-    const date = timezone(parseDate(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0);
 };
 
 const getSortTimestamp = (pubdate?: string[]): number => {
@@ -98,8 +96,9 @@ const getSortTimestamp = (pubdate?: string[]): number => {
     const year = Number(match[1]);
     const month = match[2] ? Number(match[2]) : 1;
     const day = match[3] ? Number(match[3]) : 1;
-    const timestamp = Date.UTC(year, month - 1, day);
-    return Number.isNaN(timestamp) ? Infinity : timestamp;
+    return Temporal.PlainDate.from({ year, month: 1, day: 1 })
+        .add({ months: month - 1, days: day - 1 })
+        .toZonedDateTime('UTC').epochMilliseconds;
 };
 
 const getWishCount = (wishCount?: number | string): number => {
@@ -159,7 +158,7 @@ async function handler(ctx) {
     const rawCount = Number(countParam || '');
     const requestCount = Number.isNaN(rawCount) || rawCount <= 0 ? 10 : rawCount;
 
-    const ts = new Date().toISOString().slice(0, 10).replaceAll('-', '');
+    const ts = Temporal.Now.plainDateISO('UTC').toString().replaceAll('-', '');
     const searchParams = {
         start: 0,
         count: requestCount,

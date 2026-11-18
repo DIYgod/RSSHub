@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/scveto',
@@ -46,7 +45,7 @@ async function handler() {
                 description: `${country.html()} vetoed ${agenda.html()}. <br/> <br/> <b>Resolution: </b> ${resolution.html()}<br/><br/>  <b>Meeting Record: </b> ${meeting.html()}`,
                 link: resolution.find('a').attr('href'),
                 guid: vetoNumber === 1 ? guid : `${guid}:${vetoNumber}`,
-                pubDate: date ? timezone(parseDate(date), 0) : undefined,
+                pubDate: date ? parseDate(date, 0) : undefined,
             };
         });
 

@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://av.jpn.support.panasonic.com/support/global/cs/dsc/download/';
 // shortcut: lists expose only the latest version; parse model histories if complete release history is needed.
@@ -66,8 +65,8 @@ async function fetchItems(filename: string, category: string) {
                 throw new Error(`Invalid firmware version for ${model} on ${url}`);
             }
             const date = fields.eq(2).text().replaceAll(/[.,]/g, ' ').trim().replaceAll(/\s+/g, ' ');
-            const pubDate = timezone(parseDate(date, 'MMM D YYYY', 'en', true), 0);
-            if (Number.isNaN(pubDate.getTime())) {
+            const pubDate = parseDateStrict(date, 'MMM D YYYY', 0);
+            if (!pubDate) {
                 throw new TypeError(`Invalid firmware date for ${model} on ${url}`);
             }
 

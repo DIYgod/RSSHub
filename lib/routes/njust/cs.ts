@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getContent } from './utils';
 
@@ -53,7 +52,7 @@ async function handler(ctx) {
         link: siteUrl,
         item: list.toArray().map((item) => ({
             title: $(item).find('.news_title').text(),
-            pubDate: timezone(parseDate($(item).find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+            pubDate: parseDate($(item).find('.news_meta').text(), 'YYYY-MM-DD', 8),
             link: new URL($(item).find('a').attr('href')!, siteUrl).href,
         })),
     };

@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -73,7 +72,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="publishdate"]').prop('content')), 8);
+                item.pubDate = parseDate($$('meta[name="publishdate"]').prop('content'), 8);
                 item.author = $$('meta[name="author"]').prop('content') || $$('meta[name="source"]').prop('content');
                 item.content = {
                     html: description,

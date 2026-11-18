@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -73,7 +72,7 @@ async function handler(ctx) {
 
                 item.title = content('.content-text h1').text() || item.title;
                 item.description = content('.content-text .inner-text').html();
-                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), 8);
+                item.pubDate = parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm', 8);
 
                 return item;
             })

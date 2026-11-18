@@ -6,7 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const categoryMap = {
     xsyg: { title: '学术预告', tag: '30284' },
@@ -60,7 +60,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDateInTimezone(pubDate.text(), 8),
+                pubDate: parseDate(pubDate.text(), 8),
             };
         });
 

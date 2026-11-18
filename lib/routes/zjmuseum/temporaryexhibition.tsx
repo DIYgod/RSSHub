@@ -4,8 +4,7 @@ import { Agent } from 'undici';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -81,7 +80,7 @@ async function handler(ctx) {
                 return list.map((item) => {
                     const title = item.title;
                     const itemLink = `${baseUrl}/cn/#/Exhibition/TemporaryExhibition/${item.content_id}`;
-                    const pubDate = item.create_time ? timezone(parseDate(item.create_time), 8) : undefined;
+                    const pubDate = item.create_time ? parseDate(item.create_time, 8) : undefined;
                     const startDate = item.start_time?.split('T', 1)[0] ?? '';
                     const endDate = item.end_time?.split('T', 1)[0] ?? '';
                     const location = [item.museum_area, item.address].filter(Boolean).join(' ');

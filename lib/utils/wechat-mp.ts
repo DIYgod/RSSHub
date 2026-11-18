@@ -33,7 +33,7 @@ import type { Element } from 'domhandler';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 class WeChatMpError extends Error {
     constructor(message: string) {
@@ -486,7 +486,7 @@ type WeChatMpPage = {
     author: string;
     description: string;
     summary: string;
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
     mpName?: string;
     enclosure_url?: string;
     itunes_duration?: string | number;

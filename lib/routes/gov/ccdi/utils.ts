@@ -3,9 +3,8 @@ import { Cookie, CookieJar } from 'tough-cookie';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const cookieJar = new CookieJar();
 
@@ -51,7 +50,7 @@ export const parseNewsList = async (url, selector, ctx) => {
             return {
                 title: $item.find('a').text().trim(),
                 link: new URL($item.find('a').attr('href')!, url).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
             };
         });
     const title = $('.other_Location')
@@ -88,7 +87,7 @@ export const parseArticle = async (item) => {
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
         const pubDate = title.match(/发布时间：(.*)分享/s)?.[1].trim();
         if (pubDate) {
-            item.pubDate = timezone(parseDate(pubDate), 8);
+            item.pubDate = parseDate(pubDate, 8);
         }
 
         // oldsrc is causing freshrss imageproxy not to work correctly

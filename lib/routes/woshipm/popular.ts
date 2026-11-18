@@ -2,7 +2,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, parseArticle } from './utils';
 
@@ -16,8 +16,7 @@ function parsePublicationTime(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
         return;
     }
-    const date = parseDate(value, 'x');
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value, 'x');
 }
 
 const parseArticleResult = async (item: DataItem) => {

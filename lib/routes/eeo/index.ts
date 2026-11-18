@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:column?/:category?',
@@ -129,7 +128,7 @@ async function handler(ctx: Context) {
                     ...item,
                     title: content('h1').first().text(),
                     description: content('.xd-nr').html(),
-                    pubDate: timezone(parseDate(content('.thiszihao-box-add').nextUntil('.cls').find('span').eq(0).text()), 8),
+                    pubDate: parseDate(content('.thiszihao-box-add').nextUntil('.cls').find('span').eq(0).text(), 8),
                 };
             }),
         { concurrency: 3 }

@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderEssay } from './templates/essay';
 import { renderVideo } from './templates/video';
@@ -80,7 +80,7 @@ const getData = async (list) => {
             cache.tryGet(item.link, async () => {
                 const data = await ofetch(item.json);
                 const article = data.pageProps.article;
-                item.pubDate = new Date(article.publishedAt).toUTCString();
+                item.pubDate = parseDate(article.publishedAt);
                 const content = format(article);
                 const capture = load(content);
                 await Promise.all(

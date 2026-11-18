@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -119,7 +118,7 @@ async function handler(ctx) {
                 title: formatTitle(),
                 link,
                 description: content.replaceAll(/\s/g, '<br>'),
-                pubDate: timezone(parseDate(date, 'YYYY/MM/DD HH:mm:ss'), 8),
+                pubDate: parseDate(date, 'YYYY/MM/DD HH:mm:ss', 8),
                 guid: `${name} ${content}`,
             };
             return info;

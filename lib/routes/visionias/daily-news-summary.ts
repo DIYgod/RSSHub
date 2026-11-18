@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 import { baseUrl } from './utils';
 
@@ -54,7 +54,7 @@ function processNews(page: string) {
             const title = $(item).find('a>h5').text();
             const content = $(item).find('a>div');
             const metadata = content.children('ul').first().children('li');
-            const date = parseDate(metadata.eq(2).text(), 'YYYY-MM-DD', true);
+            const date = parseDateStrict(metadata.eq(2).text(), 'YYYY-MM-DD');
             const category = [
                 metadata.eq(1).text(),
                 ...content
@@ -70,7 +70,7 @@ function processNews(page: string) {
                 link,
                 guid: link,
                 description: content.children('div[x-show]').html(),
-                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
                 category,
             };
         });

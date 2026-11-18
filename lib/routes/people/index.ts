@@ -6,9 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict, toInstant } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getPublicationDate = (html: string) => {
@@ -16,8 +15,7 @@ const getPublicationDate = (html: string) => {
     if (!timestamp) {
         return;
     }
-    const date = timezone(parseDate(timestamp, 'YYYY年MM月DD日HH:mm', true), 8);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(timestamp, 'YYYY年MM月DD日HH:mm', 8);
 };
 
 export const route: Route = {
@@ -86,8 +84,8 @@ async function handler(ctx) {
     );
 
     for (const item of items) {
-        const date = item.pubDate === undefined || item.pubDate === null ? undefined : parseDate(item.pubDate);
-        if (date && Number.isFinite(date.getTime())) {
+        const date = item.pubDate === undefined || item.pubDate === null ? undefined : toInstant(item.pubDate);
+        if (date) {
             item.pubDate = date;
         } else {
             delete item.pubDate;

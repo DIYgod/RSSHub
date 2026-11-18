@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const getItems = async (url: string, extra: { date: boolean; selector: string }) => {
     const mainUrl = 'https://insider.finology.in';
@@ -16,7 +15,7 @@ const getItems = async (url: string, extra: { date: boolean; selector: string })
             const $item = $(item);
             const title = $item.find('p.text-m-height').text();
             const link = $item.find('a').attr('href');
-            const pubDate = extra.date ? timezone(parseDate($item.find('div.text-light p').first().text()), 0) : '';
+            const pubDate = extra.date ? parseDate($item.find('div.text-light p').first().text(), 0) : '';
             const itunes_item_image = $item.find('img').attr('src');
             const category = [$item.find('p.pt025').text()];
             return {

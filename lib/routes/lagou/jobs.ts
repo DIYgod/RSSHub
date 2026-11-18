@@ -5,7 +5,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const apiUrl = 'https://www.lagou.com/jobs/v2/positionAjax.json';
 const rsaPublicKey =
@@ -98,7 +98,7 @@ async function handler(ctx: Context) {
             description: `薪资：${item.salary}<br>要求：${item.workYear} / ${item.education}<br>公司名称：${item.companyFullName}<br>公司描述：${item.industryField} / ${item.financeStage} / ${item.companySize}<br>职位优势：${item.positionAdvantage}${item.linestaion ? '<br>附近线路：' + item.linestaion : ''}`,
             category: [...new Set([...(item.companyLabelList ?? []), ...(item.positionLables ?? [])].filter(Boolean))],
             link: `https://www.lagou.com/wn/jobs/${item.positionId}.html`,
-            pubDate: item.createTime ? parseDateInTimezone(item.createTime, 8) : undefined,
+            pubDate: item.createTime ? parseDate(item.createTime, 8) : undefined,
         })),
     };
 }

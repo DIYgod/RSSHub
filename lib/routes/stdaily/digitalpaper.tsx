@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -7,7 +6,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ArticleDetailResponse, ArticleListResponse, DateListResponse, SectionListResponse } from './types';
 
@@ -38,7 +37,7 @@ async function handler(): Promise<Data> {
         method: 'POST',
         body: {
             code: CODE,
-            date: dayjs().format('YYYY-MM-01'),
+            date: Temporal.Now.plainDateISO('UTC').with({ day: 1 }).toString(),
         },
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
     });

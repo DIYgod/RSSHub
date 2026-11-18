@@ -3,10 +3,9 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -79,7 +78,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $link.contents().not('span').text(),
                     link: rootUrl + '/' + $link.attr('href'),
-                    pubDate: timezone(parseDate($link.find('span').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate($link.find('span').text(), 'YYYY-MM-DD', 8),
                 };
             })
             .filter((item) => item !== null);

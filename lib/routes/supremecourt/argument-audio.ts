@@ -1,17 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezonePlugin from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
-dayjs.extend(timezonePlugin);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/argument_audio/:year?',
@@ -24,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { year = new Date().getFullYear() } = ctx.req.param();
+    const { year = Temporal.Now.zonedDateTimeISO('UTC').year } = ctx.req.param();
 
     const rootUrl = 'https://www.supremecourt.gov';
     const imageUrl = `${rootUrl}/images/scous_seal.png`;
@@ -62,7 +56,7 @@ async function handler(ctx: Context) {
                 return {
                     description: content('#pagemaindiv').html() ?? undefined,
                     caseName,
-                    pubDate: arguedDate ? parseDate(dayjs.tz(arguedDate, 'MM/DD/YY', 'America/New_York').format()) : undefined,
+                    pubDate: arguedDate ? parseDate(arguedDate, 'MM/DD/YY', 'America/New_York') : undefined,
                     itunes_item_image: imageUrl,
                     enclosure_url: content('audio source').attr('src'),
                     enclosure_type: 'audio/mpeg',

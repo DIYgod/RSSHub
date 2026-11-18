@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml';
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 title: a.text(),
                 // Resolve the relative article link against the list page.
                 link: `${baseUrl}/../${a.attr('href')}`,
-                pubDate: timestr ? parseDateInTimezone(timestr, 8) : undefined,
+                pubDate: timestr ? parseDate(timestr, 8) : undefined,
                 author: '时间|' + timestr,
             };
         });
@@ -109,8 +109,8 @@ async function handler(ctx) {
                 item.title = data.title;
                 item.author = data.source;
                 item.guid = `hebtv-nbszxd-${articleId}`;
-                item.pubDate = data.publishDate ? parseDateInTimezone(data.publishDate, 8) : item.pubDate;
-                item.updated = data.modifyTime ? parseDateInTimezone(data.modifyTime, 8) : undefined;
+                item.pubDate = data.publishDate ? parseDate(data.publishDate, 8) : item.pubDate;
+                item.updated = data.modifyTime ? parseDate(data.modifyTime, 8) : undefined;
 
                 if (videoData) {
                     item.itunes_item_image = videoData.poster;

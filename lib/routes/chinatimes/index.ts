@@ -4,10 +4,9 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -57,7 +56,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: `${new URL(a.attr('href')!, baseUrl).href}?chdtv`,
                 guid: `${baseUrl}${a.attr('href')}`,
-                pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 8),
+                pubDate: parseDate($item.find('time').attr('datetime')!, 8),
                 category: $item
                     .find('.category a')
                     .toArray()

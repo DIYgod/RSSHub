@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -39,7 +38,7 @@ const parseArticle = async (item) => {
                     .html()!
                     .replaceAll(/data:image\S*=="\s*original="/g, '') ?? '';
             if (!pubDate && content('.introduce').text()) {
-                pubDate = timezone(parseDate(content('.introduce').text()), 8);
+                pubDate = parseDate(content('.introduce').text(), 8);
             }
         }
         // oeeee news page:
@@ -62,7 +61,7 @@ const parseArticle = async (item) => {
             const { data } = await ofetch<VideoResponse>('https://api-ndapp.oeeee.com/nd-mobile-api/web/doc/getDetail', { query: { docid: docId } });
             if (data?.flag === 'video') {
                 description = renderDescription({ videoUrl: data.videoUrl, videoPoster: data.videoFirstFrame });
-                pubDate = data.ptime ? timezone(parseDate(data.ptime, 'YYYY-MM-DD HH:mm:ss'), 8) : pubDate;
+                pubDate = data.ptime ? parseDate(data.ptime, 'YYYY-MM-DD HH:mm:ss', 8) : pubDate;
                 author = data.userName ? [{ name: data.userName }] : author;
             }
         }

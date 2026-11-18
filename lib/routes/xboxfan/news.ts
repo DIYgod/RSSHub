@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -51,7 +51,7 @@ async function handler() {
             const data: DataItem = {
                 title: '资讯',
                 author: $(item).find('div.homeName').text(),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
 
             $(item).find('div.homeName').remove();

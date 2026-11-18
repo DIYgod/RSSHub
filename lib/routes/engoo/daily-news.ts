@@ -5,8 +5,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import markdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const apiUrl = 'https://api.engoo.com/api';
 const categoryId = '0225ae09-5d63-41c2-bd75-693985d07d78';

@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gwy/:category?/:column?',
@@ -92,14 +92,14 @@ async function handler(ctx) {
                 link: link.href,
                 category: matches![1],
                 guid: `zjks-${matches![1]}-${matches![2]}`,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 tzid: matches![2],
             };
         });
 
-    const datesKnown = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const datesKnown = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        items.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(50, limit));
 

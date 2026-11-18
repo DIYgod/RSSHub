@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/edu/news',
@@ -24,8 +23,7 @@ export const route: Route = {
 };
 
 function parsePublishedDate(value: string) {
-    const date = parseDate(value.trim(), '发布日期：YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value.trim(), '发布日期：YYYY-MM-DD', 8);
 }
 
 async function handler(): Promise<Data> {

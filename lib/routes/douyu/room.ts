@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/room/:id',
@@ -44,7 +45,7 @@ async function handler(ctx) {
             item = [
                 {
                     title: `${data.videoLoop === 1 ? '视频轮播' : '开播'}: ${data.room_name}`,
-                    pubDate: new Date(data.show_time * 1000).toUTCString(),
+                    pubDate: parseDate(data.show_time * 1000),
                     guid: data.show_time,
                     link: `https://www.douyu.com/${id}`,
                     description: `<img src="${room_thumb}">`,
@@ -66,7 +67,7 @@ async function handler(ctx) {
             item = [
                 {
                     title: `开播: ${data.room_name}`,
-                    pubDate: new Date(data.start_time).toUTCString(),
+                    pubDate: parseDate(data.start_time),
                     guid: data.start_time,
                     link: `https://www.douyu.com/${id}`,
                 },

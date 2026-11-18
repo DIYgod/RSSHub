@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { parseJSONP } from './jsonp-helper';
 
@@ -75,7 +75,7 @@ async function handler() {
                 </>
             ),
             // the article publish time
-            pubDate: item.releaseDate ? parseDateInTimezone(item.releaseDate.replaceAll('.', '-'), 0) : undefined,
+            pubDate: item.releaseDate ? parseDate(item.releaseDate.replaceAll('.', '-'), 0) : undefined,
             // the article link
             link: `${url}/${item.referID}`,
         })),

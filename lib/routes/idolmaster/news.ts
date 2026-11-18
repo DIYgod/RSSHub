@@ -7,9 +7,8 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     url: 'idolmaster-official.jp/news',
@@ -81,7 +80,7 @@ async function handler(ctx: Context): Promise<Data> {
     let items: DataItem[] = articleList.map((article): DataItem => ({
         title: article.title,
         link: article.url,
-        pubDate: timezone(parseDate(article.dspdate), 9),
+        pubDate: parseDate(article.dspdate, 9),
         category: article.categories.subcategory.map((cat) => cat.name),
     }));
 

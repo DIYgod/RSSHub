@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface RecruitmentItem extends DataItem {
     link: string;
@@ -40,12 +39,11 @@ const rand = 0.01234567890123456;
 const apiRootUrl = 'https://ustc.ahbys.com';
 const rootUrl = 'https://job.ustc.edu.cn';
 
-function parseRecruitmentDate(value?: string): Date | undefined {
+function parseRecruitmentDate(value?: string): Temporal.Instant | undefined {
     if (!value) {
         return undefined;
     }
-    const parsed = parseDate(value);
-    return /(?:Z|[+-]\d{2}:\d{2})$/i.test(value) ? parsed : timezone(parsed, 8);
+    return parseDate(value, 8);
 }
 
 async function getRecruitmentDetails(category: string, id?: number): Promise<Pick<DataItem, 'title' | 'description'>> {

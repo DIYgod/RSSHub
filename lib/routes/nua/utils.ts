@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 type NuaItem = DataItem & { link: string; type: 'in-nua' | 'wechat-mp' | 'nua' | 'unknown' };
@@ -29,11 +28,11 @@ const pageType = (href: string) => {
 function parseListDate(text: string) {
     const date = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];
     if (date) {
-        return timezone(parseDate(date, 'YYYY-MM-DD'), 8);
+        return parseDate(date, 'YYYY-MM-DD', 8);
     }
     const parts = text.match(/(\d{2})\s+(\d{4})\/(\d{2})/);
     if (parts) {
-        return timezone(parseDate(`${parts[2]}-${parts[3]}-${parts[1]}`, 'YYYY-MM-DD'), 8);
+        return parseDate(`${parts[2]}-${parts[3]}-${parts[1]}`, 'YYYY-MM-DD', 8);
     }
 }
 

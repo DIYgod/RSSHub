@@ -2,6 +2,7 @@ import { createDecipheriv } from 'node:crypto';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/manga/update/:comicid',
@@ -182,7 +183,7 @@ async function handler(ctx) {
         comic_id: Number(comic_id),
     });
 
-    const ultraSign = genReqSign(query, body, Date.now());
+    const ultraSign = genReqSign(query, body, Temporal.Now.instant().epochMilliseconds);
 
     const response = await got({
         method: 'POST',
@@ -206,7 +207,7 @@ async function handler(ctx) {
             title: item.short_title === item.title ? item.short_title : `${item.short_title} ${item.title}`,
             author,
             description: `<img src="${item.cover}">`,
-            pubDate: new Date(item.pub_time + ' +0800'),
+            pubDate: parseDate(item.pub_time, 8),
             link: `https://manga.bilibili.com/mc${comic_id}/${item.id}`,
         })),
     };

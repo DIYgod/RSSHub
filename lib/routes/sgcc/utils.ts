@@ -38,7 +38,7 @@ const sm4Decrypt = (cipher: string, uuid: string) => {
 };
 
 const request = async (path: string, payload: JsonObject, uuid: string, publicKey: string, headers?: Record<string, string>) => {
-    const timestamp = Date.now();
+    const timestamp = Temporal.Now.instant().epochMilliseconds;
     const data = sm4Encrypt(payload, uuid);
     const skey = sm2.doEncrypt(Buffer.from(uuid, 'utf8').toString('hex'), publicKey, 1);
     const response = await ofetch(`${baseUrl}/api${path}`, {

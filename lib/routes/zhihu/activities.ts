@@ -2,7 +2,7 @@ import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processImage, withZhihuClient } from './utils';
 

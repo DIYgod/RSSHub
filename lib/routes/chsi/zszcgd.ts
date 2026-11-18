@@ -3,11 +3,10 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -51,12 +50,12 @@ async function handler(ctx: Context) {
 
                 return {
                     title: $item.text(),
-                    pubDate: timezone(parseDate($item.prev().text()), 8),
+                    pubDate: parseDate($item.prev().text(), 8),
                     link: new URL(link, currentUrl).href,
                 };
             });
 
-        const ordered = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        const ordered = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
         const limit = getRouteLimit(ctx);
         const selected = ordered.slice(0, limit);
         const items = await Promise.all(

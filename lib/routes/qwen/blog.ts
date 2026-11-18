@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const buildBlogItem = (item: any, base: string): DataItem => {
     const $ = load(item.content || item.extra.introduction || '');

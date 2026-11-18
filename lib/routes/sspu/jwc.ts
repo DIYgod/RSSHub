@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:listId',
@@ -55,7 +54,7 @@ async function handler(ctx) {
 
                 return {
                     description: $('.wp_articlecontent').html(),
-                    pubDate: timezone(parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss', 8),
                 };
             });
             return { ...item, ...details };

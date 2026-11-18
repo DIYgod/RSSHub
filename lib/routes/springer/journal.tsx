@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/journal/:journal',
@@ -78,7 +78,7 @@ async function handler(ctx) {
                             .toArray()
                             .map((section) => $3.html(section))
                             .join(''),
-                        pubDate: publicationDate ? parseDateInTimezone(publicationDate, 0) : undefined,
+                        pubDate: publicationDate ? parseDate(publicationDate, 0) : undefined,
                         author: $3('meta[name="citation_author"]')
                             .toArray()
                             .map((author) => $3(author).attr('content'))

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const rootUrl = 'https://www.dayanzai.me/';
 const sourceHostname = new URL(rootUrl).hostname.replace(/^www\./, '');
@@ -63,16 +62,16 @@ async function handler(ctx) {
     const $ = load(response.data);
     const lists = $('div.c-box > div > div.c-zx-list > ul > li');
     const reg = /日期：(.*?(?:\s\(.*?\))?)\s/;
-    const relativeDates = new Map<string, Date>();
+    const relativeDates = new Map<string, Temporal.Instant | undefined>();
     const list = lists.toArray().map((item) => {
         const $item = $(item).find('div');
-        let date: string | Date = reg.exec($item.find('div.r > p.other').text())![1];
+        let date: string | Temporal.Instant | undefined = reg.exec($item.find('div.r > p.other').text())![1];
         if (date.includes('周') || date.includes('月')) {
             date = /\((.*?)\)/.exec(date)![1];
-            date = timezone(parseDate(date, 'MM-DD'), 8);
+            date = parseDate(date, 'MM-DD', 8);
         } else if (date.includes('年')) {
             date = /\((.*?)\)/.exec(date)![1];
-            date = timezone(parseDate(date, 'YYYY-MM-DD'), 8);
+            date = parseDate(date, 'YYYY-MM-DD', 8);
         } else {
             const relativeDate = relativeDates.get(date) ?? parseRelativeDate(date);
             relativeDates.set(date, relativeDate);

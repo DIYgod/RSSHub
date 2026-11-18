@@ -112,13 +112,13 @@ describe('template middleware', () => {
 
         expect(data.item[0].title).toBe('ABC...');
         expect(data.item[0].author).toBe('Alice, Bob');
-        expect(data.item[0].itunes_duration).toBe('0:01:05');
+        expect(data.item[0].itunes_duration).toBe(65);
 
         config.titleLengthLimit = originalLimit;
     });
 
     it('removes control characters from every field', async () => {
-        const pubDate = new Date(0);
+        const pubDate = Temporal.Instant.fromEpochMilliseconds(0);
         const data = {
             title: 'Feed\u{0008}',
             description: 'About\u{0008}',
@@ -162,6 +162,27 @@ describe('template middleware', () => {
         });
     });
 
+    it.each([
+        ['', undefined],
+        [null, undefined],
+        [undefined, undefined],
+        [0, undefined],
+        [Temporal.Instant.from('2019-01-01T00:00:00Z'), '2019-01-01T00:00:00.000Z'],
+        [1_546_300_800_000, '2019-01-01T00:00:00.000Z'],
+        ['2019-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z'],
+        ['Tue, 01 Jan 2019 00:00:00 GMT', '2019-01-01T00:00:00.000Z'],
+        ['Tue, 01 Jan 2019 08:00:00 UTC+8', '2019-01-01T00:00:00.000Z'],
+        // no zone in the string, so it is read as UTC
+        ['Tue, 01 Jan 2019 00:00:00', '2019-01-01T00:00:00.000Z'],
+        ['something invalid', undefined],
+    ])('converts the date %s to ISO 8601 for non-rss formats', async (date, expected) => {
+        const data = { title: 'Test', item: [{ title: 'Item', pubDate: date, updated: date }] };
+        await template(createCtx({ format: 'atom' }, data), async () => {});
+
+        expect(data.item[0].pubDate).toBe(expected);
+        expect(data.item[0].updated).toBe(expected);
+    });
+
     it('clears invalid dates for non-rss formats', async () => {
         const data = {
             title: 'Test',
@@ -176,8 +197,8 @@ describe('template middleware', () => {
         const ctx = createCtx({ format: 'json' }, data);
         await template(ctx, async () => {});
 
-        expect(data.item[0].pubDate).toBe('');
-        expect(data.item[0].updated).toBe('');
+        expect(data.item[0].pubDate).toBeUndefined();
+        expect(data.item[0].updated).toBeUndefined();
     });
 
     it('returns redirect response when redirect is set', async () => {

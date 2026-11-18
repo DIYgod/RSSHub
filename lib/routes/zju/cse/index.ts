@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 class ArticleUnavailableError extends Error {}
 export const route: Route = {
@@ -89,7 +88,7 @@ async function handler(ctx) {
                         .match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0];
                     return {
                         description: article.html(),
-                        ...(dateText && { pubDate: timezone(parseDate(dateText), 8) }),
+                        ...(dateText && { pubDate: parseDate(dateText, 8) }),
                     };
                 });
                 return { ...item, guid: item.link, ...details };

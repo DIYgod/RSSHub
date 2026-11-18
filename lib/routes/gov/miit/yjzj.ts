@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.miit.gov.cn';
 
@@ -59,7 +58,7 @@ async function handler() {
             return {
                 title: $(item).find('a').text(),
                 link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
             };
         });
 
@@ -72,7 +71,7 @@ async function handler() {
                 item.description = content('#con_con').html();
                 const pubDate = content('meta[name="PubDate"]').attr('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
 
                 return item;

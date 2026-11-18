@@ -3,7 +3,7 @@ import { randomBytes, randomInt, randomUUID } from 'node:crypto';
 import sanitizeHtml from 'sanitize-html';
 
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const apiRoot = 'https://api-h5.soulapp.cn';
 const shareRoot = 'https://w3.soulsmile.cn/activity/#/web/topic/detail';
@@ -68,7 +68,7 @@ const signCs = (timestampSec: number, str1: string, str2: string) => {
 };
 
 export const signedHeaders = (path: string, query: Record<string, string>) => {
-    const ms = Date.now();
+    const ms = Temporal.Now.instant().epochMilliseconds;
     const str1 = `${path}?${Object.keys(query)
         .toSorted(sortByCodeUnit)
         .map((k) => `${k}=${query[k]}`)

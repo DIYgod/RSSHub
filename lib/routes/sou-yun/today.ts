@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/today',
@@ -36,7 +35,7 @@ async function handler() {
                 link: currentUrl,
                 guid: today ? `sou-yun:calendar:${today}` : undefined,
                 description: `${poemResponse.Content.Text}<br>${birthday}<br>${wordResponse.Content.Text}`,
-                pubDate: today ? timezone(parseDate(today, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: today ? parseDate(today, 'YYYY-MM-DD', 8) : undefined,
             },
         ],
     };

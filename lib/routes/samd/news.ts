@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const dict = { '434': '行业资讯', '436': '协会动态', '438': '重要通知', '440': '政策法规' };
 
@@ -58,7 +57,7 @@ export const route: Route = {
 
                     const content = $('.content');
                     item.author = content.find('.author span').text();
-                    item.pubDate = timezone(parseDate(content.find('.time').text(), '发布时间：YYYY-MM-DD HH:mm:ss'), 8);
+                    item.pubDate = parseDate(content.find('.time').text(), '发布时间：YYYY-MM-DD HH:mm:ss', 8);
 
                     content.children('.titles').remove();
                     content.children('.auxi').remove();

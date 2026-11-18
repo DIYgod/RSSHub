@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const host = 'https://aerospace.xmu.edu.cn';
 const urlMap = {
@@ -68,8 +67,7 @@ function parseSourceDate(value?: string) {
     if (!dateText) {
         return;
     }
-    const date = parseDate(dateText, 'YYYY-MM-DD', true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(dateText, 'YYYY-MM-DD', 8);
 }
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();

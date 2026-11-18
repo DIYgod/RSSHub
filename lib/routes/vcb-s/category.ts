@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import { renderDescription } from './templates/post';
 
@@ -78,9 +78,8 @@ function parsePublicationDate(value?: string) {
         return;
     }
     const match = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,3})?(?:Z|\+00:00)?$/.exec(value);
-    if (!match || !Number.isFinite(parseDate(match[1], 'YYYY-MM-DDTHH:mm:ss', true).getTime())) {
+    if (!match || !parseDateStrict(match[1], 'YYYY-MM-DDTHH:mm:ss')) {
         return;
     }
-    const date = parseDate(value.endsWith('Z') || value.endsWith('+00:00') ? value : `${value}Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value.endsWith('Z') || value.endsWith('+00:00') ? value : `${value}Z`);
 }

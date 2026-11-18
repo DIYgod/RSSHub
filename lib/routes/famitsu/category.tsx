@@ -7,7 +7,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ArticleDetail, Category, CategoryArticle } from './types';
 
@@ -127,7 +127,7 @@ async function handler(ctx) {
 
     const list = data.pageProps.categoryArticleDataForPc
         .filter((item) => !item.advertiserName)
-        .map((item): DataItem & { link: string; pubDate?: Date; publicationDate: string | undefined; articleId: string } => {
+        .map((item): DataItem & { link: string; pubDate?: Temporal.Instant; publicationDate: string | undefined; articleId: string } => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');
             return {
                 title: item.title,

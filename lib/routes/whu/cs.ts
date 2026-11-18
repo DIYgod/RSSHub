@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict, toInstant } from '@/utils/time';
 
 const baseUrl = 'https://cs.whu.edu.cn';
 class ArticleAccessError extends Error {}
@@ -14,8 +13,7 @@ function parseCalendarDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
 }
 function parsePublicationDate(value: string | undefined) {
     if (!value?.trim()) {
@@ -24,8 +22,7 @@ function parsePublicationDate(value: string | undefined) {
     if (/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
         return parseCalendarDate(value);
     }
-    const date = parseDate(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
 }
 export const route: Route = {
     path: '/cs/:type',
@@ -135,10 +132,10 @@ async function handler(ctx) {
                             category: category?.length ? category : undefined,
                             description: content.html()! + (downloads.length ? `\n${$.html(attachments)}` : ''),
                             publicationDate: $('meta[name="PubDate"]').attr('content'),
-                            listDate: isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime(),
+                            listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
                         };
                     });
-                    const listDate = isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime();
+                    const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
                     return {
                         ...item,
                         description: detail.description,

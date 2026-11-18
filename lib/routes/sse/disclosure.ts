@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/disclosure/:query?',
@@ -45,7 +45,7 @@ async function handler(ctx) {
             'pageHelp.beginPage': 1,
             'pageHelp.cacheSize': 1,
             'pageHelp.endPage': 5,
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Referer: pageUrl,
@@ -57,7 +57,7 @@ async function handler(ctx) {
     const items = response.data.result.map((item) => ({
         title: item.TITLE,
         description: `${pdfHost}${item.URL}`,
-        pubDate: item.ADDDATE ? parseDateInTimezone(item.ADDDATE, 8) : undefined,
+        pubDate: item.ADDDATE ? parseDate(item.ADDDATE, 8) : undefined,
         link: `${pdfHost}${item.URL}`,
         author: item.SECURITY_NAME || undefined,
     }));

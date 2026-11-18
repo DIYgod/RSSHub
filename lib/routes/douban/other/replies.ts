@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/replies/:uid',
@@ -63,7 +64,7 @@ async function handler(ctx) {
                         return {
                             link: item.link,
                             title: `${c.author.name} 于 ${c.create_time} 的回应`,
-                            pubDate: new Date(c.create_time + ' GMT+8').toUTCString(),
+                            pubDate: parseDate(c.create_time, 8),
                             description: c.text,
                             author: c.author.name,
                         };

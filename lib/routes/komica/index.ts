@@ -7,9 +7,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const parsePost = ($: CheerioAPI, post: Cheerio<Element>, base: string): DataItem => {
@@ -23,14 +22,14 @@ const parsePost = ($: CheerioAPI, post: Cheerio<Element>, base: string): DataIte
         .match(/(\d{4}\/\d{2}\/\d{2})\(.\) (\d{2}:\d{2}:\d{2})/);
 
     post.find('.quote .postvote-slot').remove();
-    const date = dateMatch ? parseDate(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss', true) : undefined;
+    const date = dateMatch ? parseDateStrict(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss', 8) : undefined;
 
     return {
         title: post.find('.title').text(),
         link: `${base}pixmicat.php?res=${no}`,
         guid: `komica:${base}${no}`,
         author: post.find('.name').text(),
-        pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined,
+        pubDate: date,
         category: post
             .find('.category a[href*="mode=category"]')
             .toArray()

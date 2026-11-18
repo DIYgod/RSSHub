@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id{.+}?',
@@ -101,7 +100,7 @@ async function handler(ctx) {
         response.results?.[0].data.slice(0, limit).map((item) => ({
             title: item.title,
             link: new URL(item.url, rootUrl).href,
-            pubDate: timezone(parseDate(item.publish_date), 8),
+            pubDate: parseDate(item.publish_date, 8),
         })) ?? [];
 
     items = await Promise.all(

@@ -6,9 +6,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDuration } from '@/utils/helpers';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate, parseDuration } from '@/utils/time';
 
 import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import cacheIn from './cache';

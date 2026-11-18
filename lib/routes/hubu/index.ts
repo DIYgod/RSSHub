@@ -6,9 +6,8 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 interface MobileChinanewsResponse {
     msgcode: number;
@@ -56,11 +55,11 @@ export const handler = async (ctx) => {
             const $item = $(item);
             const dateText = $item.find('span').text().replaceAll(/[[\]]/g, '').trim();
             const calendarDate = /^\d{4}-\d{2}-\d{2}$/.test(dateText);
-            const date = dateText ? parseDate(dateText, calendarDate ? 'YYYY-MM-DD' : undefined, true) : undefined;
+            const date = dateText ? (calendarDate ? parseDateStrict(dateText, 'YYYY-MM-DD', 8) : parseDate(dateText)) : undefined;
 
             return {
                 title: $item.find('a').text(),
-                pubDate: date && Number.isFinite(date.getTime()) ? (calendarDate ? timezone(date, 8) : date) : undefined,
+                pubDate: date,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
@@ -69,8 +68,8 @@ export const handler = async (ctx) => {
     items = items.slice(0, Math.max(20, limit));
     if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
-        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+    } else if (items.every((item) => item.pubDate instanceof Temporal.Instant)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         items = items.slice(0, limit);
     }
 

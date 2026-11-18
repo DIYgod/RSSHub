@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Item } from './types';
 
@@ -12,8 +12,7 @@ const parsePublicationDate = (value: string | number | undefined) => {
     if (typeof value !== 'number' && !value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value) ?? parseDate(value, 'MMM D, YYYY h:mm A', 'America/New_York');
 };
 export const route: Route = {
     path: '/tag/:tag',

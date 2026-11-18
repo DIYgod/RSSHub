@@ -8,6 +8,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';
@@ -205,7 +206,7 @@ async function handler(ctx) {
 
                     return `${description}${originName}${getIframe(data)}${getIframe(origin)}${imgHTMLSource}${videoHTMLSource}`;
                 })(),
-                pubDate: new Date(item.desc?.timestamp * 1000).toUTCString(),
+                pubDate: parseDate(item.desc?.timestamp * 1000),
                 link,
             };
         })

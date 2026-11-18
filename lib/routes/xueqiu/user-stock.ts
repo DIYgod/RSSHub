@@ -2,7 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user_stock/:id',
@@ -76,7 +76,7 @@ async function handler(ctx) {
         description: `@${screenName} 的雪球自选动态`,
         item: data.map((item) => ({
             title: `@${screenName} 关注了股票 ${item.name}`,
-            description: `@${screenName} 在${parseDate(item.created).toLocaleString()} 关注了 ${item.marketplace} ${item.name}(${item.exchange}:${item.symbol})。`,
+            description: `@${screenName} 在${parseDate(item.created)?.toLocaleString(undefined, { timeZone: 'UTC' })} 关注了 ${item.marketplace} ${item.name}(${item.exchange}:${item.symbol})。`,
             pubDate: parseDate(item.created),
             link: `https://xueqiu.com/s/${item.symbol}`,
         })),

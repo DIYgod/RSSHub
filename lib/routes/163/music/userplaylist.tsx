@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { toISOString, toRFC822 } from '@/utils/time';
 
 const renderDescription = (image, description, src) =>
     renderToString(
@@ -82,9 +83,9 @@ async function handler(ctx) {
             return {
                 title: pl.name,
                 link: src,
-                pubDate: new Date(pl.createTime).toUTCString(),
-                published: new Date(pl.createTime).toISOString(),
-                updated: new Date(pl.updateTime).toISOString(),
+                pubDate: toRFC822(Temporal.Instant.fromEpochMilliseconds(pl.createTime)),
+                published: toISOString(Temporal.Instant.fromEpochMilliseconds(pl.createTime)),
+                updated: toISOString(Temporal.Instant.fromEpochMilliseconds(pl.updateTime)),
                 author: pl.creator.nickname,
                 description: html,
                 content: { html },

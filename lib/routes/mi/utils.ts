@@ -3,7 +3,6 @@ import type { z } from 'zod';
 import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 import type { CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem } from './types';
 import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
@@ -107,8 +106,8 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
     sellPoint: detailItem.project_desc,
     price: detailItem.price,
     marketPrice: listItem.product_market_price,
-    startTime: parseDate(detailItem.start_time, 'X'),
-    endTime: parseDate(detailItem.end_time, 'X'),
+    startTime: Temporal.Instant.fromEpochMilliseconds(detailItem.start_time * 1000),
+    endTime: Temporal.Instant.fromEpochMilliseconds(detailItem.end_time * 1000),
     sendInfo: detailItem.send_info,
     supportList: detailItem.support_list.map((support) => ({
         image: support.goods_list[0]?.goods_image ?? '',

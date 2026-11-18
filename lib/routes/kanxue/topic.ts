@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://bbs.kanxue.com/';
 const categoryId = {
@@ -103,7 +103,7 @@ async function handler(ctx) {
         .filter((elem) => {
             const timeStr = $('.date', elem).eq(0).text();
             const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
-            return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
+            return !elem.attribs.class.includes('top') || (pubDate !== undefined && Temporal.Now.instant().epochMilliseconds - pubDate.epochMilliseconds < timeDiff);
         });
 
     const resultItem = await pMap(

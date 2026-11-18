@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://webresource.airchina.com.cn';
 
@@ -45,7 +44,7 @@ async function handler() {
             return {
                 title: item.find('a.ui-list-link').text(),
                 link: href ? new URL(href, baseUrl).href : undefined,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
                 guid: href ? Buffer.from(href).toString('base64') : undefined,
             };
         })

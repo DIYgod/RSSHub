@@ -4,14 +4,13 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value?: number): Date | undefined => {
+const parsePublicationDate = (value?: number): Temporal.Instant | undefined => {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 };
 
 export const route: Route = {

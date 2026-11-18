@@ -6,8 +6,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:section?/:type?/:value?/:minComments?',
@@ -131,7 +131,7 @@ async function handler(ctx) {
                 title: $thing.find('.titleline').children('a').text() || onStory,
                 category: $thing.find('.sitestr').text(),
                 author: $thing.find('.hnuser').text() || $thing.next().find('.hnuser').text(),
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
 
                 link: '',
                 // A story link the URL parser rejects (e.g. an invalid IDN host) falls back to the discussion page instead of failing the feed

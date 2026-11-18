@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/interview/:jobId',
@@ -32,7 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const jobId = ctx.req.param('jobId');
 
-    const link = `https://gw-c.nowcoder.com/api/sparta/job-experience/experience/job/list?_=${Date.now()}`;
+    const link = `https://gw-c.nowcoder.com/api/sparta/job-experience/experience/job/list?_=${Temporal.Now.instant().epochMilliseconds}`;
     const payload = {
         jobId,
         level: 3,

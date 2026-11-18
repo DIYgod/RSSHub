@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:lang/:category/:name/:id',
@@ -35,7 +35,7 @@ async function handler(ctx: Context) {
                 const date = x.pubDate ? parseDate(x.pubDate) : undefined;
                 return {
                     title: x.title,
-                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                    pubDate: date,
                     link: x.link,
                     description: x.content,
                 };
@@ -52,10 +52,10 @@ async function handler(ctx: Context) {
                 .toArray()
                 .map((ep) => {
                     const dateText = $('.date', ep).text();
-                    const date = dateText ? (lang === 'zh-cn' || lang === 'zh-hant' ? parseDate(dateText, 'YYYY年M月D日', true) : parseDate(dateText)) : undefined;
+                    const date = dateText ? (lang === 'zh-cn' || lang === 'zh-hant' ? parseDateStrict(dateText, 'YYYY年M月D日') : parseDate(dateText)) : undefined;
                     return {
                         title: $('.subj > span', ep).text(),
-                        pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                        pubDate: date,
                         link: $(ep).attr('href'),
                         description: $('.thmb', ep).html() ?? undefined,
                     };

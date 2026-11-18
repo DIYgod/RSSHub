@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/update',
@@ -33,7 +33,7 @@ async function handler() {
                 .text()
                 .match(/(\d{4})年(\d+)月(\d+)日/);
             return {
-                pubDate: date ? parseDateInTimezone(`${date[1]}-${date[2]}-${date[3]}`, 0) : undefined,
+                pubDate: date ? parseDate(`${date[1]}-${date[2]}-${date[3]}`, 0) : undefined,
                 title: $item.find('h3').text(),
                 link: url2 + $item.attr('href'),
             };
@@ -53,7 +53,7 @@ async function handler() {
 
                 return {
                     title,
-                    pubDate: release ? parseDateInTimezone(`${release[1]}-${release[2]}-${release[3]} ${release[4]}:${release[5] ?? '00'}`, 0) : undefined,
+                    pubDate: release ? parseDate(`${release[1]}-${release[2]}-${release[3]} ${release[4]}:${release[5] ?? '00'}`, 0) : undefined,
                     description: $('.conts').html(),
                 };
             });

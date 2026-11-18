@@ -6,8 +6,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
@@ -42,16 +42,16 @@ const processItems = async (ctx, currentUrl, title) => {
             return {
                 title: element.find('.video-title').text(),
                 link: resolveItemLink(rootUrl, element.find('.box').attr('href')),
-                pubDate: parseDate(element.find('.meta').text()),
+                pubDate: parseDate(element.find('.meta').text(), ['MM/DD/YYYY', 'YYYY-MM-DD']),
             };
         });
 
     if (!hasItemFilters(ctx)) {
-        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate && Number.isFinite(new Date(item.pubDate).getTime()))) {
-            items.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate)) {
+            items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         // Keep the default candidate pool when a source date is unavailable.
-        if (ctx.req.query('sorted') === 'false' || !ctx.req.query('limit') || items.every((item) => item.pubDate && Number.isFinite(new Date(item.pubDate).getTime()))) {
+        if (ctx.req.query('sorted') === 'false' || !ctx.req.query('limit') || items.every((item) => item.pubDate)) {
             items = items.slice(0, limit);
         }
     }
