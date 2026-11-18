@@ -40,11 +40,12 @@ const handler = async (ctx) => {
                 const header = article.find('h1').parent();
                 const metadata = header.find('h1').nextAll('div').first();
                 const structuredData: { datePublished?: string; author?: { name?: string } } = JSON.parse(detail('script[type="application/ld+json"]:contains("TechArticle")').text() || '{}');
-                const content = article.is(':has(> p):not(:has(h1))') ? article : article.find('#subscribe').prev('div');
+                const standaloneArticles = article.filter(':not(:has(h1)):has(> p, > .doc-section)');
+                const content = standaloneArticles.length ? standaloneArticles : article.find('#subscribe').prev('div');
                 if (!content.text().trim()) {
                     throw new Error(`Unable to extract Calif article content from ${item.link}: the page layout may have changed.`);
                 }
-                const contentHtml = content.html()!;
+                const contentHtml = detail.html(content.contents());
                 const author = structuredData.author?.name || metadata.find('p').first().text().trim();
                 const date = metadata.find('p').eq(1).text().trim();
 
