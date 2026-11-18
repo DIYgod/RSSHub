@@ -79,7 +79,7 @@ async function handler() {
                 title: features.title,
                 description: md.render(features.content),
                 pubDate: getReleaseDate(item.date),
-                link: features.learnMore ? new URL(features.learnMore, baseUrl).href : undefined,
+                link: new URL(features.learnMore || `/help/release-notes/${platform.appPlatform}#${item.date}`, baseUrl).href,
                 category: [platform.appPlatform],
                 guid: `typeless:${platform.appPlatform}:${item.version}`,
             };
