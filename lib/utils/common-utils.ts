@@ -3,7 +3,6 @@ import os from 'node:os';
 import title from 'title';
 
 import { config } from '@/config';
-import { toInstant, toISOString } from '@/utils/time';
 
 // convert a string into title case
 const toTitleCase = (str: string) => title(str);
@@ -17,14 +16,6 @@ const collapseWhitespace = (str?: string | null) => {
         return str.replaceAll(rAllWhitespace, ' ').trim();
     }
     return str;
-};
-
-const convertDateToISO8601 = (date?: string | Temporal.Instant | number | null) => {
-    if (!date) {
-        return date;
-    }
-    const instant = toInstant(date);
-    return instant && toISOString(instant);
 };
 
 const getSubPath = (ctx) => {
@@ -45,4 +36,4 @@ const getLocalhostAddress = () => {
     return address;
 };
 
-export { collapseWhitespace, convertDateToISO8601, getLocalhostAddress, getSubPath, toTitleCase };
+export { collapseWhitespace, getLocalhostAddress, getSubPath, toTitleCase };

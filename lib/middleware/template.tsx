@@ -3,9 +3,9 @@ import type { MiddlewareHandler } from 'hono';
 import { config } from '@/config';
 import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
-import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
+import { collapseWhitespace } from '@/utils/common-utils';
 import { Atom, json, RSS, rss3 } from '@/utils/render';
-import { parseDuration, toISOString, toRFC822 } from '@/utils/time';
+import { parseDuration, toInstant, toISOString, toRFC822 } from '@/utils/time';
 
 // https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
 // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
@@ -92,16 +92,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 if (outputType === 'rss') {
                     continue;
                 }
-                try {
-                    item.pubDate &&= convertDateToISO8601(item.pubDate) || '';
-                } catch {
-                    item.pubDate = '';
-                }
-                try {
-                    item.updated &&= convertDateToISO8601(item.updated) || '';
-                } catch {
-                    item.updated = '';
-                }
+                const pubDate = item.pubDate ? toInstant(item.pubDate) : undefined;
+                item.pubDate = pubDate && toISOString(pubDate);
+                const updated = item.updated ? toInstant(item.updated) : undefined;
+                item.updated = updated && toISOString(updated);
             }
         }
 
