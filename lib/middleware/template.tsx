@@ -5,7 +5,7 @@ import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
 import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import { Atom, json, RSS, rss3 } from '@/utils/render';
-import { toISOString, toRFC822 } from '@/utils/time';
+import { parseDuration, toISOString, toRFC822 } from '@/utils/time';
 
 // https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
 // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
@@ -87,11 +87,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.author = collapseWhitespace(item.author) || '';
                 }
 
-                if (item.itunes_duration && !String(item.itunes_duration).includes(':')) {
-                    item.itunes_duration = +item.itunes_duration;
-                    item.itunes_duration =
-                        Math.floor(item.itunes_duration / 3600) + ':' + (Math.floor((item.itunes_duration % 3600) / 60) / 100).toFixed(2).slice(-2) + ':' + (((item.itunes_duration % 3600) % 60) / 100).toFixed(2).slice(-2);
-                }
+                item.itunes_duration = parseDuration(item.itunes_duration);
 
                 if (outputType === 'rss') {
                     continue;

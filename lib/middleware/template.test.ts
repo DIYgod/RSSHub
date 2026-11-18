@@ -112,7 +112,7 @@ describe('template middleware', () => {
 
         expect(data.item[0].title).toBe('ABC...');
         expect(data.item[0].author).toBe('Alice, Bob');
-        expect(data.item[0].itunes_duration).toBe('0:01:05');
+        expect(data.item[0].itunes_duration).toBe(65);
 
         config.titleLengthLimit = originalLimit;
     });

@@ -13,7 +13,7 @@ import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { parseDate, toRFC822 } from '@/utils/time';
+import { parseDate, parseDuration, toRFC822 } from '@/utils/time';
 
 import { expandTelegraph } from './telegraph';
 import { renderVideo } from './templates/video';
@@ -589,19 +589,6 @@ async function handler(ctx) {
                     voiceHtml += '</b></p>';
                     voiceHtml += `<audio src="${voiceUrl}"></audio>`;
                 }
-                const voiceDuration = () => {
-                    if (durationObj.length) {
-                        const p = durationInMmss.split(':');
-                        let second = 0,
-                            minute = 1;
-                        while (p.length > 0) {
-                            second += minute * Number(p.pop());
-                            minute *= 60;
-                        }
-                        return second.toString();
-                    }
-                    return '';
-                };
 
                 /* link preview */
                 const linkPreview = () => {
@@ -797,7 +784,7 @@ async function handler(ctx) {
                     author: $item.find('.tgme_widget_message_from_author').text(),
 
                     enclosure_url: voiceUrl,
-                    itunes_duration: voiceDuration(),
+                    itunes_duration: parseDuration(durationInMmss),
                     enclosure_type: 'audio/ogg',
 
                     _extra: extra,

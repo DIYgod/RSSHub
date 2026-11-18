@@ -9,7 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseRelativeDate } from '@/utils/time';
+import { parseDate, parseDuration, parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             language,
-            itunes_duration: item.duration ? item.duration.split(':').reduce((seconds: number, part: string) => seconds * 60 + Number(part), 0) : undefined,
+            itunes_duration: parseDuration(item.duration),
         };
 
         return processedItem;

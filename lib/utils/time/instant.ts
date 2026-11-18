@@ -12,8 +12,8 @@ const toEpochMilliseconds = (value: Temporal.Instant | number | string | null | 
  */
 export const compareDates = (a: Temporal.Instant | number | string | null | undefined, b: Temporal.Instant | number | string | null | undefined): number => toEpochMilliseconds(a) - toEpochMilliseconds(b);
 
-/** Formats an instant as an RFC 822 date in GMT, e.g. `Tue, 05 Mar 2024 10:00:00 GMT`. */
+/** Formats an instant as an RFC 822 date in GMT, i.e., `Tue, 05 Mar 2024 10:00:00 GMT`. */
 export const toRFC822 = (instant: Temporal.Instant): string => formatDate(instant, 'ddd, DD MMM YYYY HH:mm:ss [GMT]');
 
-/** Formats an instant as ISO 8601 in UTC with milliseconds, e.g. `2024-03-05T10:00:00.000Z`. */
+/** Formats an instant as ISO 8601 in UTC with milliseconds, i.e., `2024-03-05T10:00:00.000Z`. */
 export const toISOString = (instant: Temporal.Instant): string => instant.toString({ fractionalSecondDigits: 3 });
