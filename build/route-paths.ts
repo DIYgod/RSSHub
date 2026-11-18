@@ -1215,7 +1215,6 @@ export type RoutePath =
   | `/foresightnews/article`
   | `/foresightnews/column/:id`
   | `/foresightnews/news`
-  | `/foreverblog/feeds`
   | `/forklog/news`
   | `/fortnite/news/:options?`
   | `/fortunechina/:category?`

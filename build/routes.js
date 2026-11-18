@@ -60789,45 +60789,6 @@ export default {
     "url": "www.foreignaffairs.com",
     "lang": "en"
   },
-  "foreverblog": {
-    "routes": {
-      "/feeds": {
-        "path": "/feeds",
-        "categories": [
-          "blog"
-        ],
-        "example": "/foreverblog/feeds",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.foreverblog.cn/feeds.html"
-            ]
-          }
-        ],
-        "name": "专题展示 - 文章",
-        "maintainers": [
-          "7Wate",
-          "a180285"
-        ],
-        "url": "www.foreverblog.cn/feeds.html",
-        "location": "feeds.ts",
-        "module": () => import('@/routes/foreverblog/feeds.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "十年之约",
-    "url": "www.foreverblog.cn",
-    "lang": "zh-CN"
-  },
   "fortunechina": {
     "routes": {
       "/:category?": {
