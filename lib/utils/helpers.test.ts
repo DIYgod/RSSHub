@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getCurrentPath, getRouteNameFromPath, getSearchParamsString } from '@/utils/helpers';
+import { getCurrentPath, getRouteNameFromPath, getSearchParamsString, time } from '@/utils/helpers';
 
 describe('helpers', () => {
     it('getRouteNameFromPath', () => {
@@ -11,6 +11,11 @@ describe('helpers', () => {
     it('getCurrentPath', () => {
         const expected = import.meta.dirname;
         expect(getCurrentPath(import.meta.url)).toBe(expected);
+    });
+
+    it('time', () => {
+        expect(time(performance.now() - 8.4061)).toMatch(/^\d+ms$/);
+        expect(time(performance.now() - 2400)).toBe('2s');
     });
 
     it('getSearchParamsString', () => {

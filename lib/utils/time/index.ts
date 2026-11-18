@@ -1,3 +1,4 @@
+export { calendarToInstant } from './calendar';
 export { parseDuration } from './duration';
 export type { TimeZone } from './fields';
 export { formatDate } from './format';

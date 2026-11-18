@@ -104,18 +104,14 @@ const parse = (input: string | number, format: Format | undefined, timeZone: Tim
  * - A number is a timestamp in milliseconds.
  * - Empty input (`''`, `undefined`, `null`, `0`) gives `undefined`. A value of another type throws a `TypeError`.
  * - A string longer than `MAX_DATE_LENGTH` is not parsed and gives `undefined`.
- * - With no format, the string must be ISO 8601 (`2024-03-05T10:00:00+08:00`, `2024-03-05 10:00`, `2024/3/5`)
- *   or an RFC 2822 / HTTP date (`Tue, 05 Mar 2024 10:00:00 GMT`). All other layouts need a format.
- * - A format uses the dayjs tokens (`YYYY-MM-DD HH:mm`); `X` and `x` are timestamps in seconds and milliseconds.
- *   With an array of formats, the first format that parses wins.
+ * - With no format, the string must be ISO 8601 (`2024-03-05T10:00:00+08:00`, `2024-03-05 10:00`, `2024/3/5`) or an RFC 2822 / HTTP date (`Tue, 05 Mar 2024 10:00:00 GMT`). All other layouts need a format.
+ * - A format uses the dayjs tokens (`YYYY-MM-DD HH:mm`); `X` and `x` are timestamps in seconds and milliseconds. With an array of formats, the first format that parses wins.
  *
- * The format match is lenient: separators are not compared and text after the last token is ignored.
- * Use {@link parseDateStrict} when the format must describe the full input.
+ * The format match is lenient: separators are not compared and text after the last token is ignored. Use {@link parseDateStrict} when the format must describe the full input.
  *
  * @param input - The date string or the timestamp.
  * @param format - The format or formats. A number in this position is the time zone offset.
- * @param timeZone - The zone of the input when the input has no offset of its own: an offset in hours (`8`, `-3.5`)
- *   or an IANA id (`'Asia/Shanghai'`). Default: UTC. The time zone of the host has no effect.
+ * @param timeZone - The zone of the input when the input has no offset of its own: an offset in hours (`8`, `-3.5`) or an IANA id (`'Asia/Shanghai'`). Default: UTC. The time zone of the host has no effect.
  * @returns The instant, or `undefined` when the input does not parse.
  */
 export function parseDate(input: string | number, timeZone: number): Temporal.Instant | undefined;
@@ -125,8 +121,7 @@ export function parseDate(input: string | number, format?: Format | number, time
 }
 
 /**
- * Parses a date to an instant. The format must describe the full input: separators are compared,
- * `MM` needs two digits and `M` rejects a leading zero, and no text can follow the last token.
+ * Parses a date to an instant. The format must describe the full input: separators are compared, `MM` needs two digits and `M` rejects a leading zero, and no text can follow the last token.
  *
  * @param input - The date string, or a timestamp for the `X` and `x` formats.
  * @param format - The format or formats, in dayjs tokens. With an array, the first format that parses wins.

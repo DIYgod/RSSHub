@@ -25,7 +25,7 @@ const humanize = (times: string[]) => {
 
 export const time = (start: number) => {
     const delta = performance.now() - start;
-    return humanize([delta < 1000 ? delta + 'ms' : Math.round(delta / 1000) + 's']);
+    return humanize([delta < 1000 ? Math.round(delta) + 'ms' : Math.round(delta / 1000) + 's']);
 };
 
 export const getCurrentPath = (metaUrl: string) => {

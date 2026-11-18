@@ -6,7 +6,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { calendarToInstant, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/monthly-labour-survey',
@@ -27,9 +27,9 @@ const parseJapaneseDate = (text: string) => {
     const normalized = text
         .replaceAll(/（[^）]+）/g, '')
         // oxlint-disable-next-line regexp/no-obscure-range
-        .replaceAll(/[０-９]/g, (c) => String.fromCodePoint(c.codePointAt(0)! - 0xfee0))
-        .replace(/^令和(\d+)年/, (_, year) => `${Number(year) + 2018}年`);
-    return parseDate(normalized, 'YYYY年M月D日', 9);
+        .replaceAll(/[０-９]/g, (c) => String.fromCodePoint(c.codePointAt(0)! - 0xfee0));
+    const match = /^令和\s*(元|\d+)\s*年\s*(\d+)\s*月\s*(\d+)\s*日/.exec(normalized);
+    return match ? calendarToInstant({ calendar: 'japanese', era: 'reiwa', year: match[1] === '元' ? 1 : match[1], month: match[2], day: match[3] }, 9) : parseDate(normalized, 'YYYY年M月D日', 9);
 };
 
 async function fetchPage(url: string) {

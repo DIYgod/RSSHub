@@ -5,7 +5,7 @@ import { CookieJar } from 'tough-cookie';
 import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/time';
+import { calendarToInstant } from '@/utils/time';
 
 type Section77Item = DataItem & { category: string[] };
 
@@ -176,7 +176,7 @@ async function handler(ctx) {
                         พฤศจิกายน: 11,
                         ธันวาคม: 12,
                     }[dateRegex[2].trim()];
-                    item.pubDate = parseDate(`${Number.parseInt(dateRegex[3]) - 543}-${month}-${Number.parseInt(dateRegex[1])}`, 'YYYY-M-D', 7);
+                    item.pubDate = month ? calendarToInstant({ calendar: 'buddhist', year: dateRegex[3], month, day: dateRegex[1] }, 7) : undefined;
                 }
 
                 // Every property of a list item defined above is reused here

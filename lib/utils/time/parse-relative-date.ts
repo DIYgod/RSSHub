@@ -70,8 +70,7 @@ const CN_NUM_MAP = new Map([
 /**
  * Calculates the offset to the most recent occurrence of a specific weekday.
  *
- * If the target weekday is the same as today or occurs later in the current week,
- * it returns the offset to the day in the previous week.
+ * If the target weekday is the same as today or occurs later in the current week, it returns the offset to the day in the previous week.
  *
  * @param targetDay - The day index: 1 (Monday) to 7 (Sunday).
  * @returns The offset from today, in days (always negative).

@@ -55,7 +55,7 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
         } catch {
             // The page may already be gone; the message below still names the failure.
         }
-        logger.warn(`athome: ${url} failed after ${performance.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
+        logger.warn(`athome: ${url} failed after ${Math.round(performance.now() - startedAt)}ms (blocked=${blocked}): ${String(error)}`);
         throw new Error(
             blocked
                 ? `athome: the site's authentication page did not resolve within ${LIST_DEADLINE_MS}ms; reduce polling frequency`

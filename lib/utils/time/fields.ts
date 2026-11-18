@@ -27,8 +27,7 @@ export const now = (timeZone?: TimeZone): Temporal.ZonedDateTime => Temporal.Now
 
 /**
  * Resolves wall-clock fields to an instant. An offset in the fields wins over `timeZone`.
- * Missing date fields default like dayjs: the current year, then the current month and day
- * when the input has no larger unit, else the first one.
+ * Missing date fields default like dayjs: the current year, then the current month and day when the input has no larger unit, else the first one.
  *
  * @returns `undefined` when a field is out of range (month 13, February 30).
  */
