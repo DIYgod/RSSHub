@@ -150,18 +150,55 @@ const getVisitorCookie = async () => {
     return cookie;
 };
 
+interface WbiImageUrls {
+    imgUrl: string;
+    subUrl: string;
+}
+
+// The ticket endpoint returns the same WBI image URLs as the nav endpoint, and Bilibili's risk
+// control lets it through from addresses (such as Cloudflare Workers) that get a 412 from nav.
+const getWbiImageUrlsFromTicket = async (): Promise<WbiImageUrls> => {
+    const now = Math.floor(Date.now() / 1000);
+    const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
+        headers: {
+            Referer: 'https://www.bilibili.com/',
+        },
+    });
+    const imgUrl = ticketResponse.data?.nav?.img;
+    const subUrl = ticketResponse.data?.nav?.sub;
+    if (!imgUrl || !subUrl) {
+        throw new Error(`Bilibili web ticket response has no WBI image URLs (code ${ticketResponse.code})`);
+    }
+    return { imgUrl, subUrl };
+};
+
+const getWbiImageUrlsFromNav = async (): Promise<WbiImageUrls> => {
+    const cookie = getConfiguredCookie() ?? (await getVisitorCookie());
+    const { data: navResponse } = await got('https://api.bilibili.com/x/web-interface/nav', {
+        headers: {
+            Referer: 'https://www.bilibili.com/',
+            Cookie: cookie,
+        },
+    });
+    return {
+        imgUrl: navResponse.data.wbi_img.img_url,
+        subUrl: navResponse.data.wbi_img.sub_url,
+    };
+};
+
+const getWbiImageUrls = async (): Promise<WbiImageUrls> => {
+    try {
+        return await getWbiImageUrlsFromTicket();
+    } catch (error) {
+        logger.warn(`Failed to get the Bilibili WBI keys from the web ticket, trying nav: ${error}`);
+    }
+    return getWbiImageUrlsFromNav();
+};
+
 const getWbiVerifyString = () => {
     const key = 'bili-wbi-verify-string';
     return cache.tryGet(key, async () => {
-        const cookie = getConfiguredCookie() ?? (await getVisitorCookie());
-        const { data: navResponse } = await got('https://api.bilibili.com/x/web-interface/nav', {
-            headers: {
-                Referer: 'https://www.bilibili.com/',
-                Cookie: cookie,
-            },
-        });
-        const imgUrl = navResponse.data.wbi_img.img_url;
-        const subUrl = navResponse.data.wbi_img.sub_url;
+        const { imgUrl, subUrl } = await getWbiImageUrls();
         const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.', 1)[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.', 1)[0];
         const array = [
             46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57, 62,
