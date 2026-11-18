@@ -9,11 +9,11 @@ import { parseDate } from '@/utils/parse-date';
 import { baseUrl, loadList } from './utils';
 
 // The site redesign moved the recall lists, so keep the documented IDs pointing at their new columns
-const columns: Record<string, string> = {
-    'qczh/gnzhqc': 'zhxx/jdczh/jdczh',
-    'qczh/qczhgg1': 'fzlm/zhgg/qczhgg',
-    'xfpzh/xfpgnzh': 'xfpzh',
-};
+const columns = new Map([
+    ['qczh/gnzhqc', 'zhxx/jdczh/jdczh'],
+    ['qczh/qczhgg1', 'fzlm/zhgg/qczhgg'],
+    ['xfpzh/xfpgnzh', 'xfpzh'],
+]);
 
 export const route: Route = {
     path: '/news/:type1/:type2',
@@ -59,7 +59,7 @@ export const route: Route = {
         const type2 = ctx.req.param('type2');
 
         const id = `${type1}/${type2}`;
-        const url = `${baseUrl}/${columns[id] ?? id}/`;
+        const url = `${baseUrl}/${columns.get(id) ?? id}/`;
         const response = await got(url);
         const $ = load(response.body);
 

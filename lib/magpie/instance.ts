@@ -30,7 +30,7 @@ export interface Instance {
 
 // What RSSHub runs with unless `.env` or the options say otherwise: this computer only, logs
 // in magpie's log rather than in files, and only the lines that need a look.
-const defaults: Record<string, string> = {
+const defaults = {
     LISTEN_INADDR_ANY: '0',
     NO_LOGFILES: 'true',
     LOGGER_LEVEL: 'warn',
@@ -76,7 +76,7 @@ const answers = async (url: string) => {
 export const startInstance = (options: InstanceOptions): Instance => {
     mkdirSync(options.dataDir, { recursive: true });
 
-    const env: Record<string, string> = {
+    const env: Instance['env'] = {
         ...defaults,
         ...readDotenv(options.dataDir),
         ...options.env,
