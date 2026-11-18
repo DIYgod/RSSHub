@@ -288,7 +288,7 @@ export const collectPairs = ($: CheerioAPI, scope: string | Cheerio<Element>): R
 };
 
 /** 敷金 / 礼金 in the form the site used; an explicit none is zero in both forms. */
-const money = (text: string | null): { months: number | null; jpy: number | null } => {
+const money = (text: string | null) => {
     if (text === null) {
         return { months: null, jpy: null };
     }
@@ -393,7 +393,7 @@ export interface ListedUnit {
  * The list is read fresh on every poll, so its values win; the detail page (cached) only fills
  * what the list left empty. Price changes therefore show up on the next poll, not the next cache expiry.
  */
-export const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>): Record<string, string | null> => ({
+export const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>) => ({
     ...list,
     ...detail,
     ...Object.fromEntries(Object.entries(list).filter(([, v]) => v !== null)),

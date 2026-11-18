@@ -168,7 +168,7 @@ export const parseHomesChintaiList = (html: string): ListedUnit[] => {
  * (「情報公開日：2026/09/24」) rather than as a labelled cell. A date that is not found is left out
  * rather than set to null, so a page with no field at all comes back empty and is never cached.
  */
-export const parseHomesDetail = (html: string, scope = 'body'): Record<string, string | null> => {
+export const parseHomesDetail = (html: string, scope = 'body') => {
     const $ = load(html);
     const raw = collectPairs($, scope);
     const text = $('body').text();

@@ -1,4 +1,4 @@
-import type { BrowserContext } from 'patchright';
+import type { BrowserContext, Page } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import playwright from '@/utils/playwright';
@@ -116,7 +116,7 @@ describe('limitContentLength', () => {
 
 describe('limitNavigation', () => {
     it.each(['https://rsshub.test/a', 'http://rsshub.test/a', 'about:blank'])('opens %s', async (url) => {
-        const goto = vi.fn((_url: string, _options?: object) => Promise.resolve(null));
+        const goto = vi.fn<Page['goto']>(() => Promise.resolve(null));
         const page = { goto };
         limitNavigation(page);
 
@@ -125,7 +125,7 @@ describe('limitNavigation', () => {
     });
 
     it.each(['file:///etc/hostname', 'FILE:///etc/hostname', 'chrome://version', 'view-source:https://rsshub.test/', 'data:text/html,a'])('refuses %s', async (url) => {
-        const goto = vi.fn((_url: string, _options?: object) => Promise.resolve(null));
+        const goto = vi.fn<Page['goto']>(() => Promise.resolve(null));
         const page = { goto };
         limitNavigation(page);
 
