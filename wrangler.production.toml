@@ -7,9 +7,12 @@ main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
 compatibility_flags = ["global_fetch_strictly_public"]
 
+# Upload each chunk of dist-worker as its own module instead of bundling them into one script, so
+# that the Worker does not compile every route at startup. tsdown already bundles all dependencies.
+no_bundle = true
 find_additional_modules = true
-base_dir = "dist-worker/modules"
-rules = [{ type = "Data", globs = ["data_files/**"], fallthrough = true }]
+base_dir = "dist-worker"
+rules = [{ type = "ESModule", globs = ["**/*.mjs", "vendor/**/*.js"] }, { type = "CompiledWasm", globs = ["**/*.wasm"] }, { type = "Data", globs = ["data_files/**"] }]
 
 # Serve static assets from lib/assets
 assets = { directory = "lib/assets" }

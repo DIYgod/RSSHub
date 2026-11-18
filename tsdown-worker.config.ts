@@ -59,6 +59,27 @@ function workerAliasPlugin(): TsdownPlugin {
 }
 
 const cifrante = createRequire(path.resolve('node_modules/teleproto/package.json')).resolve('cifrante');
+const oxcParserWasm = createRequire(createRequire(path.resolve('package.json')).resolve('oxc-parser/package.json')).resolve('@oxc-parser/binding-wasm32-wasip1/wasm.wasm');
+
+// Wrangler uploads dist-worker as it is, one module per chunk (`no_bundle` in the Wrangler configs).
+// Bundling every chunk again into one script made the Worker compile all routes at startup, which
+// went over the startup CPU limit. So every import in the output must resolve to a file in
+// dist-worker: these WebAssembly imports are copied there (see `copy`) and imported by relative path.
+const vendorModules: Array<{ matches: (source: string) => boolean; id: string }> = [
+    { matches: (source) => source === 'xxhash-wasm', id: './vendor/xxhash-wasm/xxhash-wasm.js' },
+    { matches: (source) => source === '@oxc-parser/binding-wasm32-wasip1/wasm.wasm', id: `./vendor/${path.basename(oxcParserWasm)}` },
+    { matches: (source) => source.endsWith('/simplecc_wasm_bg.wasm'), id: './vendor/simplecc_wasm_bg.wasm' },
+];
+
+function vendorModulesPlugin(): TsdownPlugin {
+    return {
+        name: 'worker-vendor-modules',
+        resolveId(source) {
+            const vendorModule = vendorModules.find(({ matches }) => matches(source));
+            return vendorModule ? { id: vendorModule.id, external: true } : null;
+        },
+    };
+}
 
 export default defineConfig({
     entry: ['./lib/worker.ts'],
@@ -70,7 +91,12 @@ export default defineConfig({
     platform: 'node',
     target: 'esnext',
     treeshake: true,
-    copy: [{ from: 'node_modules/header-generator/data_files', to: 'dist-worker/modules' }],
+    copy: [
+        { from: 'node_modules/header-generator/data_files', to: 'dist-worker' },
+        // xxhash-wasm's workerd export, which imports its WebAssembly from the same directory
+        { from: ['node_modules/xxhash-wasm/workerd/xxhash-wasm.js', 'node_modules/xxhash-wasm/workerd/xxhash.wasm'], to: 'dist-worker/vendor/xxhash-wasm' },
+        { from: [oxcParserWasm, 'node_modules/simplecc-wasm/pkg/web/simplecc_wasm_bg.wasm'], to: 'dist-worker/vendor' },
+    ],
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
         'process.env.VERCEL_ENV': JSON.stringify(''),
@@ -80,7 +106,7 @@ export default defineConfig({
         __dirname: JSON.stringify('/bundle'),
         __filename: JSON.stringify('/worker/index.mjs'),
     },
-    plugins: [workerAliasPlugin()],
+    plugins: [vendorModulesPlugin(), workerAliasPlugin()],
     alias: {
         // External dependencies that need Worker-compatible replacements
         'node:module': path.resolve('./lib/shims/node-module.ts'),
@@ -99,10 +125,6 @@ export default defineConfig({
     deps: {
         onlyBundle: false,
         neverBundle: [
-            // Let Wrangler select the package's static-WASM workerd export.
-            'xxhash-wasm',
-            '@oxc-parser/binding-wasm32-wasip1/wasm.wasm',
-            /simplecc_wasm_bg\.wasm$/,
             // Exclude non-code files that might be accidentally imported
             /\/_README$/,
             /\.node$/,
