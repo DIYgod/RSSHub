@@ -7,8 +7,7 @@ export const toInstant = (value: Temporal.Instant | number | string): Temporal.I
 const toEpochMilliseconds = (value: Temporal.Instant | number | string | null | undefined) => (value === null || value === undefined ? undefined : toInstant(value)?.epochMilliseconds) ?? 0;
 
 /**
- * Compares two dates for a sort: negative when `a` is the earlier one. Newest first is `compareDates(b, a)`.
- * The values are what `toInstant` takes. A missing or unparseable date sorts as the Unix epoch.
+ * Compares two dates for a sort: negative when `a` is the earlier one. Newest first is `compareDates(b, a)`. The values are what `toInstant` takes. A missing or unparseable date sorts as the Unix epoch.
  */
 export const compareDates = (a: Temporal.Instant | number | string | null | undefined, b: Temporal.Instant | number | string | null | undefined): number => toEpochMilliseconds(a) - toEpochMilliseconds(b);
 

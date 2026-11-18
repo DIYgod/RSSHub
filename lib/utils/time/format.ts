@@ -52,10 +52,8 @@ const PATTERN = /\[([^\]]*)\]|YYYY|YY|MMMM|MMM|MM|M|Do|DD|D|dddd|ddd|d|HH|H|hh|h
 /**
  * Formats a date with the dayjs format tokens, the same tokens that `parseDate` reads.
  *
- * Tokens: `YYYY` `YY` year, `M` `MM` `MMM` `MMMM` month, `D` `DD` `Do` day, `d` `ddd` `dddd` weekday,
- * `H` `HH` `h` `hh` hour, `m` `mm` minute, `s` `ss` second, `SSS` millisecond, `A` `a` AM/PM,
- * `Z` `ZZ` offset, `z` zone abbreviation (`EST`, `GMT+8`), `X` `x` timestamp in seconds and milliseconds. Text in `[...]` is kept as it is.
- * Month and weekday names are English.
+ * Tokens: `YYYY` `YY` year, `M` `MM` `MMM` `MMMM` month, `D` `DD` `Do` day, `d` `ddd` `dddd` weekday, `H` `HH` `h` `hh` hour, `m` `mm` minute, `s` `ss` second, `SSS` millisecond, `A` `a` AM/PM, `Z` `ZZ` offset, `z` zone abbreviation
+ * (`EST`, `GMT+8`), `X` `x` timestamp in seconds and milliseconds. Text in `[...]` is kept as it is. Month and weekday names are English.
  *
  * @param date - The instant, or a zoned date-time (its own zone is used).
  * @param format - The format, e.g. `'YYYY-MM-DD HH:mm'`.

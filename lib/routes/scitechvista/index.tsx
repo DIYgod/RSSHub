@@ -6,7 +6,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/time';
+import { calendarToInstant } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -21,11 +21,8 @@ function parseRocDate(rocDate: string | undefined): Temporal.Instant | undefined
     if (parts.length !== 3) {
         return undefined;
     }
-    const [rocYearStr, monthStr, dayStr] = parts;
-    const rocYear = Number(rocYearStr);
-
-    const year = rocYear + 1911;
-    return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD', 8);
+    const [year, month, day] = parts;
+    return calendarToInstant({ calendar: 'roc', year, month, day }, 8);
 }
 
 export const route: Route = {

@@ -1,3 +1,5 @@
+import { calendarToInstant, formatDate } from '@/utils/time';
+
 /** Minimal RFC 4180 CSV parser: quoted fields, `""` escapes, newlines inside quotes, CRLF. */
 const parseCsv = (text: string): string[][] => {
     const rows: string[][] = [];
@@ -75,9 +77,9 @@ export interface PermitExtra {
     raw: Row;
 }
 
-const ERA_BASE = { 令和: 2018, 平成: 1988, 昭和: 1925 } as const;
-type Era = keyof typeof ERA_BASE;
-const isEra = (s: string): s is Era => Object.hasOwn(ERA_BASE, s);
+const ERAS = { 令和: 'reiwa', 平成: 'heisei', 昭和: 'showa' } as const;
+type Era = keyof typeof ERAS;
+const isEra = (s: string): s is Era => Object.hasOwn(ERAS, s);
 
 /** `2024-04-08` / `2026/8/7` / `令和8年8月7日` → `YYYY-MM-DD`; anything else → null. */
 export const isoDate = (raw: string | null): string | null => {
@@ -93,8 +95,8 @@ export const isoDate = (raw: string | null): string | null => {
     if (!w || !isEra(w[1])) {
         return null;
     }
-    const year = ERA_BASE[w[1]] + (w[2] === '元' ? 1 : Number(w[2]));
-    return `${year}-${w[3].padStart(2, '0')}-${w[4].padStart(2, '0')}`;
+    const date = calendarToInstant({ calendar: 'japanese', era: ERAS[w[1]], year: w[2] === '元' ? 1 : w[2], month: w[3], day: w[4] });
+    return date ? formatDate(date, 'YYYY-MM-DD') : null;
 };
 
 /** Ward sites serve CSV as UTF-8 (with BOM) one month and Shift_JIS the next, so sniff: strict UTF-8 first, else Shift_JIS. */
@@ -109,5 +111,6 @@ export const decodeText = (buf: ArrayBuffer): string => {
 /** Sort key for `令和8年7月分`-style labels (full-width digits allowed): `2026-07`; null when absent. */
 export const warekiMonth = (label: string): string | null => {
     const m = /(令和|平成)(元|\d{1,2})年(\d{1,2})月/.exec(label.normalize('NFKC'));
-    return m && isEra(m[1]) ? `${ERA_BASE[m[1]] + (m[2] === '元' ? 1 : Number(m[2]))}-${m[3].padStart(2, '0')}` : null;
+    const date = m && isEra(m[1]) ? calendarToInstant({ calendar: 'japanese', era: ERAS[m[1]], year: m[2] === '元' ? 1 : m[2], month: m[3], day: 1 }) : undefined;
+    return date ? formatDate(date, 'YYYY-MM') : null;
 };

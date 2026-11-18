@@ -7,16 +7,12 @@ export interface DateRange {
 }
 
 /**
- * Controls how a 2-segment partial date (e.g. "06.05") is interpreted
- * when the string contains no month name or year to resolve the ambiguity.
+ * Controls how a 2-segment partial date (e.g. "06.05") is interpreted when the string contains no month name or year to resolve the ambiguity.
  *
- * - `'MDY'` (default): first number is the **month**, second is the **day** — typical in US English.
- *   Example: `"06.05"` → June 5
- * - `'DMY'`: first number is the **day**, second is the **month** — typical in European contexts.
- *   Example: `"06.05"` → May 6
+ * - `'MDY'` (default): first number is the **month**, second is the **day** — typical in US English. Example: `"06.05"` → June 5
+ * - `'DMY'`: first number is the **day**, second is the **month** — typical in European contexts. Example: `"06.05"` → May 6
  *
- * This has no effect when the date includes a month name or a 4-digit year,
- * since those formats are unambiguous.
+ * This has no effect when the date includes a month name or a 4-digit year, since those formats are unambiguous.
  */
 export type DateOrder = 'MDY' | 'DMY';
 
@@ -71,8 +67,7 @@ const CN_NUM_MAP = new Map([
 /**
  * Tries to extract an **exact day count** from a duration suffix in the input text.
  *
- * Only day-precise durations are returned. Week, month, and year durations are
- * considered approximate in exhibition contexts and are intentionally ignored.
+ * Only day-precise durations are returned. Week, month, and year durations are considered approximate in exhibition contexts and are intentionally ignored.
  *
  * Recognised patterns:
  * - Chinese days:  `展期90天`, `展期两天`
@@ -109,8 +104,7 @@ const parseExactDays = (text: string): number | undefined => {
  *
  * @param text        The string to search within.
  * @param keywords    The list of keywords to look for.
- * @param wholeWord   If true, each keyword must match as a whole word (case-insensitive, English only).
- *                    If false, a plain substring match is used (suitable for Chinese).
+ * @param wholeWord   If true, each keyword must match as a whole word (case-insensitive, English only). If false, a plain substring match is used (suitable for Chinese).
  */
 const containsKeyword = (text: string, keywords: string[], wholeWord = false): boolean => {
     if (wholeWord) {
@@ -254,9 +248,7 @@ const normalizeDate = (raw: string | undefined, yearHint?: number, monthHint?: n
 // ============================================================
 
 /**
- * Ordered list of regex patterns for extracting date fragments.
- * More specific (longer) patterns appear first so they are matched and
- * "claimed" before a shorter sub-pattern can grab the same characters.
+ * Ordered list of regex patterns for extracting date fragments. More specific (longer) patterns appear first so they are matched and "claimed" before a shorter sub-pattern can grab the same characters.
  */
 const DATE_TOKEN_PATTERNS: RegExp[] = [
     // Chinese full: "2025年1月1日" / "25年1月1日"
@@ -284,9 +276,7 @@ const DATE_TOKEN_PATTERNS: RegExp[] = [
 /**
  * Scans `text` for date-like substrings and returns them in document order.
  *
- * Each character position can only be claimed by one pattern — longer/higher-priority
- * patterns win, so "2025.01.01" is returned as one token rather than letting the
- * 2-segment pattern grab ".01" as a separate token.
+ * Each character position can only be claimed by one pattern — longer/higher-priority patterns win, so "2025.01.01" is returned as one token rather than letting the 2-segment pattern grab ".01" as a separate token.
  *
  * @param text  The sanitised input string to scan.
  * @returns Array of raw date fragments in the order they appear.
@@ -325,8 +315,7 @@ const extractDateTokens = (text: string): string[] => {
 /**
  * Parses a free-form date range string into structured start and end dates.
  *
- * Both dates are returned in `'YYYY-MM-DD'` format. Either value may be `undefined`
- * if the input contains only one date or the string cannot be parsed.
+ * Both dates are returned in `'YYYY-MM-DD'` format. Either value may be `undefined` if the input contains only one date or the string cannot be parsed.
  *
  * ---
  *
@@ -357,10 +346,8 @@ const extractDateTokens = (text: string): string[] => {
  * ---
  *
  * @param rangeStr    The raw date range string to parse. Returns empty result if falsy.
- * @param fieldOrder  How to interpret short numeric dates that have no year or month name,
- *                    e.g. `"06.05"`. Pass `'MDY'` (default) to read it as month-first (June 5),
- *                    or `'DMY'` to read it as day-first (May 6). Has no effect when the date
- *                    format is already unambiguous (e.g. contains a month name or full year).
+ * @param fieldOrder  How to interpret short numeric dates that have no year or month name, e.g. `"06.05"`. Pass `'MDY'` (default) to read it as month-first (June 5), or `'DMY'` to read it as day-first (May 6).
+ *                    Has no effect when the date format is already unambiguous (e.g. contains a month name or full year).
  * @returns `DateRange` with optional `startDate` and `endDate` in `'YYYY-MM-DD'` format.
  */
 export const parseDateRange = (rangeStr?: string, fieldOrder: DateOrder = 'MDY'): DateRange => {
