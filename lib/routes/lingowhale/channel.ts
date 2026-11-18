@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { apiUrl, baseUrl, fetchEntries, headers } from './utils';
+import { apiUrl, baseUrl, fetchEntries, getHeaders } from './utils';
 
 export const route: Route = {
     path: '/channel/:id',
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
         }),
         ofetch(`${apiUrl}/feed/subscription`, {
             method: 'POST',
-            headers,
+            headers: getHeaders(),
             body: { channel_ids: [id], cursor: '', limit },
         }),
     ]);

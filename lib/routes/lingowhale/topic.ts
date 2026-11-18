@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { apiUrl, baseUrl, fetchEntries, headers } from './utils';
+import { apiUrl, baseUrl, fetchEntries, getHeaders } from './utils';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
         }),
         ofetch(`${apiUrl}/feed/topic`, {
             method: 'POST',
-            headers,
+            headers: getHeaders(),
             body: { topic_id: id, cursor: '', limit },
         }),
     ]);

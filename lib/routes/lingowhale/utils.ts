@@ -9,7 +9,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'https://lingowhale.com';
 export const apiUrl = 'https://api-public.lingowhale.com/api/lingowhale/v1';
-export const headers = { imei: `IMEI-${randomUUID().toUpperCase()}` };
+let headers: { imei: string };
+export const getHeaders = () => (headers ??= { imei: `IMEI-${randomUUID().toUpperCase()}` });
 
 export const parseChannel = (channel) => ({
     title: channel.name,
