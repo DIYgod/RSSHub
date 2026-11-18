@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category } = ctx.req.param();
@@ -61,7 +60,7 @@ export const handler = async (ctx) => {
         title: item.title,
         link: item.id,
         guid: `moa-zdscxx-${item.id}`,
-        pubDate: item.date ? timezone(parseDate(item.date), 8) : undefined,
+        pubDate: item.date ? parseDate(item.date, 8) : undefined,
     }));
 
     items = await pMap(
@@ -80,7 +79,7 @@ export const handler = async (ctx) => {
                 item.link = new URL(`nyb/pc/messageView.jsp?id=${item.link}`, rootUrl).href;
                 item.description = data.content;
                 item.author = data.source;
-                item.pubDate = data.date ? timezone(parseDate(data.date), 8) : undefined;
+                item.pubDate = data.date ? parseDate(data.date, 8) : undefined;
 
                 return item;
             }),

@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -49,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: title.text(),
                 link: new URL(link.attr('href')!, baseUrl).href,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
         });
     const orderedList = list;

@@ -6,8 +6,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const getNews = async (category, _context: Context) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
@@ -29,7 +28,7 @@ export const getNews = async (category, _context: Context) => {
                 const item: DataItem = {
                     title,
                     link: url,
-                    pubDate: timezone(parseDate(focusDate), 8),
+                    pubDate: parseDate(focusDate, 8),
                 };
                 const id = path.parse(url).name;
                 const unknownTip = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';

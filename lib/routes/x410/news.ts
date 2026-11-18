@@ -7,14 +7,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
 const baseUrl = 'https://x410.dev';
 function getDate(value?: string) {
-    const date = value ? parseDate(value) : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+    return value ? parseDate(value) : undefined;
 }
 async function fetchDetail(link: string) {
     const detailResponse = await ofetch(link);

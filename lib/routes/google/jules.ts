@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jules/changelog',
@@ -51,7 +51,7 @@ async function handler() {
                 title,
                 description: article.html(),
                 link: anchor,
-                pubDate: pubDateText ? parseDate(`${pubDateText} UTC`) : undefined,
+                pubDate: pubDateText ? parseDate(pubDateText, 'MMMM D, YYYY') : undefined,
                 image,
             };
         });

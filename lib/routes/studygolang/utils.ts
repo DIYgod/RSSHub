@@ -5,7 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -59,7 +59,7 @@ const FetchGoItems = async (ctx, rewriteId?) => {
                 const content = load(detailResponse.data);
 
                 const publishedAt = content('.timeago').first().attr('title');
-                const pubDate = publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined;
+                const pubDate = publishedAt ? parseDate(publishedAt, 8) : undefined;
 
                 let description: string | undefined;
                 try {

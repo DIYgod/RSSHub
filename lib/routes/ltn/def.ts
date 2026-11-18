@@ -6,8 +6,7 @@ import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const channels = {
     breakingnewslist: '軍情動態',
@@ -76,7 +75,7 @@ async function handler(ctx: Context) {
     const list: DataItem[] = response.data.items.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: timezone(parseDate(item.createTime, 'YYYYMMDDHHmmss'), 8),
+        pubDate: parseDate(item.createTime, 'YYYYMMDDHHmmss', 8),
         image: item.url_b,
     }));
 

@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gzw/:category{.+}?',
@@ -69,7 +68,7 @@ async function handler(ctx) {
                     a.prop('href')!.replace(/^\./, () => category),
                     rootUrl
                 ).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 
@@ -86,7 +85,7 @@ async function handler(ctx) {
                 item.category = (content('meta[name="Keywords"]').prop('content') ?? '').split(/;/).filter(Boolean);
                 const pubDate = content('meta[name="PubDate"]').prop('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
 
                 return item;

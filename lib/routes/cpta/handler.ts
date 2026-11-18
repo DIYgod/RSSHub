@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { compareDates, parseDate } from '@/utils/time';
 
 type NewsCategory = {
     title: string;
@@ -82,7 +82,7 @@ const handler: Route['handler'] = async (ctx) => {
                 link: absoluteLink,
             };
         })
-        .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .toSorted((a, b) => compareDates(b.date, a.date))
         .slice(0, 10);
 
     const dataItems: DataItem[] = await pMap(contentLinkList, fetchDataItem, { concurrency: 1 });

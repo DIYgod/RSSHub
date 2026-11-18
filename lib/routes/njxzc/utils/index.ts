@@ -4,22 +4,21 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface NoticeItem extends DataItem {
     link: string;
 }
 
 // Date formats vary across the site: 2026-07-01, 2026/07/01 or 2026年07月01日 14:53, often prefixed with a label such as "发布时间："
-export function parsePubDate(text?: string): Date | undefined {
+export function parsePubDate(text?: string): Temporal.Instant | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
         return undefined;
     }
     const [, year, month, day] = match;
     const time = text?.match(/(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1];
-    return timezone(parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`), 8);
+    return parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`, 8);
 }
 
 async function fetchArticle(item: NoticeItem): Promise<DataItem> {

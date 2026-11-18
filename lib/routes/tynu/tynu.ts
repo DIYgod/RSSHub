@@ -4,16 +4,15 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'http://www.tynu.edu.cn';
 
-function getPublicationDate(value: string): Date | undefined {
+function getPublicationDate(value: string): Temporal.Instant | undefined {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYYMM-DD', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(value, 'YYYYMM-DD');
 }
 
 async function getArticleItem(item: DataItem & { link: string }): Promise<DataItem> {

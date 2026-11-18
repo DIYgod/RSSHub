@@ -4,10 +4,9 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import { getCookies } from '@/utils/playwright-utils';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.caict.ac.cn';
 
@@ -46,7 +45,7 @@ export const getFeed = async (path: string, itemSelector: string, getDescription
             return {
                 title: a.text().trim().replace(/^-\s*/, ''),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.next().find('span.kxyj_text').text()), 8),
+                pubDate: parseDate($item.next().find('span.kxyj_text').text(), 8),
             };
         });
 

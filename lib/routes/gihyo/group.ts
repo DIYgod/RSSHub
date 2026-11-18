@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/list/group/:id',
@@ -51,7 +50,7 @@ async function handler(ctx) {
             .text();
         const title = `${subtitle} ${articleTitle}`;
         const author = $('p.m-listitem__author', article).text();
-        const pubDate = timezone(parseDate($('span.date', article).text(), 'YYYY-MM-DD'), 9);
+        const pubDate = parseDate($('span.date', article).text(), 'YYYY-MM-DD', 9);
         const link = `${baseUrl}${$('a', article).attr('href')}`.replace(/\?summary$/, '');
         return {
             title,

@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc.henu.edu.cn';
 
@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
                 return {
                     link: new URL($('a', elem).attr('href')!, link).href,
                     title: $('.article-title', elem).text(),
-                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                 };
             }),
     };

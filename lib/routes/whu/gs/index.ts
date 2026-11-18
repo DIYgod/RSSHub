@@ -5,16 +5,14 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 class ArticleAccessError extends Error {}
 function parseCalendarDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
 }
 const gsIndexMap = new Map([
     [0, 'xwdt.htm'],

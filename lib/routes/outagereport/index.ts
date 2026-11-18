@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://outage.report/';
 
@@ -36,7 +36,7 @@ async function handler(ctx) {
     const watchCount = Number.isFinite(threshold) && threshold > 0 ? threshold : 10;
     const url = `${baseUrl}${serviceName}`;
     const { card } = await ofetch<StatusCard>(`${baseUrl}api/card/${serviceName}`);
-    const now = Date.now();
+    const now = Temporal.Now.instant().epochMilliseconds;
     const recentBuckets = card.signalBuckets.filter((bucket) => bucket.ts >= now - 20 * 60 * 1000 && bucket.ts < now);
     const reportCount = recentBuckets.reduce((total, bucket) => total + bucket.count, 0);
     const latestReport = Math.max(...recentBuckets.map((bucket) => bucket.ts));

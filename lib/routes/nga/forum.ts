@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const X_UA = 'NGA_skull/6.0.5(iPhone10,3;iOS 12.0.1)';
 
@@ -34,7 +34,7 @@ class LoginRequiredError extends Error {}
 
 async function handler(ctx) {
     const { fid, recommend } = ctx.req.param();
-    const timestamp = Math.floor(Date.now() / 1000);
+    const timestamp = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     let cookieString = `guestJs=${timestamp};`;
     if (config.nga.uid && config.nga.cid) {
         cookieString = `ngaPassportUid=${config.nga.uid}; ngaPassportCid=${config.nga.cid};`;

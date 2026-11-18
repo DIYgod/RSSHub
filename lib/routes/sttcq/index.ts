@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:province/:city/:district?',
@@ -66,7 +66,7 @@ async function handler(ctx: Context) {
                     .toArray()
                     .map((element) => content(element).text())
                     .find((text) => text.startsWith('编辑：'));
-                return { description, pubDate: publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined, author: editor?.slice(3) };
+                return { description, pubDate: publishedAt ? parseDate(publishedAt, 8) : undefined, author: editor?.slice(3) };
             });
             return { ...item, ...detail };
         },

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export async function getStories(url: string) {
     const headers = { 'user-agent': config.trueUA };

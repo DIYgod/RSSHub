@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/military',
@@ -42,7 +41,7 @@ async function handler() {
             title: $item.find('h3.item_title').text(),
             author: $item.find('.item_source').text(),
             category: '中华网军事',
-            pubDate: timezone(parseDate($item.find('em.item_time').text()), 8),
+            pubDate: parseDate($item.find('em.item_time').text(), 8),
             link: $item.find('h3.item_title a').attr('href'),
         };
     });
@@ -56,7 +55,7 @@ async function handler() {
                     ...entry,
                     title: $$('h1').text() || entry.title,
                     description: $$('#chan_newsDetail').html(),
-                    pubDate: articleDate ? timezone(parseDate(articleDate), 8) : entry.pubDate,
+                    pubDate: articleDate ? parseDate(articleDate, 8) : entry.pubDate,
                     author:
                         $$('#chan_newsInfo .source')
                             .text()

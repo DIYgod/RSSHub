@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const cic_base_url = 'http://cic.tju.edu.cn/';
 
@@ -14,7 +13,7 @@ const getArticle = async (link: string) => {
         const response = await got(link);
         const $ = load(response.data);
         const dateText = $('.news_info > span').first().text();
-        const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+        const pubDate = dateText ? parseDate(dateText, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
         $('.news_tit, .news_info').remove();
         return { pubDate, description: $('.con_news_body > div').html() ?? undefined };
     } catch {

@@ -5,9 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx) => {
@@ -31,7 +30,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.text(),
-                pubDate: timezone(parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'), 8),
+                pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD', 8),
                 link: new URL(a.prop('href')!, currentUrl).href,
             };
         });
@@ -65,7 +64,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate, 'YYYY/MM/DD'), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 'YYYY/MM/DD', 8) : item.pubDate;
                 item.author = $$('div.artical_info_left')
                     .text()
                     .split(/来源：/)

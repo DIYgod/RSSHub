@@ -6,8 +6,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/category/:category?/:needTorrents?/:needImages?',
@@ -80,13 +80,13 @@ export async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const published = parseDateInTimezone($item.find('div.ir').prev().text(), 0);
+            const published = parseDate($item.find('div.ir').prev().text(), 0);
 
             return {
                 title: $item.find('div.glink').text(),
                 author: $item.find('td.glhide div a').text(),
                 link: $item.find('td.glname a').attr('href'),
-                pubDate: Number.isFinite(published.getTime()) ? published : undefined,
+                pubDate: published,
                 category: $item
                     .find('div.gt')
                     .toArray()
@@ -97,9 +97,9 @@ export async function handler(ctx) {
         });
 
     const sorted = ctx.req.query('sorted') !== 'false';
-    const datedItems = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const datedItems = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (sorted && datedItems) {
-        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
     }
     if (!sorted || datedItems) {
         items = items.slice(0, limit);

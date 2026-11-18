@@ -5,9 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -183,7 +181,7 @@ export const route: Route = {
                         const { startDate, endDate } = parseDateRange(fullDuration);
 
                         const publicationDate = $detail('meta[name="PubDate"]').attr('content');
-                        const pubDate = publicationDate ? timezone(parseDate(publicationDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                        const pubDate = publicationDate ? parseDate(publicationDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 
                         const description = renderToString(
                             <div>

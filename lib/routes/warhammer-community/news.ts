@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -23,8 +22,7 @@ export const route: Route = {
 };
 
 function parsePublicationDate(dateUniversal: string | undefined, date: string | undefined) {
-    const parsed = dateUniversal ? timezone(parseDate(dateUniversal, 'YYYY-MM-DD', true), 0) : date ? timezone(parseDate(date, 'D MMM YY', 'en', true), 0) : undefined;
-    return parsed && !Number.isNaN(parsed.getTime()) ? parsed : undefined;
+    return dateUniversal ? parseDateStrict(dateUniversal, 'YYYY-MM-DD', 0) : date ? parseDateStrict(date, 'D MMM YY', 0) : undefined;
 }
 
 function parseLimit(value: string | undefined, defaultLimit: number) {

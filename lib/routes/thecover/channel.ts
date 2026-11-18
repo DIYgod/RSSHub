@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.thecover.cn';
 
@@ -76,7 +75,7 @@ async function handler(ctx): Promise<Data> {
                 item.description = content('section.article-content').html();
                 const info = content('span', '.props-of-title').not('#original-tag');
                 item.author = info.eq(0).text();
-                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm', 8);
                 return item;
             }),
         { concurrency: 3, stopOnError: false }

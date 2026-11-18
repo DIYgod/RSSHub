@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://h5-ol.sns.sohu.com/hy-moyukik-h5';
 

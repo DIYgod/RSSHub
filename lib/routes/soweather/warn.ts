@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://wx.soweather.com';
 const pageUrl = `${rootUrl}/wxapp/warn.jsp`;
@@ -84,7 +83,7 @@ function buildItem(warning: RawWarning, groupName: string): DataItem {
     const content = buildContent(warning);
     const guid = `${warning.district}-${warning.id}-${warning.yjid}`;
     const image = warning.icon ? `${rootUrl}/wxapp/images/icon/${warning.icon.replaceAll('-', '_')}` : undefined;
-    const updated = !warning.isActive && warning.jcsj ? timezone(parseDate(warning.jcsj, 'YYYY-MM-DD HH:mm'), 8) : undefined;
+    const updated = !warning.isActive && warning.jcsj ? parseDate(warning.jcsj, 'YYYY-MM-DD HH:mm', 8) : undefined;
 
     return {
         title,
@@ -95,7 +94,7 @@ function buildItem(warning: RawWarning, groupName: string): DataItem {
             html: content,
             text: sanitizeHtml(content.replaceAll(/<br\s*\/?>/gi, '\n'), { allowedTags: [], allowedAttributes: {} }).trim(),
         },
-        pubDate: timezone(parseDate(warning.fbsj, 'YYYY-MM-DD HH:mm'), 8),
+        pubDate: parseDate(warning.fbsj, 'YYYY-MM-DD HH:mm', 8),
         updated,
         author: warning.yjfbdw,
         category: [groupName, warning.district, warning.name, warning.isActive ? '生效中' : '已解除'],

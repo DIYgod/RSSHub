@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://www.nifd.cn';
 
@@ -58,7 +57,7 @@ async function handler(ctx) {
                 title: $item.find('h2, h4').first().text(),
                 link: new URL($item.find('a').attr('href')!, rootUrl).href,
                 author: $item.find('p > span:nth-child(2)').text(),
-                pubDate: date ? timezone(parseDate(date, ['YYYY-MM-DD', 'YYYY年MM月DD日']), 8) : undefined,
+                pubDate: date ? parseDate(date, ['YYYY-MM-DD', 'YYYY年MM月DD日'], 8) : undefined,
             };
         });
 

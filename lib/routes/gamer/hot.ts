@@ -4,8 +4,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hot/:bsn',
@@ -57,7 +56,7 @@ async function handler(ctx) {
                 item.title = content('.c-post__header__title').text();
                 item.description = content('div.c-post__body').html();
                 item.author = `${content('a.username').eq(0).text()} (${content('a.userid').eq(0).text()})`;
-                item.pubDate = timezone(parseDate(content('a.edittime').eq(0).attr('data-mtime')!), 8);
+                item.pubDate = parseDate(content('a.edittime').eq(0).attr('data-mtime')!, 8);
 
                 return item;
             })

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -48,7 +47,7 @@ async function handler() {
                 return {
                     title: $('meta[property="og:title"]').attr('content'),
                     author: '外務省',
-                    pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset.get(matches[1]) ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
+                    pubDate: matches ? parseDate(`${Number.parseInt(matches[2]) + (eraOffset.get(matches[1]) ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`, 9) : undefined,
                     link: $('meta[property="og:url"]').attr('content'),
                     description: $('div#maincontents').html(),
                 } as DataItem;

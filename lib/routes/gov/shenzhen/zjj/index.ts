@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const config = {
     tzgg: {
@@ -59,12 +58,12 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('a');
             const date = $item.find('span').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YY-MM-DD', true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'YY-MM-DD', 8) : undefined;
             return {
                 title: a.attr('title') || a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: a.attr('href'),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

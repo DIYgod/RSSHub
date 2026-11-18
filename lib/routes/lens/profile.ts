@@ -3,7 +3,7 @@ import { html } from 'hono/html';
 import type { Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const apiUrl = 'https://api.lens.xyz/graphql';
 const lensNamespace = '0x1aA55B9042f08f45825dC4b651B64c9F98Af4615';

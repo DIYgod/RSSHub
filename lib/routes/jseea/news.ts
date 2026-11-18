@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.jseea.cn';
 const siteTitle = ' - 江苏省教育考试院';
@@ -55,7 +54,7 @@ async function handler(ctx) {
                     .filter((_, e) => e.nodeType === 3)
                     .text(),
                 link: new URL($item.attr('href')!, listPageUrl).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 

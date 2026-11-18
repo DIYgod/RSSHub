@@ -6,8 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { fetchArticleContent, fetchResearchItems, renderImage, renderText, type ResearchItem, researchUrl, rootUrl, typeFilters, typeLabels } from './utils';
 

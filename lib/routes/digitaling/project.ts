@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categoryTitle = new Map([
     ['all', { name: '全部' }],
@@ -62,7 +61,7 @@ async function handler(ctx: Context) {
                     author: $('#avatar_by').parent().find('h3 a').text(),
                     link: itemUrl,
                     description: $('#article_con').html(),
-                    pubDate: timezone(parseDate($('#edit_url').parent().children().last().text()), 8),
+                    pubDate: parseDate($('#edit_url').parent().children().last().text(), 8),
                 };
             }),
         { concurrency: 3 }

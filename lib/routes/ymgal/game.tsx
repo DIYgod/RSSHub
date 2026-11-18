@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const host = 'https://www.ymgal.games';
 
@@ -33,9 +33,9 @@ export const route: Route = {
 };
 
 async function handler() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const date = Temporal.Now.zonedDateTimeISO('UTC');
+    const year = date.year;
+    const month = date.month;
 
     const response = await got({
         method: 'get',
@@ -77,9 +77,9 @@ const renderDescription = (itemPicUrl: string | undefined): string =>
         </>
     );
 
-function getReleaseDate(value: string): Date | undefined {
+function getReleaseDate(value: string): Temporal.Instant | undefined {
     const date = value.match(/^(\d{4}-\d{2}-\d{2})发行$/)?.[1];
-    if (!date || !Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime())) {
+    if (!date || !parseDateStrict(date, 'YYYY-MM-DD')) {
         return;
     }
     // The source provides a calendar day; midnight only serializes that day.

@@ -13,8 +13,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export type DealKind = 'rent' | 'sale';
 export type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
@@ -462,7 +461,7 @@ export const residentialItems = async (
                 title: residentialTitle(extra),
                 link: unit.link,
                 guid: unit.link,
-                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
                 description: summarizeResidential(extra),
                 image: unit.image,
                 _extra: extra,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zsjy/:category?',
@@ -53,7 +52,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                pubDate: timezone(parseDate($item.prev().text()), 8),
+                pubDate: parseDate($item.prev().text(), 8),
                 link: new URL($item.attr('href')!, currentUrl).href,
             };
         });

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://wen.woshipm.com';
 
@@ -12,8 +12,7 @@ function parseQuestionDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseRelativeDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseRelativeDate(value);
 }
 
 export const route: Route = {

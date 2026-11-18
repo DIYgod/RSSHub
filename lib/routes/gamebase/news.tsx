@@ -9,9 +9,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 interface NewsListItem {
     news_no: number;
@@ -71,9 +70,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     let list = response.return_msg?.list ?? [];
-    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.post_time && Number.isFinite(parseDate(item.post_time).getTime()))) {
+    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.post_time && parseDate(item.post_time))) {
         if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => parseDate(b.post_time).getTime() - parseDate(a.post_time).getTime());
+            list.sort((a, b) => compareDates(parseDate(b.post_time), parseDate(a.post_time)));
         }
         list = list.slice(0, limit);
     }
@@ -120,7 +119,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                     link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                     category: categories,
                     author: authors,
@@ -131,7 +130,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    updated: updated ? timezone(parseDate(updated), 8) : undefined,
+                    updated: updated ? parseDate(updated, 8) : undefined,
                     language,
                 };
 

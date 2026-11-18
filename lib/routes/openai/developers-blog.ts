@@ -8,9 +8,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import { renderFallbackDescription } from './templates/description';
 
@@ -117,14 +116,7 @@ const extractListEntries = ($: CheerioAPI, listUrl: string, config: LocaleConfig
     return entries;
 };
 
-const parseUtcDate = (dateText: string): Date | undefined => {
-    const trimmed = dateText.trim();
-    if (!trimmed) {
-        return undefined;
-    }
-    const parsed = timezone(parseDate(trimmed, ['MMM D, YYYY', 'MMMM D, YYYY'], 'en', true), 0);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
-};
+const parseUtcDate = (dateText: string): Temporal.Instant | undefined => parseDateStrict(dateText.trim(), ['MMM D, YYYY', 'MMMM D, YYYY']);
 
 const isDynamicOgCard = (imageUrl: string): boolean => {
     try {

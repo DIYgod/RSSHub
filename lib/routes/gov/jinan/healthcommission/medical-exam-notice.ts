@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/healthcommission/medical_exam_notice',
@@ -61,7 +60,7 @@ async function handler() {
             const title = html('td[width="620"] a').attr('title');
             const link = new URL(html('td[width="620"] a').attr('href')!, `${baseUrl}/col/col14418/index.html`).href;
             const dateText = html('td[width="100"]').text();
-            const date = dateText ? timezone(parseDate(dateText), 8) : undefined;
+            const date = dateText ? parseDate(dateText, 8) : undefined;
             return {
                 title: title!,
                 pubDate: date,

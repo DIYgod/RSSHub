@@ -1,16 +1,15 @@
-import 'dayjs/locale/zh-cn.js';
-
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
-
-dayjs.extend(localizedFormat);
+import { formatDate, parseDate } from '@/utils/time';
 
 const currStatusName = ['全部', '已受理', '已询问', '通过', '未通过', '提交注册', '补充审核', '注册结果', '中止', '终止'];
+
+const formatAuditDate = (value) => {
+    const date = parseDate(value, 'YYYYMMDDHHmmss');
+    return date ? formatDate(date, 'YYYY年M月D日 HH:mm') : 'Invalid Date';
+};
 
 export const route: Route = {
     path: '/renewal',
@@ -55,7 +54,7 @@ async function handler() {
             keyword: '',
             auditApplyDateBegin: '',
             auditApplyDateEnd: '',
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Referer: pageUrl,
@@ -65,15 +64,8 @@ async function handler() {
     // console.log(response.data.result);
     const items = response.data.result.map((item) => ({
         title: `【${currStatusName[item.currStatus]}】${item.stockAuditName}`,
-        description: renderToString(
-            <SseRenewalDescription
-                item={item}
-                currStatus={currStatusName[item.currStatus]}
-                updateDate={dayjs(item.updateDate, 'YYYYMMDDHHmmss').locale('zh-cn').format('lll')}
-                auditApplyDate={dayjs(item.auditApplyDate, 'YYYYMMDDHHmmss').locale('zh-cn').format('lll')}
-            />
-        ),
-        pubDate: item.updateDate ? parseDateInTimezone(item.updateDate, 8) : undefined,
+        description: renderToString(<SseRenewalDescription item={item} currStatus={currStatusName[item.currStatus]} updateDate={formatAuditDate(item.updateDate)} auditApplyDate={formatAuditDate(item.auditApplyDate)} />),
+        pubDate: item.updateDate ? parseDate(item.updateDate, 8) : undefined,
         link: `${host}/renewal/xmxq/index.shtml?auditId=${item.stockAuditNum}`,
         author: item.stockAuditName,
     }));

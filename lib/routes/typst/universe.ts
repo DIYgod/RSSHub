@@ -3,7 +3,7 @@ import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function deserializeAstroProps(val: any): any {
     if (Array.isArray(val)) {
@@ -44,12 +44,11 @@ interface SearchResults {
     packages: Package[];
 }
 
-function getPublicationDate(value: number | undefined): Date | undefined {
+function getPublicationDate(value: number | undefined): Temporal.Instant | undefined {
     if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
         return;
     }
-    const date = parseDate(value, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 'X');
 }
 
 export const route: Route = {

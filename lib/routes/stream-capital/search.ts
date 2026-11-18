@@ -1,8 +1,7 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import type { EncryptedResponse, WebBlog } from './types';
 import { decrypt, encrypt } from './utils';
@@ -46,7 +45,7 @@ async function handler() {
     const list = blogs.map((item): DataItem & { link: string } => ({
         title: item.title,
         author: item.userName,
-        pubDate: timezone(parseDate(item.ctime, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseDate(item.ctime, 'YYYY-MM-DD HH:mm:ss', 8),
         link: `${baseUrl}/article/${item.id}`,
         description: item.content,
         category: item.tags.map((t) => t.tagName),

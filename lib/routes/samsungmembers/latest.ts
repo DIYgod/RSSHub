@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -40,7 +39,7 @@ async function handler() {
                 const content = load(res);
                 return {
                     ...item,
-                    pubDate: timezone(parseDate(content('p.data').last().text()), 8),
+                    pubDate: parseDate(content('p.data').last().text(), 8),
                     description: content('div.BSHARE_POP').html(),
                 };
             }),

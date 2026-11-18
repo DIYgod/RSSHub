@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import type { Article } from './constants';
 import { Language, Parameter, SUPPORTED_LANGUAGES } from './constants';
@@ -64,12 +64,12 @@ Language codes for the \`${Parameter.Language}\` parameter:
                 const contentUrl = getArticleContentLink(language, article.articleId);
                 const item: DataItem = {
                     title: article.articleTitle,
-                    pubDate: article.createTime ? parseDateInTimezone(article.createTime, 8) : undefined,
+                    pubDate: article.createTime ? parseDate(article.createTime, 8) : undefined,
                     link: getArticleLink(language, article.articleId),
                 };
 
                 const { articleContent } = await cache.tryGet(`wutheringwaves:body:v2:${language}:${article.articleId}`, async () => {
-                    const articleDetails = await ofetch<Article>(contentUrl, { query: { t: Date.now() } });
+                    const articleDetails = await ofetch<Article>(contentUrl, { query: { t: Temporal.Now.instant().epochMilliseconds } });
                     // Article content may not always be available, e.g: https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2596
                     return { articleContent: articleDetails.articleContent ?? '' };
                 });

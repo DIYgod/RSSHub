@@ -4,9 +4,8 @@ import { getMimeType } from 'hono/utils/mime';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const documentMimeTypes = {
     doc: 'application/msword',
@@ -73,7 +72,7 @@ async function handler(ctx) {
             return {
                 title: $item.contents().first().text(),
                 link,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 enclosure_url: enclosureType ? link : undefined,
                 enclosure_type: enclosureType,
             };

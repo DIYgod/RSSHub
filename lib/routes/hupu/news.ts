@@ -1,7 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { NBA_TEAMS_ID_MAP } from './consts';
 import { getEntryDetails } from './utils';
@@ -30,7 +29,7 @@ export const route: Route = {
             title: item.title,
             guid: item.tid,
             link: `https://m.hupu.com/bbs/${item.tid}`,
-            pubDate: timezone(parseDate(item.publishTime), 8),
+            pubDate: parseDate(item.publishTime, 8),
         }));
 
         items = await Promise.all(items.map((item) => getEntryDetails(item)));

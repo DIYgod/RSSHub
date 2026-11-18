@@ -6,8 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/profile/:type/:username',
@@ -72,7 +71,7 @@ async function handler(ctx: Context) {
                         description: $post.find('.Message').html(),
                         author: username,
                         category: $post.find('.Category a').text() || undefined,
-                        pubDate: timezone(parseDate($post.find('time').attr('datetime')!), 0),
+                        pubDate: parseDate($post.find('time').attr('datetime')!, 0),
                     };
                 });
             })

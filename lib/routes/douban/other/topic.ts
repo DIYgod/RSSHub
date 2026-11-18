@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { getIpLocations } from '../ip-location';
 
@@ -110,7 +110,7 @@ async function handler(ctx) {
                 title,
                 link,
                 author,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 description,
             };
 

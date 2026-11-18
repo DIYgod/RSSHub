@@ -2,8 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const defaultSrc = '_static/ee6af7e.js';
 const defaultToken = 'djflkdsoisknfoklsyhownfrlewfknoiaewf';
@@ -91,7 +90,7 @@ const processItems = (items: any[]): any[] =>
         return {
             title,
             description,
-            pubDate: timezone(parseDate(item.addtime), 8),
+            pubDate: parseDate(item.addtime, 8),
             link: new URL(`tool/${item.zurl}`, rootUrl).href,
             category: [...new Set([...strToArray(item.categories), ...strToArray(item.tags), item.catname, item.procattrname, item.procformname, item.proctypename])].filter(Boolean),
             guid,

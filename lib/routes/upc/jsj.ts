@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const MAP = {
@@ -90,7 +89,7 @@ async function handler(ctx) {
         return {
             title: a.attr('title')!,
             link: new URL(href!, link).href,
-            pubDate: $item.find('div[style]').text() ? timezone(parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'), 8) : undefined,
+            pubDate: $item.find('div[style]').text() ? parseDate($item.find('div[style]').text(), 'YYYY-MM-DD', 8) : undefined,
         };
     });
 
@@ -127,7 +126,7 @@ async function handler(ctx) {
                     .remove();
                 details.description = detailContent.html();
                 const published = $('.nr-xinxi i').first().text().trim();
-                details.pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                details.pubDate = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 
                 return details;
             });

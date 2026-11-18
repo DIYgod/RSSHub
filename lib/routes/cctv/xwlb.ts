@@ -1,16 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import type { Context } from 'hono';
 
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-dayjs.extend(customParseFormat);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:site/:category/:name',
@@ -62,17 +57,20 @@ const getXWLB = async (ctx: Context) => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
     // Read the latest broadcast date from the native calendar.
-    const latestDate = dayjs($('.rilititle p').text(), 'YYYY-MM-DD');
+    const latestDate = parseDate($('.rilititle p').text(), 'YYYY-MM-DD')?.toZonedDateTimeISO('UTC').toPlainDate();
+    if (!latestDate) {
+        throw new Error('Unable to read the latest broadcast date from the calendar.');
+    }
     const limit = Number(ctx.req.query('limit'));
     const count = Array.from({ length: limit > 0 ? Math.min(20, limit) : 20 }, (_, index) => index);
     const resultItems = await Promise.all(
         count.map(async (i) => {
-            const newsDate = latestDate.subtract(i, 'days').hour(19);
-            const url = `https://tv.cctv.com/lm/xwlb/day/${newsDate.format('YYYYMMDD')}.shtml`;
+            const newsDate = latestDate.subtract({ days: i });
+            const url = `https://tv.cctv.com/lm/xwlb/day/${newsDate.toString().replaceAll('-', '')}.shtml`;
             const item = {
-                title: `新闻联播 ${newsDate.format('YYYY/MM/DD')}`,
+                title: `新闻联播 ${newsDate.toString().replaceAll('-', '/')}`,
                 link: url,
-                pubDate: timezone(parseDate(newsDate.format()), 8),
+                pubDate: newsDate.toZonedDateTime({ timeZone: '+08:00', plainTime: '19:00' }).toInstant(),
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);

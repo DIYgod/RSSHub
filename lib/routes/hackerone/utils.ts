@@ -3,7 +3,7 @@ import pMap from 'p-map';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const markdownIt = MarkdownIt();
 
@@ -98,7 +98,7 @@ export function parseItem(item) {
         description: summary ? markdownIt.render(summary) : undefined,
         category: [item.team.name, item.report.substate, item.severity_rating, ...(item.cve_ids ?? [])].filter(Boolean),
         author,
-        pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+        pubDate,
         link: `https://hackerone.com/reports/${item.report.databaseId}`,
     };
 }

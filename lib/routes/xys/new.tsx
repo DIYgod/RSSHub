@@ -8,7 +8,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 function getYouTubeVideoId(url: URL) {
     const videoId = url.hostname === 'youtu.be' ? url.pathname.slice(1) : url.pathname === '/watch' ? url.searchParams.get('v') : undefined;
@@ -101,13 +101,13 @@ async function handler(ctx) {
             let link = $item.attr('href');
             /^https?:\/\//.test(link!) || (link = rootUrl + '/' + link!.replace(/^\//, ''));
             const dateText = $item.parent().text().trim().slice(0, 8);
-            const date = /^\d{2}\.\d{2}\.\d{2}$/.test(dateText) ? parseDate(dateText, 'YY.MM.DD', true) : undefined;
+            const date = /^\d{2}\.\d{2}\.\d{2}$/.test(dateText) ? parseDateStrict(dateText, 'YY.MM.DD') : undefined;
             const url = new URL(link!);
             const isYouTubePage = ['youtube.com', 'www.youtube.com', 'youtu.be'].includes(url.hostname) && !getYouTubeVideoId(url);
             return {
                 title: $item.text(),
                 link,
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
                 guid: isYouTubePage ? `${link}#xys-${dateText}` : undefined,
             };
         })

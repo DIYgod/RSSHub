@@ -6,9 +6,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -150,7 +149,7 @@ async function handler(ctx) {
         return {
             title: item.title,
             link: linkMap[channel],
-            pubDate: item.publishDate || item.issueDate ? timezone(parseDate(item.publishDate || item.issueDate, 'YYYYMMDD'), 8) : undefined,
+            pubDate: item.publishDate || item.issueDate ? parseDate(item.publishDate || item.issueDate, 'YYYYMMDD', 8) : undefined,
         };
     });
 
@@ -174,7 +173,7 @@ async function handler(ctx) {
                 const $ = load(detailResponse.data);
 
                 const date = $('div.news_detail_date').text().match(/\d{8}/)?.[0];
-                item.pubDate = date ? timezone(parseDate(date, 'YYYYMMDD'), 8) : item.pubDate;
+                item.pubDate = date ? parseDate(date, 'YYYYMMDD', 8) : item.pubDate;
 
                 const desc = $('div.news_detail_box');
                 desc.find('div.news_detail_title, div.news_detail_date').remove();

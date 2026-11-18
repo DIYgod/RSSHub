@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://yjsy.hrbeu.edu.cn';
 
@@ -54,7 +53,7 @@ async function handler(ctx) {
             const link = new URL($(item).find('a').attr('href')!, `${rootUrl}/${id}/list.htm`).href;
             return {
                 title: $(item).find('a').attr('title')!,
-                pubDate: $(item).find('span.Article_PublishDate').text() ? timezone(parseDate($(item).find('span.Article_PublishDate').text()), 8) : undefined,
+                pubDate: $(item).find('span.Article_PublishDate').text() ? parseDate($(item).find('span.Article_PublishDate').text(), 8) : undefined,
                 link,
             };
         });

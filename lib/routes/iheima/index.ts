@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/recommend',
@@ -35,7 +35,7 @@ async function handler(ctx) {
             return {
                 title: linkElement.text().trim(),
                 link: linkElement.attr('href') ? new URL(linkElement.attr('href')!, baseUrl).href : undefined,
-                pubDate: Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 description: `${image ? `<img src="${new URL(image, baseUrl).href}">` : ''}${brief ? `<p>${brief}</p>` : ''}`,
             };
         })

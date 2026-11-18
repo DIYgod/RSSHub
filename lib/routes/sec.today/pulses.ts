@@ -3,7 +3,7 @@ import { type AnyNode, cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const host = 'https://sec.today';
 

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const url = 'https://www.ieee-security.org/';
 // https://www.ieee-security.org/TC/SP2023/program-papers.html
@@ -52,7 +52,7 @@ async function handler() {
             year: Number($(element).closest('td').find('b').first().text()),
             link: new URL($(element).attr('href')!, indexUrl).href,
         }))
-        .filter((conference) => conference.year >= 2020 && conference.year <= new Date().getFullYear());
+        .filter((conference) => conference.year >= 2020 && conference.year <= Temporal.Now.zonedDateTimeISO('UTC').year);
 
     const items = await pMap(conferences, fetchPapers, { concurrency: 3 });
 

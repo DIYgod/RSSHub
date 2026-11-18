@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const attrValue = (node: TagNodeObject) => Object.keys(node.attrs ?? {})[0] ?? '';
 const childrenOf = (node: TagNodeObject): NodeContent[] => (Array.isArray(node.content) ? node.content : []);
@@ -85,7 +85,7 @@ type PostResponse = {
 
 async function handler(ctx) {
     const { tid, authorId } = ctx.req.param();
-    const timestamp = Math.floor(Date.now() / 1000);
+    const timestamp = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     const cookie = config.nga.uid && config.nga.cid ? `ngaPassportUid=${config.nga.uid}; ngaPassportCid=${config.nga.cid};` : `guestJs=${timestamp};`;
     const { data }: { data: PostResponse } = await got.post('https://ngabbs.com/app_api.php?__lib=post&__act=list', {
         headers: {

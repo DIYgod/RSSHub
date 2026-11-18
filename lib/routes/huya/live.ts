@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/live/:id',
@@ -34,8 +34,7 @@ async function handler(ctx: Context) {
             throw new Error(`Huya room ${id} did not provide a valid live stream identity.`);
         }
         const startTime = Number(roomData.startTime);
-        const date = Number.isFinite(startTime) && startTime > 0 ? parseDate(startTime, 'X') : undefined;
-        const pubDate = date && Number.isFinite(date.getTime()) ? date : undefined;
+        const pubDate = Number.isFinite(startTime) && startTime > 0 ? parseDate(startTime, 'X') : undefined;
 
         item.push({
             title: roomData.introduction,

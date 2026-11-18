@@ -12,8 +12,8 @@ import cache from '@/utils/cache';
 import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 import { expandTelegraph } from './telegraph';
 import { renderVideo } from './templates/video';
@@ -771,7 +771,7 @@ async function handler(ctx) {
                     messageTitle += (messageTitle && titleText ? ': ' : '') + titleText;
                 }
 
-                messageTitle = messageTitle === '' ? mediaTag || pubDate?.toUTCString() || '' : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
+                messageTitle = messageTitle === '' ? mediaTag || (pubDate && toRFC822(pubDate)) || '' : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
 
                 let description = '';
                 if (showFwdFrom) {

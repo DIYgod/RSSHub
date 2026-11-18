@@ -10,8 +10,7 @@ import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface RequestHeaders {
     cookie?: string;
@@ -81,7 +80,7 @@ function parseElement($, element, layout: string, includeBittorrent: string | bo
     const el = $(element);
     const title = el.find('.glink').html();
     const rawDate = el.find('div[id^="posted_"]').text();
-    const pubDate = rawDate ? timezone(parseDate(rawDate), 0) : undefined;
+    const pubDate = rawDate ? parseDate(rawDate, 0) : undefined;
     let linkElement;
     let imageElement;
     // match layout

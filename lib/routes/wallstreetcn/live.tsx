@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     global: '要闻',
@@ -50,8 +50,7 @@ function parseSourceTime(value?: string | number | null) {
     if (!Number.isFinite(seconds)) {
         return;
     }
-    const date = parseDate(seconds * 1000);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(seconds * 1000);
 }
 
 function parseLimit(value: string | undefined, defaultLimit: number) {

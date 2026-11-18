@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/shop/:id/:cat?',
@@ -55,7 +54,7 @@ async function handler(ctx: Context) {
                 return {
                     ...item,
                     description: content('div.major-function').html() + `<img src="${content('ul.lg-list li img').attr('src')}">`,
-                    pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                 };
             }),
         { concurrency: 3 }

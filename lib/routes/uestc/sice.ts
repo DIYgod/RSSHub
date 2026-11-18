@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseIndexUrl = 'https://www.sice.uestc.edu.cn/index.htm';
 
@@ -58,12 +57,12 @@ async function handler() {
             const $item = $(item);
             const yearMonth = $item.find('time em').text().trim();
             const day = $item.find('time span').text().trim();
-            const date = yearMonth && day ? parseDate(`${yearMonth.replace('.', '-')}-${day}`, 'YYYY-MM-DD', true) : undefined;
+            const date = yearMonth && day ? parseDateStrict(`${yearMonth.replace('.', '-')}-${day}`, 'YYYY-MM-DD', 8) : undefined;
 
             return {
                 title: $item.find('.txt p').text(),
                 link: new URL($item.find('a[href]').attr('href')!, baseIndexUrl).href,
-                pubDate: date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined,
+                pubDate: date,
             };
         });
 

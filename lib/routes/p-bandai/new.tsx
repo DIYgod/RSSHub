@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const link = 'https://p-bandai.jp/new_itemlist/';
 
@@ -41,7 +40,7 @@ The list shortens long item names, and the item pages are behind a browser check
 :::`,
 };
 
-const parseStart = (year: number, month: string, day: string, hour: string) => timezone(parseDate(`${year}-${month}-${day} ${hour}`, 'YYYY-M-D H'), 9);
+const parseStart = (year: number, month: string, day: string, hour: string) => parseDate(`${year}-${month}-${day} ${hour}`, 'YYYY-M-D H', 9);
 
 async function handler() {
     const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(link, { responseType: 'arrayBuffer' });
@@ -49,7 +48,7 @@ async function handler() {
         throw new ConfigNotFoundError('Premium Bandai redirected the request to its international site. Send p-bandai.jp requests through a Japanese proxy with PROXY_URI and PROXY_URL_REGEX.');
     }
     const $ = load(new TextDecoder('shift_jis').decode(response._data));
-    const year = new Date().getFullYear();
+    const year = Temporal.Now.zonedDateTimeISO('UTC').year;
 
     const items = $('.item_wrap > li')
         .toArray()
@@ -60,7 +59,7 @@ async function handler() {
             const [, month, day, hour] = /(\d{1,2})\/(\d{1,2}) (\d{1,2})時/.exec(start) ?? [];
             // The list gives no year and only covers recent days, so a date ahead of now is from last year
             let pubDate = month ? parseStart(year, month, day, hour) : undefined;
-            if (pubDate && pubDate > new Date()) {
+            if (pubDate && Temporal.Instant.compare(pubDate, Temporal.Now.instant()) > 0) {
                 pubDate = parseStart(year - 1, month, day, hour);
             }
             // The `b` size of the same image is 560px instead of the 200px thumbnail

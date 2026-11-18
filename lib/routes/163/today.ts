@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/today/:need_content?',
@@ -50,7 +49,7 @@ async function handler(ctx) {
     let items = response.data.data.items.map((item) => ({
         title: item.title,
         author: item.source,
-        pubDate: timezone(parseDate(item.ptime), 8),
+        pubDate: parseDate(item.ptime, 8),
         description: `<p>${item.digest}</p><img src="${item.imgsrc}">`,
         link: item.url || `https://c.m.163.com/news/a/${item.docid}.html`,
     }));

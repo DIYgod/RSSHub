@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/convert/:query?',
@@ -40,7 +40,7 @@ async function handler(ctx) {
             isPagination: true,
             'pageHelp.pageSize': 20,
             flag: 0,
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
             ...queries,
         },
         headers: {
@@ -51,7 +51,7 @@ async function handler(ctx) {
     const items = response.data.result.map((item) => ({
         title: item.title,
         description: `${host}${item.URL}`,
-        pubDate: item.ADDDATE ? parseDateInTimezone(item.ADDDATE, 8) : undefined,
+        pubDate: item.ADDDATE ? parseDate(item.ADDDATE, 8) : undefined,
         link: `${host}${item.URL}`,
         author: item.security_Code,
     }));

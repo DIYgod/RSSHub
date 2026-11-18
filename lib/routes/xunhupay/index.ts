@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import buildData from '@/utils/common-config';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.xunhupay.com';
 
@@ -43,8 +43,7 @@ function parseArticleDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD', true);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(value, 'YYYY-MM-DD');
 }
 
 async function handler() {

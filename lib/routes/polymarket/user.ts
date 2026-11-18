@@ -2,7 +2,7 @@ import { escape } from 'entities/escape';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Activity, PublicProfile } from './types';
 import { DATA_API, GAMMA_API } from './types';

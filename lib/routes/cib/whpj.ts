@@ -8,8 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -99,7 +98,7 @@ async function handler(ctx) {
             return {
                 title: formatTitle(name, xhmr, xcmr, xhmc, xcmc, content, format),
                 link: `https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do#${item.id}`,
-                pubDate: timezone(parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'), 8),
+                pubDate: parseDate(date, 'YYYY年MM月DD日 HH:mm:ss', 8),
                 description: content.replaceAll(/\s/g, '<br>'),
                 guid: `${item.cell[0]} ${item.cell[1]} ${date}`,
             };

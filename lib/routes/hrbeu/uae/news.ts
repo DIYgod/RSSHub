@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -61,7 +60,7 @@ async function handler(ctx) {
                 .find('div.date')
                 .text()
                 .replaceAll(/(.*)\/(.*)/g, '$2-$1');
-            const pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
             return {
                 title: title!,
                 pubDate,

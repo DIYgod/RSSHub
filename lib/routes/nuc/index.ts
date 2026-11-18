@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const types = {
     zbxw: {
@@ -101,7 +100,7 @@ async function handler(ctx: Context) {
                     title: $(typeConfig.selector.title).first().text(),
                     link: articleUrl,
                     description: description.replaceAll('/__local', 'http://www.nuc.edu.cn/__local'),
-                    pubDate: dateText ? timezone(parseDate(dateText), 8) : undefined,
+                    pubDate: dateText ? parseDate(dateText, 8) : undefined,
                 };
             }),
         { concurrency: 3 }

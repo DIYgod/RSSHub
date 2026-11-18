@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.cast.org.cn';
 
@@ -31,7 +30,7 @@ async function parsePage(html: string) {
                 return cache.tryGet(articleUrl, async () => {
                     const res = await got.get(articleUrl!);
                     const article = load(res.data);
-                    const pubDate = timezone(parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8);
+                    const pubDate = parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm', 8);
 
                     return {
                         title,

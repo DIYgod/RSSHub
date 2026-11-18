@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 // https://www.natgeomedia.com/article/
 
@@ -22,7 +21,7 @@ async function loadContent(link) {
     }
     return {
         title: $('h1.content-title').text(),
-        pubDate: dtStr ? timezone(parseDate(dtStr), 8) : undefined,
+        pubDate: dtStr ? parseDateStrict(dtStr, 'MMM.\u{A0}DD\u{A0}YYYY', 8) : undefined,
         description,
         category: $('.content-tag a')
             .toArray()

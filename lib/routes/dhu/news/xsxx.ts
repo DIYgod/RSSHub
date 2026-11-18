@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { selectItems } from '../utils';
 
@@ -41,10 +40,10 @@ async function handler() {
             Referer: 'https://news.dhu.edu.cn/6410/',
         },
     });
-    const list: Array<DataItem & { link: string; pubDate: Date }> = data.data.map((item) => ({
+    const list: Array<DataItem & { link: string; pubDate: Temporal.Instant }> = data.data.map((item) => ({
         title: item.title,
         link: item.wapUrl,
-        pubDate: timezone(parseDate(item.publishTime), 8),
+        pubDate: parseDate(item.publishTime, 8),
         author: item.publisher,
     }));
 

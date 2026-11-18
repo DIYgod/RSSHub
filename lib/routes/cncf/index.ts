@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'https://www.cncf.io';
 
@@ -44,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('span.post-archive__title').text(),
                 link: $item.find('span.post-archive__title > a').attr('href'),
-                pubDate: timezone(parseDate($item.find('span.post-archive__item_date').text().split('|', 1)[0]), 0),
+                pubDate: parseDate($item.find('span.post-archive__item_date').text().split('|', 1)[0], 'MMMM D, YYYY', 0),
                 description: $item.find('div.post-archive__excerpt').html() ?? undefined,
             };
         })

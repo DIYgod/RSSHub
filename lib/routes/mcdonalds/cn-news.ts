@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cn/:category',
@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $('h3').text(),
                     link: newsUrl,
-                    pubDate: date ? parseDateInTimezone(date.replaceAll('.', '-'), 8) : undefined,
+                    pubDate: date ? parseDate(date.replaceAll('.', '-'), 8) : undefined,
                     description: $('.cmsPage').html(),
                 };
             }),

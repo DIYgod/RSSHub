@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { fetchPage } from './ct2-waap';
 import { namespace } from './namespace';

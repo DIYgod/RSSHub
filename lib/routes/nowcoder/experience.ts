@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.nowcoder.com';
 
@@ -51,7 +50,7 @@ async function handler(ctx) {
             title: x.postTitle,
             link: new URL('discuss/' + x.postId, host).href,
             author: x.author,
-            pubDate: timezone(parseDate(x.createTime), 8),
+            pubDate: parseDate(x.createTime, 8),
             category: x.postTypeName,
         };
         return info;

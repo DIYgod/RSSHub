@@ -4,7 +4,7 @@ import { config } from '@/config';
 import { renderYoutube } from '@/routes/youtube/utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const regionConfig = {
     hk: {

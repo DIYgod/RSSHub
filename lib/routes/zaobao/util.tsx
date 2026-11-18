@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import Zaobao from './zaobao';
 
@@ -24,8 +23,8 @@ export const parseList = async (
     resultList: Array<{
         title: string;
         description?: string;
-        pubDate: Date;
-        updated?: Date;
+        pubDate?: Temporal.Instant;
+        updated?: Temporal.Instant;
         link: string;
         category?: string[];
         author?: Array<{ name: string; url?: string }>;
@@ -60,7 +59,7 @@ export const parseList = async (
                     return {
                         title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
                         link: href,
-                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), 8),
+                        pubDate: $item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm', 8) : parseDate($item.next().text().trim(), 'MM月DD日', 8),
                     };
                 }
                 const response = await ofetch.raw(new URL(href, origin).href);

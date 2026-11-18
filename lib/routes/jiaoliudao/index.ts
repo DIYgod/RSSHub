@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -43,6 +43,6 @@ async function handler(ctx) {
     };
 }
 
-function parseGmtDate(value?: string): Date | undefined {
-    return value && Number.isFinite(parseDate(value, 'YYYY-MM-DDTHH:mm:ss', true).getTime()) ? parseDate(`${value}Z`) : undefined;
+function parseGmtDate(value?: string): Temporal.Instant | undefined {
+    return value && parseDateStrict(value, 'YYYY-MM-DDTHH:mm:ss') ? parseDate(`${value}Z`) : undefined;
 }

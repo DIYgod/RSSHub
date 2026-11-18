@@ -45,9 +45,9 @@ async function handler(ctx) {
         },
     });
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const date = Temporal.Now.zonedDateTimeISO('UTC');
+    const year = date.year;
+    const month = date.month;
     const mon = month < 10 ? '0' + month : month.toString();
 
     let items = response.data.data[0].items;

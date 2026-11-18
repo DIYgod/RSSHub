@@ -2,7 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 // https://github.com/streamlink/streamlink/blob/master/src/streamlink/plugins/twitch.py#L286
 const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
@@ -53,8 +53,7 @@ function getPublicationDate(value: string | undefined) {
     if (typeof value !== 'string' || !value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function handler(ctx) {

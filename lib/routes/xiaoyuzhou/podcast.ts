@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/podcast/:id',
@@ -81,7 +81,7 @@ async function handler(ctx) {
             enclosure_type: 'audio/mpeg',
             link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
             eid: item.eid,
-            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
             itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
         };
     });

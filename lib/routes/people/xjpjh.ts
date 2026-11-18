@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const host = 'http://jhsjk.people.cn';
 
@@ -16,8 +15,7 @@ const parseCalendarDate = (date: string | undefined) => {
         return;
     }
     // UTC midnight represents the source calendar day, not its publication time.
-    const parsed = timezone(parseDate(date, 'YYYY-MM-DD', true), 0);
-    return Number.isFinite(parsed.getTime()) ? parsed : undefined;
+    return parseDateStrict(date, 'YYYY-MM-DD', 0);
 };
 
 export const route: Route = {

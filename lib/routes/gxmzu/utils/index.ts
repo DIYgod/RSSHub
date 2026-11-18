@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const FALLBACK_DESCRIPTION = '该通知无法直接预览，请点击原文链接↑查看';
 
@@ -21,17 +20,13 @@ interface DetailSelectors {
 }
 
 // Date formats vary across sites: 2026-05-28, 2026/06/02 or 2026年05月28日 14:53, often prefixed with a label such as "发布日期："
-export function parsePubDate(text?: string): Date | undefined {
+export function parsePubDate(text?: string): Temporal.Instant | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
         return undefined;
     }
     const [, year, month, day] = match;
     const dateText = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    const calendarDate = new Date(`${dateText}T00:00:00Z`);
-    if (Number.isNaN(calendarDate.getTime()) || calendarDate.toISOString().slice(0, 10) !== dateText) {
-        return undefined;
-    }
     const time = text?.match(/(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1];
     if (time) {
         const [hours, minutes, seconds = 0] = time.split(':').map(Number);
@@ -39,8 +34,7 @@ export function parsePubDate(text?: string): Date | undefined {
             return undefined;
         }
     }
-    const date = timezone(parseDate(`${dateText}${time ? ` ${time}` : ''}`), 8);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(`${dateText}${time ? ` ${time}` : ''}`, 8);
 }
 
 export function parseNoticeList($: CheerioAPI, pageUrl: string, rowSelector: string, dateSelector: string): NoticeItem[] {

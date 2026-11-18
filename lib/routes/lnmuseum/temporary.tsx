@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -49,7 +48,7 @@ export const route: Route = {
                         currentPage: 1,
                         size: 9,
                         type: config.typeId,
-                        _t: Date.now(),
+                        _t: Temporal.Now.instant().epochMilliseconds,
                     },
                 });
 
@@ -58,7 +57,7 @@ export const route: Route = {
                 return list.map((item) => {
                     const title = item.name;
                     const itemLink = `${baseUrl}/#/exhibition/detail?id=${item.id}&pageType=1`;
-                    const pubDate = item.createTime === undefined || item.createTime === null ? undefined : timezone(parseDate(item.createTime), 8);
+                    const pubDate = item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime, 8);
                     const startDate = item.beginTime;
                     const endDate = item.endTime;
                     const location = item.address;

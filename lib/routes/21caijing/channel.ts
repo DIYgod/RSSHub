@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const processMenu = (data: any[]) => {
@@ -103,7 +102,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDate ? timezone(parseRelativeDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseRelativeDate(pubDate, 8) : undefined,
                 link: linkUrl,
                 category: categories,
                 author: authors,
@@ -144,13 +143,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                         category: categories,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 8) : item.updated,
                         language,
                     };
 

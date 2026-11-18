@@ -7,8 +7,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
     if (!value) {
@@ -25,13 +24,13 @@ function getImageUrl(value: string | undefined, baseUrl: string): string | undef
     return;
 }
 
-function getReleaseDate(value: string | undefined): Date | undefined {
+function getReleaseDate(value: string | undefined): Temporal.Instant | undefined {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value);
+    const date = parseDate(value, 'MMM D, YYYY', 0);
     // UTC midnight represents the release calendar day, not a publication instant.
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return date;
 }
 
 const render = (data: { cover?: string }) => renderToString(<SeriesDescription {...data} />);

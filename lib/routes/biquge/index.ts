@@ -6,9 +6,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const allowHost = new Set([
     'www.xbiquwx.la',
@@ -78,8 +77,7 @@ async function handler(ctx) {
     const author = $('meta[property="og:novel:author"]').attr('content');
     const latestChapterTitle = $('meta[property="og:novel:latest_chapter_name"]').attr('content');
     const updateTime = $('meta[property="og:novel:update_time"]').attr('content');
-    const parsedDate = updateTime ? parseDate(updateTime) : undefined;
-    const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
+    const pubDate = updateTime ? parseDate(updateTime, 8) : undefined;
     const chapterLinks = new Set<string>();
 
     let items = $('dl dd a')

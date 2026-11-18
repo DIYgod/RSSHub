@@ -6,9 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.epe.sdu.edu.cn/';
 const typelist = ['学院动态', '通知公告', '学术动态'];
@@ -88,7 +86,7 @@ async function getCyolArticle(articleId: string, scriptUrls: string[]) {
             title: article.title,
             author,
             description: $('body').html() ?? undefined,
-            ...(article.pubTime && { pubDate: parseDateInTimezone(article.pubTime.replace(' ', 'T'), 8) }),
+            ...(article.pubTime && { pubDate: parseDate(article.pubTime.replace(' ', 'T'), 8) }),
         };
     } catch (error) {
         if (error instanceof FetchError) {
@@ -136,7 +134,7 @@ async function handler(ctx) {
             if (!href || !title) {
                 return [];
             }
-            return { title, link: new URL(href, link).href, pubDate: timezone(parseDate($element.find('span').text(), 'YYYY-MM-DD'), 8) };
+            return { title, link: new URL(href, link).href, pubDate: parseDate($element.find('span').text(), 'YYYY-MM-DD', 8) };
         });
 
     const item = await pMap(
@@ -182,7 +180,7 @@ async function handler(ctx) {
                         title,
                         author,
                         description: content.html() ?? undefined,
-                        ...(publishedTime && { pubDate: parseDateInTimezone(`${publishedTime[1]}-${publishedTime[2]}-${publishedTime[3]}T${publishedTime[4]}:00`, 8) }),
+                        ...(publishedTime && { pubDate: parseDate(`${publishedTime[1]}-${publishedTime[2]}-${publishedTime[3]}T${publishedTime[4]}:00`, 8) }),
                     };
                 })
             )),

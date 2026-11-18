@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/inquire/:category?/:select?/:keyword?',
@@ -82,7 +81,7 @@ async function handler(ctx) {
             return {
                 title: `[${item.gsdm}] ${item.gsjc} (${item.hjlb})`,
                 link: `http://reportdocs.static.szse.cn/${item.ck}`,
-                pubDate: item.fhrq ? timezone(parseDate(item.fhrq, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: item.fhrq ? parseDate(item.fhrq, 'YYYY-MM-DD', 8) : undefined,
                 description: renderInquireDescription(item),
             };
         });

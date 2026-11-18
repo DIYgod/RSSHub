@@ -6,9 +6,8 @@ import pMap from 'p-map';
 import { type Data, type DataItem, type Language, type Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, loadList } from './utils';
 
@@ -69,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                     category: categories,
                     content: {
                         html: description,

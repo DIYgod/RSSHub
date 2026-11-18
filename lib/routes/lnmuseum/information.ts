@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -28,7 +27,7 @@ export const route: Route = {
             searchParams: {
                 currentPage: 1,
                 size: 10,
-                _t: Date.now(),
+                _t: Temporal.Now.instant().epochMilliseconds,
             },
         });
 
@@ -39,7 +38,7 @@ export const route: Route = {
 
             return {
                 title: item.title,
-                pubDate: item.createTime === undefined || item.createTime === null ? undefined : timezone(parseDate(item.createTime), 8),
+                pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime, 8),
                 link: itemLink,
             };
         });

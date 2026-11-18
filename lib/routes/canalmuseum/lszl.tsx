@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 

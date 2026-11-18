@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ilbolive/news',
@@ -85,7 +85,7 @@ async function handler(): Promise<Data> {
 
                 return {
                     description: article.html(),
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     author,
                 };
             });

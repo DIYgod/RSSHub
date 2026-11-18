@@ -1,16 +1,12 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { getElementChildrenInnerText } from './utils';
-
-dayjs.extend(utc);
 
 export const route: Route = {
     path: '/today',
@@ -37,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const dateFormatted = dayjs().utcOffset(8).format('YYYYMMDD');
+    const dateFormatted = formatDate(Temporal.Now.instant(), 'YYYYMMDD', 8);
 
     const baseUrl = `http://mrdx.cn/content/${dateFormatted}`;
     const link = `${baseUrl}/Page01BC.htm`;

@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 import { isYouTubeChannelId } from './utils';
 
@@ -14,8 +14,7 @@ const parsePostDate = (value: string | undefined) => {
     if (!dateText) {
         return;
     }
-    const date = parseRelativeDate(dateText);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseRelativeDate(dateText);
 };
 
 const renderCommunityDescription = (runs, media) =>

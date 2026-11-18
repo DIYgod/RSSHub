@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.ithome.com/';
 
@@ -41,11 +41,11 @@ async function handler(ctx) {
     const list = $('ul.bl > li')
         .toArray()
         .map((item): DataItem => {
-            const date = parseDateInTimezone($(item).find('div.c').attr('data-ot') ?? '', 8);
+            const date = parseDate($(item).find('div.c').attr('data-ot') ?? '', 8);
             return {
                 title: $(item).find('h2 > a').text(),
                 link: $(item).find('h2 > a').attr('href'),
-                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
             };
         });
 

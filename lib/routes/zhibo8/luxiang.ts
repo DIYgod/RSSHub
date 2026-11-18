@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/luxiang/:category?',
@@ -49,7 +48,7 @@ async function handler(ctx) {
                     return {
                         title: `${timeText.data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,
-                        pubDate: timezone(parseDate(`${href!.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), 8),
+                        pubDate: parseDate(`${href!.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日', 8),
                     };
                 });
         });

@@ -4,7 +4,7 @@ import type { Data, Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
 // import playwright from '@/utils/playwright';
-// import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/home',
@@ -59,7 +59,7 @@ async function fetchPage(): Promise<Data> {
         title: item.post_title || item.title || 'No Title',
         link: item.post_url || item.link || '',
         description: item.post_excerpt || item.excerpt || '',
-        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : item.date ? new Date(item.date).toUTCString() : '',
+        pubDate: item.post_date ? parseDate(item.post_date) : item.date ? parseDate(item.date) : '',
         category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/g, '') : '', // Clean HTML if category_link exists
         image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
     }));

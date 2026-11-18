@@ -3,9 +3,9 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { rootUrl } from './utils';
 
@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const limit = getRouteLimit(ctx, 10);
     const feed = await parser.parseString(await ofetch(`${rootUrl}/stories/feed`, { responseType: 'text' }));
-    const datedItems = feed.items.map((item) => ({ item, date: item.pubDate ? parseDate(item.pubDate).getTime() : NaN }));
+    const datedItems = feed.items.map((item) => ({ item, date: item.pubDate ? (parseDate(item.pubDate)?.epochMilliseconds ?? NaN) : NaN }));
     const hasValidDates = datedItems.every(({ date }) => Number.isFinite(date));
     if (ctx.req.query('sorted') !== 'false' && hasValidDates) {
         datedItems.sort((a, b) => b.date - a.date);

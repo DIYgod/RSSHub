@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 import type { Feed } from './types';
 import { parseFeed } from './utils';
@@ -121,7 +122,7 @@ async function handler(ctx: Context): Promise<Data> {
                     title: feed.title?.contents[0]?.text_content?.text || feed.channelInfo?.guild_name || '',
                     link: feedLink,
                     description: parseFeed(feedContent),
-                    pubDate: new Date(Number(feed.createTime) * 1000),
+                    pubDate: parseDate(feed.createTime, 'X'),
                     author: feed.poster?.nick,
                 };
             });

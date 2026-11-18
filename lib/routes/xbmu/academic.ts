@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
 
@@ -43,8 +42,7 @@ const handler: Route['handler'] = async () => {
                 .map((element) => {
                     const rawDate = $(element).find('span').text();
                     const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
-                    const parsedDate = yearMonth && day ? timezone(parseDate(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', true), 8) : undefined;
-                    const formattedDate = parsedDate && Number.isFinite(parsedDate.getTime()) ? parsedDate : undefined;
+                    const formattedDate = yearMonth && day ? parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
 
                     const title = $(element).find('a').attr('title') || '学术信息';
                     const relativeHref = $(element).find('a').attr('href') || '';

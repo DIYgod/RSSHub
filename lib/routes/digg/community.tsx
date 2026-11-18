@@ -5,8 +5,8 @@ import { FetchError } from 'ofetch';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/community/:community',
@@ -134,7 +134,7 @@ async function handler(ctx: Context): Promise<Data> {
         category: [community],
     }));
     if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
 
     return {

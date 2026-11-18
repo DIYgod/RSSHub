@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/fe/:category',
@@ -41,7 +40,7 @@ async function handler(ctx) {
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, link).href,
-                pubDate: timezone(parseDate($element.find('.mian_div_icon_p01').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($element.find('.mian_div_icon_p01').text(), 'YYYY-MM-DD', 8),
             };
         });
     const items = await pMap(

@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://tj.ustb.edu.cn';
 // The old /Class/<department>/index.htm pages are gone; department news now lives under the news center's 院系动态 section
@@ -38,7 +37,7 @@ function getNews(data, listingUrl: string) {
             return {
                 title: anchor.find('h1').text(),
                 link: new URL(anchor.attr('href')!, listingUrl).href,
-                pubDate: published ? timezone(parseDate(published, 'YYYY.MM.DD'), 8) : undefined,
+                pubDate: published ? parseDate(published, 'YYYY.MM.DD', 8) : undefined,
                 description: anchor.find('p').prop('outerHTML') ?? undefined,
                 image: image ? new URL(image, listingUrl).href : undefined,
             };

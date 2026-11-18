@@ -5,8 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -74,7 +73,7 @@ export async function handler(ctx) {
                     .find('a.aclass')
                     .toArray()
                     .map((c) => $(c).text().replaceAll('[]', '').trim()),
-                pubDate: timezone(parseDate($item.find('span.atime').text()), 8),
+                pubDate: parseDate($item.find('span.atime').text(), 8),
             };
         });
 
@@ -94,7 +93,7 @@ export async function handler(ctx) {
                     .toArray()
                     .map((c) => content(c).text())
                     .slice(1);
-                item.pubDate = timezone(parseDate(content('span.atime1, span.post-time').text()), 8);
+                item.pubDate = parseDate(content('span.atime1, span.post-time').text(), 8);
 
                 return item;
             })

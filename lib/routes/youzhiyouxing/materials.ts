@@ -5,8 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const columns: Array<{ value: string; label: string }> = [
     { value: '0', label: '全部' },
@@ -52,9 +51,9 @@ function parsePublicationDate(value: string | undefined) {
         return;
     }
 
-    const date = parseDate(value.trim(), ['YYYY-MM-DD', 'YYYY年M月D日'], true);
-    if (Number.isFinite(date.getTime())) {
-        return timezone(date, 8);
+    const date = parseDateStrict(value.trim(), ['YYYY-MM-DD', 'YYYY年M月D日'], 8);
+    if (date) {
+        return date;
     }
 }
 

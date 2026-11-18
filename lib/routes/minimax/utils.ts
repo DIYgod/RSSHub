@@ -3,7 +3,7 @@ import type { Element } from 'domhandler';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderArticleVideo } from './templates/description';
 
@@ -101,12 +101,11 @@ export const unwrapNextImageUrl = (rawUrl: string | undefined, baseUrl: string):
     }
 };
 
-export const toValidDate = (value: string | number | undefined): Date | undefined => {
+export const toValidDate = (value: string | number | undefined): Temporal.Instant | undefined => {
     if (value === undefined || value === '') {
         return undefined;
     }
-    const parsed = parseDate(value);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+    return parseDate(value);
 };
 
 interface RscVideoCandidate {

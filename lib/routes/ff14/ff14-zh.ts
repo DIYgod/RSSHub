@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -70,11 +69,10 @@ async function handler(ctx) {
     const response = await got(`https://cqnews.web.sdo.com/api/news/newsList?gameCode=ff&CategoryCode=${typeNumber[type]}&pageIndex=0&pageSize=50`);
 
     const data: NewsItem[] = response.data.Data;
-    const items = data.map((item) => ({ ...item, pubDate: timezone(parseDate(item.PublishDate), 8) }));
+    const items = data.map((item) => ({ ...item, pubDate: parseDate(item.PublishDate, 8) }));
     const limit = getRouteLimit(ctx);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates =
-        limit === undefined || (sorted && items.some((item) => !Number.isFinite(item.pubDate.getTime()))) ? items : (sorted ? items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()) : items).slice(0, limit);
+    const candidates = limit === undefined || (sorted && items.some((item) => !item.pubDate)) ? items : (sorted ? items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : items).slice(0, limit);
     const posts = await pMap(
         candidates,
         async ({ Title, Summary, OutLink, HomeImagePath, Id, pubDate }) => ({

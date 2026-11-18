@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/fd/:type',
@@ -47,7 +46,7 @@ export const route: Route = {
                     title: each.find('a').attr('title')!,
                     link: link.href,
                     guid: sourceLink,
-                    pubDate: timezone(parseDate(each.find('span').text()), 8),
+                    pubDate: parseDate(each.find('span').text(), 8),
                 };
             });
 
@@ -64,7 +63,7 @@ export const route: Route = {
                     item.description = content.html()!;
                     const date = $('.cc-headline .box p span').first().text();
                     if (date) {
-                        item.pubDate = timezone(parseDate(date), 8);
+                        item.pubDate = parseDate(date, 8);
                     }
                     const author = $('.cc-headline .box p > span')
                         .filter((_, span) => $(span).text().startsWith('作者：'))

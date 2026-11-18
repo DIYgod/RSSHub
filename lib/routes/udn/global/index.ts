@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const categoriesConf = {
@@ -118,7 +118,7 @@ async function handler(ctx) {
 
                 return {
                     author,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     description: mainImage + articleBodyHtml,
                     category: content('meta[name="news_keywords"]').attr('content')!.split(','),
                 };

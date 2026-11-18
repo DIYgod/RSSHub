@@ -5,9 +5,8 @@ import iconv from 'iconv-lite';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/list/:id?',
@@ -146,7 +145,7 @@ async function handler(ctx) {
                 item.category = content('div.fl_dh a, div.site a')
                     .toArray()
                     .map((c) => content(c).text().trim());
-                item.pubDate = timezone(parseDate(pubDate, ['YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm']), 8);
+                item.pubDate = parseDate(pubDate, ['YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm'], 8);
 
                 return item;
             })

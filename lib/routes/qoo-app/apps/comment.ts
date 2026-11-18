@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderComment } from '../templates/comment';
 import { appsUrl, createPageFetcher } from '../utils';
@@ -52,7 +51,7 @@ async function handler(ctx) {
                         rating: $item.find('.qoo-rating-bar').text().trim(),
                         text: $item.find('.text-view').html() ?? undefined,
                     }),
-                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss', 8),
                     author,
                 };
             });

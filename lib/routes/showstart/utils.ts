@@ -2,7 +2,7 @@ import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 
 const uuid = (length = 20) => {
-    const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Date.now();
+    const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Temporal.Now.instant().epochMilliseconds;
     const r: string[] = [];
     for (let i = 0; i < length; i++) {
         const index = Math.floor(Math.random() * e.length);
@@ -37,8 +37,8 @@ const getAccessToken = async () => {
     return cookieMap.get('accessToken');
 };
 
-const post = async (requestPath: string, accessToken = md5(Date.now().toString()), payload?: any) => {
-    const traceId = uuid(32) + Date.now();
+const post = async (requestPath: string, accessToken = md5(Temporal.Now.instant().epochMilliseconds.toString()), payload?: any) => {
+    const traceId = uuid(32) + Temporal.Now.instant().epochMilliseconds;
 
     const response = await ofetch(`https://www.showstart.com/api${requestPath}`, {
         method: 'POST',

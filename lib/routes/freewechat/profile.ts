@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://freewechat.com';
@@ -81,7 +80,7 @@ async function handler(ctx) {
                 });
 
                 item.description = fixArticleContent($('#js_content'));
-                item.pubDate = timezone(parseDate($('#publish_time').text()), 8);
+                item.pubDate = parseDate($('#publish_time').text(), 8);
                 return item;
             })
         )

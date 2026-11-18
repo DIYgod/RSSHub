@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     '5': '全部公告',
@@ -70,7 +70,6 @@ async function handler(ctx) {
     };
 }
 
-function parseTimestamp(value?: number): Date | undefined {
-    const date = typeof value === 'number' ? parseDate(value, 'X') : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+function parseTimestamp(value?: number): Temporal.Instant | undefined {
+    return typeof value === 'number' ? parseDate(value, 'X') : undefined;
 }

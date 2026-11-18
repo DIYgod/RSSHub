@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/group/topic/:id/:author?',
@@ -44,7 +43,7 @@ function parseReplies($: CheerioAPI, link: string, pageUrl = link): DataItem[] {
                 link: `${pageUrl}#${$reply.attr('id')}`,
                 guid: `${link}#${$reply.attr('id')}`,
                 author: $reply.find('h4 > a').first().text(),
-                pubDate: pubtime ? timezone(parseDate(pubtime[1], 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+                pubDate: pubtime ? parseDate(pubtime[1], 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
                 category: pubtime?.[2] ? [`IP属地：${pubtime[2]}`] : undefined,
             };
         });
@@ -66,7 +65,7 @@ function parseGroupTopic(html: string, link: string): GroupTopic {
         link,
         description: content,
         author: $('.topic-doc h3 .from a').text(),
-        pubDate: created ? timezone(parseDate(created, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+        pubDate: created ? parseDate(created, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
         category: ipLocation ? [`IP属地：${ipLocation}`] : undefined,
         guid: `${link}#content-${md5(`${title}\n${content}`)}`,
     };

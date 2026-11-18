@@ -6,8 +6,8 @@ import type { Route } from '@/types';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';

@@ -4,14 +4,13 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
-function getPublicationDate(value: string): Date | undefined {
+function getPublicationDate(value: string): Temporal.Instant | undefined {
     if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss');
 }
 
 async function getPreviewItem(item: DataItem & { link: string }): Promise<DataItem> {

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?/:language?/:keyword?',
@@ -67,7 +66,7 @@ async function handler(ctx) {
         return {
             title: isComplaint ? $item.find('h2, .img-plate-blk__title').text() : $item.text(),
             link: new URL($item.attr('href')!, rootUrl).href,
-            pubDate: publishedAt ? timezone(parseDate(publishedAt, 'YYYY.MM'), 8) : undefined,
+            pubDate: publishedAt ? parseDate(publishedAt, 'YYYY.MM', 8) : undefined,
         };
     });
 

@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -97,7 +96,7 @@ async function handler(ctx) {
             author,
             category: [bookStatus],
             guid: `jjwxc-${id}-${bookId}#${bookWords}`,
-            pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(bookUpdatedTime) ? timezone(parseDate(bookUpdatedTime), 8) : undefined,
+            pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(bookUpdatedTime) ? parseDate(bookUpdatedTime, 8) : undefined,
         },
     ];
 

@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateRange } from '@/utils/parse-date-range';
+import { parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 

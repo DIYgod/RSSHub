@@ -192,7 +192,7 @@ const base64url = (bytes) =>
 */
 
 const getXmSign = () => {
-    const head = `${getRandom16(8)}${getRandom16(4)}${base62(Date.now())}0202`;
+    const head = `${getRandom16(8)}${getRandom16(4)}${base62(Temporal.Now.instant().epochMilliseconds)}0202`;
     const key = Buffer.from('y3hbnr8d4s2ztjbca1wgxk6mqktf9pxr').subarray(0, 16);
     const cipher = createCipheriv('aes-128-cbc', key, key);
     const sid = Buffer.concat([cipher.update(head + crc32(head).toString(16).padStart(8, '0'), 'utf8'), cipher.final()]).toString('base64url');

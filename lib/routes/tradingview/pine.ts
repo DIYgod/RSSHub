@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/pine/:version?',
@@ -31,8 +31,7 @@ function parsePubDate(id: string) {
     }
     // Release notes specify a month or a month range, normalized to its start in UTC.
     const month = `${match[1].charAt(0).toUpperCase()}${match[1].slice(1)}`;
-    const date = parseDate(`${month} 1, ${match[2]} +00:00`, 'MMMM D, YYYY Z');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${month} 1, ${match[2]} +00:00`, 'MMMM D, YYYY Z');
 }
 
 async function handler(ctx) {

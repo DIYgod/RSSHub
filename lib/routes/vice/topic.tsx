@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface WordPressTerm {
     id: number;

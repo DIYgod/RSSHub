@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.iiilab.com/';
 
@@ -36,7 +36,7 @@ async function handler() {
                 title: row.find('a').first().text(),
                 link,
                 description: row.find('.all-content').html() ?? row.find('.markitup-box').html() ?? undefined,
-                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+                pubDate: date,
                 guid: link ? Buffer.from(link).toString('base64') : undefined,
                 author: row.find('.aw-user-name').first().text() || undefined,
             };

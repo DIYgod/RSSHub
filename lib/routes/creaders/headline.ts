@@ -5,9 +5,8 @@ import iconv from 'iconv-lite';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/headline',
@@ -34,12 +33,12 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('time').text()), 8),
+                pubDate: parseDate($item.find('time').text(), 8),
             };
         });
 
     const limit = getRouteLimit(ctx, 10);
-    const selected = limit && ctx.req.query('sorted') !== 'false' ? list.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)) : list;
+    const selected = limit && ctx.req.query('sorted') !== 'false' ? list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : list;
     const items = await Promise.all(
         selected.slice(0, limit).map((item) =>
             cache.tryGet(item.link!, async () => {

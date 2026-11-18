@@ -6,8 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const cateUrlMap = {
     lastupdate: 'https://www.wenku8.net/modules/article/toplist.php?sort=lastupdate',
@@ -76,12 +75,12 @@ async function handler(ctx) {
                 .find('p')
                 .text()
                 .match(/更新[:：]\s*(\d{4}-\d{2}-\d{2})/)?.[1];
-            const date = sourceDate ? parseDate(sourceDate, 'YYYY-MM-DD', true) : undefined;
+            const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: $(item).find('b > a').text(),
                 link: $(item).find('b > a').attr('href'),
                 description: $(item).find('img').html()! + $(item).find('div:nth-child(2)').remove('b').end().html()!,
-                pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined,
+                pubDate: date,
             };
         });
 

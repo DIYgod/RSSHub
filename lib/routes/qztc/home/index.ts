@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.qztc.edu.cn/';
 
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
+                const pubDate = parseDate(cheerioItem.find('.news_meta').text(), 8);
 
                 return {
                     title,
@@ -73,7 +72,7 @@ async function handler(ctx) {
                 return {
                     title: '',
                     link: '',
-                    pubDate: Date.now(),
+                    pubDate: Temporal.Now.instant().epochMilliseconds,
                 };
             }
         })

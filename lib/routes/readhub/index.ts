@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { apiTopicUrl, processItems, rootUrl } from './util';

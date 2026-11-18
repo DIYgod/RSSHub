@@ -6,9 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
 
 import weiboUtils from './utils';
 
@@ -141,13 +139,13 @@ async function handler(ctx) {
 
                 if (data?.text) {
                     item.mblog.text = data.text;
-                    item.mblog.created_at = parseDate(data.created_at);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(data.created_at);
                     item.mblog.pics = data.pics;
                     if (item.mblog.retweeted_status && data.retweeted_status) {
                         item.mblog.retweeted_status.created_at = data.retweeted_status.created_at;
                     }
                 } else {
-                    item.mblog.created_at = timezone(item.mblog.created_at, 8);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(item.mblog.created_at);
                 }
 
                 // 转发的长微博处理

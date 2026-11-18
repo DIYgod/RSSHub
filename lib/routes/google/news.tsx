@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://news.google.com';
 
@@ -117,7 +117,7 @@ async function handler(ctx) {
         return {
             title,
             description: renderDescription($item.find('img.Quavad').attr('src')),
-            pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
+            pubDate: publicationDate,
             author: authors,
             link: getPublisherUrl(anchor.attr('jslog'), newsUrl),
             guid: newsUrl,

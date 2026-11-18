@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog/:type?/:time?/:sort?',
@@ -70,7 +69,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
-                pubDate: new Date($item.next().text()).toUTCString(),
+                pubDate: parseDate($item.next().text()),
             };
         });
 
@@ -88,7 +87,7 @@ async function handler(ctx) {
 
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
-                return { author: content('.xs2').text(), description: content('#blog_article').html(), pubDate: timezone(parseDate(content('.xg1').eq(5).text()), 8) };
+                return { author: content('.xs2').text(), description: content('#blog_article').html(), pubDate: parseDate(content('.xg1').eq(5).text(), 8) };
             })),
         }),
         { concurrency: 3 }

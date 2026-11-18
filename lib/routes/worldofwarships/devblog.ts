@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/devblog',
@@ -46,8 +46,7 @@ function parsePublicationDate(value?: string) {
     if (!value || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss');
 }
 
 async function handler() {

@@ -4,9 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, toISOString } from '@/utils/time';
 
 const renderTitle = ({ line, latency, loss, speed, node, ip }) =>
     renderToString(
@@ -107,7 +106,7 @@ async function handler(ctx) {
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;
-        const pubDate = item.time ? timezone(parseDate(item.time), 8) : undefined;
+        const pubDate = item.time ? parseDate(item.time, 8) : undefined;
 
         return {
             title: renderTitle({
@@ -129,14 +128,14 @@ async function handler(ctx) {
             }),
             author: node,
             category: [line, latency, loss, node].filter(Boolean),
-            guid: `${domain}-${title}-${ip}-${item.line ?? ''}-${node ?? ''}-${item.colo ?? ''}#${pubDate?.toISOString() ?? ''}`,
+            guid: `${domain}-${title}-${ip}-${item.line ?? ''}-${node ?? ''}-${item.colo ?? ''}#${pubDate ? toISOString(pubDate) : ''}`,
             pubDate,
         };
     });
 
-    const hasCompleteDates = items.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    const hasCompleteDates = items.every((item) => item.pubDate);
     const preserveSourceOrder = ctx.req.query('sorted') === 'false';
-    const orderedItems = preserveSourceOrder || !hasCompleteDates ? items : items.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime());
+    const orderedItems = preserveSourceOrder || !hasCompleteDates ? items : items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
     const selectedItems = preserveSourceOrder || hasCompleteDates ? orderedItems.slice(0, limit) : orderedItems;
 
     const { data: currentResponse } = await got(currentUrl);

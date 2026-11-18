@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const processItems = (list: Array<DataItem & { link: string }>) =>
     pMap(
@@ -18,7 +17,7 @@ const processItems = (list: Array<DataItem & { link: string }>) =>
                 const dateText = content('meta[name="PubDate"]').attr('content');
                 item.description = content('div.xxy_text').html();
                 if (dateText) {
-                    item.pubDate = timezone(parseDate(dateText), 8);
+                    item.pubDate = parseDate(dateText, 8);
                 }
 
                 return item;

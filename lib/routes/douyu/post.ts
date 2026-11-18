@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -61,7 +61,7 @@ async function handler(ctx) {
                 item.sub_replies.map((r) => ({
                     nickname: r.nickname,
                     content: r.content,
-                    time: new Date(r.created_ts * 1000).toLocaleString(),
+                    time: parseDate(r.created_ts * 1000)?.toLocaleString(undefined, { timeZone: 'UTC' }),
                 })) ?? undefined,
         }),
     }));

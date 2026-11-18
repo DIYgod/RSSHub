@@ -5,9 +5,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDuration } from '@/utils/helpers';
 import logger from '@/utils/logger';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { parseDate, parseDuration } from '@/utils/time';
 
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
@@ -306,7 +306,7 @@ async function handler(ctx: Context) {
                 return {
                     title: item.title,
                     description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
-                    pubDate: new Date(item.created * 1000).toUTCString(),
+                    pubDate: parseDate(item.created * 1000),
                     link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                     author: name,
                     comments: item.comment,

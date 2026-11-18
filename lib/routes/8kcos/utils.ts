@@ -1,7 +1,7 @@
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const SUB_NAME_PREFIX = '8KCosplay';
 export const SUB_URL = 'https://www.8kcosplay.com';

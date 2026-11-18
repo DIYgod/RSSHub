@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const yzb_base_url = 'http://yzb.tju.edu.cn/';
 
@@ -92,7 +91,7 @@ async function handler(ctx) {
             return {
                 title: $('td > a', item).text(),
                 link: type === 'in-site' ? yzb_base_url + path + href : href,
-                pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD', 8),
                 type,
             };
         });

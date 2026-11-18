@@ -1,8 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://liuyan.people.com.cn';
 const apiUrl = `${rootUrl}/threads/queryThreadsList`;

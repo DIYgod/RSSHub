@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://fuliba2023.net';
 
@@ -48,7 +47,7 @@ async function handler(ctx) {
             return {
                 title: link.attr('title') || link.text(),
                 link: new URL(link.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.find('.meta time').text()), 8),
+                pubDate: parseDate($item.find('.meta time').text(), 8),
             };
         });
 

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.worldjournal.com';
 const resolveLazyImage = (raw?: string) => {
@@ -24,16 +23,12 @@ const resolveLazyImage = (raw?: string) => {
         return;
     }
 };
-const parseListingDate = (raw: string) => {
-    const parsed = raw ? parseDate(raw.trim(), 'YYYY-MM-DD HH:mm', true) : undefined;
-    return parsed && !Number.isNaN(parsed.getTime()) ? timezone(parsed, 8) : undefined;
-};
+const parseListingDate = (raw: string) => (raw ? parseDateStrict(raw.trim(), 'YYYY-MM-DD HH:mm', 8) : undefined);
 const parseStructuredDate = (raw?: string) => {
     if (!raw || !/(?:Z|[+-]\d{2}:\d{2})$/.test(raw)) {
         return;
     }
-    const parsed = parseDate(raw);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+    return parseDate(raw);
 };
 const extractArticleDates = ($: CheerioAPI) => {
     const structuredData = $('script[type="application/ld+json"]')

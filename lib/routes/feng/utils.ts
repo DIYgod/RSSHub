@@ -13,7 +13,7 @@ const threadDeleted = 1047;
 // https://juejin.cn/post/6844904066468806664
 const getXRequestId = (apiUrl) => {
     const path = new URL(apiUrl).pathname; // split search params
-    const plainText = CryptoJS.enc.Utf8.parse('url=' + path + '$time=' + Date.now() + '000000');
+    const plainText = CryptoJS.enc.Utf8.parse('url=' + path + '$time=' + Temporal.Now.instant().epochMilliseconds + '000000');
     const iv = CryptoJS.enc.Utf8.parse(KEY);
     const encrypted = CryptoJS.AES.encrypt(plainText, iv, {
         iv,

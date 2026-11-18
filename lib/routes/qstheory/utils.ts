@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'http://www.qstheory.cn';
 
@@ -45,8 +45,8 @@ export const getItem = async (item: DataItem, useArticleTitle = false): Promise<
             .replace('日', '') || $('meta[name="publishdate"]').attr('content');
 
     if (dateStr) {
-        const parsedDate = parseDateInTimezone(dateStr, 8);
-        if (!Number.isNaN(parsedDate.getTime())) {
+        const parsedDate = parseDate(dateStr, 8);
+        if (parsedDate) {
             item.pubDate = parsedDate;
         }
     }

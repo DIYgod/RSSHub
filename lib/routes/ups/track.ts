@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const configurePage = async (page: Page) => {
     await page.route('**/*', async (route) => {

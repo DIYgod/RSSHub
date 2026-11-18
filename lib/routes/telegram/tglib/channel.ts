@@ -9,7 +9,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 
@@ -204,7 +204,7 @@ export default async function handler(ctx: Context) {
         }
 
         const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text.split('\n', 1)[0] || pubDate?.toUTCString() || '';
+        const title = message.text.split('\n', 1)[0] || (pubDate && toRFC822(pubDate)) || '';
         item.push({
             title,
             description,

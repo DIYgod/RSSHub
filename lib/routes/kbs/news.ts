@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const languages = { k: 'ko', c: 'zh-CN', e: 'en', f: 'fr', g: 'de', i: 'id', j: 'ja', r: 'ru', s: 'es', v: 'vi' } satisfies Record<string, Language>;
 const isLanguageKey = (key: string): key is keyof typeof languages => Object.hasOwn(languages, key);
@@ -74,7 +73,7 @@ async function handler(ctx) {
                 title: a.text(),
                 category: $item.find('.cate').text(),
                 link: `${rootUrl}/service${a.attr('href')!.replace('./', '/')}`,
-                pubDate: date ? timezone(parseDate(date), 9) : undefined,
+                pubDate: date ? parseDate(date, 9) : undefined,
             };
         });
 

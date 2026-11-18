@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { ossUrl, ProcessFeed, rootUrl } from './utils';
 
@@ -53,7 +52,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
                 author: a.text().split('：', 1)[0],
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 

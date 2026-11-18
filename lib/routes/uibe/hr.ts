@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/hr/:category?/:type?',
@@ -72,10 +71,10 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const pubDate = parseDate(content('#shareTitle').next().text().replace('时间：', '').trim(), 'YYYY-MM-DD', true);
+                const pubDate = parseDateStrict(content('#shareTitle').next().text().replace('时间：', '').trim(), 'YYYY-MM-DD', 8);
                 return {
                     description: content('.gp-article').html(),
-                    pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
+                    pubDate,
                 };
             });
             return { ...item, ...detail };

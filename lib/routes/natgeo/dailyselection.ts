@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dailyselection',
@@ -45,7 +44,7 @@ async function handler() {
             title: item.title,
             link: item.url,
             description: `<img src="${item.url}"><br>` + item.content,
-            pubDate: addtime ? timezone(parseDate(addtime), 8) : undefined,
+            pubDate: addtime ? parseDate(addtime, 8) : undefined,
             guid: item.id,
         };
         out.push(info);

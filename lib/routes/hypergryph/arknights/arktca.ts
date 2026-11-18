@@ -4,12 +4,9 @@ import pMap from 'p-map';
 import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value: string | undefined) => {
-    const date = value ? parseDate(value) : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
-};
+const parsePublicationDate = (value: string | undefined) => (value ? parseDate(value) : undefined);
 
 const rssDescription = '明日方舟期刊《回归线》 | 泰拉创作者联合会';
 const url = 'aneot.arktca.com';

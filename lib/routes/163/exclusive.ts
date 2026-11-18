@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderExclusiveDescription } from './templates/exclusive';
 
@@ -134,7 +133,7 @@ async function handler(ctx) {
         title: item.title,
         author: item.source,
         link: item.skipURL || item.url || `${rootUrl}/dy/article/${item.docid}.html`,
-        pubDate: timezone(parseDate(item.ptime), 8),
+        pubDate: parseDate(item.ptime, 8),
         videoId: item.skipType === 'video' ? item.stitle : '',
     }));
 

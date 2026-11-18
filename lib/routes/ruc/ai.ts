@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ai/:category?',
@@ -45,7 +45,7 @@ export const route: Route = {
                 }
                 const month = $element.find('.time p').text();
                 const day = $element.find('.time b').text();
-                return [{ title, link: new URL(href, indexUrl).href, pubDate: month && day ? parseDateInTimezone(`${month}-${day}`, 8) : undefined }];
+                return [{ title, link: new URL(href, indexUrl).href, pubDate: month && day ? parseDate(`${month}-${day}`, 8) : undefined }];
             });
         const items = await pMap(
             list,
@@ -58,7 +58,7 @@ export const route: Route = {
                     const date = content('.articleTit .author')
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    return { description: body.html(), pubDate: date ? parseDateInTimezone(date, 8) : undefined };
+                    return { description: body.html(), pubDate: date ? parseDate(date, 8) : undefined };
                 });
                 return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
             },

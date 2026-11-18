@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -53,7 +52,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, currentUrl).href,
-                pubDate: dateText ? timezone(parseDate(dateText, '[YYYY-MM-DD HH:mm]'), 8) : undefined,
+                pubDate: dateText ? parseDate(dateText, '[YYYY-MM-DD HH:mm]', 8) : undefined,
             };
         });
 

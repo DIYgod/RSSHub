@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import { type Data, type DataItem, type Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -33,7 +32,7 @@ async function handler(ctx: Context): Promise<Data> {
             const dateText = $item.find('span').text().replaceAll(/[[\]]/g, '');
             return {
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: dateText ? timezone(parseDate(dateText), 8) : undefined,
+                pubDate: dateText ? parseDate(dateText, 8) : undefined,
             };
         });
 

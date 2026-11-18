@@ -3,6 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/prime/community',
@@ -47,7 +48,7 @@ async function handler() {
     const list = response.data.map((item) => ({
         title: item.title,
         link: `https://sspai.com/t/${item.id_hash}`,
-        pubDate: new Date(item.created_at * 1000),
+        pubDate: parseDate(item.created_at, 'X'),
         author: item.author.nickname,
         category: item.channel.title,
         id_hash: item.id_hash,

@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
                 return {
                     link: new URL($elem.attr('href')!, link).href,
                     title: $elem.find('h2, .tit').text().trim(),
-                    pubDate: dateMatch ? parseDateInTimezone(`${dateMatch[2]}-${dateMatch[1]}`, 8) : undefined,
+                    pubDate: dateMatch ? parseDate(`${dateMatch[2]}-${dateMatch[1]}`, 8) : undefined,
                 };
             }),
     };

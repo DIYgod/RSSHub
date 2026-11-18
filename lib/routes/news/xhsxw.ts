@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -41,8 +40,7 @@ function parsePublishedTime(value: string | number | null | undefined) {
     if ([undefined, null, ''].includes(value as string | null | undefined)) {
         return;
     }
-    const date = parseDate(value!);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value!, 8);
 }
 
 async function handler(ctx) {

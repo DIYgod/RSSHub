@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/top/:hour?',
@@ -19,7 +19,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { hour = '24' } = ctx.req.param();
 
-    const response = await ofetch(`https://dig.ichouti.cn/top/${hour}hr?_=${Date.now()}`);
+    const response = await ofetch(`https://dig.ichouti.cn/top/${hour}hr?_=${Temporal.Now.instant().epochMilliseconds}`);
 
     const resultItem = response.data.map((item) => ({
         title: item.title,

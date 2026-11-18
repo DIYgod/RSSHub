@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const rootUrl = 'http://job.hrbeu.edu.cn';
@@ -74,8 +73,8 @@ async function handler(ctx) {
                     title: item.title,
                     link: new URL(item.url, rootUrl).href,
                     guid: item.id,
-                    pubDate: item.releaseDate ? timezone(parseDate(item.releaseDate), 8) : undefined,
-                    updated: item.updateDate ? timezone(parseDate(item.updateDate), 8) : undefined,
+                    pubDate: item.releaseDate ? parseDate(item.releaseDate, 8) : undefined,
+                    updated: item.updateDate ? parseDate(item.updateDate, 8) : undefined,
                     author: item.publisher,
                     description: item.description,
                 };

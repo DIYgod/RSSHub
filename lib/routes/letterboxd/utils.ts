@@ -3,7 +3,7 @@ import Parser from 'rss-parser';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 type LetterboxdItem = {
     'letterboxd:filmTitle': string;
@@ -28,10 +28,10 @@ export async function getData(username: string, title: string) {
     const item = feed.items
         .filter((entry) => entry['letterboxd:watchedDate'])
         .map((entry) => {
-            const watchedDate = entry['letterboxd:watchedDate'];
+            const watchedDate = parseDate(entry['letterboxd:watchedDate']);
             const rating = entry.title?.match(/[★½]+$/)?.[0] ?? '';
 
-            let description = `Date: ${new Date(watchedDate).toDateString()}<br />Rating: ${rating}`;
+            let description = `Date: ${watchedDate && formatDate(watchedDate, 'ddd MMM DD YYYY')}<br />Rating: ${rating}`;
             if (entry['letterboxd:memberLike'] === 'Yes') {
                 description += '<br />Liked';
             }

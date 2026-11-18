@@ -3,14 +3,11 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate, toInstant } from '@/utils/time';
 
 const XIAOYUZHOU_ITEMS = 'xiaoyuzhou_items';
 
-const isToday = (date) => {
-    const sourceDate = new Date(new Date(date).getTime() + 8 * 60 * 60 * 1000);
-    const today = new Date(Date.now() + 8 * 60 * 60 * 1000);
-    return sourceDate.getUTCDate() === today.getUTCDate() && sourceDate.getUTCMonth() === today.getUTCMonth() && sourceDate.getUTCFullYear() === today.getUTCFullYear();
-};
+const isToday = (date) => toInstant(date)?.toZonedDateTimeISO('+08:00').toPlainDate().equals(Temporal.Now.plainDateISO('+08:00')) ?? false;
 
 const processFeed = async () => {
     const deviceId = config.xiaoyuzhou.device_id || 'f5d56d9a-8530-49a4-a6d2-cfb4b7a31240';
@@ -51,7 +48,7 @@ const processFeed = async () => {
     const data = response.data.data;
     const playList: any[] = [];
     for (const dailyPicks of data) {
-        const pubDate = new Date(dailyPicks.date + ' 00:00:00 +0800').toUTCString();
+        const pubDate = parseDate(dailyPicks.date, 8);
         for (const pick of dailyPicks.picks) {
             pick.pubDate = pubDate;
             playList.push(pick);

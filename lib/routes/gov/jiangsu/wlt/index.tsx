@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/wlt/:page?',
@@ -88,7 +87,7 @@ async function handler(ctx) {
                         <text>许可内容：{performanceContent} </text>
                     </>
                 );
-                item.pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+                item.pubDate = dateText ? parseDate(dateText, 8) : undefined;
 
                 return item;
             })

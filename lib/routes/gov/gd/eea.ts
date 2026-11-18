@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/eea/:caty',
@@ -82,6 +81,5 @@ async function handler(ctx: Context) {
 }
 
 function getPublicationDate(dateText: string | undefined) {
-    const date = dateText ? parseDate(dateText) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+    return dateText ? parseDate(dateText, 8) : undefined;
 }

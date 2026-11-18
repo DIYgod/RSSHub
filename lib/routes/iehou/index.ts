@@ -4,11 +4,10 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value: string) => (value ? timezone(parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm']), 8) : undefined);
+const parsePublicationDate = (value: string) => (value ? parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8) : undefined);
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();

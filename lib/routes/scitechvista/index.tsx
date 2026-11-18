@@ -6,14 +6,13 @@ import pMap from 'p-map';
 import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
 const baseUrl = `https://${namespace.url}`;
 
-function parseRocDate(rocDate: string | undefined): Date | undefined {
+function parseRocDate(rocDate: string | undefined): Temporal.Instant | undefined {
     if (!rocDate) {
         return undefined;
     }
@@ -26,7 +25,7 @@ function parseRocDate(rocDate: string | undefined): Date | undefined {
     const rocYear = Number(rocYearStr);
 
     const year = rocYear + 1911;
-    return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD');
+    return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD', 8);
 }
 
 export const route: Route = {
@@ -71,8 +70,7 @@ async function handler(): Promise<Data> {
             const title = node.find('div.kf-title').text();
 
             const dateText = node.find('div.kf-date > span').text().trim();
-            const parsedDate = parseRocDate(dateText);
-            const pubDate = parsedDate ? timezone(parsedDate, 8) : undefined;
+            const pubDate = parseRocDate(dateText);
 
             const imagePath = node.find('img').attr('src');
             const image = imagePath ? new URL(imagePath, baseUrl).href : undefined;

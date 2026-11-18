@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tsg',
@@ -33,11 +32,11 @@ async function handler(): Promise<Data> {
             const $item = $(item);
             const a = $item.find('h3 a');
             const date = $item.find('.list_time').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YYYY年MM月DD日'), 8) : undefined;
+            const pubDate = date ? parseDate(date, 'YYYY年MM月DD日', 8) : undefined;
             return {
                 title: a.attr('title') ?? a.text(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

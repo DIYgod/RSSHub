@@ -1,8 +1,7 @@
 import type { CheerioAPI } from 'cheerio';
 
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -123,7 +122,7 @@ const parseArticle = ($$: CheerioAPI, item) => {
 
     item.title = title;
     item.description = description;
-    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+    item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
     item.author = $$('p.xg1 a').first().text();
     item.guid = guid;
     item.id = guid;
@@ -172,7 +171,7 @@ const parsePost = ($$: CheerioAPI, item) => {
 
     item.title = title;
     item.description = description;
-    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+    item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
     item.author = $$('a.kmxi2').text();
     item.guid = guid;
     item.id = guid;

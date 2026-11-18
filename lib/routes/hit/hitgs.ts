@@ -10,9 +10,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -31,8 +30,7 @@ function parsePublicationDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, 8);
 }
 
 export const handler = async (ctx: Context): Promise<Data> => {

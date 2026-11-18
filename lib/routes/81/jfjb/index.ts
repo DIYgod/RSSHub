@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 interface ArticleItem {
     id: number;
@@ -127,7 +126,7 @@ const buildArticleSignature = (title: string, content?: string): string | undefi
     return text ? `${title}:::${text}` : undefined;
 };
 
-const formatArticleItem = (xy: ArticleItem, page: PaperPage, index: number, pubDate: ReturnType<typeof timezone>): DataItem => {
+const formatArticleItem = (xy: ArticleItem, page: PaperPage, index: number, pubDate: Temporal.Instant | undefined): DataItem => {
     const title = buildTitle(xy);
     const content = xy.content && /\S/.test(xy.content) ? xy.content : undefined;
     const author = extractAuthor(xy);
@@ -149,7 +148,7 @@ const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
     const items: DataItem[] = [];
 
     for (const page of pages) {
-        const pubDate = timezone(parseDate(page.paperData, 'YYYY-MM-DD', true), 8);
+        const pubDate = parseDateStrict(page.paperData, 'YYYY-MM-DD', 8);
         const articles = page.xyList ?? [];
         for (const [index, xy] of articles.entries()) {
             if (!xy.id && !xy.content && !xy.title) {

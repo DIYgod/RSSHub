@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const base = 'https://jwc.qdu.edu.cn/';
 
@@ -74,7 +73,7 @@ async function handler() {
                 return {
                     title: itemTitle,
                     link: itemUrl,
-                    pubDate: timezone(parseDate(itemDate), 8),
+                    pubDate: parseDate(itemDate, 8),
                     description,
                 };
             });

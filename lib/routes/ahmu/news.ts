@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -35,7 +34,7 @@ async function handler() {
                 title: $item.find('.text').text().trim(),
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 author: '安徽医科大学研究生学院',
-                pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.time').text(), 'YYYY-MM-DD', 8),
             };
         });
 

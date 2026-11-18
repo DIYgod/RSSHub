@@ -4,7 +4,7 @@ import JSONbig from 'json-bigint';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'https://www.coze.cn';
 const parseResponse = JSONbig({ storeAsString: true }).parse;

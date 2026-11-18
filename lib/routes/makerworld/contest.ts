@@ -1,5 +1,5 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, fetchJson, getNextBuildId } from './utils';
 

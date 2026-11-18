@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://research.google';
 
@@ -30,7 +30,7 @@ export const route: Route = {
                 return {
                     title: a.find('.headline-6').text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: date ? parseDate(`${date} UTC`) : undefined,
+                    pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
                     category: item
                         .find('.not-glue.caption')
                         .toArray()

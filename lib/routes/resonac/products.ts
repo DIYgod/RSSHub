@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-// import { parseDate } from '@/utils/parse-date';
-// import timezone from '@/utils/timezone';
+// import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.resonac.com';
 const host = 'https://www.resonac.com/products?intcid=glnavi_products';

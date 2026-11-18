@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { PostData } from './types';
 
@@ -38,8 +38,8 @@ const getPost = async (item) => {
     const content = await cache.tryGet(`dxy:post:content:${item.postId}`, async () => {
         const postParams = {
             postId: item.postId,
-            serverTimestamp: Date.now(),
-            timestamp: Date.now(),
+            serverTimestamp: Temporal.Now.instant().epochMilliseconds,
+            timestamp: Temporal.Now.instant().epochMilliseconds,
             noncestr: generateNonce(8, 'number'),
         };
 

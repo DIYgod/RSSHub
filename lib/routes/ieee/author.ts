@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { fetchArticleMetadata, withArticleMetadataBrowser } from './utils';
@@ -55,7 +55,7 @@ async function handler(ctx) {
         },
     });
 
-    const list: Array<{ title: string; link: string; doi?: string; author?: string; abstract: string; pubDate?: Date }> = response.records.map((item) => ({
+    const list: Array<{ title: string; link: string; doi?: string; author?: string; abstract: string; pubDate?: Temporal.Instant }> = response.records.map((item) => ({
         title: item.articleTitle,
         link: item.htmlLink,
         doi: item.doi,

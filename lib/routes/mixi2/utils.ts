@@ -5,7 +5,7 @@ import { Category, MixiClient } from 'mixi2';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export function getClient() {
     const { authToken, authKey } = config.mixi2;

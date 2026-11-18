@@ -3,8 +3,8 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { fetchArticle, fetchMetadata, fetchPage } from './utils';
 
@@ -69,19 +69,19 @@ async function handler(ctx) {
             if (title) {
                 res = Object.assign(res, { title });
             }
-            if (pubDate.toString() !== 'Invalid Date') {
+            if (pubDate) {
                 res = Object.assign(res, { pubDate });
             }
             if (language) {
                 res = Object.assign(res, { language });
             }
-            if (updated.toString() !== 'Invalid Date') {
+            if (updated) {
                 res = Object.assign(res, { updated });
             }
             return res;
         })
         .filter((e) => Boolean(e.link) && !new URL(e.link).pathname.split('/').includes('hub'))
-        .toSorted((a, b) => (a.pubDate && b.pubDate ? Number(b.pubDate) - Number(a.pubDate) : Number(b.updated) - Number(a.updated)))
+        .toSorted((a, b) => (a.pubDate && b.pubDate ? compareDates(b.pubDate, a.pubDate) : compareDates(b.updated, a.updated)))
         .slice(0, getRouteLimit(ctx, 20));
 
     const metadataItems = await pMap(

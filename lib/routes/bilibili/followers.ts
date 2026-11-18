@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -81,7 +82,7 @@ async function handler(ctx) {
         item: data.map((item) => ({
             title: `${name} 新粉丝 ${item.uname}`,
             description: `${item.uname}<br>${item.sign}<br>总计${count}`,
-            pubDate: new Date(item.mtime * 1000),
+            pubDate: parseDate(item.mtime * 1000),
             link: `https://space.bilibili.com/${item.mid}`,
         })),
     };

@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { channels } from './channels';
 
@@ -75,13 +74,13 @@ async function handler(ctx) {
     let list = contents.records.map((item) => ({
         title: item.title,
         link: `${baseUrl}${item.draftPath}`,
-        pubDate: timezone(parseDate(item.releaseDate, 'YYYY-MM-DD'), 8),
+        pubDate: parseDate(item.releaseDate, 'YYYY-MM-DD', 8),
         contentId: item.contentId,
     }));
     const limit = getRouteLimit(ctx);
     if (limit !== undefined) {
         if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         list = list.slice(0, limit);
     }
@@ -111,7 +110,7 @@ async function handler(ctx) {
                 });
 
                 item.description = article.html();
-                item.pubDate = timezone(parseDate($('.AC-l span').text(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = parseDate($('.AC-l span').text(), 'YYYY-MM-DD HH:mm', 8);
 
                 return item;
             })

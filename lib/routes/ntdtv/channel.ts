@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ntdtv.com';
 
@@ -59,7 +58,7 @@ async function handler(ctx) {
 
                 return {
                     description: content('div.post_content').html() ?? '',
-                    pubDate: timezone(parseDate(content('div.time > span').text()), 8),
+                    pubDate: parseDate(content('div.time > span').text(), 8),
                 };
             });
             return { ...item, ...article };

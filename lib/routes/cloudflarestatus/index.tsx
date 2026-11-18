@@ -4,8 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 interface IncidentUpdate {
     id: string;
@@ -60,7 +60,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
 
     return {

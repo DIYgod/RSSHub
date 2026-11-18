@@ -3,9 +3,8 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseIndexUrl = 'https://www.scse.uestc.edu.cn/index.htm';
@@ -98,7 +97,7 @@ async function handler() {
                                   return { date: (await categoryDates)[newsLink] };
                               })
                             : { date: undefined };
-                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YYYY-MM-DD', true) : undefined;
+                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                         let prefix = '【其他】';
                         for (const code in prefixes) {
                             if (newsLink.search('info/' + code) === -1) {
@@ -111,7 +110,7 @@ async function handler() {
                         return {
                             title: newsTitle,
                             link: newsLink,
-                            pubDate: parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                            pubDate: parsedDate,
                         };
                     },
                     { concurrency: 3 }

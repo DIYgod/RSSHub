@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/manga/:id',
@@ -89,7 +88,7 @@ export const route: Route = {
                 guid: `comicfuz-comic-id-${chapter.chapterId}`,
                 category: statusText,
                 author: mangaAuthor,
-                pubDate: chapter.updatedDate ? timezone(parseDate(chapter.updatedDate, 'YYYY/MM/DD'), 9) : undefined,
+                pubDate: chapter.updatedDate ? parseDate(chapter.updatedDate, 'YYYY/MM/DD', 9) : undefined,
                 upvotes: chapter.numberOfLikes || 0,
                 comments: chapter.numberOfComments || 0,
             };

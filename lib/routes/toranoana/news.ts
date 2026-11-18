@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -55,8 +55,7 @@ function parsePubDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}Z`);
 }
 function getCategories(content: string) {
     const $ = load(content);

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const appFeedUrl = 'https://raw.githubusercontent.com/Squidly271/AppFeed/master/applicationFeed.json';
 const defaultLimit = 20;

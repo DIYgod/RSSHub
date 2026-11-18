@@ -8,9 +8,9 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import { setCookies } from '@/utils/playwright-utils';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {

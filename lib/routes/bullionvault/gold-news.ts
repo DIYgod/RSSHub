@@ -7,8 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'DD MMM YY') : undefined,
                 link: linkUrl,
                 author: authors,
                 language,

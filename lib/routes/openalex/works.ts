@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://api.openalex.org';
 
@@ -34,9 +33,7 @@ export const handler = async (ctx) => {
     const { journals, type, ids } = ctx.req.param();
 
     // Get date 14 days ago (2 weeks)
-    const twoWeeksAgo = new Date();
-    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-    const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T', 1)[0];
+    const twoWeeksAgoStr = formatDate(Temporal.Now.zonedDateTimeISO('UTC').subtract({ days: 14 }), 'YYYY-MM-DD');
 
     // Build filter parameters
     const filters = [`publication_date:>${twoWeeksAgoStr}`, 'has_abstract:true', `primary_location.source.id:${journals}`];
@@ -70,8 +67,7 @@ export const handler = async (ctx) => {
             const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
             const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
 
-            const publicationDate = work.publication_date ? timezone(parseDate(work.publication_date, 'YYYY-MM-DD', true), 0) : undefined;
-            const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined;
+            const pubDate = work.publication_date ? parseDateStrict(work.publication_date, 'YYYY-MM-DD', 0) : undefined;
 
             return {
                 title: work.title || 'Untitled',

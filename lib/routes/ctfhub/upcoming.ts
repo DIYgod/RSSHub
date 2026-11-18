@@ -4,8 +4,8 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/upcoming/:limit?',

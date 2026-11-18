@@ -7,7 +7,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const hints = ['globalThis', 'headless', 'languages', 'permHook', 'vendor', 'webDriverValue', 'webdriver'];
 export const baseUrl = 'https://www.myzaker.com';

@@ -5,8 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/price-adjustment/:category',
@@ -211,7 +210,7 @@ async function handler(ctx) {
                     description,
                     link,
                     guid: dataId, // Use the native data-id as the unique identifier.
-                    pubDate: fullDate ? timezone(parseDate(fullDate, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: fullDate ? parseDate(fullDate, 'YYYY-MM-DD', 8) : undefined,
                 };
             })
     );

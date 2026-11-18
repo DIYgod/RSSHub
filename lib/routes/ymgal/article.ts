@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ymgal.games';
 const types = {
@@ -15,14 +14,13 @@ const types = {
 };
 function getPublicationTimestamp(value?: string | number): number {
     if (typeof value === 'number' || (typeof value === 'string' && value.trim())) {
-        return parseDate(value).getTime();
+        return parseDate(value)?.epochMilliseconds ?? NaN;
     }
     return NaN;
 }
-function getPublicationDate(value?: string | number): Date | undefined {
-    const timestamp = getPublicationTimestamp(value);
-    if (Number.isFinite(timestamp)) {
-        return timezone(parseDate(timestamp), 8);
+function getPublicationDate(value?: string | number): Temporal.Instant | undefined {
+    if (typeof value === 'number' || (typeof value === 'string' && value.trim())) {
+        return parseDate(value, 8);
     }
     return;
 }

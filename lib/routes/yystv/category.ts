@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 import { fetchDataItemCached, getArticleList } from './fetcher';
 

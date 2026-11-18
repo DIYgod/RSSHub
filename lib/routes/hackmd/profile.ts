@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/profile/:path',
@@ -39,7 +39,7 @@ async function handler(ctx) {
             return {
                 title: note.title,
                 description: `<pre>${note.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</pre>`,
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 category: note.tags,
                 link: `https://hackmd.io/@${path}/${note.permalink || note.shortId}`,
             };

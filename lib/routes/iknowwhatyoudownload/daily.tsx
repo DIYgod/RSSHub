@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -7,7 +6,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 interface TableData {
     key: string;
@@ -30,13 +29,13 @@ async function handler(ctx) {
     const { country } = ctx.req.param();
     const baseUrl = `https://iknowwhatyoudownload.com/en/stat/${country}/daily/q?statDate=`;
 
-    const dates = Array.from({ length: 7 }, (_, i) => dayjs().subtract(i, 'day'));
+    const dates = Array.from({ length: 7 }, (_, i) => Temporal.Now.zonedDateTimeISO('UTC').subtract({ days: i }));
 
     const items = (
         await pMap(
             dates,
             (dateObj) => {
-                const dateFormatted = dateObj.format('YYYY-MM-DD');
+                const dateFormatted = formatDate(dateObj, 'YYYY-MM-DD');
                 const url = `${baseUrl}${dateFormatted}`;
                 return cache.tryGet(url, async () => {
                     const response = await got({

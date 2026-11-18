@@ -5,7 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { allowHost } from './common';
 

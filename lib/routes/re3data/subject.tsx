@@ -7,7 +7,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.re3data.org';
 const getText = ($: CheerioAPI, name: string) =>
@@ -50,7 +50,7 @@ async function getRepository(id: string) {
             link: `${baseUrl}/repository/${id}`,
             guid: updated ? `${id}:${updated}` : id,
             // The registry provides a calendar date, represented at UTC midnight.
-            pubDate: updated ? parseDateInTimezone(updated, 0) : undefined,
+            pubDate: updated ? parseDate(updated, 0) : undefined,
             description: renderToString(
                 <>
                     <p>{getText($, 'description')}</p>

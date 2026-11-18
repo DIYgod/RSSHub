@@ -7,9 +7,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -271,7 +270,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         let processedItem: ReportItem = {
             title,
             description,
-            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             link: item.id ? new URL(`report/detail?id=${item.id}`, baseUrl).href : (linkUrl ?? (item.Id ? new URL(`chart/detail?id=${item.Id}`, baseUrl).href : undefined)),
             category: categories,
             author: authors,
@@ -370,7 +369,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : item.pubDate,
                     category: categories,
                     content: {
                         html: description,

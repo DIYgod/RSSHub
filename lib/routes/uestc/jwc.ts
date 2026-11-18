@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.jwc.uestc.edu.cn/';
 
@@ -74,7 +73,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: item.attr('title') ?? item.find('h3').text(),
                 link: new URL(item.attr('href')!, currentUrl).href,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 

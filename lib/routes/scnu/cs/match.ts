@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cs/match',
@@ -49,7 +48,7 @@ async function handler() {
                 .contents()
                 .filter((_, node) => node.type === 'text')
                 .text(),
-            pubDate: timezone(parseDate($item.find('.r').text()), 8),
+            pubDate: parseDate($item.find('.r').text(), 8),
             link: href ? new URL(href, baseUrl).href : undefined,
         };
     });

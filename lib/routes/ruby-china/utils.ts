@@ -4,7 +4,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const RUBY_CHINA_HOST = 'https://ruby-china.org';
 

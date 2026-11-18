@@ -4,8 +4,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -51,7 +51,7 @@ async function handler(ctx) {
     const articleMeta = data.result.pageContext.postsData.articles.edges;
     // { 0: node: { id, locale, slug, title, excerpt, image, published_at, article_category}}
     // The news index lists every article since 2018 in no particular order
-    const orderedArticles = articleMeta.toSorted((a, b) => getPublicationDate(b.node).getTime() - getPublicationDate(a.node).getTime());
+    const orderedArticles = articleMeta.toSorted((a, b) => compareDates(getPublicationDate(b.node), getPublicationDate(a.node)));
     const candidates = orderedArticles.slice(0, getRouteLimit(ctx, 20));
 
     const items = await pMap(

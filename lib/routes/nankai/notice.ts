@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/notice',
@@ -40,7 +39,7 @@ export const route: Route = {
                 const $time = $item.find('.time');
                 const day = $time.find('.time-d').text().trim();
                 const monthYear = $time.contents().last().text().trim();
-                const pubDate = day && monthYear ? timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), 8) : undefined;
+                const pubDate = day && monthYear ? parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD', 8) : undefined;
 
                 const $link = $item.find('.tit a');
                 let href = $link.attr('href') || '';

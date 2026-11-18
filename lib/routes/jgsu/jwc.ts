@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -31,7 +30,7 @@ async function handler() {
                     link: new URL($item.find('.xn_c_sv_20_top a').attr('href')!, baseUrl).href,
                     title: $item.find('.xn_c_sv_20_top a').text(),
                     description: $item.find('.xn_c_sv_20_text').text().trim(),
-                    pubDate: timezone(parseDate($item.find('.time').text().replaceAll(/[[\]]/g, '')), 8),
+                    pubDate: parseDate($item.find('.time').text().replaceAll(/[[\]]/g, ''), 8),
                 };
             }),
     };

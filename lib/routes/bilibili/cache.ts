@@ -120,7 +120,7 @@ const getVisitorCookie = async () => {
         },
     });
     const { b_3: buvid3, b_4: buvid4 } = fingerResponse.data;
-    const now = Math.floor(Date.now() / 1000);
+    const now = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     const cookies = [`buvid3=${buvid3}`, `buvid4=${encodeURIComponent(buvid4)}`, `b_nut=${now}`, `_uuid=${utils._uuid()}`, `b_lsid=${utils.lsid()}`, `buvid_fp=${crypto.randomUUID().replaceAll('-', '')}`];
     let ttl = Math.min(config.cache.contentExpire, 300);
 
@@ -133,7 +133,7 @@ const getVisitorCookie = async () => {
         const ticket = ticketResponse.data?.ticket;
         if (ticket) {
             const expires = Number(ticketResponse.data.created_at ?? now) + Number(ticketResponse.data.ttl ?? 3 * 24 * 60 * 60);
-            const remaining = Math.floor(expires - Date.now() / 1000);
+            const remaining = Math.floor(expires - Temporal.Now.instant().epochMilliseconds / 1000);
             if (Number.isFinite(remaining) && remaining > 0) {
                 cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${expires}`);
                 ttl = Math.min(config.cache.contentExpire, remaining);
@@ -158,7 +158,7 @@ interface WbiImageUrls {
 // The ticket endpoint returns the same WBI image URLs as the nav endpoint, and Bilibili's risk
 // control lets it through from addresses (such as Cloudflare Workers) that get a 412 from nav.
 const getWbiImageUrlsFromTicket = async (): Promise<WbiImageUrls> => {
-    const now = Math.floor(Date.now() / 1000);
+    const now = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     const { data: ticketResponse } = await got.post(`https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket?key_id=ec02&hexsign=${utils.hexsign(now)}&context[ts]=${now}&csrf=`, {
         headers: {
             Referer: 'https://www.bilibili.com/',
@@ -310,11 +310,11 @@ interface SubtitleEntry {
 }
 
 function secondsToSrtTime(seconds: number): string {
-    const date = new Date(seconds * 1000);
-    const hh = String(date.getUTCHours()).padStart(2, '0');
-    const mm = String(date.getUTCMinutes()).padStart(2, '0');
-    const ss = String(date.getUTCSeconds()).padStart(2, '0');
-    const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
+    const total = Math.trunc(seconds * 1000);
+    const hh = String(Math.floor(total / 3_600_000) % 24).padStart(2, '0');
+    const mm = String(Math.floor(total / 60000) % 60).padStart(2, '0');
+    const ss = String(Math.floor(total / 1000) % 60).padStart(2, '0');
+    const ms = String(total % 1000).padStart(3, '0');
     return `${hh}:${mm}:${ss},${ms}`;
 }
 

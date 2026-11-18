@@ -5,9 +5,8 @@ import { CookieJar } from 'tough-cookie';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 async function getResponse(url: string, cookieJar: CookieJar) {
     const options = {
@@ -53,7 +52,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.text(),
-                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
+                pubDate: parseDate($item.find('span.time').text(), 8),
                 link: new URL(a.prop('href')!, rootUrl).href,
             };
         });
@@ -66,14 +65,14 @@ export const handler = async (ctx) => {
         items.push({
             title: $('div.TextTitle > h6').text(),
             link: currentUrl,
-            pubDate: date ? timezone(parseDate(date), 8) : undefined,
+            pubDate: date ? parseDate(date, 8) : undefined,
             author: author && author !== '未知' ? author : undefined,
             description: map.html(),
         });
     }
 
     if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => parseDate(b.pubDate!).valueOf() - parseDate(a.pubDate!).valueOf());
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 
@@ -97,7 +96,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
                 item.author = author && author !== '未知' ? author : undefined;
                 item.content = {
                     html: description,

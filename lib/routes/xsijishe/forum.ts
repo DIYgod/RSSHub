@@ -7,8 +7,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, browserResourceTypes, isBlockedRequest, toBrowserCookies } from './utils';
 
@@ -50,8 +50,7 @@ function parseForumDate(value?: string) {
     if (!text) {
         return;
     }
-    const date = parseDate(text);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(text);
 }
 
 function resolveForumLink(value: string | undefined, base: string) {

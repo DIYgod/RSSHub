@@ -1,5 +1,5 @@
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export function mapFeedItem(item): DataItem {
     const image = item.enclosure?.url;

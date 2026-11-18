@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zx/xingnew',
@@ -41,7 +40,7 @@ export const route: Route = {
                 return {
                     title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn/zx/xingnew/').href,
-                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
+                    pubDate: parseDate(dateText, 'YYYY/MM/DD', 8),
                     // description: a.attr('title') || a.text(),
                 };
             });
@@ -56,7 +55,7 @@ export const route: Route = {
                     item.description = $('.cj_xw_cong').first().html() || $('.content_main').first().html();
                     const pubDate = $('meta[name="PubDate"]').attr('content');
                     if (pubDate) {
-                        item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss'), 8);
+                        item.pubDate = parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8);
                     }
                     return item;
                 })

@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://webapi.diandong.com';
 
@@ -58,9 +57,9 @@ async function handler(ctx) {
 
     const response = await got(url);
     const data = response.data.data.list;
-    const list: Array<DataItem & { link: string; pubDate: Date }> = data.map((item) => ({
+    const list: Array<DataItem & { link: string; pubDate: Temporal.Instant }> = data.map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.published), 8),
+        pubDate: parseDate(item.published, 8),
         author: item.author,
         link: `https://www.diandong.com/news/${item.contentid}.html`,
     }));

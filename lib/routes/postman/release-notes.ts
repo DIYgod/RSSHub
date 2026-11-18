@@ -1,7 +1,7 @@
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -61,7 +61,7 @@ async function handler(): Promise<Data> {
 
 function parseReleaseContent(content: string, version: string) {
     const tokens = md.parse(content, {});
-    let pubDate: Date | undefined;
+    let pubDate: Temporal.Instant | undefined;
     if (tokens[0]?.type === 'heading_open' && [version, `Postman ${version}`, `Postman v${version}`].includes(tokens[1]?.content)) {
         tokens.splice(0, 3);
         const next = tokens.at(0);
@@ -69,7 +69,7 @@ function parseReleaseContent(content: string, version: string) {
         if (next?.type === 'paragraph_open' && releaseDate && /^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(releaseDate)) {
             // Keep the publisher's calendar date at UTC midnight, independent of the host timezone.
             const date = parseDate(`${releaseDate} +0000`, ['MMMM D, YYYY ZZ', 'MMM D, YYYY ZZ']);
-            const calendarDate = date.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: releaseDate.split(' ', 1)[0].length === 3 ? 'short' : 'long', day: 'numeric' });
+            const calendarDate = date?.toLocaleString('en-US', { timeZone: 'UTC', year: 'numeric', month: releaseDate.split(' ', 1)[0].length === 3 ? 'short' : 'long', day: 'numeric' });
             if (calendarDate === releaseDate.replace(/ (\d{1,2}),/, (_, day) => ` ${Number(day)},`)) {
                 pubDate = date;
                 tokens.splice(0, 3);

@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://edu.cags.ac.cn';
 
@@ -59,10 +58,9 @@ async function handler(ctx) {
         const id = item.id;
         const title = item.title;
 
-        let pubDate: Date | null = null;
+        let pubDate: Temporal.Instant | undefined;
         if (item.publishDate) {
-            pubDate = parseDate(item.publishDate, 'YYYY-MM-DD');
-            pubDate = timezone(pubDate, 8);
+            pubDate = parseDate(item.publishDate, 'YYYY-MM-DD', 8);
         }
 
         const link = `${host}/#/dky/view/id=${id}/barId=${category}`;

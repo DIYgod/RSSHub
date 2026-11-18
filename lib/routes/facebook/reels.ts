@@ -1,8 +1,8 @@
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, fetchCollection, fetchGraphql, renderText, renderVideo } from './utils';
 

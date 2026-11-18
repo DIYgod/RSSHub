@@ -12,7 +12,7 @@ const key = CryptoJS.enc.Utf8.parse('tg09It3*9h');
  * `w_tsfp`=`base64(RC4(key, payload))`
  */
 const generateWTsfp = (url: string) => {
-    const now = Date.now();
+    const now = Temporal.Now.instant().epochMilliseconds;
     const fingerprint = randomBytes(16).toString('hex');
     const salt = randomBytes(16).toString('hex');
     const payload = JSON.stringify({

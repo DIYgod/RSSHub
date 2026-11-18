@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderComment } from '../templates/comment';
 import { appsUrl, createPageFetcher, userUrl } from '../utils';
@@ -52,7 +51,7 @@ async function handler(ctx) {
                 rating: item.score,
                 text: item.comment.content,
             }),
-            pubDate: timezone(parseDate(item.comment.created_at, 'YYYY-MM-DD'), 8),
+            pubDate: parseDate(item.comment.created_at, 'YYYY-MM-DD', 8),
             author: username,
         }));
 

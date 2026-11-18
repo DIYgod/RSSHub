@@ -5,7 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const webUrl = 'https://www.manhuagui.com/user/book/shelf/1';
 

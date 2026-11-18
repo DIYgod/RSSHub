@@ -8,8 +8,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const PAGE = 1;
 const PAGE_SIZE = 20;

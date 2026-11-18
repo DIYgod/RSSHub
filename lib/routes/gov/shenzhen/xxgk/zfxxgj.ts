@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://www.sz.gov.cn/cn/xxgk/zfxxgj/';
 
@@ -77,12 +76,10 @@ async function handler(ctx) {
                 if (content('div.fjdown').html() !== null) {
                     item.description! += content('div.fjdown').html()!;
                 }
-                item.pubDate = timezone(
-                    parseDate(
-                        content('.tit span:nth-child(2)')
-                            .text()
-                            .replace(/信息提供日期：/, '')
-                    ),
+                item.pubDate = parseDate(
+                    content('.tit span:nth-child(2)')
+                        .text()
+                        .replace(/信息提供日期：/, ''),
                     8
                 );
                 return item;

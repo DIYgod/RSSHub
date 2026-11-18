@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = '60847' } = ctx.req.param();
@@ -54,7 +53,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.news-details-p1').text().trim()), 8);
+                item.pubDate = parseDate($$('p.news-details-p1').text().trim(), 8);
                 item.content = {
                     html: description,
                     text: $$('div.news-details-cont').text(),

@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -70,7 +70,7 @@ async function handler(ctx) {
                     const date = content('h3')
                         .text()
                         .match(/(\d{4}-\d{2}-\d{2})/)?.[1];
-                    item.pubDate = date ? parseDateInTimezone(date, 8) : undefined;
+                    item.pubDate = date ? parseDate(date, 8) : undefined;
                 }
 
                 return item;

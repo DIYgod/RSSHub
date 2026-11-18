@@ -2,9 +2,9 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import { getApiResponse, getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 

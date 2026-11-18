@@ -8,8 +8,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchPhoto, fixDesc } from './utils';
 
@@ -85,7 +84,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, rootUrl).href,
-                pubDate: dateString ? timezone(parseDate(dateString, 'YYYY.M.D'), 9) : undefined,
+                pubDate: dateString ? parseDate(dateString, 'YYYY.M.D', 9) : undefined,
             };
         });
 

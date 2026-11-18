@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     astrology: '星相',
@@ -92,7 +91,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse);
                 content('.s .more').remove();
                 const date = content('.xg1.hm').contents().first().text().trim();
-                item.pubDate = date ? timezone(parseDate(date, 'YYYY-M-D HH:mm'), 8) : undefined;
+                item.pubDate = date ? parseDate(date, 'YYYY-M-D HH:mm', 8) : undefined;
                 item.description = (content('.s a').html()?.trim() ?? '') + (content('.video').html() ?? '');
                 return item;
             }),

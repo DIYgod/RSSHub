@@ -5,8 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 interface ChannelNode {
@@ -108,7 +108,7 @@ async function handler(ctx) {
                             .text()
                             .replace(/^作者[：:]\s*/, '')
                             .trim() || content('span', '.source').text(),
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     category: content('meta[name="keywords"]').attr('content')?.split(','),
                 };
             });

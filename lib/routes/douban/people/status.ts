@@ -8,8 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import { getIpLocations } from '../ip-location';
 
@@ -592,7 +592,7 @@ async function handler(ctx) {
                     title: r.title,
                     author,
                     link,
-                    pubDate: item.status.create_time ? parseDateInTimezone(item.status.create_time, 8) : undefined,
+                    pubDate: item.status.create_time ? parseDate(item.status.create_time, 8) : undefined,
                     description: r.description,
                     category: await getIpLocations(link),
                 };

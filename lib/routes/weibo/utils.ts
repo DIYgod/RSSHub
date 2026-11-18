@@ -9,6 +9,7 @@ import logger from '@/utils/logger';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getCookies } from '@/utils/playwright-utils';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 class RenewWeiboCookiesError extends Error {
     constructor(message: string) {
@@ -205,6 +206,7 @@ const weiboUtils = {
             }
         };
     })(),
+    parseCreatedAt: (value: Temporal.Instant | string) => (value instanceof Temporal.Instant ? value : (parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY'))),
     formatTitle: (html) =>
         html
             .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
@@ -403,7 +405,7 @@ const weiboUtils = {
                 html += `<br><small>原博：<a href="https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}" target="_blank" rel="noopener noreferrer">https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}</a></small>`;
             }
             if (showTimestampInDescription) {
-                html += '<br><small>' + new Date(status.retweeted_status.created_at).toLocaleString() + '</small>';
+                html += '<br><small>' + (weiboUtils.parseCreatedAt(status.retweeted_status.created_at)?.toLocaleString(undefined, { timeZone: 'UTC' }) ?? '') + '</small>';
             }
             if (readable) {
                 html += '<br clear="both" /><div style="clear: both"></div>';

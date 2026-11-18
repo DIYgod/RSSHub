@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, categoryMap } from './data';
 
@@ -115,8 +114,8 @@ async function handler(ctx) {
                     .map((e) => $(e).text().trim());
                 item.description = content.html();
                 const sourceDate = $('.publishDate').text();
-                const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined;
+                const pubDate = sourceDate ? parseDate(sourceDate, 8) : undefined;
+                item.pubDate = pubDate;
                 item.guid = item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return { author: item.author, category: item.category, description: item.description, pubDate: item.pubDate, guid: item.guid };

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/home',
@@ -41,7 +40,7 @@ async function handler() {
                     .text()
                     .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                 return {
-                    pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     description: content('div.content').html(),
                 };
             });

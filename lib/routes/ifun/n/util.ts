@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const author = '趣集';
 const language = 'zh-CN';
@@ -29,7 +29,7 @@ const processItems: (items: any[], limit: number) => DataItem[] = (items: any[],
         return {
             title,
             description,
-            pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+            pubDate: date,
             link: item.id ? new URL(`articles/${item.id}`, rootUrl).href : undefined,
             category: [...new Set([item.category, item.tag].filter(Boolean))],
             author,

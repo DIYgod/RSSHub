@@ -1,7 +1,7 @@
 import { escapeAttribute, escapeText } from 'entities';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const processFeed = async (list, cache) => {
     const detailUrl = 'https://www.infoq.cn/public/v1/article/getDetail';
@@ -31,7 +31,7 @@ const processFeed = async (list, cache) => {
                 return {
                     title: data.article_title,
                     description,
-                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                    pubDate: date,
                     category,
                     author,
                     link,

@@ -8,8 +8,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const abdrKey = 'F617E80F5BD64F5A';
 const abdrIv = '636014d173e04409';
@@ -120,7 +120,7 @@ async function handler(ctx: Context) {
                 82: sha1(), // hash of a sample of the page script text
                 85: sha1(), // hash of fields 78, 101, 103 and 82
                 101: sha1(), // per visit id: URL, referrer, user agent, start time and a random value, hashed
-                103: String(Date.now()),
+                103: String(Temporal.Now.instant().epochMilliseconds),
                 108: link, // page URL
                 109: '', // document.referrer
             });

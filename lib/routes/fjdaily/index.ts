@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const ROOT_URL = 'https://fjrb.fjdaily.com';
 
@@ -198,7 +197,7 @@ async function handler(ctx) {
                     ...item,
                     author: author || undefined,
                     description: description || undefined,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 };
             }),
         { concurrency: 3 }

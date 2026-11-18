@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:id',
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 description: `<img src="${item.picurl}">`,
                 link: `https://www.ui.cn/detail/${item.id}.html`,
                 guid: String(item.id),
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 category: item.tags?.split(','),
                 image: item.picurl,
             };

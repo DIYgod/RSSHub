@@ -6,8 +6,8 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const apiUrl = 'https://api.followin.io';
 const baseUrl = 'https://followin.io';
@@ -101,7 +101,7 @@ const parseList = (list, lang): DataItem[] =>
             title: item.translated_title || item.title,
             description: item.translated_content || item.content,
             link: `${baseUrl}/${lang === 'en' ? '' : `${lang}/`}feed/${item.id}`,
-            ...(pubDate && Number.isFinite(pubDate.getTime()) && { pubDate }),
+            ...(pubDate !== undefined && { pubDate }),
             category: item.tags?.map((tag) => tag.name) ?? [],
             author: item.nickname,
         };
@@ -129,9 +129,9 @@ const processList = (list, lang: string, ctx: Context, defaultLimit: number) => 
     const limit = getRouteLimit(ctx, defaultLimit);
     let items = parseList(list, lang);
     const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const allDated = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (!nativeOrder && allDated) {
-        items = items.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     if (nativeOrder || allDated) {
         items = items.slice(0, limit);

@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { apiBaseUrl, blogBaseUrl, getBlog, getLimit } from './utils';
 
@@ -164,7 +163,7 @@ async function handler(ctx) {
         link: `${blogBaseUrl}/u/${userId}/blog/${item.id}`,
         guid: `oschina:blog:${item.id}`,
         detailId: item.id,
-        pubDate: timezone(parseDate(item.createTime), 8),
+        pubDate: parseDate(item.createTime, 8),
         author: item.userVo.name,
         image: item.imgUrl,
     }));

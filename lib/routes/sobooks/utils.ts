@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 function getBookInfo(content: CheerioAPI, label: string) {
     return content('.book-info-item')
@@ -48,7 +48,7 @@ export const utils = async (ctx, currentUrl) => {
 
                 const description = content('.post-content, .article-content').first().html();
                 const date = getBookInfo(content, '时间：') || content('.bookinfo ul li').eq(4).text().replace('时间：', '');
-                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
+                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 const author = getBookInfo(content, '作者：') || undefined;
                 const category = [...new Set([getBookInfo(content, '分类：'), ...(content('meta[name="keywords"]').attr('content') ?? '').split(',')].map((value) => value.trim()).filter(Boolean))];

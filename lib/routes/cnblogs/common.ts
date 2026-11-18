@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: ['/aggsite/topdiggs', '/aggsite/topviews', '/aggsite/headline', '/cate/:type', '/pick'],
@@ -44,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.post-item-title').text(),
                 link: $item.find('.post-item-title').attr('href'),
-                pubDate: timezone(parseDate($item.find('.post-item-foot .post-meta-item span').text() || $item.find('.editorpick-item-meta').text(), ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD']), 8),
+                pubDate: parseDate($item.find('.post-item-foot .post-meta-item span').text() || $item.find('.editorpick-item-meta').text(), ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8),
                 description: $item.find('.post-item-summary').text(),
                 author: $item.find('.post-item-author span').text(),
             };

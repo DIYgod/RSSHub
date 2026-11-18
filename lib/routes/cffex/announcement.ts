@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/announcement',
@@ -41,7 +40,7 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const $ = load(response);
     const list = $('div.notice_list li')
         .toArray()
-        .map((item): DataItem & { pubDate: Date } => {
+        .map((item): DataItem => {
             const $item = $(item); // (Element) -> LoadedCheerio
             const titleEle = $($item).find('a').first();
             const dateEle = $($item).find('a').eq(1);
@@ -49,7 +48,7 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
             return {
                 title: titleEle.text().trim(),
                 link: `${baseUrl}${titleEle.attr('href')}`,
-                pubDate: timezone(parseDate(dateEle.text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(dateEle.text(), 'YYYY-MM-DD', 8),
             };
         });
 

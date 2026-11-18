@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://rumble.com';
 type RumbleVideoObject = {
@@ -126,7 +126,7 @@ function getMedia(image: string | undefined): DataItem['media'] {
         : undefined;
 }
 
-async function buildItem(link: string, title: string, listImage: string, pubDate: Date, includeEmbed: boolean): Promise<DataItem> {
+async function buildItem(link: string, title: string, listImage: string, pubDate: Temporal.Instant | undefined, includeEmbed: boolean): Promise<DataItem> {
     const initialResponse = await ofetch.raw<string>(link, {
         ignoreResponseError: true,
         redirect: 'manual',

@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/programs',
@@ -152,7 +151,7 @@ async function handler() {
                     title: data.SCS_WEB_BRIEFNAME,
                     link: link.href,
                     description: renderDescription(data),
-                    pubDate: data.SJ_DATE_PC ? timezone(parseDate(data.SJ_DATE_PC), 8) : undefined,
+                    pubDate: data.SJ_DATE_PC ? parseDate(data.SJ_DATE_PC, 8) : undefined,
                 };
             });
         },

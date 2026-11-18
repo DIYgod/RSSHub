@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const getArticleDetails = async (items, headers) => {
     const list = await Promise.all(

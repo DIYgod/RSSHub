@@ -4,9 +4,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -60,7 +59,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('title').text(),
-                pubDate: timezone(parseDate($item.find('date').text(), 'YYYY.MM.DD'), 9),
+                pubDate: parseDate($item.find('date').text(), 'YYYY.MM.DD', 9),
                 link: articleLink,
                 guid: isNews ? articleLink : md5(JSON.stringify([$item.find('title').text(), $item.find('date').text(), link])),
                 isNews,

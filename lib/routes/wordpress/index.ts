@@ -4,9 +4,9 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { apiSlug, bakeFeedUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakePageUrl, bakeUrl, fetchData, parseFilterStr } from './util';
 
@@ -14,15 +14,13 @@ const parseGmtDate = (value: string | undefined) => {
     if (!value) {
         return;
     }
-    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
 };
 const parseRssDate = (value: string | undefined) => {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 };
 const rewriteImageUrls = ($: CheerioAPI, link: string, cdn: string | undefined) => {
     $('img').each((_, el) => {

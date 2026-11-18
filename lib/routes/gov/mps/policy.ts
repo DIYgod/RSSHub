@@ -4,10 +4,9 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://www.mps.gov.cn';
@@ -48,7 +47,7 @@ function getItem(item: DataItem, page: Page) {
             ...item,
             title: $('.bTitle').first().text() || $('meta[name="ArticleTitle"]').attr('content') || item.title,
             description: content.html(),
-            pubDate: date ? timezone(parseDate(date.replaceAll(/\s+/g, ' ')), 8) : item.pubDate,
+            pubDate: date ? parseDate(date.replaceAll(/\s+/g, ' '), 8) : item.pubDate,
             author: $('meta[name="ContentSource"]').attr('content'),
         };
     });
@@ -83,7 +82,7 @@ async function handler(ctx) {
                 return {
                     title: anchor.text(),
                     link: new URL(anchor.attr('href')!, link).href,
-                    pubDate: publishedDate ? timezone(parseDate(publishedDate, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: publishedDate ? parseDate(publishedDate, 'YYYY-MM-DD', 8) : undefined,
                 };
             });
         return { title: `${name} - 中华人民共和国公安部`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };

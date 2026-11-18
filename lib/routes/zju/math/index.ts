@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const base = 'http://www.math.zju.edu.cn/';
 type NewsItem = {
@@ -47,7 +46,7 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<NewsItem[]>
                 item: {
                     title,
                     link: new URL(link, base).href,
-                    pubDate: timezone(parseDate(dateText), 8),
+                    pubDate: parseDate(dateText, 8),
                 },
                 intranetOnly,
             };
@@ -78,7 +77,7 @@ async function enrichNewsItemWithDetails(item: NewsItem, refererUrl: string): Pr
             return {
                 description: article.html(),
                 author,
-                ...(pubDate && { pubDate: timezone(parseDate(pubDate), 8) }),
+                ...(pubDate && { pubDate: parseDate(pubDate, 8) }),
             };
         });
         return { ...dataItem, ...details };

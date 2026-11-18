@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:suffix{.+}?',
@@ -69,7 +68,7 @@ async function handler(ctx) {
                             })}
                         </>
                     ),
-                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+                pubDate: date,
                 link: item.url,
             };
         });
@@ -82,7 +81,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: timezone(parseDate($item.find('.data').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate($item.find('.data').text(), 'YYYY-MM-DD', 8),
                 };
             });
 

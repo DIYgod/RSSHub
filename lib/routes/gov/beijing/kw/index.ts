@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://kw.beijing.gov.cn';
 
@@ -56,7 +55,7 @@ async function handler(ctx) {
                 return {
                     title: anchor.attr('title') || anchor.text(),
                     link: new URL(anchor.attr('href')!, url).href,
-                    pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
                 };
             });
     } else {
@@ -67,7 +66,7 @@ async function handler(ctx) {
             return {
                 title: load(result![2])('a').attr('title') || result![2],
                 link: new URL(result![1], rootUrl).href,
-                pubDate: timezone(parseDate(`${result![3]}-${result![4]}-${result![5]}`, 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(`${result![3]}-${result![4]}-${result![5]}`, 'YYYY-MM-DD', 8),
             };
         });
     }
@@ -79,7 +78,7 @@ async function handler(ctx) {
                 const $ = load(content.data);
                 const pubDate = $('meta[name="PubDate"]').attr('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 const article = $('.TRS_UEDITOR').first();
                 article.append($('.fujian').html() ?? '');

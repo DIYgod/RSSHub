@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -43,7 +43,7 @@ export const route: Route = {
                 const link = new URL($link.attr('href') || '', url).href;
 
                 const date = $item.find('.date.date2').text();
-                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
+                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 let title = $item.find('a .txt h3').text();
                 if (!title) {

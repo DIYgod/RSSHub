@@ -5,14 +5,13 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-const getPublicationDate = (value?: string | number | null): Date | undefined => {
+const getPublicationDate = (value?: string | number | null): Temporal.Instant | undefined => {
     if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
         return undefined;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 };
 
 export const route: Route = {

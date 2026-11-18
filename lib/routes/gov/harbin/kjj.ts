@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/kjj',
@@ -29,7 +28,7 @@ async function handler() {
         title: item.title,
         link: item.url,
         description: item.contentHtml,
-        pubDate: item.publishedTimeStr ? timezone(parseDate(item.publishedTimeStr), 8) : undefined,
+        pubDate: item.publishedTimeStr ? parseDate(item.publishedTimeStr, 8) : undefined,
         category: item.channelName,
     }));
 

@@ -5,8 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -20,8 +19,7 @@ function parsePublicationDate(value?: string) {
         return;
     }
 
-    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss', 8);
 }
 
 export const parseResult = (results, limit) =>

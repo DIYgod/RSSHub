@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { WPPost } from './types';
 

@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com.cn';
@@ -64,7 +63,7 @@ async function handler() {
 
                 return {
                     description: content('#artMain').html() ?? '',
-                    pubDate: timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm'), 8),
+                    pubDate: parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm', 8),
                 };
             });
             return { ...item, ...detail };

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { fixImg, newsUrl, siteIcon } from './utils';
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link.slice(0, item.link.lastIndexOf('/')),
             description: $.html(),
-            pubDate: parseDateInTimezone(item.date_gmt, 0),
+            pubDate: parseDate(item.date_gmt, 0),
         };
     });
 

@@ -1,16 +1,10 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 function parsePublicationDate(value: string | undefined) {
     if (!value) {
@@ -20,7 +14,7 @@ function parsePublicationDate(value: string | undefined) {
         .replace(/on\s\w+?day\s/, '')
         .replace('@', '')
         .replace(/(\d{2}:\d{2})(\w{2})$/, '$1 $2');
-    return parseDate(dayjs.tz(date, 'MMMM D, YYYY hh:mm A', 'America/New_York').toISOString());
+    return parseDate(date, 'MMMM D, YYYY hh:mm A', 'America/New_York');
 }
 
 export const route: Route = {

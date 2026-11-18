@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:websiteid?/:word?/:cateid?/:sortType?',
@@ -28,6 +27,7 @@ export const route: Route = {
 | 按时间   | 2        |`,
     async handler(ctx) {
         const { websiteid = '330201000000000', word = '人才', cateid = 658, sortType = 2 } = ctx.req.param();
+        const today = Temporal.Now.plainDateISO('UTC');
         const {
             data: { result: list },
         } = await got.post('https://search.zj.gov.cn/jsearchfront/interfaces/cateSearch.do', {
@@ -40,8 +40,8 @@ export const route: Route = {
                 checkError: 1,
                 isContains: 0,
                 q: word,
-                begin: dayjs().subtract(1, 'week').format('YYYYMMDD'),
-                end: dayjs().format('YYYYMMDD'),
+                begin: today.subtract({ weeks: 1 }).toString().replaceAll('-', ''),
+                end: today.toString().replaceAll('-', ''),
                 timetype: 2,
                 pos: 'title,content,keyword',
                 sortType,
@@ -56,7 +56,7 @@ export const route: Route = {
                 return {
                     title: title.text().trim(),
                     link: title.attr('href') || '',
-                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     author: footer.eq(0).text().trim().replace('来源:', ''),
                     description: $('.newsDescribe>a').text(),
                 };

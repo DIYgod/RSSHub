@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootURL = 'http://jwch.usts.edu.cn/index';
 
@@ -111,8 +110,8 @@ function parsePublicationDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, ['YYYY-MM-DD HH:mm:ss', 'YYYY年MM月DD日'], true);
-    if (!Number.isNaN(date.getTime())) {
-        return timezone(date, 8);
+    const date = parseDateStrict(value, ['YYYY-MM-DD HH:mm:ss', 'YYYY年MM月DD日'], 8);
+    if (date) {
+        return date;
     }
 }

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.szse.cn/';
 
@@ -67,7 +66,7 @@ async function handler() {
                 title,
                 link: itemUrl,
                 description,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
             return single;
         },

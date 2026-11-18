@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function fetch(address) {
     const res = await got(address);
@@ -50,7 +49,7 @@ async function handler(ctx) {
     const list = response.data.data.map((item) => ({
         title: item.WJBT,
         link: `${baseUrl}/mailbox/NoAuth/MailInInfo?XXLX=${type}&id=${item.NBBM}`,
-        pubDate: timezone(parseDate(item.LXSJ), 8),
+        pubDate: parseDate(item.LXSJ, 8),
         author: item.FZDW,
         category: item.NRFL,
     }));

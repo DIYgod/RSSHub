@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseIndexUrl = 'https://www.auto.uestc.edu.cn/xwgg/tzgs.htm';
 
@@ -59,13 +58,13 @@ async function handler() {
             const newsTitle = $item.attr('title') ?? $item.find('h3').text();
             const newsLink = new URL($item.attr('href') ?? '', baseIndexUrl).href;
             const newsPubDate = $item.find('.date').text().trim();
-            const pubDate = parseDate(`${newsPubDate.slice(0, 4)}-${newsPubDate.slice(4)}`, 'YYYY-MM-DD', true);
+            const pubDate = parseDateStrict(`${newsPubDate.slice(0, 4)}-${newsPubDate.slice(4)}`, 'YYYY-MM-DD', 8);
 
             return {
                 title: newsTitle,
                 description: $item.find('.p1').text().trim(),
                 link: newsLink,
-                pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
+                pubDate,
             };
         });
 

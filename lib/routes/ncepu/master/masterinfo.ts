@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function extractAuthor(value: string): string | undefined {
     for (const marker of value.matchAll(/作者：/g)) {
@@ -75,7 +74,7 @@ async function handler(ctx) {
             // The article anchor provides the title and URL.
             const a = $item.find('a');
             // Publication date
-            const pubDate = timezone(parseDate($item.find('span').text().replace('[', '').replace(']', '')), 8);
+            const pubDate = parseDate($item.find('span').text().replace('[', '').replace(']', ''), 8);
             // Resolve the relative article URL.
             const urlHead = `https://yjsy.ncepu.edu.cn/${urlMap[type]}/`;
             const urlPart = a.attr('href');

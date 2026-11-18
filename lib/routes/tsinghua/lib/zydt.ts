@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'content'>> {
     const { data: response } = await got(link);
@@ -44,7 +43,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('div.notice-list-tt a').text(),
-                pubDate: date ? timezone(parseDate(date, 'YYYY/MM/DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY/MM/DD', 8) : undefined,
                 link: new URL($item.find('div.notice-list-tt a').prop('href')!, rootUrl).href,
                 category: $item
                     .find('div.notice-label')

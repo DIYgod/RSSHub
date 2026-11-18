@@ -1,15 +1,7 @@
-import 'dayjs/locale/zh-cn.js';
-
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
 import { z } from 'zod';
 
-dayjs.extend(localizedFormat);
-dayjs.extend(timezone);
-dayjs.extend(utc);
+import { formatDate } from '@/utils/time';
 
 const SupportSchema = z.object({
     /** Product image */
@@ -35,9 +27,9 @@ const CrowdfundingSchema = z
         /** Suggested retail price */
         marketPrice: z.string(),
         /** Crowdfunding start time */
-        startTime: z.date(),
+        startTime: z.instanceof(Temporal.Instant),
         /** Crowdfunding end time */
-        endTime: z.date(),
+        endTime: z.instanceof(Temporal.Instant),
         /** Shipping info */
         sendInfo: z.string(),
         /** Support tier list */
@@ -49,8 +41,6 @@ const CrowdfundingSchema = z
     });
 
 export type Crowdfunding = z.infer<typeof CrowdfundingSchema>;
-
-const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('lll');
 
 const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding }) => (
     <>
@@ -74,7 +64,7 @@ const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding 
         )}
         众筹价：{crowdfunding.price} 元，建议零售价：{crowdfunding.marketPrice} 元
         <br />
-        众筹开始：{formatDate(crowdfunding.startTime)}，众筹结束：{formatDate(crowdfunding.endTime)}
+        众筹开始：{formatDate(crowdfunding.startTime, 'YYYY年M月D日 HH:mm', 'Asia/Shanghai')}，众筹结束：{formatDate(crowdfunding.endTime, 'YYYY年M月D日 HH:mm', 'Asia/Shanghai')}
         <br />
         物流：{crowdfunding.sendInfo}
         <br />

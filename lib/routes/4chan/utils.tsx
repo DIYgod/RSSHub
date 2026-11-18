@@ -2,8 +2,8 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import sanitizeHtml from 'sanitize-html';
 
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 const parseParams = (routeParams?: string) => {
     const parsed = new URLSearchParams(routeParams ?? '');

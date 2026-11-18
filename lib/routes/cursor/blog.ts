@@ -6,8 +6,8 @@ import type { Data, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getBlogContent = (url: string) =>
@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index)
         .slice(0, limit);
-    const orderedList = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0));
+    const orderedList = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => (b.pubDate?.epochMilliseconds ?? 0) - (a.pubDate?.epochMilliseconds ?? 0));
     const candidates = orderedList.slice(0, requestedLimit);
     const items = await Promise.all(
         candidates.map(async (item) => {

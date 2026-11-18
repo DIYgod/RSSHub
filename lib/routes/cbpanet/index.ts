@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { bigId = '2', smallId = '11' } = ctx.req.param();
@@ -46,13 +45,11 @@ export const handler = async (ctx) => {
 
                 item.title = $$('div.newstlt').text();
                 item.description = description;
-                item.pubDate = timezone(
-                    parseDate(
-                        $$('div.newstime')
-                            .text()
-                            .replace(/发布时间:/, ''),
-                        'YYYY/M/D HH:mm:ss'
-                    ),
+                item.pubDate = parseDate(
+                    $$('div.newstime')
+                        .text()
+                        .replace(/发布时间:/, ''),
+                    'YYYY/M/D HH:mm:ss',
                     8
                 );
                 item.content = {

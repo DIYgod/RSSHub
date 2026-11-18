@@ -1,5 +1,4 @@
 import { type CheerioAPI, load } from 'cheerio';
-import dayjs from 'dayjs';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
@@ -151,7 +150,7 @@ async function handler(): Promise<Data> {
     const response = await got(baseUrl);
     const $ = load(response.data);
 
-    const currentYear = dayjs().year();
+    const currentYear = Temporal.Now.zonedDateTimeISO('UTC').year;
     const yearSection = $('.year-section')
         .toArray()
         .find((el) =>

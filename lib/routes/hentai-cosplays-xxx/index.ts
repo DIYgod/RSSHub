@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type?/:name?',
@@ -64,7 +64,7 @@ async function handler(ctx: Context) {
                         .toArray()
                         .map((element) => `<img src=${$(element).attr('src')} alt="">`)
                         .join(' '),
-                    pubDate: info.date ? parseDateInTimezone(info.date, 0) : undefined,
+                    pubDate: info.date ? parseDate(info.date, 0) : undefined,
                 };
             }),
         { concurrency: 3 }

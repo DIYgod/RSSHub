@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://info.tsinghua.edu.cn/';
 const newsUrl = 'https://postinfo.tsinghua.edu.cn/f/';
@@ -39,15 +38,13 @@ function getLink(href: string | undefined) {
     return href?.trim() ? new URL(href, newsUrl).href : undefined;
 }
 
-function parseReportedDate(value: string): Date | undefined {
+function parseReportedDate(value: string): Temporal.Instant | undefined {
     const parts = value.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2}))?)?/);
     if (!parts) {
         return undefined;
     }
     const [, year, month, day, hour = '0', minute = '0', second = '0'] = parts;
-    const date = parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', true);
-
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', 8);
 }
 
 async function handler(ctx: Context) {

@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const gameList = new Set(['GTAV', 'RDR2']);
 const eventTypeName = { InGameBonus: '游戏内奖励', InGameUnlock: '游戏内解锁', InGameDiscount: '游戏内折扣' };
@@ -27,7 +27,7 @@ async function handler(ctx: Context) {
     const baseUrl = 'https://socialclub.rockstargames.com';
 
     const cookies = new Map<string, string>();
-    let url = `${baseUrl}/events/eventlisting?pageId=1&gameId=${gameId}&_=${Date.now()}`;
+    let url = `${baseUrl}/events/eventlisting?pageId=1&gameId=${gameId}&_=${Temporal.Now.instant().epochMilliseconds}`;
     let response;
     for (let i = 0; i < 5; i++) {
         // oxlint-disable-next-line no-await-in-loop

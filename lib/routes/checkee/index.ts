@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:dispdate',
@@ -56,7 +55,7 @@ async function handler(ctx: Context) {
             title,
             link: new URL(item.link!, host).href,
             description: item.note === '' ? title : item.note,
-            pubDate: timezone(parseRelativeDate(item.checkDate), 8),
+            pubDate: parseRelativeDate(item.checkDate, 8),
         };
     });
 

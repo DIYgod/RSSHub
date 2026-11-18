@@ -6,9 +6,8 @@ import { getMimeType } from 'hono/utils/mime';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const documentMimeTypes = {
     docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -53,11 +52,11 @@ export const handler = async (ctx) => {
         .map((item): DataItem => {
             const $item = $(item);
             const date = $item.find('span.time').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
 
             return {
                 title: $item.find('a').prop('title')!,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
@@ -96,8 +95,8 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 const date = $$('meta[name="PubDate"]').prop('content')?.replaceAll('∶', ':');
-                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
+                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
+                item.pubDate = pubDate ?? item.pubDate;
                 item.category = [...new Set([$$('meta[name="ColumnName"]').prop('content'), $$('meta[name="ColumnKeywords"]').prop('content')])].filter(Boolean);
                 item.author = $$('meta[name="ContentSource"]').prop('content');
                 item.content = {
@@ -119,8 +118,8 @@ export const handler = async (ctx) => {
         )
     );
 
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
-        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Temporal.Instant)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         items = items.slice(0, limit);
     }
 

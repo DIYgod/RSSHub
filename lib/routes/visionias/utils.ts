@@ -6,7 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { renderDescriptionSub } from './templates/description-sub';
@@ -180,5 +180,5 @@ function extractArticle(articleDiv: Cheerio<AnyNode>): string {
 }
 
 function parseArticleDate(value?: string) {
-    return value && Number.isFinite(Date.parse(value)) ? parseDate(value) : undefined;
+    return value ? parseDate(value) : undefined;
 }

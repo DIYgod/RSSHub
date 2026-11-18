@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const renderDescription = (data): string =>
     renderToString(

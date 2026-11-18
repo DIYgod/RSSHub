@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hot/:lang?',
@@ -45,7 +44,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.entry-date span').eq(1).text(), 'YYYY/MM/DD HH:mm'), 8),
+                pubDate: parseDate($item.find('.entry-date span').eq(1).text(), 'YYYY/MM/DD HH:mm', 8),
             };
         })
         .filter((item) => item.title);

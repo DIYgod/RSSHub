@@ -6,13 +6,12 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
+import { toInstant } from '@/utils/time';
 
 import weiboUtils from './utils';
 
-const getPostTime = (pubDate: DataItem['pubDate']) => (typeof pubDate !== 'number' && !pubDate ? NaN : new Date(pubDate).getTime());
+const getPostTime = (pubDate: DataItem['pubDate']) => (typeof pubDate !== 'number' && !pubDate ? undefined : toInstant(pubDate))?.epochMilliseconds ?? NaN;
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
     categories: ['social-media'],
@@ -142,18 +141,18 @@ async function handler(ctx) {
                 const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, bid));
                 if (data && data.text) {
                     item.mblog.text = data.text;
-                    item.mblog.created_at = parseDate(data.created_at);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(data.created_at);
                     item.mblog.pics = data.pics;
                     if (retweeted_status && data.retweeted_status) {
                         retweeted_status = {
                             ...retweeted_status,
                             ...data.retweeted_status,
-                            created_at: parseDate(data.retweeted_status.created_at),
+                            created_at: weiboUtils.parseCreatedAt(data.retweeted_status.created_at),
                         };
                         item.mblog.retweeted_status = retweeted_status;
                     }
                 } else {
-                    item.mblog.created_at = timezone(created_at, 8);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(created_at);
                 }
                 // 转发的长微博处理
                 const retweet = retweeted_status;

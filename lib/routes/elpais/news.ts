@@ -5,9 +5,9 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -29,9 +29,9 @@ async function handler(ctx) {
         .filter((item): item is typeof item & { title: string; link: string } => Boolean(item.title && item.link))
         .slice(0, Math.max(20, limit))
         .map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
-    const datesComplete = sourceItems.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    const datesComplete = sourceItems.every((item) => item.pubDate);
     if (!sourceOrder && datesComplete) {
-        sourceItems.sort((first, second) => second.pubDate!.getTime() - first.pubDate!.getTime());
+        sourceItems.sort((first, second) => Temporal.Instant.compare(second.pubDate!, first.pubDate!));
     }
     const selectedItems = sourceOrder || datesComplete ? sourceItems.slice(0, limit) : sourceItems;
     const items = await pMap(

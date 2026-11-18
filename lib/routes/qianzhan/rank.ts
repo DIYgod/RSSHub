@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/analyst/rank/:type?',
@@ -56,7 +55,7 @@ async function handler(ctx) {
                 const $ = load(detailResponse.data);
                 const description = $('#divArtBody').html();
                 const title = $('#h_title').text();
-                const pubDate = timezone(parseDate($('#pubtime_baidu').text().split('• ', 2)[1], 'YYYY-MM-DD HH:mm:ss'), 8);
+                const pubDate = parseDate($('#pubtime_baidu').text().split('• ', 2)[1], 'YYYY-MM-DD HH:mm:ss', 8);
                 const author = $('.bljjxue').text().match(/\S+/)![0];
                 return {
                     title,

@@ -2,9 +2,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/column/:id?',
@@ -51,7 +50,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.content_url,
             author: item.column_name,
-            pubDate: timezone(parseDate(item.publish_time), 8),
+            pubDate: parseDate(item.publish_time, 8),
             description: renderToString(
                 item.type === 'audio' ? (
                     <audio controls>

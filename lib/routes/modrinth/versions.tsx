@@ -7,7 +7,7 @@ import type { Author, Project, Version } from '@/routes/modrinth/api';
 import type { Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import _ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const ofetch = _ofetch.create({
     headers: {

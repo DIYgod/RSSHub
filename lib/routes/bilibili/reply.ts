@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -64,7 +65,7 @@ async function handler(ctx) {
         item: (replies ?? []).map((item) => ({
             title: `${item.member.uname} : ${item.content.message}`,
             description: `${item.member.uname} : ${item.content.message}`,
-            pubDate: new Date(item.ctime * 1000).toUTCString(),
+            pubDate: parseDate(item.ctime * 1000),
             link: `${link}/#reply${item.rpid}`,
         })),
     };

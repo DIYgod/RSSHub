@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 10);
@@ -28,12 +27,12 @@ export const handler = async (ctx) => {
 
             const title = $item.find('p.txt').text();
             const image = new URL($item.find('img').prop('src')!, rootUrl).href;
-            const publicationDate = title ? parseDate(title, 'YYYY年MM期') : undefined;
+            const publicationDate = title ? parseDate(title, 'YYYY年MM期', 8) : undefined;
 
             return {
                 title,
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : undefined,
+                pubDate: publicationDate,
                 author,
                 image,
                 banner: image,
@@ -52,8 +51,8 @@ export const handler = async (ctx) => {
 
                 const current = $$('ol.breadcrumb li a').first().text();
                 const publicationDateText = $$('div.title').text();
-                const publicationDate = publicationDateText ? parseDate(publicationDateText, 'YYYY年MM月DD日') : undefined;
-                const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : item.pubDate;
+                const publicationDate = publicationDateText ? parseDate(publicationDateText, 'YYYY年MM月DD日', 8) : undefined;
+                const pubDate = publicationDate ?? item.pubDate;
                 const image = new URL($$('div.coverline img').prop('src')!, rootUrl).href;
 
                 return $$('a.txt')

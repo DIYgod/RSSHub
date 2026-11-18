@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc.ecust.edu.cn';
 const categoryMap = {
@@ -24,7 +23,7 @@ const getFromLink = async (link) => {
             const a = $(item).find('a');
             const date = $(item).find('div[style="white-space:nowrap"]').first();
             const dateText = date.text();
-            const pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
             // deal with article_link
             let articleLink = a.attr('href');
             if (!articleLink!.startsWith('http')) {
@@ -37,7 +36,7 @@ const getFromLink = async (link) => {
             return {
                 title: a.text(),
                 link: articleLink,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
     return articleList;

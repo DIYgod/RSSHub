@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import { distinguishDuplicateGuids } from '@/utils/distinguish-duplicate-guids';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/link/news/:product',
@@ -51,7 +52,7 @@ async function handler(ctx) {
     const items = data?.map((item) => ({
         title: item.title,
         description: `${item.mark}<br><img src="${item.cover_url}">`,
-        pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
+        pubDate: parseDate(item.ctime, 8),
         link: item.announce_link || (item.id === undefined || item.id === null ? undefined : `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`),
         sourceId: item.id?.toString(),
     }));

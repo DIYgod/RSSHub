@@ -2,8 +2,8 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 type NewsDetail = {
     id: number;
@@ -28,10 +28,7 @@ export const route: Route = {
     url: 'www.arknights.jp/news',
 };
 
-const parsePublicationDate = (value: number) => {
-    const date = Number.isFinite(value) && value > 0 ? parseDate(value) : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
-};
+const parsePublicationDate = (value: number) => (Number.isFinite(value) && value > 0 ? parseDate(value) : undefined);
 
 async function handler(ctx: Context): Promise<Data> {
     const limit = getRouteLimit(ctx, 9);

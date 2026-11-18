@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -108,7 +108,7 @@ async function handler(ctx) {
             return {
                 title,
                 link: new URL(link, listUrl).href,
-                pubDate: dateMatch ? parseDateInTimezone(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`, 8) : undefined,
+                pubDate: dateMatch ? parseDate(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`, 8) : undefined,
             } satisfies DataItem;
         })
         .filter((item): item is NonNullable<typeof item> => item !== null);
@@ -137,10 +137,10 @@ async function handler(ctx) {
                 const timeMatch = $detail('.timestyle110144')
                     .text()
                     .match(/(\d{4}[-/]\d{2}[-/]\d{2})\s*(\d{2}:\d{2}(?::\d{2})?)/);
-                const pubDate = timeMatch ? parseDateInTimezone(`${timeMatch[1].replaceAll('/', '-')} ${timeMatch[2]}`, 8) : undefined;
+                const pubDate = timeMatch ? parseDate(`${timeMatch[1].replaceAll('/', '-')} ${timeMatch[2]}`, 8) : undefined;
                 return {
                     description,
-                    ...(pubDate && !Number.isNaN(pubDate.getTime()) && { pubDate }),
+                    ...(pubDate !== undefined && { pubDate }),
                 };
             });
 

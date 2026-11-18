@@ -5,8 +5,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function getCookie(url: string): Promise<string> {
     return cache.tryGet(
@@ -48,14 +47,12 @@ async function getThread(cookie: string, item: DataItem) {
     item.category = $('.posttags a')
         .toArray()
         .map((a) => $(a).text());
-    item.pubDate = timezone(
-        parseDate(
-            $('.postinfo')
-                .eq(0)
-                .text()
-                .match(/发表于 (.*)(?:[\n\r\u{2028}\u{2029}]\s*)?只看该作者/u)![1],
-            'YYYY-M-D HH:mm'
-        ),
+    item.pubDate = parseDate(
+        $('.postinfo')
+            .eq(0)
+            .text()
+            .match(/发表于 (.*)(?:[\n\r\u{2028}\u{2029}]\s*)?只看该作者/u)![1],
+        'YYYY-M-D HH:mm',
         8
     );
     $('div[id^=postmessage_] table, fieldset, .posttags, strong font, span:empty').remove();

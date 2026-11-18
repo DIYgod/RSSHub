@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/category/:cid',
@@ -36,12 +35,12 @@ async function handler(ctx: Context) {
                 const detail = await ofetch(item.detail_url);
                 return { description: detail.detail, publishedAt: detail.publish_info?.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1] };
             });
-            const publishedDate = publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined;
+            const publishedDate = publishedAt ? parseDate(publishedAt, 8) : undefined;
             return {
                 title: item.title,
                 link: item.url,
                 description: description ?? item.detail,
-                pubDate: publishedDate && !Number.isNaN(publishedDate.getTime()) ? publishedDate : parseDate(item.show_time, 'X'),
+                pubDate: publishedDate ?? parseDate(item.show_time, 'X'),
                 guid: item.url.split('?', 1)[0],
                 author: item.nickname,
             };

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:listId?',
@@ -56,7 +55,7 @@ async function handler(ctx) {
                 $('.pageLink, .alert, p[style="margin:15px;"]').remove();
 
                 item.description = $('.post-content').html();
-                item.pubDate = timezone(parseDate($('.panel-body > .text-center').text().replace('时间:', ''), 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.pubDate = parseDate($('.panel-body > .text-center').text().replace('时间:', ''), 'YYYY-MM-DD HH:mm:ss', 8);
 
                 return item;
             })

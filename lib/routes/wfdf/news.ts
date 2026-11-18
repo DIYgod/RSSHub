@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -34,8 +33,7 @@ function parseGmtDate(value?: string | null) {
     if (!value) {
         return;
     }
-    const date = parseDate(value.replace(/Z$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.replace(/Z$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 0);
 }
 
 function getArticleBody(content: string) {

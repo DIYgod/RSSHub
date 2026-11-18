@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -36,7 +35,7 @@ async function handler(ctx) {
     const posts: Array<DataItem & { link: string }> = sourcePosts.slice(0, getRouteLimit(ctx, 10)).map((item) => ({
         title: item.title,
         link: `${baseUrl}${item.path}`,
-        pubDate: item.date ? timezone(parseDate(item.date), 8) : undefined,
+        pubDate: item.date ? parseDate(item.date, 'YYYY.MM.DD', 8) : undefined,
     }));
     const items = await pMap(
         posts,

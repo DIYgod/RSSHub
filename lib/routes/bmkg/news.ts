@@ -3,8 +3,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getBmkgApiHeaders } from './utils';
 
@@ -55,7 +54,7 @@ async function handler(): Promise<Data> {
                     link,
                     description: detail.content,
                     author: detail.author,
-                    pubDate: detail.date ? timezone(parseDate(detail.date, 'YYYY-MM-DD HH:mm:ss'), 7) : undefined,
+                    pubDate: detail.date ? parseDate(detail.date, 'YYYY-MM-DD HH:mm:ss', 7) : undefined,
                 };
             });
         },

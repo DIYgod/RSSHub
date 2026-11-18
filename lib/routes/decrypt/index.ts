@@ -4,9 +4,9 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -40,7 +40,7 @@ async function handler(ctx): Promise<Data> {
     const feed = await parser.parseURL(rssUrl);
 
     const pool = feed.items.filter((item): item is (typeof feed.items)[number] & { link: string } => item && !!item.link && !item.link.includes('/videos')).slice(0, Math.max(20, limit));
-    const orderedItems = ctx.req.query('sorted') === 'false' ? pool : pool.toSorted((a, b) => parseDate(b.pubDate ?? 0).getTime() - parseDate(a.pubDate ?? 0).getTime());
+    const orderedItems = ctx.req.query('sorted') === 'false' ? pool : pool.toSorted((a, b) => compareDates(parseDate(b.pubDate ?? 0), parseDate(a.pubDate ?? 0)));
     const items = await pMap(
         orderedItems.slice(0, limit),
         (item) =>

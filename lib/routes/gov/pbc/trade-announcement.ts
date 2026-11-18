@@ -3,9 +3,8 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -58,7 +57,7 @@ async function handler() {
                     const content = load(detailContent);
                     item.description = content('#zoom').html();
                     const dateText = content('#shijian').text().trim();
-                    item.pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+                    item.pubDate = dateText ? parseDate(dateText, 8) : undefined;
                     return item;
                 });
             },

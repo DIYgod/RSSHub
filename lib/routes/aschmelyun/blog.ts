@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     name: 'Blog',
@@ -31,7 +31,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://aschmelyun.com/blog/').href,
-                pubDate: parseDate($item.find('span.text-sm').text()),
+                pubDate: parseDate($item.find('span.text-sm').text(), 'MMM D, YYYY'),
                 category: $item
                     .find('a.rounded-full')
                     .toArray()

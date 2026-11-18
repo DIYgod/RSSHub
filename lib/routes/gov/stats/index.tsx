@@ -5,9 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 type Attachment = {
     link: string;
@@ -76,8 +75,7 @@ export const route: Route = {
 };
 
 function parsePublicationDate(date: string) {
-    const pubDate = date ? timezone(parseDate(date, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY/MM/DD', 'YYYY-MM-DD'], true), 8) : undefined;
-    return pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined;
+    return date ? parseDateStrict(date, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY/MM/DD', 'YYYY-MM-DD'], 8) : undefined;
 }
 
 async function handler(ctx) {
@@ -174,8 +172,8 @@ async function handler(ctx) {
         )
     );
 
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
-        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Temporal.Instant)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         items = items.slice(0, limit);
     }
 

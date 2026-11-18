@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getHeaders } from './utils';
 
@@ -57,7 +56,7 @@ async function handler(ctx) {
                 title: a.text(),
                 description: $item.find('.pandect-content-detail').text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), 8),
+                pubDate: parseDate($item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm'], 8),
                 image: $item.find('.pandect-content-img img').attr('src'),
             };
         });
@@ -77,7 +76,7 @@ async function handler(ctx) {
                 const description = article.html() ?? undefined;
                 const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("datePublished")').text() || '{}');
                 const releaseDate = $('meta[property="og:release_date"]').attr('content');
-                const pubDate = releaseDate ? timezone(parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                const pubDate = releaseDate ? parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
                 const author = ldJson.author?.name;
                 const category = [...(ldJson.about?.map((a) => a.name) || []), ...(ldJson.mentions?.map((m) => m.name) || [])];
 

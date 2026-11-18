@@ -5,8 +5,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://www.nmpa.gov.cn';
@@ -53,7 +52,7 @@ async function handler(ctx) {
                         return {
                             title: $item.find('a').text(),
                             link: new URL($item.find('a').attr('href')!, url).href,
-                            pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+                            pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined,
                         };
                     }),
             };
@@ -72,7 +71,7 @@ async function handler(ctx) {
                     item.description = $('.text').html();
                     const pubDate = $('meta[name="PubDate"]').attr('content');
                     if (pubDate) {
-                        item.pubDate = timezone(parseDate(pubDate), 8);
+                        item.pubDate = parseDate(pubDate, 8);
                     }
                     return item;
                 });

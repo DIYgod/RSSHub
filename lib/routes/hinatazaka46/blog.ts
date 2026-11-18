@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.hinatazaka46.com';
 
@@ -67,8 +66,7 @@ function parsePublicationDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 9);
+    return parseDate(value, 'YYYY.MM.DD HH:mm', 9);
 }
 
 async function handler(ctx) {

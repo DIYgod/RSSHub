@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:caty',
@@ -50,7 +49,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, baseurl).href,
-                pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined,
             };
         });
     // Fetch article metadata and content.
@@ -75,7 +74,7 @@ async function handler(ctx) {
                     title,
                     link,
                     description,
-                    pubDate: time ? timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), 8) : item.pubDate,
+                    pubDate: time ? parseDate(time, 'YYYY年MM月DD日 HH:mm', 8) : item.pubDate,
                 };
             });
         },

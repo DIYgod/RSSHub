@@ -7,9 +7,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import defaults from './defaults';
@@ -35,11 +34,11 @@ export const route: Route = {
 大部分大学分站可按此规则订阅；需要校园内网或登录的正文页面可能只能返回公开列表中的信息。`,
 };
 
-function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Date | undefined {
+function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Temporal.Instant | undefined {
     const time = item.closest('li').find('time').first();
     const calendarTime = time.text().trim();
     if (/^\d{4}-\d{2}-\d{2}$/.test(calendarTime)) {
-        return timezone(parseDate(calendarTime, 'YYYY-MM-DD'), 8);
+        return parseDate(calendarTime, 'YYYY-MM-DD', 8);
     }
     const day = time.find('span').text().trim();
     const month = time
@@ -48,7 +47,7 @@ function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Date | undef
         .text()
         .trim();
     if (/^\d{1,2}$/.test(day) && /^\d{4}-\d{2}$/.test(month)) {
-        return timezone(parseDate(`${month}-${day.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
+        return parseDate(`${month}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8);
     }
     const dateBox = item.find('.date').first();
     const monthDay = dateBox.find('span').text();
@@ -58,7 +57,7 @@ function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Date | undef
         .text()
         .trim();
     if (/^\d{2}-\d{2}$/.test(monthDay) && /^\d{4}$/.test(year)) {
-        return timezone(parseDate(`${year}-${monthDay}`, 'YYYY-MM-DD'), 8);
+        return parseDate(`${year}-${monthDay}`, 'YYYY-MM-DD', 8);
     }
     const texts = item
         .find('p, span')
@@ -66,11 +65,11 @@ function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Date | undef
         .map((element) => $(element).text().trim());
     const calendarDate = texts.find((text) => /^\d{4}[./-]\d{2}[./-]\d{2}$/.test(text));
     if (calendarDate) {
-        return timezone(parseDate(calendarDate.replaceAll(/[./]/g, '-'), 'YYYY-MM-DD'), 8);
+        return parseDate(calendarDate.replaceAll(/[./]/g, '-'), 'YYYY-MM-DD', 8);
     }
     const dayIndex = texts.findIndex((text, index) => /^\d{1,2}$/.test(text) && /^\d{4}-\d{2}$/.test(texts[index + 1] ?? ''));
     if (dayIndex !== -1) {
-        return timezone(parseDate(`${texts[dayIndex + 1]}-${texts[dayIndex].padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
+        return parseDate(`${texts[dayIndex + 1]}-${texts[dayIndex].padStart(2, '0')}`, 'YYYY-MM-DD', 8);
     }
 }
 
@@ -125,7 +124,7 @@ async function handler(ctx) {
             result.pubDate = getCurrentListDate($, $item);
         } else if (site === 'fldpj') {
             result.title = $item.find('em').text();
-            result.pubDate = timezone(parseDate($item.find('span').text()), 8);
+            result.pubDate = parseDate($item.find('span').text(), 8);
         } else {
             const dateRegex = /(\d{4}[/年-]\d{2}[/月-]\d{2})/;
 
@@ -136,7 +135,7 @@ async function handler(ctx) {
 
             result.title = $item.find('h3, h4').first().text() || ($item.text().trim() === '' ? $item.next().text() : $item.text());
             if (dateMatch) {
-                result.pubDate = timezone(parseDate(dateMatch[1].replaceAll(/年|月/g, '-')), 8);
+                result.pubDate = parseDate(dateMatch[1].replaceAll(/年|月/g, '-'), 8);
             }
         }
 
@@ -146,8 +145,8 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 50);
     if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()))) {
-        items.sort((a, b) => parseDate(b.pubDate).getTime() - parseDate(a.pubDate).getTime());
+    } else if (items.every((item) => item.pubDate)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         items = items.slice(0, limit);
     } else {
         items = items.slice(0, Math.max(50, limit));

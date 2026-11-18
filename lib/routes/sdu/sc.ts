@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.sc.sdu.edu.cn/';
 const typelist = ['通知公告', '学术动态', '本科教育', '研究生教育'];
@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDateInTimezone($e.find('.date').text().trim(), 8),
+                pubDate: parseDate($e.find('.date').text().trim(), 8),
             };
         });
 

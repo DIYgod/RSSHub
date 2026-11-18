@@ -4,8 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://www.chinadegrees.com.cn';
 
@@ -126,7 +126,7 @@ async function handler(ctx) {
 
     const items = data.items.map((item) => {
         item.description = renderDescription(item.title, item.pubDate);
-        item.pubDate = parseDate(item.pubDate!, 'YYYY-MM-DD');
+        item.pubDate = parseDate(item.pubDate as string, 'YYYY-MM-DD');
         return item;
     });
 

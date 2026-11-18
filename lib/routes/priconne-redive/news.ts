@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:server?',
@@ -111,7 +110,7 @@ async function handler(ctx): Promise<Data> {
                         return {
                             title: article.find('h2').text(),
                             description: content.html(),
-                            pubDate: date ? parseDateInTimezone(date.replaceAll('.', '-'), 8) : undefined,
+                            pubDate: date ? parseDate(date.replaceAll('.', '-'), 8) : undefined,
                             category,
                         };
                     })),
@@ -131,7 +130,7 @@ async function handler(ctx): Promise<Data> {
                 async (item) => ({
                     title: item.title,
                     link: `https://game.bilibili.com/pcr/news.html#detail=${item.id}`,
-                    pubDate: item.ctime ? parseDateInTimezone(item.ctime, 8) : undefined,
+                    pubDate: item.ctime ? parseDate(item.ctime, 8) : undefined,
                     ...(await cache.tryGet(`priconne-redive:cn:article:${item.id}`, async () => {
                         const response = await got(`https://api.biligame.com/news/${item.id}`);
                         return { description: response.data.data.content };

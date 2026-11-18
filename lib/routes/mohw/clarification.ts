@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/clarification',
@@ -68,7 +68,7 @@ async function handler() {
 
                 const description = content('article.cpArticle').html();
                 const date = content('meta[name="DC.Date"]').attr('content');
-                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
+                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 return { description, pubDate };
             });

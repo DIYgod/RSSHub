@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.soundofhope.org';
 
@@ -56,7 +55,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('div.Content__Wrapper-sc-1bvya0-0').html();
-                item.pubDate = timezone(parseDate(content('div.date').text(), 'YYYY.M.D HH:mm'), -8);
+                item.pubDate = parseDate(content('div.date').text(), 'YYYY.M.D HH:mm', -8);
 
                 return item;
             })

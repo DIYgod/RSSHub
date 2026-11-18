@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const handler: Route['handler'] = async () => {
     const link = 'https://www.notion.com/releases';
@@ -20,7 +20,7 @@ const handler: Route['handler'] = async () => {
             const release = $(element);
             return {
                 title: release.find('h2').first().text(),
-                pubDate: parseDate(release.find('time').first().text()),
+                pubDate: parseDate(release.find('time').first().text(), 'MMMM D, YYYY'),
                 description: release.find('article').first().html(),
                 link: new URL(release.find('a[href^="/releases/"]').first().attr('href')!, link).href,
             };

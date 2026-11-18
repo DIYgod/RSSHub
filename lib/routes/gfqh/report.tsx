@@ -7,8 +7,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://rd.gfqh.cn/RDInformation';
 
@@ -52,7 +51,7 @@ async function handler(ctx) {
             return {
                 title: item.find('.article-title').text().trim(),
                 link: `${baseUrl}/article/${item.attr('onclick')?.match(/article\/(\d+)/)?.[1]}`,
-                pubDate: timezone(parseDate(item.find('.article-publish-date').text().trim()), 8),
+                pubDate: parseDate(item.find('.article-publish-date').text().trim(), 8),
             };
         });
 

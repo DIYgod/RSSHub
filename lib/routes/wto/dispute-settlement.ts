@@ -5,14 +5,13 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 function parseNewsDate(value?: string) {
     if (!value || !/^\d{4}\.\d{2}\.\d{2}_\d{2}:\d{2}:\d{2}$/.test(value)) {
         return;
     }
-    const date = parseDate(value.replaceAll('.', '-').replace('_', ' '), 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(value.replaceAll('.', '-').replace('_', ' '), 'YYYY-MM-DD HH:mm:ss');
 }
 
 export const route: Route = {
@@ -26,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { year = new Date().getFullYear() } = ctx.req.param();
+    const { year = Temporal.Now.zonedDateTimeISO('UTC').year } = ctx.req.param();
 
     const rootUrl = 'https://www.wto.org';
     const currentUrl = `${rootUrl}/library/news/news_${year}_e.js`;

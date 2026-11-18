@@ -6,7 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 interface Price {
     basePrice: string;
@@ -58,8 +58,9 @@ export const route: Route = {
     description: 'A concept ID lists every edition of the game, and a product ID lists only that product. A new item appears whenever the price or the end of the offer changes. PlayStation Plus prices and trials are not included.',
 };
 
-const renderDescription = (product: CacheEntry, price: Price, local: CacheEntry['local'], image?: string) =>
-    renderToString(
+const renderDescription = (product: CacheEntry, price: Price, local: CacheEntry['local'], image?: string) => {
+    const endTime = price.endTime ? parseDate(Number(price.endTime)) : undefined;
+    return renderToString(
         <>
             {image ? <img src={image} /> : null}
             <p>{[product.edition?.name, product.platforms?.join(' / ')].filter(Boolean).join(' · ')}</p>
@@ -72,10 +73,11 @@ const renderDescription = (product: CacheEntry, price: Price, local: CacheEntry[
                     </>
                 )}
             </p>
-            {price.endTime ? <p>Offer ends {parseDate(Number(price.endTime)).toUTCString()}</p> : null}
+            {endTime ? <p>Offer ends {toRFC822(endTime)}</p> : null}
             {local?.lowestRecentPrice ? <p>{local.lowestRecentPrice}</p> : null}
         </>
     );
+};
 
 async function handler(ctx) {
     const { id, locale = 'en-us' } = ctx.req.param();

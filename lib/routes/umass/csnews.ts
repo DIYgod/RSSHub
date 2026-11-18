@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/amherst/csnews',
@@ -25,12 +25,12 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('.news-teaser__title a');
             const date = $item.find('.news-teaser__date').text().trim();
-            const pubDate = date ? parseDate(date, 'MMMM D, YYYY', true) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'MMMM D, YYYY') : undefined;
             return {
                 title: a.text(),
                 description: $item.find('.news-teaser__summary').text().trim(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 category: $item.find('.news-teaser__category a').text(),
             };
         });

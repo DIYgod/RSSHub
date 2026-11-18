@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://indienova.com';
 
@@ -32,7 +31,7 @@ const parseItem = async (item) => {
         .text();
     const pubDate = info.match(/\d{4}-\d{2}-\d{2}|\d{2}-\d{2} \d{2}:\d{2}/)?.[0];
     const ago = info.match(/\d+ \S+前/)?.[0];
-    item.pubDate = pubDate ? timezone(parseDate(pubDate, ['YYYY-MM-DD', 'MM-DD HH:mm']), 8) : ago ? parseRelativeDate(ago) : undefined;
+    item.pubDate = pubDate ? parseDate(pubDate, ['YYYY-MM-DD', 'MM-DD HH:mm'], 8) : ago ? parseRelativeDate(ago) : undefined;
 
     return item;
 };

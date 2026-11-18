@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xwzx/:type?',
@@ -77,7 +76,7 @@ async function getArticle(link: string, articleHost: string) {
             : undefined;
     return {
         description: content.html(),
-        pubDate: time ? timezone(parseDate(`${time[1]}-${time[2]}-${time[3]} ${time[4]}:${time[5]}`), 8) : undefined,
+        pubDate: time ? parseDate(`${time[1]}-${time[2]}-${time[3]} ${time[4]}:${time[5]}`, 8) : undefined,
     };
 }
 
@@ -101,7 +100,7 @@ async function handler(ctx: Context) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 description: $item.find('.news_text a').text(),
-                pubDate: timezone(parseDate($item.find('.news_date').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.news_date').text(), 'YYYY-MM-DD', 8),
             };
         });
 

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/siren/news',
@@ -17,10 +17,7 @@ export const route: Route = {
     url: 'monster-siren.hypergryph.com/info',
 };
 
-const parsePublicationDate = (value: string) => {
-    const date = typeof value === 'string' ? parseDate(value, 'YYYY-MM-DD', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) : undefined;
-};
+const parsePublicationDate = (value: string) => (typeof value === 'string' ? parseDateStrict(value, 'YYYY-MM-DD') : undefined);
 
 async function handler() {
     const response = await ofetch('https://monster-siren.hypergryph.com/api/news', {

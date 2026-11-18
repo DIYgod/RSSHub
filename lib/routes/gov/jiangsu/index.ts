@@ -8,8 +8,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -65,7 +64,7 @@ async function getItem(item: DataItem & { link: string }) {
             title: $('meta[name="ArticleTitle"]').attr('content'),
             description: $('#zoom').html() ?? $('.article_content, .wzy_con, #UCAP-CONTENT').first().html() ?? surveyContent.html() ?? undefined,
             author: $('meta[name="ContentSource"]').attr('content') || extractSourceByline(surveyMetadata),
-            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : publishedTime ? timezone(parseDate(publishedTime, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 8) : publishedTime ? parseDate(publishedTime, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined,
             category: keywords?.split(/[,，\s]+/).filter(Boolean),
         };
     });
@@ -119,7 +118,7 @@ async function handler(ctx: Context) {
 
         return {
             title: $aTag.attr('title') || $aTag.text(),
-            pubDate: date ? timezone(parseDate(date[0]), 8) : undefined,
+            pubDate: date ? parseDate(date[0], 8) : undefined,
             link: new URL($aTag.attr('href')!, link).href,
         };
     });

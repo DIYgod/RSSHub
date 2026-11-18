@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { parseDyArticle } from './utils';
 
@@ -44,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('h4 a').text(),
                 link: $item.find('a').first().attr('href'),
-                pubDate: timezone(parseDate($item.find('.time').text()), 8),
+                pubDate: parseDate($item.find('.time').text(), 8),
                 imgsrc: itemImg.attr('src') ?? itemImg.attr('_src'),
             };
         });

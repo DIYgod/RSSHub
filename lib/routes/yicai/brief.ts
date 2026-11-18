@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { rootUrl } from './utils';
@@ -58,19 +57,18 @@ async function handler(ctx) {
     };
 }
 
-function getPublicationDate(value?: string, dateKey?: string, time?: string): Date | undefined {
+function getPublicationDate(value?: string, dateKey?: string, time?: string): Temporal.Instant | undefined {
     if (typeof value === 'string' && value.trim()) {
         const hasOffset = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
-        const date = hasOffset ? parseDate(value) : parseDate(value, ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true);
-        if (Number.isFinite(date.getTime())) {
-            return hasOffset ? date : timezone(date, 8);
+        const date = hasOffset ? parseDate(value) : parseDateStrict(value, ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 8);
+        if (date) {
+            return date;
         }
     }
     if (typeof dateKey !== 'string' || !dateKey.trim() || typeof time !== 'string' || !time.trim()) {
         return;
     }
-    const date = parseDate(`${dateKey.trim()} ${time.trim()}`, ['YYYY-MM-DD HH:mm', 'YYYY.MM.DD HH:mm'], true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(`${dateKey.trim()} ${time.trim()}`, ['YYYY-MM-DD HH:mm', 'YYYY.MM.DD HH:mm'], 8);
 }
 
 function getImageUrl(value?: string): string | undefined {

@@ -7,8 +7,8 @@ import CaptchaError from '@/errors/types/captcha';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import playwright, { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 declare global {
     interface Window {
@@ -171,8 +171,8 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
         description: string;
         author: string;
         guid: string;
-        pubDate: Date;
-        updated: Date;
+        pubDate: Temporal.Instant;
+        updated: Temporal.Instant;
     }> = [];
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {

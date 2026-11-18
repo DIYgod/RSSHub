@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jiaowc/tzgg/:category?',
@@ -71,7 +71,7 @@ async function handler(ctx) {
                 title: title!,
                 link,
                 description,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         },
         { concurrency: 3 }

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import data from '../data';
 import extractor from '../extractor';
@@ -34,7 +33,7 @@ export const route: Route = {
 type ExtractedArticle = {
     description?: string | null;
     author?: string;
-    exactDate?: Date;
+    exactDate?: Temporal.Instant;
 };
 
 async function handler(ctx) {
@@ -53,7 +52,7 @@ async function handler(ctx) {
             const link = href!.startsWith('http') ? href : baseUrl + href;
             const { description, author, exactDate } = await cache.tryGet<ExtractedArticle>(`sdu:wh-news:article-v3:${link}`, () => extractor(link));
             const span = $item.find('span');
-            const pubDate = exactDate ?? timezone(parseDate(span.text(), 'YYYY/MM/DD'), 8);
+            const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD', 8);
             return {
                 title: title!,
                 link,

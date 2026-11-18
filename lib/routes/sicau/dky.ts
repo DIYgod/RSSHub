@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dky/:category?',
@@ -55,7 +54,7 @@ async function handler(ctx) {
             return {
                 title: $item.attr('title') || $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.prev().text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.prev().text(), 'YYYY-MM-DD', 8),
             };
         });
 

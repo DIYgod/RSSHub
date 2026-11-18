@@ -6,8 +6,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.tgb.cn';
 
@@ -58,12 +57,10 @@ const renderPostDetail = async <T extends DataItem>(item: T) => {
             description += '<br>登录后可查看完整文章';
         }
 
-        const pubDate = timezone(
-            parseDate(
-                content('.article-data > span:nth-child(2)')
-                    .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0]
-            ),
+        const pubDate = parseDate(
+            content('.article-data > span:nth-child(2)')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0],
             8
         );
 

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -38,7 +37,7 @@ async function handler() {
             return {
                 title: $item.find('.title').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(dateSplit.join('-')), 8),
+                pubDate: parseDate(dateSplit.join('-'), 8),
                 category: [$item.find('.category').text()],
             };
         });

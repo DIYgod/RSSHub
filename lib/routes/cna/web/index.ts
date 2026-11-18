@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getFullText } from '../utils';
 
@@ -45,7 +44,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL($item.parents('a').attr('href')!, 'https://www.cna.com.tw').href,
-                pubDate: timezone(parseDate($item.next().text()), 8),
+                pubDate: parseDate($item.next().text(), 8),
             };
         });
 

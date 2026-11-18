@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const rootUrl = 'https://www.safe.gov.cn';
@@ -67,8 +66,8 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) 
                 ),
                 author: `${message.author}/${reply.author}`,
                 guid: `${currentUrl}#${message.author}(${message.date})/${reply.author}(${reply.date})`,
-                pubDate: message.date ? timezone(parseDate(message.date), 8) : undefined,
-                updated: reply.date ? timezone(parseDate(reply.date), 8) : undefined,
+                pubDate: message.date ? parseDate(message.date, 8) : undefined,
+                updated: reply.date ? parseDate(reply.date, 8) : undefined,
             };
         });
 

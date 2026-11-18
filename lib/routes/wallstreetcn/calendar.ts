@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/calendar/:section?',
@@ -53,8 +53,7 @@ function parseSourceTime(value?: string | number | null) {
     if (!Number.isFinite(seconds)) {
         return;
     }
-    const date = parseDate(seconds * 1000);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(seconds * 1000);
 }
 
 async function handler(ctx) {
@@ -63,8 +62,7 @@ async function handler(ctx) {
     const link = `${rootUrl}/calendar`;
     const apiRootUrl = section === 'macrodatas' ? 'https://api-one-wscn.awtmt.com' : 'https://api-ddc-wscn.awtmt.com';
     const apiUrl = section === 'macrodatas' ? `${apiRootUrl}/apiv1/finance/macrodatas` : `${apiRootUrl}/finance/report/list`;
-    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' });
-    const start = parseDate(`${today}T00:00:00+08:00`).getTime() / 1000;
+    const start = Temporal.Now.zonedDateTimeISO('Asia/Shanghai').startOfDay().epochMilliseconds / 1000;
 
     const response = await ofetch(apiUrl, {
         query:

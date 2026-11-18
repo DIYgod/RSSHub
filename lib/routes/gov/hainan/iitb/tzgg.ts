@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/iitb/tzgg',
@@ -41,7 +40,7 @@ async function handler() {
         return {
             title,
             link: new URL(link, targetUrl).href,
-            pubDate: dateText ? timezone(parseDate(dateText), 8) : undefined,
+            pubDate: dateText ? parseDate(dateText, 8) : undefined,
             category: department,
         };
     });
@@ -62,7 +61,7 @@ async function handler() {
 
                 item.author = author;
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.description = content;
 

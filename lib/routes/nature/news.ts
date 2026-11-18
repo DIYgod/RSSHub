@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, cookieJar, getArticle } from './utils';
 
@@ -45,7 +44,7 @@ async function handler() {
             return {
                 title: $item.find('h3').text(),
                 link: baseUrl + $item.find('a').attr('href'),
-                pubDate: publishedAt ? timezone(parseDate(publishedAt), 0) : undefined,
+                pubDate: publishedAt ? parseDate(publishedAt, 0) : undefined,
             };
         });
 

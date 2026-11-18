@@ -6,7 +6,6 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import weiboUtils from './utils';
@@ -82,10 +81,10 @@ async function handler(ctx) {
         item: data.map((status) => {
             const item = structuredClone(status);
             if (item.created_at) {
-                item.created_at = parseDate(item.created_at);
+                item.created_at = weiboUtils.parseCreatedAt(item.created_at);
             }
             if (item.retweeted_status?.created_at) {
-                item.retweeted_status.created_at = parseDate(item.retweeted_status.created_at);
+                item.retweeted_status.created_at = weiboUtils.parseCreatedAt(item.retweeted_status.created_at);
             }
             return weiboUtils.formatExtended(ctx, item, undefined, {
                 showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),

@@ -7,8 +7,8 @@ import type { BrowserContext } from 'patchright';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const BASE_URL = 'https://www.dailypush.dev';
@@ -17,7 +17,7 @@ export interface ArticleItem {
     title: string;
     link: string;
     author: DataItem['author'];
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
     category?: string[];
     description?: string;
     articleUrl: string;
@@ -59,10 +59,9 @@ export async function fetchPageHtml(context: BrowserContext, url: string, waitFo
 /**
  * Try to parse text as a date. Returns the Date if parsing succeeds and is valid, undefined otherwise.
  */
-function tryParseAsDate(text: string): Date | undefined {
+function tryParseAsDate(text: string): Temporal.Instant | undefined {
     try {
-        const date = parseRelativeDate(text);
-        return Number.isNaN(date.getTime()) ? undefined : date;
+        return parseRelativeDate(text);
     } catch {
         return undefined;
     }
@@ -152,7 +151,7 @@ function extractCategories(article: Cheerio<Element>, $: CheerioAPI): string[] {
 /**
  * Extract publication date from article element
  */
-function extractPubDate(article: Cheerio<Element>): Date | undefined {
+function extractPubDate(article: Cheerio<Element>): Temporal.Instant | undefined {
     const container = article.find('.flex.items-center.gap-3').first();
     if (container.length === 0) {
         return undefined;

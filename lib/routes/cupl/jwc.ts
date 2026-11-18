@@ -3,9 +3,8 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const targetUrl = 'https://jwc.cupl.edu.cn/tz/tzgg.htm';
@@ -59,7 +58,7 @@ export const route: Route = {
                     return {
                         link: href ? new URL(href, targetUrl).href : undefined,
                         title: element.find('h3').text(),
-                        pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 8),
+                        pubDate: parseDate(date, 'YYYY-MM-DD', 8),
                         description: element.find('.txt p').html(),
                     };
                 })

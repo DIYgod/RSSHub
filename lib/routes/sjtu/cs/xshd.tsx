@@ -6,7 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sjtu.edu.cn';
@@ -89,7 +89,7 @@ async function enrichItem(item: ListItem): Promise<DataItem> {
         const response = await ofetch.raw<string>(item.link);
         const finalUrl = response.url;
         let description = '';
-        let pubDate: Date | undefined;
+        let pubDate: Temporal.Instant | undefined;
 
         if (new URL(finalUrl).hostname === 'mp.weixin.qq.com') {
             const article = await fetchArticle(extractWechatUrl(finalUrl));

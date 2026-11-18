@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/main/:type?',
@@ -69,12 +68,12 @@ async function handler(ctx) {
                 return {
                     title: info.title,
                     link: info.link,
-                    pubDate: timezone(parseDate(info.time), 8),
+                    pubDate: parseDate(info.time, 8),
                     description: newsbody,
                     category: info.category,
                 };
             });
-            return { ...details, title: info.title, link: info.link, pubDate: timezone(parseDate(info.time), 8), category: info.category };
+            return { ...details, title: info.title, link: info.link, pubDate: parseDate(info.time, 8), category: info.category };
         },
         { concurrency: 3 }
     );

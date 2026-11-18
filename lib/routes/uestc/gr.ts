@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://gr.uestc.edu.cn/';
 const detailUrl = 'https://gr.uestc.edu.cn/';
@@ -83,10 +82,10 @@ async function handler(ctx: Context): Promise<Data> {
 
                 const basicInfo = content('div.topic_detail_header').find('div.info').text();
                 const match = dateTimeRegex.exec(basicInfo);
-                const pubDate = match ? parseDate(match[1], 'YYYY-MM-DD HH:mm', true) : undefined;
+                const pubDate = match ? parseDateStrict(match[1], 'YYYY-MM-DD HH:mm', 8) : undefined;
 
                 return {
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                    pubDate,
                     description: content('div.content').html(),
                 };
             });

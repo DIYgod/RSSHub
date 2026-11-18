@@ -7,7 +7,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import { renderPost } from './templates/post';

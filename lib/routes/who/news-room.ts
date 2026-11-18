@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict, toInstant } from '@/utils/time';
 
 type ArticleMetadata = {
     '@type': string;
@@ -21,20 +20,19 @@ function getArticleMetadata(content: CheerioAPI): ArticleMetadata | undefined {
         .map((element): ArticleMetadata => JSON.parse(content(element).text().trim().replace(/;$/, '')))
         .find((article) => ['Article', 'NewsArticle'].includes(article['@type']));
 }
-function getPublicationDate(value?: string): Date | undefined {
+function getPublicationDate(value?: string): Temporal.Instant | undefined {
     if (!value?.trim()) {
         return undefined;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
-function getCalendarDate(value: string): Date | undefined {
+function getCalendarDate(value: string): Temporal.Instant | undefined {
     if (!value.trim()) {
         return undefined;
     }
-    const date = parseDate(value.trim(), 'D MMMM YYYY', 'en', true);
+    const date = parseDateStrict(value.trim(), 'D MMMM YYYY', 0);
     // A calendar-only source date uses UTC midnight without implying a publication instant.
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return date;
 }
 type ArticleDetails = Pick<DataItem, 'description' | 'category' | 'author'> & {
     listTitle?: string;
@@ -64,7 +62,7 @@ async function getArticleDetails(
         category: tags.length ? tags : undefined,
         calendarDate: content('.sf-item-header-wrapper .timestamp').text(),
         listTitle: item.title,
-        listDate: isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime(),
+        listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
         articleTitle: article?.headline,
         publicationDate: article?.datePublished,
         author: article?.author?.name,
@@ -141,7 +139,7 @@ async function handler(ctx) {
             list,
             async (item) => {
                 const detail = await cache.tryGet(`who:details:${item.link}`, async () => await getArticleDetails(item));
-                const listDate = isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime();
+                const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
                 return {
                     ...item,
                     title: detail.listTitle === item.title ? (detail.articleTitle ?? item.title) : item.title,

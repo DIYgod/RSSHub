@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const host = 'https://www.wzbc.edu.cn';
 function parseSourceDate(value: string) {
@@ -14,8 +13,7 @@ function parseSourceDate(value: string) {
     if (!/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/.test(text)) {
         return;
     }
-    const date = timezone(parseDate(text, text.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', true), 8);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(text, text.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', 8);
 }
 const parserAbb = ($: CheerioAPI) => ({
     title: $('title').text(),

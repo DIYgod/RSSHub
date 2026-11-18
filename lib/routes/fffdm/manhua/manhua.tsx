@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const domain = 'manhua.fffdm.com';
 const host = `https://${domain}`;
@@ -57,13 +57,10 @@ async function handler(ctx) {
     const response = await got(`${host}/api/manhua/${id}`);
     const data = response.data;
 
-    const chapters: Array<{ url: string; time?: string; pubDate?: Date }> = data.mhlist.map((item) => ({ ...item, pubDate: item.time ? parseDate(item.time) : undefined }));
+    const chapters: Array<{ url: string; time?: string; pubDate?: Temporal.Instant }> = data.mhlist.map((item) => ({ ...item, pubDate: item.time ? parseDate(item.time) : undefined }));
     const limit = getRouteLimit(ctx);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates =
-        limit === undefined || (sorted && chapters.some((item) => !item.pubDate || !Number.isFinite(item.pubDate.getTime())))
-            ? chapters
-            : (sorted ? chapters.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime()) : chapters).slice(0, limit);
+    const candidates = limit === undefined || (sorted && chapters.some((item) => !item.pubDate)) ? chapters : (sorted ? chapters.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!)) : chapters).slice(0, limit);
     const chapterDetails = await pMap(
         candidates,
         async (item) => {

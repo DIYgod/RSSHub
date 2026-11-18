@@ -5,9 +5,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 type Category = {
     id: number;
@@ -64,8 +64,7 @@ export const route: Route = {
 };
 
 function getGmtDate(value: string | undefined) {
-    const date = value ? parseDate(`${value.replace(/Z$/, '')}Z`) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+    return value ? parseDate(`${value.replace(/Z$/, '')}Z`) : undefined;
 }
 
 async function handler(ctx: Context) {

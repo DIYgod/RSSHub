@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -34,7 +33,7 @@ async function handler() {
             });
             const year = $item.find('.newstime span').text();
             const day = $item.find('.newstime i').text();
-            const pubDate = /^\d{4}$/.test(year) && /^\d{1,2}\/\d{1,2}$/.test(day) ? timezone(parseDate(`${year}/${day}`, 'YYYY/MM/DD'), 8) : undefined;
+            const pubDate = /^\d{4}$/.test(year) && /^\d{1,2}\/\d{1,2}$/.test(day) ? parseDate(`${year}/${day}`, 'YYYY/MM/DD', 8) : undefined;
             const author =
                 $item
                     .find('.hqpl_author')

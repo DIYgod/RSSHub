@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://job.xjtu.edu.cn';
 const arr = {
@@ -36,8 +35,7 @@ const parseSourceDate = (value?: string) => {
     if (!value || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?$/.test(value)) {
         return;
     }
-    const date = timezone(parseDate(value, value.length === 16 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm:ss', true), 8);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(value, value.length === 16 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm:ss', 8);
 };
 export const route: Route = {
     path: '/job/:subpath?',

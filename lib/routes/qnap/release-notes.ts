@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/release-notes/:id',
@@ -67,7 +67,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $item.find('.version-title h4').text(),
                     link: new URL(href, currentUrl).href,
-                    pubDate: parseDateInTimezone($item.find('.release-note-time').text(), 0),
+                    pubDate: parseDate($item.find('.release-note-time').text(), 0),
                 };
             });
 

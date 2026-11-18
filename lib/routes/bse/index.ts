@@ -2,10 +2,9 @@ import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch']);
 
@@ -241,7 +240,7 @@ async function handler(ctx) {
                 category: item.tags,
                 description: item.text,
                 link: `${rootUrl}${item.htmlUrl}`,
-                pubDate: timezone(parseDate(item.publishDate), 8),
+                pubDate: parseDate(item.publishDate, 8),
             }));
             break;
 

@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/discussion/:id',
@@ -47,7 +46,7 @@ async function handler(ctx: Context) {
                 description: $item.find('.Message').html(),
                 author,
                 link: new URL($item.find('.DateCreated a').attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.DateCreated time').attr('datetime')!), 0),
+                pubDate: parseDate($item.find('.DateCreated time').attr('datetime')!, 0),
             };
         });
 

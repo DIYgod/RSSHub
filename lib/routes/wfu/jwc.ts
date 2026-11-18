@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 // Adapted from the university news route.
 const baseUrl = 'https://jwc.wfu.edu.cn/7448/list.htm';
 const sizeTitle = '潍坊学院教务处新闻';
@@ -36,9 +35,9 @@ function parsePublicationDate(value: string) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD', true);
+    const date = parseDateStrict(value, 'YYYY-MM-DD', 0);
     // UTC midnight encodes the source calendar date, not a publication instant.
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return date;
 }
 async function getArticleDetail(link: string) {
     const { data } = await got.get(link);

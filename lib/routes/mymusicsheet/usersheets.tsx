@@ -5,7 +5,7 @@ import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/sheets/:username/:iso?/:freeOnly?',
@@ -47,7 +47,7 @@ async function handler(ctx) {
             query: {
                 serviceProvider: 'mms',
                 'ngsw-bypass': true,
-                'no-cache': Date.now(),
+                'no-cache': Temporal.Now.instant().epochMilliseconds,
                 skipHeaders: true,
             },
         })

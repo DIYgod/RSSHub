@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -57,7 +57,7 @@ async function handler(ctx) {
             link: articledata[index].link,
             guid: articledata[index].guid,
             author: articledata[index].author,
-            pubDate: dayjs.unix(Number($(item).find('.js_article_create_time').text())).format(),
+            pubDate: parseDate(Number($(item).find('.js_article_create_time').text()), 'X'),
         })),
     };
 }

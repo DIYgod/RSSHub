@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import md5 from '@/utils/md5';
 
 const generateRequestHeaders = () => {
-    const now = Math.round(Date.now() / 1000);
+    const now = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);
     return {
         'X-Client-Platform': 'WechatMiniprogram',
         'X-Client-DeviceId': md5(now.toString()),

@@ -5,9 +5,8 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { host, playwrightGet } from './utils';
@@ -41,8 +40,7 @@ export const route: Route = {
 };
 
 function getPublicationDate(value: string | undefined) {
-    const date = value ? parseDate(value) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+    return value ? parseDate(value, 8) : undefined;
 }
 
 async function handler(ctx) {

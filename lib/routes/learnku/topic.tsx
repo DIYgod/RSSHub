@@ -6,7 +6,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:community/:category?',
@@ -96,7 +96,7 @@ async function handler(ctx) {
                 ),
                 category: categoryName,
                 link: itemLink,
-                pubDate: createdAt ? parseDateInTimezone(createdAt, 8) : undefined,
+                pubDate: createdAt ? parseDate(createdAt, 8) : undefined,
             };
         },
         { concurrency: 3 }

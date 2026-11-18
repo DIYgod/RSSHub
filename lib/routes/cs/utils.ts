@@ -2,8 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const currentCategoryPaths = {
     xwzx: '/yaowen.html',
@@ -98,7 +97,7 @@ export async function getCurrentItems($: CheerioAPI, currentUrl: string): Promis
             return records.slice(0, firstPageSize).map((record): DataItem & { link: string } => ({
                 title: record.title,
                 link: new URL(record.external_link || record.url, currentUrl).href,
-                pubDate: record.pub_date ? timezone(parseDate(record.pub_date), 8) : undefined,
+                pubDate: record.pub_date ? parseDate(record.pub_date, 8) : undefined,
                 author: record.miAuthor || undefined,
                 summary: record.miSummary || undefined,
                 image: record.miCover43 || undefined,

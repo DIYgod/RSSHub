@@ -5,8 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article/:id?',
@@ -47,7 +46,7 @@ async function handler(ctx: Context) {
         title: item.title,
         category: item.typeName ? [item.typeName] : undefined,
         link: `${rootUrl}/article/${item.id}`,
-        pubDate: item.gmtCreate ? timezone(parseDate(item.gmtCreate), 8) : undefined,
+        pubDate: item.gmtCreate ? parseDate(item.gmtCreate, 8) : undefined,
     }));
 
     const items = await pMap(

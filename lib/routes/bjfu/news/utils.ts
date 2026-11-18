@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 // 完整文章页
 async function loadContent(link) {
@@ -14,12 +13,10 @@ async function loadContent(link) {
     const $ = load(data);
 
     // 解析日期
-    const pubDate = timezone(
-        parseDate(
-            $('.article')
-                .text()
-                .match(/\d{4}(?:\/\d{2}){2}/)?.[0] ?? ''
-        ),
+    const pubDate = parseDate(
+        $('.article')
+            .text()
+            .match(/\d{4}(?:\/\d{2}){2}/)?.[0] ?? '',
         8
     );
 

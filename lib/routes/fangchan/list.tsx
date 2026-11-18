@@ -9,9 +9,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -61,9 +60,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     const sorted = ctx.req.query('sorted') !== 'false';
-    const allDated = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const allDated = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (sorted && allDated) {
-        items = items.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     if (!sorted || allDated) {
         items = items.slice(0, limit);
@@ -101,7 +100,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                     category: categories,
                     author: authors?.length ? authors : undefined,
                     content: {

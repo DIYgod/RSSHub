@@ -4,9 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'zx' } = ctx.req.param();
@@ -68,7 +67,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description ?? '';
-                item.pubDate = timezone(parseDate($$('.time').text()), 8);
+                item.pubDate = parseDate($$('.time').text(), 8);
                 item.category = $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.content = {
                     html: description ?? '',

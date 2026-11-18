@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const sourceOrigins = new Set(['https://www.dx2025.com', 'https://www.dx2035.cn']);

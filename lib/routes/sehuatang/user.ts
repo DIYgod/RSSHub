@@ -7,8 +7,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://sehuatang.org/';
 
@@ -115,9 +115,8 @@ async function handler(ctx) {
                 const datestampString = dateString.split(' ', 2)[1];
                 const timestampString = dateString.split(' ', 3)[2];
                 const datetimeString = `${datestampString} ${timestampString}`;
-                const timestamp = new Date(datetimeString).getTime();
 
-                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')!) : parseDate(timestamp);
+                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')!) : parseDate(datetimeString);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');

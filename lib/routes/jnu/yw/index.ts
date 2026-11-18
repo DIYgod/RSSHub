@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yw/:type?',
@@ -41,7 +40,7 @@ async function handler(ctx: Context) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, link).href,
                 description: $item.find('.news_abstract').text().trim(),
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
         });
 

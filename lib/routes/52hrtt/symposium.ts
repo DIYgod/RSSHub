@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/symposium/:id?/:classId?',
@@ -62,7 +61,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.infoTitle,
             author: item.quoteFrom,
-            pubDate: timezone(parseDate(item.infoStartTime), 8),
+            pubDate: parseDate(item.infoStartTime, 8),
             link: `${rootUrl}/global/n/w/info/${item.infoCentreId}`,
         }));
 

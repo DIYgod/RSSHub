@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeType = {
     jx: { title: '中国科学技术大学 - 教学类通知', url: 'https://ustc.edu.cn/tzgg/jxltz.htm' },
@@ -72,7 +71,7 @@ async function handler(ctx) {
             const info: DataItem = {
                 title: $(child[1]).find('a').attr('title')!,
                 link: $(child[1]).find('a').attr('href')!.startsWith('../') ? new URL($(child[1]).find('a').attr('href')!, noticeType[type].url).href : $(child[1]).find('a').attr('href'),
-                pubDate: published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined,
             };
             return info;
         });

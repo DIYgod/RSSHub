@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwb.shu.edu.cn/';
 const alias = new Map([
@@ -86,7 +85,7 @@ async function handler(ctx) {
                 item.description = $('.v_news_content').html() || item.title;
                 return { description: item.description, author: item.author };
             });
-            return { ...item, ...details, pubDate: timezone(parseDate(item.date, 'YYYY年MM月DD日'), 8) };
+            return { ...item, ...details, pubDate: parseDate(item.date, 'YYYY年MM月DD日', 8) };
         },
         { concurrency: 3 }
     );

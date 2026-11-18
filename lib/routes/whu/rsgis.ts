@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 interface Post extends DataItem {
     external: boolean;
@@ -126,8 +125,7 @@ function parseCalendarDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
 }
 async function getDetail(item: Post): Promise<Post> {
     const link = item.link;

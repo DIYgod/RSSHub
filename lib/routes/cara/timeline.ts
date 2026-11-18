@@ -1,6 +1,6 @@
 import type { Data, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import { renderPost } from './templates/post';

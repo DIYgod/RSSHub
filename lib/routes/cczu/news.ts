@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -41,7 +40,7 @@ async function handler(ctx: Context) {
             .map((elem) => ({
                 link: new URL(elem.attribs.href, pageUrl).href,
                 title: elem.attribs.title,
-                pubDate: timezone(parseDate(elem.attribs.href.replace(entryUrlRegex, '$1-$2-$3')), 8),
+                pubDate: parseDate(elem.attribs.href.replace(entryUrlRegex, '$1-$2-$3'), 8),
             })),
     };
 }

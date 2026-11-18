@@ -5,9 +5,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.sehuatang.net/';
 
@@ -111,7 +110,7 @@ async function handler(ctx) {
                 title: $item.find('a.xst').text(),
                 category: hasCategory ? [$item.find('th em a').text()] : undefined,
                 link: host + $item.find('a.xst').attr('href'),
-                pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
+                pubDate: dateString ? parseDate(dateString, 8) : undefined,
                 author: $item.find('td.by cite a').first().text(),
             };
         });
@@ -155,7 +154,7 @@ async function handler(ctx) {
                 const dateString = $('.authi em span').attr('title');
                 const detail: Partial<DataItem> = {
                     description: postMessage.html()!.replaceAll('ignore_js_op', 'div'),
-                    pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
+                    pubDate: dateString ? parseDate(dateString, 8) : undefined,
                 };
 
                 const magnet = postMessage.find('div.blockcode li').first().text();

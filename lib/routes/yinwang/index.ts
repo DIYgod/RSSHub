@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 const md = MarkdownIt({ html: true });
 
@@ -27,10 +27,10 @@ function getPubDate(date: Article['publish_date']) {
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
         // The API supplies a calendar day, not a publication time or timezone.
         const pubDate = parseDate(`${date}T00:00:00Z`);
-        return !Number.isNaN(pubDate.getTime()) && pubDate.toISOString().startsWith(`${date}T`) ? pubDate : undefined;
+        return pubDate && toISOString(pubDate).startsWith(`${date}T`) ? pubDate : undefined;
     }
     const pubDate = parseDate(date);
-    return Number.isNaN(pubDate.getTime()) ? undefined : pubDate;
+    return pubDate;
 }
 
 function getDescription(detail: ArticleDetail, link: string) {

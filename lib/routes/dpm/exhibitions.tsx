@@ -6,9 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateRange } from '@/utils/parse-date-range';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -134,7 +132,7 @@ export const route: Route = {
 
                 const { startDate, endDate } = parseDateRange(fullDuration);
 
-                const pubDate = startDate ? timezone(parseDate(startDate, 'YYYY-MM-DD'), 8) : undefined;
+                const pubDate = startDate ? parseDate(startDate, 'YYYY-MM-DD', 8) : undefined;
 
                 const description = renderToString(
                     <div>

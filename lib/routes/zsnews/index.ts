@@ -6,8 +6,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index/:cateid',
@@ -48,11 +47,11 @@ async function handler(ctx: Context) {
                     const author = article.children('.article-author').find('span').text().replaceAll(/\s+/g, ' ').trim() || undefined;
                     article.children('.article-author').remove();
                     const dateText = $('.article-meta span').first().text().slice(5);
-                    const date = dateText.trim() ? parseDate(dateText) : undefined;
+                    const date = dateText.trim() ? parseDate(dateText, 8) : undefined;
                     return {
                         description: article.html(),
                         author,
-                        pubDate: date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined,
+                        pubDate: date,
                     };
                 });
                 return { ...currentItem, ...details };

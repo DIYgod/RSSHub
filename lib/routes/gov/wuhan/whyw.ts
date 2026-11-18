@@ -4,8 +4,7 @@ import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -53,11 +52,11 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a');
             const date = copyElements($item.find('.time')).find('script').remove().end().text().trim();
-            const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8) : undefined;
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 
@@ -67,11 +66,11 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 const date = content('meta[name="PubDate"]').attr('content');
-                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
+                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
 
                 item.description = content('.article .TRS_UEDITOR').first().html() || content('.view').html();
                 item.author = content('meta[name=ContentSource]').attr('content');
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
+                item.pubDate = pubDate ?? item.pubDate;
 
                 return item;
             })

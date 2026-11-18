@@ -5,7 +5,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.cs.sjtu.edu.cn';
 const ajaxUrl = `${host}/active/ajax_type_list.html`;
@@ -65,7 +65,7 @@ async function enrichItem(item: ListItem): Promise<DataItem> {
 
         const publishedText = $body.find('.jj p').first().text();
         const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
-        let pubDate: Date | undefined;
+        let pubDate: Temporal.Instant | undefined;
         if (publishedMatch) {
             const [, y, m, d] = publishedMatch;
             pubDate = parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')} +0800`, 'YYYY-MM-DD ZZ');

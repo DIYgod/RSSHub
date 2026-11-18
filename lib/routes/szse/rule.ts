@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function getArticle(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'pubDate' | 'author' | 'content' | 'language'>> {
     const { data: detailResponse } = await got(link);
@@ -17,7 +16,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'title' | 'descr
     return {
         title: $('h2.title').text(),
         description,
-        pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+        pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
         author: $('meta[name="author"]').prop('content'),
         content: {
             html: description,

@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://cpc.ey.gov.tw';
 
@@ -60,7 +59,7 @@ async function handler(ctx) {
             return {
                 link: rootUrl + $(item).find('a').attr('href'),
                 title: $(item).find('a').attr('title')!,
-                pubDate: timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8),
+                pubDate: parseDate(dateStr, 'YYYY/MM/DD', 8),
             };
         });
 

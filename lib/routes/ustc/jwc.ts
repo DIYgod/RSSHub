@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeUrl = 'https://www.teach.ustc.edu.cn/category/notice';
 const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchange: '交流' };
@@ -55,7 +54,7 @@ async function handler(ctx) {
             const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: href ? new URL(href, noticeUrl).href : undefined,
-                pubDate: published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined,
             };
             return info;
         });
@@ -67,7 +66,7 @@ async function handler(ctx) {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 const modified = $('li.meta-last-modified').text().trim();
-                details.updated = modified ? timezone(parseDate(modified, 'YYYY-MM-DD HH:mm'), 8) : undefined;
+                details.updated = modified ? parseDate(modified, 'YYYY-MM-DD HH:mm', 8) : undefined;
                 const categories = mapElements($('li.meta-categories a'), (_, element) => $(element).text());
                 details.category = categories.length ? categories : undefined;
                 // www.teach ?? pms.cmet ?? news
@@ -80,7 +79,7 @@ async function handler(ctx) {
                         .trim() || undefined;
                 content.find('address.signature').remove();
                 details.description = content.html() ?? $('.card-footer').html() ?? $('.v_news_content').html();
-                details.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), 8) : undefined;
+                details.pubDate = $('li[class=meta-date]').text() ? parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm', 8) : undefined;
                 return details;
             });
             return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };

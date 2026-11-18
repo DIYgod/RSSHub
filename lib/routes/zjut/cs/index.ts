@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://cs.zjut.edu.cn/jsp/newsclass.jsp?wcId=';
 const host = 'cs.zjut.edu.cn';
@@ -52,8 +51,7 @@ async function handler(ctx): Promise<Data> {
                     link = 'https://' + host + '/jsp/' + link;
                 }
                 const dateText = cheerioItem.find('.datetime').text().slice(1, -1);
-                const date = dateText.trim() ? parseDate(dateText) : undefined;
-                const pubDate = date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+                const pubDate = dateText.trim() ? parseDate(dateText, 8) : undefined;
 
                 return {
                     title,

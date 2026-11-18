@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -46,7 +45,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: dateStr ? timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: dateStr ? parseDate(dateStr, 'YYYY-MM-DD', 8) : undefined,
                 };
             });
 

@@ -8,8 +8,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:uid',
@@ -102,7 +101,7 @@ async function handler(ctx) {
                     if (fullTextData) {
                         const date = fullTextData('meta[name="firstpublishedtime"]').attr('content');
                         if (date) {
-                            pubDate = timezone(parseDate(date, 'YYYY-MM-DD HH:mm:ss'), 8);
+                            pubDate = parseDate(date, 'YYYY-MM-DD HH:mm:ss', 8);
                         }
                         author = fullTextData('meta[name="author"]').attr('content');
                         category = (fullTextData('meta[name="keywords"]').attr('content') ?? '').split(/[,;]/);
@@ -135,7 +134,7 @@ async function getLatestNews(uid: 'bm' | 'yw' | 'gd', originDomain: string) {
                 ...detail,
                 title: article.TITLE,
                 link: url,
-                pubDate: detail.pubDate ?? (article.DOCRELPUBTIME ? timezone(parseDate(article.DOCRELPUBTIME), 8) : undefined),
+                pubDate: detail.pubDate ?? (article.DOCRELPUBTIME ? parseDate(article.DOCRELPUBTIME, 8) : undefined),
             };
         },
         { concurrency: 3 }
@@ -154,7 +153,7 @@ function getArticle(url: string) {
         const date = $('meta[name="firstpublishedtime"]').attr('content');
         return {
             description: $('#UCAP-CONTENT, .pages_content').first().html() ?? undefined,
-            pubDate: date ? timezone(parseDate(date, ['YYYY-MM-DD-HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']), 8) : undefined,
+            pubDate: date ? parseDate(date, ['YYYY-MM-DD-HH:mm:ss', 'YYYY-MM-DD HH:mm:ss'], 8) : undefined,
             author: $('meta[name="author"]').attr('content'),
             category: ($('meta[name="keywords"]').attr('content') ?? '').split(/[,;]/).filter(Boolean),
         };

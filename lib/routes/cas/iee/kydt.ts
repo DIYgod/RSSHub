@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/iee/kydt',
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.article-content').html();
-                item.pubDate = timezone(parseDate(content('time').text().split('：', 2)[1]), 8);
+                item.pubDate = parseDate(content('time').text().split('：', 2)[1], 8);
 
                 return item;
             })

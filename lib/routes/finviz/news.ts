@@ -1,35 +1,29 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezonePlugin from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-
-dayjs.extend(utc);
-dayjs.extend(timezonePlugin);
+import { formatDate, parseDate } from '@/utils/time';
 
 const newsTimezone = 'America/New_York';
 
-function getNewsDate(value: string, referenceDate: Date | undefined) {
-    if (!referenceDate || !Number.isFinite(referenceDate.getTime())) {
+function getNewsDate(value: string, referenceDate: Temporal.Instant | undefined) {
+    if (!referenceDate) {
         return;
     }
-    const current = dayjs(referenceDate).tz(newsTimezone).locale('en');
-    let date;
+    const current = referenceDate.toZonedDateTimeISO(newsTimezone);
+    let date: Temporal.Instant | undefined;
     if (/^\d{1,2}:\d{2}[AP]M$/.test(value)) {
-        date = dayjs.tz(`${current.format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD hh:mmA', newsTimezone);
+        date = parseDate(`${formatDate(current, 'YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD hh:mmA', newsTimezone);
     } else if (/^[a-z]{3}-\d{2}$/i.test(value)) {
-        date = dayjs.tz(`${value}-${current.year()}`, 'MMM-DD-YYYY', newsTimezone);
-        if (date.isAfter(current, 'day')) {
-            date = dayjs.tz(`${value}-${current.year() - 1}`, 'MMM-DD-YYYY', newsTimezone);
+        date = parseDate(`${value}-${current.year}`, 'MMM-DD-YYYY', newsTimezone);
+        if (date && Temporal.PlainDate.compare(date.toZonedDateTimeISO(newsTimezone).toPlainDate(), current.toPlainDate()) > 0) {
+            date = parseDate(`${value}-${current.year - 1}`, 'MMM-DD-YYYY', newsTimezone);
         }
     }
-    return date?.isValid() ? parseDate(date.format()) : undefined;
+    return date;
 }
 
 const categories = {
@@ -116,7 +110,7 @@ async function handler(ctx) {
         .filter((item) => item.title);
 
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates = sorted && items.some((item) => !item.pubDate || !Number.isFinite(item.pubDate.getTime())) ? items : (sorted ? items.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime()) : items).slice(0, limit);
+    const candidates = sorted && items.some((item) => !item.pubDate) ? items : (sorted ? items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!)) : items).slice(0, limit);
     const icon = $('link[rel="icon"]').prop('href');
 
     return {

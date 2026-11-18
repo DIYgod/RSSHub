@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // Get the lastest blog posts of https://konghq.com/
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://konghq.com';
 const BLOG_POSTS_URL = `${BASE_URL}/blog`;

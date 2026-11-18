@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/report/:type1/:type2',
@@ -74,7 +73,7 @@ async function handler(ctx: Context) {
         title: item.title,
         description: item.content || item.summary || item.desc,
         link: getLink(item),
-        pubDate: timezone(parseDate(item.createTime), 8),
+        pubDate: parseDate(item.createTime, 8),
         author: item.personName,
         category: [item.type1Name, item.type2Name, item.typeName].filter(Boolean),
         image: item.iconUrl,

@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',

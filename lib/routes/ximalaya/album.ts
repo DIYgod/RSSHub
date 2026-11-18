@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Album, MobileTrack, RichIntro, TrackInfoResponse } from './types';
 import { decryptUrl, getRandom16, getXmSign } from './utils';
@@ -136,7 +136,7 @@ async function handler(ctx) {
         await pMap(
             playList,
             async (item) => {
-                const timestamp = Math.floor(Date.now());
+                const timestamp = Math.floor(Temporal.Now.instant().epochMilliseconds);
                 const trackPayInfoApi = `https://www.ximalaya.com/mobile-playpage/track/v3/baseInfo/${timestamp}?device=www2&trackQualityLevel=2&trackId=${item.trackId}`;
                 const data = await cache.tryGet('ximalaya:trackPayInfo' + trackPayInfoApi, async () => {
                     const trackPayInfoResponse = await ofetch(trackPayInfoApi, {
@@ -176,7 +176,7 @@ async function handler(ctx) {
             title,
             link,
             description: item.desc || '',
-            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
             itunes_item_image: itunesItemImage,
         };
         if (enclosureUrl) {

@@ -8,8 +8,8 @@ import cache from '@/utils/cache';
 import { fetchGoogleNews } from '@/utils/google-news';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 

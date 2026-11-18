@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category/:name/:id',
@@ -35,11 +34,11 @@ async function handler(ctx: Context) {
 
             return {
                 title,
-                pubDate: timezone(parseDate($('.date', ep).text().trim(), 'YYYY-M-D'), 8),
+                pubDate: parseDate($('.date', ep).text().trim(), 'YYYY-M-D', 8),
                 link,
             };
         });
-    items = items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    items = items.toSorted((a, b) => (b.pubDate?.epochMilliseconds ?? 0) - (a.pubDate?.epochMilliseconds ?? 0));
     const item = await pMap(
         items,
         (item) =>

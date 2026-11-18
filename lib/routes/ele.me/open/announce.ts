@@ -8,8 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/open/announce',
@@ -33,7 +32,7 @@ function getNoticeData<T>(method: string, params: { templateId: string } | { off
     return ofetch<{ code: number; result: T }>(`https://app-api.shop.ele.me/arena/invoke/?method=NoticeKeeperService.${method}`, {
         method: 'POST',
         body: {
-            id: `${randomUUID().replaceAll('-', '').toUpperCase()}|${Date.now()}`,
+            id: `${randomUUID().replaceAll('-', '').toUpperCase()}|${Temporal.Now.instant().epochMilliseconds}`,
             metas: {
                 appName: 'Odin',
                 appVersion: '4.4.0',
@@ -76,7 +75,7 @@ async function handler() {
             return {
                 title: item.title,
                 description,
-                pubDate: item.beginDate ? timezone(parseDate(item.beginDate), 8) : undefined,
+                pubDate: item.beginDate ? parseDate(item.beginDate, 8) : undefined,
                 link: `https://open.shop.ele.me/common/publicnotice/${item.templateId}`,
             };
         },

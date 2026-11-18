@@ -9,7 +9,7 @@ import cache from '@/utils/cache';
 import { jsx } from '@/utils/jsx';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/mobile',
@@ -61,7 +61,7 @@ async function handler() {
                     const $d = load(detailResp);
 
                     let description = '';
-                    let pubDate: Date | undefined;
+                    let pubDate: Temporal.Instant | undefined;
                     if (item.link.includes('/xtopic/')) {
                         const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);
@@ -143,9 +143,9 @@ function extractPlateBlockNewsLists(jsonData: any) {
     return result;
 }
 
-function extractPubDate($: CheerioAPI): Date | undefined {
+function extractPubDate($: CheerioAPI): Temporal.Instant | undefined {
     const date = $('meta[itemprop="datePublished"]').attr('content') || $('.time').first().text().trim() || $('#videoPublicTime').first().text().trim();
-    return date ? parseDateInTimezone(date, 8) : undefined;
+    return date ? parseDate(date, 8) : undefined;
 }
 
 function getDescription($: CheerioAPI): string | null {

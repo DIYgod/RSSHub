@@ -5,9 +5,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const markdown = MarkdownIt({ html: true, linkify: true });
 
@@ -115,7 +114,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             link: linkUrl,
             category: categories,
             author: authors,

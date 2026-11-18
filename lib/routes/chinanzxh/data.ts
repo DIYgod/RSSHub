@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const rootUrl = 'https://www.chinanzxh.com';
@@ -91,7 +90,7 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, rootUrl).href,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
         });
 

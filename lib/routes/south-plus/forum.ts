@@ -7,9 +7,8 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://south-plus.net';
 
@@ -36,7 +35,7 @@ const parseThread = async (item: DataItem, headers: ForumHeaders): Promise<DataI
                 .text()
                 .match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
             if (dateMatch) {
-                fields.pubDate = timezone(parseDate(dateMatch[1], 'YYYY-MM-DD HH:mm'), 8);
+                fields.pubDate = parseDate(dateMatch[1], 'YYYY-MM-DD HH:mm', 8);
             }
             const author = $('.r_two a[href*="action-show-uid"] strong');
             if (author.length > 0) {
@@ -110,8 +109,8 @@ async function handler(ctx): Promise<Data> {
             const lastPostDateText = $row.find('td.tal.y-style a.f10').text().trim();
 
             // Preserve publication and last-reply clocks separately in the site's UTC+8 timezone.
-            const pubDate = postDateText ? timezone(parseDate(postDateText, 'YYYY-MM-DD'), 8) : undefined;
-            const updated = lastPostDateText ? timezone(parseDate(lastPostDateText, 'YYYY-MM-DD HH:mm'), 8) : undefined;
+            const pubDate = postDateText ? parseDate(postDateText, 'YYYY-MM-DD', 8) : undefined;
+            const updated = lastPostDateText ? parseDate(lastPostDateText, 'YYYY-MM-DD HH:mm', 8) : undefined;
 
             // Thread category tag (e.g. [自购], [公告]) in column 1
             const category = $row.find('a.s8').text().trim();

@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -198,7 +197,7 @@ async function handler(ctx) {
                 title: $item.prop('title') ?? $item.text(),
                 link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
                 guid: $item.prop('href')!.match(/articleId=(\w+)/)![1],
-                pubDate: timezone(parseDate($item.parent().find('span.times').text().replaceAll('[]', '')), 8),
+                pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', ''), 8),
             };
         });
 
@@ -226,7 +225,7 @@ async function handler(ctx) {
                 item.description = content('div.article_main').html();
                 item.author = matches[1].split(/&/, 1)[0];
                 item.guid = `chinaisa-${item.guid}`;
-                item.pubDate = timezone(parseDate(matches[2]), 8);
+                item.pubDate = parseDate(matches[2], 8);
 
                 return item;
             })

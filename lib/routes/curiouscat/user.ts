@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const fetchAPIByUser = async (user) => {
     const baseURL = 'https://curiouscat.me/api/v2/profile?username=';
@@ -36,7 +37,7 @@ async function handler(ctx) {
         ${media}
         <br>
         Likes: ${post.likes}`;
-        const pubDate = new Date(post.timestamp * 1000);
+        const pubDate = parseDate(post.timestamp, 'X');
         return {
             author,
             link,

@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -23,8 +22,7 @@ const parseListDate = (value: string, link?: string) => {
         }
         date = `${articleDate[1]}-${date}`;
     }
-    const pubDate = timezone(parseDate(date, 'YYYY-MM-DD', true), 8);
-    return Number.isNaN(pubDate.getTime()) ? undefined : pubDate;
+    return parseDateStrict(date, 'YYYY-MM-DD', 8);
 };
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -155,7 +153,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             ...item,
                             title,
                             description,
-                            pubDate: pubTime ? timezone(parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+                            pubDate: pubTime ? parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
                             content: {
                                 html: description,
                                 text: $$('div#Content').html(),

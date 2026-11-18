@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 6);
@@ -30,7 +29,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.prop('title') ?? '',
-                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY.MM.DD'), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY.MM.DD', 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
@@ -53,7 +52,7 @@ export const handler = async (ctx) => {
                 item.description = description;
                 const pubDate = $$('meta[name="PubDate"]').prop('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.category = [
                     ...new Set([

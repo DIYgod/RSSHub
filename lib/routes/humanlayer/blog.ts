@@ -4,14 +4,13 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function getPublicationDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value) ?? parseDate(value, 'MMMM D, YYYY');
 }
 
 export const route: Route = {

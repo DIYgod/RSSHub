@@ -6,14 +6,13 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function parseArticleDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 function mediaAttributes(attributes: Record<string, string>, names = ['src', 'alt', 'width', 'height']) {
     return Object.fromEntries(names.filter((name) => attributes[name] !== undefined).map((name) => [name, attributes[name]]));

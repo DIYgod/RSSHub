@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category',
@@ -38,8 +37,7 @@ function parsePublicationDate(value: string | undefined) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYY年MM月DD日 HH:mm:ss', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value, 'YYYY年MM月DD日 HH:mm:ss', 8);
 }
 async function handler(ctx: Context) {
     const { category } = ctx.req.param();

@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.cmse.sdu.edu.cn/';
 const typelist = ['通知公告', '学院新闻', '本科生教育', '研究生教育', '学术动态'];
@@ -47,7 +47,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
-                pubDate: parseDateInTimezone($e.find('.date').text().replaceAll('/', '-'), 8),
+                pubDate: parseDate($e.find('.date').text().replaceAll('/', '-'), 8),
             };
         });
 

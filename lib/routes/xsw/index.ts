@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -45,7 +44,7 @@ async function handler(ctx): Promise<Data> {
         .find('p:contains("更新")')
         .text()
         .match(/更新：([0-9/]+ [0-9:]+)/)?.[1];
-    const pubDate = timezone(parseDate(updatedAt ?? '', 'YYYY/M/D H:mm:ss'), 8);
+    const pubDate = parseDate(updatedAt ?? '', 'YYYY/M/D H:mm:ss', 8);
 
     // 书页内嵌「最新章节预览」10 条，完整目录为 /pages/{n}.html
     const items = $('.chapter li a')

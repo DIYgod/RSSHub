@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -53,9 +52,9 @@ export const route: Route = {
 };
 
 async function handler() {
-    const now = dayjs().valueOf();
+    const now = Temporal.Now.instant().epochMilliseconds;
     // yestoday
-    const yestoday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+    const yestoday = Temporal.Now.plainDateISO('UTC').subtract({ days: 1 }).toString();
     const renderRows = (rows) => renderToString(<GuduodataDailyTable rows={rows} />);
     const items = Object.keys(types).flatMap((key) =>
         Object.entries(types[key].categories).map(([category, categoryName]) => ({

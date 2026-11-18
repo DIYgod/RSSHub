@@ -3,8 +3,7 @@ import type { AnyNode } from 'domhandler';
 import pMap from 'p-map';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 // 专门定义一个function用于加载文章内容
 async function loadContent(link) {
@@ -14,7 +13,7 @@ async function loadContent(link) {
     const $ = load(response.data);
     const dateStr = $('span+ span').text();
     // 解析日期
-    const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD', 'zh-cn'), 8);
+    const pubDate = parseDate(dateStr, 'YYYY-MM-DD', 8);
     // 提取内容
     const description = $('form > div').html();
 

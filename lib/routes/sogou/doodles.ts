@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/doodles',
@@ -36,7 +37,7 @@ async function handler() {
             return {
                 title: `${item[2]}-${item[5]}`,
                 description: `<img src="${item[4]}">`,
-                pubDate: new Date(item[5]).toUTCString(),
+                pubDate: parseDate(item[5]),
                 link: item[7],
                 guid: item[4],
             };

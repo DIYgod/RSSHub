@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { type = 'news', id } = ctx.req.param();
@@ -35,11 +34,11 @@ export const handler = async (ctx) => {
     if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);
     } else {
-        items.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         const boundaryDate = items[limit - 1]?.pubDate;
         if (boundaryDate) {
             // Details provide finer timestamps than the calendar dates on the list.
-            items = items.filter((item) => Number(item.pubDate) >= Number(boundaryDate));
+            items = items.filter((item) => compareDates(item.pubDate, boundaryDate) >= 0);
         }
     }
 
@@ -55,7 +54,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()!), 8);
+                item.pubDate = parseDate($$('div.view span').first().text().split(/：/).pop()!, 8);
                 item.content = {
                     html: description,
                     text: $$('div.text').text(),
