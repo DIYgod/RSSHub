@@ -42,11 +42,14 @@ const handler = async (ctx) => {
                 const structuredData: { datePublished?: string; author?: { name?: string } } = JSON.parse(detail('script[type="application/ld+json"]:contains("TechArticle")').text() || '{}');
                 const standaloneArticles = article.filter(':not(:has(h1)):has(> p, > .doc-section)');
                 const content = standaloneArticles.length ? standaloneArticles : article.find('#subscribe').prev('div');
-                if (!content.text().trim()) {
+                const byline = content.find('.writeup-byline').first().text().trim();
+                const author = structuredData.author?.name || metadata.find('p').first().text().trim() || byline.replace(/^by\s+/i, '');
+                content.find('.writeup-byline, button.copy-btn').remove();
+                const contentText = content.text();
+                if (!contentText.trim()) {
                     throw new Error(`Unable to extract Calif article content from ${item.link}: the page layout may have changed.`);
                 }
                 const contentHtml = detail.html(content.contents());
-                const author = structuredData.author?.name || metadata.find('p').first().text().trim();
                 const date = metadata.find('p').eq(1).text().trim();
 
                 return {
@@ -55,7 +58,7 @@ const handler = async (ctx) => {
                     description: contentHtml,
                     content: {
                         html: contentHtml,
-                        text: content.text(),
+                        text: contentText,
                     },
                     author: author || undefined,
                     pubDate: structuredData.datePublished ? parseDate(structuredData.datePublished) : date ? parseDate(date, 'MMMM D, YYYY') : item.pubDate,
