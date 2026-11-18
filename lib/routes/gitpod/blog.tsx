@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { rootUrl } from './utils';
 
@@ -36,18 +36,18 @@ export const route: Route = {
 async function handler(ctx) {
     const limit = getRouteLimit(ctx, 10);
     const feed = await parser.parseString(await ofetch(`${rootUrl}/stories/feed`, { responseType: 'text' }));
-    const datedItems = feed.items.map((item) => ({ item, date: item.pubDate ? (parseDate(item.pubDate)?.epochMilliseconds ?? NaN) : NaN }));
-    const hasValidDates = datedItems.every(({ date }) => Number.isFinite(date));
+    const datedItems = feed.items.map((item) => ({ item, date: item.pubDate ? parseDate(item.pubDate) : undefined }));
+    const hasValidDates = datedItems.every(({ date }) => date !== undefined);
     if (ctx.req.query('sorted') !== 'false' && hasValidDates) {
-        datedItems.sort((a, b) => b.date - a.date);
+        datedItems.sort((a, b) => compareDates(b.date, a.date));
     }
     const selectedItems = datedItems.slice(0, hasValidDates || ctx.req.query('sorted') === 'false' ? limit : Math.max(10, limit));
     const items = await Promise.all(
-        selectedItems.map(async ({ item }): Promise<DataItem> => ({
+        selectedItems.map(async ({ item, date }): Promise<DataItem> => ({
             title: item.title!,
             link: item.link,
             guid: item.guid,
-            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            pubDate: date,
             ...(await cache.tryGet(`gitpod:story:${item.link}`, async () => {
                 const html = await ofetch(item.link!, { responseType: 'text' });
                 const $ = load(html);
