@@ -99,7 +99,7 @@ async function handler() {
             AIRTABLE_HOST +
             $('script')
                 .text()
-                .match(/urlWithParams: "(.*?)"/)![1]
+                .match(/urlWithParams\s*=\s*"([^"]+)"/)![1]
                 .replaceAll(String.raw`\u002F`, '/');
 
         // Cache it again
