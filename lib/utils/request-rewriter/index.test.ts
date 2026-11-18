@@ -329,14 +329,14 @@ describe('request-rewriter', () => {
 
         try {
             const { default: wrappedFetch } = await import('@/utils/request-rewriter/fetch');
-            const time = Date.now();
+            const time = performance.now();
             const tasks = Array.from({ length: 20 }, () => wrappedFetch('http://rsshub.test/headers'));
 
             await vi.advanceTimersByTimeAsync(3000);
             await Promise.all(tasks);
 
             expect(fetchSpy).toHaveBeenCalledTimes(20);
-            expect(Date.now() - time).toBeGreaterThan(1500);
+            expect(performance.now() - time).toBeGreaterThan(1500);
         } finally {
             vi.useRealTimers();
             fetchSpy.mockRestore();

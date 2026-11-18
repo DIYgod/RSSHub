@@ -9,6 +9,7 @@ import Parser from 'rss-parser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import server from '@/setup.test';
+import { parseDate } from '@/utils/time';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
@@ -338,19 +339,19 @@ describe('sorted', () => {
             { sorted }
         );
         expect(result.item.map((item) => item.title)).toEqual(order);
-        expect(result.item.every((item) => !Number.isNaN(Date.parse(item.pubDate)))).toBe(true);
+        expect(result.item.every((item) => parseDate(item.pubDate))).toBe(true);
     });
 
     it('filters publication times while preserving a source ranking', async () => {
-        const now = Date.now();
+        const now = Temporal.Now.instant();
         const result = await runMiddleware(
             {
                 title: 'Ranking',
                 sortItems: false,
                 item: [
-                    { title: 'Ranked', pubDate: new Date(now - 20000) },
-                    { title: 'Expired', pubDate: new Date(now - 120000) },
-                    { title: 'Recent', pubDate: new Date(now - 10000) },
+                    { title: 'Ranked', pubDate: now.subtract({ seconds: 20 }) },
+                    { title: 'Expired', pubDate: now.subtract({ seconds: 120 }) },
+                    { title: 'Recent', pubDate: now.subtract({ seconds: 10 }) },
                 ],
             },
             { filter_time: '60' }
@@ -732,7 +733,7 @@ describe('parameter middleware branches', () => {
                 {
                     title: 'Title',
                     description: 'Description',
-                    link: `https://example.com/${Date.now()}/desc`,
+                    link: `https://example.com/${performance.now()}/desc`,
                 },
             ],
         };
@@ -746,7 +747,7 @@ describe('parameter middleware branches', () => {
                 {
                     title: 'Title',
                     description: 'Description',
-                    link: `https://example.com/${Date.now()}/title`,
+                    link: `https://example.com/${performance.now()}/title`,
                 },
             ],
         };
@@ -768,7 +769,7 @@ describe('parameter middleware branches', () => {
         const originalInput = config.openai.inputOption;
         config.openai.inputOption = 'both';
 
-        const link = `https://example.com/${Date.now()}/shared`;
+        const link = `https://example.com/${Temporal.Now.instant().epochMilliseconds}/shared`;
         const first = await runMiddleware({ link: 'https://example.com', item: [{ title: 'First title', description: 'First description', link }] }, { chatgpt: 'true' });
         const second = await runMiddleware({ link: 'https://example.com', item: [{ title: 'Second title', description: 'Second description', link }] }, { chatgpt: 'true' });
 
@@ -892,14 +893,14 @@ describe('filter limits', () => {
         const short = makeData('a'.repeat(10000));
         const long = makeData('a'.repeat(100000));
         // only the step limit is under test here, not the time limit
-        vi.spyOn(Date, 'now').mockReturnValue(0);
+        vi.spyOn(performance, 'now').mockReturnValue(0);
         await expect(runMiddleware(short, { filter_description: '.{0,400}[0-9]' })).resolves.toBeDefined();
         await expect(runMiddleware(long, { filter_description: '.{0,400}[0-9]' })).rejects.toThrow('too complex for this feed');
     });
 
     it('rejects filter taking too long', async () => {
         let now = 0;
-        vi.spyOn(Date, 'now').mockImplementation(() => (now += 600));
+        vi.spyOn(performance, 'now').mockImplementation(() => (now += 600));
         await expect(runMiddleware(makeData(), { filterout: 'Nothing' })).rejects.toThrow('takes too long');
     });
 

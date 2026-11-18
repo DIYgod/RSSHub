@@ -33,7 +33,7 @@ export type Category =
 export type DataItem = {
     title: string;
     description?: string | null;
-    pubDate?: number | string | Date | null;
+    pubDate?: Temporal.Instant | number | string | null;
     link?: string;
     category?: string[] | string;
     author?:
@@ -53,7 +53,7 @@ export type DataItem = {
     summary?: string;
     image?: string;
     banner?: string;
-    updated?: number | string | Date;
+    updated?: Temporal.Instant | number | string;
     language?: Language;
     enclosure_url?: string;
     enclosure_type?: string;

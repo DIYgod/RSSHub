@@ -5,7 +5,7 @@
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
-compatibility_flags = ["global_fetch_strictly_public"]
+compatibility_flags = ["global_fetch_strictly_public", "temporal"]
 
 # Upload each chunk of dist-worker as its own module instead of bundling them into one script, so
 # that the Worker does not compile every route at startup. tsdown already bundles all dependencies.

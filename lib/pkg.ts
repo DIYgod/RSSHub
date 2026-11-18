@@ -9,7 +9,7 @@ import type { Data, Namespace, Route } from './types';
 
 export * from '@/types';
 export { default as ofetch } from '@/utils/ofetch';
-export * from '@/utils/parse-date';
+export * from '@/utils/time';
 
 let app: Hono | null = null;
 

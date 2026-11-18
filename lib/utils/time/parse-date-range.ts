@@ -1,8 +1,3 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-
-dayjs.extend(customParseFormat);
-
 /** The parsed result of a date range string, with each date in 'YYYY-MM-DD' format. */
 export interface DateRange {
     /** The start date, or undefined if not found or not applicable. */
@@ -45,6 +40,18 @@ const EN_END_KEYWORDS = ['closed', 'closes', 'closing', 'until', 'through', 'thr
 // ============================================================
 // Internal helpers
 // ============================================================
+
+/** Formats a calendar date as 'YYYY-MM-DD', or returns undefined when the date does not exist. */
+const toDateString = (year: number | string, month: number | string, day: number | string): string | undefined => {
+    try {
+        return Temporal.PlainDate.from({ year: Number(year), month: Number(month), day: Number(day) }, { overflow: 'reject' }).toString();
+    } catch {
+        return undefined;
+    }
+};
+
+/** Converts an English month name, abbreviated or full, to its number (1 to 12). */
+const toMonthNumber = (name: string): number => EN_MONTHS_SHORT.indexOf(name.slice(0, 3)) + 1;
 
 /** Maps common Chinese number characters to their numeric values. */
 const CN_NUM_MAP = new Map([
@@ -131,36 +138,36 @@ const parseEnglishMonthDate = (raw: string, yearHint?: number): string | undefin
     // MDY full: "Jan 1, 2025" / "January 1st 2025"
     const mdyFull = normalized.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?[ ,]+(\\d{4})$`, 'i'));
     if (mdyFull) {
-        const d = dayjs(`${mdyFull[1].replace('.', '')} ${mdyFull[2]} ${mdyFull[3]}`, ['MMMM D YYYY', 'MMM D YYYY']);
-        if (d.isValid()) {
-            return d.format('YYYY-MM-DD');
+        const date = toDateString(mdyFull[3], toMonthNumber(mdyFull[1]), mdyFull[2]);
+        if (date) {
+            return date;
         }
     }
 
     // MDY partial: "Jan 1" / "January 1st" (needs yearHint)
     const mdyPartial = normalized.match(new RegExp(`^(${EN_MONTHS_PATTERN})\\s+(\\d{1,2})(?:st|nd|rd|th)?$`, 'i'));
     if (mdyPartial && yearHint) {
-        const d = dayjs(`${mdyPartial[1].replace('.', '')} ${mdyPartial[2]} ${yearHint}`, ['MMMM D YYYY', 'MMM D YYYY']);
-        if (d.isValid()) {
-            return d.format('YYYY-MM-DD');
+        const date = toDateString(yearHint, toMonthNumber(mdyPartial[1]), mdyPartial[2]);
+        if (date) {
+            return date;
         }
     }
 
     // DMY full: "1 Jan 2025" / "1st January 2025"
     const dmyFull = normalized.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})\\s+(\\d{4})$`, 'i'));
     if (dmyFull) {
-        const d = dayjs(`${dmyFull[2].replace('.', '')} ${dmyFull[1]} ${dmyFull[3]}`, ['MMMM D YYYY', 'MMM D YYYY']);
-        if (d.isValid()) {
-            return d.format('YYYY-MM-DD');
+        const date = toDateString(dmyFull[3], toMonthNumber(dmyFull[2]), dmyFull[1]);
+        if (date) {
+            return date;
         }
     }
 
     // DMY partial: "1 Jan" / "1st January" (needs yearHint)
     const dmyPartial = normalized.match(new RegExp(`^(\\d{1,2})(?:st|nd|rd|th)?\\s+(${EN_MONTHS_PATTERN})$`, 'i'));
     if (dmyPartial && yearHint) {
-        const d = dayjs(`${dmyPartial[2].replace('.', '')} ${dmyPartial[1]} ${yearHint}`, ['MMMM D YYYY', 'MMM D YYYY']);
-        if (d.isValid()) {
-            return d.format('YYYY-MM-DD');
+        const date = toDateString(yearHint, toMonthNumber(dmyPartial[2]), dmyPartial[1]);
+        if (date) {
+            return date;
         }
     }
 
@@ -194,15 +201,13 @@ const normalizeDate = (raw: string | undefined, yearHint?: number, monthHint?: n
     if (cnFull) {
         const rawYear = cnFull[1];
         const year = (rawYear.length === 2 ? 2000 : 0) + Number(rawYear);
-        const d = dayjs(`${year}-${cnFull[2]}-${cnFull[3]}`);
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        return toDateString(year, cnFull[2], cnFull[3]);
     }
 
     // 2. Chinese partial: "6月30日" (year inferred from start date)
     const cnPartial = trimmed.match(/^(\d{1,2})月(\d{1,2})日?$/);
     if (cnPartial && yearHint) {
-        const d = dayjs(`${yearHint}-${cnPartial[1]}-${cnPartial[2]}`);
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        return toDateString(yearHint, cnPartial[1], cnPartial[2]);
     }
 
     // 3. English month-name formats (both MDY and DMY)
@@ -214,16 +219,15 @@ const normalizeDate = (raw: string | undefined, yearHint?: number, monthHint?: n
     // 4. Numeric full (4-digit year): "2025.01.01", "2025/01/01", "2025-01-01"
     const numFull = trimmed.match(/^(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})$/);
     if (numFull) {
-        const d = dayjs(`${numFull[1]}-${numFull[2]}-${numFull[3]}`);
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        return toDateString(numFull[1], numFull[2], numFull[3]);
     }
 
     // 4a. Numeric with 2-digit year: "26.10.01" (assumes YY-MM-DD)
     const numTwoDigitYear = trimmed.match(/^(\d{2})[.\-/](\d{1,2})[.\-/](\d{1,2})$/);
     if (numTwoDigitYear) {
-        // Day.js handles 2-digit year parsing (e.g., 70-99 -> 19xx, 00-69 -> 20xx)
-        const d = dayjs(`${numTwoDigitYear[1]}-${numTwoDigitYear[2]}-${numTwoDigitYear[3]}`, 'YY-MM-DD');
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        // 69-99 -> 19xx, 00-68 -> 20xx
+        const year = Number(numTwoDigitYear[1]);
+        return toDateString(year + (year > 68 ? 1900 : 2000), numTwoDigitYear[2], numTwoDigitYear[3]);
     }
 
     // 5. Numeric partial (no year): "05.10", "5/10", "5-10"
@@ -233,15 +237,13 @@ const normalizeDate = (raw: string | undefined, yearHint?: number, monthHint?: n
         const first = Number(numPartial[1]);
         const second = Number(numPartial[2]);
         const [month, day] = fieldOrder === 'DMY' ? [second, first] : [first, second];
-        const d = dayjs(`${yearHint}-${month}-${day}`);
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        return toDateString(yearHint, month, day);
     }
 
     // 6. Day-only partial (no year, no month): "16", "16日", "5"
     const dayOnly = trimmed.match(/^(\d{1,2})日?$/);
     if (dayOnly && yearHint && monthHint) {
-        const d = dayjs(`${yearHint}-${monthHint}-${dayOnly[1]}`);
-        return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+        return toDateString(yearHint, monthHint, dayOnly[1]);
     }
 
     return undefined;
@@ -391,7 +393,7 @@ export const parseDateRange = (rangeStr?: string, fieldOrder: DateOrder = 'MDY')
         // are ignored — the museum will publish the actual closing date separately.
         const exactDays = parseExactDays(sanitized);
         if (date && exactDays !== undefined) {
-            const endDate = dayjs(date).add(exactDays, 'day').format('YYYY-MM-DD');
+            const endDate = Temporal.PlainDate.from(date).add({ days: exactDays }).toString();
             return { startDate: date, endDate };
         }
 
@@ -426,15 +428,15 @@ export const parseDateRange = (rangeStr?: string, fieldOrder: DateOrder = 'MDY')
         ].join('|'),
         'i'
     ).test(endToken);
-    const inferredEndMonth = !endTokenHasMonth && startDate ? dayjs(startDate).month() + 1 : undefined;
+    const inferredEndMonth = !endTokenHasMonth && startDate ? Temporal.PlainDate.from(startDate).month : undefined;
 
     const endDate = normalizeDate(endToken, yearHint, inferredEndMonth, fieldOrder);
 
     // Cross-date guard: if the inferred end date falls before the start date, bump month or year
-    if (startDate && endDate && dayjs(endDate).isBefore(dayjs(startDate))) {
+    if (startDate && endDate && Temporal.PlainDate.compare(endDate, startDate) < 0) {
         if (!endTokenHasMonth && inferredEndMonth !== undefined) {
-            const nextMonth = dayjs(startDate).add(1, 'month');
-            const crossMonthEnd = normalizeDate(endToken, nextMonth.year(), nextMonth.month() + 1, fieldOrder);
+            const nextMonth = Temporal.PlainDate.from(startDate).add({ months: 1 });
+            const crossMonthEnd = normalizeDate(endToken, nextMonth.year, nextMonth.month, fieldOrder);
             return { startDate, endDate: crossMonthEnd };
         }
         if (!startHasYear && endHasYear && yearHint !== undefined) {

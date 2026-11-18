@@ -90,7 +90,6 @@
         "cross-env": "10.1.0",
         "crypto-js": "4.2.0",
         "currency-symbol-map": "5.1.0",
-        "dayjs": "1.11.23",
         "destr": "2.0.5",
         "dotenv": "18.0.10",
         "entities": "9.0.0",
@@ -193,7 +192,6 @@
         "fs-extra": "11.4.1",
         "globals": "17.14.0",
         "js-beautify": "2.0.3",
-        "mockdate": "3.0.5",
         "msw": "3.0.6",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.78.0",
@@ -216,7 +214,7 @@
         "yaml-eslint-parser": "2.1.0"
     },
     "engines": {
-        "node": "^24.15.0 || ^26.13.0"
+        "node": "^26.13.0"
     },
     "packageManager": "pnpm@12.21.0",
     "magpie": {

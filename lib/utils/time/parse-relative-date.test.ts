@@ -1,13 +1,9 @@
-import dayjs from 'dayjs';
-import weekday from 'dayjs/plugin/weekday.js';
-import MockDate from 'mockdate';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { parseDate, parseRelativeDate } from './parse-date';
+import { parseRelativeDate } from './parse-relative-date';
 
-dayjs.extend(weekday);
-
-const p = (...args: Parameters<typeof parseRelativeDate>) => parseRelativeDate(...args).getTime();
+const p = (date: string, format?: string | string[], timeZone?: number | string) => parseRelativeDate(date, format, timeZone)?.epochMilliseconds;
+const ms = (iso: string) => Temporal.Instant.from(`${iso}Z`).epochMilliseconds;
 
 describe('parseRelativeDate', () => {
     // === CONSTANTS ===
@@ -19,25 +15,25 @@ describe('parseRelativeDate', () => {
 
     // === BASE DATE SETUP: 2026-02-02 (Monday) ===
     const BASE_STR = '2026-02-02T12:00:00';
-    const NOW_TIMESTAMP = new Date(BASE_STR).getTime();
+    const NOW_TIMESTAMP = ms(BASE_STR);
 
     // Derived Timestamps
-    const TODAY_START = new Date('2026-02-02T00:00:00').getTime();
+    const TODAY_START = ms('2026-02-02T00:00:00');
     const YESTERDAY_START = TODAY_START - day;
     const TOMORROW_START = TODAY_START + day;
 
     // Strict Past Logic Expectations (Reference is Mon Feb 02)
     const PREVIOUS_MONDAY = TODAY_START - week; // Jan 26 (Last week)
     const PREVIOUS_WEDNESDAY = TODAY_START + 2 * day - week; // Jan 28 (Last week)
-    const LAST_SUNDAY = new Date('2026-02-01T00:00:00').getTime(); // Yesterday (Feb 01)
-    const LAST_FRIDAY = new Date('2026-01-30T00:00:00').getTime(); // Last Friday (Jan 30)
+    const LAST_SUNDAY = ms('2026-02-01T00:00:00'); // Yesterday (Feb 01)
+    const LAST_FRIDAY = ms('2026-01-30T00:00:00'); // Last Friday (Jan 30)
 
     beforeEach(() => {
-        MockDate.set(NOW_TIMESTAMP);
+        vi.spyOn(Temporal.Now, 'instant').mockReturnValue(Temporal.Instant.fromEpochMilliseconds(NOW_TIMESTAMP));
     });
 
     afterEach(() => {
-        MockDate.reset();
+        vi.restoreAllMocks();
     });
 
     /**
@@ -84,15 +80,15 @@ describe('parseRelativeDate', () => {
         });
 
         it('handles abbreviated units', () => {
-            expect(p('1y ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(1, 'year').valueOf());
-            expect(p('3mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(3, 'month').valueOf());
+            expect(p('1y ago')).toBe(ms('2025-02-02T12:00:00'));
+            expect(p('3mo ago')).toBe(ms('2025-11-02T12:00:00'));
             expect(p('2w ago')).toBe(NOW_TIMESTAMP - 2 * week);
             expect(p('5d ago')).toBe(NOW_TIMESTAMP - 5 * day);
         });
 
         it('does not read the "m" of a month as a minute', () => {
-            expect(p('11 months ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
-            expect(p('11mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
+            expect(p('11 months ago')).toBe(ms('2025-03-02T12:00:00'));
+            expect(p('11mo ago')).toBe(ms('2025-03-02T12:00:00'));
         });
 
         it('handles mixed units', () => {
@@ -138,7 +134,7 @@ describe('parseRelativeDate', () => {
             ['Tuesday 3pm', '2026-01-27T15:00:00'],
             ['Thu 10:00', '2026-01-29T10:00:00'],
         ])('parses %s as a past weekday instead of tomorrow', (input, expected) => {
-            expect(p(input)).toBe(new Date(expected).getTime());
+            expect(p(input)).toBe(ms(expected));
         });
 
         it.each(['Tomorrow', 't'])('preserves %s as tomorrow with optional time', (input) => {
@@ -191,18 +187,42 @@ describe('parseRelativeDate', () => {
      * Category 5: Edge Cases & Fallback
      */
     describe('Fallback', () => {
-        it('passes formatting options to dayjs', () => {
+        it('passes the format to parseDate', () => {
             const str = '05/02/2026';
             const format = 'DD/MM/YYYY'; // Feb 5th
-            const expected = new Date('2026-02-05T00:00:00').getTime();
-            expect(p(str, format)).toBe(expected);
+            expect(p(str, format)).toBe(ms('2026-02-05T00:00:00'));
         });
 
         it('returns raw absolute dates', () => {
-            const raw = '2026-01-01T00:00:00';
-            expect(p(raw)).toBe(new Date(raw).getTime());
+            expect(p('2026-01-01T00:00:00')).toBe(ms('2026-01-01T00:00:00'));
         });
 
+        it('returns undefined for an empty or unparseable string', () => {
+            expect(p('')).toBeUndefined();
+            expect(p('unknown')).toBeUndefined();
+        });
+    });
+
+    /**
+     * Category 6: Time zone
+     * Reference: 2026-02-02T12:00Z is 20:00 in UTC+8 and 21:00 in Tokyo.
+     */
+    describe('Time zone', () => {
+        it('starts the day of a keyword in the given zone', () => {
+            expect(parseRelativeDate('今天', 8)?.epochMilliseconds).toBe(ms('2026-02-01T16:00:00'));
+            expect(p('昨天 23:01', undefined, 'Asia/Tokyo')).toBe(ms('2026-02-01T14:01:00'));
+        });
+
+        it('does not shift a duration by the zone', () => {
+            expect(parseRelativeDate('10分钟前', 8)?.epochMilliseconds).toBe(NOW_TIMESTAMP - 10 * minute);
+        });
+
+        it('applies the zone to the fallback', () => {
+            expect(p('2026-01-01 08:00', 'YYYY-MM-DD HH:mm', 8)).toBe(ms('2026-01-01T00:00:00'));
+        });
+    });
+
+    describe('Multi-line and long input', () => {
         it('reads a duration from the last line only', () => {
             expect(p('2 days left\n3 hours ago')).toBe(NOW_TIMESTAMP - 3 * hour);
             expect(p('2 days left\r\n3小时后')).toBe(NOW_TIMESTAMP + 3 * hour);
@@ -210,16 +230,8 @@ describe('parseRelativeDate', () => {
 
         it.each(['1'.repeat(20000) + '前', '1'.repeat(20000), 'b'.repeat(40000), '今天' + '1'.repeat(20000)])('does not spend quadratic time on long input', (str) => {
             const started = performance.now();
-            expect(p(str)).toBeNaN();
+            expect(p(str)).toBeUndefined();
             expect(performance.now() - started).toBeLessThan(500);
         });
-    });
-});
-
-describe('parseDate', () => {
-    it('does not spend quadratic time on long input', () => {
-        const started = performance.now();
-        expect(parseDate('1'.repeat(100000), 'MMM D, YYYY').getTime()).toBeNaN();
-        expect(performance.now() - started).toBeLessThan(500);
     });
 });

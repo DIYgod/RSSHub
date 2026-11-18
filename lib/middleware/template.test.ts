@@ -118,7 +118,7 @@ describe('template middleware', () => {
     });
 
     it('removes control characters from every field', async () => {
-        const pubDate = new Date(0);
+        const pubDate = Temporal.Instant.fromEpochMilliseconds(0);
         const data = {
             title: 'Feed\u{0008}',
             description: 'About\u{0008}',

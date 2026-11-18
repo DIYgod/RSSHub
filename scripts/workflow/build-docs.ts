@@ -55,9 +55,9 @@ const getRouteFileAddedAt = () => {
         for (const change of changes) {
             const [status, from, to] = change.split('\t', 3);
             if (status === 'A' && !addedAt.has(from)) {
-                addedAt.set(from, new Date(date).toISOString());
+                addedAt.set(from, Temporal.Instant.from(date).toString({ fractionalSecondDigits: 3 }));
             } else if (status.startsWith('R')) {
-                addedAt.set(to, addedAt.get(from) ?? new Date(date).toISOString());
+                addedAt.set(to, addedAt.get(from) ?? Temporal.Instant.from(date).toString({ fractionalSecondDigits: 3 }));
             }
         }
     }

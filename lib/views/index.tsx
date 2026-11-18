@@ -3,9 +3,10 @@ import type { FC } from 'hono/jsx';
 import { config } from '@/config';
 import { getDebugInfo } from '@/utils/debug-info';
 import { gitDate, gitHash } from '@/utils/git-hash';
+import { toRFC822 } from '@/utils/time';
 import { Layout } from '@/views/layout';
 
-const startTime = Date.now();
+const startTime = performance.now();
 
 const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const debug = getDebugInfo();
@@ -13,7 +14,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const showDebug = !config.debugInfo || config.debugInfo === 'false' ? false : config.debugInfo === 'true' || config.debugInfo === debugQuery;
     const { disallowRobot, nodeName, cache } = config;
 
-    const duration = Date.now() - startTime;
+    const duration = performance.now() - startTime;
 
     const info = {
         showDebug,
@@ -43,7 +44,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 ? [
                       {
                           name: 'Git Date',
-                          value: gitDate.toUTCString(),
+                          value: toRFC822(gitDate),
                       },
                   ]
                 : []),

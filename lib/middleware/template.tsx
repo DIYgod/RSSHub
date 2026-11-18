@@ -5,6 +5,7 @@ import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
 import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import { Atom, json, RSS, rss3 } from '@/utils/render';
+import { toISOString, toRFC822 } from '@/utils/time';
 
 // https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
 // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
@@ -112,10 +113,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         removeControlCharacters(data);
     }
 
-    const currentDate = new Date();
+    const currentDate = Temporal.Now.instant();
     const result = {
-        lastBuildDate: currentDate.toUTCString(),
-        updated: currentDate.toISOString(),
+        lastBuildDate: toRFC822(currentDate),
+        updated: toISOString(currentDate),
         ttl,
         atomlink: ctx.req.url,
         ...data,

@@ -12,21 +12,16 @@ describe('common-utils', () => {
         expect(convertDateToISO8601(null)).toBe(null);
         expect(convertDateToISO8601(undefined)).toBe(undefined);
 
-        const date = new Date('2019-01-01');
-        const expected = date.toISOString();
-        expect(convertDateToISO8601(date)).toBe(expected);
-        expect(convertDateToISO8601(date.toISOString())).toBe(expected);
-        expect(convertDateToISO8601(date.toUTCString())).toBe(expected);
-        expect(convertDateToISO8601(date.toLocaleString())).toBe(expected);
+        const expected = '2019-01-01T00:00:00.000Z';
+        expect(convertDateToISO8601(Temporal.Instant.from(expected))).toBe(expected);
+        expect(convertDateToISO8601(1_546_300_800_000)).toBe(expected);
+        expect(convertDateToISO8601(expected)).toBe(expected);
+        expect(convertDateToISO8601('Tue, 01 Jan 2019 00:00:00 GMT')).toBe(expected);
         expect(convertDateToISO8601('Tue, 01 Jan 2019 08:00:00 UTC+8')).toBe(expected);
 
-        // no zone in the string, so it is read as local wall clock; `new Date(2019, 0, 1)` is
-        // that same wall clock, and carries the UTC offset in effect on that date rather than today's
-        expect(convertDateToISO8601('Tue, 01 Jan 2019 00:00:00')).toBe(new Date(2019, 0, 1).toISOString());
-        // need to pass a function in order to use `toThrow`
-        expect(() => {
-            convertDateToISO8601('something invalid');
-        }).toThrow(RangeError);
+        // no zone in the string, so it is read as UTC
+        expect(convertDateToISO8601('Tue, 01 Jan 2019 00:00:00')).toBe(expected);
+        expect(convertDateToISO8601('something invalid')).toBeUndefined();
     });
 
     it('collapseWhitespace', () => {
