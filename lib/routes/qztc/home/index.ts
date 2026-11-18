@@ -53,28 +53,20 @@ async function handler(ctx) {
             const cheerioItem = $(item);
             const a = cheerioItem.find('a');
 
-            try {
-                const title = a.attr('title') || '';
-                let link = a.attr('href');
-                if (!link) {
-                    link = '';
-                } else if (!link.startsWith('http')) {
-                    link = rootUrl.slice(0, -1) + link;
-                }
-                const pubDate = parseDate(cheerioItem.find('.news_meta').text(), 8);
-
-                return {
-                    title,
-                    link,
-                    pubDate,
-                };
-            } catch {
-                return {
-                    title: '',
-                    link: '',
-                    pubDate: Temporal.Now.instant().epochMilliseconds,
-                };
+            const title = a.attr('title') || '';
+            let link = a.attr('href');
+            if (!link) {
+                link = '';
+            } else if (!link.startsWith('http')) {
+                link = rootUrl.slice(0, -1) + link;
             }
+            const pubDate = parseDate(cheerioItem.find('.news_meta').text(), 8);
+
+            return {
+                title,
+                link,
+                pubDate,
+            };
         })
         .filter((item) => item.title && item.link);
 
