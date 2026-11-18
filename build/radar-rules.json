@@ -49937,6 +49937,33 @@
       }
     ]
   },
+  "vllm.ai": {
+    "_name": "vLLM",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/vllm",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/blog/rss.xml",
+          "/blog/atom.xml"
+        ],
+        "target": "/vllm/blog"
+      }
+    ],
+    "blog": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/vllm",
+        "source": [
+          "/",
+          "/:slug"
+        ],
+        "target": "/vllm/blog"
+      }
+    ]
+  },
   "vom.mn": {
     "_name": "Voice of Mongolia",
     ".": [

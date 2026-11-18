@@ -3637,6 +3637,7 @@ export type RoutePath =
   | `/viva-la-vita/featured`
   | `/viva-la-vita/hot`
   | `/viva-la-vita/latest`
+  | `/vllm/blog`
   | `/voanews/:language/:channel?`
   | `/vocus/publication/:id`
   | `/vocus/user/:id`

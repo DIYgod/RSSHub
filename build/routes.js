@@ -125354,6 +125354,66 @@ export default {
     "url": "visualstudio.com",
     "lang": "en"
   },
+  "vllm": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "vllm.ai/blog",
+        "example": "/vllm/blog",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full-text articles, release announcements, and model guides from the official vLLM blog. Fetches up to 20 entries by default via the official RSS feed; supports the common `limit` query parameter.",
+        "zh": {
+          "name": "博客",
+          "description": "通过官方 RSS 发现并抓取 vLLM 官方博客全文（涵盖技术文章、版本发布与模型指南），默认获取最多 20 篇，支持通用 `limit` 参数。"
+        },
+        "radar": [
+          {
+            "source": [
+              "vllm.ai/blog",
+              "vllm.ai/blog/:slug",
+              "vllm.ai/blog/rss.xml",
+              "vllm.ai/blog/atom.xml"
+            ],
+            "target": "/blog"
+          },
+          {
+            "source": [
+              "blog.vllm.ai/",
+              "blog.vllm.ai/:slug"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "location": "blog.ts",
+        "module": () => import('@/routes/vllm/blog.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "vLLM",
+    "url": "vllm.ai",
+    "lang": "en",
+    "description": "Technical articles, release announcements, model guides, and community updates from the vLLM project.",
+    "zh": {
+      "name": "vLLM",
+      "description": "vLLM 官方技术博客、版本发布、模型适配指南与社区动态。"
+    }
+  },
   "voanews": {
     "routes": {
       "/:language/:channel?": {
