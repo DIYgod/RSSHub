@@ -90,11 +90,11 @@ const dropCredentialHeaders =
     };
 
 const agents = new Map<string, Agent>();
-const getAgent = (minVersion?: SecureVersion, publicOnly?: boolean) => {
-    const key = `${minVersion}:${publicOnly}`;
+const getAgent = (minVersion?: SecureVersion, publicOnly?: boolean, ecdhCurve?: string) => {
+    const key = `${minVersion}:${publicOnly}:${ecdhCurve}`;
     let agent = agents.get(key);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily, lookup: publicOnly ? publicLookup : undefined } });
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, ecdhCurve, autoSelectFamily: config.requestAutoSelectFamily, lookup: publicOnly ? publicLookup : undefined } });
         agents.set(key, agent);
     }
     return agent;
@@ -115,7 +115,15 @@ export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
 
 const wrappedFetch: typeof undici.fetch = async (
     input: RequestInfo,
-    init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion; credentialHeaders?: string[]; publicOnly?: boolean; maxResponseSize?: number }
+    init?: RequestInit & {
+        headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
+        allowH2?: boolean;
+        minVersion?: SecureVersion;
+        ecdhCurve?: string;
+        credentialHeaders?: string[];
+        publicOnly?: boolean;
+        maxResponseSize?: number;
+    }
 ) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
@@ -172,7 +180,7 @@ const wrappedFetch: typeof undici.fetch = async (
         }
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
-            const dispatcher = await proxy.getDispatcher(request.url, init?.minVersion);
+            const dispatcher = await proxy.getDispatcher(request.url, init?.minVersion, init?.ecdhCurve);
             if (dispatcher) {
                 options.dispatcher = dispatcher;
                 logger.debug(`Proxying request: ${request.url}`);
@@ -180,8 +188,8 @@ const wrappedFetch: typeof undici.fetch = async (
         }
     }
 
-    if ((init?.minVersion || publicOnly) && !options.dispatcher && !init?.dispatcher) {
-        options.dispatcher = getAgent(init?.minVersion, publicOnly);
+    if ((init?.minVersion || init?.ecdhCurve || publicOnly) && !options.dispatcher && !init?.dispatcher) {
+        options.dispatcher = getAgent(init?.minVersion, publicOnly, init?.ecdhCurve);
     }
 
     const interceptors = [init?.allowH2 === false && http1Only, publicOnly && publicOnlyInterceptor, !!init?.credentialHeaders?.length && dropCredentialHeaders(new URL(request.url).origin, init.credentialHeaders)].filter(

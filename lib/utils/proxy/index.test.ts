@@ -127,4 +127,16 @@ describe('proxy', () => {
         expect(await proxy.getDispatcher('http://other.example', 'TLSv1.3')).toBe(dispatcher);
         expect(requestTlsOf(proxy.dispatcher!).minVersion).toBeUndefined();
     });
+
+    it('applies ecdhCurve to the proxy dispatcher request tls', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: 'http://proxy.local:8080',
+            PAC_URI: '',
+        });
+
+        const dispatcher = (await proxy.getDispatcher('http://example.com', undefined, 'P-256'))!;
+        expect(requestTlsOf(dispatcher).ecdhCurve).toBe('P-256');
+        expect(await proxy.getDispatcher('http://other.example', undefined, 'P-256')).toBe(dispatcher);
+        expect(requestTlsOf(proxy.dispatcher!).ecdhCurve).toBeUndefined();
+    });
 });
