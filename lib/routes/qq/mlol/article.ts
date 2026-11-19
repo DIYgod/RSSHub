@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface FeedInfo {
     feedNews: {
@@ -42,7 +41,7 @@ async function handler(ctx: Context) {
             const item = {
                 title: body.title,
                 description: `<img src='${body.imgUrl.split('?', 1)[0]}'>`,
-                pubDate: timezone(parseDate(body.comCreateDate), 8),
+                pubDate: parseDate(body.comCreateDate, 8),
                 link,
             };
 

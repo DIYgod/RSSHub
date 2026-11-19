@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -84,7 +83,7 @@ async function handler(ctx) {
                     .find('.news-item-category, .list-item-category')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate($item.find('.news-item-date, .list-item-date').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 'en'), 8),
+                pubDate: parseDate($item.find('.news-item-date, .list-item-date').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8),
             };
         });
 
@@ -106,7 +105,7 @@ async function handler(ctx) {
                         .toArray()
                         .map((c) => content(c).text()),
                 ];
-                item.pubDate = timezone(parseDate(content('.news-detail-meta-item.date span').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 'en'), 8);
+                item.pubDate = parseDate(content('.news-detail-meta-item.date span').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8);
 
                 return item;
             })

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const products = {
     'geos-col-irx': { name: '全球静止卫星 - 长波红外通道增强', xml: 'GEOS/GEOS_COL_IRX.xml', video: 'GEOS/COL/IRX/VIDEO/GEOS.COL.IRX.GBAL' },

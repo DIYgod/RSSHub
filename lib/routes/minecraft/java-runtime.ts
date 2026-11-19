@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/java-runtime/:arch?/:javaType?',
@@ -63,7 +64,7 @@ function generateJava(arch: string, javaType: string, data: RuntimeInManifest): 
     return {
         title: `${arch} ${javaType} 更新了 ${data.version.name}`,
         description: `${arch} ${javaType} 更新了 ${data.version.name}`,
-        pubDate: new Date(data.version.released).toUTCString(),
+        pubDate: parseDate(data.version.released),
         link: data.manifest.url,
         guid: arch + javaType + data.version.name,
     };

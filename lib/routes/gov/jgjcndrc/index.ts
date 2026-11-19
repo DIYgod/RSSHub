@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { columnId = '1832739866673426433', subColumnId } = ctx.req.param();
@@ -35,7 +34,7 @@ export const handler = async (ctx) => {
 
         return {
             title: item.articleTitle,
-            pubDate: item.pubDate ? timezone(parseDate(item.pubDate), 8) : undefined,
+            pubDate: item.pubDate ? parseDate(item.pubDate, 8) : undefined,
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
@@ -56,7 +55,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = data.pubDate ? timezone(parseDate(data.pubDate), 8) : item.pubDate;
+                item.pubDate = data.pubDate ? parseDate(data.pubDate, 8) : item.pubDate;
                 item.link = data.linkUrl || new URL(data.articleUrl, rootUrl).href;
                 item.category = data.parentColumns?.map((c) => c.columnName);
                 item.guid = guid;

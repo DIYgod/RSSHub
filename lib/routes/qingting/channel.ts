@@ -3,8 +3,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/channel/:id',
@@ -34,7 +33,7 @@ async function handler(ctx) {
     const items: Array<DataItem & { link: string }> = response.data.programs.map((item) => ({
         title: item.title,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}/programs/${item.id}/`,
-        pubDate: timezone(parseDate(item.update_time), 8),
+        pubDate: parseDate(item.update_time, 8),
     }));
 
     return {

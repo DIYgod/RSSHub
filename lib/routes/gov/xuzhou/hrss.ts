@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hrss/:category?',
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#Zoom, .mian-cont, .ewb-article-info, #UCAP-CONTENT').html();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
                 item.category = content('meta[name="Keywords"]').attr('content')?.split(' ');
 
                 return item;

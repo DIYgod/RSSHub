@@ -4,9 +4,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -16,7 +15,7 @@ const targetUrl = `${baseUrl}/kategorie/kratke-ceske-zpravy`;
 interface ArticleListItem {
     title: string;
     link: string;
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
 }
 
 interface Worksheet {
@@ -87,7 +86,7 @@ const parseArticle = async (item: ArticleListItem) => {
 
     const detailDateStr = $('.sigle-meta__date').text();
     const publishedTime = $('meta[property="article:published_time"]').attr('content');
-    const pubDate = publishedTime ? parseDate(publishedTime) : detailDateStr ? timezone(parseDate(detailDateStr, 'D. M. YYYY'), 0) : item.pubDate;
+    const pubDate = publishedTime ? parseDate(publishedTime) : detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY', 0) : item.pubDate;
 
     return {
         title: item.title,
@@ -114,7 +113,7 @@ const handler: Route['handler'] = async (ctx) => {
             const link = rawLink ? (rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`) : '';
             const title = el.find('.news-item-link__title').text();
             const dateStr = el.find('.news-item-meta__date').text();
-            const pubDate = dateStr ? timezone(parseDate(dateStr, 'D. M. YYYY'), 0) : undefined;
+            const pubDate = dateStr ? parseDate(dateStr, 'D. M. YYYY', 0) : undefined;
 
             return {
                 title,

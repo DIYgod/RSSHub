@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -39,7 +38,7 @@ export const route: Route = {
                     // The title in the list page is truncated, the full title is taken from the detail page
                     title: $item.find('.newstitle > h1').text(),
                     link: url.href,
-                    pubDate: timezone(parseDate($item.find('.newstitle > .date').text()), 8),
+                    pubDate: parseDate($item.find('.newstitle > .date').text(), 8),
                 };
             });
 

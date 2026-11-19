@@ -3,8 +3,7 @@ import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
 
 import buildData from '@/utils/common-config';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const url = 'http://rsshub.test/buildData';
 
@@ -22,7 +21,7 @@ describe('common-config', () => {
                 title: ($) => $('a').text() + ' - ' + suffix,
                 link: ($) => $('a').attr('href'),
                 description: ($) => $('.description').html(),
-                pubDate: ($) => timezone(parseDate($('.date').text(), 'YYYY-MM-DD'), 0),
+                pubDate: ($) => parseDate($('.date').text(), 'YYYY-MM-DD', 0),
             },
         });
         expect(data).toEqual({
@@ -31,8 +30,8 @@ describe('common-config', () => {
             description: literal,
             allowEmpty: false,
             item: [
-                { title: '1 - buildData', link: '/1', description: 'RSSHub1', pubDate: new Date('2025-01-01T00:00:00Z'), guid: undefined },
-                { title: '2 - buildData', link: '/2', description: 'RSSHub2', pubDate: new Date('2025-01-02T00:00:00Z'), guid: undefined },
+                { title: '1 - buildData', link: '/1', description: 'RSSHub1', pubDate: Temporal.Instant.from('2025-01-01T00:00:00Z'), guid: undefined },
+                { title: '2 - buildData', link: '/2', description: 'RSSHub2', pubDate: Temporal.Instant.from('2025-01-02T00:00:00Z'), guid: undefined },
             ],
         });
     });

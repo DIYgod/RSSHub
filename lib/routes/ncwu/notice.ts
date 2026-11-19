@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.ncwu.edu.cn/xxtz.htm';
 
@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: '「' + $links.first().text() + '」' + $article.text(),
                 description: $item.find('p.summary').text(),
-                pubDate: parseDateInTimezone(date, 8),
+                pubDate: parseDate(date, 8),
                 link: new URL(href, baseUrl).href,
             };
         });

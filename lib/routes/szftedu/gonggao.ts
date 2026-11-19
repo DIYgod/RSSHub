@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getArticleContent, getArticlePubDate } from './utils';
 
@@ -40,7 +39,7 @@ async function getArticle(link: string): Promise<Partial<DataItem>> {
     if (articleDate) {
         item.pubDate = articleDate;
     } else if (date) {
-        item.pubDate = timezone(parseDate(date), 8);
+        item.pubDate = parseDate(date, 8);
     }
     return item;
 }
@@ -57,7 +56,7 @@ async function handler() {
             return {
                 title: $('a', el).text(),
                 link: $('a', el).attr('href'),
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 

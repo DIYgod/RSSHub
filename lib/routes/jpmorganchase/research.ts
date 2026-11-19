@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const base = 'https://www.jpmorganchase.com';
 const frontPageUrl = `${base}/institute/all-topics`;
@@ -96,7 +96,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
             title: entry.title,
             description,
             link: url,
-            pubDate: articleDate ? parseDate(articleDate) : undefined,
+            pubDate: articleDate ? parseDate(articleDate, 'MMMM D, YYYY') : undefined,
         } satisfies DataItem;
     });
 }

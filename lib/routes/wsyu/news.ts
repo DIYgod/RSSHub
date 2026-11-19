@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'http://www.wsyu.edu.cn';
 
@@ -21,8 +20,7 @@ const parseSourceDate = (raw?: string) => {
         return;
     }
     const normalized = raw.trim().replaceAll(/\s+/g, ' ');
-    const parsed = parseDate(normalized, normalized.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isNaN(parsed.getTime()) ? undefined : timezone(parsed, 8);
+    return parseDateStrict(normalized, normalized.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', 8);
 };
 
 const fetchArticle = async (link: string): Promise<Pick<DataItem, 'description' | 'author' | 'pubDate'>> => {

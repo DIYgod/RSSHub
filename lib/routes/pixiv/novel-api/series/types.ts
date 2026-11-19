@@ -62,7 +62,7 @@ export interface SeriesFeed {
         title: string;
         description: string;
         link: string;
-        pubDate?: Date;
+        pubDate?: Temporal.Instant;
         author?: string;
         category?: string[];
     }>;
@@ -88,7 +88,7 @@ export interface AppNovelSeries {
     novels: Array<{
         id: string;
         title: string;
-        create_date: Date;
+        create_date: Temporal.Instant;
         user: AppUser;
     }>;
 }

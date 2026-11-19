@@ -7,8 +7,8 @@ import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:id',

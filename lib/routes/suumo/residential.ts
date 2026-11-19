@@ -13,8 +13,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export type DealKind = 'rent' | 'sale';
 export type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
@@ -289,7 +288,7 @@ export const collectPairs = ($: CheerioAPI, scope: string | Cheerio<Element>): R
 };
 
 /** 敷金 / 礼金 in the form the site used; an explicit none is zero in both forms. */
-const money = (text: string | null): { months: number | null; jpy: number | null } => {
+const money = (text: string | null) => {
     if (text === null) {
         return { months: null, jpy: null };
     }
@@ -394,7 +393,7 @@ export interface ListedUnit {
  * The list is read fresh on every poll, so its values win; the detail page (cached) only fills
  * what the list left empty. Price changes therefore show up on the next poll, not the next cache expiry.
  */
-export const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>): Record<string, string | null> => ({
+export const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>) => ({
     ...list,
     ...detail,
     ...Object.fromEntries(Object.entries(list).filter(([, v]) => v !== null)),
@@ -462,7 +461,7 @@ export const residentialItems = async (
                 title: residentialTitle(extra),
                 link: unit.link,
                 guid: unit.link,
-                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
                 description: summarizeResidential(extra),
                 image: unit.image,
                 _extra: extra,

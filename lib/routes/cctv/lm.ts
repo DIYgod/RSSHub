@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/lm/:id?',
@@ -75,14 +74,14 @@ async function handler(ctx) {
         guid: item.guid,
         image: item.image,
         title: item.title,
-        pubDate: timezone(parseDate(item.time), 8),
+        pubDate: parseDate(item.time, 8),
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));
     const limit = getRouteLimit(ctx);
     if (limit !== undefined) {
         if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         list = list.slice(0, limit);
     }

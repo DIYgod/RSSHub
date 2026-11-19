@@ -1,8 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
@@ -12,7 +8,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { jsx } from '@/utils/jsx';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/app/:category{.+}?',
@@ -55,8 +51,7 @@ function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function handler(ctx) {
@@ -66,9 +61,6 @@ async function handler(ctx) {
         Connection: 'keep-alive',
         'User-Agent': 'Classic/6.70.0',
     };
-    dayjs.extend(utc);
-    dayjs.extend(timezone);
-    dayjs.extend(advancedFormat);
 
     const url = `https://jsonapp1.washingtonpost.com/fusion_prod/v2/${category}`;
     const response = await got.get(url, { headers });
@@ -241,7 +233,8 @@ const renderDescription = (content): string => {
                 }
 
                 if (entry.type === 'date' && entry.subtype === 'live-update') {
-                    return entry.content ? <span key={`date-${index}`}>{dayjs.tz(entry.content, 'America/New_York').locale('en').format('dddd, MMMM D, YYYY h:mm A z')}</span> : null;
+                    const date = entry.content ? parseDate(entry.content, undefined, 'America/New_York') : undefined;
+                    return date ? <span key={`date-${index}`}>{formatDate(date, 'dddd, MMMM D, YYYY h:mm A z', 'America/New_York')}</span> : null;
                 }
 
                 return null;

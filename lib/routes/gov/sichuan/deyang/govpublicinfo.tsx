@@ -5,8 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 // 各地区url信息
 const basicInfoDict = {
@@ -55,7 +54,7 @@ const getInfoContent = (rootUrl, item) =>
                 title: $('h1').text().trim(),
                 id: $('#attribute > span:nth-child(1)').text().split('：', 2)[1].trim(),
                 infoNum: $('#attribute > span:nth-child(2)').text().split('：', 2)[1].trim(),
-                pubDate: parseDate(timezone(rawDate, 8)),
+                pubDate: parseDate(rawDate, 8),
                 date: rawDate,
                 keyWord: $('#attribute > span:nth-child(6)').text().split('：', 2)[1].trim(),
                 source: $('#attribute > span:nth-child(5)').text().split('：', 2)[1].trim(),

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sharefile-changelog/:sharefileID/:routeParams?',

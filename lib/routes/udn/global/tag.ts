@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/global/tag/:tag?',
@@ -48,7 +48,7 @@ async function handler(ctx) {
         return {
             title: item.title,
             author: item.author?.title,
-            pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
             link: item.url,
             category: item.hash?.map((h) => h.title),
         };

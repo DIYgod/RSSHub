@@ -7,8 +7,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -84,8 +84,7 @@ function getPublishingDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function getPageData<T>(url: string): Promise<T> {
@@ -124,7 +123,7 @@ async function handler(ctx): Promise<Data> {
     const sorted = ctx.req.query('sorted') !== 'false';
     const hasDates = allItems.every((item) => item.pubDate !== undefined);
     if (sorted && hasDates) {
-        allItems.sort((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        allItems.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     const limit = getRouteLimit(ctx);
     const items = await pMap(

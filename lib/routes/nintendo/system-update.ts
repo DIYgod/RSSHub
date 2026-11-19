@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/system-update',
@@ -59,7 +58,7 @@ async function handler() {
                 description: updateInfos,
                 link: `${url}#${matchedVersion![0]}`,
                 guid: `${url}#${matchedVersion![0]}`,
-                pubDate: timezone(parseDate(`${matchedDate![1]}-${matchedDate![2]}-${matchedDate![3]}`, 'YYYY-M-D'), 9),
+                pubDate: parseDate(`${matchedDate![1]}-${matchedDate![2]}-${matchedDate![3]}`, 'YYYY-M-D', 9),
             };
         }),
     };

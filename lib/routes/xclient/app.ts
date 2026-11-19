@@ -4,8 +4,7 @@ import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/app/:name',
@@ -34,11 +33,11 @@ async function handler(ctx: Context) {
             .map((item) => {
                 const td = $(item).find('td');
                 const rawDate = td.eq(2).text();
-                const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
+                const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
                 return {
                     title: td.eq(0).text(),
                     description: html`文件大小：${td.eq(3).text()}`.toString(),
-                    pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     link,
                     guid: td.eq(0).text(),
                 };

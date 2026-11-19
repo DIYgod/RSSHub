@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newshub-zh',
@@ -49,7 +49,7 @@ async function handler() {
             const href = $item.find('a').attr('href');
             const title = $item.find('.f-clamp').text();
             const itemPubdate = $item.find('.mobi').text();
-            return href && title ? { title, link: new URL(href, baseUrl).href, pubDate: itemPubdate ? parseDateInTimezone(itemPubdate, 8) : undefined } : [];
+            return href && title ? { title, link: new URL(href, baseUrl).href, pubDate: itemPubdate ? parseDate(itemPubdate, 8) : undefined } : [];
         });
     const items = await pMap(
         list,

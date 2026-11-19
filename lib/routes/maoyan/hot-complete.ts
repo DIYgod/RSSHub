@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hotComplete/:orderby?/:ascOrDesc?/:top?',
@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
     if (orderby) {
         data.sort((a, b) => {
             if (orderby === 'pubDate') {
-                return ascOrDesc === 'asc' ? new Date(a.rt).getTime() - new Date(b.rt).getTime() : new Date(b.rt).getTime() - new Date(a.rt).getTime();
+                return ascOrDesc === 'asc' ? compareDates(a.rt, b.rt) : compareDates(b.rt, a.rt);
             }
             return ascOrDesc === 'asc' ? a.sc - b.sc : b.sc - a.sc;
         });
@@ -64,7 +64,7 @@ async function handler(ctx: Context) {
             title: `${item.nm} ${rating}`,
             description: `<img src="${item.img.replace('w.h', '1000.1000')}"> <br> ${rating} <br> 演员：${item.star} <br> 上映信息：${item.showInfo}`,
             link: `https://maoyan.com/films/${item.id}`,
-            pubDate: item.rt ? parseDateInTimezone(item.rt, 8) : undefined,
+            pubDate: item.rt ? parseDate(item.rt, 8) : undefined,
         };
     });
 

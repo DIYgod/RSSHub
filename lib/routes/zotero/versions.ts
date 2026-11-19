@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/versions',
@@ -49,7 +49,7 @@ async function handler() {
                     .toArray()
                     .map((element) => $.html(element))
                     .join(''),
-                ...(date && { pubDate: parseDate(date) }),
+                ...(date && { pubDate: parseDate(date, 'MMMM D, YYYY') }),
                 link: url + '#' + $item.attr('id'),
             };
         }),

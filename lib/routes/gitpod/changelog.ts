@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { rootUrl } from './utils';
 

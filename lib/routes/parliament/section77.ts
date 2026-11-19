@@ -5,7 +5,7 @@ import { CookieJar } from 'tough-cookie';
 import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 type Section77Item = DataItem & { category: string[] };
 
@@ -162,27 +162,21 @@ async function handler(ctx) {
                 const dateRegex = /^รับฟังตั้งแต่วันที่\s(\d{1,2})\s*([\u{0E00}-\u{0E7F}]+)\s*(\d{4})/u.exec(dateText);
 
                 if (dateRegex) {
-                    item.pubDate = timezone(
-                        new Date(
-                            Number.parseInt(dateRegex[3]) - 543,
-                            {
-                                มกราคม: 0,
-                                กุมภาพันธ์: 1,
-                                มีนาคม: 2,
-                                เมษายน: 3,
-                                พฤษภาคม: 4,
-                                มิถุนายน: 5,
-                                กรกฎาคม: 6,
-                                สิงหาคม: 7,
-                                กันยายน: 8,
-                                ตุลาคม: 9,
-                                พฤศจิกายน: 10,
-                                ธันวาคม: 11,
-                            }[dateRegex[2].trim()]!,
-                            Number.parseInt(dateRegex[1])
-                        ),
-                        7
-                    );
+                    const month = {
+                        มกราคม: 1,
+                        กุมภาพันธ์: 2,
+                        มีนาคม: 3,
+                        เมษายน: 4,
+                        พฤษภาคม: 5,
+                        มิถุนายน: 6,
+                        กรกฎาคม: 7,
+                        สิงหาคม: 8,
+                        กันยายน: 9,
+                        ตุลาคม: 10,
+                        พฤศจิกายน: 11,
+                        ธันวาคม: 12,
+                    }[dateRegex[2].trim()];
+                    item.pubDate = month ? calendarToInstant({ calendar: 'buddhist', year: dateRegex[3], month, day: dateRegex[1] }, 7) : undefined;
                 }
 
                 // Every property of a list item defined above is reused here

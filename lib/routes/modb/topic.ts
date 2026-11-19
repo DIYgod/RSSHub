@@ -6,8 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -71,7 +70,7 @@ async function handler(ctx) {
             {
                 title: doc.title,
                 link: `${baseLink}/${item.rid}`,
-                pubDate: timezone(parseDate(item.createdTime), 8),
+                pubDate: parseDate(item.createdTime, 8),
                 author: doc.createdByName,
                 category: doc.tags,
                 description: item.type === 1 ? `${doc.imageUrl ? `<img src="${escapeUTF8(doc.imageUrl)}">` : ''}${doc.brief ? `<p>${escapeUTF8(doc.brief).replaceAll('\n', '<br>')}</p>` : ''}` : undefined,

@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 // /iqiyi/user/video/:uid
 // http://localhost:1200/iqiyi/user/video/2289191062

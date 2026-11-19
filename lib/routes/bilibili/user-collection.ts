@@ -1,9 +1,9 @@
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';

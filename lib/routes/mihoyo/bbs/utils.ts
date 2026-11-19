@@ -1,4 +1,4 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from '../templates/description';
 

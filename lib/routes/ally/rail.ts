@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rail/:category?/:topic?',
@@ -78,7 +77,7 @@ async function handler(ctx) {
             return {
                 title,
                 link: url.startsWith('/') ? `${rootUrl}${url}` : url,
-                pubDate: timezone(parseDate(`${urlMatch[1]}${urlMatch[2]}`), 8),
+                pubDate: parseDate(`${urlMatch[1]}${urlMatch[2]}`, 8),
             };
         })
         .filter((item) => item !== null);
@@ -88,7 +87,7 @@ async function handler(ctx) {
             uniqueItems.push(item!);
         }
     }
-    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, getRouteLimit(ctx, 20));
+    items = uniqueItems.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     items = await Promise.all(
         items.map((item) =>

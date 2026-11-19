@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc.scu.edu.cn/tzgg.htm';
 const baseIndexUrl = 'https://jwc.scu.edu.cn/';
@@ -53,7 +53,7 @@ async function handler() {
 
                 // 获取head里的meta标签
                 const title = $('head meta[name="ArticleTitle"]').attr('content') ?? '';
-                const pubDate = parseDateInTimezone($('head meta[name="PubDate"]').attr('content') ?? '', 8);
+                const pubDate = parseDate($('head meta[name="PubDate"]').attr('content') ?? '', 8);
                 const description = $('.v_news_content').html();
                 return {
                     title,

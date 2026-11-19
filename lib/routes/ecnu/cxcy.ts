@@ -5,8 +5,7 @@ import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cxcy/:type?',
@@ -58,7 +57,7 @@ export const route: Route = {
 
         const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`).find('table > tbody > tr > td').toArray();
         const links = filteredEls.map((el): DataItem & { link: string } => ({
-            pubDate: timezone(parseDate($(el).find('.data').text()), 8),
+            pubDate: parseDate($(el).find('.data').text(), 8),
             link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('.news_title').text(),
         }));

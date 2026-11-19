@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 15);
@@ -34,7 +33,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.text(),
-                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
+                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };

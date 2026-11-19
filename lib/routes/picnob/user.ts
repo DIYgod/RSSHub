@@ -5,8 +5,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseRelativeDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
+import { parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {

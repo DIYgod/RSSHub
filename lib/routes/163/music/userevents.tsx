@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const renderDescription = ({ description, pics }) => {
     const lines = (description ?? '').split('\n');
@@ -70,8 +71,8 @@ async function handler(ctx) {
                 title,
                 description: renderDescription({ description, pics }),
                 link: `https://music.163.com/#/event?id=${eventId}&uid=${userId}`,
-                pubDate: new Date(item.eventTime),
-                published: new Date(item.eventTime),
+                pubDate: parseDate(item.eventTime),
+                published: parseDate(item.eventTime),
                 author: nickname,
                 upvotes: item.info.likedCount,
                 comments: item.info.commentCount,

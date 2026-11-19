@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -62,7 +61,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href')!.startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
-                pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY.MM.DD'), 8),
+                pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD', 8),
             };
         });
 

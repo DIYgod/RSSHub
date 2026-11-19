@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 // 合并不同 subjectType 的 type 映射
 const getTypeNames = (subjectType) => {

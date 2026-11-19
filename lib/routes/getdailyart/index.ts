@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 import type { DataItem, Language, Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?',

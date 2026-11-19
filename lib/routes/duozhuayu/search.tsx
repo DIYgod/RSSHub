@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:wd',
@@ -61,7 +61,7 @@ async function handler(ctx) {
     };
 
     const getCustomRequestHeaders = () => {
-        const timestamp = Date.now();
+        const timestamp = Temporal.Now.instant().epochMilliseconds;
         const userId = 0;
         const securityKey = Math.floor(1e8 * Math.random());
         const token = encrypt([timestamp, userId, securityKey].join(':'));

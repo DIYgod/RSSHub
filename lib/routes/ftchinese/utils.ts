@@ -3,8 +3,8 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const processFeed = (i, $, link) => {
     const title = $('h1').text();
@@ -75,7 +75,7 @@ const getData = async ({ site = 'www', channel }) => {
         feed = await parser.parseURL(`https://${site}.ftchinese.com/rss/feed`);
     }
 
-    const candidates: Array<{ title: string; link: string; pubDate?: Date; description?: string; author?: string }> = feed.items.map((item) => ({
+    const candidates: Array<{ title: string; link: string; pubDate?: Temporal.Instant; description?: string; author?: string }> = feed.items.map((item) => ({
         ...item,
         link: item.link.replace('http://', 'https://'),
         pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,

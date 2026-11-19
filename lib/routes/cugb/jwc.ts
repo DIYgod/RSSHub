@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://jwc.cugb.edu.cn';
 
@@ -53,7 +52,7 @@ async function handler(ctx): Promise<Data> {
             return {
                 title,
                 link: new URL(item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(item.find('.list_con_time').text()), 8),
+                pubDate: parseDate(item.find('.list_con_time').text(), 8),
             };
         })
         .filter((item) => item.title)

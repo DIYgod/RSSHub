@@ -4,14 +4,13 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const parsePublicationDate = (value: string) => {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'MMMM YYYY');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 'MMMM YYYY');
 };
 export const route: Route = {
     name: 'PAIR - AI Explorables',

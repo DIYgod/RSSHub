@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newthread',
@@ -57,7 +56,7 @@ async function handler() {
                         const content = $thread('.t_f').first().html()?.trim();
                         const postDate = $thread('[id^="authorposton"]').first();
                         const pubDateText = postDate.find('span').attr('title') || postDate.text().replace('发表于', '').trim();
-                        const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : undefined;
+                        const pubDate = pubDateText ? parseDate(pubDateText, 8) : undefined;
 
                         return {
                             title,

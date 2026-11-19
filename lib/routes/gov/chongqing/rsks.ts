@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rsksUrl = 'https://rlsbj.cq.gov.cn/ywzl/rsks/tzgg_109374/';
 export const route: Route = {
@@ -35,7 +34,7 @@ async function handler() {
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, rsksUrl).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 
@@ -47,7 +46,7 @@ async function handler() {
                 const $ = load(response);
                 const pubDate = $('meta[name="PubDate"]').attr('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.description = $('.trs_editor_view').first().html();
                 return item;

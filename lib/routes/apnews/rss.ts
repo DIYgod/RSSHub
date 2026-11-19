@@ -3,9 +3,9 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { fetchArticle, fetchScreen, removeDuplicateByKey } from './utils';
 
@@ -129,7 +129,7 @@ async function handler(ctx) {
         return feed;
     }
     const limit = getRouteLimit(ctx, 20);
-    const ordered = ctx.req.query('sorted') === 'false' ? feed.item : feed.item.toSorted((first, second) => +new Date(second.pubDate ?? 0) - +new Date(first.pubDate ?? 0));
+    const ordered = ctx.req.query('sorted') === 'false' ? feed.item : feed.item.toSorted((first, second) => compareDates(second.pubDate, first.pubDate));
     const results = await pMap(
         ordered.slice(0, limit),
         async (item) => {

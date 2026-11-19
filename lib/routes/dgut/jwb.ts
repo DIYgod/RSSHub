@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwb/:type?',
@@ -53,7 +52,7 @@ async function handler(ctx: Context) {
             const $a = $li.find('a.con');
             return {
                 title: $a.find('.tit').text(),
-                pubDate: timezone(parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`), 8),
+                pubDate: parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`, 8),
                 link: `${baseurl}${$a.attr('href')}`,
             };
         });

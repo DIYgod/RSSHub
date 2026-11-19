@@ -40,7 +40,7 @@ interface PluginInput {
 interface PluginOptions {
     port?: number | string;
     publicUrl?: string;
-    env?: Record<string, unknown>;
+    env?: Record<string, string | number | boolean | null>;
 }
 
 interface ToolContext {
@@ -51,7 +51,7 @@ const DEFAULT_PORT = 1200;
 // magpie gives a tool 55 seconds
 const TOOL_TIME = 50000;
 
-const portOf = (value: unknown) => {
+const portOf = (value: PluginOptions['port']) => {
     const port = Number(value);
     return Number.isSafeInteger(port) && port > 0 && port < 65536 ? port : DEFAULT_PORT;
 };
@@ -69,8 +69,6 @@ const stringsOf = (env: PluginOptions['env']) => {
 
 const signalOf = (ctx?: ToolContext) => (ctx?.abort ? AbortSignal.any([ctx.abort, AbortSignal.timeout(TOOL_TIME)]) : AbortSignal.timeout(TOOL_TIME));
 
-const errorText = (error: unknown) => (error instanceof Error ? error.message : String(error));
-
 // A tool's failure is its answer, for the agent to read
 const guarded =
     <A>(fn: (args: A, ctx?: ToolContext) => Promise<string>) =>
@@ -78,7 +76,7 @@ const guarded =
         try {
             return await fn(args, ctx);
         } catch (error) {
-            return `RSSHub tool failed: ${errorText(error)}`;
+            return `RSSHub tool failed: ${error instanceof Error ? error.message : String(error)}`;
         }
     };
 

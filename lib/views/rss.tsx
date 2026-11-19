@@ -5,7 +5,7 @@ import type { Data } from '@/types';
 import { getMediaAttributes } from '@/utils/attachments';
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
-    const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
+    const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration !== undefined));
     const hasMedia = data.item?.some((i) => i.media);
     const hasAuthor = data.item?.some((i) => i.author);
     const isTelegramLink = data.link?.startsWith('https://t.me/s/');
@@ -56,7 +56,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}
                         {!item.enclosure_url && item.attachments?.slice(0, 1).map((attachment) => <enclosure url={attachment.url} length={attachment.size_in_bytes ?? 0} type={attachment.mime_type} />)}
-                        {item.itunes_duration && <itunes:duration>{item.itunes_duration}</itunes:duration>}
+                        {item.itunes_duration !== undefined && <itunes:duration>{item.itunes_duration}</itunes:duration>}
                         {item.category !== undefined && (Array.isArray(item.category) ? item.category : [item.category]).map((c) => <category>{c}</category>)}
                         {item.commentsUrl && <comments>{item.commentsUrl}</comments>}
                         {item.media &&

@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 export const zfcgBaseUrl = 'https://zfcg.czt.zj.gov.cn';
 
 export const signHeaders = (method: string, pathWithQuery: string, body = '') => {
-    const timestamp = String(Date.now());
+    const timestamp = String(Temporal.Now.instant().epochMilliseconds);
     const nonce = Array.from(randomBytes(16), (b) => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'[b % 62]).join('');
     const secret = 'zcy@148946';
     const sign = md5([method, pathWithQuery, body, timestamp, nonce, secret].join('\n'));
@@ -35,7 +35,7 @@ const flatten = (nodes: CategoryNode[], parentName?: string): FlatCategory[] =>
 
 export const getCategories = () =>
     cache.tryGet('zfcg:category', async () => {
-        const path = `/admin/category/home/categoryTreeFind?parentId=600007&siteId=110&timestamp=${Math.floor(Date.now() / 1000)}`;
+        const path = `/admin/category/home/categoryTreeFind?parentId=600007&siteId=110&timestamp=${Math.floor(Temporal.Now.instant().epochMilliseconds / 1000)}`;
         const { result } = await ofetch(`${zfcgBaseUrl}${path}`, {
             headers: signHeaders('GET', path),
         });

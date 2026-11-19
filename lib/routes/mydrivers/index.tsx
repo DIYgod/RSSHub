@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { categories, convertToQueryString, getInfo, processItems, rootUrl, title } from './util';
 
@@ -90,7 +89,7 @@ async function handler(ctx) {
                 ),
                 author: $item.find('p.tname').text(),
                 guid: $item.prop('data-id'),
-                pubDate: timezone(parseDate($item.find('p.ttime').text()), 8),
+                pubDate: parseDate($item.find('p.ttime').text(), 8),
                 comments: $item.find('a.tpinglun').text() ? Number($item.find('a.tpinglun').text()) : 0,
             };
         });

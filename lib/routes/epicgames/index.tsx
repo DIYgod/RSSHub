@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     path: '/freegames/:locale?/:country?',
@@ -55,18 +54,24 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const now = dayjs();
+    const now = Temporal.Now.instant();
     const items = response.data.data.Catalog.searchStore.elements
-        .filter(
-            (item) =>
-                item.promotions &&
-                item.promotions.promotionalOffers &&
-                item.promotions.promotionalOffers.length &&
-                item.promotions.promotionalOffers[0].promotionalOffers[0].discountSetting.discountType === 'PERCENTAGE' &&
-                item.promotions.promotionalOffers[0].promotionalOffers[0].discountSetting.discountPercentage === 0 &&
-                dayjs(item.promotions.promotionalOffers[0].promotionalOffers[0].startDate) <= now &&
-                dayjs(item.promotions.promotionalOffers[0].promotionalOffers[0].endDate) > now
-        )
+        .filter((item) => {
+            if (
+                !(
+                    item.promotions &&
+                    item.promotions.promotionalOffers &&
+                    item.promotions.promotionalOffers.length &&
+                    item.promotions.promotionalOffers[0].promotionalOffers[0].discountSetting.discountType === 'PERCENTAGE' &&
+                    item.promotions.promotionalOffers[0].promotionalOffers[0].discountSetting.discountPercentage === 0
+                )
+            ) {
+                return false;
+            }
+            const startDate = parseDate(item.promotions.promotionalOffers[0].promotionalOffers[0].startDate);
+            const endDate = parseDate(item.promotions.promotionalOffers[0].promotionalOffers[0].endDate);
+            return startDate !== undefined && endDate !== undefined && Temporal.Instant.compare(startDate, now) <= 0 && Temporal.Instant.compare(endDate, now) > 0;
+        })
         .map(async (item) => {
             let link = `${rootUrl}/${locale}/p/`;
             let contentUrl = `${contentBaseUrl}/products/`;
@@ -105,7 +110,7 @@ async function handler(ctx) {
                 }
                 return false;
             });
-            const endDate = dayjs(item.promotions.promotionalOffers[0].promotionalOffers[0].endDate).toISOString();
+            const endDate = parseDate(item.promotions.promotionalOffers[0].promotionalOffers[0].endDate);
             return {
                 title: item.title,
                 author: item.seller.name,
@@ -114,7 +119,7 @@ async function handler(ctx) {
                     <>
                         <p>{description}</p>
                         <img src={image} />
-                        <p>{`Free Now to ${endDate}`}</p>
+                        <p>{`Free Now to ${endDate && toISOString(endDate)}`}</p>
                     </>
                 ),
                 pubDate: parseDate(item.promotions.promotionalOffers[0].promotionalOffers[0].startDate),

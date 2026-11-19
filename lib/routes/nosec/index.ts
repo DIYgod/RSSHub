@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://nosec.org/home/ajaxindexdata';
 const keykinds = {
@@ -97,7 +97,7 @@ async function handler(ctx) {
             // 文章正文
             description: item.summary,
             // 文章发布时间
-            pubDate: item.publiced_at ? parseDateInTimezone(item.publiced_at, 8) : undefined,
+            pubDate: item.publiced_at ? parseDate(item.publiced_at, 8) : undefined,
             // 文章链接
             link: `https://nosec.org/home/detail/${item.id}.html`,
             author: item.username,

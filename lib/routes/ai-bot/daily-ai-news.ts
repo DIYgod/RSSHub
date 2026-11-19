@@ -3,8 +3,7 @@ import type { Element } from 'domhandler';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface DateContext {
     currentYear: number;
@@ -12,7 +11,7 @@ interface DateContext {
     prevDay: number;
 }
 
-function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
+function parseDateString(dateStr: string, ctx: DateContext): Temporal.Instant | undefined {
     // 格式如 "1月9·周五" 或 "12月25·周三"
     const match = dateStr.match(/(\d+)月(\d+)/);
     if (!match) {
@@ -31,11 +30,11 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
     ctx.prevDay = day;
 
     // 网站只提供日期，不提供时间，使用 timezone 处理时区
-    return timezone(parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`), 8);
+    return parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`, 8);
 }
 
 function processNewsList($: CheerioAPI, $newsList: Cheerio<Element>, ctx: DateContext): DataItem[] {
-    let currentPubDate: Date | undefined;
+    let currentPubDate: Temporal.Instant | undefined;
 
     return $newsList
         .children()
@@ -82,7 +81,7 @@ async function handler(): Promise<Data> {
     const $firstNewsList = $('.news-list').first();
 
     const dateCtx: DateContext = {
-        currentYear: new Date().getFullYear(),
+        currentYear: Temporal.Now.zonedDateTimeISO('UTC').year,
         prevMonth: 0,
         prevDay: 0,
     };

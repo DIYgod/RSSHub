@@ -7,12 +7,12 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const getRequestToken = () => {
     const e = 'sgn51n6r6q97o6g3';
     const t = 'jzhotdata';
-    return CryptoJS.DES.encrypt(`${Date.now().toString()}-${e}`, t).toString();
+    return CryptoJS.DES.encrypt(`${Temporal.Now.instant().epochMilliseconds.toString()}-${e}`, t).toString();
 };
 
 const baseUrl = 'https://vp.fact.qq.com';

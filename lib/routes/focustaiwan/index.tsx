@@ -6,9 +6,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -53,19 +52,19 @@ async function handler(ctx) {
     });
 
     let list: DataItem[] = response.data.ResultData.Items.map((item) => {
-        const pubDate = item.CreateTime ? timezone(parseDate(item.CreateTime), 8) : undefined;
+        const pubDate = item.CreateTime ? parseDate(item.CreateTime, 8) : undefined;
         return {
             title: item.HeadLine,
             link: item.PageUrl,
             category: item.ClassName,
-            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
         };
     });
     const limit = getRouteLimit(ctx, 50);
     const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = list.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const allDated = list.every((item) => item.pubDate instanceof Temporal.Instant);
     if (!nativeOrder && allDated) {
-        list = list.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        list = list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     if (nativeOrder || allDated) {
         list = list.slice(0, limit);

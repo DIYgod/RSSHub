@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://rustcc.cn';
 
@@ -63,7 +62,7 @@ async function handler() {
                     .map((tag) => tag.trim())
                     .filter(Boolean),
                 link: new URL(href, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('.info .timestamp').text(), 'YYYY-MM-DD HH:mm'), 8),
+                pubDate: parseDate(item.find('.info .timestamp').text(), 'YYYY-MM-DD HH:mm', 8),
             };
         });
     const items = await pMap(

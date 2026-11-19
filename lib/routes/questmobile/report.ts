@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -205,7 +205,7 @@ async function handler(ctx) {
         }),
         category: [...(item.industryList ?? []), ...(item.labelList ?? [])],
         guid: `questmobile-report#${item.id}`,
-        pubDate: item.publishTime ? parseDateInTimezone(item.publishTime, 8) : undefined,
+        pubDate: item.publishTime ? parseDate(item.publishTime, 8) : undefined,
     }));
 
     items = await pMap(
@@ -231,7 +231,7 @@ async function handler(ctx) {
                     .map((c) => content(c).text());
                 const date = content('div.data span').attr('datetime') || content('div.data span').text();
                 if (date) {
-                    item.pubDate = parseDateInTimezone(date, 8);
+                    item.pubDate = parseDate(date, 8);
                 }
 
                 return item;

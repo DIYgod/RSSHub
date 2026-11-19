@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import { renderPlaylistDescription } from '../templates/music/playlist';
 
@@ -50,12 +51,12 @@ async function handler(ctx) {
                 description: renderPlaylistDescription({
                     singer,
                     album: item.name,
-                    date: new Date(item.publishTime).toLocaleDateString(),
+                    date: parseDate(item.publishTime)?.toLocaleString(undefined, { year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC' }),
                     picUrl: item.picUrl,
                 }),
                 link: `https://music.163.com/#/album?id=${item.id}`,
-                pubDate: new Date(item.publishTime),
-                published: new Date(item.publishTime),
+                pubDate: parseDate(item.publishTime),
+                published: parseDate(item.publishTime),
                 category: item.subType,
                 author: singer,
             };

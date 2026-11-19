@@ -26,8 +26,7 @@ import { getSubPath } from '@/utils/common-utils';
 // };
 // return await gdgov(info, ctx);
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -181,13 +180,13 @@ const gdgov = async (info, ctx) => {
                     for (const item of interpretations) {
                         item.jd_content = item.jd_content?.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
                     }
-                    const pubDate = data.pub_time ? parseDate(data.pub_time) : undefined;
+                    const pubDate = data.pub_time ? parseDate(data.pub_time, 8) : undefined;
 
                     return {
                         link,
                         title: data.art_title,
                         description: renderZcjdpt(data),
-                        pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                        pubDate,
                         author: /本/.test(data.pub_unite) ? authorIsMe : data.pub_unite,
                     };
                 });
@@ -205,7 +204,7 @@ const gdgov = async (info, ctx) => {
 
                 // Extract the publication date.
                 const pubDate = pubDateElement === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDateElement).text().trim().match(pubDateMatch)?.[1]?.trim().replaceAll(/(-*$)/g, '');
-                const parsedDate = pubDate ? parseDate(pubDate, pubDateFormat) : undefined;
+                const parsedDate = pubDate ? parseDate(pubDate, pubDateFormat, 8) : undefined;
 
                 // Extract the article title.
                 const title = titleElement === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(titleElement).text().trim().match(titleMatch)?.[1];
@@ -223,7 +222,7 @@ const gdgov = async (info, ctx) => {
                     link,
                     title,
                     description,
-                    pubDate: parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                    pubDate: parsedDate,
                     author: /本/.test(author!) ? authorIsMe : author,
                 };
             });

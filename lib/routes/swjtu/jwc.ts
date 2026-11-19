@@ -7,8 +7,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'http://jwc.swjtu.edu.cn';
 const pageURL = `${rootURL}/vatuu/WebAction?setAction=newsList`;
@@ -77,7 +76,7 @@ const getItem = async (item) => {
             throw error;
         }
     });
-    return { title: newsTitle, pubDate: newsTime ? timezone(parseDate(newsTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined, link, ...details };
+    return { title: newsTitle, pubDate: newsTime ? parseDate(newsTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined, link, ...details };
 };
 
 export const route: Route = {

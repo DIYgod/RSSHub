@@ -35,7 +35,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' });
+    const today = Temporal.Now.plainDateISO('Asia/Shanghai').toString();
     const response = await ofetch(`${rootUrl}/f/recruitmentFair/ajax_calendar_list`, {
         query: { time: today.slice(0, 7) },
     });

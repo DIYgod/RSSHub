@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yzb',
@@ -45,7 +44,7 @@ async function handler() {
             if (!href || !title) {
                 return [];
             }
-            return { title, link: new URL(href, link).href, pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8) };
+            return { title, link: new URL(href, link).href, pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 8) };
         });
 
     const detailedItems = await pMap(

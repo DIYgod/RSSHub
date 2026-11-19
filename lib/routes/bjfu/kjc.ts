@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/kjc',
@@ -48,7 +47,7 @@ async function handler(ctx) {
                 .find('.ll_con_r_b_time')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date?.[0] ?? ''), 8);
+            const pubDate = parseDate(date?.[0] ?? '', 8);
 
             return {
                 title,

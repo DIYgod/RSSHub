@@ -4,8 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/doc',
@@ -39,11 +38,11 @@ async function handler() {
         body: new URLSearchParams({ pageIndex: '1' }),
     });
     const list = response.data.list.map((item): DataItem => {
-        const pubDate = item.PUBLISHED_TIME_FORMAT ? timezone(parseDate(item.PUBLISHED_TIME_FORMAT, 'YYYY-MM-DD', true), 8) : undefined;
+        const pubDate = item.PUBLISHED_TIME_FORMAT ? parseDateStrict(item.PUBLISHED_TIME_FORMAT, 'YYYY-MM-DD', 8) : undefined;
         return {
             title: item.TITLE,
             link: new URL(item.URL, link).href,
-            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
         };
     });
 
@@ -55,7 +54,7 @@ async function handler() {
 
                 item.description = $('.article-content').html();
                 item.author = $('dd.addWidth:nth-child(3) div').text().trim();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss', 8) : item.pubDate;
                 item.category = $('.OwnerDept font')
                     .toArray()
                     .map((item) => $(item).text().trim());

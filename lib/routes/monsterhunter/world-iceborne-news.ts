@@ -21,7 +21,7 @@ export const route: Route = {
 
 async function handler() {
     const url = 'https://www.monsterhunter.com/world-iceborne/cn/news/';
-    const response = await ofetch(`https://www.monsterhunter.com/world-iceborne/assets/data/cn/news.json?_=${Date.now()}`);
+    const response = await ofetch(`https://www.monsterhunter.com/world-iceborne/assets/data/cn/news.json?_=${Temporal.Now.instant().epochMilliseconds}`);
 
     const list: Array<{ title: string; img: string; link: string; isExternal: boolean }> = response.topics
         .map((item) => ({

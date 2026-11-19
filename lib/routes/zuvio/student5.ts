@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { apiUrl, getBoards, renderDesc, rootUrl, token } from './utils';
 
@@ -27,12 +26,11 @@ export const route: Route = {
     handler,
 };
 
-const getPublicationDate = (value?: string): Date | undefined => {
+const getPublicationDate = (value?: string): Temporal.Instant | undefined => {
     if (typeof value !== 'string' || !/\S/.test(value)) {
         return undefined;
     }
-    const date = timezone(parseDate(value), 8);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 8);
 };
 
 async function handler(ctx): Promise<Data> {

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cc/:type?',
@@ -71,7 +70,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: dateStr ? timezone(parseDate(dateStr), 8) : undefined,
+                    pubDate: dateStr ? parseDate(dateStr, 8) : undefined,
                     author: publisher,
                 };
             })

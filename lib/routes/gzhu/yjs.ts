@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { fetchArticle as fetchWechatArticle } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -47,7 +47,7 @@ async function handler() {
             title: a.find('h3').text(),
             description: a.find('.tx p').html() ?? undefined,
             link: new URL(a.attr('href')!, link).href,
-            pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+            pubDate: date,
         };
     });
 

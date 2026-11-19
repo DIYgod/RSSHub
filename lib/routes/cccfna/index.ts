@@ -4,9 +4,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category/:type?',
@@ -63,11 +62,11 @@ export const route: Route = {
                 .toArray()
                 .map(async ([data]) => {
                     const article = await evaluateScriptData<{ url: string; title: string; time: string }>(`var article=${data}`, 'article');
-                    return { title: article.title, link: article.url, pubDate: timezone(parseDate(article.time, 'YYYY-MM-DD'), 8) };
+                    return { title: article.title, link: article.url, pubDate: parseDate(article.time, 'YYYY-MM-DD', 8) };
                 })
         );
         if (ctx.req.query('sorted') !== 'false') {
-            list = list.toSorted((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+            list = list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         list = list.slice(0, getRouteLimit(ctx, 15));
 
@@ -79,7 +78,7 @@ export const route: Route = {
                     const content = $('.list_cont');
 
                     item.title = content.find('.title').text();
-                    item.pubDate = timezone(parseDate(content.find('.tip > .time').text(), '发布时间：YYYY-MM-DD'), 8);
+                    item.pubDate = parseDate(content.find('.tip > .time').text(), '发布时间：YYYY-MM-DD', 8);
                     item.description = content.find('#article-content').html()!;
 
                     return item;

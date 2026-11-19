@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -44,7 +43,7 @@ export const handler = async (ctx) => {
                           ]
                         : undefined,
                 }),
-                pubDate: timezone(parseDate($item.find('div.a9-rich-card-list_infos').text()), 8),
+                pubDate: parseDate($item.find('div.a9-rich-card-list_infos').text(), 8),
                 language,
             };
         });
@@ -78,14 +77,12 @@ export const handler = async (ctx) => {
                         .text()
                         .split(/：/)
                         .pop();
-                item.pubDate = timezone(
-                    parseDate(
-                        $$('div.authi em')
-                            .first()
-                            .text()
-                            .match(/发表于 (\d+-\d+-\d+ \d+:\d+)/)?.[1] ?? $$('span.c-article-main_content-intro-item').first().text(),
-                        ['YYYY-M-D HH:mm', 'YYYY-MM-DD HH:mm']
-                    ),
+                item.pubDate = parseDate(
+                    $$('div.authi em')
+                        .first()
+                        .text()
+                        .match(/发表于 (\d+-\d+-\d+ \d+:\d+)/)?.[1] ?? $$('span.c-article-main_content-intro-item').first().text(),
+                    ['YYYY-M-D HH:mm', 'YYYY-MM-DD HH:mm'],
                     8
                 );
                 item.language = language;

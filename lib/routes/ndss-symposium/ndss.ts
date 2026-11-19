@@ -8,7 +8,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.ndss-symposium.org';
 const apiUrl = rootUrl + '/wp-json/wp/v2/pages?slug=accepted-papers';

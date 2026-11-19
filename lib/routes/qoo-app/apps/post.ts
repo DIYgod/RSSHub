@@ -4,9 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { appsUrl, createPageFetcher, fixImg, newsUrl } from '../utils';
 
@@ -49,7 +47,7 @@ async function handler(ctx) {
                     title: a.attr('title')!,
                     link: a.attr('href'),
                     // description: item.find('.img-list').html() + item.find('.text-view').html(),
-                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
                     author: $item.find('cite.name').text(),
                     postId: a.attr('href')!.split('/').pop(),
                 };
@@ -65,7 +63,7 @@ async function handler(ctx) {
                     fixImg($);
 
                     item.description = $.html();
-                    item.pubDate = parseDateInTimezone(data.date_gmt, 0);
+                    item.pubDate = parseDate(data.date_gmt, 0);
 
                     return item;
                 }),

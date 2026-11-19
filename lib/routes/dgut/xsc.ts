@@ -6,9 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xsc/:type?',
@@ -54,12 +53,12 @@ async function handler(ctx: Context) {
             }
             return {
                 title,
-                pubDate: timezone(parseDate($item.find('.time').text()), 8),
+                pubDate: parseDate($item.find('.time').text(), 8),
                 link: new URL($item.find('a').attr('href')!, host).href,
             };
         })
         .filter((item) => item !== undefined);
-    const ordered = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    const ordered = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     const items = await pMap(
         ordered.slice(0, limit),
         (item) =>

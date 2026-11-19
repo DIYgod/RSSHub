@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootURL = 'https://scai.swjtu.edu.cn';
 
@@ -65,10 +64,7 @@ const partition = {
     },
 };
 
-const getCalendarDate = (parts: string[] | undefined): Date | undefined => {
-    const date = parts ? parseDate(`${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`, 'YYYY-MM-DD', true) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
-};
+const getCalendarDate = (parts: string[] | undefined): Temporal.Instant | undefined => (parts ? parseDateStrict(`${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined);
 
 async function getArticle(link: string): Promise<Partial<DataItem>> {
     const res = await ofetch(link);

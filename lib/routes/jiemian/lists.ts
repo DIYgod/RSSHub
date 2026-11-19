@@ -125,7 +125,7 @@ async function handler(ctx: Context): Promise<Data> {
         const kuaixunResponse = await ofetch('https://papi.jiemian.com/page/api/kuaixun/getlistmore', {
             query: {
                 cid: kbId,
-                start_time: Math.floor(Date.now() / 1000),
+                start_time: Math.floor(Temporal.Now.instant().epochMilliseconds / 1000),
                 page: 1,
                 tagid: kbId.replace('kb', ''),
             },

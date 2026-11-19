@@ -8,18 +8,17 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 function parsePublicationDate(value: string | number | undefined) {
     if (value === undefined || (typeof value === 'string' && !value.trim())) {
         return;
     }
-    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) && !Number.isFinite(parseDate(value.slice(0, 10), 'YYYY-MM-DD', true).getTime())) {
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) && !parseDateStrict(value.slice(0, 10), 'YYYY-MM-DD')) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 async function getArticleContent(link: string) {
     const response = await ofetch(link);

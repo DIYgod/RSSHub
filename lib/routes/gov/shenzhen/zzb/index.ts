@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const rootURL = 'http://www.zzb.sz.gov.cn/';
@@ -72,14 +71,14 @@ async function handler(ctx) {
             title: `深圳组工在线 - ${data.category.name}`,
             link: new URL(`/${currentCategory.path}/index.html?pub_point=${currentCategory.path}`, rootURL).href,
             item: data.articles.slice(0, data.category.post_per_page).map((item) => {
-                const pubDate = item.visible_publish_time ? parseDate(item.visible_publish_time, 'X') : item.date ? timezone(parseDate(item.date, 'YYYY-MM-DD', true), 8) : undefined;
+                const pubDate = item.visible_publish_time ? parseDate(item.visible_publish_time, 'X') : item.date ? parseDateStrict(item.date, 'YYYY-MM-DD', 8) : undefined;
                 return {
                     title: item.title,
                     link: new URL(item.url, rootURL).href,
                     description: item.abstract && item.abstract !== item.title ? item.abstract : undefined,
                     author: item.author || undefined,
                     category: data.category.name,
-                    pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                 };
             }),
         };
@@ -100,7 +99,7 @@ async function handler(ctx) {
             return {
                 title: tag.text(),
                 link: tag.attr('href'),
-                pubDate: timezone(parseDate(tag2.text().trim(), 'YYYY/MM/DD'), 0),
+                pubDate: parseDate(tag2.text().trim(), 'YYYY/MM/DD', 0),
             };
         });
 

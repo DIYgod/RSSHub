@@ -4,9 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://xgzlyhd.samr.gov.cn';
 const apiUrl = new URL('gjjly/message/getMessageList', rootUrl).href;
@@ -203,7 +202,7 @@ async function handler(ctx) {
         author: `${item.lyr} ⇄ ${item.fzsjCn}`,
         category: [item.fzsjCn],
         guid: `${currentUrl}#${item.zj}`,
-        pubDate: item.pubtime ? timezone(parseDate(item.pubtime), 8) : undefined,
+        pubDate: item.pubtime ? parseDate(item.pubtime, 8) : undefined,
     }));
 
     const { data: currentResponse } = await got(currentUrl);

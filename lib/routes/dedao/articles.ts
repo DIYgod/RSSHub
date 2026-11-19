@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/articles/:id?',
@@ -124,7 +125,7 @@ async function handler(ctx) {
         articles.map((article) => {
             const postUrl = `https://m.igetget.com/share/course/article/article_id/${article.id}`;
             const postTitle = article.title;
-            const postTime = new Date(article.publish_time * 1000).toUTCString();
+            const postTime = parseDate(article.publish_time, 'X');
 
             return cache.tryGet<any>(postUrl, async () => {
                 const detailResponse = await got.get(postUrl, { headers });

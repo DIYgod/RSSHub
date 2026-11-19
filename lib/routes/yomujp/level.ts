@@ -4,8 +4,7 @@ import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:level?',
@@ -35,9 +34,9 @@ function parseGmtDate(value: string | undefined) {
     if (!value) {
         return;
     }
-    const date = parseDate(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true);
-    if (Number.isFinite(date.getTime())) {
-        return timezone(date, 0);
+    const date = parseDateStrict(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 0);
+    if (date) {
+        return date;
     }
 }
 function getAuthor($: CheerioAPI) {

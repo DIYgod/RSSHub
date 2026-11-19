@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/comic/:id',
@@ -48,7 +47,7 @@ async function handler(ctx: Context) {
                   });
             return {
                 title: article.subtitle,
-                pubDate: article.serviceDateDescription ? timezone(parseDate(article.serviceDateDescription, 'YY.MM.DD'), 9) : undefined,
+                pubDate: article.serviceDateDescription ? parseDate(article.serviceDateDescription, 'YY.MM.DD', 9) : undefined,
                 link,
                 ...detail,
             };

@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 async function loadContent(link, guid) {
     const res = await got({ method: 'get', url: link });

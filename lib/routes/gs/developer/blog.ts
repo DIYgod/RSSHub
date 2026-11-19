@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/developer/blog',
@@ -65,8 +65,7 @@ function parsePublishedDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value, 'MMMM D, YYYY');
 }
 
 async function handlerRoute(): Promise<Data> {

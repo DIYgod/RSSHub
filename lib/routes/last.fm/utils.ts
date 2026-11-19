@@ -1,23 +1,14 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { html } from 'hono/html';
 import type { Request } from 'patchright';
 
 import type { Data, DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.last.fm';
 const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch']);
 const staticOrigins = new Set([baseUrl, 'https://cdn.jsdelivr.net', 'https://www.googletagmanager.com', 'https://cdn.snigelweb.com', 'https://a.pub.network', 'https://fonts.googleapis.com']);
-const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const timeZoneError = 'Last.fm did not provide a valid display time zone. Configure LASTFM_API_KEY to use the official API.';
 // four steps may wait 30 seconds each
 const browserCloseTimeout = 130000;
@@ -41,29 +32,22 @@ function isPublicRequestAllowed(request: Request, pagePath: string) {
 }
 
 function parsePublicDate(value: string, timeZone: string) {
-    const parts = /^[a-z]+ (\d{1,2}) ([a-z]{3}) (\d{4}), (\d{1,2}):(\d{2})(am|pm)$/i.exec(value);
-    if (!parts) {
+    const wallTime = parseDateStrict(value, 'dddd D MMM YYYY, h:mma')?.toZonedDateTimeISO('UTC').toPlainDateTime();
+    if (!wallTime || wallTime.toLocaleString('en-US', { weekday: 'long' }) !== value.split(' ', 1)[0]) {
         throw new Error('Last.fm returned an unrecognised track timestamp. Configure LASTFM_API_KEY to use the official API.');
     }
-    const [, day, month, year, hour, minute, period] = parts;
-    const hour24 = (Number(hour) % 12) + (period === 'pm' ? 12 : 0);
-    const numericTime = `${year}-${String(monthNames.indexOf(month) + 1).padStart(2, '0')}-${day.padStart(2, '0')} ${String(hour24).padStart(2, '0')}:${minute}`;
-    const wallTime = dayjs.utc(numericTime, 'YYYY-MM-DD HH:mm', true);
-    if (Number(hour) < 1 || Number(hour) > 12 || !wallTime.isValid() || wallTime.locale('en').format('dddd D MMM YYYY, h:mma') !== value) {
-        throw new Error('Last.fm returned an unrecognised track timestamp. Configure LASTFM_API_KEY to use the official API.');
-    }
-    const date = dayjs.tz(wallTime.format('YYYY-MM-DD HH:mm'), 'YYYY-MM-DD HH:mm', timeZone);
-    if (date.format('YYYY-MM-DD HH:mm') !== wallTime.format('YYYY-MM-DD HH:mm')) {
+    const date = wallTime.toZonedDateTime(timeZone);
+    if (!date.toPlainDateTime().equals(wallTime)) {
         throw new Error('Last.fm returned an invalid local track timestamp. Configure LASTFM_API_KEY to use the official API.');
     }
-    return parseDate(date.toISOString());
+    return date.toInstant();
 }
 
 function addRecentGuids(items: DataItem[]) {
     const occurrences = new Map<string, number>();
     // Count from the oldest row so a new play in the same minute keeps existing IDs.
     for (const item of items.toReversed()) {
-        const timestamp = item.pubDate instanceof Date ? item.pubDate.getTime() : 'nowplaying';
+        const timestamp = item.pubDate instanceof Temporal.Instant ? item.pubDate.epochMilliseconds : 'nowplaying';
         const key = `${item.link}#scrobble-${timestamp}`;
         const occurrence = (occurrences.get(key) ?? 0) + 1;
         occurrences.set(key, occurrence);

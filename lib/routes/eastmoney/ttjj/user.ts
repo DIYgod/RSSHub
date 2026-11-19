@@ -4,9 +4,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface UserPost {
     post_id: string;
@@ -61,11 +60,11 @@ async function handler(ctx) {
     });
 
     const data: UserPost[] = listResponse.data.re;
-    const list = data.map((item) => ({ ...item, pubDate: timezone(parseDate(item.post_display_time, 'YYYY-MM-DD HH:mm:ss'), 8) }));
+    const list = data.map((item) => ({ ...item, pubDate: parseDate(item.post_display_time, 'YYYY-MM-DD HH:mm:ss', 8) }));
     const sorted = ctx.req.query('sorted') !== 'false';
-    const hasDates = list.every((item) => Number.isFinite(item.pubDate.getTime()));
+    const hasDates = list.every((item) => item.pubDate !== undefined);
     if (sorted && hasDates) {
-        list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        list.sort((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
     }
     const limit = getRouteLimit(ctx);
     const candidates = limit && (!sorted || hasDates) ? list.slice(0, limit) : list;

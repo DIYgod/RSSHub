@@ -8,7 +8,7 @@ import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 // Strip '-zh-hans' suffix from display names for cleanliness
 const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');

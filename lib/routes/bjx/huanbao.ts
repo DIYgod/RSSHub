@@ -5,8 +5,7 @@ import type { APIRequestContext } from 'patchright';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { fetchBjxPage, getBjxPage } from './utils';
@@ -102,7 +101,7 @@ const fetchPage = (link: string, context: APIRequestContext) =>
         const item = {
             title: $page('title').text(),
             description: pages.map(($p) => $p('.cc-article').html() ?? '').join(''),
-            pubDate: timezone(parseDate($page('.cc-headline .box p span').eq(0).text()), 8),
+            pubDate: parseDate($page('.cc-headline .box p span').eq(0).text(), 8),
             link,
             author: $page('.cc-headline .box p span').eq(1).text(),
         };

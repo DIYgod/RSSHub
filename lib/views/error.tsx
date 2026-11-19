@@ -1,6 +1,7 @@
 import type { FC } from 'hono/jsx';
 
 import { gitDate, gitHash } from '@/utils/git-hash';
+import { toRFC822 } from '@/utils/time';
 import { Layout } from '@/views/layout';
 
 const Index: FC<{
@@ -41,7 +42,7 @@ const Index: FC<{
                         Git Hash: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{gitHash}</code>
                     </p>
                     <p className="message">
-                        Git Date: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{gitDate?.toUTCString()}</code>
+                        Git Date: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{gitDate && toRFC822(gitDate)}</code>
                     </p>
                 </div>
                 <div>

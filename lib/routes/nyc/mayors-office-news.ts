@@ -1,17 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezonePlugin from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { toTitleCase } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
-dayjs.extend(timezonePlugin);
+import { parseDate } from '@/utils/time';
 
 type SourceArticle = {
     title: string;
@@ -87,7 +81,7 @@ Categories
             return {
                 title: item.title,
                 link: baseUrl + item.link.replace('.html', ''),
-                pubDate: parseDate(dayjs.tz(item.articleDate, 'MMMM DD, YYYY', 'America/New_York').format()),
+                pubDate: parseDate(item.articleDate, 'MMMM DD, YYYY', 'America/New_York'),
                 media: imageUrl ? { content: { url: imageUrl, type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` }, thumbnail: { url: imageUrl } } : undefined,
             };
         });

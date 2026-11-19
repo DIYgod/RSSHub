@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const platformNames = { ios: 'iOS / iPadOS', tvos: 'tvOS', macos: 'macOS' };
 
@@ -40,7 +40,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('.release-version').text();
             const date = $item.find('.card-body > div').first().find('span.text-muted').text();
-            const pubDate = date ? parseDate(`${date} UTC`) : undefined;
+            const pubDate = date ? parseDate(date, 'MMM D, YYYY') : undefined;
             const content = $item.find('.card-body').children().slice(1);
             return {
                 title,

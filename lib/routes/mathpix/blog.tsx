@@ -7,8 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 </>
             );
             const date = card.find('h3').prev('div').text();
-            const pubDate = date ? parseDateInTimezone(date, 0) : undefined;
+            const pubDate = date ? parseDate(date, 0) : undefined;
             return {
                 title,
                 description,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://www.joshwcomeau.com';
 
@@ -73,6 +72,5 @@ function processDate(date: string) {
     if (!dateWithSlash) {
         return;
     }
-    const parsed = timezone(parseDate(dateWithSlash, 'MMMM/Do/YYYY', 'en'), 0);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+    return parseDate(dateWithSlash, 'MMMM/Do/YYYY', 0);
 }

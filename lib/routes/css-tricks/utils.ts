@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://css-tricks.com';
 
@@ -29,7 +28,7 @@ function extractCardsInfo(cards, mini: boolean): Card[] {
             title: articleLink.text(),
             link: new URL(articleLink.attr('href')!, rootUrl).href,
             image: $('div.article-thumbnail-wrap img').first().attr('src'),
-            pubDate: publishedAt ? timezone(parseDate(publishedAt), 0) : undefined,
+            pubDate: publishedAt ? parseDate(publishedAt, 0) : undefined,
         };
     });
 }

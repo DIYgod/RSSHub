@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dh/:language?',
@@ -63,7 +62,7 @@ async function handler(ctx) {
             return {
                 title: item[`name_${languageCode}`],
                 link: new URL(item[`link_${languageCode}`], currentUrl).href,
-                pubDate: publishedDate ? timezone(parseDate(publishedDate, language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日'), 8) : undefined,
+                pubDate: publishedDate ? parseDate(publishedDate, language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日', 8) : undefined,
             };
         })
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const source = ['isabelle-dev.sketis.net/phame/', 'isabelle-dev.sketis.net/phame/blog/'];
 

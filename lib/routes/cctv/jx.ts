@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/photo/jx',
@@ -63,7 +62,7 @@ async function handler(ctx) {
                 const date = content('head')
                     .html()
                     ?.match(/\bpublishDate\s*=\s*"(\d{14})\s*"/)?.[1];
-                item.pubDate = date ? timezone(parseDate(date, 'YYYYMMDDHHmmss'), 8) : undefined;
+                item.pubDate = date ? parseDate(date, 'YYYYMMDDHHmmss', 8) : undefined;
 
                 item.description = content('.tujitop').html();
 

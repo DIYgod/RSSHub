@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://cqe.uestc.edu.cn/';
 
@@ -84,8 +83,7 @@ async function handler(ctx) {
                 .find('span')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-            const parsedDate = newsDate ? parseDate(newsDate, 'YYYY-MM-DD', true) : undefined;
-            const newsPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
+            const newsPubDate = newsDate ? parseDateStrict(newsDate, 'YYYY-MM-DD', 8) : undefined;
 
             return {
                 title: newsTitle!,

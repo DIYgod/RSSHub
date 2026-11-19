@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/course/list/:classify?/:status?/:sellingType?',
@@ -62,8 +62,7 @@ function parseSourceDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 async function handler(ctx: Context) {

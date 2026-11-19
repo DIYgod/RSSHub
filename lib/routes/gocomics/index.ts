@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:name',
@@ -43,14 +42,15 @@ async function handler(ctx: Context) {
     }
 
     const author = strip.author?.name;
+    const pubDate = parseDate(strip.datePublished, 'MMMM D, YYYY');
     const items: DataItem[] = [
         {
             title: strip.name,
             author,
             category: ['comic'],
             description: `<img src="${strip.contentUrl}" />`,
-            pubDate: parseDate(strip.datePublished),
-            link: `${baseUrl}/${name}/${dayjs(strip.datePublished).format('YYYY/MM/DD')}`,
+            pubDate,
+            link: `${baseUrl}/${name}/${pubDate && formatDate(pubDate, 'YYYY/MM/DD')}`,
         },
     ];
 

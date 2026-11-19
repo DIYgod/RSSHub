@@ -1,7 +1,7 @@
 import type { Data, Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -11,8 +11,7 @@ function getPublicationDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 export const route: Route = {

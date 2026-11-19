@@ -1,9 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     1: '新闻',
@@ -54,7 +53,7 @@ async function handler(ctx) {
         guid: item.Id,
         title: item.Title,
         link: `${rootUrl}/NewsInfo?id=${item.Id}`,
-        pubDate: timezone(parseDate(item.Date), 8),
+        pubDate: parseDate(item.Date, 8),
     }));
 
     items = await Promise.all(

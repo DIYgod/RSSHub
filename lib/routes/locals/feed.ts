@@ -4,7 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const contentFilterMap = {
     nonplus: 'regular_content',

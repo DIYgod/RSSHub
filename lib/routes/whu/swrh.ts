@@ -1,6 +1,5 @@
 // Adapted from the computer science school route.
-// import { parseDate } from '@/utils/parse-date';
-// import timezone from '@/utils/timezone';
+// import { parseDate } from '@/utils/time';
 import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -8,8 +7,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 import { fetchArticle, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://swrh.whu.edu.cn';
@@ -17,8 +15,7 @@ function parseCalendarDate(value: string | undefined) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
 }
 class ArticleAccessError extends Error {}
 function requiresArticleAuthentication($: CheerioAPI) {

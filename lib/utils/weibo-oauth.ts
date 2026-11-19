@@ -33,7 +33,7 @@ export const createWeiboOAuthState = async (ctx: Context, feature: string | numb
         feature: String(feature),
         routeParams,
         accessScope: md5(`weibo:oauth:${config.accessKey}`),
-        expiresAt: Date.now() + stateTtl * 1000,
+        expiresAt: Temporal.Now.instant().epochMilliseconds + stateTtl * 1000,
     };
     await cache.globalCache.set(statePrefix + nonce, state, stateTtl);
     return nonce;
@@ -58,7 +58,7 @@ export const consumeWeiboOAuthState = async (nonce: string | undefined): Promise
         typeof state.feature !== 'string' ||
         (state.routeParams !== undefined && typeof state.routeParams !== 'string') ||
         !Number.isFinite(state.expiresAt) ||
-        state.expiresAt <= Date.now()
+        state.expiresAt <= Temporal.Now.instant().epochMilliseconds
     ) {
         return;
     }

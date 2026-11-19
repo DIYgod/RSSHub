@@ -1,8 +1,7 @@
 import { load } from 'cheerio'; // html parser
 
 import got from '@/utils/got'; // get web content
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export default async function get_article(url) {
     if (/^\/.*$/.test(url)) {
@@ -40,7 +39,7 @@ export default async function get_article(url) {
         .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');
 
     const item = {
-        pubDate: timezone(parseDate(date_str), 8),
+        pubDate: parseDate(date_str, 8),
         author,
         link: url,
         description,

@@ -37,7 +37,7 @@ const hex32 = () =>
 
 export const getSignedHeaders = () => {
     const nonce = generateNonce(6);
-    const timestamp = Date.now().toString();
+    const timestamp = Temporal.Now.instant().epochMilliseconds.toString();
     // server-validated signature relies on JS default codepoint sort; salt starts with digit, nonce can collide on first char with different case
     // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const signature = sha1([salt, timestamp, nonce].toSorted().join(''));

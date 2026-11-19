@@ -4,8 +4,7 @@ import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ed',
@@ -27,7 +26,7 @@ export const route: Route = {
         const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el): DataItem & { link: string } => ({
-                pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
+                pubDate: parseDate($(el).find('.news_meta').text(), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));

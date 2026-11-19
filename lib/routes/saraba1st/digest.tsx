@@ -7,9 +7,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 class RestrictedThreadError extends Error {}
 
@@ -55,7 +54,7 @@ async function handler(ctx) {
                 title: `${title}:${floor}`,
                 link: new URL(floorUrl!, `${host}/2b/`).href,
                 author: $each.find('td.by cite').first().text(),
-                pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
+                pubDate: parseDate($each.find('td.by em').first().text(), 8),
             };
         });
 

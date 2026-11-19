@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://www.tqyb.com.cn';
 
@@ -34,8 +34,7 @@ function parsePubDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(`${value} +08:00`, 'YYYY年MM月DD日 HH:mm Z');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${value} +08:00`, 'YYYY年MM月DD日 HH:mm Z');
 }
 
 async function handler() {

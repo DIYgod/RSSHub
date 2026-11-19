@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/libnews',
@@ -34,7 +33,7 @@ async function handler() {
             item: data.datas.datas.map((item) => ({
                 title: item['1'].value,
                 link: `${baseUrl}/engine2/d/${item.id}/${engineInstanceId}/0`,
-                pubDate: timezone(parseDate(item['6'].value), 8),
+                pubDate: parseDate(item['6'].value, 8),
             })),
         };
     } finally {

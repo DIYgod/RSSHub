@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/releases',
@@ -30,7 +30,7 @@ async function handler() {
                 link: `${rootUrl}#:~:text=${encodeURIComponent(title).replaceAll('-', '%2D')}`,
                 title,
                 description: $item.find('.rln-body').html(),
-                pubDate: dateText ? parseDate(`${dateText} GMT`) : undefined,
+                pubDate: dateText ? parseDate(dateText, 'MMMM D, YYYY') : undefined,
             };
         });
 

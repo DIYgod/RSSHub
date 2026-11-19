@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -100,12 +99,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     let processedItem: DataItem = {
                         title,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                         category: categories,
                         author: authors,
                         image,
                         banner: image,
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 8) : item.updated,
                         language,
                     };
 

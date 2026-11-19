@@ -5,8 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -93,7 +93,7 @@ async function handler(ctx) {
             return {
                 title: $item.attr('title') || $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: $item.prev().text() ? parseDateInTimezone($item.prev().text(), 8) : undefined,
+                pubDate: $item.prev().text() ? parseDate($item.prev().text(), 8) : undefined,
             };
         });
 
@@ -112,7 +112,7 @@ async function handler(ctx) {
                     return {
                         description: content('div.wp_articlecontent').html(),
                         author: info.match(/来源：(.*?)\s/)?.[1],
-                        pubDate: published ? parseDateInTimezone(published, 8) : undefined,
+                        pubDate: published ? parseDate(published, 8) : undefined,
                     };
                 }
 

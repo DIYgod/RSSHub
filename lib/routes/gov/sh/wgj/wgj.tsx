@@ -4,8 +4,7 @@ import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -88,8 +87,8 @@ async function handler() {
                     .filter((_, element) => $(element).attr('align') === 'right' || /text-align\s*:\s*right/.test($(element).attr('style') ?? ''))
                     .remove();
                 item.description = article.html();
-                const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD', true), 8) : undefined;
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined;
+                const pubDate = dateText ? parseDateStrict(dateText, 'YYYY-MM-DD', 8) : undefined;
+                item.pubDate = pubDate;
 
                 return item;
             })

@@ -1,16 +1,11 @@
 import { type CheerioAPI, load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(utc);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/trending/:filters?',
@@ -68,11 +63,10 @@ async function handler(ctx) {
                         .toArray()
                         .map((element) => content(element).text())
                         .join(' ');
-                const pubDate = date ? parsePublicationDate(date) : undefined;
                 return {
                     title: article.find('ArticleTitle').text(),
                     doi: article.find('ArticleId[IdType="doi"]').first().text() || undefined,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate: date ? parseDate(date, ['YYYY M D', 'YYYY MMM D', 'YYYY MMMM D', 'YYYY M', 'YYYY MMM', 'YYYY MMMM', 'YYYY']) : undefined,
                     author: article
                         .find('AuthorList > Author')
                         .toArray()
@@ -110,15 +104,6 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-
-function parsePublicationDate(value: string): Date | undefined {
-    for (const format of ['YYYY M D', 'YYYY MMM D', 'YYYY MMMM D', 'YYYY M', 'YYYY MMM', 'YYYY MMMM', 'YYYY']) {
-        const date = dayjs.utc(value, format);
-        if (date.isValid()) {
-            return date.toDate();
-        }
-    }
 }
 
 async function fetchArticleXml(ids: string) {

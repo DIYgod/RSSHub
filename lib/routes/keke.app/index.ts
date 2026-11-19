@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, fetchDetail, fetchPage, parseListItems } from './utils';
 
@@ -55,7 +55,7 @@ async function handler(ctx) {
     const html = await fetchPage(path);
     const $ = load(html, { xml: category === 'latest' });
 
-    let list: Array<{ title?: string; link: string; pubDate?: Date }>;
+    let list: Array<{ title?: string; link: string; pubDate?: Temporal.Instant }>;
     if (category === 'latest') {
         list = $('url')
             .toArray()

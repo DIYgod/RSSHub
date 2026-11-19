@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.pconline.com.cn';
 interface Item {
@@ -118,7 +118,7 @@ export const handler = async (ctx) => {
                 avatar: item.authorImg,
             },
         ],
-        pubDate: parseDateInTimezone(item.pc_pubDate, 8),
+        pubDate: parseDate(item.pc_pubDate, 8),
         link: item.url,
         description: item.summary,
         category: item.channelName,

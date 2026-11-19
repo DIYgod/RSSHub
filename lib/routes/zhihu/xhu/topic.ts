@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processImage } from '../utils';
 import auth from './auth';
@@ -52,7 +52,7 @@ async function handler(ctx) {
             let title: string | undefined;
             let description: string;
             let link: string | undefined;
-            let pubDate: Date | undefined;
+            let pubDate: Temporal.Instant | undefined;
             let author: string | undefined;
 
             switch (type) {

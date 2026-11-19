@@ -1,8 +1,6 @@
-import dayjs from 'dayjs';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newest',
@@ -41,7 +39,8 @@ async function handler() {
         const link = `https://www.icourse163.org/course/${item.schoolPanel.shortName}-${item.id}`;
         const lectors = item.termPanel.lectorPanels.map((lector) => lector.realName || lector.nickName).join('、');
         const category = (item.mocTagDtos || []).map((tag) => tag.name);
-        const startTimeString = item.termPanel.startTime === 32_503_651_201_000 ? '待定' : dayjs(item.termPanel.startTime).format('YYYY-MM-DD');
+        const startTime = parseDate(item.termPanel.startTime);
+        const startTimeString = item.termPanel.startTime === 32_503_651_201_000 ? '待定' : startTime && formatDate(startTime, 'YYYY-MM-DD');
         const media = item.VideoUrl
             ? `
         <p>

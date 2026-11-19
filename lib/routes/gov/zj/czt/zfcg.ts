@@ -4,8 +4,8 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { getCategories, signHeaders, zfcgBaseUrl } from './utils';
 
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
         categoryCode: code,
         isGov: true,
         excludeDistrictPrefix: ['90', '006011', 'H0', '001111'],
-        _t: Date.now(),
+        _t: Temporal.Now.instant().epochMilliseconds,
     });
     const { result } = await ofetch(`${zfcgBaseUrl}${path}`, {
         method: 'POST',
@@ -54,9 +54,9 @@ async function handler(ctx: Context) {
         articleId: article.articleId,
     }));
 
-    const datesKnown = list.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const datesKnown = list.every((item) => item.pubDate instanceof Temporal.Instant);
     if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        list.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     if (limit !== undefined && (ctx.req.query('sorted') === 'false' || datesKnown)) {
         list = list.slice(0, limit);
@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const path = `/portal/detail?articleId=${encodeURIComponent(item.articleId)}&timestamp=${Math.floor(Date.now() / 1000)}`;
+                const path = `/portal/detail?articleId=${encodeURIComponent(item.articleId)}&timestamp=${Math.floor(Temporal.Now.instant().epochMilliseconds / 1000)}`;
                 const { result } = await ofetch(`${zfcgBaseUrl}${path}`, {
                     headers: signHeaders('GET', path),
                 });

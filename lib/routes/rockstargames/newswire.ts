@@ -1,16 +1,10 @@
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { escapeAttribute, escapeText } from 'entities';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newswire',
@@ -226,7 +220,7 @@ async function handler() {
                 title: post.title,
                 link,
                 // timestamps carry no timezone and are always rockstar's local time (new york), regardless of locale
-                pubDate: post.created ? dayjs(parseDate(post.created, 'M/D/YY, h:mm A')).tz('America/New_York', true).toDate() : undefined,
+                pubDate: post.created ? parseDate(post.created, 'M/D/YY, h:mm A', 'America/New_York') : undefined,
                 category: [...(post.primary_tags ?? []), ...(post.secondary_tags ?? [])].map((tag) => tag.name),
                 description,
             };

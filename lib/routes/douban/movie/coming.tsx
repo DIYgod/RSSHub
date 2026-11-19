@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/movie/coming',
@@ -28,13 +27,12 @@ export const route: Route = {
     ],
     handler,
 };
-const getPubDate = (pubdate?: string[]): Date | undefined => {
+const getPubDate = (pubdate?: string[]): Temporal.Instant | undefined => {
     const datePart = pubdate?.[0]?.split('(', 1)[0];
     if (!datePart || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(datePart)) {
         return undefined;
     }
-    const date = timezone(parseDate(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0);
 };
 
 const renderDescription = (info: { title?: string; cover_url?: string; pubdate?: string[]; intro?: string; directors?: string[]; actors?: string[]; genres: string[]; wish_count?: number | string }): string =>

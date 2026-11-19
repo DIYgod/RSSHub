@@ -4,9 +4,8 @@ import { FetchError } from 'ofetch';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.nautiljon.com';
 export const route: Route = {
@@ -37,10 +36,9 @@ const parseReleaseDate = (releaseDate: string) => parseDate(releaseDate, /^\d{4}
 
 const isVolumeReleased = (releaseDate: string) => {
     const releaseDateToCheck = parseReleaseDate(releaseDate);
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
+    const todayDate = Temporal.Now.zonedDateTimeISO('UTC').startOfDay().toInstant();
 
-    return releaseDateToCheck <= todayDate;
+    return releaseDateToCheck !== undefined && Temporal.Instant.compare(releaseDateToCheck, todayDate) <= 0;
 };
 
 async function getPlanningHTML(url: string) {
@@ -90,7 +88,7 @@ async function handler() {
         return {
             title: a.text(),
             link: new URL(a.attr('href')!, host).href,
-            pubDate: timezone(parseReleaseDate(releaseDate), 0),
+            pubDate: parseReleaseDate(releaseDate),
             image: image ? new URL(image, host).href : undefined,
             category: $item.find('td.p_titre div.fl').first().text(),
         };

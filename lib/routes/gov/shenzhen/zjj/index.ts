@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 interface CategoryBase {
     link: string;
@@ -109,7 +108,7 @@ function getListDataItems($: CheerioAPI): DataItem[] {
             return {
                 title: $a.attr('title') || $a.text(),
                 link: $a.attr('href'),
-                pubDate: date ? timezone(parseDate(date, 'YY-MM-DD', true), 8) : undefined,
+                pubDate: date ? parseDateStrict(date, 'YY-MM-DD', 8) : undefined,
                 language: 'zh-CN',
             };
         });
@@ -128,7 +127,7 @@ function getTableDataItems($: CheerioAPI): DataItem[] {
             return {
                 title: $a.attr('title') || $a.text(),
                 link: $a.attr('href'),
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined,
+                pubDate: date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined,
                 language: 'zh-CN',
             };
         });

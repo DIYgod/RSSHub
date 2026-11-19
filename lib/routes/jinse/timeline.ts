@@ -5,8 +5,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -149,7 +149,6 @@ async function handler(ctx) {
     };
 }
 
-function parseTimestamp(value?: number | string): Date | undefined {
-    const date = value !== undefined && value !== '' ? parseDate(value, 'X') : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+function parseTimestamp(value?: number | string): Temporal.Instant | undefined {
+    return value !== undefined && value !== '' ? parseDate(value, 'X') : undefined;
 }

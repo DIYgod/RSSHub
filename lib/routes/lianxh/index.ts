@@ -6,8 +6,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = markdownit({
     html: true,
@@ -106,7 +106,7 @@ async function handler(ctx: Context) {
 
                 return {
                     description: md.render(response.details),
-                    pubDate: response.release_time ? parseDateInTimezone(response.release_time, 0) : undefined,
+                    pubDate: response.release_time ? parseDate(response.release_time, 0) : undefined,
                     author: response.author,
                 };
             })),

@@ -5,17 +5,15 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, toRFC822 } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure?) {
-    let expires: Date | null = null;
+    let expires: Temporal.Instant | null = null;
     if (seconds !== -1) {
-        expires = new Date();
-        expires.setTime(expires.getTime() + seconds);
+        expires = Temporal.Now.instant().add({ milliseconds: seconds });
     }
-    return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + expires.toUTCString() : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
+    return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + toRFC822(expires) : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
 };
 
 export const route: Route = {
@@ -100,7 +98,7 @@ async function handler(ctx) {
 
                 item.author = content('.uname, .user-name').first().text();
                 item.description = content('.post-cont').first().html() || content('.thread-cont').html();
-                item.pubDate = timezone(parseDate(content('.cont-top-left meta').attr('content')!), 8);
+                item.pubDate = parseDate(content('.cont-top-left meta').attr('content')!, 8);
 
                 return item;
             })

@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import { type Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type SourceArticle = { id: string; name: string; href: string; date: string };
 type SourceBlock = { type: string; content?: string; name?: string; data?: Array<{ title: string; urlAlias: string; thumbUrl: string }> };
@@ -67,7 +67,7 @@ async function handler() {
             title: article.name,
             link: `https://www.schwabnetwork.com${article.href}`,
             guid: article.id,
-            pubDate: parseDate(article.date),
+            pubDate: parseDate(article.date.slice(4), 'MMM D YYYY HH:mm:ss ZZ'),
             description: await cache.tryGet(`schwabnetwork:article:v3:${article.id}`, async () => {
                 const articleResponse = await got(`https://www.schwabnetwork.com${article.href}`);
                 const article$ = load(articleResponse.body);

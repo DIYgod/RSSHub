@@ -6,8 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     jxrb: '嘉兴日报',
@@ -125,7 +124,7 @@ export async function handler(ctx) {
                 return {
                     link: item,
                     title: content('#Title').text(),
-                    pubDate: timezone(parseDate(content('date').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate(content('date').text(), 'YYYY-MM-DD', 8),
                     description: renderToString(
                         <>
                             {attachment ? raw(attachment) : null}

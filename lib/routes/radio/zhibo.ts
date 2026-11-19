@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getAudioType } from './index';
 import { renderDescription } from './templates/description';
@@ -55,7 +55,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/pc-portal/sanji/zhibo_2.html?name=${id}`;
     const apiUrl = `${apiRootUrl}/web/appProgram/pageByColumn?${params}`;
 
-    const timestamp = Date.now();
+    const timestamp = Temporal.Now.instant().epochMilliseconds;
     const sign = CryptoJS.MD5(`${params}&timestamp=${timestamp}&key=${KEY}`).toString().toUpperCase();
 
     const response = await got({

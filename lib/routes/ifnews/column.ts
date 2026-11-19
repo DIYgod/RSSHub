@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:cid',
@@ -21,8 +21,7 @@ function getPublishedDate(value: string | undefined) {
     if (!value) {
         return;
     }
-    const date = /^\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?$/.test(value) ? parseDate(`${value.length === 10 ? `${value}T00:00:00` : value.replace(' ', 'T')}+08:00`) : parseRelativeDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return /^\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?$/.test(value) ? parseDate(`${value.length === 10 ? `${value}T00:00:00` : value.replace(' ', 'T')}+08:00`) : parseRelativeDate(value);
 }
 
 async function handler(ctx: Context) {

@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.funresearch.cn';
 const listUrl = `${rootUrl}/grant/index`;
@@ -57,7 +57,7 @@ async function handler(ctx: Context): Promise<Data> {
             title: item.title,
             link: item.link,
             author: item.author,
-            pubDate: item.date ? parseDateInTimezone(item.date, 8) : undefined,
+            pubDate: item.date ? parseDate(item.date, 8) : undefined,
             category: item.category,
         })),
     };

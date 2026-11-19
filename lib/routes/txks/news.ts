@@ -5,16 +5,16 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 const baseUrl = 'https://www.txks.org.cn/index/work.html';
 
-function getPublicationDate(value: string): Date | undefined {
+function getPublicationDate(value: string): Temporal.Instant | undefined {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
         return;
     }
     const date = parseDate(`${value}T00:00:00Z`);
-    return Number.isFinite(date.getTime()) && date.toISOString().startsWith(`${value}T`) ? date : undefined;
+    return date && toISOString(date).startsWith(`${value}T`) ? date : undefined;
 }
 
 function removeFontPresetting($: CheerioAPI): string {
@@ -38,7 +38,7 @@ function removeFontPresetting($: CheerioAPI): string {
     return content.html() || '';
 }
 
-async function getArticleItem(item: { date?: Date; title: string; link: string }): Promise<DataItem> {
+async function getArticleItem(item: { date?: Temporal.Instant; title: string; link: string }): Promise<DataItem> {
     const detail = await cache.tryGet<Pick<DataItem, 'description' | 'content'>>(`txks:article:${item.link}`, async () => {
         const { data: contentResponse } = await got(item.link);
         const content = removeFontPresetting(load(contentResponse));

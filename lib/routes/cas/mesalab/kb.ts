@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/mesalab/kb',
@@ -50,7 +49,7 @@ async function handler() {
                 return {
                     title,
                     author: $('.user_name').text(),
-                    pubDate: timezone(parseDate($('.link_postdate').text().replaceAll(/\s+/g, ' ')), 8),
+                    pubDate: parseDate($('.link_postdate').text().replaceAll(/\s+/g, ' '), 8),
                     description: $('#article_content').html()! + ($('.attachment').length ? $('.attachment').html() : '')!,
                     link,
                     category: $('.category .category_r span').first().text(),

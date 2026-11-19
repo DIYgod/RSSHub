@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { baseURL } from './const';
 
@@ -63,7 +62,7 @@ async function handler(ctx: Context): Promise<Data> {
                 link: shareLink ? new URL(shareLink, baseURL).href : undefined,
                 title: description || `${author} (${rating}/5)`,
                 author,
-                pubDate: timezone(parseDate($review1.find('div[aria-label] + div').text().trim(), 'MMMM D, YYYY'), 0),
+                pubDate: parseDate($review1.find('div[aria-label] + div').text().trim(), 'MMMM D, YYYY', 0),
 
                 // 评论内容
                 description,

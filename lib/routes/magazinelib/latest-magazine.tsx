@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://magazinelib.com';
 const renderImage = (imgUrl) =>
@@ -77,7 +77,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.link,
             category: item.categories,
-            pubDate: item.date ? parseDateInTimezone(item.date, 0) : undefined,
+            pubDate: item.date ? parseDate(item.date, 0) : undefined,
             description: item.description,
         })),
     };

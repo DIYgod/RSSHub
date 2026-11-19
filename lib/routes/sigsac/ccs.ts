@@ -71,7 +71,7 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 function getYears(ctx: Context): number[] {
-    const maxYear = new Date().getFullYear() + 1;
+    const maxYear = Temporal.Now.zonedDateTimeISO('UTC').year + 1;
     const yearParam = ctx.req.param('year');
 
     if (yearParam !== undefined) {

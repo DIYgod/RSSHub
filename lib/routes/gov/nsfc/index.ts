@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import shortcuts from './shortcuts';
 
@@ -110,7 +109,7 @@ async function handler(ctx) {
                 return {
                     title,
                     link: new URL($item.prop('href')!, currentUrl).href,
-                    ...(dateText && { pubDate: timezone(parseDate(dateText), 8) }),
+                    ...(dateText && { pubDate: parseDate(dateText, 8) }),
                 };
             });
 
@@ -140,7 +139,7 @@ async function handler(ctx) {
                             description: content('.detail-p, .main-body, #js_content').html(),
                             author: content('.detail-introduce > div').eq(2).find('span').text() || content('#js_name').text() || undefined,
                             category: [content('.detail-introduce > div').eq(1).find('span').text()].filter(Boolean),
-                            ...(wechatTimestamp ? { pubDate: parseDate(wechatTimestamp, 'X') } : dateText && { pubDate: timezone(parseDate(dateText), 8) }),
+                            ...(wechatTimestamp ? { pubDate: parseDate(wechatTimestamp, 'X') } : dateText && { pubDate: parseDate(dateText, 8) }),
                         };
                     });
                 },

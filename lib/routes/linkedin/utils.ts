@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { DataItem } from '@/types';
 
@@ -153,10 +152,10 @@ function parseCompanyName($) {
 }
 
 /**
- * Parse relative date shorthand string into a Date object
+ * Parse relative date shorthand string into a Temporal.Instant
  *
  * @param {String} shorthand The shorthand string representing the date
- * @returns {Date|null} The parsed date or null if the format is invalid
+ * @returns {Temporal.Instant|null} The parsed date or null if the format is invalid
  */
 function parseRelativeShorthandDate(shorthand) {
     const match = shorthand.match(/^(\d+)([wdmyh])$/);
@@ -166,14 +165,16 @@ function parseRelativeShorthandDate(shorthand) {
 
     const [, amount, unit] = match;
     const unitMap = {
-        w: 'week',
-        d: 'day',
-        m: 'month',
-        y: 'year',
-        h: 'hour',
+        w: 'weeks',
+        d: 'days',
+        m: 'months',
+        y: 'years',
+        h: 'hours',
     };
 
-    return dayjs().subtract(Number.parseInt(amount), unitMap[unit]);
+    return Temporal.Now.zonedDateTimeISO('UTC')
+        .subtract({ [unitMap[unit]]: Number.parseInt(amount) })
+        .toInstant();
 }
 
 export { BASE_URL, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseCompanyName, parseCompanyPosts, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam };

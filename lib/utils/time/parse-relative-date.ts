@@ -1,14 +1,7 @@
-import type { Dayjs, ManipulateType, OptionType } from 'dayjs';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import duration from 'dayjs/plugin/duration.js';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
-import weekday from 'dayjs/plugin/weekday.js';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(duration);
-dayjs.extend(isSameOrBefore);
-dayjs.extend(weekday);
+import type { TimeZone } from './fields';
+import { fieldsToInstant, now } from './fields';
+import { MAX_DATE_LENGTH, parseDate } from './parse-date';
+import { parseLenient } from './parse-format';
 
 /**
  * Defines a pattern for semantic date keywords.
@@ -19,9 +12,9 @@ interface KeywordDefinition {
      */
     regExp: RegExp;
     /**
-     * Factory function to calculate the base date (start of day) relative to the current time.
+     * Offset of the base date from today, in days.
      */
-    calc: () => Dayjs;
+    calc: (today: Temporal.ZonedDateTime) => number;
 }
 
 /**
@@ -29,17 +22,14 @@ interface KeywordDefinition {
  */
 interface UnitPattern {
     /**
-     * The unit of time manipulation (e.g., 'days', 'hours').
+     * The unit of the duration (e.g., 'days', 'hours').
      */
-    unit: ManipulateType;
+    unit: 'years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds';
     /**
      * Regular expression to match value and unit in the input string.
      */
     regExp: RegExp;
 }
-
-// No date is anywhere near this long, and Day.js takes quadratic time to look for a word token (`MMM`, `A`...)
-const MAX_DATE_LENGTH = 256;
 
 // === Pre-compiled Regular Expressions ===
 
@@ -78,63 +68,52 @@ const CN_NUM_MAP = new Map([
 ]);
 
 /**
- * Calculates the date of the most recent occurrence of a specific weekday.
+ * Calculates the offset to the most recent occurrence of a specific weekday.
  *
- * If the target weekday is the same as today or occurs later in the current week,
- * it returns the date from the previous week.
+ * If the target weekday is the same as today or occurs later in the current week, it returns the offset to the day in the previous week.
  *
  * @param targetDay - The day index: 1 (Monday) to 7 (Sunday).
- * @returns A Dayjs object representing the start of that day.
+ * @returns The offset from today, in days (always negative).
  */
-const getLastWeekday = (targetDay: number): Dayjs => {
-    const today = dayjs();
-    const currentDayIndex = today.day(); // 0 (Sun) - 6 (Sat)
-
-    // Normalize input (7=Sun) to Day.js standard (0=Sun)
-    const targetDayIndex = targetDay === 7 ? 0 : targetDay;
-
-    // Calculate difference
-    let daysToAdd = targetDayIndex - currentDayIndex;
-
-    // If the target day is today or in the future (within the standard week cycle),
-    // backtrack 7 days to find the previous occurrence.
-    if (daysToAdd >= 0) {
-        daysToAdd -= 7;
-    }
-
-    return today.add(daysToAdd, 'day').startOf('day');
-};
+const lastWeekday =
+    (targetDay: number) =>
+    (today: Temporal.ZonedDateTime): number => {
+        const days = targetDay - today.dayOfWeek;
+        // If the target day is today or in the future (within the standard week cycle),
+        // backtrack 7 days to find the previous occurrence.
+        return days >= 0 ? days - 7 : days;
+    };
 
 // Semantic Keywords configuration
 const KEYWORDS: KeywordDefinition[] = [
     {
         regExp: /^(?:今[天日早晨晚]|to?day?)/i,
-        calc: () => dayjs().startOf('day'),
+        calc: () => 0,
     },
     {
         regExp: /^(?:昨[天日早晨晚]|y(?:ester)?day?)/i,
-        calc: () => dayjs().subtract(1, 'days').startOf('day'),
+        calc: () => -1,
     },
     {
         regExp: /^(?:前天|(?:the)?d(?:ay)?b(?:eforeyesterda)?y)/i,
-        calc: () => dayjs().subtract(2, 'days').startOf('day'),
+        calc: () => -2,
     },
     {
         regExp: /^(?:明[天日早晨晚]|t(?:omorrow|(?![a-z])))/i,
-        calc: () => dayjs().add(1, 'days').startOf('day'),
+        calc: () => 1,
     },
     {
         regExp: /^(?:[后後][天日]|(?:the)?d(?:ay)?a(?:fter)?t(?:omrrow)?)/i,
-        calc: () => dayjs().add(2, 'days').startOf('day'),
+        calc: () => 2,
     },
     // Weekdays (English + Chinese)
-    { regExp: /^(?:mon(?:day)?|(?:周|星期)[1一])/i, calc: () => getLastWeekday(1) },
-    { regExp: /^(?:tue(?:sday)?|(?:周|星期)[2二两])/i, calc: () => getLastWeekday(2) },
-    { regExp: /^(?:wed(?:nesday)?|(?:周|星期)[3三])/i, calc: () => getLastWeekday(3) },
-    { regExp: /^(?:thu(?:rsday)?|(?:周|星期)[4四])/i, calc: () => getLastWeekday(4) },
-    { regExp: /^(?:fri(?:day)?|(?:周|星期)[5五])/i, calc: () => getLastWeekday(5) },
-    { regExp: /^(?:sat(?:urday)?|(?:周|星期)[6六])/i, calc: () => getLastWeekday(6) },
-    { regExp: /^(?:sun(?:day)?|(?:周|星期)[7日天])/i, calc: () => getLastWeekday(7) },
+    { regExp: /^(?:mon(?:day)?|(?:周|星期)[1一])/i, calc: lastWeekday(1) },
+    { regExp: /^(?:tue(?:sday)?|(?:周|星期)[2二两])/i, calc: lastWeekday(2) },
+    { regExp: /^(?:wed(?:nesday)?|(?:周|星期)[3三])/i, calc: lastWeekday(3) },
+    { regExp: /^(?:thu(?:rsday)?|(?:周|星期)[4四])/i, calc: lastWeekday(4) },
+    { regExp: /^(?:fri(?:day)?|(?:周|星期)[5五])/i, calc: lastWeekday(5) },
+    { regExp: /^(?:sat(?:urday)?|(?:周|星期)[6六])/i, calc: lastWeekday(6) },
+    { regExp: /^(?:sun(?:day)?|(?:周|星期)[7日天])/i, calc: lastWeekday(7) },
 ];
 
 /**
@@ -178,43 +157,25 @@ const normalize = (date: string): string => {
  * Parses a string to extract the total duration based on predefined unit patterns.
  *
  * @param str - The string containing time units (e.g., "1 hour 30 mins").
- * @returns A Dayjs Duration object representing the total time.
+ * @returns The duration, blank when the string has no unit.
  */
-const parseDuration = (str: string): plugin.Duration => {
-    let totalDuration = dayjs.duration(0);
+const parseDuration = (str: string): Temporal.Duration => {
+    // `Temporal.Duration.from` throws on an object with no unit
+    const units: Temporal.DurationLike = { seconds: 0 };
     // Remove spaces for regex unit matching
     const cleanStr = str.replaceAll(/\s+/g, '');
 
     for (const { unit, regExp } of UNIT_PATTERNS) {
         const match = regExp.exec(cleanStr);
-        if (!match) {
-            continue;
-        }
-        const val = Number(match[1]);
-        if (!Number.isNaN(val)) {
-            totalDuration = totalDuration.add(val, unit);
+        if (match) {
+            units[unit] = Number(match[1]);
         }
     }
-    return totalDuration;
+    return Temporal.Duration.from(units);
 };
 
-/**
- * A wrapper around `dayjs()` to parse standard date formats.
- * Strings longer than `MAX_DATE_LENGTH` are not parsed and give an Invalid Date.
- *
- * @param date - The date input (string, number, or Date object).
- * @param format - Optional Day.js format string(s) or config object.
- * @param localeOrStrict - Optional locale string, or the strict flag when no locale is given (mirrors `dayjs()`).
- * @param strict - Optional strict flag when a locale is given.
- * @returns A native JavaScript Date object.
- */
-export const parseDate = (date: string | number | Date, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date => {
-    if (typeof date === 'string' && date.length > MAX_DATE_LENGTH) {
-        return new Date(NaN);
-    }
-
-    return (typeof localeOrStrict === 'string' ? dayjs(date, format, localeOrStrict, strict) : dayjs(date, format, localeOrStrict)).toDate();
-};
+const MILLIS_IN_AN_HOUR = 60 * 60 * 1000;
+const TIME_FORMATS = ['HH:mm:ss', 'HH:mm', 'H:m', 'h:m a', 'h a'];
 
 /**
  * Processes a date string composed of a semantic keyword and an optional time component.
@@ -222,11 +183,11 @@ export const parseDate = (date: string | number | Date, format?: OptionType, loc
  * @param baseTime - The calculated base date (start of day).
  * @param timePart - The string segment containing the time info (e.g., "3pm", "10:00").
  * @param originalContext - The original normalized string for context detection (AM/PM modifiers).
- * @returns The resolved Date object.
+ * @returns The resolved instant.
  */
-const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalContext: string): Date => {
+const processSemanticKeyword = (baseTime: Temporal.ZonedDateTime, timePart: string, originalContext: string): Temporal.Instant => {
     if (!timePart) {
-        return baseTime.toDate();
+        return baseTime.toInstant();
     }
 
     const isPM = REGEX_IS_PM.test(originalContext);
@@ -236,44 +197,40 @@ const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalConte
     const fixTimePart = timePart.replace(REGEX_STICKY_AMPM, '$1 $2m');
 
     // Attempt 1: Parse as a duration (e.g., "8点" -> 8 hours from start of day)
-    const extraDuration = parseDuration(fixTimePart);
-    let addedMillis = extraDuration.asMilliseconds();
+    let addedMillis = parseDuration(fixTimePart).total({ unit: 'milliseconds', relativeTo: baseTime });
 
     // Attempt 2: Handle cases where duration regex fails (e.g., "3 pm" doesn't match standard units)
     const stickyMatch = REGEX_STICKY_AMPM.exec(timePart);
     if (addedMillis === 0 && stickyMatch) {
-        addedMillis = Number(stickyMatch[1]) * 60 * 60 * 1000;
+        addedMillis = Number(stickyMatch[1]) * MILLIS_IN_AN_HOUR;
     }
 
     if (addedMillis > 0) {
-        const hours = dayjs.duration(addedMillis).asHours();
+        const hours = addedMillis / MILLIS_IN_AN_HOUR;
         // Adjust for 12-hour clock context
         if (isPM && hours < 12) {
-            addedMillis += 12 * 60 * 60 * 1000;
+            addedMillis += 12 * MILLIS_IN_AN_HOUR;
         } else if (isAM && hours === 12) {
-            addedMillis -= 12 * 60 * 60 * 1000;
+            addedMillis -= 12 * MILLIS_IN_AN_HOUR;
         }
-        return baseTime.add(addedMillis, 'ms').toDate();
+        return baseTime.add({ milliseconds: addedMillis }).toInstant();
     }
 
-    // Attempt 3: Parse as a standard time string using Day.js formats
-    const composedDateStr = `${baseTime.format('YYYY-MM-DD')} ${fixTimePart}`;
-    const tried = dayjs(composedDateStr, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD H:m', 'YYYY-MM-DD h:m a', 'YYYY-MM-DD h a']);
-
-    if (tried.isValid()) {
-        let result = tried;
-        // Manual adjustment if the parser missed 12-hour context (e.g., "下午" stripped earlier)
-        if (isPM && result.hour() < 12) {
-            result = result.add(12, 'hours');
+    // Attempt 3: Parse as a standard time string
+    for (const format of TIME_FORMATS) {
+        const time = parseLenient(fixTimePart, format);
+        const tried = time && fieldsToInstant({ ...time, year: baseTime.year, month: baseTime.month, day: baseTime.day }, baseTime.timeZoneId);
+        if (tried) {
+            // Manual adjustment if the parser missed 12-hour context (e.g., "下午" stripped earlier)
+            return isPM && time.hour! < 12 ? tried.add({ hours: 12 }) : tried;
         }
-        return result.toDate();
     }
 
-    return baseTime.toDate();
+    return baseTime.toInstant();
 };
 
 /**
- * Parses a relative or semantic date string into a JavaScript Date object.
+ * Parses a relative or semantic date string to an instant.
  *
  * This function handles a variety of natural language date formats, including:
  *
@@ -295,44 +252,51 @@ const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalConte
  *    - Mixed Formats: `周五下午3点`, `Today 3 p.m.`
  *
  * 5. **Fallback**:
- *    - Any format not matched above is passed to Day.js with the provided options.
+ *    - Any format not matched above is passed to `parseDate` with the provided options.
  *
  * @param date - The relative or absolute date string to parse.
- * @param format - Optional Day.js format string(s) or config object for fallback parsing.
- * @param localeOrStrict - Optional locale string, or the strict flag when no locale is given (mirrors `dayjs()`).
- * @param strict - Optional strict flag when a locale is given.
- * @returns A parsed JavaScript Date object.
+ * @param format - The format or formats for fallback parsing. A number in this position is the time zone offset.
+ * @param timeZone - The zone where the days of the semantic keywords start and end, and the zone of the fallback: an offset in hours or an IANA id. Default: UTC.
+ * @returns The instant, or `undefined` when the input does not parse.
  */
-export const parseRelativeDate = (date: string, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date => {
+export function parseRelativeDate(date: string, timeZone: number): Temporal.Instant | undefined;
+export function parseRelativeDate(date: string, format?: string | string[], timeZone?: TimeZone): Temporal.Instant | undefined;
+export function parseRelativeDate(date: string, format?: string | string[] | number, timeZone?: TimeZone): Temporal.Instant | undefined {
     if (!date) {
-        return new Date();
+        return undefined;
     }
-
+    if (typeof format === 'number') {
+        return parseRelativeDate(date, undefined, format);
+    }
+    if (typeof date !== 'string') {
+        return parseDate(date, format, timeZone);
+    }
     if (date.length > MAX_DATE_LENGTH) {
-        return parseDate(date, format, localeOrStrict, strict);
+        return undefined;
     }
 
     const normalized = normalize(date);
+    const today = now(timeZone);
 
     // Strategy 1: Immediate Time
     if (normalized === 'just now') {
-        return dayjs().subtract(3, 'seconds').toDate();
+        return today.subtract({ seconds: 3 }).toInstant();
     }
 
     // Strategy 2: Relative Duration
     const agoMatch = REGEX_AGO.exec(normalized);
     if (agoMatch) {
         const duration = parseDuration(agoMatch[1]);
-        if (duration.asMilliseconds() > 0) {
-            return dayjs().subtract(duration).toDate();
+        if (!duration.blank) {
+            return today.subtract(duration).toInstant();
         }
     }
 
     const inMatch = REGEX_IN.exec(normalized);
     if (inMatch) {
         const duration = parseDuration(inMatch[1] || inMatch[2]);
-        if (duration.asMilliseconds() > 0) {
-            return dayjs().add(duration).toDate();
+        if (!duration.blank) {
+            return today.add(duration).toInstant();
         }
     }
 
@@ -341,12 +305,12 @@ export const parseRelativeDate = (date: string, format?: OptionType, localeOrStr
     for (const word of KEYWORDS) {
         const match = word.regExp.exec(cleanStr);
         if (match) {
-            const baseTime = word.calc();
+            const baseTime = today.startOfDay().add({ days: word.calc(today) });
             const timePart = cleanStr.replace(word.regExp, '');
             return processSemanticKeyword(baseTime, timePart, normalized);
         }
     }
 
-    // Strategy 4: Fallback to standard Day.js parsing
-    return parseDate(date, format, localeOrStrict, strict);
-};
+    // Strategy 4: Fallback to standard parsing
+    return parseDate(date, format, timeZone);
+}

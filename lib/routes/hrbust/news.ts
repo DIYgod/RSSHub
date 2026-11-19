@@ -5,8 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -125,7 +124,7 @@ async function handler(ctx) {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
+            const pubDate = pubDateText ? parseDate(pubDateText, 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,
@@ -146,7 +145,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 const dateText = content('p.xinxi span:contains("日期时间：")').text().replace('日期时间：', '').trim();
-                const pubTime = dateText ? timezone(parseDate(dateText), 8) : null;
+                const pubTime = dateText ? parseDate(dateText, 8) : null;
                 if (pubTime) {
                     item.pubDate = pubTime;
                 }

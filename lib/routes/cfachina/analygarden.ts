@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/servicesupport/analygarden/:program?',
@@ -75,7 +74,7 @@ async function handler(ctx) {
             title: item.docTitle,
             author: item.docAuthor,
             link,
-            pubDate: timezone(parseDate(item.operTime), 8),
+            pubDate: parseDate(item.operTime, 8),
             enclosure_url: link,
             enclosure_type: `application/${link.split('.').pop()}`,
         };

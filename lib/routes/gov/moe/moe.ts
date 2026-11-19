@@ -4,8 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const moeUrl = 'https://www.moe.gov.cn/';
 const typesIdMap = [
@@ -101,7 +100,7 @@ async function handler(ctx) {
                           }
 
                           const pubDate = data('meta[name="PubDate"]').attr('content');
-                          return { title: data('meta[name="ArticleTitle"]').attr('content'), description, pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined };
+                          return { title: data('meta[name="ArticleTitle"]').attr('content'), description, pubDate: pubDate ? parseDate(pubDate, 8) : undefined };
                       });
 
                 return {

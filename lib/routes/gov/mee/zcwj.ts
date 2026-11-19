@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 const categories = {
     zyygwj: '中央有关文件',
@@ -55,9 +54,9 @@ async function handler(ctx) {
                 return [];
             }
             seen.add(itemLink);
-            return [{ title: anchor.text(), link: itemLink, pubDate: timezone(parseDate(row.find('.date').text()), 8) }];
+            return [{ title: anchor.text(), link: itemLink, pubDate: parseDate(row.find('.date').text(), 8) }];
         })
-        .toSorted((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime())
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
         .slice(0, limit);
     const items = await pMap(
         list,
@@ -68,7 +67,7 @@ async function handler(ctx) {
                 const date = content('meta[name="PubDate"]').attr('content');
                 return {
                     ...item,
-                    ...(date && { pubDate: timezone(parseDate(date), 8) }),
+                    ...(date && { pubDate: parseDate(date, 8) }),
                     description: content('.TRS_Editor').html() || content('.content_body_box').html() || content('.neiright_JPZ_GK_CP').html(),
                 };
             }),

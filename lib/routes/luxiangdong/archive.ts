@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/archive',
@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got(`https://www.luxiangdong.com/content.json?t=${Date.now()}`);
+    const { data } = await got(`https://www.luxiangdong.com/content.json?t=${Temporal.Now.instant().epochMilliseconds}`);
 
     const items = data.posts.map((item) => ({
         // Article title

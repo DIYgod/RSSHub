@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -116,7 +115,7 @@ async function handler(ctx) {
                     link: item,
                     title: content('.font01').text(),
                     description: content('#ozoom').html(),
-                    pubDate: timezone(parseDate(matches[1], 'YYYY-MM/DD'), 8),
+                    pubDate: parseDate(matches[1], 'YYYY-MM/DD', 8),
                 };
             }),
         { concurrency: 3 }

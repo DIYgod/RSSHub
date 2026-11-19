@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category',
@@ -51,7 +50,7 @@ async function handler(ctx: Context): Promise<Data> {
 
             return {
                 title: $aTag.attr('title') || $aTag.text(),
-                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
+                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
                 link: new URL($aTag.attr('href')!, link).href,
             };
         });

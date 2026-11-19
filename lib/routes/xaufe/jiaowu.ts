@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 // Yep http is bad, but I had no choice :(
 const rootMeta = {
@@ -69,11 +69,11 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const rawDate = $item.children('span').text();
-            const pubDate = rawDate ? parseDate(rawDate, 'YYYY-MM-DD', true) : undefined;
+            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD') : undefined;
             const title = $item.find('a em').text();
             const link = new URL($item.children('a').attr('href')!, rootMeta.url + category.url).href;
             return {
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 title,
                 link,
             };

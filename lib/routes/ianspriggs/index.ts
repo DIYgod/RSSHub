@@ -4,8 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -31,10 +31,7 @@ export const route: Route = {
 | portraits    | characters |`,
 };
 
-const parseYear = (value: string) => {
-    const date = /^\d{4}$/.test(value) ? parseDate(`${value}-01-01`, 'YYYY-MM-DD', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), 0, 1)) : undefined;
-};
+const parseYear = (value: string) => (/^\d{4}$/.test(value) ? parseDateStrict(`${value}-01-01`, 'YYYY-MM-DD') : undefined);
 
 async function handler(ctx) {
     const { category = 'portraits' } = ctx.req.param();

@@ -1,4 +1,4 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'https://matters.town';
 export const gqlEndpoint = 'https://server.matters.town/graphql';

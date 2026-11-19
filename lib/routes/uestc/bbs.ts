@@ -6,7 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface TopListItem {
     thread_id: number;
@@ -102,7 +102,7 @@ export const route: Route = {
                     link: `https://bbs.uestc.edu.cn/thread/${item.thread_id}`,
                     author: item.author,
                     category: item.label,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     description,
                 };
             },

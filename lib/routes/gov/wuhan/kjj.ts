@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/kjj/:caty',
@@ -54,11 +53,11 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const a = $item.find('a[href]');
             const date = $item.find('span').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 
@@ -68,10 +67,10 @@ async function handler(ctx: Context) {
                 const res = await ofetch(item.link!);
                 const content = load(res);
                 const date = content('meta[name="PubDate"]').attr('content');
-                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
+                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
 
                 item.description = content('div.art_content').html();
-                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
+                item.pubDate = pubDate ?? item.pubDate;
                 return item;
             })
         )

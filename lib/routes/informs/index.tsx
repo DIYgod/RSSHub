@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://pubsonline.informs.org';
 
@@ -66,7 +66,7 @@ async function handler(ctx) {
             return {
                 title: $(item).find('h5.issue-item__title').text(),
                 link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
-                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
             };
         });
     const items = await Promise.all(

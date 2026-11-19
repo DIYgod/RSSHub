@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -36,9 +35,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                 link: linkUrl,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                updated: upDatedStr ? parseDate(upDatedStr, 8) : undefined,
                 language,
             };
 
@@ -64,12 +63,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                     content: {
                         html: description,
                         text: $$('div.newsview').text(),
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                    updated: upDatedStr ? parseDate(upDatedStr, 8) : item.updated,
                     language,
                 };
 

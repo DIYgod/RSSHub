@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     0: '全部',
@@ -50,7 +49,7 @@ async function handler(ctx) {
         documentId: item.documentId,
         source: `https://open.dangdang.com/op-api/developer-platform/document/info/get?document_id=${item.documentId}`,
         link: `https://open.dangdang.com/home/notice/message/1/${item.documentId}`,
-        pubDate: item.modifyTime ? timezone(parseDate(item.modifyTime), 8) : undefined,
+        pubDate: item.modifyTime ? parseDate(item.modifyTime, 8) : undefined,
     }));
 
     const result = await pMap(

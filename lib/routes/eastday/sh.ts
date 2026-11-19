@@ -4,8 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sh',
@@ -45,7 +44,7 @@ async function handler() {
             const entity = {
                 title: item.title,
                 description: item.abstracts,
-                pubDate: timezone(parseDate(item.time), 8),
+                pubDate: parseDate(item.time, 8),
                 link,
             };
 

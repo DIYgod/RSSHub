@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const defaultDomain = 'https://www.pornhub.com';
 
@@ -31,10 +31,10 @@ function getThumbnail(e): string | undefined {
     return typeof thumbnail === 'string' && thumbnail ? thumbnail : undefined;
 }
 
-function parsePublishDate(e): Date | undefined {
+function parsePublishDate(e): Temporal.Instant | undefined {
     const imageDate = extractDateFromImageUrl(e.find('img').data('mediumthumb'));
-    const date = imageDate ? parseDate(imageDate, 'YYYYMMDD', true) : undefined;
-    if (date && !Number.isNaN(date.getTime())) {
+    const date = imageDate ? parseDateStrict(imageDate, 'YYYYMMDD') : undefined;
+    if (date) {
         return date;
     }
 }

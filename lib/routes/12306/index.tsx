@@ -117,7 +117,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const requestedDate = ctx.req.param('date');
-    const date = ['today', 'tomorrow'].includes(requestedDate) ? new Date(Date.now() + (requestedDate === 'tomorrow' ? 24 * 60 * 60 * 1000 : 0)).toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' }) : requestedDate;
+    const date = ['today', 'tomorrow'].includes(requestedDate)
+        ? Temporal.Now.instant()
+              .add({ hours: requestedDate === 'tomorrow' ? 24 : 0 })
+              .toZonedDateTimeISO('Asia/Shanghai')
+              .toPlainDate()
+              .toString()
+        : requestedDate;
     const fromStationInfo = await getStationInfo(ctx.req.param('from'));
     const toStationInfo = await getStationInfo(ctx.req.param('to'));
     const type = ctx.req.param('type') ?? 'ADULT';

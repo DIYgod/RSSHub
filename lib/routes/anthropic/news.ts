@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -36,7 +37,7 @@ async function handler(ctx) {
             const $link = $el.find('a[class$="_title-link"]');
             const title = $link.text().trim();
             const href = $link.attr('href') ?? '';
-            const pubDate = $el.find('time').text().trim();
+            const pubDate = parseDate($el.find('time').text().trim(), 'MMM D, YYYY');
             const link = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
                 title,

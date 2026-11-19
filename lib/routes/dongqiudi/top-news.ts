@@ -3,7 +3,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processFeedType2 } from './utils';
 
@@ -40,7 +40,7 @@ async function handler(ctx) {
     const articles = data.articles;
     const label = data.label;
 
-    const list: Array<DataItem & { link: string; pubDate: Date }> = articles.map((item) => ({
+    const list: Array<DataItem & { link: string; pubDate: Temporal.Instant | undefined }> = articles.map((item) => ({
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.id}.html`,
         category: [item.category, ...(item.secondary_category ?? [])],

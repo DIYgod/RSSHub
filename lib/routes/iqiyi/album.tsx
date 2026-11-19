@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/album/:id',
@@ -31,12 +31,11 @@ function parseIssueTime(value: string | number | null | undefined) {
     if (!value && value !== 0) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 function getUploadDates($: CheerioAPI) {
-    const dates = new Map<string, Date>();
+    const dates = new Map<string, Temporal.Instant>();
     $('script[type="application/ld+json"]').each((_, script) => {
         let data;
         try {

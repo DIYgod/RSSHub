@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/innovation/:type?',
@@ -45,7 +45,7 @@ async function handler(ctx: Context) {
             const $elem = $(elem);
             return {
                 title: $elem.find('div > h5 > a').text(),
-                pubDate: parseRelativeDate($elem.find('span').first().text()),
+                pubDate: parseRelativeDate($elem.find('span').first().text(), 'YYYY/MM/DD'),
                 link: new URL($elem.find('div > h5 > a').attr('href')!, base).href,
             };
         });

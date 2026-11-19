@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -50,7 +49,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), 8) : undefined,
+                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate, 'YYYY.MM.DD HH:mm', 8) : undefined,
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
@@ -105,7 +104,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()!), 8);
+                item.pubDate = parseDate($$('p.push-time').text().split(/：/).pop()!, 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,

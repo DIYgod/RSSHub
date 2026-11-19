@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const sections = {
     zsgz: {
@@ -181,8 +180,7 @@ export async function handler(ctx: Context) {
                 return null;
             }
 
-            const publicationDate = dateText ? parseDate(dateText) : undefined;
-            const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : undefined;
+            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
 
             const fullLink = new URL(href, link).href;
 
@@ -203,7 +201,7 @@ export async function handler(ctx: Context) {
         })
     );
 
-    const result = items.filter((item): item is { title: string; link: string; pubDate: Date | undefined; description: string | undefined } => item !== null);
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Temporal.Instant | undefined; description: string | undefined } => item !== null);
 
     return {
         title,

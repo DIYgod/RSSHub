@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getHeaders } from './utils';
 
@@ -56,7 +55,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.pandect-content-title a').text(),
                 link: $item.find('.pandect-content-title a').attr('href'),
-                pubDate: published ? timezone(parseDate(published, ['YYYY-MM-DD', 'MM-DD HH:mm']), 8) : undefined,
+                pubDate: published ? parseDate(published, ['YYYY-MM-DD', 'MM-DD HH:mm'], 8) : undefined,
             };
         });
 

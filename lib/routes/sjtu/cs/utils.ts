@@ -5,7 +5,7 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sjtu.edu.cn';
@@ -13,7 +13,7 @@ const host = 'https://www.cs.sjtu.edu.cn';
 interface ListItem {
     title: string;
     link: string;
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
 }
 
 function parseListing(content: string): ListItem[] {

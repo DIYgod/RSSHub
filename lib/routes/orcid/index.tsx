@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id',
@@ -46,7 +45,7 @@ async function handler(ctx) {
         const info = {
             title: work.title.value,
             link: (typeof work.url === 'string' ? work.url : work.url?.value) ?? identifier?.normalizedUrl?.value ?? identifier?.url?.value,
-            pubDate: publicationDate ? timezone(parseDate(publicationDate, month ? (day ? 'YYYY-MM-DD' : 'YYYY-MM') : 'YYYY'), 0) : undefined,
+            pubDate: publicationDate ? parseDate(publicationDate, month ? (day ? 'YYYY-MM-DD' : 'YYYY-MM') : 'YYYY', 0) : undefined,
             category: work.workType?.value ? [work.workType.value] : undefined,
             description: renderToString(
                 <>

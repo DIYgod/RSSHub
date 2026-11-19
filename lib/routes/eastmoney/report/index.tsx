@@ -8,7 +8,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { getEpsOrPeStr, getRatingChangeStr } from '../utils';
 
@@ -81,12 +81,12 @@ async function handler(ctx) {
             .match(/var initdata(.=?)(.*?);/)![2]
     );
 
-    const list: Array<DataItem & { pubDate: ReturnType<typeof parseDateInTimezone>; originItem?: (typeof initData.data)[number] }> = initData.data.map((item) => {
+    const list: Array<DataItem & { pubDate: ReturnType<typeof parseDate>; originItem?: (typeof initData.data)[number] }> = initData.data.map((item) => {
         const stockName = category === 'stock' ? `[${item.stockName}]` : '';
         return {
             title: `[${item.orgSName}]${stockName}${item.title}`,
             link: `${baseUrl}/report/${linkType[category]}` + (category === 'stock' ? `/${item.infoCode}.html` : `.jshtml?encodeUrl=${item.encodeUrl}`),
-            pubDate: parseDateInTimezone(item.publishDate, 8),
+            pubDate: parseDate(item.publishDate, 8),
             author: item.researcher,
             originItem: item, // temp use
         };
@@ -111,7 +111,7 @@ async function handler(ctx) {
                     if (category === 'stock') {
                         const { stockName, stockCode, emRatingName, ratingChange, indvInduName } = tempOriginItem;
                         const ratingChangeStr = getRatingChangeStr(ratingChange);
-                        const currentYear = new Date().getFullYear();
+                        const currentYear = Temporal.Now.zonedDateTimeISO('UTC').year;
                         const nextYear = currentYear + 1;
                         const description = $('.ctx-content').html();
                         const predictThisYearEps = getEpsOrPeStr(tempOriginItem.predictThisYearEps, 3);

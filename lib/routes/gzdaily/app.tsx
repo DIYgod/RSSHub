@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/app/:column?',
@@ -50,7 +49,7 @@ async function handler(ctx) {
     const list: Array<DataItem & { link: string; description: string }> = response.list
         .filter((i) => i.newstype === 0) // Remove special report (专题) and articles from Guangzhou Converged Media Center (新花城).
         .map((item) => {
-            const pubDate = item.publishtime ? timezone(parseDate(item.publishtime), 8) : undefined;
+            const pubDate = item.publishtime ? parseDate(item.publishtime, 8) : undefined;
             return {
                 title: item.title,
                 description: renderToString(
@@ -63,7 +62,7 @@ async function handler(ctx) {
                         ) : null}
                     </>
                 ),
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 link: item.shareUrl,
                 category: item.colName ? [item.colName] : undefined,
                 author: item.arthorName,

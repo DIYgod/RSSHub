@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -76,7 +75,7 @@ export const route: Route = {
             const newsObj = nuxtData.find((item: any) => nuxtData[item.newsid] === newsId);
 
             const pubTime = nuxtData[newsObj.publishtime];
-            const pubDate = timezone(parseDate(pubTime, 'YYYY-MM-DD'), 8);
+            const pubDate = parseDate(pubTime, 'YYYY-MM-DD', 8);
             const title = nuxtData[newsObj.title];
 
             return {

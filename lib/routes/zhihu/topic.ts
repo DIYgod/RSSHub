@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { generateData } from './pin/utils';
 import { processImage, withZhihuClient } from './utils';
@@ -52,7 +52,7 @@ function handler(ctx) {
             let title = '';
             let description: string;
             let link = '';
-            let pubDate: Date;
+            let pubDate: Temporal.Instant | undefined;
             let author = '';
 
             switch (type) {

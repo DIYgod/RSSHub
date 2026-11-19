@@ -4,14 +4,13 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const getPublicationDate = (timestamp: number | undefined) => {
     if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
         return;
     }
-    const date = parseDate(timestamp, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(timestamp, 'X');
 };
 
 type ArticleData = [

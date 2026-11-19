@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDuration } from '@/utils/time';
 
 export const route: Route = {
     path: '/explore/:type',
@@ -160,14 +160,6 @@ function resolveFlightText(value: string | undefined, records: Map<string, strin
         return text;
     }
     return value === '$undefined' ? undefined : value;
-}
-
-function parseDuration(duration?: string): number | undefined {
-    if (!duration) {
-        return;
-    }
-    const parts = duration.split(':').map(Number);
-    return parts.every((part) => Number.isFinite(part) && part >= 0) ? parts.reduce((total, part) => total * 60 + part, 0) : undefined;
 }
 
 function toEnclosureType(linkType?: string): string | undefined {

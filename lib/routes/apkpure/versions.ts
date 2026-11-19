@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/versions/:pkg/:region?',

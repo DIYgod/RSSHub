@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const renderMedia = (media) => {
     const video = {
@@ -92,7 +92,7 @@ export const route: Route = {
         });
 
         const handledTypes = new Set(['HeadlineNews', 'Story', 'Columnist', 'Recap', 'Media', 'Shortstop']);
-        const list: Array<{ title: string; link: string; author?: string; pubDate?: Date; description: string }> = response.feed
+        const list: Array<{ title: string; link: string; author?: string; pubDate?: Temporal.Instant; description: string }> = response.feed
             .filter((item) => handledTypes.has(item.data.now[0].type))
             .map((item) => {
                 const itemDetail = item.data.now[0];

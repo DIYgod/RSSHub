@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     path: '/top/:period',
@@ -49,25 +49,25 @@ async function handler(ctx): Promise<Data> {
     const link = `${baseUrl}/top/${period}`;
 
     // Calculate date based on period
-    const date = new Date();
+    let date = Temporal.Now.zonedDateTimeISO('UTC');
 
     switch (period) {
         case 'week':
-            date.setDate(date.getDate() - 7);
+            date = date.subtract({ days: 7 });
             break;
         case 'month':
-            date.setMonth(date.getMonth() - 1);
+            date = date.subtract({ months: 1 });
             break;
         case 'year':
-            date.setFullYear(date.getFullYear() - 1);
+            date = date.subtract({ years: 1 });
             break;
         case 'infinity':
         default:
-            date.setFullYear(date.getFullYear() - 5);
+            date = date.subtract({ years: 5 });
             break;
     }
 
-    const publishedDate = period === 'infinity' ? '' : `&published_at%5Bgte%5D=${encodeURIComponent(date.toISOString())}`;
+    const publishedDate = period === 'infinity' ? '' : `&published_at%5Bgte%5D=${encodeURIComponent(toISOString(date.toInstant()))}`;
     const apiUrl = `https://dev.to/search/feed_content?per_page=15&sort_by=public_reactions_count&sort_direction=desc&approved=&class_name=Article${publishedDate}`;
     const response = await got({
         method: 'get',

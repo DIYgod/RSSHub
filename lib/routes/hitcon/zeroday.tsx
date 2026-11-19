@@ -5,9 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     name: '漏洞',
@@ -57,8 +56,7 @@ function parsePublicationDate(value: string) {
     if (!value.trim()) {
         return;
     }
-    const date = parseDate(value, 'YYYY/MM/DD');
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, 'YYYY/MM/DD', 8);
 }
 
 const titleMap = {

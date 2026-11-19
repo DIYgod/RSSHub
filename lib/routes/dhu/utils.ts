@@ -1,1 +1,1 @@
-export const selectItems = <T extends { pubDate: Date }>(items: T[]): T[] => items;
+export const selectItems = <T extends { pubDate?: Temporal.Instant }>(items: T[]): T[] => items;

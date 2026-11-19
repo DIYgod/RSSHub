@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface TenderRow {
     subject: string;
@@ -104,8 +103,7 @@ function parseCalendarDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss');
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, 'YYYY-MM-DD HH:mm:ss', 8);
 }
 
 export async function getTenderFeed(): Promise<Data> {

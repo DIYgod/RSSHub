@@ -4,7 +4,7 @@ import { escape } from 'entities';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/previews/:date?',
@@ -33,9 +33,9 @@ export const route: Route = {
         let { date } = ctx.req.param();
         if (!date) {
             // Use the current calendar month by default.
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
+            const now = Temporal.Now.zonedDateTimeISO('UTC');
+            const year = now.year;
+            const month = now.month;
             date = `${year}${month >= 10 ? month : '0' + month}`;
         }
 
@@ -65,8 +65,7 @@ export const route: Route = {
                 const releaseDate = /(\d{1,2})月(\d{1,2})日/.exec(rawDate);
                 const period = /^(\d{4})(\d{2})$/.exec(date);
                 const releaseCalendar = period && releaseDate && Number(period[2]) === Number(releaseDate[1]) ? `${period[1]}-${releaseDate[1].padStart(2, '0')}-${releaseDate[2].padStart(2, '0')}` : undefined;
-                const parsedDate = releaseCalendar ? parseDate(`${releaseCalendar}T00:00:00Z`) : undefined;
-                const pubDate = parsedDate && Number.isFinite(parsedDate.getTime()) && parsedDate.toISOString().startsWith(releaseCalendar!) ? parsedDate : undefined;
+                const pubDate = releaseCalendar ? parseDate(`${releaseCalendar}T00:00:00Z`) : undefined;
                 // Find the video in the selected trailer modal.
                 const modalSelector = row.find('.trailer-modal-trigger').attr('data-target') || '';
                 const previewVideoLink = modalSelector ? $(`${modalSelector} video source`).attr('src') || '' : '';

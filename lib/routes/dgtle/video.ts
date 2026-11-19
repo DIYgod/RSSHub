@@ -8,14 +8,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDuration, parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-const parseVideoDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? timezone(parseDate(date), 8) : parseRelativeDate(date));
+const parseVideoDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? parseDate(date, 8) : parseRelativeDate(date));
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 18);
@@ -68,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             language,
-            itunes_duration: item.duration ? item.duration.split(':').reduce((seconds: number, part: string) => seconds * 60 + Number(part), 0) : undefined,
+            itunes_duration: parseDuration(item.duration),
         };
 
         return processedItem;

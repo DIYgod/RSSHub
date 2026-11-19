@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const actualParametersDescTable = `
 | Name              | Default  | Description                                                                                                                                                                                                                                          |

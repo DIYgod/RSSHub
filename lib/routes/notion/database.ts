@@ -11,7 +11,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,

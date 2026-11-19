@@ -5,10 +5,9 @@ import { clean, normalizeFloor, parseArea, parseHeavyFood, parseJpy, parseMonths
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://www.athome.co.jp';
 const SLUG = /^[a-z\d_-]+$/;
@@ -263,7 +262,7 @@ const toItem = (b: Bukken, d: Detail | null): (DataItem & { _extra: ListingExtra
         title,
         link,
         guid: link,
-        pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+        pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
         description: [raw.comment, summarize(extra)].filter(Boolean).join(' / '),
         image: b.mainImage?.url ? new URL(b.mainImage.url, HOST).href : undefined,
         _extra: extra,
@@ -290,7 +289,7 @@ export const handler = async (ctx): Promise<Data> => {
     // Opening a browser per listing would be an order of magnitude more expensive. The browser is not
     // optional — the site answers a plain HTTP client for about four requests and then serves it the
     // 認証中 interstitial indefinitely, while a real browser keeps being served normally.
-    const startedAt = Date.now();
+    const startedAt = performance.now();
     const { page, destroy } = await getPlaywrightPage(listUrl, {
         gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT },
         onBeforeLoad: async (p) => {
@@ -303,7 +302,7 @@ export const handler = async (ctx): Promise<Data> => {
         try {
             // The authentication interstitial can resolve through its own scripts and reload.
             // Wait for settled SSR data instead of treating its initial title as a refusal.
-            const stateTimeout = Math.max(3000, LIST_DEADLINE_MS - (Date.now() - startedAt));
+            const stateTimeout = Math.max(3000, LIST_DEADLINE_MS - (performance.now() - startedAt));
             await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: stateTimeout });
             bukken = listOf(await page.content()).slice(0, limit);
         } catch (error) {
@@ -317,7 +316,7 @@ export const handler = async (ctx): Promise<Data> => {
                     // The page may already be gone; the message below still names the failure.
                 }
             }
-            logger.warn(`athome: ${listUrl} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
+            logger.warn(`athome: ${listUrl} failed after ${Math.round(performance.now() - startedAt)}ms (blocked=${blocked}): ${String(error)}`);
             throw new Error(
                 blocked
                     ? `athome: the site's authentication page did not resolve within ${LIST_DEADLINE_MS}ms; check source availability and reduce polling frequency`
@@ -326,7 +325,7 @@ export const handler = async (ctx): Promise<Data> => {
             );
         }
 
-        const deadline = Math.min(Date.now() + DETAIL_BUDGET_MS, startedAt + TOTAL_BUDGET_MS);
+        const deadline = Math.min(performance.now() + DETAIL_BUDGET_MS, startedAt + TOTAL_BUDGET_MS);
         let skipped = 0;
         for (const b of bukken) {
             let detail: Detail | null = null;
@@ -338,7 +337,7 @@ export const handler = async (ctx): Promise<Data> => {
                 const cached = await cache.get(key);
                 if (cached) {
                     detail = JSON.parse(cached) as Detail;
-                } else if (Date.now() < deadline) {
+                } else if (performance.now() < deadline) {
                     try {
                         // eslint-disable-next-line no-await-in-loop -- same shared tab
                         await page.goto(`${HOST}/rent_store/${b.id}/`, { waitUntil: 'domcontentloaded' });

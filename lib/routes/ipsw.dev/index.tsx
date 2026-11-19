@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index/:productID',
@@ -50,7 +49,7 @@ async function handler(ctx) {
             return {
                 title: `${productName} - ${version}`,
                 link: `https://ipsw.dev/download/${productID}/${build}`,
-                pubDate: date ? timezone(parseDate(date, 'MMMM D, YYYY'), 0) : undefined,
+                pubDate: date ? parseDate(date, 'MMMM D, YYYY', 0) : undefined,
                 guid: build,
                 description: renderToString(
                     <table>

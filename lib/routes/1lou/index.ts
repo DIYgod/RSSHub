@@ -3,9 +3,8 @@ import type { Context } from 'hono';
 
 import type { DataItem, Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { parseItems } from './util';
 
@@ -39,7 +38,7 @@ export const handler = async (ctx: Context) => {
 
             return {
                 title: subjectEl.text(),
-                pubDate: timezone(parseDate($item.find('span.date').text()), 8),
+                pubDate: parseDate($item.find('span.date').text(), 8),
                 link: new URL(subjectEl.prop('href')!, rootUrl).href,
                 category: [
                     $item.find('a.text-secondary').text().replaceAll('[]', ''),

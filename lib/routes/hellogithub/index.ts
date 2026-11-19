@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const sorts = {
     featured: '精选',
@@ -69,7 +69,7 @@ async function handler(ctx) {
         title: `${item.name}: ${item.title}`,
         author: item.author,
         link: `${rootUrl}/repository/${item.item_id}`,
-        updated: item.updated_at ? parseDateInTimezone(item.updated_at, 8) : undefined,
+        updated: item.updated_at ? parseDate(item.updated_at, 8) : undefined,
         description: item.summary,
         category: item.primary_lang ? [item.primary_lang] : undefined,
     }));

@@ -4,8 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -66,7 +65,7 @@ async function handler(ctx) {
                     title: item.title,
                     description: response.data.content,
                     author: item.author.nick,
-                    pubDate: timezone(parseDate(item.display_datetime), 8),
+                    pubDate: parseDate(item.display_datetime, 8),
                     link: `https://xnews.jin10.com/details/${item.id}`,
                 };
             })

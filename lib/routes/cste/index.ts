@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -51,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('h5').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.find('small').text()), 8),
+                pubDate: parseDate($item.find('small').text(), 8),
             };
         });
 

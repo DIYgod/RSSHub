@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/exam',
@@ -47,9 +46,9 @@ async function handler() {
             link,
             id: item.id,
             author: item.exam.organizer,
-            pubDate: item.createDate ? timezone(parseDate(item.createDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
-            updated: item.updateDate ? timezone(parseDate(item.updateDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
-            startDate: item.exam.signUpStartDate ? timezone(parseDate(item.exam.signUpStartDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+            pubDate: item.createDate ? parseDate(item.createDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+            updated: item.updateDate ? parseDate(item.updateDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+            startDate: item.exam.signUpStartDate ? parseDate(item.exam.signUpStartDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
             category: [item.examType],
             image: item.weixin,
             description: renderToString(<ExamDescription item={item} />),

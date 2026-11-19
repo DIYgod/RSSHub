@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { parseContent } from './parser';
 import { getAudioMimeType } from './util';

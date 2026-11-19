@@ -6,8 +6,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/industries/:category?',
@@ -67,7 +66,7 @@ async function handler(ctx: Context) {
                           .find((entry) => entry['@type'] === 'Article');
                       if (article?.datePublished) {
                           const date = article.datePublished;
-                          item.pubDate = /^\d{4}年\d{1,2}月\d{1,2}日$/.test(date) ? timezone(parseDate(date, 'YYYY年M月D日'), 8) : parseDate(date);
+                          item.pubDate = /^\d{4}年\d{1,2}月\d{1,2}日$/.test(date) ? parseDate(date, 'YYYY年M月D日', 8) : parseDate(date);
                       }
 
                       const content = s('.content-width-700--with-padding:has(.cmp-text), .bodyresponsivegridcontainer .cmp-text').filter((_, element) => !s(element).parents('.content-width-700--with-padding:has(.cmp-text)').length);

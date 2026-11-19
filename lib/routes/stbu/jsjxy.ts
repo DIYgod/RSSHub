@@ -4,8 +4,7 @@ import iconv from 'iconv-lite';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 export const route: Route = {
@@ -63,7 +62,7 @@ async function handler() {
                 });
                 const $ = load(gbk2utf8(response));
                 item.description = $('.content14').first().html()!.trim();
-                item.pubDate = timezone(parseDate($('.article .source').text().split('日期：', 2)[1].replace('\n', '').trim()), 8);
+                item.pubDate = parseDate($('.article .source').text().split('日期：', 2)[1].replace('\n', '').trim(), 8);
                 return item;
             })
         )

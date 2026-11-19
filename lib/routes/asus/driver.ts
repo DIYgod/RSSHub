@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getDrivers, getFileTitle, getOperatingSystems, getProductInfo, parseLanguage, renderFileDescription } from './utils';
 

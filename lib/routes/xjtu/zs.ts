@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zsxx1/zskx' } = ctx.req.param();
@@ -32,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY.MM.DD') : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
                 language,
@@ -79,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         const processedItem: DataItem = {
                             title,
                             description,
-                            pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                            pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
                             category: categories,
                             content: {
                                 html: description,

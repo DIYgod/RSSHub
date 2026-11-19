@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -214,8 +213,7 @@ function getPublicationDate(value?: string | number) {
     if (!((typeof value === 'string' && value.trim()) || (typeof value === 'number' && Number.isFinite(value)))) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDate(value, 8);
 }
 function isImageUrl(value?: string): value is string {
     if (typeof value !== 'string' || !value) {

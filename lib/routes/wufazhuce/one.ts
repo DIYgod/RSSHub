@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const apiUrl = 'https://wufazhuce.com/';
 const NAME = '「ONE · 一个」';
@@ -55,8 +54,7 @@ function parsePhotoDate($: CheerioAPI) {
     if (!/^(?:[1-9]|[12]\d|3[01])$/.test(day) || !/^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(month)) {
         return;
     }
-    const date = timezone(parseDate(`${day} ${month}`, 'D MMM YYYY', true), 8);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDateStrict(`${day} ${month}`, 'D MMM YYYY', 8);
 }
 async function handler(): Promise<Data> {
     const resp = await got(apiUrl);

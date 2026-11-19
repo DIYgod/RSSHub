@@ -7,17 +7,16 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 // Query the seven daily revisions to retain the existing empty-day selection.
 // Render each published day through the official API so templates and links
 // preserve their source meaning. Cache article HTML separately from item dates.
-function getCurrentEventsDatePath(date: Date): string {
+function getCurrentEventsDatePath(date: Temporal.PlainDate): string {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const year = date.getUTCFullYear();
-    const month = months[date.getUTCMonth()];
-    const day = date.getUTCDate(); // Not zero-padded
+    const year = date.year;
+    const month = months[date.month - 1];
+    const day = date.day; // Not zero-padded
     return `Portal:Current_events/${year}_${month}_${day}`;
 }
 // The day's items sit between a {{Current events|...|top=yes}} and a
@@ -213,16 +212,13 @@ async function handler(ctx) {
                 const pageName = getCurrentEventsDatePath(date);
                 const html = contentMap[pageName];
                 if (html) {
-                    const year = date.getUTCFullYear();
-                    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-                    const day = String(date.getUTCDate()).padStart(2, '0');
-                    const dateStr = `${year}-${month}-${day}`;
+                    const dateStr = date.toString();
                     return {
                         title: `Current events: ${dateStr}`,
                         link: `https://en.wikipedia.org/wiki/${pageName}`,
                         description: html,
                         // Represent the source calendar date without inventing a publication time.
-                        pubDate: timezone(parseDate(dateStr, 'YYYY-MM-DD', true), 0),
+                        pubDate: parseDateStrict(dateStr, 'YYYY-MM-DD', 0),
                         guid: `wikipedia-current-events-${dateStr}`,
                     };
                 }
@@ -241,8 +237,8 @@ async function handler(ctx) {
     }
 }
 function determineDates(includeToday: string) {
-    const now = new Date();
-    const currentHourUTC = now.getUTCHours();
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const currentHourUTC = now.hour;
     let shouldIncludeToday = false;
     switch (includeToday) {
         case 'always':
@@ -271,11 +267,7 @@ function determineDates(includeToday: string) {
     }
     // Create array of dates for the past 7 days, optionally including today
     const startOffset = shouldIncludeToday ? 0 : 1;
-    const dates = Array.from({ length: 7 }, (_, i) => {
-        const date = new Date(now);
-        date.setUTCDate(date.getUTCDate() - (i + startOffset));
-        return date;
-    });
+    const dates = Array.from({ length: 7 }, (_, i) => now.toPlainDate().subtract({ days: i + startOffset }));
     return dates;
 }
 async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {

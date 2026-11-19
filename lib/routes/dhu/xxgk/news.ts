@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { selectItems } from '../utils';
 
@@ -44,7 +43,7 @@ async function handler() {
             return {
                 title: colsTitle.text(),
                 link: new URL(colsTitle.attr('href')!, siteUrl).href,
-                pubDate: timezone(parseDate($item.find('.cols_meta').text(), 'YYYY-MM-DD', 'zh-cn'), 8),
+                pubDate: parseDate($item.find('.cols_meta').text(), 'YYYY-MM-DD', 8),
             };
         });
 

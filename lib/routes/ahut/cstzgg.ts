@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cstzgg',
@@ -27,12 +26,12 @@ async function handler() {
             return {
                 title: $item.find('a').text().trim(),
                 link: new URL($item.find('a').attr('href')!, `${baseUrl}/index/tzgg.htm`).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY/MM/DD'), 8),
+                pubDate: parseDate($item.find('span').text(), 'YYYY/MM/DD', 8),
             };
         });
 
     const $index = load(indexResponse);
-    const currentYear = new Date().getFullYear();
+    const currentYear = Temporal.Now.zonedDateTimeISO('UTC').year;
     const indexList = $index('div[frag="窗口21"] .i-list li')
         .toArray()
         .map((item) => {
@@ -40,7 +39,7 @@ async function handler() {
             return {
                 title: $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, `${baseUrl}/index.htm`).href,
-                pubDate: timezone(parseDate(`${currentYear}/${$item.find('span').text()}`, 'YYYY/MM/DD'), 8),
+                pubDate: parseDate(`${currentYear}/${$item.find('span').text()}`, 'YYYY/MM/DD', 8),
             };
         });
 

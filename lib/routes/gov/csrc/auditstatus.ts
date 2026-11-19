@@ -2,7 +2,7 @@ import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/auditstatus/:apply_id',
@@ -50,8 +50,7 @@ function getDate(timestamp?: number) {
     if (timestamp === undefined || timestamp === null) {
         return;
     }
-    const date = parseDate(timestamp);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(timestamp);
 }
 
 function getPublicProgress(application: Application) {

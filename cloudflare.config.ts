@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
             name,
             compatibilityDate: '2026-09-01',
             // No nodejs_compat needed, read https://developers.cloudflare.com/workers/runtime-apis/nodejs/#get-started
-            compatibilityFlags: ['global_fetch_strictly_public'],
+            compatibilityFlags: ['global_fetch_strictly_public', 'temporal'],
             entrypoint: 'dist-worker/worker.mjs',
             observability: {
                 enabled: true,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bannerItem',
@@ -57,7 +56,7 @@ async function handler() {
                     title: $item.find('.title').text(),
                     link,
                     description: $$('.hpoi-album-content').html() || `<img src="${$item.find('img').attr('src')}">`,
-                    pubDate: $item.find('.time').text().replace('发布时间：', '') ? timezone(parseDate($item.find('.time').text().replace('发布时间：', '')), 8) : undefined,
+                    pubDate: $item.find('.time').text().replace('发布时间：', '') ? parseDate($item.find('.time').text().replace('发布时间：', ''), 8) : undefined,
                 };
             });
         },

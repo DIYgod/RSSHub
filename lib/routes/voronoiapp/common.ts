@@ -6,7 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Post, PostCategory, SearchPost } from './types';
 
@@ -93,7 +93,7 @@ export async function getPostItems(params: {
 }
 const cdnUrl = 'https://cdn.voronoiapp.com/public/';
 function parsePostDate(timestamp?: number | string) {
-    return (typeof timestamp === 'number' && Number.isFinite(timestamp)) || (typeof timestamp === 'string' && timestamp && Number.isFinite(Date.parse(timestamp))) ? parseDate(timestamp) : undefined;
+    return timestamp === undefined ? undefined : parseDate(timestamp);
 }
 type SearchDetails = {
     publishedAt?: string;

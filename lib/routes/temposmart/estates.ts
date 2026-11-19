@@ -6,9 +6,8 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import type { ListingExtra } from './utils';
 import { bracketNotes, clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseMonthsSum, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from './utils';
@@ -252,7 +251,7 @@ export const handler = async (ctx): Promise<Data> => {
                 guid: card.link,
                 category: extra.tags,
                 // UTC midnight represents the source calendar day, not a publication timestamp.
-                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 0),
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 0),
                 description: summarize(extra),
                 _extra: extra,
             };

@@ -5,8 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -54,7 +53,7 @@ async function handler(ctx) {
         title: item.title,
         guid: item.library_id,
         link: `${rootUrl}/play-details/${item.library_id}`,
-        pubDate: timezone(parseDate(item.show_time_origin, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseDate(item.show_time_origin, 'YYYY-MM-DD HH:mm:ss', 8),
         category: item.tags.map((t) => t.tag_title),
     }));
 

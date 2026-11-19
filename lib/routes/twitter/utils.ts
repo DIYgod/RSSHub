@@ -1,15 +1,14 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { createElement } from '@/utils/jsx';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
-const getPublicationDate = (value?: string | number | Date): Date | undefined => {
-    if ((typeof value !== 'string' && typeof value !== 'number' && !(value instanceof Date)) || (typeof value === 'string' && !value.trim())) {
+const getPublicationDate = (value?: string | number): Temporal.Instant | undefined => {
+    if ((typeof value !== 'string' && typeof value !== 'number') || (typeof value === 'string' && !value.trim())) {
         return undefined;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY');
 };
 
 const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
@@ -342,7 +341,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                 }
                 const quoteDate = getPublicationDate(quoteData.created_at);
                 if (showTimestampInDescription && quoteDate) {
-                    quote += '<br><small>' + quoteDate;
+                    quote += `<br><small>${quoteDate}`;
                     quote += '</small>';
                     if (readable) {
                         quote += `<br clear='both' /><div style='clear: both'></div>`;

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const handler = async () => {
     const url = 'http://rss.weather.gov.hk/rss/CurrentWeather.xml';
@@ -29,7 +29,7 @@ const handler = async () => {
             return {
                 title: area,
                 description: degree,
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 link: pageUrl,
                 guid: `${$('guid').text()}#${area}`,
             };

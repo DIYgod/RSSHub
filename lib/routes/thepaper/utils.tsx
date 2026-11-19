@@ -4,15 +4,14 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const parseSourceDate = (value?: string | number) => {
     if (value === undefined || value === '') {
         return;
     }
     const sourceValue = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(value) ? `${value.replace(' ', 'T')}+08:00` : value;
-    const date = parseDate(sourceValue);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(sourceValue);
 };
 const defaultRssItem = (item) => ({
     title: item.name,
@@ -59,7 +58,7 @@ async function processItem(item, ctx) {
     let pubDate = parseSourceDate(item.pubTimeLong) ?? parseSourceDate(contentDetail.publishTime);
     if (!pubDate && contentDetail.pubTime) {
         pubDate = parseRelativeDate(contentDetail.pubTime);
-        if (Number.isNaN(pubDate.getTime())) {
+        if (!pubDate) {
             pubDate = undefined;
         }
     }

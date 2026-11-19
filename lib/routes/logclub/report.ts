@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -87,7 +87,7 @@ async function handler(ctx) {
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: item.release_time ? parseDateInTimezone(item.release_time, 8) : undefined,
+        pubDate: item.release_time ? parseDate(item.release_time, 8) : undefined,
     }));
 
     items = await pMap(

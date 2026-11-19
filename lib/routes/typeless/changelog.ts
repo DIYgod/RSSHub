@@ -8,7 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 const gunzip = promisify(gunzipCallback);
 
@@ -38,7 +38,7 @@ function getReleaseDate(value: string | undefined) {
     }
     // Preserve the source calendar day without introducing the host timezone.
     const date = parseDate(`${value}T00:00:00Z`);
-    return Number.isFinite(date.getTime()) && date.toISOString().startsWith(`${value}T`) ? date : undefined;
+    return date && toISOString(date).startsWith(`${value}T`) ? date : undefined;
 }
 
 async function handler() {
@@ -79,7 +79,7 @@ async function handler() {
                 title: features.title,
                 description: md.render(features.content),
                 pubDate: getReleaseDate(item.date),
-                link: features.learnMore ? new URL(features.learnMore, baseUrl).href : undefined,
+                link: new URL(features.learnMore || `/help/release-notes/${platform.appPlatform}#${item.date}`, baseUrl).href,
                 category: [platform.appPlatform],
                 guid: `typeless:${platform.appPlatform}:${item.version}`,
             };

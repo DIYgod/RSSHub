@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjsy/zhaosheng/:id?',
@@ -54,7 +54,7 @@ async function handler(ctx) {
             return {
                 title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, currentUrl).href,
-                pubDate: parseDateInTimezone($item.find('span').text(), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 

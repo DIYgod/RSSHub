@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://news.yxrb.net';
 
@@ -59,16 +58,14 @@ async function handler(ctx) {
                 const $ = load(response.data);
 
                 const author = $('.author-info .name a').text().split('作者 : ', 2)[1];
-                const pubDate = timezone(
-                    parseDate(
-                        $('.publish-time')
-                            .first()
-                            .contents()
-                            .filter((_, e) => e.nodeType === 3)
-                            .text()
-                            .trim(),
-                        'YYYY-MM-DD HH:mm:ss'
-                    ),
+                const pubDate = parseDate(
+                    $('.publish-time')
+                        .first()
+                        .contents()
+                        .filter((_, e) => e.nodeType === 3)
+                        .text()
+                        .trim(),
+                    'YYYY-MM-DD HH:mm:ss',
                     8
                 );
                 const description = $('article').html();

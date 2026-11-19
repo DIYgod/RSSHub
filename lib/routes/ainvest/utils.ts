@@ -2,7 +2,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const contentStreamUrl = 'https://news.ainvest.com/news-w-ds-hxcmp-content-stream/content_stream/api/stream_item/v1/query_content_stream';
 const contentPageUrl = 'https://news.ainvest.com/content-page/v1/page';

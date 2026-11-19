@@ -146,7 +146,7 @@ describe('protected Weibo OAuth', () => {
         const expiredState = await (await app.request('/authorize?key=fake-test-key')).text();
         const key = `weibo:oauth:state:${expiredState}`;
         const stored = JSON.parse((await cache.globalCache.get(key))!);
-        await cache.globalCache.set(key, { ...stored, expiresAt: Date.now() - 1 }, 600);
+        await cache.globalCache.set(key, { ...stored, expiresAt: Temporal.Now.instant().epochMilliseconds - 1 }, 600);
         expect((await app.request(`/weibo/timeline/0?code=fake-oauth-code&state=${expiredState}`)).status).toBe(403);
         const previousState = await (await app.request('/authorize?key=fake-test-key')).text();
         config.accessKey = 'rotated-fake-test-key';

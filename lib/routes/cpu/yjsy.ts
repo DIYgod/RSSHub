@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjsy',
@@ -31,14 +30,14 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 8),
             };
         });
 
     const limit = getRouteLimit(ctx);
     if (limit !== undefined) {
         if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         list = list.slice(0, limit);
     }

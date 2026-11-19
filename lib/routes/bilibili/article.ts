@@ -3,8 +3,7 @@ import { type CheerioAPI, load } from 'cheerio';
 import type { Route } from '@/types';
 import cacheGeneral from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -23,7 +22,7 @@ const getOpusPubDate = ($: CheerioAPI) => {
         }
     }
     const displayTime = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
-    return displayTime ? timezone(parseDate(displayTime, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+    return displayTime ? parseDate(displayTime, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
 };
 
 export const route: Route = {

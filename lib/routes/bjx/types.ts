@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getBjxPage } from './utils';
 
@@ -45,7 +44,7 @@ async function handler(ctx) {
                 return {
                     title: $item.find('a').attr('title')!,
                     link: $item.find('a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('span').text()), 8),
+                    pubDate: parseDate($item.find('span').text(), 8),
                 };
             }),
         };

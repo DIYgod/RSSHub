@@ -7,11 +7,11 @@ const git = (command: string) =>
         .trim();
 
 let gitHash = process.env.HEROKU_SLUG_COMMIT?.slice(0, 8) || process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8);
-let gitDate: Date | undefined;
+let gitDate: Temporal.Instant | undefined;
 if (!gitHash) {
     try {
         gitHash = git('git rev-parse HEAD').slice(0, 8);
-        gitDate = new Date(git('git log -1 --format=%cd'));
+        gitDate = Temporal.Instant.from(git('git log -1 --format=%cI'));
     } catch {
         gitHash = 'unknown';
     }

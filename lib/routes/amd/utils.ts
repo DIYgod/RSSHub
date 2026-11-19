@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { compareDates, parseDate } from '@/utils/time';
 
 export async function fetchArticle(link: string) {
     const response = await ofetch(link, { responseType: 'text' });
@@ -68,6 +68,6 @@ export async function fetchChineseNews(limit: number | undefined, pressOnly = fa
             link: new URL($(element).attr('href')!, 'https://www.amd.com').href,
             pubDate: parseDate($(element).closest('.card-body').find('.card-date').text()),
         }))
-        .toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     return pMap(items.slice(0, limit), async ({ link }) => ({ link, ...(await cache.tryGet(link, () => fetchArticle(link))) }), { concurrency: 3 });
 }

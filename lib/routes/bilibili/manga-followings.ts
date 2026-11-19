@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -66,7 +67,7 @@ async function handler(ctx) {
         item: comics.map((item) => ({
             title: `${item.title} ${item.latest_ep_short_title}`,
             description: `<img src='${item.vcover}'>`,
-            pubDate: new Date(item.last_ep_publish_time + ' +0800'),
+            pubDate: parseDate(item.last_ep_publish_time, 8),
             link: `https://manga.bilibili.com/detail/mc${item.comic_id}`,
         })),
     };

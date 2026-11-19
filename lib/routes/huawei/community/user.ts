@@ -5,8 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://cn.club.vmall.com';
 const apiUrl = 'https://sgw-cn.c.huawei.com/forward/club/content_h5';
@@ -15,8 +15,7 @@ function getPublicationDate(value?: string | number) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'x');
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value, 'x');
 }
 
 export const route: Route = {

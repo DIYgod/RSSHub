@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/album/:id',
@@ -48,8 +48,7 @@ async function handler(ctx) {
         title: `${ownerName ? `${ownerName} 创建的 ` : ''}Google 相册 - ${albumName}`,
         link: url,
         item: list.slice(0, Math.max(50, getRouteLimit(ctx, 50))).map((item) => {
-            const date = typeof item[2] === 'number' && Number.isFinite(item[2]) ? parseDate(item[2]) : undefined;
-            const time = date && !Number.isNaN(date.getTime()) ? date : undefined;
+            const time = typeof item[2] === 'number' && Number.isFinite(item[2]) ? parseDate(item[2]) : undefined;
             const imageUrl = `${item[1][0]}=w${item[1][1]}-h${item[1][2]}-no`;
             const videoUrl = item[9]?.['76647426']?.[13]?.[0];
             const description = videoUrl ? `<video src="${videoUrl}=m18" poster="${imageUrl}" controls controlslist="nodownload" loop style="max-width: 100%;"></video>` : `<img src="${imageUrl}" style="max-width: 100%;">`;

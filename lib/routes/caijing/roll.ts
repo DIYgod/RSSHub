@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/roll',
@@ -50,7 +49,7 @@ async function handler() {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 const publishedTime = $('#pubtime_baidu').text();
-                item.pubDate = publishedTime ? timezone(parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                item.pubDate = publishedTime ? parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
                 item.author = $('.editor').text().trim() || $('#editor_baidu').text().trim().replaceAll(/[()]/g, '');
                 item.description = $('.article-content').html();
                 item.category = [

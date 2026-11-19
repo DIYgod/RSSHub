@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 // import InvalidParameterError from '@/errors/types/invalid-parameter';
 const map = new Map([
     ['kydt', { title: '科研动态', id: '2404' }],
@@ -60,7 +59,7 @@ async function handler(ctx) {
         let link = anchor.attr('href');
         link = link!.startsWith('/') ? host + link : link;
         const published = elem.find('.Article_PublishDate, .news_meta').text().trim();
-        const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
+        const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
         return {
             title,
             pubDate,

@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 // any UA containing "RSS" can pass the check
@@ -60,8 +60,8 @@ async function handler(ctx) {
 
                 const description = fixArticleContent($('.post'));
 
-                let pubDate: string | Date | undefined = item.pubDate;
-                if (!pubDate || pubDate === 'Invalid Date') {
+                let pubDate = item.pubDate ? parseDate(item.pubDate) : undefined;
+                if (!pubDate) {
                     // sometimes the pubDate is not available in the official feed
                     const postDate = $('.post-date')
                         .text()
@@ -70,7 +70,6 @@ async function handler(ctx) {
                     // following the official feed behavior: imprecise date is in UTC
                     // `<pubDate>Mon, 04 Apr 2022 00:00:00 GMT</pubDate>`
                     pubDate = parseDate(postDate, 'YYYY年MM月DD日');
-                    pubDate = new Date(pubDate.getTime() - pubDate.getTimezoneOffset() * 60 * 1000);
                 }
 
                 return {

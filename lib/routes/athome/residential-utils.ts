@@ -38,7 +38,7 @@ const ALLOWED_RESOURCES = new Set(['document', 'script', 'xhr', 'fetch']);
 
 /** One list page, rendered until its SSR state is attached. A page that never settles is an error, never an empty feed. */
 export const fetchAthomeList = async (url: string): Promise<string> => {
-    const startedAt = Date.now();
+    const startedAt = performance.now();
     const { page, destroy } = await getPlaywrightPage(url, {
         gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT },
         onBeforeLoad: async (p) => {
@@ -46,7 +46,7 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
         },
     });
     try {
-        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: Math.max(3000, LIST_DEADLINE_MS - (Date.now() - startedAt)) });
+        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: Math.max(3000, LIST_DEADLINE_MS - (performance.now() - startedAt)) });
         return await page.content();
     } catch (error) {
         let blocked = false;
@@ -55,7 +55,7 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
         } catch {
             // The page may already be gone; the message below still names the failure.
         }
-        logger.warn(`athome: ${url} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
+        logger.warn(`athome: ${url} failed after ${Math.round(performance.now() - startedAt)}ms (blocked=${blocked}): ${String(error)}`);
         throw new Error(
             blocked
                 ? `athome: the site's authentication page did not resolve within ${LIST_DEADLINE_MS}ms; reduce polling frequency`
@@ -67,7 +67,12 @@ export const fetchAthomeList = async (url: string): Promise<string> => {
     }
 };
 
-type State = Record<string, unknown>;
+interface StateEntry {
+    data?: { propertyListData?: { propertyList?: RentBuilding[] } };
+    body?: string;
+}
+
+type State = Record<string, StateEntry | undefined>;
 
 export const stateOf = (html: string): State => {
     const raw = load(html)('#serverApp-state').text();
@@ -121,8 +126,7 @@ interface RentBuilding {
  * by different agents, kept as `raw.same_room_ids`.
  */
 export const parseAthomeChintai = (state: State): ListedUnit[] => {
-    const firstView = state['first-view-ITEMS'] as { data?: { propertyListData?: { propertyList?: RentBuilding[] } } } | undefined;
-    const buildings = firstView?.data?.propertyListData?.propertyList;
+    const buildings = state['first-view-ITEMS']?.data?.propertyListData?.propertyList;
     if (!Array.isArray(buildings)) {
         throw new TypeError('athome: the SSR state holds no 賃貸 listing data; the page structure may have changed');
     }
@@ -197,14 +201,10 @@ interface SaleUnit {
     osusumeComment?: { comment?: string } | null;
 }
 
-interface ResponseEnvelope {
-    body?: string;
-}
-
 /** The 売買 list keeps the SSR pass's whole HTTP response: the units are in its `body` (held as text), three layers down. */
 const saleListOf = (state: State): SaleUnit[] => {
     const key = Object.keys(state).find((k) => k.includes('/sell-living/bukken/list/first-view'));
-    const body = key === undefined ? undefined : (state[key] as ResponseEnvelope).body;
+    const body = key === undefined ? undefined : state[key]?.body;
     const list = body === undefined ? undefined : (JSON.parse(body) as { data?: { bukkenData?: { bukkenList?: SaleUnit[] } } }).data?.bukkenData?.bukkenList;
     if (!Array.isArray(list)) {
         throw new TypeError('athome: the SSR state holds no 売買 listing data; the page structure may have changed');

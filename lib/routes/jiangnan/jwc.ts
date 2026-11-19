@@ -6,9 +6,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-async function getOptionalPublicationDate(link: string): Promise<Date | undefined> {
+async function getOptionalPublicationDate(link: string): Promise<Temporal.Instant | undefined> {
     try {
         return await getPublicationDate(link);
     } catch {

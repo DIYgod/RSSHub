@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/ai',
@@ -45,11 +44,11 @@ async function handler() {
             list.toArray().map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
-                const pubDate = parseDate($item.find('.m-date').text().trim(), 'YYYY-MM-DD', true);
+                const pubDate = parseDateStrict($item.find('.m-date').text().trim(), 'YYYY-MM-DD', 8);
                 return {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
+                    pubDate,
                 };
             }),
     };

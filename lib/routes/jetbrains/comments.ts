@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({ html: true });
 
@@ -87,7 +87,7 @@ async function handler(ctx) {
 
     let items = response.activities.map((activity) => processActivity(activity, issueId)).filter((item) => item !== null);
     if (ctx.req.query('sorted') !== 'false') {
-        items = items.toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 

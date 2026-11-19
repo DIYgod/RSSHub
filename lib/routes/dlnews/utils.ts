@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.dlnews.com';
 
@@ -68,7 +67,7 @@ const renderBlocks = (blocks, articleLink: string): string =>
         .join('');
 
 export const getList = async (category: string | undefined, limit: number): Promise<DataItem[]> => {
-    const startDate = dayjs(new Date().toISOString().slice(0, 10)).subtract(1, 'year').format('YYYY-MM-DD');
+    const startDate = Temporal.Now.plainDateISO('UTC').subtract({ years: 1 }).toString();
     const response = await ofetch<{ data: any[] }>('https://api.dlnews.com/website/articles/by-search', {
         query: { skip: 0, limit, sort: 'display_date:desc', subtypes: 'news', verticals: category, startDate },
     });

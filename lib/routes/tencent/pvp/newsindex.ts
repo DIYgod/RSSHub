@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const map = new Map([
     ['rm', { name: '热门', channelid: 1760 }],
@@ -43,7 +43,7 @@ const renderItem = async (item: NewsItem): Promise<DataItem> => {
     return {
         title: `【${item.typeName}】` + item.sTitle,
         link: pageUrl + item.iNewsId,
-        pubDate: publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined,
+        pubDate: publishedAt ? parseDate(publishedAt, 8) : undefined,
         description,
     };
 };

@@ -5,16 +5,14 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const parsePublicationDate = (value: string | number | undefined) => {
     if (typeof value !== 'number' && !value) {
         return;
     }
-    const date = timezone(parseDate(value), 8);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value, 8);
 };
 export const route: Route = {
     path: '/research/:variety?/:type?',

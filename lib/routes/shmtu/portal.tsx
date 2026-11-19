@@ -5,8 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const bootstrapHost = 'https://weixin.shmtu.edu.cn/dynamic/shmtuHttps';
 const host = 'https://portal.shmtu.edu.cn/api';
@@ -124,7 +123,7 @@ async function handler(ctx) {
     const list = JSON.parse(response.data).map((item) => ({
         title: load(item.title).text(),
         link: `${host}/node/${item.nid}.json`,
-        pubDate: timezone(parseDate(item.created), 8),
+        pubDate: parseDate(item.created, 8),
         category: item.field_department[0],
         author: item.field_department[0],
     }));

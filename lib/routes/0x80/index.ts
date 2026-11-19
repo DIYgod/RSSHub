@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { toInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -64,7 +64,7 @@ async function handler() {
 
                 item.author = author;
                 const pubDate = item.pubDate || articlePubDate;
-                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
+                item.pubDate = pubDate ? toInstant(pubDate) : undefined;
                 $('div.document > h1.title, div.document > table.docinfo').remove();
                 item.description = $('div.document').first().html();
 

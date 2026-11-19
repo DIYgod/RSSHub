@@ -7,7 +7,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ItemDetail, SearchResponse, ShopItemDetail } from './types';
 
@@ -246,7 +246,7 @@ function generateDPOP({ uuid, method, url }: { uuid: string; method: string; url
 
     // Create JWT payload
     const payload = {
-        iat: Math.floor(Date.now() / 1000),
+        iat: Math.floor(Temporal.Now.instant().epochMilliseconds / 1000),
         jti: uuid,
         htu: url,
         htm: method.toUpperCase(),

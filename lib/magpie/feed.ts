@@ -20,7 +20,7 @@ export interface JsonFeed {
     items?: JsonFeedItem[];
 }
 
-const entities: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+const entities = new Map(Object.entries({ amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' }));
 
 const decode = (text: string) =>
     text.replaceAll(/&(#x[\da-f]+|#\d+|\w+);/gi, (whole, name: string) => {
@@ -28,7 +28,7 @@ const decode = (text: string) =>
             const code = name[1].toLowerCase() === 'x' ? Number.parseInt(name.slice(2), 16) : Number(name.slice(1));
             return Number.isFinite(code) && code <= 0x10_ff_ff ? String.fromCodePoint(code) : whole;
         }
-        return entities[name.toLowerCase()] ?? whole;
+        return entities.get(name.toLowerCase()) ?? whole;
     });
 
 /** HTML as plain text: paragraphs and line breaks kept, pictures named, everything else let go. */

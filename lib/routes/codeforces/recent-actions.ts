@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/recent-actions/:minrating?',
@@ -34,7 +35,7 @@ async function handler(ctx) {
     const rsp = await ofetch('https://codeforces.com/api/recentActions?maxCount=100');
 
     const actions = rsp.result.map((action) => {
-        const pubDate = new Date(action.timeSeconds * 1000);
+        const pubDate = parseDate(action.timeSeconds, 'X');
 
         const blog = action.blogEntry;
         const blogId = blog.id;

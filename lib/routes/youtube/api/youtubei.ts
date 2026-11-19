@@ -4,7 +4,7 @@ import { type Helpers, Innertube, YTNodes } from 'youtubei.js';
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 import { formatDescription, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';

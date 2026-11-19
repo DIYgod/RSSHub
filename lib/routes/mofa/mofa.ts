@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -19,10 +18,10 @@ export const route: Route = {
 const baseUrl = 'https://www.mofa.go.jp';
 const indexUrl = `${baseUrl}/mofaj/press/kaiken/bn/index.html`;
 
-const eraOffset = new Map([
-    ['昭和', 1925],
-    ['平成', 1988],
-    ['令和', 2018],
+const eras = new Map([
+    ['昭和', 'showa'],
+    ['平成', 'heisei'],
+    ['令和', 'reiwa'],
 ]);
 
 async function handler() {
@@ -43,12 +42,13 @@ async function handler() {
                 $('div.social-btn-top').remove();
 
                 const title3 = $('h3.title3');
-                const matches = title3.text().match(/（(..)(\d+)年(\d+)月(\d+)日（(.)曜日）(\d+)時(\d+)分.*）/);
+                const matches = title3.text().match(/（(..)(元|\d+)年(\d+)月(\d+)日（(.)曜日）(\d+)時(\d+)分.*）/);
+                const era = matches ? eras.get(matches[1]) : undefined;
 
                 return {
                     title: $('meta[property="og:title"]').attr('content'),
                     author: '外務省',
-                    pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset.get(matches[1]) ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
+                    pubDate: matches && era ? calendarToInstant({ calendar: 'japanese', era, year: matches[2] === '元' ? 1 : matches[2], month: matches[3], day: matches[4], hour: matches[6], minute: matches[7] }, 9) : undefined,
                     link: $('meta[property="og:url"]').attr('content'),
                     description: $('div#maincontents').html(),
                 } as DataItem;

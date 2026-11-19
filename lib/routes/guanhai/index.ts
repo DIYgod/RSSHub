@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -45,7 +44,7 @@ async function handler() {
                 return {
                     title: $item.find('a').attr('title')!,
                     link: $item.find('a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
             }),
         ...recommand,
@@ -60,7 +59,7 @@ async function handler() {
                 return {
                     author: $('.source').text(),
                     description: $('.article-content').html() ?? $('.video-content').html() ?? $('.p-iframe').html(),
-                    pubDate: timezone(parseDate($('.date').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate($('.date').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
             });
             return { ...item, ...article, pubDate: item.pubDate ?? article.pubDate };

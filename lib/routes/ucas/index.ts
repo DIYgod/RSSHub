@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://zhaopin.ucas.ac.cn';
 
@@ -67,8 +66,7 @@ async function handler(ctx) {
         async (item) => {
             const title = $(item).find('a').attr('title');
             const link = rootUrl + $(item).find('a').attr('href');
-            const date = parseDate($(item).find('span').text().trim(), 'YYYY.MM.DD', true);
-            const pubDate = Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+            const pubDate = parseDateStrict($(item).find('span').text().trim(), 'YYYY.MM.DD', 8);
 
             const desc = await cache.tryGet(link, async () => {
                 const response = await got.get(link);

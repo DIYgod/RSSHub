@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { toInstant } from '@/utils/time';
 
 import { EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam } from './utils';
 
@@ -134,7 +134,7 @@ async function handler(ctx) {
             return {
                 title, // item title
                 description, // job description
-                pubDate: job.pubDate ? parseDate(job.pubDate) : undefined, // data publish date
+                pubDate: job.pubDate ? toInstant(job.pubDate) : undefined, // data publish date
                 link: job.link, // job source link
             };
         }),

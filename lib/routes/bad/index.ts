@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -67,7 +66,7 @@ async function handler(ctx) {
                 link: new URL(link, rootUrl).href,
                 description: $item.find('.coverdiv').html(),
                 author: $item.find('.author').text().trim(),
-                pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 8),
+                pubDate: parseDate($item.find('time').attr('datetime')!, 8),
                 category: $item
                     .find('.label')
                     .toArray()

@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 vdescription: item.description || '',
             }),
             pubDate: item.created_time ? parseDate(item.created_time) : undefined,
-            updated: item.modified_time && Number.isFinite(Date.parse(item.modified_time)) ? parseDate(item.modified_time) : undefined,
+            updated: item.modified_time ? parseDate(item.modified_time) : undefined,
             link: item.link,
             image: item.pictures?.sizes?.at(-1)?.link,
             author: item.user.name,

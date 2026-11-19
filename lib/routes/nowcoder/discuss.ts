@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.nowcoder.com';
 
@@ -67,7 +66,7 @@ async function handler(ctx) {
                     title,
                     link: itemUrl,
                     description,
-                    pubDate: timezone(parseDate(date_value), 8),
+                    pubDate: parseDate(date_value, 8),
                 };
             });
         })

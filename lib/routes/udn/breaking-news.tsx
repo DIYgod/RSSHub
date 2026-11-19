@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 type ArticleSummary = {
     title: string;
@@ -112,11 +111,11 @@ async function handler(ctx) {
             });
 
             const date = item.time?.date;
-            const pubDate = date ? parseDate(date, 'YYYY-MM-DD HH:mm', true) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD HH:mm', 8) : undefined;
             return {
                 ...details,
                 title: item.title,
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                pubDate,
                 link,
             };
         },

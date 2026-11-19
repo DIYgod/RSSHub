@@ -1,9 +1,9 @@
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 import { namespace } from './namespace';
 
-function parseCalendarDate(sourceDate: string | undefined): Date | undefined {
+function parseCalendarDate(sourceDate: string | undefined): Temporal.Instant | undefined {
     if (typeof sourceDate !== 'string' || !sourceDate.trim()) {
         return;
     }
@@ -12,7 +12,7 @@ function parseCalendarDate(sourceDate: string | undefined): Date | undefined {
     const isCalendarDay = /^\d{4}-\d{2}-\d{2}$/.test(value);
     // UTC midnight represents the calendar day, not a source publication instant.
     const date = parseDate(isCalendarDay ? `${value}T00:00:00Z` : value);
-    if (!Number.isFinite(date.getTime()) || (isCalendarDay && date.toISOString().slice(0, 10) !== value)) {
+    if (!date || (isCalendarDay && toISOString(date).slice(0, 10) !== value)) {
         return;
     }
 

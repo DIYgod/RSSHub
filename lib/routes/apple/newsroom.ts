@@ -6,9 +6,9 @@ import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.apple.com.cn';
 const rootUrl = `${baseUrl}/newsroom/`;

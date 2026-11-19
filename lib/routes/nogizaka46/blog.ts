@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.nogizaka46.com';
 
@@ -97,7 +97,7 @@ async function handler(ctx) {
             list.map((item) => ({
                 title: item.title,
                 link: item.link,
-                pubDate: item.date ? parseDateInTimezone(item.date, 9) : undefined,
+                pubDate: item.date ? parseDate(item.date, 9) : undefined,
                 author: item.name,
                 description: item.text,
                 guid: rootUrl + new URL(item.link).pathname,

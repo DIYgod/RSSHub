@@ -5,9 +5,8 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -38,7 +37,7 @@ export async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: link.endsWith('.html') ? link : `${link}#${pubDate}`,
             };
         });
@@ -58,7 +57,7 @@ export async function handler(ctx) {
 
                     const detailPubTimeMatches = detailResponse.data.match(/__\$pubtime='(.*?)';var/);
 
-                    item.pubDate = detailPubTimeMatches?.[1] ? timezone(parseDate(detailPubTimeMatches[1]), 8) : item.pubDate;
+                    item.pubDate = detailPubTimeMatches?.[1] ? parseDate(detailPubTimeMatches[1], 8) : item.pubDate;
                     item.description = renderDescription({
                         video: content('#con_video').html() ?? undefined,
                         description: content('.TRS_Editor, #content').html() ?? undefined,

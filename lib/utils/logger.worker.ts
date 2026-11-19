@@ -16,7 +16,7 @@ interface Logger {
 }
 
 const formatMessage = (level: string, message: string): string => {
-    const timestamp = new Date().toISOString();
+    const timestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
     return `[${timestamp}] ${level}: ${message}`;
 };
 

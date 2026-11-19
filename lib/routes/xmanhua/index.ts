@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:uid',
@@ -33,8 +33,7 @@ function parseChapterDate(value?: string) {
     if (!dateText) {
         return;
     }
-    const date = parseDate(dateText, 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(dateText, 'YYYY-MM-DD');
 }
 
 async function handler(ctx) {

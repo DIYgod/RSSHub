@@ -3,6 +3,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import getToken from '../_access';
 import constants from '../_constants';
@@ -165,7 +166,7 @@ async function handler(ctx) {
             return {
                 title: mangaMeta?.title || 'Unknown',
                 link: `${constants.API.MANGA_CHAPTERS}${chapter.id}`,
-                pubDate: new Date(chapter.attributes.publishAt),
+                pubDate: parseDate(chapter.attributes.publishAt),
                 description: chapterTitile,
                 image: mangaMeta?.cover,
             };

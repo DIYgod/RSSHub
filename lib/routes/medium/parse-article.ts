@@ -5,7 +5,7 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { isMediumChallenge } from './browser';
 import type { PostPreview } from './graphql';

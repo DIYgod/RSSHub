@@ -5,6 +5,7 @@ import Parser from 'rss-parser';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 type CustomItem = { issued?: string; author?: string };
 
@@ -69,7 +70,7 @@ async function handler(): Promise<Data> {
             title: item.title || '',
             link: item.link || '',
             author: item.author || '',
-            pubDate: item.issued ? new Date(item.issued) : undefined,
+            pubDate: item.issued ? parseDate(item.issued) : undefined,
             description: item.content || '',
             image: item.enclosure?.url,
             guid: item.guid,

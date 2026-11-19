@@ -4,8 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const apiUrl = 'https://gql-beta.hashnode.com/';
 const slugPattern = /^[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?$/i;

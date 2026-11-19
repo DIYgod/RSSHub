@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { selectItems } from '../utils';
 
@@ -49,14 +48,14 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $('.list_item, .col_news_list .news_list > li')
         .toArray()
-        .map((item): DataItem & { link: string; pubDate: Date } => {
+        .map((item): DataItem & { link: string; pubDate: Temporal.Instant | undefined } => {
             const $item = $(item);
             const a = $item.find('a').first();
             const date = $item.find('.Article_PublishDate').text() || `${$item.find('.news_year').text()}-${$item.find('.news_day').text()}`;
             return {
                 title: a.attr('title') || $item.find('.news_title').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         });
 

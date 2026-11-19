@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const site = 'https://www.gdufs.edu.cn';
 
@@ -47,7 +47,7 @@ async function handler() {
         const yearMonth = item.find('h6').text().trim();
         const dateString = yearMonth + '/' + day;
         const fullLink = href.startsWith('http') ? href : new URL(href, site).href;
-        const pubDate = parseDate(dateString).toUTCString();
+        const pubDate = parseDate(dateString);
 
         return { title, link: fullLink, pubDate };
     });

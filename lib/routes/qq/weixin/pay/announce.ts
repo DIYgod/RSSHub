@@ -3,7 +3,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/weixin/pay/announce',
@@ -15,7 +15,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const now = Math.floor(Date.now() / 1000);
+    const now = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     const query = {
         id: '6200',
         cmstype: '1',

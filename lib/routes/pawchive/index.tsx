@@ -6,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { apiBaseUrl, baseUrl, fileUrl, MIME_TYPE_MAP, thumbnailUrl } from './const';
 import type { PawchiveFile, PawchivePost } from './types';

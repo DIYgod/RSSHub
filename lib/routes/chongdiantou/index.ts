@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -31,7 +30,7 @@ async function handler() {
         title: item.title,
         link: item.link,
         image: item.cover,
-        pubDate: timezone(parseDate(item.time, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseDate(item.time, 'YYYY-MM-DD HH:mm:ss', 8),
         category: item.cat.name,
     }));
 

@@ -5,8 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import MarkdownIt from '@/utils/markdown-it';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -83,7 +82,7 @@ async function handler(ctx) {
         author: item.author,
         category: [item.catalogName, item.subCatalogName ?? undefined, ...(item.tags?.map((t) => t.tagName) ?? [])].filter(Boolean),
         guid: `farmatters-${item.id}`,
-        pubDate: timezone(parseDate(item.createdAt), 8),
+        pubDate: parseDate(item.createdAt, 8),
     }));
 
     const { data: currentResponse } = await got(currentUrl);

@@ -1,6 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { defaultDomain, getRootUrl, processApiItems } from './utils';

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 interface Comment {
     id: string;
@@ -191,6 +191,7 @@ export async function getJournals(username: string): Promise<Journal[]> {
                 const journal = $(element);
                 const id = journal.attr('id')!.slice(4);
                 const timestamp = Number(journal.find('.section-header .popup_date').first().attr('data-time'));
+                const postedAt = Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000) : undefined;
                 const permalink = journal.find(`.section-footer a[href="/journal/${id}/"]`).attr('href');
                 if (!permalink) {
                     throw new Error(`Fur Affinity returned a journal without its permalink on ${link}.`, { cause: error });
@@ -200,7 +201,7 @@ export async function getJournals(username: string): Promise<Journal[]> {
                     title: journal.find('.section-header h2').text(),
                     link: new URL(permalink, link).href,
                     description: journal.find('.section-body .journal-body').html() ?? '',
-                    posted_at: Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000).toISOString() : undefined,
+                    posted_at: postedAt && toISOString(postedAt),
                 };
             });
     }
@@ -235,12 +236,13 @@ export async function getComments(kind: 'journal' | 'submission', id: string): P
                     throw new Error(`Fur Affinity returned a comment without its ID or author on ${link}.`, { cause: error });
                 }
                 const timestamp = Number(comment.attr('data-timestamp'));
+                const postedAt = Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000) : undefined;
                 return {
                     id: anchor.slice(4),
                     name: author,
                     avatar: comment.find('.comment_useravatar').attr('src'),
                     text: comment.find('.comment_text').html() ?? '',
-                    posted_at: Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000).toISOString() : undefined,
+                    posted_at: postedAt && toISOString(postedAt),
                 };
             });
         return { title, name, comments };

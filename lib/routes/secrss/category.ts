@@ -5,8 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/category/:category?',
@@ -60,7 +59,7 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 link: itemUrl,
-                pubDate: timezone(parseDate(item.published_at), 8),
+                pubDate: parseDate(item.published_at, 8),
                 description,
                 author: item.source_author,
                 category: item.tags.map((t) => t.title),

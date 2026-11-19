@@ -4,7 +4,7 @@ import { config } from '@/config';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -41,7 +41,7 @@ async function handler() {
                 return {
                     title,
                     link: itemLink,
-                    pubDate: date ? parseDate(`${date} UTC`) : undefined,
+                    pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
                     description: content.html(),
                 };
             }),

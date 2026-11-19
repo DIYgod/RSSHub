@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/wxchart/:type?',
@@ -55,8 +54,13 @@ const charts = {
     fsas48: '48時間予想天気図',
 };
 
-const toJst = (marker: string) => timezone(parseDate(marker.slice(0, 12), 'YYYYMMDDHHmm'), -9);
-const toYmd = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '');
+const toUtcFields = (instant: Temporal.Instant | undefined) => {
+    if (!instant) {
+        throw new Error('Invalid chart time');
+    }
+    return instant.toZonedDateTimeISO('UTC');
+};
+const toJst = (marker: string) => toUtcFields(parseDate(marker.slice(0, 12), 'YYYYMMDDHHmm', -9));
 
 async function handler(ctx: Context) {
     const { type = 'daily' } = ctx.req.param();
@@ -86,7 +90,7 @@ async function daily() {
         .map((group): DataItem => {
             const { region, prefix, chart, valid, issued } = group[0];
             const lead = { fsas24: 24, fsas48: 48 }[chart] ?? 0;
-            const jst = timezone(parseDate(valid, 'YYYYMMDDHHmmss'), -(9 + lead));
+            const jst = toUtcFields(parseDate(valid, 'YYYYMMDDHHmmss', -(9 + lead)));
             const description = group
                 .map(({ file, prefix, mono }) => {
                     let html = `<img src="${bosaiUrl}/data/png/${file}">`;
@@ -99,11 +103,11 @@ async function daily() {
                 .join('');
 
             return {
-                title: `${charts[chart]} ${region} ${jst.getUTCMonth() + 1}月${jst.getUTCDate()}日${jst.getUTCHours()}時`,
-                link: `${yohoUrl}/wxchart/quickdaily.html?show=${toYmd(jst)}#${prefix.toLowerCase()}`,
+                title: `${charts[chart]} ${region} ${formatDate(jst, 'M月D日H時')}`,
+                link: `${yohoUrl}/wxchart/quickdaily.html?show=${formatDate(jst, 'YYYYMMDD')}#${prefix.toLowerCase()}`,
                 guid: `${bosaiUrl}/data/png/${group[0].file}`,
                 description,
-                pubDate: timezone(parseDate(issued, 'YYYYMMDDHHmmss'), 0),
+                pubDate: parseDate(issued, 'YYYYMMDDHHmmss', 0),
             };
         });
 
@@ -117,26 +121,27 @@ async function daily() {
 
 async function monthly() {
     const [first, latest] = await Promise.all([ofetch<string>(`${archiveUrl}/first.txt`), ofetch<string>(`${archiveUrl}/spas_latest.txt`)]);
-    const firstDay = toYmd(toJst(first));
+    const firstDay = formatDate(toJst(first), 'YYYYMMDD');
     const latestJst = toJst(latest);
-    const latestDay = toYmd(latestJst);
+    const latestDay = formatDate(latestJst, 'YYYYMMDD');
     const ym = latestDay.slice(0, 6);
     const year = Number(ym.slice(0, 4));
     const monthIndex = Number(ym.slice(4, 6)) - 1;
 
-    const items: DataItem[] = Array.from({ length: 31 }, (_, i) => new Date(Date.UTC(year, monthIndex, i + 1)))
+    const monthStart = Temporal.ZonedDateTime.from({ timeZone: 'UTC', year, month: monthIndex + 1, day: 1 });
+    const items: DataItem[] = Array.from({ length: 31 }, (_, i) => monthStart.add({ days: i }))
         .filter((date) => {
-            const ymd = toYmd(date);
+            const ymd = formatDate(date, 'YYYYMMDD');
             return ymd.slice(0, 6) === ym && ymd >= firstDay && ymd <= latestDay;
         })
         .map((date) => {
-            const ymd = toYmd(date);
-            const image = ymd === latestDay && latestJst.getUTCHours() < 9 ? `${archiveUrl}/${latest.slice(0, 6)}/SPAS_COLOR_${latest.slice(0, 10)}00.png` : `${archiveUrl}/${ym}/SPAS_COLOR_${ymd}0000.png`;
+            const ymd = formatDate(date, 'YYYYMMDD');
+            const image = ymd === latestDay && latestJst.hour < 9 ? `${archiveUrl}/${latest.slice(0, 6)}/SPAS_COLOR_${latest.slice(0, 10)}00.png` : `${archiveUrl}/${ym}/SPAS_COLOR_${ymd}0000.png`;
             return {
-                title: `${date.getUTCMonth() + 1}月${date.getUTCDate()}日`,
+                title: formatDate(date, 'M月D日'),
                 link: `${yohoUrl}/wxchart/quickdaily.html?show=${ymd}`,
                 description: `<img src="${image}">`,
-                pubDate: date,
+                pubDate: date.toInstant(),
             };
         });
 

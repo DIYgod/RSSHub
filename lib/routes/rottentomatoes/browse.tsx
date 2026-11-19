@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const lists = {
     'new-in-theaters': { path: 'movies_in_theaters/sort:newest', name: 'New movies in theaters' },
@@ -46,7 +46,7 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 link: new URL(item.mediaUrl, 'https://www.rottentomatoes.com').href,
-                pubDate: releaseDate ? parseDate(releaseDate, 'MMM DD, YYYY', 'en') : undefined,
+                pubDate: releaseDate ? parseDate(releaseDate, 'MMM DD, YYYY') : undefined,
                 description: renderToString(
                     <>
                         {item.posterUri && <img src={item.posterUri} alt="" />}

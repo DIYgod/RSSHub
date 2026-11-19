@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -134,7 +133,7 @@ async function handler(ctx) {
                     // Spans for publish dates are the same cases as above.
 
                     const pubTime = (content('span.time').text() || content('span.public_time').text() || content('.top-time').text()).match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}(?::\d{2})?)?/)?.[0];
-                    item.pubDate = pubTime ? timezone(parseDate(pubTime), 8) : undefined;
+                    item.pubDate = pubTime ? parseDate(pubTime, 8) : undefined;
 
                     return item;
                 } catch {

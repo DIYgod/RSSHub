@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -60,7 +59,7 @@ async function handler(ctx) {
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
                 link: new URL($item.parent().prop('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(pubDate!, 'YYYY/M/D H:mm:ss'), 8),
+                pubDate: parseDate(pubDate!, 'YYYY/M/D H:mm:ss', 8),
             };
         });
 

@@ -4,10 +4,9 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://www.ebrun.com';
@@ -46,7 +45,7 @@ function getItem(item: DataItem, page: Page) {
         item.description = content.html() || '';
         const date = $('.post-header .date-time').text();
         if (date) {
-            item.pubDate = timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), 8);
+            item.pubDate = parseDate(date, 'YYYY-MM-DD HH:mm', 8);
         }
         const author = $('.post-header .source .info span').first().text();
         if (author) {

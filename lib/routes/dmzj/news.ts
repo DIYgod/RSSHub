@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -46,7 +45,7 @@ async function handler(ctx) {
                 title: $(item).find('h3 a').text(),
                 link: $(item).find('h3 a').attr('href'),
                 author: $(item).find('.head_con_p_o span:nth-child(3)').text().split('：', 2)[1],
-                pubDate: timezone(parseDate($(item).find('.head_con_p_o span').first().text(), 'YYYY-MM-DD HH:mm'), 8),
+                pubDate: parseDate($(item).find('.head_con_p_o span').first().text(), 'YYYY-MM-DD HH:mm', 8),
                 description: $(item).find('p.com_about').text(),
                 category: $(item)
                     .find('.u_comfoot a .bqwarp')

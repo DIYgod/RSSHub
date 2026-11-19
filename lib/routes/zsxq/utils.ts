@@ -3,7 +3,7 @@ import { html } from 'hono/html';
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { BasicResponse, ResponseData, Topic, TopicImage } from './types';
 

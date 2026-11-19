@@ -5,10 +5,9 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import timezone from '@/utils/timezone';
+import { parseDate, toInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/archives',
@@ -54,7 +53,7 @@ async function handler(ctx) {
             const link = new URL($item.find('.title a').attr('href')!, currentUrl).href;
             const dateStr = $item.find('.date').text().trim();
             const publishedDate = dates.get(link);
-            const pubDate = publishedDate ? parseDate(publishedDate) : dateStr ? timezone(parseDate(dateStr), 0) : undefined;
+            const pubDate = publishedDate ? parseDate(publishedDate) : dateStr ? parseDate(dateStr, 0) : undefined;
 
             return {
                 title,
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 pubDate,
             };
         });
-    const hasDates = items.every((item) => dates.has(item.link!) && item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()));
+    const hasDates = items.every((item) => dates.has(item.link!) && item.pubDate && toInstant(item.pubDate));
 
     items = await pMap(
         items,

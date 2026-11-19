@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface NewsItem {
     code: string;
@@ -104,7 +103,7 @@ export const route: Route = {
                 return {
                     ...detail,
                     title: item.titleDecoded || item.title,
-                    pubDate: timezone(parseDate(item.issueTime), 8),
+                    pubDate: parseDate(item.issueTime, 8),
                     category: item.infoType?.entryItemName || item.bulletinInfoType?.entryItemName,
                     author: item.artAuthor || undefined,
                     link: itemLink,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const xmut = 'https://jwc.xmut.edu.cn';
 export const route: Route = {
@@ -55,9 +54,9 @@ async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'descri
         .first()
         .text()
         .match(/时间：\s*(\d{4}年\d{2}月\d{2}日\s+\d{2}:\d{2})/)?.[1];
-    const date = published ? parseDate(published, 'YYYY年MM月DD日 HH:mm', true) : undefined;
+    const date = published ? parseDateStrict(published, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
     // The source clock has no offset; use a fixed +08 calendar representation.
-    const pubDate = date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+    const pubDate = date;
     return { description: parseArticleContent($, link) ?? undefined, pubDate };
 }
 function parseSourceDate(value?: string) {
@@ -65,8 +64,7 @@ function parseSourceDate(value?: string) {
     if (!dateText) {
         return;
     }
-    const date = parseDate(dateText, 'YYYY-MM-DD', true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(dateText, 'YYYY-MM-DD', 8);
 }
 async function handler(ctx) {
     const { category = 'jwxt' } = ctx.req.param();

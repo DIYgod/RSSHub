@@ -7,12 +7,11 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const getPhotoDate = (caption: { preHeading?: string; title?: string }) => {
     const date = caption.preHeading || caption.title?.match(/^[A-Z][a-z]+ \d{1,2}, \d{4}(?= \|)/)?.[0];
-    return date ? timezone(parseDate(date), 0) : undefined;
+    return date ? parseDate(date, 'MMMM D, YYYY', 0) : undefined;
 };
 
 const renderDescription = (img) =>

@@ -6,8 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const map = new Map([
     ['tzgg', { title: '中国科学技术大学研究生院 - 通知公告', id: '9' }],
@@ -58,7 +57,7 @@ async function handler(ctx) {
             const title = $item.find('a').text();
             const link = new URL($item.find('a').attr('href')!, host).href;
             const published = $item.find('time').text().trim();
-            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
+            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title,
                 pubDate,
@@ -86,7 +85,7 @@ async function handler(ctx) {
                     const published = $detail('.info-bar time')
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    details.pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
+                    details.pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
                 } catch {
                     // Retain the existing optional-detail fallback.
                 }

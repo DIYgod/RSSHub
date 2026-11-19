@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { formatDate } from '@/utils/time';
 
 import { utils } from './utils';
 
@@ -22,7 +23,7 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const { date, year, month } = ctx.req.param();
-    const archiveDate = year && month ? `${year}/${month}` : (date ?? `${new Date().getFullYear()}/${new Date().getMonth() + 1}`);
+    const archiveDate = year && month ? `${year}/${month}` : (date ?? formatDate(Temporal.Now.instant(), 'YYYY/M'));
 
     return await utils(ctx, `books/date/${archiveDate.replace('-', '/')}`);
 }

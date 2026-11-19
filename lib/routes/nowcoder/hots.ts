@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     let link: string;
     if (type === '1') {
-        link = `https://gw-c.nowcoder.com/api/sparta/subject/hot-subject?limit=${size}&_=${Date.now()}&t=`;
+        link = `https://gw-c.nowcoder.com/api/sparta/subject/hot-subject?limit=${size}&_=${Temporal.Now.instant().epochMilliseconds}&t=`;
         const responseBody = (await got.get(link)).data;
         if (responseBody.code !== 0) {
             throw new Error(`接口错误，错误代码:${responseBody.code},错误原因:${responseBody.msg}`);
@@ -53,7 +53,7 @@ async function handler(ctx) {
         };
     }
     if (type === '2') {
-        link = `https://gw-c.nowcoder.com/api/sparta/hot-search/top-hot-pc?size=${size}&_=${Date.now()}&t=`;
+        link = `https://gw-c.nowcoder.com/api/sparta/hot-search/top-hot-pc?size=${size}&_=${Temporal.Now.instant().epochMilliseconds}&t=`;
         const responseBody = (await got.get(link)).data;
         if (responseBody.code !== 0) {
             throw new Error(`接口错误，错误代码: ${responseBody.code}，错误原因: ${responseBody.msg}`);

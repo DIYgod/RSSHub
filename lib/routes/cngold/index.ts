@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx) => {
@@ -29,19 +28,19 @@ export const handler = async (ctx) => {
 
     let items = $('ul.newsList li')
         .toArray()
-        .map((item): DataItem & { link: string; pubDate: Date } => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('t1').text(),
-                pubDate: timezone(parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']), 8),
+                pubDate: parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD'], 8),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
         });
 
     if (ctx.req.query('sorted') !== 'false') {
-        items = items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 
@@ -57,7 +56,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.details_top div.min span').first().text()), 8);
+                item.pubDate = parseDate($$('div.details_top div.min span').first().text(), 8);
                 item.author = $$('div.details_top div.min span').last().text().split(/：/).pop();
                 item.content = {
                     html: description,

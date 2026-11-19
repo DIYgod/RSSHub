@@ -3,8 +3,7 @@ import iconv from 'iconv-lite';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 // import logger from '@/utils/logger';
 
 export const route: Route = {
@@ -442,7 +441,7 @@ async function handler(ctx) {
                 if (time.includes('[')) {
                     time = time.slice(1, 11);
                 }
-                date = timezone(parseDate(time), 8);
+                date = parseDate(time, 8);
             }
             // logger.info("date:" + date);
 

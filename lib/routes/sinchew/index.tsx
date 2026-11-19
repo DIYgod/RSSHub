@@ -5,9 +5,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -51,7 +50,7 @@ export async function handler(ctx) {
             return {
                 title: $item.attr('data-title')!,
                 link: new URL(link!, currentUrl).href,
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 
@@ -86,7 +85,7 @@ export async function handler(ctx) {
                 item.description = content('.article-page-content').html();
                 const date = content('meta[property="article:published_time"]').attr('content');
                 if (date) {
-                    item.pubDate = timezone(parseDate(date), 8);
+                    item.pubDate = parseDate(date, 8);
                 }
 
                 return item;

@@ -5,9 +5,8 @@ import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://canaeru.usen.com';
 const DEFAULT_LIMIT = 10;
@@ -240,7 +239,7 @@ export const handler = async (ctx): Promise<Data> => {
                     title: card.title,
                     link: card.link,
                     guid: card.link,
-                    pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+                    pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
                     description: summarize(extra),
                     image: card.image,
                     _extra: extra,

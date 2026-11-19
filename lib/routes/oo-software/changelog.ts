@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/changelog/:id',
@@ -61,7 +60,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((element) => $(element).prop('outerHTML'))
                     .join(''),
-                pubDate: publishedAt ? timezone(parseDate(publishedAt, /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(publishedAt) ? 'DD.MM.YYYY' : ['M/D/YYYY', 'MMMM D, YYYY']), 0) : undefined,
+                pubDate: publishedAt ? parseDate(publishedAt, /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(publishedAt) ? 'DD.MM.YYYY' : ['M/D/YYYY', 'MMMM D, YYYY'], 0) : undefined,
             };
         });
 

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import { extractDoc, renderVideo } from './utils';
 
@@ -31,8 +30,7 @@ export const route: Route = {
 };
 
 function parseNewsDate(value: string) {
-    const date = value?.trim() ? parseDate(value.trim(), 'YYYY-MM-DD HH:mm:ss', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return value?.trim() ? parseDateStrict(value.trim(), 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 }
 
 async function handler(ctx) {

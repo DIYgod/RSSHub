@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -94,7 +93,7 @@ async function handler(ctx) {
             return {
                 title: `${$item.find('.activity-label').text().split(' • ', 1)[0]}: ${$item.find('.stamp-anchor').text()}`,
                 link: `${rootUrl}${$item.find('.stamp-anchor .tbx-tooltip').attr('href')}`,
-                pubDate: timezone(parseDate($item.find('.activity-time span').attr('title')!), 0),
+                pubDate: parseDate($item.find('.activity-time span').attr('title')!, 0),
                 author: $item.find('.user-anchor').text(),
                 description: renderDescription(
                     $item.find('.changelog').text(),

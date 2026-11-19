@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 import { SourceClient } from './utils';
 
@@ -31,12 +31,12 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('a');
                 const date = $item.find('.pub-date').text().trim();
-                const pubDate = date ? parseDate(date, 'MMMM D, YYYY', true) : undefined;
+                const pubDate = date ? parseDateStrict(date, 'MMMM D, YYYY') : undefined;
                 return {
                     title: a.text(),
                     description: $item.find('.summary').html()?.trim(),
                     link: new URL(a.attr('href')!, baseUrl).href,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                 };
             });
 

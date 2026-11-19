@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/explore',
@@ -50,7 +49,7 @@ async function handler() {
             title: target.title || target.abstract || '',
             author: target.author?.name || (target.owner?.type === 'user' ? target.owner.name : undefined),
             description: renderDescription(target),
-            pubDate: target.create_time ? timezone(parseDate(target.create_time), 8) : undefined,
+            pubDate: target.create_time ? parseDate(target.create_time, 8) : undefined,
             category: target.gallery_topic?.name ? [target.gallery_topic.name] : undefined,
             link: target.url || `https://www.douban.com/doubanapp/dispatch?uri=${encodeURIComponent(target.uri.replace('douban://douban.com', ''))}`,
         })),

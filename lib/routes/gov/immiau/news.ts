@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const url = 'https://immi.homeaffairs.gov.au/_layouts/15/api/Data.aspx/GetNews';
 
@@ -41,7 +41,7 @@ async function handler() {
     const { data: res } = await got({
         method: 'post',
         url,
-        json: reqBodyByYear(new Date().getFullYear()),
+        json: reqBodyByYear(Temporal.Now.zonedDateTimeISO('UTC').year),
     });
 
     const list = res.d.data.map((item) => ({

@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
@@ -89,9 +89,9 @@ async function handler(ctx) {
             };
         })
         .filter((post) => post.link !== undefined);
-    const datesAvailable = posts.every((post) => post.pubDate && !Number.isNaN(post.pubDate.getTime()));
+    const datesAvailable = posts.every((post) => post.pubDate);
     if (sorted && datesAvailable) {
-        posts.sort((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime());
+        posts.sort((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
     }
     const selectedPosts = !sorted || datesAvailable ? posts.slice(0, limit) : posts;
 

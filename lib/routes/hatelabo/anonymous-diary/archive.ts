@@ -3,8 +3,7 @@ import { escape } from 'entities';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/anonymous_diary/archive',
@@ -39,7 +38,7 @@ async function handler(): Promise<Data> {
                     title: a.text(),
                     description: escape($item.find('blockquote p').text()),
                     link: new URL(href, baseUrl).href,
-                    pubDate: timezone(parseDate(href.replace('/', ''), 'YYYYMMDDHHmmss'), 9),
+                    pubDate: parseDate(href.replace('/', ''), 'YYYYMMDDHHmmss', 9),
                 };
             }),
     };

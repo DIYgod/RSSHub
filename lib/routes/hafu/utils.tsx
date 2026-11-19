@@ -7,9 +7,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     ggtz: { url: 'https://www.hafu.edu.cn/index/ggtz.htm', root: 'https://www.hafu.edu.cn/', title: '河南财院 - 公告通知', parseFn: ggtzParse },
@@ -131,8 +130,7 @@ function parsePublicationDate(value: string | undefined, format: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, format);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, format, 8);
 }
 
 async function getArticle(link: string, type: string) {

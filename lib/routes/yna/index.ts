@@ -6,8 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -87,12 +87,12 @@ async function fetchFeed(url: string, redirectCount = 0): Promise<string> {
     return response.body.toString(supportedEncodings.includes(encoding) ? (encoding as BufferEncoding) : 'utf8');
 }
 
-function parsePublicationDate(value: string | undefined): Date | undefined {
+function parsePublicationDate(value: string | undefined): Temporal.Instant | undefined {
     if (typeof value !== 'string' || !value.trim()) {
         return;
     }
     const date = parseDate(value);
-    if (Number.isFinite(date.getTime())) {
+    if (date) {
         return date;
     }
     return;

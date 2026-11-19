@@ -3,9 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:column',
@@ -72,7 +71,7 @@ async function handler(ctx) {
                     </p>
                 </>
             ),
-            pubDate: timezone(parseDate(item.time, 'YYYY-MM-DD HH:mm:ss'), 8),
+            pubDate: parseDate(item.time, 'YYYY-MM-DD HH:mm:ss', 8),
             link: item.url,
         })),
     };

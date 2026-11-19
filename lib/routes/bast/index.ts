@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const legacyColumns = {
     '31266': 'sy/tzgg',
@@ -94,7 +93,7 @@ async function handler(ctx) {
                         content('.arctit p')
                             .text()
                             .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    item.pubDate = dateString ? timezone(parseDate(dateString), 8) : undefined;
+                    item.pubDate = dateString ? parseDate(dateString, 8) : undefined;
                     item.category = [content('meta[name="ColumnName"]').attr('content')!];
 
                     item.description = content('.arccont').html();

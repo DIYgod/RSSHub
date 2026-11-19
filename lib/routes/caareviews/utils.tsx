@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://www.caareviews.org';
 
@@ -43,7 +43,7 @@ const getItems = (_context, list) =>
                         {raw(content ?? '')}
                     </>
                 );
-                item.pubDate = parseDate($('div.header-text > div.clearfix').text());
+                item.pubDate = parseDate($('div.header-text > div.clearfix').text(), 'MMMM D, YYYY');
                 item.doi = $('div.crossref > a').attr('href')!.replace('http://dx.doi.org/', '');
 
                 return item;

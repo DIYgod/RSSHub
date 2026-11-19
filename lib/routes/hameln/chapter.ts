@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -49,10 +48,10 @@ async function handler(ctx) {
             return {
                 title: chapterLink.text(),
                 link: chapterLink.attr('href'),
-                pubDate: timezone(parseDate($chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
+                pubDate: parseDate($chapter.find('nobr').text(), 'YYYYMMDD HH:mm', 9),
             };
         });
-    const candidates = (ctx.req.query('sorted') === 'false' ? chapterList : chapterList.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))).slice(0, limit);
+    const candidates = (ctx.req.query('sorted') === 'false' ? chapterList : chapterList.toSorted((a, b) => compareDates(b.pubDate, a.pubDate))).slice(0, limit);
 
     const itemList = await Promise.all(
         candidates.map((chapter) => {

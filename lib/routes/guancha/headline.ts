@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getFullText } from './utils';
 
@@ -52,7 +51,7 @@ async function handler() {
                 description: $item.parent().next().html(),
                 summary: $item.parent().next().text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.parents('div').first().find('span').text()), 8),
+                pubDate: parseDate($item.parents('div').first().find('span').text(), 8),
             };
         });
 

@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function loadDetail(list: AnyNode[], $: CheerioAPI, caches: typeof cache) {
     return pMap(
@@ -39,7 +38,7 @@ function loadDetail(list: AnyNode[], $: CheerioAPI, caches: typeof cache) {
                 const detail = load(detailResponse.data);
                 return {
                     description: detail('.Article_content').html(),
-                    pubDate: timezone(parseDate(detail('.PBtime').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: parseDate(detail('.PBtime').text(), 'YYYY-MM-DD HH:mm:ss', 8),
                 };
             });
             return { title, link: url, ...details };

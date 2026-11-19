@@ -7,8 +7,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/channel/:channelId/:embed?',
@@ -39,9 +38,9 @@ function parsePublicationDate(value: string) {
         return;
     }
     const [, year, month, day, hour = '0', minute = '0', second = '0'] = match;
-    const date = parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', true);
-    if (Number.isFinite(date.getTime())) {
-        return timezone(date, 8);
+    const date = parseDateStrict(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', 8);
+    if (date) {
+        return date;
     }
 }
 function resolveLink(value: string | undefined, baseUrl: string) {

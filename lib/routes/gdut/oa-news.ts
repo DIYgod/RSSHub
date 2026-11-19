@@ -6,9 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {
@@ -117,14 +116,14 @@ async function handler(ctx) {
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
-        pubDate: timezone(parseDate(item.publishDate), 8),
+        pubDate: parseDate(item.publishDate, 8),
         author: item.publishUserDepart,
         category: item.typeName,
     }));
     const limit = getRouteLimit(ctx);
-    if (limit && (ctx.req.query('sorted') === 'false' || articles.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime())))) {
+    if (limit && (ctx.req.query('sorted') === 'false' || articles.every((item) => item.pubDate instanceof Temporal.Instant))) {
         if (ctx.req.query('sorted') !== 'false') {
-            articles.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+            articles.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         }
         articles = articles.slice(0, limit);
     }

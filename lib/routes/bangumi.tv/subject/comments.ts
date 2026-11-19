@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const getComments = async (subjectID, minLength) => {
     // bangumi.tv未提供获取“吐槽（comments）”的API，因此仍需要通过抓取网页来获取

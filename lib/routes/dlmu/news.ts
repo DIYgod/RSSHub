@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -49,7 +48,7 @@ async function handler(ctx: Context) {
                 link: new URL($('dd a', element).attr('href')!, baseUrl).href,
                 title: $('dd a', element).text(),
                 description: $('dd p', element).text(),
-                pubDate: timezone(parseDate($('i', element).text().slice(1, -1)), 8),
+                pubDate: parseDate($('i', element).text().slice(1, -1), 8),
             })),
     };
 }

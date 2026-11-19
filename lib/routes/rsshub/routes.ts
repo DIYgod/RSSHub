@@ -3,7 +3,7 @@ import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = markdownit({
     breaks: true,
@@ -13,14 +13,14 @@ const md = markdownit({
 // The docs' routes.json, where build-docs adds when each route's file was first committed
 type DocsNamespacesType = Record<string, NamespacesType[string] & { routes: Record<string, { addedAt?: string }> }>;
 
-type RouteItem = { guid: string; pubDate?: Date };
+type RouteItem = { guid: string; pubDate?: Temporal.Instant };
 
 // Newest first, so a reader that keeps only its latest items keeps the new routes, then by path so that routes added
 // in one commit keep their order between builds. Undated routes follow in the order of routes.json, which leaves the
 // feed as it was while routes.json carries no dates.
 const byNewest = (a: RouteItem, b: RouteItem) => {
     if (a.pubDate && b.pubDate) {
-        return b.pubDate.getTime() - a.pubDate.getTime() || a.guid.localeCompare(b.guid);
+        return b.pubDate.epochMilliseconds - a.pubDate.epochMilliseconds || a.guid.localeCompare(b.guid);
     }
     return Number(!a.pubDate) - Number(!b.pubDate);
 };

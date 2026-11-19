@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { category = 'sy/gzdt_210283' } = ctx.req.param();
@@ -28,7 +27,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('a').text(),
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: $item.find('a').prop('href'),
                 language,
             };
@@ -45,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('h2').text();
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.time span').last().text()), 8);
+                item.pubDate = parseDate($$('div.time span').last().text(), 8);
                 item.author = $$('div.time span').first().text();
                 item.content = {
                     html: description,

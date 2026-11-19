@@ -2,8 +2,8 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import type { HasType, SearchGuildMessagesParams } from './discord-api';
 import { baseUrl, getGuild, searchGuildMessages, VALID_HAS_TYPES } from './discord-api';

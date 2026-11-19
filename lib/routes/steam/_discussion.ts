@@ -3,7 +3,7 @@ import type { Element } from 'domhandler';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const steamCommunityUrl = 'https://steamcommunity.com';
 

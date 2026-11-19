@@ -4,9 +4,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
 
@@ -60,7 +59,7 @@ async function handler() {
             return {
                 title: $elem.find('a').text(),
                 link: $elem.find('a').attr('href'),
-                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim()), 8),
+                pubDate: parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), 8),
             };
         });
 

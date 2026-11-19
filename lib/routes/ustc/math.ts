@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const map = new Map([
     ['xyxw', { title: '中国科学技术大学数学科学学院 - 学院新闻', id: 'xyxw' }],
@@ -59,7 +58,7 @@ async function handler(ctx) {
             let link = elem.find('.Article_Title > a').attr('href');
             link = link!.startsWith('/') ? host + link : link;
             const published = elem.find('.Article_PublishDate').text().trim();
-            const pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined;
+            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: title!,
                 pubDate,

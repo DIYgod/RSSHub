@@ -5,9 +5,9 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const getArticleDetail = (link) =>
     cache.tryGet(link, async () => {
@@ -55,9 +55,9 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 30);
     const sourceOrder = ctx.req.query('sorted') === 'false';
     const candidates = feed.items.slice(0, Math.max(30, limit)).map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
-    const datesComplete = candidates.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    const datesComplete = candidates.every((item) => item.pubDate !== undefined);
     if (!sourceOrder && datesComplete) {
-        candidates.sort((first, second) => second.pubDate!.getTime() - first.pubDate!.getTime());
+        candidates.sort((first, second) => Temporal.Instant.compare(second.pubDate!, first.pubDate!));
     }
     const selected = sourceOrder || datesComplete ? candidates.slice(0, limit) : candidates;
     const items = await pMap(

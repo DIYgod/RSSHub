@@ -6,9 +6,9 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { setCookies } from '@/utils/playwright-utils';
+import { parseDate } from '@/utils/time';
 
 import type { PostData } from './types';
 import { resolveUrl, templates } from './utils';

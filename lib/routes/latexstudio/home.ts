@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/home',
@@ -43,7 +42,7 @@ async function handler() {
                 const content = load(res);
 
                 return {
-                    pubDate: timezone(parseDate(content('div.entry-meta ul li').eq(3).text().replace('发布日期：', '')), 8),
+                    pubDate: parseDate(content('div.entry-meta ul li').eq(3).text().replace('发布日期：', ''), 8),
                     description: content('div.article-text').html(),
                 };
             })),

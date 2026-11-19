@@ -3,9 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: ['/column/:id?', '/:id?'],
@@ -69,7 +68,7 @@ async function handler(ctx): Promise<Data> {
         title: item.data.title,
         author: item.data.userName,
         category: item.data.channelName,
-        pubDate: timezone(parseDate(item.data.publishTime), 8),
+        pubDate: parseDate(item.data.publishTime, 8),
         link: item.data.moVideoPath ? item.data.sourceUrl : `${rootUrl}/json/content/${item.data.url.match(/\/pages\/(.*?)\.html/)[1]}.detailjson`,
         video: item.data.moVideoPath,
         cover: item.data.mCoverImg,

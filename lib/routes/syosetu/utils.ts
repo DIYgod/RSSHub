@@ -7,17 +7,16 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export function getNovelDates(novel: Pick<NarouSearchResult, 'general_firstup' | 'novelupdated_at'>): Partial<DataItem> {
     return {
-        pubDate: novel.general_firstup ? timezone(parseDate(novel.general_firstup, 'YYYY-MM-DD HH:mm:ss'), 9) : undefined,
-        updated: novel.novelupdated_at ? timezone(parseDate(novel.novelupdated_at, 'YYYY-MM-DD HH:mm:ss'), 9) : undefined,
+        pubDate: novel.general_firstup ? parseDate(novel.general_firstup, 'YYYY-MM-DD HH:mm:ss', 9) : undefined,
+        updated: novel.novelupdated_at ? parseDate(novel.novelupdated_at, 'YYYY-MM-DD HH:mm:ss', 9) : undefined,
     };
 }
 
-export async function fetchChapterPublicationDates(novelUrl: string): Promise<Map<string, Date>> {
+export async function fetchChapterPublicationDates(novelUrl: string): Promise<Map<string, Temporal.Instant | undefined>> {
     const response = await ofetch(novelUrl, {
         headers: {
             Cookie: 'over18=yes',
@@ -25,7 +24,7 @@ export async function fetchChapterPublicationDates(novelUrl: string): Promise<Ma
         },
     });
     const $ = load(response);
-    const dates = new Map<string, Date>();
+    const dates = new Map<string, Temporal.Instant | undefined>();
     for (const element of $('.p-eplist__sublist').toArray()) {
         const link = $('a.p-eplist__subtitle', element).attr('href');
         const publication = copyNodes($('.p-eplist__update', element));
@@ -35,7 +34,7 @@ export async function fetchChapterPublicationDates(novelUrl: string): Promise<Ma
             continue;
         }
         const publishedAt = date.replaceAll(/\s+/g, ' ');
-        dates.set(new URL(link, novelUrl).href.replace(/\/$/, ''), timezone(parseDate(publishedAt, 'YYYY/MM/DD HH:mm'), 9));
+        dates.set(new URL(link, novelUrl).href.replace(/\/$/, ''), parseDate(publishedAt, 'YYYY/MM/DD HH:mm', 9));
     }
     return dates;
 }

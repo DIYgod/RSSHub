@@ -30,7 +30,7 @@ export interface Instance {
 
 // What RSSHub runs with unless `.env` or the options say otherwise: this computer only, logs
 // in magpie's log rather than in files, and only the lines that need a look.
-const defaults: Record<string, string> = {
+const defaults = {
     LISTEN_INADDR_ANY: '0',
     NO_LOGFILES: 'true',
     LOGGER_LEVEL: 'warn',
@@ -76,7 +76,7 @@ const answers = async (url: string) => {
 export const startInstance = (options: InstanceOptions): Instance => {
     mkdirSync(options.dataDir, { recursive: true });
 
-    const env: Record<string, string> = {
+    const env: Instance['env'] = {
         ...defaults,
         ...readDotenv(options.dataDir),
         ...options.env,
@@ -124,7 +124,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
     };
 
     const run = () => {
-        startedAt = Date.now();
+        startedAt = performance.now();
         child = spawn(process.execPath, [options.serverFile], {
             cwd: options.dataDir,
             env: { ...process.env, ...env, RSSHUB_MAGPIE_HOST: '1' },
@@ -139,7 +139,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
             child = undefined;
             remember(`RSSHub exited (${signal ?? `code ${code}`})`);
             // a server that ran a while had a failure of its own, not one at start
-            failures = Date.now() - startedAt > 60000 ? 1 : failures + 1;
+            failures = performance.now() - startedAt > 60000 ? 1 : failures + 1;
             if (failures >= MAX_FAILURES) {
                 gaveUp = true;
                 return;
@@ -153,7 +153,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
         if (await answers(url('/healthz'))) {
             return;
         }
-        if (gaveUp || Date.now() > deadline) {
+        if (gaveUp || performance.now() > deadline) {
             const why = recent.slice(-8).join('\n');
             throw new Error(`RSSHub isn't answering at ${origin}.${why ? `\nIts last log lines:\n${why}` : ''}`);
         }
@@ -175,7 +175,7 @@ export const startInstance = (options: InstanceOptions): Instance => {
             failures = 0;
             run();
         }
-        return waitFor(Date.now() + READY_TIMEOUT, signal);
+        return waitFor(performance.now() + READY_TIMEOUT, signal);
     };
 
     return { origin, env, url, ready };

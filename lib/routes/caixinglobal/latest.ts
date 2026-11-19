@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -38,7 +37,7 @@ async function handler(ctx): Promise<Data> {
             start: 0,
             count: getRouteLimit(ctx, 20),
             type: '2',
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
     });
 
@@ -46,7 +45,7 @@ async function handler(ctx): Promise<Data> {
         title: e.desc,
         description: e.summ,
         link: e.link,
-        pubDate: e.time ? timezone(parseDate(e.time, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+        pubDate: e.time ? parseDate(e.time, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
         category: e.tags.map((t) => t.name),
         nid: e.nid,
         attr: e.attr,
@@ -77,7 +76,7 @@ async function handler(ctx): Promise<Data> {
                             id: item.nid,
                             source: '',
                             url: item.link,
-                            _: Date.now(),
+                            _: Temporal.Now.instant().epochMilliseconds,
                         },
                     });
                     content = data.data.content;

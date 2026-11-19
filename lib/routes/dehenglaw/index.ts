@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -42,13 +41,13 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: date ? timezone(parseDate(date, 'YYYY/M/D'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY/M/D', 8) : undefined,
                 link: $item.find('a').prop('href'),
             };
         });
 
     if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => +(b.pubDate ?? 0) - +(a.pubDate ?? 0));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 

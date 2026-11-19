@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:url',
@@ -49,7 +49,7 @@ async function handler(ctx) {
                 guid: item.event.api_id,
                 pubDate: parseDate(item.event.start_at),
                 itunes_item_image: item.event.cover_url,
-                itunes_duration: (new Date(item.event.end_at).getTime() - new Date(item.event.start_at).getTime()) / 1000,
+                itunes_duration: compareDates(item.event.end_at, item.event.start_at) / 1000,
             }));
             break;
         case 'event':
@@ -61,7 +61,7 @@ async function handler(ctx) {
                     guid: response.data.event.api_id,
                     pubDate: parseDate(response.data.event.start_at),
                     itunes_item_image: response.data.event.cover_url,
-                    itunes_duration: (new Date(response.data.event.end_at).getTime() - new Date(response.data.event.start_at).getTime()) / 1000,
+                    itunes_duration: compareDates(response.data.event.end_at, response.data.event.start_at) / 1000,
                 },
             ];
             break;
@@ -73,7 +73,7 @@ async function handler(ctx) {
                 guid: item.event.api_id,
                 pubDate: parseDate(item.event.start_at),
                 itunes_item_image: item.event.cover_url,
-                itunes_duration: (new Date(item.event.end_at).getTime() - new Date(item.event.start_at).getTime()) / 1000,
+                itunes_duration: compareDates(item.event.end_at, item.event.start_at) / 1000,
             }));
             break;
         default:

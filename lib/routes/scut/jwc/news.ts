@@ -3,7 +3,7 @@ import querystring from 'node:querystring';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://jw.scut.edu.cn';
 const refererUrl = baseUrl + '/dist/';
@@ -15,15 +15,7 @@ const articleApiUrl = baseUrl + '/zhinan/jw/api/v2/getArticleInfo.do';
 const getArticleUrlById = (id) => `${baseUrl}/zhinan/cms/article/view.do?type=posts&id=${id}`;
 const getArticleMobileUrlById = (id) => `${baseUrl}/dist/#/detail/index?id=${id}&type=news`;
 
-const generateArticlePubDate = (createDateStr) => {
-    const date = new Date(createDateStr);
-    date.setHours(8);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-
-    return timezone(date, 8);
-};
+const generateArticlePubDate = (createDateStr) => parseDate(createDateStr)?.toZonedDateTimeISO('UTC').toPlainDate().toZonedDateTime({ timeZone: '+08:00', plainTime: '08:00' }).toInstant();
 
 const isRedirectPage = (data) => !!data.link;
 
@@ -109,7 +101,7 @@ async function handler() {
                 title: articleData.name,
                 link: articleUrl,
                 description: articleFullText,
-                pubDate: generateArticlePubDate(articleData.createDate).toUTCString(),
+                pubDate: generateArticlePubDate(articleData.createDate),
             };
 
             cache.set(articleUrl, JSON.stringify(item));

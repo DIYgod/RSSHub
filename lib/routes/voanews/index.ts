@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseURLs = {
     cantonese: 'https://www.voacantonese.com/',
@@ -71,7 +71,7 @@ async function handler(ctx: Context) {
             return {
                 title: $e.find('title').text(),
                 link: $e.find('guid').text(),
-                pubDate: publicationTime && Number.isFinite(Date.parse(publicationTime)) ? parseDate(publicationTime) : undefined,
+                pubDate: publicationTime ? parseDate(publicationTime) : undefined,
                 description: $e.find('description').text(),
                 author: $e.find('author').text() || undefined,
                 image: $e.find('enclosure[type^="image/"]').first().attr('url') || undefined,

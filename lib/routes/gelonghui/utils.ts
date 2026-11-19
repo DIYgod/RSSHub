@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const parseItem = async (item: DataItem) => {
     const { date, ...detail } = await cache.tryGet(`${item.link}:detail:v2`, async () => {
@@ -33,7 +32,7 @@ const parseItem = async (item: DataItem) => {
     let pubDate = item.pubDate;
     if (!pubDate && date) {
         const isRelativeDate = date.includes('前') || date.includes('天');
-        pubDate = isRelativeDate ? parseRelativeDate(date) : timezone(parseDate(date, ['YYYY年MM月DD日 HH时mm分', 'MM-DD HH:mm']), 8);
+        pubDate = isRelativeDate ? parseRelativeDate(date) : parseDate(date, ['YYYY年MM月DD日 HH时mm分', 'MM-DD HH:mm'], 8);
     }
     return { ...item, ...detail, pubDate };
 };

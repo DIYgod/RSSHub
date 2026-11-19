@@ -6,8 +6,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface Program {
     id: number;
@@ -47,7 +46,7 @@ export const route: Route = {
 };
 
 function getMediaUrl(channelId: string, mediaId: number) {
-    const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Date.now()}`;
+    const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Temporal.Now.instant().epochMilliseconds}`;
     const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex');
     return `https://audio.qingting.fm${path}&sign=${sign}`;
 }
@@ -99,7 +98,7 @@ async function handler(ctx) {
                     link,
                     itunes_item_image: item.cover,
                     itunes_duration: item.duration,
-                    pubDate: timezone(parseDate(item.update_time), 8),
+                    pubDate: parseDate(item.update_time, 8),
                     description: detail.richtext,
                 };
 

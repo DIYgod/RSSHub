@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/keti/:id?',
@@ -58,7 +57,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.zizizi').text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 
@@ -75,7 +74,7 @@ async function handler(ctx) {
 
                 item.description = content('.d_text').html();
                 if (!item.pubDate && date) {
-                    item.pubDate = timezone(parseDate(date), 8);
+                    item.pubDate = parseDate(date, 8);
                 }
                 item.author = content('div.d_information p span').last().text();
 

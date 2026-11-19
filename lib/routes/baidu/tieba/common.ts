@@ -35,7 +35,7 @@ const computeSign = (params: Partial<TiebaClientParams> & Record<string, string>
 export const tiebaClientRequest = async (path: string, params: Partial<TiebaClientParams> & Record<string, string>) => {
     const bduss = config.baidu.cookie?.match(/BDUSS=([^;]+)/)?.[1];
     const apiParams: Partial<TiebaClientParams> & Record<string, string> = {
-        _client_id: `wappc_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+        _client_id: `wappc_${Temporal.Now.instant().epochMilliseconds}_${Math.floor(Math.random() * 1000)}`,
         _client_type: '2',
         _client_version: '12.20.1.0',
         _phone_imei: '000000000000000',

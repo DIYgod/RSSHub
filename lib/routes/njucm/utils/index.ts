@@ -5,8 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function getNoticeList(ctx, url, host, listSelector, titleSelector, contentSelector) {
     const response = await got(url);
@@ -26,7 +25,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
                 .match(/\d{4}-\d{2}-\d{2}/)?.[0];
             return [
                 {
-                    pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     title: $item.find(titleSelector).attr('title')!,
                     link: new URL(href, host).href,
                 },
@@ -49,7 +48,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
                     .text()
                     .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                 if (date) {
-                    item.pubDate = timezone(parseDate(date), 8);
+                    item.pubDate = parseDate(date, 8);
                 }
                 return item;
             }),

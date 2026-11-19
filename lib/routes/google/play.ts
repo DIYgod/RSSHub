@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     name: 'Play Store Update',
@@ -115,13 +115,13 @@ async function handler(ctx: Context) {
     };
 }
 
-function formatVersion(version: string, updatedDate: Date) {
+function formatVersion(version: string, updatedDate: Temporal.Instant | undefined) {
     // some apps show version as "VARY"
     // https://play.google.com/store/apps/details?id=com.adobe.reader&hl=en-us
     const isVersion = /^\d/.test(version);
-    return isVersion ? version : updatedDate.toISOString().slice(0, 10);
+    return isVersion || !updatedDate ? version : toISOString(updatedDate).slice(0, 10);
 }
 
-function formatGuid(version: string, updatedDate: Date) {
-    return updatedDate.getTime().toString() + '-' + version;
+function formatGuid(version: string, updatedDate: Temporal.Instant | undefined) {
+    return `${updatedDate?.epochMilliseconds}-${version}`;
 }

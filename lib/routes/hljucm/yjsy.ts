@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjsy/:category?',
@@ -68,8 +68,8 @@ async function handler(ctx) {
                     .replaceAll(/[年月]/g, '-')
                     .replaceAll('日', '');
                 const dateMatch = dateText.match(/\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?/);
-                const pubDate = dateMatch ? parseDateInTimezone(dateMatch[0], 8) : undefined;
-                details.pubDate = pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined;
+                const pubDate = dateMatch ? parseDate(dateMatch[0], 8) : undefined;
+                details.pubDate = pubDate;
 
                 const files = detailResponse.data.match(/<span>附件【<a href="(.*)"><span>(.*)<\/span><\/a>】<\/span>/g);
 

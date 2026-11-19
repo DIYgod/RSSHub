@@ -2,11 +2,11 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://cum.st';
 const API_URL = `${BASE_URL}/api/v1`;
-const EDGE_BASE_URLS = ['https://e1.cum.st', 'https://e2.cum.st', 'https://e3.cum.st'];
+const CDN_BASE_URL = 'https://cdn.cum.st';
 const IMG_BASE_URL = 'https://img.cum.st';
 
 interface MediaAttachment {
@@ -43,8 +43,7 @@ const renderMedia = (attachments: MediaAttachment[] = []): Array<{ html: string;
                 return;
             }
             const key = encodeURIComponent(attachment.storageKey);
-            const edge = EDGE_BASE_URLS[Math.floor(Math.random() * EDGE_BASE_URLS.length)];
-            const src = `${edge}/media/${key}/${encodeURIComponent(variant.name)}`;
+            const src = `${CDN_BASE_URL}/media/${key}/${encodeURIComponent(variant.name)}`;
             switch (attachment.kind) {
                 case 'image':
                 case 'gif':

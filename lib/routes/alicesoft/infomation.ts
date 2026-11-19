@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.alicesoft.com';
 
@@ -58,7 +59,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('p.txt').text(),
                 link: $item.find('a').attr('href'),
-                pubDate: new Date($item.find('time').attr('datetime')!),
+                pubDate: parseDate($item.find('time').attr('datetime') ?? ''),
             };
         })
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);

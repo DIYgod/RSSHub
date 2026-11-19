@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article',
@@ -41,11 +40,11 @@ async function handler() {
                 const detail = await ofetch(item.link);
                 const $detail = load(detail);
                 const date = $detail('.works-top .time em').text().replaceAll('更新于：', '');
-                const pubDate = date ? parseDate(date) : undefined;
+                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 return {
                     description: $detail('.exp-content').html(),
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                    pubDate,
                 };
             });
             return { ...item, ...detailData };

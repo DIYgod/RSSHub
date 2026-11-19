@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant, parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.aac.moj.gov.tw';
 
@@ -13,8 +12,7 @@ function parseListDate(value: string) {
     if (!match) {
         return;
     }
-    const year = Number(match[1]) + (match[1].length === 3 ? 1911 : 0);
-    return timezone(parseDate(`${year}-${match[2]}-${match[3]}`, 'YYYY-M-D'), 8);
+    return calendarToInstant({ calendar: match[1].length === 3 ? 'roc' : 'gregory', year: match[1], month: match[2], day: match[3] }, 8);
 }
 
 export const route: Route = {
@@ -68,7 +66,7 @@ async function handler(ctx) {
 
                     const publishedTime = $('.info time').attr('datetime');
                     if (publishedTime) {
-                        item.pubDate = timezone(parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss'), 8);
+                        item.pubDate = parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss', 8);
                     }
                     $('.info, button').remove();
                     item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');

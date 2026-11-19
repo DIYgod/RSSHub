@@ -1,19 +1,17 @@
 import type { CheerioAPI } from 'cheerio';
-import dayjs from 'dayjs';
 import { escapeAttribute, escapeText } from 'entities';
 
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 export const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
 export const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
 
-export const getPubDate = (takenAt?: number | string): Date | undefined => {
+export const getPubDate = (takenAt?: number | string): Temporal.Instant | undefined => {
     if ((typeof takenAt !== 'number' && typeof takenAt !== 'string') || (typeof takenAt === 'string' && !takenAt.trim()) || !Number.isFinite(Number(takenAt))) {
         return undefined;
     }
-    const date = parseDate(takenAt, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(takenAt, 'X');
 };
 
 export interface ThreadItem {
@@ -160,7 +158,7 @@ export const buildContent = (item, options) => {
         description += `@${escapeText(embededPost.user?.username ?? '')}`;
         const quotedDate = getPubDate(embededPost.taken_at);
         if (quotedDate) {
-            description += ` — <a href="${escapeAttribute(threadUrl(embededPost.code))}">${escapeText(dayjs(quotedDate).toString())}</a>`;
+            description += ` — <a href="${escapeAttribute(threadUrl(embededPost.code))}">${escapeText(toRFC822(quotedDate))}</a>`;
         }
         description += '</blockquote>';
     }

@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gerenzhongxin/trpl/:uid',
@@ -56,7 +55,7 @@ export async function handler(ctx) {
         return {
             title: item.post_title || item.source_post_title || `${nickname} 发布了评论`,
             description: descriptionContent,
-            pubDate: timezone(parseDate(item.reply_publish_time), 8),
+            pubDate: parseDate(item.reply_publish_time, 8),
             link: linkUrl,
             guid,
             author: item.reply_user.user_nickname,

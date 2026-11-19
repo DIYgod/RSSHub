@@ -32,7 +32,7 @@ describe('honeybadger middleware', () => {
         expect(setContextSpy).toHaveBeenCalledWith({ node_name: 'node-a' });
         expect(infoSpy).toHaveBeenCalledWith('Honeybadger inited.');
 
-        const nowSpy = vi.spyOn(Date, 'now');
+        const nowSpy = vi.spyOn(performance, 'now');
         nowSpy.mockReturnValueOnce(0).mockReturnValueOnce(100);
 
         const ctx = new Context(new Request('http://localhost/test/slow'), { env: {}, path: '/test/slow' });

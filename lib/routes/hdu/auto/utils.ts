@@ -5,7 +5,7 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://auto.hdu.edu.cn';
 

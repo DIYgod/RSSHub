@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/seie/news_center',
@@ -46,7 +46,7 @@ async function handler() {
         return {
             title: titleElement.attr('title')!,
             link: new URL(titleElement.attr('href')!, url).href,
-            pubDate: parseDateInTimezone($item.find('.date').text(), 8),
+            pubDate: parseDate($item.find('.date').text(), 8),
         };
     });
 

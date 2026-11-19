@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function handler(ctx: Context): Promise<Data> {
     const catagory = ctx.req.param('category') ?? 'all';
@@ -19,7 +19,7 @@ async function handler(ctx: Context): Promise<Data> {
         .map((e) => ({
             title: $('header a', e).text().trim(),
             link: $('a', e).attr('href'),
-            pubDate: $('time', e).attr('datetime') ? timezone($('time', e).attr('datetime') || '', 8) : undefined,
+            pubDate: $('time', e).attr('datetime') ? parseDate($('time', e).attr('datetime') || '', 8) : undefined,
         }));
 
     return {

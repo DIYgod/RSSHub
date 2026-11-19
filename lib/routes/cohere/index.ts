@@ -4,8 +4,8 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import type { SanityBlock } from './templates/description';
 import { renderGhostDescription as renderGhostDescriptionTemplate, renderSanityDescription } from './templates/description';
@@ -134,10 +134,10 @@ const normalizeBlogLink = (slug: string) =>
 const parseBlogDate = (value?: string | null) => (value ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00Z` : value) : undefined);
 
 const toValidTimestamp = (pubDate?: DataItem['pubDate']) => {
-    if (!(pubDate instanceof Date)) {
+    if (!(pubDate instanceof Temporal.Instant)) {
         return 0;
     }
-    const time = pubDate.getTime();
+    const time = pubDate.epochMilliseconds;
     return Number.isFinite(time) ? time : 0;
 };
 

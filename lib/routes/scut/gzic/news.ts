@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gzic/news',
@@ -43,7 +43,7 @@ async function handler() {
             return {
                 title: $item.find('.li-img a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDateInTimezone(pubDate.text().replaceAll(/年|月/g, '-').replaceAll('日', ''), 8),
+                pubDate: parseDate(pubDate.text().replaceAll(/年|月/g, '-').replaceAll('日', ''), 8),
                 itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
             };
         });

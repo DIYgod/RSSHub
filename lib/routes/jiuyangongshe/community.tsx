@@ -5,9 +5,8 @@ import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 interface User {
     follow_type: number;
@@ -122,7 +121,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const link = 'https://www.jiuyangongshe.com';
 
-    const time = String(Date.now());
+    const time = String(Temporal.Now.instant().epochMilliseconds);
     const response = await ofetch<Community>('https://app.jiuyangongshe.com/jystock-app/api/v2/article/community', {
         method: 'POST',
         headers: {
@@ -157,7 +156,6 @@ async function handler(ctx: Context): Promise<Data> {
     };
 }
 
-function parseCreatedAt(value?: string): Date | undefined {
-    const date = value ? parseDate(value, 'YYYY-MM-DD HH:mm:ss', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+function parseCreatedAt(value?: string): Temporal.Instant | undefined {
+    return value ? parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 }

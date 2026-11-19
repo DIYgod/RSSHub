@@ -3,8 +3,8 @@ import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/region/:region{.+}?',
@@ -59,6 +59,6 @@ async function handler(ctx) {
             description: `<p>${escapeText(item.content || item.post_excerpt || '')}</p>`,
             pubDate: parseDate(item.post_date_formatted, 'MMMM D, YYYY'),
         }))
-        .toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     return { title: $('title').text(), link, item: items.slice(0, getRouteLimit(ctx, 20)) };
 }

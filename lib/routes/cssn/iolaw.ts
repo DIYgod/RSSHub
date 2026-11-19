@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/iolaw/:section?',
@@ -42,7 +41,7 @@ async function handler(ctx) {
                 title,
                 link: url,
                 author: '中国法学网',
-                pubtime: publishedAt ? timezone(parseDate(publishedAt), 8) : undefined,
+                pubtime: publishedAt ? parseDate(publishedAt, 8) : undefined,
             };
         });
 

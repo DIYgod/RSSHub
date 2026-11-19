@@ -7,9 +7,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ci-en/:id/article',
@@ -89,7 +88,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content('article').html();
-                item.pubDate = timezone(parseDate(content('.e-date').first().text()), 9);
+                item.pubDate = parseDate(content('.e-date').first().text(), 'MMM/DD/YYYY HH:mm', 9);
                 item.category = content('.c-hashTagList-item')
                     .toArray()
                     .map((t) => content(t).text().split('#').pop()!.trim());

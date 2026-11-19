@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://www.ygb.sdu.edu.cn/';
@@ -61,7 +61,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title') || a.text(),
                 link,
-                pubDate: parseDateInTimezone($e.find('b').text().trim().slice(1, -1), 8),
+                pubDate: parseDate($e.find('b').text().trim().slice(1, -1), 8),
             };
         });
 

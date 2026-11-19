@@ -1,4 +1,4 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderImages } from './images';
 import { renderVideo } from './video';
@@ -62,8 +62,7 @@ export const renderItems = (items) =>
         const id = String(item.pk);
         const url = productType === 'story' ? `https://www.instagram.com/stories/${item.user.username}/${item.pk}/` : `https://www.instagram.com/p/${item.code}/`;
         const timestamp = item.caption?.created_at_utc || item.taken_at;
-        const parsedDate = ([undefined, null, ''] as unknown[]).includes(timestamp) ? undefined : parseDate(timestamp, 'X');
-        const pubDate = parsedDate && Number.isFinite(parsedDate.getTime()) ? parsedDate : undefined;
+        const pubDate = ([undefined, null, ''] as unknown[]).includes(timestamp) ? undefined : parseDate(timestamp, 'X');
         const title = summary.split('\n', 1)[0] || item.accessibility_caption || `Story from @${item.user.username}`;
 
         return {

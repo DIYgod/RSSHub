@@ -12,7 +12,7 @@ import { namespace } from './namespace';
 // Generate a dynamic token using AES-256-ECB with a static key and timestamp
 function getToken() {
     const key = 'TYYY3OT3-TOCBW7OW-T33QMVJ3-2IUUVC22'.replaceAll('-', ''); // this key is used for AES-256-ECB encryption, and it is hardcoded in the original code in https://www.scmuseum.cn/js/index.2af39792.chunk.js
-    const t = (Math.random() + '').slice(-6) + Date.now();
+    const t = (Math.random() + '').slice(-6) + Temporal.Now.instant().epochMilliseconds;
     const cipher = crypto.createCipheriv('aes-256-ecb', Buffer.from(key, 'utf8'), null);
     cipher.setAutoPadding(true);
     let token = cipher.update(t, 'utf8', 'base64');

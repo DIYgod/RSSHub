@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function parseListDate(value: string) {
     const match = value.match(/^([a-z]+)\.?\s+(\d{1,2}),\s+(\d{4})$/i);

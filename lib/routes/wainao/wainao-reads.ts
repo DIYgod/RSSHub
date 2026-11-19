@@ -7,8 +7,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { jsx } from '@/utils/jsx';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 import { fetchEmbeddedStory } from './topics';
 
@@ -135,8 +135,7 @@ function parseSourceTime(value?: string | number) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function handler() {

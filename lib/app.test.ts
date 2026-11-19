@@ -6,6 +6,7 @@ import { describe, expect, it, vi } from 'vitest';
 import app from '@/app';
 import { config } from '@/config';
 import server from '@/setup.test';
+import { parseDate } from '@/utils/time';
 
 describe('index', () => {
     it('exports app entrypoint', () => {
@@ -89,9 +90,9 @@ if (process.env.FULL_ROUTES_TEST) {
 async function checkRSS(response) {
     const checkDate = (date) => {
         expect(date).toEqual(expect.any(String));
-        expect(Date.parse(date)).toEqual(expect.any(Number));
-        expect(Date.now() - +new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
-        expect(Date.now() - +new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
+        const age = Temporal.Now.instant().epochMilliseconds - parseDate(date)!.epochMilliseconds;
+        expect(age).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
+        expect(age).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
     };
 
     const parsed = await parser.parseString(await response.text());

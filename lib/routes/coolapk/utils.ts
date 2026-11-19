@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问', 11: '回答', 12: '图文', 15: '二手', 17: '观点', 20: '交易动态' };
 
@@ -14,7 +14,7 @@ const getRandomDEVICE_ID = () => crypto.randomUUID();
 
 const get_app_token = () => {
     const DEVICE_ID = getRandomDEVICE_ID();
-    const now = Math.round(Date.now() / 1000);
+    const now = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);
     const hex_now = '0x' + now.toString(16);
     const md5_now = md5(now.toString());
     const s = 'token://com.coolapk.market/c67ef5943784d09750dcfbb31020f0ab?' + md5_now + '$' + DEVICE_ID + '&com.coolapk.market';

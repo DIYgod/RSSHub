@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'https://ctt.swjtu.edu.cn';
 const sourceUrl = `${rootURL}/yjsjxnew/tzgg.htm`;
@@ -25,7 +24,7 @@ const getItem = async (item) => {
     const description = await cache.tryGet(`swjtu:jtys:article:${link}`, () => getArticle(link));
     return {
         title,
-        pubDate: date ? timezone(parseDate(date, 'YYYY.MM.DD'), 8) : undefined,
+        pubDate: date ? parseDate(date, 'YYYY.MM.DD', 8) : undefined,
         link,
         description,
     };

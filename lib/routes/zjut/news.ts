@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.news.zjut.edu.cn';
 
@@ -55,7 +55,7 @@ async function handler(ctx) {
             return {
                 title,
                 description: '',
-                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+                pubDate: date,
                 link,
             };
         });

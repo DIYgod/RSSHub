@@ -4,7 +4,7 @@ import { wafFetch } from '@/routes/mafengwo/utils';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getHeaders, parseSearchDate } from './utils';
 

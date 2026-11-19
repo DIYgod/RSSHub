@@ -6,8 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -110,7 +109,7 @@ const getInfoUrlList = async (url) => {
         .map((item) => ({
             title: $('a', item).attr('title')!,
             url: `${rootUrl}${$('a', item).attr('href')}`,
-            pubDate: timezone(parseDate($('div > div:nth-child(4)', item).html()!.trim()), 8),
+            pubDate: parseDate($('div > div:nth-child(4)', item).html()!.trim(), 8),
         }));
     return infoList;
 };

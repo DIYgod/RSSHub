@@ -6,8 +6,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const constants = {
     labelHot: '热门',
@@ -94,15 +94,15 @@ const processItems = async (apiUrl, ctx: Context, ...parameters) => {
             author: item.column?.title ?? item.author?.username,
             category: categories,
             guid: `foresightnews-${sourceType}#${item.id}`,
-            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+            pubDate,
             updated: item.last_update_at ? parseDate(item.last_update_at * 1000) : undefined,
         };
     });
 
     const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const allDated = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (!nativeOrder && allDated) {
-        items = items.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        items = items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
     }
     if (nativeOrder || allDated) {
         items = items.slice(0, limit);

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://computer.hdu.edu.cn/12269/list.htm';
 
@@ -19,7 +19,7 @@ const getSingleRecord = async () => {
         const date = $item.find('.fbsj4').text();
         return {
             title: $item.find('.btt3 a').text(),
-            pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+            pubDate: date ? parseDate(date, 8) : undefined,
             link: new URL($item.find('.btt3 a').attr('href')!, host).href,
         };
     });

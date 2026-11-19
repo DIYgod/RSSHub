@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -34,9 +33,9 @@ async function handler() {
         if (post.text?.post_date_gmt) {
             pubDate = parseDate(`${post.text.post_date_gmt}Z`);
         } else if (post.text?.post_date) {
-            pubDate = timezone(parseDate(post.text.post_date), 4);
+            pubDate = parseDate(post.text.post_date, 4);
         } else if (post.date) {
-            pubDate = timezone(parseDate(post.date, 'DD.MM.YYYY HH:mm'), 4);
+            pubDate = parseDate(post.date, 'DD.MM.YYYY HH:mm', 4);
         }
         const imageSrc = post.image || post.image_mobile;
         const views = post.views;

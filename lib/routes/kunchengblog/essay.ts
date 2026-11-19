@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/essay',
@@ -53,8 +53,7 @@ const parsePublicationMonth = (value: string) => {
     if (!match) {
         return;
     }
-    const date = parseDate(`${match[1]} 1, ${match[2]} GMT`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${match[1]} 1, ${match[2]}`, 'MMM D, YYYY');
 };
 
 async function handler(ctx) {

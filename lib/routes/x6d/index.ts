@@ -5,8 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -57,10 +56,10 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
     const imageSrc = $('div.article-content img').first().attr('src');
     const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
     const rawDate = $('time').text();
-    const pubDate = rawDate ? timezone(parseDate(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], true), 8) : undefined;
+    const pubDate = rawDate ? parseDateStrict(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], 8) : undefined;
     return {
         description,
-        pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+        pubDate,
         category: $('b.bq-wg')
             .toArray()
             .map((element) => $(element).text()),

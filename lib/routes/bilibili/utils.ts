@@ -36,7 +36,7 @@ function padStringWithZeros(string, length) {
 }
 
 function lsid() {
-    const e = Date.now().toString(16).toUpperCase();
+    const e = Temporal.Now.instant().epochMilliseconds.toString(16).toUpperCase();
     const lsid = randomHexStr(8) + '_' + e;
     return lsid;
 }
@@ -47,7 +47,7 @@ function _uuid() {
     const r = randomHexStr(4);
     const n = randomHexStr(4);
     const o = randomHexStr(12);
-    const i = Date.now();
+    const i = Temporal.Now.instant().epochMilliseconds;
     return e + '-' + t + '-' + r + '-' + n + '-' + o + padStringWithZeros((i % 100000).toString(), 5) + 'infoc';
 }
 
@@ -72,7 +72,7 @@ function addWbiVerifyInfo(params, wbiVerifyString) {
     const searchParams = new URLSearchParams(params);
     searchParams.sort();
     const verifyParam = searchParams.toString();
-    const wts = Math.round(Date.now() / 1000);
+    const wts = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);
     const w_rid = md5(`${verifyParam}&wts=${wts}${wbiVerifyString}`);
     return `${params}&w_rid=${w_rid}&wts=${wts}`;
 }

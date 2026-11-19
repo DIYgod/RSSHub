@@ -1,5 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { appDetail, getLanguage, getRootUrl, X_UA } from '../utils';
 

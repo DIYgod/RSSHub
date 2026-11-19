@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/novel/chapter/:id',
@@ -61,7 +60,7 @@ async function handler(ctx) {
                 item.description = $('div.article-content').html();
 
                 const rawDate = $('div.article-desc span').eq(1).text();
-                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), 8);
+                item.pubDate = parseDate(rawDate.replace('更新时间：', ''), 8);
 
                 return { description: item.description, pubDate: item.pubDate };
             })),

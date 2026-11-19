@@ -1,9 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getFullText } from './utils';
 
@@ -53,7 +52,7 @@ async function handler(ctx) {
     const list = (isTopic ? resultData.Topic.NewsItems : resultData.Items).slice(0, limit).map((item) => ({
         title: item.HeadLine,
         link: item.PageUrl,
-        pubDate: timezone(parseDate(item.CreateTime), 8),
+        pubDate: parseDate(item.CreateTime, 8),
     }));
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, async () => await getFullText(item))));

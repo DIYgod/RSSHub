@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { html } from 'hono/html';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function getPublicationDate(value: string) {
     const elapsed = value.match(/^(\d+)(秒|分钟|小时|天)前$/);
@@ -12,8 +12,7 @@ function getPublicationDate(value: string) {
         if (!Number.isSafeInteger(amount)) {
             return;
         }
-        const date = parseDate(Date.now() - amount * unitMs);
-        return Number.isNaN(date.getTime()) ? undefined : date;
+        return parseDate(Temporal.Now.instant().epochMilliseconds - amount * unitMs);
     }
 
     return;

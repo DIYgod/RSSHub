@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/checkin/:id',
@@ -47,12 +46,12 @@ async function handler(ctx: Context) {
                     return `${task.operation}了 ${task.num} ${task.unit}${task.name}，学习时间 ${minute} 分 ${second} 秒`;
                 })
                 .join('；');
-            const pubDate = timezone(parseDate(item.date), 8);
+            const pubDate = parseDate(item.date, 8);
 
             return {
                 title: `${username} 的第 ${item.checkin_days_num} 天扇贝打卡`,
                 pubDate,
-                guid: item.id + (pubDate.getTime() >= 1_596_729_600_000 ? action : ''),
+                guid: item.id + (pubDate !== undefined && pubDate.epochMilliseconds >= 1_596_729_600_000 ? action : ''),
                 description: action,
                 link,
             };

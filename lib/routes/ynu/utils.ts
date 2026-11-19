@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 function resolveArticleLink(value: string, baseUrl: string) {
     const href = value.trim();
@@ -24,8 +23,7 @@ function parsePublishedDate(value: string) {
         return;
     }
     const normalized = match[2] ? `${match[1]} ${match[2]}.${(match[3] ?? '0').padEnd(3, '0')}` : match[1];
-    const date = parseDate(normalized, match[2] ? 'YYYY-MM-DD HH:mm:ss.SSS' : 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(normalized, match[2] ? 'YYYY-MM-DD HH:mm:ss.SSS' : 'YYYY-MM-DD', 8);
 }
 function restorePdfContent($: CheerioAPI, link: string) {
     $('.v_news_content script').each((_, element) => {

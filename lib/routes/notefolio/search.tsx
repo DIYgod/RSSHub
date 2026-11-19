@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -6,8 +5,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, toISOString } from '@/utils/time';
 
 // 分类
 const categoryMap = [
@@ -186,25 +185,26 @@ async function handler(ctx) {
     }
     // 时间范围
     if (time !== 'all' && ['one-day', 'week', 'month', 'three-month'].includes(time)) {
+        const now = Temporal.Now.zonedDateTimeISO('UTC');
         let startTime: string;
-        const endTime = dayjs().endOf('d').toISOString();
+        const endTime = toISOString(now.startOfDay().add({ days: 1 }).subtract({ milliseconds: 1 }).toInstant());
 
         // 过去24小时-day 最近一周-week 最近一个月-month 最近三个月three-month
         switch (time) {
             case 'one-day':
-                startTime = dayjs().subtract(1, 'd').toISOString();
+                startTime = toISOString(now.subtract({ days: 1 }).toInstant());
                 break;
 
             case 'week':
-                startTime = dayjs().subtract(7, 'd').startOf('d').toISOString();
+                startTime = toISOString(now.subtract({ days: 7 }).startOfDay().toInstant());
                 break;
 
             case 'month':
-                startTime = dayjs().subtract(30, 'd').startOf('d').toISOString();
+                startTime = toISOString(now.subtract({ days: 30 }).startOfDay().toInstant());
                 break;
 
             case 'three-month':
-                startTime = dayjs().subtract(90, 'd').startOf('d').toISOString();
+                startTime = toISOString(now.subtract({ days: 90 }).startOfDay().toInstant());
                 break;
 
             default:

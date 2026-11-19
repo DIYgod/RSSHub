@@ -5,8 +5,8 @@ import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://www.science.org';

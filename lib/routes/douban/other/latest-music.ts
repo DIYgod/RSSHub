@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/music/latest/:area?',
@@ -85,8 +84,7 @@ async function handler(ctx) {
                     ${rating}
                 `;
                 const date = item.pubdate?.find((date: string) => /^\d{4}-\d{1,2}-\d{1,2}$/.test(date));
-                const parsedDate = date ? timezone(parseDate(date, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0) : undefined;
-                const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : undefined;
+                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0) : undefined;
 
                 return {
                     title,

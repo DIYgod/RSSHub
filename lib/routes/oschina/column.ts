@@ -6,8 +6,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getLimit, getNews } from './utils';
 
@@ -54,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 return {
                     title: news.title,
                     description: news.detail,
-                    pubDate: timezone(parseDate(news.pubTime), 8),
+                    pubDate: parseDate(news.pubTime, 8),
                     updated: news.lastUpdate ? parseDate(news.lastUpdate) : undefined,
                     category: news.tags ? news.tags.split(',') : undefined,
                     author: [{ name: news.userVo.name, url: news.userVo.spaceUrl, avatar: news.userVo.portraitUrl }],

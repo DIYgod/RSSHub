@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const currentURL = (catagory: string) => `https://phys.ncku.edu.tw/news/${catagory === '_all' ? '' : catagory}`;
 
@@ -85,7 +85,7 @@ export const route: Route = {
                     .replaceAll(' / ', '-');
                 return {
                     title: $('a', e).text(),
-                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     link: $('a', e).attr('href'),
                     category: [$('.newIcon', e).text()].filter(Boolean),
                 };

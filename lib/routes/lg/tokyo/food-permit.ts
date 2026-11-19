@@ -3,9 +3,8 @@ import { type CheerioAPI, load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
 
@@ -83,12 +82,9 @@ const toNumber = (v: string | null): number | null => {
 };
 
 /** 渋谷区 stores dates as text (`2026/8/7`), so the current and previous month (JST) are selected with LIKE and sorted locally. */
-const shibuyaQueryUrl = (now: Date): string => {
-    const jst = new Date(now.getTime() + 9 * 3600 * 1000);
-    const months = [0, 1].map((back) => {
-        const d = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth() - back, 1));
-        return `${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/`;
-    });
+const shibuyaQueryUrl = (now: Temporal.Instant): string => {
+    const jst = now.toZonedDateTimeISO('+09:00');
+    const months = [0, 1].map((back) => formatDate(jst.subtract({ months: back }), 'YYYY/M/'));
     const params = new URLSearchParams({
         where: months.map((m) => `${SHIBUYA_DATE} LIKE '${m}%'`).join(' OR '),
         outFields: '*',
@@ -104,7 +100,7 @@ interface ArcgisFeature {
 }
 
 const fetchShibuya = async (): Promise<Row[]> => {
-    const body = await ofetch(shibuyaQueryUrl(new Date()));
+    const body = await ofetch(shibuyaQueryUrl(Temporal.Now.instant()));
     const features: ArcgisFeature[] = body?.features ?? [];
     return features.map((f) => Object.fromEntries(Object.entries(f.attributes).map(([k, v]) => [k, v === null || v === undefined ? null : String(v)])));
 };
@@ -197,7 +193,7 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
         title: `${name}（${businessType ?? '業種不明'}）`,
         guid: `lg/tokyo/food-permit:${source}:${permitNo}`,
         link: SOURCES[source].link,
-        pubDate: permitDate === null ? undefined : timezone(parseDate(permitDate, 'YYYY-MM-DD'), 9),
+        pubDate: permitDate === null ? undefined : parseDate(permitDate, 'YYYY-MM-DD', 9),
         description: [ward, address, businessType, permitDate, `許可番号 ${permitNo}`].filter(Boolean).join(' / '),
         _extra: { source, ward, permit_no: permitNo, name, address, town, permit_date: permitDate, first_permit_date: firstPermitDate, expires_at: expiresAt, closed_date: closedDate, business_type: businessType, lat, lon, raw },
     };

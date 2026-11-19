@@ -5,9 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const handler = async (ctx) => {
     const { id = '915' } = ctx.req.param();
@@ -37,7 +36,7 @@ export const handler = async (ctx) => {
         return {
             title,
             description,
-            pubDate: item.publishDate ? timezone(parseDate(item.publishDate), 8) : undefined,
+            pubDate: item.publishDate ? parseDate(item.publishDate, 8) : undefined,
             link: new URL(`cn/view/pages/ItemDetail.html?docId=${guid}`, rootUrl).href,
             guid,
             id: guid,
@@ -70,7 +69,7 @@ export const handler = async (ctx) => {
 
                 item.title = title || item.title;
                 item.description = description;
-                item.pubDate = data.publishDate ? timezone(parseDate(data.publishDate), 8) : item.pubDate;
+                item.pubDate = data.publishDate ? parseDate(data.publishDate, 8) : item.pubDate;
                 item.category = data.listTwoItem?.[0]?.ItemLvs?.map((c) => c.itemName);
                 item.author = data.docSource;
                 item.guid = `cbirc-${item.guid}`;

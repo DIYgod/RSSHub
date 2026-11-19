@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -54,7 +54,7 @@ async function handler(ctx) {
         },
     });
 
-    const list: Array<{ title: string; description: string; link: string; pubDate: Date }> = response.newsList.map((item) => ({
+    const list: Array<{ title: string; description: string; link: string; pubDate: Temporal.Instant }> = response.newsList.map((item) => ({
         title: item.title,
         description: item.lead,
         link: `https://tass.com${item.link}`,

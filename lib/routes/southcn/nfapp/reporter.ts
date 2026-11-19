@@ -2,8 +2,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from '../templates/description';
 import { type ArticleSource, parseArticle } from './utils';
@@ -41,7 +40,7 @@ async function handler(ctx) {
                 thumb: item.picMiddle,
                 description: item.attAbstract,
             }),
-            pubDate: item.publishtime ? timezone(parseDate(item.publishtime), 8) : undefined,
+            pubDate: item.publishtime ? parseDate(item.publishtime, 8) : undefined,
             link: item.shareUrl,
         },
         articleId: item.fileId,
