@@ -310,8 +310,8 @@ importers:
         specifier: 0.7.3
         version: 0.7.3
       imapflow:
-        specifier: 2.11.0
-        version: 2.11.0
+        specifier: 2.12.1
+        version: 2.12.1
       ioredis:
         specifier: 6.0.0
         version: 6.0.0(supports-color@10.2.2)
@@ -3210,8 +3210,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@zone-eu/mailsplit@5.4.30':
-    resolution: {integrity: sha512-qN0KT6/ziAFvo5TzscaqpurIJaJQEXPPtqBZnpyhiGrACOKLDVMV6Lm57kXt5e/8zZUWoYiSC8oKl/aewtrJDQ==}
+  '@zone-eu/mailsplit@5.4.31':
+    resolution: {integrity: sha512-P031SeyobwXE/aZf1f/hN9RZm/t8ZSibCUYA7Us6Fory4b1p5HxNEA08YcfTynkPnvJ3nFjMFguwSp30TXc4Tw==}
     engines: {node: '>=20.0.0'}
 
   abbrev@3.0.1:
@@ -4297,8 +4297,8 @@ packages:
     resolution: {integrity: sha512-/8UvqAPU9DGTI9k4mxtf49U37Isfwr8Uts96+SBHIkFxPJnHS0Ew4f00sM4Scd8V8EjM0jUNtVDdv1kPdt35lg==}
     engines: {node: '>= 4'}
 
-  imapflow@2.11.0:
-    resolution: {integrity: sha512-Jv/PBBbBsKjBkdN5DUbELRCo7Xm3DQz+gYBkAy4h87ObQthTRd7nu53WV/dKDf2M8imoJZY+eQFBVkQAJagC6g==}
+  imapflow@2.12.1:
+    resolution: {integrity: sha512-mM0FAU13CU1DMZG9ylow3GgyU+rs0UvWcoZuLpYXWNq3tie0MGNqE/aJqOnNb25kJgeNVtU/spfJ0I0qCYxbpQ==}
     engines: {node: '>=20.0.0'}
 
   import-without-cache@0.4.1:
@@ -4532,12 +4532,12 @@ packages:
     resolution: {integrity: sha512-Nyh3H90B3gRtrcxIe56Ayy7635J0jmh6AbxbQgQae8wrSPQMH5wFqJChiMTB13yKG512L3YspbA5DzumhFTITA==}
     engines: {node: '>=20.0.0'}
 
-  libmime@5.6.4:
-    resolution: {integrity: sha512-QWiiwq3ujIUSsCCjFDldDN7FfXuLYSTnEln0oeYfOjgqyVlRV6WQ3UyJ/paguoz8Ynxy1s7k3kh6xomS3bJkCw==}
+  libmime@5.6.5:
+    resolution: {integrity: sha512-2mbKYlwUP2mWys7kUE0MBHNdOndOe++8TIdmGXtt/hMYWSgbjHkSIXyC4jCpVSc/sAox3GSxWn1dSmyiQimLNA==}
     engines: {node: '>=20.0.0'}
 
-  libqp@3.0.1:
-    resolution: {integrity: sha512-7QZxpPX25pga1WiMueduWxmrHMVBFrZPH6ZUaozGYa/H98JH6NVBSET3qVw+4NxzoraIW7rJ81YxSU9IalvCpg==}
+  libqp@3.0.2:
+    resolution: {integrity: sha512-24oL5vCMpFd6lGLbD3vPrmcAEGFScDPX9eARY8TXsRVBSde93xP2iG7+8pg5M56Yiu9Uy14hCVN1E+yj5LMtyQ==}
     engines: {node: '>=20.0.0'}
 
   lightningcss-android-arm64@1.33.0:
@@ -8137,11 +8137,11 @@ snapshots:
   '@yuku-toolchain/win32-x64@0.27.0':
     optional: true
 
-  '@zone-eu/mailsplit@5.4.30':
+  '@zone-eu/mailsplit@5.4.31':
     dependencies:
       libbase64: 1.4.1
-      libmime: 5.6.4
-      libqp: 3.0.1
+      libmime: 5.6.5
+      libqp: 3.0.2
 
   abbrev@3.0.1: {}
 
@@ -9306,14 +9306,14 @@ snapshots:
 
   ignore@7.0.12: {}
 
-  imapflow@2.11.0:
+  imapflow@2.12.1:
     dependencies:
-      '@zone-eu/mailsplit': 5.4.30
+      '@zone-eu/mailsplit': 5.4.31
       encoding-japanese: 2.5.0
       iconv-lite: 0.7.3
       libbase64: 1.4.1
-      libmime: 5.6.4
-      libqp: 3.0.1
+      libmime: 5.6.5
+      libqp: 3.0.2
       pino: 10.3.1
       socks: 2.8.10
 
@@ -9528,14 +9528,14 @@ snapshots:
 
   libbase64@1.4.1: {}
 
-  libmime@5.6.4:
+  libmime@5.6.5:
     dependencies:
       encoding-japanese: 2.5.0
       iconv-lite: 0.7.3
       libbase64: 1.4.1
-      libqp: 3.0.1
+      libqp: 3.0.2
 
-  libqp@3.0.1: {}
+  libqp@3.0.2: {}
 
   lightningcss-android-arm64@1.33.0:
     optional: true
