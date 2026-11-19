@@ -100,7 +100,7 @@ async function handler(ctx) {
                 author: article.publisher || undefined,
                 category: article.category?.name ? [article.category.name] : undefined,
             };
-            if (!item.link.startsWith(baseUrl)) {
+            if (!item.link.startsWith(`${baseUrl}/`)) {
                 return item;
             }
             return mapResolvedValue(
