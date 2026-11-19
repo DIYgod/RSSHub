@@ -27,7 +27,7 @@ export const route: Route = {
 
 const extractSearchConfig = (source: string) => {
     const embedded = /\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/.exec(source);
-    const client = source.includes('algolia.net') ? /\(["']([A-Z0-9]{10})["'],["']([a-f0-9]{32})["']\)/.exec(source) : undefined;
+    const client = /\(["']([A-Z0-9]{10})["'],["']([a-f0-9]{32})["']\)/.exec(source);
     const match = embedded ?? client;
     return match ? { appId: match[1], apiKey: match[2] } : undefined;
 };

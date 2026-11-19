@@ -96,8 +96,7 @@ const parseList = (html: string): ListCard[] => {
             };
             // `<br>` separates 駅 from 徒歩, and cheerio's .text() would run them together.
             const stationEl = th('最寄駅');
-            const stationHtml = stationEl ? $(stationEl).next('td').html() : null;
-            const stationText = value(stationHtml?.replaceAll(/<br\s*\/?>/gi, ' ').replaceAll(/<[^>]+>/g, '') ?? null);
+            const stationText = stationEl ? value($(stationEl).next('td').find('br').replaceWith(' ').end().text()) : null;
 
             const raw: ListingExtra['raw'] = {
                 address: cell('住所'),
