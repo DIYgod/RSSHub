@@ -57782,6 +57782,146 @@
       }
     ]
   },
+  "baoan.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "宝安区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/bajshej/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/baoan/bajshej/:caty?"
+      }
+    ]
+  },
+  "dpxq.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "大鹏新区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/dpzfjsj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/dpxq/dpzfjsj/:caty?"
+      }
+    ]
+  },
+  "lg.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "龙岗区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/lgzjj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/lg/lgzjj/:caty?"
+      }
+    ]
+  },
+  "szft.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "福田区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/ftqjsj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szft/ftqjsj/:caty?"
+      }
+    ]
+  },
+  "szgm.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "光明区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/gmzfhjsjcsgx/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szgm/gmzfhjsjcsgx/:caty?"
+      }
+    ]
+  },
+  "szlh.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "罗湖区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/lhqzfhjsj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szlh/lhqzfhjsj/:caty?"
+      }
+    ],
+    ".": [
+      {
+        "title": "罗湖区人民政府 政务服务",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/zwfw/zffw/:caty"
+        ],
+        "target": "/gov/shenzhen/szlh/zwfw/zffw/:caty"
+      }
+    ]
+  },
+  "szlhq.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "龙华区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/lhzfhjsj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szlhq/lhzfhjsj/:caty?"
+      }
+    ]
+  },
+  "szns.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "南山区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/nsqzjj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szns/nsqzjj/:caty?"
+      }
+    ]
+  },
+  "szpsq.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "坪山区住房保障中心",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/pszfbzzx/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/szpsq/pszfbzzx/:caty?"
+      }
+    ]
+  },
+  "yantian.gov.cn": {
+    "_name": "深圳市人民政府",
+    "www": [
+      {
+        "title": "盐田区住房和建设局",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/ytjsj/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/yantian/ytjsj/:caty?"
+      }
+    ]
+  },
   "sz.gov.cn": {
     "_name": "深圳市人民政府",
     "hrss": [
@@ -57840,19 +57980,6 @@
           "/service/file/index.html"
         ],
         "target": "/gov/shenzhen/zzb/bgxz"
-      }
-    ]
-  },
-  "szlh.gov.cn": {
-    "_name": "深圳市人民政府",
-    ".": [
-      {
-        "title": "罗湖区人民政府 政务服务",
-        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
-        "source": [
-          "/zwfw/zffw/:caty"
-        ],
-        "target": "/gov/shenzhen/szlh/zwfw/zffw/:caty"
       }
     ]
   },

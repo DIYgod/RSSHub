@@ -1525,9 +1525,19 @@ export type RoutePath =
   | `/gov/sh/yjj/:path{.+}?`
   | `/gov/shaanxi/kjt/:id?`
   | `/gov/shanxi/rst/:category`
+  | `/gov/shenzhen/baoan/bajshej/:caty?`
+  | `/gov/shenzhen/dpxq/dpzfjsj/:caty?`
   | `/gov/shenzhen/hrss/szksy/:caty/:page?`
+  | `/gov/shenzhen/lg/lgzjj/:caty?`
+  | `/gov/shenzhen/szft/ftqjsj/:caty?`
+  | `/gov/shenzhen/szgm/gmzfhjsjcsgx/:caty?`
+  | `/gov/shenzhen/szlh/lhqzfhjsj/:caty?`
   | `/gov/shenzhen/szlh/zwfw/zffw/:caty`
+  | `/gov/shenzhen/szlhq/lhzfhjsj/:caty?`
+  | `/gov/shenzhen/szns/nsqzjj/:caty?`
+  | `/gov/shenzhen/szpsq/pszfbzzx/:caty?`
   | `/gov/shenzhen/xxgk/zfxxgj/:caty`
+  | `/gov/shenzhen/yantian/ytjsj/:caty?`
   | `/gov/shenzhen/zjj/xxgk/:caty`
   | `/gov/shenzhen/zzb/:caty/:page?`
   | `/gov/sichuan/deyang/govpublicinfo/:countyName/:infoType?`

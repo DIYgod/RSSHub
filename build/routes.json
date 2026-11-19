@@ -151247,6 +151247,856 @@
   },
   "gov/shenzhen": {
     "routes": {
+      "/baoan/bajshej/:caty?": {
+        "path": "/baoan/bajshej/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/baoan/bajshej/5445",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "24748",
+                "label": "规划计划"
+              },
+              {
+                "value": "5436",
+                "label": "规划计划 - 工作计划及总结"
+              },
+              {
+                "value": "24749",
+                "label": "规划计划 - 法治政府建设报告"
+              },
+              {
+                "value": "24750",
+                "label": "财政审计"
+              },
+              {
+                "value": "5437",
+                "label": "财政审计 - 财政预决算"
+              },
+              {
+                "value": "24751",
+                "label": "财政审计 - 审计问题整改报告"
+              },
+              {
+                "value": "26118",
+                "label": "建议提案"
+              },
+              {
+                "value": "26119",
+                "label": "建议提案 - 人大建议答复"
+              },
+              {
+                "value": "25125",
+                "label": "建议提案 - 政协提案答复"
+              },
+              {
+                "value": "5438",
+                "label": "信息发布"
+              },
+              {
+                "value": "22353",
+                "label": "政务服务"
+              },
+              {
+                "value": "22378",
+                "label": "政民互动"
+              },
+              {
+                "value": "22379",
+                "label": "政民互动 - 征集调查"
+              },
+              {
+                "value": "22380",
+                "label": "政民互动 - 留言统计"
+              },
+              {
+                "value": "22381",
+                "label": "政民互动 - 业务知识库"
+              },
+              {
+                "value": "22377",
+                "label": "信用信息双公示"
+              },
+              {
+                "value": "22362",
+                "label": "其他法定公开内容"
+              },
+              {
+                "value": "5445",
+                "label": "其他法定公开内容 - 通知公告"
+              },
+              {
+                "value": "5446",
+                "label": "其他法定公开内容 - 工作动态"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.baoan.gov.cn/bajshej/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "宝安区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 24748 | 规划计划 |\n| 5436 | 规划计划 - 工作计划及总结 |\n| 24749 | 规划计划 - 法治政府建设报告 |\n| 24750 | 财政审计 |\n| 5437 | 财政审计 - 财政预决算 |\n| 24751 | 财政审计 - 审计问题整改报告 |\n| 26118 | 建议提案 |\n| 26119 | 建议提案 - 人大建议答复 |\n| 25125 | 建议提案 - 政协提案答复 |\n| 5438 | 信息发布 |\n| 22353 | 政务服务 |\n| 22378 | 政民互动 |\n| 22379 | 政民互动 - 征集调查 |\n| 22380 | 政民互动 - 留言统计 |\n| 22381 | 政民互动 - 业务知识库 |\n| 22377 | 信用信息双公示 |\n| 22362 | 其他法定公开内容 |\n| 5445 | 其他法定公开内容 - 通知公告 |\n| 5446 | 其他法定公开内容 - 工作动态 |",
+        "location": "baoan/bajshej/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/baoan/bajshej/index.ts')"
+      },
+      "/dpxq/dpzfjsj/:caty?": {
+        "path": "/dpxq/dpzfjsj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/dpxq/dpzfjsj/18890",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "18887",
+                "label": "规划计划"
+              },
+              {
+                "value": "18897",
+                "label": "规划计划 - 规划计划及总结"
+              },
+              {
+                "value": "18888",
+                "label": "资金信息"
+              },
+              {
+                "value": "18889",
+                "label": "人事信息"
+              },
+              {
+                "value": "18890",
+                "label": "部门动态"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dpxq.gov.cn/dpzfjsj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "大鹏新区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 18887 | 规划计划 |\n| 18897 | 规划计划 - 规划计划及总结 |\n| 18888 | 资金信息 |\n| 18889 | 人事信息 |\n| 18890 | 部门动态 |",
+        "location": "dpxq/dpzfjsj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/dpxq/dpzfjsj/index.ts')"
+      },
+      "/lg/lgzjj/:caty?": {
+        "path": "/lg/lgzjj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/lg/lgzjj/6622",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "6611",
+                "label": "年度工作计划及总结"
+              },
+              {
+                "value": "6609",
+                "label": "财政预决算"
+              },
+              {
+                "value": "23903",
+                "label": "人事信息"
+              },
+              {
+                "value": "23897",
+                "label": "重点领域"
+              },
+              {
+                "value": "23898",
+                "label": "重点领域 - 住房保障政策"
+              },
+              {
+                "value": "23900",
+                "label": "重点领域 - 分配和退出信息"
+              },
+              {
+                "value": "23902",
+                "label": "重点领域 - 住房保障信息"
+              },
+              {
+                "value": "6554",
+                "label": "其他"
+              },
+              {
+                "value": "6623",
+                "label": "其他 - 工作动态"
+              },
+              {
+                "value": "6622",
+                "label": "其他 - 通知公告"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.lg.gov.cn/lgzjj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "龙岗区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 6611 | 年度工作计划及总结 |\n| 6609 | 财政预决算 |\n| 23903 | 人事信息 |\n| 23897 | 重点领域 |\n| 23898 | 重点领域 - 住房保障政策 |\n| 23900 | 重点领域 - 分配和退出信息 |\n| 23902 | 重点领域 - 住房保障信息 |\n| 6554 | 其他 |\n| 6623 | 其他 - 工作动态 |\n| 6622 | 其他 - 通知公告 |",
+        "location": "lg/lgzjj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/lg/lgzjj/index.ts')"
+      },
+      "/szft/ftqjsj/:caty?": {
+        "path": "/szft/ftqjsj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szft/ftqjsj/9084",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "9088",
+                "label": "政策法规"
+              },
+              {
+                "value": "21529",
+                "label": "规划计划"
+              },
+              {
+                "value": "9092",
+                "label": "规划计划 - 规划计划及总结"
+              },
+              {
+                "value": "25940",
+                "label": "规划计划 - 法治政府建设报告"
+              },
+              {
+                "value": "21530",
+                "label": "资金信息"
+              },
+              {
+                "value": "9090",
+                "label": "资金信息 - 预决算信息"
+              },
+              {
+                "value": "9095",
+                "label": "资金信息 - “三公”经费"
+              },
+              {
+                "value": "9077",
+                "label": "工作动态"
+              },
+              {
+                "value": "9084",
+                "label": "通知公告"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szft.gov.cn/ftqjsj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "福田区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 9088 | 政策法规 |\n| 21529 | 规划计划 |\n| 9092 | 规划计划 - 规划计划及总结 |\n| 25940 | 规划计划 - 法治政府建设报告 |\n| 21530 | 资金信息 |\n| 9090 | 资金信息 - 预决算信息 |\n| 9095 | 资金信息 - “三公”经费 |\n| 9077 | 工作动态 |\n| 9084 | 通知公告 |",
+        "location": "szft/ftqjsj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szft/ftqjsj/index.ts')"
+      },
+      "/szgm/gmzfhjsjcsgx/:caty?": {
+        "path": "/szgm/gmzfhjsjcsgx/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szgm/gmzfhjsjcsgx/11184",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "11169",
+                "label": "政策法规"
+              },
+              {
+                "value": "11180",
+                "label": "政策法规 - 政策法规及规范性文件"
+              },
+              {
+                "value": "11170",
+                "label": "规划计划"
+              },
+              {
+                "value": "11181",
+                "label": "规划计划 - 年度工作计划及总结"
+              },
+              {
+                "value": "11171",
+                "label": "财政信息"
+              },
+              {
+                "value": "11182",
+                "label": "财政信息 - 部门预决算"
+              },
+              {
+                "value": "11172",
+                "label": "政务服务"
+              },
+              {
+                "value": "11173",
+                "label": "其他"
+              },
+              {
+                "value": "11184",
+                "label": "其他 - 通知公告"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szgm.gov.cn/gmzfhjsjcsgx/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "光明区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 11169 | 政策法规 |\n| 11180 | 政策法规 - 政策法规及规范性文件 |\n| 11170 | 规划计划 |\n| 11181 | 规划计划 - 年度工作计划及总结 |\n| 11171 | 财政信息 |\n| 11182 | 财政信息 - 部门预决算 |\n| 11172 | 政务服务 |\n| 11173 | 其他 |\n| 11184 | 其他 - 通知公告 |",
+        "location": "szgm/gmzfhjsjcsgx/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szgm/gmzfhjsjcsgx/index.ts')"
+      },
+      "/szlh/lhqzfhjsj/:caty?": {
+        "path": "/szlh/lhqzfhjsj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szlh/lhqzfhjsj/12588",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "12570",
+                "label": "政策文件"
+              },
+              {
+                "value": "12588",
+                "label": "通知公告"
+              },
+              {
+                "value": "24781",
+                "label": "规划计划"
+              },
+              {
+                "value": "12563",
+                "label": "规划计划 - 计划总结"
+              },
+              {
+                "value": "24573",
+                "label": "规划计划 - 法治政府建设报告"
+              },
+              {
+                "value": "19703",
+                "label": "行政执法"
+              },
+              {
+                "value": "12583",
+                "label": "行政执法 - “双随机、一公开”"
+              },
+              {
+                "value": "12567",
+                "label": "资金信息"
+              },
+              {
+                "value": "12591",
+                "label": "资金信息 - 财政预算决算"
+              },
+              {
+                "value": "12578",
+                "label": "资金信息 - “三公”经费"
+              },
+              {
+                "value": "12574",
+                "label": "征集调查"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szlh.gov.cn/lhqzfhjsj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "罗湖区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 12570 | 政策文件 |\n| 12588 | 通知公告 |\n| 24781 | 规划计划 |\n| 12563 | 规划计划 - 计划总结 |\n| 24573 | 规划计划 - 法治政府建设报告 |\n| 19703 | 行政执法 |\n| 12583 | 行政执法 - “双随机、一公开” |\n| 12567 | 资金信息 |\n| 12591 | 资金信息 - 财政预算决算 |\n| 12578 | 资金信息 - “三公”经费 |\n| 12574 | 征集调查 |",
+        "location": "szlh/lhqzfhjsj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szlh/lhqzfhjsj/index.ts')"
+      },
+      "/szlhq/lhzfhjsj/:caty?": {
+        "path": "/szlhq/lhzfhjsj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szlhq/lhzfhjsj/14151",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "14134",
+                "label": "政策法规"
+              },
+              {
+                "value": "14148",
+                "label": "政策法规 - 政策文件及解读"
+              },
+              {
+                "value": "14135",
+                "label": "规划计划"
+              },
+              {
+                "value": "14149",
+                "label": "规划计划 - 年度工作计划及总结"
+              },
+              {
+                "value": "14132",
+                "label": "资金信息"
+              },
+              {
+                "value": "14140",
+                "label": "资金信息 - 财政预决算"
+              },
+              {
+                "value": "14136",
+                "label": "其他"
+              },
+              {
+                "value": "14152",
+                "label": "其他 - 工作动态"
+              },
+              {
+                "value": "14151",
+                "label": "其他 - 通知公告"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szlhq.gov.cn/lhzfhjsj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "龙华区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 14134 | 政策法规 |\n| 14148 | 政策法规 - 政策文件及解读 |\n| 14135 | 规划计划 |\n| 14149 | 规划计划 - 年度工作计划及总结 |\n| 14132 | 资金信息 |\n| 14140 | 资金信息 - 财政预决算 |\n| 14136 | 其他 |\n| 14152 | 其他 - 工作动态 |\n| 14151 | 其他 - 通知公告 |",
+        "location": "szlhq/lhzfhjsj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szlhq/lhzfhjsj/index.ts')"
+      },
+      "/szns/nsqzjj/:caty?": {
+        "path": "/szns/nsqzjj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szns/nsqzjj/15162",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "15169",
+                "label": "政策文件及解读"
+              },
+              {
+                "value": "15160",
+                "label": "规划计划"
+              },
+              {
+                "value": "15176",
+                "label": "规划计划 - 工作计划及总结"
+              },
+              {
+                "value": "22112",
+                "label": "数据发布"
+              },
+              {
+                "value": "15158",
+                "label": "资金信息"
+              },
+              {
+                "value": "15170",
+                "label": "资金信息 - 部门财政预决算"
+              },
+              {
+                "value": "15171",
+                "label": "资金信息 - “三公”经费"
+              },
+              {
+                "value": "22231",
+                "label": "住房服务"
+              },
+              {
+                "value": "22234",
+                "label": "住房服务 - 项目分配及退出公告"
+              },
+              {
+                "value": "22235",
+                "label": "住房服务 - 施工许可"
+              },
+              {
+                "value": "22236",
+                "label": "住房服务 - 竣工验收备案"
+              },
+              {
+                "value": "26295",
+                "label": "住房服务 - 物业管理"
+              },
+              {
+                "value": "15162",
+                "label": "通知公告"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szns.gov.cn/nsqzjj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "南山区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 15169 | 政策文件及解读 |\n| 15160 | 规划计划 |\n| 15176 | 规划计划 - 工作计划及总结 |\n| 22112 | 数据发布 |\n| 15158 | 资金信息 |\n| 15170 | 资金信息 - 部门财政预决算 |\n| 15171 | 资金信息 - “三公”经费 |\n| 22231 | 住房服务 |\n| 22234 | 住房服务 - 项目分配及退出公告 |\n| 22235 | 住房服务 - 施工许可 |\n| 22236 | 住房服务 - 竣工验收备案 |\n| 26295 | 住房服务 - 物业管理 |\n| 15162 | 通知公告 |",
+        "location": "szns/nsqzjj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szns/nsqzjj/index.ts')"
+      },
+      "/szpsq/pszfbzzx/:caty?": {
+        "path": "/szpsq/pszfbzzx/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/szpsq/pszfbzzx/16835",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "16836",
+                "label": "工作动态"
+              },
+              {
+                "value": "16835",
+                "label": "通知公告"
+              },
+              {
+                "value": "16841",
+                "label": "规划计划"
+              },
+              {
+                "value": "16834",
+                "label": "资金信息"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szpsq.gov.cn/pszfbzzx/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "坪山区住房保障中心",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 16836 | 工作动态 |\n| 16835 | 通知公告 |\n| 16841 | 规划计划 |\n| 16834 | 资金信息 |",
+        "location": "szpsq/pszfbzzx/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/szpsq/pszfbzzx/index.ts')"
+      },
+      "/yantian/ytjsj/:caty?": {
+        "path": "/yantian/ytjsj/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/yantian/ytjsj/17753",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "17730",
+                "label": "政策法规"
+              },
+              {
+                "value": "17741",
+                "label": "政策法规 - 法律、法规、规章"
+              },
+              {
+                "value": "17725",
+                "label": "规划计划"
+              },
+              {
+                "value": "17754",
+                "label": "规划计划 - 年度计划与总结"
+              },
+              {
+                "value": "17726",
+                "label": "资金信息"
+              },
+              {
+                "value": "27388",
+                "label": "资金信息 - 财政预算决算"
+              },
+              {
+                "value": "17727",
+                "label": "信息公开年度工作报告"
+              },
+              {
+                "value": "17728",
+                "label": "其他"
+              },
+              {
+                "value": "17753",
+                "label": "其他 - 通知公告"
+              },
+              {
+                "value": "17729",
+                "label": "业务工作"
+              },
+              {
+                "value": "17731",
+                "label": "业务工作 - 工程建设领域信息公开专栏"
+              },
+              {
+                "value": "17764",
+                "label": "业务工作 - 工程建设领域信息公开专栏 - 竣工验收信息"
+              },
+              {
+                "value": "17761",
+                "label": "业务工作 - 工程建设领域信息公开专栏 - 质量安全检查信息"
+              },
+              {
+                "value": "17760",
+                "label": "业务工作 - 工程建设领域信息公开专栏 - 施工管理信息"
+              },
+              {
+                "value": "17757",
+                "label": "业务工作 - 工程建设领域信息公开专栏 - 招标投标信息"
+              },
+              {
+                "value": "17733",
+                "label": "业务工作 - 住房保障信息公开"
+              },
+              {
+                "value": "17766",
+                "label": "业务工作 - 住房保障信息公开 - 住房保障动态"
+              },
+              {
+                "value": "17765",
+                "label": "业务工作 - 住房保障信息公开 - 计划和建设信息"
+              },
+              {
+                "value": "17762",
+                "label": "业务工作 - 住房保障信息公开 - 住房保障政策"
+              },
+              {
+                "value": "26538",
+                "label": "业务工作 - 城市更新和土地整备"
+              },
+              {
+                "value": "26539",
+                "label": "业务工作 - 城市更新和土地整备 - 计划规划"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.yantian.gov.cn/ytjsj/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "盐田区住房和建设局",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| 0 | 全部 |\n| 17730 | 政策法规 |\n| 17741 | 政策法规 - 法律、法规、规章 |\n| 17725 | 规划计划 |\n| 17754 | 规划计划 - 年度计划与总结 |\n| 17726 | 资金信息 |\n| 27388 | 资金信息 - 财政预算决算 |\n| 17727 | 信息公开年度工作报告 |\n| 17728 | 其他 |\n| 17753 | 其他 - 通知公告 |\n| 17729 | 业务工作 |\n| 17731 | 业务工作 - 工程建设领域信息公开专栏 |\n| 17764 | 业务工作 - 工程建设领域信息公开专栏 - 竣工验收信息 |\n| 17761 | 业务工作 - 工程建设领域信息公开专栏 - 质量安全检查信息 |\n| 17760 | 业务工作 - 工程建设领域信息公开专栏 - 施工管理信息 |\n| 17757 | 业务工作 - 工程建设领域信息公开专栏 - 招标投标信息 |\n| 17733 | 业务工作 - 住房保障信息公开 |\n| 17766 | 业务工作 - 住房保障信息公开 - 住房保障动态 |\n| 17765 | 业务工作 - 住房保障信息公开 - 计划和建设信息 |\n| 17762 | 业务工作 - 住房保障信息公开 - 住房保障政策 |\n| 26538 | 业务工作 - 城市更新和土地整备 |\n| 26539 | 业务工作 - 城市更新和土地整备 - 计划规划 |",
+        "location": "yantian/ytjsj/index.ts",
+        "module": "() => import('@/routes/gov/shenzhen/yantian/ytjsj/index.ts')"
+      },
       "/hrss/szksy/:caty/:page?": {
         "path": "/hrss/szksy/:caty/:page?",
         "categories": [
@@ -151346,7 +152196,87 @@
         ],
         "example": "/gov/shenzhen/zjj/xxgk/tzgg",
         "parameters": {
-          "caty": "信息类别"
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "zcfgs-zcfg",
+                "label": "政策法规及解读 - 政策法规"
+              },
+              {
+                "value": "zcfgs-zcjd",
+                "label": "政策法规及解读 - 政策解读"
+              },
+              {
+                "value": "ghjh",
+                "label": "规划计划"
+              },
+              {
+                "value": "tjsj",
+                "label": "统计信息"
+              },
+              {
+                "value": "zjxx-czyjs",
+                "label": "资金信息 - 财政预决算"
+              },
+              {
+                "value": "zjxx-qt",
+                "label": "资金信息 - 其他资金信息"
+              },
+              {
+                "value": "zjxx-sgjfcsc",
+                "label": "资金信息 - 三公经费"
+              },
+              {
+                "value": "rsxx5",
+                "label": "人事信息"
+              },
+              {
+                "value": "tzgg",
+                "label": "通知公告"
+              },
+              {
+                "value": "zscd-zy",
+                "label": "政声传递 - 国家"
+              },
+              {
+                "value": "zscd-gd",
+                "label": "政声传递 - 广东省"
+              },
+              {
+                "value": "zscd-sz",
+                "label": "政声传递 - 深圳市"
+              },
+              {
+                "value": "gzdt",
+                "label": "工作动态"
+              },
+              {
+                "value": "csyjgx",
+                "label": "城市有机更新"
+              },
+              {
+                "value": "video",
+                "label": "视频集锦"
+              },
+              {
+                "value": "zfws",
+                "label": "执法文书"
+              },
+              {
+                "value": "rd",
+                "label": "人大建议政协提案"
+              },
+              {
+                "value": "ndbg",
+                "label": "年度信息公开报告"
+              },
+              {
+                "value": "wzgznd",
+                "label": "政府网站工作年度报表"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -151365,9 +152295,10 @@
         ],
         "name": "住房和建设局",
         "maintainers": [
-          "lonn"
+          "lonn",
+          "nuomi1"
         ],
-        "description": "| 通知公告 |\n| :------: |\n|   tzgg   |",
+        "description": "| caty | 信息类别 |\n| ---- | -------- |\n| zcfgs-zcfg | 政策法规及解读 - 政策法规 |\n| zcfgs-zcjd | 政策法规及解读 - 政策解读 |\n| ghjh | 规划计划 |\n| tjsj | 统计信息 |\n| zjxx-czyjs | 资金信息 - 财政预决算 |\n| zjxx-qt | 资金信息 - 其他资金信息 |\n| zjxx-sgjfcsc | 资金信息 - 三公经费 |\n| rsxx5 | 人事信息 |\n| tzgg | 通知公告 |\n| zscd-zy | 政声传递 - 国家 |\n| zscd-gd | 政声传递 - 广东省 |\n| zscd-sz | 政声传递 - 深圳市 |\n| gzdt | 工作动态 |\n| csyjgx | 城市有机更新 |\n| video | 视频集锦 |\n| zfws | 执法文书 |\n| rd | 人大建议政协提案 |\n| ndbg | 年度信息公开报告 |\n| wzgznd | 政府网站工作年度报表 |",
         "location": "zjj/index.ts",
         "module": "() => import('@/routes/gov/shenzhen/zjj/index.ts')"
       },

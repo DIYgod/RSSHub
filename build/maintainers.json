@@ -11023,6 +11023,36 @@
   "/gov/shanxi/rst/:category": [
     "wolfyu1991"
   ],
+  "/gov/shenzhen/baoan/bajshej/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/dpxq/dpzfjsj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/lg/lgzjj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szft/ftqjsj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szgm/gmzfhjsjcsgx/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szlh/lhqzfhjsj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szlhq/lhzfhjsj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szns/nsqzjj/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/szpsq/pszfbzzx/:caty?": [
+    "nuomi1"
+  ],
+  "/gov/shenzhen/yantian/ytjsj/:caty?": [
+    "nuomi1"
+  ],
   "/gov/shenzhen/hrss/szksy/:caty/:page?": [
     "zlasd"
   ],
@@ -11033,7 +11063,8 @@
     "laoxua"
   ],
   "/gov/shenzhen/zjj/xxgk/:caty": [
-    "lonn"
+    "lonn",
+    "nuomi1"
   ],
   "/gov/shenzhen/zzb/:caty/:page?": [
     "zlasd"
