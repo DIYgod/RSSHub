@@ -37,7 +37,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid site');
     }
     const rootUrl = `http://${site}.people.com.cn`;
-    const path = site === 'politics' && !category ? 'GB/1024' : site === 'society' && category === '1008' ? '' : category ? `GB/${category}` : '';
+    const path = site === 'politics' && !category ? 'GB/1024' : category && !(site === 'society' && category === '1008') ? `GB/${category}` : '';
     const requestedUrl = new URL(path, rootUrl).href;
     const { $, url: currentUrl } = await fetchChannel(requestedUrl);
     const articleRootUrl = new URL('/', currentUrl).href;
