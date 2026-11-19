@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.szgm.gov.cn/gmzfhjsjcsgx';
@@ -57,7 +56,18 @@ export const route: Route = {
     name: '光明区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 11169 | 政策法规 |
+| 11180 | 政策法规 - 政策法规及规范性文件 |
+| 11170 | 规划计划 |
+| 11181 | 规划计划 - 年度工作计划及总结 |
+| 11171 | 财政信息 |
+| 11182 | 财政信息 - 部门预决算 |
+| 11172 | 政务服务 |
+| 11173 | 其他 |
+| 11184 | 其他 - 通知公告 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

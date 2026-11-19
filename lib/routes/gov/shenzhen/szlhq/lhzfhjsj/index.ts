@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.szlhq.gov.cn/lhzfhjsj';
@@ -62,7 +61,18 @@ export const route: Route = {
     name: '龙华区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 14134 | 政策法规 |
+| 14148 | 政策法规 - 政策文件及解读 |
+| 14135 | 规划计划 |
+| 14149 | 规划计划 - 年度工作计划及总结 |
+| 14132 | 资金信息 |
+| 14140 | 资金信息 - 财政预决算 |
+| 14136 | 其他 |
+| 14152 | 其他 - 工作动态 |
+| 14151 | 其他 - 通知公告 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

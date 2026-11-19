@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.yantian.gov.cn/ytjsj';
@@ -68,7 +67,30 @@ export const route: Route = {
     name: '盐田区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 17730 | 政策法规 |
+| 17741 | 政策法规 - 法律、法规、规章 |
+| 17725 | 规划计划 |
+| 17754 | 规划计划 - 年度计划与总结 |
+| 17726 | 资金信息 |
+| 27388 | 资金信息 - 财政预算决算 |
+| 17727 | 信息公开年度工作报告 |
+| 17728 | 其他 |
+| 17753 | 其他 - 通知公告 |
+| 17729 | 业务工作 |
+| 17731 | 业务工作 - 工程建设领域信息公开专栏 |
+| 17764 | 业务工作 - 工程建设领域信息公开专栏 - 竣工验收信息 |
+| 17761 | 业务工作 - 工程建设领域信息公开专栏 - 质量安全检查信息 |
+| 17760 | 业务工作 - 工程建设领域信息公开专栏 - 施工管理信息 |
+| 17757 | 业务工作 - 工程建设领域信息公开专栏 - 招标投标信息 |
+| 17733 | 业务工作 - 住房保障信息公开 |
+| 17766 | 业务工作 - 住房保障信息公开 - 住房保障动态 |
+| 17765 | 业务工作 - 住房保障信息公开 - 计划和建设信息 |
+| 17762 | 业务工作 - 住房保障信息公开 - 住房保障政策 |
+| 26538 | 业务工作 - 城市更新和土地整备 |
+| 26539 | 业务工作 - 城市更新和土地整备 - 计划规划 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

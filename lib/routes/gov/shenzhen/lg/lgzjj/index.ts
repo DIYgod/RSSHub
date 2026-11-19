@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.lg.gov.cn/lgzjj';
@@ -58,7 +57,19 @@ export const route: Route = {
     name: '龙岗区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 6611 | 年度工作计划及总结 |
+| 6609 | 财政预决算 |
+| 23903 | 人事信息 |
+| 23897 | 重点领域 |
+| 23898 | 重点领域 - 住房保障政策 |
+| 23900 | 重点领域 - 分配和退出信息 |
+| 23902 | 重点领域 - 住房保障信息 |
+| 6554 | 其他 |
+| 6623 | 其他 - 工作动态 |
+| 6622 | 其他 - 通知公告 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

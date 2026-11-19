@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.szns.gov.cn/nsqzjj';
@@ -63,7 +62,22 @@ export const route: Route = {
     name: '南山区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 15169 | 政策文件及解读 |
+| 15160 | 规划计划 |
+| 15176 | 规划计划 - 工作计划及总结 |
+| 22112 | 数据发布 |
+| 15158 | 资金信息 |
+| 15170 | 资金信息 - 部门财政预决算 |
+| 15171 | 资金信息 - “三公”经费 |
+| 22231 | 住房服务 |
+| 22234 | 住房服务 - 项目分配及退出公告 |
+| 22235 | 住房服务 - 施工许可 |
+| 22236 | 住房服务 - 竣工验收备案 |
+| 26295 | 住房服务 - 物业管理 |
+| 15162 | 通知公告 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

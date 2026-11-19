@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.dpxq.gov.cn/dpzfjsj';
@@ -55,7 +54,14 @@ export const route: Route = {
     name: '大鹏新区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 18887 | 规划计划 |
+| 18897 | 规划计划 - 规划计划及总结 |
+| 18888 | 资金信息 |
+| 18889 | 人事信息 |
+| 18890 | 部门动态 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

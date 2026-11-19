@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.szlh.gov.cn/lhqzfhjsj';
@@ -61,7 +60,20 @@ export const route: Route = {
     name: '罗湖区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 12570 | 政策文件 |
+| 12588 | 通知公告 |
+| 24781 | 规划计划 |
+| 12563 | 规划计划 - 计划总结 |
+| 24573 | 规划计划 - 法治政府建设报告 |
+| 19703 | 行政执法 |
+| 12583 | 行政执法 - “双随机、一公开” |
+| 12567 | 资金信息 |
+| 12591 | 资金信息 - 财政预算决算 |
+| 12578 | 资金信息 - “三公”经费 |
+| 12574 | 征集调查 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

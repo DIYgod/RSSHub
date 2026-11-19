@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.szft.gov.cn/ftqjsj';
@@ -58,7 +57,18 @@ export const route: Route = {
     name: '福田区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 9088 | 政策法规 |
+| 21529 | 规划计划 |
+| 9092 | 规划计划 - 规划计划及总结 |
+| 25940 | 规划计划 - 法治政府建设报告 |
+| 21530 | 资金信息 |
+| 9090 | 资金信息 - 预决算信息 |
+| 9095 | 资金信息 - “三公”经费 |
+| 9077 | 工作动态 |
+| 9084 | 通知公告 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

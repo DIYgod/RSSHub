@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { GkmlptCategory } from '@/routes/gov/shenzhen/gkmlpt/types';
 import { buildCategoryMap, buildOptions, defaultOption, getArticleDataItems, getArticleList, getCategoryLink } from '@/routes/gov/shenzhen/gkmlpt/utils';
-import { renderOptionsMarkdownTable } from '@/routes/gov/shenzhen/utils/render-markdown-table';
 import type { Data, Route } from '@/types';
 
 const baseUrl = 'https://www.baoan.gov.cn/bajshej';
@@ -72,7 +71,28 @@ export const route: Route = {
     name: '宝安区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: renderOptionsMarkdownTable({ parameter: 'caty', description: '信息类别', options }),
+    description: `| caty | 信息类别 |
+| ---- | -------- |
+| 0 | 全部 |
+| 24748 | 规划计划 |
+| 5436 | 规划计划 - 工作计划及总结 |
+| 24749 | 规划计划 - 法治政府建设报告 |
+| 24750 | 财政审计 |
+| 5437 | 财政审计 - 财政预决算 |
+| 24751 | 财政审计 - 审计问题整改报告 |
+| 26118 | 建议提案 |
+| 26119 | 建议提案 - 人大建议答复 |
+| 25125 | 建议提案 - 政协提案答复 |
+| 5438 | 信息发布 |
+| 22353 | 政务服务 |
+| 22378 | 政民互动 |
+| 22379 | 政民互动 - 征集调查 |
+| 22380 | 政民互动 - 留言统计 |
+| 22381 | 政民互动 - 业务知识库 |
+| 22377 | 信用信息双公示 |
+| 22362 | 其他法定公开内容 |
+| 5445 | 其他法定公开内容 - 通知公告 |
+| 5446 | 其他法定公开内容 - 工作动态 |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {
