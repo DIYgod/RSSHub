@@ -57,10 +57,12 @@ const getXWLB = async (ctx: Context) => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
     // Read the latest broadcast date from the native calendar.
-    const latestDate = parseDate($('.rilititle p').text(), 'YYYY-MM-DD')?.toZonedDateTimeISO('UTC').toPlainDate();
-    if (!latestDate) {
+    const calendarDate = parseDate($('.rilititle p').text(), 'YYYY-MM-DD')?.toZonedDateTimeISO('UTC').toPlainDate();
+    if (!calendarDate) {
         throw new Error('Unable to read the latest broadcast date from the calendar.');
     }
+    // The calendar can show the current day with an empty list before that day's broadcast is published.
+    const latestDate = $('#content li').length > 0 ? calendarDate : calendarDate.subtract({ days: 1 });
     const limit = Number(ctx.req.query('limit'));
     const count = Array.from({ length: limit > 0 ? Math.min(20, limit) : 20 }, (_, index) => index);
     const resultItems = await Promise.all(
