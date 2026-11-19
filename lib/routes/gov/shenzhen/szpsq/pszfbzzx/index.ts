@@ -52,9 +52,9 @@ export const route: Route = {
     name: '坪山区住房保障中心',
     maintainers: ['nuomi1'],
     handler,
-    description: `| caty | 信息类别 |
-| ---- | -------- |
-| 0 | 全部 |
+    description: `| caty  | 信息类别 |
+| ----- | -------- |
+| 0     | 全部     |
 | 16836 | 工作动态 |
 | 16835 | 通知公告 |
 | 16841 | 规划计划 |

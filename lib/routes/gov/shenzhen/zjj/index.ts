@@ -78,27 +78,27 @@ export const route: Route = {
     name: '住房和建设局',
     maintainers: ['lonn', 'nuomi1'],
     handler,
-    description: `| caty | 信息类别 |
-| ---- | -------- |
-| zcfgs-zcfg | 政策法规及解读 - 政策法规 |
-| zcfgs-zcjd | 政策法规及解读 - 政策解读 |
-| ghjh | 规划计划 |
-| tjsj | 统计信息 |
-| zjxx-czyjs | 资金信息 - 财政预决算 |
-| zjxx-qt | 资金信息 - 其他资金信息 |
-| zjxx-sgjfcsc | 资金信息 - 三公经费 |
-| rsxx5 | 人事信息 |
-| tzgg | 通知公告 |
-| zscd-zy | 政声传递 - 国家 |
-| zscd-gd | 政声传递 - 广东省 |
-| zscd-sz | 政声传递 - 深圳市 |
-| gzdt | 工作动态 |
-| csyjgx | 城市有机更新 |
-| video | 视频集锦 |
-| zfws | 执法文书 |
-| rd | 人大建议政协提案 |
-| ndbg | 年度信息公开报告 |
-| wzgznd | 政府网站工作年度报表 |`,
+    description: `| caty         | 信息类别                  |
+| ------------ | ------------------------- |
+| zcfgs-zcfg   | 政策法规及解读 - 政策法规 |
+| zcfgs-zcjd   | 政策法规及解读 - 政策解读 |
+| ghjh         | 规划计划                  |
+| tjsj         | 统计信息                  |
+| zjxx-czyjs   | 资金信息 - 财政预决算     |
+| zjxx-qt      | 资金信息 - 其他资金信息   |
+| zjxx-sgjfcsc | 资金信息 - 三公经费       |
+| rsxx5        | 人事信息                  |
+| tzgg         | 通知公告                  |
+| zscd-zy      | 政声传递 - 国家           |
+| zscd-gd      | 政声传递 - 广东省         |
+| zscd-sz      | 政声传递 - 深圳市         |
+| gzdt         | 工作动态                  |
+| csyjgx       | 城市有机更新              |
+| video        | 视频集锦                  |
+| zfws         | 执法文书                  |
+| rd           | 人大建议政协提案          |
+| ndbg         | 年度信息公开报告          |
+| wzgznd       | 政府网站工作年度报表      |`,
 };
 
 // Dispatch on `layout`. An unknown layout is a programming error, so it fails loudly

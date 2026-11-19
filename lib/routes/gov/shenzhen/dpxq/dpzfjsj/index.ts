@@ -54,14 +54,14 @@ export const route: Route = {
     name: '大鹏新区住房和建设局',
     maintainers: ['nuomi1'],
     handler,
-    description: `| caty | 信息类别 |
-| ---- | -------- |
-| 0 | 全部 |
-| 18887 | 规划计划 |
+    description: `| caty  | 信息类别                  |
+| ----- | ------------------------- |
+| 0     | 全部                      |
+| 18887 | 规划计划                  |
 | 18897 | 规划计划 - 规划计划及总结 |
-| 18888 | 资金信息 |
-| 18889 | 人事信息 |
-| 18890 | 部门动态 |`,
+| 18888 | 资金信息                  |
+| 18889 | 人事信息                  |
+| 18890 | 部门动态                  |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {
