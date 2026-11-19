@@ -195,7 +195,6 @@
         // "unicorn/no-array-sort": "error",
         "unicorn-js/no-array-sort-for-min-max": "error",
         "unicorn-js/no-array-splice": "error",
-        "unicorn-js/no-async-promise-finally": "error",
         "unicorn-js/no-async-iterator-callback": "error",
         // "unicorn/no-await-expression-member": "error",
         "unicorn/no-await-in-promise-methods": "error",
@@ -732,6 +731,7 @@
         "unicorn/no-array-reduce": "warn",
         "unicorn/no-array-reverse": ["error", { "allowExpressionStatement": false }],
         "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
+        "unicorn-js/no-async-promise-finally": "error",
 
         "unicorn/no-await-expression-member": "off",
         "unicorn/no-empty-file": "warn",
