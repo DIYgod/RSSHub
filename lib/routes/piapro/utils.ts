@@ -11,7 +11,7 @@ export const parseContent = (htmlString: string) => {
         .text()
         .match(/\d+\/\d+\/\d+ \d+:\d+:\d+/)?.[0];
 
-    const audioUrl = htmlString.match(/"url":\s*"(https:\/\/cdn\.piapro\.jp\/mp3_a\/[^"]+)"/)?.[1];
+    const audioUrl = /"url":\s*"(https:\/\/cdn\.piapro\.jp\/mp3_a\/[^"]+)"/.exec(htmlString)?.[1];
 
     const description =
         ($('.contents_illust_img').html() ?? '') +

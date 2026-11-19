@@ -26,7 +26,7 @@ function getWechatAuthor(content: CheerioAPI) {
 }
 
 function parseWechatPublication(content: string) {
-    const timestamp = content.match(/\bvar\s+ct\s*=\s*["'](\d+)["']\s*;/)?.[1];
+    const timestamp = /\bvar\s+ct\s*=\s*["'](\d+)["']\s*;/.exec(content)?.[1];
     if (!timestamp) {
         return;
     }

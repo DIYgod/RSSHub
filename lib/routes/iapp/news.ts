@@ -26,8 +26,8 @@ export const route: Route = {
 };
 
 const extractSearchConfig = (source: string) => {
-    const embedded = source.match(/\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/);
-    const client = source.match(/\(["']([A-Z0-9]{10})["'],["']([a-f0-9]{32})["']\)/);
+    const embedded = /\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/.exec(source);
+    const client = /\(["']([A-Z0-9]{10})["'],["']([a-f0-9]{32})["']\)/.exec(source);
     const match = embedded ?? client;
     return match ? { appId: match[1], apiKey: match[2] } : undefined;
 };

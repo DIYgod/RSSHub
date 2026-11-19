@@ -11,7 +11,7 @@ import { parseDateStrict, toInstant } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getPublicationDate = (html: string) => {
-    const timestamp = html.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1];
+    const timestamp = /(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/.exec(html)?.[1];
     if (!timestamp) {
         return;
     }
@@ -37,7 +37,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid site');
     }
     const rootUrl = `http://${site}.people.com.cn`;
-    const path = site === 'politics' && !category ? 'GB/1024' : site === 'society' && category === '1008' ? '' : category ? `GB/${category}` : '';
+    const path = site === 'politics' && !category ? 'GB/1024' : category && !(site === 'society' && category === '1008') ? `GB/${category}` : '';
     const requestedUrl = new URL(path, rootUrl).href;
     const { $, url: currentUrl } = await fetchChannel(requestedUrl);
     const articleRootUrl = new URL('/', currentUrl).href;

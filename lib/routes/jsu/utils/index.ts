@@ -22,7 +22,7 @@ const getPageItemAndDate = getPageDetails;
 export { getPageItemAndDate };
 
 const parseCmsDate = (text: string) => {
-    const value = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];
+    const value = /\d{4}-\d{2}-\d{2}/.exec(text)?.[0];
     return value && parseDateStrict(value, 'YYYY-MM-DD') ? parseDate(`${value}T00:00:00+08:00`) : undefined;
 };
 

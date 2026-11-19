@@ -49,7 +49,7 @@ const convertAttributes = (source: string, files: Record<string, string>, rootUr
 };
 
 const parsePublicationMonth = (value: string) => {
-    const match = value.trim().match(/^([A-Z]+)\s+(\d{4})\b/i);
+    const match = /^([A-Z]+)\s+(\d{4})\b/i.exec(value.trim());
     if (!match) {
         return;
     }

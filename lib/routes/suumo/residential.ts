@@ -78,13 +78,13 @@ export const parseLayout = (text: string | null): string | null => {
     if (s.startsWith('ワンルーム')) {
         return '1R';
     }
-    const m = s.match(/^(\d+)\s*(S?L?D?K|R)(?![A-Z])/);
+    const m = /^(\d+)\s*(S?L?D?K|R)(?![A-Z])/.exec(s);
     return m ? `${m[1]}${m[2]}` : null;
 };
 
 /** '1975年4月（築51年7ヶ月）' → '1975-04'. A bare age ('築7年') is not a date and stays null. */
 export const parseYm = (text: string | null): string | null => {
-    const m = text === null ? null : nfkc(text).match(/(\d{4})\s*年\s*(\d{1,2})\s*月/);
+    const m = text === null ? null : /(\d{4})\s*年\s*(\d{1,2})\s*月/.exec(nfkc(text));
     return m ? `${m[1]}-${m[2].padStart(2, '0')}` : null;
 };
 
@@ -98,7 +98,7 @@ export const parseFloorsTotal = (text: string | null): number | null => {
         return null;
     }
     const s = nfkc(text);
-    const m = s.match(/地上\s*(\d+)\s*階/) ?? s.match(/(?<!地下\s*)(\d+)\s*階(?:\s*地下\s*\d+\s*階)?\s*建/);
+    const m = /地上\s*(\d+)\s*階/.exec(s) ?? /(?<!地下\s*)(\d+)\s*階(?:\s*地下\s*\d+\s*階)?\s*建/.exec(s);
     return m ? Number(m[1]) : null;
 };
 
@@ -136,7 +136,7 @@ export interface Access {
  */
 export const parseAccess = (text: string | null): Access => {
     const first = text === null ? '' : nfkc(text.split('\n', 1)[0]).trim();
-    const m = first.match(/^([^「]+)「([^」]+)」(.*)$/) ?? first.match(/^([^/]+)\/([^/駅]+)駅(.*)$/) ?? first.match(/^(\S+)\s+([^\s駅]+)駅(.*)$/);
+    const m = /^([^「]+)「([^」]+)」(.*)$/.exec(first) ?? /^([^/]+)\/([^/駅]+)駅(.*)$/.exec(first) ?? /^(\S+)\s+([^\s駅]+)駅(.*)$/.exec(first);
     if (!m) {
         return { line: null, station: null, walk_min: null };
     }
@@ -421,8 +421,7 @@ export const residentialItems = async (
     units: ListedUnit[],
     base: { source: string; deal_kind: DealKind },
     readDetail: ((html: string) => Record<string, string | null>) | null,
-    fetchPage: (url: string) => Promise<string> = (url) => ofetch<string>(url),
-    options: { maxFetches?: number } = {}
+    { fetchPage = (url) => ofetch<string>(url), maxFetches }: { fetchPage?: (url: string) => Promise<string>; maxFetches?: number } = {}
 ): Promise<Array<DataItem & { _extra: ResidentialExtra }>> => {
     let fetches = 0;
     let deferred = 0;
@@ -435,7 +434,7 @@ export const residentialItems = async (
                     detail = await cache.tryGet(
                         `${base.source}:detail:${unit.id}`,
                         async () => {
-                            if (options.maxFetches !== undefined && fetches >= options.maxFetches) {
+                            if (maxFetches !== undefined && fetches >= maxFetches) {
                                 throw new DetailDeferred();
                             }
                             fetches += 1;
@@ -470,7 +469,7 @@ export const residentialItems = async (
         { concurrency: DETAIL_CONCURRENCY }
     );
     if (deferred > 0) {
-        logger.info(`${base.source}: ${deferred} of ${units.length} detail pages left for a later run (at most ${options.maxFetches} per run)`);
+        logger.info(`${base.source}: ${deferred} of ${units.length} detail pages left for a later run (at most ${maxFetches} per run)`);
     }
     return items;
 };

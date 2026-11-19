@@ -39,7 +39,7 @@ function getLink(href: string | undefined) {
 }
 
 function parseReportedDate(value: string): Temporal.Instant | undefined {
-    const parts = value.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2}))?)?/);
+    const parts = /(\d{4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2}))?)?/.exec(value);
     if (!parts) {
         return undefined;
     }

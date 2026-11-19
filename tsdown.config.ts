@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsdown';
 
-const namespaceOf = (id: string) => id.match(/[\\/]lib[\\/]routes[\\/]([^\\/]+)[\\/]/)?.[1];
+const namespaceOf = (id: string) => /[\\/]lib[\\/]routes[\\/]([^\\/]+)[\\/]/.exec(id)?.[1];
 
 export default defineConfig({
     entry: ['./lib/index.ts'],

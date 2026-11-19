@@ -74,7 +74,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                         .text();
 
                     const pubDateStr = metaStr.match(isAnswer ? /(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/ : /发表时间\s(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)?.[1];
-                    const updatedStr = metaStr.match(/最后修改时间\s(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)?.[1];
+                    const updatedStr = /最后修改时间\s(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/.exec(metaStr)?.[1];
 
                     const authorEl: Cheerio<Element> = $$(isAnswer ? 'p.publisher a.aw-user-name' : 'div.aw-side-bar-mod-body a.aw-user-name').first();
                     const author: DataItem['author'] = authorEl.prop('href')

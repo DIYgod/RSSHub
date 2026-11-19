@@ -158,7 +158,7 @@ function parseCompanyName($) {
  * @returns {Temporal.Instant|null} The parsed date or null if the format is invalid
  */
 function parseRelativeShorthandDate(shorthand) {
-    const match = shorthand.match(/^(\d+)([wdmyh])$/);
+    const match = /^(\d+)([wdmyh])$/.exec(shorthand);
     if (!match) {
         return null;
     }

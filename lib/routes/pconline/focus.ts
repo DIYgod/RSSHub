@@ -51,7 +51,7 @@ const categories = {
 };
 
 const parseArticles = (response: string): { articleList: Item[] } => {
-    const payload = response.match(/^\s*Module\.callback\(([\s\S]*)\);?\s*$/)?.[1];
+    const payload = /^\s*Module\.callback\(([\s\S]*)\);?\s*$/.exec(response)?.[1];
     if (!payload) {
         throw new Error('PConline returned an unexpected article list response.');
     }

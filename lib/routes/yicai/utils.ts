@@ -128,7 +128,7 @@ function getNavigationChannels(html: string, section: 'news' | 'video'): Navigat
         });
 }
 function getBreadcrumbChannel(html: string, section: 'news' | 'video'): BreadcrumbChannel {
-    const match = html.match(/\bbreadcrumb\s*=\s*JSON\.parse\('([\s\S]*?)'\)/);
+    const match = /\bbreadcrumb\s*=\s*JSON\.parse\('([\s\S]*?)'\)/.exec(html);
     if (!match) {
         throw new Error('Yicai category page has no channel breadcrumb');
     }

@@ -195,7 +195,7 @@
         // "unicorn/no-array-sort": "error",
         "unicorn-js/no-array-sort-for-min-max": "error",
         "unicorn-js/no-array-splice": "error",
-        "unicorn-js/no-async-promise-finally": "error",
+        // "unicorn-js/no-asterisk-prefix-in-documentation-comments": "error", // off
         "unicorn-js/no-async-iterator-callback": "error",
         // "unicorn/no-await-expression-member": "error",
         "unicorn/no-await-in-promise-methods": "error",
@@ -423,6 +423,7 @@
         "unicorn-js/prefer-object-iterable-methods": "error",
         "unicorn-js/prefer-observer-apis": "error",
         "unicorn/prefer-optional-catch-binding": "error",
+        "unicorn-js/prefer-options-parameter": "error",
         // "unicorn-js/prefer-path2d": "error", // unused
         "unicorn-js/prefer-private-class-fields": "error",
         "unicorn-js/prefer-promise-static-methods": "error",
@@ -432,6 +433,7 @@
         "unicorn/prefer-query-selector": "error",
         "unicorn-js/prefer-queue-microtask": "error",
         "unicorn/prefer-reflect-apply": "error",
+        "unicorn-js/prefer-regexp-exec": "error",
         "unicorn/prefer-regexp-test": "error",
         "unicorn/prefer-response-static-json": "error",
         "unicorn-js/prefer-scoped-selector": "error",
@@ -484,6 +486,7 @@
         "unicorn/require-number-to-fixed-digits-argument": "error",
         "unicorn-js/require-passive-events": "error",
         // "unicorn-js/require-proxy-trap-boolean-return": "error", off, handled by tsc
+        "unicorn-js/require-spread-parentheses": "error",
         "unicorn-js/require-text-decoder-streaming": "error",
         // "unicorn-js/single-line-block-comment-style": "error",
         // "unicorn/switch-case-braces": "error",
@@ -732,6 +735,7 @@
         "unicorn/no-array-reduce": "warn",
         "unicorn/no-array-reverse": ["error", { "allowExpressionStatement": false }],
         "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
+        "unicorn-js/no-async-promise-finally": "error",
 
         "unicorn/no-await-expression-member": "off",
         "unicorn/no-empty-file": "warn",

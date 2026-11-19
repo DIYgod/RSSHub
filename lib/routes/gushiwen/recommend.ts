@@ -34,7 +34,7 @@ export const route: Route = {
 const idPattern = /230427\('\w+','(\w+)'\)/;
 
 function getContent(onclick: string, annotation: string) {
-    const id = onclick.match(idPattern)![1];
+    const id = idPattern.exec(onclick)![1];
     return ofetch(`https://www.guwendao.net/nocdn/ajaxshiwenDetailCont.aspx?id=${id}&value=${annotation}`, { headers: { cookie: 'login=flase' } });
 }
 

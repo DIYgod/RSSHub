@@ -25,7 +25,7 @@ export const route: Route = {
 };
 
 function parsePubDate(id: string) {
-    const match = id.match(/^([a-z]+)(?:-[a-z]+)?-(\d{4})$/);
+    const match = /^([a-z]+)(?:-[a-z]+)?-(\d{4})$/.exec(id);
     if (!match) {
         return;
     }

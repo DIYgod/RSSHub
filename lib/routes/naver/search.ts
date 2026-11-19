@@ -100,19 +100,19 @@ function extractItems(response: string, templateId: string): DataItem[] {
 }
 
 function extractVideoItem(segment: string) {
-    const htmlMatch = segment.match(/"html":"((?:[^"\\]|\\.)*)"/);
+    const htmlMatch = /"html":"((?:[^"\\]|\\.)*)"/.exec(segment);
     const title = htmlMatch ? cleanText(htmlMatch[1]) : '';
-    const authorMatch = segment.match(/"authorHtml":"((?:[^"\\]|\\.)*)"/);
+    const authorMatch = /"authorHtml":"((?:[^"\\]|\\.)*)"/.exec(segment);
     const author = authorMatch ? cleanText(authorMatch[1]) : '';
     const hrefMatches = segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g).toArray();
     const links = hrefMatches.map((m) => parseEmbeddedString(m[1]));
     const mediaDomains = /^(?:https?:\/\/)?(?:m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
     const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
-    const dateMatch = segment.match(/"createdAt":"((?:[^"\\]|\\.)*)"/);
+    const dateMatch = /"createdAt":"((?:[^"\\]|\\.)*)"/.exec(segment);
     const timeText = dateMatch ? parseEmbeddedString(dateMatch[1]) : '';
-    const viewMatch = segment.match(/"viewCount":"((?:[^"\\]|\\.)*)"/);
+    const viewMatch = /"viewCount":"((?:[^"\\]|\\.)*)"/.exec(segment);
     const viewCount = viewMatch ? cleanText(viewMatch[1]) : '';
-    const durationMatch = segment.match(/"playDuration":(\d+)/);
+    const durationMatch = /"playDuration":(\d+)/.exec(segment);
     const duration = durationMatch ? `${durationMatch[1]}초` : '';
 
     const hasVideoFields = segment.includes('"videoPlayerType"') || segment.includes('"playDuration"');
@@ -147,14 +147,14 @@ function buildVideoDescription(viewCount: string, duration: string): string {
 
 function extractLink(segment: string, templateId: string): string {
     if (templateId === 'webItem') {
-        const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+        const hrefMatch = /"href":"((?:[^"\\]|\\.)*)"/.exec(segment);
         return hrefMatch ? parseEmbeddedString(hrefMatch[1]) : '';
     }
     const hrefMatches = segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g).toArray();
     if (hrefMatches.length > 0) {
         return parseEmbeddedString(hrefMatches.at(-1)![1]);
     }
-    const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+    const hrefMatch = /"href":"((?:[^"\\]|\\.)*)"/.exec(segment);
     return hrefMatch ? parseEmbeddedString(hrefMatch[1]) : '';
 }
 
@@ -166,7 +166,7 @@ function extractGenericItem(segment: string, templateId: string) {
     const link = extractLink(segment, templateId);
 
     let bodyText = '';
-    const bodyMatch = segment.match(/"bodyText":"((?:[^"\\]|\\.)*)"/) || segment.match(/"content":"((?:[^"\\]|\\.)*)"/);
+    const bodyMatch = /"bodyText":"((?:[^"\\]|\\.)*)"/.exec(segment) || /"content":"((?:[^"\\]|\\.)*)"/.exec(segment);
     if (bodyMatch) {
         bodyText = cleanText(bodyMatch[1]);
     }
@@ -180,17 +180,17 @@ function extractGenericItem(segment: string, templateId: string) {
 
 function buildItemFromTemplate(segment: string, templateId: string, title: string, link: string, bodyText: string, sourceName: string) {
     if (templateId === 'ugcItem') {
-        const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
+        const dateMatch = /"createdDate":"([^"]*)"/.exec(segment);
         const pubDate = parseKoreanRelativeTime(dateMatch ? parseEmbeddedString(dateMatch[1]) : '');
         return { title, link, description: bodyText, author: sourceName || undefined, ...(pubDate && { pubDate }) };
     }
 
     let timeText = '';
     if (templateId === 'webItem') {
-        const timeMatch = segment.match(/\[\{"text":"([^"]*)"\}/);
+        const timeMatch = /\[\{"text":"([^"]*)"\}/.exec(segment);
         timeText = timeMatch ? parseEmbeddedString(timeMatch[1]) : '';
     } else {
-        const textMatch = segment.match(/"text":"([^"]*)"/);
+        const textMatch = /"text":"([^"]*)"/.exec(segment);
         timeText = textMatch ? parseEmbeddedString(textMatch[1]) : '';
     }
 
@@ -256,7 +256,7 @@ function parseKoreanRelativeTime(timeText: string): Temporal.Instant | undefined
         return parseDate(Temporal.Now.instant().epochMilliseconds);
     }
 
-    const match = timeText.match(/(\d+)\s*(시간|[분일주])\s*(?:전|이내)/);
+    const match = /(\d+)\s*(시간|[분일주])\s*(?:전|이내)/.exec(timeText);
     if (!match) {
         return;
     }

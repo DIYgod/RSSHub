@@ -28,7 +28,7 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
     if (!wikitext) {
         return null;
     }
-    const top = wikitext.match(TOP_TEMPLATE);
+    const top = TOP_TEMPLATE.exec(wikitext);
     if (!top) {
         return null;
     }

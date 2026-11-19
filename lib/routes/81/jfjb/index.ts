@@ -108,7 +108,7 @@ const extractAuthor = (xy: ArticleItem): string | undefined => {
 
 const matchPage = (page: PaperPage, req: string): boolean => {
     const trimmed = req.trim();
-    const pageNumMatch = trimmed.match(/^第?(\d{1,2})版?$/);
+    const pageNumMatch = /^第?(\d{1,2})版?$/.exec(trimmed);
     if (!pageNumMatch) {
         return false;
     }

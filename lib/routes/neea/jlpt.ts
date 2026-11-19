@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.text();
-            const pubDateStr: string | undefined = title.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+            const pubDateStr: string | undefined = /(\d{4}-\d{2}-\d{2})/.exec(title)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 

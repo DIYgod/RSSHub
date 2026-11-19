@@ -38,7 +38,7 @@ const parseImageList = (
     url: string;
     caption: string;
 }> => {
-    const encoded = script.match(/document\.writeln\(("(?:\\.|[^"\\])*var imglist\s*=(?:\\.|[^"\\])*")\);/)?.[1];
+    const encoded = /document\.writeln\(("(?:\\.|[^"\\])*var imglist\s*=(?:\\.|[^"\\])*")\);/.exec(script)?.[1];
     if (!encoded) {
         throw new Error('The gallery image list is missing. Check whether the gallery is accessible on WNACG.');
     }

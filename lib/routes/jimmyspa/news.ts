@@ -95,7 +95,7 @@ async function handler(ctx) {
 
 function convertHtmlDateToStandardFormat(htmlContent: string): Temporal.Instant | undefined {
     const dateRegex = /<p>(\d{1,2})<\/p>\s*<p>(\d{1,2})\s*\.\s*([A-Za-z]{3})<\/p>/;
-    const match = htmlContent.match(dateRegex);
+    const match = dateRegex.exec(htmlContent);
 
     if (match) {
         const day = match[1].padStart(2, '0');

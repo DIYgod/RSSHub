@@ -10,17 +10,17 @@ import { parseDate } from '@/utils/time';
 type ArticleMetadata = { '@type'?: string; headline?: string; dateModified?: string; author?: { name?: string } };
 
 function parseArticleByline(text: string): { author: string; credit?: string } | undefined {
-    const editor = text.match(/^編輯／([\p{Script=Han}、\s]{1,40})$/u);
-    const reporter = text.match(/^\p{Script=Han}{1,8}／\s*([\p{Script=Han}、][\p{Script=Han}、\s]{0,39}?)\s+編輯／[\p{Script=Han}、\s]{1,40}$/u);
+    const editor = /^編輯／([\p{Script=Han}、\s]{1,40})$/u.exec(text);
+    const reporter = /^\p{Script=Han}{1,8}／\s*([\p{Script=Han}、][\p{Script=Han}、\s]{0,39}?)\s+編輯／[\p{Script=Han}、\s]{1,40}$/u.exec(text);
     if (editor || reporter) {
         const author = (reporter?.[1] || editor?.[1])?.replace(/\s+編撰$/, '').trim();
         return author ? { author } : undefined;
     }
-    const photoByline = text.match(/^（記者([\p{Script=Han}、\s]{1,40})、圖片來源：([^（）\n]+)）$/u);
+    const photoByline = /^（記者([\p{Script=Han}、\s]{1,40})、圖片來源：([^（）\n]+)）$/u.exec(text);
     if (photoByline) {
         return { author: photoByline[1].trim(), credit: `（圖片來源：${photoByline[2]}）` };
     }
-    const syndicatedByline = text.match(/^（常春月刊／編輯部整理、文章授權提供／([^、（）\n]+)、圖片來源：([^（）\n]+)）$/);
+    const syndicatedByline = /^（常春月刊／編輯部整理、文章授權提供／([^、（）\n]+)、圖片來源：([^（）\n]+)）$/.exec(text);
     if (syndicatedByline) {
         return { author: '常春月刊編輯部', credit: `（文章授權提供／${syndicatedByline[1]}、圖片來源：${syndicatedByline[2]}）` };
     }

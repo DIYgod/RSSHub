@@ -56,7 +56,7 @@ function getRoomData(room?: DouyinRoom, owner?: DouyinUser): RoomData | undefine
 }
 
 function parseRoomScript(script: string) {
-    const match = script.match(/^\s*self\.__pace_f\.push\((\[.*\])\);?\s*$/s);
+    const match = /^\s*self\.__pace_f\.push\((\[.*\])\);?\s*$/s.exec(script);
     if (!match) {
         return;
     }

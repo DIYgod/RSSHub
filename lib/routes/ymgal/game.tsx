@@ -78,7 +78,7 @@ const renderDescription = (itemPicUrl: string | undefined): string =>
     );
 
 function getReleaseDate(value: string): Temporal.Instant | undefined {
-    const date = value.match(/^(\d{4}-\d{2}-\d{2})发行$/)?.[1];
+    const date = /^(\d{4}-\d{2}-\d{2})发行$/.exec(value)?.[1];
     if (!date || !parseDateStrict(date, 'YYYY-MM-DD')) {
         return;
     }

@@ -69,7 +69,7 @@ function getHeaders(referer: string, cookie = acwScV2Cookie) {
 }
 
 function getAcwScV2Cookie(response: string) {
-    const arg1 = response.match(/var arg1='(.*?)';/)?.[1];
+    const arg1 = /var arg1='(.*?)';/.exec(response)?.[1];
     if (!arg1) {
         return '';
     }

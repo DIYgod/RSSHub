@@ -76,7 +76,7 @@ async function handler(ctx) {
             category: item.category,
             date: isBio ? item.url : item.date,
             description: isBio ? item.kiji : item.article,
-            image: isBio ? (item.image_url === '' ? undefined : `${sonyUrl}${item.image_url}`) : undefined,
+            image: isBio && item.image_url !== '' ? `${sonyUrl}${item.image_url}` : undefined,
         };
     });
 

@@ -19,7 +19,7 @@ const hex = (s: string) => (s.startsWith('-') ? -Number(s.slice(1)) : Number(s))
 const argRe = /^(\w+)(?:-\s?(-?0x[0-9a-f]+))?$/;
 
 const decodeStrings = async (bundle: string) => {
-    const dec = bundle.match(/function (\w+)\((\w+),\w+\)\{\2=\2-(0x[0-9a-fA-F]+);var \w+=(\w+)\(\);/);
+    const dec = /function (\w+)\((\w+),\w+\)\{\2=\2-(0x[0-9a-fA-F]+);var \w+=(\w+)\(\);/.exec(bundle);
     if (!dec) {
         throw new Error('CT2-WAAP: string decoder missing');
     }
@@ -31,7 +31,7 @@ const decodeStrings = async (bundle: string) => {
         throw new Error('CT2-WAAP: string table missing');
     }
 
-    const table = await evaluateScriptData<string[]>(`${bundle.slice(tableStart + `function ${tableFn}(){`.length, tableEnd + 1)};`, bundle.slice(tableStart, tableEnd).match(/var (\w+)=\[/)![1]);
+    const table = await evaluateScriptData<string[]>(`${bundle.slice(tableStart + `function ${tableFn}(){`.length, tableEnd + 1)};`, /var (\w+)=\[/.exec(bundle.slice(tableStart, tableEnd))![1]);
     const base = Number(baseHex);
 
     const wrappers = new Map<string, { params: string[]; callee: string; args: Array<{ p: string; off: number }> }>();
