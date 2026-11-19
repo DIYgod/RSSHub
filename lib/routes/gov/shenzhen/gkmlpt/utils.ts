@@ -2,7 +2,7 @@ import type { z } from 'zod';
 
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Article, GkmlptCategory } from './types';
 import { ArticleResponseSchema } from './types';
