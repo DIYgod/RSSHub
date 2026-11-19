@@ -1,4 +1,3 @@
-import { Agent } from 'undici';
 import type { z } from 'zod';
 
 import type { DataItem } from '@/types';
@@ -13,11 +12,6 @@ import { ArticleResponseSchema } from './types';
  */
 export const defaultOption = '0';
 
-// These district platforms finish the ECDHE key exchange with a point that OpenSSL rejects
-// (`bad ecpoint`) when the client offers its full curve list, so P-256 is pinned here.
-// ofetch bypasses the configured proxy whenever a dispatcher is passed explicitly.
-const dispatcher = new Agent({ connect: { ecdhCurve: 'P-256' } });
-
 /**
  * Fetch one category's article list from a Guangdong government disclosure platform.
  *
@@ -27,7 +21,9 @@ const dispatcher = new Agent({ connect: { ecdhCurve: 'P-256' } });
  */
 export const getArticleList = async (baseUrl: string, id: string): Promise<Article[]> => {
     const response = await ofetch<z.infer<typeof ArticleResponseSchema>>(`${baseUrl}/gkmlpt/api/all/${id}`, {
-        dispatcher,
+        // These platforms finish the ECDHE key exchange with a point that OpenSSL rejects
+        // (`bad ecpoint`) when the client offers its full curve list, so P-256 is pinned.
+        ecdhCurve: 'P-256',
         schema: ArticleResponseSchema,
     });
 
