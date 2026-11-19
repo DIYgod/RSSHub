@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { calendarToInstant } from '@/utils/time';
 
 function parseRocDate(dateStr: string): Temporal.Instant | undefined {
-    const match = dateStr.match(/^(\d{2,4})-(\d{2})-(\d{2})$/);
+    const match = /^(\d{2,4})-(\d{2})-(\d{2})$/.exec(dateStr);
     if (!match) {
         return;
     }

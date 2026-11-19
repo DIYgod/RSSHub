@@ -14,7 +14,7 @@ export async function getFulltext(url: string) {
     if (!config.caixin.cookie || !/\d+\.html/.test(url)) {
         return;
     }
-    const articleID = url.match(/(\d+)\.html/)![1];
+    const articleID = /(\d+)\.html/.exec(url)![1];
 
     const nonce = crypto.randomUUID().replaceAll('-', '').toUpperCase();
 

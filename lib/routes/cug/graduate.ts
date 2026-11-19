@@ -20,7 +20,7 @@ function parseArticle(item: DataItem, content: string): DataItem {
         throw new Error(`CUG admissions did not provide its article body: ${item.link}`);
     }
     const pubDate = isAdmissions
-        ? content.match(/"publishTime":"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})"/)?.[1]
+        ? /"publishTime":"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})"/.exec(content)?.[1]
         : $('.article_data')
               .text()
               .match(/发稿时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)?.[1];

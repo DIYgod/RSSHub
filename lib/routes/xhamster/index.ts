@@ -58,7 +58,7 @@ interface Initials {
     };
 }
 function extractInitials(scriptContent: string): Initials {
-    const match = scriptContent.match(/window\.initials\s*=\s*(\S[\s\S]*?);?$/);
+    const match = /window\.initials\s*=\s*(\S[\s\S]*?);?$/.exec(scriptContent);
     if (!match) {
         throw new Error('initials not found');
     }

@@ -34,7 +34,7 @@ export function extractForumThreadDates($: CheerioAPI): Map<string, Temporal.Ins
 }
 
 export function extractNextData<T = unknown>(html: string, url?: string): T {
-    const scriptMatch = html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+    const scriptMatch = /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/.exec(html);
     if (!scriptMatch || !scriptMatch[1]) {
         throw new Error(`Failed to find __NEXT_DATA__ script tag in page${url ? `: ${url}` : ''}`);
     }

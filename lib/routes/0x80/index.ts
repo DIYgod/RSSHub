@@ -17,7 +17,7 @@ export const route: Route = {
 
 function extractDateFromURL(url: string) {
     const regex = /\d{4}-\d{2}-\d{2}/;
-    const match = url.match(regex);
+    const match = regex.exec(url);
     return match?.[0];
 }
 

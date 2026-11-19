@@ -46,8 +46,8 @@ const getPage = async (url: string) => {
 };
 const getRedirect = (data: string, $: CheerioAPI) => {
     // The current desktop entry declares a redirect separately from its mobile branch.
-    const desktop = data.match(/(?:window\.)?location\.href\s*=\s*["']([^"']*\/pc\/col\/index\.html(?:[?#][^"']*)?)["']/);
-    const legacy = data.match(/window\.location\.href\s*=\s*["']([^"']+)["']/) ?? data.match(/setTimeout\("javascript:location\.href='(.*?)'", 3000\);/);
+    const desktop = /(?:window\.)?location\.href\s*=\s*["']([^"']*\/pc\/col\/index\.html(?:[?#][^"']*)?)["']/.exec(data);
+    const legacy = /window\.location\.href\s*=\s*["']([^"']+)["']/.exec(data) ?? /setTimeout\("javascript:location\.href='(.*?)'", 3000\);/.exec(data);
     const refresh = $('meta[http-equiv]')
         .filter((_, element) => $(element).attr('http-equiv')?.toLowerCase() === 'refresh')
         .first()

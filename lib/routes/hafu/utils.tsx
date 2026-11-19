@@ -35,7 +35,7 @@ export const parseList = async (ctx, type) => {
 };
 
 function getPdfImages(source: string, articleUrl: string): string[] {
-    const imageData = source.match(/vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])\s*;/)?.[1];
+    const imageData = /vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])\s*;/.exec(source)?.[1];
     if (!imageData) {
         return [];
     }

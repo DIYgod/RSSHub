@@ -296,7 +296,7 @@ const applyTailwindSvgToken = ($el: Cheerio<Element>, token: string, vars: Map<s
         setMissingAttr($el, 'fill', '#7fee641a');
         return;
     }
-    const prefixMatch = token.match(/^(fill|stroke|text)-(v2-primary-[a-z0-9-]+)$/);
+    const prefixMatch = /^(fill|stroke|text)-(v2-primary-[a-z0-9-]+)$/.exec(token);
     if (!prefixMatch) {
         return;
     }

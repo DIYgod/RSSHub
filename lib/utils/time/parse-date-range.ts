@@ -78,7 +78,7 @@ const CN_NUM_MAP = new Map([
  */
 const parseExactDays = (text: string): number | undefined => {
     // Chinese days: 展期[约/大概/共] N [个]? [天|日]
-    const cnMatch = text.match(/展期[约大概共]*(\d+|[一二三四五六七八九十两]+)个?[天日](?!期)/);
+    const cnMatch = /展期[约大概共]*(\d+|[一二三四五六七八九十两]+)个?[天日](?!期)/.exec(text);
     if (cnMatch) {
         const rawNum = cnMatch[1];
         const value = /^\d+$/.test(rawNum) ? Number(rawNum) : (CN_NUM_MAP.get(rawNum) ?? 0);
@@ -88,7 +88,7 @@ const parseExactDays = (text: string): number | undefined => {
     }
 
     // English days: for 90 days / lasting 30 days / runs for 14 days
-    const enMatch = text.match(/(?:for|runs?\s+for|lasting?)\s+(\d+)\s*days?/i);
+    const enMatch = /(?:for|runs?\s+for|lasting?)\s+(\d+)\s*days?/i.exec(text);
     if (enMatch) {
         const value = Number(enMatch[1]);
         if (value > 0) {

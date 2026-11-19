@@ -12,10 +12,10 @@ import ofetch from '@/utils/ofetch';
 export const baseUrl = 'https://www.keke1.app';
 
 const solveChallenge = (html: string) => {
-    const strings = Array.from(html.match(/const a0_0x[0-9a-f]+=\[([^\]]+)\]/)?.[1].matchAll(/'([^']*)'/g) ?? [], (m) => m[1]);
+    const strings = Array.from(/const a0_0x[0-9a-f]+=\[([^\]]+)\]/.exec(html)?.[1].matchAll(/'([^']*)'/g) ?? [], (m) => m[1]);
     const challenge = strings.find((s) => /^[0-9A-F]{40}$/.test(s));
     const cookieName = strings.find((s) => s.endsWith('='));
-    const target = html.match(/s\[n1\]===(0x[0-9a-f]+)&&s\[n1\+0x1\]===(0x[0-9a-f]+)/);
+    const target = /s\[n1\]===(0x[0-9a-f]+)&&s\[n1\+0x1\]===(0x[0-9a-f]+)/.exec(html);
     if (!challenge || !cookieName || !target) {
         throw new Error('cdndefend format changed');
     }

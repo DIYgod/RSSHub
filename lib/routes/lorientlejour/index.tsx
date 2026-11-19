@@ -87,7 +87,7 @@ async function viewCategory(category: string) {
 }
 
 function getCategoryId(category: string) {
-    const match = category.match(/^(\d+)/);
+    const match = /^(\d+)/.exec(category);
     if (!match) {
         throw new InvalidParameterError('Category must start with its numeric ID, for example 977-lebanon. Separate multiple categories with |.');
     }

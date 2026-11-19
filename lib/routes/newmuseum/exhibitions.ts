@@ -65,7 +65,7 @@ interface MuseumData {
 }
 
 function getPageData(html: string) {
-    const data: MuseumData = JSON.parse(html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s)?.[1] ?? '');
+    const data: MuseumData = JSON.parse(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s.exec(html)?.[1] ?? '');
     const pageData = data.props?.pageProps?.__TEMPLATE_QUERY_DATA__;
     if (!pageData) {
         throw new Error('New Museum page data is unavailable');

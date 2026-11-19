@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 function parseListDate(value: string) {
-    const match = value.match(/^([a-z]+)\.?\s+(\d{1,2}),\s+(\d{4})$/i);
+    const match = /^([a-z]+)\.?\s+(\d{1,2}),\s+(\d{4})$/i.exec(value);
     const month = match && ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].indexOf(match[1].slice(0, 3).toLowerCase());
     return match && month !== null && month >= 0 ? parseDate(`${match[3]}-${String(month + 1).padStart(2, '0')}-${match[2].padStart(2, '0')}T00:00:00Z`) : undefined;
 }

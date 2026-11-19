@@ -136,7 +136,7 @@ export const getSessionPage = async (link: string, cookieJar: CookieJar) => {
     });
     await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
     const html: string = page._data;
-    const csrfToken = html.match(/"csrf_token":"([A-Za-z0-9]+)"/)?.[1];
+    const csrfToken = /"csrf_token":"([A-Za-z0-9]+)"/.exec(html)?.[1];
     if (csrfToken && !(await getCSRFTokenFromJar(cookieJar))) {
         await cookieJar.setCookie(`csrftoken=${csrfToken}; Path=/; Secure`, baseUrl);
     }

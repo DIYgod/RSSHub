@@ -22,7 +22,7 @@ function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
 }
 
 const parseSourceClock = (value: string): Temporal.Instant | undefined => {
-    const match = value.match(/\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/);
+    const match = /\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/.exec(value);
     return match ? parseDateStrict(match[0], ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm:ss', 'YYYY-M-D HH:mm'], 8) : undefined;
 };
 

@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 export const rootUrl = 'https://www.36kr.com';
 
 export const getInitialState = (html: string) => {
-    const stateMatch = html.match(/window\.initialState=(\{.*\})/);
+    const stateMatch = /window\.initialState=(\{.*\})/.exec(html);
     if (!stateMatch) {
         throw new Error('36kr page does not contain initial state. The source may be serving an anti-bot challenge.');
     }

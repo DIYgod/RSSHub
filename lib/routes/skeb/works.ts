@@ -94,7 +94,7 @@ async function ensureRequestKey(url: string) {
         });
     } catch (error) {
         if (error instanceof FetchError && error.data) {
-            const newRequestKey = String(error.data).match(/request_key=(.*?);/)?.[1];
+            const newRequestKey = /request_key=(.*?);/.exec(String(error.data))?.[1];
             if (newRequestKey) {
                 cache.set('skeb:request_key', newRequestKey);
                 logger.debug('Retrieved a new request key');

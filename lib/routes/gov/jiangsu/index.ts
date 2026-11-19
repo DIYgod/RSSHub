@@ -22,7 +22,7 @@ function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
 function extractSourceByline(value: string): string | undefined {
     for (const marker of value.matchAll(/来源[：:]/g)) {
         const tail = value.slice(marker.index + marker[0].length).trimStart();
-        const byline = tail.match(/^(.*?)(?:查看反馈|$)/);
+        const byline = /^(.*?)(?:查看反馈|$)/.exec(tail);
         if (byline) {
             return byline[1].trim();
         }

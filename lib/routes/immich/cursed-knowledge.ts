@@ -24,8 +24,8 @@ const ghType = {
 };
 
 const parseGithubLink = (arg: string) => {
-    const number = arg.match(/(?:number: )?([\d_]+)/)?.[1].replaceAll('_', '');
-    const type = arg.match(/type: '(\w+)'/)?.[1] ?? 'pr';
+    const number = /(?:number: )?([\d_]+)/.exec(arg)?.[1].replaceAll('_', '');
+    const type = /type: '(\w+)'/.exec(arg)?.[1] ?? 'pr';
     return `https://github.com/immich-app/immich/${ghType[type]}/${number}`;
 };
 

@@ -252,7 +252,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     previewyoutube: (node) => ({
         tag: 'iframe',
         attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[\w-]+/)?.[0]}`,
+            src: `https://www.youtube-nocookie.com/embed/${/[\w-]+/.exec(getUniqAttr(node.attrs) as string)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',

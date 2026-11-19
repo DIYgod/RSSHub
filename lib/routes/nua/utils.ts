@@ -26,11 +26,11 @@ const pageType = (href: string) => {
 };
 
 function parseListDate(text: string) {
-    const date = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];
+    const date = /\d{4}-\d{2}-\d{2}/.exec(text)?.[0];
     if (date) {
         return parseDate(date, 'YYYY-MM-DD', 8);
     }
-    const parts = text.match(/(\d{2})\s+(\d{4})\/(\d{2})/);
+    const parts = /(\d{2})\s+(\d{4})\/(\d{2})/.exec(text);
     if (parts) {
         return parseDate(`${parts[2]}-${parts[3]}-${parts[1]}`, 'YYYY-MM-DD', 8);
     }

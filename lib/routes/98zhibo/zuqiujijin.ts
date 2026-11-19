@@ -25,7 +25,7 @@ export const route: Route = {
 
 // Titles start with the publish date, e.g. 2026年9月9日 欧冠-贝蒂斯客场3-2逆转十人里尔 ...
 const parsePubDateFromTitle = (title: string) => {
-    const match = title.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日/);
+    const match = /^(\d{4})年(\d{1,2})月(\d{1,2})日/.exec(title);
     return match ? parseDate(`${match[1]}-${match[2]}-${match[3]}`, 8) : undefined;
 };
 

@@ -22,7 +22,7 @@ const typeMap = new Map([
 function decodeData(str: string) {
     // Match the source decoding expression.
     const regex = /Base64.decode\(unzip\("(.+?)"\)\.substr\((\d+)\)\)\.substr\((\d+)\)/;
-    const match = str.match(regex);
+    const match = regex.exec(str);
     if (!match) {
         throw new Error('The job source no longer contains the expected encoded data. Check the source page format.');
     }

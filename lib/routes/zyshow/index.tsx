@@ -62,7 +62,7 @@ async function handler(ctx) {
 }
 
 function getBroadcastDate(title: string) {
-    const sourceDate = title.match(/(\d{8})$/)?.[1];
+    const sourceDate = /(\d{8})$/.exec(title)?.[1];
     if (!sourceDate) {
         return;
     }

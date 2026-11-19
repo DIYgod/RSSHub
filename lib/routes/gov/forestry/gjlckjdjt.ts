@@ -21,7 +21,7 @@ function extractLecturer(value: string): string | undefined {
             continue;
         }
         const separator = /\s单\s*位[：:]/.exec(tail);
-        const candidate = separator ? tail.slice(0, separator.index).trimEnd() : tail.match(/^(.+)$/)?.[1];
+        const candidate = separator ? tail.slice(0, separator.index).trimEnd() : /^(.+)$/.exec(tail)?.[1];
         if (candidate !== undefined && !/[\r\n\u{2028}\u{2029}]/u.test(candidate)) {
             return candidate.trim();
         }
@@ -161,7 +161,7 @@ async function handler(ctx) {
 }
 
 function getPublicationDate(link: string) {
-    const date = link.match(/\/(\d{8})\//)?.[1];
+    const date = /\/(\d{8})\//.exec(link)?.[1];
     if (!date) {
         return;
     }

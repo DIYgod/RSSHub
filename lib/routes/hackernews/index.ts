@@ -73,7 +73,7 @@ const parseComments = (text: string): Story['comments'] => {
         return text;
     }
 
-    const match = text.match(/^(\d+)\s+comments?$/);
+    const match = /^(\d+)\s+comments?$/.exec(text);
     return match ? Number.parseInt(match[1]) : '';
 };
 

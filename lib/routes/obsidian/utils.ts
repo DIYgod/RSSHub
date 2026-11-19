@@ -56,7 +56,7 @@ export async function buildCommunityFeed(type: CommunityEntryType): Promise<Data
 }
 
 export function getTitle(path: string): string {
-    const match = path.match(titleRegex);
+    const match = titleRegex.exec(path);
     return match ? match[1] : '';
 }
 

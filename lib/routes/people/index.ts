@@ -11,7 +11,7 @@ import { parseDateStrict, toInstant } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getPublicationDate = (html: string) => {
-    const timestamp = html.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1];
+    const timestamp = /(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/.exec(html)?.[1];
     if (!timestamp) {
         return;
     }

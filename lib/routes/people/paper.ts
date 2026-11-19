@@ -29,7 +29,7 @@ const parseCalendarDate = (date: string) =>
     parseDateStrict(date, 'YYYY年MM月DD日', 0);
 
 const getEditionDate = (url: string) => {
-    const match = url.match(/\/(\d{4})(\d{2})\/(\d{2})\//);
+    const match = /\/(\d{4})(\d{2})\/(\d{2})\//.exec(url);
     if (!match) {
         throw new Error('Unable to determine the current People’s Daily edition date');
     }

@@ -49,7 +49,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .remove();
             const title: string = aEl.prop('title') ?? aEl.text();
 
-            const dateMatch = title.match(/(\d{4}-\d{2}-\d{2})$/);
+            const dateMatch = /\d{4}-\d{2}-\d{2}$/.exec(title);
             let pubDate;
 
             if (dateMatch) {
