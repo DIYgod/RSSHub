@@ -13,9 +13,10 @@ const device = {
     aid: '10000001',
     av: '6.32.0',
     avc: '260813221000',
-    di: randomUUID().toUpperCase(),
-    sdi: randomBytes(16).toString('hex'),
 };
+
+let deviceId: { di: string; sdi: string };
+const getDeviceId = () => (deviceId ??= { di: randomUUID().toUpperCase(), sdi: randomBytes(16).toString('hex') });
 
 const sortByCodeUnit = (a: string, b: string) => {
     if (a < b) {
@@ -78,8 +79,7 @@ export const signedHeaders = (path: string, query: Record<string, string>) => {
         aid: device.aid,
         at: ms.toString(16),
         av: device.av,
-        di: device.di,
-        sdi: device.sdi,
+        ...getDeviceId(),
     };
     const str2 = Object.entries(headers)
         .toSorted(([a], [b]) => sortByCodeUnit(a, b))
