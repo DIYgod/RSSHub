@@ -155,7 +155,7 @@
         "@bbob/types": "4.4.1",
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/playwright": "1.4.0",
-        "@cloudflare/vitest-plugin": "1.8.2",
+        "@cloudflare/vitest-plugin": "1.8.3",
         "@cloudflare/workers-types": "5.20261116.1",
         "@eslint/js": "10.0.1",
         "@j178/prek": "0.5.11",
@@ -178,7 +178,7 @@
         "@typescript-eslint/parser": "8.72.2",
         "@vercel/nft": "1.11.4",
         "@vitest/coverage-v8": "5.1.0",
-        "cf": "1.0.0-beta.32",
+        "cf": "1.0.0-rc.0",
         "discord-api-types": "0.38.59",
         "domhandler": "6.0.1",
         "eslint": "10.15.0",
@@ -210,7 +210,7 @@
         "unrun": "0.3.1",
         "vite-tsconfig-paths": "7.0.0-alpha.3",
         "vitest": "5.1.0",
-        "wrangler": "4.162.0",
+        "wrangler": "4.163.0",
         "yaml-eslint-parser": "2.1.0"
     },
     "engines": {
