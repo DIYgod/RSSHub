@@ -7,6 +7,10 @@ describe('magpie feed', () => {
         expect(htmlToText('<p>Hello <b>world</b></p><p>a&amp;b &#20013;&#x6587;<br>next</p><img alt="cat" src="x"><script>alert(1)</script>')).toBe('Hello world\na&b 中文\nnext\n[image: cat]');
     });
 
+    it('removes tags that form after a removal', () => {
+        expect(htmlToText('<scr<script></script>ipt>alert(1)</script>a<b>b</b>')).toBe('ab');
+    });
+
     it('formats a JSON Feed for an agent', () => {
         const text = formatFeed(
             {
