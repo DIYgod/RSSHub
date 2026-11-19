@@ -161,7 +161,7 @@
         "@j178/prek": "0.5.10",
         "@mswjs/interceptors": "0.45.12",
         "@oxlint/plugins": "1.93.0",
-        "@stylistic/eslint-plugin": "6.0.0",
+        "@stylistic/eslint-plugin": "6.0.1",
         "@types/crypto-js": "4.2.2",
         "@types/eslint": "9.6.1",
         "@types/etag": "1.8.4",
