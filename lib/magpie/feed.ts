@@ -31,16 +31,26 @@ const decode = (text: string) =>
         return entities.get(name.toLowerCase()) ?? whole;
     });
 
+const removeAll = (text: string, pattern: RegExp) => {
+    let previous: string;
+    do {
+        previous = text;
+        text = text.replaceAll(pattern, '');
+    } while (text !== previous);
+    return text;
+};
+
 /** HTML as plain text: paragraphs and line breaks kept, pictures named, everything else let go. */
 export const htmlToText = (html: string) =>
     decode(
-        html
-            .replaceAll(/<(script|style)[\s\S]*?<\/\1>/gi, '')
-            .replaceAll(/<img[^>]*?alt="([^"]+)"[^>]*>/gi, '[image: $1]')
-            .replaceAll(/<img[^>]*>/gi, '[image]')
-            .replaceAll(/<br\s*\/?>/gi, '\n')
-            .replaceAll(/<\/(p|div|li|h[1-6]|blockquote|pre|tr)>/gi, '\n')
-            .replaceAll(/<[^>]+>/g, '')
+        removeAll(
+            removeAll(html, /<(script|style)[\s\S]*?<\/\1>/gi)
+                .replaceAll(/<img[^>]*?alt="([^"]+)"[^>]*>/gi, '[image: $1]')
+                .replaceAll(/<img[^>]*>/gi, '[image]')
+                .replaceAll(/<br\s*\/?>/gi, '\n')
+                .replaceAll(/<\/(p|div|li|h[1-6]|blockquote|pre|tr)>/gi, '\n'),
+            /<[^>]+>/g
+        )
     )
         .replaceAll(/[ \t\f\v]+/g, ' ')
         .replaceAll(/\s*\n\s*/g, '\n')
