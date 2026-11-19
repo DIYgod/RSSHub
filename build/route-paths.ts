@@ -2365,6 +2365,7 @@ export type RoutePath =
   | `/mixi2/home`
   | `/mixi2/user/:name/:media?`
   | `/miyuki/news`
+  | `/modal/blog`
   | `/modb/topic/:id`
   | `/modelscope/community`
   | `/modelscope/datasets`

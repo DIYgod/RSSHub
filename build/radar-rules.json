@@ -35204,6 +35204,21 @@
       }
     ]
   },
+  "modal.com": {
+    "_name": "Modal",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/modal",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/blog/atom.xml"
+        ],
+        "target": "/modal/blog"
+      }
+    ]
+  },
   "modelscope.cn": {
     "_name": "ModelScope 魔搭社区",
     "www": [
