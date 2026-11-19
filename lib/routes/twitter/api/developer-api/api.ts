@@ -301,8 +301,8 @@ const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operat
     return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
 };
 
-const getUserTimeline = async (id: string, params?: DevApiParams, options: DevApiParams = {}) => {
-    const count = Number(params?.count ?? 20);
+const getUserTimeline = async (id: string, params: DevApiParams, options: DevApiParams = {}) => {
+    const count = Number(params.count ?? 20);
     const snapshotKey = `twitter:developer-timeline:${id}:${count}:${JSON.stringify(options)}`;
     const stored = await cache.get(snapshotKey, false);
     const previous: LegacyTweet[] = stored ? JSON.parse(stored) : [];

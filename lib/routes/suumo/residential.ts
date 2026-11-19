@@ -421,8 +421,7 @@ export const residentialItems = async (
     units: ListedUnit[],
     base: { source: string; deal_kind: DealKind },
     readDetail: ((html: string) => Record<string, string | null>) | null,
-    fetchPage: (url: string) => Promise<string> = (url) => ofetch<string>(url),
-    options: { maxFetches?: number } = {}
+    { fetchPage = (url) => ofetch<string>(url), maxFetches }: { fetchPage?: (url: string) => Promise<string>; maxFetches?: number } = {}
 ): Promise<Array<DataItem & { _extra: ResidentialExtra }>> => {
     let fetches = 0;
     let deferred = 0;
@@ -435,7 +434,7 @@ export const residentialItems = async (
                     detail = await cache.tryGet(
                         `${base.source}:detail:${unit.id}`,
                         async () => {
-                            if (options.maxFetches !== undefined && fetches >= options.maxFetches) {
+                            if (maxFetches !== undefined && fetches >= maxFetches) {
                                 throw new DetailDeferred();
                             }
                             fetches += 1;
@@ -470,7 +469,7 @@ export const residentialItems = async (
         { concurrency: DETAIL_CONCURRENCY }
     );
     if (deferred > 0) {
-        logger.info(`${base.source}: ${deferred} of ${units.length} detail pages left for a later run (at most ${options.maxFetches} per run)`);
+        logger.info(`${base.source}: ${deferred} of ${units.length} detail pages left for a later run (at most ${maxFetches} per run)`);
     }
     return items;
 };
