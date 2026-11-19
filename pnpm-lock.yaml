@@ -482,8 +482,8 @@ importers:
         specifier: 1.93.0
         version: 1.93.0
       '@stylistic/eslint-plugin':
-        specifier: 6.0.0
-        version: 6.0.0(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(oxlint@1.93.0(oxlint-tsgolint@7.0.2007))
+        specifier: 6.0.1
+        version: 6.0.1(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(oxlint@1.93.0(oxlint-tsgolint@7.0.2007))
       '@types/crypto-js':
         specifier: 4.2.2
         version: 4.2.2
@@ -2835,8 +2835,8 @@ packages:
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
 
-  '@stylistic/eslint-plugin@6.0.0':
-    resolution: {integrity: sha512-phICSey4OqR8nkSwmoeXsl9EBzv30Zqbge4jrK3CU02GhjTgZ+y5qhTTg92EDK5j7JhX2xzp4VvH+YYUknQ8/Q==}
+  '@stylistic/eslint-plugin@6.0.1':
+    resolution: {integrity: sha512-7nyi2RmGIuzBYGq5C8cFaoQsh+COfo6oHMWCygzg2iaqJJ4RDThaKCMYRkkOUAQWv80R7sbBbpuKZfulH7bFcw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
@@ -7779,7 +7779,7 @@ snapshots:
 
   '@speed-highlight/core@1.2.24': {}
 
-  '@stylistic/eslint-plugin@6.0.0(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(oxlint@1.93.0(oxlint-tsgolint@7.0.2007))':
+  '@stylistic/eslint-plugin@6.0.1(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(oxlint@1.93.0(oxlint-tsgolint@7.0.2007))':
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))
       '@typescript-eslint/types': 8.72.2
