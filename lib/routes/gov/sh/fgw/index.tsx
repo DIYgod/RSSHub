@@ -55,7 +55,7 @@ export const handler = async (ctx) => {
             const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
 
             return {
-                title: $item.find('a').prop('title')!,
+                title: $item.find('a').prop('title'),
                 pubDate,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,

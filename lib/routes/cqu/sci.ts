@@ -30,9 +30,7 @@ async function handler(ctx: Context) {
     const url = `https://sci.cqu.edu.cn/index/xwzx/${category}.htm`;
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                ['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort();
-            });
+            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });

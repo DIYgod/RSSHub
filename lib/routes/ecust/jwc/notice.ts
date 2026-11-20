@@ -82,7 +82,7 @@ async function handler(ctx) {
                     }
                 });
                 article.find('img[data-src]').each((_, element) => {
-                    content(element).attr('src', content(element).attr('data-src')!).removeAttr('data-src');
+                    content(element).attr('src', content(element).attr('data-src')).removeAttr('data-src');
                 });
                 article.find('[style]').removeAttr('style');
                 item.description = article.html() || undefined;

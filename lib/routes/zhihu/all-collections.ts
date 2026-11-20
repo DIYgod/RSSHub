@@ -107,7 +107,7 @@ async function handler(ctx) {
         const data = generateCollectionItem(item);
         const previous = uniqueItems.get(data.link);
         if (previous) {
-            previous.category = [...new Set([...(previous.category ?? []), ...(data.category ?? [])])];
+            previous.category = [...new Set([...[previous.category ?? []].flat(), ...[data.category ?? []].flat()])];
         } else {
             uniqueItems.set(data.link, data);
         }

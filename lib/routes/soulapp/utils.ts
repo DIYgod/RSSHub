@@ -16,7 +16,7 @@ const device = {
 };
 
 let deviceId: { di: string; sdi: string };
-const getDeviceId = () => (deviceId ??= { di: randomUUID().toUpperCase(), sdi: randomBytes(16).toString('hex') });
+const getDeviceId = () => (deviceId ??= { di: randomUUID().toUpperCase(), sdi: randomBytes(16).toHex() });
 
 const sortByCodeUnit = (a: string, b: string) => {
     if (a < b) {
@@ -51,19 +51,19 @@ const signCs = (timestampSec: number, str1: string, str2: string) => {
         s[3 + 2 * i] = e1[i];
     }
 
-    const m2 = Buffer.from(md5(str1 + e2.toString('hex') + 'kG@yGB9'), 'hex');
+    const m2 = Buffer.from(md5(str1 + e2.toHex() + 'kG@yGB9'), 'hex');
     for (let i = 0; i < 4; i++) {
         s[12 + i] = m2[i];
     }
 
-    Buffer.from(s.subarray(0, 16).toString('hex'), 'latin1').copy(s, 0);
+    Buffer.from(s.subarray(0, 16).toHex(), 'latin1').copy(s, 0);
 
     s[20] = 0x30 + randomInt(0, 10);
     s[21] = 0x30 + randomInt(0, 10);
     s[22] = 0x30 + randomInt(0, 10);
     s[23] = s[22];
 
-    Buffer.from(randomBytes(2).toString('hex'), 'latin1').copy(s, 32);
+    Buffer.from(randomBytes(2).toHex(), 'latin1').copy(s, 32);
 
     return s.toString('latin1');
 };

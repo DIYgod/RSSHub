@@ -1,4 +1,5 @@
-import { getEntities, getPlainText, type Status } from 'fanfou-sdk';
+import type { Status } from 'fanfou-sdk';
+import { getEntities, getPlainText } from 'fanfou-sdk';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';

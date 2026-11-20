@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
@@ -13,7 +14,10 @@ const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
 const DEFAULT_LIMIT = 10;
 const DETAIL_FETCH_DELAY = 3000;
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) =>
+    new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 const getRequestOptions = (referer: string) => ({
     headers: {
         Referer: referer,

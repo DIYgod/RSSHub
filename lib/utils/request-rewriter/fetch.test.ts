@@ -11,7 +11,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi 
 
 import { config } from '@/config';
 
-import wrappedFetch, { useCustomHeader } from './fetch';
+import wrappedFetch, { registerCustomHeader } from './fetch';
 
 const getInitRequest = (): NonNullable<ReturnType<typeof getCurrentCell>>['request'] => ({
     requestHeaders: {},
@@ -30,7 +30,7 @@ enum Env {
     test = 'test',
 }
 
-describe('useCustomHeader', () => {
+describe('registerCustomHeader', () => {
     let originalEnv: string;
 
     beforeEach(() => {
@@ -57,7 +57,7 @@ describe('useCustomHeader', () => {
             isAborted: false,
         });
 
-        await useCustomHeader(headers);
+        await registerCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();
@@ -87,7 +87,7 @@ describe('useCustomHeader', () => {
             pipes: [],
             isAborted: false,
         });
-        await useCustomHeader(headers);
+        await registerCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();

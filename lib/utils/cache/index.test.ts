@@ -39,8 +39,8 @@ describe('cache', () => {
 
     it('memory get returns null before init', async () => {
         const memory = (await import('@/utils/cache/memory')).default;
-        expect(await memory.get('missing')).toBeNull();
-        expect(await memory.has('missing')).toBe(false);
+        expect(memory.get('missing')).toBeNull();
+        expect(memory.has('missing')).toBe(false);
     });
 
     it.each([
@@ -110,7 +110,7 @@ describe('cache', () => {
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';
         const cache = (await import('@/utils/cache')).default;
-        await cache.init();
+        cache.init();
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
         expect(await cache.has('mock2')).toBe(false);

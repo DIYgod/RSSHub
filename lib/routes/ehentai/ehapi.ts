@@ -57,7 +57,7 @@ function getThumbnail(cache, thumbnailUrl) {
     return cache.tryGet(`ehentai:thumbnail:${thumbnailUrl}`, async () => {
         try {
             const buffer = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(thumbnailUrl, { responseType: 'arrayBuffer', headers: headers.cookie && isGalleryUrl(thumbnailUrl, true) ? { Cookie: headers.cookie } : undefined });
-            const data = Buffer.from(buffer._data!).toString('base64');
+            const data = Buffer.from(buffer._data!).toBase64();
             const ext = path.extname(new URL(thumbnailUrl).pathname).slice(1).toLowerCase();
             const imageTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' };
             const contentType = buffer.headers.get('content-type')?.split(';', 1)[0].toLowerCase();

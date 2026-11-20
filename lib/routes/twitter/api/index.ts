@@ -14,7 +14,7 @@ const enableDeveloperApi = config.twitter.consumerKey && config.twitter.consumer
 type ApiItem = (id: string, params?: ApiParams) => Promise<any> | null;
 
 interface TwitterApi {
-    init: () => void;
+    init: () => Promise<void> | void;
     getUser: ApiItem;
     getUserTweets: ApiItem;
     getUserTweetsAndReplies: ApiItem;

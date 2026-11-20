@@ -1,5 +1,7 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
@@ -119,7 +121,7 @@ async function handler(ctx): Promise<Data> {
                 content.prepend(copyContent($('.post-main-img img').first(), $));
                 content.find('img[data-src]').each((_, image) => {
                     const element = $(image);
-                    element.attr('src', element.attr('data-src')!);
+                    element.attr('src', element.attr('data-src'));
                 });
                 return $.html(content);
             }),

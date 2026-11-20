@@ -44,7 +44,7 @@ function handleRequest(route) {
     }
     if (['xhr', 'fetch'].includes(type) && ['www.cbre.com.cn', 'www.cbre.com.hk'].includes(url.host) && url.pathname.startsWith('/coveo/rest/')) {
         if (url.pathname === '/coveo/rest/search/v2' && request.method() === 'POST') {
-            const params = new URLSearchParams(request.postData()!);
+            const params = new URLSearchParams(request.postData());
             params.set('sortCriteria', '@publishdate descending');
             return route.continue({ postData: params.toString() });
         }

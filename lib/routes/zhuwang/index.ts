@@ -48,7 +48,7 @@ async function handler() {
         const change = (today - yesterday).toFixed(2);
         let description = `较昨日价格, 每公斤上涨${change}元`;
         if (yesterday > today) {
-            description = `较昨日价格, 下跌${-change}元`;
+            description = `较昨日价格, 下跌${-Number(change)}元`;
         }
         if (yesterday === today) {
             description = '较昨日价格持平';

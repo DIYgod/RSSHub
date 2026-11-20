@@ -120,8 +120,8 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!, {
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link, {
                     headers: {
                         Referer: 'https://news.mingpao.com/',
                     },
@@ -175,7 +175,7 @@ async function handler(ctx) {
                 delete item.isoDate;
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
-                item.guid = item.link!.includes('?') ? item.link : item.link!.slice(0, item.link!.lastIndexOf('/'));
+                item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return { ...item, pubDate: parseDate(item.pubDate!) };
             }),

@@ -87,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
                     const pubDateStr: string | undefined = detailResponse.match(/var\stime\s=\s"(.*?)";/)?.[1];
                     const categoryEls: Element[] = $$('div.entity_tag span a').toArray();
-                    const categories: string[] = [...new Set([...categoryEls.map((el) => $$(el).text()), ...(item.category ?? [])].filter(Boolean))];
+                    const categories: string[] = [...new Set([...categoryEls.map((el) => $$(el).text()), ...[item.category ?? []].flat()].filter(Boolean))];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     const processedItem: DataItem = {

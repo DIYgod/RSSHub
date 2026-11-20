@@ -64,7 +64,9 @@ describe('ofetch', () => {
             res.end('ok');
         });
 
-        await new Promise<void>((resolve) => server.listen(0, resolve));
+        await new Promise<void>((resolve) => {
+            server.listen(0, resolve);
+        });
         const address = server.address();
         if (!isAddressInfo(address)) {
             throw new TypeError('expected the test server to listen on a TCP port');

@@ -26,8 +26,8 @@ async function handler(ctx) {
     const currentUrl = 'https://www.air-level.com/rank/';
     const response = await ofetch(currentUrl);
     const $ = load(response);
-    let table = '';
-    let title = '';
+    let table: string;
+    let title: string;
 
     const cards = $('main .card').filter((_, element) => $(element).find('table').length > 0);
     const best = cards.filter((_, element) => $(element).find('.card-header').text().includes('最佳'));

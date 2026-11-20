@@ -1,4 +1,5 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
@@ -212,7 +213,7 @@ async function handler(ctx: Context): Promise<Data> {
         description: feed.description || 'Technical articles, release announcements, model guides, and community updates from the vLLM project.',
         link: BLOG_URL,
         language: 'en-us',
-        item: items as DataItem[],
+        item: items,
     };
 }
 

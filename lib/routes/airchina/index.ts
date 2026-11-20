@@ -45,7 +45,7 @@ async function handler() {
                 title: item.find('a.ui-list-link').text(),
                 link: href ? new URL(href, baseUrl).href : undefined,
                 pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
-                guid: href ? Buffer.from(href).toString('base64') : undefined,
+                guid: href ? Buffer.from(href).toBase64() : undefined,
             };
         })
         .filter((item) => item.link);

@@ -124,11 +124,11 @@ async function handler(ctx: Context) {
                 108: link, // page URL
                 109: '', // document.referrer
             });
-            const data = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]).toString('hex');
+            const data = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]).toHex();
 
             const response = await ofetch.raw('https://miao.baidu.com/abdr', {
                 method: 'POST',
-                body: Buffer.from(JSON.stringify({ data, key_id: abdrKeyId })).toString('base64'),
+                body: Buffer.from(JSON.stringify({ data, key_id: abdrKeyId })).toBase64(),
                 headers: {
                     'content-type': 'text/plain;charset=UTF-8',
                     origin: 'https://baijiahao.baidu.com',

@@ -46,7 +46,7 @@ async function handler(ctx) {
                 (
                     await cache.tryGet<{ description?: string }>(`elpais:body:${item.link}`, async () => {
                         try {
-                            const response = await ofetch(item.link!);
+                            const response = await ofetch(item.link);
                             const $ = load(response);
                             const metadata = $('script[type="application/ld+json"]')
                                 .toArray()

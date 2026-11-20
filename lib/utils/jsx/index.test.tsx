@@ -37,7 +37,7 @@ describe('jsx', () => {
     it('keeps every other child as it is', () => {
         expect(
             renderToString(
-                <div class="a">
+                <div className="a">
                     {'<'}
                     {1}
                     {0}
@@ -56,6 +56,7 @@ describe('jsx', () => {
     });
 
     it('keeps async children', async () => {
-        expect(await (<p>{Promise.resolve('a')}</p>).toString()).toEqual(expect.stringContaining('<p>a</p>'));
+        const rendered = (<p>{Promise.resolve('a')}</p>).toString() as string | Promise<string>;
+        expect(await rendered).toEqual(expect.stringContaining('<p>a</p>'));
     });
 });

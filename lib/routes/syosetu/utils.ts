@@ -1,6 +1,9 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
-import { NarouNovelFetch, type NarouSearchResult, SearchBuilder, SearchBuilderR18 } from 'narou';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
+import type { NarouSearchResult } from 'narou';
+import { NarouNovelFetch, SearchBuilder, SearchBuilderR18 } from 'narou';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';

@@ -61,7 +61,7 @@ async function handler() {
             pubDate: ($) => parseArticleDate($('.date').text()),
             guid: ($) => {
                 const href = $('a').attr('href');
-                return href ? Buffer.from(href).toString('base64') : undefined;
+                return href ? Buffer.from(href).toBase64() : undefined;
             },
         },
     });

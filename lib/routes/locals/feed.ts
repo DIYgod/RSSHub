@@ -394,7 +394,7 @@ async function fetchFeedData(communityId: number, community: string, session: st
             if (!existing) {
                 continue;
             }
-            existing.category = [...new Set([...(existing.category ?? []), ...(item.category ?? [])])];
+            existing.category = [...new Set([...[existing.category ?? []].flat(), ...[item.category ?? []].flat()])];
             existing.description ||= item.description;
             existing.itunes_item_image ||= item.itunes_item_image;
         }

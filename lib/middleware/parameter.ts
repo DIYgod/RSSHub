@@ -272,7 +272,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             return item;
         };
 
-        data.item = await Promise.all(data.item.map((itm) => handleItem(itm)));
+        data.item = data.item.map((itm) => handleItem(itm));
 
         // filter
         const engine = config.feature.filter_regex_engine;
@@ -483,7 +483,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         // handle title
                         else if (config.openai.inputOption === 'title' && item.title) {
                             const title = await cache.tryGet(getAiCacheKey('title', config.openai.promptTitle, item.title), async () => {
-                                const title = convert(item.title!);
+                                const title = convert(item.title);
                                 return await getAiCompletion(config.openai.promptTitle, title);
                             });
                             // replace the title
@@ -494,7 +494,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         // handle both
                         else if (config.openai.inputOption === 'both' && item.title && item.description) {
                             const title = await cache.tryGet(getAiCacheKey('title', config.openai.promptTitle, item.title), async () => {
-                                const title = convert(item.title!);
+                                const title = convert(item.title);
                                 return await getAiCompletion(config.openai.promptTitle, title);
                             });
                             // replace the title

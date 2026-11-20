@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { escape } from 'entities/escape';
 import pMap from 'p-map';
 
@@ -170,6 +171,8 @@ function toEnclosureType(linkType?: string): string | undefined {
             return 'audio/mp4';
         case 'mp4':
             return 'video/mp4';
+        default:
+            return;
     }
 }
 
@@ -190,5 +193,7 @@ function toEpisodeLanguage(language?: string | null): DataItem['language'] {
             return 'cs';
         case 'German':
             return 'de';
+        default:
+            return;
     }
 }

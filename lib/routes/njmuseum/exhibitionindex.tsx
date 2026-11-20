@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -95,7 +96,7 @@ export const route: Route = {
 
             const description = renderToString(
                 <div>
-                    {item.describe && <div dangerouslySetInnerHTML={{ __html: item.describe }} />}
+                    {item.describe && <div>{raw(item.describe)}</div>}
                     {imgUrl && <img src={imgUrl} />}
                     <br />
                     <p>

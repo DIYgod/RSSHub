@@ -146,7 +146,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const origin: string | undefined = originOptions.find((opt) => opt.value === result.origin)?.label ?? undefined;
                 const tags: string[] = findNamesByUuids(projectTagsData, result.project_tags ?? []);
 
-                const categories: string[] = [...new Set([...(item.category ?? []), origin ?? undefined, ...tags, result.license].filter((value): value is string => Boolean(value)))];
+                const categories: string[] = [...new Set([...[item.category ?? []].flat(), origin ?? undefined, ...tags, result.license].filter((value): value is string => Boolean(value)))];
                 const authors: DataItem['author'] = new Map(
                     [result.owner, result.creator, ...result.members].map((author) => {
                         const item = {

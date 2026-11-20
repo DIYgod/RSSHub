@@ -211,7 +211,7 @@ const blockRenderers = new Map<string, (block: SanityBlock) => Node>([
         (block) =>
             block.code ? (
                 <pre>
-                    <code class={block.language ? `language-${block.language}` : undefined}>{block.code}</code>
+                    <code className={block.language ? `language-${block.language}` : undefined}>{block.code}</code>
                 </pre>
             ) : null,
     ],
@@ -221,7 +221,7 @@ const blockRenderers = new Map<string, (block: SanityBlock) => Node>([
             const latex = block.body?.trim();
             return latex ? (
                 <pre>
-                    <code class="language-latex">{latex}</code>
+                    <code className="language-latex">{latex}</code>
                 </pre>
             ) : null;
         },

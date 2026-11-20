@@ -86,7 +86,7 @@ export type DataItem = {
         type?: string;
         title?: string;
     }>;
-    // oxlint-disable-next-line anti-slop/no-unsafe-dictionary-type
+    // oxlint-disable-next-line quality/no-unsafe-dictionary-type
     _extra?: Record<string, any> & {
         links?: Array<{
             url: string;

@@ -56,9 +56,7 @@ async function handler(ctx) {
     if (cacheMiss) {
         cookieJar = new CookieJar();
         if (cookie) {
-            for await (const c of cookie.split('; ')) {
-                await cookieJar.setCookie(c, baseUrl);
-            }
+            await Promise.all(cookie.split('; ').map((c) => cookieJar.setCookie(c, baseUrl)));
         }
     } else {
         cookieJar = CookieJar.fromJSON(cookieJar);

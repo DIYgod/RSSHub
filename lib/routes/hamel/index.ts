@@ -67,7 +67,7 @@ async function handler() {
                         if ($detail('title').text() === 'Redirect' && redirectMap) {
                             const destination = JSON.parse(redirectMap[1])[''];
                             if (typeof destination === 'string') {
-                                const target = new URL(destination, item.link!);
+                                const target = new URL(destination, item.link);
                                 if (target.origin !== new URL(item.link!).origin) {
                                     throw new Error('Hamel linked a redirect outside the original article site.');
                                 }

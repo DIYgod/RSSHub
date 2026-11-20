@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -52,7 +54,7 @@ export async function getItems(feed: Awaited<ReturnType<typeof parser.parseURL>>
         entries,
         async (entry) => {
             const details = await cache.tryGet(`${entry.link}:qbitai-main-content`, async () => {
-                const response = await ofetch(entry.link!);
+                const response = await ofetch(entry.link);
                 const $ = load(response);
                 const body = copyNodes($('.article'));
                 body.children('h1').first().remove();

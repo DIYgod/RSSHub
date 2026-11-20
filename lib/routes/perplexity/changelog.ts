@@ -13,9 +13,7 @@ import { parseDate } from '@/utils/time';
 const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
     const page = await context.newPage();
     try {
-        await page.route('**/*', (route) => {
-            route.request().resourceType() === 'document' ? route.continue() : route.abort();
-        });
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         await page.goto(url, { waitUntil: 'domcontentloaded' });
         return await page.evaluate(() => document.documentElement.getHTML());
     } finally {
@@ -37,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
+                return request.resourceType() === 'document' ? route.continue() : route.abort();
             });
         },
     });

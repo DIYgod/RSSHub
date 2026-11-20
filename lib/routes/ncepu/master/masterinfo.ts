@@ -98,7 +98,7 @@ async function handler(ctx) {
             const files = content('.Annex').html() || '';
 
             const single = {
-                title: item.title!,
+                title: item.title,
                 link: item.link,
                 description: (eDescription || '') + files,
                 author,

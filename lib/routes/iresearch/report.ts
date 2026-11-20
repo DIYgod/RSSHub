@@ -363,7 +363,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     description: data.Content,
                 });
                 const pubDate: number | string = data.Uptime;
-                const categories: string[] = [...new Set([...(item.category ?? []), data.industry, ...(data.Keyword ?? []), ...(data.keywords?.split(/,/) ?? [])])].filter(Boolean);
+                const categories: string[] = [...new Set([...[item.category ?? []].flat(), data.industry, ...(data.Keyword ?? []), ...(data.keywords?.split(/,/) ?? [])])].filter(Boolean);
                 const image: string | undefined = images?.[0] ?? undefined;
 
                 let processedItem: DataItem = {

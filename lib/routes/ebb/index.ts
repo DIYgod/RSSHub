@@ -20,7 +20,7 @@ async function handler() {
             Referer: url,
         },
     });
-    const responseData = JSON.parse(LZString.decompressFromUTF16(response)!);
+    const responseData = JSON.parse(LZString.decompressFromUTF16(response));
     const result = responseData.map((item) => ({
         title: item.name_chi,
         link: `https://ebb.io/anime/${item.anime_id}x${item.season_id}`,

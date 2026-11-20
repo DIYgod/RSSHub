@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-import { defineConfig, type TsdownPlugin } from 'tsdown';
+import type { TsdownPlugin } from 'tsdown';
+import { defineConfig } from 'tsdown';
 
 // Plugin to automatically resolve .worker.ts files instead of .ts files
 function workerAliasPlugin(): TsdownPlugin {

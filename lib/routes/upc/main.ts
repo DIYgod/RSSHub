@@ -99,7 +99,7 @@ async function handler(ctx) {
                         return getCareerContent(careerApi, item.link);
                     }
                     const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
-                    if (!item.link!.startsWith(`${baseUrl}/`) || item.link!.includes('content.jsp')) {
+                    if (!item.link.startsWith(`${baseUrl}/`) || item.link.includes('content.jsp')) {
                         throw new ArticleBodyUnavailableError('The source article is outside the supported public news sources.');
                     }
 

@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import LZString from 'lz-string';
 
 import type { Route } from '@/types';

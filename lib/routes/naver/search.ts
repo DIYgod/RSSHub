@@ -185,7 +185,7 @@ function buildItemFromTemplate(segment: string, templateId: string, title: strin
         return { title, link, description: bodyText, author: sourceName || undefined, ...(pubDate && { pubDate }) };
     }
 
-    let timeText = '';
+    let timeText: string;
     if (templateId === 'webItem') {
         const timeMatch = /\[\{"text":"([^"]*)"\}/.exec(segment);
         timeText = timeMatch ? parseEmbeddedString(timeMatch[1]) : '';

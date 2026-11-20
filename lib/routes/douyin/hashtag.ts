@@ -51,7 +51,7 @@ async function handler(ctx) {
             try {
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 const awemeList = await getApiResponse(page, tagUrl, '/v1/web/challenge/aweme');
                 await page.waitForSelector('#RENDER_DATA', { timeout: config.requestTimeout });

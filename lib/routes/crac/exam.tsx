@@ -38,8 +38,8 @@ async function handler() {
     });
 
     const list = response.data.res.list.map((item) => {
-        const id = Buffer.from(item.id).toString('base64');
-        const type = Buffer.from(item.type).toString('base64');
+        const id = Buffer.from(item.id).toBase64();
+        const type = Buffer.from(item.type).toBase64();
         const link = `${baseUrl}/crac/pages/list_detail.html?id=${id}&type=${type}`;
         return {
             title: item.name,
@@ -62,8 +62,8 @@ async function handler() {
 }
 
 const ExamDescription = ({ item }: { item: any }) => (
-    <div class="notice-info">
-        <table class="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
+    <div className="notice-info">
+        <table className="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
             <tr>
                 <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">组织者：</th>
                 <td>{item.exam.organizer}</td>
@@ -107,7 +107,7 @@ const ExamDescription = ({ item }: { item: any }) => (
                 <td></td>
             </tr>
         </table>
-        <div class="content" id="detail_content">
+        <div className="content" id="detail_content">
             {item.content ? raw(item.content) : null}
         </div>
     </div>

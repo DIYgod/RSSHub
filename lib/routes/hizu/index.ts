@@ -146,7 +146,7 @@ async function handler(ctx) {
                     const $ = load(article.data);
                     const main = $('#js_content');
                     main.find('img[data-src]').each((_, image) => {
-                        $(image).attr('src', $(image).attr('data-src')!);
+                        $(image).attr('src', $(image).attr('data-src'));
                     });
                     return main.html() ?? undefined;
                 }

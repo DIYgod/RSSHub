@@ -26,7 +26,6 @@ type TiebaClientParams = {
 };
 
 const computeSign = (params: Partial<TiebaClientParams> & Record<string, string>): string => {
-    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const sortedKeys = Object.keys(params).toSorted();
     const raw = sortedKeys.map((key) => `${key}=${params[key]}`).join('') + TIEBA_CLIENT_SECRET;
     return md5(raw);

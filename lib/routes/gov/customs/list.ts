@@ -110,7 +110,7 @@ async function handler(ctx) {
                     const description = $('.news_detail_con, .easysite-news-peruse').first().html();
 
                     return {
-                        title: info.title!,
+                        title: info.title,
                         link: info.link,
                         description,
                         author: $('meta[name="ContentSource"]').attr('content') || undefined,

@@ -39,7 +39,7 @@ function parseRedirectPath(refresh: string | undefined) {
     if (!prefix) {
         return;
     }
-    const remainder = refresh!.slice(prefix[0].length);
+    const remainder = refresh.slice(prefix[0].length);
     if (!remainder) {
         return /\s$/.test(prefix[0]) ? prefix[0].at(-1) : prefix[1].at(-1);
     }

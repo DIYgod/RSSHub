@@ -35,7 +35,7 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const originDomain = 'https://www.gov.cn';
     let url = '';
-    let title = '';
+    let title: string;
     switch (uid) {
         case 'bm':
         case 'yw':

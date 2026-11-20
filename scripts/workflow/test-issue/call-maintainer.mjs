@@ -17,10 +17,10 @@ const dndUsernames = new Set([]);
 /**
  * @param {string} body
  * @param {typeof import('@actions/core')} core
- * @returns {Promise<string[] | null>}
+ * @returns {string[] | null}
  */
-async function parseBodyRoutes(body, core) {
-    const ast = await unified().use(remarkParse).parse(body);
+function parseBodyRoutes(body, core) {
+    const ast = unified().use(remarkParse).parse(body);
 
     // Is this a bug report?
     const title = ast.children[0].children[0].value.trim();
@@ -108,7 +108,7 @@ export default async function callMaintainer({ github, context, core }) {
 
     let routes;
     try {
-        routes = await parseBodyRoutes(body, core);
+        routes = parseBodyRoutes(body, core);
     } catch (error) {
         core.warning(error);
     }

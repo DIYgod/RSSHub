@@ -111,7 +111,7 @@ async function handler(ctx) {
                         .join(', ');
                 }
                 if (metadata?.articleSection) {
-                    item.category = [...new Set([...(item.category ?? []), ...[metadata.articleSection].flat()])];
+                    item.category = [...new Set([...[item.category ?? []].flat(), ...[metadata.articleSection].flat()])];
                 }
 
                 // Some cards link to anthropic.com posts, whose body is the article's `<hash>_body` block since the 2026-10 class rename

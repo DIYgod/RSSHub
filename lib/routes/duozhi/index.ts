@@ -128,7 +128,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const pubDateStr: string | undefined = $$('div.subject-meta').text()?.split(/发布/, 1)[0];
                 const categories: string[] = [
                     ...new Set([
-                        ...(item.category ?? []),
+                        ...[item.category ?? []].flat(),
                         ...($$('meta[name="keywords"]')
                             .attr('content')
                             ?.split(',')

@@ -1,8 +1,10 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDateRange, parseDateStrict } from '@/utils/time';
@@ -78,7 +80,7 @@ export const route: Route = {
                 const description = renderToString(
                     <div>
                         {imgUrl && <img src={imgUrl} />}
-                        <div dangerouslySetInnerHTML={{ __html: detail.description || '' }} />
+                        <div>{raw(detail.description || '')}</div>
                     </div>
                 );
                 return {
@@ -95,7 +97,7 @@ export const route: Route = {
             title: `${museumName} - 最新展览`,
             link: listUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

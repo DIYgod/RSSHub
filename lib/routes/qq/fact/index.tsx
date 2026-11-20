@@ -93,7 +93,7 @@ const QqFactDescription = ({ data }: { data: any }) => {
     return (
         <>
             {cover ? <img src={cover} /> : null}
-            {data.rumor ? <div class="saying">流传说法：{data.rumor}</div> : null}
+            {data.rumor ? <div className="saying">流传说法：{data.rumor}</div> : null}
             {data.abstract ? (
                 <>
                     查证要点：

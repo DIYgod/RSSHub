@@ -38,7 +38,7 @@ async function handler(ctx) {
             // get first image in content
             let firstImgSrc = '';
             if (item.content) {
-                const $ = load(item.content!);
+                const $ = load(item.content);
                 firstImgSrc = $('img').first().attr('src')!;
             }
             return {

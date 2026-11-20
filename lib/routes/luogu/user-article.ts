@@ -4,7 +4,8 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-import { getArticleDescription, getPageData, type LuoguArticle } from './utils';
+import type { LuoguArticle } from './utils';
+import { getArticleDescription, getPageData } from './utils';
 
 export const route: Route = {
     path: '/user/article/:uid',

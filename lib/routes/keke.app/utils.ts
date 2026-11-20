@@ -5,7 +5,6 @@ import { load } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 
 import { config } from '@/config';
-import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -80,5 +79,5 @@ export const fetchDetail = (item: { title?: string; link: string }) =>
                 .toArray()
                 .flatMap((el) => $(el).text().split(' / ')),
             description: `${poster ? `<img src="${new URL(poster, 'https://vres.cyscyy.com').href}">` : ''}<p>${$('.detail-desc p').text()}</p>${rows}`,
-        } as DataItem;
+        };
     });

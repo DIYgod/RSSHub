@@ -67,7 +67,7 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
             throw new Error('Missing Knowledge Planet topic ID; no unique article URL is available.');
         }
         let description: string | undefined;
-        let title = '';
+        let title: string;
         const url = `https://wx.zsxq.com/topic/${topic.topic_id}`;
         switch (topic.type) {
             case 'talk':

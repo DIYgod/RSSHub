@@ -39,14 +39,14 @@ export default {
             let cacheTtl = cacheTtlValue;
             if (value && refresh) {
                 if (cacheTtl) {
-                    clients.redisClient.expire(cacheTtlKey, cacheTtl);
+                    await clients.redisClient.expire(cacheTtlKey, cacheTtl);
                 } else {
                     // if cacheTtl is not set, that means the cache expire time is contentExpire
                     cacheTtl = config.cache.contentExpire + '';
                     // dont save cacheTtl to Redis, as it is the default value
                     // redisClient.set(cacheTtlKey, cacheTtl, 'EX', cacheTtl);
                 }
-                clients.redisClient.expire(key, cacheTtl);
+                await clients.redisClient.expire(key, cacheTtl);
             }
             return value || '';
         }
@@ -59,7 +59,7 @@ export default {
         }
         return false;
     },
-    set: <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
+    set: async <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
         if (!status.available || !clients.redisClient) {
             return;
         }
@@ -70,7 +70,7 @@ export default {
 
         if (maxAge !== config.cache.contentExpire) {
             // intentionally store the cache ttl if it is not the default value
-            clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
+            await clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
         }
         return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
     },

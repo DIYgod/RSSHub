@@ -64,8 +64,8 @@ async function handler(ctx: Context) {
                 if (!isOnSite(item.link, 'chsi.com.cn')) {
                     return item;
                 }
-                return cache.tryGet(item.link!, async () => {
-                    const detailResponse = await fetchWithPage(page, item.link!);
+                return cache.tryGet(item.link, async () => {
+                    const detailResponse = await fetchWithPage(page, item.link);
                     if (!detailResponse.ok) {
                         throw new Error(`Failed to fetch CHSI policy article: HTTP ${detailResponse.status}`);
                     }

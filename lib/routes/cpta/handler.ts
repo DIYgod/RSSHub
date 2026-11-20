@@ -73,7 +73,7 @@ const handler: Route['handler'] = async (ctx) => {
         .toArray()
         .map((element) => {
             const title = $(element).find('a').attr('title')!;
-            const date = $(element).find('i').text()!.replaceAll(/[[\]]/g, '');
+            const date = $(element).find('i').text().replaceAll(/[[\]]/g, '');
             const relativeLink = $(element).find('a').attr('href')!;
             const absoluteLink = new URL(relativeLink, WEBSITE_URL).href;
             return {

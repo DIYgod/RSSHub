@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseDateRange } from '@/utils/time';
 
@@ -134,6 +134,6 @@ export const route: Route = {
             link: listUrl,
             language: 'zh-CN',
             item: items,
-        } as Data;
+        };
     },
 };

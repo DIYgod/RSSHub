@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -193,7 +194,7 @@ async function handler(ctx) {
         items = await pMap(
             items,
             async (item) => {
-                const detail = await cache.tryGet(`xsijishe:article:v2:${item.link!}`, () => fetchArticleContent(item.link!, source));
+                const detail = await cache.tryGet(`xsijishe:article:v2:${item.link}`, () => fetchArticleContent(item.link, source));
                 return { ...item, ...detail };
             },
             { concurrency: 3, stopOnError: false }

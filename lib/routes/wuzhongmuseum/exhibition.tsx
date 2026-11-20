@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
@@ -171,11 +172,11 @@ export const route: Route = {
                                 {endDate}
                             </p>
                         )}
-                        <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+                        <div>{raw(detail.content)}</div>
                         {detail.chapters.map((chapter) => (
                             <section>
                                 <h3>{chapter.name}</h3>
-                                <div dangerouslySetInnerHTML={{ __html: chapter.content || '' }} />
+                                <div>{raw(chapter.content || '')}</div>
                             </section>
                         ))}
                         {detail.downloads.map((download) => (

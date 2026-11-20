@@ -93,7 +93,7 @@ async function handler(ctx) {
 
                     const content = renderToString(
                         <article>
-                            <div class="stats">
+                            <div className="stats">
                                 <h1>Torrent download statistics</h1>
                                 <ul>
                                     {numStats.map((stat) => (
@@ -103,7 +103,7 @@ async function handler(ctx) {
                                     ))}
                                 </ul>
                             </div>
-                            <div class="table-view">
+                            <div className="table-view">
                                 <h1>Table View</h1>
                                 {tableData ? (
                                     <table>
@@ -122,7 +122,7 @@ async function handler(ctx) {
                                     </table>
                                 ) : null}
                             </div>
-                            <div class="top-list">
+                            <div className="top-list">
                                 <h1>Top List</h1>
                                 {topList.map((entry) => (
                                     <>

@@ -120,7 +120,7 @@ export const getQuests = (authorization: string) =>
             return ofetch<QuestResponse>(`${apiUrl}/quests/@me`, {
                 headers: {
                     authorization,
-                    'X-Super-Properties': Buffer.from(superProperties).toString('base64'),
+                    'X-Super-Properties': Buffer.from(superProperties).toBase64(),
                 },
             });
         },

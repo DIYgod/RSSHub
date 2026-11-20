@@ -3,7 +3,8 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDateStrict } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
@@ -66,7 +67,7 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+                return isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
             });
         },
     });

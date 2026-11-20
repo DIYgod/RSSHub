@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';

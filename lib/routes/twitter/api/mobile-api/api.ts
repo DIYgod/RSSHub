@@ -263,11 +263,11 @@ const getUserTweets = async (id, params = {}) => {
     );
 
     const cacheKey = `twitter:user:tweets-cache:${rest_id}`;
-    let cacheValue = await cache.get(cacheKey);
+    const cacheValue = await cache.get(cacheKey);
     if (cacheValue) {
-        cacheValue = JSON.parse(cacheValue);
-        if (cacheValue && cacheValue.length) {
-            tweets = [...cacheValue, ...tweets];
+        const cachedTweets = JSON.parse(cacheValue);
+        if (cachedTweets && cachedTweets.length) {
+            tweets = [...cachedTweets, ...tweets];
         }
     }
     const idSet = new Set();

@@ -4,7 +4,8 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { csvRecords, type Row } from '../utils';
+import type { Row } from '../utils';
+import { csvRecords } from '../utils';
 
 /**
  * 駅別乗降車人員 from the 東京都統計年鑑 (CC BY 4.0), which restates the figures 私鉄各社 and the subway

@@ -65,7 +65,7 @@ const renderDescription = ({ attributes, relationships, included, videoPreview }
                 ) : null
             ) : postType === 'text_only' ? null : (
                 <>
-                    Post type: "{postType}" is not supported.
+                    Post type: &quot;{postType}&quot; is not supported.
                     <br />
                 </>
             )}

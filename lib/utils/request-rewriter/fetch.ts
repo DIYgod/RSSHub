@@ -100,12 +100,12 @@ const getAgent = (minVersion?: SecureVersion, publicOnly?: boolean, ecdhCurve?: 
     return agent;
 };
 
-export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
+export const registerCustomHeader = async (headers: Iterable<[string, string]>) => {
     if (process.env.NODE_ENV !== 'dev') {
         return;
     }
-    const { useRegisterRequest } = await import('node-network-devtools');
-    useRegisterRequest((req) => {
+    const { useRegisterRequest: registerRequest } = await import('node-network-devtools');
+    registerRequest((req) => {
         for (const [key, value] of headers) {
             req.requestHeaders[key] = value;
         }
@@ -166,7 +166,7 @@ const wrappedFetch: typeof undici.fetch = async (
     }
 
     if (config.enableRemoteDebugging) {
-        await useCustomHeader(request.headers);
+        await registerCustomHeader(request.headers);
     }
 
     // proxy

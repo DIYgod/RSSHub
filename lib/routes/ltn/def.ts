@@ -90,7 +90,7 @@ async function handler(ctx: Context) {
                 const content = $('.whitecon:not(.template) div[data-desc="內文"]');
                 content.find('.before_ir, .after_ir, [id^="ad"], .appE1121').remove();
                 content.find('img[data-src]').each((_, img) => {
-                    $(img).attr('src', $(img).attr('data-src')!).removeAttr('data-src');
+                    $(img).attr('src', $(img).attr('data-src')).removeAttr('data-src');
                 });
                 content.find('iframe[src^="https://www.youtube.com/embed/"]').each((_, iframe) => {
                     const videoId = new URL($(iframe).attr('src')!).pathname.split('/').pop();

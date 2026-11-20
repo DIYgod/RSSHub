@@ -87,7 +87,7 @@ async function handler() {
             return {
                 feedTitle,
                 feedDesc,
-                items: items.map((item) => ((guidCounts.get(item.guid!) ?? 0) > 1 ? { ...item, guid: `${item.guid}-${encodeURIComponent(item.title!)}` } : item)),
+                items: items.map((item) => ((guidCounts.get(item.guid!) ?? 0) > 1 ? { ...item, guid: `${item.guid}-${encodeURIComponent(item.title)}` } : item)),
             };
         },
         config.cache.routeExpire,

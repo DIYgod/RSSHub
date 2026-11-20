@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 import { escape } from 'entities/escape';
 import pMap from 'p-map';
 
-import { type Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';

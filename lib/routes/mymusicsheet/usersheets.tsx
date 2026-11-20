@@ -229,7 +229,7 @@ const MymusicSheetDescription = ({
         price?: string;
     };
 }) => (
-    <div class="item-description">
+    <div className="item-description">
         {youtubeId ? raw(renderYoutube(true, youtubeId, undefined, undefined)) : null}
         {content.musicName ? <p>Music Name: {content.musicName}</p> : null}
         {content.musicMemo ? <p>Music Memo: {content.musicMemo}</p> : null}

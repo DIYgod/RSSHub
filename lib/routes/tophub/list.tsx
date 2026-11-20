@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const { h64ToString } = await xxhash();
+const hasher = await xxhash();
 
 export const route: Route = {
     path: '/list/:id',
@@ -91,7 +91,7 @@ async function handler(ctx) {
                 title,
                 link,
                 description: renderRank,
-                guid: h64ToString(combinedTitles),
+                guid: hasher.h64ToString(combinedTitles),
             },
         ],
     };

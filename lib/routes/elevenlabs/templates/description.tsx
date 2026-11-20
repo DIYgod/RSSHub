@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 interface TableCell {
@@ -15,7 +16,7 @@ export const renderTable = (rows: TableCell[][]) =>
                     <tr>
                         {row.map(({ html, header }) => {
                             const Cell = header ? 'th' : 'td';
-                            return <Cell dangerouslySetInnerHTML={{ __html: html }} />;
+                            return <Cell>{raw(html)}</Cell>;
                         })}
                     </tr>
                 ))}

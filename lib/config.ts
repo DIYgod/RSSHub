@@ -1349,7 +1349,7 @@ const calculateValue = () => {
     Object.assign(value, _value);
 };
 calculateValue();
-(async () => {
+void (async () => {
     if (!envs.REMOTE_CONFIG) {
         return;
     }

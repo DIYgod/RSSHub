@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -238,7 +239,7 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
     if (!item.link) {
         return Promise.resolve(item);
     }
-    return cache.tryGet(item.link!, async () => {
+    return cache.tryGet(item.link, async () => {
         try {
             const detailResponse = await got({
                 method: 'get',

@@ -72,7 +72,7 @@ const fetchNewsDetail = (item: NewsApiItem, link: string, baseUrl: string): Prom
         });
     }
 
-    return cache.tryGet(`minimax:news:${link}`, async () => {
+    return cache.tryGet<DataItem>(`minimax:news:${link}`, async () => {
         const html = await fetchHtml(link);
         const $ = load(html);
         const $prose = $('article .prose').first();
@@ -100,7 +100,7 @@ const fetchNewsDetail = (item: NewsApiItem, link: string, baseUrl: string): Prom
         };
 
         return result;
-    }) as Promise<DataItem>;
+    });
 };
 
 async function handler(ctx: Context): Promise<Data> {

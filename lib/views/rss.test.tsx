@@ -197,6 +197,7 @@ describe('RSS view', () => {
                                     url: 'https://example.com/a.jpg',
                                     width: 250,
                                     children: 'child',
+                                    // oxlint-disable-next-line eslint-js/no-restricted-syntax - test
                                     dangerouslySetInnerHTML: { __html: '<injected/>' },
                                 } as any,
                             },

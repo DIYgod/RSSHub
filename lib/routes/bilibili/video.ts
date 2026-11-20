@@ -6,7 +6,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate, parseDuration } from '@/utils/time';
 
 import cache from './cache';
@@ -258,7 +259,7 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
 
             await page.route('**/*', (route) => {
                 const request = route.request();
-                allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },

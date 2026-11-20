@@ -5,7 +5,8 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from '../templates/description';
-import { type ArticleSource, parseArticle } from './utils';
+import type { ArticleSource } from './utils';
+import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/nfapp/column/:column?',

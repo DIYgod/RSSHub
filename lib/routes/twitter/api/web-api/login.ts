@@ -38,12 +38,14 @@ async function login({ username, password, authenticationSecret }) {
         await buttons[3]?.click();
         await page.waitForSelector('input[autocomplete="current-password"]');
         await page.type('input[autocomplete="current-password"]', password);
-        (await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]'))?.click();
+        const loginButton = await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]');
+        await loginButton?.click();
         if (authenticationSecret) {
             await page.waitForSelector('input[inputmode="numeric"]');
             const token = await generate({ secret: authenticationSecret });
             await page.type('input[inputmode="numeric"]', token);
-            (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
+            const nextButton = await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]');
+            await nextButton?.click();
         }
         const waitForRequest = new Promise<string>((resolve) => {
             page.on('response', async (response) => {

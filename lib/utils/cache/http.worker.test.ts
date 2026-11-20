@@ -1,12 +1,12 @@
 import { env } from 'cloudflare:workers';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type * as WorkerCache from './index.worker';
+import type { default as workerCache, setKVNamespace as workerSetKVNamespace } from './index.worker';
 
 type StoredValue = { ttl: number; value: string };
 
-let cache: typeof WorkerCache.default;
-let setKVNamespace: typeof WorkerCache.setKVNamespace;
+let cache: typeof workerCache;
+let setKVNamespace: typeof workerSetKVNamespace;
 const values = new Map<string, StoredValue>();
 
 const handleCacheRequest = (input: RequestInfo | URL, init?: RequestInit) => {

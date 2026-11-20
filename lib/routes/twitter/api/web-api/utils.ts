@@ -61,7 +61,9 @@ const getAuth = async (retry: number) => {
     const lock = await cache.get(`${lockPrefix}${token}`, false);
     if (lock) {
         logger.debug(`twitter debug: twitter cookie is locked, retry: ${retry}`);
-        await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+        await new Promise((resolve) => {
+            setTimeout(resolve, Math.random() * 500 + 500);
+        });
         return await getAuth(retry - 1);
     }
     logger.debug('twitter debug: lock twitter cookie');

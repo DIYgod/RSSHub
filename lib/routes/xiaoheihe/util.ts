@@ -42,7 +42,7 @@ const checksum = (data) =>
 
 export const calculate = (url, timestamp = 0, nonce = '') => {
     timestamp ||= Math.trunc(Temporal.Now.instant().epochMilliseconds / 1000);
-    nonce ||= md5(Math.random().toString()).toString('hex').toUpperCase();
+    nonce ||= md5(Math.random().toString()).toHex().toUpperCase();
 
     const { pathname } = new URL(url);
     const ts = timestamp + 1;
@@ -50,10 +50,10 @@ export const calculate = (url, timestamp = 0, nonce = '') => {
 
     let key = '';
     const nonceHash = md5((nonce + dict).replaceAll(/\D/g, ''))
-        .toString('hex')
+        .toHex()
         .toLowerCase();
     const rnd = md5(ts + u + nonceHash)
-        .toString('hex')
+        .toHex()
         .replaceAll(/\D/g, '')
         .slice(0, 9)
         .padEnd(9, '0');
@@ -64,7 +64,7 @@ export const calculate = (url, timestamp = 0, nonce = '') => {
         key += dict[u];
     }
 
-    const suffix = checksum([...key].slice(-4).map((c) => c.codePointAt(0)))
+    const suffix = checksum(Array.from(key.slice(-4), (c) => c.codePointAt(0)))
         .toString()
         .padStart(2, '0');
 

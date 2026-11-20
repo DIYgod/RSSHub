@@ -100,7 +100,7 @@ async function handler(ctx) {
                     .text()
                     .replace(/^(By|作者)[：:]\s*/, '');
                 item.category = [
-                    ...item.category,
+                    ...[item.category].flat(),
                     ...content('.news-detail-tag')
                         .toArray()
                         .map((c) => content(c).text()),

@@ -35,26 +35,24 @@ const handler: Route['handler'] = async () => {
         const listItems = $(itemSelector);
 
         // Map through each list item to extract details
-        const academicLinkList = await Promise.all(
-            listItems
-                .toArray()
-                .filter((element) => $(element).find('a').attr('href'))
-                .map((element) => {
-                    const rawDate = $(element).find('span').text();
-                    const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
-                    const formattedDate = yearMonth && day ? parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
+        const academicLinkList = listItems
+            .toArray()
+            .filter((element) => $(element).find('a').attr('href'))
+            .map((element) => {
+                const rawDate = $(element).find('span').text();
+                const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
+                const formattedDate = yearMonth && day ? parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
 
-                    const title = $(element).find('a').attr('title') || '学术信息';
-                    const relativeHref = $(element).find('a').attr('href') || '';
-                    const link = new URL(relativeHref, baseUrl).href;
+                const title = $(element).find('a').attr('title') || '学术信息';
+                const relativeHref = $(element).find('a').attr('href') || '';
+                const link = new URL(relativeHref, baseUrl).href;
 
-                    return {
-                        date: formattedDate,
-                        title,
-                        link,
-                    };
-                })
-        );
+                return {
+                    date: formattedDate,
+                    title,
+                    link,
+                };
+            });
 
         return {
             title: '西北民族大学学术信息',

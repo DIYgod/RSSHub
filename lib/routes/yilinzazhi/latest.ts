@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
@@ -6,7 +7,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { isOnSite } from '@/utils/valid-host';
 
 const articleSelector = '.article-main > .article-content, .blkContainerSblk.collectionContainer';
@@ -160,7 +162,7 @@ async function handler(): Promise<Data> {
                 .includes(currentYear + '')
         );
 
-    const stage = $(yearSection!)
+    const stage = $(yearSection)
         .find('a')
         .toArray()
         .map<Stage>((elem) => {

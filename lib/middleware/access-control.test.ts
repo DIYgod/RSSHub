@@ -1,7 +1,6 @@
 import { Hono } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type * as TelegramClientModule from '@/routes/telegram/tglib/client';
 import md5 from '@/utils/md5';
 import type { WeiboOAuthState } from '@/utils/weibo-oauth';
 
@@ -22,7 +21,7 @@ vi.mock('@/routes/telegram/tglib/client', async (importOriginal) => {
         media: new Api.MessageMediaPhoto({ photo: new Api.PhotoEmpty({ id: returnBigInt(7) }) }),
     };
     return {
-        ...(await importOriginal<typeof TelegramClientModule>()),
+        ...(await importOriginal<object>()),
         getClient: () => ({
             getInputEntity: () => new Api.InputPeerChannel({ channelId: channel.id, accessHash: returnBigInt(2) }),
             getEntity: () => channel,

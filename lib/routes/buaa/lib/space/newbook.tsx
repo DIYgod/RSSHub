@@ -7,7 +7,8 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
 
 interface Book {
@@ -188,10 +189,10 @@ async function getItem(item: Book, page?: Page): Promise<DataItem> {
                 ) : null}
                 <h2>书籍信息</h2>
                 <div>
-                    <span class="call-no" style="font-family: JetBrainsMono, monospace; font-style: italic; font-weight: 700; color: #458f57;">
+                    <span className="call-no" style="font-family: JetBrainsMono, monospace; font-style: italic; font-weight: 700; color: #458f57;">
                         {item.callno?.at(0) || '无'}
                     </span>{' '}
-                    / <span class="author">{item.author}</span> / <span class="publisher">{item.publisher}</span> / <span class="pub-year">{item.pub_year}</span>
+                    / <span className="author">{item.author}</span> / <span className="publisher">{item.publisher}</span> / <span className="pub-year">{item.pub_year}</span>
                 </div>
                 <h3>简介</h3>
                 <div itemprop="description">{info?.content}</div>

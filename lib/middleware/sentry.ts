@@ -1,14 +1,14 @@
-import type * as SentryType from '@sentry/node';
 import type { MiddlewareHandler } from 'hono';
 
 import { config } from '@/config';
 import { getRouteNameFromPath } from '@/utils/helpers';
 import logger from '@/utils/logger';
 
-let Sentry: typeof SentryType | undefined;
+const loadSentry = () => import('@sentry/node');
+let Sentry: Awaited<ReturnType<typeof loadSentry>> | undefined;
 
 if (config.sentry.dsn) {
-    Sentry = await import('@sentry/node');
+    Sentry = await loadSentry();
     Sentry.init({
         dsn: config.sentry.dsn,
     });
@@ -23,7 +23,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     if (Sentry && performance.now() - time >= config.errorTrackingRouteTimeout) {
         Sentry.withScope((scope) => {
             scope.setTag('name', getRouteNameFromPath(ctx.req.path));
-            Sentry!.captureException(new Error('Route Timeout'));
+            Sentry.captureException(new Error('Route Timeout'));
         });
     }
 };

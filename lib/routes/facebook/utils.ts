@@ -154,8 +154,8 @@ const renderStory = (story: any) => {
 };
 
 export const fetchGraphql = async (friendlyName: string, docId: string, variables: Record<string, string | number | boolean | null>, limit: number, collect: (lines: any[]) => any[]) => {
-    const lsd = randomBytes(16).toString('base64url');
-    const jazoest = `2${[...lsd].reduce((sum, char) => sum + char.codePointAt(0)!, 0)}`;
+    const lsd = randomBytes(16).toBase64({ alphabet: 'base64url', omitPadding: true });
+    const jazoest = `2${Array.from(lsd, (char) => char.codePointAt(0)!).reduce((sum, code) => sum + code, 0)}`;
 
     const { cookie } = config.facebook;
     const dtsg = cookie
@@ -175,7 +175,7 @@ export const fetchGraphql = async (friendlyName: string, docId: string, variable
     while (pageInfo.has_next_page && items.length < limit) {
         const cursor = pageInfo.end_cursor;
         // oxlint-disable-next-line no-await-in-loop - depends on previous response for cursor
-        const text = (await cache.tryGet(
+        const text = await cache.tryGet<string>(
             `facebook:${friendlyName}:${variables.id}:${cursor ?? ''}`,
             () =>
                 ofetch(`${baseUrl}/api/graphql/`, {
@@ -192,7 +192,7 @@ export const fetchGraphql = async (friendlyName: string, docId: string, variable
                 }),
             cursor ? config.cache.contentExpire : config.cache.routeExpire,
             !!cursor
-        )) as string;
+        );
 
         const lines = text.split('\n').map((line) => JSON.parse(line));
         const next = lines.map((data) => findPageInfo(data)).find(Boolean);

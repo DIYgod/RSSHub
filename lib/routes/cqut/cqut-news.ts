@@ -25,7 +25,7 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
+                return ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'networkidle' },

@@ -1,4 +1,5 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 

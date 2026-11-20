@@ -22,7 +22,7 @@ vi.mock('@cloudflare/containers', () => ({
 describe('container worker', () => {
     it('replaces a running container when the config in KV changes', async () => {
         const { RSSHubContainer } = await import('@/container');
-        const container = new RSSHubContainer({} as never, {} as never) as InstanceType<typeof RSSHubContainer> & { runningWith?: Record<string, string> };
+        const container = new RSSHubContainer({}, {}) as InstanceType<typeof RSSHubContainer> & { runningWith?: Record<string, string> };
         const destroy = vi.spyOn(container, 'destroy');
 
         await container.startWithEnvVars({ NODE_ENV: 'production', CACHE_EXPIRE: '300' });
@@ -51,7 +51,7 @@ describe('container worker', () => {
 
     it('does not let the client choose the container port', async () => {
         const { RSSHubContainer } = await import('@/container');
-        const container = new RSSHubContainer({} as never, {} as never);
+        const container = new RSSHubContainer({}, {});
 
         const request = new Request('https://rsshub.test/metrics', { headers: { 'cf-container-target-port': '9464' } });
         await container.fetch(request);

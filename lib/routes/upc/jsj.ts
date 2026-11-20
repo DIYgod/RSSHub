@@ -45,7 +45,7 @@ function parseArticleAuthor(byline: string | undefined) {
     if (!prefix) {
         return;
     }
-    const remainder = byline!.slice(prefix[0].length);
+    const remainder = byline.slice(prefix[0].length);
     const firstLineBreak = remainder.search(/[\r\n\u{2028}\u{2029}]/u);
     for (const marker of remainder.matchAll(/摄影|图片|责任编辑|编辑|审核|】/g)) {
         if (!marker.index) {

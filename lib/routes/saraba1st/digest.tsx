@@ -138,13 +138,13 @@ async function fetchContent(url) {
 
 const DigestSection = ({ author, msg, host }: { author: { link?: string; name: string; postinfo: string }; msg?: string; host: string }) => (
     <>
-        <div class="quoted" style="background:rgba(220,220,220,0.3);">
+        <div className="quoted" style="background:rgba(220,220,220,0.3);">
             <a style="text-decoration: none;" href={`${host}/2b/${author.link ?? ''}`}>
                 {author.name}
             </a>
             <span style="text-decoration: none;color:#aaa;">{author.postinfo}</span>
         </div>
-        <div class="content" style="margin-bottom:20px!important;">
+        <div className="content" style="margin-bottom:20px!important;">
             {msg ? raw(msg) : null}
         </div>
     </>

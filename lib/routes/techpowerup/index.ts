@@ -66,7 +66,7 @@ async function handler() {
                         .map((tag) => $(tag).text()),
                 };
             });
-            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate, category: [...new Set([...item.category, ...(detail.category ?? [])])] };
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate, category: [...new Set([...[item.category].flat(), ...[detail.category ?? []].flat()])] };
         },
         { concurrency: 3 }
     );

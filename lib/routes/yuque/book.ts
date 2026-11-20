@@ -97,20 +97,24 @@ async function handler(ctx) {
                     }
                 });
                 // obtain real video src
-                for await (const v of $('video').toArray()) {
-                    const $v = $(v);
-                    const src = $v.attr('src');
-                    if (!src?.startsWith('inputs')) {
-                        continue;
-                    }
-                    const { data } = await got(`${baseUrl}/api/video`, {
-                        searchParams: {
-                            video_id: src,
-                        },
-                    });
-                    const { info } = data.data;
-                    $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
-                }
+                await Promise.all(
+                    $('video')
+                        .toArray()
+                        .map(async (v) => {
+                            const $v = $(v);
+                            const src = $v.attr('src');
+                            if (!src?.startsWith('inputs')) {
+                                return;
+                            }
+                            const { data } = await got(`${baseUrl}/api/video`, {
+                                searchParams: {
+                                    video_id: src,
+                                },
+                            });
+                            const { info } = data.data;
+                            $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
+                        })
+                );
 
                 return {
                     description: $.html(),

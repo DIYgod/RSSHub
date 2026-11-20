@@ -105,7 +105,7 @@ const legacyFetch = async (page, queryOrItem) => {
         return response.url;
     });
     if (response) {
-        const feed = webFetchCb(response._data!, webUrl);
+        const feed = webFetchCb(response._data, webUrl);
         cache.set(`${webArticlesCacheKey}:${webUrl}`, feed);
         return feed;
     }

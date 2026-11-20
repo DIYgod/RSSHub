@@ -1,4 +1,5 @@
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export class SourceClient {
     private page?: Page;

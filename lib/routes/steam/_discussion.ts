@@ -1,4 +1,5 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';

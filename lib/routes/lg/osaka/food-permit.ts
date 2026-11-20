@@ -6,7 +6,8 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { isOnSite } from '@/utils/valid-host';
 
-import { csvRecords, decodeText, isoDate, type PermitExtra, type Row } from '../utils';
+import type { PermitExtra, Row } from '../utils';
+import { csvRecords, decodeText, isoDate } from '../utils';
 
 /**
  * 食品営業許可 facilities of 大阪市, from the CC BY 4.0 CSV linked on the city's 食品営業許可施設一覧 page

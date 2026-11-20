@@ -1,8 +1,9 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -152,6 +153,6 @@ async function handler(ctx) {
         title,
         link: isLatest ? muluUrl : targetIssueUrl,
         image,
-        item: items as DataItem[],
+        item: items,
     };
 }

@@ -32,8 +32,8 @@ async function handler(ctx: Context) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
                 item.description = $('main[itemprop="articleBody"]').html()?.trim();
                 item.pubDate = parseDate($('time[itemprop="datePublished"]').attr('datetime')!, undefined, 'Europe/Amsterdam');

@@ -139,7 +139,7 @@ const renderShopItemDescription = (detail: ShopItemDetail) =>
     );
 
 function bytesToBase64URL(b: Buffer): string {
-    return b.toString('base64').replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+    return b.toBase64({ alphabet: 'base64url', omitPadding: true });
 }
 
 function strToBase64URL(s: string): string {

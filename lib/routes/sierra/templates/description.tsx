@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 const getVideoMimeType = (src: string) => (src.endsWith('.webm') ? 'video/webm' : 'video/mp4');
@@ -23,7 +24,7 @@ export const renderVideo = (desktopSrc?: string, mobileSrc?: string, captionHtml
             <p>
                 <a href={primarySrc}>Watch the video</a>
             </p>
-            {captionHtml && <figcaption dangerouslySetInnerHTML={{ __html: captionHtml }} />}
+            {captionHtml && <figcaption>{raw(captionHtml)}</figcaption>}
         </>
     );
 };

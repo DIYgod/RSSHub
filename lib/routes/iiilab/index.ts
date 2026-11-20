@@ -37,7 +37,7 @@ async function handler() {
                 link,
                 description: row.find('.all-content').html() ?? row.find('.markitup-box').html() ?? undefined,
                 pubDate: date,
-                guid: link ? Buffer.from(link).toString('base64') : undefined,
+                guid: link ? Buffer.from(link).toBase64() : undefined,
                 author: row.find('.aw-user-name').first().text() || undefined,
             };
         });

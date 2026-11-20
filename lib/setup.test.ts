@@ -1,4 +1,3 @@
-// oxlint-disable unicorn-js/no-useless-template-literals
 import { FormData, Headers, Request, Response } from 'undici';
 import { afterAll, afterEach } from 'vitest';
 

@@ -6,7 +6,8 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { getNotices, getPreviewUrl, type Notice } from './utils';
+import type { Notice } from './utils';
+import { getNotices, getPreviewUrl } from './utils';
 
 const baseUrl = 'https://e.ecust.edu.cn';
 

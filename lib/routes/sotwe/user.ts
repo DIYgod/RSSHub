@@ -79,7 +79,7 @@ async function handler(ctx) {
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
                         const request = route.request();
-                        ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
+                        return ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
                     });
                 },
             });

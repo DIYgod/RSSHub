@@ -27,6 +27,6 @@ async function handler(): Promise<Data> {
         link: feed.link,
         description: feed.description,
         language: 'uk',
-        item: await Promise.all(feed.items.map((item) => createItem(item))),
+        item: feed.items.map((item) => createItem(item)),
     };
 }

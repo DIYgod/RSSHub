@@ -1,7 +1,8 @@
 // oxlint-disable unicorn/prefer-add-event-listener -- Playwright transports expose protocol callbacks, not EventTarget methods.
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { installNativeTransport, type TransportFetch, type TransportServer, withTransportFetch } from './playwright-transport.worker';
+import type { TransportFetch, TransportServer } from './playwright-transport.worker';
+import { installNativeTransport, withTransportFetch } from './playwright-transport.worker';
 
 type SocketEvent = { data?: string | ArrayBuffer };
 

@@ -52,10 +52,10 @@ async function handler(ctx) {
                     'x-requested-with': 'XMLHttpRequest',
                 },
                 form: {
-                    channelid: Buffer.from(title_dict[type].channelid).toString('base64'),
-                    pagesize: Buffer.from('15').toString('base64'),
-                    pageno: Buffer.from('1').toString('base64'),
-                    hasPage: Buffer.from('true').toString('base64'),
+                    channelid: Buffer.from(title_dict[type].channelid).toBase64(),
+                    pagesize: Buffer.from('15').toBase64(),
+                    pageno: Buffer.from('1').toBase64(),
+                    hasPage: Buffer.from('true').toBase64(),
                 },
             });
             return data;

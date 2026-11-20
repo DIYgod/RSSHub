@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -94,7 +95,7 @@ async function handler(ctx: Context) {
     const items = await pMap(
         list,
         async (item) => {
-            const detail = await cache.tryGet(`xmu:aero:article:${item.link}`, () => fetchArticleContent(item.link!));
+            const detail = await cache.tryGet(`xmu:aero:article:${item.link}`, () => fetchArticleContent(item.link));
             return { ...item, description: detail.description };
         },
         { concurrency: 3 }

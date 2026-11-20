@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -52,7 +54,7 @@ async function handler(ctx: Context) {
             const link = href ? new URL(href, url).href : undefined;
 
             return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
-                let description = $item.find('div.contson').html();
+                let description: string | null;
                 const onclick = $item.find('img[onclick]').attr('onclick');
                 if (annotation && onclick) {
                     const annotationHtml = await getContent(onclick, annotation);

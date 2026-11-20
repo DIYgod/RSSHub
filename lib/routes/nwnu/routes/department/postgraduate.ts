@@ -65,7 +65,7 @@ const handler: Route['handler'] = async (ctx) => {
     // Map through each list item to extract details
     const itemLinks = listItems.toArray().map((element) => {
         const title = $(element).find('a:nth-child(2)').attr('title')!;
-        const date = parseDate($(element).find('span.pdate').text()!);
+        const date = parseDate($(element).find('span.pdate').text());
         const relativeLink = $(element).find('a:nth-child(2)').attr('href')!;
         const link = new URL(relativeLink, BASE_URL).href;
         return {

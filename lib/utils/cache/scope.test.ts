@@ -16,7 +16,9 @@ describe('cache key scope', () => {
 
     it('keeps the namespace across awaits', async () => {
         const key = await runInCacheNamespace('bast', async () => {
-            await new Promise((resolve) => setTimeout(resolve, 1));
+            await new Promise((resolve) => {
+                setTimeout(resolve, 1);
+            });
             return scopeCacheKey('https://example.com/a');
         });
         expect(key).toBe('bast:https://example.com/a');

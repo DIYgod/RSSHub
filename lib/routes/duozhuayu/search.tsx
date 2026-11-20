@@ -57,7 +57,7 @@ async function handler(ctx) {
     // token获取见 https://github.com/wong2/userscripts/blob/master/duozhuayu.user.js
     const encrypt = (text) => {
         const cipher = crypto.createCipheriv('aes-128-cfb8', 'DkOliWvFNR7C4WvR', 'GQWKUE2CVGOOBKXU');
-        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toString('hex');
+        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toHex();
     };
 
     const getCustomRequestHeaders = () => {

@@ -53,7 +53,7 @@ const key = 'anN2bXA2NjYsamlh';
 const iv = 'amlheW91LHFpYW53';
 const algorithm = 'aes-128-cfb';
 const decrypt = (rawData) => {
-    const encrypted = Buffer.from(rawData, 'base64').toString('hex');
+    const encrypted = Buffer.from(rawData, 'base64').toHex();
     const decipher = createDecipheriv(algorithm, key, iv);
     const decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
     return JSON.parse(decrypted);
@@ -124,9 +124,7 @@ export async function handler(ctx) {
             });
             let res: string;
             try {
-                await page.route('**/*', (route) => {
-                    ['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort();
-                });
+                await page.route('**/*', (route) => (['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
                 await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
                 res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
             } finally {

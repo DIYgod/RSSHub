@@ -76,7 +76,7 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
             media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} type="application/x-shockwave-flash" width={post.w} height={post.h} />;
             break;
         case '.webm':
-            media = <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls class="full-image"></video>;
+            media = <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls className="full-image"></video>;
             break;
         default:
             break;

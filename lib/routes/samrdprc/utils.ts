@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';

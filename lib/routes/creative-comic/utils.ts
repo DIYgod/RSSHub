@@ -38,7 +38,7 @@ const getImgEncrypted = async (pageId, quality) => {
         },
         responseType: 'buffer',
     });
-    return Buffer.from(res).toString('base64');
+    return Buffer.from(res).toBase64();
 };
 
 const getImgKey = (pageId, uuid) =>

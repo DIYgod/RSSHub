@@ -53,7 +53,7 @@ async function handler(ctx) {
         const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' ? route.continue() : route.abort();
         });
 
         await page.goto(profileUrl, {
@@ -73,7 +73,7 @@ async function handler(ctx) {
                 const downloadUrl = new URL($item.find('.downbtn').attr('href')!, baseUrl);
                 downloadUrl.searchParams.delete('dl');
                 const fullImage = new URL(image.attr('data-src')!);
-                fullImage.searchParams.set('o', Buffer.from(downloadUrl.href).toString('base64'));
+                fullImage.searchParams.set('o', Buffer.from(downloadUrl.href).toBase64());
                 const sum = $item.find('.sum');
                 const title = sum.text().split('\n', 1)[0] || alt;
                 const content = sum.html()?.replaceAll('\n', '<br>') || alt;
@@ -98,7 +98,7 @@ async function handler(ctx) {
                         const page = await context.newPage();
                         await page.route('**/*', (route) => {
                             const request = route.request();
-                            request.resourceType() === 'document' ? route.continue() : route.abort();
+                            return request.resourceType() === 'document' ? route.continue() : route.abort();
                         });
 
                         await page.goto(item.link, {
