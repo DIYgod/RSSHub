@@ -913,7 +913,6 @@ export default defineConfig({
         'typescript/no-unsafe-return': 'off',
         'typescript/no-unsafe-type-assertion': 'off',
         'typescript/return-await': 'off',
-        'typescript/switch-exhaustiveness-check': 'off',
         'typescript/unbound-method': 'off',
         // #endregion
 

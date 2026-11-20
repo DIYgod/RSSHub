@@ -170,6 +170,8 @@ function toEnclosureType(linkType?: string): string | undefined {
             return 'audio/mp4';
         case 'mp4':
             return 'video/mp4';
+        default:
+            return;
     }
 }
 
@@ -190,5 +192,7 @@ function toEpisodeLanguage(language?: string | null): DataItem['language'] {
             return 'cs';
         case 'German':
             return 'de';
+        default:
+            return;
     }
 }
