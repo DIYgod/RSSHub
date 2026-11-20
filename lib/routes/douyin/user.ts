@@ -53,7 +53,7 @@ async function handler(ctx) {
             try {
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${pageUrl}`);
                 const postData = (await getApiResponse(page, pageUrl, '/web/aweme/post')) as PostData;

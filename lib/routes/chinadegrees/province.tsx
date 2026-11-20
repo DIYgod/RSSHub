@@ -88,7 +88,7 @@ async function handler(ctx) {
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
                         const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                        return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                     });
                 },
             });

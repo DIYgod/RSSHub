@@ -44,7 +44,7 @@ async function handler(ctx) {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${link}`);
                 await page.goto(link, {

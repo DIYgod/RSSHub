@@ -43,7 +43,7 @@ async function handler(ctx: Context) {
 
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' ? route.continue() : route.abort();
         });
 
         logger.http(`Requesting ${url}`);

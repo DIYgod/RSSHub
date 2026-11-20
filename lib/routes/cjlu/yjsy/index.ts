@@ -78,7 +78,7 @@ async function handler(ctx) {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'networkidle' },

@@ -12,9 +12,7 @@ const cookie = Cookie.fromJSON({
     domain: 'playno1.com',
     path: '/',
 });
-(async () => {
-    await cookieJar.setCookie(cookie!, 'http://www.playno1.com/');
-})();
+cookieJar.setCookieSync(cookie!, 'http://www.playno1.com/');
 
 const processArticle = (items: DataItem[], cache) =>
     pMap(

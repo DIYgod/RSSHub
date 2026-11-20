@@ -22,7 +22,7 @@ const fetchDesc = (list: Array<DataItem & { link: string }>, page: Page) =>
             const description = await cache.tryGet<string>(`science:body:v2:${item.link}`, async () => {
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
 
                 await page.goto(item.link, {

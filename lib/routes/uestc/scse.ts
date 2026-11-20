@@ -66,7 +66,7 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+                return isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
             });
         },
     });

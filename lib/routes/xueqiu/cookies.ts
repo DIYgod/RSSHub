@@ -13,7 +13,7 @@ export const parseToken = (link: string) =>
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     const type = request.resourceType();
-                    type === 'document' || type === 'script' ? route.continue() : route.abort();
+                    return type === 'document' || type === 'script' ? route.continue() : route.abort();
                 });
                 await page.goto(link, {
                     waitUntil: 'domcontentloaded',

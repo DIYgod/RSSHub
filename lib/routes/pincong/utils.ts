@@ -10,7 +10,7 @@ const playwrightGet = async (url: string) => {
         const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' ? route.continue() : route.abort();
         });
         logger.http(`Requesting ${url}`);
         await page.goto(url, {

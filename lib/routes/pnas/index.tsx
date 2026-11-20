@@ -87,7 +87,7 @@ async function handler(ctx): Promise<Data> {
                         await setCookies(page, await cookieJar.getCookieString(item.link), '.pnas.org');
                         await page.route('**/*', (route) => {
                             const request = route.request();
-                            request.resourceType() === 'document' ? route.continue() : route.abort();
+                            return request.resourceType() === 'document' ? route.continue() : route.abort();
                         });
                         logger.http(`Requesting ${item.link}`);
                         await page.goto(item.link, {

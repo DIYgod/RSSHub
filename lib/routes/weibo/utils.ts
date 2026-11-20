@@ -129,13 +129,12 @@ const weiboUtils = {
                             const request = route.request();
                             // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
                             if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                route.abort();
-                                return;
+                                return route.abort();
                             }
                             if (request.url().startsWith(url)) {
                                 times++;
                             }
-                            route.continue();
+                            return route.continue();
                         });
                     },
                     gotoConfig: { waitUntil: 'networkidle' },

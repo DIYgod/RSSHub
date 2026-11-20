@@ -903,7 +903,6 @@ export default defineConfig({
         'react/purity': 'off',
         'react/rules-of-hooks': 'off',
         'typescript/await-thenable': 'off',
-        'typescript/no-floating-promises': 'off',
         'typescript/no-for-in-array': 'off',
         'typescript/no-import-type-side-effects': 'off',
         'typescript/no-misused-promises': 'off',
@@ -955,13 +954,6 @@ export default defineConfig({
             plugins: ['typescript'],
             rules: {
                 'typescript/no-unnecessary-template-expression': 'off',
-            },
-        },
-        {
-            // re-enabled by preset overrides; existing findings, off until fixed
-            files: ['**/*.{ts,tsx,mts,cts}'],
-            rules: {
-                'typescript/no-floating-promises': 'off',
             },
         },
     ],

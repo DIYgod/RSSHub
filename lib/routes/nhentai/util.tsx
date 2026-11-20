@@ -92,7 +92,7 @@ const fetchPage = async (url: string): Promise<string> => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                     await page.route('**/*', (route) => {
                         const request = route.request();
-                        allowedTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                        return allowedTypes.has(request.resourceType()) ? route.continue() : route.abort();
                     });
                 },
             });

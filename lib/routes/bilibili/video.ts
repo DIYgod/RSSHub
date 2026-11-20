@@ -231,7 +231,7 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
 
             await page.route('**/*', (route) => {
                 const request = route.request();
-                allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },
