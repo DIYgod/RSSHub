@@ -5,18 +5,13 @@ import ofetch from '@/utils/ofetch';
 import { API_URL } from './constant';
 import type { BaseResponse, DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, Resently, UserDynamic, UserInfo, UserPost } from './types';
 
-function request<T>(url: string, options?: RequestInit) {
-    return ofetch<T>(url, {
-        ...options,
+async function requestAPI<T = any>(url: string) {
+    const response = await ofetch<BaseResponse<T>>(url, {
         headers: {
             Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
             'User-Agent': config.sdo.ua!,
         },
     });
-}
-
-async function requestAPI<T = any>(url: string, options?: RequestInit) {
-    const response = await request<BaseResponse<T>>(url, options);
 
     if (response.code !== 10000) {
         throw new Error(response.msg);
