@@ -903,7 +903,6 @@ export default defineConfig({
         'react/purity': 'off',
         'react/rules-of-hooks': 'off',
         'typescript/await-thenable': 'off',
-        'typescript/no-for-in-array': 'off',
         'typescript/no-import-type-side-effects': 'off',
         'typescript/no-misused-spread': 'off',
         'typescript/no-non-null-assertion': 'off',

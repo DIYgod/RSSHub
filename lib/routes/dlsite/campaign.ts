@@ -112,12 +112,13 @@ const setUrl = (info) => {
     let paramsPath = `${info.url}/=/`;
     const params = info.params;
     for (const name in params) {
-        if (Array.isArray(params[name])) {
-            for (const index in params[name]) {
-                paramsPath += `${name}[${index}]/${params[name][index]}/`;
+        const value = params[name];
+        if (Array.isArray(value)) {
+            for (const [index, item] of value.entries()) {
+                paramsPath += `${name}[${index}]/${item}/`;
             }
         } else {
-            paramsPath += `${name}/${params[name]}/`;
+            paramsPath += `${name}/${value}/`;
         }
     }
     return paramsPath.slice(1);
