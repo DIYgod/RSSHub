@@ -892,7 +892,6 @@ export default defineConfig({
         '@nkzw/no-instanceof': 'off',
         'import/consistent-type-specifier-style': 'off',
         'jsx-a11y/alt-text': 'off',
-        'no-useless-assignment': 'off',
         'react/jsx-key': 'off',
         'react/jsx-no-target-blank': 'off',
         'react/no-unknown-property': 'off',

@@ -52,7 +52,7 @@ async function handler(ctx: Context) {
             const link = href ? new URL(href, url).href : undefined;
 
             return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
-                let description = $item.find('div.contson').html();
+                let description: string | null;
                 const onclick = $item.find('img[onclick]').attr('onclick');
                 if (annotation && onclick) {
                     const annotationHtml = await getContent(onclick, annotation);

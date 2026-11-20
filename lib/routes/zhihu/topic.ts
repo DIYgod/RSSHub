@@ -49,9 +49,9 @@ function handler(ctx) {
 
         const items = response.data.map(({ target: item }) => {
             const type = item.type;
-            let title = '';
+            let title: string;
             let description: string;
-            let link = '';
+            let link: string;
             let pubDate: Temporal.Instant | undefined;
             let author = '';
 

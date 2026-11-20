@@ -68,7 +68,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const link = host + map.get(type)!.id;
-    let items: any[] = [];
+    let items: any[];
     if (type === 0) {
         const results = await pMap(map.values(), (value) => getPage(value.id), { concurrency: 3 });
         items = results.flat();

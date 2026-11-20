@@ -239,7 +239,7 @@ async function handler(ctx) {
 function determineDates(includeToday: string) {
     const now = Temporal.Now.zonedDateTimeISO('UTC');
     const currentHourUTC = now.hour;
-    let shouldIncludeToday = false;
+    let shouldIncludeToday: boolean;
     switch (includeToday) {
         case 'always':
             shouldIncludeToday = true;

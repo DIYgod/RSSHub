@@ -55,8 +55,8 @@ export const route: Route = {
             return response.data?.data || [];
         };
 
-        let rawItems: ExhibitItem[] = [];
-        let titleTag = '';
+        let rawItems: ExhibitItem[];
+        let titleTag: string;
 
         if (type === 'PAST' || type === 'PRESENT') {
             // if user specified the type with past or present

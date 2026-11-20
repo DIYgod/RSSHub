@@ -201,8 +201,8 @@ export const processFeed = async (model: string, ctx: Context): Promise<Data> =>
     const language = ctx.req.param('language') ?? '';
 
     let filter = '';
-    let listLink = '';
-    let feedName = '';
+    let listLink: string;
+    let feedName: string;
 
     switch (model) {
         case 'channel': {
