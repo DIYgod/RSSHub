@@ -446,7 +446,6 @@ export default defineConfig({
         'unicorn/prefer-set-has': 'error',
         'unicorn-js/prefer-set-methods': 'error',
         'unicorn/prefer-set-size': 'error',
-        'unicorn-js/prefer-short-arrow-method': 'warn',
         'unicorn-js/prefer-short-escape-sequences': 'error',
         // "unicorn-js/prefer-simple-condition-first": "error", // unopinionated
         'unicorn-js/prefer-simple-sort-comparator': 'error',
@@ -481,7 +480,6 @@ export default defineConfig({
         'unicorn-js/prefer-url-href': 'error',
         'unicorn-js/prefer-url-search-parameters': 'error',
         'unicorn-js/prefer-while-loop-condition': 'error',
-        // "unicorn/prevent-abbreviations": "error",
         'unicorn/relative-url-style': 'error',
         'unicorn/require-array-join-separator': 'error',
         // "unicorn-js/require-array-sort-compare": "error", off, handled by typescript/require-array-sort-compare
@@ -798,6 +796,7 @@ export default defineConfig({
         'unicorn/prefer-module': 'off',
 
         'unicorn/prefer-number-properties': ['error', { checkInfinity: false, checkNaN: false }],
+        'unicorn-js/prefer-short-arrow-method': 'warn',
         'unicorn-js/prefer-smaller-scope': ['error', { checkTypeAliases: false }],
 
         'unicorn/prefer-spread': 'warn',
