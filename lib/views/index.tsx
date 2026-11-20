@@ -157,13 +157,19 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 </p>
                 <div className="font-bold space-x-4 text-sm">
                     <a target="_blank" href="https://docs.rsshub.app">
-                        <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full transition-colors">Home</button>
+                        <button type="button" className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full transition-colors">
+                            Home
+                        </button>
                     </a>
                     <a target="_blank" href="https://folo.is/">
-                        <button className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">Try Folo</button>
+                        <button type="button" className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">
+                            Try Folo
+                        </button>
                     </a>
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                        <button className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">GitHub</button>
+                        <button type="button" className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">
+                            GitHub
+                        </button>
                     </a>
                 </div>
                 {info.showDebug ? (

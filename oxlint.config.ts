@@ -895,7 +895,6 @@ export default defineConfig({
         'jsx-a11y/alt-text': 'off',
         'no-promise-executor-return': 'off',
         'no-useless-assignment': 'off',
-        'react/button-has-type': 'off',
         'react/jsx-key': 'off',
         'react/jsx-no-target-blank': 'off',
         'react/no-unescaped-entities': 'off',
