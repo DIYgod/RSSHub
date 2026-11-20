@@ -7,5 +7,5 @@ export const parseScriptSource = (source: string) => {
         preserveParens: false,
         experimentalRawTransfer: rawTransferSupported(),
     } as never);
-    return { program, errors };
+    return Promise.resolve({ program, errors });
 };

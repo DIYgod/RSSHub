@@ -272,7 +272,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             return item;
         };
 
-        data.item = await Promise.all(data.item.map((itm) => handleItem(itm)));
+        data.item = data.item.map((itm) => handleItem(itm));
 
         // filter
         const engine = config.feature.filter_regex_engine;

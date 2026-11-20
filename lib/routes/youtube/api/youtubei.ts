@@ -140,7 +140,7 @@ export const getStreamsByChannelId = async ({ channelId, embed }: { channelId: s
 export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean; isJsonFeed: boolean }): Promise<Data> => {
     const innertube = await getInnertube();
     const playlist = await innertube.getPlaylist(playlistId);
-    const videos = await playlist.videos;
+    const videos = playlist.videos;
     return {
         title: `${playlist.info.title || playlistId} by ${playlist.info.author.name} - YouTube`,
         link: `https://www.youtube.com/playlist?list=${playlistId}`,

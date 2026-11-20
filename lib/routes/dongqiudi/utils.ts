@@ -123,7 +123,7 @@ export const processFeed = async (ctx: Context, type, id) => {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
-                await processFeedType2(item, response);
+                processFeedType2(item, response);
 
                 return item;
             }),

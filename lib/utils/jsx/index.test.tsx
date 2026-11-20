@@ -56,6 +56,7 @@ describe('jsx', () => {
     });
 
     it('keeps async children', async () => {
-        expect(await (<p>{Promise.resolve('a')}</p>).toString()).toEqual(expect.stringContaining('<p>a</p>'));
+        const rendered = (<p>{Promise.resolve('a')}</p>).toString() as string | Promise<string>;
+        expect(await rendered).toEqual(expect.stringContaining('<p>a</p>'));
     });
 });

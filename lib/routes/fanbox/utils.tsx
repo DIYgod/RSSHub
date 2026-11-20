@@ -113,8 +113,8 @@ async function parseVideo(body: VideoPost['body']) {
     return ret;
 }
 
-async function parseArtile(body: ArticlePost['body']) {
-    let ret: string[] = [];
+function parseArtile(body: ArticlePost['body']) {
+    const ret: string[] = [];
     for (const b of body.blocks) {
         ret.push('<p>');
 
@@ -141,7 +141,6 @@ async function parseArtile(body: ArticlePost['body']) {
             default:
         }
     }
-    ret = await Promise.all(ret);
     return ret.join('');
 }
 
@@ -173,7 +172,7 @@ async function parseDetail(i: PostDetailResponse['body']['post']) {
             ret += await parseVideo(i.body);
             break;
         case 'article':
-            ret += await parseArtile(i.body);
+            ret += parseArtile(i.body);
             break;
         default:
             ret += '<b>Unsupported content (RSSHub)</b>';

@@ -39,7 +39,7 @@ async function handler(ctx) {
     delete apiResponse.pids;
     delete apiResponse.count;
 
-    const items = await Promise.all(Object.values<{ plurk_id: number }>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ')));
+    const items = Object.values<{ plurk_id: number }>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ'));
 
     return {
         title: 'Anonymous - Plurk',

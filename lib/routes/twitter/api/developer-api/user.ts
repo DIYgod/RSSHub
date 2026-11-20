@@ -7,7 +7,7 @@ const handler = async (ctx) => {
     const { include_replies, include_rts, count } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
-    await api.init();
+    api.init();
     const userInfo: any = await api.getUser(id);
     let data = await (include_replies ? api.getUserTweetsAndReplies(id, params) : api.getUserTweets(id, params));
     if (!include_rts) {

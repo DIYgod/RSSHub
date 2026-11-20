@@ -51,7 +51,7 @@ async function handler(ctx) {
         (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
-                await processFeedType2(item, response);
+                processFeedType2(item, response);
                 return item;
             }),
         { concurrency: 4 }

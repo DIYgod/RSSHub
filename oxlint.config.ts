@@ -894,7 +894,6 @@ export default defineConfig({
         'jsx-a11y/alt-text': 'off',
         'react/jsx-key': 'off',
         'react/no-unknown-property': 'off',
-        'typescript/await-thenable': 'off',
         'typescript/no-non-null-assertion': 'off',
         'typescript/no-unnecessary-type-assertion': 'off',
         'typescript/no-unsafe-argument': 'off',

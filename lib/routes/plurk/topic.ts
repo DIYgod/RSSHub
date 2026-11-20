@@ -50,7 +50,7 @@ async function handler(ctx) {
     const userIds = Object.values<any>(apiResponse).map((item) => item.user_id);
     const names = await fetchFriends(userIds);
 
-    const items = await Promise.all(Object.values<any>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name)));
+    const items = Object.values<any>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name));
 
     return {
         title: $('head title').text(),
