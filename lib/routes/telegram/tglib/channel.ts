@@ -160,6 +160,8 @@ export default async function handler(ctx: Context) {
     const entity = await client.getEntity(peer);
 
     let attachments: string[] = [];
+    let captions: string[] = [];
+    let captionTitle = '';
     const messages = await client.getMessages(peer, { limit: 50 });
 
     const item: DataItem[] = [];
@@ -189,6 +191,10 @@ export default async function handler(ctx: Context) {
             }
         }
         attachments.unshift(...parts);
+        if (message.message) {
+            captions.unshift(`<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`);
+            captionTitle = message.text.split('\n', 1)[0] || captionTitle;
+        }
         if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
             continue;
         }
@@ -196,15 +202,13 @@ export default async function handler(ctx: Context) {
             const fwdFrom = message.forward?.chat ?? message.forward?.sender;
             attachments.unshift(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
         }
-        let description = attachments.join('<br/>\n');
+        const description = attachments.join('<br/>\n') + captions.join('');
+        captions = [];
         attachments = []; // emitting these, buffer other ones
 
-        if (message.message) {
-            description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
-        }
-
         const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text.split('\n', 1)[0] || (pubDate && toRFC822(pubDate)) || '';
+        const title = captionTitle || (pubDate && toRFC822(pubDate)) || '';
+        captionTitle = '';
         item.push({
             title,
             description,
