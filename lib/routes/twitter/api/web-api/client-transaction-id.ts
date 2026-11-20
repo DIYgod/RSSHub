@@ -3,7 +3,8 @@ import { ClientTransaction, fetchXDocument } from 'x-client-transaction-id';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 
-const cacheKey = 'twitter:x-client-transaction';
+// v2: entries cached by the pre-0.3 shim are `{}` and would leave `keyBytes` undefined until they expire.
+const cacheKey = 'twitter:x-client-transaction:v2';
 
 // `x-client-transaction-id` >= 0.3 keeps the derived keys in a (private) `keys` field and `generateTransactionId`
 // throws `ClientTransactionNotInitializedError` unless it is set. `keys` is plain JSON, so it can go through the cache.
