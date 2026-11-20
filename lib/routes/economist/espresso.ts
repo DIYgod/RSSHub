@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/time';
 
 const link = 'https://www.economist.com/the-world-in-brief';
 
-const { h64ToString } = await xxhash();
+const hasher = await xxhash();
 
 export const route: Route = {
     path: '/espresso',
@@ -56,7 +56,7 @@ async function handler() {
         title: sanitizeHtml(item, { allowedTags: [], allowedAttributes: {} }),
         pubDate: parseDate(content.datePublished),
         description: item,
-        guid: `${link}#${h64ToString(item)}`,
+        guid: `${link}#${hasher.h64ToString(item)}`,
     }));
 
     return {
