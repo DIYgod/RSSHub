@@ -143,7 +143,6 @@ const genReqSign = (query: string, body: string, ts: number) => {
         0,
         0,
     ]);
-    // oxlint-disable-next-line unicorn/no-array-reduce
     buf[29] = buf.subarray(0, 28).reduce((x, y) => x ^ y, 0);
     const out = Buffer.from([buf[0], buf[1], 0, 0, 0, ...[22, 7, 17, 21, 16, 28, 15, 12, 4, 3, 14, 27, 10, 6, 11, 19, 24, 25, 26, 20, 23, 18, 8, 2].map((i) => buf[i])]);
     const hA = md5v2(Buffer.concat([out, Buffer.from([h1[7], h2[29]])]));
