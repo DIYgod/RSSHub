@@ -20,7 +20,10 @@ vi.mock('node:dns', async (importOriginal) => {
     return { ...original, default: { ...original, lookup }, lookup };
 });
 
-const lookup = (hostname: string, all: boolean) => new Promise((resolve, reject) => publicLookup(hostname, { all }, (error, address) => (error ? reject(error) : resolve(address))));
+const lookup = (hostname: string, all: boolean) =>
+    new Promise((resolve, reject) => {
+        publicLookup(hostname, { all }, (error, address) => (error ? reject(error) : resolve(address)));
+    });
 
 describe('publicLookup', () => {
     it.each(['localhost', '0.0.0.0', '10.0.0.1', '100.64.0.1', '127.0.0.1', '169.254.169.254', '172.16.0.1', '192.168.0.1', '255.255.255.255', '198.18.0.1', '::', '::1', '::ffff:127.0.0.1', 'fd00::1', 'fe80::1'])(

@@ -13,7 +13,10 @@ const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
 const DEFAULT_LIMIT = 10;
 const DETAIL_FETCH_DELAY = 3000;
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) =>
+    new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 const getRequestOptions = (referer: string) => ({
     headers: {
         Referer: referer,
