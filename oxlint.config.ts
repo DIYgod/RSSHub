@@ -891,7 +891,6 @@ export default defineConfig({
         // #region --- @cloudflare/oxlint-config rules with existing findings, off until fixed ---
         '@nkzw/no-instanceof': 'off',
         'import/consistent-type-specifier-style': 'off',
-        'import/no-namespace': 'off',
         'jsx-a11y/alt-text': 'off',
         'no-promise-executor-return': 'off',
         'no-useless-assignment': 'off',

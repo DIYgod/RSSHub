@@ -1,5 +1,5 @@
 import Honeybadger from '@honeybadger-io/js';
-import * as Sentry from '@sentry/node';
+import { close, init } from '@sentry/node';
 import { load } from 'cheerio';
 import { Hono } from 'hono';
 import { http, HttpResponse } from 'msw';
@@ -159,7 +159,7 @@ describe('error handler honeybadger', () => {
 
 describe('error handler sentry', () => {
     afterEach(async () => {
-        await Sentry.close();
+        await close();
         vi.restoreAllMocks();
         vi.resetModules();
     });
@@ -169,7 +169,7 @@ describe('error handler sentry', () => {
         vi.resetModules();
 
         const beforeSend = vi.fn(() => null);
-        Sentry.init({
+        init({
             dsn: 'https://public@sentry.example.test/1',
             beforeSend,
             defaultIntegrations: false,
