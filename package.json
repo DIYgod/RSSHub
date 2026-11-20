@@ -156,7 +156,7 @@
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/playwright": "1.4.0",
         "@cloudflare/vitest-plugin": "1.8.3",
-        "@cloudflare/workers-types": "5.20261116.1",
+        "@cloudflare/workers-types": "5.20261117.1",
         "@eslint/js": "10.0.1",
         "@j178/prek": "0.5.11",
         "@mswjs/interceptors": "0.45.12",
