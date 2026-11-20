@@ -51,7 +51,7 @@ const config: KnipConfig = {
         'scripts/workflow/test-{issue,route}/*.mjs': ['exports'],
         'lib/routes/twitter/api/{mobile-api/api,mobile-api/login,web-api/login}.ts': ['exports'],
     },
-    ignoreUnresolved: ['@/utils/jsx'],
+    ignoreUnresolved: ['@/utils/jsx', ...(fs.existsSync('assets/build/route-paths.ts') ? [] : ['@/../assets/build/route-paths'])],
     // `cycles` is opt-in, and listing it here replaces the default issue types, so those are repeated
     include: ['files', 'dependencies', 'unlisted', 'binaries', 'unresolved', 'exports', 'types', 'enumMembers', 'namespaceMembers', 'duplicates', 'catalog', 'catalogReferences', 'cycles'],
     rules: {
