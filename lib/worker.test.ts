@@ -148,6 +148,23 @@ describe('Worker Integration Tests', () => {
         });
     });
 
+    describe('Bundle', () => {
+        it('should not call import.meta.resolve, which Workers do not have', () => {
+            const files = fs.readdirSync('./dist-worker', { recursive: true, encoding: 'utf8' }).filter((file) => /\.m?js$/.test(file));
+            const offenders = files.filter((file) => fs.readFileSync(`./dist-worker/${file}`, 'utf8').includes('import.meta.resolve('));
+            expect(offenders).toEqual([]);
+        });
+
+        it('should load routes that import the proxy utilities', async () => {
+            // Without Twitter credentials the route fails in its handler, which it only reaches if its modules load
+            const response = await worker.fetch('/twitter/user/x');
+            expect(response.status).toBeGreaterThanOrEqual(400);
+            const text = await response.text();
+            expect(text).toContain('Twitter API is not configured');
+            expect(text).not.toContain('is not a function');
+        }, 30000);
+    });
+
     describe('Error Handling', () => {
         it('should handle /test/error route', async () => {
             const response = await worker.fetch('/test/error');
