@@ -111737,6 +111737,61 @@
     "url": "www.sicau.edu.cn",
     "lang": "zh-CN"
   },
+  "sierra": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "sierra.ai/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/sierra/blog",
+        "parameters": {},
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full-text news, product updates, engineering deep dives, and customer stories from the official Sierra blog via its RSS feed.",
+        "zh": {
+          "name": "博客",
+          "description": "通过官方 RSS 获取 Sierra 博客的产品更新、工程实践与客户案例全文。"
+        },
+        "radar": [
+          {
+            "source": [
+              "sierra.ai/blog",
+              "sierra.ai/blog/:slug",
+              "sierra.ai/rss.xml"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "view": 0,
+        "location": "blog.ts",
+        "module": "() => import('@/routes/sierra/blog.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Sierra",
+    "url": "sierra.ai",
+    "categories": [
+      "programming"
+    ],
+    "lang": "en",
+    "description": "News, product updates, engineering deep dives, and customer stories from Sierra.",
+    "zh": {
+      "name": "Sierra",
+      "description": "Sierra 官方博客、产品更新、工程实践与客户案例。"
+    }
+  },
   "sigsac": {
     "routes": {
       "/ccs/:year?": {

@@ -44259,6 +44259,21 @@
       }
     ]
   },
+  "sierra.ai": {
+    "_name": "Sierra",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/sierra",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/rss.xml"
+        ],
+        "target": "/sierra/blog"
+      }
+    ]
+  },
   "sigsac.org": {
     "_name": "ACM Special Interest Group on Security Audit and Control",
     ".": [
