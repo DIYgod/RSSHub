@@ -1,5 +1,6 @@
-import type { CheerioAPI } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -296,8 +297,8 @@ const extractResponsiveVideos = ($: CheerioAPI): ResponsiveVideoUrls[] => {
     return videos;
 };
 
-const isVideoPlaceholderFigure = ($content: CheerioAPI, el: Parameters<CheerioAPI>[0]): boolean => {
-    const $fig = $content(el);
+const isVideoPlaceholderFigure = ($: CheerioAPI, el: Element): boolean => {
+    const $fig = $(el);
     if ($fig.find('video').length > 0) {
         return true;
     }
@@ -306,13 +307,14 @@ const isVideoPlaceholderFigure = ($content: CheerioAPI, el: Parameters<CheerioAP
     return !hasMediaOrTable && !hasText;
 };
 
-const replaceResponsiveVideoSlots = ($content: CheerioAPI, videos: ResponsiveVideoUrls[]): void => {
-    const candidateFigures = $content('figure')
+const replaceResponsiveVideoSlots = ($: CheerioAPI, $content: Cheerio<Element>, videos: ResponsiveVideoUrls[]): void => {
+    const candidateFigures = $content
+        .find('figure')
         .toArray()
-        .filter((el) => isVideoPlaceholderFigure($content, el));
+        .filter((el) => isVideoPlaceholderFigure($, el));
 
     for (const [idx, el] of candidateFigures.entries()) {
-        const $fig = $content(el);
+        const $fig = $(el);
         const captionHtml = $fig.find('figcaption').first().html()?.trim();
         const media = videos[idx];
         const videoHtml = media ? renderVideo(media.desktopUrl, media.mobileUrl) : '';
@@ -325,8 +327,8 @@ const replaceResponsiveVideoSlots = ($content: CheerioAPI, videos: ResponsiveVid
         }
     }
 
-    $content('video').each((_, el) => {
-        const $video = $content(el);
+    $content.find('video').each((_, el) => {
+        const $video = $(el);
         if (!$video.attr('src') && $video.find('source').length === 0) {
             $video.remove();
         }
@@ -345,9 +347,9 @@ const parseWistiaPosterId = (src: string | undefined): string | undefined => {
     return id && SAFE_ID_RE.test(id) ? id : undefined;
 };
 
-const cleanButtons = ($content: CheerioAPI): void => {
-    $content('button').each((_, el) => {
-        const $button = $content(el);
+const cleanButtons = ($: CheerioAPI, $content: Cheerio<Element>): void => {
+    $content.find('button').each((_, el) => {
+        const $button = $(el);
         if ($button.find('img').length > 0) {
             $button.replaceWith($button.contents());
             return;
@@ -356,24 +358,24 @@ const cleanButtons = ($content: CheerioAPI): void => {
     });
 };
 
-const replaceWistiaPosters = ($content: CheerioAPI): void => {
-    $content('img').each((_, el) => {
-        const $img = $content(el);
+const replaceWistiaPosters = ($: CheerioAPI, $content: Cheerio<Element>): void => {
+    $content.find('img').each((_, el) => {
+        const $img = $(el);
         const wistiaId = parseWistiaPosterId($img.attr('src'));
         if (!wistiaId) {
             return;
         }
         const embedUrl = `https://fast.wistia.net/embed/iframe/${wistiaId}?web_component=true&seo=true`;
         const watchUrl = `https://fast.wistia.net/embed/iframe/${wistiaId}`;
-        const $wrapper = $img.closest('.wistia-bg');
-        const $target = $wrapper.length > 0 ? $wrapper : $img;
+        const $parent = $img.parent();
+        const $target = $parent.hasClass('wistia-bg') ? $parent : $img;
         $target.replaceWith(renderEmbed(embedUrl, watchUrl, 'Wistia video player'));
     });
 };
 
-const normalizeImages = ($content: CheerioAPI): void => {
-    $content('img').each((_, el) => {
-        const $img = $content(el);
+const normalizeImages = ($: CheerioAPI, $content: Cheerio<Element>): void => {
+    $content.find('img').each((_, el) => {
+        const $img = $(el);
         const resolved = unwrapCdnImageUrl($img.attr('src'));
         if (!resolved) {
             $img.remove();
@@ -402,9 +404,9 @@ const resolveEmbedWatchUrl = (embedUrl: URL): string => {
     return embedUrl.href;
 };
 
-const cleanIframes = ($content: CheerioAPI, articleUrl: string): void => {
-    $content('iframe').each((_, el) => {
-        const $iframe = $content(el);
+const cleanIframes = ($: CheerioAPI, $content: Cheerio<Element>, articleUrl: string): void => {
+    $content.find('iframe').each((_, el) => {
+        const $iframe = $(el);
         const src = $iframe.attr('src')?.trim();
         const title = $iframe.attr('title')?.trim();
 
@@ -423,10 +425,10 @@ const cleanIframes = ($content: CheerioAPI, articleUrl: string): void => {
     });
 };
 
-const stripUtilityAttributes = ($content: CheerioAPI): void => {
-    $content('script, style, noscript, template, svg, form').remove();
-    $content('*').each((_, el) => {
-        const $el = $content(el);
+const stripUtilityAttributes = ($: CheerioAPI, $content: Cheerio<Element>): void => {
+    $content.find('script, style, noscript, template, svg, form').remove();
+    $content.find('*').each((_, el) => {
+        const $el = $(el);
         $el.removeAttr('class');
         $el.removeAttr('style');
         const attribs = 'attribs' in el ? el.attribs : undefined;
@@ -441,17 +443,16 @@ const stripUtilityAttributes = ($content: CheerioAPI): void => {
     });
 };
 
-const extractMainColumn = ($: CheerioAPI): CheerioAPI | undefined => {
+const extractMainColumn = ($: CheerioAPI): Cheerio<Element> | undefined => {
     const grid = $('article').first().children().eq(1).children().eq(0);
     if (grid.length === 0) {
         return undefined;
     }
     const mainColumn = grid.children().length > 1 ? grid.children().eq(1) : grid.children().eq(0);
-    const rawHtml = mainColumn.html()?.trim();
-    if (!rawHtml) {
+    if (mainColumn.length === 0 || !mainColumn.html()?.trim()) {
         return undefined;
     }
-    return load(rawHtml, null, false);
+    return mainColumn;
 };
 
 const parseArticlePage = (html: string, entry: RssEntry): ParsedArticleDetails => {
@@ -472,15 +473,15 @@ const parseArticlePage = (html: string, entry: RssEntry): ParsedArticleDetails =
         };
     }
 
-    cleanButtons($content);
-    replaceResponsiveVideoSlots($content, videos);
-    cleanIframes($content, entry.link);
-    replaceWistiaPosters($content);
-    normalizeImages($content);
-    stripUtilityAttributes($content);
+    cleanButtons($, $content);
+    replaceResponsiveVideoSlots($, $content, videos);
+    cleanIframes($, $content, entry.link);
+    replaceWistiaPosters($, $content);
+    normalizeImages($, $content);
+    stripUtilityAttributes($, $content);
 
-    const firstBodyImage = unwrapCdnImageUrl($content('img').first().attr('src'));
-    const cleanedHtml = $content.root().html()?.trim() ?? '';
+    const firstBodyImage = unwrapCdnImageUrl($content.find('img').first().attr('src'));
+    const cleanedHtml = $content.html()?.trim() ?? '';
 
     return {
         description: cleanedHtml || renderFallbackDescription(entry.excerpt),
