@@ -154,6 +154,7 @@
         "@actions/github": "9.1.1",
         "@bbob/types": "4.4.1",
         "@cloudflare/containers": "0.3.7",
+        "@cloudflare/oxlint-config": "0.1.0",
         "@cloudflare/playwright": "1.4.0",
         "@cloudflare/vitest-plugin": "1.8.3",
         "@cloudflare/workers-types": "5.20261117.1",

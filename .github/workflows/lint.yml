@@ -49,7 +49,7 @@ jobs:
                   - name: Typecheck
                     run: pnpm typecheck
                   - name: Lint
-                    run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
+                    run: pnpm exec oxlint --type-aware --config=oxlint.ci.config.ts
                         --format=json | oxlint-json-to-sarif > oxlint-results.sarif
                     continue-on-error: true
             - parallel:
