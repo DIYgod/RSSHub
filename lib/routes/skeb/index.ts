@@ -116,15 +116,8 @@ async function handler(ctx): Promise<Data> {
         throw new Error('Invalid data received from API');
     }
 
-    const items = await cache.tryGet(`skeb:items:v2:${category}`, async () => {
-        if (!Object.hasOwn(apiData, category) || !Array.isArray(apiData[category])) {
-            return [];
-        }
-
-        const processItem = workCategories.has(category) ? processWork : processCreator;
-        const processed = await Promise.all(apiData[category].map(async (item) => await processItem(item)));
-        return processed.filter((item) => item !== null);
-    });
+    const processItem = workCategories.has(category) ? processWork : processCreator;
+    const items = Object.hasOwn(apiData, category) && Array.isArray(apiData[category]) ? apiData[category].map((item) => processItem(item)).filter((item) => item !== null) : [];
 
     return {
         title: `Skeb - ${categoryMap[category]}`,

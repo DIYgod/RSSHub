@@ -911,7 +911,6 @@ export default defineConfig({
         'typescript/no-unsafe-member-access': 'off',
         'typescript/no-unsafe-return': 'off',
         'typescript/no-unsafe-type-assertion': 'off',
-        'typescript/return-await': 'off',
         // #endregion
 
         // #region --- quality (@nkzw/oxlint-config) ---
