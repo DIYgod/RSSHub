@@ -962,7 +962,6 @@ export default defineConfig({
             files: ['**/*.{ts,tsx,mts,cts}'],
             rules: {
                 'typescript/no-floating-promises': 'off',
-                'typescript/only-throw-error': 'off',
             },
         },
     ],

@@ -57,10 +57,6 @@ export const requestMetric = {
 };
 
 export const getContext = async (): Promise<string> => {
-    try {
-        const value = await exporter.collect();
-        return serializer.serialize(value.resourceMetrics);
-    } catch {
-        throw '';
-    }
+    const value = await exporter.collect();
+    return serializer.serialize(value.resourceMetrics);
 };
