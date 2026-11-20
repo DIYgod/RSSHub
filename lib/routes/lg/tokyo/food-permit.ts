@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -6,7 +7,8 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { formatDate, parseDate } from '@/utils/time';
 
-import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
+import type { PermitExtra, Row } from '../utils';
+import { csvRecords, decodeText, isoDate, warekiMonth } from '../utils';
 
 /**
  * 飲食店営業許可 (food business permits) newly granted in Tokyo wards, from each ward's CC BY open data.

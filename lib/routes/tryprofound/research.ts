@@ -9,7 +9,8 @@ import logger from '@/utils/logger';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { fetchArticleContent, fetchResearchItems, renderImage, renderText, type ResearchItem, researchUrl, rootUrl, typeFilters, typeLabels } from './utils';
+import type { ResearchItem } from './utils';
+import { fetchArticleContent, fetchResearchItems, renderImage, renderText, researchUrl, rootUrl, typeFilters, typeLabels } from './utils';
 
 const DEFAULT_LIMIT = 20;
 const DETAIL_CONCURRENCY = 5;

@@ -4,7 +4,8 @@ import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { fetchWithPage } from '@/utils/playwright-request';
 import { isOnSite } from '@/utils/valid-host';
 

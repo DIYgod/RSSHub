@@ -1,5 +1,6 @@
 import { escapeAttribute, escapeText } from 'entities';
-import { type Helpers, Innertube, YTNodes } from 'youtubei.js';
+import type { Helpers } from 'youtubei.js';
+import { Innertube, YTNodes } from 'youtubei.js';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';

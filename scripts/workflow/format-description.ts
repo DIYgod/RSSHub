@@ -2,7 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import stringWidth from 'fast-string-width';
-import { type ObjectExpression, parse, type Program, type VariableDeclarator } from 'oxc-parser';
+import type { ObjectExpression, Program, VariableDeclarator } from 'oxc-parser';
+import { parse } from 'oxc-parser';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkPangu from 'remark-pangu';

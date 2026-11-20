@@ -1,6 +1,7 @@
 import path from 'node:path';
 
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 

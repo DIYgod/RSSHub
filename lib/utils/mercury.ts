@@ -1,4 +1,5 @@
-import { type ChildProcess, fork } from 'node:child_process';
+import type { ChildProcess } from 'node:child_process';
+import { fork } from 'node:child_process';
 import { once } from 'node:events';
 
 const PARSE_TIMEOUT = 10000;

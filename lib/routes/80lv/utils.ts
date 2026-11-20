@@ -1,4 +1,5 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 export const SITE_URL = 'https://80.lv';

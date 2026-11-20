@@ -3,7 +3,8 @@ import { raw } from 'hono/html';
 import type { Child } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { type ArticleBlock, type ArticleBlockContent, type ArticleDetail, type ArticleListItem, extractPlainText, isHostnameOrSubdomain, pickImageUrl, resolveHttpUrl, resolveSafeUrl, sanitizeRichHtml } from '../utils';
+import type { ArticleBlock, ArticleBlockContent, ArticleDetail, ArticleListItem } from '../utils';
+import { extractPlainText, isHostnameOrSubdomain, pickImageUrl, resolveHttpUrl, resolveSafeUrl, sanitizeRichHtml } from '../utils';
 
 const DIRECT_VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov', '.m4v'];
 

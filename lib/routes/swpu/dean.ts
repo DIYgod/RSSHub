@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';

@@ -1,4 +1,5 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { ChildNode, Element } from 'domhandler';
 
 import MarkdownIt from '@/utils/markdown-it';

@@ -6,7 +6,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate, parseDuration } from '@/utils/time';
 
 import cache from './cache';

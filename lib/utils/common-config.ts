@@ -1,4 +1,5 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 import iconv from 'iconv-lite';
 

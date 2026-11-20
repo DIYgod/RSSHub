@@ -1,6 +1,7 @@
 // Adapted from the computer science school route.
 // import { parseDate } from '@/utils/time';
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';

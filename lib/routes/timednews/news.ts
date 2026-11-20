@@ -1,4 +1,5 @@
-import { type CheerioOptions, load } from 'cheerio';
+import type { CheerioOptions } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';

@@ -9,7 +9,8 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderArticleDescription, renderFallbackDescription } from './templates/description';
-import { BLOG_LIST_URL, DEFAULT_LIMIT, DETAIL_CONCURRENCY, type EntrySourceKind, extractBlogEntries, hydrateNextSuspenseSlots, MAX_LIMIT, normalizeContentContainer, type ParsedBlogEntry, SITE_URL } from './utils';
+import type { EntrySourceKind, ParsedBlogEntry } from './utils';
+import { BLOG_LIST_URL, DEFAULT_LIMIT, DETAIL_CONCURRENCY, extractBlogEntries, hydrateNextSuspenseSlots, MAX_LIMIT, normalizeContentContainer, SITE_URL } from './utils';
 
 const EXTERNAL_SCRAPE_KINDS = new Set<EntrySourceKind>(['github', 'huggingface', 'github-pages']);
 

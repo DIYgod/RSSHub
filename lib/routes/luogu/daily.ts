@@ -5,7 +5,8 @@ import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-import { getArticleDescription, getPageData, type LuoguArticle } from './utils';
+import type { LuoguArticle } from './utils';
+import { getArticleDescription, getPageData } from './utils';
 
 const md = MarkdownIt();
 

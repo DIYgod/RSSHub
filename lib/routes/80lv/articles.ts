@@ -9,7 +9,8 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderArticleDescription } from './templates/description';
-import { API_BASE_URL, type ArticleDetail, type ArticleListItem, type ArticleListResponse, CATEGORY_NAME_MAP, CATEGORY_OPTIONS, DEFAULT_LIMIT, DETAIL_CONCURRENCY, MAX_LIMIT, pickImageUrl, SITE_URL } from './utils';
+import type { ArticleDetail, ArticleListItem, ArticleListResponse } from './utils';
+import { API_BASE_URL, CATEGORY_NAME_MAP, CATEGORY_OPTIONS, DEFAULT_LIMIT, DETAIL_CONCURRENCY, MAX_LIMIT, pickImageUrl, SITE_URL } from './utils';
 
 const JSON_HEADERS = {
     Accept: 'application/json',

@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/shxyj/:year?/:issue?',
