@@ -7,7 +7,6 @@ export default defineConfig({
     options: {
         ...base.options,
         respectEslintDisableDirectives: false,
-        reportUnusedDisableDirectives: 'error',
     },
     rules: {
         ...base.rules,

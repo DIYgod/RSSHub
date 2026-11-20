@@ -75,6 +75,8 @@ interface ArchiveItem {
 type BrowserResponse = Awaited<ReturnType<Page['waitForResponse']>>;
 
 const videoListApiPath = '/x/space/wbi/arc/search';
+const riskControlCode = -352;
+const videoListApiAttempts = 3;
 const allowedBrowserRequestTypes = new Set(['document', 'script', 'xhr', 'fetch', 'image', 'font', 'stylesheet', 'other']);
 // A Worker's remote browser session runs out of memory after about 30 seconds on a page stuck in
 // Bilibili's risk control, so give up before that and return an error RSSHub can report.
@@ -158,15 +160,12 @@ async function applyCookie(page: Page, cookie: string) {
     }
 }
 
-async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
-    // The API takes a visitor cookie instead of the w_webid from the space page, which now sits
-    // behind a 412 proof-of-work challenge for plain requests.
-    const cookie = cache.getConfiguredCookie() ?? (await cache.getVisitorCookie());
-    const wbiVerifyString = await cache.getWbiVerifyString();
-    const dmImgList = utils.getDmImgList();
-    const dmImgInter = utils.getDmImgInter();
-
-    const params = utils.addWbiVerifyInfo(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), wbiVerifyString);
+async function requestVideoList(uid: string, cookie: string, wbiVerifyString: string): Promise<VideoListResponse> {
+    // A fresh dm_img_* fingerprint and wts on every call, so each attempt carries a new signature
+    const params = utils.addWbiVerifyInfo(
+        utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, utils.getDmImgList(), utils.getDmImgInter()),
+        wbiVerifyString
+    );
     const response = await got(`https://api.bilibili.com${videoListApiPath}?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}`,
@@ -174,10 +173,38 @@ async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
             Cookie: cookie,
         },
     });
-    const data = response.data;
+    return response.data;
+}
+
+// From Cloudflare Workers, the risk control of the video list API rejects requests one by one with
+// -352 and lets roughly a third through, so a newly signed request often passes. The cookie stays
+// the same: the endpoints that make a new visitor cookie answer Workers with a 412.
+async function requestVideoListWithRetry(uid: string, cookie: string, wbiVerifyString: string, attempt = 1): Promise<VideoListResponse> {
+    const data = await requestVideoList(uid, cookie, wbiVerifyString);
+    if (data.code !== riskControlCode || attempt >= videoListApiAttempts) {
+        if (attempt > 1) {
+            logger.info(`[bilibili/video] video list API answered code ${data.code ?? 0} on attempt ${attempt}`);
+        }
+        return data;
+    }
+
+    return requestVideoListWithRetry(uid, cookie, wbiVerifyString, attempt + 1);
+}
+
+async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
+    // The API takes a visitor cookie instead of the w_webid from the space page, which now sits
+    // behind a 412 proof-of-work challenge for plain requests.
+    const cookie = cache.getConfiguredCookie() ?? (await cache.getVisitorCookie());
+    const wbiVerifyString = await cache.getWbiVerifyString();
+
+    const data = await requestVideoListWithRetry(uid, cookie, wbiVerifyString);
     if (data.code) {
         logger.error(JSON.stringify(data.data));
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
+    }
+
+    if (!data.data) {
+        throw new Error('Bilibili video list response does not contain video list data');
     }
 
     return data.data;
