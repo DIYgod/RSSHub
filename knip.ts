@@ -4,14 +4,15 @@ import path from 'node:path';
 import type { KnipConfig } from 'knip';
 
 // Route modules are loaded by directory import (see lib/registry-dev.ts and scripts/workflow/build-routes.ts),
-// so only files exporting `route`, `namespace` or `apiRoute` are real entries; everything else must be imported.
-const routeEntryPattern = /^export (?:const|\{) ?(?:route|namespace|apiRoute)\b/m;
+// so only files exporting `route` or `apiRoute`, and files named namespace.ts, are real entries; everything else must be imported.
+// A misnamed namespace file (e.g. namaspace.ts) is therefore reported as an unused file.
+const routeEntryPattern = /^export (?:const|\{) ?(?:route|apiRoute)\b/m;
 
 const routeEntries = fs
     .readdirSync('lib/routes', { recursive: true, withFileTypes: true })
     .filter((entry) => entry.isFile() && /\.tsx?$/.test(entry.name) && !/\.test\.tsx?$/.test(entry.name))
     .map((entry) => path.join(entry.parentPath, entry.name).replaceAll('\\', '/'))
-    .filter((file) => routeEntryPattern.test(fs.readFileSync(file, 'utf8')));
+    .filter((file) => file.endsWith('/namespace.ts') || routeEntryPattern.test(fs.readFileSync(file, 'utf8')));
 
 const config: KnipConfig = {
     entry: [
