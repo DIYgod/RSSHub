@@ -40,6 +40,7 @@ async function handler(ctx) {
         searchParams: {
             per_page: 100,
             categories: categoryIds,
+            _embed: 'wp:term',
         },
     });
     const items = response.data.map((post) => {
@@ -47,14 +48,12 @@ async function handler(ctx) {
         const link = post.link;
         const pubDate = post.date_gmt ? parseDate(post.date_gmt, 0) : undefined;
         const description = post.content.rendered;
-        const tags = (Array.isArray(post.tag_info) ? post.tag_info : []).map((tag) => tag.name);
-        const categories = post.category_info.map((category) => category.name);
         return {
             title,
             link,
             pubDate,
             description,
-            category: [...tags, ...categories],
+            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
         };
     });
     return {
