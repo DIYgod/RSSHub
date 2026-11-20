@@ -91,7 +91,7 @@ const renderReplyContext = (tweet) => {
     return renderToString(
         createElement(
             'div',
-            { class: 'rsshub-reply-context' },
+            { className: 'rsshub-reply-context' },
             ...parents.map((parent) =>
                 createElement(
                     'blockquote',

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -81,7 +82,7 @@ export function createPublicHandler(rootUrl: string, assetsUrl: string, name: st
                     pubDate: post.published ? parseDate(post.published) : undefined,
                     description: renderToString(
                         <>
-                            <div dangerouslySetInnerHTML={{ __html: content }} />
+                            <div>{raw(content)}</div>
                             {renderFiles(post, assetsUrl, rootUrl)}
                         </>
                     ),

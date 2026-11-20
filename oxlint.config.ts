@@ -663,6 +663,18 @@ export default defineConfig({
                 selector: 'Identifier[name="_ctx"]',
                 message: 'Usage of `_ctx` is not allowed.',
             },
+            {
+                selector: 'JSXAttribute[name.name="class"]',
+                message: 'Usage of `class` is not allowed.',
+            },
+            {
+                selector: ':matches(CallExpression[callee.name=/^(jsx|createElement)$/], JSXSpreadAttribute) > ObjectExpression > :matches(Property[key.name="class"], Property[key.value="class"])',
+                message: 'Usage of `class` is not allowed.',
+            },
+            {
+                selector: ':matches(Property[key.name="dangerouslySetInnerHTML"], Property[key.value="dangerouslySetInnerHTML"])',
+                message: 'Usage of `dangerouslySetInnerHTML` is not allowed.',
+            },
         ],
 
         'no-unneeded-ternary': 'error',
@@ -886,6 +898,10 @@ export default defineConfig({
                 ignores: [],
             },
         ],
+        // #endregion
+
+        // #region --- react ---
+        'react/no-danger': 'error',
         // #endregion
 
         // #region --- @cloudflare/oxlint-config ---

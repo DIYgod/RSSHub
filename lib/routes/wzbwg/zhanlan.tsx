@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
@@ -79,7 +80,7 @@ export const route: Route = {
                 const description = renderToString(
                     <div>
                         {imgUrl && <img src={imgUrl} />}
-                        <div dangerouslySetInnerHTML={{ __html: detail.description || '' }} />
+                        <div>{raw(detail.description || '')}</div>
                     </div>
                 );
                 return {

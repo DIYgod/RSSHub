@@ -37,7 +37,7 @@ describe('jsx', () => {
     it('keeps every other child as it is', () => {
         expect(
             renderToString(
-                <div class="a">
+                <div className="a">
                     {'<'}
                     {1}
                     {0}
