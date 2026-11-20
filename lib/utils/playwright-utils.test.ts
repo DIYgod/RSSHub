@@ -1,8 +1,8 @@
-import type { BrowserContext } from 'patchright';
+import type { BrowserContext, Page } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import playwright from '@/utils/playwright';
-import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/playwright-utils';
+import { constructCookieArray, getCookies, limitContentLength, limitNavigation, parseCookieArray, setCookies } from '@/utils/playwright-utils';
 
 let context: BrowserContext | null = null;
 
@@ -98,5 +98,46 @@ describe('browser cookie utils', () => {
             waitUntil: 'domcontentloaded',
         });
         expect((await getCookies(page, 'example.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(cookieStrAll.split('; ').toSorted((a, b) => a.localeCompare(b)));
+    }, 45000);
+});
+
+describe('limitContentLength', () => {
+    it.each([
+        ['returns a document at the limit', 4 * 1024 * 1024, true],
+        ['rejects a document over the limit', 4 * 1024 * 1024 + 1, false],
+    ])('%s', async (_, length, accepted) => {
+        const html = 'x'.repeat(length);
+        const page = { content: vi.fn(() => Promise.resolve(html)), url: () => 'https://rsshub.test/' };
+        limitContentLength(page);
+
+        await (accepted ? expect(page.content()).resolves.toBe(html) : expect(page.content()).rejects.toThrow(`https://rsshub.test/ rendered to ${length} characters`));
+    });
+});
+
+describe('limitNavigation', () => {
+    it.each(['https://rsshub.test/a', 'http://rsshub.test/a', 'about:blank'])('opens %s', async (url) => {
+        const goto = vi.fn<Page['goto']>(() => Promise.resolve(null));
+        const page = { goto };
+        limitNavigation(page);
+
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        expect(goto).toHaveBeenCalledWith(url, { waitUntil: 'domcontentloaded' });
+    });
+
+    it.each(['file:///etc/hostname', 'FILE:///etc/hostname', 'chrome://version', 'view-source:https://rsshub.test/', 'data:text/html,a'])('refuses %s', async (url) => {
+        const goto = vi.fn<Page['goto']>(() => Promise.resolve(null));
+        const page = { goto };
+        limitNavigation(page);
+
+        await expect(page.goto(url)).rejects.toThrow('only web pages are opened');
+        expect(goto).not.toHaveBeenCalled();
+    });
+
+    it('is applied to pages of the browser context', async () => {
+        context = await playwright();
+        const page = await context.newPage();
+
+        await expect(page.goto('file:///etc/hostname')).rejects.toThrow('only web pages are opened');
+        await page.goto('about:blank');
     }, 45000);
 });

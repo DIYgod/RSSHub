@@ -43,7 +43,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const filter = ctx.req.param('filter') ?? '';
 
-    const currentUrl = `/series/${id}${filter ? `?f=${filter}` : ''}`;
+    const currentUrl = `/series/${encodeURIComponent(id)}${filter ? `?f=${filter}` : ''}`;
 
     const filters = {
         '': '',

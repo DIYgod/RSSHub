@@ -1,6 +1,6 @@
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 interface MediaUrl {
     h: number;
@@ -72,7 +72,7 @@ export const processItems = (data: Tweet[], type: 'index' | 'illust' | 'manga'):
 
 const relativeUnits = { 時間: 'hours', 日: 'days', 週間: 'weeks' };
 
-const parseTweetDate = (date?: string | null): Date | undefined => {
+const parseTweetDate = (date?: string | null): Temporal.Instant | undefined => {
     const match = date?.match(/^(\d+)(時間|日|週間)前$/);
     return match ? parseRelativeDate(`${match[1]} ${relativeUnits[match[2]]} ago`) : undefined;
 };
@@ -82,5 +82,6 @@ export const fetchData = async (url: string, isManga: boolean = false): Promise<
         return await ofetch<Tweet[]>(url);
     }
     const response = await ofetch<{ tweet: Tweet[] }>(url);
-    return response.tweet;
+    // The ranking API repeats a tweet once for each rank it held
+    return new Map(response.tweet.map((item) => [item.id, item])).values().toArray();
 };

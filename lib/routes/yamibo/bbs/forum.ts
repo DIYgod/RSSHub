@@ -9,7 +9,7 @@ import ofetch from '@/utils/ofetch';
 
 import { bbsOrigin, fetchThread, generateDescription, getDate, getUpdated } from '../utils';
 
-async function fetchDescription(id: string): Promise<{ description?: string; updated?: Date }> {
+async function fetchDescription(id: string): Promise<{ description?: string; updated?: Temporal.Instant }> {
     const { data } = await fetchThread(id);
     if (data && !data.startsWith('<script type="text/javascript">')) {
         const $ = load(data);

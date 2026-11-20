@@ -267,7 +267,7 @@ const getFilterByKeyAndKeyword = async (key: string, keyword: string, rootUrl: s
         },
     });
 
-    return response.length > 0 ? response[0] : undefined;
+    return response[0];
 };
 
 /**

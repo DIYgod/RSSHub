@@ -1,54 +1,70 @@
-import 'dayjs/locale/zh-cn.js';
-
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
+import { z } from 'zod';
 
-dayjs.extend(localizedFormat);
-dayjs.extend(timezone);
-dayjs.extend(utc);
+import { formatDate } from '@/utils/time';
 
-export type Crowdfunding = {
-    /** Project image */
-    image: string;
-    /** Project sell point */
-    sellPoint: string;
-    /** Crowdfunding price */
-    price: string;
-    /** Suggested retail price */
-    marketPrice: string;
-    /** Crowdfunding start time */
-    startTime: Date;
-    /** Crowdfunding end time */
-    endTime: Date;
-    /** Shipping info */
-    sendInfo: string;
-    /** Support tier list */
-    supportList: Array<{
-        /** Product image */
-        image: string;
-        /** Tier name */
-        name: string;
-        /** Tier price */
-        price: string;
-        /** Tier description */
-        description: string;
-    }>;
-};
+const SupportSchema = z.object({
+    /** Product image */
+    image: z.string(),
+    /** Tier name */
+    name: z.string(),
+    /** Tier price */
+    price: z.string(),
+    /** Tier description */
+    description: z.string(),
+});
 
-const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('lll');
+const CrowdfundingSchema = z
+    .object({
+        /** Project image */
+        image: z.string(),
+        /** Project sell point list */
+        sellPointList: z.array(z.string()).optional(),
+        /** Project sell point */
+        sellPoint: z.string().optional(),
+        /** Crowdfunding price */
+        price: z.string(),
+        /** Suggested retail price */
+        marketPrice: z.string(),
+        /** Crowdfunding start time */
+        startTime: z.instanceof(Temporal.Instant),
+        /** Crowdfunding end time */
+        endTime: z.instanceof(Temporal.Instant),
+        /** Shipping info */
+        sendInfo: z.string(),
+        /** Support tier list */
+        supportList: z.array(SupportSchema),
+    })
+    .refine((value) => Number(value.sellPointList !== undefined) + Number(value.sellPoint !== undefined) === 1, {
+        message: 'Exactly one of sellPointList and sellPoint must be provided',
+        path: ['sellPointList', 'sellPoint'],
+    });
+
+export type Crowdfunding = z.infer<typeof CrowdfundingSchema>;
 
 const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding }) => (
     <>
         <img src={crowdfunding.image} />
         <br />
-        {crowdfunding.sellPoint}
-        <br />
+        {crowdfunding.sellPointList && crowdfunding.sellPointList.length > 0 && (
+            <>
+                <ol>
+                    {crowdfunding.sellPointList.map((point) => (
+                        <li>{point}</li>
+                    ))}
+                </ol>
+                <br />
+            </>
+        )}
+        {crowdfunding.sellPoint && (
+            <>
+                {crowdfunding.sellPoint}
+                <br />
+            </>
+        )}
         众筹价：{crowdfunding.price} 元，建议零售价：{crowdfunding.marketPrice} 元
         <br />
-        众筹开始：{formatDate(crowdfunding.startTime)}，众筹结束：{formatDate(crowdfunding.endTime)}
+        众筹开始：{formatDate(crowdfunding.startTime, 'YYYY年M月D日 HH:mm', 'Asia/Shanghai')}，众筹结束：{formatDate(crowdfunding.endTime, 'YYYY年M月D日 HH:mm', 'Asia/Shanghai')}
         <br />
         物流：{crowdfunding.sendInfo}
         <br />
@@ -83,4 +99,4 @@ const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding 
  * @param {Crowdfunding} crowdfunding - Crowdfunding data.
  * @returns {string} Rendered description HTML.
  */
-export const renderCrowdfunding = (crowdfunding: Crowdfunding): string => renderToString(<CrowdfundingDescription crowdfunding={crowdfunding} />);
+export const renderCrowdfunding = (crowdfunding: Crowdfunding): string => renderToString(<CrowdfundingDescription crowdfunding={CrowdfundingSchema.parse(crowdfunding)} />);

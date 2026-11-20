@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const ENDPOINT = 'https://misskon.com/wp-json/wp/v2';
 const getPosts = async (searchParams) => {
@@ -18,7 +17,7 @@ const getPosts = async (searchParams) => {
             title: item.title.rendered,
             link: item.link,
             description: $.html(),
-            pubDate: timezone(parseDate(item.date_gmt), 0),
+            pubDate: parseDate(item.date_gmt, 0),
             category: item._embedded['wp:term']
                 .flat()
                 .filter((x) => x.taxonomy === 'post_tag')

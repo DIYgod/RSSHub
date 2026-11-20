@@ -36,7 +36,7 @@ async function handler(): Promise<{
     item: DataItem[];
 }> {
     const rootUrl = 'https://i.jandan.net';
-    const feed = await parser.parseString(await ofetch<string, 'text'>(`${rootUrl}/feed/`, { responseType: 'text', headers: { 'User-Agent': config.ua } }));
+    const feed = await parser.parseString(await ofetch<string, 'text'>(`${rootUrl}/?feed=rss2`, { responseType: 'text', headers: { 'User-Agent': config.ua } }));
     const items = await pMap(
         feed.items,
         async (item): Promise<DataItem | undefined> => {
@@ -54,7 +54,7 @@ async function handler(): Promise<{
                     const newSrc = src?.replace(/https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn');
                     return `<img src="${newSrc}" alt="${alt}">`;
                 });
-                return $('.entry').html();
+                return $('.post-content').html();
             });
             return {
                 title: item.title || '',

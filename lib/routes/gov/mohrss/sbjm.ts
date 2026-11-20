@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sbjm/:category?',
@@ -50,7 +49,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text().trim(),
                 link: new URL(a.attr('href')!, currentUrl).href.replace(/^http:(?=\/\/www\.mohrss\.gov\.cn\/)/, 'https:'),
-                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
+                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
             };
         });
 
@@ -64,7 +63,7 @@ async function handler(ctx: Context) {
                       item.description = content('#insMainConTxt').html() || content('.TRS_Editor').html() || content('.art_p').html();
                       const pubDate = content('meta[name="PubDate"]').attr('content');
                       if (pubDate) {
-                          item.pubDate = timezone(parseDate(pubDate), 8);
+                          item.pubDate = parseDate(pubDate, 8);
                       }
 
                       return item;

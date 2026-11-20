@@ -3,10 +3,10 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderIndexDescription } from './templates/index';
-import { domainValidation } from './utils';
+import { domainValidation, isSiteLink } from './utils';
 
 export const route: Route = {
     path: '/:lang?',
@@ -60,14 +60,15 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.video-title').text(),
-                link: $item.find('a').attr('href'),
+                link: new URL($item.find('a').attr('href')!, siteUrl).href,
                 poster: $item.find('.img-responsive').attr('src'),
             };
-        });
+        })
+        .filter((item) => isSiteLink(item.link!, domain));
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(`91porn:${lang}:${new URL(item.link!).searchParams.get('viewkey')}`, async () => {
+            cache.tryGet(`91porn:${lang}:${new URL(item.link!).searchParams.get('viewkey')}:${domain}`, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 

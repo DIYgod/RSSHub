@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.cst.zju.edu.cn/';
 
@@ -68,7 +68,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const link = host + map.get(type)!.id;
-    let items: any[] = [];
+    let items: any[];
     if (type === 0) {
         const results = await pMap(map.values(), (value) => getPage(value.id), { concurrency: 3 });
         items = results.flat();

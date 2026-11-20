@@ -1,12 +1,13 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { escapeAttribute, escapeText } from 'entities';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -49,7 +50,8 @@ type BodyBlock = {
     btnLink?: string;
     youtube?: string;
     sliderCollection?: { items: Array<{ slideImage?: Image; noteHtml1?: string; notePlain1?: string }> };
-    softwareListCollection?: { items: Software[] };
+    // An entry the CMS can no longer resolve, such as an unpublished game, comes back as null
+    softwareListCollection?: { items: Array<Software | null> };
 };
 type JsonValue = string | number | boolean | null | undefined | JsonValue[] | { [key: string]: JsonValue };
 type Article = { title: string; displayDate: string; category: string; bodyCollection: { items: BodyBlock[] } };
@@ -168,11 +170,13 @@ function renderBody(block: BodyBlock): string {
         renderNote(block.noteHtml2, block.notePlain2),
         block.youtube ? `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(block.youtube)}"></iframe>` : '',
         ...(block.sliderCollection?.items.map((slide) => renderImage(slide.slideImage) + renderNote(slide.noteHtml1, slide.notePlain1)) ?? []),
-        ...(block.softwareListCollection?.items.map((software) => {
-            const href = (software.pageLinkCustom || software.pageLink)?.replaceAll('{NSUID}', () => software.nsuid);
-            const title = escapeText(software.title);
-            return `<h3>${href ? `<a href="${escapeAttribute(href)}">${title}</a>` : title}</h3>${renderImage(software.imageHero)}`;
-        }) ?? []),
+        ...(block.softwareListCollection?.items
+            .filter((software) => software !== null)
+            .map((software) => {
+                const href = (software.pageLinkCustom || software.pageLink)?.replaceAll('{NSUID}', () => software.nsuid);
+                const title = escapeText(software.title);
+                return `<h3>${href ? `<a href="${escapeAttribute(href)}">${title}</a>` : title}</h3>${renderImage(software.imageHero)}`;
+            }) ?? []),
         block.btnLink && block.btnText ? `<p><a href="${escapeAttribute(block.btnLink)}">${escapeText(block.btnText)}</a></p>` : '',
     ].join('');
 }

@@ -3,9 +3,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import type { PostData } from './types';
 import { getApiResponse, getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
@@ -53,7 +53,7 @@ async function handler(ctx) {
             try {
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${pageUrl}`);
                 const postData = (await getApiResponse(page, pageUrl, '/web/aweme/post')) as PostData;

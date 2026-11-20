@@ -5,13 +5,9 @@ import Parser from 'rss-parser';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 type CustomItem = { issued?: string; author?: string };
-const parser = new Parser<object, CustomItem>({
-    customFields: {
-        item: ['issued'],
-    },
-});
 
 export const route: Route = {
     path: '/articles',
@@ -37,6 +33,11 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
+    const parser = new Parser<object, CustomItem>({
+        customFields: {
+            item: ['issued'],
+        },
+    });
     const rsp = await got('https://ntrblog.com/atom.xml');
     const feed = await parser.parseString(rsp.data);
 
@@ -69,7 +70,7 @@ async function handler(): Promise<Data> {
             title: item.title || '',
             link: item.link || '',
             author: item.author || '',
-            pubDate: item.issued ? new Date(item.issued) : undefined,
+            pubDate: item.issued ? parseDate(item.issued) : undefined,
             description: item.content || '',
             image: item.enclosure?.url,
             guid: item.guid,

@@ -4,15 +4,13 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function parsePublicationDate(value?: string) {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD');
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, 'YYYY-MM-DD', 8);
 }
 
 const typeMap = {

@@ -4,7 +4,7 @@ import { html } from 'hono/html';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getPublicTracks } from './utils';
 
@@ -31,7 +31,7 @@ export const route: Route = {
         },
     ],
     name: '用户 Love 记录',
-    description: '未配置 LASTFM\\_API\\_KEY 时使用公开页面，公开页面的时间精度为分钟。',
+    description: String.raw`未配置 LASTFM\_API\_KEY 时使用公开页面，公开页面的时间精度为分钟。`,
     maintainers: ['hoilc'],
     handler,
 };

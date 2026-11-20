@@ -1,12 +1,13 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { joinUrl } from './utils';
 
@@ -87,7 +88,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'author' | 'desc
         )
         .find(Boolean);
     if (modifiedDate) {
-        details.updated = timezone(parseDate(modifiedDate[1], 'YYYY-MM-DD'), 8);
+        details.updated = parseDate(modifiedDate[1], 'YYYY-MM-DD', 8);
     }
 
     return details;
@@ -106,7 +107,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $('em', elem).text(),
-            ...(/\d{4}-\d{2}-\d{2}/.test($('span', elem).text()) && { pubDate: timezone(parseDate($('span', elem).text(), 'YYYY-MM-DD'), 8) }),
+            ...(/\d{4}-\d{2}-\d{2}/.test($('span', elem).text()) && { pubDate: parseDate($('span', elem).text(), 'YYYY-MM-DD', 8) }),
             link: joinUrl('https://www.swpu.edu.cn/scs/index/', $('a', elem).attr('href')),
         }));
 

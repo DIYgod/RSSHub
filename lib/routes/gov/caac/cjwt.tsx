@@ -3,9 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cjwt/:category?',
@@ -59,8 +58,8 @@ async function handler(ctx) {
             author: [item.gname, item.feedbackName].filter(Boolean).join('/') || undefined,
             category: [item.messageType].filter(Boolean),
             guid: `caac-cjwt#${item.id}`,
-            pubDate: item.createDate ? timezone(parseDate(item.createDate), 8) : undefined,
-            updated: item.feedbackDate ? timezone(parseDate(item.feedbackDate), 8) : undefined,
+            pubDate: item.createDate ? parseDate(item.createDate, 8) : undefined,
+            updated: item.feedbackDate ? parseDate(item.feedbackDate, 8) : undefined,
         }));
 
     const author = '中国民用航空局';

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { generateData as generatePinData } from './pin/utils';
 import { processImage } from './utils';
@@ -49,7 +49,7 @@ async function handler(ctx) {
         let title: string;
         let link: string;
         let author: string;
-        let pubDate: Date;
+        let pubDate: Temporal.Instant | undefined;
         switch (item.type) {
             case 'answer':
                 title = item.question.title;

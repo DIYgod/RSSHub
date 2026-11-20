@@ -1,8 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { createClient, division, link, parentOf } from './utils';
 
@@ -54,7 +53,7 @@ async function handler(ctx: Context) {
         link,
         category: [item.takeType, item.powerType],
         guid: item.poweroffId,
-        pubDate: timezone(parseDate(item.startTime), 8),
+        pubDate: parseDate(item.startTime, 8),
     }));
 
     return {

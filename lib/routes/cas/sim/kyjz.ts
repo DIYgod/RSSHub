@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.sim.cas.cn/';
 
@@ -45,7 +44,7 @@ async function handler() {
             const $e = $(e);
             return {
                 link: new URL($e.find('a').attr('href')!, link).href,
-                pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
+                pubDate: parseDate($e.find('span').text().replace('[', '').replace(']', ''), 8),
                 title: '',
             };
         });
@@ -62,7 +61,6 @@ async function handler() {
                 item.title = $('p.wztitle').text();
                 item.author = reg.exec(author)![1].trim();
                 item.description = $('.TRS_Editor, .TRS_UEDITOR').first().html();
-                item.pubDate = timezone(parseDate(item.pubDate!), 8);
                 return item;
             })
         )

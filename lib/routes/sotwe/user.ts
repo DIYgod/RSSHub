@@ -7,8 +7,8 @@ import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:id',
@@ -79,7 +79,7 @@ async function handler(ctx) {
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
                         const request = route.request();
-                        ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
+                        return ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
                     });
                 },
             });

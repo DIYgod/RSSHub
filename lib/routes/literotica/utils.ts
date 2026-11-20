@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const parseList = ($: CheerioAPI, baseUrl: string): Array<DataItem & { link: string }> =>
     $('article')
@@ -22,7 +22,8 @@ export const parseList = ($: CheerioAPI, baseUrl: string): Array<DataItem & { li
                 category: $item.find('a[href*="/c/"]').first().text(),
                 pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
 export const parseItems = (list: Array<DataItem & { link: string }>) =>
     pMap(

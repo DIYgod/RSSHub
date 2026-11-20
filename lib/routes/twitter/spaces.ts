@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, gqlFeatures } from './api/web-api/constants';
 import { buildGqlMap, resolveQueryIds } from './api/web-api/gql-id-resolver';

@@ -1,11 +1,15 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-const baseUrl = 'https://xsijishe.com';
+import { baseUrl, browserResourceTypes, isBlockedRequest, toBrowserCookies } from './utils';
+
+const rankSelector = '.nex_recon_lists';
 
 export const route: Route = {
     path: '/rank/:type',
@@ -22,7 +26,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -33,6 +37,46 @@ export const route: Route = {
     maintainers: ['akynazh', 'AiraNadih'],
     handler,
 };
+
+async function fetchPortal(url: string) {
+    const cookie = config.xsijishe.cookie;
+    try {
+        return await ofetch<string>(url, {
+            headers: {
+                ...(cookie && { Cookie: cookie }),
+            },
+        });
+    } catch (error) {
+        if (!isBlockedRequest(error)) {
+            throw error;
+        }
+    }
+
+    const { page, destroy } = await getPlaywrightPage(url, {
+        noGoto: true,
+        closeTimeout: 0,
+        onBeforeLoad: async (_page, context) => {
+            if (cookie) {
+                await context!.addCookies(toBrowserCookies(cookie));
+            }
+            await context!.route('**/*', (route) => (browserResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
+    });
+    try {
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        try {
+            await page.waitForSelector(rankSelector, { state: 'attached', timeout: 20000 });
+        } catch (error) {
+            if (error instanceof Error && error.name === 'TimeoutError') {
+                throw new CaptchaError('Xsijishe did not show its rank list in the browser. It may still be requesting browser verification; retry later.');
+            }
+            throw error;
+        }
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
 
 async function handler(ctx) {
     const rankType = ctx.req.param('type');
@@ -50,13 +94,9 @@ async function handler(ctx) {
     }
 
     const url = `${baseUrl}/portal.php`;
-    const data = await ofetch(url, {
-        headers: {
-            ...(config.xsijishe.cookie && { Cookie: config.xsijishe.cookie }),
-        },
-    });
+    const data = await fetchPortal(url);
     const $ = load(data);
-    const items = $('.nex_recon_lists ul li')
+    const items = $(`${rankSelector} ul li`)
         .eq(index)
         .find('.nex_recons_demens dl dd')
         .toArray()

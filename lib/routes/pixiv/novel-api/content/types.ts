@@ -11,8 +11,8 @@ export interface NovelContent {
     viewCount: number;
     likeCount: number;
 
-    createDate: Date;
-    updateDate: Date | null;
+    createDate: Temporal.Instant | undefined;
+    updateDate: Temporal.Instant | null | undefined;
 
     tags: string[];
 

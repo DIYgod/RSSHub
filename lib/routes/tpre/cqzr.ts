@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cqzr',
@@ -18,8 +18,7 @@ function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(`${value} +08:00`, `${format} Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${value} +08:00`, `${format} Z`);
 }
 
 async function handler(ctx: Context) {
@@ -31,7 +30,7 @@ async function handler(ctx: Context) {
             projectInformation: '',
             current: 1,
             size: limit,
-            _unique: Date.now(),
+            _unique: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Accept: 'application/json, text/plain, */*',

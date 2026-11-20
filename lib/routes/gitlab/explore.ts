@@ -4,8 +4,8 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { allowHost } from './common';
 
@@ -38,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type = 'active', host = 'gitlab.com' } = ctx.req.param();
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(new URL(`https://${host}/`).hostname)) {
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.has(host)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 

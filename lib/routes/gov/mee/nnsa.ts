@@ -7,9 +7,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywdt/hjyw' } = ctx.req.param();
@@ -17,7 +16,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const limit = ctx.req.query('sorted') === 'false' ? sourceLimit : Math.max(15, sourceLimit);
 
     const baseUrl = 'https://nnsa.mee.gov.cn';
-    const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
+    const targetUrl = `${baseUrl}/${category.endsWith('/') ? category : `${category}/`}`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -71,7 +70,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                     category: categories,
                     author: authors,
                     content: {

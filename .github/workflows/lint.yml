@@ -2,11 +2,22 @@ name: Linter
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 # pull_request includes [opened, reopened, synchronize] events by default
-# 'edited' is required for title-lint
+# 'edited' is required for title-lint, which runs on pull_request_target; Lint does not rerun when a title or description is edited
+# Docs-only changes skip Lint; the pull_request_target jobs still run for every pull request
 on:
-    push: {}
+    push:
+        # A dependabot branch always has a pull request, whose pull_request run lints the same commit
+        branches-ignore:
+            - 'dependabot/**'
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     pull_request:
-        types: [opened, reopened, synchronize, edited]
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     pull_request_target:
         types: [opened, reopened, synchronize, edited]
 
@@ -15,13 +26,18 @@ jobs:
     eslint-warning:
         name: Lint
         if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        # Set on this job only: the pull_request_target jobs below run once when a pull request is opened and must not be cancelled.
+        # A new push to a pull request cancels the run of the previous push; every push gets its own group per branch and commit.
+        concurrency:
+            group: ${{ github.workflow }}-lint-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
+            cancel-in-progress: ${{ github.event_name == 'pull_request' }}
         runs-on: ubuntu-latest
         timeout-minutes: 15
         permissions:
             security-events: write
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-            - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+            - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
             - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
               with:
                   node-version: lts/*
@@ -35,7 +51,7 @@ jobs:
                   - name: Knip
                     run: pnpm knip --reporter github-actions
                   - name: Lint
-                    run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
+                    run: pnpm exec oxlint --type-aware --config=oxlint.ci.config.ts
                         --format=json | oxlint-json-to-sarif > oxlint-results.sarif
                     continue-on-error: true
             - parallel:
@@ -56,7 +72,7 @@ jobs:
         runs-on: ubuntu-slim
         timeout-minutes: 5
         steps:
-            - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
+            - uses: amannn/action-semantic-pull-request@2252a14e810aa9b85c2d560bd7070c802206ecf6 # v6.1.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   ignoreLabels: |
@@ -114,7 +130,7 @@ jobs:
         timeout-minutes: 10
         steps:
             - name: AgentScan
-              uses: MatteoGabriele/agentscan-action@8112fb79b33fafb8506159df20129a34209ac410 # v2.5.0
+              uses: MatteoGabriele/agentscan-action@7ad606f1e21df2119da8be99b763f282a670a1c5 # v2.8.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   trusted-author-associations: 'collaborator,member,owner'
@@ -146,3 +162,10 @@ jobs:
                   lock-pr: false
                   max-changed-lines: 1000
                   max-description-length: 2000
+            - if: ${{ !cancelled() && github.event.pull_request.head.repo.full_name != github.repository && !github.event.pull_request.maintainer_can_modify }}
+              run: |
+                  gh pr close ${{ github.event.pull_request.number }} --comment "Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop)."
+                  gh pr edit ${{ github.event.pull_request.number }} --add-label spam
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}

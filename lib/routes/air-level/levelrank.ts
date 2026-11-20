@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rank/:status?',
@@ -18,7 +17,7 @@ export const route: Route = {
     },
     name: '空气质量排行',
     maintainers: ['lifetraveler'],
-    example: '/air-level/rank/best,/air-level/rank',
+    example: '/air-level/rank',
     handler,
 };
 
@@ -27,8 +26,8 @@ async function handler(ctx) {
     const currentUrl = 'https://www.air-level.com/rank/';
     const response = await ofetch(currentUrl);
     const $ = load(response);
-    let table = '';
-    let title = '';
+    let table: string;
+    let title: string;
 
     const cards = $('main .card').filter((_, element) => $(element).find('table').length > 0);
     const best = cards.filter((_, element) => $(element).find('.card-header').text().includes('最佳'));
@@ -63,7 +62,7 @@ async function handler(ctx) {
             link: currentUrl,
             description: table,
             guid: pubTime,
-            pubDate: timezone(parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss'), 8),
+            pubDate: parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss', 8),
         },
     ];
     return {

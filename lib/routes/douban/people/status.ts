@@ -8,8 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import { getIpLocations } from '../ip-location';
 
@@ -559,7 +559,7 @@ async function getFullTextItems(items: Array<{ status: FullTextStatus }>) {
 
 async function handler(ctx) {
     const userid = ctx.req.param('userid');
-    const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${userid}`;
+    const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${encodeURIComponent(userid)}`;
     const items = await cache.tryGet(
         `douban:timeline:${userid}:${md5(config.douban.cookie || 'visitor')}`,
         async () => {
@@ -592,7 +592,7 @@ async function handler(ctx) {
                     title: r.title,
                     author,
                     link,
-                    pubDate: item.status.create_time ? parseDateInTimezone(item.status.create_time, 8) : undefined,
+                    pubDate: item.status.create_time ? parseDate(item.status.create_time, 8) : undefined,
                     description: r.description,
                     category: await getIpLocations(link),
                 };

@@ -6,7 +6,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://today.line.me';
 
@@ -45,7 +45,9 @@ const parseItems = (list: Array<DataItem & { link: string; hash: string }>) =>
                 const $ = load(data.data.content, null, false);
                 $('img').each((_, img) => {
                     delete img.attribs['data-hashid'];
-                    img.attribs.src = img.attribs.src.replace(/\/w\d+$/, '');
+                    if (img.attribs.src) {
+                        img.attribs.src = img.attribs.src.replace(/\/w\d+$/, '');
+                    }
                 });
 
                 return {

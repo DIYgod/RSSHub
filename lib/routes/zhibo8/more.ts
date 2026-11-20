@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     nba: 'NBA',
@@ -65,7 +64,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
-                    pubDate: timezone(parseDate($item.find('span.postTime').text()), 8),
+                    pubDate: parseDate($item.find('span.postTime').text(), 8),
                     category: $item.attr('data-label')!.split(',').filter(Boolean),
                 };
             });
@@ -76,7 +75,7 @@ async function handler(ctx) {
         list = response.data.data.list.map((item) => ({
             title: item.title,
             link: `https:${item.url}`,
-            pubDate: timezone(parseDate(item.createtime), 8),
+            pubDate: parseDate(item.createtime, 8),
         }));
     }
     const items = await pMap(

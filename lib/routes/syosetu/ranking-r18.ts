@@ -80,7 +80,7 @@ export const route: Route = {
     },
     name: 'R18 Rankings',
     url: 'syosetu.com/site/group',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     description: `| Period  | Description       | 説明             |
 | ------- | ----------------- | ---------------- |

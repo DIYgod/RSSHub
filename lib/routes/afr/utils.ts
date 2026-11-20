@@ -81,9 +81,10 @@ const renderArticle = (asset, link: string) => {
             return;
         }
 
-        const placeholder = asset.bodyPlaceholders[id!];
+        const placeholder = asset.bodyPlaceholders[id];
         switch (placeholder?.type) {
             case 'callout':
+            case 'domainListing':
             case 'relatedStory':
                 $el.replaceWith('');
                 break;

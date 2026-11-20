@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -93,9 +93,9 @@ async function handler(ctx) {
     };
 }
 
-function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined {
+function convertHtmlDateToStandardFormat(htmlContent: string): Temporal.Instant | undefined {
     const dateRegex = /<p>(\d{1,2})<\/p>\s*<p>(\d{1,2})\s*\.\s*([A-Za-z]{3})<\/p>/;
-    const match = htmlContent.match(dateRegex);
+    const match = dateRegex.exec(htmlContent);
 
     if (match) {
         const day = match[1].padStart(2, '0');
@@ -120,7 +120,7 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined 
         const month = monthMapping.get(monthAbbreviation) ?? '';
 
         const date = `20${year}-${month}-${day}`;
-        if (month && Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime())) {
+        if (month && parseDateStrict(date, 'YYYY-MM-DD')) {
             return parseDate(`${date}T00:00:00+08:00`);
         }
     }

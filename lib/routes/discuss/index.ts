@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:fid',
@@ -64,7 +63,7 @@ async function handler(ctx: Context) {
                 item.author = cite.eq(0).text();
                 item.description = content('.archiver_post').html();
                 item.link = `${rootUrl}/viewthread.php?tid=${item.link!.match(/tid-(\d+)\.html/)![1]}`;
-                item.pubDate = timezone(parseDate(firstAuthorParent.text(), 'YYYY-M-D hh:mm A'), 8);
+                item.pubDate = parseDate(firstAuthorParent.text(), 'YYYY-M-D hh:mm A', 8);
 
                 return item;
             })

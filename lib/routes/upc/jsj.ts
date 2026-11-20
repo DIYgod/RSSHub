@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const MAP = {
     news: '6277',
@@ -45,7 +45,7 @@ function parseArticleAuthor(byline: string | undefined) {
     if (!prefix) {
         return;
     }
-    const remainder = byline!.slice(prefix[0].length);
+    const remainder = byline.slice(prefix[0].length);
     const firstLineBreak = remainder.search(/[\r\n\u{2028}\u{2029}]/u);
     for (const marker of remainder.matchAll(/摄影|图片|责任编辑|编辑|审核|】/g)) {
         if (!marker.index) {
@@ -85,17 +85,22 @@ async function handler(ctx) {
     const entries = list.toArray().map((item): DataItem => {
         const $item = $(item);
         const a = $item.find('a');
-        const link = a.attr('href');
+        const href = a.attr('href');
         return {
             title: a.attr('title')!,
-            link: link!.startsWith('http') ? link : `${baseUrl}${link}`,
-            pubDate: $item.find('div[style]').text() ? timezone(parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'), 8) : undefined,
+            link: new URL(href!, link).href,
+            pubDate: $item.find('div[style]').text() ? parseDate($item.find('div[style]').text(), 'YYYY-MM-DD', 8) : undefined,
         };
     });
 
     const out = await pMap(
         entries,
         async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'upc.edu.cn')) {
+                return item;
+            }
+
             const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`upc:jsj:detail:${item.link}`, async () => {
                 const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
 
@@ -121,7 +126,7 @@ async function handler(ctx) {
                     .remove();
                 details.description = detailContent.html();
                 const published = $('.nr-xinxi i').first().text().trim();
-                details.pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                details.pubDate = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 
                 return details;
             });

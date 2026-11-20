@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const categoryMap = {
     gwxx: { title: '公务信息', tag: '20616' },
@@ -56,7 +56,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDateInTimezone(pubDate.text(), 8),
+                pubDate: parseDate(pubDate.text(), 8),
             };
         });
     const items = await pMap(

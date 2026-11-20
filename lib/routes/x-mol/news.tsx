@@ -6,8 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
 
@@ -64,7 +63,7 @@ async function handler(ctx) {
             const span = $element.find('.space-right-m30');
             const author = span.text().replace('来源：', '').trim();
             const rawDate = span.next().text().trim();
-            const pubDate = rawDate ? timezone(parseDate(rawDate, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss'], true), 8) : undefined;
+            const pubDate = rawDate ? parseDateStrict(rawDate, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss'], 8) : undefined;
 
             return {
                 title: a.text(),
@@ -81,7 +80,7 @@ async function handler(ctx) {
                     </>
                 ),
                 author,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

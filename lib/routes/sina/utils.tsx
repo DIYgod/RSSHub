@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const getRollNewsList = (pageid, lid, limit) =>
     got('https://feed.mix.sina.com.cn/api/roll/get', {
@@ -19,7 +18,7 @@ const getRollNewsList = (pageid, lid, limit) =>
             num: limit,
             page: 1,
             r: Math.random(),
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
     });
 
@@ -42,7 +41,7 @@ const parseArticle = async (item: DataItem & { link: string }): Promise<DataItem
 
         const metaPublishTime = $('meta[property="article:published_time"]').attr('content');
         const htmlPubDate = $('#pub_date, .date').text().trim();
-        const htmlDate = htmlPubDate ? timezone(parseDate(htmlPubDate, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY年MM月DD日 HH:mm', 'YYYY年MM月DD日HH:mm'], true), 8) : undefined;
+        const htmlDate = htmlPubDate ? parseDateStrict(htmlPubDate, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY年MM月DD日 HH:mm', 'YYYY年MM月DD日HH:mm'], 8) : undefined;
         const metaDate = metaPublishTime ? parseDate(metaPublishTime) : htmlDate; // 2023-05-08T08:39:31+08:00
         details.pubDate = metaDate;
         details.author = $('meta[property="article:author"]').attr('content');
@@ -80,7 +79,7 @@ const parseArticle = async (item: DataItem & { link: string }): Promise<DataItem
                     pid: 1,
                     ran: Math.random(),
                     r: item.link,
-                    ssid: `gusr_pc_${Date.now()}`,
+                    ssid: `gusr_pc_${Temporal.Now.instant().epochMilliseconds}`,
                     preload: 0,
                     uu: '',
                     isAuto: 1,

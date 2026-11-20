@@ -2,10 +2,10 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
-export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Date }>> {
+export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Temporal.Instant | undefined }>> {
     const pageUrl: string = url;
 
     const response = await got.get(pageUrl, {
@@ -29,14 +29,15 @@ export async function getNotifByPage(url): Promise<Array<{ title: string; link: 
 
         return {
             title: title!,
-            link: href!,
-            pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), 8),
+            link: new URL(href!, pageUrl).href,
+            pubDate: parseDate(time, 'YYYY-MM-DD', 8),
         };
     });
 }
 
 export async function getArticle(articleUrl: string) {
-    if (articleUrl.includes('sem.tongji.edu.cn/semch')) {
+    // only follow links on the site itself
+    if (isOnSite(articleUrl, 'sem.tongji.edu.cn') && new URL(articleUrl).pathname.startsWith('/semch')) {
         // console.log(articleUrl);
 
         try {

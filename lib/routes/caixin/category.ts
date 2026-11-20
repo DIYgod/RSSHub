@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { parseArticle } from './utils';
@@ -80,7 +79,7 @@ async function handler(ctx) {
         title: item.desc,
         description: item.summ,
         link: item.link.replace('http://', 'https://'),
-        pubDate: timezone(parseDate(item.time), 8),
+        pubDate: parseDate(item.time, 8),
         category: item.keyword.split(' '),
         audio: item.audioUrl,
         audio_image_url: item.pict.imgs[0].url,

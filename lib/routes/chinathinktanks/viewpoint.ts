@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.chinathinktanks.org.cn';
 
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 title: node.find('h3').first().text(),
                 link: new URL(node.attr('href')!, baseUrl).href,
                 author: node.find('article .border-t span').first().text() || undefined,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
         });
     const items = await Promise.all(
@@ -82,7 +81,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((element) => content(element).text());
                 if (date) {
-                    item.pubDate = timezone(parseDate(date, 'YYYY-MM-DD'), 8);
+                    item.pubDate = parseDate(date, 'YYYY-MM-DD', 8);
                 }
                 return item;
             })

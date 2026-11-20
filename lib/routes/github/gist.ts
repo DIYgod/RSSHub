@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gist/:gistId',
@@ -40,7 +40,7 @@ async function handler(ctx) {
               };
 
     const host = 'https://gist.github.com';
-    const apiUrl = `https://api.github.com/gists/${gistId}`;
+    const apiUrl = `https://api.github.com/gists/${encodeURIComponent(gistId)}`;
 
     const { data: response } = await got(apiUrl, {
         headers,

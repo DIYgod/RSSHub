@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.lyu.edu.cn/';
 
@@ -48,7 +47,7 @@ async function handler(ctx: Context) {
                 title: $item.find('.news_title a').text(),
                 link: new URL($item.find('.news_title a').attr('href')!, baseUrl).href,
                 author: '临沂大学',
-                pubDate: timezone(parseDate(`${$item.find('.news_days').text()}-${$item.find('.news_year').text()}`), 8),
+                pubDate: parseDate(`${$item.find('.news_days').text()}-${$item.find('.news_year').text()}`, 8),
             };
         });
 

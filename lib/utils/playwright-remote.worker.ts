@@ -1,7 +1,8 @@
 import type { BrowserType } from 'patchright';
 
 import { getPlaywrightCore } from '../../assets/build/playwright-worker.mjs';
-import { installNativeTransport, type TransportFetch, withTransportFetch } from './playwright-transport.worker';
+import type { TransportFetch } from './playwright-transport.worker';
+import { installNativeTransport, withTransportFetch } from './playwright-transport.worker';
 
 export type PlaywrightService = { fetch: TransportFetch };
 let playwrightService: PlaywrightService | undefined;

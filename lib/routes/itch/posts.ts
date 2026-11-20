@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/posts/:topic/:id',
@@ -56,7 +56,7 @@ async function handler(ctx) {
                 description: description.html(),
                 title: `${author}: ${description.text()}`,
                 link: $item.find('.post_date a').attr('href'),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -67,7 +66,7 @@ async function fetchPage() {
                     link,
                     category: [$title.prev().children().first().text()],
                     author: $title.next().text().replace(/^By /, ''),
-                    pubDate: timezone(parseDate($title.prev().children().last().text(), 'MMMM D, YYYY'), 0),
+                    pubDate: parseDate($title.prev().children().last().text(), 'MMMM D, YYYY', 0),
                     description: $(content).html(),
                 };
             });

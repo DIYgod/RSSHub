@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -47,7 +46,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const rootUrl = 'https://hnrb.voc.com.cn';
+    const rootUrl = 'https://hnrb.hunantoday.cn';
     const currentUrl = `${rootUrl}/hnrb_epaper`;
 
     let response = await got({
@@ -73,11 +72,14 @@ async function handler(ctx) {
         .filter((a) => a.endsWith('div=-1'));
 
     if (!id) {
-        const boardArticles = await pMap(
+        // The paper links every page twice (the page dropdown and the page list), so keep each page once
+        const pageUrls = new Set(
             $('#pageLink')
-                .slice(1)
                 .toArray()
-                .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`),
+                .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
+        );
+        const boardArticles = await pMap(
+            [...pageUrls].slice(1),
             async (p) => {
                 const pageResponse = await got({
                     method: 'get',
@@ -113,7 +115,7 @@ async function handler(ctx) {
                     link: item,
                     title: content('.font01').text(),
                     description: content('#ozoom').html(),
-                    pubDate: timezone(parseDate(matches[1], 'YYYY-MM/DD'), 8),
+                    pubDate: parseDate(matches[1], 'YYYY-MM/DD', 8),
                 };
             }),
         { concurrency: 3 }

@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { AnnouncementCatalog } from './types';
 
@@ -38,7 +38,7 @@ async function handler() {
         },
     });
 
-    const articles = response.data?.catalogs.find((catalog) => catalog.catalogId === 48)?.articles.filter((article) => article.title.includes('币安新币挖矿上线')) ?? [];
+    const articles = response.data?.catalogs.find((catalog) => catalog.catalogId === 48)?.articles ?? [];
 
     return {
         title: 'Binance | 数字货币及交易对上新',

@@ -23,7 +23,7 @@ it('extracts the policy library in workerd with page/item callbacks and dates', 
         throw new TypeError('expected the route to return feed data');
     }
     expect(data.title).toBe('部门文件 - 政府文件库');
-    expect(data.item).toEqual([{ title: '政策', link: '/policy', pubDate: new Date('2025-01-01T00:00:00Z'), description: undefined, guid: undefined }]);
+    expect(data.item).toEqual([{ title: '政策', link: '/policy', pubDate: Temporal.Instant.from('2025-01-01T00:00:00Z'), description: undefined, guid: undefined }]);
     expect(fetchMock).toHaveBeenCalledTimes(1);
 });
 

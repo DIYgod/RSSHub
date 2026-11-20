@@ -1,26 +1,36 @@
-import { type CheerioAPI, load } from 'cheerio';
 import { decodeHTML } from 'entities/decode';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import { config } from '@/config';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+import { fetchFeaturedPosts } from './api';
 
 export const route: Route = {
     path: '/today',
     categories: ['other'],
     example: '/producthunt/today',
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PRODUCTHUNT_ACCESS_TOKEN',
+                description: 'Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    description: 'Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.',
     radar: [
         {
             source: ['www.producthunt.com/'],
@@ -33,17 +43,22 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const response = await ofetch('https://www.producthunt.com/', {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+    const feed = { title: 'Product Hunt Today Popular', link: 'https://www.producthunt.com/', language: 'en' as const };
+    if (config.producthunt.accessToken) {
+        return { ...feed, sortItems: false, item: await fetchFeaturedPosts(config.producthunt.accessToken) };
+    }
 
-    const $ = load(response);
-    const data = parseTransport($).flatMap((snapshot) => snapshot.events ?? []);
+    let response: string;
+    try {
+        response = await ofetch<string, 'text'>('https://www.producthunt.com/', { responseType: 'text', headers: { 'User-Agent': config.trueUA } });
+    } catch (error) {
+        throw new Error('Product Hunt’s Today list is unavailable. /producthunt/feed provides the general feed.', { cause: error });
+    }
+
+    const data = parseTransport(response).flatMap((snapshot) => snapshot.events ?? []);
     const todayList = data.find((event) => event.type === 'next' && event.value?.data?.homefeed)?.value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0')?.node;
     if (!todayList) {
-        throw new Error('Product Hunt featured feed was not found in the public page.');
+        throw new Error('Product Hunt did not return the Today list. /producthunt/feed provides the general feed.');
     }
     // 0: Top Products Launching Today
     // 1: Yesterday's Top Products
@@ -61,45 +76,41 @@ async function handler(): Promise<Data> {
             description: item.tagline,
             pubDate: parseDate(item.createdAt),
             image: `https://ph-files.imgix.net/${item.thumbnailImageUuid}`,
-            category: item.topics.edges.map((topic) => topic.node.name),
+            category: item.topics?.edges.map((topic) => topic.node.name),
         }));
 
     const items = await pMap(
         list,
-        async (item) => ({
-            ...item,
-            ...(await cache.tryGet(`producthunt:launch:v3:${item.postSlug}`, async () => {
-                const response = await ofetch(`https://www.producthunt.com/posts/${item.postSlug}`, {
-                    headers: { 'User-Agent': config.trueUA },
-                });
-                const post = findPost(parseTransport(load(response)), item.postSlug);
-                if (!post) {
-                    throw new Error(`Product Hunt launch metadata was not found for ${item.postSlug}.`);
-                }
+        async ({ postSlug, ...item }) => {
+            try {
+                const details = await cache.tryGet(`producthunt:launch:v3:${postSlug}`, async () => {
+                    const response = await ofetch<string, 'text'>(`https://www.producthunt.com/posts/${postSlug}`, {
+                        responseType: 'text',
+                        headers: { 'User-Agent': config.trueUA },
+                    });
+                    const post = findPost(parseTransport(response), postSlug);
+                    if (!post) {
+                        throw new Error(`Product Hunt launch metadata was not found for ${postSlug}.`);
+                    }
 
-                return {
-                    author: post.user?.name,
-                    description: renderDescription({
-                        tagline: post.tagline,
-                        description: post.description,
-                        media: post.media,
-                    }),
-                };
-            })),
-        }),
+                    return {
+                        author: post.user?.name,
+                        description: renderDescription({
+                            tagline: post.tagline,
+                            description: post.description,
+                            media: post.media,
+                        }),
+                    };
+                });
+                return { ...item, ...details };
+            } catch {
+                return item;
+            }
+        },
         { concurrency: 3 }
     );
 
-    return {
-        title: 'Product Hunt Today Popular',
-        link: 'https://www.producthunt.com/',
-        language: 'en',
-        item: items.map((post) => {
-            const item = { ...post };
-            Reflect.deleteProperty(item, 'postSlug');
-            return item;
-        }),
-    };
+    return { ...feed, sortItems: false, item: items };
 }
 
 type MediaItem = {
@@ -133,7 +144,7 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
                 }
 
                 if (item.mediaType === 'video' && item.metadata?.platform === 'youtube' && item.metadata.videoId) {
-                    return <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${item.metadata.videoId}`} frameborder="0" allowfullscreen></iframe>;
+                    return raw(renderYoutube(true, item.metadata.videoId, undefined, undefined));
                 }
 
                 return null;
@@ -141,38 +152,18 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
         </>
     );
 
-function parseTransport($: CheerioAPI) {
-    return $('script:contains("ApolloSSRDataTransport")')
-        .toArray()
-        .flatMap((script) => {
-            const match = $(script)
-                .text()
-                .match(/\.push\(([\s\S]+)\)\s*;?$/);
-            if (!match) {
-                return [];
-            }
+function parseTransport(html: string) {
+    return (
+        html
+            .matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)
+            .toArray()
+            .map((script) => script[1])
+            .filter((text) => text.includes('ApolloSSRDataTransport'))
+            .map((text) => text.match(/\.push\(([\s\S]+)\)\s*;?$/)?.[1])
+            .filter((json) => json !== undefined)
             // The transport is JSON with occasional unquoted undefined values.
-            let json = '';
-            let quoted = false;
-            let escaped = false;
-            for (let i = 0; i < match[1].length; i++) {
-                const char = match[1][i];
-                if (!quoted && match[1].startsWith('undefined', i)) {
-                    json += 'null';
-                    i += 8;
-                    continue;
-                }
-                json += char;
-                if (escaped) {
-                    escaped = false;
-                } else if (quoted && char === '\\') {
-                    escaped = true;
-                } else if (char === '"') {
-                    quoted = !quoted;
-                }
-            }
-            return [JSON.parse(json)];
-        });
+            .map((json) => JSON.parse(json.replaceAll(/"(?:[^"\\]|\\.)*"|undefined/g, (token) => (token === 'undefined' ? 'null' : token))))
+    );
 }
 
 function findPost(value, slug: string): (DescriptionProps & { user?: { name?: string } }) | undefined {

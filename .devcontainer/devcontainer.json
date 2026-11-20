@@ -2,7 +2,7 @@
 // https://github.com/devcontainers/images/blob/v0.4.19/src/typescript-node/.devcontainer/devcontainer.json
 {
     "name": "Node.js & TypeScript",
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:26-trixie",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker": {
             "version": "latest",

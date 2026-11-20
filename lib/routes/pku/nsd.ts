@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toInstant, toISOString } from '@/utils/time';
 import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://nsd.pku.edu.cn/sylm/gd/';
@@ -108,9 +108,9 @@ async function getArticle(item: DataItem, selector: string) {
         };
     });
     const publicationDate = article.publishedAt ? parseDate(`${article.publishedAt.replace(' ', 'T')}+08:00`) : undefined;
-    const listDate = item.pubDate ? parseDate(item.pubDate) : undefined;
+    const listDate = item.pubDate ? toInstant(item.pubDate) : undefined;
     // Only refine the same portal publication date; a newer list date must stay fresh after a cache hit.
-    const usePublicationDate = publicationDate && !Number.isNaN(publicationDate.getTime()) && (!listDate || (!Number.isNaN(listDate.getTime()) && article.publishedAt?.startsWith(listDate.toISOString().slice(0, 10))));
+    const usePublicationDate = publicationDate !== undefined && (!item.pubDate || (listDate !== undefined && article.publishedAt?.startsWith(toISOString(listDate).slice(0, 10))));
     return {
         ...item,
         title: article.title && article.listingTitle === item.title ? article.title : item.title,

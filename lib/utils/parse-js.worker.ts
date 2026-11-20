@@ -1,6 +1,6 @@
 import parserWasm from '@oxc-parser/binding-wasm32-wasip1/wasm.wasm';
 import { instantiate } from '@oxc-parser/binding-wasm32-wasip1/workerd';
-import { type OxcError, type Program } from 'oxc-parser';
+import type { OxcError, Program } from 'oxc-parser';
 import { wrap } from 'oxc-parser/src-js/wrap.js';
 
 let bindingPromise: ReturnType<typeof instantiate> | undefined;

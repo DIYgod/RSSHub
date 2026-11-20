@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yxy.zcmu.edu.cn/';
 
@@ -52,14 +52,14 @@ async function handler(ctx) {
     });
 
     const $ = load(res.data);
-    const items = $('.lm_list li')
+    const items = $('.sp-list li')
         .toArray()
         .map((item) => {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
-                link: `https://yxy.zcmu.edu.cn/${$item.find('a').attr('href')}`,
-                pubDate: parseDate($item.find('span').text()),
+                link: new URL($item.find('a').attr('href')!, host).href,
+                pubDate: parseDate($item.find('.sp-list-time').text()),
             };
         });
 

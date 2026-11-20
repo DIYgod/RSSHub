@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/research/blog',
@@ -49,7 +49,7 @@ async function handler() {
         author: item.authorList?.map((author) => ({ name: author.name })) ?? item.authorName,
         link: `${rootUrl}${item.urlLink}`,
         category: [item.catagoryCode, item.hashTag1, item.hashTag2],
-        pubDate: item.publicationDtsStr ? parseDate(`${item.publicationDtsStr.replace(/On /, '')} GMT`) : undefined,
+        pubDate: item.publicationDtsStr ? parseDate(item.publicationDtsStr.replace(/On /, ''), 'MMMM D, YYYY') : undefined,
     }));
 
     items = await pMap(

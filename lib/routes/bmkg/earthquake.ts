@@ -1,6 +1,5 @@
 import type { Data, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchBmkgApi } from './utils';
 
@@ -52,7 +51,7 @@ async function handler(): Promise<Data> {
         title: `${item.latitude}|${item.longitude}|${item.magnitude}|${item.depth}|${item.area}`,
         link: `https://www.bmkg.go.id/gempabumi/${item.eventid}`,
         description: `<p>${item.description}</p><p>${item.instruction}</p>`,
-        pubDate: timezone(parseDate(`${item.date} ${item.time}`, 'DD-MM-YY HH:mm:ss [WIB]'), 7),
+        pubDate: parseDate(`${item.date} ${item.time}`, 'DD-MM-YY HH:mm:ss [WIB]', 7),
     }));
 
     return {

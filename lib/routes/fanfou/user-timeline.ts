@@ -1,4 +1,5 @@
-import { getEntities, getPlainText, type Status } from 'fanfou-sdk';
+import type { Status } from 'fanfou-sdk';
+import { getEntities, getPlainText } from 'fanfou-sdk';
 import type { Context } from 'hono';
 
 import { config } from '@/config';

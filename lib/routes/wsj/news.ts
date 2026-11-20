@@ -3,6 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { isOnSite } from '@/utils/valid-host';
 
 import { parseArticle } from './utils';
 
@@ -81,7 +82,8 @@ async function handler(ctx) {
                 return false;
             }
             const link = value?.data?.data?.url;
-            return typeof link === 'string' && link.includes('wsj.com/articles/');
+            // only follow links on the site itself
+            return isOnSite(link, 'wsj.com') && new URL(link).pathname.startsWith('/articles/');
         })
         .map(([key]) => key);
     const list = filteredKeys.map((key) => {

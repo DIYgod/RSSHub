@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://news.uestc.edu.cn';
 
@@ -61,14 +60,14 @@ async function handler(ctx) {
             const $item = $(item);
             const newsTitle = $item.find('a').text();
             const newsLink = new URL($item.find('a').attr('href')!, baseUrl + pageUrl).href;
-            const newsDate = parseDate($item.find('div.date-box-sm').text().trim(), 'YYYY.MM-DD', true);
+            const newsDate = parseDateStrict($item.find('div.date-box-sm').text().trim(), 'YYYY.MM-DD', 8);
             const newsDescription = $item.find('div.content').text().trim().replace('&nbsp;', '');
 
             return {
                 title: newsTitle,
                 link: newsLink,
                 description: newsDescription,
-                pubDate: Number.isNaN(newsDate.getTime()) ? undefined : timezone(newsDate, 8),
+                pubDate: newsDate,
             };
         });
 

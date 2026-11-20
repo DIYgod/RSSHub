@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 const isUnpinnedQuestion = (item) => item.is_toped === false;
 
@@ -46,9 +46,9 @@ async function handler(ctx) {
     const data = response.data.results; // The source API response data.
     const topicName = data[0].topic.name; // Read the topic name.
     // Render Markdown as HTML.
-    const md = new MarkdownIt();
+    const md = MarkdownIt();
     const items = await pMap(
-        data.filter(isUnpinnedQuestion),
+        data.filter((item) => isUnpinnedQuestion(item)),
         (item: { id: number }) =>
             cache.tryGet(`https://www.lanqiao.cn/api/v2/questions/${item.id}/`, async () => {
                 const questionResponse = await got({

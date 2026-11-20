@@ -1,10 +1,10 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cacheGeneral from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -23,7 +23,7 @@ const getOpusPubDate = ($: CheerioAPI) => {
         }
     }
     const displayTime = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
-    return displayTime ? timezone(parseDate(displayTime, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+    return displayTime ? parseDate(displayTime, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
 };
 
 export const route: Route = {
@@ -67,34 +67,40 @@ async function handler(ctx) {
     const entries = data.items;
 
     const item = await Promise.all(
-        entries.map(async (item) => {
-            const link = 'https:' + item.jump_url;
-            const data = await cacheGeneral.tryGet<string>(
-                link,
-                async () =>
-                    (
-                        await got({
-                            method: 'get',
-                            url: link,
-                            headers: {
-                                Referer: `https://space.bilibili.com/${uid}/article`,
-                                Cookie: cookie,
-                            },
-                        })
-                    ).data
-            );
+        entries
+            .map((item) => {
+                const url = new URL(item.jump_url, 'https://www.bilibili.com');
+                // only send the cookie to bilibili.com hosts
+                return url.protocol === 'https:' && (url.hostname === 'bilibili.com' || url.hostname.endsWith('.bilibili.com')) ? { item, link: url.href } : undefined;
+            })
+            .filter((entry) => entry !== undefined)
+            .map(async ({ item, link }) => {
+                const data = await cacheGeneral.tryGet<string>(
+                    link,
+                    async () =>
+                        (
+                            await got({
+                                method: 'get',
+                                url: link,
+                                headers: {
+                                    Referer: `https://space.bilibili.com/${uid}/article`,
+                                    Cookie: cookie,
+                                },
+                            })
+                        ).data
+                );
 
-            const $ = load(data);
-            const description = $('.opus-module-content').html();
+                const $ = load(data);
+                const description = $('.opus-module-content').html();
 
-            const single = {
-                title: item.content,
-                link,
-                description: description || item.content,
-                pubDate: getOpusPubDate($),
-            };
-            return single;
-        })
+                const single = {
+                    title: item.content,
+                    link,
+                    description: description || item.content,
+                    pubDate: getOpusPubDate($),
+                };
+                return single;
+            })
     );
     return {
         title,

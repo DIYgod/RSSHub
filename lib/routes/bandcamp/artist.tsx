@@ -35,7 +35,7 @@ async function handler(ctx) {
     }
     const limit = getRouteLimit(ctx, 10);
     const link = `https://${artist}.bandcamp.com/music`;
-    const response = await got(link);
+    const response = await got(link, { minVersion: 'TLSv1.3' });
     const $ = load(response.data);
 
     // The grid renders the first releases, and the page adds the rest from data-client-items
@@ -45,12 +45,14 @@ async function handler(ctx) {
             .toArray()
             .map((element) => $(element).attr('href')!),
         ...clientItems.map((item) => item.page_url),
-    ];
+    ]
+        .map((url) => new URL(url, link))
+        .filter((url) => ['http:', 'https:'].includes(url.protocol));
 
     const items = await pMap(
         urls.slice(0, limit),
         async (url) => {
-            const itemLink = new URL(url, link).href;
+            const itemLink = url.href;
             return { ...(await getRelease(itemLink)), link: itemLink };
         },
         { concurrency: 3 }

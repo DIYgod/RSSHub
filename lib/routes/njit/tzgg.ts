@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const url = 'https://www.njit.edu.cn/index/tzgg.htm';
 const host = 'https://www.njit.edu.cn';
@@ -49,7 +49,7 @@ async function handler() {
             return {
                 title: $item.find('.text .l2').text(),
                 link: new URL(href, url).href,
-                pubDate: parseDateInTimezone(date, 8),
+                pubDate: parseDate(date, 8),
             };
         });
 

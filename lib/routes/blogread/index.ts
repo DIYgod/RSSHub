@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newest',
@@ -41,7 +40,7 @@ async function handler() {
                 description: $elem.find('.br-summary').html(),
                 link: new URL($link.attr('href')!, url).href,
                 author: $elem.find('.br-meta a').text(),
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD HH:mm', 8) : undefined,
             };
         });
     return {

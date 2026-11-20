@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.jornada.com.mx';
 
@@ -19,7 +19,7 @@ const categories = {
     sociedad: 'Sociedad',
 };
 
-const getDateForToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Mexico_City', year: 'numeric', month: '2-digit', day: '2-digit' }).format(Date.now());
+const getDateForToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Mexico_City', year: 'numeric', month: '2-digit', day: '2-digit' }).format(Temporal.Now.instant().epochMilliseconds);
 
 export const route: Route = {
     path: '/:date?/:category?',
@@ -57,7 +57,7 @@ export const route: Route = {
 async function handler(ctx) {
     const date = ctx.req.param('date') === 'today' || ctx.req.param('date') === undefined ? getDateForToday() : ctx.req.param('date');
     const category = ctx.req.param('category');
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`)) || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !parseDate(date)) {
         throw new InvalidParameterError('Date must be a valid YYYY-MM-DD calendar date or today.');
     }
     if (category && !Object.hasOwn(categories, category)) {

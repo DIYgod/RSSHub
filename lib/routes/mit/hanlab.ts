@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hanlab/blog',
@@ -45,7 +44,7 @@ async function handler() {
             const link = new URL(el.attr('href') ?? '', rootUrl).href;
             const description = el.find('p.text-tldr').html();
             const dateText = el.find('div.text-date').text();
-            const pubDate = dateText.trim() ? timezone(parseDate(dateText.trim()), 0) : undefined;
+            const pubDate = dateText.trim() ? parseDate(dateText.trim(), 'MMM D, YYYY', 0) : undefined;
 
             return {
                 title,

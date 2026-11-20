@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const { h64ToString } = await xxhash();
+const hasher = await xxhash();
 
 export const route: Route = {
     path: '/list/:id',
@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const link = `https://tophub.today/n/${id}`;
+    const link = `https://tophub.today/n/${encodeURIComponent(id)}`;
     const response = await ofetch(link, {
         headers: {
             Cookie: config.tophub?.cookie ?? '',
@@ -91,7 +91,7 @@ async function handler(ctx) {
                 title,
                 link,
                 description: renderRank,
-                guid: h64ToString(combinedTitles),
+                guid: hasher.h64ToString(combinedTitles),
             },
         ],
     };

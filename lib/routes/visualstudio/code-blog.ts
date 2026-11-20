@@ -6,8 +6,8 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/code/blog',
@@ -40,11 +40,13 @@ async function fetchArticle(link: string): Promise<Pick<DataItem, 'description'>
     const data = await ofetch(link);
     const $ = load(data);
 
-    const article = $('main.docs-main-content.body');
+    // Release notes keep the body on <main>; blog posts moved it to <article>, with the title, byline and an "On this page" menu around the text
+    const article = $('.docs-main-content.body').first();
     if (!article.length) {
         throw new NotFoundError(`No VS Code article body was found at ${link}`);
     }
     article.children('h1').first().remove();
+    article.find('.blog-post-header, .blog-mobile-navigation').remove();
     article
         .children('p')
         .slice(0, 2)
@@ -101,8 +103,8 @@ async function handler(): Promise<Data> {
                 title,
                 link,
                 description: detail.description,
-                pubDate: item.pubDate && Number.isFinite(Date.parse(item.pubDate)) ? parseDate(item.pubDate) : undefined,
-                updated: modifiedDates.get(link) && Number.isFinite(Date.parse(modifiedDates.get(link)!)) ? parseDate(modifiedDates.get(link)!) : undefined,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                updated: modifiedDates.get(link) ? parseDate(modifiedDates.get(link)!) : undefined,
                 author: item.author ?? item.creator,
                 category: categories.get(link),
             };

@@ -1,12 +1,12 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -77,14 +77,13 @@ function getVideo(value?: string):
     const extension = url.pathname.match(/\.([a-z\d]+)$/i)?.[1].toLowerCase();
     return { src: value, type: extension ? videoMimeTypes.get(extension) : undefined };
 }
-function getPublicationDate(value?: string | number): Date | undefined {
+function getPublicationDate(value?: string | number): Temporal.Instant | undefined {
     if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDate(value, 8);
 }
-function getArticleDate(content: CheerioAPI): Date | undefined {
+function getArticleDate(content: CheerioAPI): Temporal.Instant | undefined {
     const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
     const match = dataScript.match(/_pb = (\[.*?\]);/);
     if (!match) {
@@ -108,8 +107,7 @@ function getArticleDate(content: CheerioAPI): Date | undefined {
     }
     // The source uses hour-only offsets such as +08; retain the supplied offset.
     const normalized = actime.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?[+-]\d{2})$/, '$1:00');
-    const date = parseDate(normalized);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(normalized);
 }
 function getNavigationChannels(html: string, section: 'news' | 'video'): NavigationChannel[] {
     const content = load(html);
@@ -131,12 +129,7 @@ function getNavigationChannels(html: string, section: 'news' | 'video'): Navigat
         });
 }
 function getBreadcrumbChannel(html: string, section: 'news' | 'video'): BreadcrumbChannel {
-    const content = load(html);
-    const script = content('script')
-        .toArray()
-        .map((node) => content(node).text())
-        .join('\n');
-    const match = script.match(/\bbreadcrumb\s*=\s*JSON\.parse\('([\s\S]*?)'\)/);
+    const match = /\bbreadcrumb\s*=\s*JSON\.parse\('([\s\S]*?)'\)/.exec(html);
     if (!match) {
         throw new Error('Yicai category page has no channel breadcrumb');
     }

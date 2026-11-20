@@ -5,8 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
@@ -83,7 +82,7 @@ async function handler(ctx) {
                 const $ = load(detailResponse.data);
 
                 const date = $('.create-time').text();
-                result.pubDate = date ? timezone(parseDate(date), 8) : undefined;
+                result.pubDate = date ? parseDate(date, 8) : undefined;
                 result.description = $('.rich-content').html();
                 return result;
             });

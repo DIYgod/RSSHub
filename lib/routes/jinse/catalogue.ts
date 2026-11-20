@@ -4,8 +4,8 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -66,7 +66,7 @@ async function handler(ctx) {
 
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
-        link: item.extra.topic_url.replace(/\/\/(?:www\.|m\.)?jinse\.com(?:\.cn)?(?=\/)/, '//www.jinse.com.cn'),
+        link: item.extra.topic_url.replace(/\/\/(?:www\.|m\.)?jinse\.(?:com(?:\.cn)?|cn)(?=\/)/, '//www.jinse.com.cn'),
         description: renderDescription({
             images:
                 item.extra.thumbnails_pics.length > 0
@@ -130,7 +130,6 @@ async function handler(ctx) {
     };
 }
 
-function parseTimestamp(value?: number | string): Date | undefined {
-    const date = value !== undefined && value !== null && value !== '' ? parseDate(value, 'X') : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+function parseTimestamp(value?: number | string): Temporal.Instant | undefined {
+    return value !== undefined && value !== '' ? parseDate(value, 'X') : undefined;
 }

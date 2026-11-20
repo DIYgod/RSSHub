@@ -1,8 +1,9 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { distinguishDuplicateGuids } from '@/utils/distinguish-duplicate-guids';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/entry/:id',
@@ -33,17 +34,20 @@ async function handler(ctx) {
     const response = await got(`https://api.cngal.org/api/entries/GetEntryView/${entryId}`);
 
     const data = response.data;
+    const link = `https://www.cngal.org/entries/index/${entryId}`;
+    const items = data.newsOfEntry.map((article) => ({
+        title: article.title,
+        description: renderDescription(article),
+        pubDate: parseDate(article.happenedTime),
+        link: article.link,
+        sourceId: article.articleId?.toString(),
+    }));
 
     ctx.set('json', response.data);
     return {
         title: `CnGal - ${data.name} 的动态`,
-        link: `https://www.cngal.org/entries/index/${entryId}`,
-        item: data.newsOfEntry.map((item) => ({
-            title: item.title,
-            description: renderDescription(item),
-            pubDate: parseDate(item.happenedTime),
-            link: item.link,
-        })),
+        link,
+        item: distinguishDuplicateGuids(items, `cngal-${entryId}-`, link),
     };
 }
 

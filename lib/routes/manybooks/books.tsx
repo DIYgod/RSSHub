@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -52,7 +53,7 @@ export async function getBooks(link: string, selector: string) {
                 description: renderToString(
                     <>
                         {imageUrl && <img src={new URL(imageUrl, link).href} alt="" />}
-                        <div dangerouslySetInnerHTML={{ __html: book.find('.field--name-body').html() ?? '' }} />
+                        <div>{raw(book.find('.field--name-body').html() ?? '')}</div>
                     </>
                 ),
             };

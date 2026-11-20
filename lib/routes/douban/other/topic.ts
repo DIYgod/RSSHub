@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { getIpLocations } from '../ip-location';
 
@@ -24,7 +24,7 @@ export const route: Route = {
     },
     name: '话题',
     maintainers: ['LogicJake', 'pseudoyu', 'haowenwu'],
-    description: '源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP 属地：… 和 回帖 IP 属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN\\_COOKIE。',
+    description: String.raw`源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP 属地：… 和 回帖 IP 属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN\_COOKIE。`,
     handler,
 };
 
@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const link = `https://www.douban.com/gallery/topic/${id}/?sort=${sort}`;
 
-    const api = `https://m.douban.com/rexxar/api/v2/gallery/topic/${id}/items?sort=${sort}&start=0&count=10&status_full_text=1`;
+    const api = `https://m.douban.com/rexxar/api/v2/gallery/topic/${encodeURIComponent(id)}/items?sort=${sort}&start=0&count=10&status_full_text=1`;
     const response = await got({
         method: 'GET',
         url: api,
@@ -110,7 +110,7 @@ async function handler(ctx) {
                 title,
                 link,
                 author,
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 description,
             };
 

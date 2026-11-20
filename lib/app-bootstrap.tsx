@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { compress } from 'hono/compress';
+import { contextStorage } from 'hono/context-storage';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { trimTrailingSlash } from 'hono/trailing-slash';
 
@@ -25,6 +26,7 @@ process.on('uncaughtException', (e) => {
 
 const app = new Hono();
 
+app.use(contextStorage());
 app.use(trimTrailingSlash());
 app.use(compress());
 

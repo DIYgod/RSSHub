@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/tw/feeds/:category',
@@ -51,7 +50,7 @@ async function handler(ctx) {
                     title: $('.page-header').text(),
                     author: $('.author a').text(),
                     description: $('article').eq(0).html(),
-                    pubDate: date && Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime()) ? parseDateInTimezone(date, 8) : undefined,
+                    pubDate: date && parseDateStrict(date, 'YYYY-MM-DD') ? parseDate(date, 8) : undefined,
                     link,
                 };
             });

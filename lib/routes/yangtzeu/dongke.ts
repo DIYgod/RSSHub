@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/dongke/:path{.+}?',
@@ -34,13 +33,13 @@ async function fetchDetails(link: string) {
         .text()
         .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
 
-    const date = pubDate ? parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', true) : undefined;
+    const date = pubDate ? parseDateStrict(pubDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 
     return {
         title: content('title').text(),
         description: body.html() ?? undefined,
         category: content('meta[name="keywords"]').prop('content')?.split(','),
-        pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined,
+        pubDate: date,
     };
 }
 

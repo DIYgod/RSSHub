@@ -3,15 +3,15 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const handler = async (ctx) => {
     const { category = 'jgzx/xwzx' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.beijingprice.cn';
-    const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.endsWith('/') ? category : `${category}/`}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -54,7 +54,9 @@ const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (!item.link!.includes('www.beijingprice.cn') || item.link!.endsWith('.pdf')) {
+                const { protocol, hostname } = new URL(item.link!);
+                // only follow links on the site itself
+                if (!['http:', 'https:'].includes(protocol) || hostname !== 'www.beijingprice.cn' || item.link!.endsWith('.pdf')) {
                     return item;
                 }
 

@@ -51,7 +51,7 @@ async function handler() {
     );
 
     const item = await pMap(
-        products,
+        products.filter((item, index, items) => items.findIndex((candidate) => candidate.id === item.id) === index),
         async (item) => {
             const details = await cache.tryGet(`sspai:series:body:v2:${item.id}`, async () => {
                 const res = await ofetch(`https://sspai.com/api/v1/series/info/get?id=${item.id}&view=second`);

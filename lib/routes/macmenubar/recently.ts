@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 async function getCategoryId(categories) {
     const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/categories';
@@ -40,21 +40,20 @@ async function handler(ctx) {
         searchParams: {
             per_page: 100,
             categories: categoryIds,
+            _embed: 'wp:term',
         },
     });
     const items = response.data.map((post) => {
         const title = post.title.rendered;
         const link = post.link;
-        const pubDate = post.date_gmt ? parseDateInTimezone(post.date_gmt, 0) : undefined;
+        const pubDate = post.date_gmt ? parseDate(post.date_gmt, 0) : undefined;
         const description = post.content.rendered;
-        const tags = (Array.isArray(post.tag_info) ? post.tag_info : []).map((tag) => tag.name);
-        const categories = post.category_info.map((category) => category.name);
         return {
             title,
             link,
             pubDate,
             description,
-            category: [...tags, ...categories],
+            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
         };
     });
     return {

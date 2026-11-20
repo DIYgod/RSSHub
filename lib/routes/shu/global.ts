@@ -4,8 +4,7 @@ import pMap from 'p-map'; // cheerio@1.0.0
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeType = {
     tzgg: { title: '上海大学国际部港澳台-通知公告', url: 'https://global.shu.edu.cn/cd/tzgg.htm' },
@@ -71,7 +70,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').text(), // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
-                pubDate: timezone(parseDate(pubDate, 'YYYY年MM月DD日'), 8), // 解析并转换日期
+                pubDate: parseDate(pubDate, 'YYYY年MM月DD日', 8), // 解析并转换日期
                 description: '', // 没有提供简要描述，设为空字符串
             };
         });

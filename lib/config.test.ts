@@ -176,6 +176,19 @@ describe('config', () => {
         delete process.env.COOMER_ASSETS_URL;
     });
 
+    it('Misskey API host', async () => {
+        process.env.MISSKEY_API_HOST = 'misskey.example.com';
+
+        let { config } = await import('./config');
+        expect(config.misskey.apiHost).toBe('misskey.example.com');
+
+        delete process.env.MISSKEY_API_HOST;
+        vi.resetModules();
+
+        ({ config } = await import('./config'));
+        expect(config.misskey.apiHost).toBe('misskey.io');
+    });
+
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 

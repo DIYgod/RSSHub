@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -63,7 +62,7 @@ async function handler() {
                         .filter((_, node) => node.type === 'text')
                         .text(),
                     link: new URL(href, baseUrl).href,
-                    pubDate: timezone(parseDate($item.find('span').text().replaceAll(/[[\]]/g, '')), 8),
+                    pubDate: parseDate($item.find('span').text().replaceAll(/[[\]]/g, ''), 8),
                 };
             }),
     };

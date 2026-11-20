@@ -4,6 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/people/:userid/wish',
@@ -26,7 +27,7 @@ export const route: Route = {
 async function handler(ctx) {
     const userid = ctx.req.param('userid');
 
-    const url = `https://movie.douban.com/people/${userid}/wish`;
+    const url = `https://movie.douban.com/people/${encodeURIComponent(userid)}/wish`;
     const data = await cache.tryGet(
         url,
         async () => {
@@ -59,7 +60,7 @@ async function handler(ctx) {
                 title,
                 description: `${info.find('.intro').text()}<br><img src="${itemPicUrl}">`,
                 link: url,
-                pubDate: new Date(day),
+                pubDate: parseDate(day),
             };
         });
 

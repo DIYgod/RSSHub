@@ -1,4 +1,4 @@
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const apiUrl = 'https://wp.technologyreview.com/wp-json/wp/v2';
 
@@ -15,5 +15,5 @@ export const renderItem = (item) => ({
         .flat()
         .map((term) => term.name)
         .filter(Boolean),
-    pubDate: item.date_gmt ? parseDateInTimezone(item.date_gmt, 0) : undefined,
+    pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
 });

@@ -54,7 +54,7 @@ async function handler() {
                 });
                 content.find('video source[data-src]').each((_, source) => {
                     const $source = $(source);
-                    $source.attr('src', $source.attr('data-src')!);
+                    $source.attr('src', $source.attr('data-src'));
                     $source.removeAttr('data-src');
                 });
                 item.description = content.html() || $('.e_container .c_rich-text__cms').html();

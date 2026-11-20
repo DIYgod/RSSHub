@@ -35,7 +35,7 @@ Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
         nsfw: true,
     },
     name: 'Novel Series',
-    maintainers: ['SnowAgar25', 'keocheung'],
+    maintainers: ['Tsuyumi25', 'keocheung'],
     handler,
     radar: [
         {

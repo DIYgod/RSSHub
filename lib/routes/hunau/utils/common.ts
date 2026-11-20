@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import { categoryTitle } from './category-title';
 import { indexPage } from './index-page';
@@ -64,8 +63,7 @@ export const getContent = async (
             const title = a.text();
             const link = new URL(href!, url).href;
             const date = ($item.find('.date').first().text() || $item.find('span').first().text()).replaceAll(/\s/g, '');
-            const parsedDate = date ? parseDate(date, ['YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY/MM/DD'], true) : undefined;
-            const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY/MM/DD'], 8) : undefined;
             if (new URL(link).pathname.toLowerCase().endsWith('.pdf')) {
                 return {
                     title,

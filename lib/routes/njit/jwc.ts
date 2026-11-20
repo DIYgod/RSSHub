@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwc.njit.edu.cn';
 
@@ -70,7 +70,7 @@ async function handler(ctx) {
                             title: titleList[index]!,
                             link: itemUrl,
                             description: '该通知无法直接预览, 请点击原文链接↑查看',
-                            pubDate: dateList.at(index) ? parseDateInTimezone(dateList[index], 8) : undefined,
+                            pubDate: dateList.at(index) ? parseDate(dateList[index], 8) : undefined,
                         };
                         return single;
                     }
@@ -83,7 +83,7 @@ async function handler(ctx) {
                             ?.replaceAll('src="/', () => `src="${new URL('.', host).href}`)
                             .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim(),
-                        pubDate: $('.author p').eq(1).text().replace('时间:', '') || dateList.at(index) ? parseDateInTimezone($('.author p').eq(1).text().replace('时间:', '') || dateList[index], 8) : undefined,
+                        pubDate: $('.author p').eq(1).text().replace('时间:', '') || dateList.at(index) ? parseDate($('.author p').eq(1).text().replace('时间:', '') || dateList[index], 8) : undefined,
                     };
                     return single;
                 });
@@ -92,7 +92,7 @@ async function handler(ctx) {
                 title: titleList[index]!,
                 link: itemUrl,
                 description: '该通知为文件，请点击原文链接↑下载',
-                pubDate: dateList.at(index) ? parseDateInTimezone(dateList[index], 8) : undefined,
+                pubDate: dateList.at(index) ? parseDate(dateList[index], 8) : undefined,
             };
             return single;
         },

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/announce/:owner?/:province?/:office?',
@@ -98,8 +97,7 @@ async function handler(ctx) {
                     ประกาศ ณ วันที่ ${anceBegDate.text()}
                 `,
                 link: `${baseUrl}/${anceFile.find('a').attr('href')}`,
-                // Convert the source's Buddhist calendar year to the Gregorian year.
-                pubDate: timezone(parseDate(`${Number.parseInt(dateList[2]) - 543}-${dateList[1]}-${dateList[0]}`, 'YYYY-MM-DD'), 7),
+                pubDate: calendarToInstant({ calendar: 'buddhist', year: dateList[2], month: dateList[1], day: dateList[0] }, 7),
                 author: officeName.text(),
                 category: [reqType.text()],
             };

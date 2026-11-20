@@ -1,17 +1,27 @@
+import { html } from 'hono/html';
 import type { FC } from 'hono/jsx';
 
 import type { Data } from '@/types';
-import { getItemAttachments } from '@/utils/attachments';
+import { getItemAttachments, getMediaAttributes } from '@/utils/attachments';
+import { toInstant, toISOString } from '@/utils/time';
+
+const Link: FC<Record<string, string | number | undefined>> = (props) =>
+    html`<link${Object.entries(props)
+        .filter(([, value]) => value !== undefined)
+        .map(([name, value]) => html` ${name}="${value}"`)} />`;
+
+// A missing or unparseable date falls back to the current time, as Atom requires <updated>
+const toISO = (date?: string | number | Temporal.Instant | null) => toISOString((date && toInstant(date)) || Temporal.Now.instant());
 
 const RSS: FC<{ data: Data }> = ({ data }) => (
-    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xml:lang={data.language || 'en'}>
-        <title>{data.title || 'RSSHub'}</title>
-        <link rel="alternate" href={data.link || 'https://docs.rsshub.app'} />
-        <link rel="self" href={data.atomlink} type="application/atom+xml" />
+    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xmlns:media={data.item?.some((item) => item.media) ? 'http://search.yahoo.com/mrss/' : undefined} xml:lang={data.language || 'en'}>
+        {html`<title>${data.title || 'RSSHub'}</title>`}
+        <Link rel="alternate" href={data.link || 'https://docs.rsshub.app'} />
+        <Link rel="self" href={data.atomlink} type="application/atom+xml" />
         <id>{data.id || data.link}</id>
         <subtitle>{data.description || data.title} - Powered by RSSHub</subtitle>
         <generator>RSSHub</generator>
-        <updated>{new Date(data.lastBuildDate || new Date()).toISOString()}</updated>
+        <updated>{toISO(data.lastBuildDate)}</updated>
         <author>
             <name>{data.author || 'RSSHub'}</name>
         </author>
@@ -20,15 +30,18 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
 
         {data.item?.map((item) => (
             <entry>
-                <title>{item.title}</title>
+                {html`<title>${item.title}</title>`}
                 {item.description ? <content type="html">{item.description}</content> : item.content?.text ? <content type="text">{item.content.text}</content> : <content src={item.link} type="text/html" />}
-                <link href={item.link} />
+                <Link href={item.link} />
+                {item.links?.map((link) => (
+                    <Link rel={link.rel} href={link.url} type={link.type} title={link.title} />
+                ))}
                 {getItemAttachments(item).map((attachment) => (
-                    <link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
+                    <Link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
                 ))}
                 <id>{item.guid || item.link || item.title}</id>
-                {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
-                <updated>{new Date(item.updated || item.pubDate || new Date()).toISOString()}</updated>
+                {item.pubDate && <published>{toISO(item.pubDate)}</published>}
+                <updated>{toISO(item.updated || item.pubDate)}</updated>
                 {item.summary && <summary>{item.summary}</summary>}
                 {item.author && (
                     <author>
@@ -39,7 +52,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 {item.media &&
                     Object.entries(item.media).map(([key, value]) => {
                         const Tag = `media:${key}`;
-                        return <Tag {...value} />;
+                        return <Tag {...getMediaAttributes(value)} />;
                     })}
                 {item.upvotes ? <rsshub:upvotes>{item.upvotes}</rsshub:upvotes> : ''}
                 {item.downvotes ? <rsshub:downvotes>{item.downvotes}</rsshub:downvotes> : ''}

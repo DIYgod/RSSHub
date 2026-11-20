@@ -5,8 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import type { Post } from './types';
 
@@ -117,8 +117,8 @@ async function handler(ctx: Context): Promise<Data> {
                 title: post.title.rendered,
                 link: post.link,
                 description: $.html(),
-                pubDate: post.date_gmt ? parseDateInTimezone(post.date_gmt, 0) : undefined,
-                updated: post.modified_gmt ? parseDateInTimezone(post.modified_gmt, 0) : undefined,
+                pubDate: post.date_gmt ? parseDate(post.date_gmt, 0) : undefined,
+                updated: post.modified_gmt ? parseDate(post.modified_gmt, 0) : undefined,
             };
         }),
     };

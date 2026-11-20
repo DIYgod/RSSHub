@@ -31,7 +31,7 @@ const parsePage = (html: string, link: string) => {
                 .toArray()
                 .map((th) => cellText($(th).text()));
             const col = (re: RegExp): number => headers.findIndex((h) => re.test(h));
-            const [iCommuter, iOther, iTotal, iYoy, iPrev] = [/^定期\(/, /^定期外/, /^計/, /^前年比/, /年度$/].map(col);
+            const [iCommuter, iOther, iTotal, iYoy, iPrev] = [/^定期\(/, /^定期外/, /^計/, /^前年比/, /年度$/].map((re) => col(re));
             if (iTotal < 0) {
                 return [];
             }

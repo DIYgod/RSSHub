@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/whats-new',
@@ -64,7 +63,7 @@ async function handler() {
                 title,
                 link: currentUrl,
                 description,
-                pubDate: timezone(parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY']), 0),
+                pubDate: parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY'], 0),
                 guid: title,
             };
         });

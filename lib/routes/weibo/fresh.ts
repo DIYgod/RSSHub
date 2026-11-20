@@ -4,40 +4,37 @@ import { escapeAttribute } from 'entities';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import weiboUtils from './utils';
 
-const parseFreshDate = (value: string, reference?: Date) => {
+const parseFreshDate = (value: string, reference?: Temporal.Instant) => {
     let date = value;
     const relative = /^(今天|昨天|前天)\s+(\d{1,2}:\d{2})$/.exec(value);
     const elapsed = /^(\d+)\s*(分钟|小时|秒)前$/.exec(value);
     const monthDay = /^(\d{1,2})月(\d{1,2})日\s+(\d{1,2}:\d{2})$/.exec(value);
     if (relative || elapsed || monthDay || /^\d{1,2}-\d{1,2}\s/.test(value)) {
-        if (!reference || Number.isNaN(reference.getTime())) {
+        if (!reference) {
             return;
         }
         if (elapsed) {
             const seconds = elapsed[2] === '小时' ? 3600 : elapsed[2] === '分钟' ? 60 : 1;
-            return parseDate(reference.getTime() - Number(elapsed[1]) * seconds * 1000);
+            return reference.subtract({ seconds: Number(elapsed[1]) * seconds });
         }
-        const chinaDate = new Date(reference.getTime() + 8 * 60 * 60 * 1000);
+        const chinaDate = reference.toZonedDateTimeISO('+08:00');
         if (relative) {
             const days = relative[1] === '昨天' ? 1 : relative[1] === '前天' ? 2 : 0;
-            chinaDate.setUTCDate(chinaDate.getUTCDate() - days);
-            date = `${chinaDate.toISOString().slice(0, 10)} ${relative[2]}`;
+            date = `${chinaDate.subtract({ days }).toPlainDate().toString()} ${relative[2]}`;
         } else {
             const parts = monthDay || /^(\d{1,2})-(\d{1,2})\s/.exec(value)!;
             const month = Number(parts[1]);
             const day = Number(parts[2]);
-            const isPreviousYear = month > chinaDate.getUTCMonth() + 1 || (month === chinaDate.getUTCMonth() + 1 && day > chinaDate.getUTCDate());
-            const year = chinaDate.getUTCFullYear() - Number(isPreviousYear);
+            const isPreviousYear = month > chinaDate.month || (month === chinaDate.month && day > chinaDate.day);
+            const year = chinaDate.year - Number(isPreviousYear);
             date = `${year}-${monthDay ? `${monthDay[1]}-${monthDay[2]} ${monthDay[3]}` : value}`;
         }
     }
-    const parsed = timezone(parseDate(date, 'YYYY-M-D HH:mm'), 8);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+    return parseDate(date, 'YYYY-M-D HH:mm', 8);
 };
 
 export const route: Route = {

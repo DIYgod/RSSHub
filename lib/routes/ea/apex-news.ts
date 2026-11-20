@@ -1,14 +1,14 @@
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -84,14 +84,12 @@ function getPublishingDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function getPageData<T>(url: string): Promise<T> {
     const response = await ofetch(url, { responseType: 'text' });
-    const $ = load(response);
-    const data = $('#__NEXT_DATA__').text();
+    const data = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1];
     if (!data) {
         throw new Error('The EA page no longer contains its public news data. Please check the original page.');
     }
@@ -125,7 +123,7 @@ async function handler(ctx): Promise<Data> {
     const sorted = ctx.req.query('sorted') !== 'false';
     const hasDates = allItems.every((item) => item.pubDate !== undefined);
     if (sorted && hasDates) {
-        allItems.sort((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+        allItems.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     const limit = getRouteLimit(ctx);
     const items = await pMap(

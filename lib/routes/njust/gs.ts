@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getContent } from './utils';
 
@@ -62,7 +61,7 @@ async function handler(ctx) {
             return {
                 title: $(item).find('a').attr('title') || $(item).find('a').text(),
                 description: desc,
-                pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD', 8),
                 link: url,
             };
         },

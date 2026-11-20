@@ -24,6 +24,7 @@ type ConfigEnvKeys =
     | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
+    | 'REQUEST_MAX_RESPONSE_SIZE'
     | 'REQUEST_AUTO_SELECT_FAMILY'
     | 'REQUEST_RATE_LIMITS'
     | 'WORDPRESS_ALLOWED_DOMAINS'
@@ -41,15 +42,12 @@ type ConfigEnvKeys =
     | 'CACHE_HTTP_TOKEN'
     // Proxy
     | 'PROXY_URI'
-    | 'PROXY_URIS'
     | 'PROXY_PROTOCOL'
     | 'PROXY_HOST'
     | 'PROXY_PORT'
     | 'PROXY_AUTH'
     | 'PROXY_URL_REGEX'
     | 'PROXY_STRATEGY'
-    | 'PROXY_FAILOVER_TIMEOUT'
-    | 'PROXY_HEALTH_CHECK_INTERVAL'
     | 'PAC_URI'
     | 'PAC_SCRIPT'
     // Access control
@@ -161,6 +159,7 @@ type ConfigEnvKeys =
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
     | 'LORIENTLEJOUR_PASSWORD'
+    | 'LOWENDTALK_COOKIE'
     | 'MALAYSIAKINI_EMAIL'
     | 'MALAYSIAKINI_PASSWORD'
     | 'MALAYSIAKINI_REFRESHTOKEN'
@@ -178,6 +177,7 @@ type ConfigEnvKeys =
     | 'MIHOYO_COOKIE'
     | 'MINIFLUX_INSTANCE'
     | 'MINIFLUX_TOKEN'
+    | 'MISSKEY_API_HOST'
     | 'MISSKEY_ACCESS_TOKEN'
     | 'MIXI2_AUTH_TOKEN'
     | 'MIXI2_AUTH_KEY'
@@ -199,8 +199,10 @@ type ConfigEnvKeys =
     | 'PIXIV_BYPASS_DOH'
     | 'PIXIV_IMG_PROXY'
     | 'PKUBBS_COOKIE'
+    | 'PRODUCTHUNT_ACCESS_TOKEN'
     | 'QINGTING_ID'
     | 'READWISE_ACCESS_TOKEN'
+    | 'REUTERS_AUTH_TOKEN'
     | 'SARABA1ST_COOKIE'
     | 'SARABA1ST_HOST'
     | 'SEHUATANG_COOKIE'
@@ -295,6 +297,7 @@ export type Config = {
     disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
+    requestMaxResponseSize: number;
     requestAutoSelectFamily?: boolean;
     requestRateLimits: HostRateLimits;
     ua: string;
@@ -320,7 +323,6 @@ export type Config = {
     };
     // proxy
     proxyUri?: string;
-    proxyUris?: string[];
     proxy: {
         protocol?: string;
         host?: string;
@@ -328,8 +330,6 @@ export type Config = {
         auth?: string;
         url_regex: string;
         strategy: 'on_retry' | 'all';
-        failoverTimeout?: number;
-        healthCheckInterval?: number;
     };
     pacUri?: string;
     pacScript?: string;
@@ -551,6 +551,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    lowendtalk: {
+        cookie?: string;
+    };
     malaysiakini: {
         email?: string;
         password?: string;
@@ -583,6 +586,7 @@ export type Config = {
         token?: string;
     };
     misskey: {
+        apiHost: string;
         accessToken?: string;
     };
     mixi2: {
@@ -631,11 +635,17 @@ export type Config = {
     pkubbs: {
         cookie?: string;
     };
+    producthunt: {
+        accessToken?: string;
+    };
     qingting: {
         id?: string;
     };
     readwise: {
         accessToken?: string;
+    };
+    reuters: {
+        authToken?: string;
     };
     saraba1st: {
         cookie?: string;
@@ -843,6 +853,7 @@ const calculateValue = () => {
         disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
+        requestMaxResponseSize: toInt(envs.REQUEST_MAX_RESPONSE_SIZE, 16 * 1024 * 1024), // Bytes a response body may have after its Content-Encoding is decoded
         requestAutoSelectFamily: envs.REQUEST_AUTO_SELECT_FAMILY === undefined ? undefined : toBoolean(envs.REQUEST_AUTO_SELECT_FAMILY, false),
         requestRateLimits: parseHostRateLimits(envs.REQUEST_RATE_LIMITS),
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
@@ -869,11 +880,6 @@ const calculateValue = () => {
         },
         // proxy
         proxyUri: envs.PROXY_URI,
-        proxyUris: envs.PROXY_URIS
-            ? envs.PROXY_URIS.split(',')
-                  .map((uri) => uri.trim())
-                  .filter(Boolean)
-            : undefined,
         proxy: {
             protocol: envs.PROXY_PROTOCOL,
             host: envs.PROXY_HOST,
@@ -881,8 +887,6 @@ const calculateValue = () => {
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
             strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
-            failoverTimeout: toInt(envs.PROXY_FAILOVER_TIMEOUT, 5000),
-            healthCheckInterval: toInt(envs.PROXY_HEALTH_CHECK_INTERVAL, 60000),
         },
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
@@ -1105,6 +1109,9 @@ const calculateValue = () => {
             username: envs.LORIENTLEJOUR_USERNAME,
             password: envs.LORIENTLEJOUR_PASSWORD,
         },
+        lowendtalk: {
+            cookie: envs.LOWENDTALK_COOKIE,
+        },
         malaysiakini: {
             email: envs.MALAYSIAKINI_EMAIL,
             password: envs.MALAYSIAKINI_PASSWORD,
@@ -1137,6 +1144,7 @@ const calculateValue = () => {
             token: envs.MINIFLUX_TOKEN || '',
         },
         misskey: {
+            apiHost: envs.MISSKEY_API_HOST || 'misskey.io',
             accessToken: envs.MISSKEY_ACCESS_TOKEN,
         },
         mixi2: {
@@ -1185,11 +1193,17 @@ const calculateValue = () => {
         pkubbs: {
             cookie: envs.PKUBBS_COOKIE,
         },
+        producthunt: {
+            accessToken: envs.PRODUCTHUNT_ACCESS_TOKEN,
+        },
         qingting: {
             id: envs.QINGTING_ID,
         },
         readwise: {
             accessToken: envs.READWISE_ACCESS_TOKEN,
+        },
+        reuters: {
+            authToken: envs.REUTERS_AUTH_TOKEN,
         },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
@@ -1335,7 +1349,7 @@ const calculateValue = () => {
     Object.assign(value, _value);
 };
 calculateValue();
-(async () => {
+void (async () => {
     if (!envs.REMOTE_CONFIG) {
         return;
     }

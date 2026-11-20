@@ -2,8 +2,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     '2': '懷孕',
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
         link: item.link,
         guid: item.guid.rendered,
         description: item.content.rendered,
-        pubDate: item.date_gmt ? parseDateInTimezone(item.date_gmt, 0) : undefined,
+        pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
         author: item._embedded.author.map((author) => author.name).join(', '),
         category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));

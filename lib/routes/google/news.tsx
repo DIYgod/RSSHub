@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://news.google.com';
 
@@ -90,7 +90,7 @@ async function handler(ctx) {
     const items = list.map((item) => {
         const $item = $(item);
 
-        const title = $item.find('.gPFEn').text();
+        const title = $item.find('.gPFEn, .JtKRv').text();
         const anchor = $item.find('a.WwrzSb').first();
         const newsUrl = new URL(anchor.attr('href')!, baseUrl).href;
         const timestamp = $item.find('time').attr('datetime');
@@ -117,7 +117,7 @@ async function handler(ctx) {
         return {
             title,
             description: renderDescription($item.find('img.Quavad').attr('src')),
-            pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
+            pubDate: publicationDate,
             author: authors,
             link: getPublisherUrl(anchor.attr('jslog'), newsUrl),
             guid: newsUrl,
@@ -135,7 +135,7 @@ const renderDescription = (img: string | undefined): string | undefined =>
     img
         ? renderToString(
               <>
-                  <img src={img} />
+                  <img src={new URL(img, baseUrl).href} />
                   <br />
               </>
           )

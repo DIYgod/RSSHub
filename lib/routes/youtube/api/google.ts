@@ -1,17 +1,13 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration.js';
 
 import NotFoundError from '@/errors/types/not-found';
 import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { formatDescription, getChannelWithId, getChannelWithUsername, getPlaylist, getPlaylistItems, getPlaylistWithShortsFilter, getThumbnail, getVideos, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
-
-dayjs.extend(duration);
 
 export const getDataByUsername = async ({ username, embed, filterShorts, isJsonFeed }: { username: string; embed: boolean; filterShorts: boolean; isJsonFeed: boolean }): Promise<Data> => {
     let userHandleData;
@@ -94,7 +90,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
                         {
                             url: getVideoUrl(videoId),
                             mime_type: 'text/html',
-                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                            duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                         },
                         ...srtAttachments,
                     ],
@@ -139,7 +135,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts, isJso
                         {
                             url: getVideoUrl(videoId),
                             mime_type: 'text/html',
-                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                            duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                         },
                         ...srtAttachments,
                     ],
@@ -178,7 +174,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed, isJsonFeed }: { p
                     {
                         url: getVideoUrl(videoId),
                         mime_type: 'text/html',
-                        duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                        duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                     },
                     ...srtAttachments,
                 ],

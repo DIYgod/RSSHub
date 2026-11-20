@@ -1,12 +1,14 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?/:channel?/:subChannel?',
@@ -71,7 +73,7 @@ const renderSpecialReport = ($: CheerioAPI) => {
     content.find('h1, .byline, .dateline, .Theme-Byline, header.Theme-TitleSection, .Theme-CustomHtmlSection, .Theme-Footer, nav, footer, button, script, style, [aria-hidden="true"]').remove();
     content.find('img[data-src], source[data-src]').each((_, element) => {
         const image = $(element);
-        image.attr('src', image.attr('data-src')!);
+        image.attr('src', image.attr('data-src'));
         image.removeAttr('data-src');
     });
     return content.html() ?? undefined;
@@ -97,7 +99,7 @@ async function handler(ctx: Context) {
             const website = Object.values<any>(story.websites)[0];
             return {
                 title: story.headlines.basic,
-                description: story.description.basic,
+                description: story.description?.basic,
                 link: new URL(website.website_url, baseUrl).href,
                 pubDate: story.display_date ? parseDate(story.display_date) : undefined,
                 author: story.credits?.by?.map((author) => author.name).join(', '),

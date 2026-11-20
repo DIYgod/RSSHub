@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -35,7 +34,7 @@ async function handler() {
             const title = heading.text();
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
-            const pubDate = timezone(parseDate(`${$item.find('.news_data span').text()}-${$item.find('.news_data p').text()}`), 8);
+            const pubDate = parseDate(`${$item.find('.news_data span').text()}-${$item.find('.news_data p').text()}`, 8);
 
             return cache.tryGet(itemUrl, async () => {
                 const response = await ofetch(itemUrl);

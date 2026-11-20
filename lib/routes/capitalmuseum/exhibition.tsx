@@ -5,34 +5,9 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
-
-// parse exhibition date string like "2024年5月1日 - 2024年6月30日" or "2024年5月1日-" or "2024年5月1日 - 6月30日"
-const parseExhibitionDates = (fullDuration: string | undefined) => {
-    let startDate: string | undefined;
-    let endDate: string | undefined;
-
-    if (fullDuration) {
-        // Regex to capture start and optional end dates.
-        const dateRegex = /(\d{4})年(\d{1,2})月(\d{1,2})日(?:\D+(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日)?/;
-        const match = fullDuration.match(dateRegex);
-
-        if (match) {
-            const startYear = match[1];
-            startDate = `${startYear}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-
-            if (match[5] && match[6]) {
-                const endYear = match[4] || startYear; // If end year is not present, use start year
-                endDate = `${endYear}-${match[5].padStart(2, '0')}-${match[6].padStart(2, '0')}`;
-            }
-        }
-    }
-
-    return { startDate, endDate };
-};
 
 export const route: Route = {
     path: '/exhibition/:type?',
@@ -118,8 +93,8 @@ export const route: Route = {
 
                     const location = detailNuxtData[detailObj.address];
                     const fullDuration = detailNuxtData[detailObj.open_time];
-                    const { startDate, endDate } = parseExhibitionDates(fullDuration);
-                    const pubDate = startDate ? timezone(parseDate(startDate, 'YYYY-MM-DD'), 8) : undefined;
+                    const { startDate, endDate } = parseDateRange(fullDuration);
+                    const pubDate = startDate ? parseDate(startDate, 'YYYY-MM-DD', 8) : undefined;
 
                     const description = renderToString(
                         <div>

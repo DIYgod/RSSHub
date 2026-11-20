@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news_web_easy',
@@ -91,12 +90,12 @@ async function handler(ctx) {
                 </>
             ),
             guid: article.news_id,
-            pubDate: timezone(parseDate(article.news_prearranged_time), 9),
+            pubDate: parseDate(article.news_prearranged_time, 9),
             link: `https://news.web.nhk/news/easy/${article.news_id}/${article.news_id}.html`,
         }))
     );
 
-    items = items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, getRouteLimit(ctx, 30));
+    items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 30));
 
     items = await pMap(
         items,

@@ -30,7 +30,7 @@ async function handler(ctx) {
     const { user, repo, order, anon } = ctx.req.param();
 
     const host = `https://github.com/${user}/${repo}`;
-    const url = `https://api.github.com/repos/${user}/${repo}/contributors?` + (anon ? 'anon=1' : '');
+    const url = `https://api.github.com/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/contributors?` + (anon ? 'anon=1' : '');
 
     // Use token if available
     const headers: Record<string, string> = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};

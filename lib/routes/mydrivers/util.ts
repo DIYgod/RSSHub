@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const domain = 'mydrivers.com';
 const rootUrl = `https://m.${domain}`;
@@ -96,13 +95,13 @@ const processItems = async <T extends DataItem>(items: T[]) =>
                 item.description = content('#content').html() ?? item.description;
                 item.author = content('li.writer').text() || item.author;
                 item.category = [
-                    ...(item.category ?? []),
+                    ...[item.category ?? []].flat(),
                     ...content('div.bqian1 a')
                         .toArray()
                         .map((c) => content(c).contents().last().text().trim()),
                 ].filter(Boolean);
                 item.guid = `${domain}#${item.guid}`;
-                item.pubDate ??= timezone(parseDate(content('li.writer').next().text().trim(), 'YYYY年MM月DD日 HH:mm'), 8);
+                item.pubDate ??= parseDate(content('li.writer').next().text().trim(), 'YYYY年MM月DD日 HH:mm', 8);
                 item.upvotes = voteResponse.NewsSupport ? Number(voteResponse.NewsSupport) : 0;
                 item.downvotes = voteResponse.NewsOppose ? Number(voteResponse.NewsOppose) : 0;
                 item.comments = content('#tpinglun').text() ? Number(content('#tpinglun').text()) : 0;

@@ -10,9 +10,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const toSize = (raw) => {
     const matches = raw.match(/(\d+(\.\d+)?)(\D\w*)/);
@@ -70,7 +69,7 @@ export const route: Route = {
             description: 'Any path of list page on javbus',
         },
     },
-    description: 'The item title receives a \\[中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.',
+    description: String.raw`The item title receives a \[中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.`,
     features: {
         nsfw: true,
     },
@@ -84,7 +83,7 @@ async function handler(ctx) {
     const rootUrl = `https://www.${domain}`;
     const westernUrl = `https://www.${westernDomain}`;
 
-    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(new URL(`https://${domain}/`).hostname) || !allowDomain.has(new URL(`https://${westernDomain}/`).hostname))) {
+    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(domain) || !allowDomain.has(westernDomain))) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
@@ -116,7 +115,7 @@ async function handler(ctx) {
                 link: $item.attr('href'),
                 guid: $item.find('date').first().text(),
                 // This is a calendar release date, represented at UTC midnight.
-                pubDate: date && Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime()) ? parseDateInTimezone(date, 0) : undefined,
+                pubDate: date && parseDateStrict(date, 'YYYY-MM-DD') ? parseDate(date, 0) : undefined,
                 title: '',
             };
         });

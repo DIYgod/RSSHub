@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/article/:id?',
@@ -90,10 +90,11 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const href = $item.attr('href');
 
             return {
                 title: $item.text(),
-                link: $item.attr('href'),
+                link: href ? new URL(href, currentUrl).href : undefined,
             };
         });
 
@@ -103,7 +104,8 @@ async function handler(ctx) {
             ...item,
             ...(await cache.tryGet(item.link!, async () => {
                 const detail: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
-                if (item.link!.indexOf('wyzxwk.com') > 0) {
+                // only follow links on the site itself
+                if (isOnSite(item.link, 'wyzxwk.com')) {
                     try {
                         const detailResponse = await got({
                             method: 'get',
@@ -115,8 +117,8 @@ async function handler(ctx) {
 
                         const pubDate = detailResponse.data.match(/<span class="s-grey-3">(\d{4}-\d{2}-\d{2})<\/span>/);
                         if (pubDate) {
-                            const date = timezone(parseDate(pubDate[1], 'YYYY-MM-DD', true), 8);
-                            if (!Number.isNaN(date.getTime())) {
+                            const date = parseDateStrict(pubDate[1], 'YYYY-MM-DD', 8);
+                            if (date) {
                                 detail.pubDate = date;
                             }
                         }

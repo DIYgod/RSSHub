@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.nogizaka46.com';
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
         title: item.title,
         link: item.link_url,
         description: item.text,
-        pubDate: item.date ? parseDateInTimezone(item.date, 9) : undefined,
+        pubDate: item.date ? parseDate(item.date, 9) : undefined,
         category: item.cate,
         guid: rootUrl + new URL(item.link_url).pathname,
     }));

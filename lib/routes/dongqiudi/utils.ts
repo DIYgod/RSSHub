@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const processVideo = ($, scope) => {
     scope.find('div.video').each((i, v) => {
@@ -61,7 +60,9 @@ const processImg = (content) => {
             delete img.attribs['orig-src'];
             delete img.attribs['data-src'];
         }
-        img.attribs.src = img.attribs.src.includes('?watermark') ? img.attribs.src.split('?watermark', 1)[0] : img.attribs.src;
+        if (img.attribs.src?.includes('?watermark')) {
+            img.attribs.src = img.attribs.src.split('?watermark', 1)[0];
+        }
     });
 };
 
@@ -92,7 +93,7 @@ export const processFeed = async (ctx: Context, type, id) => {
         },
     });
 
-    let list: Array<DataItem & { link: string; pubDate: Date }> = data.data.articles.map((article) => ({
+    let list: Array<DataItem & { link: string; pubDate: Temporal.Instant | undefined }> = data.data.articles.map((article) => ({
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
@@ -108,13 +109,13 @@ export const processFeed = async (ctx: Context, type, id) => {
                     title: news.find('.tp-news-item__title').text(),
                     link: new URL(news.attr('href')!, link).href,
                     category: [news.find('.tp-news-item__tag').text()],
-                    pubDate: timezone(parseDate(news.find('.tp-news-item__time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate(news.find('.tp-news-item__time').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
             });
     }
 
     if (ctx.req.query('sorted') !== 'false') {
-        list = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+        list = list.toSorted((a, b) => (b.pubDate?.epochMilliseconds ?? 0) - (a.pubDate?.epochMilliseconds ?? 0));
     }
     const out = await pMap(
         list.slice(0, getRouteLimit(ctx)),
@@ -122,7 +123,7 @@ export const processFeed = async (ctx: Context, type, id) => {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
-                await processFeedType2(item, response);
+                processFeedType2(item, response);
 
                 return item;
             }),

@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
             return {
                 title: item.title,
                 description: `<img src="${item.videoThumbnail}"><br>案号：${item.caseNo}<br>${item.judge}`,
-                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+                pubDate: date,
                 link: `${host}/live/${item.caseId}`,
                 author: item.courtName,
                 category: item.caseCause,

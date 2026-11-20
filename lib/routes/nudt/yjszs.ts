@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 /* 研究生院 */
 const host = 'https://yjszs.nudt.edu.cn';
@@ -81,7 +80,7 @@ async function handler(ctx) {
         return {
             link: new URL($elem.find('a').attr('href')!, host).href,
             title: $elem.find('h3').text().trim(),
-            pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+            pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined,
         };
     });
 
@@ -92,7 +91,7 @@ async function handler(ctx) {
                 const detailResponse = await collegeGot({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
                 const dateText = content('p.time').first().text().trim();
-                const pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+                const pubDate = dateText ? parseDate(dateText, 8) : undefined;
                 content('h1').remove();
                 content('div.time-browse').remove();
                 return { pubDate, description: content('div.content').html() };

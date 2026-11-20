@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -66,7 +67,7 @@ async function handler(ctx) {
             const item = {
                 title: card_data.title,
                 description,
-                pubDate: new Date(card_data.publish_time * 1000).toUTCString(),
+                pubDate: parseDate(card_data.publish_time * 1000),
                 link,
                 author: card.desc.user_profile.info.uname,
             };

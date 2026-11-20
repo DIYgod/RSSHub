@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const author = '趣集';
 const language = 'zh-CN';
@@ -18,7 +18,8 @@ const getRecords = (response) => {
 const processItems: (items: any[], limit: number) => DataItem[] = (items: any[], limit: number) =>
     items.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string = item.content;
+        // The list API returns a summary only; the full story is split across pages on the site
+        const description: string | undefined = item.summary ?? undefined;
         const guid = `ifun-n-${item.id}`;
 
         const author: DataItem['author'] = item.author;
@@ -28,16 +29,19 @@ const processItems: (items: any[], limit: number) => DataItem[] = (items: any[],
         return {
             title,
             description,
-            pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+            pubDate: date,
             link: item.id ? new URL(`articles/${item.id}`, rootUrl).href : undefined,
             category: [...new Set([item.category, item.tag].filter(Boolean))],
             author,
             guid,
             id: guid,
-            content: {
-                html: description,
-                text: load(description).text(),
-            },
+            // Older stories have no summary
+            content: description
+                ? {
+                      html: description,
+                      text: load(description).text(),
+                  }
+                : undefined,
             language,
         };
     });

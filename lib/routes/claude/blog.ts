@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://claude.com';
 
@@ -33,11 +32,6 @@ function getArticleMetadata($: CheerioAPI): ArticleMetadata | undefined {
             return article;
         }
     }
-}
-
-function parseArticleDate(date: string) {
-    const parsed = parseDate(date);
-    return /^\d{4}-\d{2}-\d{2}T/.test(date) ? parsed : timezone(parsed, 0);
 }
 
 export const route: Route = {
@@ -89,7 +83,7 @@ async function handler(ctx) {
             return {
                 title,
                 link: new URL(href, baseUrl).href,
-                pubDate: pubDateText ? parseArticleDate(pubDateText) : undefined,
+                pubDate: pubDateText ? parseDate(pubDateText, 'MMM D, YYYY') : undefined,
                 category,
             };
         });
@@ -104,10 +98,10 @@ async function handler(ctx) {
                 const metadata = getArticleMetadata($);
                 const publicationDate = metadata?.datePublished ?? $('time[datetime]').first().attr('datetime');
                 if (publicationDate) {
-                    item.pubDate = parseArticleDate(publicationDate);
+                    item.pubDate = parseDate(publicationDate);
                 }
                 if (metadata?.dateModified) {
-                    item.updated = parseArticleDate(metadata.dateModified);
+                    item.updated = parseDate(metadata.dateModified);
                 }
                 if (metadata?.author) {
                     item.author = [metadata.author]
@@ -117,10 +111,11 @@ async function handler(ctx) {
                         .join(', ');
                 }
                 if (metadata?.articleSection) {
-                    item.category = [...new Set([...(item.category ?? []), ...[metadata.articleSection].flat()])];
+                    item.category = [...new Set([...[item.category ?? []].flat(), ...[metadata.articleSection].flat()])];
                 }
 
-                const content = $('[class*="ArticleLayout"][class*="__content"], article[class*="MooSanityContainer"], article article, div.prose').first();
+                // Some cards link to anthropic.com posts, whose body is the article's `<hash>_body` block since the 2026-10 class rename
+                const content = $('[class*="ArticleLayout"][class*="__content"], article[class*="MooSanityContainer"], article article, div.prose, article > div > div[class$="_body"]').first();
 
                 if (!content.length) {
                     throw new Error(`Article content was not found at ${item.link}`);

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const siteLink = 'https://chinafactcheck.com';
 
@@ -36,7 +35,7 @@ const getArticleDetail = async (link) => {
 
     const title = $('.content-head h2').text();
     const author = $('.content-persons p span:last').text();
-    const pubDate = timezone(parseDate($('.content-time').text(), 'YYYY-MM-DD'), 8);
+    const pubDate = parseDate($('.content-time').text(), 'YYYY-MM-DD', 8);
 
     const description = $('div[class=content-list-box]').html();
     const category = $('.content-tags a[rel="tag"]')

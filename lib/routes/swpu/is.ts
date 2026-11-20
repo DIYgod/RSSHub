@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/is/:code',
@@ -75,7 +74,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem): DataItem & { link: string } => ({
             title: $('a[title]', elem).text(),
-            pubDate: $('span[class^="timestyle"]', elem).text().trim() ? timezone(parseDate($('span[class^="timestyle"]', elem).text(), 'YYYY/MM/DD'), 8) : undefined,
+            pubDate: $('span[class^="timestyle"]', elem).text().trim() ? parseDate($('span[class^="timestyle"]', elem).text(), 'YYYY/MM/DD', 8) : undefined,
             link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
         }));
 

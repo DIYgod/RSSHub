@@ -1,11 +1,11 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 function getWechatAuthor(content: CheerioAPI) {
@@ -27,16 +27,15 @@ function getWechatAuthor(content: CheerioAPI) {
 }
 
 function parseWechatPublication(content: string) {
-    const timestamp = content.match(/\bvar\s+ct\s*=\s*["'](\d+)["']\s*;/)?.[1];
+    const timestamp = /\bvar\s+ct\s*=\s*["'](\d+)["']\s*;/.exec(content)?.[1];
     if (!timestamp) {
         return;
     }
 
-    const date = parseDate(timestamp, 'X');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(timestamp, 'X');
 }
 
-async function fetchDetails(url: string): Promise<{ description?: string; pubDate?: Date; author?: string }> {
+async function fetchDetails(url: string): Promise<{ description?: string; pubDate?: Temporal.Instant; author?: string }> {
     try {
         const response = await ofetch(url);
         const $ = load(response);
@@ -119,7 +118,7 @@ async function handler() {
                 title,
                 link: new URL(link, baseUrl).href,
                 description: description || undefined,
-                pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(dateText, 'YYYY-MM-DD', 8),
             };
         })
         .filter((item) => item !== null);

@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:pre?',
@@ -32,7 +32,13 @@ async function handler(ctx: Context) {
                 return {
                     title,
                     link: new URL($item.find('.release-number a').attr('href')!, 'https://www.python.org').href,
-                    pubDate: parseDate($item.find('.release-date').text()),
+                    pubDate: parseDate(
+                        $item
+                            .find('.release-date')
+                            .text()
+                            .replace(/^(\w{3})\w*\.?/, '$1'),
+                        'MMM D, YYYY'
+                    ),
                 };
             })
             .filter(({ title }) => title && (includePreRelease || !/\d(?:a|b|rc)\d/i.test(title))),

@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
-import markdownit from 'markdown-it';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import markdownit from '@/utils/markdown-it';
 import { getRouteLimit } from '@/utils/route-limit';
 
 const md = markdownit({

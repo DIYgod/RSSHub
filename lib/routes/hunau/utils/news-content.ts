@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const newsContent = async (link, department = '') => {
     // Fetch the article.
@@ -20,7 +19,7 @@ export const newsContent = async (link, department = '') => {
 
     // Parse the source publication date.
     const extractDate = ($('.info').html()?.match(reg) || [])[0];
-    const pubDate = extractDate ? timezone(parseDate(extractDate.replaceAll('/', '-'), 'YYYY-MM-DD', true), 8) : undefined;
+    const pubDate = extractDate ? parseDateStrict(extractDate.replaceAll('/', '-'), 'YYYY-MM-DD', 8) : undefined;
     // Extract the main article content.
     const newsContent = $(element).first();
     if (!newsContent.length) {
@@ -34,5 +33,5 @@ export const newsContent = async (link, department = '') => {
     }
 
     // Return the extracted article details.
-    return { description, pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined };
+    return { description, pubDate };
 };

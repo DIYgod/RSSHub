@@ -12,9 +12,9 @@ export const route: Route = {
     },
     description: `Language
 
-| Arabic | Chinese | English |
-| ------ | ------- | ------- |
-| arabic | chinese | english |
+| Arabic | English |
+| ------ | ------- |
+| arabic | english |
 
 ::: tip
 If you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is \`english\` and whose path is \`science-and-technology\`, you can get the route as [\`/aljazeera/english/tag/science-and-technology\`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
@@ -27,10 +27,6 @@ If you subscribe to [Al Jazeera English - Science and Technology](https://www.al
         {
             source: ['www.aljazeera.net/tag/:id', 'www.aljazeera.net/'],
             target: '/arabic/tag/:id',
-        },
-        {
-            source: ['chinese.aljazeera.net/tag/:id', 'chinese.aljazeera.net/'],
-            target: '/chinese/tag/:id',
         },
     ],
     name: 'Tag',

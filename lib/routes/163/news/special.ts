@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     1: '轻松一刻',
@@ -126,7 +126,7 @@ async function handler(ctx) {
 
                 article.link = url;
                 article.description = $('.article-body').html() || $('div[class="video"]').html();
-                article.pubDate = parseDate(article.ptime);
+                article.pubDate = parseDate(article.ptime, 'YYYY-MM-DDHH:mm:ss');
 
                 return article;
             });

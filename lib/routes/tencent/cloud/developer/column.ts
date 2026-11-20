@@ -1,19 +1,19 @@
 import { load } from 'cheerio';
 import { escapeAttribute, escapeText } from 'entities';
-import MarkdownIt from 'markdown-it';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import CaptchaError from '@/errors/types/captcha';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const PAGE = 1;
 const PAGE_SIZE = 20;
-const markdown = new MarkdownIt({ html: true });
+const markdown = MarkdownIt({ html: true });
 const sourceOrigin = 'https://cloud.tencent.com';
 type SourceBrowser = Awaited<ReturnType<typeof getPlaywrightPage>>;
 type GetSourceBrowser = (link?: string) => Promise<SourceBrowser>;
@@ -124,7 +124,7 @@ interface RichNode {
 
 const renderRichContent = (node: RichNode): string => {
     const attrs = node.attrs ?? {};
-    const content = (node.content ?? []).map(renderRichContent).join('');
+    const content = (node.content ?? []).map((child) => renderRichContent(child)).join('');
     if (node.type === 'text') {
         return (node.marks ?? []).reduce(
             (text, mark) => {

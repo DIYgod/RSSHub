@@ -5,7 +5,7 @@ import { Api } from 'teleproto';
 import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
 import type { Data, DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 import { getGeoLink, getMediaLink } from './tglib/channel';
 import { getClient, getStory, unwrapMedia } from './tglib/client';
@@ -92,6 +92,10 @@ async function handler(ctx: Context): Promise<Data | Response> {
         throw new NotFoundError();
     }
     const peer = await c.getInputEntity(username);
+    if (peer instanceof Api.InputPeerSelf) {
+        // only other peers' stories are served
+        throw new NotFoundError();
+    }
     if (story) {
         const storyItem = await getStory(peer, Number(story));
         await configureMiddlewares(ctx);
@@ -116,7 +120,7 @@ async function handler(ctx: Context): Promise<Data | Response> {
 
         const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
         item.push({
-            title: story.caption ?? pubDate?.toUTCString() ?? '',
+            title: story.caption ?? (pubDate && toRFC822(pubDate)) ?? '',
             description,
             pubDate,
             link: `https://t.me/${username}/s/${story.id}`,

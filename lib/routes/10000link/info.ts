@@ -8,8 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -87,7 +87,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     });
                     const pubDateStr: string | undefined = detailResponse.match(/var\stime\s=\s"(.*?)";/)?.[1];
                     const categoryEls: Element[] = $$('div.entity_tag span a').toArray();
-                    const categories: string[] = [...new Set([...categoryEls.map((el) => $$(el).text()), ...(item.category ?? [])].filter(Boolean))];
+                    const categories: string[] = [...new Set([...categoryEls.map((el) => $$(el).text()), ...[item.category ?? []].flat()].filter(Boolean))];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     const processedItem: DataItem = {

@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import { createElement } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import cache from '@/utils/cache';
+import { createElement } from '@/utils/jsx';
 import ofetch from '@/utils/ofetch';
 
 type TelegraphNode = string | { tag: string; attrs?: { href?: string; src?: string }; children?: TelegraphNode[] };

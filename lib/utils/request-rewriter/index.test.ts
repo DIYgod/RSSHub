@@ -260,6 +260,28 @@ describe('request-rewriter', () => {
         expect(fetchSpy.mock.lastCall?.[1]?.dispatcher).toBeUndefined();
     });
 
+    it('ofetch ecdhCurve sets the key agreement curve on the dispatcher in use', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
+
+        try {
+            await ofetch('http://rsshub.test/tls', { retry: 0, ecdhCurve: 'P-256' });
+        } catch {
+            // ignore
+        }
+        const direct = fetchSpy.mock.lastCall?.[1]?.dispatcher;
+        expect(direct).toBeInstanceOf(undici.Agent);
+        expect(connectOf(direct!)).toMatchObject({ preferH2: true, ecdhCurve: 'P-256' });
+
+        try {
+            await ofetch('http://rsshub.test/headers', { retry: 0, ecdhCurve: 'P-256' });
+        } catch {
+            // ignore
+        }
+        const proxied = fetchSpy.mock.lastCall?.[1]?.dispatcher;
+        expect(proxied).toBeInstanceOf(undici.ProxyAgent);
+        expect(requestTlsOf(proxied!).ecdhCurve).toBe('P-256');
+    });
+
     it('ofetch header preset', async () => {
         const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
 
@@ -329,14 +351,14 @@ describe('request-rewriter', () => {
 
         try {
             const { default: wrappedFetch } = await import('@/utils/request-rewriter/fetch');
-            const time = Date.now();
+            const time = performance.now();
             const tasks = Array.from({ length: 20 }, () => wrappedFetch('http://rsshub.test/headers'));
 
             await vi.advanceTimersByTimeAsync(3000);
             await Promise.all(tasks);
 
             expect(fetchSpy).toHaveBeenCalledTimes(20);
-            expect(Date.now() - time).toBeGreaterThan(1500);
+            expect(performance.now() - time).toBeGreaterThan(1500);
         } finally {
             vi.useRealTimers();
             fetchSpy.mockRestore();

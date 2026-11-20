@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -37,7 +37,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.attr('title') || $item.text(),
-                link: $item.attr('href'),
+                link: new URL($item.attr('href')!, baseUrl).href,
             };
         });
 

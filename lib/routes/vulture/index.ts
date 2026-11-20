@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:tag/:excludetags?',
@@ -44,7 +44,7 @@ async function loadArticle(articleURL: string): Promise<ArticleDetails> {
     return {
         title: $('meta[property="og:title"]').attr('content') ?? '',
         author: $('meta[name="author"]').attr('content'),
-        pubDate: publicationTime && Number.isFinite(Date.parse(publicationTime)) ? parseDate(publicationTime) : undefined,
+        pubDate: publicationTime ? parseDate(publicationTime) : undefined,
         description: description.html(),
         category,
     };

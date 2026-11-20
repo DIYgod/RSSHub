@@ -6,7 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Post, PostCategory, SearchPost } from './types';
 
@@ -93,7 +93,7 @@ export async function getPostItems(params: {
 }
 const cdnUrl = 'https://cdn.voronoiapp.com/public/';
 function parsePostDate(timestamp?: number | string) {
-    return (typeof timestamp === 'number' && Number.isFinite(timestamp)) || (typeof timestamp === 'string' && timestamp && Number.isFinite(Date.parse(timestamp))) ? parseDate(timestamp) : undefined;
+    return timestamp === undefined ? undefined : parseDate(timestamp);
 }
 type SearchDetails = {
     publishedAt?: string;
@@ -183,7 +183,10 @@ async function getSearchItem(post: SearchPost, categories: PostCategory[]): Prom
         throw new Error(`No public category found for Voronoi post ${post.pid}`);
     }
     const link = `https://www.voronoiapp.com/${category.slug}/${post.link}`;
-    const { publishedAt, images, dataset, tags, upvotes, comments } = await cache.tryGet(`voronoiapp:search-detail:v1:${link}`, async () => await extractSearchDetails(await ofetch<string>(link), post));
+    const { publishedAt, images, dataset, tags, upvotes, comments } = await cache.tryGet(`voronoiapp:search-detail:v1:${link}`, async () => {
+        const response = await ofetch<string>(link);
+        return extractSearchDetails(response, post);
+    });
     const itemImages = images?.length ? images : post.preview_images;
     return {
         title: post.headline,

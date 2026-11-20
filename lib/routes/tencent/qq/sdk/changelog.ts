@@ -1,14 +1,16 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const restoreReleaseSiblings = ($: CheerioAPI) => {
     // Unclosed list items on the source page can contain later release headings.
-    $('.wp-editor li').each((_, element) => {
+    $('.doc-content li').each((_, element) => {
         const $item = $(element);
         const nodes = $item.contents().toArray();
         const releaseStart = nodes.findIndex((node) => node.type === 'tag' && node.name === 'p' && /^V\d/.test($(node).find('strong').text()));
@@ -59,7 +61,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     restoreReleaseSiblings($);
     const publishedDates = new Map<string, string>();
-    $('.wp-editor table tr').each((_, element) => {
+    $('.doc-content table tr').each((_, element) => {
         const $row = $(element);
         const date = $row.find('td').first().text();
         const anchor = $row.find('a[href^="#"]').attr('href')?.slice(1);
@@ -68,19 +70,21 @@ async function handler(ctx) {
         }
         publishedDates.set(anchor, date.replaceAll('.', '-'));
     });
-    const headings = $('.wp-editor')
+    const headings = $('.doc-content')
         .children('p')
         .filter((_, element) => $(element).text() !== '' && $(element).find('strong').length > 0);
     const changelogs = headings.toArray().map((heading) => {
         const $heading = $(heading);
         const sectionTitle = $heading.text();
-        const anchor = $heading.find('a[name]').attr('name');
+        // Older releases mark the anchor with name, newer ones with id
+        const $anchor = $heading.find('a[name], a[id]');
+        const anchor = $anchor.attr('name') ?? $anchor.attr('id');
         const publishedAt = anchor ? publishedDates.get(anchor) : undefined;
         return {
             title: sectionTitle,
             link: anchor ? `${link}#${anchor}` : link,
             guid: `${platform}:${sectionTitle}`,
-            pubDate: publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined,
+            pubDate: publishedAt ? parseDate(publishedAt, 8) : undefined,
             description: $heading
                 .nextUntil('p:has(strong)')
                 .toArray()
@@ -103,6 +107,6 @@ function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): C
     return $(nodes);
 }
 function clearContent<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    selection.contents().remove();
+    selection.empty();
     return selection;
 }

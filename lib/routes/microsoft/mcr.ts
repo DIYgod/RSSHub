@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/mcr/product/*',
@@ -42,7 +43,8 @@ async function handler(ctx) {
         image: `https://mcr.microsoft.com${details.imagePath}`,
         link: `https://mcr.microsoft.com/en-us/product/${product}`,
         item: tags.map((tag: any) => {
-            const descriptionItems = [`Digest: \`${tag.digest}\``, `Last modified date: ${new Date(tag.lastModifiedDate).toDateString()}`];
+            const lastModifiedDate = parseDate(tag.lastModifiedDate);
+            const descriptionItems = [`Digest: \`${tag.digest}\``, `Last modified date: ${lastModifiedDate ? formatDate(lastModifiedDate, 'ddd MMM DD YYYY') : 'Invalid Date'}`];
 
             if (tag.architecture) {
                 descriptionItems.push(`Architecture: ${tag.architecture}`);
@@ -55,7 +57,7 @@ async function handler(ctx) {
                 title: `${details.name} - ${tag.name}`,
                 author: details.publisher,
                 description: descriptionItems.join('<br />'),
-                pubDate: new Date(tag.lastModifiedDate),
+                pubDate: lastModifiedDate,
                 guid: `mcr::${product}::${tag.name}::${tag.digest}`,
                 link: `https://mcr.microsoft.com/en-us/product/${product}/tags?name=${tag.name}&digest=${tag.digest}`,
             };

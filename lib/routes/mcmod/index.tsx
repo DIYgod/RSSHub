@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const render = (mod) =>
     renderToString(
@@ -68,7 +67,7 @@ export const route: Route = {
                     title: each.find('div > .name > a').text(),
                     image: each.find('img').attr('src')?.split('@', 1)[0],
                     link: each.children('a').attr('href'),
-                    pubDate: time.attr('title') && timezone(parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: time.attr('title') && parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss', 8),
                 };
             });
 

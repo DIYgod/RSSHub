@@ -1,10 +1,11 @@
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -44,13 +45,14 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx) {
     const data = await ofetch<{ result: { pageContext: { postsData: { articles: { edges: Array<{ node: ArticleDate & { slug: string } }> } } } } }>(`${baseUrl}/page-data/news/page-data.json`);
 
     const articleMeta = data.result.pageContext.postsData.articles.edges;
     // { 0: node: { id, locale, slug, title, excerpt, image, published_at, article_category}}
-    const orderedArticles = articleMeta;
-    const candidates = orderedArticles;
+    // The news index lists every article since 2018 in no particular order
+    const orderedArticles = articleMeta.toSorted((a, b) => compareDates(getPublicationDate(b.node), getPublicationDate(a.node)));
+    const candidates = orderedArticles.slice(0, getRouteLimit(ctx, 20));
 
     const items = await pMap(
         candidates,
@@ -68,7 +70,7 @@ async function handler() {
                     link: `${baseUrl}${articleData.path}`,
                     description: md.render(pageData.content),
                     pubDate: getPublicationDate(pageData),
-                    category: pageData.article_category.name,
+                    category: pageData.article_category?.name,
                 };
             });
         },

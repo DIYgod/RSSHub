@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cse/:type?',
@@ -61,7 +60,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: $e.find('.news_meta').text() ? timezone(parseDate($e.find('.news_meta').text(), 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: $e.find('.news_meta').text() ? parseDate($e.find('.news_meta').text(), 'YYYY-MM-DD', 8) : undefined,
             };
         });
 

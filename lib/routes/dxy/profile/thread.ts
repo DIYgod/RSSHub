@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { generateNonce, getPost, sign, webBaseUrl } from '../utils';
 
@@ -44,8 +44,8 @@ async function handler(ctx) {
     const userInfo = await cache.tryGet(`dxy:user-info:${userId}`, async () => {
         const userInfoParams = {
             userId,
-            serverTimestamp: Date.now(),
-            timestamp: Date.now(),
+            serverTimestamp: Temporal.Now.instant().epochMilliseconds,
+            timestamp: Temporal.Now.instant().epochMilliseconds,
             noncestr: generateNonce(8, 'number'),
         };
 
@@ -70,8 +70,8 @@ async function handler(ctx) {
                 type: '0',
                 pageNum: '1',
                 pageSize: limit,
-                serverTimestamp: Date.now(),
-                timestamp: Date.now(),
+                serverTimestamp: Temporal.Now.instant().epochMilliseconds,
+                timestamp: Temporal.Now.instant().epochMilliseconds,
                 noncestr: generateNonce(8, 'number'),
             };
 

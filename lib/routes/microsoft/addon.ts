@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/edge/addon/:crxid',
@@ -45,7 +46,7 @@ async function handler(ctx) {
                 title: 'v' + data.version,
                 author: data.developer,
                 description: data.description,
-                pubDate: new Date(data.lastUpdateDate * 1000),
+                pubDate: parseDate(data.lastUpdateDate, 'X'),
                 guid: `edge::${crxid}::${data.version}`,
                 link: pageUrl,
             },

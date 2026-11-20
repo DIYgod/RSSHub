@@ -48,7 +48,7 @@ const collectionNames = {
 } satisfies Record<string, string>;
 
 export const route: Route = {
-    path: '/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?',
+    path: '/:collection{(?:jobs|seminars|conferences|institutions|experiments|journals)}/:q?',
     name: 'Collection Search',
     categories: ['journal'],
     example: '/inspirehep/jobs',

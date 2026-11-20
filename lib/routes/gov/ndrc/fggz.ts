@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/fggz/:category{.+}?',
@@ -668,7 +667,7 @@ async function handler(ctx) {
             return {
                 title: $item.prop('title') || $item.text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
-                pubDate: publishedDate ? timezone(parseDate(publishedDate, 'YYYY/MM/DD'), 8) : undefined,
+                pubDate: publishedDate ? parseDate(publishedDate, 'YYYY/MM/DD', 8) : undefined,
             };
         });
 
@@ -688,7 +687,7 @@ async function handler(ctx) {
                 );
                 const publishedDate = content('meta[name="PubDate"]').prop('content');
                 if (publishedDate) {
-                    item.pubDate = timezone(parseDate(publishedDate), 8);
+                    item.pubDate = parseDate(publishedDate, 8);
                 }
 
                 return item;

@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/readlist/:listid',
@@ -45,7 +46,7 @@ async function handler(ctx) {
                 title: item.title,
                 author: data.author.name,
                 description: `${item.summary}…<br><img src="${item.image_urls[0]}">`,
-                pubDate: new Date(item.publish_time * 1000).toUTCString(),
+                pubDate: parseDate(item.publish_time * 1000),
                 link: `https://www.bilibili.com/read/cv${item.id}/?from=readlist`,
             })),
     };

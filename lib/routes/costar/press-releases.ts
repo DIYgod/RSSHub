@@ -7,9 +7,9 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
@@ -39,7 +39,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD MMMM YYYY'), 0) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'DD MMMM YYYY', 0) : undefined,
                 link: linkUrl,
                 category: categories,
                 content: {
@@ -56,11 +56,12 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     items = await Promise.all(
         items.map((item) => {
-            if (!item.link) {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'costar.com')) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 

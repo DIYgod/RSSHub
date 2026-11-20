@@ -1,10 +1,11 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const url = 'https://www.usenix.org';
 const seasons = ['spring', 'summer', 'fall', 'winter'];
@@ -82,7 +83,7 @@ export const route: Route = {
     description: 'Return results from 2020',
 };
 async function handler() {
-    const last = new Date().getFullYear() + 1;
+    const last = Temporal.Now.zonedDateTimeISO('UTC').year + 1;
     const conferenceUrls = Array.from({ length: last - 2020 }, (_, v) => `${url}/conference/usenixsecurity${v + 20}`);
     const urlList = conferenceUrls.flatMap((url) => seasons.map((season) => `${url}/${season}-accepted-papers`));
     const responses = await pMap(urlList, (url) => settle(fetchAcceptedPapers(url)), { concurrency: 3 });
@@ -91,7 +92,7 @@ async function handler() {
     const linkedPages = (await pMap(missingConferences, getAcceptedPaperUrls, { concurrency: 3 })).flat();
     const additionalUrls = [...new Set(linkedPages)].filter((link) => !urlList.includes(link));
     const additionalResponses = await pMap(additionalUrls, fetchAcceptedPapers, { concurrency: 3 });
-    const list = new Map([...historicalLists.flat(), ...additionalResponses.flatMap(parseAcceptedPapers)].map((item) => [item.link, item])).values().toArray();
+    const list = new Map([...historicalLists.flat(), ...additionalResponses.flatMap((response) => parseAcceptedPapers(response))].map((item) => [item.link, item])).values().toArray();
     const items = await pMap(
         list,
         (item) => {

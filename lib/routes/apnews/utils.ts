@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export function removeDuplicateByKey(items, key: string) {
     return new Map(items.map((x) => [x[key], x])).values().toArray();

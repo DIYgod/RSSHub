@@ -3,14 +3,13 @@ import type { AnyNode } from 'domhandler';
 import pMap from 'p-map';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const parseArticleDate = (value: string | undefined) => {
     if (!value) {
         return;
     }
-    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}+08:00`);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}+08:00`);
 };
 
 // 加载文章页

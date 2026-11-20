@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getComicFeed } from './comipo';
 
@@ -117,7 +116,7 @@ async function handler(ctx) {
         .text()
         .trim()
         .replaceAll(/（.*）/g, '');
-    const pubDate = timezone(parseDate(dateText, 'YYYY年M月D日'), 9);
+    const pubDate = parseDate(dateText, 'YYYY年M月D日', 9);
     const item = list.toArray().map((element) => {
         const title = $('.work_name > a', element).text();
         const link = $('.work_name > a', element).attr('href');

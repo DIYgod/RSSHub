@@ -5,9 +5,9 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:node',
@@ -75,6 +75,10 @@ async function handler(ctx) {
         const items = await pMap(
             list,
             async (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'ycwb.com')) {
+                    return { item, nodeLinks: [] };
+                }
                 let details: ArticleDetails;
                 try {
                     details = await cache.tryGet(`ycwb:article:v4:${item.link}`, () => fetchArticleDetails(item.link, browserFallback.getContent));
@@ -209,8 +213,7 @@ function getPublicationDate(value?: string | number) {
     if (!((typeof value === 'string' && value.trim()) || (typeof value === 'number' && Number.isFinite(value)))) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDate(value, 8);
 }
 function isImageUrl(value?: string): value is string {
     if (typeof value !== 'string' || !value) {

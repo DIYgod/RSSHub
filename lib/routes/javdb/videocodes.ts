@@ -41,7 +41,7 @@ async function handler(ctx) {
     const code = ctx.req.param('code');
     const filter = ctx.req.param('filter') ?? '';
 
-    const currentUrl = `/video_codes/${code}${filter ? `?f=${filter}` : ''}`;
+    const currentUrl = `/video_codes/${encodeURIComponent(code)}${filter ? `?f=${filter}` : ''}`;
 
     const filters = {
         '': '',

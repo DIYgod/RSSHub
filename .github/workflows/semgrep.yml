@@ -12,6 +12,12 @@ on:
         # random HH:MM to avoid a load spike on GitHub Actions at 00:00
         - cron: 21 20 * * *
 
+# A new push to a pull request cancels the scan of the previous push.
+# Every other run gets its own group per branch and commit, so a push to master is never cancelled or replaced.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request_target' }}
+
 jobs:
     semgrep:
         name: Scan

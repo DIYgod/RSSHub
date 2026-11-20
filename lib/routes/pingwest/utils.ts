@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const modifiedLink = (link: string) => new URL(link, 'https://www.pingwest.com').href;
 
@@ -16,7 +15,7 @@ const statusListParser = ($) => {
             const $item = $(ele);
             const mainNode = $item.find('.news-detail');
             const imgsStr = mainNode
-                .find('img')
+                .find('img[src]')
                 .toArray()
                 .map((ele) => `<img src="${ele.attribs.src.split('?x-', 1)[0]}">`)
                 .join('<br>');
@@ -29,7 +28,7 @@ const statusListParser = ($) => {
                 title: content,
                 link: modifiedLink(link),
                 description: [content, imgsStr].filter((s) => !!s).join('<br>'),
-                pubDate: new Date(timestamp * 1000).toUTCString(),
+                pubDate: parseDate(timestamp, 'X'),
             };
         });
     return items;
@@ -61,7 +60,7 @@ const articleListParser = async ($: CheerioAPI, needFullText, cache) => {
             const author = authorNode.children().first().text();
             const timestamp = authorNode.find('.time').text();
             const isRelativeDate = /小时前/.test(timestamp);
-            const date = isRelativeDate ? parseRelativeDate(timestamp) : parseDate(timestamp, ['YYYY M D', 'M D']);
+            const date = isRelativeDate ? parseRelativeDate(timestamp) : parseDate(timestamp, ['YYYY M D', 'M D'], 8);
             let description = $item.find('.desc').text();
             const shortText = imgUrl ? `<br><img src="${imgUrl}">` : '';
             description = needFullText ? ((await getFullArticle(link, cache)) ?? description) : description + shortText;
@@ -75,7 +74,7 @@ const articleListParser = async ($: CheerioAPI, needFullText, cache) => {
                     .find('.item-tag-list .tag span')
                     .toArray()
                     .map((tag) => $(tag).text()),
-                pubDate: isRelativeDate ? date : timezone(date, 8),
+                pubDate: date,
             };
         },
         { concurrency: 3 }
@@ -89,7 +88,7 @@ const getFullArticle = (link, cache) =>
         const { data } = await got(link);
         const $ = load(data);
         $('img').each((_, ele) => {
-            if (ele.attribs.src.includes('?x-')) {
+            if (ele.attribs.src?.includes('?x-')) {
                 ele.attribs.src = ele.attribs.src.split('?x-', 1)[0];
             }
         });

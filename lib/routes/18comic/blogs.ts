@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { defaultDomain, getRootUrl } from './utils';
 
@@ -58,17 +58,19 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.parent().attr('href')}`,
+                link: new URL($item.parent().attr('href')!, rootUrl).href,
                 guid: `https://18comic.org${$item.parent().attr('href')}`,
             };
-        });
+        })
+        // only follow links on the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
     const items = await Promise.all(
         new Map(list.map((item) => [item.guid, item]))
             .values()
             .toArray()
             .map((item) =>
-                cache.tryGet(item.guid, async () => {
+                cache.tryGet(`${item.guid}:${rootUrl}`, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

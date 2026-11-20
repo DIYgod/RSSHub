@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { apiTopicUrl, processItems, rootUrl } from './util';
@@ -33,7 +33,7 @@ async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 
-    const currentUrl = new URL(category ?? '', rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
 
     const { data: currentResponse } = await got(currentUrl);
 

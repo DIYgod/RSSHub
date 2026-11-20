@@ -14,7 +14,7 @@ const handler = async (ctx: Context) => {
     return {
         title: `4chan's /${board}/`,
         link: `https://boards.4chan.org/${board}/catalog`,
-        item: processCatalog({ data, board, viewOptions }),
+        item: processCatalog({ data, board, viewOptions, catalogUrl: ctx.req.url }),
     };
 };
 
@@ -47,6 +47,7 @@ export const route: Route = {
 | ----------------- | ------------------------------------------------ | ---------------------- | ----------- |
 | \`showReplyCount\`  | Show number of replies of each thread in catalog | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
 | \`showLastReplies\` | Show last 5 replies of each thread               | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
+| \`showThreadFeed\`  | Add a per-thread feed link to each item          | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
 | \`revealSpoilers\`  | Don't wrap images tagged as spoilers             | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
 | \`excludeSticky\`   | Filter out sticky threads                        | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |
 | \`minReplies\`      | Minimum replies per thread                       | Integer                | None        |

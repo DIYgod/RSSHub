@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -47,7 +47,7 @@ async function handler() {
         if (!href || !title) {
             return [];
         }
-        return { title, link: new URL(href, link).href, pubDate: parseDateInTimezone($element.find('span').text(), 8) };
+        return { title, link: new URL(href, link).href, pubDate: parseDate($element.find('span').text(), 8) };
     });
     const item = await pMap(
         items,

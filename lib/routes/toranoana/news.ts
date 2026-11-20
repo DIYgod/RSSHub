@@ -1,11 +1,13 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -55,8 +57,7 @@ function parsePubDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}Z`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}Z`);
 }
 function getCategories(content: string) {
     const $ = load(content);
@@ -120,7 +121,7 @@ async function handler(ctx): Promise<Data> {
                 content.prepend(copyContent($('.post-main-img img').first(), $));
                 content.find('img[data-src]').each((_, image) => {
                     const element = $(image);
-                    element.attr('src', element.attr('data-src')!);
+                    element.attr('src', element.attr('data-src'));
                 });
                 return $.html(content);
             }),

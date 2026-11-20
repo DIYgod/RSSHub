@@ -5,8 +5,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { getDetail, headers } from './utils';
 
@@ -51,9 +51,9 @@ async function handler(ctx: Context) {
         };
     });
     const limit = getRouteLimit(ctx);
-    if (limit && (ctx.req.query('sorted') === 'false' || list.every((item) => Number.isFinite(item.pubDate.getTime())))) {
+    if (limit && (ctx.req.query('sorted') === 'false' || list.every((item) => item.pubDate))) {
         if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         list = list.slice(0, limit);
     }

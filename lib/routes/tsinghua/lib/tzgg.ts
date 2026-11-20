@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 type ArticleDetails = Pick<DataItem, 'description' | 'author' | 'updated'>;
 type XiumiDocument = {
@@ -134,7 +133,7 @@ async function handler(ctx) {
                 return {
                     title,
                     link: fullUrl,
-                    pubDate: time ? timezone(parseDate(time, 'YYYY/MM/DD'), 8) : undefined,
+                    pubDate: time ? parseDate(time, 'YYYY/MM/DD', 8) : undefined,
                     category: itemCategory,
                 };
             }

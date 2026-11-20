@@ -4,7 +4,7 @@ import iconv from 'iconv-lite';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'http://www.pacilution.com/';
 
@@ -54,7 +54,10 @@ const handler: Route['handler'] = async () => {
                             });
                             const targetPage = load(iconv.decode(response.data, 'gb2312'));
                             const content = targetPage(CONTENT_SELECTOR).html() || '';
-                            const date = parseDate(targetPage(DATE_SELECTOR).text().trim().replaceAll('日', '')).toISOString();
+                            const date = parseDate(targetPage(DATE_SELECTOR).text().trim().replaceAll('日', ''));
+                            if (!date) {
+                                return FETCH_FAILED;
+                            }
                             return {
                                 title: item.title,
                                 pubDate: date,

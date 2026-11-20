@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const legacyColumns = {
     '31266': 'sy/tzgg',
@@ -40,7 +39,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.bast.net.cn';
     const legacyId = colPath.match(/^(?:col\/col)?(\d+)\/?$/)?.[1];
     const currentPath = legacyId ? (legacyColumns[legacyId] ?? `col/col${legacyId}`) : colPath;
-    const currentUrl = new URL(`${currentPath.replace(/\/$/, '')}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${currentPath.replace(/\/$/, '')}/`;
 
     const response = await got({
         method: 'get',
@@ -77,7 +76,9 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (/bast\.net\.cn/.test(item.link!)) {
+                const { protocol, hostname } = new URL(item.link!);
+                // only follow links on the site itself
+                if (['http:', 'https:'].includes(protocol) && (hostname === 'bast.net.cn' || hostname.endsWith('.bast.net.cn'))) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -92,7 +93,7 @@ async function handler(ctx) {
                         content('.arctit p')
                             .text()
                             .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    item.pubDate = dateString ? timezone(parseDate(dateString), 8) : undefined;
+                    item.pubDate = dateString ? parseDate(dateString, 8) : undefined;
                     item.category = [content('meta[name="ColumnName"]').attr('content')!];
 
                     item.description = content('.arccont').html();

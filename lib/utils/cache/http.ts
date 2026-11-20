@@ -30,7 +30,7 @@ const cacheUrl = (key: string, refresh = false) => {
 
 const requestSignal = () => ('timeout' in AbortSignal ? AbortSignal.timeout(config.requestTimeout) : undefined);
 
-const request = async (url: string, init: Omit<RequestInit, 'headers'> = {}, headers: Record<string, string> = {}) => {
+const request = async (url: string, init: Omit<RequestInit, 'headers'>, headers: Record<string, string> = {}) => {
     if (!status.available || !apiToken) {
         return null;
     }

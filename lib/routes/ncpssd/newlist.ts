@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newlist',
@@ -67,7 +67,7 @@ async function handler() {
                     ...item,
                     author: response.data.showwriter ?? undefined,
                     description: response.data.remarkc ?? undefined,
-                    pubDate: response.data.publishDateTime ? parseDateInTimezone(response.data.publishDateTime, 8) : undefined,
+                    pubDate: response.data.publishDateTime ? parseDate(response.data.publishDateTime, 8) : undefined,
                 };
             }),
         { concurrency: 6 }

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/health/blog',
@@ -49,7 +49,9 @@ async function handler() {
                 title: $item.text(),
                 link: $item.attr('href'),
             };
-        });
+        })
+        // The page shows some posts in more than one section
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await Promise.all(
         list.map(async (item) => ({

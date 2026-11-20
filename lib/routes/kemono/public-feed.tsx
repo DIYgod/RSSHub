@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { getCoomerMediaUrl } from '../coomer/utils';
 
@@ -81,7 +82,7 @@ export function createPublicHandler(rootUrl: string, assetsUrl: string, name: st
                     pubDate: post.published ? parseDate(post.published) : undefined,
                     description: renderToString(
                         <>
-                            <div dangerouslySetInnerHTML={{ __html: content }} />
+                            <div>{raw(content)}</div>
                             {renderFiles(post, assetsUrl, rootUrl)}
                         </>
                     ),

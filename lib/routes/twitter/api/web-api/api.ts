@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { getTwitterUserCacheKey } from '../../utils';
+import { getTwitterUserCacheKey, TWITTER_USER_CACHE_EXPIRE } from '../../utils';
 import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import type { ApiParams } from './utils';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
@@ -42,39 +42,43 @@ const getUserResult = (response: any) => {
 
 const getUserData = async (id: string) => {
     // Other Twitter API adapters cache different schemas under the legacy key.
-    const data = await cache.tryGet(`twitter:web:userdata:v2:${id}`, async () => {
-        const params = {
-            variables: id.startsWith('+')
-                ? JSON.stringify({
-                      userId: id.slice(1),
-                      withSafetyModeUserFields: true,
+    const data = await cache.tryGet(
+        `twitter:web:userdata:v2:${id}`,
+        async () => {
+            const params = {
+                variables: id.startsWith('+')
+                    ? JSON.stringify({
+                          userId: id.slice(1),
+                          withSafetyModeUserFields: true,
+                      })
+                    : JSON.stringify({
+                          screen_name: id,
+                          withSafetyModeUserFields: true,
+                      }),
+                features: JSON.stringify(id.startsWith('+') ? gqlFeatures.UserByRestId : gqlFeatures.UserByScreenName),
+                fieldToggles: JSON.stringify({
+                    withAuxiliaryUserLabels: false,
+                }),
+            };
+
+            const response = config.twitter.thirdPartyApi
+                ? await ofetch(`${config.twitter.thirdPartyApi}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, {
+                      method: 'GET',
+                      params,
+                      headers: {
+                          'accept-encoding': 'gzip',
+                      },
                   })
-                : JSON.stringify({
-                      screen_name: id,
-                      withSafetyModeUserFields: true,
-                  }),
-            features: JSON.stringify(id.startsWith('+') ? gqlFeatures.UserByRestId : gqlFeatures.UserByScreenName),
-            fieldToggles: JSON.stringify({
-                withAuxiliaryUserLabels: false,
-            }),
-        };
+                : await twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
+                      allowNoAuth: !id.startsWith('+'),
+                  });
 
-        const response = config.twitter.thirdPartyApi
-            ? await ofetch(`${config.twitter.thirdPartyApi}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, {
-                  method: 'GET',
-                  params,
-                  headers: {
-                      'accept-encoding': 'gzip',
-                  },
-              })
-            : await twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
-                  allowNoAuth: !id.startsWith('+'),
-              });
-
-        // HTTP 200 can still contain GraphQL errors; never cache those responses.
-        getUserResult(response);
-        return response;
-    });
+            // HTTP 200 can still contain GraphQL errors; never cache those responses.
+            getUserResult(response);
+            return response;
+        },
+        TWITTER_USER_CACHE_EXPIRE
+    );
     return getUserResult(data);
 };
 

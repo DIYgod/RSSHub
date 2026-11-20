@@ -3,9 +3,10 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/publications/:id',
@@ -36,7 +37,7 @@ async function handler(ctx) {
     try {
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
         });
         await page.goto(currentUrl);
         const response = await page.evaluate(() => document.documentElement.getHTML());
@@ -56,8 +57,12 @@ async function handler(ctx) {
 
         const items = await pMap(
             list,
-            (item) =>
-                cache.tryGet(item.link!, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'researchgate.net')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
                     await page.goto(item.link!);
                     const detailResponse = await page.evaluate(() => document.documentElement.getHTML());
                     const content = load(detailResponse);
@@ -77,7 +82,8 @@ async function handler(ctx) {
                     item.description = content('div[itemprop="description"]').html();
 
                     return item;
-                }),
+                });
+            },
             { concurrency: 1 }
         );
 

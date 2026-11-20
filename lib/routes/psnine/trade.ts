@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 function parseTradeDate(date: string) {
     if (!date) {
@@ -11,11 +10,11 @@ function parseTradeDate(date: string) {
     }
     const relative = /^(\d+天前|今天|昨天|前天)\s+(\d{1,2}:\d{2})$/.exec(date);
     if (relative) {
-        const day = parseRelativeDate(relative[1]).toLocaleDateString('en-CA', { timeZone: 'Asia/Shanghai' });
-        return timezone(parseDate(`${day} ${relative[2]}`, 'YYYY-MM-DD HH:mm'), 8);
+        const day = parseRelativeDate(relative[1])?.toLocaleString('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });
+        return parseDate(`${day} ${relative[2]}`, 'YYYY-MM-DD HH:mm', 8);
     }
     if (/^(?:\d{4}-)?\d{2}-\d{2}\s+\d{1,2}:\d{2}$/.test(date)) {
-        return timezone(parseDate(date, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm']), 8);
+        return parseDate(date, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8);
     }
     return parseRelativeDate(date);
 }

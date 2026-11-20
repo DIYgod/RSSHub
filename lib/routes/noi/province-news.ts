@@ -2,8 +2,8 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 import { createPageFetcher } from './utils';
 
@@ -28,8 +28,13 @@ async function handler() {
             (item) => {
                 const $item = $(item);
                 const title = $item.find('a').text();
-                const link = 'https://www.noi.cn' + $item.find('a').attr('href');
-                const pubDate = timezone(parseDate($item.find('small').text().slice(-19)), 8);
+                const link = new URL($item.find('a').attr('href')!, 'https://www.noi.cn').href;
+                const pubDate = parseDate($item.find('small').text().slice(-19), 8);
+
+                // only follow links on the site itself
+                if (!isOnSite(link, 'noi.cn')) {
+                    return { title, link, guid: link, pubDate };
+                }
 
                 return cache.tryGet(link, async () => {
                     const $detail = await getPage(link, '.news-cont');

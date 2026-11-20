@@ -1,10 +1,11 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
 
@@ -101,7 +102,7 @@ async function parseVideo(body: VideoPost['body']) {
             ret += await getSoundCloudEmbedUrl(body.video.videoId);
             break;
         case 'youtube':
-            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0"></iframe>`;
+            ret += renderYoutube(true, body.video.videoId, undefined, undefined);
             break;
         case 'vimeo':
             ret += `<iframe src="https://player.vimeo.com/video/${body.video.videoId}" frameborder="0"></iframe>`;
@@ -112,8 +113,8 @@ async function parseVideo(body: VideoPost['body']) {
     return ret;
 }
 
-async function parseArtile(body: ArticlePost['body']) {
-    let ret: string[] = [];
+function parseArtile(body: ArticlePost['body']) {
+    const ret: string[] = [];
     for (const b of body.blocks) {
         ret.push('<p>');
 
@@ -140,7 +141,6 @@ async function parseArtile(body: ArticlePost['body']) {
             default:
         }
     }
-    ret = await Promise.all(ret);
     return ret.join('');
 }
 
@@ -172,7 +172,7 @@ async function parseDetail(i: PostDetailResponse['body']['post']) {
             ret += await parseVideo(i.body);
             break;
         case 'article':
-            ret += await parseArtile(i.body);
+            ret += parseArtile(i.body);
             break;
         default:
             ret += '<b>Unsupported content (RSSHub)</b>';

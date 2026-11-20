@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -7,8 +9,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getTenderFeed } from './tender';
 
@@ -58,8 +59,7 @@ function parseCalendarDate(value: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(value, 'YYYY-MM-DD');
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDate(value, 'YYYY-MM-DD', 8);
 }
 
 async function handler(ctx: Context): Promise<Data> {

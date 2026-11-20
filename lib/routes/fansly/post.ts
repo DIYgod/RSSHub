@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, getAccountByUsername, getTimelineByAccountId, parseDescription } from './utils';
 

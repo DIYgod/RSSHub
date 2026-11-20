@@ -7,15 +7,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
     const page = await context.newPage();
     try {
-        await page.route('**/*', (route) => {
-            route.request().resourceType() === 'document' ? route.continue() : route.abort();
-        });
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         await page.goto(url, { waitUntil: 'domcontentloaded' });
         return await page.evaluate(() => document.documentElement.getHTML());
     } finally {
@@ -37,7 +35,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
+                return request.resourceType() === 'document' ? route.continue() : route.abort();
             });
         },
     });
@@ -81,7 +79,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                 seenLinks.add(fullLink);
 
-                let pubDate: Date | undefined;
+                let pubDate: Temporal.Instant | undefined;
                 if (dateText) {
                     // Format: MM.DD.YY or MM.DD.YYYY (e.g., 12.12.24 = December 12, 2024)
                     const dateMatch = dateText.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);

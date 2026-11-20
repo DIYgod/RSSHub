@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -36,7 +36,7 @@ async function handler(ctx) {
     });
 
     const data = response.data.results; // The source API response data.
-    const md = new MarkdownIt();
+    const md = MarkdownIt();
 
     // Course fee types.
     const courseType = {

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/main/:type?',
@@ -27,7 +26,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = '' } = ctx.req.param();
-    const titleUrl = type ? `http://www.mpaypass.com.cn/${type}.html` : 'http://www.mpaypass.com.cn';
+    const baseUrl = 'https://www.mpaypass.com.cn';
+    const titleUrl = type ? `${baseUrl}/${type}.html` : baseUrl;
 
     const response = await got({
         method: 'get',
@@ -38,21 +38,23 @@ async function handler(ctx) {
 
     const $ = load(data);
 
-    const titleCn = type ? $(`a[href="http://www.mpaypass.com.cn/${type}.html"], a[href="https://www.mpaypass.com.cn/${type}.html"]`).first().text() : '最新文章';
-    const list = $('.newslist')
+    const titleCn = type ? $(`a[href="${titleUrl}"]`).first().text().trim() : '最新文章';
+    const list = $(type ? '.pl-item' : '.new-list-with-img .nli-item')
         .toArray()
         .map((item) => {
-            const info = {
-                title: $(item).find('#title').text(),
-                link: $(item).find('#title').find('a').attr('href'),
-                time: $(item).find('#time').text(),
-                category: $(item)
-                    .find('#keywords')
-                    .find('a')
+            const $item = $(item);
+            return {
+                title: $item
+                    .find(type ? '.pl-title' : '.nli-title')
+                    .text()
+                    .trim(),
+                link: (type ? $item.find('.pl-title a') : $item).attr('href'),
+                time: $item.find('time').text().trim(),
+                category: $item
+                    .find('.pl-tag')
                     .toArray()
                     .map((e) => $(e).text().trim()),
             };
-            return info;
         });
 
     const out = await pMap(
@@ -61,17 +63,17 @@ async function handler(ctx) {
             const details = await cache.tryGet(info.link!, async () => {
                 const response = await got(info.link);
                 const $ = load(response.data);
-                const newsbody = $('div.newsbody').html();
+                const newsbody = $('#artBody').html();
 
                 return {
                     title: info.title,
                     link: info.link,
-                    pubDate: timezone(parseDate(info.time), 8),
+                    pubDate: parseDate(info.time, 8),
                     description: newsbody,
                     category: info.category,
                 };
             });
-            return { ...details, title: info.title, link: info.link, pubDate: timezone(parseDate(info.time), 8), category: info.category };
+            return { ...details, title: info.title, link: info.link, pubDate: parseDate(info.time, 8), category: info.category };
         },
         { concurrency: 3 }
     );

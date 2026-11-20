@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -40,11 +40,10 @@ function parsePublishedDate(value?: string) {
         return;
     }
     const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    if (!Number.isFinite(parseDate(calendarDate, 'YYYY-MM-DD', true).getTime())) {
+    if (!parseDateStrict(calendarDate, 'YYYY-MM-DD')) {
         return;
     }
-    const date = parseDate(Date.parse(value));
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 }
 
 async function handler(ctx) {

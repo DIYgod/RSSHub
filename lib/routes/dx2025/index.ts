@@ -5,8 +5,10 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const sourceOrigins = new Set(['https://www.dx2025.com', 'https://www.dx2035.cn']);
 
@@ -106,8 +108,12 @@ async function fetchFeed(ctx, page?: Page) {
 
     const items = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'dx2025.com', 'dx2035.cn')) {
+                return item;
+            }
+            return cache.tryGet(item.link!, async () => {
                 const detailResponse = await fetchHtml(item.link!, page);
                 const content = load(detailResponse);
 
@@ -117,7 +123,8 @@ async function fetchFeed(ctx, page?: Page) {
                 item.pubDate = pubDate ? parseDate(pubDate) : undefined;
 
                 return item;
-            }),
+            });
+        },
         { concurrency: page ? 1 : 10 }
     );
 

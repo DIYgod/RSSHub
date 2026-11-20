@@ -1,18 +1,12 @@
-import 'dayjs/locale/zh-cn.js';
-
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import pMap from 'p-map';
 
 import type sharedCache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { renderEshopCnDescription } from './templates/eshop-cn';
-
-dayjs.extend(localizedFormat);
 
 async function nuxtReader(data) {
     let nuxt;
@@ -145,13 +139,14 @@ const ProcessItemChina = <T extends ChineseItem>(list: T[], cache: typeof shared
             }
             const n = await cache.tryGet(item.link, async () => nuxtReader((await got(item.link)).data));
             const software = n.data;
+            const release = parseDate(software.releaseDatetime);
             return {
                 ...item,
                 category: [...software.supportLanguages, ...software.genre, ...software.playMode],
                 description: renderEshopCnDescription({
                     item,
                     software,
-                    releaseDatetime: dayjs(software.releaseDatetime).locale('zh-cn').format('lll'),
+                    releaseDatetime: release && formatDate(release, 'YYYY年M月D日 HH:mm'),
                 }),
             };
         },

@@ -3,10 +3,10 @@ import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
-import { baseUrl, getForumMeta, getThread, getThreads } from './utils';
+import { baseUrl, getForumMeta, getThread, getThreads, threadDeleted } from './utils';
 
 const renderImages = (images?: string[]) =>
     renderToString(
@@ -66,7 +66,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Forum ${topicId} was not found in the current public forum list.`);
     }
     const topicMeta = forumMeta.dataList.find((data) => data.topicId === topicId);
-    const threads: Array<DataItem & { tid: number; pubDate: Date }> = (await getThreads(topicId, type)).data.dataList.map((data) => ({
+    const threads: Array<DataItem & { tid: number; pubDate: Temporal.Instant | undefined }> = (await getThreads(topicId, type)).data.dataList.map((data) => ({
         title: data.title,
         pubDate: parseDate(data.dateline * 1000),
         author: data.userBaseInfo.userName,
@@ -76,13 +76,15 @@ async function handler(ctx) {
 
     const limit = getRouteLimit(ctx);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates =
-        limit === undefined || (sorted && threads.some((item) => !Number.isFinite(item.pubDate.getTime()))) ? threads : (sorted ? threads.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()) : threads).slice(0, limit);
+    const candidates = limit === undefined || (sorted && threads.some((item) => !item.pubDate)) ? threads : (sorted ? threads.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : threads).slice(0, limit);
     const posts = await pMap(
         candidates,
         async (item) => {
             const { tid, ...post } = item;
             const thread = await getThread(tid, topicId);
+            if (thread.status.code === threadDeleted) {
+                return null;
+            }
             if (thread.status.code === 0) {
                 const img = renderImages(thread.data.thread.fengTalkImage.length ? thread.data.thread.fengTalkImage : undefined);
                 post.description = thread.data.thread.message + img;
@@ -98,6 +100,6 @@ async function handler(ctx) {
         title: `${topicMeta.topicName} - 社区 - 威锋 - 千万果粉大本营`,
         description: topicMeta.topicDescription,
         link: `${baseUrl}/forum/${topicId}`,
-        item: posts,
+        item: posts.filter((post) => post !== null),
     };
 }

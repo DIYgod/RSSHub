@@ -5,8 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sydwgkzp/:year?',
@@ -64,7 +63,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, sydwgkzpUrl).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 
@@ -75,7 +74,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const $ = load(response);
                 const pubDate = $('meta[name="PubDate"]').attr('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.description = $('.trs_editor_view').html();
                 return item;
@@ -91,5 +90,5 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 function currentYear(): number {
-    return new Date().getFullYear();
+    return Temporal.Now.zonedDateTimeISO('UTC').year;
 }

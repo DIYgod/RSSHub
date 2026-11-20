@@ -13,7 +13,7 @@ async function getPublicToken() {
     const tokenResponse = await ofetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
-            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toBase64()}`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
@@ -35,7 +35,7 @@ async function getPrivateToken() {
     const tokenResponse = await ofetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
-            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toBase64()}`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({

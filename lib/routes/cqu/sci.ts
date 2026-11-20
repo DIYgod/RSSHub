@@ -4,9 +4,8 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sci/:category',
@@ -31,9 +30,7 @@ async function handler(ctx: Context) {
     const url = `https://sci.cqu.edu.cn/index/xwzx/${category}.htm`;
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                ['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort();
-            });
+            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });
@@ -59,7 +56,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, url).href,
-                pubDate: timezone(parseDate(dateText), 8),
+                pubDate: parseDate(dateText, 8),
             };
         });
 

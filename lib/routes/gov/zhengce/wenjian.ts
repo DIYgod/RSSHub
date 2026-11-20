@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/wenjian/:pcodeJiguan?',
@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: $elem.find('td:nth-child(2) > a').text(),
                 link: $elem.find('td:nth-child(2) > a').attr('href'),
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
 

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://www.slowmist.com';
@@ -69,7 +69,7 @@ async function handler(ctx) {
         title: item.title,
         link: item.url,
         description: item.desc,
-        pubDate: item.date ? parseDateInTimezone(item.date, 8) : undefined,
+        pubDate: item.date ? parseDate(item.date, 8) : undefined,
     }));
 
     items = await pMap(

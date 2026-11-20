@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type?',
@@ -56,8 +55,8 @@ async function handler(ctx: Context): Promise<Data> {
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 const sourceDate = $('.gray').text().replace('发布时间：', '').trim();
-                const date = sourceDate ? parseDate(sourceDate, 'YYYY-MM-DD', true) : undefined;
-                item.pubDate = date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+                const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY-MM-DD', 8) : undefined;
+                item.pubDate = date;
                 item.description = $('.v_news_content').html();
                 return item;
             })

@@ -2,9 +2,9 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import { getApiResponse, getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
             try {
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 const awemeList = await getApiResponse(page, tagUrl, '/v1/web/challenge/aweme');
                 await page.waitForSelector('#RENDER_DATA', { timeout: config.requestTimeout });

@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -7,7 +6,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:id',
@@ -50,7 +49,7 @@ async function handler(ctx: Context) {
         },
     });
 
-    const csrfToken = load(initalResponse)('meta[name="csrf-token"]').attr('content');
+    const csrfToken = initalResponse.match(/name="csrf-token" content="(.*?)"\s?\/>/)?.[1];
     if (!csrfToken) {
         throw new Error('Fantia did not provide the CSRF token required by its post API. Check that the homepage is accessible and that the configured cookie is valid.');
     }
@@ -63,7 +62,7 @@ async function handler(ctx: Context) {
 
     const fanClub = response.fanclub;
 
-    const list: Array<{ title: string; link: string; description: string; pubDate: Date }> = response.fanclub.recent_posts.map((item) => ({
+    const list: Array<{ title: string; link: string; description: string; pubDate: Temporal.Instant }> = response.fanclub.recent_posts.map((item) => ({
         title: item.title,
         link: `${rootUrl}/api/v1/posts/${item.id}`,
         description: item.comment ? `<p>${item.comment}</p>` : '',

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { formatDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zhujia',
@@ -27,8 +28,7 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://zhujia.zhuwang.com.cn/';
-    const now = new Date();
-    const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    const date = formatDate(Temporal.Now.instant(), 'YYYY-M-D');
     const response = await got(`${baseUrl}/api/chartData`, {
         searchParams: {
             areaId: -1,
@@ -48,7 +48,7 @@ async function handler() {
         const change = (today - yesterday).toFixed(2);
         let description = `较昨日价格, 每公斤上涨${change}元`;
         if (yesterday > today) {
-            description = `较昨日价格, 下跌${-change}元`;
+            description = `较昨日价格, 下跌${-Number(change)}元`;
         }
         if (yesterday === today) {
             description = '较昨日价格持平';

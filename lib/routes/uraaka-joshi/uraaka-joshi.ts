@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 const configurePage = async (page: Page) => {
     await page.route('**/*', async (route) => {
@@ -104,7 +104,7 @@ async function handler() {
                 description: $item.html(),
                 link: $item.find('.account-group-link-row').attr('href'),
                 pubDate: parseDate($item.find('.profile-char').attr('datetime')!),
-                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime().toString(),
+                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!)?.epochMilliseconds.toString(),
             };
         }),
     };

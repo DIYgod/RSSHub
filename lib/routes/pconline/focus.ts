@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.pconline.com.cn';
 interface Item {
@@ -51,7 +51,7 @@ const categories = {
 };
 
 const parseArticles = (response: string): { articleList: Item[] } => {
-    const payload = response.match(/^\s*Module\.callback\(([\s\S]*)\);?\s*$/)?.[1];
+    const payload = /^\s*Module\.callback\(([\s\S]*)\);?\s*$/.exec(response)?.[1];
     if (!payload) {
         throw new Error('PConline returned an unexpected article list response.');
     }
@@ -118,7 +118,7 @@ const handler = async (ctx) => {
                 avatar: item.authorImg,
             },
         ],
-        pubDate: parseDateInTimezone(item.pc_pubDate, 8),
+        pubDate: parseDate(item.pc_pubDate, 8),
         link: item.url,
         description: item.summary,
         category: item.channelName,

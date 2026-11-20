@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'https://carnegieendowment.org';
 
@@ -36,7 +36,7 @@ function getItem(item: DataItem) {
     if (!item.link?.startsWith(`${baseUrl}/`)) {
         return item;
     }
-    return cache.tryGet(item.link!, async () => {
+    return cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.white-scheme > .cms-html.payload-richtext');

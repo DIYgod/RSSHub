@@ -6,18 +6,16 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict, toInstant } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getPublicationDate = (html: string) => {
-    const timestamp = html.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1];
+    const timestamp = /(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/.exec(html)?.[1];
     if (!timestamp) {
         return;
     }
-    const date = timezone(parseDate(timestamp, 'YYYY年MM月DD日HH:mm', true), 8);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(timestamp, 'YYYY年MM月DD日HH:mm', 8);
 };
 
 export const route: Route = {
@@ -39,7 +37,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid site');
     }
     const rootUrl = `http://${site}.people.com.cn`;
-    const path = site === 'politics' && !category ? 'GB/1024' : site === 'society' && category === '1008' ? '' : category ? `GB/${category}` : '';
+    const path = site === 'politics' && !category ? 'GB/1024' : category && !(site === 'society' && category === '1008') ? `GB/${category}` : '';
     const requestedUrl = new URL(path, rootUrl).href;
     const { $, url: currentUrl } = await fetchChannel(requestedUrl);
     const articleRootUrl = new URL('/', currentUrl).href;
@@ -86,8 +84,8 @@ async function handler(ctx) {
     );
 
     for (const item of items) {
-        const date = item.pubDate === undefined || item.pubDate === null ? undefined : parseDate(item.pubDate);
-        if (date && Number.isFinite(date.getTime())) {
+        const date = item.pubDate === undefined || item.pubDate === null ? undefined : toInstant(item.pubDate);
+        if (date) {
             item.pubDate = date;
         } else {
             delete item.pubDate;

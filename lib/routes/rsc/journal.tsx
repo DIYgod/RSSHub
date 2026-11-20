@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/journal/:id/:category?',
@@ -87,7 +86,7 @@ async function handler(ctx) {
                 author: authors,
                 category: [$item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript] as string[],
                 guid: `rsc-${doi}`,
-                pubDate: timezone(parseDate($item.find('div.text--small span.block').text().split(/on\s/).pop()!, 'DD MMM YYYY'), 1),
+                pubDate: parseDate($item.find('div.text--small span.block').text().split(/on\s/).pop()!, 'DD MMM YYYY', 1),
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureUrl ? 'application/pdf' : undefined,
                 doi,
@@ -107,7 +106,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="DC.title"]').prop('content');
                     item.description = content('#wrapper, article.article-control').html();
-                    item.pubDate = timezone(parseDate(content('meta[name="citation_online_date"]').prop('content'), 'YYYY/MM/DD'), 1);
+                    item.pubDate = parseDate(content('meta[name="citation_online_date"]').prop('content'), 'YYYY/MM/DD', 1);
                     item.enclosure_url = content('meta[name="citation_pdf_url"]').prop('content');
                     item.enclosure_type = item.enclosure_url ? 'application/pdf' : undefined;
                     item.doi = content('meta[name="DC.Identifier"]').prop('content');

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 import { renderPost } from './templates/post';
 
@@ -30,7 +31,7 @@ async function handler(ctx) {
         title: post.record.text,
         link: `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`,
         description: renderPost({ text: post.record.text, embed: post.embed }),
-        pubDate: new Date(post.record.createdAt),
+        pubDate: parseDate(post.record.createdAt),
         author: [
             {
                 name: post.author.displayName,

@@ -5,9 +5,9 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 import { host, playwrightGet } from './utils';
 
@@ -40,8 +40,7 @@ export const route: Route = {
 };
 
 function getPublicationDate(value: string | undefined) {
-    const date = value ? parseDate(value) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+    return value ? parseDate(value, 8) : undefined;
 }
 
 async function handler(ctx) {
@@ -92,8 +91,12 @@ async function handler(ctx) {
 
         const out = await pMap(
             list,
-            (info) =>
-                cache.tryGet(info.link, async () => {
+            (info) => {
+                // only follow links on the site itself
+                if (!isOnSite(info.link, 'customs.gov.cn')) {
+                    return { title: info.title, link: info.link, pubDate: info.date };
+                }
+                return cache.tryGet(info.link, async () => {
                     if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
                         return { title: info.title, link: info.link, pubDate: info.date };
                     }
@@ -107,13 +110,14 @@ async function handler(ctx) {
                     const description = $('.news_detail_con, .easysite-news-peruse').first().html();
 
                     return {
-                        title: info.title!,
+                        title: info.title,
                         link: info.link,
                         description,
                         author: $('meta[name="ContentSource"]').attr('content') || undefined,
                         pubDate: date || info.date,
                     };
-                }),
+                });
+            },
             { concurrency: 3 }
         );
 

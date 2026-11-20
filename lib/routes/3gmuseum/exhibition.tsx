@@ -1,11 +1,9 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -52,24 +50,17 @@ export const route: Route = {
             let endDate;
 
             if (fullDuration) {
-                // Typical format: 2026年2月10日-5月18日 or 2026年1月27日——2027年1月17日 or 2025.6.18-2026.1.5
-                const dateMatch = fullDuration.match(/(\d{4}[年.]\d{1,2}[月.]\d{1,2}日?)\s*[—\-~至]+\s*(\d{4}[年.])?(\d{1,2}[月.]\d{1,2}日?)/);
-                if (dateMatch) {
-                    const startStr = dateMatch[1].replaceAll(/[年月.]/g, '-').replace('日', '');
-                    const endYear = dateMatch[2] ? dateMatch[2].replaceAll(/[年.]/g, '-') : startStr.slice(0, 5);
-                    const endStr = endYear + dateMatch[3].replaceAll(/[月.]/g, '-').replace('日', '');
-
-                    startDate = dayjs(startStr).format('YYYY-MM-DD');
-                    endDate = dayjs(endStr).format('YYYY-MM-DD');
-                }
+                ({ startDate, endDate } = parseDateRange(fullDuration));
             } else {
                 // extend_field_starttime may differ from the fullDuration, usually 1 day earlier, so parse fullDuration first, then fallback to extend_field_starttime and extend_field_endtime if fullDuration is not available
                 const formMap = article.formMap;
-                startDate = dayjs(formMap.extend_field_starttime).format('YYYY-MM-DD');
-                endDate = dayjs(formMap.extend_field_endtime).format('YYYY-MM-DD');
+                const start = parseDate(formMap.extend_field_starttime);
+                const end = parseDate(formMap.extend_field_endtime);
+                startDate = start && formatDate(start, 'YYYY-MM-DD');
+                endDate = end && formatDate(end, 'YYYY-MM-DD');
             }
 
-            const pubDate = timezone(parseDate(item.pubTime), 8);
+            const pubDate = parseDate(item.pubTime, 8);
             const title = item.listTitle;
             const imgUrl = `https:${item.listImage}`;
 

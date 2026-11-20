@@ -1,11 +1,11 @@
-import dayjs from 'dayjs';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -56,13 +56,12 @@ function parseEpochDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
         return;
     }
-    const date = parseDate(value * 1000);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value * 1000);
 }
 
 function parseEventDate(value?: number) {
     const date = parseEpochDate(value);
-    return date ? dayjs(date).format('YYYY-MM-DD') : undefined;
+    return date ? formatDate(date, 'YYYY-MM-DD') : undefined;
 }
 
 function exhibitionLink(value: string | undefined, fallback: string) {
@@ -173,11 +172,11 @@ export const route: Route = {
                                 {endDate}
                             </p>
                         )}
-                        <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+                        <div>{raw(detail.content)}</div>
                         {detail.chapters.map((chapter) => (
                             <section>
                                 <h3>{chapter.name}</h3>
-                                <div dangerouslySetInnerHTML={{ __html: chapter.content || '' }} />
+                                <div>{raw(chapter.content || '')}</div>
                             </section>
                         ))}
                         {detail.downloads.map((download) => (

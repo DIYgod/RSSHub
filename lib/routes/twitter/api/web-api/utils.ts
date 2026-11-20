@@ -61,7 +61,9 @@ const getAuth = async (retry: number) => {
     const lock = await cache.get(`${lockPrefix}${token}`, false);
     if (lock) {
         logger.debug(`twitter debug: twitter cookie is locked, retry: ${retry}`);
-        await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+        await new Promise((resolve) => {
+            setTimeout(resolve, Math.random() * 500 + 500);
+        });
         return await getAuth(retry - 1);
     }
     logger.debug('twitter debug: lock twitter cookie');
@@ -79,6 +81,7 @@ export const twitterGot = async (
     params,
     options?: {
         allowNoAuth?: boolean;
+        refreshTransactionId?: boolean;
     }
 ) => {
     const auth = await getAuth(30);
@@ -142,7 +145,7 @@ export const twitterGot = async (
     // `onResponse` callback, the rate-limit and auth error handling that was
     // previously in `onResponse` is now inlined below.
     const pathname = new URL(url).pathname;
-    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname) : undefined;
+    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname, options?.refreshTransactionId) : undefined;
     const response = await undici.fetch(requestUrl, {
         headers: {
             authority: 'x.com',
@@ -185,8 +188,7 @@ export const twitterGot = async (
     logger.debug(`twitter debug: twitter rate limit remaining is ${remaining} and reset at ${reset}, status: ${response.status}`);
     if (auth) {
         if (remaining && remainingInt < 2 && reset) {
-            const resetTime = new Date(Number.parseInt(reset) * 1000);
-            const delay = (resetTime.getTime() - Date.now()) / 1000;
+            const delay = (Number.parseInt(reset) * 1000 - Temporal.Now.instant().epochMilliseconds) / 1000;
             logger.debug(`twitter debug: twitter rate limit exceeded with status ${response.status}, will unlock after ${delay}s`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', Math.ceil(delay) * 2);
         } else if (response.status === 429 || JSON.stringify(responseData?.data) === '{"user":{}}') {
@@ -217,6 +219,12 @@ export const twitterGot = async (
             logger.debug('twitter debug: unlock twitter cookie with success');
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
         }
+    }
+
+    // X answers 404 when the cached transaction keys are no longer accepted; refetch them and retry once.
+    if (response.status === 404 && clientTransactionId && !options?.refreshTransactionId) {
+        logger.debug('twitter debug: 404 with x-client-transaction-id, refreshing transaction keys and retrying');
+        return twitterGot(url, params, { ...options, refreshTransactionId: true });
     }
 
     if (response.status >= 400) {
@@ -284,17 +292,27 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     return new Map([...pinnedEntries, ...(gridEntries || moduleItems || entries)].map((entry) => [entry.entryId, entry])).values().toArray();
 };
 
-const hydrateLegacyUser = (legacy: any, tweet: any) => {
+const hydrateLegacyTweet = (legacy: any, tweet: any) => {
     const userResult = tweet.core?.user_results?.result;
-    if (!userResult) {
+    if (userResult) {
+        legacy.user = {
+            name: userResult.core?.name,
+            screen_name: userResult.core?.screen_name,
+            profile_image_url_https: userResult.avatar?.image_url,
+        };
+    }
+    legacy.id_str = tweet.rest_id ?? legacy.id_str;
+    const note = tweet.note_tweet?.note_tweet_results?.result;
+    if (typeof note?.text !== 'string') {
         return;
     }
-
-    legacy.user = {
-        name: userResult.core?.name,
-        screen_name: userResult.core?.screen_name,
-        profile_image_url_https: userResult.avatar?.image_url,
-    };
+    legacy.full_text = note.text;
+    legacy.entities ??= {};
+    for (const field of ['hashtags', 'symbols', 'urls', 'user_mentions']) {
+        if (Array.isArray(note.entity_set?.[field])) {
+            legacy.entities[field] = note.entity_set[field];
+        }
+    }
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
@@ -335,7 +353,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                     reply_count: preview.reply_count ?? 0,
                     retweet_count: preview.retweet_count ?? 0,
                 };
-                hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                hydrateLegacyTweet(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
                 if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
                     tweets.push(fakeLegacy);
                 }
@@ -348,28 +366,20 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         if (!tweet) {
             continue;
         }
-        const retweet = tweet.legacy?.retweeted_status_result?.result;
+        const retweetResult = tweet.legacy?.retweeted_status_result?.result;
+        const retweet = retweetResult?.tweet || retweetResult;
         for (const t of [tweet, retweet]) {
             if (!t?.legacy) {
                 continue;
             }
-            hydrateLegacyUser(t.legacy, t);
-            t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+            hydrateLegacyTweet(t.legacy, t);
             contextTweets.set(t.rest_id, t.legacy);
             const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-            if (quote?.legacy) {
-                t.legacy.quoted_status = quote.legacy;
-                hydrateLegacyUser(t.legacy.quoted_status, quote);
-            }
-            if (!t.note_tweet) {
+            if (!quote?.legacy) {
                 continue;
             }
-            const tmp = t.note_tweet.note_tweet_results.result;
-            t.legacy.entities.hashtags = tmp.entity_set.hashtags;
-            t.legacy.entities.symbols = tmp.entity_set.symbols;
-            t.legacy.entities.urls = tmp.entity_set.urls;
-            t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
-            t.legacy.full_text = tmp.text;
+            t.legacy.quoted_status = quote.legacy;
+            hydrateLegacyTweet(t.legacy.quoted_status, quote);
         }
         const legacy = tweet.legacy;
         if (!legacy) {

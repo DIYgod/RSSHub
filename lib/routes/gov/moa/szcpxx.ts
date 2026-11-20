@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 6);
@@ -30,7 +29,7 @@ const handler = async (ctx) => {
 
             return {
                 title: a.prop('title') ?? '',
-                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY.MM.DD'), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY.MM.DD', 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
@@ -38,7 +37,7 @@ const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(`gov:moa:szcpxx:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -49,11 +48,11 @@ const handler = async (ctx) => {
                 const contentId = $$('meta[name="contentid"]').prop('content');
                 const guid = contentId ? `moa-${contentId}` : item.link;
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
                 const pubDate = $$('meta[name="PubDate"]').prop('content');
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
                 item.category = [
                     ...new Set([

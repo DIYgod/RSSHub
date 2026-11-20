@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.woshipm.com';
 
@@ -12,8 +11,7 @@ function parseArticleDate(value?: string) {
     if (!value || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})?)?$/.test(value)) {
         return;
     }
-    const date = /(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? parseDate(value) : timezone(parseDate(value, value.includes('T') ? 'YYYY-MM-DDTHH:mm:ss' : 'YYYY-MM-DD', true), 8);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return /(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? parseDate(value) : parseDateStrict(value, value.includes('T') ? 'YYYY-MM-DDTHH:mm:ss' : 'YYYY-MM-DD', 8);
 }
 
 const fetchArticleDetails = (link: string) =>

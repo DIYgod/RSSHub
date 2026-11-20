@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -31,8 +29,9 @@ export const route: Route = {
 async function handler(ctx) {
     const beforeDays = ctx.req.param('before') ? Number.parseInt(ctx.req.param('before')) : 30;
     const afterDays = ctx.req.param('after') ? Number.parseInt(ctx.req.param('after')) : 30;
-    const before = dayjs().subtract(beforeDays, 'day').format('YYYY-MM-DD');
-    const after = dayjs().add(afterDays, 'day').format('YYYY-MM-DD');
+    const today = Temporal.Now.plainDateISO('UTC');
+    const before = today.subtract({ days: beforeDays }).toString();
+    const after = today.add({ days: afterDays }).toString();
 
     const response = await got({
         method: 'get',

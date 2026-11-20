@@ -109,7 +109,7 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
                 return;
             }
             if (response.status === 404) {
-                return next();
+                return await next();
             }
             return response;
         } finally {

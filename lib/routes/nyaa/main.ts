@@ -1,14 +1,14 @@
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     breaks: true,
@@ -105,7 +105,7 @@ async function handler(ctx) {
             title: feed.title!,
             link: currentLink,
             description: feed.description,
-            item: items.flatMap(toDataItems),
+            item: items.flatMap((item) => toDataItems(item)),
         };
     }
     feed.items.map((item) => {
@@ -117,6 +117,6 @@ async function handler(ctx) {
         title: feed.title!,
         link: currentLink,
         description: feed.description,
-        item: feed.items.flatMap(toDataItems),
+        item: feed.items.flatMap((item) => toDataItems(item)),
     };
 }

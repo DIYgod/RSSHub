@@ -3,8 +3,7 @@ import iconv from 'iconv-lite';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export default {
     parseFeed: async ({ subjectid: subjectId }) => {
@@ -73,7 +72,7 @@ export default {
                         title: el.text(),
                         author: pubInfo[0].trim(),
                         description: description.html(),
-                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                        pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                         link: url,
                     };
                     return single;

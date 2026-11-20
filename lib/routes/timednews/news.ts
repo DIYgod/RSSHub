@@ -1,10 +1,11 @@
-import { type CheerioOptions, load } from 'cheerio';
+import type { CheerioOptions } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE = 'https://www.timednews.com/topic';
 

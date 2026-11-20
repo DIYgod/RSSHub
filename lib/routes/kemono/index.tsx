@@ -4,8 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { KEMONO_API_URL, KEMONO_ASSETS_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
 import type { DiscordMessage, KemonoFile, KemonoPost } from './types';
@@ -82,8 +82,7 @@ function parsePublishedDate(value?: string | number | null) {
     if (!value && value !== 0) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 function buildApiUrl(source: string, userId?: string, contentType?: string): string {
@@ -301,7 +300,7 @@ function processAnnouncements(announcements: any[], authorName: string, source: 
         const displayDate = parsePublishedDate(announcement.published) ?? parsePublishedDate(announcement.added);
 
         return {
-            title: displayDate ? `Announcement from ${displayDate.toDateString()}` : 'Announcement',
+            title: displayDate ? `Announcement from ${formatDate(displayDate, 'ddd MMM DD YYYY')}` : 'Announcement',
             description: `<div>${announcement.content || ''}</div>`,
             author: authorName || undefined,
             pubDate: displayDate,

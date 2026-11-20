@@ -1,11 +1,11 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const xmut = 'https://yjs.xmut.edu.cn';
 export const route: Route = {
@@ -57,8 +57,7 @@ function parseSourceDate(value?: string) {
     if (!dateText) {
         return;
     }
-    const date = parseDate(dateText, 'YYYY-MM-DD', true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(dateText, 'YYYY-MM-DD', 8);
 }
 async function handler(ctx) {
     const { category = 'yjsc' } = ctx.req.param();

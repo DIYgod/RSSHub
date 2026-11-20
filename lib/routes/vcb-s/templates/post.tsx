@@ -17,7 +17,7 @@ type DescriptionData = {
 const VcbPostDescription = ({ medias, post }: DescriptionData) => (
     <>
         {medias?.map((media) => (
-            <figure class="thumbnail">
+            <figure className="thumbnail">
                 <img width={media.media_details?.width} height={media.media_details?.height} src={media.source_url} />
             </figure>
         ))}

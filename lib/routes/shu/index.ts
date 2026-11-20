@@ -4,8 +4,7 @@ import pMap from 'p-map'; // cheerio@1.0.0
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeType = {
     tzgg: { title: '上海大学 - 通知公告', url: 'https://www.shu.edu.cn/tzgg.htm' },
@@ -66,7 +65,7 @@ async function handler(ctx) {
             return {
                 title: item.find('p.bt').text(),
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl,
-                pubDate: timezone(parseDate(item.find('p.sj').text(), 'YYYY.MM.DD'), 8),
+                pubDate: parseDate(item.find('p.sj').text(), 'YYYY.MM.DD', 8),
                 description: item.find('p.zy').text(),
             };
         });

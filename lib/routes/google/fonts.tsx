@@ -5,8 +5,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const titleMap = {
     date: 'Newest',
@@ -75,7 +75,7 @@ async function handler(ctx) {
                     description: renderDescription(item),
                     category: item.category ? [item.category] : undefined,
                     link: `https://fonts.google.com/specimen/${item.family.replaceAll(/\s/g, '+')}`,
-                    updated: updated && !Number.isNaN(updated.getTime()) ? updated : undefined,
+                    updated,
                 };
             }),
     };

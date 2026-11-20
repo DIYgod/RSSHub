@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.stheadline.com';
 
@@ -83,7 +83,7 @@ interface GalleryImage {
 
 function getArticleContent($: CheerioAPI, response: string) {
     const content = $('.content-body');
-    const galleryData = response.match(/const article_galleries\s*=\s*(\{[^\n]+\});/);
+    const galleryData = /const article_galleries\s*=\s*(\{[^\n]+\});/.exec(response);
     const galleries: Record<string, GalleryImage[]> = galleryData ? JSON.parse(galleryData[1]) : {};
     for (const [key, images] of Object.entries(galleries)) {
         const figure = $('<figure>');

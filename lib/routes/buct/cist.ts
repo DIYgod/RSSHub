@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cist',
@@ -35,7 +34,7 @@ async function handler() {
     const list = $('ul.wp_article_list > li.list_item')
         .toArray()
         .map((item): DataItem => ({
-            pubDate: timezone(parseDate($(item).find('.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
+            pubDate: parseDate($(item).find('.Article_PublishDate').text(), 'YYYY-MM-DD', 8),
             title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }));

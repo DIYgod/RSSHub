@@ -6,7 +6,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderImage } from './templates/image';
 import { renderYouTube } from './templates/youtube';
@@ -221,7 +221,7 @@ export async function getArticleItem(item: ArticleSummary): Promise<DataItem> {
         title: item.title,
         link,
         guid: link,
-        pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+        pubDate: date,
         category: [
             ...new Set(
                 [...(item.category_set ?? []).flatMap((entry) => [entry.category?.name, entry.subcategory?.name]), ...(item.tags ?? []).map((tag) => tag.name)].filter(

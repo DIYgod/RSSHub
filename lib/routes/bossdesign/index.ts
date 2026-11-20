@@ -1,9 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -49,8 +48,8 @@ async function handler(ctx) {
     const items = posts.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: item.date_gmt ? timezone(parseDate(item.date_gmt), 0) : undefined,
-        updated: item.modified_gmt ? timezone(parseDate(item.modified_gmt), 0) : undefined,
+        pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
+        updated: item.modified_gmt ? parseDate(item.modified_gmt, 0) : undefined,
         link: item.link,
         guid: item.guid.rendered,
         category: [...new Set([...item._embedded['wp:term'][0].map((item) => item.name), ...item._embedded['wp:term'][1].map((item) => item.name)])],

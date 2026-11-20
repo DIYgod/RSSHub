@@ -24,8 +24,8 @@ const humanize = (times: string[]) => {
 };
 
 export const time = (start: number) => {
-    const delta = Date.now() - start;
-    return humanize([delta < 1000 ? delta + 'ms' : Math.round(delta / 1000) + 's']);
+    const delta = performance.now() - start;
+    return humanize([delta < 1000 ? Math.round(delta) + 'ms' : Math.round(delta / 1000) + 's']);
 };
 
 export const getCurrentPath = (metaUrl: string) => {
@@ -40,26 +40,4 @@ function isPureObject(o: any) {
 export function getSearchParamsString(searchParams: any) {
     const searchParamsString = isPureObject(searchParams) ? stringifyQuery(searchParams) : null;
     return searchParamsString ?? new URLSearchParams(searchParams).toString();
-}
-
-/**
- * parse duration string to seconds
- * @param {string} timeStr - duration string like "01:01:01" / "01:01" / "59"
- * @returns {number}       - total seconds
- */
-export function parseDuration(timeStr: string | undefined | null): number | undefined {
-    if (!timeStr) {
-        return;
-    }
-    const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
-    const parts = clean.split(':');
-    let total = 0;
-    for (const [idx, part] of parts.entries()) {
-        const n = Number(part);
-        if (Number.isNaN(n)) {
-            throw new TypeError(`Invalid segment: ${part}`);
-        }
-        total += n * Math.pow(60, parts.length - 1 - idx);
-    }
-    return total;
 }

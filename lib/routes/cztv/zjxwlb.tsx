@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const renderDesc = (item) =>
     renderToString(
@@ -55,7 +54,7 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate($item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm'), 8),
+                pubDate: parseDate($item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm', 8),
                 description: renderDesc({ title, videoUrl, posterUrl }),
             };
         });

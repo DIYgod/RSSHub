@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const categories = {
     all: {
@@ -49,8 +49,7 @@ const parseModifiedDate = (raw?: string) => {
     if (!raw || !/(?:Z|[+-]\d{2}:\d{2})$/.test(raw)) {
         return;
     }
-    const parsed = parseDate(raw);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+    return parseDate(raw);
 };
 const handler = async (ctx): Promise<Data> => {
     const lang = ctx.req.param('lang') ?? 'en';
@@ -105,10 +104,10 @@ const handler = async (ctx): Promise<Data> => {
                     // Parse date based on language
                     // English: "21 Jan 2026" with 'en' locale for month name recognition
                     // Chinese: "2026年01月20日" - numeric format, no locale needed
-                    let pubDate: Date | undefined;
+                    let pubDate: Temporal.Instant | undefined;
                     if (articleDate) {
-                        const parsed = lang === 'en' ? parseDate(articleDate, 'DD MMM YYYY', 'en', true) : parseDate(articleDate, 'YYYY年MM月DD日', true);
-                        if (!Number.isNaN(parsed.getTime())) {
+                        const parsed = lang === 'en' ? parseDateStrict(articleDate, 'DD MMM YYYY') : parseDateStrict(articleDate, 'YYYY年MM月DD日');
+                        if (parsed) {
                             pubDate = parsed;
                         }
                     }

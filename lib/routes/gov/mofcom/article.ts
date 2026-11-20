@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article/:suffix{.+}',
@@ -38,7 +37,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, url).href,
-                pubDate: date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D']), 8) : undefined,
+                pubDate: date ? parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D'], 8) : undefined,
             };
         });
 
@@ -66,7 +65,7 @@ async function handler(ctx) {
                     item.description = $('.art-con').html() || /* xwfb/xwztfbh */ $('.textlive').html();
                 }
                 const publishedDate = $('meta[name="PubDate"]').attr('content');
-                item.pubDate = publishedDate ? timezone(parseDate(publishedDate, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
+                item.pubDate = publishedDate ? parseDate(publishedDate, 'YYYY-MM-DD HH:mm', 8) : item.pubDate;
 
                 return item;
             })

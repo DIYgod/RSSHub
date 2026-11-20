@@ -1,5 +1,5 @@
 import type { Data, Route } from '@/types';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 async function getUserInfo(response: { json: () => Promise<any> }): Promise<{ name?: string } | undefined> {
     try {
@@ -37,10 +37,10 @@ The profile page of the user, which contains the user's information, videos, and
 
 async function handler(ctx) {
     const { principalId } = ctx.req.param();
-    const context = await playwright();
     const userInfoRequests: Array<Promise<{ name?: string } | undefined>> = [];
+    // The default browser closes 30s after launch, before the 30s wait below can time out, so own its lifetime
+    const { page, destroy } = await getPlaywrightPage('https://www.kuaishou.com', { noGoto: true, closeTimeout: 0 });
     try {
-        const page = await context.newPage();
         await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
         page.on('response', (response) => {
             if (response.ok() && new URL(response.url()).pathname.startsWith('/live_api/baseuser/userinfo/byid')) {
@@ -78,7 +78,7 @@ async function handler(ctx) {
         };
         return data;
     } finally {
-        await context.close();
+        await destroy();
         await Promise.allSettled(userInfoRequests);
     }
 }

@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -86,7 +86,7 @@ function getPublishedTime($: CheerioAPI): string | undefined {
             continue;
         }
         const article = schema['@graph'].find((entry) => entry && typeof entry === 'object' && entry['@type'] === 'Article');
-        if (article && typeof article.datePublished === 'string' && article.datePublished && Number.isFinite(Date.parse(article.datePublished))) {
+        if (article && typeof article.datePublished === 'string' && article.datePublished && parseDate(article.datePublished)) {
             return article.datePublished;
         }
     }

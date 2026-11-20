@@ -6,18 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-const parser = new Parser({
-    customFields: {
-        item: ['magnet'],
-    },
-    headers: {
-        'User-Agent': config.ua,
-    },
-    defaultRSS: 0.9,
-});
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cn/*',
@@ -72,6 +61,15 @@ async function handler(ctx) {
     let $;
 
     if (isOfficialRSS) {
+        const parser = new Parser({
+            customFields: {
+                item: ['magnet'],
+            },
+            headers: {
+                'User-Agent': config.ua,
+            },
+            defaultRSS: 0.9,
+        });
         officialFeed = await parser.parseURL(currentUrl);
         items = officialFeed.items.slice(0, limit).map((item) => ({
             title: item.title,
@@ -120,7 +118,7 @@ async function handler(ctx) {
                 divs.first().remove();
                 divs.last().remove();
 
-                item.pubDate = timezone(parseDate(item.link!.match(/\/\d+-(.*?)\.html/)![1], 'YYYY-MM-DD-HH-mm-ss'), 9);
+                item.pubDate = parseDate(item.link!.match(/\/\d+-(.*?)\.html/)![1], 'YYYY-MM-DD-HH-mm-ss', 9);
 
                 item.author = content('meta[name="author"]').attr('content');
                 item.title ??= content('meta[name="twitter:title"]').attr('content')!;

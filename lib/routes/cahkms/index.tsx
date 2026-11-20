@@ -4,9 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     '01': '关于我们',
@@ -71,7 +70,7 @@ async function handler(ctx) {
             id: item.ID,
             title: item.TITLE,
             description: `<p>${item.GJZ}</p>`,
-            pubDate: timezone(parseDate(item.JDRQ), 8),
+            pubDate: parseDate(item.JDRQ, 8),
             link: `${rootUrl}/HKMAC/indexMac/getWzxx?id=${item.ID}`,
         }));
 

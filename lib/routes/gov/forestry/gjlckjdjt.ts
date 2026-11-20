@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -22,7 +21,7 @@ function extractLecturer(value: string): string | undefined {
             continue;
         }
         const separator = /\s单\s*位[：:]/.exec(tail);
-        const candidate = separator ? tail.slice(0, separator.index).trimEnd() : tail.match(/^(.+)$/)?.[1];
+        const candidate = separator ? tail.slice(0, separator.index).trimEnd() : /^(.+)$/.exec(tail)?.[1];
         if (candidate !== undefined && !/[\r\n\u{2028}\u{2029}]/u.test(candidate)) {
             return candidate.trim();
         }
@@ -99,7 +98,7 @@ async function handler(ctx) {
 
     items = items.slice(0, Math.max(30, limit));
     if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, limit);
 
@@ -162,10 +161,9 @@ async function handler(ctx) {
 }
 
 function getPublicationDate(link: string) {
-    const date = link.match(/\/(\d{8})\//)?.[1];
+    const date = /\/(\d{8})\//.exec(link)?.[1];
     if (!date) {
         return;
     }
-    const pubDate = parseDate(date, 'YYYYMMDD', true);
-    return Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8);
+    return parseDateStrict(date, 'YYYYMMDD', 8);
 }

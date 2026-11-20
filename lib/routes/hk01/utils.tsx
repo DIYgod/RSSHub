@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
@@ -6,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://hk01.com';
 const apiRootUrl = 'https://web-data.api.hk01.com';
@@ -40,7 +39,7 @@ const renderText = (lines) =>
         if (tokens.length === 1 && tokens[0].type === 'h3') {
             return <h3>{tokens[0].content}</h3>;
         }
-        return <p>{tokens.map(renderToken)}</p>;
+        return <p>{tokens.map((token) => renderToken(token))}</p>;
     });
 
 const renderDescription = ({ image, teasers, blocks }) =>
@@ -140,8 +139,7 @@ const ProcessItems = (items, ctx) => {
                     url: item.link,
                 });
 
-                const $ = load(detailResponse.data);
-                const payload = $('script#__NEXT_DATA__').text();
+                const payload = detailResponse.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)?.[1];
                 if (!payload) {
                     throw new Error(`The Hong Kong 01 article is missing its source data: ${item.link}`);
                 }

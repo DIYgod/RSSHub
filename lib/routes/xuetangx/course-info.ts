@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 export const route: Route = {
     path: '/course/:sign',
@@ -33,8 +33,7 @@ function parseClassDate(value?: number) {
     if (value === undefined || !Number.isFinite(value)) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value);
 }
 
 async function fetchSkuInfo(sign: string, classroomId: number): Promise<string> {
@@ -72,7 +71,7 @@ async function handler(ctx: Context) {
             const skuInfo = await cache.tryGet(`xuetangx:course:sku:${sign}:${c.classroom_id}`, () => fetchSkuInfo(sign, c.classroom_id));
             const classStart = parseClassDate(c.class_start);
             const classEnd = parseClassDate(c.class_end);
-            const info = [`班次: ${c.classroom_name}`, ...(classStart ? [`开课时间: ${classStart.toUTCString()}`] : []), ...(classEnd ? [`结课时间: ${classEnd.toUTCString()}`] : []), skuInfo].join('<br>');
+            const info = [`班次: ${c.classroom_name}`, ...(classStart ? [`开课时间: ${toRFC822(classStart)}`] : []), ...(classEnd ? [`结课时间: ${toRFC822(classEnd)}`] : []), skuInfo].join('<br>');
             return {
                 title: `${courseTitle} - ${c.classroom_name}`,
                 description: `${basicInfo.data.long_intro || basicInfo.data.short_intro || ''}<br>${info}<br>报名人数: ${c.count}`,

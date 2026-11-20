@@ -51,6 +51,24 @@ describe('worker cache with KV binding', () => {
         expect(getValue).toHaveBeenCalledTimes(1);
     });
 
+    it.each([
+        { key: 'snowflake', value: '1234567890123456789' },
+        { key: 'false', value: false },
+        { key: 'zero', value: 0 },
+        { key: 'null', value: null },
+        { key: 'empty-string', value: '' },
+    ])('tryGet preserves $key values on cache hits', async ({ key, value }) => {
+        const getValue = vi.fn().mockResolvedValue(value);
+
+        const miss = await cache.tryGet(`worker:${key}`, getValue);
+        expect(miss).toBe(value);
+
+        const hit = await cache.tryGet(`worker:${key}`, getValue);
+        expect(hit).toBeTypeOf(typeof value);
+        expect(hit).toBe(value);
+        expect(getValue).toHaveBeenCalledTimes(1);
+    });
+
     it('stores a ttl sidecar key for non-default expiry', async () => {
         await kv.set('worker:custom-ttl', 'v', 120);
         expect(await env.CACHE.get('rsshub:cacheTtl:worker:custom-ttl')).toBe('120');

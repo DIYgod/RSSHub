@@ -4,8 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://xwxy.gdufs.edu.cn';
 
@@ -48,7 +48,7 @@ const handler = async (ctx) => {
             const li = a.closest('li');
             const contextText = (li && li.text()) || a.text();
             const dateText = a.find('i').text().trim() || (li && li.find('i').text().trim()) || (li && li.find('time').text().trim()) || (contextText.match(datePattern)?.[0] ?? '');
-            const pubDate: Date | undefined = dateText ? parseDate(dateText) : undefined;
+            const pubDate: Temporal.Instant | undefined = dateText ? parseDate(dateText) : undefined;
             const title = [a.find('h5').text(), a.attr('title'), a.text(), contextText.replace(datePattern, '')].find((value) => value && /\S/.test(value)) || '';
             // Skip entries without a link.
             if (!href) {
@@ -61,7 +61,7 @@ const handler = async (ctx) => {
                 pubDate,
             };
         })
-        .filter((v): v is { title: string; link: string; pubDate: Date | undefined } => !!v && !!v.title && !!v.link);
+        .filter((v): v is { title: string; link: string; pubDate: Temporal.Instant | undefined } => !!v && !!v.title && !!v.link);
 
     const limit = Math.max(10, getRouteLimit(ctx, 10));
     const limitedItems = items.slice(0, limit);
@@ -119,7 +119,7 @@ const handler = async (ctx) => {
                 const authors = metaTexts.filter((t) => !t.includes('发布时间')).filter((t) => !datePattern.test(t));
 
                 // Keep the article date available as a fallback for undated list entries.
-                let pubDateRecovered: string | number | Date | undefined;
+                let pubDateRecovered: string | number | Temporal.Instant | undefined;
                 const dateTextInMeta = metaTexts.find((t) => datePattern.test(t));
                 if (dateTextInMeta) {
                     const matched = dateTextInMeta.match(datePattern)?.[0];

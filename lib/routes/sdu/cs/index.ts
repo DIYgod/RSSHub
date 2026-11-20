@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sdu.edu.cn/';
@@ -82,7 +82,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDateInTimezone($e.find('.fr').text().trim(), 8),
+                pubDate: parseDate($e.find('.fr').text().trim(), 8),
             };
         });
 

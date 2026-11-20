@@ -1,6 +1,7 @@
 import { raw } from 'hono/html';
-import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
+
+import { jsx } from '@/utils/jsx';
 
 type DescriptionImage = {
     src?: string;

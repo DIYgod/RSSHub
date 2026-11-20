@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { UserInfo, VideoItem } from './types';
 import { getUserInfoById, getUserVideosById, renderVideo } from './utils';

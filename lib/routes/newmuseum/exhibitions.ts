@@ -1,11 +1,10 @@
-import { load } from 'cheerio';
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/exhibitions/:state?',
@@ -66,8 +65,7 @@ interface MuseumData {
 }
 
 function getPageData(html: string) {
-    const $ = load(html);
-    const data: MuseumData = JSON.parse($('#__NEXT_DATA__').text());
+    const data: MuseumData = JSON.parse(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s.exec(html)?.[1] ?? '');
     const pageData = data.props?.pageProps?.__TEMPLATE_QUERY_DATA__;
     if (!pageData) {
         throw new Error('New Museum page data is unavailable');

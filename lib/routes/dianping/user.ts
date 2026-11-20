@@ -59,7 +59,7 @@ const starMap = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const userPage = `https://m.dianping.com/userprofile/${id}`;
+    const userPage = `https://m.dianping.com/userprofile/${encodeURIComponent(id)}`;
     const cookie = config.dianping.cookie;
 
     const headers: { Referer: string; Cookie: string } | { Referer: string } = cookie ? { Referer: userPage, Cookie: cookie } : { Referer: userPage };
@@ -72,7 +72,7 @@ async function handler(ctx) {
     const nickNameReg = /window\.nickName = "(.*?)"/;
     const nickName = nickNameReg.exec(pageResponse)?.[1];
 
-    const response = await ofetch(`https://m.dianping.com/member/ajax/NobleUserFeeds?userId=${id}`, {
+    const response = await ofetch(`https://m.dianping.com/member/ajax/NobleUserFeeds?userId=${encodeURIComponent(id)}`, {
         headers,
         headerGeneratorOptions: PRESETS.MODERN_IOS,
     });

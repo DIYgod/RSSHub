@@ -4,8 +4,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { ContentFetcher } from './utils';
 
@@ -48,7 +47,7 @@ async function handler(ctx: Context) {
                     author: $item.find('.by cite a').text(),
                     link: `${rootUrl}${$item.find('.a_subject').attr('href')}`,
                     title: $item.find('.thread-name span').eq(0).text() + $item.find('.a_subject').text(),
-                    pubDate: timezone(parseDate(sort === '' ? $item.find('.by cite nobr').text() : $item.find('.by .xmc_b9').eq(0).text()), 8),
+                    pubDate: parseDate(sort === '' ? $item.find('.by cite nobr').text() : $item.find('.by .xmc_b9').eq(0).text(), 8),
                 };
             });
 

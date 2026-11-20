@@ -25,13 +25,14 @@ export default async function test({ github, context, core }, baseUrl, routes, n
     let failCount = 0;
     let comment = `Successfully [generated](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n`;
 
-    for await (const lks of links) {
+    for (const lks of links) {
         core.info(`testing route:  ${lks}`);
-        // Intended, one at a time
         let success = false;
         let detail;
 
+        // oxlint-disable-next-line no-await-in-loop - intended, one at a time
         const res = await fetch(lks);
+        // oxlint-disable-next-line no-await-in-loop - intended, one at a time
         const body = await res.text();
         if (res.ok) {
             success = true;
@@ -124,9 +125,9 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
         }
     }
 
-    for await (const comment of commentList) {
-        // Intended, one at a time
+    for (const comment of commentList) {
         try {
+            // oxlint-disable-next-line no-await-in-loop - intended, one at a time
             await github.rest.issues.createComment({
                 issue_number: number,
                 owner: context.repo.owner,

@@ -2,6 +2,7 @@ import type { Handler, Hono } from 'hono';
 import { routePath } from 'hono/route';
 
 import type { APIRoute, Namespace, Route } from '@/types';
+import { runInCacheNamespace } from '@/utils/cache/scope';
 import logger from '@/utils/logger';
 
 const SEPARATOR = /[/\\]/;
@@ -195,7 +196,7 @@ export function registerRssRoutes(app: Hono, namespaces: NamespacesType): void {
                         routeData.handler = route.handler;
                     }
                 }
-                const response = await routeData.handler(ctx);
+                const response = await runInCacheNamespace(namespace, () => routeData.handler(ctx));
                 if (response instanceof Response) {
                     return response;
                 }
@@ -231,7 +232,7 @@ export function registerApiRoutes(app: Hono, namespaces: NamespacesType): void {
                         routeData.handler = apiRoute.handler;
                     }
                 }
-                const data = await routeData.handler(ctx);
+                const data = await runInCacheNamespace(namespace, () => routeData.handler(ctx));
                 ctx.set('apiData', data);
             };
             subApp.get(path, wrappedHandler);

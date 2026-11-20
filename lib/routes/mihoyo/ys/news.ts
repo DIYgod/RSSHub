@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     latest: {
@@ -136,7 +136,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${rootUrl}${currentUrls[location]}/detail/${item.iInfoId}`,
-        pubDate: item.dtStartTime ? parseDateInTimezone(item.dtStartTime, 8) : undefined,
+        pubDate: item.dtStartTime ? parseDate(item.dtStartTime, 8) : undefined,
         category: item.sCategoryName,
     }));
 

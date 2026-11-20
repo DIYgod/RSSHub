@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://agirls.aotter.net';
 

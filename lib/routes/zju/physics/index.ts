@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 // const host = 'http://physics.zju.edu.cn/redir.php?catalog_id=';
 const host = 'https://physics.zju.edu.cn';
@@ -63,10 +63,10 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const dateText = $item.find('.date').text() || `${$item.find('.time .y').text()}-${$item.find('.time .d').text()}`;
-            const date = parseDate(dateText.trim(), 'YYYY-MM-DD', true);
+            const date = parseDateStrict(dateText.trim(), 'YYYY-MM-DD');
             return {
                 title: $item.find('h3').text(),
-                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
 
                 link: new URL($item.find('a').attr('href')!, link).href,
                 // link: `http://10.14.122.238/${item.find('a').attr('href')}`,

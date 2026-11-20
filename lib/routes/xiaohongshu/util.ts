@@ -7,8 +7,8 @@ import CaptchaError from '@/errors/types/captcha';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import playwright, { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 declare global {
     interface Window {
@@ -75,7 +75,7 @@ const getUser = (url, cache) =>
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
                         const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? route.continue() : route.abort();
+                        return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? route.continue() : route.abort();
                     });
                 },
             });
@@ -149,7 +149,7 @@ const getBoard = (url, cache) =>
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);
@@ -171,8 +171,8 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
         description: string;
         author: string;
         guid: string;
-        pubDate: Date;
-        updated: Date;
+        pubDate: Temporal.Instant;
+        updated: Temporal.Instant;
     }> = [];
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {

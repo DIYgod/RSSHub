@@ -3,9 +3,10 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { fetchWithPage } from '@/utils/playwright-request';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/yz/:type',
@@ -50,11 +51,11 @@ async function handler(ctx: Context) {
         throw new Error(`Unknown college: ${type}`);
     }
 
-    const { context, page, destroy } = await getPlaywrightPage(college.url, { noGoto: true, closeTimeout: 0 });
+    const { page, destroy } = await getPlaywrightPage(college.url, { noGoto: true, closeTimeout: 0 });
     try {
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
         });
         await page.goto(college.url, {
             waitUntil: 'networkidle',
@@ -84,23 +85,27 @@ async function handler(ctx: Context) {
                 return {
                     title: $item.attr('title') ?? ($item.find('h3, font, .bt').text() || $item.text()).trim(),
                     link: new URL($item.attr('href')!, college.url).href,
-                    pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
+                    pubDate: date ? parseDate(date, 'YYYY-M-D', 8) : undefined,
                 };
             })
             .filter((item) => item.pubDate);
         const orderedList = list;
         const entries = orderedList;
         const result = await Promise.all(
-            entries.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await context.request.get(item.link!, { timeout: 12000 });
-                    const detail = await response.text();
+            entries.map((item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'bupt.edu.cn')) {
+                    return item;
+                }
+                return cache.tryGet(item.link!, async () => {
+                    const response = await fetchWithPage(page, item.link!, { timeout: 12000 });
+                    const detail = response.text;
                     const $ = load(detail);
                     $('.v_news_content style').remove();
                     item.description = $('.v_news_content').html();
                     return item;
-                })
-            )
+                });
+            })
         );
 
         return {

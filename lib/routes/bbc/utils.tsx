@@ -8,13 +8,14 @@ import type { JSX } from 'hono/jsx/jsx-runtime';
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates } from '@/utils/time';
 
 export const limitBbcItems = <T extends Pick<DataItem, 'pubDate'>>(items: T[], ctx: Context): T[] => {
     const limit = getRouteLimit(ctx);
     if (limit === undefined) {
         return items;
     }
-    const sortedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+    const sortedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     return sortedItems.slice(0, limit);
 };
 
@@ -416,6 +417,8 @@ export const fetchBbcContent = async (link: string, item) => {
             return {
                 description: item.content ?? item.description ?? '',
             };
+        // Video pages (/zhongwen/watch/) carry the same page data as articles, with a video block
+        case pathname.startsWith('/zhongwen/watch/'):
         case pathname.startsWith('/zhongwen/articles/'): {
             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
             const pageData = nextData.props.pageProps.pageData;

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 interface MovieItem {
     id: number;
@@ -52,7 +52,7 @@ async function handler() {
     const items = movies.map((movie) => ({
         title: `${movie.sc ? `[${movie.sc}分] ` : ''}${movie.nm}`,
         link: `https://www.maoyan.com/films/${movie.id}`,
-        pubDate: movie.rt ? parseDateInTimezone(movie.rt, 8) : undefined,
+        pubDate: movie.rt ? parseDate(movie.rt, 8) : undefined,
         description: `
             <img src="${movie.img}" />
             <p><strong>${movie.nm}</strong></p>

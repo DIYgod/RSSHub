@@ -4,9 +4,8 @@ import RequestInProgressError from '@/errors/types/request-in-progress';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import wait from '@/utils/wait';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -14,7 +13,7 @@ const parsePage = ($item, hyperlinkSelector, timeSelector) => {
     const hyperlink = $item.find(hyperlinkSelector);
     const title = hyperlink.text();
     const link = hyperlink.attr('href');
-    const pubDate = timezone(parseDate($item.find(timeSelector).text(), 'YYYY-MM-DD HH:mm'), 8);
+    const pubDate = parseDate($item.find(timeSelector).text(), 'YYYY-MM-DD HH:mm', 8);
     return {
         title,
         link,

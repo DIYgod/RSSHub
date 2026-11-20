@@ -101,7 +101,7 @@ async function loadCookie() {
 
 function getCompanyList() {
     // Using date as cache key and it will automatically expired by 1d
-    const key = `kuaidi100-company-name-${new Date().toISOString().split('T', 1)[0]}`;
+    const key = `kuaidi100-company-name-${Temporal.Now.plainDateISO('UTC').toString()}`;
     return cache.tryGet(key, async () => {
         const cookie = await getCookie();
         const wwwid = cookie.wwwid;
@@ -186,9 +186,9 @@ export default {
         const queryKey = `kuaidi100-query-${JSON.stringify([number, id, phone ?? ''])}`;
         let query: any = await cache.get(queryKey);
         // Include the ticket number and a date two months before the query.
-        const timestamp = Number.parseInt(String(Date.now() / 1000));
-        const twoMonthsAgo = Date.now() - 60 * 60 * 24 * 60 * 1000;
-        const dateString = new Date(twoMonthsAgo).toLocaleDateString('ZH').split('/').join('');
+        const timestamp = Number.parseInt(String(Temporal.Now.instant().epochMilliseconds / 1000));
+        const twoMonthsAgo = Temporal.Now.instant().subtract({ hours: 24 * 60 });
+        const dateString = twoMonthsAgo.toLocaleString('ZH', { year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC' }).split('/').join('');
         const queryMeta = encodeURIComponent(
             JSON.stringify({
                 date: dateString,

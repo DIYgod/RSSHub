@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchArticle } from './utils';
 
@@ -30,8 +29,8 @@ async function handler(ctx) {
     const list = res.data.slice(0, getRouteLimit(ctx, 15)).map((e) => ({
         title: e.row.title,
         guid: e.uuid,
-        pubDate: timezone(parseDate(e.row.publish_time), 8),
-        updated: timezone(parseDate(e.row.update_time), 8),
+        pubDate: parseDate(e.row.publish_time, 8),
+        updated: parseDate(e.row.update_time, 8),
         link: `https://www.bjnews.com.cn/detail/${e.uuid}.html`,
     }));
 

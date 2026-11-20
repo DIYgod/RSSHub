@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://css-tricks.com';
 
@@ -23,13 +22,13 @@ export async function extractMiniCards(cardselector: string, titleSelector: stri
 function extractCardsInfo(cards, mini: boolean): Card[] {
     return cards.map((card): Card => {
         const $ = load(card);
-        const articleLink = mini ? $('h3.mini-card-title a:not(.aal_anchor)').first() : $('div.article-article h2 a, div.article-article h1 a').first();
+        const articleLink = mini ? $('h3 a:not(.aal_anchor)').first() : $('div.article-article h2 a, div.article-article h1 a').first();
         const publishedAt = $('time').first().attr('datetime');
         return {
             title: articleLink.text(),
             link: new URL(articleLink.attr('href')!, rootUrl).href,
             image: $('div.article-thumbnail-wrap img').first().attr('src'),
-            pubDate: publishedAt ? timezone(parseDate(publishedAt), 0) : undefined,
+            pubDate: publishedAt ? parseDate(publishedAt, 0) : undefined,
         };
     });
 }

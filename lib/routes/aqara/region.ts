@@ -2,7 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 
 export const route: Route = {
-    path: '/:region{cn|kr|eu|us|ru|en}/:type?',
+    path: '/:region{(?:cn|kr|eu|us|ru|en)}/:type?',
     categories: ['other'],
     example: '/aqara/en/news',
     parameters: {

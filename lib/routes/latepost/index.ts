@@ -5,10 +5,11 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 /**
  * Convert an array into a dictionary object.
@@ -119,18 +120,23 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
         link: string;
         category: Array<string | undefined>;
         guid: string | number;
-        pubDate?: Date;
+        pubDate?: Temporal.Instant;
     }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.detail_url, rootUrl).href,
         category: [Number(item.is_dj) === 1 ? exclusiveCategory : undefined, item.programa ? columns[item.programa]?.title : undefined, ...item.label.map((c) => c.label)],
         guid: item.id,
-        pubDate: item.release_time ? parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日']) : undefined,
+        pubDate: item.release_time ? parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日'], 8) : undefined,
     }));
 
     const items = await pMap(
         list,
         async (item) => {
+            const category = item.category.filter((category): category is string => Boolean(category));
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'latepost.com')) {
+                return { ...item, category, guid: `latepost-${item.guid}` };
+            }
             const article = await cache.tryGet(`latepost:article:${item.link}`, async () => {
                 const detailResponse = await requestData(page, item.link);
 
@@ -164,10 +170,10 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
                 const date = content('div.article-header-date').text();
                 const pubDate = date
                     ? /\d+月\d+日/.test(date)
-                        ? timezone(parseDate(date, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']), 8)
+                        ? parseDate(date, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm'], 8)
                         : /ago|^(?:just\s*now|刚刚|剛剛)$|(?:[秒天周月年]|分[钟鍾]?|小[时時]|星期)\s*[前后後]/.test(date)
                           ? parseRelativeDate(date)
-                          : timezone(parseRelativeDate(date), 8)
+                          : parseRelativeDate(date, 8)
                     : undefined;
 
                 return { title, description, author, pubDate, comments: Number(commentResponse.count ?? commentResponse.data?.length ?? 0) };
@@ -177,9 +183,9 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
                 title: item.title ?? article.title,
                 description: article.description,
                 author: article.author,
-                category: item.category.filter((category): category is string => Boolean(category)),
+                category,
                 guid: `latepost-${item.guid}`,
-                pubDate: article.pubDate ?? (item.pubDate ? timezone(item.pubDate, 8) : undefined),
+                pubDate: article.pubDate ?? item.pubDate,
                 comments: article.comments,
             };
         },

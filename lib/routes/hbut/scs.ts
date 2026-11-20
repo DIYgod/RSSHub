@@ -4,8 +4,8 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/scs/:type',
@@ -66,13 +66,13 @@ async function handler(ctx: Context) {
             return {
                 link: new URL($('a', elem).attr('href')!, link).href,
                 title: $('a', elem).text(),
-                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         });
     const limit = getRouteLimit(ctx, 10);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const datesAvailable = items.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
-    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime()).slice(0, limit) : items.slice(0, sorted ? Math.max(10, limit) : limit);
+    const datesAvailable = items.every((item) => item.pubDate);
+    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!)).slice(0, limit) : items.slice(0, sorted ? Math.max(10, limit) : limit);
 
     return { link, title: $('title').text(), item: selectedItems };
 }

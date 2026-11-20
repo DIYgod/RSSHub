@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/czt/xwdt/:category?',
@@ -63,7 +62,7 @@ async function handler(ctx) {
 
                 item.author = content('meta[name="ContentSource"]').attr('content');
                 const pubDate = content('meta[name="PubDate"]').attr('content');
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : undefined;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : undefined;
                 item.description = content('.TRS_Editor, .content').html();
 
                 return item;

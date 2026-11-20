@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchData, processItems, rootUrl } from './util';
 
@@ -79,7 +78,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 

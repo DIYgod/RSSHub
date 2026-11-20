@@ -1,11 +1,12 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { escape } from 'entities/escape';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDuration } from '@/utils/time';
 
 export const route: Route = {
     path: '/explore/:type',
@@ -162,14 +163,6 @@ function resolveFlightText(value: string | undefined, records: Map<string, strin
     return value === '$undefined' ? undefined : value;
 }
 
-function parseDuration(duration?: string): number | undefined {
-    if (!duration) {
-        return;
-    }
-    const parts = duration.split(':').map(Number);
-    return parts.every((part) => Number.isFinite(part) && part >= 0) ? parts.reduce((total, part) => total * 60 + part, 0) : undefined;
-}
-
 function toEnclosureType(linkType?: string): string | undefined {
     switch (linkType) {
         case 'mp3':
@@ -178,6 +171,8 @@ function toEnclosureType(linkType?: string): string | undefined {
             return 'audio/mp4';
         case 'mp4':
             return 'video/mp4';
+        default:
+            return;
     }
 }
 
@@ -198,5 +193,7 @@ function toEpisodeLanguage(language?: string | null): DataItem['language'] {
             return 'cs';
         case 'German':
             return 'de';
+        default:
+            return;
     }
 }

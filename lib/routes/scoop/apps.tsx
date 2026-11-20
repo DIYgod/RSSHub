@@ -6,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const orderbys = (desc: string) => {
     const base = {

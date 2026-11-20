@@ -1,9 +1,8 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt();
 
@@ -39,7 +38,7 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 description: md.render(item.content),
-                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
                 author: item.from?.nickname || item.from?.username,
                 link: `https://hackertalk.net/posts/${item.id}`,
             };

@@ -4,7 +4,7 @@ import { escapeAttribute, escapeText } from 'entities';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const videoAPI = 'https://api.ruguoapp.com/1.0/mediaMeta/play?type=ORIGINAL_POST';
 const topicDataHanding = (data, ctx) =>
@@ -195,9 +195,8 @@ const constructTopicEntry = async (ctx, url) => {
     return data;
 };
 
-function parseCreatedAt(value?: string): Date | undefined {
-    const date = value ? parseDate(value) : undefined;
-    return date && Number.isFinite(date.getTime()) ? date : undefined;
+function parseCreatedAt(value?: string): Temporal.Instant | undefined {
+    return value ? parseDate(value) : undefined;
 }
 
 export { constructTopicEntry, parseCreatedAt, topicDataHanding };

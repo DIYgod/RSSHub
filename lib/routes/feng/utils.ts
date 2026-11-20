@@ -7,11 +7,13 @@ import got from '@/utils/got';
 const apiUrl = 'https://api.wfdata.club';
 const baseUrl = 'https://www.feng.com';
 const KEY = '2b7e151628aed2a6';
+// The thread list keeps threads the forum has deleted (内容已被删除); their detail answers this code
+const threadDeleted = 1047;
 
 // https://juejin.cn/post/6844904066468806664
 const getXRequestId = (apiUrl) => {
     const path = new URL(apiUrl).pathname; // split search params
-    const plainText = CryptoJS.enc.Utf8.parse('url=' + path + '$time=' + Date.now() + '000000');
+    const plainText = CryptoJS.enc.Utf8.parse('url=' + path + '$time=' + Temporal.Now.instant().epochMilliseconds + '000000');
     const iv = CryptoJS.enc.Utf8.parse(KEY);
     const encrypted = CryptoJS.AES.encrypt(plainText, iv, {
         iv,
@@ -71,11 +73,11 @@ const getThread = (tid, topicId) => {
                 'X-Request-Id': getXRequestId(url),
             },
         });
-        if (response.data.status.code !== 0) {
+        if (response.data.status.code !== 0 && response.data.status.code !== threadDeleted) {
             throw new Error(`The forum did not provide thread ${tid}: ${response.data.status.message} (code ${response.data.status.code}). Check that ${baseUrl}/post/${tid} is public.`);
         }
         return response.data;
     });
 };
 
-export { baseUrl, getForumMeta, getThread, getThreads };
+export { baseUrl, getForumMeta, getThread, getThreads, threadDeleted };

@@ -1,15 +1,14 @@
-import { createElement } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { parseDate } from '@/utils/parse-date';
+import { createElement } from '@/utils/jsx';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
-const getPublicationDate = (value?: string | number | Date): Date | undefined => {
-    if ((typeof value !== 'string' && typeof value !== 'number' && !(value instanceof Date)) || (typeof value === 'string' && !value.trim())) {
+const getPublicationDate = (value?: string | number): Temporal.Instant | undefined => {
+    if ((typeof value !== 'string' && typeof value !== 'number') || (typeof value === 'string' && !value.trim())) {
         return undefined;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY');
 };
 
 const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
@@ -92,7 +91,7 @@ const renderReplyContext = (tweet) => {
     return renderToString(
         createElement(
             'div',
-            { class: 'rsshub-reply-context' },
+            { className: 'rsshub-reply-context' },
             ...parents.map((parent) =>
                 createElement(
                     'blockquote',
@@ -335,14 +334,14 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                 quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
-                if (readable) {
-                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str || quoteData.conversation_id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
+                if (author.screen_name && quoteData.id_str) {
+                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
                         author.screen_name
-                    }/status/${quoteData.id_str || quoteData.conversation_id_str}</a></small>`;
+                    }/status/${quoteData.id_str}</a></small>`;
                 }
                 const quoteDate = getPublicationDate(quoteData.created_at);
                 if (showTimestampInDescription && quoteDate) {
-                    quote += '<br><small>' + quoteDate;
+                    quote += `<br><small>${quoteDate}`;
                     quote += '</small>';
                     if (readable) {
                         quote += `<br clear='both' /><div style='clear: both'></div>`;
@@ -574,6 +573,9 @@ const keepOnlyMedia = function (tweets) {
     const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };
+
+// Profiles rarely change, and every timeline fetch looks one up first
+export const TWITTER_USER_CACHE_EXPIRE = 24 * 60 * 60;
 
 export const getTwitterUserCacheKey = (id: string, operationName: string, params: Record<string, string | number | boolean | undefined> | undefined) => `twitter:${id}:${operationName}:${JSON.stringify(params)}`;
 

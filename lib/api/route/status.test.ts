@@ -1,10 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import xxhash from 'xxhash-wasm';
 
-const { h64ToString } = await xxhash();
+import { routeCacheKey } from '@/utils/cache/route-key';
 
 const requestPath = '/github/comments/DIYgod/RSSHub/20768';
-const cacheKey = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + ':rss');
+const cacheKey = 'rsshub:koa-redis-cache:' + routeCacheKey({ path: requestPath, format: 'rss', filtered: false, origin: 'http://localhost', prefix: '', query: '' });
 
 afterEach(() => {
     delete process.env.CACHE_TYPE;

@@ -25,7 +25,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Following Works',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {

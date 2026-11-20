@@ -1,12 +1,13 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { joinUrl } from './utils';
 
@@ -81,7 +82,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $(elem.children[0]).text(),
-            pubDate: $(elem.children[1]).text().trim() ? timezone(parseDate($(elem.children[1]).text()), 8) : undefined,
+            pubDate: $(elem.children[1]).text().trim() ? parseDate($(elem.children[1]).text(), 8) : undefined,
             link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
         }));
 

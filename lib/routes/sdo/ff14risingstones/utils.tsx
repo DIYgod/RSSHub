@@ -4,8 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getDutiesRecruitDetail, getFreeCompanyRecruitDetail, getNoviceNetworkRecruitDetail, getPostsDetail } from './api';
 import { DynamicSource, INDEX_URL, JOB, NoviceNetworkIdentity, PLAY_STYLE } from './constant';
@@ -123,8 +122,8 @@ export async function generatePostFeeds(posts: UserPost[]) {
                 title: `[${post.part_name}] ${post.title}`,
                 link: `${INDEX_URL}#/post/detail/${post.posts_id}`,
                 description: detail?.contentInfo.content,
-                pubDate: timezone(parseDate(post.created_at), 8),
-                updated: detail?.updated_at ? timezone(parseDate(detail.updated_at), 8) : undefined,
+                pubDate: parseDate(post.created_at, 8),
+                updated: detail?.updated_at ? parseDate(detail.updated_at, 8) : undefined,
                 guid: `sdo/ff14risingstones/posts:${post.posts_id}`,
                 author: `${post.character_name}@${post.group_name}`,
             } satisfies DataItem;
@@ -283,7 +282,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(dynamic.created_at), 8),
+                pubDate: parseDate(dynamic.created_at, 8),
                 guid: `sdo/ff14risingstones/dynamics:${dynamic.id}`,
                 author: `${dynamic.character_name}@${dynamic.group_name}`,
                 description,

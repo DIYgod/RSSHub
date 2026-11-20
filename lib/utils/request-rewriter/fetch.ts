@@ -1,8 +1,9 @@
 import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
+import { tryGetContext } from 'hono/context-storage';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import type { Agent, Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
+import type { Agent, Dispatcher, RequestInfo, RequestInit } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';
@@ -10,6 +11,8 @@ import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header
 import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
+import limitResponseSize from '@/utils/request-rewriter/limit-response-size';
+import { publicLookup, publicOnly as publicOnlyInterceptor } from '@/utils/request-rewriter/public-only';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -17,9 +20,49 @@ const limiter = new RateLimiterMemory({
     execEvenly: true,
 });
 
+const maxQueueSize = 4800;
+
 const limiterQueue = new RateLimiterQueue(limiter, {
-    maxQueueSize: 4800,
+    maxQueueSize,
 });
+
+// The queue is first-in-first-out and shared by the whole process, so one incoming request may only
+// hold a few places in it at a time. Otherwise a route following a long upstream list makes the
+// outgoing requests of every other route wait until the last item of that list has been requested.
+const maxPlacesPerRequest = limiter.points;
+const places = new WeakMap<object, { held: number; waiting: Array<() => void> }>();
+
+const removeToken = async () => {
+    const ctx = tryGetContext();
+    if (!ctx) {
+        return limiterQueue.removeTokens(1);
+    }
+    let place = places.get(ctx);
+    if (!place) {
+        place = { held: 0, waiting: [] };
+        places.set(ctx, place);
+    }
+    if (place.held < maxPlacesPerRequest) {
+        place.held++;
+    } else if (place.waiting.length < maxQueueSize) {
+        const { waiting } = place;
+        await new Promise<void>((resolve) => {
+            waiting.push(resolve);
+        });
+    } else {
+        throw new Error(`Number of requests reached it's maximum ${maxQueueSize}`);
+    }
+    try {
+        return await limiterQueue.removeTokens(1);
+    } finally {
+        const next = place.waiting.shift();
+        if (next) {
+            next();
+        } else {
+            place.held--;
+        }
+    }
+};
 
 undici.setGlobalDispatcher(
     new undici.Agent({
@@ -29,22 +72,40 @@ undici.setGlobalDispatcher(
 
 const http1Only: Dispatcher.DispatcherComposeInterceptor = (dispatch) => (opts, handler) => dispatch({ ...opts, allowH2: false } as Dispatcher.DispatchOptions, handler);
 
-const tlsAgents = new Map<SecureVersion, Agent>();
-const getTlsAgent = (minVersion: SecureVersion) => {
-    let agent = tlsAgents.get(minVersion);
+// undici only drops Authorization, Proxy-Authorization and Cookie when a redirect leaves the origin,
+// credentials in custom headers have to be dropped here, once per hop
+const dropCredentialHeaders =
+    (origin: string, names: string[]): Dispatcher.DispatcherComposeInterceptor =>
+    (dispatch) => {
+        const credentialHeaders = new Set(names.map((name) => name.toLowerCase()));
+        let crossOrigin = false;
+        return (opts, handler) => {
+            crossOrigin ||= new URL(opts.origin!).origin !== origin;
+            if (!crossOrigin) {
+                return dispatch(opts, handler);
+            }
+            const headers = Object.fromEntries(Object.entries(opts.headers as Record<string, string | string[]>).filter(([name]) => !credentialHeaders.has(name.toLowerCase())));
+            return dispatch({ ...opts, headers }, handler);
+        };
+    };
+
+const agents = new Map<string, Agent>();
+const getAgent = (minVersion?: SecureVersion, publicOnly?: boolean, ecdhCurve?: string) => {
+    const key = `${minVersion}:${publicOnly}:${ecdhCurve}`;
+    let agent = agents.get(key);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily } });
-        tlsAgents.set(minVersion, agent);
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, ecdhCurve, autoSelectFamily: config.requestAutoSelectFamily, lookup: publicOnly ? publicLookup : undefined } });
+        agents.set(key, agent);
     }
     return agent;
 };
 
-export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
+export const registerCustomHeader = async (headers: Iterable<[string, string]>) => {
     if (process.env.NODE_ENV !== 'dev') {
         return;
     }
-    const { useRegisterRequest } = await import('node-network-devtools');
-    useRegisterRequest((req) => {
+    const { useRegisterRequest: registerRequest } = await import('node-network-devtools');
+    registerRequest((req) => {
         for (const [key, value] of headers) {
             req.requestHeaders[key] = value;
         }
@@ -52,9 +113,21 @@ export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
     });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion }) => {
+const wrappedFetch: typeof undici.fetch = async (
+    input: RequestInfo,
+    init?: RequestInit & {
+        headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
+        allowH2?: boolean;
+        minVersion?: SecureVersion;
+        ecdhCurve?: string;
+        credentialHeaders?: string[];
+        publicOnly?: boolean;
+        maxResponseSize?: number;
+    }
+) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
+    const publicOnly = !!init?.publicOnly && !config.feature.allow_user_supply_unsafe_domain;
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
@@ -93,7 +166,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     }
 
     if (config.enableRemoteDebugging) {
-        await useCustomHeader(request.headers);
+        await registerCustomHeader(request.headers);
     }
 
     // proxy
@@ -107,61 +180,35 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
-            const currentProxy = proxy.getCurrentProxy();
-            if (currentProxy) {
-                const dispatcher = proxy.getDispatcherForProxy(currentProxy, init?.minVersion);
-                if (dispatcher) {
-                    options.dispatcher = dispatcher;
-                    logger.debug(`Proxying request via ${currentProxy.uri}: ${request.url}`);
-                }
+            const dispatcher = await proxy.getDispatcher(request.url, init?.minVersion, init?.ecdhCurve);
+            if (dispatcher) {
+                options.dispatcher = dispatcher;
+                logger.debug(`Proxying request: ${request.url}`);
             }
         }
     }
 
-    if (init?.minVersion && !options.dispatcher && !init.dispatcher) {
-        options.dispatcher = getTlsAgent(init.minVersion);
+    if ((init?.minVersion || init?.ecdhCurve || publicOnly) && !options.dispatcher && !init?.dispatcher) {
+        options.dispatcher = getAgent(init?.minVersion, publicOnly, init?.ecdhCurve);
     }
 
-    await limiterQueue.removeTokens(1);
+    const interceptors = [init?.allowH2 === false && http1Only, publicOnly && publicOnlyInterceptor, !!init?.credentialHeaders?.length && dropCredentialHeaders(new URL(request.url).origin, init.credentialHeaders)].filter(
+        (interceptor): interceptor is Dispatcher.DispatcherComposeInterceptor => !!interceptor
+    );
 
-    const maxRetries = proxy.multiProxy?.allProxies.length || 1;
+    await removeToken();
+    await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
 
-    const attemptRequest = async (attempt: number): Promise<Response> => {
-        await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
-        try {
-            if (init?.allowH2 === false) {
-                return await undici.fetch(request, {
-                    ...options,
-                    dispatcher: (options.dispatcher ?? init.dispatcher ?? undici.getGlobalDispatcher()).compose(http1Only),
-                });
-            }
-            return await undici.fetch(request, options);
-        } catch (error) {
-            if (options.dispatcher && proxy.multiProxy && attempt < maxRetries - 1) {
-                const currentProxy = proxy.getCurrentProxy();
-                if (currentProxy) {
-                    logger.warn(`Request failed with proxy ${currentProxy.uri}, trying next proxy: ${error}`);
-                    proxy.markProxyFailed(currentProxy.uri);
-
-                    const nextProxy = proxy.getCurrentProxy();
-                    if (nextProxy && nextProxy.uri !== currentProxy.uri) {
-                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy, init?.minVersion);
-                        if (nextDispatcher) {
-                            options.dispatcher = nextDispatcher;
-                        }
-                        logger.debug(`Retrying request with proxy ${nextProxy.uri}: ${request.url}`);
-                        return attemptRequest(attempt + 1);
-                    }
-                    logger.warn('No more proxies available, trying without proxy');
-                    options.dispatcher = init?.minVersion ? getTlsAgent(init.minVersion) : undefined;
-                    return attemptRequest(attempt + 1);
-                }
-            }
-            throw error;
-        }
-    };
-
-    return attemptRequest(0);
+    if (interceptors.length > 0) {
+        return limitResponseSize(
+            await undici.fetch(request, {
+                ...options,
+                dispatcher: (options.dispatcher ?? init?.dispatcher ?? undici.getGlobalDispatcher()).compose(...interceptors),
+            }),
+            init?.maxResponseSize
+        );
+    }
+    return limitResponseSize(await undici.fetch(request, options), init?.maxResponseSize);
 };
 
 export default wrappedFetch;

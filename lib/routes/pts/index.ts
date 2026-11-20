@@ -5,8 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -80,8 +79,8 @@ export async function handler(ctx) {
                     .map((e) => ({ name: content(e).text() }));
                 const published = content('.article-time .mr-2 time').text();
                 const modified = content('.article-time span:nth-child(2) time').text();
-                const pubDate = published ? timezone(parseDate(published), 8) : undefined;
-                const updated = modified ? timezone(parseDate(modified), 8) : undefined;
+                const pubDate = published ? parseDate(published, 8) : undefined;
+                const updated = modified ? parseDate(modified, 8) : undefined;
                 const category = content('.tag-list')
                     .first()
                     .find('.blue-tag')

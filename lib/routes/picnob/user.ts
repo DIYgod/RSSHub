@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseRelativeDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
+import { parseRelativeDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/user/:id/:type?',
@@ -51,7 +53,7 @@ async function handler(ctx) {
         const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' ? route.continue() : route.abort();
         });
 
         await page.goto(profileUrl, {
@@ -71,7 +73,7 @@ async function handler(ctx) {
                 const downloadUrl = new URL($item.find('.downbtn').attr('href')!, baseUrl);
                 downloadUrl.searchParams.delete('dl');
                 const fullImage = new URL(image.attr('data-src')!);
-                fullImage.searchParams.set('o', Buffer.from(downloadUrl.href).toString('base64'));
+                fullImage.searchParams.set('o', Buffer.from(downloadUrl.href).toBase64());
                 const sum = $item.find('.sum');
                 const title = sum.text().split('\n', 1)[0] || alt;
                 const content = sum.html()?.replaceAll('\n', '<br>') || alt;
@@ -80,21 +82,23 @@ async function handler(ctx) {
                 return {
                     title,
                     description: `<img src="${isVideo ? image.attr('data-src') : fullImage.href}"><br>${content}`,
-                    link: `${baseUrl}${coverLink}`,
+                    link: new URL(coverLink!, baseUrl).href,
                     guid: coverLink?.split('/', 3)?.[2],
                     pubDate: parseRelativeDate($item.find('.time .txt').text()),
                     slideOrVideo: $item.find('.corner').length,
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link, async () => {
-                    if (item.slideOrVideo) {
+                    // only follow links on the site itself
+                    if (item.slideOrVideo && isOnSite(item.link, 'picnob.com')) {
                         const page = await context.newPage();
                         await page.route('**/*', (route) => {
                             const request = route.request();
-                            request.resourceType() === 'document' ? route.continue() : route.abort();
+                            return request.resourceType() === 'document' ? route.continue() : route.abort();
                         });
 
                         await page.goto(item.link, {
@@ -102,6 +106,7 @@ async function handler(ctx) {
                         });
                         logger.http(`Requesting ${item.link}`);
                         const html = await page.content();
+                        await page.close();
                         const $ = load(html);
 
                         const media = $('.slide-item').length
@@ -124,8 +129,8 @@ async function handler(ctx) {
                     }
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

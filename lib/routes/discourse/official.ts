@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
@@ -33,14 +34,18 @@ export const route: Route = {
 async function handler(ctx) {
     const discourseConfig: unknown = getConfig(ctx);
     const { link, key } = discourseConfig as { link: string; key: string };
-    const path = ctx.req.param('path');
+    const segments = ctx.req.param('path').split('/');
+    if (segments.some((segment) => ['', '.', '..'].includes(segment))) {
+        throw new InvalidParameterError('Invalid path');
+    }
 
-    const url = `${link}/${path}.rss`;
+    const url = `${link}/${segments.map((segment) => encodeURIComponent(segment)).join('/')}.rss`;
 
     const feed = await RSSParser.parseString(
         (
             await got(url, {
                 headers: key ? { 'User-Api-Key': key } : {},
+                credentialHeaders: ['User-Api-Key'],
             })
         ).data
     );

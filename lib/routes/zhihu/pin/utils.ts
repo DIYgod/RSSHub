@@ -1,4 +1,4 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const generateDescription = (target, description = '') => {
     for (const item of target.content) {
@@ -35,7 +35,7 @@ export const generateData = (data) =>
     data.map((item) => {
         const target = item.target ?? item;
         const pubDate = parseDate(target.created, 'X');
-        const updated = target.updated !== undefined && target.updated !== null && target.updated !== '' ? parseDate(target.updated, 'X') : undefined;
+        const updated = [undefined, null, ''].includes(target.updated) ? undefined : parseDate(target.updated, 'X');
         const author = target.author.name;
         const title = target.excerpt_title;
         const link = `https://www.zhihu.com/pin/${target.id}`;

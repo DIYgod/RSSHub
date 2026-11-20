@@ -1,16 +1,18 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import timezone from '@/utils/timezone';
+import { parseDateStrict, parseRelativeDate } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -21,10 +23,9 @@ function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     return copy;
 }
 
-const parseSourceClock = (value: string): Date | undefined => {
-    const match = value.match(/\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/);
-    const date = match ? parseDate(match[0], ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm:ss', 'YYYY-M-D HH:mm'], true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+const parseSourceClock = (value: string): Temporal.Instant | undefined => {
+    const match = /\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/.exec(value);
+    return match ? parseDateStrict(match[0], ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm:ss', 'YYYY-M-D HH:mm'], 8) : undefined;
 };
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
@@ -67,12 +68,22 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let queryParams: ParsedQuery = {};
+    const queryParams: ParsedQuery = {};
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];
     } else {
-        queryParams = queryString.parse(path);
+        // only the documented keys, fid and typeid
+        const { fid, typeid } = queryString.parse(path);
+        const documented = Object.entries({ fid, typeid });
+        for (const [key, value] of documented) {
+            if (typeof value === 'string' && /^\d+$/.test(value)) {
+                queryParams[key] = value;
+            }
+        }
+    }
+    if (!queryParams.fid) {
+        throw new InvalidParameterError('Invalid path');
     }
     queryParams.mod = 'forumdisplay';
     queryParams.orderby = 'dateline';
@@ -115,9 +126,11 @@ async function handler(ctx) {
                 title: $item.find('a.xst').text(),
                 link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
             };
-        });
+        })
+        // only send the cookie to the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
     items = await Promise.all(
         items.map(async (item) => {

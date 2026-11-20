@@ -7,8 +7,8 @@ import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate, toInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/:bo_table',
@@ -104,9 +104,9 @@ async function handler(ctx: Context): Promise<Data> {
         comments: article.commentCount,
     }));
 
-    const hasDates = items.every((item) => item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()));
+    const hasDates = items.every((item) => item.pubDate && toInstant(item.pubDate));
     if (ctx.req.query('sorted') !== 'false' && hasDates) {
-        items.sort((a, b) => parseDate(b.pubDate!).getTime() - parseDate(a.pubDate!).getTime());
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
 
     return {

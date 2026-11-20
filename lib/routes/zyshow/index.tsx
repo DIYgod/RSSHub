@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -62,12 +62,11 @@ async function handler(ctx) {
 }
 
 function getBroadcastDate(title: string) {
-    const sourceDate = title.match(/(\d{8})$/)?.[1];
+    const sourceDate = /(\d{8})$/.exec(title)?.[1];
     if (!sourceDate) {
         return;
     }
-    const date = parseDate(sourceDate, 'YYYYMMDD', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(sourceDate, 'YYYYMMDD');
 }
 
 const ZyshowDescription = ({ subject }: { subject: string }) => <p>{subject}</p>;

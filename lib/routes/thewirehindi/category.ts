@@ -1,7 +1,7 @@
 import type { Data, Route } from '@/types';
-import got from '@/utils/got';
+import parser from '@/utils/rss-parser';
 
-import { mapPostToItem } from './utils';
+import { mapFeedItem } from './utils';
 
 const categories = [
     { value: 'interview', label: 'इंटरव्यू', id: 92820 },
@@ -57,20 +57,19 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { category } = ctx.req.param();
-    const categoryData = categories.find((cat) => cat.value === category);
+    const categoryData = categories.find((cat) => cat.value === category || cat.label === category);
 
     if (!categoryData) {
         throw new Error(`Category "${category}" not found`);
     }
 
-    const apiUrl = `https://thewirehindi.com/wp-json/wp/v2/posts?categories=${categoryData.id}&_embed`;
-    const { data } = await got(apiUrl);
-
-    const items = data.map((v) => mapPostToItem(v));
+    const categoryUrl = `https://thewirehindi.com/?cat=${categoryData.id}`;
+    const feed = await parser.parseURL(`${categoryUrl}&feed=rss2`);
+    const items = feed.items.map((item) => mapFeedItem(item)).filter((item) => item.title);
 
     return {
         title: `The Wire Hindi - ${categoryData.label}`,
-        link: `https://thewirehindi.com/category/${category}/`,
+        link: feed.link ?? categoryUrl,
         item: items,
         description: `Latest news from The Wire Hindi - ${categoryData.label} category`,
         logo: 'https://thewirehindi.com/wp-content/uploads/2023/05/cropped-The-wire-32x32.jpeg',

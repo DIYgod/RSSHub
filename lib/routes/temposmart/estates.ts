@@ -4,10 +4,10 @@ import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import type { ListingExtra } from './utils';
 import { bracketNotes, clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseMonthsSum, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from './utils';
@@ -120,7 +120,7 @@ const parseList = ($: CheerioAPI): ListCard[] =>
                 key_money_months: null,
                 fixtures_transfer_jpy: null,
                 condition: parseCondition(purpose, normalizedTitle),
-                prev_business: purpose !== null && purpose !== 'スケルトン' && purpose !== 'その他' ? purpose : null,
+                prev_business: [null, 'スケルトン', 'その他'].includes(purpose) ? null : purpose,
                 heavy_food_ok: parseHeavyFood(normalizedTitle),
                 business_limit: notes.length > 0 ? notes.join(' / ') : null,
                 listed_at: null,
@@ -236,15 +236,22 @@ const handler = async (ctx): Promise<Data> => {
     const items = await pMap(
         cards,
         async (card): Promise<DataItem> => {
-            const detail = await cache.tryGet<DetailFields>(`temposmart:detail:v2:${card.link}`, () => fetchDetail(card.link));
-            const extra = mergeDetail(card.extra, detail);
+            let extra = card.extra;
+            try {
+                const detail = await cache.tryGet<DetailFields>(`temposmart:detail:v2:${card.link}`, () => fetchDetail(card.link));
+                extra = mergeDetail(card.extra, detail);
+            } catch (error) {
+                // One unreadable detail page must not cost the other listings: this one keeps its list-page
+                // fields (the detail-only ones stay null), and nothing is cached, so the next poll asks again.
+                logger.warn(`temposmart: detail page ${card.link} failed, list fields only: ${String(error)}`);
+            }
             return {
                 title: card.title,
                 link: card.link,
                 guid: card.link,
                 category: extra.tags,
                 // UTC midnight represents the source calendar day, not a publication timestamp.
-                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 0),
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 0),
                 description: summarize(extra),
                 _extra: extra,
             };

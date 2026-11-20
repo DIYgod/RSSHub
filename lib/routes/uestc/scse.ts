@@ -3,9 +3,10 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDateStrict } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseIndexUrl = 'https://www.scse.uestc.edu.cn/index.htm';
 const host = 'https://www.scse.uestc.edu.cn/';
@@ -66,7 +67,7 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+                return isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
             });
         },
     });
@@ -90,11 +91,14 @@ async function handler() {
                             .filter((index, element) => element.nodeType === 3)
                             .text();
                         const newsLink = new URL($item.find('a[href]').attr('href')!, host).href;
-                        const { date } = await cache.tryGet(`uestc:scse:date:v1:${newsLink}`, async () => {
-                            categoryDates ??= getCategoryDates(page, categoryUrl);
-                            return { date: (await categoryDates)[newsLink] };
-                        });
-                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YYYY-MM-DD', true) : undefined;
+                        // only follow links on the site itself
+                        const { date } = isOnSite(categoryUrl, 'scse.uestc.edu.cn')
+                            ? await cache.tryGet(`uestc:scse:date:v1:${newsLink}`, async () => {
+                                  categoryDates ??= getCategoryDates(page, categoryUrl);
+                                  return { date: (await categoryDates)[newsLink] };
+                              })
+                            : { date: undefined };
+                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                         let prefix = '【其他】';
                         for (const code in prefixes) {
                             if (newsLink.search('info/' + code) === -1) {
@@ -107,7 +111,7 @@ async function handler() {
                         return {
                             title: newsTitle,
                             link: newsLink,
-                            pubDate: parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                            pubDate: parsedDate,
                         };
                     },
                     { concurrency: 3 }

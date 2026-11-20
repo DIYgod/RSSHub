@@ -4,8 +4,7 @@ import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseJpy, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://www.inshokuten.com';
 
@@ -112,7 +111,7 @@ const parseList = (html: string): DataItem[] => {
                 title,
                 link,
                 guid: link,
-                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
                 description: [raw.comment, summarize(extra)].filter(Boolean).join(' / '),
                 image: image && !image.includes('no_image') ? image : undefined,
                 _extra: extra,

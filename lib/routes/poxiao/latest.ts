@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.poxiao.com';
 
@@ -49,7 +49,7 @@ async function handler(ctx) {
         .map((element) => {
             const anchor = $(element).find('a[href]').last();
             const date = $(element).find('.date').text();
-            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: date ? parseDateInTimezone(date, 8) : undefined };
+            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: date ? parseDate(date, 8) : undefined };
         })
         .filter((item) => {
             if (seen.has(item.link)) {

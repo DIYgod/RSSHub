@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/cssearch/latest/:webVpn/:key',
@@ -47,13 +46,13 @@ async function handler(ctx: Context) {
             const $el = $(el);
             const href = $el.attr('href')!;
             const calendarDate = new URL(href, baseUrl).pathname.match(/^\/art\/(\d{4}\/\d{1,2}\/\d{1,2})\//)?.[1];
-            const pubDate = calendarDate ? parseDate(calendarDate, ['YYYY/M/D', 'YYYY/MM/DD'], true) : undefined;
+            const pubDate = calendarDate ? parseDateStrict(calendarDate, ['YYYY/M/D', 'YYYY/MM/DD'], 8) : undefined;
             const title = $el.text();
 
             return {
                 title,
                 link: vpnBool === 0 ? href : vpnUrl + href.slice(24),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                pubDate,
                 description: '<br/>' + $el.attr('title') + '<br/>部分全文内容需使用校园网或VPN获取',
                 guid: href,
             };

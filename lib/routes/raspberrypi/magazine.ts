@@ -6,7 +6,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -59,7 +59,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const pdfPath = article.find('a[href$="/pdf"]').attr('href');
                 let enclosureUrl: string | undefined;
                 if (pdfPath) {
-                    const pdfPageUrl = new URL(pdfPath, item.link!).href;
+                    const pdfPageUrl = new URL(pdfPath, item.link).href;
                     const pageSource1 = await ofetch(pdfPageUrl);
                     const pdfPage = load(pageSource1);
                     const downloadPath = pdfPage('main a[href$="/pdf/download"]').attr('href');
@@ -73,7 +73,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 return {
                     title,
                     description,
-                    pubDate: date ? parseDate(date) : undefined,
+                    pubDate: date ? parseDate(date, 'YYYY-MM-DD HH:mm:ss') : undefined,
                     content: { html: description },
                     image,
                     banner: image,

@@ -1,6 +1,6 @@
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { SearchResult } from './types';
 import { GAMMA_API } from './types';

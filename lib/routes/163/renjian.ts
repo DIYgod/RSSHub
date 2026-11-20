@@ -4,9 +4,8 @@ import iconv from 'iconv-lite';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     texie: '特写',
@@ -95,7 +94,7 @@ async function handler(ctx) {
                         .text()
                         .match(/renjian_author = '(.*)'/)![1],
                     description: content('#endText').html() ?? content('#content').html(),
-                    pubDate: timezone(parseDate(content('.pub_time').text() ?? content('.post_info').text().split('来源:', 1)[0].trim()), 8),
+                    pubDate: parseDate(content('.pub_time').text() ?? content('.post_info').text().split('来源:', 1)[0].trim(), 8),
                 };
             })
         )

@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
@@ -16,11 +15,11 @@ const parseArticle = (item) =>
 
             item.description = lis.html()! + $('.L_title').html()! + $('.GmL_1').html();
             item.category = category;
-            item.pubDate = timezone(parseDate(pubDate), 8);
+            item.pubDate = parseDate(pubDate, 8);
             item.author = author;
         } else {
             item.description = $('.news_warp_center').html();
-            item.pubDate = timezone(parseDate($('.time span').text()), 8);
+            item.pubDate = parseDate($('.time span').text(), 8);
             item.author = $('.intem li:nth-child(2) .name').text().trim();
         }
 

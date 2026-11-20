@@ -1,6 +1,6 @@
 import type { Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type CommunityEntryType = 'plugin' | 'theme';
 
@@ -56,7 +56,7 @@ export async function buildCommunityFeed(type: CommunityEntryType): Promise<Data
 }
 
 export function getTitle(path: string): string {
-    const match = path.match(titleRegex);
+    const match = titleRegex.exec(path);
     return match ? match[1] : '';
 }
 

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/changelog',
@@ -47,7 +47,7 @@ async function handler(): Promise<Data> {
                 title: `${month} - ${title}`,
                 description: $section.html(),
                 link: url,
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
                 guid: `webcatalog-${month}-${title}`,
             };
         });

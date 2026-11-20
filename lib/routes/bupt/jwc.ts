@@ -3,9 +3,9 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { fetchWithPage } from '@/utils/playwright-request';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
         throw new Error('Invalid type parameter');
     }
 
-    const { context, page, destroy } = await getPlaywrightPage(currentUrl, { noGoto: true, closeTimeout: 0 });
+    const { page, destroy } = await getPlaywrightPage(currentUrl, { noGoto: true, closeTimeout: 0 });
     try {
         await page.route('**/*', (request) => (['document', 'script'].includes(request.request().resourceType()) ? request.continue() : request.abort()));
         await page.goto(currentUrl, { waitUntil: 'networkidle', timeout: 12000 });
@@ -78,7 +78,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $link.contents().not('span').text(),
                     link: rootUrl + '/' + $link.attr('href'),
-                    pubDate: timezone(parseDate($link.find('span').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate($link.find('span').text(), 'YYYY-MM-DD', 8),
                 };
             })
             .filter((item) => item !== null);
@@ -87,8 +87,8 @@ async function handler(ctx: Context) {
         const items = await Promise.all(
             entries.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const detailResponse = await context.request.get(item.link, { timeout: 12000 });
-                    const detailContent = await detailResponse.text();
+                    const detailResponse = await fetchWithPage(page, item.link, { timeout: 12000 });
+                    const detailContent = detailResponse.text;
                     const content = load(detailContent);
 
                     item.description = content('.v_news_content').html();

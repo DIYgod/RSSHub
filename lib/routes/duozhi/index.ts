@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -19,13 +18,15 @@ const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://www.duozhi.com';
-    const targetUrl: string = new URL(category && category.endsWith('/') ? category : category ? `${category}/` : '', baseUrl).href;
+    const targetUrl = `${baseUrl}/${category && category.endsWith('/') ? category : category ? `${category}/` : ''}`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('div.post-item')
+        // entries are siblings; one nested in another would only read the same subtree again
+        .not('div.post-item div.post-item')
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -46,13 +47,12 @@ const handler = async (ctx: Context): Promise<Data> => {
                       ]
                     : undefined,
             });
-            const pubDateStr: string | undefined = $el.find('div.post-attr').text().split(/\|/, 1)[0]?.trim();
+            const attrText: string = $el.find('div.post-attr').first().text();
+            const pubDateStr: string | undefined = attrText.split(/\|/, 1)[0]?.trim();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('span.post-tag a.link-tag').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const authors: DataItem['author'] = $el
-                .find('div.post-attr')
-                .text()
+            const authors: DataItem['author'] = attrText
                 .split(/by/)
                 ?.pop()
                 ?.split(/\s+/)
@@ -67,7 +67,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 title,
                 description,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
                 author: authors,
                 content: {
@@ -84,12 +84,12 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     if (ctx.req.query('sorted') === 'false') {
         items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()))) {
-        items.sort((a, b) => parseDate(b.pubDate!).getTime() - parseDate(a.pubDate!).getTime());
+    } else if (items.every((item) => item.pubDate)) {
+        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         // List dates have day precision; include the entire boundary day before detail timestamps are sorted.
         const boundaryDate = items[limit - 1]?.pubDate;
         if (boundaryDate) {
-            items = items.filter((item) => parseDate(item.pubDate!).getTime() >= parseDate(boundaryDate).getTime());
+            items = items.filter((item) => Temporal.Instant.compare(item.pubDate as Temporal.Instant, boundaryDate as Temporal.Instant) >= 0);
         }
     } else {
         items = items.slice(0, Math.max(30, limit));
@@ -99,6 +99,11 @@ const handler = async (ctx: Context): Promise<Data> => {
         items,
         (item) => {
             if (!item.link) {
+                return item;
+            }
+            // only follow links on the site itself
+            const { protocol, hostname } = new URL(item.link);
+            if (!['http:', 'https:'].includes(protocol) || (hostname !== 'duozhi.com' && !hostname.endsWith('.duozhi.com'))) {
                 return item;
             }
 
@@ -120,12 +125,10 @@ const handler = async (ctx: Context): Promise<Data> => {
                     intro: $$('div.subject-desc').text(),
                     description: $$('div.subject-content').html() ?? undefined,
                 });
-                const pubDateStr: string | undefined = $$('div.subject-meta')
-                    .text()
-                    ?.split(/发布/, 1)[0];
+                const pubDateStr: string | undefined = $$('div.subject-meta').text()?.split(/发布/, 1)[0];
                 const categories: string[] = [
                     ...new Set([
-                        ...(item.category ?? []),
+                        ...[item.category ?? []].flat(),
                         ...($$('meta[name="keywords"]')
                             .attr('content')
                             ?.split(',')
@@ -147,7 +150,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                     category: categories,
                     author: authors,
                     content: {

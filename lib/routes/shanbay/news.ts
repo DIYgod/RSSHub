@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface NewsArticle {
     id: string;
@@ -91,7 +90,7 @@ async function handler(ctx: Context) {
         async (article) => ({
             title: `${article.title_en} | ${article.title_cn}`,
             link: `${baseUrl}/articles/${article.id}`,
-            pubDate: timezone(parseDate(article.published_at), 8),
+            pubDate: parseDate(article.published_at, 8),
             category: [article.category.name, article.exam_level.name, article.sbay_level.name],
             author: `${article.source.name_en} (${article.source.name_cn})`,
             ...(await cache.tryGet(`${baseUrl}/articles/${article.id}`, async () => {

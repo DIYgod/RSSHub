@@ -4,6 +4,7 @@ import { config } from '@/config';
 import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import fetchWithPlaywrightRetry from '@/utils/playwright-fetch';
+import limitResponseSize from '@/utils/request-rewriter/limit-response-size';
 
 // Static browser headers (Chrome-like fingerprint)
 const STATIC_BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36';
@@ -22,7 +23,53 @@ const STATIC_BROWSER_HEADERS = {
 
 const originalFetch = fetch;
 
-const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+// The platform fetch keeps every request header when a redirect leaves the origin, even Authorization and Cookie,
+// so a request carrying a credential has its redirects followed here and the credential dropped once the origin changes
+const CREDENTIAL_HEADERS = ['authorization', 'proxy-authorization', 'cookie'];
+const REQUEST_BODY_HEADERS = ['content-encoding', 'content-language', 'content-location', 'content-length', 'content-type'];
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+const MAX_REDIRECTS = 20;
+
+const fetchWithSafeRedirect = async (request: Request, credentialHeaders: string[]): Promise<Response> => {
+    if (request.redirect !== 'follow' || credentialHeaders.every((header) => !request.headers.has(header))) {
+        return originalFetch(request);
+    }
+
+    let { method, headers } = request;
+    let body = request.body ? await request.arrayBuffer() : null;
+    let url = request.url;
+    for (let hop = 0; hop < MAX_REDIRECTS; hop++) {
+        // eslint-disable-next-line no-await-in-loop
+        const response = await originalFetch(new Request(url, { method, headers, body, redirect: 'manual', signal: request.signal }));
+        const location = response.headers.get('location');
+        if (!REDIRECT_STATUSES.has(response.status) || !location) {
+            return response;
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await response.body?.cancel();
+
+        // https://fetch.spec.whatwg.org/#http-redirect-fetch
+        const target = new URL(location, url);
+        headers = new Headers(headers);
+        if (target.origin !== new URL(url).origin) {
+            for (const header of credentialHeaders) {
+                headers.delete(header);
+            }
+        }
+        if (response.status === 303 || ((response.status === 301 || response.status === 302) && method === 'POST')) {
+            method = 'GET';
+            body = null;
+            for (const header of REQUEST_BODY_HEADERS) {
+                headers.delete(header);
+            }
+        }
+        logger.http(`Redirecting to ${target.href} for ${url}`);
+        url = target.href;
+    }
+    throw new TypeError('Too many redirects');
+};
+
+const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit & { credentialHeaders?: string[]; maxResponseSize?: number }): Promise<Response> => {
     const request = new Request(input, init);
 
     const requestUrl = new URL(request.url);
@@ -60,7 +107,8 @@ const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit): Promi
     }
 
     await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
-    return fetchWithPlaywrightRetry(request, originalFetch);
+    const credentialHeaders = [...CREDENTIAL_HEADERS, ...(init?.credentialHeaders ?? [])];
+    return limitResponseSize(await fetchWithPlaywrightRetry(request, (request) => fetchWithSafeRedirect(request, credentialHeaders)), init?.maxResponseSize);
 };
 
 export default wrappedFetch;

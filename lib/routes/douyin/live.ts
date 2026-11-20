@@ -1,13 +1,13 @@
-import { load } from 'cheerio';
-
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { queryToBoolean } from '@/utils/readable-social';
+import { formatDate } from '@/utils/time';
 
 import { getOriginAvatar } from './utils';
 
@@ -57,7 +57,7 @@ function getRoomData(room?: DouyinRoom, owner?: DouyinUser): RoomData | undefine
 }
 
 function parseRoomScript(script: string) {
-    const match = script.match(/^\s*self\.__pace_f\.push\((\[.*\])\);?\s*$/s);
+    const match = /^\s*self\.__pace_f\.push\((\[.*\])\);?\s*$/s.exec(script);
     if (!match) {
         return;
     }
@@ -84,11 +84,12 @@ function parseRoomScript(script: string) {
 }
 
 function parseRoomHtml(html: string) {
-    const $ = load(html);
-    return $('script')
-        .toArray()
-        .map((script) => parseRoomScript($(script).text()))
-        .find((data) => data !== undefined);
+    for (const [, script] of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)) {
+        const data = parseRoomScript(script);
+        if (data) {
+            return data;
+        }
+    }
 }
 
 async function getEnterResponse(page: Page) {
@@ -143,7 +144,7 @@ async function getFirstSeen(roomId: string) {
     if (existing) {
         return await existing;
     }
-    const request = cache.tryGet(`douyin:live:first-seen:${roomId}`, () => Promise.resolve(Date.now()), 30 * 24 * 60 * 60, false);
+    const request = cache.tryGet(`douyin:live:first-seen:${roomId}`, () => Promise.resolve(Temporal.Now.instant().epochMilliseconds), 30 * 24 * 60 * 60, false);
     firstSeenRequests.set(roomId, request);
     try {
         return await request;
@@ -151,8 +152,6 @@ async function getFirstSeen(roomId: string) {
         firstSeenRequests.delete(roomId);
     }
 }
-
-const formatFirstSeen = (timestamp: number) => new Date(timestamp + 8 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' ');
 
 export const route: Route = {
     path: '/live/:rid/:showTime?',
@@ -212,7 +211,7 @@ async function handler(ctx) {
     const userAvatar = roomOwner.avatar_thumb?.url_list[0];
     const showTime = queryToBoolean(ctx.req.param('showTime')) ?? false;
     const firstSeen = await getFirstSeen(roomInfo.id_str);
-    const suffix = showTime ? `（本场首次检测：${formatFirstSeen(firstSeen)} UTC+8）` : '';
+    const suffix = showTime ? `（本场首次检测：${formatDate(Temporal.Instant.fromEpochMilliseconds(firstSeen), 'YYYY-MM-DD HH:mm:ss', 8)} UTC+8）` : '';
 
     const items: DataItem[] = [];
     if (roomInfo.id_str) {

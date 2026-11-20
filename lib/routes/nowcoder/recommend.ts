@@ -26,7 +26,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `https://www.nowcoder.com/recommand/activity?token=&type=3&_=${Date.now()}`;
+    const link = `https://www.nowcoder.com/recommand/activity?token=&type=3&_=${Temporal.Now.instant().epochMilliseconds}`;
     const responseBody = (await got.get(link)).data;
     if (responseBody.code !== 0) {
         throw new Error(`接口错误，错误代码:${responseBody.code},错误原因:${responseBody.msg}`);

@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:slug?',
@@ -52,7 +51,7 @@ async function handler(ctx: Context) {
                 return {
                     author: info[0].replace('来源：', ''),
                     description: content('.gp-article').html(),
-                    pubDate: timezone(parseDate(info.at(-1)!.replace('发布时间：', '')), 8),
+                    pubDate: parseDate(info.at(-1)!.replace('发布时间：', ''), 8),
                 };
             })),
         }),

@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/goods/:id',
@@ -42,7 +42,7 @@ async function handler(ctx: Context) {
                 title: good.itemName,
                 description: `价格：${Number.parseInt(good.itemPrice) / 100}<br><img src="${good.itemMainPic}">`,
                 link: `https://weidian.com/item.html?itemID=${good.itemId}`,
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
             };
         }),
     };

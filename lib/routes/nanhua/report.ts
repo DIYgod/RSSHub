@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/report/:type1/:type2',
@@ -59,11 +58,22 @@ async function handler(ctx: Context) {
     const parent = treeList.find((item) => item.type === type1);
     const child = parent?.children?.find((item) => item.type === type2);
 
+    // detailUrl is the app's share page, which cannot open the PDF in a browser, so link items the way the website's report list does
+    const getLink = (item) => {
+        if (item.type1Code === 'SSDP' || item.type1Code === 'RDJD') {
+            return `${baseUrl}/mall/r/w/reportNew/report-list-page.html?id=${encodeURIComponent(item.id)}`;
+        }
+        if (item.style === '1') {
+            return item.link;
+        }
+        return `${baseUrl}/mall/r/w/mobileGuide/js/web/viewer.html?file=${encodeURIComponent(`${apiBase}/report/getReportFile?reportId=${item.id}`)}&filetitle=${encodeURIComponent(item.fileName)}`;
+    };
+
     const items: DataItem[] = response.data.result.map((item) => ({
         title: item.title,
         description: item.content || item.summary || item.desc,
-        link: item.detailUrl || baseUrl + '/mall/r/w/reportNew/report-list-page.html?id=' + encodeURIComponent(item.id),
-        pubDate: timezone(parseDate(item.createTime), 8),
+        link: getLink(item),
+        pubDate: parseDate(item.createTime, 8),
         author: item.personName,
         category: [item.type1Name, item.type2Name, item.typeName].filter(Boolean),
         image: item.iconUrl,

@@ -5,9 +5,11 @@ import { HTMLParser } from 'teleproto/extensions/html.js';
 import { returnBigInt } from 'teleproto/Helpers.js';
 import { getDisplayName } from 'teleproto/Utils.js';
 
+import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import md5 from '@/utils/md5';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 
@@ -50,13 +52,14 @@ function getMessageMediaUrl(requestUrl: string, username: string, messageId: num
     const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
     const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
     const url = new URL(request.origin);
-    url.pathname = `${prefix.replace(/\/+$/, '')}/telegram/media/${username}/${messageId}`;
-    for (const key of ['key', 'code']) {
-        const value = request.searchParams.get(key);
-        if (value) {
-            url.searchParams.set(key, value);
-        }
+    url.pathname = `/telegram/media/${username}/${messageId}`;
+    if (config.accessKey) {
+        // The feed is cached and shared by every client allowed to read it, so it must not carry the requester's own
+        // key or code; the access code of the media path itself is the same for all of them and only opens that path.
+        // The reverse proxy strips the prefix before access control sees the path, so the code is computed without it.
+        url.searchParams.set('code', md5(url.pathname + config.accessKey));
     }
+    url.pathname = prefix.replace(/\/+$/, '') + url.pathname;
     return url.href;
 }
 
@@ -159,52 +162,49 @@ export default async function handler(ctx: Context) {
     let attachments: string[] = [];
     const messages = await client.getMessages(peer, { limit: 50 });
 
-    let i = 0;
     const item: DataItem[] = [];
-    for (const message of messages) {
-        let text = message.text; // must not be HTML
-
-        if (message.fwdFrom?.fromId) {
-            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
-        }
+    for (const [index, message] of messages.entries()) {
+        const parts: string[] = [];
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) {
             // if successfully loaded the story
             const storyFrom = await client.getEntity(message.media.peer);
-            text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
+            parts.push(`<p>Story From: ${getDisplayName(storyFrom)}</p>`);
         }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
-                attachments.push(await getPollResults(client, message, media));
-                continue;
+                parts.push(await getPollResults(client, message, media));
+            } else {
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                parts.push(getMediaLink(src, media));
             }
-            // messages that have no text are shown as if they're one post
-            // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
-            attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
                 for (const button of buttonRow.buttons) {
                     if (button.type instanceof Api.InlineButtonTypeUrl) {
-                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+                        parts.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
                     }
                 }
             }
         }
-        if (text === '' && ++i !== messages.length - 1) {
+        attachments.unshift(...parts);
+        if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
             continue;
+        }
+        if (message.fwdFrom) {
+            const fwdFrom = message.forward?.chat ?? message.forward?.sender;
+            attachments.unshift(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
         }
         let description = attachments.join('<br/>\n');
         attachments = []; // emitting these, buffer other ones
 
-        if (text) {
+        if (message.message) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
         const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text || pubDate?.toUTCString() || '';
+        const title = message.text.split('\n', 1)[0] || (pubDate && toRFC822(pubDate)) || '';
         item.push({
             title,
             description,

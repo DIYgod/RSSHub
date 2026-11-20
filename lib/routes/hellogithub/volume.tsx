@@ -1,15 +1,15 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import MarkdownIt from '@/utils/markdown-it';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -99,7 +99,7 @@ async function handler(ctx) {
                         title: `《HelloGitHub》第 ${id} 期`,
                         link: `${rootUrl}/periodical/volume/${id}`,
                         description: renderVolume(data.pageProps.volume.data),
-                        pubDate: data.pageProps.volume.publish_at ? parseDateInTimezone(data.pageProps.volume.publish_at, 8) : undefined,
+                        pubDate: data.pageProps.volume.publish_at ? parseDate(data.pageProps.volume.publish_at, 8) : undefined,
                     };
                 },
                 config.cache.routeExpire,

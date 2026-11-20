@@ -1,8 +1,6 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
 
-dayjs.extend(utc);
+import { formatDate, parseDate } from '@/utils/time';
 
 type NewsItem = {
     url?: string;
@@ -55,16 +53,19 @@ export const renderDescription = ({ description, news, timeline, rootUrl }: Desc
                     <h3>事件追踪</h3>
                     <table cellspacing="10">
                         <tbody>
-                            {timeline.topics?.map((topic, index) => (
-                                <tr key={String(topic.uid ?? topic.title ?? index)}>
-                                    <th align="left">
-                                        <small>{topic.publishDate ? dayjs(topic.publishDate).utcOffset(8).format('YYYY-MM-DD HH:mm:ss') : ''}</small>
-                                    </th>
-                                    <td>
-                                        <a href={topic.uid ? new URL(`topic/${topic.uid}`, rootUrl).href : undefined}>{topic.title}</a>
-                                    </td>
-                                </tr>
-                            ))}
+                            {timeline.topics?.map((topic, index) => {
+                                const publishDate = topic.publishDate ? parseDate(topic.publishDate) : undefined;
+                                return (
+                                    <tr key={String(topic.uid ?? topic.title ?? index)}>
+                                        <th align="left">
+                                            <small>{publishDate ? formatDate(publishDate, 'YYYY-MM-DD HH:mm:ss', 8) : ''}</small>
+                                        </th>
+                                        <td>
+                                            <a href={topic.uid ? new URL(`topic/${topic.uid}`, rootUrl).href : undefined}>{topic.title}</a>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </>

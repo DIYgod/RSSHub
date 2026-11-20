@@ -3,9 +3,8 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 type NewsArticle = {
     title: string;
@@ -85,7 +84,7 @@ async function handler(ctx): Promise<Data> {
                     author: article.author,
                     description: video + article.content,
                     category: [article.category, ...article.tags].filter(Boolean),
-                    pubDate: timezone(parseDate(article.publishTime), 8),
+                    pubDate: parseDate(article.publishTime, 8),
                     image: article.coverImage?.imageUrl,
                     link,
                 };

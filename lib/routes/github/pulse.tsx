@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/pulse/:user/:repo/:period?',
@@ -97,7 +97,7 @@ async function handler(ctx) {
         ofetch<PulseCommitter[]>(new URL(`${paths.committerDataPath}/${pulsePeriod}`, baseUrl).href, options),
     ]);
     const [periodFrom, periodTo] = overview.rangeLabel?.split(' – ', 2) ?? [];
-    const pubDate = periodTo ? parseDate(`${periodTo} UTC`) : undefined;
+    const pubDate = periodTo ? parseDate(periodTo, 'MMMM D, YYYY') : undefined;
     const sections = [
         { heading: 'Releases', entries: overview.releases, dateField: 'createdAt' },
         { heading: 'Merged pull requests', entries: overview.mergedPulls, dateField: 'mergedAt' },
@@ -110,7 +110,6 @@ async function handler(ctx) {
         overview.period !== pulsePeriod ||
         !periodFrom ||
         !pubDate ||
-        !Number.isFinite(pubDate.getTime()) ||
         !Number.isFinite(overview.totalPullRequests) ||
         !Number.isFinite(overview.totalIssues) ||
         !Number.isFinite(diffstat.totalCommits) ||

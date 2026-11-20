@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface AuthorData {
     fullname?: string;
@@ -50,8 +50,7 @@ export const route: Route = {
 };
 
 function getPublicationDate(publishedAt: string | undefined) {
-    const date = publishedAt ? parseDate(publishedAt) : undefined;
-    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+    return publishedAt ? parseDate(publishedAt) : undefined;
 }
 
 async function handler() {

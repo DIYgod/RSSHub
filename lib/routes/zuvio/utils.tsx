@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -93,13 +94,7 @@ const renderImageSection = (section): string =>
 
 const renderTextSection = (section): string => renderToString(<>{section.content}</>).replaceAll('\n', '<br>');
 
-const renderYouTubeSection = (section): string =>
-    renderToString(
-        <>
-            <iframe width="672" height="377" src={`https://www.youtube-nocookie.com/embed/${section.youtube_id}`} frameborder="0" allowfullscreen></iframe>
-            <br />
-        </>
-    );
+const renderYouTubeSection = (section): string => renderYoutube(true, section.youtube_id, undefined, undefined);
 
 const renderLinkSection = (section): string =>
     renderToString(

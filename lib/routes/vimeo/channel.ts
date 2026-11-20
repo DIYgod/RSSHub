@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -89,7 +89,7 @@ async function handler(ctx) {
                     videoUrl: $item.find('.more').attr('href')!,
                     vdescription: description[index] || '',
                 }),
-                pubDate: publicationTime && Number.isFinite(Date.parse(publicationTime)) ? parseDate(publicationTime) : undefined,
+                pubDate: publicationTime ? parseDate(publicationTime) : undefined,
                 link: `https://vimeo.com${$item.find('.more').attr('href')}`,
                 author,
             };

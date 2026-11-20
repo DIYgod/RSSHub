@@ -5,8 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/lib/:category?',
@@ -56,7 +55,7 @@ async function handler(ctx) {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
+            const pubDate = pubDateText ? parseDate(pubDateText, 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,

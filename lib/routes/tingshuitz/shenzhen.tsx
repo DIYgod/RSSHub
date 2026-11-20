@@ -2,8 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/shenzhen',
@@ -55,7 +54,7 @@ async function handler() {
                         {item.stopStartTime ? `,停水开始时间${item.stopStartTime}` : undefined}
                         {item.stopEndTime ? `,停水结束时间${item.stopEndTime}` : undefined}
                     </p>
-                    {item.mainLeadPath !== undefined && item.mainLeadPath !== null && item.mainLeadPath !== '' ? <p>停水主管径：{item.mainLeadPath}</p> : undefined}
+                    {[undefined, null, ''].includes(item.mainLeadPath) ? undefined : <p>停水主管径：{item.mainLeadPath}</p>}
                     {item.servicePhone ? (
                         <p>
                             服务热线：<a href={`tel:${item.servicePhone}`}>{item.servicePhone}</a>
@@ -63,7 +62,7 @@ async function handler() {
                     ) : undefined}
                 </>
             ),
-            pubDate: item.createdOn ? timezone(parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+            pubDate: item.createdOn ? parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
             link: 'https://szgk.sz-water.com.cn/wechat_web/Water_stop.html',
             guid: item.informId ? `shenzhen-water-${item.informId}` : `shenzhen-water-${JSON.stringify([item.position, item.stopStartTime, item.createdOn])}`,
         })),

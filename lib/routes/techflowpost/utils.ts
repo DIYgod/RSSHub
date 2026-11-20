@@ -4,7 +4,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
@@ -69,7 +69,7 @@ function getHeaders(referer: string, cookie = acwScV2Cookie) {
 }
 
 function getAcwScV2Cookie(response: string) {
-    const arg1 = response.match(/var arg1='(.*?)';/)?.[1];
+    const arg1 = /var arg1='(.*?)';/.exec(response)?.[1];
     if (!arg1) {
         return '';
     }

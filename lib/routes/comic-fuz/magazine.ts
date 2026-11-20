@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/magazine/:id',
@@ -79,7 +78,7 @@ export const route: Route = {
                 <p>截止日期: ${item.endDate || '无'}</p>
                 ${item.longDescription ? `<p>${item.longDescription}</p>` : ''}
                 `,
-                pubDate: rawDate ? timezone(parseDate(rawDate, 'YYYY/MM/DD'), 9) : undefined,
+                pubDate: rawDate ? parseDate(rawDate, 'YYYY/MM/DD', 9) : undefined,
                 guid: `comicfuz-magazine-id-${item.magazineIssueId}`,
                 category: [statusText],
             };

@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const articleHosts = new Set(['gcxy.cug.edu.cn', 'wenming.cug.edu.cn']);
 
@@ -54,7 +53,7 @@ async function handler(ctx: Context) {
                 return {
                     title: a.attr('title')!,
                     link: new URL(a.attr('href')!, host + url).href,
-                    pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
+                    pubDate: parseDate($item.find('span.news-date').text(), 8),
                 };
             });
         return { name, items };

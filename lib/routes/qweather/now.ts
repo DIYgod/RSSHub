@@ -3,7 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 import type { NowItem } from './util';
 import { renderNowDescription } from './util';
@@ -66,7 +66,11 @@ async function handler(ctx) {
         title: ctx.req.param('location') + '实时天气',
         description: ctx.req.param('location') + '实时天气状况',
         item: data.map((item: NowItem) => {
-            const observationTime = parseDate(item.obsTime || responseData.updateTime).toISOString();
+            const observationDate = parseDate(item.obsTime || responseData.updateTime);
+            if (!observationDate) {
+                throw new Error(`Invalid observation time: ${item.obsTime || responseData.updateTime}`);
+            }
+            const observationTime = toISOString(observationDate);
             return {
                 title: '观测时间：' + observationTime,
                 description: renderNowDescription(item),

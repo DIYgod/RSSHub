@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
 
@@ -63,11 +62,11 @@ async function handler(ctx) {
                 .find('.magazine-text-atten')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-            const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: $item.find('.magazine-text-title a').text(),
                 link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

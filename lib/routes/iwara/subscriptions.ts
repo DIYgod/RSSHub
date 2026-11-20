@@ -1,12 +1,12 @@
 import { createHash } from 'node:crypto';
 
-import MarkdownIt from 'markdown-it';
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 import { renderSubscriptionImages } from './templates/subscriptions';

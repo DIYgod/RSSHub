@@ -1,19 +1,17 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+
+import { formatDate as formatTime } from '@/utils/time';
 
 type DescriptionData = {
     detail: any;
     images?: string[];
     discountRate?: string;
-    discountEndDate?: Date;
+    discountEndDate?: Temporal.Instant;
     description?: string;
 };
 
-dayjs.extend(utc);
-
-export const formatDate = (date?: Date) => (date ? dayjs(date).utcOffset(9).format('YYYY-MM-DD HH:mm') : '');
+export const formatDate = (date?: Temporal.Instant) => (date ? formatTime(date, 'YYYY-MM-DD HH:mm', 9) : '');
 
 export const renderDescription = ({ detail, images, discountRate, discountEndDate, description }: DescriptionData) => {
     const localePrices = detail.locale_price_str ?? {};

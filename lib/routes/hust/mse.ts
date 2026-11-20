@@ -3,9 +3,9 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const handler = async (ctx) => {
     const { category = 'sylm/xyxw' } = ctx.req.param();
@@ -28,11 +28,11 @@ const handler = async (ctx) => {
             const $item = $(item);
 
             const a = $item.find('a');
-            const pubDate = parseDate($item.find('span.time').text().trim(), 'YYYY-MM-DD', true);
+            const pubDate = parseDateStrict($item.find('span.time').text().trim(), 'YYYY-MM-DD', 8);
 
             return {
                 title: a.text(),
-                pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                pubDate,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
@@ -41,7 +41,8 @@ const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (!item.link!.includes(domain)) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, domain)) {
                     return item;
                 }
 
@@ -57,9 +58,9 @@ const handler = async (ctx) => {
 
                     if (!item.pubDate && data.startsWith('发布')) {
                         const date = data.split(/：/)?.pop()?.trim();
-                        const pubDate = date ? parseDate(date, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true) : undefined;
-                        if (pubDate && Number.isFinite(pubDate.getTime())) {
-                            item.pubDate = timezone(pubDate, 8);
+                        const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
+                        if (pubDate) {
+                            item.pubDate = pubDate;
                         }
                     } else if (!item.author && (data.startsWith('作者') || data.startsWith('编辑'))) {
                         item.author = data.split(/：/)?.pop() ?? undefined;

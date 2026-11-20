@@ -5,7 +5,7 @@ import type { JSX } from 'hono/jsx/jsx-runtime';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const renderContent = (content) => renderToString(<ZhubaiContent content={content} />);
 

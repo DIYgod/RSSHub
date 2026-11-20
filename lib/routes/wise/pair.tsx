@@ -1,13 +1,10 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
-dayjs.extend(utc);
 const renderDesc = (content) =>
     renderToString(
         <>
@@ -57,7 +54,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const cacheDate = dayjs().utc().subtract(1, 'day').format('YYYY-MM-DD');
+    const cacheDate = formatDate(Temporal.Now.zonedDateTimeISO('UTC').subtract({ days: 1 }), 'YYYY-MM-DD');
 
     const source = ctx.req.param('source').toUpperCase();
     const target = ctx.req.param('target').toUpperCase();
@@ -84,13 +81,13 @@ async function handler(ctx) {
 
         const yData = data.at(-1);
         const byDate = data.at(-2);
-        if ([yData, byDate].some((record) => !record || !Number.isFinite(record.value) || record.value <= 0 || typeof record.time !== 'number' || !Number.isFinite(new Date(record.time).getTime()))) {
+        if ([yData, byDate].some((record) => !record || !Number.isFinite(record.value) || record.value <= 0 || typeof record.time !== 'number' || !parseDate(record.time))) {
             throw new Error('Wise returned an invalid daily exchange rate or timestamp for this currency pair.');
         }
         const yRate = yData.value;
         const byRate = byDate.value;
-        const yesterday = dayjs(yData.time).utc().format('YYYY-MM-DD');
-        const dayBefore = dayjs(byDate.time).utc().format('YYYY-MM-DD');
+        const yesterday = formatDate(parseDate(yData.time)!, 'YYYY-MM-DD');
+        const dayBefore = formatDate(parseDate(byDate.time)!, 'YYYY-MM-DD');
         const guid = `wise:rates:${ctx.req.param('source')}-${ctx.req.param('target')}-${yesterday}`;
         const trend = yRate > byRate ? '📈' : yRate < byRate ? '📉' : '↔️';
         const diff = (yRate - byRate) / byRate;

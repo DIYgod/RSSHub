@@ -70,7 +70,7 @@ describe('got', () => {
             domain: 'rsshub.test',
             path: '/',
         });
-        cookie && cookieJar.setCookie(cookie, 'http://rsshub.test');
+        await cookieJar.setCookie(cookie!, 'http://rsshub.test');
         const { data } = await got.get('http://rsshub.test/headers', {
             cookieJar,
         });

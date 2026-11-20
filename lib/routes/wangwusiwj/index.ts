@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -33,7 +32,7 @@ function parsePublicationMetadata(text: string) {
 }
 
 async function handler(ctx: Context) {
-    const { id = String(new Date().getFullYear()) } = ctx.req.param();
+    const { id = String(Temporal.Now.zonedDateTimeISO('UTC').year) } = ctx.req.param();
     const url = `https://wangwusiwj.blogspot.com/${id}`;
     const [response, sitemap] = await Promise.all([ofetch(url), ofetch('https://wangwusiwj.blogspot.com/sitemap.xml', { responseType: 'text' })]);
 
@@ -55,7 +54,7 @@ async function handler(ctx: Context) {
                 .filter((_, element) => /^\s*作者\s*[:：]/.test($(element).text()))
                 .first();
             const metadata = parsePublicationMetadata(metadataElement.text().replaceAll(/\s+/g, ' '));
-            const publicationDate = metadata ? timezone(parseDate(`${metadata[2]}-${metadata[3].padStart(2, '0')}-${metadata[4].padStart(2, '0')}`, 'YYYY-MM-DD', true), 8) : undefined;
+            const publicationDate = metadata ? parseDateStrict(`${metadata[2]}-${metadata[3].padStart(2, '0')}-${metadata[4].padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
             const lastModified = link ? lastModifiedDates.get(link) : undefined;
             const updated = lastModified ? parseDate(lastModified) : undefined;
             if (metadata) {
@@ -66,8 +65,8 @@ async function handler(ctx: Context) {
                 description: body.html(),
                 link,
                 author: metadata?.[1],
-                pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
-                updated: updated && !Number.isNaN(updated.getTime()) ? updated : undefined,
+                pubDate: publicationDate,
+                updated,
             };
         });
 

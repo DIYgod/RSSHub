@@ -39,7 +39,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const groupId = ctx.req.param('id');
+    const groupId = ctx.req.param('id')!;
     const scope = ctx.req.param('scope') ?? 'all';
     const accessToken = config.zsxq.accessToken;
 
@@ -49,9 +49,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const count = Math.min(getRouteLimit(ctx, 20), 30);
 
-    const { group } = await customFetch<GroupInfoResponse>(`/groups/${groupId}`);
+    const { group } = await customFetch<GroupInfoResponse>(`/groups/${encodeURIComponent(groupId)}`);
 
-    const { topics } = await customFetch<TopicsResponse>(`/groups/${groupId}/topics?scope=${scope}&count=${count}`);
+    const { topics } = await customFetch<TopicsResponse>(`/groups/${encodeURIComponent(groupId)}/topics?scope=${scope}&count=${count}`);
 
     return {
         title: `知识星球 - ${group.name}`,

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.itsec.gov.cn';
 const currentUrl = `${rootUrl}/zxxw/index.html`;
@@ -55,10 +54,10 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: date && Number.isFinite(parseDate(date).getTime()) ? parseDateInTimezone(date, 8) : undefined,
+                pubDate: date && parseDate(date) ? parseDate(date, 8) : undefined,
             };
         })
-        .filter((item): item is { title: string; link: string; pubDate: Date | undefined } => item !== null);
+        .filter((item): item is { title: string; link: string; pubDate: Temporal.Instant | undefined } => item !== null);
 
     const items = await pMap(
         list,
@@ -79,7 +78,7 @@ async function handler() {
                     link: item.link,
                     description,
                     author,
-                    pubDate: date && Number.isFinite(parseDate(date).getTime()) ? parseDateInTimezone(date, 8) : undefined,
+                    pubDate: date && parseDate(date) ? parseDate(date, 8) : undefined,
                 };
             });
             return { ...item, ...details, title: details.title || item.title, pubDate: details.pubDate ?? item.pubDate };

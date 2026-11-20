@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'http://www.huizhou.gov.cn';
 
@@ -57,7 +56,7 @@ async function handler(ctx) {
             return {
                 title: $(item).find('a').text(),
                 link: new URL($(item).find('a').attr('href')!, `${url}/`).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 
@@ -77,7 +76,7 @@ async function handler(ctx) {
                     .text()
                     .match(/时间：(.*)/)?.[1];
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate), 8);
+                    item.pubDate = parseDate(pubDate, 8);
                 }
 
                 return item;

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export async function getNotifList() {
     const response = await got.get('https://scupi.scu.edu.cn/activities/notice', {
@@ -33,7 +33,7 @@ export async function getNotifList() {
                 title,
                 link,
                 itunes_item_image: imageElement.attr('src'),
-                pubDate: parseDateInTimezone(pubDate, 8),
+                pubDate: parseDate(pubDate, 8),
             };
         });
 }

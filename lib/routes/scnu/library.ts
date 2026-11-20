@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/library',
@@ -43,10 +42,11 @@ async function handler() {
 
     const items = list.toArray().map((item) => {
         const $item = $(item);
+        const href = $item.find('a').attr('href');
         return {
             title: $item.find('a').text(),
-            pubDate: timezone(parseDate($item.find('.clock').text()), 8),
-            link: $item.find('a').attr('href'),
+            pubDate: parseDate($item.find('.clock').text(), 8),
+            link: href ? new URL(href, baseUrl).href : undefined,
         };
     });
     const detailedItems = await pMap(

@@ -1,13 +1,13 @@
 import { escapeAttribute, escapeText } from 'entities';
-import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -180,7 +180,7 @@ async function handler(ctx) {
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {
-    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues/comments`, {
         headers,
         query: {
             sort: 'updated',
@@ -233,7 +233,7 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         return singleIssueGraphql(ctx, user, repo, number, Math.min(limit, 100), headers);
     }
 
-    const response = await ofetch.raw(`${apiUrl}/repos/${user}/${repo}/issues/${number}`, {
+    const response = await ofetch.raw(`${apiUrl}/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues/${number}`, {
         headers,
     });
     const issue = response._data;

@@ -4,8 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDepthDescription } from './templates/depth';
 import { getSearchParams, rootUrl } from './utils';
@@ -66,7 +66,7 @@ async function handler(ctx) {
         query: getSearchParams(),
     });
 
-    const articles = [...response.data.top_article, ...response.data.depth_list];
+    const articles = [...response.data.top_article, ...response.data.depth_list].filter((item, index, items) => items.findIndex((candidate) => candidate.id === item.id) === index);
     const ordered = ctx.req.query('sorted') === 'false' ? articles : articles.toSorted((a, b) => b.ctime - a.ctime);
     let items = ordered.slice(0, limit).map((item): DataItem => ({
         title: item.title || item.brief,
@@ -98,6 +98,6 @@ async function handler(ctx) {
     return {
         title: `财联社 - ${title}`,
         link: currentUrl,
-        item: items,
+        item: items.filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index),
     };
 }

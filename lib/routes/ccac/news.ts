@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -47,7 +46,7 @@ async function handler(ctx) {
             title: item.name,
             category: item.tags.map((tag) => tag.name),
             link: utils.BASE_URL + item.url,
-            pubDate: timezone(parseDate(item.time, 'YYYY-MM-DD'), 8),
+            pubDate: parseDate(item.time, 'YYYY-MM-DD', 8),
         }));
 
     const items = await Promise.all(

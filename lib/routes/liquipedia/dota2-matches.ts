@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dota2/matches/:id',
@@ -65,7 +65,7 @@ async function handler(ctx) {
                 description: `At ${tournament},  ${team} ${score} ${vs_team}`,
                 pubDate: dateTime,
                 link: url,
-                guid: url + dateTime,
+                guid: `${url}${dateTime}`,
             };
         }),
     };

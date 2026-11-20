@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/pen0',
@@ -45,7 +45,7 @@ async function handler() {
                 title: $item.find('h3').text(),
                 link: $item.find('h3 a').attr('href'),
                 author: meta.split('|', 1)[0].trim(),
-                pubDate: parseDate(meta.split('|', 2)[1].trim()),
+                pubDate: parseDate(meta.split('|', 2)[1].trim(), 'YYYY.MM.DD'),
             };
         });
 

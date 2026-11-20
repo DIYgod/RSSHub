@@ -2,10 +2,11 @@ import { load } from 'cheerio';
 import { escapeText } from 'entities';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import oftech from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/articles',
@@ -52,9 +53,7 @@ const render = (widgets) =>
                 case 'keyFacts':
                     return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
                 case 'inlineVideo':
-                    return w.provider === 'youtube'
-                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen></iframe>`
-                        : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
+                    return w.provider === 'youtube' ? renderYoutube(true, w.videoId, undefined, undefined) : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
                 case 'inlineImage':
                     return w.inlineImageImages
                         .map((image) => {

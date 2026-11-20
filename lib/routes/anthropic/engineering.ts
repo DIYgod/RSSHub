@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/engineering',
@@ -30,15 +30,16 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
 
-    const list: DataItem[] = $('a[class$="cardLink"]')
+    const list: DataItem[] = $('article[data-listing-row]')
         .toArray()
         .map((element) => {
             const $e = $(element);
-            const href = $e.attr('href') ?? '';
+            const $link = $e.find('a[class$="_metaTitleLink"]');
+            const href = $link.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const dateText = $e.find('div[class$="date"]').text();
+            const dateText = $e.find('time').text();
             return {
-                title: $e.find('h2, h3').text(),
+                title: $link.text().trim(),
                 link: fullLink,
                 pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
             };
@@ -53,7 +54,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('article > div > div[class$="__body"]');
+                const content = $('article > div > div[class$="_body"]');
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);

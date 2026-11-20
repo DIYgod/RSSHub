@@ -3,7 +3,7 @@ import { destr } from 'destr';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderAudioMedia } from './templates/audio-media';
 import { renderChartMedia } from './templates/chart-media';
@@ -307,8 +307,7 @@ const processBody = async (body_html, story_json) => {
     $('.paywall').removeAttr('class');
 
     // Asynchronous iteration intentionally
-    // https://github.com/eslint/eslint/blob/8a159686f9d497262d573dd601855ce28362199b/tests/lib/rules/no-await-in-loop.js#L50
-    for await (const e of $('figure')) {
+    for (const e of $('figure')) {
         const imageType = $(e).data('image-type');
         const type = $(e).data('type');
         const figureId = $(e).data('id') as string | number;
@@ -339,6 +338,7 @@ const processBody = async (body_html, story_json) => {
         } else if (imageType === 'video') {
             if (story_json.videoAttachments) {
                 const attachment = story_json.videoAttachments[figureId];
+                // oxlint-disable-next-line no-await-in-loop
                 const video = await processVideo(attachment.bmmrId);
                 new_figure = renderVideoMedia(video);
             }

@@ -6,8 +6,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -212,7 +212,7 @@ async function getPublicArticleDetails(link: string) {
     const { data } = await got(link);
     const $ = load(data);
     const teaser = $('.article-paywall').first();
-    const content = teaser.length ? teaser : $('article.article-content .details').first();
+    const content = teaser.text().trim() ? teaser : $('article.article-content .details').first();
     content.find('script, style, .advertisement, .ad-center').remove();
     const body = content.html();
     if (!body || !content.text().trim()) {

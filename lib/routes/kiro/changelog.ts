@@ -9,15 +9,10 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate, parseDateStrict } from '@/utils/time';
 
-const parser = new Parser();
-const parseCalendarDate = (value: string): Date | undefined => {
-    const date = parseDate(value.trim(), ['MMM D, YYYY', 'MMMM D, YYYY'], 'en', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
-};
+const parseCalendarDate = (value: string): Temporal.Instant | undefined => parseDateStrict(value.trim(), ['MMM D, YYYY', 'MMMM D, YYYY'], 0);
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
@@ -28,17 +23,17 @@ const handler = async (ctx: Context): Promise<Data> => {
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
-    const publicationDates = new Map<string, Date>();
+    const publicationDates = new Map<string, Temporal.Instant>();
     const feedLink = $('link[rel="alternate"][type="application/rss+xml"]').attr('href');
     if (feedLink) {
-        const feed = await parser.parseString(await ofetch(new URL(feedLink, baseUrl).href, { responseType: 'text' }));
+        const feed = await new Parser().parseString(await ofetch(new URL(feedLink, baseUrl).href, { responseType: 'text' }));
         for (const entry of feed.items) {
             if (!(entry.link && entry.isoDate)) {
                 continue;
             }
 
             const date = parseDate(entry.isoDate);
-            if (Number.isFinite(date.getTime())) {
+            if (date) {
                 publicationDates.set(new URL(entry.link, baseUrl).href.replace(/\/$/, ''), date);
             }
         }
@@ -71,9 +66,9 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     items = items.map((item) => ({ ...item, pubDate: (item.link ? publicationDates.get(item.link.replace(/\/$/, '')) : undefined) ?? item.pubDate }));
     const sourceOrder = ctx.req.query('sorted') === 'false';
-    const hasDates = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    const hasDates = items.every((item) => item.pubDate instanceof Temporal.Instant);
     if (!sourceOrder && hasDates) {
-        items = items.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     items = items.slice(0, sourceOrder || hasDates ? limit : Math.max(30, limit));
 

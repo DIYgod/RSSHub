@@ -2,8 +2,8 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import sanitizeHtml from 'sanitize-html';
 
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 const parseParams = (routeParams?: string) => {
     const parsed = new URLSearchParams(routeParams ?? '');
@@ -18,11 +18,17 @@ const parseParams = (routeParams?: string) => {
         maxReplies: Number.isFinite(maxReplies) ? maxReplies : undefined,
         minReplies: Number.isFinite(minReplies) ? minReplies : undefined,
         revealSpoilers: !!queryToBoolean(parsed.get('revealSpoilers')),
+        showThreadFeed: !!queryToBoolean(parsed.get('showThreadFeed')),
     };
     return viewOptions;
 };
 
-const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions }) => {
+const processCatalog = ({ data, board, viewOptions, catalogUrl }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions; catalogUrl: string }) => {
+    const requestUrl = new URL(catalogUrl);
+    // Preserve a deployment prefix (/rsshub) and strip /catalog plus any routeParams.
+    const basePath = requestUrl.pathname.replace(/\/catalog(?:\/.*)?$/, '');
+    const threadFeedUrl = (threadNo: number) => `${requestUrl.origin}${basePath}/thread/${threadNo}?format=atom`;
+
     const transformedData = data.flatMap((page) => page.threads);
     return transformedData
         .filter((thread) => {
@@ -43,6 +49,15 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
             link: `https://boards.4chan.org/${board}/thread/${thread.no}`,
             pubDate: parseDate(thread.time * 1000),
             title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>', 1)[0] ?? '', { allowedTags: [] }),
+            ...(viewOptions.showThreadFeed && {
+                links: [
+                    {
+                        url: threadFeedUrl(thread.no),
+                        rel: 'replies',
+                        type: 'application/atom+xml',
+                    },
+                ],
+            }),
         }));
 };
 
@@ -61,7 +76,7 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
             media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} type="application/x-shockwave-flash" width={post.w} height={post.h} />;
             break;
         case '.webm':
-            media = <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls class="full-image"></video>;
+            media = <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls className="full-image"></video>;
             break;
         default:
             break;
@@ -103,6 +118,7 @@ interface ChanPost {
     resto: number;
     sticky?: number;
     closed?: number;
+    archived?: 1;
     now: string;
     time: number;
     name: string;
@@ -140,5 +156,5 @@ interface ChanPost {
     last_replies?: ChanPost[];
 }
 
-export type { CatalogApiReturn };
-export { parseParams, processCatalog };
+export type { CatalogApiReturn, ChanPost };
+export { parseParams, processCatalog, renderPost };

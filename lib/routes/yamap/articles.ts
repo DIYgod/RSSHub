@@ -2,7 +2,7 @@ import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
@@ -12,8 +12,7 @@ function parseUnixDate(value?: number) {
         return;
     }
 
-    const date = parseDate(value * 1000);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value * 1000);
 }
 
 export const route: Route = {

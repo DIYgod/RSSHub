@@ -1,10 +1,9 @@
 import { escapeAttribute } from 'entities';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.cspengyuan.com';
 
@@ -59,7 +58,7 @@ async function handler(ctx) {
         return {
             title: report.title,
             link: `${baseUrl}/pdf-view?url=${encodeURIComponent(new URL(pdfUrl).pathname)}`,
-            pubDate: timezone(parseDate(report.publishDate, 'YYYY-MM-DD HH:mm:ss'), 8),
+            pubDate: parseDate(report.publishDate, 'YYYY-MM-DD HH:mm:ss', 8),
             category: report.category,
             description: `<iframe src="${escapeAttribute(pdfUrl)}"></iframe>`,
             enclosure_url: pdfUrl,

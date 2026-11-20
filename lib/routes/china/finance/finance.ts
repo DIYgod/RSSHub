@@ -4,9 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const CATEGORY_MAP = {
     tuijian: 'tuijian', // 推荐
@@ -82,7 +81,7 @@ async function handler(ctx) {
                     title: $d('.article_title').text(),
                     link: item.link,
                     description: $d('#js_article_content').html(),
-                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), 8),
+                    pubDate: parseDate($d('.article_info>span.time').text(), 8),
                     author: $d(' div.article_info > span.source').text(),
                     category: listCategory,
                 };

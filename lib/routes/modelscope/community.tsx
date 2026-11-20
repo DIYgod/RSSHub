@@ -6,9 +6,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/community',
@@ -60,7 +59,7 @@ async function handler(ctx) {
         description: c.content.desc,
         author: c.nickname,
         link: `${baseUrl}/${c.content.id}.html`,
-        pubDate: timezone(parseDate(c.content.createdTime), 8),
+        pubDate: parseDate(c.content.createdTime, 8),
         category: c.content.externalData.tags.map((t) => t.name),
         thumb: c.content.thumb,
     }));

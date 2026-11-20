@@ -58,7 +58,7 @@ async function handler(ctx) {
                         .filter((line) => line.trim())
                         .map((line) => `<p>${escapeText(line.trim())}</p>`)
                         .join(''),
-                    guid: Buffer.from(`${vid}${chapter[1]}`).toString('base64'),
+                    guid: Buffer.from(`${vid}${chapter[1]}`).toBase64(),
                     link: lastestChapters[index]?.link,
                 }))
                 .filter((chapter) => chapter.description)

@@ -6,9 +6,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gnn/:category?',
@@ -163,7 +162,7 @@ async function handler(ctx) {
                         component = _$('div.text-paragraph').html() ?? '';
                     }
                 }
-                const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
+                const pubDate = parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss', 8);
                 component = component.replaceAll(/\b(data-src)\b/g, 'src');
                 return { description: component, author, pubDate };
             });

@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -31,7 +31,7 @@ async function handler(ctx) {
     let api = 'https://www.dcard.tw/service/api/v2';
     let title = 'Dcard - ';
 
-    if (section !== 'posts' && section !== 'popular' && section !== 'latest') {
+    if (!['posts', 'popular', 'latest'].includes(section)) {
         link += `/${section}`;
         api += `/forums/${section}`;
         title += `${section} - `;
@@ -51,7 +51,7 @@ async function handler(ctx) {
     try {
         await page.route('**/*', (route) => {
             const request = route.request();
-            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
         });
         await page.setExtraHTTPHeaders({
             referer: `https://www.dcard.tw/f/${section}`,

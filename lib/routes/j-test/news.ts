@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -38,7 +37,7 @@ async function handler() {
         .map((item) => {
             const [title, date] = $(item).text().trim().replaceAll(']', '').split(' [', 2);
             const link = new URL($(item).children('a').attr('href')!, baseUrl).href;
-            const pubDate = date && Number.isFinite(parseDate(date).getTime()) ? parseDateInTimezone(date, 8) : undefined;
+            const pubDate = date && parseDate(date) ? parseDate(date, 8) : undefined;
             return {
                 title,
                 link,

@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://instant.1point3acres.com';
 const apiRootUrl = 'https://api.1point3acres.com';

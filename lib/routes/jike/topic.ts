@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { escapeAttribute, escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { formatDate } from '@/utils/time';
 
 import { constructTopicEntry, topicDataHanding } from './utils';
 
@@ -79,7 +79,7 @@ async function handler(ctx) {
                     });
                 }
                 item.description = linkifyText(item.description);
-                item.title = item.pubDate ? `${data.topic.content} ${dayjs(item.pubDate).format('MM月DD日')}` : data.topic.content;
+                item.title = item.pubDate ? `${data.topic.content} ${formatDate(item.pubDate, 'MM月DD日')}` : data.topic.content;
                 return item;
             })
         );

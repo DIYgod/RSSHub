@@ -24,7 +24,7 @@ const handler: RouteHandler<typeof route> = (ctx) =>
         userLimit: config.follow.userLimit,
         cacheTime: config.cache.routeExpire,
         gitHash,
-        gitDate: gitDate?.getTime(),
+        gitDate: gitDate?.epochMilliseconds,
     });
 
 export { handler, route };

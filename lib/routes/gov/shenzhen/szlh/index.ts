@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const config = {
     tzgg: {
@@ -59,7 +58,7 @@ async function handler(ctx) {
 
             // Extract the date from <i>
             const date = a.find('i').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
 
             // Remove <i> to get only the visible text
             const textOnly = a.find('i').remove().end().text();
@@ -67,7 +66,7 @@ async function handler(ctx) {
             return {
                 title: textOnly,
                 link: a.attr('href'),
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
 

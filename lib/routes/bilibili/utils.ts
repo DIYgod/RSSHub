@@ -5,6 +5,7 @@ import { config } from '@/config';
 import type cacheModule from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
+import type { Page } from '@/utils/playwright';
 
 import { renderDescription } from './templates/description';
 import type { MediaResult, ResultResponse, SeasonResult } from './types';
@@ -35,7 +36,7 @@ function padStringWithZeros(string, length) {
 }
 
 function lsid() {
-    const e = Date.now().toString(16).toUpperCase();
+    const e = Temporal.Now.instant().epochMilliseconds.toString(16).toUpperCase();
     const lsid = randomHexStr(8) + '_' + e;
     return lsid;
 }
@@ -46,7 +47,7 @@ function _uuid() {
     const r = randomHexStr(4);
     const n = randomHexStr(4);
     const o = randomHexStr(12);
-    const i = Date.now();
+    const i = Temporal.Now.instant().epochMilliseconds;
     return e + '-' + t + '-' + r + '-' + n + '-' + o + padStringWithZeros((i % 100000).toString(), 5) + 'infoc';
 }
 
@@ -67,15 +68,11 @@ function hexsign(e) {
     return o;
 }
 
-function addRenderData(params, renderData) {
-    return `${params}&w_webid=${encodeURIComponent(renderData)}`;
-}
-
 function addWbiVerifyInfo(params, wbiVerifyString) {
     const searchParams = new URLSearchParams(params);
     searchParams.sort();
     const verifyParam = searchParams.toString();
-    const wts = Math.round(Date.now() / 1000);
+    const wts = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);
     const w_rid = md5(`${verifyParam}&wts=${wts}${wbiVerifyString}`);
     return `${params}&w_rid=${w_rid}&wts=${wts}`;
 }
@@ -173,7 +170,7 @@ function getDmImgInterT(tag: string) {
 }
 
 function getDmImgInterC(className: string) {
-    return Buffer.from(className).toString('base64').slice(0, -2);
+    return Buffer.from(className).toBase64().slice(0, -2);
 }
 
 function getDmImgInterOf(top: number, left: number) {
@@ -187,8 +184,8 @@ function getDmImgInterWh(width: number, height: number) {
 }
 
 function addDmVerifyInfo(params: string, dmImgList: string) {
-    const dmImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
-    const dmCoverImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
+    const dmImgStr = Buffer.from('no webgl').toBase64().slice(0, -2);
+    const dmCoverImgStr = Buffer.from('no webgl').toBase64().slice(0, -2);
     return `${params}&dm_img_list=${dmImgList}&dm_img_str=${dmImgStr}&dm_cover_img_str=${dmCoverImgStr}`;
 }
 
@@ -305,6 +302,11 @@ export function getVideoUrl(bvid?: string): string | undefined {
 }
 export const getLiveUrl = (roomId?: string) => (roomId ? `https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}` : undefined);
 
+// Bilibili web pages ask the API for machine-translated titles and descriptions
+// when the browser language is not Chinese, e.g. the en-US default of headless Chromium.
+// The `always_translate=0` cookie keeps the original text.
+const disableAutoTranslate = (page: Page) => page.context().addCookies([{ name: 'always_translate', value: '0', domain: '.bilibili.com', path: '/' }]);
+
 export default {
     lsid,
     _uuid,
@@ -315,10 +317,10 @@ export default {
     addDmVerifyInfo,
     addDmVerifyInfoWithInter,
     bvidTime,
-    addRenderData,
     getBangumi,
     getBangumiItems,
     renderUGCDescription,
     renderOGVDescription,
     getVideoUrl,
+    disableAutoTranslate,
 };

@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/drive/:selName',
@@ -46,7 +45,7 @@ async function handler(ctx): Promise<Data> {
         title: `${item.DriverName} ${item.Version}`,
         link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
         description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
-        pubDate: item.CreateTime ? timezone(parseDate(item.CreateTime), 8) : undefined,
+        pubDate: item.CreateTime ? parseDate(item.CreateTime, 8) : undefined,
     }));
 
     return {
@@ -58,7 +57,7 @@ async function handler(ctx): Promise<Data> {
 }
 
 const DriveDescription = ({ driveName, driveCode, driveVersion, downloadFileName, downloadFilePath }: { driveName: string; driveCode: string; driveVersion: string; downloadFileName: string; downloadFilePath: string }) => (
-    <div class="driver-info">
+    <div className="driver-info">
         <h2>驱动信息</h2>
         <ul>
             <li>

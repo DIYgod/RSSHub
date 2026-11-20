@@ -3,8 +3,9 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+
+import { getFullText } from './utils';
 
 export const route: Route = {
     path: '/headline',
@@ -50,13 +51,13 @@ async function handler() {
                 description: $item.parent().next().html(),
                 summary: $item.parent().next().text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.parents('div').first().find('span').text()), 8),
+                pubDate: parseDate($item.parents('div').first().find('span').text(), 8),
             };
         });
 
     items = await Promise.all(
         items.map(async (item) => {
-            const article = await cache.tryGet(`guancha:headline:attributed-article:${item.link}`, async () => {
+            const article = await cache.tryGet(`guancha:headline:full-article:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -65,7 +66,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 return {
-                    description: content('.all-txt').html(),
+                    description: await getFullText(content, item.link),
                     author: content('.author-intro p a').text() || content('.editor-intro p a').text() || undefined,
                 };
             });

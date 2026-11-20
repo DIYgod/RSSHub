@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/blog/:id',
@@ -46,7 +45,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://bgm.tv').href,
-                pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
+                pubDate: dateString ? parseDate(dateString, 8) : undefined,
             };
         });
 

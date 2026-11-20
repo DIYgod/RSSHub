@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -48,7 +47,7 @@ async function handler() {
             return {
                 title: keyword![1],
                 author: keyword![2],
-                pubDate: timezone(parseDate(keyword![3], 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(keyword![3], 'YYYY-MM-DD', 8),
                 link,
             };
         });

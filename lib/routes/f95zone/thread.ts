@@ -1,9 +1,10 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processContent } from './utils';
 
@@ -47,7 +48,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
     handler: async (ctx) => {
         const { thread } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
-        const threadLink = `${baseUrl}/threads/${thread}/`;
+        const threadLink = `${baseUrl}/threads/${encodeURIComponent(thread)}/`;
 
         const headers = {
             ...(config.f95zone.cookie && { cookie: config.f95zone.cookie }),

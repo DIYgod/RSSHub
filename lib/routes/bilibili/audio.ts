@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const audio = 'https://www.bilibili.com/audio/au';
 
@@ -45,7 +46,7 @@ async function handler(ctx) {
             title,
             link,
             author,
-            pubDate: new Date(item.passtime * 1000).toUTCString(),
+            pubDate: parseDate(item.passtime * 1000),
             description,
         };
 

@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/index/:category?',
@@ -54,12 +53,12 @@ async function handler(ctx) {
             const $item = $(item);
             const link = new URL($item.find('a').attr('href')!, 'http://www.xaut.edu.cn/index/' + categoryPaths[category]).href;
             const rawDate = $item.find('div.time').text();
-            const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
+            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
             const title = $item.find('h5').text();
             return {
                 title,
                 link,
-                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                pubDate,
             };
         });
     return {

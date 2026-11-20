@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface MsnCard {
     url: string;
@@ -76,7 +76,7 @@ export const route: Route = {
                         const articleData = await ofetch<{ body: string }>(articleDetailUrl);
                         return articleData.body;
                     });
-                    articleContentHtml = fetchedArticleContentHtml.replace(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
+                    articleContentHtml = fetchedArticleContentHtml.replaceAll(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
                 }
 
                 return {

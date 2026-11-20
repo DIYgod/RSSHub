@@ -1,15 +1,14 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import MarkdownIt from 'markdown-it';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-const markdown = new MarkdownIt({ html: true, linkify: true });
+const markdown = MarkdownIt({ html: true, linkify: true });
 
 type Racer = {
     mainId?: string;
@@ -27,7 +26,7 @@ const findMainIds = (data: readonly Racer[], searchKey?: string): MainIdsResult 
     if (!searchKey) {
         return { name: undefined, racer2: undefined, racer3: undefined };
     }
-    const recurse = (currentList: readonly Racer[], parentMainId: string | undefined = undefined, grandParentMainId: string | undefined = undefined): MainIdsResult => {
+    const recurse = (currentList: readonly Racer[], parentMainId?: string, grandParentMainId?: string): MainIdsResult => {
         for (const item of currentList) {
             const isMatch = item.mainId === searchKey || item.name === searchKey;
 
@@ -115,7 +114,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             link: linkUrl,
             category: categories,
             author: authors,

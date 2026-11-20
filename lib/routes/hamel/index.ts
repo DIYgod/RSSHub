@@ -4,8 +4,7 @@ import { FetchError } from 'ofetch';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -46,8 +45,7 @@ async function handler() {
             }
 
             const link = new URL(href, rootUrl).href;
-            const parsedDate = dateStr ? parseDate(dateStr, 'M/D/YY') : undefined;
-            const pubDate = parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 0) : undefined;
+            const pubDate = dateStr ? parseDate(dateStr, 'M/D/YY', 0) : undefined;
 
             return {
                 title,
@@ -69,7 +67,7 @@ async function handler() {
                         if ($detail('title').text() === 'Redirect' && redirectMap) {
                             const destination = JSON.parse(redirectMap[1])[''];
                             if (typeof destination === 'string') {
-                                const target = new URL(destination, item.link!);
+                                const target = new URL(destination, item.link);
                                 if (target.origin !== new URL(item.link!).origin) {
                                     throw new Error('Hamel linked a redirect outside the original article site.');
                                 }

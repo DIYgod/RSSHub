@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/developer/blog',
@@ -53,20 +53,19 @@ function findBlogCards(value: JsonValue): BlogCard[] {
         return [];
     }
     if (Array.isArray(value)) {
-        return value.flatMap(findBlogCards);
+        return value.flatMap((entry) => findBlogCards(entry));
     }
     if (Array.isArray(value.cards) && value.cards.every(isBlogCard)) {
         return value.cards;
     }
-    return Object.values(value).flatMap(findBlogCards);
+    return Object.values(value).flatMap((entry) => findBlogCards(entry));
 }
 
 function parsePublishedDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(value, 'MMMM D, YYYY');
 }
 
 async function handlerRoute(): Promise<Data> {

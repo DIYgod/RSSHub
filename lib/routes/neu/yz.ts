@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'http://yz.neu.edu.cn';
 const DOWNLOAD_ID = 5792;
@@ -38,7 +37,7 @@ const parsePage = async (items: Element[], type) => {
                 description: '',
                 pubDate: (() => {
                     const sTag = $('span.Article_PublishDate');
-                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), 8) : undefined;
+                    const pubDate = sTag.text() ? parseDate(sTag.text(), 8) : undefined;
                     return pubDate;
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
@@ -65,7 +64,7 @@ const parsePage = async (items: Element[], type) => {
                         .match(/[:：]?\s*(.+)/);
                     const author = authorText ? authorText[1].trim() : '';
                     if (date) {
-                        details.pubDate = timezone(parseDate(date), 8);
+                        details.pubDate = parseDate(date, 8);
                     }
                     details.author = author;
                 }

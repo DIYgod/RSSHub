@@ -4,9 +4,9 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:category{.+}?',
@@ -80,7 +80,8 @@ export async function handler(ctx) {
                   };
               });
 
-    items = items.filter((item) => /https?:\/\/www\.gov\.cn\/zhengce.*content_\d+\.htm/.test(item.link!));
+    // only follow links on the site itself
+    items = items.filter((item) => isOnSite(item.link, 'www.gov.cn') && /^\/zhengce.*content_\d+\.htm/.test(new URL(item.link!).pathname));
     // Detail metadata refines the list's calendar dates, so keep the source's
     // first page until core sorts it unless native ordering is requested.
     if (ctx.req.query('sorted') === 'false' && limit !== undefined) {
@@ -127,8 +128,8 @@ export async function handler(ctx) {
                 item.guid = manuscriptId ? `gov-zhengce-${manuscriptId}` : item.link;
                 const published = content('meta[name="firstpublishedtime"]').prop('content');
                 const modified = content('meta[name="lastmodifiedtime"]').prop('content');
-                item.pubDate = published ? timezone(parseDate(published, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined;
-                item.updated = modified ? timezone(parseDate(modified, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined;
+                item.pubDate = published ? parseDate(published, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
+                item.updated = modified ? parseDate(modified, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
 
                 return item;
             })

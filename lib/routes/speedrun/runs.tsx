@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/runs/:scope?/:name?',
@@ -26,7 +26,7 @@ export const route: Route = {
 async function handler(ctx) {
     const scope = ctx.req.param('scope');
     const name = ctx.req.param('name');
-    if ((scope && !['game', 'user'].includes(scope)) || (scope && !name)) {
+    if (scope && (!['game', 'user'].includes(scope) || !name)) {
         throw new InvalidParameterError('Use /runs, /runs/game/:abbreviation or /runs/user/:username.');
     }
     let subject;

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://www.ruankao.org.cn/index/work.html';
 
@@ -39,7 +39,7 @@ const handler: Route['handler'] = async () => {
         const title = $(element).find('a').attr('title')!;
         const link = $(element).find('a').attr('href')!;
 
-        const formattedDate = date ? parseDateInTimezone(date, 8) : undefined;
+        const formattedDate = date ? parseDate(date, 8) : undefined;
         return {
             date: formattedDate,
             title,

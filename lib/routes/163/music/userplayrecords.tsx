@@ -79,7 +79,7 @@ async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type')) || 0;
 
     const url = `https://music.163.com/api/v1/play/record?uid=${uid}&type=${type}`;
-    const response = await ofetch.raw(url, { headers, responseType: 'json' });
+    const response = await ofetch.raw(url, { headers });
 
     if (response._data.code !== 200) {
         throw new Error(`Unable to fetch listening records: ${response._data.message ?? `API code ${response._data.code}`}. Check that the records are public or configure NCM_COOKIES.`);
@@ -92,5 +92,6 @@ async function handler(ctx) {
         link: `https://music.163.com/user/home?id=${uid}`,
         updated: response.headers.get('date') ?? undefined,
         item: getItem(records),
+        allowEmpty: type === 1,
     };
 }

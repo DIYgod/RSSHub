@@ -1,8 +1,10 @@
+import pMap from 'p-map';
+
 import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
@@ -27,13 +29,14 @@ export const route: Route = {
 };
 
 const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({

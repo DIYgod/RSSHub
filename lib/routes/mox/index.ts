@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
@@ -98,14 +100,14 @@ export const route: Route = {
 };
 
 function getDescription(content: string): string {
-    const description = content.match(/document\.getElementById\("div_desc_content"\)\.innerHTML\s*=\s*("(?:\\.|[^"\\])*")\s*;/s)?.[1];
+    const description = /document\.getElementById\("div_desc_content"\)\.innerHTML\s*=\s*("(?:\\.|[^"\\])*")\s*;/s.exec(content)?.[1];
     return description ? JSON.parse(description) : '';
 }
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
-    const currentUrl = `${rootUrl}${category ? `/l/${category}` : ''}`;
+    const currentUrl = `${rootUrl}${category ? `/l/${encodeURIComponent(category)}` : ''}`;
 
     const cookie = config.mox.cookie;
     const page = await getPage(currentUrl, cookie);

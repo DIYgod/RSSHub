@@ -15,7 +15,7 @@ const fetchViaBrowser = async (url: string, type: 'html' | 'json' = 'html') => {
             const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
             await page.route('**/*', (route) => {
                 const request = route.request();
-                expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
     });

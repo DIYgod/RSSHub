@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     path: '/changelog',
@@ -32,7 +32,7 @@ export const route: Route = {
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-function getPublicationDate(value: string): Date | undefined {
+function getPublicationDate(value: string): Temporal.Instant | undefined {
     const match = /^([A-Z][a-z]+) (\d{1,2}), (\d{4})$/.exec(value.replaceAll(/\s+/g, ' ').trim());
     if (!match) {
         return;
@@ -43,7 +43,7 @@ function getPublicationDate(value: string): Date | undefined {
     }
     const calendarDate = `${match[3]}-${String(month).padStart(2, '0')}-${match[2].padStart(2, '0')}`;
     const date = parseDate(`${calendarDate}T00:00:00Z`);
-    return Number.isFinite(date.getTime()) && date.toISOString().startsWith(calendarDate) ? date : undefined;
+    return date && toISOString(date).startsWith(calendarDate) ? date : undefined;
 }
 
 async function getArticleItem(item: DataItem & { link: string }): Promise<DataItem> {

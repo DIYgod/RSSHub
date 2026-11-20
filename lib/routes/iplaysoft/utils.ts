@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://www.iplaysoft.com/';
 
@@ -29,7 +29,7 @@ async function fetchNewsItems(apiUrl: string) {
         title: item.title.rendered,
         description: item.content.rendered,
         link: item.link,
-        pubDate: item.date_gmt && Number.isFinite(parseDate(item.date_gmt, 'YYYY-MM-DDTHH:mm:ss', true).getTime()) ? parseDate(`${item.date_gmt}Z`).toUTCString() : undefined,
+        pubDate: item.date_gmt ? parseDateStrict(item.date_gmt, 'YYYY-MM-DDTHH:mm:ss') : undefined,
         author: item._embedded?.author?.[0]?.name,
         category: item._embedded?.['wp:term']?.flat().map((term) => term.name),
     }));

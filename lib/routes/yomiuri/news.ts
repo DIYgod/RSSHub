@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -69,15 +68,11 @@ function parseArticleDate(value: string | undefined) {
     if (!match) {
         return;
     }
-    const [, year, month, day, hour, minute, second = '0', offset] = match;
-    const calendar = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
-    if (calendar.getUTCFullYear() !== Number(year) || calendar.getUTCMonth() !== Number(month) - 1 || calendar.getUTCDate() !== Number(day) || Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59) {
+    const [hour, minute, second = '0'] = match.slice(4, 7);
+    if (Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59) {
         return;
     }
-    const date = parseDate(value!);
-    if (Number.isFinite(date.getTime())) {
-        return offset ? date : timezone(date, 9);
-    }
+    return parseDate(value!, 9);
 }
 
 async function handler(ctx) {

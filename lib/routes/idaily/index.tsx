@@ -5,8 +5,8 @@ import { getMimeType } from 'hono/utils/mime';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?',
@@ -69,9 +69,9 @@ async function handler(ctx): Promise<Data> {
             };
         });
 
-    const canSort = articles.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    const canSort = articles.every((item) => item.pubDate !== undefined);
     if (ctx.req.query('sorted') !== 'false' && canSort) {
-        articles.sort((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime());
+        articles.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
     const items = articles.slice(0, ctx.req.query('sorted') === 'false' || canSort ? limit : Math.max(100, limit));
 

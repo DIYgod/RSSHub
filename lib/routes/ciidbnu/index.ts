@@ -4,8 +4,7 @@ import iconv from 'iconv-lite';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -62,7 +61,7 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
                 item.description = content('#text').html();
-                item.pubDate = timezone(parseDate(content('.t8').eq(0).text(), 'YYYY/M/D H:mm:ss'), 8);
+                item.pubDate = parseDate(content('.t8').eq(0).text(), 'YYYY/M/D H:mm:ss', 8);
 
                 content('.t14').remove();
 

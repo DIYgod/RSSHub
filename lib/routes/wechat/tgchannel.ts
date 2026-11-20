@@ -4,6 +4,7 @@ import type { AnyNode } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem, normalizeUrl } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -41,7 +42,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const mpName = ctx.req.param('mpName') ?? '';
     let searchQueryType = ctx.req.param('searchQueryType') ?? '0';
-    if (searchQueryType !== '0' && searchQueryType !== '1' && searchQueryType !== '2') {
+    if (!['0', '1', '2'].includes(searchQueryType)) {
         searchQueryType = '0';
     }
     searchQueryType = +searchQueryType; // 将字符串转换为数字
@@ -152,7 +153,7 @@ async function handler(ctx) {
                 title = author + ': ' + title; // 给标题里加上获取到的作者
             }
 
-            const pubDate = new Date($item.find('.tgme_widget_message_date time').attr('datetime')!).toUTCString();
+            const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime')!);
 
             /*
              * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.

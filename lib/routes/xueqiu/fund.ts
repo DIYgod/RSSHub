@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/fund/:id',
@@ -56,7 +55,7 @@ async function handler(ctx) {
     const single = {
         title,
         description,
-        pubDate: timezone(parseDate(end_date), 8),
+        pubDate: parseDate(end_date, 8),
         link: appUrl,
         guid: end_date ? `${appUrl}#${end_date}` : undefined,
     };

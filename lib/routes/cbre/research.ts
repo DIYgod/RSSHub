@@ -2,9 +2,10 @@ import { escapeText } from 'entities';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const sites = {
     cn: { url: 'https://www.cbre.com.cn/insights', language: 'zh-CN', name: '中国' },
@@ -43,7 +44,7 @@ function handleRequest(route) {
     }
     if (['xhr', 'fetch'].includes(type) && ['www.cbre.com.cn', 'www.cbre.com.hk'].includes(url.host) && url.pathname.startsWith('/coveo/rest/')) {
         if (url.pathname === '/coveo/rest/search/v2' && request.method() === 'POST') {
-            const params = new URLSearchParams(request.postData()!);
+            const params = new URLSearchParams(request.postData());
             params.set('sortCriteria', '@publishdate descending');
             return route.continue({ postData: params.toString() });
         }
@@ -73,6 +74,10 @@ async function handler(ctx) {
         await page.waitForSelector(selector, { state: 'attached' });
         const src = await page.locator(selector).first().getAttribute('src');
         const iframeUrl = new URL(src!, config.url);
+        // only follow links on the site itself
+        if (!isOnSite(iframeUrl.href, 'cbre.com.cn', 'cbre.com.hk')) {
+            throw new Error('CBRE research results are no longer embedded from the CBRE site.');
+        }
         const resultsPath = iframeUrl.pathname.split('/').at(-1);
         const [response] = await Promise.all([
             page.waitForResponse((response) => {

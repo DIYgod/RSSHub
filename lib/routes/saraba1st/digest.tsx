@@ -7,9 +7,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 class RestrictedThreadError extends Error {}
 
@@ -36,7 +35,7 @@ async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const cookieString = config.saraba1st.cookie ?? '';
     const host = config.saraba1st.host;
-    const res = await got(`${host}/2b/${tid}.html`, {
+    const res = await got(`${host}/2b/${encodeURIComponent(tid)}.html`, {
         headers: {
             Cookie: cookieString,
         },
@@ -55,7 +54,7 @@ async function handler(ctx) {
                 title: `${title}:${floor}`,
                 link: new URL(floorUrl!, `${host}/2b/`).href,
                 author: $each.find('td.by cite').first().text(),
-                pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
+                pubDate: parseDate($each.find('td.by em').first().text(), 8),
             };
         });
 
@@ -139,13 +138,13 @@ async function fetchContent(url) {
 
 const DigestSection = ({ author, msg, host }: { author: { link?: string; name: string; postinfo: string }; msg?: string; host: string }) => (
     <>
-        <div class="quoted" style="background:rgba(220,220,220,0.3);">
+        <div className="quoted" style="background:rgba(220,220,220,0.3);">
             <a style="text-decoration: none;" href={`${host}/2b/${author.link ?? ''}`}>
                 {author.name}
             </a>
             <span style="text-decoration: none;color:#aaa;">{author.postinfo}</span>
         </div>
-        <div class="content" style="margin-bottom:20px!important;">
+        <div className="content" style="margin-bottom:20px!important;">
             {msg ? raw(msg) : null}
         </div>
     </>

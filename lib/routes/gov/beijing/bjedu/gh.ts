@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bjedu/gh/:urlPath?',
@@ -51,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: $item.text().trim(),
                 link: $item.attr('href')!.startsWith('http') ? $item.attr('href')!.replace(/^http:/, 'https:') : new URL($item.attr('href')!, link).href,
-                pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
             };
         });
 
@@ -67,7 +66,7 @@ async function handler(ctx) {
                 item.title = item.title.endsWith('...') ? $('.con-h h1').text().trim() : item.title;
                 const pubDate = $('.con-h span').eq(0).text();
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss'), 8);
+                    item.pubDate = parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8);
                 }
                 item.author = $('.con-h span').eq(1).text().trim();
                 item.description = $('.content_font').html();

@@ -4,8 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://efe.com';
 
@@ -68,8 +68,7 @@ function getGmtDate(date?: string) {
     if (!date) {
         return;
     }
-    const result = parseDate(`${date}Z`);
-    return Number.isFinite(result.getTime()) ? result : undefined;
+    return parseDate(`${date}Z`);
 }
 
 async function handler(ctx) {

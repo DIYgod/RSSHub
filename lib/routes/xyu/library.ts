@@ -4,11 +4,10 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 function parsePublicationDate(value: string) {
-    const date = parseDate(value, 'YYYY-MM-DD', true);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDateStrict(value, 'YYYY-MM-DD');
 }
 
 async function fetchDetails(url: string) {

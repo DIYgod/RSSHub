@@ -19,7 +19,7 @@ export const route: Route = {
    2. Specifically, this route defaults to sorting entries from new to old (\`direction=desc\`).
    3. Moreover, this route supports additional options including:
       - Using the \`feed_name\` parameter to control title formatting; setting \`feed_name=1\` will display each title as "Article Title | Feed Name," while default is set at \`0\`, showing only article titles.
-      - Utilizing the \`mark\` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (\`unchanged\`, default), marking as read (\`read\`), removing (\`removed\`) or marking as unread (\`unread\`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.
+      - Utilizing the \`mark\` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (\`unchanged\`, default), marking as read (\`read\`), removing (\`removed\`) or marking as unread (\`unread\`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature. As it changes the MiniFlux account, it is only available on instances protected by \`ACCESS_KEY\`.
       - Future support may include utilizing the \`link\` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.
       - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.`,
     categories: ['other'],
@@ -37,6 +37,11 @@ export const route: Route = {
             {
                 name: 'MINIFLUX_TOKEN',
                 description: "User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.",
+            },
+            {
+                name: 'ACCESS_KEY',
+                optional: true,
+                description: 'Required to use the `mark` option, which changes the status of entries in the MiniFlux account.',
             },
         ],
         requirePuppeteer: false,
@@ -82,6 +87,10 @@ async function handler(ctx) {
         switch (filter) {
             case 'mark':
                 if (['read', 'removed', 'unread'].includes(option) && !setMark.length) {
+                    // changes the operator's account, so it needs ACCESS_KEY
+                    if (!config.accessKey) {
+                        throw new ConfigNotFoundError(`The \`mark\` option changes the status of entries in the MiniFlux account and is disabled unless 'ACCESS_KEY' is set.`);
+                    }
                     mark = option;
                     setMark.push(1);
                 }
@@ -110,7 +119,7 @@ async function handler(ctx) {
                 Number.isNaN(Number.parseInt(option)) ? (item = '') : (item = `category_id=${option}`);
                 break;
             case 'order':
-                if (option !== 'id' && option !== 'category_title' && option !== 'published_at' && option !== 'status' && option !== 'category_id') {
+                if (!['id', 'category_title', 'published_at', 'status', 'category_id'].includes(option)) {
                     item = '';
                 }
                 break;
@@ -186,6 +195,7 @@ async function handler(ctx) {
                     headers: {
                         'X-Auth-Token': token,
                     },
+                    credentialHeaders: ['X-Auth-Token'],
                 });
 
                 return response.data.entries;
@@ -250,6 +260,7 @@ async function handler(ctx) {
 
         const response = await got.get(`${instance}/v1/entries?${parameters}`, {
             headers: { 'X-Auth-Token': token },
+            credentialHeaders: ['X-Auth-Token'],
         });
 
         const entries = response.data.entries;
@@ -290,6 +301,7 @@ async function handler(ctx) {
                 'Content-Type': 'application/json',
                 'X-Auth-Token': token,
             },
+            credentialHeaders: ['X-Auth-Token'],
             json: {
                 entry_ids: entriesID,
                 status: mark,

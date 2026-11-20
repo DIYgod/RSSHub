@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const platformIds = {
     osx: 'macOS',
@@ -144,7 +144,7 @@ async function handler(ctx) {
     }
 
     items = items
-        .toSorted((a, b) => Number(parseDate(b.releaseTimestamp)) - Number(parseDate(a.releaseTimestamp)))
+        .toSorted((a, b) => compareDates(parseDate(b.releaseTimestamp), parseDate(a.releaseTimestamp)))
         .slice(0, limit)
         .map((item) => {
             const pid = item.platformId ?? platformId;

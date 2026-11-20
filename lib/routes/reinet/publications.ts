@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.reinet.or.jp';
 const link = `${baseUrl}/publications/`;
@@ -39,7 +38,7 @@ async function handler(ctx: Context) {
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(entry.prev('dt').text().trim(), 'YYYY/MM/DD'), 9),
+                pubDate: parseDate(entry.prev('dt').text().trim(), 'YYYY/MM/DD', 9),
             };
         });
 

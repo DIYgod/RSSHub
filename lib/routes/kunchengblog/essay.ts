@@ -1,11 +1,10 @@
 import { load } from 'cheerio';
-import { SourceMapConsumer } from 'source-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/essay',
@@ -50,12 +49,11 @@ const convertAttributes = (source: string, files: Record<string, string>, rootUr
 };
 
 const parsePublicationMonth = (value: string) => {
-    const match = value.trim().match(/^([A-Z]+)\s+(\d{4})\b/i);
+    const match = /^([A-Z]+)\s+(\d{4})\b/i.exec(value.trim());
     if (!match) {
         return;
     }
-    const date = parseDate(`${match[1]} 1, ${match[2]} GMT`);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${match[1]} 1, ${match[2]}`, 'MMM D, YYYY');
 };
 
 async function handler(ctx) {
@@ -88,45 +86,43 @@ async function handler(ctx) {
         return data.files as Record<string, string>;
     });
 
-    const items = await SourceMapConsumer.with(response, null, (consumer) =>
-        consumer.sources
-            .filter((s) => /routes\/essays/.test(s))
-            .toReversed()
-            .slice(0, sourceLimit)
-            .map((item) => {
-                const source = consumer.sourceContentFor(item)!.replaceAll(/\s\n/g, '');
+    const items = response.sources
+        .filter((s) => /routes\/essays/.test(s))
+        .toReversed()
+        .slice(0, sourceLimit)
+        .map((item) => {
+            const source = response.sourcesContent[response.sources.indexOf(item)].replaceAll(/\s\n/g, '');
 
-                const processedSource = convertAttributes(source, files, rootUrl);
+            const processedSource = convertAttributes(source, files, rootUrl);
 
-                const content = load(processedSource, { xmlMode: true });
-                const publication = content('p[className="App-essay-article"]').last();
-                const publicationText = publication.text();
-                const pubDate = parsePublicationMonth(publicationText);
-                const sourceAuthor = publicationText.match(/^\s*[A-Za-z]+\s+\d{4}[ \t]*\|[ \t]*Author:[ \t]*([^\r\n]+)/)?.[1];
-                if (pubDate) {
-                    const header = publication
-                        .contents()
-                        .toArray()
-                        .find((node) => content(node).text().trim());
-                    if (header?.type === 'text') {
-                        header.data = header.data.replace(/^\s*[A-Za-z]+\s+\d{4}(?:[ \t]*\|[ \t]*Author:[^\r\n]*)?[ \t]*(?:\r?\n)?/, '');
-                    } else if (header && /^[A-Za-z]+\s+\d{4}(?:\s*\|\s*Author:.*)?$/.test(content(header).text().trim())) {
-                        content(header).remove();
-                    }
+            const content = load(processedSource, { xmlMode: true });
+            const publication = content('p[className="App-essay-article"]').last();
+            const publicationText = publication.text();
+            const pubDate = parsePublicationMonth(publicationText);
+            const sourceAuthor = publicationText.match(/^\s*[A-Za-z]+\s+\d{4}[ \t]*\|[ \t]*Author:[ \t]*([^\r\n]+)/)?.[1];
+            if (pubDate) {
+                const header = publication
+                    .contents()
+                    .toArray()
+                    .find((node) => content(node).text().trim());
+                if (header?.type === 'text') {
+                    header.data = header.data.replace(/^\s*[A-Za-z]+\s+\d{4}(?:[ \t]*\|[ \t]*Author:[^\r\n]*)?[ \t]*(?:\r?\n)?/, '');
+                } else if (header && /^[A-Za-z]+\s+\d{4}(?:\s*\|\s*Author:.*)?$/.test(content(header).text().trim())) {
+                    content(header).remove();
                 }
+            }
 
-                return {
-                    title: content('title').text(),
-                    pubDate,
-                    link: new URL(`essay/${item.match(/\/(\w+)\.js/)![1].toLowerCase()}`, currentUrl).href,
-                    description: content('p[className="App-essay-article"]')
-                        .toArray()
-                        .map((p) => content.html(content(p).contents(), { xmlMode: false }))
-                        .join(''),
-                    author: sourceAuthor ?? title,
-                };
-            })
-    );
+            return {
+                title: content('title').text(),
+                pubDate,
+                link: new URL(`essay/${item.match(/\/(\w+)\.js/)![1].toLowerCase()}`, currentUrl).href,
+                description: content('p[className="App-essay-article"]')
+                    .toArray()
+                    .map((p) => content.html(content(p).contents(), { xmlMode: false }))
+                    .join(''),
+                author: sourceAuthor ?? title,
+            };
+        });
 
     const language = $('html').prop('lang') as Language;
 

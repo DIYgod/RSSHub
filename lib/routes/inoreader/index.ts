@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/html_clip/:user/:tag',
@@ -47,12 +46,12 @@ async function handler(ctx) {
                 .replace(/UTC.*/, '');
             const author = $('div.article_author span span', header).text().trim();
             const feedName = $('div.article_author a.feed_link', header).text().trim();
-            const parsedDate = pubDate ? parseDate(pubDate.trim(), 'MMM DD YYYY HH:mm:ss', true) : undefined;
+            const parsedDate = pubDate ? parseDateStrict(pubDate.trim(), 'MMM DD YYYY HH:mm:ss', 0) : undefined;
             return {
                 title: $('a.title_link', header).text(),
                 link: $('a.title_link', header).attr('href'),
                 author: author ? [author, feedName].filter(Boolean).join(' via ') : undefined,
-                pubDate: parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 0) : undefined,
+                pubDate: parsedDate,
                 description: $(item).html(),
             };
         }),

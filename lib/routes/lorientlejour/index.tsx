@@ -8,9 +8,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
 
@@ -88,7 +87,7 @@ async function viewCategory(category: string) {
 }
 
 function getCategoryId(category: string) {
-    const match = category.match(/^(\d+)/);
+    const match = /^(\d+)/.exec(category);
     if (!match) {
         throw new InvalidParameterError('Category must start with its numeric ID, for example 977-lebanon. Separate multiple categories with |.');
     }
@@ -96,7 +95,7 @@ function getCategoryId(category: string) {
 }
 
 async function handler(ctx) {
-    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map(getCategoryId);
+    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((category) => getCategoryId(category));
     const limit = getRouteLimit(ctx, 25);
 
     let token;
@@ -159,8 +158,8 @@ async function handler(ctx) {
     const items = response.data.data.map((item) => {
         item.link = item.url;
         item.author = item.authors.map((author) => author.name).join(', ');
-        item.pubDate = timezone(parseDate(item.firstPublished), 3);
-        item.updated = timezone(parseDate(item.lastUpdate), 3);
+        item.pubDate = parseDate(item.firstPublished, 3);
+        item.updated = parseDate(item.lastUpdate, 3);
         item.category = item.categories.map((itemCategory) => itemCategory.name);
         const contents = item.contents;
         const $ = load(contents);
@@ -168,9 +167,11 @@ async function handler(ctx) {
         article.find('.inline-embeded-article').remove();
         article.find('.relatedArticles').remove();
         if (item.inline_attachments) {
+            // index by url once per article; reversed so that the first attachment with a given url wins
+            const inlineAttachments = new Map<string | undefined, { description?: string }>(item.inline_attachments.toReversed().map((inlineAttachment) => [inlineAttachment.url, inlineAttachment]));
             article.find('.inlineImage').each((_, el) => {
                 const inlineImageSrc = $(el).attr('src');
-                const inlineAttachment = item.inline_attachments.find((inlineAttachment) => inlineAttachment.url === inlineImageSrc);
+                const inlineAttachment = inlineAttachments.get(inlineImageSrc);
                 if (!(inlineAttachment && inlineAttachment.description)) {
                     return;
                 }

@@ -3,9 +3,9 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const targetUrl = 'https://jwc.cupl.edu.cn/tz/tzgg.htm';
 const allowedRequestTypes = new Set(['document', 'script', 'xhr', 'fetch']);
@@ -58,7 +58,7 @@ export const route: Route = {
                     return {
                         link: href ? new URL(href, targetUrl).href : undefined,
                         title: element.find('h3').text(),
-                        pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 8),
+                        pubDate: parseDate(date, 'YYYY-MM-DD', 8),
                         description: element.find('.txt p').html(),
                     };
                 })
@@ -66,8 +66,12 @@ export const route: Route = {
 
             const items = await pMap(
                 list,
-                (item) =>
-                    cache.tryGet(item.link!, async () => {
+                (item) => {
+                    // only follow links on the site itself
+                    if (!isOnSite(item.link, 'cupl.edu.cn')) {
+                        return item;
+                    }
+                    return cache.tryGet(item.link!, async () => {
                         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
                         await page.waitForSelector('.v_news_content', { state: 'attached' });
                         const detailHtml = await page.content();
@@ -84,7 +88,8 @@ export const route: Route = {
                             ...item,
                             description: `${$('.v_news_content').html() ?? ''}${attachments.length ? `<ul>${attachments.join('')}</ul>` : ''}`,
                         };
-                    }),
+                    });
+                },
                 { concurrency: 1 }
             );
 

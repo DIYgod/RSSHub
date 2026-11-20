@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-import { parseSourceDate } from './utils';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.ithome.com/';
 
@@ -41,11 +40,14 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('ul.bl > li')
         .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('h2 > a').text(),
-            link: $(item).find('h2 > a').attr('href'),
-            pubDate: parseSourceDate($(item).find('div.c').attr('data-ot')),
-        }));
+        .map((item): DataItem => {
+            const date = parseDate($(item).find('div.c').attr('data-ot') ?? '', 8);
+            return {
+                title: $(item).find('h2 > a').text(),
+                link: $(item).find('h2 > a').attr('href'),
+                pubDate: date,
+            };
+        });
 
     const items = await pMap(
         list,

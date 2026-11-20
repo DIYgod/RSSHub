@@ -1,12 +1,13 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/std/:category?',
@@ -70,7 +71,7 @@ async function handler(ctx) {
                         .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                     return {
                         description: body.html() ?? undefined,
-                        pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                        pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
                     };
                 }),
                 (detail) => ({ ...item, ...detail })

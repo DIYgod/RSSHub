@@ -15,7 +15,7 @@ beforeEach(() => {
     config.playwrightWSEndpoint = undefined;
     mocks.goto.mockResolvedValue(undefined);
     mocks.newPage.mockResolvedValue({ goto: mocks.goto });
-    mocks.newContext.mockResolvedValue({ newPage: mocks.newPage, close: mocks.contextClose });
+    mocks.newContext.mockResolvedValue({ newPage: mocks.newPage, on: vi.fn(), close: mocks.contextClose });
     mocks.launch.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
     mocks.connect.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
     mocks.cloudConnect.mockResolvedValue({ newContext: mocks.newContext, close: mocks.close });
@@ -45,7 +45,7 @@ describe('Worker browser lifecycle', () => {
         expect(mocks.launch).not.toHaveBeenCalled();
         expect(mocks.sessionFetch).not.toHaveBeenCalled();
         expect(mocks.cloudConnect).not.toHaveBeenCalled();
-        expect(mocks.newContext).toHaveBeenCalledWith({ ignoreHTTPSErrors: true, javaScriptEnabled: false });
+        expect(mocks.newContext).toHaveBeenCalledWith({ javaScriptEnabled: false });
         await Promise.all([destroy(), destroy()]);
         expect(mocks.contextClose).toHaveBeenCalledOnce();
         expect(mocks.close).toHaveBeenCalledOnce();
@@ -65,8 +65,8 @@ describe('Worker browser lifecycle', () => {
     it('isolates simultaneous requests and cleans up only their own context', async () => {
         useSessionCoordinator();
         const contexts = [
-            { newPage: mocks.newPage, close: vi.fn() },
-            { newPage: mocks.newPage, close: vi.fn() },
+            { newPage: mocks.newPage, on: vi.fn(), close: vi.fn() },
+            { newPage: mocks.newPage, on: vi.fn(), close: vi.fn() },
         ];
         mocks.newContext.mockResolvedValueOnce(contexts[0]).mockResolvedValueOnce(contexts[1]);
         const pages = await Promise.all([getPlaywrightPage('about:blank', { noGoto: true }), getPlaywrightPage('about:blank', { noGoto: true })]);
@@ -173,6 +173,14 @@ describe('Worker browser lifecycle', () => {
         await vi.advanceTimersByTimeAsync(180000);
         expect(mocks.close).not.toHaveBeenCalled();
         await destroy();
+        expect(mocks.close).toHaveBeenCalledOnce();
+    });
+
+    it('still closes a shared page whose explicit cleanup is never reached', async () => {
+        await getPlaywrightPage('https://example.com', { noGoto: true, closeTimeout: 0 });
+        await vi.advanceTimersByTimeAsync(299999);
+        expect(mocks.close).not.toHaveBeenCalled();
+        await vi.advanceTimersByTimeAsync(1);
         expect(mocks.close).toHaveBeenCalledOnce();
     });
 

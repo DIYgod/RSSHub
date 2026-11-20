@@ -6,7 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 
-import { getTwitterUserCacheKey } from '../../utils';
+import { getTwitterUserCacheKey, TWITTER_USER_CACHE_EXPIRE } from '../../utils';
 
 interface ClientWrapper {
     client: TwitterApiReadOnly;
@@ -278,14 +278,18 @@ const mapTweetResponseToLegacy = (response: TweetsV2Response) => {
 };
 
 const getUserData = (id: string) =>
-    cache.tryGet(`twitter-userdata-${id}`, async () => {
-        const client = await getAppClient();
-        const params = {
-            'user.fields': 'profile_image_url,description,verified,url',
-        };
-        const response = id.startsWith('+') ? await client.v2.user(id.slice(1), params) : await client.v2.userByUsername(id, params);
-        return mapUserToLegacy(response?.data) ?? '';
-    });
+    cache.tryGet(
+        `twitter-userdata-${id}`,
+        async () => {
+            const client = await getAppClient();
+            const params = {
+                'user.fields': 'profile_image_url,description,verified,url',
+            };
+            const response = id.startsWith('+') ? await client.v2.user(id.slice(1), params) : await client.v2.userByUsername(id, params);
+            return mapUserToLegacy(response?.data) ?? '';
+        },
+        TWITTER_USER_CACHE_EXPIRE
+    );
 
 const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operationName: string, func: (id: string, params?: DevApiParams) => Promise<LegacyTweet[]>) => {
     const userData: any = await getUserData(_id);
@@ -297,8 +301,8 @@ const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operat
     return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
 };
 
-const getUserTimeline = async (id: string, params?: DevApiParams, options: DevApiParams = {}) => {
-    const count = Number(params?.count ?? 20);
+const getUserTimeline = async (id: string, params: DevApiParams, options: DevApiParams = {}) => {
+    const count = Number(params.count ?? 20);
     const snapshotKey = `twitter:developer-timeline:${id}:${count}:${JSON.stringify(options)}`;
     const stored = await cache.get(snapshotKey, false);
     const previous: LegacyTweet[] = stored ? JSON.parse(stored) : [];

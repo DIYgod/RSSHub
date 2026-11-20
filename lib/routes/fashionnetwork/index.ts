@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -57,6 +56,11 @@ const handler = async (ctx) => {
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
             };
+        })
+        // only follow links on the site itself
+        .filter((item) => {
+            const { protocol, hostname } = new URL(item.link!);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'fashionnetwork.cn' || hostname.endsWith('.fashionnetwork.cn'));
         });
 
     items = await pMap(
@@ -75,7 +79,7 @@ const handler = async (ctx) => {
                 return {
                     title,
                     description,
-                    pubDate: timezone(parseDate($$('span.time-ago').first().text().trim()), 8),
+                    pubDate: parseDate($$('span.time-ago').first().text().trim(), 8),
                     category: $$('div.newsTags')
                         .find('div.news-tag')
                         .toArray()

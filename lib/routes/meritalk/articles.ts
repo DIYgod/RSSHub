@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -49,7 +49,7 @@ async function handler() {
             const datetime = $item.find('time[datetime]').attr('datetime');
             return {
                 title: a.text(),
-                link,
+                link: new URL(link, baseUrl).href,
                 pubDate: datetime ? parseDate(datetime) : undefined,
                 category: $item
                     .find('.category-header-name a')

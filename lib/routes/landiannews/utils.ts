@@ -2,13 +2,13 @@ import sanitizeHtml from 'sanitize-html';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.landiannews.com/';
 
 const getRenderedText = (html: string) => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
-const getPubDate = (dateGmt?: string, date?: string) => (dateGmt ? parseDateInTimezone(dateGmt, 0) : date ? parseDateInTimezone(date, 8) : undefined);
+const getPubDate = (dateGmt?: string, date?: string) => (dateGmt ? parseDate(dateGmt, 0) : date ? parseDate(date, 8) : undefined);
 
 const fetchTaxonomy = async (slug: string, type: 'categories' | 'tags') => {
     const url = new URL(`wp-json/wp/v2/${type}`, rootUrl);

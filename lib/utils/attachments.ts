@@ -1,6 +1,9 @@
 import type { CheerioAPI } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem } from '@/types';
+import type { LinkResolver } from '@/utils/link-resolver';
+import { createLinkResolver } from '@/utils/link-resolver';
 
 type Attachment = NonNullable<DataItem['attachments']>[number];
 
@@ -27,6 +30,21 @@ const mimeTypes = {
 } satisfies Record<string, string>;
 const isMimeTypeKey = (key: string): key is keyof typeof mimeTypes => Object.hasOwn(mimeTypes, key);
 
+export const getImageMimeType = (image: string) => {
+    try {
+        const mimeType = getMimeType(new URL(image, 'https://rsshub.app').pathname)?.split(';', 1)[0];
+        return mimeType?.startsWith('image/') ? mimeType : undefined;
+    } catch {
+        return;
+    }
+};
+
+// Only primitive values of an `item.media` entry may become attributes of the `<media:*>` element.
+// The entry comes from the route (and often straight from upstream JSON), so an object-valued key such as
+// `dangerouslySetInnerHTML` or `children` must not reach hono's JSX, which would write it into the feed unescaped.
+export const getMediaAttributes = (value: NonNullable<DataItem['media']>[string]): Record<string, string | number> =>
+    Object.fromEntries(Object.entries(value && typeof value === 'object' ? value : {}).filter((entry) => entry[0] !== 'children' && (typeof entry[1] === 'string' || typeof entry[1] === 'number')));
+
 export const getItemAttachments = (item: DataItem): Attachment[] => {
     const attachments = [...(item.attachments || [])];
     if (item.enclosure_url && attachments.every((attachment) => attachment.url !== item.enclosure_url)) {
@@ -41,7 +59,7 @@ export const getItemAttachments = (item: DataItem): Attachment[] => {
     return attachments;
 };
 
-export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = false): Attachment[] => {
+export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = false, resolveLink: LinkResolver = createLinkResolver()): Attachment[] => {
     const attachments = getItemAttachments(item);
     const seen = new Set(attachments.map((attachment) => attachment.url));
     // Prefer playable media when a reader supports only one enclosure.
@@ -54,7 +72,7 @@ export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = f
         }
         let url: URL;
         try {
-            url = new URL(source, item.link);
+            url = new URL(resolveLink(source, item.link));
         } catch {
             continue;
         }

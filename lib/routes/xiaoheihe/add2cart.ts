@@ -1,6 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/add2cart/:platform',
@@ -29,7 +29,7 @@ async function handler(ctx) {
             description += `评分: ${item.score}<br/>`;
         }
         description += `支持中文: ${item.chinese_support ? '是' : '否'}<br/>`;
-        description += `截止时间: ${parseDate(item.end_time * 1000).toLocaleString('zh-CN')}<br/>`;
+        description += `截止时间: ${parseDate(item.end_time * 1000)?.toLocaleString('zh-CN', { timeZone: 'UTC' })}<br/>`;
         description += '<br/>';
         let link = `https://api.xiaoheihe.cn/game/share_game_detail?appid=${item.steam_appid}`;
         if (platform === 'steam') {

@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/desktop',
@@ -40,7 +39,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    $('h4[data-identifyelement]').each((_, el) => {
+    $('h3').each((_, el) => {
         const $el = $(el);
 
         if ($el.text().trim() === '') {
@@ -48,14 +47,14 @@ async function handler(ctx) {
         }
     });
 
-    const items = $('h4[data-identifyelement]')
+    const items = $('h3')
         .toArray()
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
 
             const title = $item.text();
-            const content = $item.nextUntil('h4');
+            const content = $item.nextUntil('h3');
             const description = $.html(content);
 
             return {
@@ -68,7 +67,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => $(c).text()),
                 guid: `tradingview-desktop#${title.split(/versions?\s/).pop()}`,
-                pubDate: timezone(parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY'), 8),
+                pubDate: parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY', 8),
             };
         });
 

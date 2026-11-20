@@ -17,7 +17,7 @@ const getCategoryList = async (): Promise<Record<string, typeof namespaces>> => 
             if (!namespaces[namespace].routes[path].categories?.length) {
                 continue;
             }
-            const categories = namespaces[namespace].routes[path].categories!;
+            const categories = namespaces[namespace].routes[path].categories;
             for (const category of categories) {
                 if (!Object.hasOwn(list, category)) {
                     list[category] = {};

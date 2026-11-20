@@ -1,12 +1,14 @@
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDuration } from '@/utils/helpers';
 import logger from '@/utils/logger';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate, parseDuration } from '@/utils/time';
 
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
@@ -60,11 +62,25 @@ interface VideoListResponse {
     message?: string;
 }
 
+interface ArchiveItem {
+    aid: number;
+    bvid?: string;
+    desc?: string;
+    duration?: number;
+    pic: string;
+    pubdate: number;
+    title: string;
+}
+
 type BrowserResponse = Awaited<ReturnType<Page['waitForResponse']>>;
 
 const videoListApiPath = '/x/space/wbi/arc/search';
+const riskControlCode = -352;
+const videoListApiAttempts = 3;
 const allowedBrowserRequestTypes = new Set(['document', 'script', 'xhr', 'fetch', 'image', 'font', 'stylesheet', 'other']);
-const browserResponseTimeout = 45000;
+// A Worker's remote browser session runs out of memory after about 30 seconds on a page stuck in
+// Bilibili's risk control, so give up before that and return an error RSSHub can report.
+const browserResponseTimeout = 20000;
 const browserCloseTimeout = 90000;
 
 const getErrorMessage = (cause: unknown) => (cause instanceof Error ? cause.message : String(cause));
@@ -144,15 +160,10 @@ async function applyCookie(page: Page, cookie: string) {
     }
 }
 
-async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
-    const cookie = await cache.getCookie();
-    const wbiVerifyString = await cache.getWbiVerifyString();
-    const dmImgList = utils.getDmImgList();
-    const dmImgInter = utils.getDmImgInter();
-    const renderData = await cache.getRenderData(uid);
-
+async function requestVideoList(uid: string, cookie: string, wbiVerifyString: string): Promise<VideoListResponse> {
+    // A fresh dm_img_* fingerprint and wts on every call, so each attempt carries a new signature
     const params = utils.addWbiVerifyInfo(
-        utils.addRenderData(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), renderData),
+        utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, utils.getDmImgList(), utils.getDmImgInter()),
         wbiVerifyString
     );
     const response = await got(`https://api.bilibili.com${videoListApiPath}?${params}`, {
@@ -162,13 +173,73 @@ async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
             Cookie: cookie,
         },
     });
-    const data = response.data;
+    return response.data;
+}
+
+// From Cloudflare Workers, the risk control of the video list API rejects requests one by one with
+// -352 and lets roughly a third through, so a newly signed request often passes. The cookie stays
+// the same: the endpoints that make a new visitor cookie answer Workers with a 412.
+async function requestVideoListWithRetry(uid: string, cookie: string, wbiVerifyString: string, attempt = 1): Promise<VideoListResponse> {
+    const data = await requestVideoList(uid, cookie, wbiVerifyString);
+    if (data.code !== riskControlCode || attempt >= videoListApiAttempts) {
+        if (attempt > 1) {
+            logger.info(`[bilibili/video] video list API answered code ${data.code ?? 0} on attempt ${attempt}`);
+        }
+        return data;
+    }
+
+    return requestVideoListWithRetry(uid, cookie, wbiVerifyString, attempt + 1);
+}
+
+async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
+    // The API takes a visitor cookie instead of the w_webid from the space page, which now sits
+    // behind a 412 proof-of-work challenge for plain requests.
+    const cookie = cache.getConfiguredCookie() ?? (await cache.getVisitorCookie());
+    const wbiVerifyString = await cache.getWbiVerifyString();
+
+    const data = await requestVideoListWithRetry(uid, cookie, wbiVerifyString);
     if (data.code) {
         logger.error(JSON.stringify(data.data));
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
     }
 
+    if (!data.data) {
+        throw new Error('Bilibili video list response does not contain video list data');
+    }
+
     return data.data;
+}
+
+// The uploads as the space page's search lists them, newest first. It needs no WBI signature, and
+// its risk control often lets through requests that the video list API turns away.
+async function fetchVideoListFromArchiveSearch(uid: string): Promise<VideoListData> {
+    const cookie = cache.getConfiguredCookie() ?? (await cache.getVisitorCookie());
+    const response = await got(`https://api.bilibili.com/x/series/recArchivesByKeywords?mid=${uid}&keywords=&ps=30&pn=1&orderby=senddate`, {
+        headers: {
+            Referer: `https://space.bilibili.com/${uid}`,
+            origin: 'https://space.bilibili.com',
+            Cookie: cookie,
+        },
+    });
+    const data = response.data;
+    if (data.code) {
+        throw new Error(`Got error code ${data.code} while searching the uploads: ${data.message}`);
+    }
+
+    const archives: ArchiveItem[] = data.data?.archives ?? [];
+    return {
+        list: {
+            vlist: archives.map((archive) => ({
+                aid: archive.aid,
+                bvid: archive.bvid,
+                created: archive.pubdate,
+                description: archive.desc ?? '',
+                length: archive.duration === undefined ? '' : String(archive.duration),
+                pic: archive.pic,
+                title: archive.title,
+            })),
+        },
+    };
 }
 
 async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
@@ -180,13 +251,15 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
         closeTimeout: browserCloseTimeout,
         noGoto: true,
         onBeforeLoad: async (page) => {
+            // Applied before the configured cookie so that BILIBILI_COOKIE_* can still override it
+            await utils.disableAutoTranslate(page);
             if (cookie) {
                 await applyCookie(page, cookie);
             }
 
             await page.route('**/*', (route) => {
                 const request = route.request();
-                allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },
@@ -214,17 +287,27 @@ async function getVideoList(uid: string): Promise<VideoListData> {
     try {
         return await fetchVideoListFromApi(uid);
     } catch (error) {
-        logger.warn(`[bilibili/video] API request failed, falling back to browser mode: ${error}`);
-        return fetchVideoListFromBrowser(uid);
+        logger.warn(`[bilibili/video] video list API failed, trying the upload search: ${error}`);
     }
+
+    try {
+        return await fetchVideoListFromArchiveSearch(uid);
+    } catch (error) {
+        logger.warn(`[bilibili/video] upload search failed, falling back to browser mode: ${error}`);
+    }
+
+    return fetchVideoListFromBrowser(uid);
 }
 
 async function handler(ctx: Context) {
     const isJsonFeed = ctx.req.query('format') === 'json';
 
-    const uid = ctx.req.param('uid');
+    const uid = ctx.req.param('uid')!;
+    if (!/^\d+$/.test(uid)) {
+        throw new InvalidParameterError('Invalid uid');
+    }
     const embed = !ctx.req.param('embed');
-    const data = await getVideoList(uid!);
+    const data = await getVideoList(uid);
     const videos = data.list?.vlist ?? [];
 
     let name = videos[0]?.author || uid;
@@ -251,7 +334,7 @@ async function handler(ctx: Context) {
                 return {
                     title: item.title,
                     description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
-                    pubDate: new Date(item.created * 1000).toUTCString(),
+                    pubDate: parseDate(item.created * 1000),
                     link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                     author: name,
                     comments: item.comment,

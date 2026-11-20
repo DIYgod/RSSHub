@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/sthj',
@@ -32,7 +31,7 @@ async function handler() {
                 title: `${aqi} - ${time}`,
                 link,
                 description: $('table.table').html()! + $('div.air-yb').html(),
-                pubDate: timezone(parseDate(time, 'YYYY-MM-DD HH:mm:ss', true), 8),
+                pubDate: parseDateStrict(time, 'YYYY-MM-DD HH:mm:ss', 8),
             },
         ],
     };

@@ -1,6 +1,7 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';
@@ -55,7 +56,7 @@ async function handler(ctx) {
             data.data.archives.map((item) => ({
                 title: item.title,
                 description: utils.renderUGCDescription(embed, item.pic, item.desc, item.aid, undefined, item.bvid),
-                pubDate: new Date(item.fav_at * 1000).toUTCString(),
+                pubDate: parseDate(item.fav_at * 1000),
                 link: item.fav_at > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,
             })),

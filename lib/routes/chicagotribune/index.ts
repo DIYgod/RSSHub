@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category/:subcategory?',

@@ -1,6 +1,7 @@
 import Honeybadger from '@honeybadger-io/js';
 import type { ErrorHandler, NotFoundHandler } from 'hono';
 import { routePath } from 'hono/route';
+import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
@@ -11,6 +12,17 @@ import Error from '@/views/error';
 import NotFoundError from './types/not-found';
 
 const Sentry = config.sentry.dsn ? await import('@sentry/node') : undefined;
+
+// FetchError quotes the full request URL in its message, and some routes put the operator's API key or token
+// in the path or query of that URL, so only its origin is shown to clients (the log keeps the full URL)
+const hideRequestUrl = (error: Error, text: string) => {
+    if (!(error instanceof FetchError) || !error.request) {
+        return text;
+    }
+    const url = typeof error.request === 'string' ? error.request : error.request.url;
+    const origin = URL.canParse(url) ? new URL(url).origin : '';
+    return text.replaceAll(JSON.stringify(url), () => JSON.stringify(origin)).replaceAll(url, () => origin);
+};
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
@@ -76,12 +88,13 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
             break;
     }
     logger.error(`Error in ${requestPath}: ${errorMessage}`);
+    errorMessage = hideRequestUrl(error, errorMessage);
     requestMetric.error({ path: matchedRoute, method: ctx.req.method, status: ctx.res.status });
 
     return config.isPackage || ctx.req.query('format') === 'json'
         ? ctx.json({
               error: {
-                  message: error.message ?? error,
+                  message: hideRequestUrl(error, error.message) ?? error,
               },
           })
         : ctx.html(<Error requestPath={requestPath} message={errorMessage} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);

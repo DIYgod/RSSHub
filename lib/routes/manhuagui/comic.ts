@@ -1,12 +1,13 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import LZString from 'lz-string';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
-const getChapters = ($: CheerioAPI, baseUrl: string, latestChapterLink?: string, updateDate?: Date) => {
-    const result: Array<{ link: string; title?: string; pubDate?: Date; num: string; category: string; isNew: boolean }> = [];
+const getChapters = ($: CheerioAPI, baseUrl: string, latestChapterLink?: string, updateDate?: Temporal.Instant) => {
+    const result: Array<{ link: string; title?: string; pubDate?: Temporal.Instant; num: string; category: string; isNew: boolean }> = [];
     $('h4').each((_, ele) => {
         const categoryName = $(ele).text();
         let nextEle = ele.next;
@@ -92,7 +93,7 @@ async function handler(ctx) {
         .filter((_, element) => /最近[于於]/.test($(element).text()))
         .first();
     const dateText = updateStatus.text().match(/最近[于於]\s*\[([^\]]+)\]/)?.[1];
-    const updateDate = dateText ? parseDateInTimezone(dateText, 0) : undefined;
+    const updateDate = dateText ? parseDate(dateText, 0) : undefined;
     const latestChapterHref = updateStatus.find('a').attr('href');
     const latestChapterLink = latestChapterHref ? new URL(latestChapterHref, baseUrl).href : undefined;
     const chapters = getChapters($, baseUrl, latestChapterLink, updateDate);

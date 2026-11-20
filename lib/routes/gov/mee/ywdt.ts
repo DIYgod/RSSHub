@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.mee.gov.cn/';
 const columns = {
@@ -80,7 +79,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 try {
                     const pubDate = content('meta[name=PubDate]').attr('content');
-                    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : undefined;
+                    item.pubDate = pubDate ? parseDate(pubDate, 8) : undefined;
                     // Video news uses a separate article layout.
                     if (cate === 'spxw') {
                         item.title = content('meta[name=ArticleTitle]').attr('content')!;

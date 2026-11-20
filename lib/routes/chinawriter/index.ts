@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id{.+}?',
@@ -148,7 +147,7 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 40);
 
     const rootUrl = 'http://www.chinawriter.com.cn';
-    const currentUrl = `${new URL(id ?? '', rootUrl).href}/`;
+    const currentUrl = `${rootUrl}/${id ?? ''}/`;
 
     const { data: response } = await got(currentUrl);
 
@@ -166,8 +165,13 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
+                link: new URL(link!, rootUrl).href,
             };
+        })
+        .filter((item) => {
+            // only follow links on the site itself
+            const { protocol, hostname } = new URL(item.link!);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'chinawriter.com.cn' || hostname.endsWith('.chinawriter.com.cn'));
         })
         .filter((item) => {
             const link = item.link!.replace(/^https?:/, '');
@@ -210,7 +214,7 @@ async function handler(ctx) {
                             ].filter((c): c is string => Boolean(c))
                         ),
                     ];
-                    item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
+                    item.pubDate = content('div.end_info em').text() ? parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm', 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
                 } catch {
                     //
                 }

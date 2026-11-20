@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/curator/:id/:routeParams?',
@@ -64,7 +63,7 @@ Examples:
                 const reviewDateText = el.find('.curator_review_date').text().trim();
 
                 const notCurrentYearPattern = /,\s\d{4}$/;
-                const reviewPubDate = reviewDateText ? timezone(notCurrentYearPattern.test(reviewDateText) ? parseDate(reviewDateText) : parseDate(`${reviewDateText}, ${new Date().getFullYear()}`), 0) : undefined;
+                const reviewPubDate = reviewDateText ? (notCurrentYearPattern.test(reviewDateText) ? parseDate(reviewDateText, 0) : parseDate(`${reviewDateText}, ${Temporal.Now.zonedDateTimeISO('UTC').year}`, 0)) : undefined;
 
                 const description = renderToString(<SteamCuratorDescription image={appImage} description={reviewContent} />);
 

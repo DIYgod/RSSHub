@@ -5,8 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'http://www.wzu.edu.cn/index/';
 
@@ -84,13 +83,13 @@ async function handler(ctx) {
                 const $originUrl = $a1.attr('href');
                 const $itemUrl = new URL($originUrl!, baseUrl).href;
                 const rawDate = $item.children('samp').text();
-                const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
+                const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
                 const detail = await cache.tryGet(`wzu:detail:v3:${$itemUrl}`, () => loadContent($itemUrl));
                 return {
                     title: $a1.attr('title') ?? '',
                     description: detail.description,
                     author: detail.author,
-                    pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     link: $itemUrl,
                 };
             },

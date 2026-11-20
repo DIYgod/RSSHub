@@ -4,7 +4,7 @@ import { escapeUTF8 } from 'entities/escape';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getObjectFields, MIXCLOUD_CONFIG, TYPE_CONFIG, TYPE_NAMES } from './config';
 
@@ -71,7 +71,7 @@ async function callApi(objectType: string, objectFields: string, username: strin
 // https://github.com/yt-dlp/yt-dlp/commits/master/yt_dlp/extractor/mixcloud.py
 function decryptXorCipher(key: string, ciphertext: string): string {
     const decoded = CryptoJS.enc.Base64.parse(ciphertext).toString(CryptoJS.enc.Utf8);
-    return [...decoded].map((ch, i) => String.fromCodePoint((ch.codePointAt(0) || 0) ^ (key.codePointAt(i % key.length) || 0))).join('');
+    return Array.from(decoded, (ch, i) => String.fromCodePoint((ch.codePointAt(0) || 0) ^ (key.codePointAt(i % key.length) || 0))).join('');
 }
 
 function tryDecrypt(ciphertext: string | undefined): string {

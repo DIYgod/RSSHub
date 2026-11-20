@@ -1,11 +1,12 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/weixin/miniprogram/wxcloud/:caty?',
@@ -43,10 +44,11 @@ async function handler(ctx: Context) {
                         .toArray()
                         .map((element) => $.html(element))
                         .join(''),
-                    pubDate: date ? timezone(parseDate(date, 'YYYY.MM.DD'), 8) : undefined,
-                    link: link + $item.find('a.header-anchor').attr('href'),
+                    pubDate: date ? parseDate(date, 'YYYY.MM.DD', 8) : undefined,
+                    link: $item.attr('id') ? `${link}#${$item.attr('id')}` : link,
                 };
-            }),
+            })
+            .filter((item) => item.link !== link),
         description: name,
     };
 }

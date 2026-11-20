@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rczp/:type',
@@ -52,10 +52,10 @@ async function handler(ctx) {
                     'x-requested-with': 'XMLHttpRequest',
                 },
                 form: {
-                    channelid: Buffer.from(title_dict[type].channelid).toString('base64'),
-                    pagesize: Buffer.from('15').toString('base64'),
-                    pageno: Buffer.from('1').toString('base64'),
-                    hasPage: Buffer.from('true').toString('base64'),
+                    channelid: Buffer.from(title_dict[type].channelid).toBase64(),
+                    pagesize: Buffer.from('15').toBase64(),
+                    pageno: Buffer.from('1').toBase64(),
+                    hasPage: Buffer.from('true').toBase64(),
                 },
             });
             return data;

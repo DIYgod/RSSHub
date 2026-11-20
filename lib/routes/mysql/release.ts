@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/release/:version?',
@@ -53,7 +53,7 @@ async function handler(ctx) {
 
             return {
                 title,
-                pubDate: pubDate ? parseDateInTimezone(pubDate, 0) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 0) : undefined,
                 link: `${currentUrl}${$item.attr('href')}`,
             };
         });

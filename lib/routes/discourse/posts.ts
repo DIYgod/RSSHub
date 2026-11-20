@@ -35,6 +35,7 @@ async function handler(ctx) {
         (
             await got(`${link}/posts.rss`, {
                 headers: key ? { 'User-Api-Key': key } : {},
+                credentialHeaders: ['User-Api-Key'],
             })
         ).data
     );

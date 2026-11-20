@@ -6,8 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const listUrl = 'https://it.swufe.edu.cn/index/';
 
@@ -41,13 +40,13 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'description' | 
     content.find('.cont-shar').remove();
     content.find('img[orisrc]').each((_, img) => {
         const $img = $(img);
-        $img.attr('src', $img.attr('orisrc')!);
+        $img.attr('src', $img.attr('orisrc'));
         $img.removeAttr('orisrc');
     });
     const publishedAt = $('.article-date').text().trim();
     return {
         description: content.html()!.trim(),
-        ...(publishedAt && { pubDate: timezone(parseDate(publishedAt, 'YYYY年MM月DD日 HH:mm'), 8) }),
+        ...(publishedAt && { pubDate: parseDate(publishedAt, 'YYYY年MM月DD日 HH:mm', 8) }),
     };
 }
 
@@ -79,7 +78,7 @@ async function handler(ctx: Context) {
         async (info) => ({
             title: info.title,
             link: info.link,
-            pubDate: info.date.trim() ? timezone(parseDate(info.date), 8) : undefined,
+            pubDate: info.date.trim() ? parseDate(info.date, 8) : undefined,
             ...(await cache.tryGet(`swufe:seie:article:v3:${info.link}`, () => getArticle(info.link))),
         }),
         { concurrency: 3 }

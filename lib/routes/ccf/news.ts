@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -65,7 +64,7 @@ async function handler(ctx) {
                 content('.new_info .num').remove();
 
                 item.description = content('.txt').html();
-                item.pubDate = timezone(parseDate(content('.new_info span').text()), 8);
+                item.pubDate = parseDate(content('.new_info span').text(), 8);
 
                 return item;
             })

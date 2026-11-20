@@ -1,11 +1,10 @@
-import { VM } from 'vm2';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const contentFilterMap = {
     nonplus: 'regular_content',
@@ -80,13 +79,6 @@ type FeedRequestArgs = {
     pageSize: number;
 };
 
-type ResponseSandbox = {
-    $R: Record<string, unknown[]>;
-    self: {
-        $R?: Record<string, unknown[]>;
-    };
-};
-
 type LocalsCommunityInfo = {
     description?: string;
     design?: {
@@ -156,7 +148,7 @@ function extractAssetUrls(html: string) {
 }
 
 function extractFeedActionId(asset: string) {
-    const symbol = asset.match(/getFeedPosts:([A-Za-z_$][\w$]*)/)?.[1];
+    const symbol = /getFeedPosts:([A-Za-z_$][\w$]*)/.exec(asset)?.[1];
     if (!symbol) {
         return;
     }
@@ -207,17 +199,9 @@ function createRequestBody(args: FeedRequestArgs) {
     });
 }
 
-function parseUnknownResponse<T>(body: string, instanceId: string): T {
-    const sandbox: ResponseSandbox = {
-        $R: {},
-        self: {},
-    };
-
-    sandbox.self.$R = sandbox.$R;
-
-    new VM({ timeout: 5000, sandbox }).run(body);
-
-    const value = sandbox.self.$R?.[instanceId]?.[0] as T | undefined;
+async function parseUnknownResponse<T>(body: string, instanceId: string): Promise<T> {
+    // The response is seroval-serialized data, so read it instead of executing it. A full page of posts needs more than the default step budget.
+    const value = await evaluateScriptData<T | undefined>(body, `$R[${JSON.stringify(instanceId)}][0]`, 100000);
     if (!value) {
         throw new Error('Unable to decode the Locals server response.');
     }
@@ -232,10 +216,10 @@ function extractCommunityInfo(html: string, community: string) {
     }
 
     const context = html.slice(Math.max(0, markerIndex - 200), markerIndex + 1200);
-    const idMatch = context.match(/id:(\d+)/);
-    const titleMatch = context.match(/title:"([^"]+)"/);
-    const descriptionMatch = context.match(/description:"([^"]*)"/);
-    const imageMatch = context.match(/image:\$R\[\d+\]=\{big:"([^"]*)",thumb:"([^"]*)"/);
+    const idMatch = /id:(\d+)/.exec(context);
+    const titleMatch = /title:"([^"]+)"/.exec(context);
+    const descriptionMatch = /description:"([^"]*)"/.exec(context);
+    const imageMatch = /image:\$R\[\d+\]=\{big:"([^"]*)",thumb:"([^"]*)"/.exec(context);
 
     if (!idMatch || !titleMatch) {
         throw new Error('Unable to resolve the Locals community metadata.');
@@ -256,7 +240,7 @@ function extractCommunityInfo(html: string, community: string) {
 }
 
 function fetchContentPage(community: string, session: string) {
-    return cache.tryGet(`locals:content-page:${community}`, () => ofetch(`${rootUrl}/${community}/feed?mode=content`, { headers: getRequestHeaders(session) }));
+    return cache.tryGet(`locals:content-page:${community}`, () => ofetch(`${rootUrl}/${encodeURIComponent(community)}/feed?mode=content`, { headers: getRequestHeaders(session) }));
 }
 
 function resolveActionIds(community: string, session: string) {
@@ -410,7 +394,7 @@ async function fetchFeedData(communityId: number, community: string, session: st
             if (!existing) {
                 continue;
             }
-            existing.category = [...new Set([...(existing.category ?? []), ...(item.category ?? [])])];
+            existing.category = [...new Set([...[existing.category ?? []].flat(), ...[item.category ?? []].flat()])];
             existing.description ||= item.description;
             existing.itunes_item_image ||= item.itunes_item_image;
         }

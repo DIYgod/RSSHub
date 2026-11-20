@@ -62,7 +62,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
     const displayLivePhoto = !!fallback(undefined, queryToBoolean(routeParams.displayLivePhoto), false);
-    const url = `https://www.xiaohongshu.com/user/profile/${userId}`;
+    const url = `https://www.xiaohongshu.com/user/profile/${encodeURIComponent(userId)}`;
     const cookie = config.xiaohongshu.cookie;
 
     if (cookie && category === 'notes') {

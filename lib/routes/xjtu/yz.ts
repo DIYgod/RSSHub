@@ -5,8 +5,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yz/:category?',
@@ -52,7 +51,7 @@ async function handler(ctx) {
             const dataItem: DataItem = {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, targetUrl).href,
-                pubDate: timezone(parseDate(item.find('span.date.fr').text()), 8),
+                pubDate: parseDate(item.find('span.date.fr').text(), 8),
             };
             return dataItem;
         });

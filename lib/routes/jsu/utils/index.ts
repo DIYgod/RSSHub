@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 /** Read article content and source metadata from the selected elements. */
 async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, dateHander = (date) => date) {
@@ -22,8 +22,8 @@ const getPageItemAndDate = getPageDetails;
 export { getPageItemAndDate };
 
 const parseCmsDate = (text: string) => {
-    const value = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];
-    return value && !Number.isNaN(parseDate(value, 'YYYY-MM-DD', true).getTime()) ? parseDate(`${value}T00:00:00+08:00`) : undefined;
+    const value = /\d{4}-\d{2}-\d{2}/.exec(text)?.[0];
+    return value && parseDateStrict(value, 'YYYY-MM-DD') ? parseDate(`${value}T00:00:00+08:00`) : undefined;
 };
 
 const getCmsDetails = async (link: string) => {
@@ -35,7 +35,7 @@ const getCmsDetails = async (link: string) => {
         throw new Error(`Jishou University article content was not found: ${link}`);
     }
     body.find('img[data-src]').each((_, el) => {
-        $(el).attr('src', $(el).attr('data-src')!);
+        $(el).attr('src', $(el).attr('data-src'));
     });
     for (const el of body.find('[href], [src]').add(attachments).toArray()) {
         const node = $(el);

@@ -1,7 +1,6 @@
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const appsUrl = 'https://apps.qoo-app.com';
 const newsUrl = 'https://news.qoo-app.com';
@@ -23,7 +22,9 @@ const fixImg = ($) => {
             delete img.attribs['data-medium-file'];
             delete img.attribs['data-large-file'];
         }
-        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
+        if (img.attribs.src) {
+            img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
+        }
         delete img.attribs.srcset;
     });
 };
@@ -35,7 +36,7 @@ const extractNotes = ($) =>
             const $item = $(item);
             const title = $item.find('.qoo-note-view .content-title').text();
             const author = $item.find('cite.name').text();
-            const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8);
+            const pubDate = parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8);
             $item.find('cite.name, time, footer, .qoo-note-view .content-title').remove();
             return {
                 title,

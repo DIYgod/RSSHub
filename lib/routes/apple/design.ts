@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     categories: ['design'],
@@ -41,11 +41,13 @@ async function handler() {
                         description,
                         guid: md5(`${title}${description}${date}`),
                         link,
-                        pubDate: parseDate(date),
+                        pubDate: parseDate(date, 'MMMM D, YYYY'),
                         title,
                     };
                 });
-        });
+        })
+        // The page lists some updates twice, such as the June 2023 Privacy entry
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.guid === item.guid) === index);
 
     return {
         item: items,

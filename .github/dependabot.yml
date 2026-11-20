@@ -28,6 +28,7 @@ updates:
           cloudflare:
               patterns:
                   - '@cloudflare/*'
+                  - 'cf'
                   - 'wrangler'
           eslint:
               patterns:
@@ -53,7 +54,7 @@ updates:
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-plugin-eslint'
-                  - 'oxlint-tsgolint'
+                  - 'tsrs'
           proxy-agent:
               patterns:
                   - 'https-proxy-agent'

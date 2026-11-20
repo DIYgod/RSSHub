@@ -29,7 +29,7 @@ async function handler(ctx) {
     const user = ctx.req.param('user');
 
     const host = `https://github.com/${user}`;
-    const url = `https://api.github.com/users/${user}/followers`;
+    const url = `https://api.github.com/users/${encodeURIComponent(user)}/followers`;
 
     const response = await got({
         method: 'get',

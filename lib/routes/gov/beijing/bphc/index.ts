@@ -2,8 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const mapping = {
     '/project': {
@@ -55,7 +54,7 @@ async function handler(ctx) {
                     author: description.match(/来源：(.*?)</)?.[1].trim() ?? item.operator,
                     link: `${rootUrl}${obj.link}${item.id}`,
                     description,
-                    pubDate: timezone(parseDate(item.createTime), 8),
+                    pubDate: parseDate(item.createTime, 8),
                 };
                 return single;
             });

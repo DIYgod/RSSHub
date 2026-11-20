@@ -1,4 +1,6 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { JSDOM } from 'jsdom';
 import { describe, expect, it } from 'vitest';
 
 import Atom from '@/views/atom';
@@ -29,6 +31,9 @@ describe('Atom view', () => {
                                 content: {
                                     url: 'https://example.com/video.mp4',
                                 },
+                                thumbnail: {
+                                    url: 'https://example.com/thumbnail.jpg',
+                                },
                             },
                             upvotes: 12,
                             downvotes: 1,
@@ -48,7 +53,9 @@ describe('Atom view', () => {
 
         expect(html).toContain('<icon>https://example.com/icon.png</icon>');
         expect(html).toContain('<logo>https://example.com/logo.png</logo>');
-        expect(html).toContain('media:content');
+        const { document } = new JSDOM(html, { contentType: 'application/xml' }).window;
+        expect(document.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0]?.getAttribute('url')).toBe('https://example.com/video.mp4');
+        expect(document.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0]?.getAttribute('url')).toBe('https://example.com/thumbnail.jpg');
         expect(html).toContain('term="News"');
         expect(html).toContain('term="Tech"');
         expect(html).toContain('rsshub:upvotes');
@@ -79,5 +86,75 @@ describe('Atom view', () => {
         expect(html.match(/rel="enclosure"/g)).toHaveLength(2);
         expect(html).toContain('href="https://example.com/audio.mp3" type="audio/mpeg" length="123" title="Audio &amp; notes"');
         expect(html).toContain('href="https://example.com/cover.png" type="image/png"');
+    });
+
+    it('renders item links and ignores items without them', () => {
+        const html = renderToString(
+            <Atom
+                data={{
+                    title: 'Item links',
+                    item: [
+                        {
+                            title: 'Item with replies feed',
+                            link: 'https://example.com/thread/1',
+                            links: [
+                                {
+                                    url: 'https://example.com/thread/1?format=atom',
+                                    rel: 'replies',
+                                    type: 'application/atom+xml',
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Item without links',
+                            link: 'https://example.com/thread/2',
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html.match(/rel="replies"/g)).toHaveLength(1);
+        expect(html).toContain('href="https://example.com/thread/1?format=atom" type="application/atom+xml"');
+    });
+
+    it('does not let hono hoist feed titles and links as document metadata', () => {
+        const html = String(
+            <probe>
+                {raw('</head>')}
+                <Atom data={{ title: 'Feed', item: [{ title: 'Item', link: 'https://example.com/item' }] }} />
+            </probe>
+        );
+
+        expect(html).toMatch(/^<probe><\/head><feed/);
+    });
+
+    it('renders only primitive media values as attributes', () => {
+        const html = renderToString(
+            <Atom
+                data={{
+                    title: 'Feed',
+                    item: [
+                        {
+                            title: 'Item',
+                            link: 'https://example.com/item',
+                            media: {
+                                content: {
+                                    url: 'https://example.com/a.jpg',
+                                    width: 250,
+                                    children: 'child',
+                                    // oxlint-disable-next-line eslint-js/no-restricted-syntax - test
+                                    dangerouslySetInnerHTML: { __html: '<injected/>' },
+                                } as any,
+                            },
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html).toContain('<media:content url="https://example.com/a.jpg" width="250"></media:content>');
+        expect(html).not.toContain('<injected/>');
+        expect(html).not.toContain('child');
     });
 });

@@ -8,9 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const defaultCategory = 'news';
 const defaultId = '2121t76';
@@ -173,12 +172,11 @@ export const route: Route = {
     view: ViewType.Articles,
 };
 
-function getPublicationDate(value?: string): Date | undefined {
+function getPublicationDate(value?: string): Temporal.Instant | undefined {
     if (typeof value !== 'string' || !value.trim()) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDate(value, 8);
 }
 
 function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {

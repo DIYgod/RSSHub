@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://vocus.cc';
 const apiUrl = 'https://api.vocus.cc';
@@ -25,7 +25,7 @@ interface ArticleEntry {
     item: DataItem;
 }
 function parseArticleDate(value?: string) {
-    return value && value !== '0001-01-01T00:00:00Z' && Number.isFinite(Date.parse(value)) ? parseDate(value) : undefined;
+    return value && value !== '0001-01-01T00:00:00Z' ? parseDate(value) : undefined;
 }
 const processList = (articleData: ArticleList[]): ArticleEntry[] =>
     articleData.map((article) => ({

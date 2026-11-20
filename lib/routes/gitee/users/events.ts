@@ -1,11 +1,10 @@
-import MarkdownIt from 'markdown-it';
-
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -37,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const username = ctx.req.param('username');
 
-    const apiUrl = `https://gitee.com/api/v5/users/${username}/events/public`;
+    const apiUrl = `https://gitee.com/api/v5/users/${encodeURIComponent(username)}/events/public`;
     const limit = getRouteLimit(ctx, 100);
     const response = await cache.tryGet(
         `${apiUrl}:${limit}`,

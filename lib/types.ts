@@ -33,7 +33,7 @@ export type Category =
 export type DataItem = {
     title: string;
     description?: string | null;
-    pubDate?: number | string | Date | null;
+    pubDate?: Temporal.Instant | number | string | null;
     link?: string;
     category?: string[] | string;
     author?:
@@ -53,7 +53,7 @@ export type DataItem = {
     summary?: string;
     image?: string;
     banner?: string;
-    updated?: number | string | Date;
+    updated?: Temporal.Instant | number | string;
     language?: Language;
     enclosure_url?: string;
     enclosure_type?: string;
@@ -64,7 +64,10 @@ export type DataItem = {
     media?: Record<string, Record<string, string>>;
     upvotes?: number;
     downvotes?: number;
+    /** Comment count. */
     comments?: number;
+    /** URL of the item's comments page, rendered as the RSS 2.0 `<comments>` element. */
+    commentsUrl?: string;
     attachments?: Array<{
         url: string;
         mime_type: string;
@@ -72,7 +75,18 @@ export type DataItem = {
         size_in_bytes?: number;
         duration_in_seconds?: number;
     }>;
-    // oxlint-disable-next-line anti-slop/no-unsafe-dictionary-type
+    /**
+     * Additional links for this item, rendered as Atom <link> elements.
+     * `type` is a MIME type (e.g. `application/atom+xml`).
+     * RSS and JSON views ignore this field.
+     */
+    links?: Array<{
+        url: string;
+        rel: string;
+        type?: string;
+        title?: string;
+    }>;
+    // oxlint-disable-next-line quality/no-unsafe-dictionary-type
     _extra?: Record<string, any> & {
         links?: Array<{
             url: string;

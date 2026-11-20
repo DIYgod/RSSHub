@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article/:id',
@@ -82,7 +81,7 @@ const createItem = (url: string) =>
         return {
             title,
             description: Object.keys(decryptionMap).length ? decrypt(encryptedContent, articleid, chapterid, decryptionMap) : content.html(),
-            pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
             author,
             link: url,
         };

@@ -6,7 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getRssFeed } from './utils';
 
@@ -25,6 +25,7 @@ export const route: Route = {
     parameters: {
         cat: {
             description: "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url.",
+            default: 'HomePage',
         },
     },
     features: {
@@ -49,7 +50,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const url = `https://rss.nytimes.com/services/xml/rss/nyt/${ctx.req.param('cat')}.xml`;
+    const url = `https://rss.nytimes.com/services/xml/rss/nyt/${ctx.req.param('cat') ?? 'HomePage'}.xml`;
 
     const rss = await getRssFeed(url);
 

@@ -6,15 +6,14 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const parseGmtDate = (value: string | undefined) => {
     if (!value) {
         return;
     }
-    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
-    return Number.isNaN(date.getTime()) ? undefined : date;
+    return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
 };
 
 const handler = async (ctx: Context): Promise<Data> => {
@@ -33,7 +32,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Use a keyword, cat_report/<category>, or tag_report/<tag>.');
     }
 
-    let searchId: number | undefined = undefined;
+    let searchId: number | undefined;
 
     if (taxonomy && keyword) {
         const apiSearchUrl = new URL(`${apiSlug}/${taxonomy}`, baseUrl).href;

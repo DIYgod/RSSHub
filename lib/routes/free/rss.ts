@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -41,7 +41,7 @@ async function handler() {
                 content.children('.wp-block-group:has(.wp-block-jetpack-subscriptions)').remove();
                 content.find('img[data-src], iframe[data-src]').each((_, element) => {
                     const media = $(element);
-                    media.attr('src', media.attr('data-src')!);
+                    media.attr('src', media.attr('data-src'));
                 });
                 content.find('.perfmatters-lazy-video[data-src]').each((_, element) => {
                     $(element).replaceWith($('<iframe>').attr({ src: $(element).attr('data-src')!, width: '560', height: '315', allowfullscreen: 'true' }));

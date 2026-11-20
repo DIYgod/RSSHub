@@ -1,10 +1,9 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface Image {
     id: number;
@@ -76,15 +75,11 @@ async function handler(ctx) {
     }
     const link = `${baseUrl}/hybrid/share/profile?mid=${mid}`;
     const html = await ofetch(link);
-    const $ = load(html);
-    const stateScript = $('script')
-        .toArray()
-        .map((script) => $(script).text())
-        .find((script) => script.startsWith('window.APP_INITIAL_STATE='));
+    const stateScript = html.match(/window\.APP_INITIAL_STATE=(.+?);?<\/script>/)?.[1];
     if (!stateScript) {
         throw new Error('Zuiyou did not return the public profile data. Check that the profile sharing link is accessible.');
     }
-    const { shareProfile } = JSON.parse(stateScript.replace(/^window\.APP_INITIAL_STATE=/, '').replace(/;\s*$/, '')) as InitialState;
+    const { shareProfile } = JSON.parse(stateScript) as InitialState;
     if (!shareProfile?.profileInfo || !Array.isArray(shareProfile.posts)) {
         throw new Error('Zuiyou did not return a public profile and post list.');
     }

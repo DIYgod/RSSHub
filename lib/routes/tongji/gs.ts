@@ -1,12 +1,12 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 class ArticleBodyUnavailableError extends Error {}
 
@@ -46,7 +46,7 @@ async function getNoticeContent(link: string, getBrowserContent: (url: string) =
         throw new ArticleBodyUnavailableError('The source notice does not expose a public article body.');
     }
     content.find('img[data-src]').each((_, element) => {
-        $(element).attr('src', $(element).attr('data-src')!);
+        $(element).attr('src', $(element).attr('data-src'));
     });
     const attachments = mapElements(
         content
@@ -70,7 +70,7 @@ async function handler() {
             const linkRaw = $(item).find('a').attr('href');
             const link = linkRaw!.startsWith('http') ? linkRaw : `${baseUrl}/${linkRaw}`;
             const pubDate = $(item).find('span').text();
-            return { title, link, pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) };
+            return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8) };
         });
     let browserPromise: ReturnType<typeof getPlaywrightPage> | undefined;
     const getBrowserContent = async (url: string) => {

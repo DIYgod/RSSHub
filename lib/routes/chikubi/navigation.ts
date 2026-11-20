@@ -19,7 +19,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Navigation',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     description: `| 殿堂 | 動畫  | VR | 漫畫  | 音聲  | CG・イラスト |
 | ---- | ----- | -- | ----- | ----- | ------------ |

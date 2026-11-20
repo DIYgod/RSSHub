@@ -6,6 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import playwright from '@/utils/playwright';
+import { isOnSite } from '@/utils/valid-host';
 
 import utils, { getRssFeed } from './utils';
 
@@ -90,6 +91,16 @@ async function handler(ctx) {
             async (item) => {
                 let link = item.link;
 
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'nytimes.com')) {
+                    return {
+                        title: item.title!,
+                        pubDate: item.pubDate,
+                        link,
+                        author: item['dc:creator'],
+                    };
+                }
+
                 let response,
                     hasEnVersion = false,
                     dual = false;
@@ -121,9 +132,11 @@ async function handler(ctx) {
 
                     if (lang === 'en') {
                         const $ = load(response);
-                        if ($('.dual-btn').length > 0) {
+                        const enLink = $('.dual-btn a').last().attr('href');
+                        // only follow links on the site itself
+                        if ($('.dual-btn').length > 0 && isOnSite(enLink, 'nytimes.com')) {
                             hasEnVersion = true;
-                            link = $('.dual-btn a').last().attr()!.href;
+                            link = enLink;
 
                             response = await utils.PuppeterGetter(ctx, context, link);
                         }

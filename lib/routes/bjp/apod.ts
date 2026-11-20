@@ -4,9 +4,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/apod',
@@ -49,10 +48,10 @@ async function handler(ctx) {
             return {
                 title: $e.find('a').attr('title')!,
                 link: `${baseUrl}${$e.find('a').attr('href')}`,
-                pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD', 8),
             };
         })
-        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
         .slice(0, getRouteLimit(ctx, 10));
 
     const items = await Promise.all(

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const DOMAIN = 'www.moj.gov.cn';
 
@@ -51,7 +50,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
             };
         });
 
@@ -63,7 +62,7 @@ async function handler() {
                 item.description = content('div.TRS_Editor').html();
                 item.author = content('div.sT_left span:first').text().split('：', 2)[1];
                 const pubDate = content('div.sT_left span:last').text().split('：', 2)[1];
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
                 return item;
             })
         )

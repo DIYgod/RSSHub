@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { extractArticle, extractWork } from './utils';
@@ -56,7 +56,7 @@ async function handler(ctx) {
     const workList = data.props.pageProps.workList.map((item) => ({
         title: item.title,
         link: item.pageUrl,
-        pubDate: item.publishTime !== undefined && item.publishTime !== null && item.publishTime !== '' ? parseDate(item.publishTime, 'x') : undefined,
+        pubDate: [undefined, null, ''].includes(item.publishTime) ? undefined : parseDate(item.publishTime, 'x'),
         category: [item.objectTypeStr, item.cateStr, item.subCateStr, ...item.tags],
     }));
 

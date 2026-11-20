@@ -6,19 +6,25 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
+const resolveItemLink = (rootUrl: URL, href = '') => {
+    const itemUrl = new URL(href, rootUrl);
+    // Always keep detail requests on the validated root domain, even if the listing returns an absolute or protocol-relative link.
+    return new URL(`${itemUrl.pathname}${itemUrl.search}${itemUrl.hash}`, rootUrl.origin).href;
+};
+
 const processItems = async (ctx, currentUrl, title) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
-    const url = new URL(currentUrl, `https://${domain}`);
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(url.hostname)) {
+    const rootUrl = new URL(`https://${domain}`);
+    const url = new URL(currentUrl, rootUrl);
+    // currentUrl can be an absolute URL supplied through a route parameter, so validate both the requested domain and the effective host.
+    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(rootUrl.hostname) || !allowDomain.has(url.hostname))) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
-
-    const rootUrl = `https://${domain}`;
 
     const headers = config.javdb.session ? { cookie: `_jdb_session=${config.javdb.session}` } : undefined;
     const response = await ofetch(url.href, { headers });
@@ -35,17 +41,17 @@ const processItems = async (ctx, currentUrl, title) => {
             const element = $(item);
             return {
                 title: element.find('.video-title').text(),
-                link: `${rootUrl}${element.find('.box').attr('href')}`,
-                pubDate: parseDate(element.find('.meta').text()),
+                link: resolveItemLink(rootUrl, element.find('.box').attr('href')),
+                pubDate: parseDate(element.find('.meta').text(), ['MM/DD/YYYY', 'YYYY-MM-DD']),
             };
         });
 
     if (!hasItemFilters(ctx)) {
-        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate && Number.isFinite(new Date(item.pubDate).getTime()))) {
-            items.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate)) {
+            items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
         // Keep the default candidate pool when a source date is unavailable.
-        if (ctx.req.query('sorted') === 'false' || !ctx.req.query('limit') || items.every((item) => item.pubDate && Number.isFinite(new Date(item.pubDate).getTime()))) {
+        if (ctx.req.query('sorted') === 'false' || !ctx.req.query('limit') || items.every((item) => item.pubDate)) {
             items = items.slice(0, limit);
         }
     }

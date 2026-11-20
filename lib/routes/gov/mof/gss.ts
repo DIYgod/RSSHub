@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const DOMAIN = 'gss.mof.gov.cn';
 
@@ -29,9 +28,9 @@ const handler = async (ctx: Context): Promise<Data | null> => {
             }
             const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
             return {
-                title: a.prop('title') as string,
+                title: a.prop('title'),
                 link,
-                pubDate: timezone(parseDate(pubDate), 8),
+                pubDate: parseDate(pubDate, 8),
             };
         });
 

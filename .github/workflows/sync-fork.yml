@@ -1,0 +1,22 @@
+name: Sync fork
+
+on:
+    schedule:
+        - cron: '17 4 * * *'
+    workflow_dispatch:
+
+jobs:
+    sync-fork:
+        if: github.repository_owner != 'DIYgod'
+        runs-on: ubuntu-slim
+        name: Sync fork with DIYgod/RSSHub
+        timeout-minutes: 5
+        permissions:
+            contents: write
+        steps:
+            # The default token cannot update files under .github/workflows, so a sync that brings in workflow changes needs a SYNC_TOKEN secret with the workflow scope
+            - name: Sync default branch
+              env:
+                  GH_TOKEN: ${{ secrets.SYNC_TOKEN || github.token }}
+                  FORK_REPO: ${{ github.repository }}
+              run: gh repo sync "${FORK_REPO}"

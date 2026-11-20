@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const fetchItem = async <T extends { link: string }>(item: T) => ({
     ...item,
@@ -48,7 +47,7 @@ export const ProcessFeed = async (url: string) => {
                 title: a.text(),
                 link: a.attr('href')!,
                 author: $item.find('.mainbox-author').text(),
-                pubDate: timezone(parseDate($item.find('.caption-text').not('.height-limit').text().split('｜', 2)[1]), 8),
+                pubDate: parseDate($item.find('.caption-text').not('.height-limit').text().split('｜', 2)[1], 8),
             };
         });
 

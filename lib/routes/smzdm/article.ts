@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getHeaders } from './utils';
 
@@ -46,19 +45,17 @@ async function handler(ctx) {
     });
     const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
     const $ = load(response._data);
-    const title = $('.info-stuff-nickname a').text();
+    const title = $('.user-profile-card__name').text();
 
-    const list = $('.pandect-content-common')
+    const list = $('.feed-article-card')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('.pandect-content-title a');
+            const a = $item.find('.feed-article-card__title-link');
             return {
-                title: a.text(),
-                description: $item.find('.pandect-content-detail').text(),
+                title: a.text().trim(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), 8),
-                image: $item.find('.pandect-content-img img').attr('src'),
+                image: $item.find('.feed-card-image__img').attr('src'),
             };
         });
 
@@ -72,12 +69,10 @@ async function handler(ctx) {
                     },
                 });
                 const $ = load(response);
-                const article = $('.m-contant article');
-                article.find('h1, .recommend-tab, input, .the-end').remove();
-                const description = article.html() ?? undefined;
+                const description = $('article.J_article').html() ?? undefined;
                 const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("datePublished")').text() || '{}');
                 const releaseDate = $('meta[property="og:release_date"]').attr('content');
-                const pubDate = releaseDate ? timezone(parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                const pubDate = releaseDate ? parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
                 const author = ldJson.author?.name;
                 const category = [...(ldJson.about?.map((a) => a.name) || []), ...(ldJson.mentions?.map((m) => m.name) || [])];
 
@@ -90,8 +85,8 @@ async function handler(ctx) {
 
     return {
         title: `${title}-什么值得买`,
-        description: $('.info-stuff-words div').text(),
-        image: `https:${$('.avatar-img').attr('src')}`,
+        description: $('.user-profile-card__bio').text(),
+        image: $('.user-profile-card__avatar').attr('src'),
         link,
         item: out,
     };

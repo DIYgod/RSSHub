@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 type PublishedPost = { id: number; title: string; summary: string; pass_at: string; user_nick: string };
 
@@ -16,41 +15,37 @@ function getPassAt(e) {
     const yesterdayRelativeTime = /昨天\s*(\d+):(\d+)/;
     const shortDate = /(\d+)-(\d+)\s+(\d+):(\d+)/;
 
-    // offset to ADD for transforming China time to UTC
-    const chinaToUtcOffset = -8 * 3600 * 1000;
-    // offset to ADD for transforming local time to UTC
-    const localToUtcOffset = new Date().getTimezoneOffset() * 60 * 1000;
-    // offset to ADD for transforming local time to china time
-    const localToChinaOffset = localToUtcOffset - chinaToUtcOffset;
+    const now = Temporal.Now.zonedDateTimeISO('+08:00');
 
     let time;
     if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(e)) {
-        time = timezone(parseDate(e), 8);
+        time = parseDate(e, 8);
     } else if (e === '刚刚') {
-        time = new Date();
+        time = now.toInstant();
     } else if (minuteRelativeTime.test(e)) {
         const rel = minuteRelativeTime.exec(e);
-        time = new Date(Date.now() - Number.parseInt(rel![1]) * 60 * 1000);
+        time = now.toInstant().subtract({ minutes: Number.parseInt(rel![1]) });
     } else if (hourRelativeTime.test(e)) {
         const rel = hourRelativeTime.exec(e);
-        time = new Date(Date.now() - Number.parseInt(rel![1]) * 60 * 60 * 1000);
+        time = now.toInstant().subtract({ hours: Number.parseInt(rel![1]) });
     } else if (yesterdayRelativeTime.test(e)) {
         const rel = yesterdayRelativeTime.exec(e);
-        // this time is China time data in local timezone
-        time = new Date(Date.now() - 86400 * 1000 + localToChinaOffset);
-        time.setHours(Number.parseInt(rel![1]), Number.parseInt(rel![2]), 0, 0);
-        // transform back to china timezone
-        time = new Date(time.getTime() - localToChinaOffset);
+        time = now
+            .subtract({ days: 1 })
+            .withPlainTime({ hour: Number.parseInt(rel![1]), minute: Number.parseInt(rel![2]) })
+            .toInstant();
     } else if (shortDate.test(e)) {
         const rel = shortDate.exec(e);
-        const now = new Date(Date.now() + localToChinaOffset);
-        const year = now.getFullYear();
-        // this time is China time data in local timezone
-        time = new Date(year, Number.parseInt(rel![1]) - 1, Number.parseInt(rel![2]), Number.parseInt(rel![3]), Number.parseInt(rel![4]));
-        // transform back to china timezone
-        time = new Date(time.getTime() - localToChinaOffset);
+        time = Temporal.ZonedDateTime.from({
+            timeZone: '+08:00',
+            year: now.year,
+            month: Number.parseInt(rel![1]),
+            day: Number.parseInt(rel![2]),
+            hour: Number.parseInt(rel![3]),
+            minute: Number.parseInt(rel![4]),
+        }).toInstant();
     } else {
-        time = new Date(e);
+        time = parseDate(e);
     }
     return time;
 }

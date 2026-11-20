@@ -4,9 +4,8 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'http://www.ulapia.com';
 const researchList = ['stock_research', 'industry_research', 'strategy_research', 'macro_research', 'ipo_research'];
@@ -46,13 +45,13 @@ async function handler(ctx: Context) {
                 .toArray()
                 .map((item) => {
                     const date = $(item).find('div.mb-0.text-muted').last().text().split(':', 2)[1]?.trim() ?? '';
-                    const pubDate = parseDate(date, 'YYYY-MM-DD', true);
+                    const pubDate = parseDateStrict(date, 'YYYY-MM-DD', 8);
                     return {
                         title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
                         author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
                         link: $(item).find('h5.mb-1 > a').attr('href'),
                         description: `<img src="${$(item).find('img').attr('src')!.split('!', 1)[0]}">`,
-                        pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
+                        pubDate,
                     };
                 });
             return items;

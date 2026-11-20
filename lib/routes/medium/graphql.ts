@@ -1,6 +1,7 @@
 import got from '@/utils/got';
 
-import { type GetMediumBrowser, isMediumChallenge } from './browser';
+import type { GetMediumBrowser } from './browser';
+import { isMediumChallenge } from './browser';
 
 export type PostPreview = {
     mediumUrl: string;

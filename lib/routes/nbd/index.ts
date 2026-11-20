@@ -5,9 +5,9 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 async function settleQueueRequest(request: Promise<unknown>): Promise<void> {
     try {
@@ -149,6 +149,10 @@ async function handler(ctx) {
         const items = await pMap(
             list,
             (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'nbd.com.cn')) {
+                    return item;
+                }
                 const pending = (async () => {
                     const detail = await cache.tryGet(`nbd:article:v3:${item.link}`, async () => {
                         const detailResponse = await source.getBody(item.link!);
@@ -161,7 +165,7 @@ async function handler(ctx) {
 
                         return {
                             description: content('.g-articl-text').html(),
-                            pubDate: publishedAt ? (/Z$|[+-]\d{2}:\d{2}$/.test(publishedAt) ? parseDate(publishedAt) : timezone(parseDate(publishedAt), 8)) : undefined,
+                            pubDate: publishedAt ? (/Z$|[+-]\d{2}:\d{2}$/.test(publishedAt) ? parseDate(publishedAt) : parseDate(publishedAt, 8)) : undefined,
                         };
                     });
                     return { ...item, ...detail };

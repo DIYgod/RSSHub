@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xna',
@@ -52,7 +52,8 @@ async function handler(ctx) {
                 title: $(link).text(),
                 link: $(link).attr('href'),
                 author,
-                pubDate: dateText ? parseRelativeDate(dateText) : undefined,
+                // Entries older than a day show a month and day without a year, such as `10 月 31 日`
+                pubDate: dateText ? parseRelativeDate(dateText, 'M 月 D 日') : undefined,
             };
         });
 

@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.qiche365.org.cn';
 
@@ -54,7 +53,7 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: cheerioItem.find('h1').text(),
                 link: `${baseUrl}${cheerioItem.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(cheerioItem.find('h2').html()!.match('</i>(.*?)<b>')![1]), 8),
+                pubDate: parseDate(cheerioItem.find('h2').html()!.match('</i>(.*?)<b>')![1], 8),
                 description: cheerioItem.find('p').text().trim(),
                 author: cheerioItem.find('h3 span').text(),
                 image: cheerioItem.find('img').attr('src') && `${baseUrl}${cheerioItem.find('img').attr('src')}`,

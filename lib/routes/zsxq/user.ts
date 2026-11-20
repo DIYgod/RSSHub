@@ -35,7 +35,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const uid = ctx.req.param('id');
+    const uid = ctx.req.param('id')!;
     const accessToken = config.zsxq.accessToken;
 
     if (!accessToken) {
@@ -44,9 +44,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const count = Math.min(getRouteLimit(ctx, 20), 30);
 
-    const userInfo = await customFetch<UserInfoResponse>(`/users/${uid}`);
+    const userInfo = await customFetch<UserInfoResponse>(`/users/${encodeURIComponent(uid)}`);
 
-    const { topics } = await customFetch<TopicsResponse>(`/users/${uid}/topics/footprint?count=${count}`);
+    const { topics } = await customFetch<TopicsResponse>(`/users/${encodeURIComponent(uid)}/topics/footprint?count=${count}`);
 
     return {
         title: `知识星球 - ${userInfo.user.name}`,

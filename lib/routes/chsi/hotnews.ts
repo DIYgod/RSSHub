@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yz.chsi.com.cn';
 
@@ -62,7 +61,7 @@ async function handler() {
                     description,
                 };
                 if (itemDate) {
-                    result.pubDate = timezone(parseDate(itemDate, 'YYYY年MM月DD日'), 8);
+                    result.pubDate = parseDate(itemDate, 'YYYY年MM月DD日', 8);
                 }
                 return result;
             });

@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -25,6 +25,9 @@ const parseFlightData = (buf: Buffer) => {
         } else {
             end = buf.indexOf(0x0a, colon);
             value = buf.toString('utf8', colon + 1, end);
+        }
+        if (end < i) {
+            throw new Error('Unterminated row in flight payload');
         }
         rows.set(id, value);
         i = end + 1;

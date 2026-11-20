@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const url = 'http://www.cqgas.cn/portal/article/page?cateId=1082&pageNo=1';
 const contentUrl = (id: string | undefined) => `http://www.cqgas.cn/portal/article/content?contentId=${id}`;

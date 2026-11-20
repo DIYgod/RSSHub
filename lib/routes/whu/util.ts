@@ -1,11 +1,11 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict, toInstant } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -28,8 +28,7 @@ function parseCalendarDate(value: string | undefined, format: string | string[] 
     if (!value?.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), format, true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), format, 0);
 }
 function parsePublicationDate(value: string | undefined) {
     if (!value?.trim()) {
@@ -38,8 +37,7 @@ function parsePublicationDate(value: string | undefined) {
     if (/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
         return parseCalendarDate(value);
     }
-    const date = parseDate(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
 }
 type ArticleDetails = Pick<DataItem, 'description' | 'author' | 'category' | 'guid' | 'enclosure_url' | 'enclosure_type'> & {
     articleTitle?: string;
@@ -78,6 +76,9 @@ const getItemDetail = async (item, rootUrl): Promise<ArticleDetails> => {
     const content = load(detailResponse);
     if (content('title').text() === '用户验证' && content('body').text().includes('验证码')) {
         throw new ArticleAccessError(`Article access verification required at ${item.link}`);
+    }
+    if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
+        throw new ArticleAccessError(`Article access permission required at ${item.link}`);
     }
     if (content('div.v_news_content').length !== 1) {
         throw new Error(`Article body not found at ${item.link}`);
@@ -131,7 +132,7 @@ const getItemDetail = async (item, rootUrl): Promise<ArticleDetails> => {
     const details: ArticleDetails = {
         articleTitle: getMeta(meta, 'ArticleTitle'),
         listTitle: item.title,
-        listDate: isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime(),
+        listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
         publicationDate: getMeta(meta, 'PubDate'),
         description: renderDescription({ description: description ?? undefined, attachments }),
         author: getMeta(meta, 'ContentSource'),
@@ -169,7 +170,7 @@ const processItems = async <
                 }
                 try {
                     const detail = await cache.tryGet(`whu:details:download-mime:${item.link}`, async () => await getItemDetail(item, rootUrl));
-                    const listDate = isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime();
+                    const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
                     return {
                         ...item,
                         title: detail.listTitle === item.title ? (detail.articleTitle ?? item.title) : item.title,

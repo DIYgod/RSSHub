@@ -2,11 +2,11 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from '../templates/description';
-import { type ArticleSource, parseArticle } from './utils';
+import type { ArticleSource } from './utils';
+import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/nfapp/column/:column?',
@@ -59,8 +59,8 @@ async function handler(ctx) {
                     thumb: item.picMiddle,
                     description: item.summary === '详见内文' ? '' : item.summary,
                 }),
-                pubDate: item.releaseTime ? timezone(parseDate(item.releaseTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
-                updated: item.updateTime ? timezone(parseDate(item.updateTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
+                pubDate: item.releaseTime ? parseDate(item.releaseTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+                updated: item.updateTime ? parseDate(item.updateTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
                 link: item.shareUrl,
             },
             articleId: item.articleId,

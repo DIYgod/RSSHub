@@ -4,9 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xwdt/:category{.+}?',
@@ -86,7 +85,7 @@ async function handler(ctx) {
                 item.description = (content('.TRS_Editor').html() || content('.article_con').html() || '') + (content('.attachment').html() || '');
                 const publishedDate = content('meta[name="PubDate"]').attr('content');
                 if (publishedDate) {
-                    item.pubDate = timezone(parseDate(publishedDate), 8);
+                    item.pubDate = parseDate(publishedDate, 8);
                 }
 
                 return item;

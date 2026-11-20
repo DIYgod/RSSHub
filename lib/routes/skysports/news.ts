@@ -1,12 +1,14 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface ArticleSchema {
     '@type'?: string | string[];
@@ -95,7 +97,7 @@ async function handler(ctx) {
                     const video = content(element);
                     const poster = copyNodes(video.find('.sdc-site-video__poster img').first());
                     const caption = copyNodes(video.find('.sdc-site-video__caption').first());
-                    video.contents().remove();
+                    video.empty();
                     video.append(poster, caption);
                 });
 

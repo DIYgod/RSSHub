@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.qlu.edu.cn';
 
@@ -62,7 +61,7 @@ async function handler() {
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
             const itemUrl = item.link;
-            return cache.tryGet(itemUrl!, async () => {
+            return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (new URL(itemUrl).origin === host) {
                     const result = await got(itemUrl);
@@ -74,7 +73,7 @@ async function handler() {
                 return {
                     title: itemTitle,
                     link: itemUrl,
-                    pubDate: timezone(parseDate(itemDate), 8),
+                    pubDate: parseDate(itemDate, 'YYYYMM/DD', 8),
                     description,
                 };
             });

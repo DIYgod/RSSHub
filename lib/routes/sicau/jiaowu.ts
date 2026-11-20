@@ -4,8 +4,7 @@ import { Language } from '@/routes/kurogames/wutheringwaves/constants';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const $get = async (url: string) => new TextDecoder('gb2312').decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 const $trim = (str: string) => {
@@ -56,7 +55,7 @@ export const route: Route = {
                     category: [children.eq(1).text()],
                     link: `${baseUrl}/${a.attr('href')!}`,
                     title: a.children().first().text(),
-                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), 8),
+                    pubDate: parseDate(children.eq(3).text(), 'YYYY-M-D', 8),
                     author: children.eq(4).text(),
                     description: '请在应用内抓取全文内容',
                 };

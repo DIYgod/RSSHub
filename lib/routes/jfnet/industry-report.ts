@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const HOST = 'https://www.jfnet.or.jp';
 const INDEX = `${HOST}/industry_report/?c=29&y=0`; // c=29 → 月次レポート only

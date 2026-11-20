@@ -1,9 +1,7 @@
-import { renderToString } from 'hono/jsx/dom/server';
+import { renderYoutube } from '@/routes/youtube/utils';
 
 type YoutubeProps = {
     video: string;
 };
 
-const YoutubeEmbed = ({ video }: YoutubeProps) => <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${video}`} frameborder="0" allowfullscreen></iframe>;
-
-export const renderYouTube = (props: YoutubeProps): string => renderToString(<YoutubeEmbed {...props} />);
+export const renderYouTube = ({ video }: YoutubeProps): string => renderYoutube(true, video, undefined, undefined);

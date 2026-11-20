@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.yz.sdu.edu.cn';
 
@@ -49,7 +49,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: parseDateInTimezone(itemDate, 8),
+                pubDate: parseDate(itemDate, 8),
             };
         });
 

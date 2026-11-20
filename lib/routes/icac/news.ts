@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
 
@@ -59,9 +58,9 @@ async function handler(ctx) {
                 c('.col-3-wrap.clearfix.pressPhoto div').removeAttr('class');
                 const des = c('.pressContent').html();
                 const thumbs = c('.pressPhoto, .lightGallery').html() ?? '';
-                const pubDate = parseDate(c('h3').first().text().trim(), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日', 'YYYY-MM-DD', 'YYYY-MM-D', 'YYYY-M-DD', 'YYYY-M-D'], true);
-                if (Number.isFinite(pubDate.getTime())) {
-                    item.pubDate = timezone(pubDate, 8);
+                const pubDate = parseDateStrict(c('h3').first().text().trim(), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日', 'YYYY-MM-DD', 'YYYY-MM-D', 'YYYY-M-DD', 'YYYY-M-D'], 8);
+                if (pubDate) {
+                    item.pubDate = pubDate;
                 }
                 item.description = des + thumbs;
                 return item;

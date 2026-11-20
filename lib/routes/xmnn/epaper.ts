@@ -1,11 +1,11 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/epaper/:id?',
@@ -47,8 +47,8 @@ const getPage = async (url: string) => {
 };
 const getRedirect = (data: string, $: CheerioAPI) => {
     // The current desktop entry declares a redirect separately from its mobile branch.
-    const desktop = data.match(/(?:window\.)?location\.href\s*=\s*["']([^"']*\/pc\/col\/index\.html(?:[?#][^"']*)?)["']/);
-    const legacy = data.match(/window\.location\.href\s*=\s*["']([^"']+)["']/) ?? data.match(/setTimeout\("javascript:location\.href='(.*?)'", 3000\);/);
+    const desktop = /(?:window\.)?location\.href\s*=\s*["']([^"']*\/pc\/col\/index\.html(?:[?#][^"']*)?)["']/.exec(data);
+    const legacy = /window\.location\.href\s*=\s*["']([^"']+)["']/.exec(data) ?? /setTimeout\("javascript:location\.href='(.*?)'", 3000\);/.exec(data);
     const refresh = $('meta[http-equiv]')
         .filter((_, element) => $(element).attr('http-equiv')?.toLowerCase() === 'refresh')
         .first()
@@ -86,8 +86,7 @@ const getPublicationDate = (value: string) => {
         return;
     }
     const normalized = value.trim().replace(/^(\d{4}年\d{1,2}月\d{1,2}日)\s+星期[一二三四五六日天]$/, '$1');
-    const date = parseDate(normalized, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY年M月D日'], true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(normalized, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD', 'YYYY年MM月DD日', 'YYYY年M月D日'], 8);
 };
 const getArticleDetails = async (url: string): Promise<ArticleDetails> => {
     const page = await getPage(url);

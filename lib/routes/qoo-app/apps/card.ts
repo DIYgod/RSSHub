@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { appsUrl, createPageFetcher } from '../utils';
 
@@ -42,7 +41,7 @@ async function handler(ctx) {
                 const $item = $(item);
                 const name = $item.find('.qoo-clearfix .name a');
                 const author = name.eq(0).text();
-                const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss'), 8);
+                const pubDate = parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss', 8);
                 $item.find('a.icon, .qoo-clearfix, footer, article.qoo-comment-panel, div.slot').remove();
                 $item.find('.img-list').attr('data-target', '');
                 return {

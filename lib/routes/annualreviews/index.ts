@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const getDoi = (identifier: string | undefined) => identifier?.match(/10\.\d{4,9}\/[^?&#\s]+/)?.[0];
 

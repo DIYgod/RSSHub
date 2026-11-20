@@ -1,7 +1,7 @@
 import { escapeAttribute, escapeText } from 'entities';
-import MarkdownIt from 'markdown-it';
 
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({ html: true, linkify: true });
 
@@ -38,12 +38,12 @@ function formatEventItem(event: any) {
             const commitCount = payload.size ? `${payload.size} commit(s) ` : '';
             description = escapeText(`Pushed ${commitCount}to ${branch} in ${repo.name}`);
 
+            // Use the pre-push tip as the base to include the first pushed commit's changes.
+            link = `https://github.com/${repo.name}/compare/${payload.before}..${payload.head}`;
+
             const latestCommit = payload.commits?.at(-1);
             if (latestCommit) {
-                link = `https://github.com/${repo.name}/commit/${latestCommit.sha}`;
                 description += `<br><strong>Latest commit:</strong> ${escapeText(latestCommit.message)}`;
-            } else {
-                link = `https://github.com/${repo.name}/commit/${payload.head}`;
             }
             break;
         }

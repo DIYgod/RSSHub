@@ -1,47 +1,14 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
-
-const formatExhibitionDate = (dateStr: string): string | undefined => {
-    const normalized = dateStr.replaceAll(/[年月.]/g, '-').replace('日', '');
-    const [y, m, d] = normalized.split('-', 3);
-    if (!y || !m || !d) {
-        return undefined;
-    }
-    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-};
-
-// parse date formate for 2026年1月1日—2026年4月6日, 2025.09.30-2026.01.04 or 2025年6月17日-8月17日
-const parseExhibitionDuration = (fullDuration: string) => {
-    if (!fullDuration) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    const parts = fullDuration.split(/[—-]/);
-    if (parts.length < 2) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    const startRaw = parts[0].trim();
-    let endRaw = parts[1].trim();
-
-    const startDate = formatExhibitionDate(startRaw);
-
-    if (startDate && !/\d{4}/.test(endRaw)) {
-        const startYear = startDate.slice(0, 4);
-        endRaw = `${startYear}年${endRaw}`;
-    }
-
-    const endDate = formatExhibitionDate(endRaw);
-
-    return { startDate, endDate };
-};
 
 export const route: Route = {
     path: '/linzhantezhan',
@@ -90,12 +57,13 @@ export const route: Route = {
                     let fullDuration = '';
                     $d('.zhengwen p').each((_, el) => {
                         const text = $d(el).text().trim();
-                        if (text.includes('展览时间：')) {
-                            fullDuration = text.split('展览时间：', 2)[1];
+                        const match = text.match(/(?:展览时间|展期)：(.*)/);
+                        if (match) {
+                            fullDuration = match[1];
                         }
                     });
 
-                    const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                    const { startDate, endDate } = parseDateRange(fullDuration);
 
                     const articleContent = $d('.zhengwen').html();
                     const description = renderToString(
@@ -103,7 +71,7 @@ export const route: Route = {
                             <img src={item.imgUrl} />
                             <br />
                             {articleContent ? (
-                                <div dangerouslySetInnerHTML={{ __html: articleContent }} />
+                                <div>{raw(articleContent)}</div>
                             ) : (
                                 <>
                                     <p>

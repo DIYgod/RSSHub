@@ -1,14 +1,8 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { formatDate, parseDate } from '@/utils/time';
 
 const newsTimezone = 'America/New_York';
 
@@ -39,7 +33,7 @@ async function handler(ctx) {
 
     const responseDate = response.headers.get('date');
     const currentDate = responseDate ? parseDate(responseDate) : undefined;
-    const today = currentDate && Number.isFinite(currentDate.getTime()) ? dayjs(currentDate).tz(newsTimezone).locale('en').format('MMM-DD-YY') : undefined;
+    const today = currentDate && formatDate(currentDate, 'MMM-DD-YY', newsTimezone);
     let dateRow: string | undefined;
     const item = data.toArray().map((e) => {
         const date = $(e).find('td').first().text().trim();
@@ -48,7 +42,7 @@ async function handler(ctx) {
             dateRow = parts[1] === 'Today' ? today : parts[1];
         }
         const time = date.match(/\d{1,2}:\d{2}[AP]M$/)?.[0];
-        const pubDate = dateRow && time ? parseDate(dayjs.tz(`${dateRow} ${time}`, 'MMM-DD-YY hh:mmA', newsTimezone).format()) : undefined;
+        const pubDate = dateRow && time ? parseDate(`${dateRow} ${time}`, 'MMM-DD-YY hh:mmA', newsTimezone) : undefined;
         return {
             title: $(e).find('a').text(),
             pubDate,

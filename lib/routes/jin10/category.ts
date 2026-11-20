@@ -3,8 +3,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -183,7 +182,7 @@ async function handler(ctx) {
                     classify: `[${id}]`,
                 },
             });
-            return response.data.filter((item) => item.type !== 1);
+            return response.data.filter((item) => item.type !== 1 && (item.data.content || item.data.vip_title));
         },
         config.cache.routeExpire,
         false
@@ -203,7 +202,7 @@ async function handler(ctx) {
         return {
             title,
             description: renderDescription(content, item.data.pic),
-            pubDate: timezone(parseDate(item.time), 8),
+            pubDate: parseDate(item.time, 8),
             guid: `jin10:category:${item.id}`,
         };
     });

@@ -5,12 +5,10 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 function parsePublicationDate(value: string) {
-    const date = parseDate(value.trim(), 'YYYY-MM-DD HH:mm:ss', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+    return parseDateStrict(value.trim(), 'YYYY-MM-DD HH:mm:ss', 8);
 }
 
 async function fetchDetails(url: string) {

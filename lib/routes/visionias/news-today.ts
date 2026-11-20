@@ -1,6 +1,7 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import dayjs from 'dayjs';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import NotFoundError from '@/errors/types/not-found';
@@ -43,8 +44,9 @@ export const route: Route = {
 };
 async function handler(ctx): Promise<Data> {
     const filter = ctx.req.param('filter') ?? 'latest';
-    const currentYear = dayjs().year();
-    const currentMonth = dayjs().month() + 1;
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const currentYear = now.year;
+    const currentMonth = now.month;
     logger.debug(`Getting news for month ${currentMonth} and year ${currentYear}`);
     const response = await ofetch<
         Array<{

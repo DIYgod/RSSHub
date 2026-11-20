@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gerenzhongxin/guba/:uid',
@@ -54,7 +53,7 @@ export async function handler(ctx) {
         return {
             title: item.post_title || `${nickname} 发布了帖子: ${descriptionContent}`,
             description: descriptionContent,
-            pubDate: timezone(parseDate(item.post_publish_time), 8),
+            pubDate: parseDate(item.post_publish_time, 8),
             link: `https://guba.eastmoney.com/news,${item.post_guba.stockbar_code},${item.post_id}.html`,
             author: item.post_user.user_nickname,
         };

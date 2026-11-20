@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function loadContent(item) {
     const response = await got(item.link);
@@ -27,7 +26,7 @@ const processFeed = (list, caches) => {
                 title: $title.find('.title .gp-ellipsis').text(),
                 link: itemUrl,
                 author: '教务部',
-                pubDate: timezone(parseDate($('.date').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($('.date').text(), 'YYYY-MM-DD', 8),
             };
 
             return caches.tryGet(single.link, () => loadContent(single));

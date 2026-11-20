@@ -1,15 +1,14 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import type { LiteratureResponse } from './types';
 
 export const baseUrl = 'https://inspirehep.net';
 
 export const parseRecordDate = (value?: string) => {
-    if (!value || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/.test(value) || !Number.isFinite(parseDate(value.slice(0, 10), 'YYYY-MM-DD', true).getTime())) {
+    if (!value || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/.test(value) || !parseDateStrict(value.slice(0, 10), 'YYYY-MM-DD')) {
         return;
     }
-    const date = parseDate(value);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value);
 };
 
 export const parseLiterature = (hits: LiteratureResponse['hits']['hits']) =>

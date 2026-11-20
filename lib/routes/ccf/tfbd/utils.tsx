@@ -3,8 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const base = 'http://tfbd.ccf.org.cn';
 
@@ -29,7 +28,7 @@ const fetchAllArticles = (data) => {
         const r = {
             title: c.find('h3 a[href]').text(),
             link: base + c.find('h3 a[href]').attr('href'),
-            pubDate: timezone(parseDate(c.find('p').text().trim(), 'YYYY-MM-DD'), 8),
+            pubDate: parseDate(c.find('p').text().trim(), 'YYYY-MM-DD', 8),
         };
         return r;
     });

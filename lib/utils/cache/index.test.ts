@@ -39,25 +39,30 @@ describe('cache', () => {
 
     it('memory get returns null before init', async () => {
         const memory = (await import('@/utils/cache/memory')).default;
-        expect(await memory.get('missing')).toBeNull();
-        expect(await memory.has('missing')).toBe(false);
+        expect(memory.get('missing')).toBeNull();
+        expect(memory.has('missing')).toBe(false);
     });
 
-    it('tryGet preserves snowflake ID precision', async () => {
+    it.each([
+        { key: 'snowflake', value: '1234567890123456789' },
+        { key: 'false', value: false },
+        { key: 'zero', value: 0 },
+        { key: 'null', value: null },
+        { key: 'empty-string', value: '' },
+    ])('tryGet preserves $key values on cache hits', async ({ key, value }) => {
         process.env.CACHE_TYPE = 'memory';
         const cache = (await import('@/utils/cache')).default;
         if (!cache.clients.memoryCache || !cache.status.available) {
             throw new Error('Memory cache client error');
         }
 
-        const snowflakeId = '1234567890123456789';
-        const fetcher = vi.fn(() => Promise.resolve(snowflakeId));
+        const fetcher = vi.fn(() => Promise.resolve(value));
 
-        const fresh = await cache.tryGet('snowflake', fetcher);
-        expect(fresh).toBe(snowflakeId);
-        const cached = await cache.tryGet('snowflake', fetcher);
-        expect(cached).toBeTypeOf('string');
-        expect(cached).toBe(snowflakeId);
+        const fresh = await cache.tryGet(key, fetcher);
+        expect(fresh).toBe(value);
+        const cached = await cache.tryGet(key, fetcher);
+        expect(cached).toBeTypeOf(typeof value);
+        expect(cached).toBe(value);
         expect(fetcher).toHaveBeenCalledTimes(1);
     });
 
@@ -105,7 +110,7 @@ describe('cache', () => {
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';
         const cache = (await import('@/utils/cache')).default;
-        await cache.init();
+        cache.init();
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
         expect(await cache.has('mock2')).toBe(false);

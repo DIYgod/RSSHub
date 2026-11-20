@@ -6,8 +6,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/fluid/:url',
@@ -52,7 +52,7 @@ async function handler(ctx: Context) {
                 const pubDate = date ? parseDate(date) : undefined;
 
                 return {
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     description: $('.markdown-body').html(),
                 };
             })),

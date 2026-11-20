@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { compareDates, parseDate } from '@/utils/time';
 
 const BASE = 'https://www.resetera.com';
 
@@ -61,7 +62,7 @@ const handler: Route['handler'] = async (ctx) => {
             // Publication time
             const timeEl = $el.find('time').first();
             const dataTime = Number(timeEl.attr('data-time') || 0);
-            const pubDate = timeEl.attr('datetime') || (dataTime ? new Date(dataTime * 1000).toUTCString() : undefined);
+            const pubDate = timeEl.attr('datetime') || (dataTime ? parseDate(dataTime, 'X') : undefined);
 
             // Main post content
             const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper');
@@ -118,9 +119,7 @@ const handler: Route['handler'] = async (ctx) => {
         if (idb !== ida) {
             return idb - ida;
         }
-        const ta = a.pubDate ? new Date(a.pubDate).getTime() : 0;
-        const tb = b.pubDate ? new Date(b.pubDate).getTime() : 0;
-        return tb - ta;
+        return compareDates(b.pubDate, a.pubDate);
     });
 
     const title = $('h1').text().trim() || `ResetEra Thread ${id}`;

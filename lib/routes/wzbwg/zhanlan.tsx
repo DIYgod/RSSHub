@@ -1,29 +1,15 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateRange, parseDateStrict } from '@/utils/time';
 
 import { namespace } from './namespace';
-
-type ExhibitionDuration = { startDate: string | undefined; endDate: string | undefined };
-
-// Convert "YYYY年M月D日（-/——/—/至）[YYYY年]M月D日" into YYYY-MM-DD start/end dates
-const parseExhibitionDuration = (raw: string): ExhibitionDuration => {
-    const m = raw.match(/(\d{4})年(\d{1,2})月(\d{1,2})日[-—至]+(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/);
-    if (!m) {
-        return { startDate: undefined, endDate: undefined };
-    }
-    const endYear = m[4] ?? m[1];
-    return {
-        startDate: `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`,
-        endDate: `${endYear}-${m[5].padStart(2, '0')}-${m[6].padStart(2, '0')}`,
-    };
-};
 
 // Extract exhibition date and location from detail page txt div
 const extractExhibitionMeta = ($detail: CheerioAPI) => {
@@ -81,21 +67,20 @@ export const route: Route = {
                     const detailResponse = await ofetch(item.link);
                     const $detail = load(detailResponse);
                     const { fullDuration, location } = extractExhibitionMeta($detail);
-                    const { startDate, endDate } = parseExhibitionDuration(fullDuration ?? '');
+                    const { startDate, endDate } = parseDateRange(fullDuration ?? '');
                     const dateRaw =
                         $detail('div.n2')
                             .text()
                             .match(/\[(.+?)\]/)?.[1]
                             ?.trim() || '';
-                    const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(dateRaw) ? timezone(parseDate(dateRaw, 'YYYY-MM-DD', true), 8) : undefined;
-                    const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : undefined;
+                    const pubDate = /^\d{4}-\d{2}-\d{2}$/.test(dateRaw) ? parseDateStrict(dateRaw, 'YYYY-MM-DD', 8) : undefined;
                     return { pubDate, location, startDate, endDate, description: $detail('.info .txt').html() || undefined };
                 });
                 const { pubDate, location, startDate, endDate } = detail;
                 const description = renderToString(
                     <div>
                         {imgUrl && <img src={imgUrl} />}
-                        <div dangerouslySetInnerHTML={{ __html: detail.description || '' }} />
+                        <div>{raw(detail.description || '')}</div>
                     </div>
                 );
                 return {
@@ -112,7 +97,7 @@ export const route: Route = {
             title: `${museumName} - 最新展览`,
             link: listUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

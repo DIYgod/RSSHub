@@ -52,7 +52,7 @@ export const parsePct = (text: string): number | null => {
 
 /** '2025年度' anywhere in the text → 2025; nothing → null. */
 export const parseFiscalYear = (text: string): number | null => {
-    const m = text.match(/(\d{4})年度/);
+    const m = /(\d{4})年度/.exec(text);
     return m ? Number(m[1]) : null;
 };
 

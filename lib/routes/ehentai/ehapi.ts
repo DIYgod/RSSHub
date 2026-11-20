@@ -10,8 +10,7 @@ import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface RequestHeaders {
     cookie?: string;
@@ -38,6 +37,18 @@ if (config.ehentai.star) {
     headers.cookie = `${headers.cookie};star=${config.ehentai.star}`;
 }
 
+const galleryHosts = new Set(['e-hentai.org', 'exhentai.org']);
+
+// only send the cookie to the gallery site itself
+function isGalleryUrl(url: string, includeSubdomains = false) {
+    try {
+        const { protocol, hostname } = new URL(url);
+        return protocol === 'https:' && (galleryHosts.has(hostname) || (includeSubdomains && [...galleryHosts].some((host) => hostname.endsWith(`.${host}`))));
+    } catch {
+        return false;
+    }
+}
+
 function ehgot(url) {
     return fromEx ? got({ method: 'get', url: `https://exhentai.org/${url}`, headers }) : got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
 }
@@ -45,8 +56,8 @@ function ehgot(url) {
 function getThumbnail(cache, thumbnailUrl) {
     return cache.tryGet(`ehentai:thumbnail:${thumbnailUrl}`, async () => {
         try {
-            const buffer = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(thumbnailUrl, { responseType: 'arrayBuffer', headers: headers.cookie ? { Cookie: headers.cookie } : undefined });
-            const data = Buffer.from(buffer._data!).toString('base64');
+            const buffer = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(thumbnailUrl, { responseType: 'arrayBuffer', headers: headers.cookie && isGalleryUrl(thumbnailUrl, true) ? { Cookie: headers.cookie } : undefined });
+            const data = Buffer.from(buffer._data!).toBase64();
             const ext = path.extname(new URL(thumbnailUrl).pathname).slice(1).toLowerCase();
             const imageTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' };
             const contentType = buffer.headers.get('content-type')?.split(';', 1)[0].toLowerCase();
@@ -69,7 +80,7 @@ function parseElement($, element, layout: string, includeBittorrent: string | bo
     const el = $(element);
     const title = el.find('.glink').html();
     const rawDate = el.find('div[id^="posted_"]').text();
-    const pubDate = rawDate ? timezone(parseDate(rawDate), 0) : undefined;
+    const pubDate = rawDate ? parseDate(rawDate, 0) : undefined;
     let linkElement;
     let imageElement;
     // match layout
@@ -107,7 +118,7 @@ function parseElement($, element, layout: string, includeBittorrent: string | bo
     if (includeBittorrent) {
         const downloadElement = el.find('div.gldown');
         const bittorrentPageUrl = downloadElement.find('a').attr('href');
-        if (bittorrentPageUrl) {
+        if (bittorrentPageUrl && isGalleryUrl(bittorrentPageUrl)) {
             item.bittorrentPageUrl = bittorrentPageUrl;
         }
     }

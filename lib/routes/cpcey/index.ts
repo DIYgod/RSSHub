@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 const rootUrl = 'https://cpc.ey.gov.tw';
 
@@ -54,13 +53,12 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const date = $(item).find('span').text();
-            const dateArr = date.split('-');
-            const dateStr = Number.parseInt(dateArr[0]) + 1911 + '/' + dateArr[1] + '/' + dateArr[2];
+            const [year, month, day] = date.split('-', 3);
 
             return {
                 link: rootUrl + $(item).find('a').attr('href'),
                 title: $(item).find('a').attr('title')!,
-                pubDate: timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8),
+                pubDate: calendarToInstant({ calendar: 'roc', year, month, day }, 8),
             };
         });
 

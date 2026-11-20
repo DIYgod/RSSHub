@@ -1,6 +1,6 @@
+import type { PageObjectResponse } from '@notionhq/client';
 import { APIErrorCode, Client, isFullPage, isNotionClientError } from '@notionhq/client';
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
 import { NotionToMarkdown } from 'notion-to-md';
 
 import { config } from '@/config';
@@ -10,7 +10,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -95,7 +96,7 @@ async function handler(ctx) {
 
         // Query page content
         const n2m = new NotionToMarkdown({ notionClient: notion });
-        const pageList = results.filter(isFullPage).filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
+        const pageList = results.filter((item): item is PageObjectResponse => isFullPage(item)).filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
         const items = await Promise.all(
             pageList.map(async (page) => {
                 const titleProperty = Object.values<any>(page.properties).find((property) => property.id === 'title');
@@ -123,6 +124,7 @@ async function handler(ctx) {
                             const response = await got({
                                 method: 'get',
                                 url: articleLink,
+                                publicOnly: true,
                             });
                             const $ = load(response.body);
                             const articleAuthor = $('meta[name="author"]').attr('content');

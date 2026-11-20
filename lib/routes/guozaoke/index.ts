@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/default',
@@ -46,12 +47,13 @@ async function handler() {
         .map((item): DataItem | undefined => {
             const $item = $(item);
             const title = $item.find('h3.title a').text();
-            const url = $item.find('h3.title a').attr('href');
+            const href = $item.find('h3.title a').attr('href');
             const author = $item.find('span.username a').text();
             const lastTouched = $item.find('span.last-touched').text();
             const updated = lastTouched ? parseRelativeDate(lastTouched) : undefined;
-            const link = url ? url.split('#', 1)[0] : undefined;
-            return link ? { title, link, author, updated } : undefined;
+            const link = href ? new URL(href.split('#', 1)[0], url) : undefined;
+            // the article request carries the configured cookie, so it must not leave www.guozaoke.com
+            return link && link.origin === new URL(url).origin ? { title, link: link.href, author, updated } : undefined;
         })
         .filter((item) => item !== undefined);
 
@@ -59,10 +61,9 @@ async function handler() {
         items,
         async (item) => {
             const article = await cache.tryGet(`guozaoke:article:${item.link}`, async () => {
-                const url = `https://www.guozaoke.com${item.link}`;
                 const res = await got({
                     method: 'get',
-                    url,
+                    url: item.link,
                     headers: {
                         Cookie: config.guozaoke.cookies,
                     },
@@ -87,7 +88,7 @@ async function handler() {
                 });
                 if (comments && comments.length > 0) {
                     for (const item of comments) {
-                        content += '<br>' + item.author + ': ' + item.comment;
+                        content += '<br>' + escapeText(item.author) + ': ' + escapeText(item.comment);
                     }
                 }
                 return { description: content, pubDate };

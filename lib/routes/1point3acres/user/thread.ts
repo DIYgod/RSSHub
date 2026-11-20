@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:id/threads',
@@ -38,7 +39,7 @@ async function handler(ctx) {
             title: item.title,
             author,
             description: item.description,
-            pubDate: new Date(item.update_time + ' GMT+8').toUTCString(),
+            pubDate: parseDate(item.update_time, 8),
             link: `https://instant.1point3acres.com/thread/${item.id}`,
         })),
     };

@@ -1,10 +1,11 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/weixin/miniprogram/framework',
@@ -34,10 +35,11 @@ async function handler() {
                     .toArray()
                     .map((element) => $.html(element))
                     .join(''),
-                pubDate: date ? timezone(parseDate(date.replaceAll('.', '-')), 8) : undefined,
-                link: link + $item.find('a.header-anchor').attr('href'),
+                pubDate: date ? parseDate(date.replaceAll('.', '-'), 8) : undefined,
+                link: $item.attr('id') ? `${link}#${$item.attr('id')}` : link,
             };
-        });
+        })
+        .filter((item) => item.link !== link);
 
     return {
         title: name,

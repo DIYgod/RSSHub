@@ -5,9 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -73,7 +72,7 @@ async function handler(ctx) {
 
                 item.title = content('.main-article .title').text();
                 const date = content('.time').eq(0).text();
-                item.pubDate = date ? timezone(parseDate(date), 8) : undefined;
+                item.pubDate = date ? parseDate(date, 8) : undefined;
                 item.description = content('.content-intro').html();
                 item.author = content('.author a').text();
                 item.category = content('.keyword > a')

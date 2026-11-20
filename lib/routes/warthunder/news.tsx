@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const renderDescription = (desc: { description?: string; imglink?: string }) => renderToString(<WarthunderDescription description={desc.description} imglink={desc.imglink} />);
 
@@ -48,8 +47,7 @@ function parseSourceTime(value: string) {
     if (!value.trim()) {
         return;
     }
-    const date = parseDate(value.trim(), 'D MMMM YYYY', 'en', true);
-    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+    return parseDateStrict(value.trim(), 'D MMMM YYYY', 0);
 }
 
 async function handler() {
@@ -99,7 +97,7 @@ async function handler() {
                 content.find('script, style').remove();
                 content.find('img[data-src]').each((_, element) => {
                     const image = $(element);
-                    image.attr('src', image.attr('data-src')!);
+                    image.attr('src', image.attr('data-src'));
                 });
                 return { description: content.html() || undefined };
             });

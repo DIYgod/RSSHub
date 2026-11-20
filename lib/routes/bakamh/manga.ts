@@ -6,9 +6,10 @@ import CaptchaError from '@/errors/types/captcha';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const url = 'https://bakamh.com';
 
@@ -67,6 +68,10 @@ const handler = async (ctx) => {
         const items = await pMap(
             list,
             async (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'bakamh.com')) {
+                    return item;
+                }
                 try {
                     return await cache.tryGet(item.link!, async () => {
                         const response = instance ? await getChapterHtml(instance.context, item.link!) : await ofetch(item.link!);

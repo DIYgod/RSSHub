@@ -1,13 +1,14 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate } from '@/utils/time';
 
-import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
+import type { PermitExtra, Row } from '../utils';
+import { csvRecords, decodeText, isoDate, warekiMonth } from '../utils';
 
 /**
  * 飲食店営業許可 (food business permits) newly granted in Tokyo wards, from each ward's CC BY open data.
@@ -41,7 +42,7 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
     },
     shinagawa: {
         label: '品川区',
-        link: 'https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html',
+        link: 'https://www.city.shinagawa.tokyo.jp/kenko/eisei/1003077/1003132.html',
     },
     setagaya: {
         label: '世田谷区',
@@ -83,12 +84,9 @@ const toNumber = (v: string | null): number | null => {
 };
 
 /** 渋谷区 stores dates as text (`2026/8/7`), so the current and previous month (JST) are selected with LIKE and sorted locally. */
-const shibuyaQueryUrl = (now: Date): string => {
-    const jst = new Date(now.getTime() + 9 * 3600 * 1000);
-    const months = [0, 1].map((back) => {
-        const d = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth() - back, 1));
-        return `${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/`;
-    });
+const shibuyaQueryUrl = (now: Temporal.Instant): string => {
+    const jst = now.toZonedDateTimeISO('+09:00');
+    const months = [0, 1].map((back) => formatDate(jst.subtract({ months: back }), 'YYYY/M/'));
     const params = new URLSearchParams({
         where: months.map((m) => `${SHIBUYA_DATE} LIKE '${m}%'`).join(' OR '),
         outFields: '*',
@@ -104,7 +102,7 @@ interface ArcgisFeature {
 }
 
 const fetchShibuya = async (): Promise<Row[]> => {
-    const body = await ofetch(shibuyaQueryUrl(new Date()));
+    const body = await ofetch(shibuyaQueryUrl(Temporal.Now.instant()));
     const features: ArcgisFeature[] = body?.features ?? [];
     return features.map((f) => Object.fromEntries(Object.entries(f.attributes).map(([k, v]) => [k, v === null || v === undefined ? null : String(v)])));
 };
@@ -197,7 +195,7 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
         title: `${name}（${businessType ?? '業種不明'}）`,
         guid: `lg/tokyo/food-permit:${source}:${permitNo}`,
         link: SOURCES[source].link,
-        pubDate: permitDate === null ? undefined : timezone(parseDate(permitDate, 'YYYY-MM-DD'), 9),
+        pubDate: permitDate === null ? undefined : parseDate(permitDate, 'YYYY-MM-DD', 9),
         description: [ward, address, businessType, permitDate, `許可番号 ${permitNo}`].filter(Boolean).join(' / '),
         _extra: { source, ward, permit_no: permitNo, name, address, town, permit_date: permitDate, first_permit_date: firstPermitDate, expires_at: expiresAt, closed_date: closedDate, business_type: businessType, lat, lon, raw },
     };
@@ -259,7 +257,7 @@ export const route: Route = {
 - 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month
 - 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first
 - 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)
-- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
+- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/kenko/eisei/1003077/1003132.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
 - 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)
 - 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)
 

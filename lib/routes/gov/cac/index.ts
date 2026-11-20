@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}',
@@ -70,7 +69,7 @@ async function handler(ctx) {
             const date = c.find('.times').text();
             return {
                 link: new URL(articleHref!, completeUrl).href,
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 title,
             };
         });
@@ -85,7 +84,7 @@ async function handler(ctx) {
                     const pubDate = content('#pubtime').text().trim();
                     return {
                         description: content('.main-content').html() ?? undefined,
-                        pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY年MM月DD日 HH:mm'), 8) : undefined,
+                        pubDate: pubDate ? parseDate(pubDate, 'YYYY年MM月DD日 HH:mm', 8) : undefined,
                     };
                 });
                 return {

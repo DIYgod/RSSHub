@@ -2,8 +2,7 @@ import { load } from 'cheerio'; // HTML parser with jQuery-like API
 
 import type { Route } from '@/types';
 import got from '@/utils/got'; // Custom got instance
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ccst/xwzx/:category',
@@ -76,7 +75,7 @@ async function handler(ctx: any) {
             return {
                 title,
                 link,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
             };
         }),
     };

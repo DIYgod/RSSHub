@@ -8,9 +8,10 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 import { setCookies } from '@/utils/playwright-utils';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
@@ -74,15 +75,19 @@ async function handler(ctx): Promise<Data> {
     try {
         out = await pMap(
             list,
-            (item) =>
-                cache.tryGet(item.link, async () => {
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'pnas.org')) {
+                    return item;
+                }
+                return cache.tryGet(item.link, async () => {
                     const page = await context.newPage();
                     let res: string;
                     try {
                         await setCookies(page, await cookieJar.getCookieString(item.link), '.pnas.org');
                         await page.route('**/*', (route) => {
                             const request = route.request();
-                            request.resourceType() === 'document' ? route.continue() : route.abort();
+                            return request.resourceType() === 'document' ? route.continue() : route.abort();
                         });
                         logger.http(`Requesting ${item.link}`);
                         await page.goto(item.link, {
@@ -130,7 +135,8 @@ async function handler(ctx): Promise<Data> {
                     );
 
                     return item;
-                }),
+                });
+            },
             { concurrency: 3, stopOnError: false }
         );
     } finally {

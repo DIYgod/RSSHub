@@ -4,8 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.cqwu.edu.cn';
 const map = {
@@ -63,7 +62,7 @@ async function handler(ctx) {
                 return {
                     title: $('.abs').prev('.title').text(),
                     desc: $('.contentAtice').html(),
-                    pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD HH:mm'), 8) : undefined,
+                    pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm', 8) : undefined,
                 };
             });
 
@@ -72,7 +71,7 @@ async function handler(ctx) {
                 title: detailTitle || $(item).find('.title').text(),
                 link: pageUrl,
                 description: desc,
-                pubDate: pubDate || (/^\d{4}-\d{2}-\d{2}$/.test(listDate) ? timezone(parseDate(listDate, 'YYYY-MM-DD'), 8) : undefined),
+                pubDate: pubDate || (/^\d{4}-\d{2}-\d{2}$/.test(listDate) ? parseDate(listDate, 'YYYY-MM-DD', 8) : undefined),
             };
         })
     );

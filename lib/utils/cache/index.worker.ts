@@ -7,6 +7,7 @@ import type CacheModule from './base';
 import { stringify } from './base';
 import http from './http';
 import kv, { getKVNamespace, toKVTtl } from './kv';
+import { scopeCacheKey } from './scope';
 
 const cacheModule: CacheModule = config.cache.type === 'http' ? http : kv;
 
@@ -84,26 +85,22 @@ export default {
      * @param refresh Whether to renew the cache expiration time when the cache is hit. `true` by default.
      * @returns
      */
-    tryGet: async <T>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
-        if (typeof key !== 'string') {
-            throw new TypeError('Cache key must be a string');
-        }
+    get: (key: string, refresh?: boolean) => cacheModule.get(scopeCacheKey(key), refresh),
+    has: (key: string) => cacheModule.has(scopeCacheKey(key)),
+    set: <T>(key: string, value?: string | T, maxAge?: number) => cacheModule.set(scopeCacheKey(key), value, maxAge),
+    tryGet: async <T>(rawKey: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
+        const key = scopeCacheKey(rawKey);
         if (cacheModule.status.available) {
-            let v = await cacheModule.get(key, refresh);
+            const v = await cacheModule.get(key, refresh);
             if (v) {
-                let parsed;
                 try {
-                    parsed = JSON.parse(v);
+                    return JSON.parse(v) as T;
                 } catch {
-                    parsed = null;
+                    return v as T;
                 }
-                if (parsed) {
-                    v = parsed;
-                }
-                return v as T;
             }
             const value = await getValueFunc();
-            await cacheModule.set(key, value, maxAge);
+            await cacheModule.set(key, JSON.stringify(value), maxAge);
             return value;
         }
         // Fallback: always call getValueFunc if the cache is not available.

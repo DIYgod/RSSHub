@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwc.nchu.edu.cn';
 
@@ -56,7 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
                 title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 description: $item.find('.intro').text().trim(),
-                pubDate: timezone(parseDate($item.find('.date').text().replace('发表时间：', '')), 8),
+                pubDate: parseDate($item.find('.date').text().replace('发表时间：', ''), 8),
             };
         });
 

@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import type { RecommendListData, SpecialBoardDetail } from './types';
 import { generateNonce, getPost, phoneBaseUrl, sign, webBaseUrl } from './utils';
@@ -36,7 +36,7 @@ async function handler(ctx) {
         const detailParams = {
             specialId,
             requestType: 'h5',
-            timestamp: Date.now(),
+            timestamp: Temporal.Now.instant().epochMilliseconds,
             noncestr: generateNonce(8, 'number'),
         };
 
@@ -60,7 +60,7 @@ async function handler(ctx) {
                 requestType: 'h5',
                 pageNum: '1',
                 pageSize: limit,
-                timestamp: Date.now(),
+                timestamp: Temporal.Now.instant().epochMilliseconds,
                 noncestr: generateNonce(8, 'number'),
             };
 

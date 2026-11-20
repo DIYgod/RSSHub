@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -25,7 +24,7 @@ async function handler() {
             const $item = $(item);
             const title = $item.find('.news_title a').text();
             const date = $item.find('.news_date').text().trim();
-            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined;
+            const pubDate = date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined;
             const singleUrl = new URL($item.find('.news_title a').attr('href')!, host).href;
             const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`usst:jwc:detail:${singleUrl}`, async () => {
                 if (new URL(singleUrl).hostname === 'webpro.usst.edu.cn') {
@@ -54,7 +53,7 @@ async function handler() {
                             .replace(/^发布者[：:]\s*/, '')
                             .trim() ||
                         undefined,
-                    pubDate: published ? timezone(parseDate(published, 'YYYY-MM-DD'), 8) : undefined,
+                    pubDate: published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined,
                 };
             });
             return { title, link: singleUrl, ...details, pubDate: details.pubDate ?? pubDate };

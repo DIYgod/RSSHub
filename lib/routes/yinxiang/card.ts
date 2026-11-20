@@ -1,4 +1,5 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { encodeXML } from 'entities';
 import type { Context } from 'hono';
 import pMap from 'p-map';
@@ -6,13 +7,13 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type ListedItem = DataItem & {
     link: string;
 };
 type NoteDetails = Pick<DataItem, 'category' | 'description' | 'pubDate'>;
-function parsePublishTime(value?: string | number): Date | undefined {
+function parsePublishTime(value?: string | number): Temporal.Instant | undefined {
     if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
         return;
     }
@@ -21,7 +22,7 @@ function parsePublishTime(value?: string | number): Date | undefined {
         return;
     }
     const date = parseDate(timestamp);
-    if (Number.isFinite(date.getTime())) {
+    if (date) {
         return date;
     }
     return;

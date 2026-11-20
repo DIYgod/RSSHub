@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'https://tfc-taiwan.org.tw';
 
@@ -38,7 +38,7 @@ const parsePostItem = (item) => {
     };
 };
 
-export const parseItem = (postsResponse) => postsResponse.map(parsePostItem);
+export const parseItem = (postsResponse) => postsResponse.map((item) => parsePostItem(item));
 
 export const parsePost = (limit, categoryId) =>
     cache.tryGet(`tfc-taiwan:posts:${categoryId ?? 'latest'}:${limit ?? 10}`, () =>

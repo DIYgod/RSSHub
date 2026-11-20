@@ -1,13 +1,13 @@
 import bbobHTML from '@bbob/html';
-import { isTagNode } from '@bbob/plugin-helper';
+import { isTagNode, TagNode } from '@bbob/plugin-helper';
 import presetHTML5 from '@bbob/preset-html5';
 import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const languageCodes = {
     english: 'en',
@@ -59,7 +59,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
             {
                 ...node,
                 content: Array.isArray(node.content)
-                    ? node.content.flatMap((item) => (isTagNode(item) && item.tag === '*' ? [{ ...item, content: [] }, ...(Array.isArray(item.content) ? item.content : [item.content ?? ''])] : [item]))
+                    ? node.content.flatMap((item) => (isTagNode(item) && item.tag === '*' ? [TagNode.create(item.tag, item.attrs, []), ...(Array.isArray(item.content) ? item.content : [item.content ?? ''])] : [item]))
                     : node.content,
             },
             helpers,

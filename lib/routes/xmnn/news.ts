@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
@@ -55,8 +54,7 @@ function parsePublicationDate(value?: string) {
     if (!text) {
         return;
     }
-    const date = parseDate(text, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], true);
-    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+    return parseDateStrict(text, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8);
 }
 
 async function fetchArticleDetail(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'author' | 'pubDate'>> {
@@ -93,7 +91,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h1').text(),
-                link: $item.prop('href')!,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 description: $item.find('div.abstract').html(),
                 author: sourceAuthor ? [{ name: sourceAuthor }] : undefined,
                 pubDate: parsePublicationDate($item.find('div.time').text()),

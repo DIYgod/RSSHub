@@ -1,7 +1,8 @@
-import { type CheerioAPI, load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
 
 interface LuoguUserData {

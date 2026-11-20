@@ -1,6 +1,15 @@
+import { once } from 'node:events';
+import nodeHttp from 'node:http';
+import type { AddressInfo } from 'node:net';
+
 import { Context } from 'hono';
+import { http, HttpResponse } from 'msw';
+import { RE2JS } from 're2js';
 import Parser from 'rss-parser';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import server from '@/setup.test';
+import { parseDate } from '@/utils/time';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
@@ -8,6 +17,7 @@ process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
 const { default: parameter } = await import('@/middleware/parameter');
+const { default: cache } = await import('@/utils/cache');
 
 const parser = new Parser();
 
@@ -329,19 +339,19 @@ describe('sorted', () => {
             { sorted }
         );
         expect(result.item.map((item) => item.title)).toEqual(order);
-        expect(result.item.every((item) => !Number.isNaN(Date.parse(item.pubDate)))).toBe(true);
+        expect(result.item.every((item) => parseDate(item.pubDate))).toBe(true);
     });
 
     it('filters publication times while preserving a source ranking', async () => {
-        const now = Date.now();
+        const now = Temporal.Now.instant();
         const result = await runMiddleware(
             {
                 title: 'Ranking',
                 sortItems: false,
                 item: [
-                    { title: 'Ranked', pubDate: new Date(now - 20000) },
-                    { title: 'Expired', pubDate: new Date(now - 120000) },
-                    { title: 'Recent', pubDate: new Date(now - 10000) },
+                    { title: 'Ranked', pubDate: now.subtract({ seconds: 20 }) },
+                    { title: 'Expired', pubDate: now.subtract({ seconds: 120 }) },
+                    { title: 'Recent', pubDate: now.subtract({ seconds: 10 }) },
                 ],
             },
             { filter_time: '60' }
@@ -401,12 +411,89 @@ describe('wrong_path', () => {
 });
 
 describe('fulltext_mode', () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     it('fulltext', async () => {
         const response = await app.request('/test/1?mode=fulltext');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].content).not.toBe(undefined);
     }, 60000);
+
+    it('skips item links on local addresses', async () => {
+        const handler = vi.fn((_req: nodeHttp.IncomingMessage, res: nodeHttp.ServerResponse) => res.end('<html><body><p>Local page</p></body></html>'));
+        const server = nodeHttp.createServer(handler);
+        await once(server.listen(0, '127.0.0.1'), 'listening');
+        const { port } = server.address() as AddressInfo;
+        try {
+            const result = await runMiddleware(
+                {
+                    title: 'Fulltext',
+                    link: 'https://github.com/DIYgod/RSSHub',
+                    item: [
+                        { title: 'Title1', description: 'Description1', link: `http://127.0.0.1:${port}/page` },
+                        { title: 'Title2', description: 'Description2', link: `http://localhost:${port}/page` },
+                    ],
+                },
+                { mode: 'fulltext' }
+            );
+            expect(handler).not.toHaveBeenCalled();
+            expect(result.item[0].description).toBe('Description1');
+            expect(result.item[1].description).toBe('Description2');
+        } finally {
+            server.close();
+        }
+    });
+
+    describe('with pages on test hosts', () => {
+        // the msw hosts do not resolve, so let item links through to them
+        beforeEach(() => {
+            config.feature.allow_user_supply_unsafe_domain = true;
+        });
+        afterEach(() => {
+            config.feature.allow_user_supply_unsafe_domain = false;
+        });
+
+        it('replaces the description with the parsed page', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext', () => HttpResponse.html(`<article>${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(10)}</article>`)));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toContain('Lorem ipsum');
+        });
+
+        it('keeps the description when the page is not text', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-pdf', () => HttpResponse.text('%PDF-1.4 '.repeat(10), { headers: { 'content-type': 'application/pdf' } })));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-pdf' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toBe('Description');
+        });
+
+        it('keeps the description when the page is too large', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-large', () => HttpResponse.html(`<article>${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(100000)}</article>`)));
+
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-large' }] }, { mode: 'fulltext' });
+            expect(data.item[0].description).toBe('Description');
+        });
+
+        it('keeps the description and answers other requests when the page takes too long to parse', async () => {
+            const { default: server } = await import('@/setup.test');
+            server.use(http.get('http://rsshub.test/fulltext-slow', () => HttpResponse.html('<p>'.repeat(50000))));
+            const timeout = AbortSignal.timeout.bind(AbortSignal);
+            vi.spyOn(AbortSignal, 'timeout').mockImplementation((ms) => timeout(Math.min(ms, 1000)));
+
+            let ticks = 0;
+            const interval = setInterval(() => ticks++, 50);
+            const data = await runMiddleware({ item: [{ title: 'Title', description: 'Description', link: 'http://rsshub.test/fulltext-slow' }] }, { mode: 'fulltext' });
+            clearInterval(interval);
+            expect(data.item[0].description).toBe('Description');
+            expect(ticks).toBeGreaterThan(5);
+        });
+    });
 });
 
 describe('complicated_description', () => {
@@ -465,6 +552,18 @@ describe('mess parameter', () => {
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].pubDate).toBe('Mon, 31 Dec 2018 16:00:00 GMT');
         expect(parsed.items[0].link).toBe('https://github.com/DIYgod/RSSHub/issues/0');
+    });
+
+    it('drops invalid pubDate', async () => {
+        const result = await runMiddleware(
+            {
+                title: 'Test',
+                link: 'https://example.com',
+                item: [{ title: 'Invalid date', pubDate: 'Invalid Date' }],
+            },
+            {}
+        );
+        expect(result.item[0].pubDate).toBeUndefined();
     });
 });
 
@@ -593,6 +692,38 @@ describe('parameter middleware branches', () => {
         await expect(runMiddleware(data, { brief: '10' })).rejects.toThrow('Invalid parameter brief');
     });
 
+    it('does not repeat a long base url in any number of relative links', async () => {
+        const padding = 'a'.repeat(20000);
+
+        // relative links of one description
+        const description = await runMiddleware({ link: 'https://example.com', item: [{ title: 'hostile', link: `https://example.com/?${padding}`, description: '<a href="#"></a>'.repeat(10000) }] }, {});
+        expect(description.item[0].description.startsWith(`<a href="https://example.com/?${padding}#"></a>`)).toBe(true);
+        expect(description.item[0].description.endsWith('<a href="#"></a>')).toBe(true);
+        expect(JSON.stringify(description).length).toBeLessThan(5 * 1024 * 1024);
+
+        // the descriptions of one feed share the budget
+        const descriptions = await runMiddleware(
+            { link: 'https://example.com', item: Array.from({ length: 100 }, (_, index) => ({ title: 'hostile', link: `https://example.com/${index}?${padding}`, description: '<a href="#"></a>'.repeat(100) })) },
+            {}
+        );
+        expect(JSON.stringify(descriptions).length).toBeLessThan(7 * 1024 * 1024);
+
+        // the links of its items
+        const links = await runMiddleware({ link: `https://example.com/?${padding}`, item: Array.from({ length: 10000 }, () => ({ title: 'hostile', link: '#' })) }, {});
+        expect(links.item[0].link).toBe(`https://example.com/?${padding}#`);
+        expect(links.item.at(-1).link).toBe('#');
+        expect(JSON.stringify(links).length).toBeLessThan(5 * 1024 * 1024);
+
+        // what is left relative is not resolved for the attachments either
+        const attachments = await runMiddleware(
+            { link: 'https://example.com', item: [{ title: 'hostile', link: `https://example.com/${padding}/`, description: Array.from({ length: 10000 }, (_, index) => `<a href="${index}.mp3"></a>`).join('') }] },
+            { enclosure: 'true' }
+        );
+        expect(attachments.item[0].attachments[0].url).toBe(`https://example.com/${padding}/0.mp3`);
+        expect(attachments.item[0].attachments.length).toBeLessThan(10000);
+        expect(JSON.stringify(attachments).length).toBeLessThan(9 * 1024 * 1024);
+    });
+
     it('processes openai description and title', async () => {
         const originalInput = config.openai.inputOption;
 
@@ -602,7 +733,7 @@ describe('parameter middleware branches', () => {
                 {
                     title: 'Title',
                     description: 'Description',
-                    link: `https://example.com/${Date.now()}/desc`,
+                    link: `https://example.com/${performance.now()}/desc`,
                 },
             ],
         };
@@ -616,13 +747,37 @@ describe('parameter middleware branches', () => {
                 {
                     title: 'Title',
                     description: 'Description',
-                    link: `https://example.com/${Date.now()}/title`,
+                    link: `https://example.com/${performance.now()}/title`,
                 },
             ],
         };
         config.openai.inputOption = 'title';
         const titleResult = await runMiddleware(titleData, { chatgpt: 'true' });
         expect(titleResult.item[0].title).toContain('AI processed content.');
+
+        config.openai.inputOption = originalInput;
+    });
+
+    it('does not share openai results between items with the same link', async () => {
+        // echo the input so the test can tell which text a completion was made from
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', async ({ request }) => {
+                const body = (await request.json()) as { messages: Array<{ content: string }> };
+                return HttpResponse.json({ choices: [{ message: { content: `AI: ${body.messages[1].content}` } }] });
+            })
+        );
+        const originalInput = config.openai.inputOption;
+        config.openai.inputOption = 'both';
+
+        const link = `https://example.com/${Temporal.Now.instant().epochMilliseconds}/shared`;
+        const first = await runMiddleware({ link: 'https://example.com', item: [{ title: 'First title', description: 'First description', link }] }, { chatgpt: 'true' });
+        const second = await runMiddleware({ link: 'https://example.com', item: [{ title: 'Second title', description: 'Second description', link }] }, { chatgpt: 'true' });
+
+        expect(first.item[0].title).toBe('AI: First title');
+        expect(first.item[0].description).toContain('AI: First description');
+        expect(second.item[0].title).toBe('AI: Second title');
+        expect(second.item[0].description).toContain('AI: Second description');
+        expect(second.item[0].description).not.toContain('First description');
 
         config.openai.inputOption = originalInput;
     });
@@ -706,6 +861,57 @@ describe('filter-engine', () => {
     });
 });
 
+const makeData = (description = 'Desc') => ({
+    link: 'https://example.com',
+    item: [1, 2, 3].map((i) => ({ title: `Item ${i}`, description, author: 'Author', category: ['Category'] })),
+});
+
+describe('filter limits', () => {
+    const filters = ['filter', 'filter_title', 'filter_description', 'filter_author', 'filter_category', 'filterout', 'filterout_title', 'filterout_description', 'filterout_author', 'filterout_category'];
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it.each(filters)('rejects too long %s', async (filter) => {
+        await expect(runMiddleware(makeData(), { [filter]: 'a'.repeat(1024) })).resolves.toBeDefined();
+        await expect(runMiddleware(makeData(), { [filter]: 'a'.repeat(1025) })).rejects.toThrow('longer than 1024 characters');
+    });
+
+    it.each(filters)('rejects too complex %s', async (filter) => {
+        await expect(runMiddleware(makeData(), { [filter]: '.{0,100}[0-9]' })).resolves.toBeDefined();
+        await expect(runMiddleware(makeData(), { [filter]: '.{0,1000}.{0,100}[0-9]' })).rejects.toThrow('too complex');
+    });
+
+    it('responds with an error', async () => {
+        const response = await app.request(`/test/brief?filter=${encodeURIComponent('.{0,1000}'.repeat(20) + '[0-9]')}`);
+        expect(response.status).toBe(503);
+        expect(await response.text()).toMatch(/InvalidParameterError: Invalid filter: too complex/);
+    });
+
+    it('rejects filter too complex for the text', async () => {
+        const short = makeData('a'.repeat(10000));
+        const long = makeData('a'.repeat(100000));
+        // only the step limit is under test here, not the time limit
+        vi.spyOn(performance, 'now').mockReturnValue(0);
+        await expect(runMiddleware(short, { filter_description: '.{0,400}[0-9]' })).resolves.toBeDefined();
+        await expect(runMiddleware(long, { filter_description: '.{0,400}[0-9]' })).rejects.toThrow('too complex for this feed');
+    });
+
+    it('rejects filter taking too long', async () => {
+        let now = 0;
+        vi.spyOn(performance, 'now').mockImplementation(() => (now += 600));
+        await expect(runMiddleware(makeData(), { filterout: 'Nothing' })).rejects.toThrow('takes too long');
+    });
+
+    it('compiles each filter once', async () => {
+        const compile = vi.spyOn(RE2JS, 'compile');
+        const result = await runMiddleware(makeData(), { filter_title: 'Item', filter_description: 'Desc', filterout: 'Item 2' });
+        expect(result.item.map((item) => item.title)).toEqual(['Item 1', 'Item 3']);
+        expect(compile).toHaveBeenCalledTimes(3);
+    });
+});
+
 describe('entities', () => {
     it('decodes HTML entities', async () => {
         const data = await runMiddleware(
@@ -746,6 +952,48 @@ const makeImageData = () => ({
 });
 
 describe('show_image', () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it.each([undefined, 'true'])('removes fulltext images with enclosure=%s', async (enclosure) => {
+        const fulltext =
+            '<p>Full article content replacing the original summary.</p><img src="https://example.com/full.png"><picture><source srcset="https://example.com/full.webp"><img src="https://example.com/full.png"></picture><video src="https://example.com/full.mp4" poster="https://example.com/poster.jpg"></video><audio src="https://example.com/full.mp3"></audio>';
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: fulltext });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext', show_image: 'false', enclosure });
+        const item = data.item[0];
+        expect(item.description).toContain('<p>Full article content replacing the original summary.</p>');
+        expect(item.description).not.toMatch(/<img|<picture|poster=/);
+        expect(item.description).toContain('<video src="https://example.com/full.mp4"></video>');
+        expect(item.description).toContain('<audio src="https://example.com/full.mp3"></audio>');
+        expect(item.attachments.every((attachment) => !attachment.mime_type.startsWith('image/'))).toBe(true);
+        if (enclosure === 'true') {
+            expect(item.attachments).toEqual(
+                expect.arrayContaining([
+                    { url: 'https://example.com/full.mp4', mime_type: 'video/mp4' },
+                    { url: 'https://example.com/full.mp3', mime_type: 'audio/mpeg' },
+                ])
+            );
+        }
+    });
+
+    it('keeps fulltext images by default', async () => {
+        const fulltext = '<p>Full article content replacing the original summary.</p><img src="https://example.com/full.png">';
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: fulltext });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext' });
+        expect(data.item[0].description).toBe(fulltext);
+    });
+
+    it('keeps the filtered summary when fulltext is too short', async () => {
+        vi.spyOn(cache, 'tryGet').mockResolvedValue({ content: '<p>Short</p>' });
+
+        const data = await runMiddleware(makeImageData(), { mode: 'fulltext', show_image: 'false' });
+        expect(data.item[0].description).toContain('<p>Text</p>');
+        expect(data.item[0].description).not.toMatch(/<img|<picture|poster=/);
+    });
+
     it('removes pictures and artwork while retaining text, video and audio', async () => {
         const data = await runMiddleware(makeImageData(), { show_image: 'false' });
         expect(data.image).toBeUndefined();
@@ -763,6 +1011,45 @@ describe('show_image', () => {
         const data = await runMiddleware(makeImageData(), {});
         expect(data.item[0].description).toContain('<img');
         expect(data.item[0].image).toBe('https://example.com/a.png');
+    });
+});
+
+describe('image enclosure type', () => {
+    it.each([
+        ['https://example.com/image.jpg', 'image/jpeg'],
+        ['https://example.com/image.jpeg', 'image/jpeg'],
+        ['https://example.com/image.png', 'image/png'],
+        ['https://example.com/image.webp', 'image/webp'],
+        ['https://example.com/image.gif', 'image/gif'],
+        ['https://example.com/image.svg', 'image/svg+xml'],
+        ['https://example.com/image.PNG?size=300#preview', 'image/png'],
+        ['//example.com/image.gif', 'image/gif'],
+    ])('infers %s as %s', async (image, mimeType) => {
+        const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+        expect(data.item[0].enclosure_type).toBe(mimeType);
+        expect(data.item[0].enclosure_url).toBeUndefined();
+    });
+
+    it.each(['https://example.com/image', 'https://example.com/image?filename=image.jpg', 'https://example.com/image.unknown', 'https://example.com/page.html', 'https://example.com/video.mp4', 'https://['])(
+        'does not invent a MIME type for %s',
+        async (image) => {
+            const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+            expect(data.item[0].enclosure_type).toBeUndefined();
+        }
+    );
+
+    it('leaves explicit enclosures and attachments alone', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    { title: 'Media', image: 'https://example.com/thumbnail.jpg', enclosure_url: 'https://example.com/audio.mp3', enclosure_type: 'audio/mpeg' },
+                    { title: 'Attachment', image: 'https://example.com/cover.png', attachments: [{ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg' }] },
+                ],
+            },
+            {}
+        );
+        expect(data.item[0].enclosure_type).toBe('audio/mpeg');
+        expect(data.item[1].enclosure_type).toBeUndefined();
     });
 });
 

@@ -3,12 +3,13 @@ import type { Handler, Hono } from 'hono';
 import type { RoutePath } from '@/../assets/build/route-paths';
 import type { ConfigEnv } from '@/config';
 import { setConfig } from '@/config';
+import { runInCacheNamespace } from '@/utils/cache/scope';
 
 import type { Data, Namespace, Route } from './types';
 
 export * from '@/types';
 export { default as ofetch } from '@/utils/ofetch';
-export * from '@/utils/parse-date';
+export * from '@/utils/time';
 
 let app: Hono | null = null;
 
@@ -58,7 +59,7 @@ export async function registerRoute(namespace: string, route: Route, namespaceCo
         if (ctx.get('data')) {
             return;
         }
-        const response = await route.handler(ctx);
+        const response = await runInCacheNamespace(namespace, () => route.handler(ctx));
         if (response instanceof Response) {
             return response;
         }

@@ -1,4 +1,4 @@
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderImages } from './images';
 import { renderVideo } from './video';
@@ -11,17 +11,18 @@ export const renderItems = (items) =>
 
         let description: string;
         switch (productType) {
-            case 'carousel_container': {
-                const images = item.carousel_media.map((i) => ({
-                    ...i.image_versions2.candidates.toSorted((a, b) => b.width - a.width)[0],
-                    alt: item.accessibility_caption,
-                }));
-                description = renderImages({
-                    summary,
-                    images,
-                });
+            case 'carousel_container':
+                description = item.carousel_media
+                    .map((media, index) => {
+                        const image = media.image_versions2.candidates.toSorted((a, b) => b.width - a.width)[0];
+                        const mediaSummary = index === 0 ? summary : '';
+                        return media.media_type === 2
+                            ? renderVideo({ summary: mediaSummary, image: image.url, video: media.video_versions[0] })
+                            : renderImages({ summary: mediaSummary, images: [{ ...image, alt: item.accessibility_caption }] });
+                    })
+                    .join('<br>');
                 break;
-            }
+
             case 'clips':
             case 'igtv':
             case 'longform':
@@ -61,9 +62,8 @@ export const renderItems = (items) =>
         const id = String(item.pk);
         const url = productType === 'story' ? `https://www.instagram.com/stories/${item.user.username}/${item.pk}/` : `https://www.instagram.com/p/${item.code}/`;
         const timestamp = item.caption?.created_at_utc || item.taken_at;
-        const parsedDate = ([undefined, null, ''] as unknown[]).includes(timestamp) ? undefined : parseDate(timestamp, 'X');
-        const pubDate = parsedDate && Number.isFinite(parsedDate.getTime()) ? parsedDate : undefined;
-        const title = summary || item.accessibility_caption || `Story from @${item.user.username}`;
+        const pubDate = ([undefined, null, ''] as unknown[]).includes(timestamp) ? undefined : parseDate(timestamp, 'X');
+        const title = summary.split('\n', 1)[0] || item.accessibility_caption || `Story from @${item.user.username}`;
 
         return {
             title,

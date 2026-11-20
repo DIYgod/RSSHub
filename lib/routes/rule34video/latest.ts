@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -124,7 +124,7 @@ function buildDataItem(item: VideoItem) {
         link: item.link,
         description,
         image: item.preview,
-        ...(pubDate && { pubDate: pubDate.toISOString() }),
+        ...(pubDate && { pubDate }),
         guid: item.videoId ? `rule34video:${item.videoId}` : item.link,
         category: item.isHD ? ['HD'] : [],
     };

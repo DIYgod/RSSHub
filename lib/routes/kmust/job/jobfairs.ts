@@ -22,7 +22,7 @@ export const route: Route = {
 const baseUrl = 'http://job.kmust.edu.cn';
 
 async function handler(): Promise<Data> {
-    const pageUrl = `${baseUrl}/module/getjobfairs?start_page=1&keyword=&count=20&start=1&_=${Date.now()}`;
+    const pageUrl = `${baseUrl}/module/getjobfairs?start_page=1&keyword=&count=20&start=1&_=${Temporal.Now.instant().epochMilliseconds}`;
     const data = await ofetch<{ data: Jobfair[] }>(pageUrl);
 
     return {

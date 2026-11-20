@@ -4,7 +4,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processEmbedPDF } from '../lib/embed-resource';
 
@@ -65,7 +65,7 @@ const handler: Route['handler'] = async (ctx) => {
     // Map through each list item to extract details
     const itemLinks = listItems.toArray().map((element) => {
         const title = $(element).find('a:nth-child(2)').attr('title')!;
-        const date = parseDate($(element).find('span.pdate').text()!);
+        const date = parseDate($(element).find('span.pdate').text());
         const relativeLink = $(element).find('a:nth-child(2)').attr('href')!;
         const link = new URL(relativeLink, BASE_URL).href;
         return {

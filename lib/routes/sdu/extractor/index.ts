@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 import { sdrj } from './sdrj';
 import { view } from './view';
@@ -21,7 +21,7 @@ async function getExamArticle(link: string) {
     }
     const $ = load(response.data);
     const date = /发布(?:时间|日期)：\s*(\d{4}-\d{2}-\d{2})/.exec($('.MLspan').text())?.[1];
-    return { description: $('#UCAP-CONTENT, .txt').first().html() ?? undefined, exactDate: date ? parseDateInTimezone(date, 8) : undefined };
+    return { description: $('#UCAP-CONTENT, .txt').first().html() ?? undefined, exactDate: date ? parseDate(date, 8) : undefined };
 }
 
 export default function index(link) {

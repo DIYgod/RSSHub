@@ -2,7 +2,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from '../templates/description';
 import { parseArticle } from '../utils';
@@ -40,7 +40,7 @@ async function handler(ctx) {
                 thumb: item.titleimg.replaceAll(/\?x-oss-process=.*/g, ''),
                 description: item.summary,
             }),
-            pubDate: item.ptime !== undefined && item.ptime !== null && item.ptime !== '' ? parseDate(Number(item.ptime) * 1000) : undefined,
+            pubDate: [undefined, null, ''].includes(item.ptime) ? undefined : parseDate(Number(item.ptime) * 1000),
             link: item.url,
         }));
 

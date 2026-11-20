@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -36,13 +35,13 @@ async function handler(): Promise<Data> {
                 const date = $('#articleInfo')
                     .text()
                     .match(/\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?/)?.[0];
-                const pubDate = date ? timezone(parseDate(date), 8) : undefined;
+                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 return {
                     title: $('h2').text(),
                     author: '广州航海学院教务处',
                     link: itemUrl,
-                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    pubDate,
                     description: $('div .body').html(),
                     guid: itemUrl,
                 };

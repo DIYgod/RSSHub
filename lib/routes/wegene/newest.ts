@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newest',
@@ -29,7 +29,7 @@ async function handler() {
             return {
                 title: item.title,
                 description: item.description,
-                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+                pubDate: date,
                 link: item.url,
             };
         }),

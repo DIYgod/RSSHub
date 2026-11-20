@@ -38,7 +38,7 @@ Examples:
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['siygle', 'SnowAgar25', 'HanaokaYuzu'],
+    maintainers: ['siygle', 'Tsuyumi25', 'HanaokaYuzu'],
     handler,
 };
 

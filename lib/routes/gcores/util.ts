@@ -4,7 +4,7 @@ import { getMimeType, mimes } from 'hono/utils/mime';
 
 import type { Data, DataItem, Language } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { parseContent } from './parser';
 import { renderDescription } from './templates/description';

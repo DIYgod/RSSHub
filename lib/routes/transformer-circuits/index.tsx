@@ -1,5 +1,7 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
@@ -7,7 +9,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 // Define the main route path
 export const route: Route = {
@@ -135,14 +137,13 @@ function extractArticleDate($: CheerioAPI) {
         return;
     }
     const format = /^\d{4}\/\d{2}\/\d{2}$/.test(sourceDate) ? 'YYYY/MM/DD' : /\d(?:st|nd|rd|th),/.test(sourceDate) ? 'MMMM Do, YYYY' : undefined;
-    return parseArticleDate(sourceDate, format);
+    return parseArticleDate(sourceDate, format) ?? parseArticleDate(sourceDate, 'MMMM D, YYYY');
 }
 function parseArticleDate(sourceDate: string, format?: string) {
     if (!sourceDate) {
         return;
     }
-    const date = parseDate(sourceDate, format);
-    return Number.isFinite(date.valueOf()) ? date : undefined;
+    return parseDate(sourceDate, format);
 }
 async function fetchArticleDetails(url: string): Promise<Pick<DataItem, 'description' | 'author' | 'pubDate'>> {
     try {

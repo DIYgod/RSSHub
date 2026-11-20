@@ -4,14 +4,13 @@ import queryString from 'query-string';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function parseUnixDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }
-    const date = parseDate(value * 1000);
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(value * 1000);
 }
 function renderSource(source: string) {
     if (URL.canParse(source) && ['http:', 'https:'].includes(new URL(source).protocol)) {

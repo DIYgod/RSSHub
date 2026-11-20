@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got'; // RSSHub HTTP client
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got.post('https://lcen.xiaote.net//api/graphql/', {
+    const { data } = await got.post('https://lcen.xiaote.net/api/graphql/', {
         json: {
             query: /* GraphQL */ `
                 query ($startCursor: Int) {

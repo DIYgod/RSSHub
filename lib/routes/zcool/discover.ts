@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import locations from './locations';
 import { renderDescription } from './templates/description';
@@ -254,7 +254,7 @@ async function handler(ctx) {
     const list = response.data.datas.map((item) => ({
         title: item.content.title,
         link: item.content.pageUrl,
-        pubDate: item.content.publishTime !== undefined && item.content.publishTime !== null && item.content.publishTime !== '' ? parseDate(item.content.publishTime) : undefined,
+        pubDate: [undefined, null, ''].includes(item.content.publishTime) ? undefined : parseDate(item.content.publishTime),
         author: item.content.creatorObj.username,
         category: item.content.tags,
     }));

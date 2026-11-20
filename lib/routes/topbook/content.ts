@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -43,8 +43,7 @@ function parsePubDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDate(`${value} +08:00`, 'YYYY-MM-DD HH:mm:ss Z');
-    return Number.isFinite(date.getTime()) ? date : undefined;
+    return parseDate(`${value} +08:00`, 'YYYY-MM-DD HH:mm:ss Z');
 }
 
 async function handler(ctx: Context) {

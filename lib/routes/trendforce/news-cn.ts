@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'description' | 'author' | 'category'>> {
     const response = await ofetch(link);
@@ -59,7 +58,7 @@ async function handler() {
                 title: a.find('strong').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('p').text()?.trim(),
-                pubDate: date ? timezone(parseDate(date, 'D MMMM YYYY'), 8) : undefined,
+                pubDate: date ? parseDate(date, 'D MMMM YYYY', 8) : undefined,
             };
         });
 

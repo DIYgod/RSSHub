@@ -5,8 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -56,8 +55,8 @@ export const route: Route = {
             return response.data?.data || [];
         };
 
-        let rawItems: ExhibitItem[] = [];
-        let titleTag = '';
+        let rawItems: ExhibitItem[];
+        let titleTag: string;
 
         if (type === 'PAST' || type === 'PRESENT') {
             // if user specified the type with past or present
@@ -79,10 +78,10 @@ export const route: Route = {
                 const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
                 const imgUrl = item.picPath ? `${baseUrl}/mu/${item.picPath}` : '';
                 const location = item.exhibitPlace || '上海博物馆';
-                const pubDate = timezone(parseDate(item.issueTime), 8);
+                const pubDate = parseDate(item.issueTime, 8);
 
                 const fullDuration = item.exhibitDateRange || '';
-                const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ') : [fullDuration, ''];
+                const { startDate, endDate } = parseDateRange(fullDuration);
 
                 const description = renderToString(
                     <div>

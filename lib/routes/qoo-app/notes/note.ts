@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderNote } from '../templates/note';
 import { createPageFetcher, notesUrl, ssoUrl } from '../utils';

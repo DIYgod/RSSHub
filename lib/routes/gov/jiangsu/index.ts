@@ -1,5 +1,7 @@
-import { type Cheerio, load } from 'cheerio';
-import { type AnyNode, cloneNode, Document } from 'domhandler';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import { cloneNode, Document } from 'domhandler';
 import { decodeHTML } from 'entities';
 import type { Context } from 'hono';
 import pMap from 'p-map';
@@ -8,8 +10,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -23,7 +24,7 @@ function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
 function extractSourceByline(value: string): string | undefined {
     for (const marker of value.matchAll(/来源[：:]/g)) {
         const tail = value.slice(marker.index + marker[0].length).trimStart();
-        const byline = tail.match(/^(.*?)(?:查看反馈|$)/);
+        const byline = /^(.*?)(?:查看反馈|$)/.exec(tail);
         if (byline) {
             return byline[1].trim();
         }
@@ -65,7 +66,7 @@ async function getItem(item: DataItem & { link: string }) {
             title: $('meta[name="ArticleTitle"]').attr('content'),
             description: $('#zoom').html() ?? $('.article_content, .wzy_con, #UCAP-CONTENT').first().html() ?? surveyContent.html() ?? undefined,
             author: $('meta[name="ContentSource"]').attr('content') || extractSourceByline(surveyMetadata),
-            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : publishedTime ? timezone(parseDate(publishedTime, 'YYYY-MM-DD-HH:mm:ss'), 8) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 8) : publishedTime ? parseDate(publishedTime, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined,
             category: keywords?.split(/[,，\s]+/).filter(Boolean),
         };
     });
@@ -119,7 +120,7 @@ async function handler(ctx: Context) {
 
         return {
             title: $aTag.attr('title') || $aTag.text(),
-            pubDate: date ? timezone(parseDate(date[0]), 8) : undefined,
+            pubDate: date ? parseDate(date[0], 8) : undefined,
             link: new URL($aTag.attr('href')!, link).href,
         };
     });

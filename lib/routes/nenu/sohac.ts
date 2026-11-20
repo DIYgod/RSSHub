@@ -4,8 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sohac/:path{.+}?',
@@ -48,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                pubDate: date ? parseDateInTimezone(`${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}`, 8) : undefined,
+                pubDate: date ? parseDate(`${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}`, 8) : undefined,
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
@@ -70,7 +70,7 @@ async function handler(ctx) {
                     .text()
                     .match(/(\d{4}-\d{2}-\d{2})/)?.[1];
                 if (date) {
-                    item.pubDate = parseDateInTimezone(date, 8);
+                    item.pubDate = parseDate(date, 8);
                 }
 
                 return item;

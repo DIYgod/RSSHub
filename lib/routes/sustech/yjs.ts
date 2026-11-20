@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -58,7 +58,7 @@ async function handler() {
             const item = {
                 title: article.title,
                 link: `${baseUrl}/#/common/detail?current_id=99&id=99&article_id=${article.id}`,
-                pubDate: article.published_at ? parseDateInTimezone(article.published_at, 8) : undefined,
+                pubDate: article.published_at ? parseDate(article.published_at, 8) : undefined,
             };
             const resolvedValue1 = await cache.tryGet(item.link, async () => {
                 const detail = await got(article.url);

@@ -1,6 +1,3 @@
-import dayjs from 'dayjs';
-import timezonePlugin from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -8,11 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-dayjs.extend(utc);
-dayjs.extend(timezonePlugin);
+import { formatDate, parseDate } from '@/utils/time';
 
 type DailySentence = {
     content: string;
@@ -59,7 +52,7 @@ async function handler(ctx: Context) {
     const data = await pMap(
         Array.from({ length: days }, (_, x) => x),
         (x) => {
-            const date = dayjs().tz('Asia/Shanghai').subtract(x, 'day').format('YYYY-MM-DD');
+            const date = formatDate(Temporal.Now.zonedDateTimeISO('Asia/Shanghai').subtract({ days: x }), 'YYYY-MM-DD');
             const link = `https://open.iciba.com/dsapi/?date=${date}`;
             return cache.tryGet(link, () => ofetch<DailySentence>(link, { parseResponse: JSON.parse }));
         },
@@ -75,7 +68,7 @@ async function handler(ctx: Context) {
         item: data.map((item) => ({
             title: item.content,
             description: `${item.content}<br>${item.note}<br><img src="${item[imgType]}">`,
-            pubDate: timezone(parseDate(item.dateline), 8),
+            pubDate: parseDate(item.dateline, 8),
             link: `http://news.iciba.com/views/dailysentence/daily.html#!/detail/title/${item.dateline}`,
             itunes_item_image: item.picture3,
             enclosure_url: item.tts,

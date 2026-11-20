@@ -81,6 +81,23 @@ describe('header-generator (mocked)', () => {
         expect(headersQueue.length).toBe(0);
     });
 
+    it('falls back to the browsers by name when their versions are newer than its data', () => {
+        const generators: HeaderGenerator[] = [];
+        vi.spyOn(HeaderGenerator.prototype, 'getHeaders').mockImplementation(function (this: HeaderGenerator) {
+            generators.push(this);
+            if (generators.length === 1) {
+                throw new Error('No headers based on this input can be generated. Please relax or change some of the requirements you specified.');
+            }
+            return { 'user-agent': 'Mozilla/5.0 Firefox' };
+        });
+
+        const headers = generateHeaders({ browserListQuery: 'last 2 firefox versions', operatingSystems: ['linux'] });
+
+        expect(headers['user-agent']).toContain('Firefox');
+        expect(generators).toHaveLength(2);
+        expect(generators[1]).not.toBe(generators[0]);
+    });
+
     it('accepts firefox user agents', () => {
         const headersQueue = [{ 'user-agent': 'Mozilla/5.0 Firefox' }];
         vi.spyOn(HeaderGenerator.prototype, 'getHeaders').mockImplementation(() => headersQueue.shift() ?? { 'user-agent': 'Mozilla/5.0 Firefox' });

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwc.zcmu.edu.cn/';
 

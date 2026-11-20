@@ -3,9 +3,9 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 type CommunityTopic = { id: number; title: string; slug: string; tags?: string[] };
 type CommunitySearchPost = { id: number; topic_id: number };

@@ -1,15 +1,10 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -37,11 +32,11 @@ async function handler(ctx: Context) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
                 item.description = $('main[itemprop="articleBody"]').html()?.trim();
-                item.pubDate = dayjs.tz($('time[itemprop="datePublished"]').attr('datetime')!, 'Europe/Amsterdam').toDate();
+                item.pubDate = parseDate($('time[itemprop="datePublished"]').attr('datetime')!, undefined, 'Europe/Amsterdam');
                 return item;
             })
         )

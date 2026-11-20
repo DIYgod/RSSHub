@@ -1,6 +1,5 @@
 import { createDecipheriv } from 'node:crypto';
 
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { routePath } from 'hono/route';
@@ -9,9 +8,8 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { formatDate, parseDate } from '@/utils/time';
 
 // Parameters
 const CACHE_MAX_AGE = config.cache.contentExpire;
@@ -55,7 +53,7 @@ const key = 'anN2bXA2NjYsamlh';
 const iv = 'amlheW91LHFpYW53';
 const algorithm = 'aes-128-cfb';
 const decrypt = (rawData) => {
-    const encrypted = Buffer.from(rawData, 'base64').toString('hex');
+    const encrypted = Buffer.from(rawData, 'base64').toHex();
     const decipher = createDecipheriv(algorithm, key, iv);
     const decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
     return JSON.parse(decrypted);
@@ -103,9 +101,9 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const now = dayjs();
-    const start_date = now.subtract(DEFAULT_FETCH_DURATION_MONTH, 'month').format('YYYYMMDD');
-    const end_date = now.format('YYYYMMDD');
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const start_date = formatDate(now.subtract({ months: DEFAULT_FETCH_DURATION_MONTH }), 'YYYYMMDD');
+    const end_date = formatDate(now, 'YYYYMMDD');
     const keyword = ctx.req.param('keyword');
     if (!keyword) {
         throw new InvalidParameterError('Invalid keyword');
@@ -126,9 +124,7 @@ export async function handler(ctx) {
             });
             let res: string;
             try {
-                await page.route('**/*', (route) => {
-                    ['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort();
-                });
+                await page.route('**/*', (route) => (['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
                 await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
                 res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
             } finally {
@@ -155,7 +151,7 @@ export async function handler(ctx) {
                     author: `巨量算数 - ${channelName}算数指数`,
                     description: content,
                     link,
-                    pubDate: timezone(parseDate(date), 8),
+                    pubDate: parseDate(date, 8),
                     guid: `巨量算数 - ${channelName}算数指数 | ${keyword} - ${date}`,
                 };
             });

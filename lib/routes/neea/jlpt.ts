@@ -8,8 +8,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
@@ -28,7 +28,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.text();
-            const pubDateStr: string | undefined = title.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+            const pubDateStr: string | undefined = /(\d{4}-\d{2}-\d{2})/.exec(title)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 

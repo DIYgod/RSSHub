@@ -4,9 +4,11 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://ifs.org.uk';
 const sections = {
@@ -33,11 +35,14 @@ export const route: Route = {
 };
 
 function parseCalendarDate(value: string) {
-    const date = value.trim() ? parseDate(value.trim(), 'D MMMM YYYY', true) : undefined;
-    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) : undefined;
+    return value.trim() ? parseDateStrict(value.trim(), 'D MMMM YYYY') : undefined;
 }
 
 async function getItem(item: DataItem, page: Page) {
+    // only follow links on the site itself
+    if (!isOnSite(item.link, 'ifs.org.uk')) {
+        return item;
+    }
     const detail = await cache.tryGet(`ifs:article-detail:${item.link}`, async () => {
         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('main .c-single-header');

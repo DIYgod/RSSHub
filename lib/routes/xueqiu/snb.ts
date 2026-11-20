@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface CubeInfo {
     name: string;
@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const url = 'https://xueqiu.com/p/' + id;
+    const url = 'https://xueqiu.com/p/' + encodeURIComponent(id);
 
     const response = await got(url, {
         headerGeneratorOptions: PRESETS.MODERN_ANDROID,

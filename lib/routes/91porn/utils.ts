@@ -9,4 +9,10 @@ const domainValidation = (domain) => {
     }
 };
 
-export { domainValidation };
+// only follow links on the site itself
+const isSiteLink = (link: string, domain: string) => {
+    const { protocol, hostname } = new URL(link);
+    return ['http:', 'https:'].includes(protocol) && (hostname === domain || allowDomain.has(hostname));
+};
+
+export { domainValidation, isSiteLink };

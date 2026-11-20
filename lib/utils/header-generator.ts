@@ -37,6 +37,21 @@ const isValidHeader = (headers: Record<string, string>, browser: string): boolea
 // Cache for HeaderGenerator instances per preset
 const generatorCache = new Map<string, HeaderGenerator>();
 
+// The browsers header-generator has data for, as browserslist names them
+const browserNames = ['chrome', 'edge', 'firefox', 'safari'] as const;
+
+/**
+ * A generator for the browsers of a preset's `browserListQuery`, in any version header-generator knows.
+ * browserslist resolves the query from caniuse-lite, which can name newer versions than header-generator's
+ * data has (when neither is pinned to the other, as in an install of the npm package), and a generator
+ * for those makes no headers at all.
+ */
+const relaxedGenerator = ({ browserListQuery = '', ...preset }: Partial<HeaderGeneratorOptions>) => {
+    const query = browserListQuery.toLowerCase();
+    const browsers = browserNames.filter((name) => query.includes(name));
+    return new HeaderGenerator(browsers.length ? { ...preset, browsers: [...browsers] } : preset);
+};
+
 export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESETS.MODERN_MACOS_CHROME) => {
     const cacheKey = JSON.stringify(preset);
     let generator = generatorCache.get(cacheKey);
@@ -44,7 +59,17 @@ export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESET
         generator = new HeaderGenerator(preset);
         generatorCache.set(cacheKey, generator);
     }
-    let headers = generator.getHeaders();
+    let headers: ReturnType<HeaderGenerator['getHeaders']>;
+    try {
+        headers = generator.getHeaders();
+    } catch (error) {
+        if (!preset.browserListQuery) {
+            throw error;
+        }
+        generator = relaxedGenerator(preset);
+        generatorCache.set(cacheKey, generator);
+        headers = generator.getHeaders();
+    }
 
     const userAgent = headers['user-agent'];
     let detectedBrowser: string;
