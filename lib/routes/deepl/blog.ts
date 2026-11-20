@@ -49,7 +49,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el).parent().parent();
-            const linkUrl = $el.find('a[href]').attr('href');
+            const linkUrl = $el.find('a[data-dui-component="Button"]').attr('href');
             const link = linkUrl ? new URL(linkUrl, baseUrl).href : undefined;
             const feedItem = feedItems.get(link);
 
