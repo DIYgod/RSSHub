@@ -63,7 +63,7 @@ const md5v2 = (data: Uint8Array) => {
         state = processBlock(buf.subarray(i, i + 64), state);
     }
     const hex = state.map((w) => w.toString(16).padStart(8, '0')).join('');
-    return Buffer.from([...hex].map((ch) => ALPHA62.codePointAt(ch.codePointAt(0)! % 62)!));
+    return Buffer.from(Array.from(hex, (ch) => ALPHA62.codePointAt(ch.codePointAt(0)! % 62)!));
 };
 
 /**
@@ -159,8 +159,7 @@ const genReqSign = (query: string, body: string, ts: number) => {
 
 const decryptBytesData = (bytesData: string, buvid3: string, comicId: string) => {
     const key = Buffer.from(
-        [...buvid3]
-            .filter((_, i) => i % 2 === 0)
+        Array.from(buvid3, (ch, i) => (i % 2 === 0 ? ch : ''))
             .join('')
             .slice(0, 18) +
             'web' +

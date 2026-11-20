@@ -121,7 +121,6 @@ function request<T>(url: string, options?: RequestInit) {
         headers: {
             Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
             'User-Agent': config.sdo.ua!,
-            ...options?.headers,
         },
     });
 }

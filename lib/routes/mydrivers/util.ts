@@ -95,7 +95,7 @@ const processItems = async <T extends DataItem>(items: T[]) =>
                 item.description = content('#content').html() ?? item.description;
                 item.author = content('li.writer').text() || item.author;
                 item.category = [
-                    ...(item.category ?? []),
+                    ...[item.category ?? []].flat(),
                     ...content('div.bqian1 a')
                         .toArray()
                         .map((c) => content(c).contents().last().text().trim()),

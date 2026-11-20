@@ -155,7 +155,7 @@ const renderStory = (story: any) => {
 
 export const fetchGraphql = async (friendlyName: string, docId: string, variables: Record<string, string | number | boolean | null>, limit: number, collect: (lines: any[]) => any[]) => {
     const lsd = randomBytes(16).toString('base64url');
-    const jazoest = `2${[...lsd].reduce((sum, char) => sum + char.codePointAt(0)!, 0)}`;
+    const jazoest = `2${Array.from(lsd, (char) => char.codePointAt(0)!).reduce((sum, code) => sum + code, 0)}`;
 
     const { cookie } = config.facebook;
     const dtsg = cookie

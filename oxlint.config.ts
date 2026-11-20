@@ -896,7 +896,6 @@ export default defineConfig({
         'react/jsx-no-target-blank': 'off',
         'react/no-unknown-property': 'off',
         'typescript/await-thenable': 'off',
-        'typescript/no-misused-spread': 'off',
         'typescript/no-non-null-assertion': 'off',
         'typescript/no-unnecessary-type-assertion': 'off',
         'typescript/no-unsafe-argument': 'off',

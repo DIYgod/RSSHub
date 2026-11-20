@@ -87,7 +87,7 @@ async function handler(ctx) {
 
                 item.category = [
                     ...new Set([
-                        ...item.category,
+                        ...[item.category].flat(),
                         ...$('.article-hash-tag a')
                             .toArray()
                             .map((i) => $(i).text()),

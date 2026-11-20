@@ -131,7 +131,7 @@ async function handler(ctx) {
                 // Act draft status
                 const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
-                    ...item.category,
+                    ...[item.category].flat(),
                     ...$('.container-fluid .bg-status .col-md-8.p-0 h5')
                         .find('span, a')
                         .toArray()

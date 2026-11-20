@@ -64,7 +64,7 @@ export const calculate = (url, timestamp = 0, nonce = '') => {
         key += dict[u];
     }
 
-    const suffix = checksum([...key].slice(-4).map((c) => c.codePointAt(0)))
+    const suffix = checksum(Array.from(key.slice(-4), (c) => c.codePointAt(0)))
         .toString()
         .padStart(2, '0');
 

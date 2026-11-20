@@ -32,11 +32,8 @@ function sign(urlType: string, params: Record<string, string>) {
         .map(([, value]) => value)
         // oxlint-disable-next-line unicorn-js/require-array-sort-compare sig requires plain code-unit order, not locale order
         .toSorted();
-    const hex = [...md5(`${urlType}${values.join('')}bdaefd747c7d594f${params.sigTime}Tw5AY783H@EU3#XC`)];
-    for (let i = 0; i < hex.length; i += 2) {
-        [hex[i], hex[i + 1]] = [hex[i + 1], hex[i]];
-    }
-    return hex.join('');
+    // swap each pair of hex digits
+    return md5(`${urlType}${values.join('')}bdaefd747c7d594f${params.sigTime}Tw5AY783H@EU3#XC`).replaceAll(/(.)(.)/g, '$2$1');
 }
 
 async function handler(ctx: Context) {
