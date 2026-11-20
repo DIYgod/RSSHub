@@ -787,7 +787,7 @@ export default defineConfig({
         'unicorn/prefer-module': 'off',
 
         'unicorn/prefer-number-properties': ['error', { checkInfinity: false, checkNaN: false }],
-        'unicorn-js/prefer-smaller-scope': 'off', // TODO: use ["error", { "checkTypeAliases": false }] in > v79
+        'unicorn-js/prefer-smaller-scope': ['error', { checkTypeAliases: false }],
 
         'unicorn/prefer-spread': 'warn',
         'unicorn/prefer-string-slice': 'warn',
