@@ -7,6 +7,7 @@ import { toRFC822 } from '@/utils/time';
 import { Layout } from '@/views/layout';
 
 const startTime = performance.now();
+const getUptime = () => performance.now() - startTime;
 
 const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const debug = getDebugInfo();
@@ -14,7 +15,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const showDebug = !config.debugInfo || config.debugInfo === 'false' ? false : config.debugInfo === 'true' || config.debugInfo === debugQuery;
     const { disallowRobot, nodeName, cache } = config;
 
-    const duration = performance.now() - startTime;
+    const duration = getUptime();
 
     const info = {
         showDebug,
