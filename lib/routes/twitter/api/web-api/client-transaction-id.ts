@@ -5,14 +5,18 @@ import cache from '@/utils/cache';
 
 const cacheKey = 'twitter:x-client-transaction';
 
-const fetchClientTransactionKeys = async () => {
+// `x-client-transaction-id` >= 0.3 keeps the derived keys in a (private) `keys` field and `generateTransactionId`
+// throws `ClientTransactionNotInitializedError` unless it is set. `keys` is plain JSON, so it can go through the cache.
+type ClientTransactionKeys = { keyBytes: number[]; animationKey: string };
+
+const fetchClientTransactionKeys = async (): Promise<ClientTransactionKeys> => {
     const document = await fetchXDocument();
-    const { key, animationKey } = (await ClientTransaction.create(document)) as unknown as { key: string; animationKey: string };
-    return { key, animationKey };
+    const clientTransaction = (await ClientTransaction.create(document)) as unknown as { keys: ClientTransactionKeys };
+    return clientTransaction.keys;
 };
 
 // `refresh` skips the cached keys and overwrites them; used after X rejects a transaction id with 404.
-const getClientTransactionKeys = async (refresh: boolean) => {
+const getClientTransactionKeys = async (refresh: boolean): Promise<ClientTransactionKeys> => {
     if (!refresh) {
         return cache.tryGet(cacheKey, fetchClientTransactionKeys, config.cache.contentExpire, false);
     }
@@ -22,7 +26,7 @@ const getClientTransactionKeys = async (refresh: boolean) => {
 };
 
 export const getClientTransactionId = async (method: string, path: string, refresh = false) => {
-    const { key, animationKey } = await getClientTransactionKeys(refresh);
-    const clientTransaction = Object.assign(Object.create(ClientTransaction.prototype), { isInitialized: true });
-    return clientTransaction.generateTransactionId(method, path, undefined, key, animationKey);
+    const keys = await getClientTransactionKeys(refresh);
+    const clientTransaction = Object.assign(Object.create(ClientTransaction.prototype), { keys });
+    return clientTransaction.generateTransactionId(method, path);
 };
