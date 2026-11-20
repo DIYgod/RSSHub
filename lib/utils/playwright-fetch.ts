@@ -167,7 +167,7 @@ async function replayRequest(request: Request, signal: AbortSignal, body?: Uint8
                     requestId: event.requestId,
                     method: request.method,
                     headers: Array.from(request.headers, ([name, value]) => ({ name, value })),
-                    ...(body && { postData: Buffer.from(body).toString('base64') }),
+                    ...(body && { postData: Buffer.from(body).toBase64() }),
                 });
             };
             void handleRequest().catch(() => controller.abort());

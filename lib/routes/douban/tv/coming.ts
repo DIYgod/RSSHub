@@ -63,7 +63,7 @@ const signRequest = async (url: string, ts: string, method = 'GET'): Promise<str
     const messageData = new TextEncoder().encode(rawSign);
     const key = await webcrypto.subtle.importKey('raw', keyData, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
     const signature = await webcrypto.subtle.sign('HMAC', key, messageData);
-    return Buffer.from(signature).toString('base64');
+    return Buffer.from(signature).toBase64();
 };
 
 const getPubDateText = (pubdate?: string[]): string | undefined => pubdate?.[0];

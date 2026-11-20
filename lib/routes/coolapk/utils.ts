@@ -18,7 +18,7 @@ const get_app_token = () => {
     const hex_now = '0x' + now.toString(16);
     const md5_now = md5(now.toString());
     const s = 'token://com.coolapk.market/c67ef5943784d09750dcfbb31020f0ab?' + md5_now + '$' + DEVICE_ID + '&com.coolapk.market';
-    const md5_s = md5(Buffer.from(s).toString('base64'));
+    const md5_s = md5(Buffer.from(s).toBase64());
     const token = md5_s + DEVICE_ID + hex_now;
     return token;
 };

@@ -57,7 +57,7 @@ const get = async (path: string) => {
             ...(cookie && { cookie }),
             sign: `${rules.prefix}:${hash}:${Math.abs(checksum).toString(16)}:${rules.suffix}`,
             time,
-            'x-bc': browserId ?? randomBytes(20).toString('hex'),
+            'x-bc': browserId ?? randomBytes(20).toHex(),
         },
     });
 };

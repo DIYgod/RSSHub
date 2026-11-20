@@ -28,7 +28,7 @@ function renderText(text) {
 }
 
 function getItem(header) {
-    const encodedId = Buffer.from(header.master_id.replaceAll('-', ''), 'hex').toString('base64url');
+    const encodedId = Buffer.from(header.master_id.replaceAll('-', ''), 'hex').toBase64({ alphabet: 'base64url', omitPadding: true });
     const slug = header.title_text.text
         .toLowerCase()
         .replaceAll(/[^a-z0-9]+/g, '-')

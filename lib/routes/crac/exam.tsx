@@ -38,8 +38,8 @@ async function handler() {
     });
 
     const list = response.data.res.list.map((item) => {
-        const id = Buffer.from(item.id).toString('base64');
-        const type = Buffer.from(item.type).toString('base64');
+        const id = Buffer.from(item.id).toBase64();
+        const type = Buffer.from(item.type).toBase64();
         const link = `${baseUrl}/crac/pages/list_detail.html?id=${id}&type=${type}`;
         return {
             title: item.name,

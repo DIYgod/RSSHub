@@ -128,7 +128,7 @@ const getAthenaAppKey = () =>
                 padding: constants.RSA_PKCS1_PADDING,
             },
             Buffer.from(athenaAppCredential)
-        ).toString('base64')
+        ).toBase64()
     );
 
 export const route: Route = {

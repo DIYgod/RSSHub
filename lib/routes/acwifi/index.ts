@@ -17,7 +17,7 @@ export const route: Route = {
     handler,
 };
 
-const toHex = (s: string) => Buffer.from(s).toString('hex');
+const toHex = (s: string) => Buffer.from(s).toHex();
 
 const getCookie = async (url: string) => {
     const init = await ofetch.raw(url);

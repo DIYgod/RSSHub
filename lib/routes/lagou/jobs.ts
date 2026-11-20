@@ -39,7 +39,7 @@ const getAesKey = () =>
                 method: 'POST',
                 headers: { Origin: 'https://www.lagou.com', Referer: 'https://www.lagou.com/' },
                 body: {
-                    secretKeyDecode: crypto.publicEncrypt({ key: rsaPublicKey, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(aesKey)).toString('base64'),
+                    secretKeyDecode: crypto.publicEncrypt({ key: rsaPublicKey, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(aesKey)).toBase64(),
                 },
             });
             return { aesKey, secret: response.content.secretKeyValue };
@@ -55,7 +55,7 @@ async function handler(ctx: Context) {
     const key = Buffer.from(aesKey);
     const encrypt = (text: string) => {
         const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toString('base64');
+        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toBase64();
     };
     const decrypt = (text: string) => {
         const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
@@ -71,7 +71,7 @@ async function handler(ctx: Context) {
         headers: {
             Origin: 'https://www.lagou.com',
             Referer: `https://www.lagou.com/wn/jobs?kd=${encodeURIComponent(position)}&city=${encodeURIComponent(city)}`,
-            traceparent: `00-${crypto.randomBytes(16).toString('hex')}-${crypto.randomBytes(8).toString('hex')}-01`,
+            traceparent: `00-${crypto.randomBytes(16).toHex()}-${crypto.randomBytes(8).toHex()}-01`,
             'x-k-header': secret,
             'x-s-header': encrypt(JSON.stringify({ originHeader, code })),
             'x-ss-req-header': JSON.stringify({ secret }),

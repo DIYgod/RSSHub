@@ -475,7 +475,6 @@ export default defineConfig({
         // "unicorn/prefer-top-level-await": "error",
         'unicorn/prefer-type-error': 'error',
         'unicorn-js/prefer-type-literal-last': 'error',
-        // "unicorn-js/prefer-uint8array-base64": "error", re-evaluate when node > 25
         'unicorn-js/prefer-unary-minus': 'error',
         'unicorn-js/prefer-unicode-code-point-escapes': 'error',
         'unicorn-js/prefer-url-can-parse': 'error',
@@ -813,6 +812,8 @@ export default defineConfig({
 
         'unicorn-js/prefer-temporal': ['error', { checkDateNow: true, checkReferences: true }],
         'unicorn/prefer-top-level-await': 'off',
+        'unicorn-js/prefer-uint8array-base64': ['error', { checkBufferDecoding: false }],
+        'unicorn-js/prefer-uint8array-hex': ['error', { checkBufferDecoding: false }],
         // "unicorn/prevent-abbreviations": "off",
         'unicorn-js/single-line-block-comment-style': ['error', 'single-line'],
         'unicorn/switch-case-braces': ['error', 'avoid'],

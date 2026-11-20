@@ -33,7 +33,7 @@ async function handler(ctx) {
         Accept: 'application/json',
     };
     if (config.bitbucket && config.bitbucket.username && config.bitbucket.password) {
-        headers.Authorization = `Basic ${Buffer.from(`${config.bitbucket.username}:${config.bitbucket.password}`).toString('base64')}`;
+        headers.Authorization = `Basic ${Buffer.from(`${config.bitbucket.username}:${config.bitbucket.password}`).toBase64()}`;
     }
     const response = await got({
         method: 'get',

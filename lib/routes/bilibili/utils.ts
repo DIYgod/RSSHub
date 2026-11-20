@@ -170,7 +170,7 @@ function getDmImgInterT(tag: string) {
 }
 
 function getDmImgInterC(className: string) {
-    return Buffer.from(className).toString('base64').slice(0, -2);
+    return Buffer.from(className).toBase64().slice(0, -2);
 }
 
 function getDmImgInterOf(top: number, left: number) {
@@ -184,8 +184,8 @@ function getDmImgInterWh(width: number, height: number) {
 }
 
 function addDmVerifyInfo(params: string, dmImgList: string) {
-    const dmImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
-    const dmCoverImgStr = Buffer.from('no webgl').toString('base64').slice(0, -2);
+    const dmImgStr = Buffer.from('no webgl').toBase64().slice(0, -2);
+    const dmCoverImgStr = Buffer.from('no webgl').toBase64().slice(0, -2);
     return `${params}&dm_img_list=${dmImgList}&dm_img_str=${dmImgStr}&dm_cover_img_str=${dmCoverImgStr}`;
 }
 

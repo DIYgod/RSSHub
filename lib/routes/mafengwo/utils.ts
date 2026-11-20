@@ -13,8 +13,8 @@ const key = CryptoJS.enc.Utf8.parse('tg09It3*9h');
  */
 const generateWTsfp = (url: string) => {
     const now = Temporal.Now.instant().epochMilliseconds;
-    const fingerprint = randomBytes(16).toString('hex');
-    const salt = randomBytes(16).toString('hex');
+    const fingerprint = randomBytes(16).toHex();
+    const salt = randomBytes(16).toHex();
     const payload = JSON.stringify({
         timestamp: now,
         basets: now,

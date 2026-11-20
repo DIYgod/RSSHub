@@ -106,7 +106,7 @@ const aes = (key: string) => ({
     },
     encrypt: (text: string) => {
         const c = createCipheriv('aes-128-cbc', key, key);
-        return Buffer.concat([c.update(text, 'utf8'), c.final()]).toString('base64');
+        return Buffer.concat([c.update(text, 'utf8'), c.final()]).toBase64();
     },
 });
 
