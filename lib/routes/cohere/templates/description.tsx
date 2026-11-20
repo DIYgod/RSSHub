@@ -5,14 +5,14 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { resolveSafeUrl, SITE_URL } from '../utils';
 
-export interface SanitySpan {
+interface SanitySpan {
     _type?: string;
     text?: string;
     body?: string;
     marks?: string[];
 }
 
-export interface SanityMarkDef {
+interface SanityMarkDef {
     _key: string;
     _type: string;
     href?: string;

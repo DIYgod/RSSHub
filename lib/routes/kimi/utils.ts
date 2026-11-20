@@ -15,7 +15,7 @@ export const DETAIL_CONCURRENCY = 5;
 
 export type EntrySourceKind = 'kimi' | 'github' | 'huggingface' | 'github-pages' | 'external';
 
-export interface BlogListItem {
+interface BlogListItem {
     id?: string;
     title?: string;
     description?: string;

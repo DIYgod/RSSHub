@@ -16,7 +16,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 export type DealKind = 'rent' | 'sale';
-export type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
+type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
 
 export interface ResidentialExtra {
     source: string; // site id: 'suumo' / 'homes' / 'athome'
@@ -123,7 +123,7 @@ const parseOccupiedFloor = (text: string | null): string | null => {
     );
 };
 
-export interface Access {
+interface Access {
     line: string | null;
     station: string | null;
     walk_min: number | null;
