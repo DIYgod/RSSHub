@@ -101,7 +101,7 @@ const renderDescription = ({
                             <tr>
                                 <th>Link</th>
                                 <td>
-                                    <a href={linkUrl} target="_blank">
+                                    <a href={linkUrl} target="_blank" rel="noreferrer">
                                         {linkUrl}
                                     </a>
                                 </td>

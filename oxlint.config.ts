@@ -893,7 +893,6 @@ export default defineConfig({
         'import/consistent-type-specifier-style': 'off',
         'jsx-a11y/alt-text': 'off',
         'react/jsx-key': 'off',
-        'react/jsx-no-target-blank': 'off',
         'react/no-unknown-property': 'off',
         'typescript/await-thenable': 'off',
         'typescript/no-non-null-assertion': 'off',

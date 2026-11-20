@@ -49,22 +49,22 @@ const Index: FC<{
                     <p className="mb-2 font-bold">Report</p>
                     <p>
                         After carefully reading the{' '}
-                        <a className="text-[#F5712C]" href="https://docs.rsshub.app/" target="_blank">
+                        <a className="text-[#F5712C]" href="https://docs.rsshub.app/" target="_blank" rel="noreferrer">
                             document
                         </a>
                         , if you think this is a bug of RSSHub, please{' '}
-                        <a className="text-[#F5712C]" href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&template=bug_report_en.yml" target="_blank">
+                        <a className="text-[#F5712C]" href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&template=bug_report_en.yml" target="_blank" rel="noreferrer">
                             submit an issue
                         </a>{' '}
                         on GitHub.
                     </p>
                     <p>
                         在仔细阅读
-                        <a className="text-[#F5712C]" href="https://docs.rsshub.app/zh/" target="_blank">
+                        <a className="text-[#F5712C]" href="https://docs.rsshub.app/zh/" target="_blank" rel="noreferrer">
                             文档
                         </a>
                         后，如果你认为这是 RSSHub 的 bug，请在 GitHub{' '}
-                        <a className="text-[#F5712C]" href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&template=bug_report_zh.yml" target="_blank">
+                        <a className="text-[#F5712C]" href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&template=bug_report_zh.yml" target="_blank" rel="noreferrer">
                             提交 issue
                         </a>
                         。
@@ -74,30 +74,30 @@ const Index: FC<{
                     <p className="mb-2 font-bold">Community</p>
                     <p>
                         You can also join our{' '}
-                        <a className="text-[#F5712C]" target="_blank" href="https://t.me/rsshub">
+                        <a className="text-[#F5712C]" target="_blank" rel="noreferrer" href="https://t.me/rsshub">
                             Telegram group
                         </a>
                         , or follow our{' '}
-                        <a className="text-[#F5712C]" target="_blank" href="https://t.me/awesomeRSSHub">
+                        <a className="text-[#F5712C]" target="_blank" rel="noreferrer" href="https://t.me/awesomeRSSHub">
                             Telegram channel
                         </a>{' '}
                         and{' '}
-                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" rel="noreferrer" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         to get community support and news.
                     </p>
                     <p>
                         你也可以加入我们的{' '}
-                        <a className="text-[#F5712C]" target="_blank" href="https://t.me/rsshub">
+                        <a className="text-[#F5712C]" target="_blank" rel="noreferrer" href="https://t.me/rsshub">
                             Telegram 群组
                         </a>
                         ，或关注我们的{' '}
-                        <a className="text-[#F5712C]" target="_blank" href="https://t.me/awesomeRSSHub">
+                        <a className="text-[#F5712C]" target="_blank" rel="noreferrer" href="https://t.me/awesomeRSSHub">
                             Telegram 频道
                         </a>
                         和{' '}
-                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" rel="noreferrer" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         获取社区支持和新闻。
@@ -107,19 +107,19 @@ const Index: FC<{
         </div>
         <div className="mt-4 pb-8 text-center w-full text-sm font-medium space-y-2">
             <p className="space-x-4">
-                <a target="_blank" href="https://github.com/DIYgod/RSSHub">
+                <a target="_blank" rel="noreferrer" href="https://github.com/DIYgod/RSSHub">
                     <picture>
                         <source srcset="https://cdn.simpleicons.org/github/_/fff" media="(prefers-color-scheme: dark)" />
                         <img className="inline" src="https://cdn.simpleicons.org/github" alt="github" width="20" height="20" />
                     </picture>
                 </a>
-                <a target="_blank" href="https://t.me/rsshub">
+                <a target="_blank" rel="noreferrer" href="https://t.me/rsshub">
                     <img className="inline" src="https://cdn.simpleicons.org/telegram" alt="telegram group" width="20" height="20" />
                 </a>
-                <a target="_blank" href="https://t.me/awesomeRSSHub">
+                <a target="_blank" rel="noreferrer" href="https://t.me/awesomeRSSHub">
                     <img className="inline" src="https://cdn.simpleicons.org/telegram" alt="telegram channel" width="20" height="20" />
                 </a>
-                <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                <a target="_blank" rel="noreferrer" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                     <picture>
                         <source srcset="https://cdn.simpleicons.org/x/_/fff" media="(prefers-color-scheme: dark)" />
                         <img className="inline" src="https://cdn.simpleicons.org/x" alt="X" width="20" height="20" />
@@ -128,18 +128,18 @@ const Index: FC<{
             </p>
             <p className="!mt-6">
                 Please consider{' '}
-                <a target="_blank" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
+                <a target="_blank" rel="noreferrer" href="https://docs.rsshub.app/sponsor" className="text-[#F5712C]">
                     sponsoring
                 </a>{' '}
                 to help keep this open source project alive.
             </p>
             <p>
                 Made with ❤️ by{' '}
-                <a target="_blank" href="https://diygod.cc" className="text-[#F5712C]">
+                <a target="_blank" rel="noreferrer" href="https://diygod.cc" className="text-[#F5712C]">
                     DIYgod
                 </a>{' '}
                 and{' '}
-                <a target="_blank" href="https://github.com/DIYgod/RSSHub/graphs/contributors" className="text-[#F5712C]">
+                <a target="_blank" rel="noreferrer" href="https://github.com/DIYgod/RSSHub/graphs/contributors" className="text-[#F5712C]">
                     Contributors
                 </a>{' '}
                 under AGPL-3.0 License.

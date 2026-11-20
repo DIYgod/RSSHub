@@ -139,7 +139,7 @@ async function handler(ctx) {
                     <>
                         Monitor ID:{' '}
                         {link ? (
-                            <a href={link} target="_blank">
+                            <a href={link} target="_blank" rel="noreferrer">
                                 {id}
                             </a>
                         ) : (
