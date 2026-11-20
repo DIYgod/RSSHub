@@ -900,7 +900,6 @@ export default defineConfig({
         'react/jsx-no-target-blank': 'off',
         'react/no-unescaped-entities': 'off',
         'react/no-unknown-property': 'off',
-        'react/rules-of-hooks': 'off',
         'typescript/await-thenable': 'off',
         'typescript/no-import-type-side-effects': 'off',
         'typescript/no-misused-spread': 'off',
