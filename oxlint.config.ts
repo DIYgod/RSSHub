@@ -919,7 +919,6 @@ export default defineConfig({
         'typescript/return-await': 'off',
         'typescript/switch-exhaustiveness-check': 'off',
         'typescript/unbound-method': 'off',
-        'typescript/use-unknown-in-catch-callback-variable': 'off',
         // #endregion
 
         // #region --- quality (@nkzw/oxlint-config) ---
