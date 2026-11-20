@@ -21268,6 +21268,21 @@
       }
     ]
   },
+  "elevenlabs.io": {
+    "_name": "ElevenLabs",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/elevenlabs",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/blog/rss.xml"
+        ],
+        "target": "/elevenlabs/blog"
+      }
+    ]
+  },
   "elpais.com": {
     "_name": "El País",
     ".": [

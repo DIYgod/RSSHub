@@ -1113,6 +1113,7 @@ export type RoutePath =
   | `/elecfans/soft/:atype`
   | `/eleduck/jobs`
   | `/eleduck/posts/:id?`
+  | `/elevenlabs/blog`
   | `/elpais/news`
   | `/elsevier/:journal`
   | `/elsevier/:journal/:issue`

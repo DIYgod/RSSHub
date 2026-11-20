@@ -58190,6 +58190,49 @@ export default {
     "url": "www.elecfans.com",
     "lang": "zh-CN"
   },
+  "elevenlabs": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "elevenlabs.io/blog",
+        "example": "/elevenlabs/blog",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full-text product updates, research, and customer stories from the official blog.",
+        "zh": {
+          "name": "博客",
+          "description": "通过官方 RSS 获取 ElevenLabs 的产品动态、研究文章和客户案例全文。"
+        },
+        "radar": [
+          {
+            "source": [
+              "elevenlabs.io/blog",
+              "elevenlabs.io/blog/:slug",
+              "elevenlabs.io/blog/rss.xml"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "location": "blog.ts",
+        "module": () => import('@/routes/elevenlabs/blog.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "ElevenLabs",
+    "url": "elevenlabs.io",
+    "lang": "en",
+    "description": "Product updates, research, and customer stories from ElevenLabs.",
+    "zh": {
+      "name": "ElevenLabs",
+      "description": "ElevenLabs 官方产品动态、研究文章与客户案例。"
+    }
+  },
   "elpais": {
     "routes": {
       "/news": {
