@@ -20,7 +20,7 @@ export const route: Route = {
 
 async function handler() {
     const currentUrl = 'https://www.hicairo.com';
-    const response = await got(`${currentUrl}/feed.php`);
+    const response = await got(`${currentUrl}/feed.xml`);
     const $ = load(response.data, { xmlMode: true });
     const titleMain = $('channel > title').text();
     const descriptionMain = $('channel > description').text();
