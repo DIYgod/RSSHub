@@ -393,9 +393,6 @@ importers:
       socks-proxy-agent:
         specifier: 10.1.0
         version: 10.1.0(supports-color@10.2.2)
-      source-map:
-        specifier: 0.8.0
-        version: 0.8.0
       teleproto:
         specifier: 1.233.0
         version: 1.233.0
@@ -5634,10 +5631,6 @@ packages:
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-
-  source-map@0.8.0:
-    resolution: {integrity: sha512-d8EqvL+k/SOXCreS/SUzg2ciyHqBBLcN/yuRjFsbvVhHTE2pgei7oAhmPM7kWFbkX6OSMQfUq4KbkF3au9lhYQ==}
-    engines: {node: '>= 12'}
 
   split-on-first@3.0.0:
     resolution: {integrity: sha512-qxQJTx2ryR0Dw0ITYyekNQWpz6f8dGd7vffGNflQQ3Iqj9NJ6qiZ7ELpZsJ/QBhIVAiDfXdag3+Gp8RvWa62AA==}
@@ -11032,8 +11025,6 @@ snapshots:
 
   source-map@0.6.1:
     optional: true
-
-  source-map@0.8.0: {}
 
   split-on-first@3.0.0: {}
 
