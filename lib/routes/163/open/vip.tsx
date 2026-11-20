@@ -48,7 +48,7 @@ const renderDescription = (data, description) => {
     return renderToString(
         <>
             {chapterList?.length ? (
-                <div class="toc">
+                <div className="toc">
                     {chapterList.map((chapter, chapterIndex) => (
                         <>
                             <h3>

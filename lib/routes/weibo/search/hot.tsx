@@ -144,7 +144,7 @@ function seekContent(clist, wpic: string, fullpic: string) {
     const renderDigest = ({ author, msg, link, postinfo, pics }) =>
         renderToString(
             <>
-                <div class="quoted">
+                <div className="quoted">
                     <a style="text-decoration: none;" href={author.link}>
                         {author.name}
                     </a>
@@ -152,11 +152,11 @@ function seekContent(clist, wpic: string, fullpic: string) {
                         <a href={link}>{` | ${postinfo} `}</a>
                     </span>
                 </div>
-                <div class="content">{msg ? raw(msg) : null}</div>
+                <div className="content">{msg ? raw(msg) : null}</div>
                 {pics.length ? (
                     <>
                         <br />
-                        <div class="pic-row">
+                        <div className="pic-row">
                             {pics.map((pic) => (
                                 <a href={pic.rurl}>
                                     <img src={pic.url} />

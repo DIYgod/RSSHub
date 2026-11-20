@@ -130,7 +130,7 @@ const ThepaperImageDetail = ({
     <>
         {images.map((image) => (
             <>
-                <figure class="wp-block-image size-full">
+                <figure className="wp-block-image size-full">
                     <img width={image.width} src={image.src} />
                 </figure>
                 <p>{image.description}</p>

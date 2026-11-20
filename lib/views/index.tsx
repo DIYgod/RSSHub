@@ -176,9 +176,9 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     <details className="text-xs w-96 !mt-8 max-h-[400px] overflow-auto">
                         <summary className="text-sm cursor-pointer">Debug Info</summary>
                         {info.debug.map((item) => (
-                            <div class="debug-item my-3 pl-8">
-                                <span class="debug-key w-32 text-right inline-block mr-2">{item.name}: </span>
-                                <span class="debug-value inline-block break-all align-top">{item.value}</span>
+                            <div className="debug-item my-3 pl-8">
+                                <span className="debug-key w-32 text-right inline-block mr-2">{item.name}: </span>
+                                <span className="debug-value inline-block break-all align-top">{item.value}</span>
                             </div>
                         ))}
                     </details>

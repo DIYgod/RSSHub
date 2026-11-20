@@ -62,8 +62,8 @@ async function handler() {
 }
 
 const ExamDescription = ({ item }: { item: any }) => (
-    <div class="notice-info">
-        <table class="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
+    <div className="notice-info">
+        <table className="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
             <tr>
                 <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">组织者：</th>
                 <td>{item.exam.organizer}</td>
@@ -107,7 +107,7 @@ const ExamDescription = ({ item }: { item: any }) => (
                 <td></td>
             </tr>
         </table>
-        <div class="content" id="detail_content">
+        <div className="content" id="detail_content">
             {item.content ? raw(item.content) : null}
         </div>
     </div>

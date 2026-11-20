@@ -57,7 +57,7 @@ export async function handler(ctx): Promise<Data> {
 }
 
 const DriveDescription = ({ driveName, driveCode, driveVersion, downloadFileName, downloadFilePath }: { driveName: string; driveCode: string; driveVersion: string; downloadFileName: string; downloadFilePath: string }) => (
-    <div class="driver-info">
+    <div className="driver-info">
         <h2>驱动信息</h2>
         <ul>
             <li>

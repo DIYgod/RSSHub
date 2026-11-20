@@ -143,7 +143,7 @@ const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJ
                     <strong>Requirements:</strong> {processedData.requirements_summary}
                 </p>
             ) : null}
-            <div class="job-description">{jobInfo.description ? raw(jobInfo.description) : null}</div>
+            <div className="job-description">{jobInfo.description ? raw(jobInfo.description) : null}</div>
             {companyInfoDescription ? (
                 <>
                     <h2>About {processedData.company_name}</h2>

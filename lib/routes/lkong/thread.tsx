@@ -79,9 +79,9 @@ const quoteStyles = `
 
 const LkongQuote = ({ target, author, content }: { target: string; author: string; content: string }) => (
     <>
-        <div class="quote">
-            <a href={target} class="quote-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13.16" height="12" viewBox="0 0 13.16 12" class="css-1f5j0lz">
+        <div className="quote">
+            <a href={target} className="quote-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13.16" height="12" viewBox="0 0 13.16 12" className="css-1f5j0lz">
                     <path d="M5.71,0,0,5l5.71,5V6.57S13.63,4,12,12c0,0,5.11-9.71-6.42-9L5.71,0Z"></path>
                 </svg>
                 {author}

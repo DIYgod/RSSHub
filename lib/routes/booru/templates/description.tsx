@@ -12,31 +12,31 @@ type DescriptionData = {
 
 export const renderDescription = ({ image, title, posted, by, source, rating, score }: DescriptionData) =>
     renderToString(
-        <div class="item-description">
+        <div className="item-description">
             {image ? <img src={image} alt={title} /> : null}
             {posted ? (
                 <p>
-                    posted: <span class="posted">{posted}</span>
+                    posted: <span className="posted">{posted}</span>
                 </p>
             ) : null}
             {by ? (
                 <p>
-                    by: <span class="by">{by}</span>
+                    by: <span className="by">{by}</span>
                 </p>
             ) : null}
             {source ? (
                 <p>
-                    source: <span class="source">{source}</span>
+                    source: <span className="source">{source}</span>
                 </p>
             ) : null}
             {rating ? (
                 <p>
-                    rating: <span class="rating">{rating}</span>
+                    rating: <span className="rating">{rating}</span>
                 </p>
             ) : null}
             {score ? (
                 <p>
-                    score: <span class="score">{score}</span>
+                    score: <span className="score">{score}</span>
                 </p>
             ) : null}
         </div>

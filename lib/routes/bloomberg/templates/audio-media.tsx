@@ -19,8 +19,8 @@ export const renderAudioMedia = ({ img, src, caption, credit }: AudioMediaData) 
                 </audio>
             </div>
             <figcaption>
-                <div class="caption">{caption ? raw(caption) : null}</div>
-                <div class="credit">{credit ? raw(credit) : null}</div>
+                <div className="caption">{caption ? raw(caption) : null}</div>
+                <div className="credit">{credit ? raw(credit) : null}</div>
             </figcaption>
         </figure>
     );

@@ -106,7 +106,7 @@ const renderCodeBlock = (content: ArticleBlockContent): Child => {
     }
     return (
         <pre>
-            <code class={content.language ? `language-${content.language}` : undefined}>{content.code}</code>
+            <code className={content.language ? `language-${content.language}` : undefined}>{content.code}</code>
         </pre>
     );
 };
@@ -181,7 +181,7 @@ const renderSocialLinkQuote = (rawUrl: string | undefined, className: string): C
         return null;
     }
     return (
-        <blockquote class={className}>
+        <blockquote className={className}>
             <a href={safeUrl}>{safeUrl}</a>
         </blockquote>
     );
@@ -198,7 +198,7 @@ const renderInstagramBlockquote = (content: ArticleBlockContent): Child => {
     }
     const text = $('a[href]').first().text().trim() || permalink;
     return (
-        <blockquote class="instagram-media">
+        <blockquote className="instagram-media">
             <a href={permalink}>{text}</a>
         </blockquote>
     );
