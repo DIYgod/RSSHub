@@ -16,7 +16,7 @@ const offset = (seconds: number, separator: string) => {
     return `${seconds < 0 ? '-' : '+'}${pad(Math.trunc(minutes / 60))}${separator}${pad(minutes % 60)}`;
 };
 
-const TOKENS: Record<string, (date: Temporal.ZonedDateTime) => string> = {
+const TOKENS = {
     YYYY: (date) => pad(date.year, 4),
     YY: (date) => pad(date.year % 100),
     MMMM: (date) => MONTHS[date.month - 1],
@@ -45,7 +45,9 @@ const TOKENS: Record<string, (date: Temporal.ZonedDateTime) => string> = {
     Z: (date) => offset(date.offsetNanoseconds / 1e9, ':'),
     X: (date) => String(Math.floor(date.epochMilliseconds / 1000)),
     x: (date) => String(date.epochMilliseconds),
-};
+} satisfies Record<string, (date: Temporal.ZonedDateTime) => string>;
+
+const isToken = (token: string): token is keyof typeof TOKENS => Object.hasOwn(TOKENS, token);
 
 const PATTERN = /\[([^\]]*)\]|YYYY|YY|MMMM|MMM|MM|M|Do|DD|D|dddd|ddd|d|HH|H|hh|h|mm|m|ss|[sAa]|SSS|ZZ|[XZxz]/g;
 
@@ -61,5 +63,5 @@ const PATTERN = /\[([^\]]*)\]|YYYY|YY|MMMM|MMM|MM|M|Do|DD|D|dddd|ddd|d|HH|H|hh|h
  */
 export const formatDate = (date: Temporal.Instant | Temporal.ZonedDateTime, format: string, timeZone?: TimeZone): string => {
     const zoned = date instanceof Temporal.Instant ? date.toZonedDateTimeISO(toTimeZoneId(timeZone)) : date;
-    return format.replaceAll(PATTERN, (token, literal?: string) => literal ?? TOKENS[token](zoned));
+    return format.replaceAll(PATTERN, (token, literal?: string) => literal ?? (isToken(token) ? TOKENS[token](zoned) : token));
 };
