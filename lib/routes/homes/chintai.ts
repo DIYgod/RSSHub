@@ -7,7 +7,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { checkSlugs, DEFAULT_LIMIT, DETAIL_BUDGET, HOMES_RENT_DETAIL_SCOPE, homesFetcher, HOST, parseHomesChintaiList, parseHomesDetail } from './utils';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref');
     const city: string = ctx.req.param('city');
     checkSlugs({ pref, city });
