@@ -41,7 +41,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { data } = await got(appFeedUrl);
+    const { data } = await got(appFeedUrl, { maxResponseSize: 64 * 1024 * 1024 }); // the feed lists every app, 22 MB now
     const requestedLimit = Math.trunc(Number(ctx.req.query('limit')));
     const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : defaultLimit;
 
