@@ -28,7 +28,7 @@ async function handler(ctx) {
     const downloadCountLastMonthRes = await ofetch(packageDownloadLastMonthAPI);
     const downloadCountLastWeekRes = await ofetch(packageDownloadLastWeekAPI);
     const downloadCountLastDayRes = await ofetch(packageDownloadLastDayAPI);
-    const packageVersionRes = await ofetch(packageVersionAPI);
+    const packageVersionRes = await ofetch(packageVersionAPI, { maxResponseSize: 64 * 1024 * 1024 }); // the full document lists every version, 42 MB for rsshub
 
     const packageVersion = packageVersionRes.time;
     const packageVersionList = Object.entries(packageVersion)
