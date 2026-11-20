@@ -45,10 +45,6 @@ const config: KnipConfig = {
         'scripts/workflow/test-{issue,route}/*.mjs': ['exports'],
         'lib/routes/twitter/api/{mobile-api/api,mobile-api/login,web-api/login}.ts': ['exports'],
     },
-    ignoreDependencies: [
-        // `cloudflare:test` virtual module provided by @cloudflare/vitest-plugin
-        'cloudflare',
-    ],
     // `cycles` is opt-in, and listing it here replaces the default issue types, so those are repeated
     include: ['files', 'dependencies', 'unlisted', 'binaries', 'unresolved', 'exports', 'types', 'enumMembers', 'namespaceMembers', 'duplicates', 'catalog', 'catalogReferences', 'cycles'],
     rules: {

@@ -191,7 +191,7 @@
         "fs-extra": "11.4.1",
         "globals": "17.14.0",
         "js-beautify": "2.0.3",
-        "knip": "6.41.0",
+        "knip": "6.47.0",
         "msw": "3.0.6",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.79.0",
