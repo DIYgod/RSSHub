@@ -1,4 +1,4 @@
-import { type Node } from 'oxc-parser';
+import type { Node } from 'oxc-parser';
 
 import { parseScriptSource } from './parse-js';
 

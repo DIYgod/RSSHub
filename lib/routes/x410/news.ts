@@ -1,5 +1,5 @@
 import { type Cheerio, type CheerioAPI, load } from 'cheerio';
-import { type Element } from 'domhandler';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
