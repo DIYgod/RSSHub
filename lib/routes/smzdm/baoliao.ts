@@ -45,17 +45,15 @@ async function handler(ctx) {
     });
     const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
     const $ = load(response._data);
-    const title = $('.info-stuff-nickname').text();
+    const title = $('.user-profile-card__name').text();
 
-    const list = $('.pandect-content-stuff')
+    const list = $('.feed-horizontal-card')
         .toArray()
         .map((item): DataItem => {
-            const $item = $(item);
-            const published = $item.find('.pandect-content-time').text();
+            const a = $(item).find('.feed-horizontal-card__title-link');
             return {
-                title: $item.find('.pandect-content-title a').text(),
-                link: $item.find('.pandect-content-title a').attr('href'),
-                pubDate: published ? parseDate(published, ['YYYY-MM-DD', 'MM-DD HH:mm'], 8) : undefined,
+                title: a.text().trim(),
+                link: a.attr('href'),
             };
         });
 
@@ -69,7 +67,7 @@ async function handler(ctx) {
                     },
                 });
                 const $ = load(response);
-                const description = $('article.txt-detail').html();
+                const description = $('.detail-article-body__content').html();
                 const published = $('meta[name="weibo:webpage:create_at"]').attr('content');
                 const pubDate = published && /^\d{4}-\d{2}-\d{2}/.test(published) ? parseDate(published) : undefined;
 
@@ -82,8 +80,8 @@ async function handler(ctx) {
 
     return {
         title: `${title}的爆料 - 什么值得买`,
-        description: $('.info-stuff-words div').text(),
-        image: `https:${$('.avatar-img').attr('src')}`,
+        description: $('.user-profile-card__bio').text(),
+        image: $('.user-profile-card__avatar').attr('src'),
         link,
         item: out,
     };
