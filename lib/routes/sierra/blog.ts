@@ -317,11 +317,10 @@ const replaceResponsiveVideoSlots = ($: CheerioAPI, $content: Cheerio<Element>, 
         const $fig = $(el);
         const captionHtml = $fig.find('figcaption').first().html()?.trim();
         const media = videos[idx];
-        const videoHtml = media ? renderVideo(media.desktopUrl, media.mobileUrl) : '';
+        const videoHtml = media ? renderVideo(media.desktopUrl, media.mobileUrl, captionHtml) : '';
 
         if (videoHtml) {
-            const captionBlock = captionHtml ? `<figcaption>${captionHtml}</figcaption>` : '';
-            $fig.html(`${videoHtml}${captionBlock}`);
+            $fig.html(videoHtml);
         } else {
             $fig.find('video').remove();
         }
