@@ -905,7 +905,6 @@ export default defineConfig({
         'typescript/await-thenable': 'off',
         'typescript/no-for-in-array': 'off',
         'typescript/no-import-type-side-effects': 'off',
-        'typescript/no-misused-promises': 'off',
         'typescript/no-misused-spread': 'off',
         'typescript/no-non-null-assertion': 'off',
         'typescript/no-unnecessary-type-assertion': 'off',
