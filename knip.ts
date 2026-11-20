@@ -22,6 +22,8 @@ const config: KnipConfig = {
         // Swapped in for their non-worker counterparts by workerAliasPlugin and `alias` in tsdown-worker.config.ts
         'lib/**/*.worker.{ts,tsx}!',
         'lib/shims/*.ts!',
+        // Imported by compiler
+        'lib/utils/jsx/jsx-{,dev-}runtime.ts!',
         // Disabled Twitter login flows kept for re-enabling, see the commented-out imports in
         // lib/routes/twitter/api/index.ts, mobile-api/token.ts and web-api/utils.ts
         'lib/routes/twitter/api/{mobile-api/api,mobile-api/login,web-api/login}.ts',
@@ -39,13 +41,17 @@ const config: KnipConfig = {
         // Mirror the API of the module they replace in the worker build
         'lib/shims/*.ts': ['exports'],
         'lib/**/*.worker.{ts,tsx}': ['exports', 'types'],
+        // Read by the compiler
+        'lib/utils/jsx/jsx-{,dev-}runtime.ts': ['exports', 'types'],
         // Consumed by npm package users and Cloudflare (Durable Object / container classes)
         'lib/pkg.ts': ['exports'],
         'lib/worker.ts': ['exports'],
         'lib/container.ts': ['exports'],
+        'lib/magpie/plugin.ts': ['exports'],
         'scripts/workflow/test-{issue,route}/*.mjs': ['exports'],
         'lib/routes/twitter/api/{mobile-api/api,mobile-api/login,web-api/login}.ts': ['exports'],
     },
+    ignoreUnresolved: ['@/utils/jsx'],
     // `cycles` is opt-in, and listing it here replaces the default issue types, so those are repeated
     include: ['files', 'dependencies', 'unlisted', 'binaries', 'unresolved', 'exports', 'types', 'enumMembers', 'namespaceMembers', 'duplicates', 'catalog', 'catalogReferences', 'cycles'],
     rules: {
