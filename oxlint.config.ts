@@ -897,7 +897,6 @@ export default defineConfig({
         'no-useless-assignment': 'off',
         'react/jsx-key': 'off',
         'react/jsx-no-target-blank': 'off',
-        'react/no-unescaped-entities': 'off',
         'react/no-unknown-property': 'off',
         'typescript/await-thenable': 'off',
         'typescript/no-import-type-side-effects': 'off',

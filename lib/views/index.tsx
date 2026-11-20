@@ -142,7 +142,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[#F5712C]">RSSHub</span>!
                 </h1>
-                <p className="text-xl font-medium text-zinc-600 dark:text-zinc-300">The world's largest RSS Network.</p>
+                <p className="text-xl font-medium text-zinc-600 dark:text-zinc-300">The world&apos;s largest RSS Network.</p>
                 <p className="text-zinc-500 dark:text-zinc-400">If you see this page, the RSSHub is successfully installed and working.</p>
                 <p className="max-w-xl text-center text-zinc-500 dark:text-zinc-400">
                     Pair your feeds with{' '}
