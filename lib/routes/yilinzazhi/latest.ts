@@ -160,7 +160,7 @@ async function handler(): Promise<Data> {
                 .includes(currentYear + '')
         );
 
-    const stage = $(yearSection!)
+    const stage = $(yearSection)
         .find('a')
         .toArray()
         .map<Stage>((elem) => {

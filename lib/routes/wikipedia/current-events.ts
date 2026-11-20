@@ -32,7 +32,7 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
     if (!top) {
         return null;
     }
-    let content = wikitext.slice(top.index! + top[0].length);
+    let content = wikitext.slice(top.index + top[0].length);
     const bottom = content.match(BOTTOM_TEMPLATE);
     if (bottom) {
         content = content.slice(0, bottom.index);

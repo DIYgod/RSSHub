@@ -2,7 +2,7 @@ import { type CheerioAPI, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDateRange, parseDateStrict } from '@/utils/time';
@@ -95,7 +95,7 @@ export const route: Route = {
             title: `${museumName} - 最新展览`,
             link: listUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

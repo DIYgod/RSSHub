@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
     const items = await pMap(
         selectItems(list),
         (item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.wp_articlecontent').first().html();

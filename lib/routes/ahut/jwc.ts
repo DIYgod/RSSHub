@@ -37,11 +37,11 @@ async function handler() {
 
     const out = await Promise.all(
         list.map((item) => {
-            if (!new URL(item.link!).hostname.endsWith('.ahut.edu.cn')) {
+            if (!new URL(item.link).hostname.endsWith('.ahut.edu.cn')) {
                 return item;
             }
-            return cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
+            return cache.tryGet(item.link, async () => {
+                const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
                 return {

@@ -26,7 +26,7 @@ export const parseItems = (e, baseUrl: string) => {
 
     return {
         title: e.find('.video-card__title').text(),
-        link: new URL(e.find('.video-card__title').attr('href')!, baseUrl).href,
+        link: new URL(e.find('.video-card__title').attr('href'), baseUrl).href,
         description: renderDescription({
             poster: poster ? new URL(poster, baseUrl).href : undefined,
             previewVideo: previewVideo ? new URL(previewVideo, baseUrl).href : undefined,

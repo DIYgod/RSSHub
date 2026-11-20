@@ -131,7 +131,7 @@ async function handler(ctx) {
                             .text()
                             .match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)?.[1];
                         content('#js_content img[data-src]').each((_, image) => {
-                            content(image).attr('src', content(image).attr('data-src')!);
+                            content(image).attr('src', content(image).attr('data-src'));
                         });
                         return {
                             ...item,

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -58,7 +58,7 @@ async function handler() {
                         author: post.authors.map((a) => a.displayName).join(', '),
                         pubDate: parseDate(item.pubDate!),
                         category: [post.primarySection?.name, post.auxiliarySection?.name].filter(Boolean),
-                    } as DataItem;
+                    };
                 });
             } catch {
                 // Article pages sit behind DataDome, which turns away a share of requests with a 403.
@@ -69,7 +69,7 @@ async function handler() {
                     description: item['content:encoded'] ?? item.content,
                     author: item.creator,
                     pubDate: parseDate(item.pubDate!),
-                } as DataItem;
+                };
             }
         },
         { concurrency: 2 }

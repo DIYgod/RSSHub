@@ -94,7 +94,7 @@ async function handler(ctx: Context) {
     const items = await pMap(
         list,
         async (item) => {
-            const detail = await cache.tryGet(`xmu:aero:article:${item.link}`, () => fetchArticleContent(item.link!));
+            const detail = await cache.tryGet(`xmu:aero:article:${item.link}`, () => fetchArticleContent(item.link));
             return { ...item, description: detail.description };
         },
         { concurrency: 3 }

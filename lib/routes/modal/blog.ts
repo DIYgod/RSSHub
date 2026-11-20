@@ -485,7 +485,7 @@ async function handler(ctx: Context): Promise<Data> {
         description: feedSubtitle,
         link: BLOG_URL,
         language: 'en',
-        item: items as DataItem[],
+        item: items,
     };
 }
 

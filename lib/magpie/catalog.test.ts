@@ -42,7 +42,7 @@ const namespaces = {
 };
 
 describe('magpie catalog', () => {
-    const catalog = createCatalog(namespaces as never);
+    const catalog = createCatalog(namespaces);
 
     it('indexes every route', () => {
         expect(catalog.entries).toHaveLength(4);

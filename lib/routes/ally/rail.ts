@@ -84,7 +84,7 @@ async function handler(ctx) {
     const uniqueItems: DataItem[] = [];
     for (const item of items) {
         if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
-            uniqueItems.push(item!);
+            uniqueItems.push(item);
         }
     }
     items = uniqueItems.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 20));

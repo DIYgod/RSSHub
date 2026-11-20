@@ -207,7 +207,7 @@ export const fetchNewsroomData = async (
     const topicSlug = rawTopic && rawTopic !== 'all' ? rawTopic : undefined;
 
     const topic = topicSlug
-        ? ((await cache.tryGet(`arm:newsroom:topic:${topicSlug}`, async () => {
+        ? await cache.tryGet<WpTopic>(`arm:newsroom:topic:${topicSlug}`, async () => {
               const topics = await api<WpTopic[]>('topics', {
                   slug: topicSlug,
                   _fields: 'id,name,slug,link',
@@ -221,7 +221,7 @@ export const fetchNewsroomData = async (
                   slug: topics[0].slug,
                   link: topics[0].link,
               };
-          })) as WpTopic)
+          })
         : undefined;
 
     const limit = Math.min(Math.max(getRouteLimit(ctx, 20), 1), 100);

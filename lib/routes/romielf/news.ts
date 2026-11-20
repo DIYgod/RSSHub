@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/time';
@@ -68,7 +68,7 @@ async function handler(ctx: Context) {
                 pubDate: item.publish_time ? parseDate(item.publish_time * 1000) : temotime ? (temotime.endsWith('前') ? parseRelativeDate(temotime) : parseRelativeDate(temotime, 8)) : undefined,
                 category: item.tags.map((tag) => tag.name),
                 image: item.covers[0]?.path_url,
-            } as DataItem;
+            };
         },
         { concurrency: 3 }
     );

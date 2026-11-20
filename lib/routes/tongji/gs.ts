@@ -45,7 +45,7 @@ async function getNoticeContent(link: string, getBrowserContent: (url: string) =
         throw new ArticleBodyUnavailableError('The source notice does not expose a public article body.');
     }
     content.find('img[data-src]').each((_, element) => {
-        $(element).attr('src', $(element).attr('data-src')!);
+        $(element).attr('src', $(element).attr('data-src'));
     });
     const attachments = mapElements(
         content

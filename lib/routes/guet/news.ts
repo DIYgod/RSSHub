@@ -60,7 +60,7 @@ async function getArticle(link: string, articleHost: string) {
     content.find('script, style').remove();
     content.find('img[data-src]').each((_, image) => {
         const element = $(image);
-        element.attr('src', element.attr('data-src')!);
+        element.attr('src', element.attr('data-src'));
     });
     content.find('.wp_video_player[sudy-wp-src]').each((_, player) => {
         const element = $(player);

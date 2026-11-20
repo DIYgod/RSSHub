@@ -212,7 +212,7 @@ async function handler(ctx: Context): Promise<Data> {
         description: feed.description || 'Technical articles, release announcements, model guides, and community updates from the vLLM project.',
         link: BLOG_URL,
         language: 'en-us',
-        item: items as DataItem[],
+        item: items,
     };
 }
 

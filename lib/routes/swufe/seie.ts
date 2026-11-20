@@ -40,7 +40,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'description' | 
     content.find('.cont-shar').remove();
     content.find('img[orisrc]').each((_, img) => {
         const $img = $(img);
-        $img.attr('src', $img.attr('orisrc')!);
+        $img.attr('src', $img.attr('orisrc'));
         $img.removeAttr('orisrc');
     });
     const publishedAt = $('.article-date').text().trim();

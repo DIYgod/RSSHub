@@ -61,7 +61,7 @@ async function handler() {
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
             const itemUrl = item.link;
-            return cache.tryGet(itemUrl!, async () => {
+            return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (new URL(itemUrl).origin === host) {
                     const result = await got(itemUrl);

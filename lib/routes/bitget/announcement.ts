@@ -72,7 +72,7 @@ const handler: Route['handler'] = async (ctx) => {
         throw new Error('Failed to fetch announcements');
     }
     const items = responses
-        .flatMap((response) => response!.data.items)
+        .flatMap((response) => response.data.items)
         .toSorted((a, b) => Number(b.sendTime || 0) - Number(a.sendTime || 0))
         .slice(0, pageSize);
     const data = await Promise.all(

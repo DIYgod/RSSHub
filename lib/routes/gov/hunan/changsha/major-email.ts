@@ -63,7 +63,7 @@ async function handler() {
 
                 const pubDate = $('.letter-details div:first table tr:nth-child(2) > .td_label2').text().trim();
                 const data = {
-                    title: item.title!,
+                    title: item.title,
                     description: $('.letter-details').html()!.trim(),
                     pubDate: pubDate ? parseDate(`${pubDate} +0800`, 'YYYY-MM-DD HH:mm:ss ZZ') : undefined,
                     link: item.link,

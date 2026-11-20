@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/time';
 
 import { baseUrl, fetchDetail, fetchPage, parseListItems } from './utils';
@@ -72,7 +72,7 @@ async function handler(ctx) {
         list.slice(0, limit).map(async (item) => {
             const detail = await fetchDetail(item);
             return {
-                ...(detail as DataItem),
+                ...detail,
                 pubDate: item.pubDate,
             };
         })

@@ -95,11 +95,11 @@ const fetchExternalEntry = async (entry: ParsedBlogEntry): Promise<DataItem> => 
 
 const fetchBlogItem = async (entry: ParsedBlogEntry): Promise<DataItem> => {
     if (entry.kind === 'kimi') {
-        return (await cache.tryGet(`kimi:blog:${entry.link}`, () => fetchInternalEntry(entry))) as DataItem;
+        return await cache.tryGet<DataItem>(`kimi:blog:${entry.link}`, () => fetchInternalEntry(entry));
     }
     if (EXTERNAL_SCRAPE_KINDS.has(entry.kind)) {
         try {
-            return (await cache.tryGet(`kimi:blog:${entry.link}`, () => fetchExternalEntry(entry))) as DataItem;
+            return await cache.tryGet<DataItem>(`kimi:blog:${entry.link}`, () => fetchExternalEntry(entry));
         } catch {
             // Do not cache transient external fetch failures inside cache.tryGet
         }

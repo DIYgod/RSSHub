@@ -77,7 +77,7 @@ async function handler(ctx) {
         'link'
     ) as DataItem[];
 
-    const list = deduplicatedItems.toSorted((a, b) => compareDates(b!.pubDate, a!.pubDate)).slice(0, getRouteLimit(ctx, 20));
+    const list = deduplicatedItems.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

@@ -70,7 +70,7 @@ async function handler(ctx) {
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
-                    title: item.title!,
+                    title: item.title,
                     link: item.link,
                     description: item.description,
                     pubDate: article.datePublished ? parseDate(article.datePublished) : item.pubDate,

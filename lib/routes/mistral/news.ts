@@ -101,7 +101,7 @@ async function handler(ctx) {
                     description: html || item.description,
                     category: category ? [category] : undefined,
                     author: author || undefined,
-                } as DataItem;
+                };
             }),
         { concurrency: 5 }
     );

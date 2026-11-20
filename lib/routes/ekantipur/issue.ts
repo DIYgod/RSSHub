@@ -97,7 +97,7 @@ async function handler(ctx) {
                     .add(cover)
                     .find('img[data-src]')
                     .each((_, element) => {
-                        $(element).attr('src', $(element).attr('data-src')!);
+                        $(element).attr('src', $(element).attr('data-src'));
                         $(element).removeAttr('data-src');
                     });
                 const tags = $('.news-section-wrap-story a[href*="/tag/"]')

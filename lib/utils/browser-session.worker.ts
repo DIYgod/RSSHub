@@ -32,7 +32,7 @@ export class BrowserSession {
         if (body.invalidSessionId !== undefined && typeof body.invalidSessionId !== 'string') {
             return new Response('invalidSessionId must be a string.', { status: 400 });
         }
-        const invalidSessionId = body.invalidSessionId as string | undefined;
+        const invalidSessionId = body.invalidSessionId;
         // Serializing acquisition also coalesces simultaneous reports of an expired ID.
         const queued = this.queue;
         const operation = (async () => {

@@ -75,7 +75,7 @@ async function handler(ctx) {
                     $detail('.wp_articlecontent [pdfsrc]').each((_, el) => {
                         const attachment = $detail(el);
                         const title = attachment.attr('sudyfile-attr')?.match(/'title':'(.+?)'/)?.[1] ?? 'PDF';
-                        const attachmentUrl1 = new URL(attachment.attr('pdfsrc')!, item.link!).href;
+                        const attachmentUrl1 = new URL(attachment.attr('pdfsrc')!, item.link).href;
                         attachment.replaceWith($detail('<a>').attr('href', attachmentUrl1).text(title));
                     });
                     details.description = $detail('div.wp_articlecontent').html();

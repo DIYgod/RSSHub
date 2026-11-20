@@ -68,7 +68,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const description = $('.right_content').html();
                 return {
-                    title: title!,
+                    title,
                     link: itemUrl,
                     description,
                     pubDate: parseDate(date),

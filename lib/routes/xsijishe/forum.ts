@@ -193,7 +193,7 @@ async function handler(ctx) {
         items = await pMap(
             items,
             async (item) => {
-                const detail = await cache.tryGet(`xsijishe:article:v2:${item.link!}`, () => fetchArticleContent(item.link!, source));
+                const detail = await cache.tryGet(`xsijishe:article:v2:${item.link}`, () => fetchArticleContent(item.link, source));
                 return { ...item, ...detail };
             },
             { concurrency: 3, stopOnError: false }

@@ -59,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const pdfPath = article.find('a[href$="/pdf"]').attr('href');
                 let enclosureUrl: string | undefined;
                 if (pdfPath) {
-                    const pdfPageUrl = new URL(pdfPath, item.link!).href;
+                    const pdfPageUrl = new URL(pdfPath, item.link).href;
                     const pageSource1 = await ofetch(pdfPageUrl);
                     const pdfPage = load(pageSource1);
                     const downloadPath = pdfPage('main a[href$="/pdf/download"]').attr('href');

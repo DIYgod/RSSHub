@@ -31,8 +31,8 @@ export async function fetchList(path: string, title: string) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await ofetch(item.link);
                 const $detail = load(detailResponse);
 
                 const published = $detail('.contbar')

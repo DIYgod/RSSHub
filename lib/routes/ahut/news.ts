@@ -43,8 +43,8 @@ async function handler() {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
                 return {

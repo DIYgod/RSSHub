@@ -119,7 +119,7 @@ async function handler(ctx): Promise<Data> {
                 content.prepend(copyContent($('.post-main-img img').first(), $));
                 content.find('img[data-src]').each((_, image) => {
                     const element = $(image);
-                    element.attr('src', element.attr('data-src')!);
+                    element.attr('src', element.attr('data-src'));
                 });
                 return $.html(content);
             }),

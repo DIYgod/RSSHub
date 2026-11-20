@@ -72,7 +72,7 @@ async function handler(ctx) {
             const href = $article('a[aria-label]').attr('href');
 
             return {
-                title: title!,
+                title,
                 link: `${rootUrl}${href}`,
                 author,
                 pubDate,

@@ -505,10 +505,10 @@ const resolveItemAuthor = (detailsAuthor: DataItem['author'] | undefined, rssAut
 };
 
 const fetchArticleDetails = (entry: RssEntry): Promise<ParsedArticleDetails> =>
-    cache.tryGet(`sierra:blog:${entry.link}`, async () => {
+    cache.tryGet<ParsedArticleDetails>(`sierra:blog:${entry.link}`, async () => {
         const html = await ofetch(entry.link, { responseType: 'text' });
         return parseArticlePage(html, entry);
-    }) as Promise<ParsedArticleDetails>;
+    });
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);

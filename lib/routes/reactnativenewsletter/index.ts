@@ -54,7 +54,7 @@ async function handler(ctx: Context): Promise<Data> {
         list,
         (item) =>
             cache.tryGet(`reactnativenewsletter:issue:v3:${item.link}`, async () => {
-                const response = await ofetch(item.link!);
+                const response = await ofetch(item.link);
                 const $ = load(response);
                 const description = $('#templateBody').html();
                 if (!description) {

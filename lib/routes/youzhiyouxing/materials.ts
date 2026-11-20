@@ -134,7 +134,7 @@ async function handler(ctx) {
 
                 content('#zx-material-marker-root img[data-src]').each((_, image) => {
                     const $image = content(image);
-                    $image.attr('src', $image.attr('data-src')!).removeAttr('data-src');
+                    $image.attr('src', $image.attr('data-src')).removeAttr('data-src');
                 });
 
                 return {

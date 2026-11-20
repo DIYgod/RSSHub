@@ -35,7 +35,7 @@ const getCmsDetails = async (link: string) => {
         throw new Error(`Jishou University article content was not found: ${link}`);
     }
     body.find('img[data-src]').each((_, el) => {
-        $(el).attr('src', $(el).attr('data-src')!);
+        $(el).attr('src', $(el).attr('data-src'));
     });
     for (const el of body.find('[href], [src]').add(attachments).toArray()) {
         const node = $(el);

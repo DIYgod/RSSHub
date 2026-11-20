@@ -121,7 +121,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `80 Level - ${categoryLabel}`,
         link: category ? `${SITE_URL}/articles/${category}` : `${SITE_URL}/articles`,
         language: category === '80-level-china' ? 'zh-CN' : 'en',
-        item: items as DataItem[],
+        item: items,
     };
 }
 

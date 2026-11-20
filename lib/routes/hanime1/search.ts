@@ -47,7 +47,7 @@ async function handler(ctx) {
             const imageSrc = element.find('img.main-thumb, img[style*="object-fit: cover"], .video-card-inner img').attr('src'); // Select the thumbnail.
 
             return {
-                title: title!,
+                title,
                 link: videoLink,
                 description: `<img src="${imageSrc}">`,
             };

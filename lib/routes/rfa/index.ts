@@ -71,7 +71,7 @@ const renderSpecialReport = ($: CheerioAPI) => {
     content.find('h1, .byline, .dateline, .Theme-Byline, header.Theme-TitleSection, .Theme-CustomHtmlSection, .Theme-Footer, nav, footer, button, script, style, [aria-hidden="true"]').remove();
     content.find('img[data-src], source[data-src]').each((_, element) => {
         const image = $(element);
-        image.attr('src', image.attr('data-src')!);
+        image.attr('src', image.attr('data-src'));
         image.removeAttr('data-src');
     });
     return content.html() ?? undefined;

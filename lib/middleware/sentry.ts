@@ -23,7 +23,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     if (Sentry && performance.now() - time >= config.errorTrackingRouteTimeout) {
         Sentry.withScope((scope) => {
             scope.setTag('name', getRouteNameFromPath(ctx.req.path));
-            Sentry!.captureException(new Error('Route Timeout'));
+            Sentry.captureException(new Error('Route Timeout'));
         });
     }
 };

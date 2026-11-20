@@ -172,7 +172,7 @@ async function handler(ctx: Context): Promise<Data> {
         description: pageDescription,
         link: blogUrl,
         language: config.feedLanguage,
-        item: items as DataItem[],
+        item: items,
     };
 }
 

@@ -30,7 +30,7 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
     const out = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link, async () => {
                 const response = await ofetch.raw(item.link, { responseType: 'text' });
                 if (response.url === item.link) {
                     const $ = load(response._data ?? '');

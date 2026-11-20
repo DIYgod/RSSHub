@@ -135,7 +135,7 @@ async function handler(ctx) {
 
     const hasCompleteDates = items.every((item) => item.pubDate);
     const preserveSourceOrder = ctx.req.query('sorted') === 'false';
-    const orderedItems = preserveSourceOrder || !hasCompleteDates ? items : items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
+    const orderedItems = preserveSourceOrder || !hasCompleteDates ? items : items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate, a.pubDate));
     const selectedItems = preserveSourceOrder || hasCompleteDates ? orderedItems.slice(0, limit) : orderedItems;
 
     const { data: currentResponse } = await got(currentUrl);

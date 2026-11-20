@@ -66,8 +66,8 @@ async function handler() {
                 if (!isOnSite(item.link, 'bupt.edu.cn')) {
                     return item;
                 }
-                return cache.tryGet(item.link!, async () => {
-                    const response = await fetchWithPage(page, item.link!, { timeout: 12000 });
+                return cache.tryGet(item.link, async () => {
+                    const response = await fetchWithPage(page, item.link, { timeout: 12000 });
                     const detail = response.text;
                     const $ = load(detail);
                     $('.v_news_content style').remove();

@@ -28,7 +28,7 @@ async function parsePage(html: string) {
                 articleUrl = `${baseUrl}${a.attr('href')}`;
 
                 return cache.tryGet(articleUrl, async () => {
-                    const res = await got.get(articleUrl!);
+                    const res = await got.get(articleUrl);
                     const article = load(res.data);
                     const pubDate = parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm', 8);
 

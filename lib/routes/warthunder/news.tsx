@@ -97,7 +97,7 @@ async function handler() {
                 content.find('script, style').remove();
                 content.find('img[data-src]').each((_, element) => {
                     const image = $(element);
-                    image.attr('src', image.attr('data-src')!);
+                    image.attr('src', image.attr('data-src'));
                 });
                 return { description: content.html() || undefined };
             });

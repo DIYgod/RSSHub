@@ -28,7 +28,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
             }
             const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
             return {
-                title: a.prop('title') as string,
+                title: a.prop('title'),
                 link,
                 pubDate: parseDate(pubDate, 8),
             };

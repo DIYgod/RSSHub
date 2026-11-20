@@ -161,7 +161,7 @@ async function handler(ctx) {
                         .map((a) => {
                             const $a = $(a);
                             return {
-                                link: new URL($a.attr('href')!, item.link!).href,
+                                link: new URL($a.attr('href')!, item.link).href,
                                 name: $a.text().trim(),
                             };
                         }),
