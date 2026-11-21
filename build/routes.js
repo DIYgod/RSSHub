@@ -34616,6 +34616,78 @@ export default {
         "location": "exchange-repair.ts",
         "module": () => import('@/routes/apple/exchange-repair.ts')
       },
+      "/ml-research/:category?": {
+        "path": "/ml-research/:category?",
+        "name": "Machine Learning Research",
+        "url": "machinelearning.apple.com",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "example": "/apple/ml-research",
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "category": {
+            "description": "Content category: `all` (default, highlights + research papers), `highlights` (featured research & engineering articles), or `research` (research publications).",
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "label": "All"
+              },
+              {
+                "value": "highlights",
+                "label": "Highlights"
+              },
+              {
+                "value": "research",
+                "label": "Research Publications"
+              }
+            ]
+          }
+        },
+        "description": "Full-text engineering highlights and research publications (with full abstracts, KaTeX math, audio/video, and arXiv/GitHub links) from Apple Machine Learning Research (`machinelearning.apple.com`).",
+        "zh": {
+          "name": "机器学习研究",
+          "description": "获取 Apple Machine Learning Research（`machinelearning.apple.com`）的精选技术长文与研究论文（含完整摘要、公式、音视频及 arXiv/GitHub 源码链接）。",
+          "parameters": {
+            "category": "内容分类：默认 `all`（精选文章 + 研究论文合并按时间排序），可选 `highlights`（精选工程与研究博客）或 `research`（论文全库）。"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "machinelearning.apple.com/",
+              "machinelearning.apple.com/research/:slug"
+            ],
+            "target": "/ml-research"
+          },
+          {
+            "source": [
+              "machinelearning.apple.com/highlights"
+            ],
+            "target": "/ml-research/highlights"
+          },
+          {
+            "source": [
+              "machinelearning.apple.com/research"
+            ],
+            "target": "/ml-research/research"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "ml-research.ts",
+        "module": () => import('@/routes/apple/ml-research.ts')
+      },
       "/newsroom": {
         "path": "/newsroom",
         "name": "Newsroom (中国大陆)",
