@@ -149,6 +149,12 @@ describe('input type', () => {
         expect(parseDate(`5 Mar 2024${' '.repeat(100000)}x`)).toBeUndefined();
         expect(performance.now() - started).toBeLessThan(500);
     });
+
+    it('trims the input before the length limit', () => {
+        const padding = `\n${' '.repeat(300)}`;
+        expect(iso(parseDate(`${padding}November 18, 2026${padding}`, 'MMMM D, YYYY'))).toBe('2026-11-18T00:00:00.000Z');
+        expect(iso(parseDate(`${padding}2026-11-18${padding}`))).toBe('2026-11-18T00:00:00.000Z');
+    });
 });
 
 describe('parseDateStrict', () => {

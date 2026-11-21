@@ -58,8 +58,7 @@ const parseRfc2822 = (input: string): DateFields | undefined => {
     return { year: fullYear, month, day: Number(day), hour: toNumber(hour), minute: toNumber(minute), second: toNumber(second), offsetMinutes };
 };
 
-const parseUnformatted = (input: string, timeZone?: TimeZone): Temporal.Instant | undefined => {
-    const text = input.trim();
+const parseUnformatted = (text: string, timeZone?: TimeZone): Temporal.Instant | undefined => {
     const wallClock = WALL_CLOCK.exec(text) ?? WALL_CLOCK_COMPACT.exec(text);
     if (wallClock) {
         const [year, month, day, hour, minute, second] = wallClock.slice(1, 7).map((value) => toNumber(value));
@@ -105,7 +104,7 @@ const parse = (input: string | number, format: Format | undefined, timeZone: Tim
  *
  * - A number is a timestamp in milliseconds.
  * - Empty input (`''`, `undefined`, `null`, `0`) gives `undefined`. A value of another type throws a `TypeError`.
- * - A string longer than `MAX_DATE_LENGTH` is not parsed and gives `undefined`.
+ * - The string is trimmed. A string still longer than `MAX_DATE_LENGTH` is not parsed and gives `undefined`.
  * - With no format, the string must be ISO 8601 (`2024-03-05T10:00:00+08:00`, `2024-03-05 10:00`, `2024/3/5`) or an RFC 2822 / HTTP date (`Tue, 05 Mar 2024 10:00:00 GMT`). All other layouts need a format.
  * - A format uses the dayjs tokens (`YYYY-MM-DD HH:mm`); `X` and `x` are timestamps in seconds and milliseconds. With an array of formats, the first format that parses wins.
  *
@@ -119,7 +118,8 @@ const parse = (input: string | number, format: Format | undefined, timeZone: Tim
 export function parseDate(input: string | number, timeZone: number): Temporal.Instant | undefined;
 export function parseDate(input: string | number, format?: Format, timeZone?: TimeZone): Temporal.Instant | undefined;
 export function parseDate(input: string | number, format?: Format | number, timeZone?: TimeZone): Temporal.Instant | undefined {
-    return typeof format === 'number' ? parse(input, undefined, format, false) : parse(input, format, timeZone, false);
+    const text = typeof input === 'string' ? input.trim() : input;
+    return typeof format === 'number' ? parse(text, undefined, format, false) : parse(text, format, timeZone, false);
 }
 
 /**
