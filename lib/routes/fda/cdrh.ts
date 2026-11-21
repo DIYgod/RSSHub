@@ -45,7 +45,7 @@ async function handler(ctx) {
             if (!/^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(date)) {
                 return [];
             }
-            const pubDate = parseDate(`${date} UTC`);
+            const pubDate = parseDate(date, 'MMMM D, YYYY');
             return $heading
                 .nextUntil('h2')
                 .find('li > a[href]')
