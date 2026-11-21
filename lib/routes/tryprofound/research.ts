@@ -14,6 +14,7 @@ import { fetchArticleContent, fetchResearchArticles, renderImage, researchUrl, r
 
 const DEFAULT_LIMIT = 20;
 const DETAIL_CONCURRENCY = 5;
+const blogPrefix = `${rootUrl}/blog/`;
 
 const filterOptions = [
     { value: 'all', label: 'All Research' },
@@ -46,7 +47,7 @@ const toDataItem = async (article: ResearchArticle, link: string): Promise<DataI
     return {
         title: article.title,
         link,
-        description: coverImage + ((await fetchFullText(link)) ?? ''),
+        description: coverImage + ((link.startsWith(blogPrefix) ? await fetchFullText(link) : undefined) ?? ''),
         pubDate: article.publicationDate ? parseDate(article.publicationDate) : undefined,
         author: authors.length > 0 ? authors.join(', ') : undefined,
         category: (article.tags ?? []).map((tag) => tag.label),
