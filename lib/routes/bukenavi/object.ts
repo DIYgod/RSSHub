@@ -232,7 +232,7 @@ const enrich = async (card: ListCard, cookie: string | null): Promise<ListingExt
     }
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const regionSlug: string = ctx.req.param('region') ?? 'kanto';
     const region = REGIONS.find((r) => r.slug === regionSlug);
     if (!region) {

@@ -11,7 +11,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const locale = ctx.req.param('locale');
     if (locale && !isValidHost(locale)) {
         throw new InvalidParameterError('Invalid locale');

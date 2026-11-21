@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
 const leadTimeForecastRegex = /^(\d{4})(\d{2})(\d{2}) (\d{2}:\d{2}) \d+小时$/;
 const leadTimeRegex = /\d+小时$/;
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'observations/hourly-temperature/html' } = ctx.req.param();
     const productId = id.replace(/\.(html|htm)$/, '/$1');
     const limit = getRouteLimit(ctx, 50);

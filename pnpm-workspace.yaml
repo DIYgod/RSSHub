@@ -6,7 +6,6 @@ allowBuilds:
     core-js: true
     es5-ext: true
     esbuild: true
-    eslint-nibble: true
     patchright: true
     patchright-core: true
     protobufjs: true

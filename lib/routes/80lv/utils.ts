@@ -37,13 +37,13 @@ export interface ImageUrls {
     src2x?: string;
 }
 
-export interface ArticleTag {
+interface ArticleTag {
     name?: string;
     is_category?: boolean;
     slug?: string;
 }
 
-export interface ArticlePerson {
+interface ArticlePerson {
     name?: string;
     pseudonym?: string;
     position?: string | null;
@@ -99,17 +99,17 @@ export interface ArticleBlock {
     content?: ArticleBlockContent | ArticleBlock[];
 }
 
-export interface ArticleMetaEntry {
+interface ArticleMetaEntry {
     content?: string;
 }
 
-export interface ArticleMeta {
+interface ArticleMeta {
     'article-article:published_time'?: ArticleMetaEntry;
     'article-article:modified_time'?: ArticleMetaEntry;
     'og-og:image'?: ArticleMetaEntry;
 }
 
-export interface ArticleAside {
+interface ArticleAside {
     author?: ArticlePerson;
     interviewer?: ArticlePerson;
     date?: string;

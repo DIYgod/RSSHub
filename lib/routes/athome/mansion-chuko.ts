@@ -4,7 +4,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { athomeListUrl, checkSlugs, DEFAULT_LIMIT, fetchAthomeList, parseAthomeBuy, stateOf } from './residential-utils';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref');
     const city: string = ctx.req.param('city');
     checkSlugs({ pref, city });

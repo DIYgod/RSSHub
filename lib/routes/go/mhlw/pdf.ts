@@ -4,7 +4,7 @@ import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'stf/seisakunitsuite/bunya/houkokusuunosuii' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

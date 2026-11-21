@@ -9,7 +9,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { type = '1' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

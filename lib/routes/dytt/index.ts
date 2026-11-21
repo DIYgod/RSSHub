@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/time';
 const domain = 'www.dydytt.net';
 const baseUrl = `https://${domain}`;
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gndy/dyzz' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '25');
 

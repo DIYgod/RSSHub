@@ -14,7 +14,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { device, sort, searchParams } = ctx.req.param();
     if (!isValidHost(device)) {
         throw new InvalidParameterError('Invalid device');

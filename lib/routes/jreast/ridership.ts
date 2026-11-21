@@ -115,7 +115,7 @@ const resolveYearPage = async (year: string | undefined): Promise<{ link: string
     throw new Error(`jreast: FY${year} is not published`);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const yearParam: string | undefined = ctx.req.param('year');
     const page = await cache.tryGet(`jreast/ridership:${yearParam ?? 'latest'}`, async () => {
         const { link, html } = await resolveYearPage(yearParam);

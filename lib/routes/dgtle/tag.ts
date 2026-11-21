@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 
 import { baseUrl, ProcessFeedItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
 
     const targetUrl: string = new URL(`tag-${id}-1.html`, baseUrl).href;

@@ -143,7 +143,7 @@ const parseDetail = (html: string, region: string, id: string): DataItem | null 
     };
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const region: string = ctx.req.param('region') ?? 'kanto';
     const id: string = ctx.req.param('id');
     if (!REGIONS.has(region)) {

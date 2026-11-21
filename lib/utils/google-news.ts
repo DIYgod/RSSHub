@@ -10,4 +10,4 @@ const googleNewsUrl = (query: string, { hl = 'en-US', gl = 'US', ceid = 'US:en' 
 
 const fetchGoogleNews = (query: string, options?: GoogleNewsOptions) => parser.parseURL(googleNewsUrl(query, options));
 
-export { fetchGoogleNews, googleNewsUrl };
+export { fetchGoogleNews };

@@ -69,7 +69,7 @@ const parsePage = (html: string) => {
     return { fiscalYear, items };
 };
 
-export const handler = async (): Promise<Data> => {
+const handler = async (): Promise<Data> => {
     const page = await cache.tryGet(LINK, async () => parsePage(await ofetch(LINK)));
     return {
         title: `小田急電鉄 ${page.fiscalYear}年度 1日平均駅別乗降人員`,

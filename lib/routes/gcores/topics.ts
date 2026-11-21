@@ -5,7 +5,7 @@ import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '30');
 

@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 
-export const handler = (ctx: Context): void => {
+const handler = (ctx: Context): void => {
     const { id } = ctx.req.param();
     const query = new URLSearchParams(ctx.req.query());
     if (!query.has('limit')) {

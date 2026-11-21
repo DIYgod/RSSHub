@@ -11,7 +11,7 @@ import { clean } from '@/routes/temposmart/utils';
 import logger from '@/utils/logger';
 import { getPlaywrightPage } from '@/utils/playwright';
 
-export const HOST = 'https://www.athome.co.jp';
+const HOST = 'https://www.athome.co.jp';
 /** 都道府県 / 市区町村 slugs as the site spells them (tokyo, minato-city, yokohama_naka-city). */
 const SLUG = /^[a-z\d_-]+$/;
 export const DEFAULT_LIMIT = 20;

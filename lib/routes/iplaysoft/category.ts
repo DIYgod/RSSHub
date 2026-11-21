@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 
 import { fetchArchive } from './utils';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug = ctx.req.param('slug');
 
     const { name, items } = await fetchArchive(slug, 'categories');

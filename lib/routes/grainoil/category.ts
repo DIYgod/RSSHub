@@ -12,7 +12,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category, id: rawId } = ctx.req.param();
     const id = rawId.endsWith('.jspx') ? rawId.slice(0, -5) : rawId;
     if (!isValidHost(category)) {

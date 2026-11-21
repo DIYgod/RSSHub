@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 
-import { exec, youtubeOAuth2Client } from './api/google';
+import { exec, youtubeOAuth2Client } from './api/google-client';
 
 export const getPlaylistItems = (id, part, cache) =>
     cache.tryGet(

@@ -15,7 +15,7 @@ const actions = new Map([
     ['answers', '201'],
 ]);
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id, type = 'questions' } = ctx.req.param();
 
     if (type && type !== 'answers' && type !== 'questions') {

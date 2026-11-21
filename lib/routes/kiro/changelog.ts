@@ -14,7 +14,7 @@ import { compareDates, parseDate, parseDateStrict } from '@/utils/time';
 
 const parseCalendarDate = (value: string): Temporal.Instant | undefined => parseDateStrict(value.trim(), ['MMM D, YYYY', 'MMMM D, YYYY'], 0);
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://kiro.dev';

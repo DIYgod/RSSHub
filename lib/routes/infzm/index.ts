@@ -2,7 +2,7 @@ import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 
 import type { ContentsResponse } from './types';
-import { fetchArticles } from './utils';
+import { baseUrl, fetchArticles } from './utils';
 
 export const route: Route = {
     path: '/:id',
@@ -18,8 +18,6 @@ export const route: Route = {
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |`,
 };
-
-export const baseUrl = 'https://www.infzm.com/contents';
 
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');

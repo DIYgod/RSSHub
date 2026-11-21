@@ -7,7 +7,7 @@ import { collectPairs, photoUrl } from './residential';
 
 export const HOST = 'https://suumo.jp';
 /** 都道府県 / 市区町村 slugs as the site spells them in its area paths (tokyo, minato, yokohamashinaka). */
-export const SLUG = /^[a-z\d_-]+$/;
+const SLUG = /^[a-z\d_-]+$/;
 export const DEFAULT_LIMIT = 20;
 
 /** The 市区町村 slug without the `sc_` the site prints in its paths, so a Radar-matched `sc_minato` works too. */

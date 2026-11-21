@@ -25,7 +25,7 @@ function parseLegacyPublicationDate(value: string | undefined) {
     const calendarDate = /^[a-z]+ \d{1,2}, \d{4}$/i.test(value);
     return calendarDate ? parseDateStrict(value, 'MMMM D, YYYY') : parseDate(value);
 }
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 100);
     const baseUrl = 'https://windsurf.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;

@@ -65,7 +65,7 @@ const parseRows = (html: string, pref: string): DataItem[] => {
         .filter((item): item is DataItem => item !== null);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug: string = ctx.req.param('pref') ?? 'tokyo';
     const prefecture = PREFECTURES.find((p) => p.slug === slug);
     if (!prefecture) {

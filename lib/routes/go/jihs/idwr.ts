@@ -9,7 +9,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { year = Temporal.Now.zonedDateTimeISO('UTC').year } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

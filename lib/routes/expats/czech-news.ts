@@ -34,7 +34,7 @@ const getArticleDates = ($: CheerioAPI) => {
     }
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'daily-news' } = ctx.req.param();
     const detailLimit = getRouteLimit(ctx);
     const limit = ctx.req.query('sorted') === 'false' && detailLimit !== undefined ? detailLimit : Math.max(30, getRouteLimit(ctx, 30));

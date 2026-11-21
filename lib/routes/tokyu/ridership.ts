@@ -91,7 +91,7 @@ const latestYear = async (): Promise<number> => {
     return Math.max(...years);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const year: string | undefined = ctx.req.param('year');
     const fy = year === undefined ? await cache.tryGet('tokyu/ridership:latest', latestYear) : Number(year);
     if (!Number.isSafeInteger(fy)) {

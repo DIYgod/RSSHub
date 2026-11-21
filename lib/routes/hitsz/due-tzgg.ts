@@ -14,7 +14,7 @@ function parsePublicationDate(value?: string) {
     return parseDate(value, 8);
 }
 
-export const handler = async () => {
+const handler = async () => {
     const baseUrl = 'http://due.hitsz.edu.cn';
     const baseListPath = 'index/tzggqb';
 

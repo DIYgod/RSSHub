@@ -14,7 +14,7 @@ import { parseDate } from '@/utils/time';
 
 import { baseUrl, loadList } from './utils';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'gnxw' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 17);
 

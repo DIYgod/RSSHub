@@ -21,7 +21,7 @@ interface CbndataArticleDetail {
     thumbnail_url?: string;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
 

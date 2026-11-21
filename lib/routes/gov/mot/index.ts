@@ -11,7 +11,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'xinwen/jiaotongyaowen' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
     const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);

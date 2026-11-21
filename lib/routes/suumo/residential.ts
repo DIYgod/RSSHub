@@ -16,7 +16,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 export type DealKind = 'rent' | 'sale';
-export type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
+type PropertyKind = 'mansion' | 'apartment' | 'house' | 'land';
 
 export interface ResidentialExtra {
     source: string; // site id: 'suumo' / 'homes' / 'athome'
@@ -57,7 +57,7 @@ const nfkc = (text: string): string => text.normalize('NFKC');
  * '1万3740円' → 13740；'9,680万円' → 96800000；'1億2,000万円' → 120000000；'無' / 'なし' → 0.
  * The amount must lead the text and carry 億 / 万 / 円: a bare number or a month count is not yen.
  */
-export const parseYen = (text: string | null): number | null => {
+const parseYen = (text: string | null): number | null => {
     if (text === null) {
         return null;
     }
@@ -70,7 +70,7 @@ export const parseYen = (text: string | null): number | null => {
 };
 
 /** '1DK ( … )' → '1DK'；'２ＳＬＤＫ' → '2SLDK'；'ワンルーム' → '1R'. */
-export const parseLayout = (text: string | null): string | null => {
+const parseLayout = (text: string | null): string | null => {
     if (text === null) {
         return null;
     }
@@ -83,7 +83,7 @@ export const parseLayout = (text: string | null): string | null => {
 };
 
 /** '1975年4月（築51年7ヶ月）' → '1975-04'. A bare age ('築7年') is not a date and stays null. */
-export const parseYm = (text: string | null): string | null => {
+const parseYm = (text: string | null): string | null => {
     const m = text === null ? null : /(\d{4})\s*年\s*(\d{1,2})\s*月/.exec(nfkc(text));
     return m ? `${m[1]}-${m[2].padStart(2, '0')}` : null;
 };
@@ -93,7 +93,7 @@ export const parseYm = (text: string | null): string | null => {
  * A basement count written between the height and 建 is skipped, never read as the height.
  * Text without 階建 says nothing about the building.
  */
-export const parseFloorsTotal = (text: string | null): number | null => {
+const parseFloorsTotal = (text: string | null): number | null => {
     if (text === null) {
         return null;
     }
@@ -103,7 +103,7 @@ export const parseFloorsTotal = (text: string | null): number | null => {
 };
 
 /** '10階/15階建' → '10F'；'11階建 / 3階' → '3F'；'RC 15階建/11階部分' → '11F'. */
-export const parseOccupiedFloor = (text: string | null): string | null => {
+const parseOccupiedFloor = (text: string | null): string | null => {
     if (text === null) {
         return null;
     }
@@ -123,7 +123,7 @@ export const parseOccupiedFloor = (text: string | null): string | null => {
     );
 };
 
-export interface Access {
+interface Access {
     line: string | null;
     station: string | null;
     walk_min: number | null;
@@ -134,7 +134,7 @@ export interface Access {
  * 'Line/駅名駅 歩6分' (SUUMO 賃貸), 'Line「駅名」徒歩5分' (SUUMO 売買, athome), 'Line 駅名駅 徒歩6分' (HOME'S).
  * A bus leg means the minutes are not a walk to the station, so walk_min stays null.
  */
-export const parseAccess = (text: string | null): Access => {
+const parseAccess = (text: string | null): Access => {
     const first = text === null ? '' : nfkc(text.split('\n', 1)[0]).trim();
     const m = /^([^「]+)「([^」]+)」(.*)$/.exec(first) ?? /^([^/]+)\/([^/駅]+)駅(.*)$/.exec(first) ?? /^(\S+)\s+([^\s駅]+)駅(.*)$/.exec(first);
     if (!m) {
@@ -146,7 +146,7 @@ export const parseAccess = (text: string | null): Access => {
 };
 
 /** The site's own 種目 label → kind; anything not named explicitly stays null. */
-export const propertyKind = (label: string | null): PropertyKind | null => {
+const propertyKind = (label: string | null): PropertyKind | null => {
     if (label === null) {
         return null;
     }
@@ -217,7 +217,7 @@ const LABELS: Array<[RegExp, string]> = [
 ];
 
 /** A page label → its `raw` key; SUUMO's 「ヒント」 tooltips and whitespace are ignored. Unknown → null. */
-export const labelKey = (label: string): string | null => {
+const labelKey = (label: string): string | null => {
     const s = nfkc(label).replaceAll(/\s|ヒント/g, '');
     return LABELS.find(([re]) => re.test(s))?.[1] ?? null;
 };
@@ -298,7 +298,7 @@ const money = (text: string | null) => {
     return { months: /[ヶヵかカケ]月/.test(text) ? parseMonths(text) : null, jpy: parseYen(text) };
 };
 
-export const buildExtra = (base: { source: string; listing_id: string; deal_kind: DealKind }, raw: Record<string, string | null>, tags: string[] = []): ResidentialExtra => {
+const buildExtra = (base: { source: string; listing_id: string; deal_kind: DealKind }, raw: Record<string, string | null>, tags: string[] = []): ResidentialExtra => {
     const get = (key: string): string | null => raw[key] ?? null;
     const deposit = money(get('deposit'));
     const keyMoney = money(get('key_money'));
@@ -350,7 +350,7 @@ export const photoUrl = (src: string | undefined, host: string): string | undefi
  * with no building name (most houses) is named by its address: the 種目 is the same for every item
  * of a feed and would not tell them apart.
  */
-export const residentialTitle = (x: ResidentialExtra): string => [x.building_name ?? x.address ?? x.property_type, x.room_no ?? x.floor, x.layout].filter((p): p is string => p !== null).join(' ') || x.listing_id;
+const residentialTitle = (x: ResidentialExtra): string => [x.building_name ?? x.address ?? x.property_type, x.room_no ?? x.floor, x.layout].filter((p): p is string => p !== null).join(' ') || x.listing_id;
 
 const yen = (n: number): string => `${n.toLocaleString('ja-JP')}円`;
 
@@ -362,7 +362,7 @@ const lumpSum = (label: string, months: number | null, jpy: number | null): stri
 };
 
 /** Structured one-line summary used as the item description. */
-export const summarizeResidential = (x: ResidentialExtra): string =>
+const summarizeResidential = (x: ResidentialExtra): string =>
     [
         x.price_jpy === null ? null : `${x.deal_kind === 'rent' ? '賃料' : '価格'} ${yen(x.price_jpy)}`,
         x.management_fee_jpy === null ? null : `管理費 ${yen(x.management_fee_jpy)}`,
@@ -393,7 +393,7 @@ export interface ListedUnit {
  * The list is read fresh on every poll, so its values win; the detail page (cached) only fills
  * what the list left empty. Price changes therefore show up on the next poll, not the next cache expiry.
  */
-export const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>) => ({
+const mergeRaw = (list: Record<string, string | null>, detail: Record<string, string | null>) => ({
     ...list,
     ...detail,
     ...Object.fromEntries(Object.entries(list).filter(([, v]) => v !== null)),

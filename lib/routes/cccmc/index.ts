@@ -10,7 +10,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywgg/tzgg' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 15);
 

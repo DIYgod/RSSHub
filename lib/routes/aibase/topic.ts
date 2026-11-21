@@ -6,7 +6,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { buildApiUrl, processItems, rootUrl } from './util';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id, filter = 'id' } = ctx.req.param();
 
     const limit = getRouteLimit(ctx, 30);

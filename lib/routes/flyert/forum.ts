@@ -7,7 +7,7 @@ import got from '@/utils/got';
 
 import { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl } from './util';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { params } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
