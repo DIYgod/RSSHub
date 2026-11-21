@@ -45,7 +45,7 @@ const renderDescription = ({ images, intro, description }) =>
         </>
     );
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'newslist', category = 'all' } = ctx.req.param();
 
     if (!types.hasOwnProperty(type)) {

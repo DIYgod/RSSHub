@@ -115,7 +115,7 @@ const resolvedArea = ($: CheerioAPI): string | null => {
     return name !== undefined && name !== h1 ? name : null;
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref');
     const city: string = ctx.req.param('city');
     const type: string | undefined = ctx.req.param('type');

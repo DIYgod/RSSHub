@@ -195,7 +195,7 @@ const resolveFeedMetadata = (targetPages: PaperPage[], requestedPage: string | u
     };
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const requestedPage = ctx.req.param('page');
     const limit = getRouteLimit(ctx, 100);
 

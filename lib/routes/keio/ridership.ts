@@ -95,7 +95,7 @@ const parsePage = (html: string) => {
     return { years, items };
 };
 
-export const handler = async (): Promise<Data> => {
+const handler = async (): Promise<Data> => {
     const page = await cache.tryGet(LINK, async () => {
         const html = await ofetch(LINK);
         return parsePage(html);

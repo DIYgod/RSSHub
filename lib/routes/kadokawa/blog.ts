@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.kadokawa.com.tw';

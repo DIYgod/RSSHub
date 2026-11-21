@@ -96,7 +96,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     }),
 }));
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'all', language = 'english' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 100);
 

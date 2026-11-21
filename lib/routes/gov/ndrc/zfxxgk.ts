@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 15);
     const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit);
 

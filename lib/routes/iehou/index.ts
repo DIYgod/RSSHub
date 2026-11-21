@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/time';
 
 const parsePublicationDate = (value: string) => (value ? parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8) : undefined);
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 100);
 

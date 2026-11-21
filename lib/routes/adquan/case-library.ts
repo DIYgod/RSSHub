@@ -13,7 +13,7 @@ import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 24);
 
     const baseUrl = 'https://www.adquan.com';

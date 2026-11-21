@@ -51,7 +51,7 @@ async function getArticleContent(link: string) {
     const author = authors.length === 1 ? authors[0].name : authors.length ? authors : undefined;
     return { description, content: { html: description, text: body.text() }, author };
 }
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
     const baseUrl = 'https://windsurf.com';
     const targetUrl: string = new URL('blog', baseUrl).href;

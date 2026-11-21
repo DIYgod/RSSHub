@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 
 import { baseUrl, ProcessFeedItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const targetUrl: string = new URL('feed', baseUrl).href;
     const apiUrl: string = new URL('feed/getHotDynamic', baseUrl).href;
 

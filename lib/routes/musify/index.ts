@@ -41,7 +41,7 @@ async function fetchList(url: string) {
     }
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { language = '' } = ctx.req.param();
     if (language && !isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');

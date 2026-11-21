@@ -64,24 +64,8 @@ const gqlFeatures = JSON.stringify({
     view_counts_everywhere_api_enabled: false,
 });
 
-const timelineParams = {
-    include_can_media_tag: 1,
-    include_cards: 1,
-    include_entities: 1,
-    include_profile_interstitial_type: 0,
-    include_quote_count: 0,
-    include_reply_count: 0,
-    include_user_entities: 0,
-    include_ext_reply_count: 0,
-    include_ext_media_color: 0,
-    cards_platform: 'Web-13',
-    tweet_mode: 'extended',
-    send_error_codes: 1,
-    simple_quoted_tweet: 1,
-};
-
 const bearerToken = 'Bearer AAAAAAAAAAAAAAAAAAAAAFXzAwAAAAAAMHCxpeSDG1gLNLghVe8d74hl6k4%3DRUMF4xAQLsbeBhTSRrCiQpJtxoGWeyHrDb5te2jpGskWDFW82F';
 
 const guestActivateUrl = baseUrl + '/1.1/guest/activate.json';
 
-export { baseUrl, bearerToken, consumerKey, consumerSecret, gqlFeatures, gqlMap, guestActivateUrl, timelineParams };
+export { baseUrl, bearerToken, consumerKey, consumerSecret, gqlFeatures, gqlMap, guestActivateUrl };

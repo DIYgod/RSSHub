@@ -20,7 +20,7 @@ const audioMimeTypes = {
     flac: 'audio/flac',
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '1103' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

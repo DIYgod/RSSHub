@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news-events/latest-news' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 12);
 

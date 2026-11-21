@@ -34,7 +34,7 @@ interface MaintenanceResponse {
 
 const baseUrl = 'https://www.cloudflarestatus.com';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 100);
     const [incidents, maintenances] = await Promise.all([ofetch<StatusResponse>(`${baseUrl}/api/v2/incidents.json`), ofetch<MaintenanceResponse>(`${baseUrl}/api/v2/scheduled-maintenances.json`)]);
 

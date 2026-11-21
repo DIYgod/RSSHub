@@ -15,7 +15,7 @@ export const DETAIL_CONCURRENCY = 5;
 
 export type EntrySourceKind = 'kimi' | 'github' | 'huggingface' | 'github-pages' | 'external';
 
-export interface BlogListItem {
+interface BlogListItem {
     id?: string;
     title?: string;
     description?: string;
@@ -42,7 +42,7 @@ const SAFE_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
 const MEDIA_KEEP_SELECTOR = 'img, video, audio, table, iframe, svg, math, pre, code';
 const DECORATIVE_VIEWBOXES = new Set(['0 0 16 16', '0 0 23 24']);
 
-export const isHostnameOrSubdomain = (hostname: string, domain: string): boolean => hostname === domain || hostname.endsWith(`.${domain}`);
+const isHostnameOrSubdomain = (hostname: string, domain: string): boolean => hostname === domain || hostname.endsWith(`.${domain}`);
 
 const parseSafeUrl = (rawUrl: string | undefined, baseUrl: string, protocols: Set<string>): string | undefined => {
     const trimmed = rawUrl?.trim();
@@ -57,9 +57,9 @@ const parseSafeUrl = (rawUrl: string | undefined, baseUrl: string, protocols: Se
     }
 };
 
-export const resolveHttpUrl = (rawUrl: string | undefined, baseUrl = SITE_URL): string | undefined => parseSafeUrl(rawUrl, baseUrl, SAFE_HTTP_PROTOCOLS);
+const resolveHttpUrl = (rawUrl: string | undefined, baseUrl = SITE_URL): string | undefined => parseSafeUrl(rawUrl, baseUrl, SAFE_HTTP_PROTOCOLS);
 
-export const unwrapImageUrl = (rawUrl: string | undefined, baseUrl = SITE_URL): string | undefined => {
+const unwrapImageUrl = (rawUrl: string | undefined, baseUrl = SITE_URL): string | undefined => {
     const absolute = resolveHttpUrl(rawUrl, baseUrl);
     if (!absolute) {
         return undefined;

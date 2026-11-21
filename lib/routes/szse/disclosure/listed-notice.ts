@@ -23,7 +23,7 @@ function isValidDate(dateString: string): boolean {
     return date.year === year && date.month === month && date.day === day;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
     const query: string = ctx.req.param('query') ?? '';

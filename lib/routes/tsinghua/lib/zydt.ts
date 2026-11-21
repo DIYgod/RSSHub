@@ -20,7 +20,7 @@ async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'title'
     };
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category } = ctx.req.param();
     const limit = getRouteLimit(ctx, 10);
 

@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 const baseUrl = 'https://river.to/occasus';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit = getRouteLimit(ctx, 40);
 

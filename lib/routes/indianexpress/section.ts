@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'trending' } = ctx.req.param();
     const limit = Math.min(getRouteLimit(ctx, 50), 100);
 

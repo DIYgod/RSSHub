@@ -1,8 +1,23 @@
+import { config } from '@/config';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 import { API_URL } from './constant';
-import type { DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, Resently, UserDynamic, UserInfo, UserPost } from './types';
-import { requestAPI } from './utils';
+import type { BaseResponse, DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, Resently, UserDynamic, UserInfo, UserPost } from './types';
+
+async function requestAPI<T = any>(url: string) {
+    const response = await ofetch<BaseResponse<T>>(url, {
+        headers: {
+            Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
+            'User-Agent': config.sdo.ua!,
+        },
+    });
+
+    if (response.code !== 10000) {
+        throw new Error(response.msg);
+    }
+    return response.data;
+}
 
 // 获取用户游戏近况
 export const getResently = async (uid: string) => await requestAPI<Resently[]>(`${API_URL}/home/userInfo/getResently?uuid=${uid}`);

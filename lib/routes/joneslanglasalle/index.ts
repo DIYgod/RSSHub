@@ -55,7 +55,7 @@ const localeMap = new Map<string, LocaleConfig>([
     ],
 ]);
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 12);
 

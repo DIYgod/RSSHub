@@ -52,7 +52,7 @@ async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     };
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const params = ctx.req.param();
     let category: string;
     let id: string;

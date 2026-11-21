@@ -15,7 +15,7 @@ function parsePublicationDate(value?: string) {
     return parseDate(value, 8);
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 按类型分组（可直接用于 handler 中的逻辑判断）

@@ -1,14 +1,14 @@
-export interface Dependencies {
+interface Dependencies {
     version_id: string;
     project_id: string;
     file_name: string;
     dependency_type: string;
 }
-export interface Hashes {
+interface Hashes {
     sha512: string;
     sha1: string;
 }
-export interface File {
+interface File {
     hashes: Hashes;
     url: string;
     filename: string;
@@ -81,17 +81,17 @@ export interface Project {
     loaders: string[];
     gallery: Gallery[];
 }
-export interface DonationUrl {
+interface DonationUrl {
     id: string;
     platform: string;
     url: string;
 }
-export interface License {
+interface License {
     id: string;
     name: string;
     url: string;
 }
-export interface Gallery {
+interface Gallery {
     url: string;
     featured: boolean;
     title: string;

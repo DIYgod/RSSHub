@@ -58,7 +58,7 @@ async function fetchDetail(link: string) {
     };
     return processedItem;
 }
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const requestedLimit = Number(ctx.req.query('limit') ?? '30');
     const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
     const targetUrl: string = new URL('news', baseUrl).href;

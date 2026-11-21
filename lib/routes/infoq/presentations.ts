@@ -12,7 +12,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { conference } = ctx.req.param();
     if (conference && !isValidHost(conference)) {
         throw new InvalidParameterError('Invalid conference');

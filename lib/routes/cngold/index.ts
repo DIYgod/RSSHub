@@ -8,7 +8,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category: rawCategory = 'news-325' } = ctx.req.param();
     const category = rawCategory.endsWith('.html') ? rawCategory.slice(0, -5) : rawCategory;
     if (!isValidHost(category)) {

@@ -25,7 +25,7 @@ const parseListDate = (value: string, link?: string) => {
     return parseDateStrict(date, 'YYYY-MM-DD', 8);
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

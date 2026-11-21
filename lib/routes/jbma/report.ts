@@ -16,7 +16,7 @@ const parseGmtDate = (value: string | undefined) => {
     return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit = Math.min(getRouteLimit(ctx, 50), 100);
 

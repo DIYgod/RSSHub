@@ -18,7 +18,7 @@ const parsePublicationDate = (value?: string) => {
     return parseDate(`${date}T00:00:00+08:00`);
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'home/zxdt' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

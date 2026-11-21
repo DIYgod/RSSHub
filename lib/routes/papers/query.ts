@@ -52,7 +52,7 @@ const getPublicationDate = (value?: string | number | null): Temporal.Instant | 
     return parseDate(value);
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { keyword = 'query/Detection' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 150);
 

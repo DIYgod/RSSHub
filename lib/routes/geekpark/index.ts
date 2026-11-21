@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { column } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { bigId = '2', smallId = '11' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 15);
 

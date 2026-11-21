@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 
 import { parseItems } from './parser';
 
-export const handler = async (ctx: Context): Promise<Data | null> => {
+const handler = async (ctx: Context): Promise<Data | null> => {
     const baseUrl = 'https://www.melonbooks.co.jp';
     const query = ctx.req.param('query') ?? '';
     const url = `${baseUrl}/search/search.php?${query}`;

@@ -6,7 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-export const endPoints = {
+const endPoints = {
     zh: {
         url: 'https://odinapi.asus.com.cn/',
         lang: 'cn',
