@@ -49864,6 +49864,27 @@
       }
     ]
   },
+  "valueresearchonline.com": {
+    "_name": "Value Research",
+    "www": [
+      {
+        "title": "Knowledge Center",
+        "docs": "https://docs.rsshub.app/routes/valueresearchonline",
+        "source": [
+          "/indexinvestor/"
+        ],
+        "target": "/valueresearchonline/knowledge-center/index-investor"
+      },
+      {
+        "title": "Knowledge Center",
+        "docs": "https://docs.rsshub.app/routes/valueresearchonline",
+        "source": [
+          "/knowledge-center/:section/"
+        ],
+        "target": "/valueresearchonline/knowledge-center/:section"
+      }
+    ]
+  },
   "vb-audio.com": {
     "_name": "VB-Audio",
     "forum": [

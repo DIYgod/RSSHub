@@ -125099,6 +125099,84 @@
     "url": "v2ex.com",
     "lang": "zh-CN"
   },
+  "valueresearchonline": {
+    "routes": {
+      "/knowledge-center/:section": {
+        "path": "/knowledge-center/:section",
+        "name": "Knowledge Center",
+        "url": "www.valueresearchonline.com/knowledge-center/",
+        "example": "/valueresearchonline/knowledge-center/investing-for-income",
+        "categories": [
+          "finance"
+        ],
+        "parameters": {
+          "section": {
+            "description": "Knowledge Center section, the slug after `/knowledge-center/` in the URL",
+            "options": [
+              {
+                "value": "get-started",
+                "label": "Get Started"
+              },
+              {
+                "value": "index-investor",
+                "label": "The Index Investor"
+              },
+              {
+                "value": "invest-like-a-woman",
+                "label": "Invest Like a Woman"
+              },
+              {
+                "value": "investing-for-growth",
+                "label": "Investing for Growth"
+              },
+              {
+                "value": "investing-for-income",
+                "label": "Investing for Income"
+              },
+              {
+                "value": "tax-planning",
+                "label": "Tax Planning"
+              }
+            ]
+          }
+        },
+        "description": "Full-text articles from a Value Research Knowledge Center section, such as [The Index Investor](https://www.valueresearchonline.com/indexinvestor/) or [Investing for Income](https://www.valueresearchonline.com/knowledge-center/investing-for-income/). Video entries include the YouTube player and the transcript. Stories from the Value Research magazines (such as Mutual Fund Insight) are not public, so those items only carry the teaser the site shows. The item list follows the section's own curated RSS feed (20 entries), so it is not strictly ordered by date.",
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.valueresearchonline.com/indexinvestor/"
+            ],
+            "target": "/knowledge-center/index-investor"
+          },
+          {
+            "source": [
+              "www.valueresearchonline.com/knowledge-center/:section/"
+            ],
+            "target": "/knowledge-center/:section"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "view": 0,
+        "location": "knowledge-center.ts",
+        "module": "() => import('@/routes/valueresearchonline/knowledge-center.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Value Research",
+    "url": "www.valueresearchonline.com",
+    "lang": "en",
+    "description": "Mutual fund, stock and personal finance research from Value Research, an independent investment research firm in India."
+  },
   "vb-audio": {
     "routes": {
       "/voicemeeter/changelog": {

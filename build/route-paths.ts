@@ -3632,6 +3632,7 @@ export type RoutePath =
   | `/v2ex/topics/:type`
   | `/v2ex/xna`
   | `/v2rayshare/`
+  | `/valueresearchonline/knowledge-center/:section`
   | `/vb-audio/voicemeeter/changelog`
   | `/vcb-s/`
   | `/vcb-s/category/:cate`
