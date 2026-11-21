@@ -5922,6 +5922,9 @@
   "/maldita/updates/:category?": [
     "canonnizq"
   ],
+  "/manager-dev/newsletter/:sort?": [
+    "Rjnishant530"
+  ],
   "/manhuagui/comic/:id/:chapterCnt?": [
     "MegrezZhu"
   ],

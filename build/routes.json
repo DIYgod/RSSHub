@@ -84098,6 +84098,66 @@
     "name": "Maldita.es",
     "url": "maldita.es"
   },
+  "manager-dev": {
+    "routes": {
+      "/newsletter/:sort?": {
+        "path": "/newsletter/:sort?",
+        "name": "Newsletter",
+        "url": "www.manager.dev/newsletter",
+        "example": "/manager-dev/newsletter",
+        "parameters": {
+          "sort": {
+            "description": "Sort order, same as the tabs on the newsletter page",
+            "default": "most-read",
+            "options": [
+              {
+                "value": "most-read",
+                "label": "Most read"
+              },
+              {
+                "value": "newest",
+                "label": "Newest"
+              }
+            ]
+          }
+        },
+        "description": "Full-text posts from the Manager.dev newsletter, either the most-read posts of all time (by view count) or the newest posts. Sponsor blocks are removed.",
+        "categories": [
+          "blog"
+        ],
+        "maintainers": [
+          "Rjnishant530"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.manager.dev/newsletter"
+            ],
+            "target": "/newsletter"
+          }
+        ],
+        "view": 0,
+        "location": "newsletter.ts",
+        "module": "() => import('@/routes/manager-dev/newsletter.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Manager.dev",
+    "url": "www.manager.dev",
+    "categories": [
+      "blog"
+    ],
+    "lang": "en",
+    "description": "A weekly newsletter for engineering managers by Anton Zaides."
+  },
   "manhuagui": {
     "routes": {
       "/comic/:id/:chapterCnt?": {

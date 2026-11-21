@@ -2244,6 +2244,7 @@ export type RoutePath =
   | `/malaysiakini/:lang/:category?`
   | `/maldita/updates/:category?`
   | `/mamibuy/:caty?`
+  | `/manager-dev/newsletter/:sort?`
   | `/mangadex/manga/:id/:lang?`
   | `/mangadex/mdlist/:id/:lang?`
   | `/mangadex/user/feed/follow/:lang?`

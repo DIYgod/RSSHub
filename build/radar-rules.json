@@ -32361,6 +32361,19 @@
       }
     ]
   },
+  "manager.dev": {
+    "_name": "Manager.dev",
+    "www": [
+      {
+        "title": "Newsletter",
+        "docs": "https://docs.rsshub.app/routes/manager-dev",
+        "source": [
+          "/newsletter"
+        ],
+        "target": "/manager-dev/newsletter"
+      }
+    ]
+  },
   "mhgui.com": {
     "_name": "看漫画",
     "www": [
