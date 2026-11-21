@@ -11552,6 +11552,22 @@
       }
     ]
   },
+  "amazon.com": {
+    "_name": "Amazon",
+    "aws": [
+      {
+        "title": "AWS Blog",
+        "docs": "https://docs.rsshub.app/routes/amazon",
+        "source": [
+          "/blogs",
+          "/blogs/:category",
+          "/blogs/:category/feed",
+          "/blogs/:category/:slug"
+        ],
+        "target": "/amazon/blogs/:category?"
+      }
+    ]
+  },
   "android.com": {
     "_name": "Android",
     "source": [

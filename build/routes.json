@@ -33619,6 +33619,57 @@
         "location": "awsblogs.ts",
         "module": "() => import('@/routes/amazon/awsblogs.ts')"
       },
+      "/blogs/:category?": {
+        "path": "/blogs/:category?",
+        "name": "AWS Blog",
+        "url": "aws.amazon.com/blogs",
+        "example": "/amazon/blogs/machine-learning",
+        "categories": [
+          "blog"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "category": {
+            "description": "Blog category slug from the URL path (e.g. `aws`, `machine-learning`, `compute`, `security`, `architecture`, `containers`, `devops`, `database`)",
+            "default": "aws"
+          }
+        },
+        "description": "Full-text articles from a specific AWS Blog category via `aws.amazon.com/blogs/<category>/feed/`, stripping the WordPress author bio footer, merging co-authors, and resolving article `og:image` covers when posts have no body images.",
+        "zh": {
+          "name": "AWS 博客",
+          "parameters": {
+            "category": {
+              "description": "AWS 博客分类路径标识（如 `aws`、`machine-learning`、`compute`、`security`、`architecture`、`containers`、`devops`、`database`）",
+              "default": "aws"
+            }
+          },
+          "description": "通过 `aws.amazon.com/blogs/<category>/feed/` 获取指定 AWS 博客分类全文，清理文末作者简介页脚、补全合著作者，并在正文无配图时抓取页面 `og:image` 作为封面，默认对应 `aws` 分类。"
+        },
+        "radar": [
+          {
+            "source": [
+              "aws.amazon.com/blogs",
+              "aws.amazon.com/blogs/:category",
+              "aws.amazon.com/blogs/:category/feed",
+              "aws.amazon.com/blogs/:category/:slug"
+            ],
+            "target": "/blogs/:category?"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "blogs.tsx",
+        "module": "() => import('@/routes/amazon/blogs.tsx')"
+      },
       "/kindle/software-updates": {
         "path": "/kindle/software-updates",
         "categories": [

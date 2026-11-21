@@ -203,6 +203,7 @@ export type RoutePath =
   | `/alwayscontrol/news`
   | `/amazfitwatchfaces/:device/:sort/:searchParams?`
   | `/amazon/awsblogs/:locale?`
+  | `/amazon/blogs/:category?`
   | `/amazon/kindle/software-updates`
   | `/amd/newsroom/:category?/:language?`
   | `/amd/press-releases/:language?`

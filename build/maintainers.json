@@ -2524,6 +2524,9 @@
   "/amazon/awsblogs/:locale?": [
     "HankChow"
   ],
+  "/amazon/blogs/:category?": [
+    "ljh12138164"
+  ],
   "/amazon/kindle/software-updates": [
     "IvanWng97"
   ],
