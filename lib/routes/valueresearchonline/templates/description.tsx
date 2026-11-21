@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 interface DescriptionProps {
@@ -23,7 +24,7 @@ export const renderDescription = ({ subhead, youtubeId, bodyHtml, lockedNotice }
                     </p>
                 </>
             )}
-            {bodyHtml && <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />}
+            {bodyHtml && <div>{raw(bodyHtml)}</div>}
             {lockedNotice && (
                 <p>
                     <em>Preview only. {lockedNotice}.</em>

@@ -16,14 +16,14 @@ import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://www.valueresearchonline.com';
 
-const sections: Record<string, string> = {
-    'get-started': 'Get Started',
-    'index-investor': 'The Index Investor',
-    'invest-like-a-woman': 'Invest Like a Woman',
-    'investing-for-growth': 'Investing for Growth',
-    'investing-for-income': 'Investing for Income',
-    'tax-planning': 'Tax Planning',
-};
+const sections = new Map([
+    ['get-started', 'Get Started'],
+    ['index-investor', 'The Index Investor'],
+    ['invest-like-a-woman', 'Invest Like a Woman'],
+    ['investing-for-growth', 'Investing for Growth'],
+    ['investing-for-income', 'Investing for Income'],
+    ['tax-planning', 'Tax Planning'],
+]);
 
 const youtubeIdPattern = /^[\w-]{11}$/;
 
@@ -179,7 +179,7 @@ const parseVideo = ($: CheerioAPI, url: string): ArticleDetails | undefined => {
 };
 
 const fetchItem = (entry: FeedEntry): Promise<DataItem> =>
-    cache.tryGet(entry.link, async () => {
+    cache.tryGet<DataItem>(entry.link, async () => {
         const item: DataItem = {
             title: entry.title,
             link: entry.link,
@@ -213,7 +213,7 @@ const fetchItem = (entry: FeedEntry): Promise<DataItem> =>
             category: details.section ? [details.section] : item.category,
             image: details.image,
         };
-    }) as Promise<DataItem>;
+    });
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { section } = ctx.req.param();
@@ -225,7 +225,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const items = await pMap(entries, (entry) => fetchItem(entry), { concurrency: 5 });
 
     return {
-        title: `${sections[section] ?? section} - Value Research`,
+        title: `${sections.get(section) ?? section} - Value Research`,
         link,
         language: 'en',
         image: `${rootUrl}/assets/images/valueresearchonline-desktop.png`,
@@ -242,7 +242,7 @@ export const route: Route = {
     parameters: {
         section: {
             description: 'Knowledge Center section, the slug after `/knowledge-center/` in the URL',
-            options: Object.entries(sections).map(([value, label]) => ({ value, label })),
+            options: [...sections].map(([value, label]) => ({ value, label })),
         },
     },
     description: `Full-text articles from a Value Research Knowledge Center section, such as [The Index Investor](https://www.valueresearchonline.com/indexinvestor/) or [Investing for Income](https://www.valueresearchonline.com/knowledge-center/investing-for-income/). Video entries include the YouTube player and the transcript. Stories from the Value Research magazines (such as Mutual Fund Insight) are not public, so those items only carry the teaser the site shows. The item list follows the section's own curated RSS feed (20 entries), so it is not strictly ordered by date.`,
