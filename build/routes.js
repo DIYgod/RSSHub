@@ -11700,6 +11700,66 @@ export default {
     "url": "rottentomatoes.com",
     "lang": "en"
   },
+  "ryo.lu": {
+    "routes": {
+      "/journal/:lang?": {
+        "path": "/journal/:lang?",
+        "categories": [
+          "blog"
+        ],
+        "view": 0,
+        "example": "/ryo.lu/journal",
+        "parameters": {
+          "lang": {
+            "description": "Language",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh",
+                "label": "中文"
+              },
+              {
+                "value": "ja",
+                "label": "日本語"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ryo.lu/journal",
+              "ryo.lu/"
+            ],
+            "target": "/journal"
+          }
+        ],
+        "name": "Journal",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "ryo.lu/journal",
+        "location": "journal.tsx",
+        "module": () => import('@/routes/ryo.lu/journal.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Ryo Lu",
+    "url": "ryo.lu",
+    "lang": "en"
+  },
   "scmuseum": {
     "routes": {
       "/exhibition/:type?": {
@@ -14554,6 +14614,54 @@ export default {
     "url": "foresightnews.pro",
     "lang": "zh-CN"
   },
+  "fortnite": {
+    "routes": {
+      "/news/:options?": {
+        "path": "/news/:options?",
+        "categories": [
+          "game"
+        ],
+        "example": "/fortnite/news",
+        "parameters": {
+          "options": "Query-style options, `lang` and `tag`, see below"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.fortnite.com/news"
+            ],
+            "target": "/news"
+          },
+          {
+            "source": [
+              "www.fortnite.com/news/tag/:tag"
+            ],
+            "target": "/news/tag=:tag"
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "lyqluis"
+        ],
+        "url": "www.fortnite.com/news",
+        "description": "- `lang`, default `en-US`, one of `ar`, `de`, `en-US`, `es-ES`, `es-MX`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-BR`, `ru`, `tr`, `zh-Hans`\n- `tag`, optional, one of `battle-royale` (Battle Royale), `fortnite-competitive` (Fortnite Competitive), `fortnite-festival` (Fortnite Festival), `fortnite-news` (Fortnite News), `fortnite-og` (Fortnite OG), `fortnite-uefn-and-creative` (UEFN and Creative), `lego-fortnite` (LEGO Fortnite Odyssey), `lego-fortnite-brick-life` (LEGO Fortnite Brick Life), `ranked` (Ranked Battle Royale), `reload` (Reload), `rocket-racing` (Rocket Racing), `save-the-world` (Save the World)",
+        "location": "news.ts",
+        "module": () => import('@/routes/fortnite/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Fortnite",
+    "url": "fortnite.com",
+    "lang": "en"
+  },
   "gamekee": {
     "routes": {
       "/news": {
@@ -16810,6 +16918,50 @@ export default {
     "url": "mittrchina.com",
     "lang": "zh-CN"
   },
+  "mymusicsheet": {
+    "routes": {
+      "/user/sheets/:username/:iso?/:freeOnly?": {
+        "path": "/user/sheets/:username/:iso?/:freeOnly?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/mymusicsheet/user/sheets/HalcyonMusic/USD/1",
+        "parameters": {
+          "username": "Username, can be found in the URL",
+          "iso": "ISO 4217 currency code for displaying prices, defaults to `USD`",
+          "freeOnly": "Only return free scores, any value to enable"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mymusicfive.com/:username/*",
+              "mymusicfive.com/:username"
+            ],
+            "target": "/user/sheets/:username"
+          }
+        ],
+        "name": "User Sheets",
+        "maintainers": [
+          "Freddd13"
+        ],
+        "description": "Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.",
+        "location": "usersheets.tsx",
+        "module": () => import('@/routes/mymusicsheet/usersheets.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "mymusic5 (MyMusicSheet)",
+    "url": "mymusicfive.com",
+    "lang": "en"
+  },
   "nanhua": {
     "routes": {
       "/index-research/:category?": {
@@ -17627,6 +17779,75 @@ export default {
     "apiRoutes": {},
     "name": "Pixabay",
     "url": "pixabay.com",
+    "lang": "en"
+  },
+  "producthunt": {
+    "routes": {
+      "/feed": {
+        "path": "/feed",
+        "categories": [
+          "other"
+        ],
+        "example": "/producthunt/feed",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Official Feed",
+        "maintainers": [
+          "miaoyafeng",
+          "Fatpandac"
+        ],
+        "url": "www.producthunt.com/feed/",
+        "location": "feed.ts",
+        "module": () => import('@/routes/producthunt/feed.ts')
+      },
+      "/today": {
+        "path": "/today",
+        "categories": [
+          "other"
+        ],
+        "example": "/producthunt/today",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PRODUCTHUNT_ACCESS_TOKEN",
+              "description": "Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.",
+        "radar": [
+          {
+            "source": [
+              "www.producthunt.com/"
+            ]
+          }
+        ],
+        "name": "Top Products Launching Today",
+        "maintainers": [
+          "miaoyafeng",
+          "Fatpandac"
+        ],
+        "url": "www.producthunt.com/",
+        "location": "today.tsx",
+        "module": () => import('@/routes/producthunt/today.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Product Hunt",
+    "url": "www.producthunt.com",
+    "description": "> 官方 Feed 地址为: <https://www.producthunt.com/feed>",
     "lang": "en"
   },
   "qbittorrent": {
@@ -21391,6 +21612,42 @@ export default {
     "name": "Facebook",
     "url": "www.facebook.com",
     "lang": "en"
+  },
+  "fanbox": {
+    "routes": {
+      "/:creator": {
+        "path": "/:creator",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/fanbox/official",
+        "parameters": {
+          "creator": "fanbox user name"
+        },
+        "maintainers": [
+          "KarasuShin",
+          "pseudoyu"
+        ],
+        "name": "Creator",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FANBOX_SESSION_ID",
+              "description": "Required for private posts. Can be found in browser DevTools -> Application -> Cookies -> https://www.fanbox.cc -> FANBOXSESSID",
+              "optional": true
+            }
+          ],
+          "requirePuppeteer": false,
+          "nsfw": true
+        },
+        "location": "index.ts",
+        "module": () => import('@/routes/fanbox/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "fanbox",
+    "url": "www.fanbox.cc",
+    "lang": "zh-CN"
   },
   "fansly": {
     "routes": {
@@ -25544,6 +25801,60 @@ export default {
       "other"
     ],
     "lang": "zh-CN"
+  },
+  "zuvio": {
+    "routes": {
+      "/student5/:board?": {
+        "path": "/student5/:board?",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/zuvio/student5/34",
+        "parameters": {
+          "board": "看板 ID，空为全站文章，可在看板 URL 或下方路由找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "校園話題",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "student5.ts",
+        "module": () => import('@/routes/zuvio/student5.ts')
+      },
+      "/student5/boards": {
+        "path": "/student5/boards",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/zuvio/student5/boards",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "看板列表",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "boards.ts",
+        "module": () => import('@/routes/zuvio/boards.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Zuvio",
+    "url": "irs.zuvio.com.tw",
+    "lang": "zh-TW"
   },
   "douyin": {
     "routes": {
@@ -47284,7 +47595,6 @@ export default {
     "lang": "zh-TW"
   },
   "cline": {
-    "name": "cline",
     "routes": {
       "/blog": {
         "path": "/blog",
@@ -47320,7 +47630,14 @@ export default {
         "module": () => import('@/routes/cline/blog.ts')
       }
     },
-    "apiRoutes": {}
+    "apiRoutes": {},
+    "name": "Cline Official Blog",
+    "url": "cline.bot",
+    "description": "Cline Official Blog.\nCline is an AI-powered coding assistant that runs in VS Code. It goes beyond simple autocompletion by reading and writing across multiple files, executing commands, and adapting to your workflow—like having a skilled developer pair-programming with you right inside your editor.\nCline understands your codebase context and can help with everything from small code edits to complex refactoring tasks.",
+    "zh": {
+      "name": "Cline Official Blog",
+      "description": "Cline 官方博客"
+    }
   },
   "cloudflare": {
     "routes": {
@@ -52389,6 +52706,55 @@ export default {
     "name": "Cybercrime Magazine",
     "url": "cybersecurityventures.com",
     "lang": "en"
+  },
+  "czechstepbystep": {
+    "routes": {
+      "/kratke-ceske-zpravy": {
+        "path": "/kratke-ceske-zpravy",
+        "categories": [
+          "study"
+        ],
+        "example": "/czechstepbystep/kratke-ceske-zpravy",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy"
+            ],
+            "target": "/kratke-ceske-zpravy"
+          }
+        ],
+        "name": "Krátké české zprávy",
+        "maintainers": [
+          "cmp0xff"
+        ],
+        "url": "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy",
+        "description": "Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.",
+        "zh": {
+          "name": "捷克语短新闻",
+          "description": "来自 CzechStepByStep 的捷克语短新闻（Krátké české zprávy），包含视频、完整文字记录、在线练习和工作表。"
+        },
+        "location": "kratke-ceske-zpravy.ts",
+        "module": () => import('@/routes/czechstepbystep/kratke-ceske-zpravy.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "CzechStepByStep",
+    "url": "www.czechstepbystep.cz",
+    "lang": "cs",
+    "zh": {
+      "name": "捷克语学习",
+      "description": "捷克语学习网站，提供短新闻、在线练习与工作表。"
+    }
   },
   "cztv": {
     "routes": {
@@ -103479,6 +103845,96 @@ export default {
     "categories": [
       "game"
     ]
+  },
+  "psyche": {
+    "routes": {
+      "/topic/:topic": {
+        "path": "/topic/:topic",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/topic/therapeia",
+        "parameters": {
+          "topic": "Topic"
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/therapeia"
+            ],
+            "target": "/topic/therapeia"
+          },
+          {
+            "source": [
+              "psyche.co/eudaimonia"
+            ],
+            "target": "/topic/eudaimonia"
+          },
+          {
+            "source": [
+              "psyche.co/poiesis"
+            ],
+            "target": "/topic/poiesis"
+          }
+        ],
+        "name": "Topics",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported categories: Therapeia, Eudaimonia, and Poiesis.",
+        "location": "topic.ts",
+        "module": () => import('@/routes/psyche/topic.ts')
+      },
+      "/type/:type": {
+        "path": "/type/:type",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/psyche/type/ideas",
+        "parameters": {
+          "type": "Type"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "psyche.co/ideas"
+            ],
+            "target": "/type/ideas"
+          },
+          {
+            "source": [
+              "psyche.co/guides"
+            ],
+            "target": "/type/guides"
+          },
+          {
+            "source": [
+              "psyche.co/films"
+            ],
+            "target": "/type/films"
+          }
+        ],
+        "name": "Types",
+        "maintainers": [
+          "emdoe"
+        ],
+        "description": "Supported types: Ideas, Guides, and Films.",
+        "location": "type.ts",
+        "module": () => import('@/routes/psyche/type.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Psyche",
+    "url": "psyche.co",
+    "lang": "en"
   },
   "publico": {
     "routes": {
@@ -162951,6 +163407,69 @@ export default {
         "url": "yz.scnu.edu.cn/tongzhigonggao/ssgg",
         "location": "yjs.ts",
         "module": () => import('@/routes/scnu/yjs.ts')
+      },
+      "/physics-school-announcements": {
+        "path": "/physics-school-announcements",
+        "categories": [
+          "university"
+        ],
+        "example": "/scnu/physics-school-announcements",
+        "radar": [
+          {
+            "source": [
+              "physics.scnu.edu.cn/NEWS/Notices/*"
+            ]
+          }
+        ],
+        "name": "物理学院通知",
+        "maintainers": [
+          "Shinonome28"
+        ],
+        "url": "physics.scnu.edu.cn/NEWS/Notices/",
+        "location": "physics/announcements.ts",
+        "module": () => import('@/routes/scnu/physics/announcements.ts')
+      },
+      "/physics-school-news": {
+        "path": "/physics-school-news",
+        "categories": [
+          "university"
+        ],
+        "example": "/scnu/physics-school-news",
+        "radar": [
+          {
+            "source": [
+              "physics.scnu.edu.cn/NEWS/News/*"
+            ]
+          }
+        ],
+        "name": "物理学院新闻动态",
+        "maintainers": [
+          "Shinonome28"
+        ],
+        "url": "physics.scnu.edu.cn/NEWS/News/",
+        "location": "physics/news.ts",
+        "module": () => import('@/routes/scnu/physics/news.ts')
+      },
+      "/physics-school-research-news": {
+        "path": "/physics-school-research-news",
+        "categories": [
+          "university"
+        ],
+        "example": "/scnu/physics-school-research-news",
+        "radar": [
+          {
+            "source": [
+              "physics.scnu.edu.cn/RESEARCH/*"
+            ]
+          }
+        ],
+        "name": "物理学院科学研究动态",
+        "maintainers": [
+          "Shinonome28"
+        ],
+        "url": "physics.scnu.edu.cn/RESEARCH/",
+        "location": "physics/research.ts",
+        "module": () => import('@/routes/scnu/physics/research.ts')
       }
     },
     "apiRoutes": {},
@@ -166145,6 +166664,142 @@ export default {
     "url": "www.tryprofound.com",
     "lang": "en",
     "description": "Profound is an AI search visibility platform. Its Research Hub publishes data studies on answer engines, AI shopping and personal agents."
+  },
+  "twreporter": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/twreporter/category/world",
+        "parameters": {
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "twreporter.org/:category"
+            ]
+          },
+          {
+            "source": [
+              "twreporter.org/categories/world"
+            ],
+            "target": "/category/world"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/humanrights"
+            ],
+            "target": "/category/humanrights"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/politics-and-society"
+            ],
+            "target": "/category/politics_and_society"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/health"
+            ],
+            "target": "/category/health"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/environment"
+            ],
+            "target": "/category/environment"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/econ"
+            ],
+            "target": "/category/econ"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/culture"
+            ],
+            "target": "/category/culture"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/education"
+            ],
+            "target": "/category/education"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/podcast"
+            ],
+            "target": "/category/podcast"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/opinion"
+            ],
+            "target": "/category/opinion"
+          },
+          {
+            "source": [
+              "twreporter.org/categories/photography"
+            ],
+            "target": "/category/photos_section"
+          }
+        ],
+        "name": "分類",
+        "maintainers": [
+          "emdoe"
+        ],
+        "url": "twreporter.org/",
+        "location": "category.ts",
+        "module": () => import('@/routes/twreporter/category.ts')
+      },
+      "/newest": {
+        "path": "/newest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/twreporter/newest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "twreporter.org/"
+            ]
+          }
+        ],
+        "name": "最新",
+        "maintainers": [
+          "emdoe"
+        ],
+        "url": "twreporter.org/",
+        "location": "newest.ts",
+        "module": () => import('@/routes/twreporter/newest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "報導者",
+    "url": "twreporter.org",
+    "lang": "zh-TW"
   },
   "vocus": {
     "routes": {
@@ -169504,55 +170159,6 @@ export default {
     "description": "::: tip\n自 2024 年 7 月，未登录状态下大部分路由[无法获取全文](https://github.com/DIYgod/RSSHub/issues/16260)。若有需要请在登陆知乎后寻找并添加包含`z_c0`的 Cookies 至环境变量`ZHIHU_COOKIES`。\n:::",
     "lang": "zh-CN"
   },
-  "czechstepbystep": {
-    "routes": {
-      "/kratke-ceske-zpravy": {
-        "path": "/kratke-ceske-zpravy",
-        "categories": [
-          "study"
-        ],
-        "example": "/czechstepbystep/kratke-ceske-zpravy",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy"
-            ],
-            "target": "/kratke-ceske-zpravy"
-          }
-        ],
-        "name": "Krátké české zprávy",
-        "maintainers": [
-          "cmp0xff"
-        ],
-        "url": "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy",
-        "description": "Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.",
-        "zh": {
-          "name": "捷克语短新闻",
-          "description": "来自 CzechStepByStep 的捷克语短新闻（Krátké české zprávy），包含视频、完整文字记录、在线练习和工作表。"
-        },
-        "location": "kratke-ceske-zpravy.ts",
-        "module": () => import('@/routes/czechstepbystep/kratke-ceske-zpravy.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "CzechStepByStep",
-    "url": "www.czechstepbystep.cz",
-    "lang": "cs",
-    "zh": {
-      "name": "捷克语学习",
-      "description": "捷克语学习网站，提供短新闻、在线练习与工作表。"
-    }
-  },
   "finology": {
     "routes": {
       "/bullets": {
@@ -169747,54 +170353,6 @@ export default {
     "apiRoutes": {},
     "name": "Finology Insider",
     "url": "insider.finology.in",
-    "lang": "en"
-  },
-  "fortnite": {
-    "routes": {
-      "/news/:options?": {
-        "path": "/news/:options?",
-        "categories": [
-          "game"
-        ],
-        "example": "/fortnite/news",
-        "parameters": {
-          "options": "Query-style options, `lang` and `tag`, see below"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.fortnite.com/news"
-            ],
-            "target": "/news"
-          },
-          {
-            "source": [
-              "www.fortnite.com/news/tag/:tag"
-            ],
-            "target": "/news/tag=:tag"
-          }
-        ],
-        "name": "News",
-        "maintainers": [
-          "lyqluis"
-        ],
-        "url": "www.fortnite.com/news",
-        "description": "- `lang`, default `en-US`, one of `ar`, `de`, `en-US`, `es-ES`, `es-MX`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-BR`, `ru`, `tr`, `zh-Hans`\n- `tag`, optional, one of `battle-royale` (Battle Royale), `fortnite-competitive` (Fortnite Competitive), `fortnite-festival` (Fortnite Festival), `fortnite-news` (Fortnite News), `fortnite-og` (Fortnite OG), `fortnite-uefn-and-creative` (UEFN and Creative), `lego-fortnite` (LEGO Fortnite Odyssey), `lego-fortnite-brick-life` (LEGO Fortnite Brick Life), `ranked` (Ranked Battle Royale), `reload` (Reload), `rocket-racing` (Rocket Racing), `save-the-world` (Save the World)",
-        "location": "news.ts",
-        "module": () => import('@/routes/fortnite/news.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Fortnite",
-    "url": "fortnite.com",
     "lang": "en"
   },
   "gcores": {
@@ -170836,50 +171394,6 @@ export default {
     "url": "bbs.hupu.com",
     "lang": "zh-CN"
   },
-  "mymusicsheet": {
-    "routes": {
-      "/user/sheets/:username/:iso?/:freeOnly?": {
-        "path": "/user/sheets/:username/:iso?/:freeOnly?",
-        "categories": [
-          "shopping"
-        ],
-        "example": "/mymusicsheet/user/sheets/HalcyonMusic/USD/1",
-        "parameters": {
-          "username": "Username, can be found in the URL",
-          "iso": "ISO 4217 currency code for displaying prices, defaults to `USD`",
-          "freeOnly": "Only return free scores, any value to enable"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "mymusicfive.com/:username/*",
-              "mymusicfive.com/:username"
-            ],
-            "target": "/user/sheets/:username"
-          }
-        ],
-        "name": "User Sheets",
-        "maintainers": [
-          "Freddd13"
-        ],
-        "description": "Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.",
-        "location": "usersheets.tsx",
-        "module": () => import('@/routes/mymusicsheet/usersheets.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "mymusic5 (MyMusicSheet)",
-    "url": "mymusicfive.com",
-    "lang": "en"
-  },
   "pixiv": {
     "routes": {
       "/user/bookmarks/:id": {
@@ -171281,225 +171795,6 @@ export default {
     "name": "pixiv",
     "url": "www.pixiv.net",
     "lang": "ja"
-  },
-  "producthunt": {
-    "routes": {
-      "/feed": {
-        "path": "/feed",
-        "categories": [
-          "other"
-        ],
-        "example": "/producthunt/feed",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Official Feed",
-        "maintainers": [
-          "miaoyafeng",
-          "Fatpandac"
-        ],
-        "url": "www.producthunt.com/feed/",
-        "location": "feed.ts",
-        "module": () => import('@/routes/producthunt/feed.ts')
-      },
-      "/today": {
-        "path": "/today",
-        "categories": [
-          "other"
-        ],
-        "example": "/producthunt/today",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "PRODUCTHUNT_ACCESS_TOKEN",
-              "description": "Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "description": "Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.",
-        "radar": [
-          {
-            "source": [
-              "www.producthunt.com/"
-            ]
-          }
-        ],
-        "name": "Top Products Launching Today",
-        "maintainers": [
-          "miaoyafeng",
-          "Fatpandac"
-        ],
-        "url": "www.producthunt.com/",
-        "location": "today.tsx",
-        "module": () => import('@/routes/producthunt/today.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Product Hunt",
-    "url": "www.producthunt.com",
-    "description": "> 官方 Feed 地址为: <https://www.producthunt.com/feed>",
-    "lang": "en"
-  },
-  "psyche": {
-    "routes": {
-      "/topic/:topic": {
-        "path": "/topic/:topic",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/psyche/topic/therapeia",
-        "parameters": {
-          "topic": "Topic"
-        },
-        "radar": [
-          {
-            "source": [
-              "psyche.co/therapeia"
-            ],
-            "target": "/topic/therapeia"
-          },
-          {
-            "source": [
-              "psyche.co/eudaimonia"
-            ],
-            "target": "/topic/eudaimonia"
-          },
-          {
-            "source": [
-              "psyche.co/poiesis"
-            ],
-            "target": "/topic/poiesis"
-          }
-        ],
-        "name": "Topics",
-        "maintainers": [
-          "emdoe"
-        ],
-        "description": "Supported categories: Therapeia, Eudaimonia, and Poiesis.",
-        "location": "topic.ts",
-        "module": () => import('@/routes/psyche/topic.ts')
-      },
-      "/type/:type": {
-        "path": "/type/:type",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/psyche/type/ideas",
-        "parameters": {
-          "type": "Type"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "psyche.co/ideas"
-            ],
-            "target": "/type/ideas"
-          },
-          {
-            "source": [
-              "psyche.co/guides"
-            ],
-            "target": "/type/guides"
-          },
-          {
-            "source": [
-              "psyche.co/films"
-            ],
-            "target": "/type/films"
-          }
-        ],
-        "name": "Types",
-        "maintainers": [
-          "emdoe"
-        ],
-        "description": "Supported types: Ideas, Guides, and Films.",
-        "location": "type.ts",
-        "module": () => import('@/routes/psyche/type.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Psyche",
-    "url": "psyche.co",
-    "lang": "en"
-  },
-  "ryo.lu": {
-    "routes": {
-      "/journal/:lang?": {
-        "path": "/journal/:lang?",
-        "categories": [
-          "blog"
-        ],
-        "view": 0,
-        "example": "/ryo.lu/journal",
-        "parameters": {
-          "lang": {
-            "description": "Language",
-            "default": "en",
-            "options": [
-              {
-                "value": "en",
-                "label": "English"
-              },
-              {
-                "value": "zh",
-                "label": "中文"
-              },
-              {
-                "value": "ja",
-                "label": "日本語"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "ryo.lu/journal",
-              "ryo.lu/"
-            ],
-            "target": "/journal"
-          }
-        ],
-        "name": "Journal",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "ryo.lu/journal",
-        "location": "journal.tsx",
-        "module": () => import('@/routes/ryo.lu/journal.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Ryo Lu",
-    "url": "ryo.lu",
-    "lang": "en"
   },
   "sobooks": {
     "routes": {
@@ -174935,178 +175230,6 @@ export default {
     "description": "::: warning\n由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。\n:::",
     "lang": "zh-CN"
   },
-  "twreporter": {
-    "routes": {
-      "/category/:category": {
-        "path": "/category/:category",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/twreporter/category/world",
-        "parameters": {
-          "category": "Category"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "twreporter.org/:category"
-            ]
-          },
-          {
-            "source": [
-              "twreporter.org/categories/world"
-            ],
-            "target": "/category/world"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/humanrights"
-            ],
-            "target": "/category/humanrights"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/politics-and-society"
-            ],
-            "target": "/category/politics_and_society"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/health"
-            ],
-            "target": "/category/health"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/environment"
-            ],
-            "target": "/category/environment"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/econ"
-            ],
-            "target": "/category/econ"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/culture"
-            ],
-            "target": "/category/culture"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/education"
-            ],
-            "target": "/category/education"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/podcast"
-            ],
-            "target": "/category/podcast"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/opinion"
-            ],
-            "target": "/category/opinion"
-          },
-          {
-            "source": [
-              "twreporter.org/categories/photography"
-            ],
-            "target": "/category/photos_section"
-          }
-        ],
-        "name": "分類",
-        "maintainers": [
-          "emdoe"
-        ],
-        "url": "twreporter.org/",
-        "location": "category.ts",
-        "module": () => import('@/routes/twreporter/category.ts')
-      },
-      "/newest": {
-        "path": "/newest",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/twreporter/newest",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "twreporter.org/"
-            ]
-          }
-        ],
-        "name": "最新",
-        "maintainers": [
-          "emdoe"
-        ],
-        "url": "twreporter.org/",
-        "location": "newest.ts",
-        "module": () => import('@/routes/twreporter/newest.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "報導者",
-    "url": "twreporter.org",
-    "lang": "zh-TW"
-  },
-  "fanbox": {
-    "routes": {
-      "/:creator": {
-        "path": "/:creator",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/fanbox/official",
-        "parameters": {
-          "creator": "fanbox user name"
-        },
-        "maintainers": [
-          "KarasuShin",
-          "pseudoyu"
-        ],
-        "name": "Creator",
-        "features": {
-          "requireConfig": [
-            {
-              "name": "FANBOX_SESSION_ID",
-              "description": "Required for private posts. Can be found in browser DevTools -> Application -> Cookies -> https://www.fanbox.cc -> FANBOXSESSID",
-              "optional": true
-            }
-          ],
-          "requirePuppeteer": false,
-          "nsfw": true
-        },
-        "location": "index.ts",
-        "module": () => import('@/routes/fanbox/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "fanbox",
-    "url": "www.fanbox.cc",
-    "lang": "zh-CN"
-  },
   "google": {
     "routes": {
       "/album/:id": {
@@ -175525,60 +175648,6 @@ export default {
     "url": "www.google.com",
     "lang": "en"
   },
-  "zuvio": {
-    "routes": {
-      "/student5/boards": {
-        "path": "/student5/boards",
-        "categories": [
-          "bbs"
-        ],
-        "example": "/zuvio/student5/boards",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "看板列表",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "boards.ts",
-        "module": () => import('@/routes/zuvio/boards.ts')
-      },
-      "/student5/:board?": {
-        "path": "/student5/:board?",
-        "categories": [
-          "bbs"
-        ],
-        "example": "/zuvio/student5/34",
-        "parameters": {
-          "board": "看板 ID，空为全站文章，可在看板 URL 或下方路由找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "校園話題",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "student5.ts",
-        "module": () => import('@/routes/zuvio/student5.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Zuvio",
-    "url": "irs.zuvio.com.tw",
-    "lang": "zh-TW"
-  },
   "twitter": {
     "routes": {
       "/trends/:woeid?": {
@@ -175960,60 +176029,6 @@ export default {
   },
   "youtube": {
     "routes": {
-      "/community/:handle": {
-        "path": "/community/:handle",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/community/@JFlaMusic",
-        "parameters": {
-          "handle": "YouTube handles or channel id"
-        },
-        "name": "Community Posts",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "community.tsx",
-        "module": () => import('@/routes/youtube/community.tsx')
-      },
-      "/c/:username/:embed?": {
-        "path": "/c/:username/:embed?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/youtube/c/YouTubeCreators",
-        "parameters": {
-          "username": "YouTube custom URL",
-          "embed": "Default to embed the video, set to any value to disable embedding"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "YOUTUBE_KEY",
-              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/c/:id"
-            ],
-            "target": "/c/:id"
-          }
-        ],
-        "name": "Custom URL",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "custom.ts",
-        "module": () => import('@/routes/youtube/custom.ts')
-      },
       "/charts/:category?/:country?/:embed?": {
         "path": "/charts/:category?/:country?/:embed?",
         "categories": [
@@ -176078,6 +176093,60 @@ export default {
         "url": "www.youtube.com/feed/subscriptions",
         "location": "subscriptions.ts",
         "module": () => import('@/routes/youtube/subscriptions.ts')
+      },
+      "/community/:handle": {
+        "path": "/community/:handle",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/community/@JFlaMusic",
+        "parameters": {
+          "handle": "YouTube handles or channel id"
+        },
+        "name": "Community Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "community.tsx",
+        "module": () => import('@/routes/youtube/community.tsx')
+      },
+      "/c/:username/:embed?": {
+        "path": "/c/:username/:embed?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/c/YouTubeCreators",
+        "parameters": {
+          "username": "YouTube custom URL",
+          "embed": "Default to embed the video, set to any value to disable embedding"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "YOUTUBE_KEY",
+              "description": " YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/c/:id"
+            ],
+            "target": "/c/:id"
+          }
+        ],
+        "name": "Custom URL",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "custom.ts",
+        "module": () => import('@/routes/youtube/custom.ts')
       },
       "/channel/:id/:routeParams?": {
         "path": "/channel/:id/:routeParams?",

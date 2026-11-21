@@ -3026,6 +3026,9 @@ export type RoutePath =
   | `/scnu/cs/match`
   | `/scnu/jw`
   | `/scnu/library`
+  | `/scnu/physics-school-announcements`
+  | `/scnu/physics-school-news`
+  | `/scnu/physics-school-research-news`
   | `/scnu/ss`
   | `/scnu/yjs`
   | `/scoop/apps/:query?`

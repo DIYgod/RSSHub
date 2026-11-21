@@ -3134,6 +3134,20 @@
       }
     ]
   },
+  "ryo.lu": {
+    "_name": "Ryo Lu",
+    ".": [
+      {
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/ryo.lu",
+        "source": [
+          "/journal",
+          "/"
+        ],
+        "target": "/ryo.lu/journal"
+      }
+    ]
+  },
   "scmuseum.cn": {
     "_name": "Sichuan Museum",
     "www": [
@@ -3875,6 +3889,27 @@
       }
     ]
   },
+  "fortnite.com": {
+    "_name": "Fortnite",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/fortnite",
+        "source": [
+          "/news"
+        ],
+        "target": "/fortnite/news"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/fortnite",
+        "source": [
+          "/news/tag/:tag"
+        ],
+        "target": "/fortnite/news/tag=:tag"
+      }
+    ]
+  },
   "gamekee.com": {
     "_name": "GameKee | 游戏百科攻略",
     ".": [
@@ -4335,6 +4370,20 @@
       }
     ]
   },
+  "mymusicfive.com": {
+    "_name": "mymusic5 (MyMusicSheet)",
+    ".": [
+      {
+        "title": "User Sheets",
+        "docs": "https://docs.rsshub.app/routes/mymusicsheet",
+        "source": [
+          "/:username/*",
+          "/:username"
+        ],
+        "target": "/mymusicsheet/user/sheets/:username"
+      }
+    ]
+  },
   "nanhua.net": {
     "_name": "南华期货",
     "www": [
@@ -4581,6 +4630,19 @@
           "/:searchType/search/:q"
         ],
         "target": "/pixabay/search/:q"
+      }
+    ]
+  },
+  "producthunt.com": {
+    "_name": "Product Hunt",
+    "www": [
+      {
+        "title": "Top Products Launching Today",
+        "docs": "https://docs.rsshub.app/routes/producthunt",
+        "source": [
+          "/"
+        ],
+        "target": "/producthunt/today"
       }
     ]
   },
@@ -17038,7 +17100,7 @@
     ]
   },
   "cline.bot": {
-    "_name": "cline",
+    "_name": "Cline Official Blog",
     ".": [
       {
         "title": "Blog",
@@ -19018,6 +19080,19 @@
           "/mergers-and-acquisitions-report"
         ],
         "target": "/cybersecurityventures/news/mergers-and-acquisitions-report"
+      }
+    ]
+  },
+  "czechstepbystep.cz": {
+    "_name": "CzechStepByStep",
+    "www": [
+      {
+        "title": "Krátké české zprávy",
+        "docs": "https://docs.rsshub.app/routes/czechstepbystep",
+        "source": [
+          "/kategorie/kratke-ceske-zpravy"
+        ],
+        "target": "/czechstepbystep/kratke-ceske-zpravy"
       }
     ]
   },
@@ -41872,6 +41947,59 @@
       }
     ]
   },
+  "psyche.co": {
+    "_name": "Psyche",
+    ".": [
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/therapeia"
+        ],
+        "target": "/psyche/topic/therapeia"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/eudaimonia"
+        ],
+        "target": "/psyche/topic/eudaimonia"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/poiesis"
+        ],
+        "target": "/psyche/topic/poiesis"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/ideas"
+        ],
+        "target": "/psyche/type/ideas"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/guides"
+        ],
+        "target": "/psyche/type/guides"
+      },
+      {
+        "title": "Types",
+        "docs": "https://docs.rsshub.app/routes/psyche",
+        "source": [
+          "/films"
+        ],
+        "target": "/psyche/type/films"
+      }
+    ]
+  },
   "publico.es": {
     "_name": "Público",
     ".": [
@@ -60821,6 +60949,32 @@
         ],
         "target": "/scnu/yjs"
       }
+    ],
+    "physics": [
+      {
+        "title": "物理学院通知",
+        "docs": "https://docs.rsshub.app/routes/scnu",
+        "source": [
+          "/NEWS/Notices/*"
+        ],
+        "target": "/scnu/physics-school-announcements"
+      },
+      {
+        "title": "物理学院新闻动态",
+        "docs": "https://docs.rsshub.app/routes/scnu",
+        "source": [
+          "/NEWS/News/*"
+        ],
+        "target": "/scnu/physics-school-news"
+      },
+      {
+        "title": "物理学院科学研究动态",
+        "docs": "https://docs.rsshub.app/routes/scnu",
+        "source": [
+          "/RESEARCH/*"
+        ],
+        "target": "/scnu/physics-school-research-news"
+      }
     ]
   },
   "scu.edu.cn": {
@@ -61926,6 +62080,115 @@
       }
     ]
   },
+  "twreporter.org": {
+    "_name": "報導者",
+    ".": [
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/:category"
+        ],
+        "target": "/twreporter/category/:category"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/world"
+        ],
+        "target": "/twreporter/category/world"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/humanrights"
+        ],
+        "target": "/twreporter/category/humanrights"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/politics-and-society"
+        ],
+        "target": "/twreporter/category/politics_and_society"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/health"
+        ],
+        "target": "/twreporter/category/health"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/environment"
+        ],
+        "target": "/twreporter/category/environment"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/econ"
+        ],
+        "target": "/twreporter/category/econ"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/culture"
+        ],
+        "target": "/twreporter/category/culture"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/education"
+        ],
+        "target": "/twreporter/category/education"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/podcast"
+        ],
+        "target": "/twreporter/category/podcast"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/opinion"
+        ],
+        "target": "/twreporter/category/opinion"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/categories/photography"
+        ],
+        "target": "/twreporter/category/photos_section"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/twreporter",
+        "source": [
+          "/"
+        ],
+        "target": "/twreporter/newest"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
@@ -62767,19 +63030,6 @@
       }
     ]
   },
-  "czechstepbystep.cz": {
-    "_name": "CzechStepByStep",
-    "www": [
-      {
-        "title": "Krátké české zprávy",
-        "docs": "https://docs.rsshub.app/routes/czechstepbystep",
-        "source": [
-          "/kategorie/kratke-ceske-zpravy"
-        ],
-        "target": "/czechstepbystep/kratke-ceske-zpravy"
-      }
-    ]
-  },
   "finology.in": {
     "_name": "Finology Insider",
     "insider": [
@@ -62926,27 +63176,6 @@
           "/tag/:topic"
         ],
         "target": "/finology/tag/:topic"
-      }
-    ]
-  },
-  "fortnite.com": {
-    "_name": "Fortnite",
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/fortnite",
-        "source": [
-          "/news"
-        ],
-        "target": "/fortnite/news"
-      },
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/fortnite",
-        "source": [
-          "/news/tag/:tag"
-        ],
-        "target": "/fortnite/news/tag=:tag"
       }
     ]
   },
@@ -63229,20 +63458,6 @@
       }
     ]
   },
-  "mymusicfive.com": {
-    "_name": "mymusic5 (MyMusicSheet)",
-    ".": [
-      {
-        "title": "User Sheets",
-        "docs": "https://docs.rsshub.app/routes/mymusicsheet",
-        "source": [
-          "/:username/*",
-          "/:username"
-        ],
-        "target": "/mymusicsheet/user/sheets/:username"
-      }
-    ]
-  },
   "pixiv.net": {
     "_name": "pixiv",
     "www": [
@@ -63301,86 +63516,6 @@
           "/en/users/:id"
         ],
         "target": "/pixiv/user/novels/:id/true"
-      }
-    ]
-  },
-  "producthunt.com": {
-    "_name": "Product Hunt",
-    "www": [
-      {
-        "title": "Top Products Launching Today",
-        "docs": "https://docs.rsshub.app/routes/producthunt",
-        "source": [
-          "/"
-        ],
-        "target": "/producthunt/today"
-      }
-    ]
-  },
-  "psyche.co": {
-    "_name": "Psyche",
-    ".": [
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/therapeia"
-        ],
-        "target": "/psyche/topic/therapeia"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/eudaimonia"
-        ],
-        "target": "/psyche/topic/eudaimonia"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/poiesis"
-        ],
-        "target": "/psyche/topic/poiesis"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/ideas"
-        ],
-        "target": "/psyche/type/ideas"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/guides"
-        ],
-        "target": "/psyche/type/guides"
-      },
-      {
-        "title": "Types",
-        "docs": "https://docs.rsshub.app/routes/psyche",
-        "source": [
-          "/films"
-        ],
-        "target": "/psyche/type/films"
-      }
-    ]
-  },
-  "ryo.lu": {
-    "_name": "Ryo Lu",
-    ".": [
-      {
-        "title": "Journal",
-        "docs": "https://docs.rsshub.app/routes/ryo.lu",
-        "source": [
-          "/journal",
-          "/"
-        ],
-        "target": "/ryo.lu/journal"
       }
     ]
   },
@@ -63989,115 +64124,6 @@
       }
     ]
   },
-  "twreporter.org": {
-    "_name": "報導者",
-    ".": [
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/:category"
-        ],
-        "target": "/twreporter/category/:category"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/world"
-        ],
-        "target": "/twreporter/category/world"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/humanrights"
-        ],
-        "target": "/twreporter/category/humanrights"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/politics-and-society"
-        ],
-        "target": "/twreporter/category/politics_and_society"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/health"
-        ],
-        "target": "/twreporter/category/health"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/environment"
-        ],
-        "target": "/twreporter/category/environment"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/econ"
-        ],
-        "target": "/twreporter/category/econ"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/culture"
-        ],
-        "target": "/twreporter/category/culture"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/education"
-        ],
-        "target": "/twreporter/category/education"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/podcast"
-        ],
-        "target": "/twreporter/category/podcast"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/opinion"
-        ],
-        "target": "/twreporter/category/opinion"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/categories/photography"
-        ],
-        "target": "/twreporter/category/photos_section"
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/twreporter",
-        "source": [
-          "/"
-        ],
-        "target": "/twreporter/newest"
-      }
-    ]
-  },
   "google.com": {
     "_name": "Google",
     "artsandculture": [
@@ -64231,14 +64257,6 @@
     "_name": "YouTube",
     "www": [
       {
-        "title": "Custom URL",
-        "docs": "https://docs.rsshub.app/routes/youtube",
-        "source": [
-          "/c/:id"
-        ],
-        "target": "/youtube/c/:id"
-      },
-      {
         "title": "Subscriptions",
         "docs": "https://docs.rsshub.app/routes/youtube",
         "source": [
@@ -64246,6 +64264,14 @@
           "/feed/channels"
         ],
         "target": "/youtube/subscriptions"
+      },
+      {
+        "title": "Custom URL",
+        "docs": "https://docs.rsshub.app/routes/youtube",
+        "source": [
+          "/c/:id"
+        ],
+        "target": "/youtube/c/:id"
       },
       {
         "title": "Channel with id",

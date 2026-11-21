@@ -975,6 +975,9 @@
   "/rottentomatoes/browse/:list?": [
     "DIYgod"
   ],
+  "/ryo.lu/journal/:lang?": [
+    "TonyRL"
+  ],
   "/scmuseum/exhibition/:type?": [
     "magazian"
   ],
@@ -1217,6 +1220,9 @@
   "/foresightnews/news": [
     "nczitzk"
   ],
+  "/fortnite/news/:options?": [
+    "lyqluis"
+  ],
   "/gamekee/news": [
     "ueiu"
   ],
@@ -1412,6 +1418,9 @@
     "EsuRt",
     "queensferryme"
   ],
+  "/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?": [
+    "Freddd13"
+  ],
   "/nanhua/index-research/:category?": [
     "pseudoyu"
   ],
@@ -1474,6 +1483,14 @@
   ],
   "/pixabay/search/:q/:order?": [
     "TonyRL"
+  ],
+  "/producthunt/feed": [
+    "miaoyafeng",
+    "Fatpandac"
+  ],
+  "/producthunt/today": [
+    "miaoyafeng",
+    "Fatpandac"
   ],
   "/qbittorrent/news": [
     "TonyRL"
@@ -1799,6 +1816,10 @@
   "/facebook/reels/:id": [
     "TonyRL"
   ],
+  "/fanbox/:creator": [
+    "KarasuShin",
+    "pseudoyu"
+  ],
   "/fansly/user/:username": [
     "TonyRL"
   ],
@@ -2121,6 +2142,12 @@
     "TonyRL"
   ],
   "/wellcee/support-city": [
+    "TonyRL"
+  ],
+  "/zuvio/student5/:board?": [
+    "TonyRL"
+  ],
+  "/zuvio/student5/boards": [
     "TonyRL"
   ],
   "/douyin/hashtag/:cid/:routeParams?": [
@@ -3760,6 +3787,9 @@
   ],
   "/cybersecurityventures/news/:category?": [
     "KarasuShin"
+  ],
+  "/czechstepbystep/kratke-ceske-zpravy": [
+    "cmp0xff"
   ],
   "/cztv/zjxwlb/daily": [
     "yhkang"
@@ -7117,6 +7147,12 @@
   ],
   "/psnine/trade": [
     "betta-cyber"
+  ],
+  "/psyche/topic/:topic": [
+    "emdoe"
+  ],
+  "/psyche/type/:type": [
+    "emdoe"
   ],
   "/publico/ciencias/:subsection?": [
     "adrianrico97"
@@ -12074,6 +12110,15 @@
   "/scnu/yjs": [
     "shengmaosu"
   ],
+  "/scnu/physics-school-announcements": [
+    "Shinonome28"
+  ],
+  "/scnu/physics-school-news": [
+    "Shinonome28"
+  ],
+  "/scnu/physics-school-research-news": [
+    "Shinonome28"
+  ],
   "/scu/jwc/notice": [
     "KXXH"
   ],
@@ -12354,6 +12399,12 @@
   ],
   "/tryprofound/research/:filter?": [
     "Rjnishant530"
+  ],
+  "/twreporter/category/:category": [
+    "emdoe"
+  ],
+  "/twreporter/newest": [
+    "emdoe"
   ],
   "/vocus/publication/:id": [
     "Maecenas"
@@ -12643,9 +12694,6 @@
   "/zhihu/zhuanlan/:id": [
     "DIYgod"
   ],
-  "/czechstepbystep/kratke-ceske-zpravy": [
-    "cmp0xff"
-  ],
   "/finology/bullets": [
     "Rjnishant530"
   ],
@@ -12657,9 +12705,6 @@
   ],
   "/finology/tag/:topic": [
     "Rjnishant530"
-  ],
-  "/fortnite/news/:options?": [
-    "lyqluis"
   ],
   "/gcores/radios/:category?": [
     "eternasuno"
@@ -12749,9 +12794,6 @@
     "nczitzk",
     "hyoban"
   ],
-  "/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?": [
-    "Freddd13"
-  ],
   "/pixiv/user/bookmarks/:id": [
     "EYHN"
   ],
@@ -12774,23 +12816,6 @@
   "/pixiv/user/novels/:id/:full_content?": [
     "TonyRL",
     "Tsuyumi25"
-  ],
-  "/producthunt/feed": [
-    "miaoyafeng",
-    "Fatpandac"
-  ],
-  "/producthunt/today": [
-    "miaoyafeng",
-    "Fatpandac"
-  ],
-  "/psyche/topic/:topic": [
-    "emdoe"
-  ],
-  "/psyche/type/:type": [
-    "emdoe"
-  ],
-  "/ryo.lu/journal/:lang?": [
-    "TonyRL"
   ],
   "/sobooks/date/:date?": [
     "nczitzk"
@@ -12841,16 +12866,6 @@
     "TonyRL",
     "ETiV"
   ],
-  "/twreporter/category/:category": [
-    "emdoe"
-  ],
-  "/twreporter/newest": [
-    "emdoe"
-  ],
-  "/fanbox/:creator": [
-    "KarasuShin",
-    "pseudoyu"
-  ],
   "/google/album/:id": [
     "hoilc"
   ],
@@ -12896,12 +12911,6 @@
   "/google/play/:id/:lang?": [
     "surwall"
   ],
-  "/zuvio/student5/boards": [
-    "TonyRL"
-  ],
-  "/zuvio/student5/:board?": [
-    "TonyRL"
-  ],
   "/twitter/trends/:woeid?": [
     "sakamossan"
   ],
@@ -12946,16 +12955,16 @@
     "CaoMeiYouRen",
     "pseudoyu"
   ],
-  "/youtube/community/:handle": [
-    "TonyRL"
-  ],
-  "/youtube/c/:username/:embed?": [
-    "TonyRL"
-  ],
   "/youtube/charts/:category?/:country?/:embed?": [
     "TonyRL"
   ],
   "/youtube/subscriptions/:embed?": [
+    "TonyRL"
+  ],
+  "/youtube/community/:handle": [
+    "TonyRL"
+  ],
+  "/youtube/c/:username/:embed?": [
     "TonyRL"
   ],
   "/youtube/channel/:id/:routeParams?": [
