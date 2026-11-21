@@ -435,9 +435,6 @@
   "/tableau/viz-of-the-day": [
     "KaiyoungYu"
   ],
-  "/the-decoder/news": [
-    "ljh12138164"
-  ],
   "/trendingpapers/papers/:category?/:time?/:cited?": [
     "CookiePieWw"
   ],
@@ -8357,6 +8354,9 @@
   "/the/:filter{.+}?": [
     "nczitzk",
     "pseudoyu"
+  ],
+  "/the-decoder/news": [
+    "ljh12138164"
   ],
   "/theatlantic/author/:id": [
     "pseudoyu"

@@ -5246,40 +5246,6 @@
     "url": "public.tableau.com",
     "lang": "en"
   },
-  "the-decoder": {
-    "routes": {
-      "/news": {
-        "path": "/news",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/the-decoder/news",
-        "name": "News",
-        "maintainers": [
-          "ljh12138164"
-        ],
-        "description": "Full English news and analysis from the official WordPress API, including images and videos. The official RSS feed only contains excerpts. Fetches the latest 30 articles by default; use the common `limit` parameter for up to 100 articles.",
-        "zh": {
-          "name": "新闻",
-          "description": "官方 RSS 只提供摘要。本路由通过官方 WordPress API 获取英文新闻与分析全文，保留正文中的图片和视频。默认获取最新 30 篇，可通过通用参数 `limit` 调整，最多 100 篇。"
-        },
-        "radar": [
-          {
-            "source": [
-              "the-decoder.com/",
-              "the-decoder.com/artificial-intelligence-news/"
-            ]
-          }
-        ],
-        "location": "news.ts",
-        "module": "() => import('@/routes/the-decoder/news.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "The Decoder",
-    "url": "the-decoder.com",
-    "lang": "en"
-  },
   "trendingpapers": {
     "routes": {
       "/papers/:category?/:time?/:cited?": {
@@ -119821,6 +119787,40 @@
     ],
     "description": "",
     "lang": "zh-CN"
+  },
+  "the-decoder": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/the-decoder/news",
+        "name": "News",
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Free-to-read English news and analysis in full from the official WordPress API, including images and videos. Skips subscriber-only posts and posts without a body. Returns up to 30 articles by default; use the common `limit` parameter to request up to 100 articles.",
+        "zh": {
+          "name": "新闻",
+          "description": "通过官方 WordPress API 获取可免费阅读的英文新闻与分析全文，保留正文中的图片和视频，跳过订阅专享和无正文的文章。默认最多返回 30 篇，可通过通用参数 `limit` 请求最多 100 篇。"
+        },
+        "radar": [
+          {
+            "source": [
+              "the-decoder.com/",
+              "the-decoder.com/artificial-intelligence-news/"
+            ]
+          }
+        ],
+        "location": "news.ts",
+        "module": "() => import('@/routes/the-decoder/news.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "The Decoder",
+    "url": "the-decoder.com",
+    "lang": "en"
   },
   "theatlantic": {
     "routes": {

@@ -1334,20 +1334,6 @@
       }
     ]
   },
-  "the-decoder.com": {
-    "_name": "The Decoder",
-    ".": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/the-decoder",
-        "source": [
-          "/",
-          "/artificial-intelligence-news/"
-        ],
-        "target": "/the-decoder/news"
-      }
-    ]
-  },
   "unusualwhales.com": {
     "_name": "Unusual Whales",
     ".": [
@@ -48227,6 +48213,20 @@
           "/occasus/rawdhl9hugdfn9"
         ],
         "target": "/the/category/rawdhl9hugdfn9"
+      }
+    ]
+  },
+  "the-decoder.com": {
+    "_name": "The Decoder",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/the-decoder",
+        "source": [
+          "/",
+          "/artificial-intelligence-news/"
+        ],
+        "target": "/the-decoder/news"
       }
     ]
   },
