@@ -165964,24 +165964,12 @@ export default {
         ],
         "parameters": {
           "filter": {
-            "description": "Filter by content type (`article`, `post`, `ebook`) or by tag slug as used in `https://www.tryprofound.com/research?filter=<slug>` (e.g. `answer-engines`, `industry-verticals`, `personal-agents`). Omit or use `all` for everything.",
+            "description": "Tag slug as used in `https://www.tryprofound.com/research?filter=<slug>` (e.g. `answer-engines`, `industry-verticals`, `personal-agents`). Omit or use `all` for every article.",
             "default": "all",
             "options": [
               {
                 "value": "all",
                 "label": "All Research"
-              },
-              {
-                "value": "article",
-                "label": "Articles"
-              },
-              {
-                "value": "post",
-                "label": "Posts"
-              },
-              {
-                "value": "ebook",
-                "label": "E-books"
               },
               {
                 "value": "answer-engines",
@@ -165998,7 +165986,7 @@ export default {
             ]
           }
         },
-        "description": "Items from Profound's Research Hub. Articles include the full text from the Profound blog; LinkedIn posts use the excerpt shown on the Research Hub and e-books use their subtitle. Fetches 20 entries by default; supports the common `limit` parameter.",
+        "description": "Full-text research articles from Profound's Research Hub, fetched from the Profound blog. LinkedIn posts and e-books listed on the hub are not included. Fetches 20 entries by default; supports the common `limit` parameter.",
         "radar": [
           {
             "source": [
