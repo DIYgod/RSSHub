@@ -152,6 +152,25 @@ jobs:
                   NODE_OPTIONS: '--max-http-header-size=32768'
                   LOGGER_LEVEL: debug
 
+            - name: Wait for RSSHub startup
+              if: env.TEST_CONTINUE
+              env:
+                  TEST_BASEURL: http://localhost:1200
+              run: |
+                  set -euo pipefail
+                  healthcheck_url="$TEST_BASEURL/healthz"
+
+                  for _ in $(seq 1 30); do
+                      if curl --silent --show-error --fail "$healthcheck_url" >/dev/null; then
+                          exit 0
+                      fi
+
+                      sleep 1
+                  done
+
+                  echo "Timed out waiting for RSSHub health check: $healthcheck_url"
+                  exit 1
+
             - name: Generate feedback
               if: env.TEST_CONTINUE
               uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0

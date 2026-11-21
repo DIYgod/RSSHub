@@ -26,6 +26,8 @@ describe('parseDate', () => {
         ['Mon, 07 Sep 2026 08:00:00 GMT', 8, '2026-09-07T08:00:00.000Z'],
         ['Mon, 07 Sep 2026 08:00:00 +0800', 0, '2026-09-07T00:00:00.000Z'],
         ['Mon, 07 Sep 2026 08:00:00 EDT', 0, '2026-09-07T12:00:00.000Z'],
+        ['Mon, 07 Sep 26 08:00:00 +0800', 0, '2026-09-07T00:00:00.000Z'],
+        ['Fri, 31 Dec 99 23:59:59 GMT', 0, '1999-12-31T23:59:59.000Z'],
         ['7 September 2026 08:00', 8, '2026-09-07T00:00:00.000Z'],
         ['2026/9/7 8:05', 8, '2026-09-07T00:05:00.000Z'],
         ['20260907', 0, '2026-09-07T00:00:00.000Z'],
@@ -146,6 +148,12 @@ describe('input type', () => {
         expect(parseDate('1'.repeat(100000), 'MMM D, YYYY')).toBeUndefined();
         expect(parseDate(`5 Mar 2024${' '.repeat(100000)}x`)).toBeUndefined();
         expect(performance.now() - started).toBeLessThan(500);
+    });
+
+    it('trims the input before the length limit', () => {
+        const padding = `\n${' '.repeat(300)}`;
+        expect(iso(parseDate(`${padding}November 18, 2026${padding}`, 'MMMM D, YYYY'))).toBe('2026-11-18T00:00:00.000Z');
+        expect(iso(parseDate(`${padding}2026-11-18${padding}`))).toBe('2026-11-18T00:00:00.000Z');
     });
 });
 
