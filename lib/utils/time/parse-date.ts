@@ -12,8 +12,8 @@ const WALL_CLOCK = /^(\d{4})(?:[-/](\d{1,2})(?:[-/](\d{1,2})(?:[T\s]+(\d{1,2})(?
 // The same with no separators: `20240305`, `20240305T100000`, `202403051000`
 const WALL_CLOCK_COMPACT = /^(\d{4})(\d{2})(\d{2})(?:[T\s]?(\d{2}):?(\d{2})(?::?(\d{2}))?)?$/i;
 
-// RFC 2822 and HTTP dates: `Tue, 05 Mar 2024 10:00:00 GMT`, `5 Mar 2024 10:00 +0800`, `05 March 2024`
-const RFC_2822 = /^(?:[a-z]{3,9},?\s+)?(\d{1,2})\s+([a-z]{3})[a-z]*\.?,?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?\s*(?:(z|ut|gmt|utc|[ecmp][sd]t)\s*)?([+-]\d{1,2}(?::?\d{2})?)?$/i;
+// RFC 2822 and HTTP dates: `Tue, 05 Mar 2024 10:00:00 GMT`, `5 Mar 2024 10:00 +0800`, `05 March 2024`, and the two-digit years of RFC 822: `Tue, 05 Mar 24 10:00:00 GMT`
+const RFC_2822 = /^(?:[a-z]{3,9},?\s+)?(\d{1,2})\s+([a-z]{3})[a-z]*\.?,?\s+(\d{4}|\d{2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?\s*(?:(z|ut|gmt|utc|[ecmp][sd]t)\s*)?([+-]\d{1,2}(?::?\d{2})?)?$/i;
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -53,7 +53,9 @@ const parseRfc2822 = (input: string): DateFields | undefined => {
     } else if (zone) {
         offsetMinutes = (ZONE_ABBREVIATIONS.get(zone.toLowerCase()) ?? 0) * 60;
     }
-    return { year: Number(year), month, day: Number(day), hour: toNumber(hour), minute: toNumber(minute), second: toNumber(second), offsetMinutes };
+    // RFC 2822 section 4.3: a two-digit year from 00 to 49 is 20xx, from 50 to 99 is 19xx
+    const fullYear = year.length === 2 ? Number(year) + (Number(year) < 50 ? 2000 : 1900) : Number(year);
+    return { year: fullYear, month, day: Number(day), hour: toNumber(hour), minute: toNumber(minute), second: toNumber(second), offsetMinutes };
 };
 
 const parseUnformatted = (input: string, timeZone?: TimeZone): Temporal.Instant | undefined => {
