@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
         throw new Error('Invalid language');
     }
     const baseUrl = language === 'ja' ? 'https://touhougarakuta.com' : `https://${language}.touhougarakuta.com`;
-    const response = await ofetch(`${baseUrl}/page-data/${type === 'interviews' ? 'tags/interviews' : type}/page-data.json`);
+    const response = await ofetch(`${baseUrl}/page-data/${type === 'interviews' ? 'tags/interviews' : type}/page-data.json`, { maxResponseSize: 64 * 1024 * 1024 }); // the news page lists every article with its full text, 23 MB now
     return {
         title: `東方我楽多叢誌 - ${type}`,
         link: `${baseUrl}/${type === 'index' ? '' : type}`,
