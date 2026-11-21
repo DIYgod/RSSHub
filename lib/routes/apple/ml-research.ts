@@ -23,7 +23,6 @@ const MAX_LIMIT = 100;
 const DETAIL_CONCURRENCY = 5;
 const FALLBACK_AUTHOR = 'Apple Machine Learning Research';
 const GENERIC_SHARE_IMAGE_PREFIX = '/media/Home_1200x630_';
-const TAG_RE = /<[^>]+>/g;
 
 type MlCategory = 'all' | 'highlights' | 'research';
 
@@ -167,7 +166,7 @@ const getCategoryFeedInfo = (category: MlCategory): CategoryFeedInfo => {
     };
 };
 
-const stripTags = (rawHtml: string | undefined): string => (rawHtml ? rawHtml.replaceAll(TAG_RE, '') : '');
+const stripTags = (rawHtml: string | undefined): string => (rawHtml ? load(rawHtml).text() : '');
 
 const extractNextData = ($: CheerioAPI): MlNextData | undefined => {
     const payload = $('script#__NEXT_DATA__').first().text();
