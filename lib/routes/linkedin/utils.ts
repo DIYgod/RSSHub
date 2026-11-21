@@ -132,7 +132,7 @@ function parseCompanyPosts($) {
             }
 
             const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
-            const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
+            const date = parseRelativeShorthandDate(elemHtml.find('time').first().text().trim());
 
             return { link, text, date };
         });
@@ -158,7 +158,7 @@ function parseCompanyName($) {
  * @returns {Temporal.Instant|null} The parsed date or null if the format is invalid
  */
 function parseRelativeShorthandDate(shorthand) {
-    const match = /^(\d+)([wdmyh])$/.exec(shorthand);
+    const match = /^(\d+)(mo|[wdmyh])\b/.exec(shorthand);
     if (!match) {
         return null;
     }
@@ -167,7 +167,8 @@ function parseRelativeShorthandDate(shorthand) {
     const unitMap = {
         w: 'weeks',
         d: 'days',
-        m: 'months',
+        mo: 'months',
+        m: 'minutes',
         y: 'years',
         h: 'hours',
     };
