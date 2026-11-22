@@ -19,7 +19,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const $ = load(await ofetch<string>(link));
+    const response = await ofetch<string>(link);
+    const $ = load(response);
     const seen = new Set<string>();
 
     const item = $('a[href]')
@@ -35,14 +36,12 @@ async function handler() {
             }
 
             seen.add(reportLink);
-            return [
-                {
-                    title,
-                    link: reportLink,
-                    description: card.find('figcaption p').first().html() ?? undefined,
-                    pubDate: parseDate(`${date[1]}-${date[2]}-${date[3]}T00:00:00Z`),
-                },
-            ];
+            return {
+                title,
+                link: reportLink,
+                description: card.find('figcaption p').first().html() ?? undefined,
+                pubDate: parseDate(`${date[1]}-${date[2]}-${date[3]}T00:00:00Z`),
+            };
         });
 
     return { title: 'IMF World Economic Outlook', link, item };

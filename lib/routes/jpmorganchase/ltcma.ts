@@ -18,7 +18,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const $ = load(await ofetch<string>(link));
+    const response = await ofetch<string>(link);
+    const $ = load(response);
     const headline = $('.geo-content h1').first();
     const title = headline.text().replace(/^<p>(.*)<\/p>$/, '$1');
     const edition = title.match(/\b\d{4}\b/)?.[0];

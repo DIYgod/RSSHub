@@ -20,7 +20,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const $ = load(await ofetch<string>(link));
+    const response = await ofetch<string>(link);
+    const $ = load(response);
     const title = $('h1').first().text();
     const { datePublished } = destr<{ datePublished?: string }>($('script[type="application/ld+json"]').first().text() || '{}');
     const pubDate = datePublished && parseDate(datePublished);
