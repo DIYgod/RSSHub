@@ -31228,14 +31228,14 @@
   },
   "komica1.org": {
     "_name": "Komica",
-    "gita": [
+    "gaia": [
       {
         "title": "討論板",
         "docs": "https://docs.rsshub.app/routes/komica",
         "source": [
           "/:board/"
         ],
-        "target": "/komica/gita/:board"
+        "target": "/komica/gaia/:board"
       }
     ]
   },
