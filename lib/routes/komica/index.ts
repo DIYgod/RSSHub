@@ -50,7 +50,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const html = await ofetch(listUrl);
     const $ = load(html);
 
-    const links = $('tr[class^="ListRow"] a[href^="pixmicat.php?res="]')
+    const links = $('tr[class*="ListRow"] a[href^="pixmicat.php?res="]')
         .toArray()
         .map((a) => new URL($(a).attr('href')!, baseUrl).href)
         .slice(0, limit);
@@ -79,18 +79,18 @@ export const route: Route = {
     url: 'komica1.org',
     maintainers: ['TonyRL'],
     handler,
-    example: '/komica/gita/00b/動畫',
+    example: '/komica/gaia/00b/動畫',
     parameters: {
-        host: '子網域，即討論板網址中 `*.komica1.org` 的第一段，如 `gita`',
+        host: '子網域，即討論板網址中 `*.komica1.org` 的第一段，如 `gaia`',
         board: '討論板路徑，如 `00b`',
         category: '類別（列表模式），如 `動畫`、`漫畫`、`掛圖`、`新番捏他`、`新番實況`、`模型`、`軍武`；留空為整個版面',
     },
-    description: '例如綜合避難所 <https://gita.komica1.org/00b/> 對應 `/komica/gita/00b`，其「動畫」列表對應 `/komica/gita/00b/動畫`。',
+    description: '例如綜合避難所 <https://gaia.komica1.org/00b/> 對應 `/komica/gaia/00b`，其「動畫」列表對應 `/komica/gaia/00b/動畫`。',
     categories: ['bbs'],
     radar: [
         {
-            source: ['gita.komica1.org/:board/'],
-            target: '/gita/:board',
+            source: ['gaia.komica1.org/:board/'],
+            target: '/gaia/:board',
         },
     ],
 };
