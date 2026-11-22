@@ -121719,6 +121719,63 @@ export default {
     "url": "cic.tju.edu.cn",
     "lang": "zh-CN"
   },
+  "together": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "together.ai/blog",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "example": "/together/blog",
+        "parameters": {},
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full-text news, research, model launches, and engineering posts from the official Together AI blog (`together.ai/blog`) via its RSS feed, preserving hero media, `<audio>` samples, `<video>` players, YouTube/Vimeo embeds, code blocks, and tables. Returns up to 20 articles by default and supports the common `limit` parameter.",
+        "zh": {
+          "name": "博客",
+          "description": "通过官方 RSS 抓取 Together AI 官方博客全文（涵盖新闻动态、前沿研究、模型发布与推理工程实践），完整保留题图、音视频播放器、YouTube/Vimeo 视频嵌入、代码块与表格。默认返回最新 20 篇，支持通用 `limit` 参数。"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.together.ai/blog",
+              "www.together.ai/blog/:slug",
+              "www.together.ai/blog/rss.xml",
+              "together.ai/blog",
+              "together.ai/blog/:slug"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "blog.ts",
+        "module": () => import('@/routes/together/blog.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Together AI",
+    "url": "together.ai",
+    "categories": [
+      "programming"
+    ],
+    "lang": "en",
+    "description": "News, research, model releases, and inference engineering articles from Together AI.",
+    "zh": {
+      "name": "Together AI",
+      "description": "Together AI 官方博客、研究发布、模型上线与推理工程实践文章。"
+    }
+  },
   "tokeninsight": {
     "routes": {
       "/blog/:lang?": {

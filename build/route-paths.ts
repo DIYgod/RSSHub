@@ -3480,6 +3480,7 @@ export type RoutePath =
   | `/tmtpost/new`
   | `/tmtpost/nictation`
   | `/toei/ridership`
+  | `/together/blog`
   | `/tokeninsight/blog/:lang?`
   | `/tokeninsight/bulletin/:lang?`
   | `/tokeninsight/report/:lang?`

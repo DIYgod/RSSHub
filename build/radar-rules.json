@@ -48740,6 +48740,23 @@
       }
     ]
   },
+  "together.ai": {
+    "_name": "Together AI",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/together",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/blog/rss.xml",
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/together/blog"
+      }
+    ]
+  },
   "tokeninsight.com": {
     "_name": "TokenInsight",
     ".": [
