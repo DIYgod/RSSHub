@@ -23,7 +23,7 @@ async function handler() {
         .map((ele) => {
             const $item = $(ele);
             const titleNode = $item.find('.title > a');
-            const thumbnail = getImageUrl($item.find('a > img').attr('src'), url);
+            const thumbnail = $item.find('a > img').attr('src');
 
             const infoNode = $item.find('.info');
             const desc = infoNode.find('.desc').text();
@@ -42,19 +42,4 @@ async function handler() {
         link: url,
         item: items,
     };
-}
-
-function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    try {
-        const url = new URL(value, baseUrl);
-        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
-            return url.href;
-        }
-    } catch {
-        // Ignore unsupported source image URLs.
-    }
-    return;
 }

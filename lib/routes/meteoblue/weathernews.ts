@@ -45,7 +45,7 @@ async function handler() {
             }
 
             // Get date from time element
-            const $time = $article.find('time[itemprop="datePublished"], time.js-localdate').first();
+            const $time = $article.find('time.js-localdate');
             const dateText = $time.attr('datetime') || '';
 
             // Extract author from the time element text

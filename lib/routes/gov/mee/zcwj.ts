@@ -39,22 +39,16 @@ async function handler(ctx) {
     const link = `https://www.mee.gov.cn/zcwj/${category ? `${category}/` : ''}`;
     const response = await ofetch(link);
     const $ = load(response);
-    const seen = new Set<string>();
     const list = $('li:has(.date)')
         .toArray()
         .flatMap((element): DataItem[] => {
             const row = $(element);
-            const anchor = row.find('a[href]').first();
+            const anchor = row.find('a[href]');
             const href = anchor.attr('href');
             if (!href) {
                 return [];
             }
-            const itemLink = new URL(href, link).href;
-            if (seen.has(itemLink)) {
-                return [];
-            }
-            seen.add(itemLink);
-            return [{ title: anchor.text(), link: itemLink, pubDate: parseDate(row.find('.date').text(), 8) }];
+            return [{ title: anchor.text(), link: new URL(href, link).href, pubDate: parseDate(row.find('.date').text(), 8) }];
         })
         .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
         .slice(0, limit);
@@ -68,7 +62,7 @@ async function handler(ctx) {
                 return {
                     ...item,
                     ...(date && { pubDate: parseDate(date, 8) }),
-                    description: content('.TRS_Editor').html() || content('.content_body_box').html() || content('.neiright_JPZ_GK_CP').html(),
+                    description: content('.TRS_Editor').html() || content('.content_body_box').html(),
                 };
             }),
         { concurrency: 3 }

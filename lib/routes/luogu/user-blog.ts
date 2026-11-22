@@ -38,7 +38,7 @@ async function handler(ctx) {
 
     const blogBaseUrl = `https://www.luogu.com.cn/blog/${name}/`;
 
-    const response = await ofetch(blogBaseUrl, { responseType: 'text' });
+    const response = await ofetch(blogBaseUrl);
     const { articles, user } = getPageData<{ articles: { result: LuoguArticle[] }; user: { name: string } }>(response);
     const item = await pMap(
         articles.result,

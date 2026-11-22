@@ -21,13 +21,13 @@ export const getRelease = (link: string) =>
             title: data.current.title,
             author: data.artist,
             image,
-            pubDate: data.current.publish_date ? parseDate(data.current.publish_date) : undefined,
+            pubDate: parseDate(data.current.publish_date),
             category: content('.tralbum-tags a.tag')
                 .toArray()
                 .map((tag) => content(tag).text()),
             description: renderToString(
                 <>
-                    {image ? <img src={image} /> : null}
+                    <img src={image} />
                     <div>{raw(about)}</div>
                     {data.current.credits ? <p style="white-space: pre-line">{data.current.credits}</p> : null}
                     <ol>

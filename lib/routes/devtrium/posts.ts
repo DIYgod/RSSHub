@@ -50,7 +50,7 @@ async function fetchPage() {
         title: post.title,
         link: `${baseUrl}/posts/${post.slug}`,
         description: post.description,
-        pubDate: post.date ? parseDate(`${post.date}T00:00:00Z`) : undefined,
+        pubDate: parseDate(`${post.date}T00:00:00Z`),
     }));
     return items;
 }

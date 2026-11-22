@@ -41,16 +41,8 @@ function getReplayMedia(url?: string): ReplayMedia {
     if (!url) {
         return {};
     }
-    try {
-        const mediaUrl = new URL(url);
-        if (!['http:', 'https:'].includes(mediaUrl.protocol) || mediaUrl.username || mediaUrl.password) {
-            return {};
-        }
-        const extension = mediaUrl.pathname.split('.').at(-1)?.toLowerCase();
-        return { url: mediaUrl.href, mimeType: extension === 'mp4' ? 'video/mp4' : extension === 'webm' ? 'video/webm' : undefined };
-    } catch {
-        return {};
-    }
+    const extension = new URL(url).pathname.split('.').at(-1)?.toLowerCase();
+    return { url, mimeType: extension === 'mp4' ? 'video/mp4' : extension === 'webm' ? 'video/webm' : undefined };
 }
 
 async function handler(ctx) {

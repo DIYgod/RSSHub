@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import cache from './cache';
 import { post2item } from './utils';
@@ -42,11 +43,9 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('Miyoushe Timeline is not available due to the absense of [Miyoushe Cookie]. Check <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config tutorial</a>');
     }
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const pageSize = String(Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20);
     const searchParams = {
         gids: 2,
-        page_size: pageSize,
+        page_size: getRouteLimit(ctx, 20),
     };
     const link = 'https://www.miyoushe.com/ys/timeline';
     const url = 'https://bbs-api.miyoushe.com/painter/wapi/timeline/list';

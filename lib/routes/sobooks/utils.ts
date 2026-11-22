@@ -47,11 +47,11 @@ export const utils = async (ctx, currentUrl) => {
 
                 content('.e-secret, .article-social').remove();
 
-                const description = content('.post-content, .article-content').first().html();
+                const description = content('.post-content, .article-content').html();
                 const date = getBookInfo(content, '时间：') || content('.bookinfo ul li').eq(4).text().replace('时间：', '');
-                const pubDate = date ? parseDate(date, 8) : undefined;
+                const pubDate = parseDate(date, 8);
 
-                const author = getBookInfo(content, '作者：') || undefined;
+                const author = getBookInfo(content, '作者：');
                 const category = [...new Set([getBookInfo(content, '分类：'), ...(content('meta[name="keywords"]').attr('content') ?? '').split(',')].map((value) => value.trim()).filter(Boolean))];
                 const image = content('.book-info-cover img').attr('src');
                 return { description, pubDate, author, category, image };

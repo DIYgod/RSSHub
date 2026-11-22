@@ -12,7 +12,7 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { compareDates, parseDate, parseDateStrict } from '@/utils/time';
 
-const parseCalendarDate = (value: string): Temporal.Instant | undefined => parseDateStrict(value.trim(), ['MMM D, YYYY', 'MMMM D, YYYY'], 0);
+const parseCalendarDate = (value: string): Temporal.Instant | undefined => parseDateStrict(value, ['MMM D, YYYY', 'MMMM D, YYYY'], 0);
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
@@ -32,10 +32,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 continue;
             }
 
-            const date = parseDate(entry.isoDate);
-            if (date) {
-                publicationDates.set(new URL(entry.link, baseUrl).href.replace(/\/$/, ''), date);
-            }
+            publicationDates.set(new URL(entry.link, baseUrl).href.replace(/\/$/, ''), parseDate(entry.isoDate)!);
         }
     }
 
@@ -60,11 +57,10 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     items = items.map((item) => ({ ...item, pubDate: (item.link ? publicationDates.get(item.link.replace(/\/$/, '')) : undefined) ?? item.pubDate }));
     const sourceOrder = ctx.req.query('sorted') === 'false';
-    const hasDates = items.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (!sourceOrder && hasDates) {
+    if (!sourceOrder) {
         items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    items = items.slice(0, sourceOrder || hasDates ? limit : Math.max(30, limit));
+    items = items.slice(0, limit);
 
     items = await pMap(
         items,

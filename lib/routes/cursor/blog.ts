@@ -15,12 +15,8 @@ const getBlogContent = (url: string) =>
         const response = await ofetch(url);
         const $ = load(response);
         const article = $('.prose--blog, main article .prose').first();
-        if (!article.length) {
-            throw new Error(`Cursor blog article content was not found at ${url}`);
-        }
-
-        const description = article.html() ?? undefined;
-        article.find('script, style').remove();
+        const description = article.html();
+        article.find('style').remove();
 
         return {
             description,
@@ -55,7 +51,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const descendantLink = $el.find('a').first();
+            const descendantLink = $el.find('a');
             const $link = descendantLink.length ? descendantLink : $el.closest('a');
 
             const title = $el.find('p').first().text();

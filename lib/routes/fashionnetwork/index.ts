@@ -79,7 +79,7 @@ const handler = async (ctx) => {
                 return {
                     title,
                     description,
-                    pubDate: parseDate($$('span.time-ago').first().text().trim(), 8),
+                    pubDate: parseDate($$('span.time-ago').first().text(), 8),
                     category: $$('div.newsTags')
                         .find('div.news-tag')
                         .toArray()

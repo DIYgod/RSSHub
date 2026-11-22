@@ -56,13 +56,9 @@ export const renderItems = (items) =>
         }
 
         // Metadata
-        if (([undefined, null, ''] as unknown[]).includes(item.pk)) {
-            throw new Error('Instagram media is missing its ID');
-        }
         const id = String(item.pk);
         const url = productType === 'story' ? `https://www.instagram.com/stories/${item.user.username}/${item.pk}/` : `https://www.instagram.com/p/${item.code}/`;
-        const timestamp = item.caption?.created_at_utc || item.taken_at;
-        const pubDate = ([undefined, null, ''] as unknown[]).includes(timestamp) ? undefined : parseDate(timestamp, 'X');
+        const pubDate = parseDate(item.caption?.created_at_utc || item.taken_at, 'X');
         const title = summary.split('\n', 1)[0] || item.accessibility_caption || `Story from @${item.user.username}`;
 
         return {

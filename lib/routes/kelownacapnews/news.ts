@@ -44,8 +44,8 @@ export const route: Route = {
         const type = ctx.req.param('type');
         const baseURL = 'https://kelownacapnews.com';
 
-        const response = await ofetch.raw<string, 'text'>(`${baseURL}/${type}`, { responseType: 'text' });
-        const $ = load(response._data!);
+        const response = await ofetch.raw(`${baseURL}/${type}`);
+        const $ = load(response._data);
         const feedLink = $('link[rel="alternate"][type="application/rss+xml"]').attr('href');
         if (!feedLink) {
             throw new Error('Kelowna Capital News did not provide a category RSS feed. Check that the requested news category still exists.');

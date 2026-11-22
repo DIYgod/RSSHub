@@ -54,7 +54,6 @@ function processNews(page: string) {
             const title = $(item).find('a>h5').text();
             const content = $(item).find('a>div');
             const metadata = content.children('ul').first().children('li');
-            const date = parseDateStrict(metadata.eq(2).text(), 'YYYY-MM-DD');
             const category = [
                 metadata.eq(1).text(),
                 ...content
@@ -63,14 +62,14 @@ function processNews(page: string) {
                     .children('li')
                     .toArray()
                     .map((tag) => $(tag).text()),
-            ].filter(Boolean);
+            ];
             const link = $(item).find('div>p>a').attr('href') || '';
             return {
                 title,
                 link,
                 guid: link,
                 description: content.children('div[x-show]').html(),
-                pubDate: date,
+                pubDate: parseDateStrict(metadata.eq(2).text(), 'YYYY-MM-DD'),
                 category,
             };
         });

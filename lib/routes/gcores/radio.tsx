@@ -52,7 +52,7 @@ async function handler(ctx) {
     api.searchParams.set('filter[list-all]', '0');
     api.searchParams.set('filter[is-require-privilege]', '0');
     api.searchParams.set('fields[radios]', 'title,cover,published-at,duration,content,media');
-    const { data, included = [] } = await get(api);
+    const { data, included } = await get(api);
 
     const audios = {};
     for (const media of included) {

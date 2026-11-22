@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -53,12 +53,11 @@ const handler = async (ctx) => {
             const link = new URL(a.prop('href')!, rootUrl).href;
             const guid = `infoq-${$item.prop('data-path').replace(/^\//, '')}`;
             const length = $item.find('div.card__length').text() || undefined;
-            const calendarDate = parseDateStrict($item.find('span.card__date span').text().trim(), 'MMM DD, YYYY', 0);
 
             return {
                 title,
                 description,
-                pubDate: calendarDate,
+                pubDate: parseDate($item.find('span.card__date span').text().trim(), 'MMM DD, YYYY', 0),
                 link,
                 category: $item
                     .find('div.card__topics')
@@ -122,16 +121,8 @@ const handler = async (ctx) => {
                 const image = $$('meta[property="twitter:image"]').prop('content') || $$('meta[property="og:image"]').prop('content');
 
                 item.title = title;
-                const articleMetadata = $$('script[type="application/ld+json"]')
-                    .toArray()
-                    .map((script) => JSON.parse($$(script).text()))
-                    .find((metadata) => metadata['@type'] === 'NewsArticle');
-                const published = articleMetadata?.datePublished;
-                const calendarDate = parseDateStrict($$('p.date').text().trim(), 'MMM DD, YYYY', 0);
-                item.pubDate =
-                    typeof published === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/.test(published) && parseDateStrict(published.slice(0, 10), 'YYYY-MM-DD') && parseDate(published)
-                        ? parseDate(published)
-                        : calendarDate;
+                const articleMetadata = JSON.parse($$('script[type="application/ld+json"]:contains("NewsArticle")').text());
+                item.pubDate = parseDate(articleMetadata.datePublished);
                 item.link = $$('meta[property="og:url"]').prop('content');
                 item.category = topicsStr ? JSON.parse(topicsStr).map((t) => t.name) : $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.author = $$('ul.authors a.author__link')

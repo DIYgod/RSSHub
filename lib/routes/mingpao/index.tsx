@@ -116,7 +116,7 @@ async function handler(ctx) {
     const link = `https://news.mingpao.com/rss/${type}/${category}.xml`;
 
     const feed = await parser.parseString(await ofetch(link));
-    const list: Array<(typeof feed.items)[number] & { link: string }> = feed.items.map((item) => ({ ...item, link: item.link?.split(/[\s"\\]/, 1)[0] })).filter((item): item is typeof item & { link: string } => Boolean(item.link));
+    const list = feed.items.map((item) => ({ ...item, link: item.link!.split(/[\s"\\]/, 1)[0] }));
     const items = await pMap(
         list,
         (item) =>

@@ -87,7 +87,7 @@ const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                const title = $$('div.TextTitle > h6').text() || item.title;
+                const title = $$('div.TextTitle > h6').text();
                 const description = $$('div.NewsText').html();
                 const pubDate = $$('div.shar')
                     .text()

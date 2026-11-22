@@ -16,31 +16,24 @@ interface ListingData {
 // Values in a Nuxt payload; `undefined` comes from the -1 reference.
 type PayloadValue = string | number | boolean | null | undefined | PayloadValue[] | { [key: string]: PayloadValue };
 
-const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map<number, PayloadValue>()): PayloadValue => {
+const decodePayload = (payload: PayloadValue[], index: number): PayloadValue => {
     if (index === -1) {
         return undefined;
-    }
-    if (decoded.has(index)) {
-        return decoded.get(index);
     }
     const value = payload[index];
     if (Array.isArray(value)) {
         if (typeof value[0] === 'string' && ['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0]) && typeof value[1] === 'number') {
-            return decodePayload(payload, value[1], decoded);
+            return decodePayload(payload, value[1]);
         }
-        const result: PayloadValue[] = [];
-        decoded.set(index, result);
-        result.push(...value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference, decoded) : undefined)));
-        return result;
+        return value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference) : undefined));
     }
     if (value && typeof value === 'object') {
         const result: { [key: string]: PayloadValue } = {};
-        decoded.set(index, result);
         for (const [key, reference] of Object.entries(value)) {
             if (typeof reference !== 'number') {
                 throw new TypeError('The public page contains an unsupported payload reference.');
             }
-            result[key] = decodePayload(payload, reference, decoded);
+            result[key] = decodePayload(payload, reference);
         }
         return result;
     }
@@ -48,7 +41,7 @@ const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map
 };
 
 const getPageData = async <T>(url: string, key: 'cast' | 'category' | 'studio' | 'video'): Promise<T> => {
-    const html = await ofetch(url, { responseType: 'text' });
+    const html = await ofetch(url);
     const nuxtData = html.match(/<script[^>]*id="__NUXT_DATA__"[^>]*>(.*?)<\/script>/s)?.[1];
     if (!nuxtData) {
         throw new Error(`The public page ${url} no longer contains Nuxt data.`);
@@ -61,14 +54,7 @@ const getPageData = async <T>(url: string, key: 'cast' | 'category' | 'studio' |
     return decodePayload(payload, index) as T;
 };
 
-export const getList = async (url: string, key: 'cast' | 'category' | 'studio') => {
-    const data = await getPageData<ListingData>(url, key);
-    const listingDetails = data[key];
-    if (!Array.isArray(data.videos) || !listingDetails) {
-        throw new Error(`The public page ${url} does not contain a valid first-page video list.`);
-    }
-    return data;
-};
+export const getList = (url: string, key: 'cast' | 'category' | 'studio') => getPageData<ListingData>(url, key);
 
 const hdGallery = (gallery) =>
     gallery.map((item) => {

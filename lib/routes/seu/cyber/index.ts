@@ -45,28 +45,33 @@ async function handler() {
             const a = e.find('.news_title a');
             const title = a.text();
             const href = a.attr('href');
-            const dateText = e.find('.news_meta').text().trim();
+            const dateText = e.find('.news_meta').text();
 
             return {
                 title,
                 link: new URL(href || '', host).href,
-                pubDate: dateText ? parseDate(dateText, 'YYYY.MM.DD', 8) : undefined,
+                pubDate: parseDate(dateText, 'YYYY.MM.DD', 8),
                 description: '',
             };
         });
 
     const out = await pMap(
         list,
-        async (item) => ({
-            ...item,
-            ...(await recoverArticle(
-                cache.tryGet(`seu:cyber:article-v4:${item.link}`, async () => {
+        async (item) => {
+            try {
+                const article = await cache.tryGet(`seu:cyber:article-v4:${item.link}`, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
                     return { description: $('.wp_articlecontent').html() || $('.article-content').html() || $('.main-text').html() || $('article').html() || '' };
-                })
-            )),
-        }),
+                });
+                return { ...item, ...article };
+            } catch (error) {
+                if (error instanceof FetchError) {
+                    return { ...item, description: '' };
+                }
+                throw error;
+            }
+        },
         { concurrency: 3 }
     );
 
@@ -76,15 +81,4 @@ async function handler() {
         description: '东南大学网络空间安全学院通知公告RSS',
         item: out,
     };
-}
-
-async function recoverArticle<T>(promise: Promise<T>) {
-    try {
-        return await promise;
-    } catch (error) {
-        if (error instanceof FetchError) {
-            return { description: '' };
-        }
-        throw error;
-    }
 }

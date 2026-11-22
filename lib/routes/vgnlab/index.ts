@@ -38,7 +38,7 @@ async function handler() {
         .map((item): DataItem & { link: string } => ({
             title: item.title,
             link: `${baseUrl}/web/news-${item.id}`,
-            pubDate: typeof item.publish_time === 'number' && Number.isFinite(item.publish_time) ? parseDate(item.publish_time * 1000) : undefined,
+            pubDate: parseDate(item.publish_time * 1000),
             image: item.img_url,
             id: item.id,
         }));

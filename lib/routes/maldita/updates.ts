@@ -49,21 +49,16 @@ export const route: Route = {
                     const response = await ofetch(link);
                     const $ = load(response);
 
-                    const dateText = $('time').attr('datetime');
-                    const articleContent = $('#article-content').html();
-                    if (!articleContent) {
-                        throw new Error(`Maldita article content was not found at ${link}. The source layout may have changed.`);
-                    }
                     return {
                         title: $('h1').text(),
                         link,
                         category: $('#article-metadata .flex a')
                             .toArray()
                             .map((x) => $(x).text()),
-                        pubDate: dateText ? parseDate(dateText) : undefined,
+                        pubDate: parseDate($('time').attr('datetime')!),
                         itunes_item_image: $('#featuredImage img').attr('src'),
                         content: {
-                            html: ($('#keys').html() ?? '') + articleContent,
+                            html: ($('#keys').html() ?? '') + $('#article-content').html()!,
                         },
                     };
                 }),

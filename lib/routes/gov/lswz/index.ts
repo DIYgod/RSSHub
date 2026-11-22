@@ -21,7 +21,7 @@ const handler = async (ctx) => {
     const redirectsToFirstLink = $('script')
         .toArray()
         .some((script) => /window\.location\.href\s*=\s*document\.links\[0\]\.href/.test($(script).text()));
-    const redirectUrl = redirectsToFirstLink ? $('a[href]').first().prop('href') : undefined;
+    const redirectUrl = redirectsToFirstLink ? $('a[href]').prop('href') : undefined;
     if (redirectUrl) {
         currentUrl = new URL(redirectUrl, currentUrl).href;
         const { data: redirectedResponse } = await got(currentUrl);
@@ -73,8 +73,7 @@ const handler = async (ctx) => {
         )
     );
 
-    const imageSource = $('div.lsj-index-logo img').prop('src');
-    const image = imageSource ? new URL(imageSource, rootUrl).href : undefined;
+    const image = new URL($('div.lsj-index-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

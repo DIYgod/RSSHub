@@ -37,10 +37,7 @@ export async function processItems(_context, baseURL, exclude) {
     const $ = load(response.data);
     const list = $('ul.list li')
         .toArray()
-        .filter((item) => {
-            const link = $(item).find('a');
-            return link.attr('href') && !exclude?.some((pattern) => pattern.test(link.text()));
-        });
+        .filter((item) => exclude.every((pattern) => !pattern.test($(item).find('a').text())));
 
     const process = await Promise.all(
         list.map((item) => {

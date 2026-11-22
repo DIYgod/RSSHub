@@ -33,7 +33,7 @@ async function handler() {
     const link = `${baseUrl}/sszs/list.htm`;
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('.news_list li.news2').length ? $('.news_list li.news2') : $('.list tr');
+    const list = $('.news_list li.news2');
 
     return {
         title: '中国石油大学研究生院',
@@ -47,7 +47,7 @@ async function handler() {
                 return {
                     title: a.attr('title') ?? a.text(),
                     link: new URL(a.attr('href')!, baseUrl).href,
-                    pubDate: $item.find('.news_meta, div[style]').text() ? parseDate($item.find('.news_meta, div[style]').text(), 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate($item.find('.news_meta, div[style]').text(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

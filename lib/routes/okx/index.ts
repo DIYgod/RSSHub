@@ -97,7 +97,7 @@ async function handler(ctx: Context) {
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
     const itemsTemp: Array<{ title: string; link: string; pubDate: Temporal.Instant | undefined }> =
-        (ssrData?.appContext?.initialProps?.sectionData?.articleList?.list ?? ssrData?.appContext?.initialProps?.sectionData?.articleList?.items)?.map((item: { title: string; slug: string; publishTime: string }) => ({
+        ssrData?.appContext?.initialProps?.sectionData?.articleList?.list?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
             link: `${baseUrl}/zh-hans/help/${item.slug}`,
             pubDate: parseDate(item.publishTime),

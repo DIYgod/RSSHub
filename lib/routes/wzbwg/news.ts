@@ -1,20 +1,13 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
-function parseSourceDate(raw: string) {
-    const value = raw.trim();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-        return;
-    }
-    return parseDateStrict(value, 'YYYY-MM-DD', 8);
-}
 export const route: Route = {
     path: '/news/:type',
     categories: ['travel'],
@@ -41,7 +34,7 @@ export const route: Route = {
         const categoryName = $(`a[href="/news/${type}"]`).first().text();
         const list = $('div.slide.wow.fadeInUp a[href^="/newsinfo/"]')
             .toArray()
-            .map((item): DataItem => {
+            .map((item) => {
                 const a = $(item);
                 const title = a.attr('title') ?? '';
                 const link = new URL(a.attr('href')!, baseUrl).href;
@@ -53,28 +46,16 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: parseSourceDate(dateRaw),
+                    pubDate: parseDate(dateRaw, 8),
                 };
             });
         const items = await pMap(
             list,
             async (item) => {
-                if (!item.link) {
-                    return item;
-                }
-                const link = item.link;
-                const detail = await cache.tryGet(link, async () => {
-                    const article = await ofetch(link);
+                const detail = await cache.tryGet(item.link, async () => {
+                    const article = await ofetch(item.link);
                     const $detail = load(article);
-                    const clock =
-                        $detail('.info .n2')
-                            .text()
-                            .match(/\[\s*(\d{4}-\d{2}-\d{2})\s*\]/)?.[1] || '';
-                    const pubDate = parseSourceDate(clock);
-                    return {
-                        description: $detail('.info .txt').html() || undefined,
-                        ...(pubDate && { pubDate }),
-                    } satisfies Pick<DataItem, 'description' | 'pubDate'>;
+                    return { description: $detail('.info .txt').html() };
                 });
                 return { ...item, ...detail };
             },

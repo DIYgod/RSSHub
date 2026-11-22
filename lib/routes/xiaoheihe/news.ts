@@ -44,21 +44,20 @@ async function handler() {
     }));
     items = await pMap(
         items,
-        ({ linkId, ...item }) =>
-            mapResolvedValue(
-                cache.tryGet(`xiaoheihe:news:content:v1:${item.link}`, async () => {
-                    const dataUrl = calculate(
-                        `https://api.xiaoheihe.cn/bbs/app/api/share/data/?os_type=web&app=heybox&client_type=mobile&version=999.0.3&x_client_type=web&x_os_type=Mac&x_app=heybox&heybox_id=-1&offset=0&limit=3&link_id=${linkId}&use_concept_type=`
-                    );
-                    const dataResponse = await got({
-                        method: 'get',
-                        url: dataUrl,
-                    });
-                    const content = dataResponse.data.link?.content?.[0]?.text;
-                    return typeof content === 'string' && content ? { description: content } : {};
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+        async ({ linkId, ...item }) => {
+            const detail = await cache.tryGet(`xiaoheihe:news:content:v1:${item.link}`, async () => {
+                const dataUrl = calculate(
+                    `https://api.xiaoheihe.cn/bbs/app/api/share/data/?os_type=web&app=heybox&client_type=mobile&version=999.0.3&x_client_type=web&x_os_type=Mac&x_app=heybox&heybox_id=-1&offset=0&limit=3&link_id=${linkId}&use_concept_type=`
+                );
+                const dataResponse = await got({
+                    method: 'get',
+                    url: dataUrl,
+                });
+                const content = dataResponse.data.link?.content?.[0]?.text;
+                return typeof content === 'string' && content ? { description: content } : {};
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -66,8 +65,4 @@ async function handler() {
         link: 'https://xiaoheihe.cn',
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
 }

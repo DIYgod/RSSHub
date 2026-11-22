@@ -92,7 +92,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
-                pubDate: pubDate ? (pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate)) : undefined,
+                pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
             };
         });
 
@@ -112,7 +112,7 @@ async function handler(ctx) {
                 return {
                     author: content('.name').text(),
                     description: content('#content').html(),
-                    pubDate: pubDateMatches?.[1] ? parseDate(pubDateMatches[1]) : undefined,
+                    pubDate: pubDateMatches ? parseDate(pubDateMatches[1]) : undefined,
                     category:
                         content('meta[name="keywords"]')
                             .attr('content')

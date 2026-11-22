@@ -42,27 +42,25 @@ async function handler() {
         title: '停水通知 - 深圳水务',
         link: 'https://www.sz-water.com.cn/',
         item: data.map((item) => ({
-            title: item.title || `${item.position || ''}${item.stoptime || ''}`,
+            title: item.title || `${item.position || ''}${item.stoptime}`,
             description: renderToString(
                 <>
                     {item.position ? <p>{item.position}</p> : undefined}
                     <p>
                         {item.reginName ? `【${item.reginName}】` : undefined}
-                        {item.affectUser !== undefined && item.affectUser !== null ? `(影响用户${item.affectUser})` : undefined}
+                        {item.affectUser ? `(影响用户${item.affectUser})` : undefined}
                         {item.stopwaterType ? ` [${item.stopwaterType}]` : undefined}
                         {item.reason ? `原因：${item.reason}` : undefined}
-                        {item.stopStartTime ? `,停水开始时间${item.stopStartTime}` : undefined}
-                        {item.stopEndTime ? `,停水结束时间${item.stopEndTime}` : undefined}
+                        {`,停水开始时间${item.stopStartTime}`}
+                        {`,停水结束时间${item.stopEndTime}`}
                     </p>
-                    {[undefined, null, ''].includes(item.mainLeadPath) ? undefined : <p>停水主管径：{item.mainLeadPath}</p>}
-                    {item.servicePhone ? (
-                        <p>
-                            服务热线：<a href={`tel:${item.servicePhone}`}>{item.servicePhone}</a>
-                        </p>
-                    ) : undefined}
+                    {item.mainLeadPath ? <p>停水主管径：{item.mainLeadPath}</p> : undefined}
+                    <p>
+                        服务热线：<a href={`tel:${item.servicePhone}`}>{item.servicePhone}</a>
+                    </p>
                 </>
             ),
-            pubDate: item.createdOn ? parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+            pubDate: parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss', 8),
             link: 'https://szgk.sz-water.com.cn/wechat_web/Water_stop.html',
             guid: item.informId ? `shenzhen-water-${item.informId}` : `shenzhen-water-${JSON.stringify([item.position, item.stopStartTime, item.createdOn])}`,
         })),

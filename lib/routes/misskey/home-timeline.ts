@@ -85,8 +85,7 @@ async function handler(ctx) {
     // docs on: https://misskey.io/api-doc#tag/notes/operation/notes___timeline
     const url = `https://${site}/api/notes/timeline`;
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
-    const pathLimit = Number(routeParams.limit ?? 10);
-    const defaultLimit = Number.isSafeInteger(pathLimit) && pathLimit > 0 ? Math.min(pathLimit, 100) : 10;
+    const limit = getRouteLimit(ctx, Number(routeParams.limit ?? 10));
     const response = await got({
         method: 'post',
         url,
@@ -94,7 +93,7 @@ async function handler(ctx) {
             Authorization: `Bearer ${accessToken}`,
         },
         json: {
-            limit: Math.min(getRouteLimit(ctx, defaultLimit), 100),
+            limit: Math.min(limit, 100),
             withFiles: queryToBoolean(routeParams.withFiles ?? false),
             withRenotes: queryToBoolean(routeParams.withRenotes ?? true),
             allowPartial: queryToBoolean(routeParams.allowPartial ?? true),

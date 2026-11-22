@@ -79,7 +79,7 @@ async function fetchArticle(link: string): Promise<ArticleDetails> {
     const pubDate = parseDate($('.vom-news-show-meta .right').prev().text());
     const category = $('.vom-news-show-meta .uk-button-text').text();
     $('.uk-article-title, .uk-text-meta, article .uk-grid-small').remove();
-    return { title, author, pubDate, category, description: $('article').html() ?? undefined };
+    return { title, author, pubDate, category, description: $('article').html() };
 }
 
 async function getArticle(link: string): Promise<DataItem> {

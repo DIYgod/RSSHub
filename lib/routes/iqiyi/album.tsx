@@ -28,39 +28,15 @@ export const route: Route = {
 :::`,
 };
 
-function parseIssueTime(value: string | number | null | undefined) {
-    if (!value && value !== 0) {
-        return;
-    }
-    return parseDate(value);
-}
-
 function getUploadDates($: CheerioAPI) {
-    const dates = new Map<string, Temporal.Instant>();
-    $('script[type="application/ld+json"]').each((_, script) => {
-        let data;
-        try {
-            data = JSON.parse($(script).text());
-        } catch {
-            return;
+    const dates = new Map<string | null, Temporal.Instant>();
+    const data = JSON.parse($('script[type="application/ld+json"]:contains("VideoObject")').text());
+    const entries = data['@graph'] ?? [data];
+    for (const entry of entries) {
+        if (entry['@type'] === 'VideoObject') {
+            dates.set(new URL(entry.embedUrl).searchParams.get('id'), parseDate(entry.uploadDate)!);
         }
-        const entries = Array.isArray(data) ? data : Array.isArray(data?.['@graph']) ? data['@graph'] : [data];
-        for (const entry of entries) {
-            if (entry?.['@type'] !== 'VideoObject' || typeof entry.uploadDate !== 'string' || !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(entry.uploadDate) || typeof entry.embedUrl !== 'string') {
-                continue;
-            }
-            try {
-                const url = new URL(entry.embedUrl);
-                const id = url.searchParams.get('id');
-                const date = parseIssueTime(entry.uploadDate);
-                if (['http:', 'https:'].includes(url.protocol) && id && date) {
-                    dates.set(id, date);
-                }
-            } catch {
-                // Keep the episode API clock when source metadata is malformed.
-            }
-        }
-    });
+    }
     return dates;
 }
 
@@ -96,9 +72,9 @@ async function handler(ctx) {
 
     const items = data.epg.map((item) => ({
         title: item.name,
-        description: item.pic ? renderToString(<img src={new URL(item.pic, 'https://www.iq.com').href} />) : undefined,
+        description: renderToString(<img src={item.pic} />),
         link: `https://www.iq.com/play/${item.playLocSuffix}`,
-        pubDate: uploadDates.get(item.qipuIdStr) ?? parseIssueTime(item.initIssueTime),
+        pubDate: uploadDates.get(item.qipuIdStr) ?? parseDate(item.initIssueTime),
     }));
 
     return {

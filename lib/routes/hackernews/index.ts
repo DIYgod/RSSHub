@@ -62,7 +62,7 @@ Examples:
 
 type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
     comments: string | number | undefined;
-    upvotes: string | number | undefined;
+    upvotes: string;
     origin?: string;
     onStory: string;
     currentComment: string;
@@ -119,7 +119,6 @@ async function handler(ctx) {
         .map((thing) => {
             const $thing = $(thing);
             const date = $thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title');
-            const pubDate = date ? parseDate(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(date) ? `${date}Z` : date) : undefined;
             const storyLink = $thing.find('.onstory a');
             const origin = $thing.find('.titleline').children('a').attr('href');
             if (storyLink.length) {
@@ -131,7 +130,7 @@ async function handler(ctx) {
                 title: $thing.find('.titleline').children('a').text() || onStory,
                 category: $thing.find('.sitestr').text(),
                 author: $thing.find('.hnuser').text() || $thing.next().find('.hnuser').text(),
-                pubDate,
+                pubDate: parseDate(`${date}Z`),
 
                 link: '',
                 // A story link the URL parser rejects (e.g. an invalid IDN host) falls back to the discussion page instead of failing the feed
@@ -191,7 +190,7 @@ async function handler(ctx) {
                 item.description = item.currentComment;
             }
 
-            const upvotes = /^\d+$/.test(String(item.upvotes)) ? Number(item.upvotes) : undefined;
+            const upvotes = /^\d+$/.test(item.upvotes) ? Number(item.upvotes) : undefined;
 
             return {
                 guid: item.guid,

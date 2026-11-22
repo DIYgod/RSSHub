@@ -1,4 +1,3 @@
-import { escape } from 'entities';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -18,12 +17,10 @@ interface RecruitmentItem {
     id: string;
     title: string;
     url: string;
-    startTime?: string;
+    startTime: string;
 }
 
 interface RecruitmentResponse<T> {
-    state: number;
-    msg?: string;
     object: T;
 }
 
@@ -31,10 +28,8 @@ interface NewsItem {
     id: string;
     title: string;
     url: string;
-    isExternalLink?: boolean;
-    link?: string;
-    publisher?: string;
-    releaseDate?: string;
+    publisher: string;
+    releaseDate: string;
     category: { name: string };
 }
 
@@ -42,32 +37,20 @@ const getNewsItems = async (category: { id: number; name: string }) => {
     const { data }: { data: RecruitmentResponse<NewsItem[][]> } = await got.post(new URL('f/ajaxHome/ajax_cmsListByIds', baseUrl).href, {
         form: { categoryIds: `${category.id},`, number: 10 },
     });
-    if (data.state !== 1 || !Array.isArray(data.object?.[0])) {
-        throw new Error(`Unable to load news information: ${data.msg ?? 'unexpected response from the public API'}`);
-    }
     const items = await pMap(
-        data.object[0].filter((item) => item.url),
+        data.object[0],
         async (item): Promise<DataItem> => {
-            const link = new URL(item.isExternalLink && item.link ? item.link : item.url, baseUrl).href;
+            const link = new URL(item.url, baseUrl).href;
             const detail = await cache.tryGet(`pku:scc:news:v1:${item.id}`, async () => {
-                const { data }: { data: RecruitmentResponse<{ article: { articleData?: { content?: string } }; fileMap?: Record<string, { fileName: string; fileUrl: string }> }> } = await got(
-                    new URL('f/newsCenter/ajax_view', baseUrl).href,
-                    { searchParams: { id: item.id } }
-                );
-                if (data.state !== 1 || !data.object?.article) {
-                    throw new Error(`Unable to load news article ${link}: ${data.msg ?? 'unexpected response from the public API'}`);
-                }
-                const attachments = Object.values(data.object.fileMap ?? {})
-                    .map((file) => `<p><a href="${escape(new URL(file.fileUrl, baseUrl).href)}">${escape(file.fileName)}</a></p>`)
-                    .join('');
-                return { description: (data.object.article.articleData?.content ?? '') + attachments || undefined };
+                const { data }: { data: RecruitmentResponse<{ article: { articleData: { content: string } } }> } = await got(new URL('f/newsCenter/ajax_view', baseUrl).href, { searchParams: { id: item.id } });
+                return { description: data.object.article.articleData.content || undefined };
             });
             return {
                 title: item.title,
                 link,
-                pubDate: item.releaseDate ? parseDate(item.releaseDate, 8) : undefined,
-                author: item.publisher || undefined,
-                category: item.category?.name ? [item.category.name] : undefined,
+                pubDate: parseDate(item.releaseDate, 8),
+                author: item.publisher,
+                category: [item.category.name],
                 ...detail,
             };
         },
@@ -80,24 +63,17 @@ const getRecruitmentItems = async (positionType: number) => {
     const { data }: { data: RecruitmentResponse<RecruitmentItem[]> } = await got.post(new URL('f/ajaxHome/ajax_findRecruitmentinfoLimitList', baseUrl).href, {
         form: { num: 10, positionType },
     });
-    if (data.state !== 1 || !Array.isArray(data.object)) {
-        throw new Error(`Unable to load recruitment information: ${data.msg ?? 'unexpected response from the public API'}`);
-    }
-
     const items = await pMap(
-        data.object.filter((item) => item.url),
+        data.object,
         async (item): Promise<DataItem> => {
             const link = new URL(item.url, baseUrl).href;
             const detail = await cache.tryGet(`pku:scc:recruitment:v1:${item.id}`, async () => {
-                const { data }: { data: RecruitmentResponse<{ recruitmentinfo: { content?: string } }> } = await got.post(new URL('f/recruitmentinfo/ajax_show', baseUrl).href, {
+                const { data }: { data: RecruitmentResponse<{ recruitmentinfo: { content: string } }> } = await got.post(new URL('f/recruitmentinfo/ajax_show', baseUrl).href, {
                     form: { recruitmentId: item.id },
                 });
-                if (data.state !== 1 || !data.object?.recruitmentinfo) {
-                    throw new Error(`Unable to load recruitment article ${link}: ${data.msg ?? 'unexpected response from the public API'}`);
-                }
                 return { description: data.object.recruitmentinfo.content };
             });
-            return { title: item.title, link, pubDate: item.startTime ? parseDate(item.startTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined, ...detail };
+            return { title: item.title, link, pubDate: parseDate(item.startTime, 'YYYY-MM-DD HH:mm:ss', 8), ...detail };
         },
         { concurrency: 3 }
     );

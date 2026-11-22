@@ -28,12 +28,12 @@ async function handler(ctx) {
     const $ = load(response);
 
     const title = $('main h1').text();
-    const summary = $('main .card-body.text-center').first();
-    const table = $('main table').first();
+    const summary = $('main .card-body.text-center');
+    const table = $('main table');
     const quality = summary.find('[class*="aqi-level-"]').text().trim();
     const pubTime = summary.text().match(/发布时间：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1];
 
-    if (!title || !pubTime || !table.find('tbody tr').length) {
+    if (!pubTime) {
         throw new Error('Unable to find current air quality data on the source page.');
     }
 

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const appFeedUrl = 'https://raw.githubusercontent.com/Squidly271/AppFeed/master/applicationFeed.json';
@@ -42,8 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { data } = await got(appFeedUrl, { maxResponseSize: 64 * 1024 * 1024 }); // the feed lists every app, 22 MB now
-    const requestedLimit = Math.trunc(Number(ctx.req.query('limit')));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : defaultLimit;
+    const limit = getRouteLimit(ctx, defaultLimit);
 
     let appList = data.applist.filter((app) => typeof app.Name === 'string' && app.Name.length > 0);
     appList = appList.map((app) => {
@@ -53,7 +53,7 @@ async function handler(ctx) {
             pubDate,
         };
     });
-    appList.sort((a, b) => (b.pubDate ?? 0) - (a.pubDate ?? 0));
+    appList.sort((a, b) => b.pubDate - a.pubDate);
     const identities = new Set<string>();
     const returnedAppList = appList
         .filter((app) => {
@@ -75,8 +75,8 @@ async function handler(ctx) {
             title: `${app.Name} (${app.Repository ?? 'Unknown repository'})`,
             link: app.Registry || `https://unraid.net/community/apps?q=${app.Name}`,
             description: app.Overview?.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>').replaceAll('[br]', '<br>'),
-            pubDate: app.pubDate !== undefined && app.pubDate !== null ? parseDate(app.pubDate * 1000) : undefined,
-            image: app.Icon || undefined,
+            pubDate: parseDate(app.pubDate * 1000),
+            image: app.Icon,
             category: app.CategoryList,
             upvotes: app.stars,
         })),

@@ -40,11 +40,10 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
 
-            const published = $item.find('.time').text().trim();
             return {
                 title: $item.find('.tit').text(),
                 link: $item.find('a').attr('href'),
-                pubDate: published ? parseDate(`${published} +0000`, 'MM/DD/YYYY ZZ') : undefined,
+                pubDate: parseDate(`${$item.find('.time').text()} +0000`, 'MM/DD/YYYY ZZ'),
             };
         });
 

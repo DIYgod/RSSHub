@@ -10,7 +10,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 interface NewsListItem {
     news_no: number;
@@ -69,13 +69,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let list = response.return_msg?.list ?? [];
-    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.post_time && parseDate(item.post_time))) {
-        if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => compareDates(parseDate(b.post_time), parseDate(a.post_time)));
-        }
-        list = list.slice(0, limit);
-    }
+    const list = response.return_msg?.list?.slice(0, limit) ?? [];
 
     const items: DataItem[] = await pMap(
         list,
@@ -127,6 +121,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     id: guid,
                     content: {
                         html: description,
+                        text: load(description).text(),
                     },
                     image,
                     banner: image,
@@ -143,13 +138,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         title: '新聞 | 遊戲基地 Gamebase',
         description: '精選基地編輯每日為你帶來的電玩、動漫、娛樂遊戲最新新聞',
         link: targetUrl,
-        item: items.map((item) => ({
-            ...item,
-            content: {
-                ...item.content,
-                text: load(item.content?.html ?? item.description ?? '').text(),
-            },
-        })),
+        item: items,
         image: 'https://image.gamebase.com.tw/gb_tw/static/logo_01.png',
         author: '遊戲基地 Gamebase',
         language,

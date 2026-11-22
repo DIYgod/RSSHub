@@ -36,7 +36,7 @@ const handler = async (ctx) => {
         return {
             title,
             description,
-            pubDate: item.publishDate ? parseDate(item.publishDate, 8) : undefined,
+            pubDate: parseDate(item.publishDate, 8),
             link: new URL(`cn/view/pages/ItemDetail.html?docId=${guid}`, rootUrl).href,
             guid,
             id: guid,
@@ -67,10 +67,10 @@ const handler = async (ctx) => {
                 const title = data.docTitle;
                 const description = $$('div.Section0').html();
 
-                item.title = title || item.title;
+                item.title = title;
                 item.description = description;
-                item.pubDate = data.publishDate ? parseDate(data.publishDate, 8) : item.pubDate;
-                item.category = data.listTwoItem?.[0]?.ItemLvs?.map((c) => c.itemName);
+                item.pubDate = parseDate(data.publishDate, 8);
+                item.category = data.listTwoItem?.[0]?.ItemLvs.map((c) => c.itemName);
                 item.author = data.docSource;
                 item.guid = `cbirc-${item.guid}`;
                 item.id = item.guid;
@@ -78,8 +78,8 @@ const handler = async (ctx) => {
                     html: description,
                     text: $$('div.Section0').text(),
                 };
-                item.updated = data.docEditdate ? parseDate(data.docEditdate) : undefined;
-                item.language = ($$('html').prop('lang') || undefined) as Language | undefined;
+                item.updated = parseDate(data.docEditdate);
+                item.language = $$('html').prop('lang') as Language | undefined;
 
                 return item;
             }),

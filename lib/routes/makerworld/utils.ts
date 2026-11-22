@@ -12,7 +12,7 @@ export const baseUrl = 'https://makerworld.com';
 const fetchViaBrowser = async (url: string, type: 'html' | 'json' = 'html') => {
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+            const expectResourceTypes = new Set(['document']);
             await page.route('**/*', (route) => {
                 const request = route.request();
                 return expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();

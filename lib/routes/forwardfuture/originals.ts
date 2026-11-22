@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 interface OriginalPost {
     id: string;
@@ -112,13 +112,7 @@ async function handler(ctx: Context): Promise<Data> {
         image: post.thumbnail,
         category: post.categories.length > 0 ? post.categories : post.category === 'General' ? undefined : [post.category],
     }));
-    if (ctx.req.query('sorted') === 'false') {
-        items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate instanceof Temporal.Instant)) {
-        items = items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant)).slice(0, limit);
-    } else {
-        items = items.slice(0, Math.max(30, limit));
-    }
+    items = ctx.req.query('sorted') === 'false' ? items.slice(0, limit) : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit);
 
     return {
         title: 'Forward Future - Originals',

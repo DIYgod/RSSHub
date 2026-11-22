@@ -121,7 +121,7 @@ async function handler(ctx) {
         category: item.typeName,
     }));
     const limit = getRouteLimit(ctx);
-    if (limit && (ctx.req.query('sorted') === 'false' || articles.every((item) => item.pubDate instanceof Temporal.Instant))) {
+    if (limit) {
         if (ctx.req.query('sorted') !== 'false') {
             articles.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
         }

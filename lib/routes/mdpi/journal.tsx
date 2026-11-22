@@ -14,31 +14,24 @@ type PayloadValue = string | number | boolean | null | undefined | PayloadValue[
 
 const isRecord = (value: PayloadValue): value is { [key: string]: PayloadValue } => !!value && typeof value === 'object' && !Array.isArray(value);
 
-const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map<number, PayloadValue>()): PayloadValue => {
+const decodePayload = (payload: PayloadValue[], index: number): PayloadValue => {
     if (index === -1) {
         return undefined;
-    }
-    if (decoded.has(index)) {
-        return decoded.get(index);
     }
     const value = payload[index];
     if (Array.isArray(value)) {
         if (typeof value[0] === 'string' && ['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0]) && typeof value[1] === 'number') {
-            return decodePayload(payload, value[1], decoded);
+            return decodePayload(payload, value[1]);
         }
-        const result: PayloadValue[] = [];
-        decoded.set(index, result);
-        result.push(...value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference, decoded) : undefined)));
-        return result;
+        return value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference) : undefined));
     }
     if (isRecord(value)) {
         const result: { [key: string]: PayloadValue } = {};
-        decoded.set(index, result);
         for (const [key, reference] of Object.entries(value)) {
             if (typeof reference !== 'number') {
                 throw new TypeError('The journal page contains an unsupported article reference');
             }
-            result[key] = decodePayload(payload, reference, decoded);
+            result[key] = decodePayload(payload, reference);
         }
         return result;
     }
@@ -119,13 +112,10 @@ async function handler(ctx) {
         cookieJar,
     });
     const $ = load(response.data);
-    const jrnlName = $('.journal__description').find('h1').text() || $('h1').first().text();
-    const currentIssuePath =
-        $('.side-menu-ul').find('a').eq(1).attr('href') ??
-        $('a')
-            .filter((_, element) => $(element).text().trim() === 'Current Issue')
-            .first()
-            .attr('href');
+    const jrnlName = $('h1').text();
+    const currentIssuePath = $('a')
+        .filter((_, element) => $(element).text() === 'Current Issue')
+        .attr('href');
     if (!currentIssuePath) {
         throw new Error('The journal page does not contain a current issue link');
     }
@@ -135,50 +125,7 @@ async function handler(ctx) {
         cookieJar,
     });
     const $2 = load(response2.data);
-    const issue = $2('.content__container').find('h1').text().trim();
-    const list = $2('.article-item')
-        .toArray()
-        .map((item): DataItem & { authors: string; doi: string; abstract: string; issue: string; img?: string } => {
-            const title = $2(item).find('.title-link').text();
-            const link = `${host}${$2(item).find('.title-link').attr('href')}`;
-            const authors = $2(item).find('.authors').find('.inlineblock').text();
-            const publishedDate = $2(item)
-                .find('.color-grey-dark')
-                .text()
-                .match(/ - (\d{1,2} [A-Z]{3} \d{4})/i)?.[1];
-            const doiLink = $2(item).find('.color-grey-dark').find('a').attr('href');
-            let doi = '';
-            if (doiLink !== undefined) {
-                doi = doiLink.replace('https://doi.org/', '');
-            }
-            $2(item).find('.abstract-full').find('a').remove();
-            const abstract = $2(item).find('.abstract-full').html()?.trim() ?? '';
-            const imageSource = $2(item).find('.openpopupgallery').find('img').attr('data-src');
-            const img = imageSource ? new URL(imageSource, host).href : undefined;
-            return {
-                title,
-                authors,
-                author: authors,
-                pubDate: publishedDate ? parseDate(publishedDate, 'D MMM YYYY') : undefined,
-                link,
-                doi,
-                abstract,
-                issue,
-                img,
-            };
-        });
-
-    const nuxtData = $2('#__NUXT_DATA__').text();
-    const items =
-        !list.length && nuxtData
-            ? parseIssueArticles(JSON.parse(nuxtData), issueUrl)
-            : list.map(({ title, link, author, pubDate, abstract, img }) => ({
-                  title,
-                  link,
-                  author,
-                  pubDate,
-                  description: renderDesc({ abstract, img }),
-              }));
+    const items = parseIssueArticles(JSON.parse($2('#__NUXT_DATA__').text()), issueUrl);
 
     return {
         title: jrnlName,

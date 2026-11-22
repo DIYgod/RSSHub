@@ -93,7 +93,7 @@ async function getData(response) {
             // Render the article description.
             const description = renderToString(
                 <>
-                    {thumbnailUrl ? <img src={thumbnailUrl} /> : null}
+                    <img src={thumbnailUrl} />
                     <p>
                         原作：<b>{origins}</b>
                     </p>

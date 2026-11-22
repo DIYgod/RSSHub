@@ -5,7 +5,6 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -56,10 +55,7 @@ async function handler(ctx) {
             delete result.content;
             delete result.contentSnippet;
             delete result.isoDate;
-            return {
-                ...result,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-            };
+            return result;
         })
     );
 

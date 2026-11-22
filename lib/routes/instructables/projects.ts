@@ -36,13 +36,6 @@ export const route: Route = {
 |     | circuits | workshop | craft | cooking | living | outside | teachers |`,
 };
 
-const parsePublicationDate = (value?: string | number) => {
-    if (value === undefined || value === '') {
-        return;
-    }
-    return parseDate(value);
-};
-
 async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
@@ -95,7 +88,7 @@ async function handler(ctx) {
             link: `https://${siteDomain}/${item.document.urlString}`,
             author: item.document.screenName,
             description: `<img src="${item.document.coverImageUrl}?auto=webp&crop=1.2%3A1&frame=1&width=500" width="500">`,
-            pubDate: parsePublicationDate(item.document.publishDate),
+            pubDate: parseDate(item.document.publishDate),
             category: item.document.primaryClassification,
         })),
     };

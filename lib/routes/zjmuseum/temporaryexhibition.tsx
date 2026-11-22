@@ -54,7 +54,7 @@ async function handler(ctx) {
     });
 
     try {
-        const responses = await Promise.allSettled(
+        const responses = await Promise.all(
             fetchTypes.map(async (t) => {
                 const config = apiConfig[t];
 
@@ -80,9 +80,9 @@ async function handler(ctx) {
                 return list.map((item) => {
                     const title = item.title;
                     const itemLink = `${baseUrl}/cn/#/Exhibition/TemporaryExhibition/${item.content_id}`;
-                    const pubDate = item.create_time ? parseDate(item.create_time, 8) : undefined;
-                    const startDate = item.start_time?.split('T', 1)[0] ?? '';
-                    const endDate = item.end_time?.split('T', 1)[0] ?? '';
+                    const pubDate = parseDate(item.create_time, 8);
+                    const startDate = item.start_time.split('T', 1)[0];
+                    const endDate = item.end_time.split('T', 1)[0];
                     const location = [item.museum_area, item.address].filter(Boolean).join(' ');
                     const imgUrl = `${baseUrl}${item.cover_url}`;
 
@@ -124,11 +124,7 @@ async function handler(ctx) {
             })
         );
 
-        const failure = responses.find((response) => response.status === 'rejected');
-        if (failure?.status === 'rejected') {
-            throw failure.reason;
-        }
-        const items = responses.flatMap((response) => (response.status === 'fulfilled' ? response.value : []));
+        const items = responses.flat();
 
         return {
             title: `${museumName} - 临时展览 - ${titleTag}`,

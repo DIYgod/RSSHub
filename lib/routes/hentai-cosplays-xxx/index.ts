@@ -64,7 +64,7 @@ async function handler(ctx: Context) {
                         .toArray()
                         .map((element) => `<img src=${$(element).attr('src')} alt="">`)
                         .join(' '),
-                    pubDate: info.date ? parseDate(info.date, 0) : undefined,
+                    pubDate: parseDate(info.date, 0),
                 };
             }),
         { concurrency: 3 }

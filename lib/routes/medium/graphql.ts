@@ -92,9 +92,6 @@ async function graphqlRequest(body, cookie, getBrowser?: GetMediumBrowser) {
         }
         data = response.data;
     }
-    if (!Array.isArray(data)) {
-        throw new TypeError('The Medium GraphQL source did not return its expected JSON response.');
-    }
     return data[0].data;
 }
 

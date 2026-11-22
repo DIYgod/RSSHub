@@ -16,11 +16,9 @@ const categories = {
 interface Article {
     title: string;
     url: string;
-    abstract?: string;
     author?: string;
-    display_publish_time?: number;
-    publish_time?: number;
-    EXT_tags?: string;
+    display_publish_time: number;
+    EXT_tags: string;
 }
 
 export const route: Route = {
@@ -52,7 +50,7 @@ async function handler(ctx) {
 
     const rootUrl = 'http://www.cdi.org.cn';
     const currentUrl = `${rootUrl}/Research/${categories[id]}/index.html`;
-    const page = await ofetch(currentUrl, { responseType: 'text' });
+    const page = await ofetch(currentUrl);
     const $ = load(page);
     const apiPath = $('script')
         .text()
@@ -61,22 +59,21 @@ async function handler(ctx) {
         throw new Error('The CDI category page no longer provides its article API URL.');
     }
     const response = await ofetch<{ category: { name: string }; articles: Article[] }>(new URL(apiPath, rootUrl).href);
-    const firstPage = response.articles.toSorted((a, b) => (b.display_publish_time || 0) - (a.display_publish_time || 0)).slice(0, 24);
+    const firstPage = response.articles.toSorted((a, b) => b.display_publish_time - a.display_publish_time).slice(0, 24);
     const items = await pMap(
         firstPage,
         (article) => {
             const link = new URL(article.url, currentUrl).href;
             return cache.tryGet(link, async (): Promise<DataItem> => {
-                const detail = await ofetch(link, { responseType: 'text' });
+                const detail = await ofetch(link);
                 const content = load(detail);
-                const date = article.display_publish_time || article.publish_time;
                 return {
                     title: article.title,
                     link,
-                    description: content('#info').html() || article.abstract,
+                    description: content('#info').html(),
                     author: article.author || undefined,
-                    category: article.EXT_tags?.split(',').filter(Boolean),
-                    pubDate: date ? parseDate(date, 'X') : undefined,
+                    category: article.EXT_tags.split(',').filter(Boolean),
+                    pubDate: parseDate(article.display_publish_time, 'X'),
                 };
             });
         },

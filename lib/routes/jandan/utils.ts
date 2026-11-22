@@ -4,14 +4,7 @@ import sanitizeHtml from 'sanitize-html';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseDateStrict } from '@/utils/time';
-
-const parseSourceDate = (value?: string) => {
-    if (typeof value !== 'string' || !value || !parseDateStrict(value.slice(0, 19), value.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DDTHH:mm:ss')) {
-        return;
-    }
-    return parseDate(value);
-};
+import { parseDate } from '@/utils/time';
 
 /**
  * Extract page ID from script tags and title
@@ -62,7 +55,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
             author: item.author,
             title: `${item.author}: ${sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} })}`,
             description: content,
-            pubDate: parseSourceDate(item.date_gmt),
+            pubDate: parseDate(item.date_gmt),
             link: `${rootUrl}/t/${item.id}`,
         };
     });
@@ -88,8 +81,8 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
     const items = forumData.data.list.map((post): DataItem => ({
         author: post.author_name,
         title: post.title,
-        pubDate: parseSourceDate(post.create_time),
-        updated: parseSourceDate(post.update_time),
+        pubDate: parseDate(post.create_time),
+        updated: parseDate(post.update_time),
         link: `${rootUrl}/new/forum/topic/${post.post_id}`,
         category: post.reply_count > 0 ? [`${post.reply_count}条回复`] : undefined,
     }));
@@ -124,7 +117,7 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
             author: comment.author,
             title: `${comment.author}: ${sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} })}`,
             description: content,
-            pubDate: parseSourceDate(comment.date_gmt),
+            pubDate: parseDate(comment.date_gmt),
             link: `${rootUrl}/t/${comment.id}`,
         };
     });

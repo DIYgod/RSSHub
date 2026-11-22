@@ -83,10 +83,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = (content('.TRS_Editor').html() || content('.article_con').html() || '') + (content('.attachment').html() || '');
-                const publishedDate = content('meta[name="PubDate"]').attr('content');
-                if (publishedDate) {
-                    item.pubDate = parseDate(publishedDate, 8);
-                }
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
 
                 return item;
             }),

@@ -71,7 +71,7 @@ async function handler(ctx) {
     });
 
     const items = response.data.data.data.news.map((item) => {
-        const audio = item.audioInfos?.find((audio) => audio.language === lang && audio.audioUrl);
+        const audio = item.audioInfos.find((audio) => audio.language === lang && audio.audioUrl);
         return {
             title: item.title || item.content,
             description: item.content,

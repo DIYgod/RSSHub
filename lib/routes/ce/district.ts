@@ -61,7 +61,7 @@ async function handler(ctx) {
     const entries = $('.news_items li').length ? $('.news_items li') : $('div.sec_left li');
     const list = entries.toArray().map((e): DataItem => {
         const element = $(e);
-        const anchor = element.find('h3 a[href]').length ? element.find('h3 a[href]') : element.find('a[href]').first();
+        const anchor = element.find('h3 a[href]').length ? element.find('h3 a[href]') : element.find('a[href]');
         const title = anchor.attr('title') || anchor.text();
         const link = new URL(anchor.attr('href')!, url).href;
         return {
@@ -80,7 +80,7 @@ async function handler(ctx) {
                 const pubDateText = $('span#articleTime').text().trim();
                 item.pubDate = pubDateText ? parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
 
-                item.description = $('div.TRS_Editor').html() || $('#articleText .TRS_UEDITOR').html();
+                item.description = $('#articleText .TRS_UEDITOR').html();
                 return item;
             }),
         { concurrency: 5 }

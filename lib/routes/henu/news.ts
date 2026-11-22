@@ -46,13 +46,10 @@ async function handler(ctx: Context) {
         title: $('title').text(),
         item: $('.article-list li')
             .toArray()
-            .map((elem): DataItem => {
-                const date = $('.article-date', elem).text();
-                return {
-                    link: new URL($('a', elem).attr('href')!, link).href,
-                    title: $('.article-title', elem).text(),
-                    pubDate: date ? parseDate(date, 8) : undefined,
-                };
-            }),
+            .map((elem): DataItem => ({
+                link: new URL($('a', elem).attr('href')!, link).href,
+                title: $('.article-title', elem).text(),
+                pubDate: parseDate($('.article-date', elem).text(), 8),
+            })),
     };
 }

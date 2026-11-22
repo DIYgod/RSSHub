@@ -21,7 +21,7 @@ export const newsContent = async (link, department = '') => {
     const extractDate = ($('.info').html()?.match(reg) || [])[0];
     const pubDate = extractDate ? parseDateStrict(extractDate.replaceAll('/', '-'), 'YYYY-MM-DD', 8) : undefined;
     // Extract the main article content.
-    const newsContent = $(element).first();
+    const newsContent = $(element);
     if (!newsContent.length) {
         throw new Error(`Article content was not found at ${link}`);
     }

@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const categories = {
@@ -58,17 +59,6 @@ export const route: Route = {
 
 type DetailQuery = { action: string; game?: string; kid?: string; catid?: string; id?: string };
 
-function parseArticleDate(value?: string | number | null) {
-    if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    const timestamp = Number(value);
-    if (!Number.isFinite(timestamp)) {
-        return;
-    }
-    return parseDate(timestamp, 'X');
-}
-
 async function fetchArticleContent(detailQuery: DetailQuery): Promise<Pick<DataItem, 'description'>> {
     const detail = await ofetch('https://jx3.xoyo.com/api.php', {
         query: { op: 'search_api', ...detailQuery },
@@ -80,8 +70,7 @@ async function fetchArticleContent(detailQuery: DetailQuery): Promise<Pick<DataI
 async function handler(ctx: Context) {
     const { caty = 'latest' } = ctx.req.param();
     const category = categories[caty];
-    const parsedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
-    const limit = Number.isSafeInteger(parsedLimit) && parsedLimit > 0 ? parsedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://jx3.xoyo.com';
     const response = await ofetch(`${rootUrl}/api.php`, {
@@ -100,7 +89,7 @@ async function handler(ctx: Context) {
             title: article.title,
             link: `${rootUrl}/index/index.html#/article-details?${isCustomer ? `kid=${article.id}` : `catid=${article.catid}&id=${article.id}`}`,
             description: article.description,
-            pubDate: parseArticleDate(article.inputtime),
+            pubDate: parseDate(Number(article.inputtime), 'X'),
             detailQuery: isCustomer ? { action: 'get_customer_article_detail', game: 'jx3', kid: article.id } : { action: 'get_article_detail', catid: article.catid, id: article.id },
         };
     });

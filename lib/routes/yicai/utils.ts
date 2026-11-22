@@ -19,7 +19,7 @@ type SourceArticle = {
     NewsAuthor?: string;
     NewsSource?: string;
     CreaterName?: string;
-    CreateDate?: string | number;
+    CreateDate: string;
     originPic?: string;
     NewsNotes?: string;
     VideoUrl?: string;
@@ -62,26 +62,11 @@ function getVideo(value?: string):
           type?: string;
       }
     | undefined {
-    if (typeof value !== 'string') {
+    if (!value) {
         return;
     }
-    let url: URL;
-    try {
-        url = new URL(value);
-    } catch {
-        return;
-    }
-    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) {
-        return;
-    }
-    const extension = url.pathname.match(/\.([a-z\d]+)$/i)?.[1].toLowerCase();
+    const extension = new URL(value).pathname.match(/\.([a-z\d]+)$/i)?.[1].toLowerCase();
     return { src: value, type: extension ? videoMimeTypes.get(extension) : undefined };
-}
-function getPublicationDate(value?: string | number): Temporal.Instant | undefined {
-    if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
-        return;
-    }
-    return parseDate(value, 8);
 }
 function getArticleDate(content: CheerioAPI): Temporal.Instant | undefined {
     const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
@@ -89,84 +74,39 @@ function getArticleDate(content: CheerioAPI): Temporal.Instant | undefined {
     if (!match) {
         return;
     }
-    let entries: unknown;
-    try {
-        entries = JSON.parse(match[1].replaceAll("'", '"'));
-    } catch (error) {
-        if (error instanceof SyntaxError) {
-            return;
-        }
-        throw error;
-    }
-    if (!Array.isArray(entries) || entries.some((entry) => !(Array.isArray(entry) && entry.length >= 2))) {
-        return;
-    }
-    const actime = new Map(entries as Array<[unknown, unknown]>).get('actime');
-    if (typeof actime !== 'string' || !actime.trim()) {
-        return;
-    }
-    // The source uses hour-only offsets such as +08; retain the supplied offset.
-    const normalized = actime.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?[+-]\d{2})$/, '$1:00');
-    return parseDate(normalized);
+    const pb = new Map(JSON.parse(match[1].replaceAll("'", '"')));
+    return parseDate(`${pb.get('actime')}:00`);
 }
-function getNavigationChannels(html: string, section: 'news' | 'video'): NavigationChannel[] {
+function getNavigationChannels(html: string): NavigationChannel[] {
     const content = load(html);
     return content('li > a[href]')
         .toArray()
-        .flatMap((node) => {
+        .map((node) => {
             const anchor = content(node);
-            let url: URL;
-            try {
-                url = new URL(anchor.attr('href')!, rootUrl);
-            } catch {
-                return [];
-            }
-            const parts = url.pathname.split('/').filter(Boolean);
-            if (url.origin !== rootUrl || url.username || url.password || url.search || url.hash || parts.length !== 2 || parts[0] !== section) {
-                return [];
-            }
-            return { name: anchor.text(), slug: parts[1], url: url.href };
+            const url = new URL(anchor.attr('href')!, rootUrl);
+            return { name: anchor.text(), slug: url.pathname.split('/', 3)[2], url: url.href };
         });
 }
-function getBreadcrumbChannel(html: string, section: 'news' | 'video'): BreadcrumbChannel {
+function getBreadcrumbChannel(html: string): BreadcrumbChannel {
     const match = /\bbreadcrumb\s*=\s*JSON\.parse\('([\s\S]*?)'\)/.exec(html);
     if (!match) {
         throw new Error('Yicai category page has no channel breadcrumb');
     }
-    const breadcrumb: unknown = JSON.parse(match[1]);
-    // Preserve the source channel ID's existing positive-integer validation range.
-    // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer
-    if (!Array.isArray(breadcrumb) || breadcrumb[0]?.[1] !== section || !Array.isArray(breadcrumb[1]) || typeof breadcrumb[1][0] !== 'string' || !Number.isInteger(breadcrumb[1][1]) || breadcrumb[1][1] <= 0) {
-        throw new Error('Yicai category page has an invalid channel breadcrumb');
-    }
+    const breadcrumb = JSON.parse(match[1]);
     return { id: breadcrumb[1][1], name: breadcrumb[1][0] };
 }
 async function getChannel(section: 'news' | 'video', id: string, limit: number): Promise<Channel> {
     const response = await got({ method: 'get', url: `${rootUrl}/api/ajax/getnavs` });
-    const navigation: unknown = response.data.header?.[section];
-    if (Array.isArray(navigation)) {
-        const channel = navigation.find((entry) => entry.EnglishName === id || String(entry.ChannelID) === id);
-        if (channel && (typeof channel.ChannelID === 'string' || typeof channel.ChannelID === 'number') && typeof channel.ChannelName === 'string' && typeof channel.EnglishName === 'string') {
-            return { id: channel.ChannelID, name: channel.ChannelName, slug: channel.EnglishName };
-        }
-        throw new InvalidParameterError(`Unknown Yicai ${section} channel: ${id}`);
-    }
-    if (typeof navigation !== 'string') {
-        throw new TypeError('Yicai channel navigation has an unsupported format');
-    }
-    const channels = getNavigationChannels(navigation, section);
+    const channels = getNavigationChannels(response.data.header[section]);
     const channel = channels.find((entry) => entry.slug === id);
     if (channel) {
         const page = await got({ method: 'get', url: channel.url });
-        return { ...getBreadcrumbChannel(page.data, section), slug: channel.slug };
+        return { ...getBreadcrumbChannel(page.data), slug: channel.slug };
     }
     if (/^[1-9]\d*$/.test(id)) {
         const result = await got({ method: 'get', url: `${rootUrl}/api/ajax/getlistbycid?cid=${id}&page=1&pagesize=${limit}` });
         const items: SourceArticle[] = result.data;
-        if (!Array.isArray(items)) {
-            throw new TypeError('Yicai channel API has an unsupported format');
-        }
-        const record = items.find((item) => String(item.ChannelID) === id && typeof item.ChannelName === 'string');
+        const record = items.find((item) => String(item.ChannelID) === id);
         const channel = record && channels.find((entry) => entry.name === record.ChannelName);
         if (channel) {
             return { id, name: record.ChannelName, slug: channel.slug, items };
@@ -182,7 +122,7 @@ const processItems = async (apiUrl: string, suppliedItems?: SourceArticle[]) => 
             title: item.NewsTitle,
             link: item.url.startsWith('http') ? item.url : `${rootUrl}${item.AppID === 0 ? '/vip' : ''}${item.url}`,
             author: item.NewsAuthor || item.NewsSource || item.CreaterName,
-            pubDate: getPublicationDate(item.CreateDate),
+            pubDate: parseDate(item.CreateDate, 8),
             category: [item.ChannelName],
             description: renderDescription({
                 image: {
@@ -202,9 +142,9 @@ async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     const detailResponse = await got({ method: 'get', url: link });
     const content = load(detailResponse.data);
     const pubDate = getArticleDate(content);
-    const main = content('.multiText, #multi-text, .txt').first();
+    const main = content('.multiText, #multi-text, .txt');
     if (new URL(link).pathname.startsWith('/topic/')) {
-        const heading = main.children('h1').first();
+        const heading = main.children('h1');
         if (heading.text() === content('title').text()) {
             heading.remove();
         }
@@ -213,18 +153,8 @@ async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     const videoUrls = main
         .find('video[src], video source[src]')
         .toArray()
-        .flatMap((node) => {
-            const src = content(node).attr('src');
-            if (!src) {
-                return [];
-            }
-            try {
-                return [new URL(src, link).href];
-            } catch {
-                return [];
-            }
-        });
-    return { description: main.html() ?? '', pubDate, videoUrls };
+        .map((node) => new URL(content(node).attr('src')!, link).href);
+    return { description: main.html(), pubDate, videoUrls };
 }
 function fetchFullArticles(items: ListedArticleItem[]): Promise<ArticleItem[]> {
     return pMap(

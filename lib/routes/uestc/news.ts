@@ -60,7 +60,7 @@ async function handler(ctx) {
             const $item = $(item);
             const newsTitle = $item.find('a').text();
             const newsLink = new URL($item.find('a').attr('href')!, baseUrl + pageUrl).href;
-            const newsDate = parseDateStrict($item.find('div.date-box-sm').text().trim(), 'YYYY.MM-DD', 8);
+            const newsDate = parseDateStrict($item.find('div.date-box-sm').text(), 'YYYY.MM-DD', 8);
             const newsDescription = $item.find('div.content').text().trim().replace('&nbsp;', '');
 
             return {

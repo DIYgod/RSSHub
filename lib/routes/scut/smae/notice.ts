@@ -70,7 +70,7 @@ async function handler(ctx) {
                 const content = $('div.wp_articlecontent');
                 content.find('.wp_pdf_player[pdfsrc]').each((_, element) => {
                     const pdf = $(element);
-                    const url = new URL(pdf.attr('pdfsrc')!, item.link).href;
+                    const url = pdf.attr('pdfsrc')!;
                     pdf.replaceWith($('<p>').append($('<a>').attr('href', url).text('Download PDF')));
                 });
                 item.description = content.html();

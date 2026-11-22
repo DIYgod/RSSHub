@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, toInstant, toISOString } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://nsd.pku.edu.cn/sylm/gd/';
@@ -59,18 +59,24 @@ async function handler() {
             return {
                 title: $(item).find('a').text(),
                 link: type === 'in-site' ? baseUrl + href : href,
-                pubDate: $(item).find('span').first().text() ? parseDate(`${$(item).find('span').first().text()}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${$(item).find('span').text()}T00:00:00Z`),
                 type,
             };
-        })
-        .filter((item, index, items) => items.findIndex(({ link }) => link === item.link) === index);
+        });
 
     const items = await pMap(
         list,
-        (item) => {
+        async (item) => {
             switch (item.type) {
                 case 'wechat-mp':
-                    return recoverArticle(finishArticleItem(item), item);
+                    try {
+                        return await finishArticleItem(item);
+                    } catch (error) {
+                        if (error instanceof WeChatMpError && error.message.startsWith('wechat-mp: request blocked by WAF:')) {
+                            return item;
+                        }
+                        throw error;
+                    }
                 case 'pku-news':
                     return getArticle(item, 'div.pageArticle > div.col.lf');
                 case 'in-site':
@@ -90,42 +96,22 @@ async function handler() {
 }
 
 async function getArticle(item: DataItem, selector: string) {
-    const article = await cache.tryGet(`pku:nsd:article:v5:${item.link}`, async () => {
+    const article = await cache.tryGet(`pku:nsd:article:v6:${item.link}`, async () => {
         const response = await got(item.link!);
         const $ = load(response.data);
         const content = $(selector);
+        if (selector !== 'div.article') {
+            return { description: content.html() };
+        }
+        const publishedAt = content
+            .children('h5')
+            .text()
+            .match(/发布日期：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)![1];
         return {
-            description: selector === 'div.article' ? (content.children('.article-section').html() ?? content.html()) : content.html(),
-            publishedAt:
-                selector === 'div.article'
-                    ? content
-                          .children('h5')
-                          .text()
-                          .match(/发布日期：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)?.[1]
-                    : undefined,
-            title: selector === 'div.article' ? content.children('.article-title').text() || undefined : undefined,
-            listingTitle: item.title,
+            title: content.children('.article-title').text(),
+            description: content.children('.article-section').html(),
+            pubDate: parseDate(`${publishedAt.replace(' ', 'T')}+08:00`),
         };
     });
-    const publicationDate = article.publishedAt ? parseDate(`${article.publishedAt.replace(' ', 'T')}+08:00`) : undefined;
-    const listDate = item.pubDate ? toInstant(item.pubDate) : undefined;
-    // Only refine the same portal publication date; a newer list date must stay fresh after a cache hit.
-    const usePublicationDate = publicationDate !== undefined && (!item.pubDate || (listDate !== undefined && article.publishedAt?.startsWith(toISOString(listDate).slice(0, 10))));
-    return {
-        ...item,
-        title: article.title && article.listingTitle === item.title ? article.title : item.title,
-        description: article.description,
-        pubDate: usePublicationDate ? publicationDate : item.pubDate,
-    };
-}
-
-async function recoverArticle<T, TItem>(promise: Promise<T>, item: TItem) {
-    try {
-        return await promise;
-    } catch (error) {
-        if (error instanceof WeChatMpError && error.message.startsWith('wechat-mp: request blocked by WAF:')) {
-            return item;
-        }
-        throw error;
-    }
+    return { ...item, ...article };
 }

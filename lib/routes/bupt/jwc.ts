@@ -82,10 +82,8 @@ async function handler(ctx: Context) {
                 };
             })
             .filter((item) => item !== null);
-        const orderedList = list;
-        const entries = orderedList;
         const items = await Promise.all(
-            entries.map((item) =>
+            list.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const detailResponse = await fetchWithPage(page, item.link, { timeout: 12000 });
                     const detailContent = detailResponse.text;

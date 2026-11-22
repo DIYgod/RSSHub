@@ -48,7 +48,7 @@ async function handler() {
     const verguetungOptions = response.fields['custom.verguetung'].options;
 
     const items = jobPostings.map((job) => {
-        const pubDate = job.createdOn ? parseDate(job.createdOn, 'YYYY-MM-DDTHH:mm:ssZ') : undefined;
+        const pubDate = parseDate(job.createdOn, 'YYYY-MM-DDTHH:mm:ssZ');
 
         // Resolve Institution label.
         const institutionLabel = findLabel(job.custom.bereich, bereichOptions);
@@ -61,7 +61,7 @@ async function handler() {
             link: job.url,
             description,
             pubDate,
-            updated: job.modifiedOn ? parseDate(job.modifiedOn) : undefined,
+            updated: parseDate(job.modifiedOn),
         };
     });
 

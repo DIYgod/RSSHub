@@ -65,12 +65,7 @@ async function handler() {
                         if (content('title').text() === 'Login - 西安交通大学统一身份认证网关' && content('form#fm1 input[name=password]').length === 1) {
                             throw new ArticleAccessError(`Article authentication required at ${item.link}`);
                         }
-                        const body = content('#vsb_content, #vsb_content_503').first();
-                        const article = body.html();
-                        if (!article?.trim()) {
-                            throw new Error(`Unable to find article content at ${item.link}`);
-                        }
-                        const description = article + (content('form ul').html() ?? '');
+                        const description = content('#vsb_content, #vsb_content_503').html()! + (content('form ul').html() ?? '');
                         return { description };
                     });
                     return { ...item, ...detail };

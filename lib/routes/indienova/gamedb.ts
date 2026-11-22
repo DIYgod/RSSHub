@@ -38,7 +38,6 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('small').first().text();
             return {
                 title: $item
                     .find('span')
@@ -46,7 +45,7 @@ async function handler(ctx) {
                     .filter((_, el) => el.nodeType === 3)
                     .text(),
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                pubDate: date ? parseRelativeDate(date) : undefined,
+                pubDate: parseRelativeDate($item.find('small').first().text()),
             };
         });
 
@@ -67,7 +66,7 @@ async function handler(ctx) {
                 article.find('#showHiddenText').remove();
 
                 item.description = [$('.cover-image').prop('outerHTML'), $('.tab-container').html(), article.html()].join('');
-                const releaseDate = $('.gamedb-release').text().replaceAll(/[()]/g, '').trim();
+                const releaseDate = $('.gamedb-release').text().replaceAll(/[()]/g, '');
                 item.pubDate = releaseDate ? parseDate(releaseDate, 8) : item.pubDate;
 
                 return item;

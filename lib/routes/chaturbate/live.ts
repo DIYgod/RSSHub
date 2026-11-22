@@ -7,8 +7,8 @@ import { parseDate } from '@/utils/time';
 interface RoomDossier {
     broadcaster_username: string;
     room_status: string;
-    start_timestamp?: number;
-    num_viewers?: number;
+    start_timestamp: number;
+    num_viewers: number;
 }
 
 export const route: Route = {
@@ -38,16 +38,9 @@ async function handler(ctx: Context) {
     const { username } = ctx.req.param();
     const link = `https://chaturbate.com/${username}/`;
     const dossier: RoomDossier = await ofetch(`https://chaturbate.com/api/chatvideocontext/${username}/`);
-    if (typeof dossier.broadcaster_username !== 'string' || dossier.broadcaster_username.toLowerCase() !== username.toLowerCase() || typeof dossier.room_status !== 'string') {
-        throw new Error('Chaturbate returned unexpected room metadata. Check the broadcaster username.');
-    }
-
     const broadcaster = dossier.broadcaster_username;
     const isLive = dossier.room_status === 'public';
     const startTime = dossier.start_timestamp;
-    if (isLive && (typeof startTime !== 'number' || !Number.isSafeInteger(startTime) || startTime <= 0)) {
-        throw new Error('Chaturbate did not provide a valid broadcast start time. A stable live notification cannot be generated.');
-    }
 
     return {
         title: `${broadcaster} - Live status`,
@@ -58,8 +51,8 @@ async function handler(ctx: Context) {
                 link,
                 author: broadcaster,
                 guid: isLive ? `${broadcaster}:${startTime}` : `${broadcaster}:inactive`,
-                pubDate: isLive && typeof startTime === 'number' ? parseDate(startTime, 'X') : undefined,
-                description: typeof dossier.num_viewers === 'number' && Number.isFinite(dossier.num_viewers) && dossier.num_viewers >= 0 ? `<p>Viewers: ${dossier.num_viewers}</p>` : undefined,
+                pubDate: isLive ? parseDate(startTime, 'X') : undefined,
+                description: `<p>Viewers: ${dossier.num_viewers}</p>`,
             },
         ],
     };

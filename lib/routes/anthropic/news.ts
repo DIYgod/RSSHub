@@ -37,7 +37,7 @@ async function handler(ctx) {
             const $link = $el.find('a[class$="_title-link"]');
             const title = $link.text().trim();
             const href = $link.attr('href') ?? '';
-            const pubDate = parseDate($el.find('time').text().trim(), 'MMM D, YYYY');
+            const pubDate = parseDate($el.find('time').text(), 'MMM D, YYYY');
             const link = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
                 title,

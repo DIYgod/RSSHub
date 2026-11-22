@@ -44,8 +44,8 @@ export const route: Route = {
                 const $dateMonth = $item.find('.d .d-m');
 
                 // Combine the date components.
-                const day = $dateDay.text().trim(); // Format: 04.
-                const monthYear = $dateMonth.text().trim(); // Format: 2025/06.
+                const day = $dateDay.text(); // Format: 04.
+                const monthYear = $dateMonth.text(); // Format: 2025/06.
                 const fullDate = `${monthYear}/${day}`; // 2025/06/04
 
                 const href = $link.attr('href');
@@ -54,7 +54,7 @@ export const route: Route = {
                 return {
                     title: $link.text(),
                     link,
-                    pubDate: day && monthYear ? parseDate(fullDate, 'YYYY/MM/DD', 8) : undefined,
+                    pubDate: parseDate(fullDate, 'YYYY/MM/DD', 8),
                 };
             })
             .filter((item) => item.link); // Discard entries without a link.
@@ -93,8 +93,6 @@ export const route: Route = {
                         });
 
                         detail.description = content.html();
-                    } else {
-                        throw new Error(`Could not find the academic notice content: ${item.link}`);
                     }
                     return detail;
                 });

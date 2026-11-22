@@ -4,7 +4,8 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dongke/:path{.+}?',
@@ -24,28 +25,20 @@ export const route: Route = {
 async function fetchDetails(link: string) {
     const { data: response } = await got(link);
     const content = load(response);
-    const body = content('div.v_news_content').first();
-    if (!body.length) {
-        return {};
-    }
-
     const pubDate = content('p.content-info')
         .text()
         .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
 
-    const date = pubDate ? parseDateStrict(pubDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
-
     return {
         title: content('title').text(),
-        description: body.html() ?? undefined,
+        description: content('div.v_news_content').html(),
         category: content('meta[name="keywords"]').prop('content')?.split(','),
-        pubDate: date,
+        pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
     };
 }
 
 async function handler(ctx): Promise<Data> {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
     const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`;
@@ -71,7 +64,7 @@ async function handler(ctx): Promise<Data> {
         async (item) => {
             const details = await cache.tryGet(`yangtzeu:dongke:article:v1:${item.link}`, () => fetchDetails(item.link!));
             return {
-                title: details.title ?? item.title,
+                title: details.title,
                 link: item.link,
                 description: details.description,
                 category: details.category,

@@ -46,9 +46,9 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('.time').text(), 'YYYY.MM.DD', 8),
             };
         });
-    const selectedList = list;
+
     const items = await Promise.all(
-        selectedList.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);

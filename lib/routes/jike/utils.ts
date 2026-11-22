@@ -142,7 +142,7 @@ const topicDataHanding = (data, ctx) =>
         return {
             title,
             description: description.trim().replaceAll('\n', '<br>'),
-            pubDate: parseCreatedAt(item.createdAt),
+            pubDate: parseDate(item.createdAt),
             author,
             link,
         };
@@ -195,8 +195,4 @@ const constructTopicEntry = async (ctx, url) => {
     return data;
 };
 
-function parseCreatedAt(value?: string): Temporal.Instant | undefined {
-    return value ? parseDate(value) : undefined;
-}
-
-export { constructTopicEntry, parseCreatedAt, topicDataHanding };
+export { constructTopicEntry, topicDataHanding };

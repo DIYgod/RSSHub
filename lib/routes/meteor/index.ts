@@ -1,6 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { baseUrl, getBoards, renderDesc } from './utils';
@@ -25,8 +26,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     let { board = 'all' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
 
     const boards = await getBoards();
     let boardInfo;
@@ -44,7 +43,7 @@ async function handler(ctx) {
             boardId: board,
             isCollege: false,
             page: 0,
-            pageSize: limit,
+            pageSize: getRouteLimit(ctx, 30),
         },
     });
 

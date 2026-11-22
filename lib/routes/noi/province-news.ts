@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
-import { createPageFetcher } from './utils';
+import { getPage } from './utils';
 
 export const route: Route = {
     path: '/province-news',
@@ -13,50 +13,45 @@ export const route: Route = {
     example: '/noi/province-news',
     name: '各省新闻',
     maintainers: ['WenryXu'],
-    features: { requirePuppeteer: true },
+    features: { antiCrawler: true },
     handler,
 };
 
 async function handler() {
-    const { getPage, destroy } = createPageFetcher();
-    try {
-        const $ = await getPage('https://www.noi.cn/gs/xw/index.shtml', '.news-all .news-item');
-        const postList = $('.news-all .news-item').toArray();
+    const $ = await getPage('https://www.noi.cn/gs/xw/index.shtml');
+    const postList = $('.news-all .news-item').toArray();
 
-        const result = await pMap(
-            postList,
-            (item) => {
-                const $item = $(item);
-                const title = $item.find('a').text();
-                const link = new URL($item.find('a').attr('href')!, 'https://www.noi.cn').href;
-                const pubDate = parseDate($item.find('small').text().slice(-19), 8);
+    const result = await pMap(
+        postList,
+        (item) => {
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const link = new URL($item.find('a').attr('href')!, 'https://www.noi.cn').href;
+            const pubDate = parseDate($item.find('small').text().slice(-19), 8);
 
-                // only follow links on the site itself
-                if (!isOnSite(link, 'noi.cn')) {
-                    return { title, link, guid: link, pubDate };
-                }
+            // only follow links on the site itself
+            if (!isOnSite(link, 'noi.cn')) {
+                return { title, link, guid: link, pubDate };
+            }
 
-                return cache.tryGet(link, async () => {
-                    const $detail = await getPage(link, '.news-cont');
+            return cache.tryGet(link, async () => {
+                const $detail = await getPage(link);
 
-                    return {
-                        title,
-                        link,
-                        guid: link,
-                        pubDate,
-                        description: $detail('.news-cont').html(),
-                    };
-                });
-            },
-            { concurrency: 3, stopOnError: false }
-        );
+                return {
+                    title,
+                    link,
+                    guid: link,
+                    pubDate,
+                    description: $detail('.news-cont').html(),
+                };
+            });
+        },
+        { concurrency: 3, stopOnError: false }
+    );
 
-        return {
-            title: '各省新闻 - NOI 全国青少年信息学奥林匹克竞赛',
-            link: 'https://www.noi.cn/gs/xw/index.shtml',
-            item: result,
-        };
-    } finally {
-        await destroy();
-    }
+    return {
+        title: '各省新闻 - NOI 全国青少年信息学奥林匹克竞赛',
+        link: 'https://www.noi.cn/gs/xw/index.shtml',
+        item: result,
+    };
 }

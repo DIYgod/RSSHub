@@ -2,10 +2,11 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderNote } from '../templates/note';
-import { createPageFetcher, notesUrl, ssoUrl } from '../utils';
+import { notesUrl, ssoUrl } from '../utils';
 
 export const route: Route = {
     path: ['/notes/:lang/note/:id', '/notes/note/:id'],
@@ -17,7 +18,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -29,45 +30,38 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageFetcher = createPageFetcher();
-    try {
-        const { id, lang = '' } = ctx.req.param();
-        const requestedLimit = Number(ctx.req.query('limit'));
-        const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 100;
-        const api = `${ssoUrl}/api/v1/comments`;
-        const link = `${notesUrl}${lang ? `/${lang}` : ''}/note/${id}`;
+    const { id, lang = '' } = ctx.req.param();
+    const api = `${ssoUrl}/api/v1/comments`;
+    const link = `${notesUrl}${lang ? `/${lang}` : ''}/note/${id}`;
 
-        const response = await pageFetcher.get(link);
-        const $ = load(response);
+    const { data: response } = await got(link);
+    const $ = load(response);
 
-        const { data } = await got(api, {
-            searchParams: {
-                sort: 'newest',
-                for: 'web',
-                limit,
-                type: 'note',
-                object_id: id,
-            },
-        });
+    const { data } = await got(api, {
+        searchParams: {
+            sort: 'newest',
+            for: 'web',
+            limit: getRouteLimit(ctx, 100),
+            type: 'note',
+            object_id: id,
+        },
+    });
 
-        const items = data.data.map((item) => ({
-            title: item.content,
-            description: renderNote({
-                content: item.content,
-                picture: item.picture,
-            }),
-            pubDate: parseDate(item.created_timestamp, 'X'),
-            author: item.user.name,
-            guid: `qoo-app:notes:note:${id}:${item.id}`,
-        }));
+    const items = data.data.map((item) => ({
+        title: item.content,
+        description: renderNote({
+            content: item.content,
+            picture: item.picture,
+        }),
+        pubDate: parseDate(item.created_timestamp, 'X'),
+        author: item.user.name,
+        guid: `qoo-app:notes:note:${id}:${item.id}`,
+    }));
 
-        return {
-            title: $('head title').text(),
-            link,
-            language: $('html').attr('lang') as Language,
-            item: items,
-        };
-    } finally {
-        await pageFetcher.close();
-    }
+    return {
+        title: $('head title').text(),
+        link,
+        language: $('html').attr('lang') as Language,
+        item: items,
+    };
 }

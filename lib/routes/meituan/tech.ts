@@ -36,7 +36,8 @@ export const route: Route = {
 
 async function handler() {
     const rssUrl = `${rootUrl}feed/`;
-    const feed = await parser.parseString(await ofetch(rssUrl, { responseType: 'text' }));
+    const rss = await ofetch(rssUrl);
+    const feed = await parser.parseString(rss);
     const items = await pMap(
         feed.items,
         async (item) => {
@@ -44,19 +45,19 @@ async function handler() {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
                 const publishedDate = $('.vp-post-date').text().trim();
-                const author = $('.vp-post-department').text().trim() || undefined;
+                const author = $('.vp-post-department').text().trim();
                 $('.vp-post-header').remove();
                 return {
                     author,
-                    description: $('.vp-page-content').html() ?? $('div.content').html(),
-                    pubDate: publishedDate ? parseDate(publishedDate, 'YYYY-MM-DD') : undefined,
+                    description: $('.vp-page-content').html(),
+                    pubDate: parseDate(publishedDate, 'YYYY-MM-DD'),
                 };
             });
             return {
                 title: item.title!,
                 link: item.link,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : detail.pubDate,
-                author: item.creator || detail.author,
+                pubDate: detail.pubDate,
+                author: detail.author,
                 description: detail.description,
             };
         },

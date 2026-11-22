@@ -192,14 +192,13 @@ async function handler(ctx): Promise<Data> {
             pubDate: content.lastUpdated,
         };
     });
-    const selectedList = list;
     const items = await Promise.all(
-        selectedList.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    item.description = $('.Content .blog').html() ?? item.description;
+                    item.description = $('.Content .blog').html();
                     return item;
                 } catch {
                     return item;

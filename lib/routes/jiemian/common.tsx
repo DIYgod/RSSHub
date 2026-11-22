@@ -119,8 +119,7 @@ export const fetchArticle = async (item) => {
             .toArray()
             .map((c) => content(c).text());
         // article: div.article-info, video: div.article-header__info
-        const publicationTime = content('div.article-info, div.article-header__info').find('span[data-article-publish-time]').first().prop('data-article-publish-time');
-        const pubDate = publicationTime && parseDate(publicationTime, 'X') ? parseDate(publicationTime, 'X') : undefined;
+        const pubDate = parseDate(content('div.article-info, div.article-header__info').find('span[data-article-publish-time]').prop('data-article-publish-time'), 'X');
         const upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
         const comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
 

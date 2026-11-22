@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -9,15 +6,6 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 const rootUrl = 'http://www.mztoday.gov.cn';
 const basicInfoDict = {
@@ -121,7 +109,7 @@ const getInfoContent = (item) =>
     cache.tryGet(item.url, async () => {
         const response = await got(item.url);
         const $ = load(response.data);
-        const content = copyElements($('.showText, #js_content, #articleContent').first());
+        const content = $('.showText, #js_content, #articleContent');
         if (!content.length && $('.articleTitle, #js_article').length) {
             throw new Error(`Article content was not found: ${item.url}`);
         }

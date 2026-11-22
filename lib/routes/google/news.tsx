@@ -14,18 +14,8 @@ const getPublisherUrl = (metadata: string | undefined, fallback: string) => {
     if (!encoded) {
         return fallback;
     }
-    try {
-        const values: unknown = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
-        if (Array.isArray(values)) {
-            const url = values.find((value) => typeof value === 'string' && /^https?:\/\//.test(value));
-            if (url && new URL(url).hostname !== 'news.google.com') {
-                return url as string;
-            }
-        }
-    } catch {
-        // Google may change click metadata; preserve the working News link.
-    }
-    return fallback;
+    const values: string[] = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
+    return values.find((value) => typeof value === 'string' && /^https?:\/\//.test(value));
 };
 
 export const route: Route = {
@@ -91,10 +81,8 @@ async function handler(ctx) {
         const $item = $(item);
 
         const title = $item.find('.gPFEn, .JtKRv').text();
-        const anchor = $item.find('a.WwrzSb').first();
+        const anchor = $item.find('a.WwrzSb');
         const newsUrl = new URL(anchor.attr('href')!, baseUrl).href;
-        const timestamp = $item.find('time').attr('datetime');
-        const publicationDate = timestamp ? parseDate(timestamp) : undefined;
 
         const authorText = $item.find('.bInasb span').text();
         const authors = authorText
@@ -117,7 +105,7 @@ async function handler(ctx) {
         return {
             title,
             description: renderDescription($item.find('img.Quavad').attr('src')),
-            pubDate: publicationDate,
+            pubDate: parseDate($item.find('time').attr('datetime')!),
             author: authors,
             link: getPublisherUrl(anchor.attr('jslog'), newsUrl),
             guid: newsUrl,

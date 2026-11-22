@@ -6,6 +6,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
@@ -24,7 +25,7 @@ export const route: Route = {
 };
 
 function parsePubDate(value?: string) {
-    if (!value?.trim()) {
+    if (!value) {
         return;
     }
 
@@ -57,8 +58,7 @@ function getDescription(content: CheerioAPI) {
 
 export async function handler(ctx) {
     const path = getSubPath(ctx);
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const isHot = path === '/hot';
 
@@ -122,7 +122,7 @@ export async function handler(ctx) {
                     .pop();
 
                 return {
-                    title: content('h1').text() || undefined,
+                    title: content('h1').text(),
                     description: getDescription(content),
                     author: content('div.left-infos p a').text().trim() || undefined,
                     category: content('div.right-infos a')

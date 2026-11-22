@@ -12,7 +12,7 @@ import { namespace } from './namespace';
 const getExhibitionContent = async (link: string) => {
     const response = await ofetch(link);
     const $ = load(response);
-    return { description: $('.exhUs_r').first().html() ?? '' };
+    return { description: $('.exhUs_r').html() ?? '' };
 };
 
 export const route: Route = {
@@ -102,7 +102,7 @@ export const route: Route = {
             title: `${museumName} - 临时展览`,
             link: listUrl,
             language: 'zh-CN',
-            item: await pMap(items, async (item) => ({ ...item, description: (item.description ?? '') + (await cache.tryGet(item.link!, () => getExhibitionContent(item.link!))).description }), { concurrency: 3 }),
+            item: await pMap(items, async (item) => ({ ...item, description: item.description + (await cache.tryGet(item.link!, () => getExhibitionContent(item.link!))).description }), { concurrency: 3 }),
         };
     },
 };

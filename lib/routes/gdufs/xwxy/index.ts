@@ -21,7 +21,6 @@ const titleMap = {
     announcements: '公告',
     media: '媒体聚焦',
 };
-const linkAttributes = ['src', 'href'];
 const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
 
 const handler = async (ctx) => {
@@ -30,7 +29,7 @@ const handler = async (ctx) => {
         throw new InvalidParameterError('category must be news, notices, announcements, or media.');
     }
 
-    const link = `${baseUrl}${pathMap[category] ?? pathMap.news}`;
+    const link = `${baseUrl}${pathMap[category]}`;
 
     const response = await got(link);
     if (!response.body) {
@@ -91,24 +90,7 @@ const handler = async (ctx) => {
                 }
                 const $$ = load(articleResponse.body);
 
-                const $content = $$('.v_news_content');
-
-                // Resolve media and article links against the article URL.
-                $content.find('img, a').each((_, el) => {
-                    const $el = $$(el);
-                    for (const attr of linkAttributes) {
-                        const v = $el.attr(attr);
-                        if (v && !v.startsWith('http')) {
-                            try {
-                                $el.attr(attr, new URL(v, item.link).href);
-                            } catch {
-                                // ignore malformed url
-                            }
-                        }
-                    }
-                });
-
-                const content = $content.html();
+                const content = $$('.v_news_content').html();
                 // Read author and editor metadata.
                 const metaTexts = $$('.show01 p i')
                     .toArray()
@@ -118,36 +100,20 @@ const handler = async (ctx) => {
                 // Exclude publication labels and dates from the author list.
                 const authors = metaTexts.filter((t) => !t.includes('发布时间')).filter((t) => !datePattern.test(t));
 
-                // Keep the article date available as a fallback for undated list entries.
-                let pubDateRecovered: string | number | Temporal.Instant | undefined;
-                const dateTextInMeta = metaTexts.find((t) => datePattern.test(t));
-                if (dateTextInMeta) {
-                    const matched = dateTextInMeta.match(datePattern)?.[0];
-                    if (matched) {
-                        try {
-                            pubDateRecovered = parseDate(matched);
-                        } catch {
-                            // ignore parse error
-                        }
-                    }
-                }
-
                 return {
                     description: content,
                     author: authors.join(', '),
-                    pubDate: pubDateRecovered,
                 };
             });
             return {
                 ...item,
                 ...detail,
-                pubDate: item.pubDate ?? detail.pubDate,
             };
         })
     );
 
     return {
-        title: `广外新传学院-${titleMap[category] ?? titleMap.news}`,
+        title: `广外新传学院-${titleMap[category]}`,
         link,
         description: '广东外语外贸大学新闻与传播学院官网-新闻中心',
         item: enhancedItems,

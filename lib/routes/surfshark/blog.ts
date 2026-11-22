@@ -8,6 +8,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
@@ -15,8 +16,7 @@ import { renderDescription } from './templates/description';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const domain = 'surfshark.com';
     const baseUrl = `https://${domain}`;
@@ -55,8 +55,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             });
 
             const pubDateEl: Cheerio<Element> = $el.find('span.js-date');
-            const dateParts = ['data-year', 'data-month', 'data-day'].map((attribute) => pubDateEl.attr(attribute));
-            const pubDateStr = dateParts.every(Boolean) ? dateParts.join('-') : undefined;
+            const pubDateStr = `${pubDateEl.attr('data-year')}-${pubDateEl.attr('data-month')}-${pubDateEl.attr('data-day')}`;
 
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.dg-blog-breadcrumbs a').toArray();
@@ -78,12 +77,12 @@ const handler = async (ctx: Context): Promise<Data> => {
                     avatar: undefined,
                 };
             });
-            const upDatedStr: string | undefined = pubDateStr;
+            const upDatedStr = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: parseDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
                 author: authors,
@@ -92,7 +91,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: parseDate(upDatedStr),
                 language,
             };
 
@@ -108,7 +107,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 return item;
             }
 
-            const resolvedValue1 = await cache.tryGet(`surfshark:article:v2:${item.link}`, async () => {
+            const detail = await cache.tryGet(`surfshark:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!, {
                     headers,
                 });
@@ -150,15 +149,12 @@ const handler = async (ctx: Context): Promise<Data> => {
                     updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 };
             });
-            {
-                const detail = resolvedValue1;
-                return {
-                    ...item,
-                    ...detail,
-                    pubDate: detail.pubDate ?? item.pubDate,
-                    updated: detail.updated ?? item.updated,
-                };
-            }
+            return {
+                ...item,
+                ...detail,
+                pubDate: detail.pubDate ?? item.pubDate,
+                updated: detail.updated ?? item.updated,
+            };
         },
         { concurrency: 3 }
     );

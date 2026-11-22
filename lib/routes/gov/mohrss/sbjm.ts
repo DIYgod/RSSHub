@@ -45,11 +45,10 @@ async function handler(ctx: Context) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
-            const publishedDate = $item.find('span').text();
             return {
                 title: a.text().trim(),
                 link: new URL(a.attr('href')!, currentUrl).href.replace(/^http:(?=\/\/www\.mohrss\.gov\.cn\/)/, 'https:'),
-                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 

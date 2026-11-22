@@ -79,12 +79,12 @@ async function handler(ctx: Context) {
             const dateString = $item
                 .find('span')
                 .text()
-                .match(/\d+\.\d+\.\d+/)?.[0];
+                .match(/\d+\.\d+\.\d+/)![0];
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, rootUrl).href,
-                pubDate: dateString ? parseDate(dateString, 'YYYY.M.D', 9) : undefined,
+                pubDate: parseDate(dateString, 'YYYY.M.D', 9),
             };
         });
 

@@ -4,7 +4,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import logger from '@/utils/logger';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -117,13 +116,13 @@ async function handler(ctx) {
                     .text()
                     .trim();
 
-                const dateStr = $top.find('.time').text().trim();
+                const dateStr = $top.find('.time').text();
 
-                const metal = $top.find('.right').first().text().trim();
+                const metal = $top.find('.right').first().text();
 
                 const $priceSpan = $top.find('span.clearfloat');
-                const minPriceLabel = $priceSpan.find('.left').text().trim();
-                const maxPriceLabel = $priceSpan.find('.right').text().trim();
+                const minPriceLabel = $priceSpan.find('.left').text();
+                const maxPriceLabel = $priceSpan.find('.right').text();
 
                 const $bottom = $item.find('.bottom');
                 const $avgSpan = $bottom.find('.up_down_span');
@@ -134,7 +133,7 @@ async function handler(ctx) {
                     .text()
                     .trim();
 
-                const changeStr = $avgSpan.find('.up_down').text().trim();
+                const changeStr = $avgSpan.find('.up_down').text();
                 const changeNum = Number(changeStr);
 
                 let icon; // Omit the icon when the change is zero or cannot be parsed.
@@ -172,7 +171,7 @@ async function handler(ctx) {
                                     <strong>涨跌</strong>
                                 </td>
                                 <td>
-                                    {icon ?? ''}
+                                    {icon}
                                     {changeStr}
                                 </td>
                             </tr>
@@ -189,28 +188,18 @@ async function handler(ctx) {
                 );
 
                 const link = `${url}/quota/${dataId}.html`;
-                let fullDate: string | undefined;
-                try {
-                    fullDate = await cache.tryGet(`${link}:${dateStr}`, async () => {
-                        const detailResponse = await got(link);
-                        const $$ = load(detailResponse.data);
-                        const sourceDate = $$('title')
-                            .text()
-                            .match(/\d{4}年\d{2}月\d{2}日/g)
-                            ?.at(-1);
-                        const value = sourceDate?.replace('年', '-').replace('月', '-').replace('日', '');
-                        return value?.endsWith(dateStr) ? value : undefined;
-                    });
-                } catch (error) {
-                    logger.warn(`CCMN: unable to read the full quote date from ${link}: ${String(error)}`);
-                }
+                const fullDate = await cache.tryGet(`${link}:${dateStr}`, async () => {
+                    const detailResponse = await got(link);
+                    const [, year, month, day] = detailResponse.data.match(/<title>[^<]*(\d{4})年(\d{2})月(\d{2})日/);
+                    return `${year}-${month}-${day}`;
+                });
 
                 return {
                     title,
                     description,
                     link,
                     guid: dataId, // Use the native data-id as the unique identifier.
-                    pubDate: fullDate ? parseDate(fullDate, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate(fullDate, 'YYYY-MM-DD', 8),
                 };
             })
     );

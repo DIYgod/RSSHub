@@ -51,7 +51,7 @@ export async function handler(ctx) {
     let items = $('li.layui-row, li.layui-timeline-item')
         .slice(0, limit)
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
@@ -73,75 +73,73 @@ export async function handler(ctx) {
 
     items = await pMap(
         items,
-        async (item) => {
-            const detailResponse = await cache.tryGet(`logclub:html:${item.link}`, async () => {
-                const { data } = await got(item.link);
-                return data;
-            });
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data: detailResponse } = await got(item.link);
 
-            const content = load(detailResponse);
+                const content = load(detailResponse);
 
-            content('a.dl_file').each((_, el) => {
-                const $el = content(el);
-                $el.parent().remove();
-            });
-            content('img').each((_, el) => {
-                const $el = content(el);
-                $el.replaceWith(
-                    renderDescription({
-                        image: {
-                            src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                            alt: $el.prop('title'),
-                        },
-                    })
-                );
-            });
+                content('a.dl_file').each((_, el) => {
+                    const $el = content(el);
+                    $el.parent().remove();
+                });
+                content('img').each((_, el) => {
+                    const $el = content(el);
+                    $el.replaceWith(
+                        renderDescription({
+                            image: {
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
+                            },
+                        })
+                    );
+                });
 
-            item.title = content('h1, div.current_video_title').first().text();
+                item.title = content('h1, div.current_video_title').first().text();
 
-            item.enclosure_url = content('video#ref_video').prop('src');
-            item.enclosure_type = item.enclosure_url ? getMimeType(new URL(item.enclosure_url, item.link).pathname) : undefined;
+                item.enclosure_url = content('video#ref_video').prop('src');
+                item.enclosure_type = item.enclosure_url ? getMimeType(new URL(item.enclosure_url, item.link).pathname) : undefined;
 
-            item.description += renderDescription({
-                video: {
-                    poster: item.itunes_item_image,
-                    src: item.enclosure_url,
-                    type: item.enclosure_type,
-                },
-                description: content('div.article-cont').html() ?? undefined,
-            });
-            item.author = content('div.article-info-r a')
-                .toArray()
-                .map((a) => content(a).text())
-                .join('/');
-            item.category = [
-                ...new Set([
-                    ...content('div.article-label-r a.label')
-                        .toArray()
-                        .map((c) => content(c).text()),
-                    ...(content('meta[name="keywords"]')
-                        .prop('content')
-                        ?.split(/\s?,\s?/) ?? []),
-                ]),
-            ].filter(Boolean);
+                item.description += renderDescription({
+                    video: {
+                        poster: item.itunes_item_image,
+                        src: item.enclosure_url,
+                        type: item.enclosure_type,
+                    },
+                    description: content('div.article-cont').html() ?? undefined,
+                });
+                item.author = content('div.article-info-r a')
+                    .toArray()
+                    .map((a) => content(a).text())
+                    .join('/');
+                item.category = [
+                    ...new Set([
+                        ...content('div.article-label-r a.label')
+                            .toArray()
+                            .map((c) => content(c).text()),
+                        ...(content('meta[name="keywords"]')
+                            .prop('content')
+                            ?.split(/\s?,\s?/) ?? []),
+                    ]),
+                ].filter(Boolean);
 
-            item.pubDate =
-                content('span.aritlceIn-time').length === 0
-                    ? parseDate(
-                          content(
-                              content('div.video_info_item, div.lc-infos div')
-                                  .toArray()
-                                  .findLast((i) => /\d{4}-\d{2}-\d{2}/.test(content(i).text()))
+                item.pubDate =
+                    content('span.aritlceIn-time').length === 0
+                        ? parseDate(
+                              content(
+                                  content('div.video_info_item, div.lc-infos div')
+                                      .toArray()
+                                      .findLast((i) => /\d{4}-\d{2}-\d{2}/.test(content(i).text()))
+                              )
+                                  .text()
+                                  .split(/：/)
+                                  .pop()!
+                                  .trim()
                           )
-                              .text()
-                              .split(/：/)
-                              .pop()!
-                              .trim()
-                      )
-                    : parseDate(content('span.aritlceIn-time').text().trim());
+                        : parseDate(content('span.aritlceIn-time').text().trim());
 
-            return item;
-        },
+                return item;
+            }),
         { concurrency: 3 }
     );
 

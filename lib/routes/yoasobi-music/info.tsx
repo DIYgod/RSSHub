@@ -6,16 +6,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { parseJSONP } from './jsonp-helper';
-
-const parseInfoDate = (date?: string): Temporal.Instant | undefined => {
-    if (typeof date !== 'string' || !/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(date)) {
-        return;
-    }
-    return parseDateStrict(date, ['YYYY.MM.DD', 'YYYY.M.D', 'YYYY.MM.D', 'YYYY.M.DD']);
-};
 
 export const route: Route = {
     path: '/info/:category?',
@@ -94,7 +87,7 @@ async function handler(ctx) {
             // the article content
             description: renderDescription(i.image, i.description.replaceAll('\n', '<br>')),
             // the article publish time
-            pubDate: parseInfoDate(i.date),
+            pubDate: parseDate(i.date, 'YYYY.M.D'),
             // guid
             guid: i.guid,
             // the article link

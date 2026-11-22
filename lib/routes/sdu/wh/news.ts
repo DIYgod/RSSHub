@@ -44,7 +44,7 @@ async function handler(ctx) {
     const items = $('.n_newslist li');
     const out = await pMap(
         items.toArray(),
-        async (item, _index) => {
+        async (item) => {
             const $item = $(item);
             const anchor = $item.find('a');
             const title = anchor.attr('title');

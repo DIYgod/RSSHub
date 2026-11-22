@@ -80,7 +80,7 @@ async function handler(ctx) {
                     if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
                         throw new CaptchaError(`The article at ${item.link} requires a CAPTCHA.`);
                     }
-                    const description = $('article').html() ?? undefined;
+                    const description = $('article').html();
                     const releaseDate = $('meta[property="og:release_date"]').attr('content');
                     const pubDate = releaseDate ? parseDate(releaseDate, 8) : undefined;
                     const author = $('meta[property="og:author"]').attr('content');

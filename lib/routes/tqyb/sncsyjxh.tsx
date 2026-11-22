@@ -30,13 +30,6 @@ export const route: Route = {
     url: 'www.tqyb.com.cn/gz/weatherAlarm/otherCity/',
 };
 
-function parsePubDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(`${value} +08:00`, 'YYYY年MM月DD日 HH:mm Z');
-}
-
 async function handler() {
     const sncsyjxhJsUrl = `${rootUrl}/data/gzWeather/otherCityAlarm.js`;
 
@@ -60,7 +53,7 @@ async function handler() {
                 <text>等级： {item.sigtypename} </text>
             </>
         ),
-        pubDate: parsePubDate(item.datetime),
+        pubDate: parseDate(`${item.datetime} +08:00`, 'YYYY年MM月DD日 HH:mm Z'),
         guid: `weather-alert:${item.obtid}:${item.signame}:${item.sigcolor}:${item.datetime}`,
     }));
 

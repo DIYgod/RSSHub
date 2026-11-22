@@ -134,7 +134,7 @@ const getVisitorCookie = async () => {
         if (ticket) {
             const expires = Number(ticketResponse.data.created_at ?? now) + Number(ticketResponse.data.ttl ?? 3 * 24 * 60 * 60);
             const remaining = Math.floor(expires - Temporal.Now.instant().epochMilliseconds / 1000);
-            if (Number.isFinite(remaining) && remaining > 0) {
+            if (remaining > 0) {
                 cookies.push(`bili_ticket=${ticket}`, `bili_ticket_expires=${expires}`);
                 ttl = Math.min(config.cache.contentExpire, remaining);
             }

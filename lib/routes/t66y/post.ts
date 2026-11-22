@@ -21,7 +21,7 @@ function parseItems(tid: string, $: CheerioAPI) {
             return {
                 title: $('head title').text(),
                 description: content,
-                author: $item.find('b .s3').first().text() || $item.find('b').first().text(),
+                author: $item.find('b .s3').text() || $item.find('b').first().text(),
                 pubDate: parseDate(String(footer.find('span[data-timestamp]').data('timestamp')), 'X'),
                 link: `${baseUrl}/read.php?tid=${tid}${pid ? `&pid=${pid}` : ''}`,
             };
@@ -54,10 +54,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { tid } = ctx.req.param();
-    const response = await ofetch.raw(`${baseUrl}/read.php?tid=${tid}`, { responseType: 'text' });
-    if (!response._data) {
-        throw new Error('The requested thread returned no content.');
-    }
+    const response = await ofetch.raw(`${baseUrl}/read.php?tid=${tid}`);
     const link = response.url;
     const $ = load(response._data);
 

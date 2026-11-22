@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/hots/:type?',
@@ -30,8 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '1';
-    const limit = Number(ctx.req.query('limit') ?? '20');
-    const size = Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : 20;
+    const size = getRouteLimit(ctx, 20);
 
     let link: string;
     if (type === '1') {

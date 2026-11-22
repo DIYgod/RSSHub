@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                return { ...item, description: $('.newsContent').first().html() ?? undefined };
+                return { ...item, description: $('.newsContent').html() };
             }),
         { concurrency: 3 }
     );

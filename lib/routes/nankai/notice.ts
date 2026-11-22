@@ -37,9 +37,9 @@ export const route: Route = {
             .map((item): DataItem => {
                 const $item = $(item);
                 const $time = $item.find('.time');
-                const day = $time.find('.time-d').text().trim();
+                const day = $time.find('.time-d').text();
                 const monthYear = $time.contents().last().text().trim();
-                const pubDate = day && monthYear ? parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD', 8) : undefined;
+                const pubDate = parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD', 8);
 
                 const $link = $item.find('.tit a');
                 let href = $link.attr('href') || '';

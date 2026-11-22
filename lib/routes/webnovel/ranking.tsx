@@ -1,10 +1,8 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
-import { FetchError } from 'ofetch';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 const rankings = {
@@ -36,19 +34,11 @@ export const route: Route = {
 };
 
 async function fetchRanking(link: string) {
-    try {
-        return await ofetch<string>(link);
-    } catch (error) {
-        if (!(error instanceof FetchError) || (error.status !== 403 && error.status !== 429)) {
-            throw error;
-        }
-    }
-
     const { page, destroy } = await getPlaywrightPage(link, {
         closeTimeout: 0,
         gotoConfig: { waitUntil: 'domcontentloaded', timeout: 20000 },
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         },
     });
     try {
@@ -74,19 +64,18 @@ async function handler(ctx) {
             .toArray()
             .map((element) => {
                 const book = $(element);
-                const title = book.find('h3 a').first();
-                const image = book.find('img').first().attr('data-original') ?? book.find('img').first().attr('src');
+                const title = book.find('h3 a');
                 return {
                     title: title.text(),
                     link: new URL(title.attr('href')!, link).href,
-                    author: book.find('strong.c_l').last().text() || undefined,
+                    author: book.find('strong.c_l').text(),
                     category: book
                         .find('a[href^="/tags/"], a[href^="/stories/"]')
                         .toArray()
                         .map((tag) => $(tag).attr('title') ?? $(tag).text()),
                     description: renderToString(
                         <>
-                            {image && <img src={new URL(image, link).href} alt="" />}
+                            <img src={book.find('img').attr('data-original')} alt="" />
                             <p>{title.closest('h3').next('p').text()}</p>
                         </>
                     ),

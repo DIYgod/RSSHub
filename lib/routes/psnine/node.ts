@@ -7,9 +7,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/time';
 
 function parseNodeDate(date: string) {
-    if (!date) {
-        return;
-    }
     const relative = /^(\d+天前|今天|昨天|前天)\s+(\d{1,2}:\d{2})$/.exec(date);
     if (relative) {
         const day = parseRelativeDate(relative[1])?.toLocaleString('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });

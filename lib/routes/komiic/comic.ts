@@ -81,7 +81,7 @@ async function handler(ctx) {
     const items = filteredChapters.map((chapter) => ({
         title: chapter.type === 'book' ? `第 ${chapter.serial} 卷` : `第 ${chapter.serial} 话`,
         link: `${baseUrl}/comic/${id}/chapter/${chapter.id}/images/all`,
-        pubDate: chapter.dateUpdated ? parseDate(chapter.dateUpdated) : undefined,
+        pubDate: parseDate(chapter.dateUpdated),
         description: generateChapterDescription(chapter),
     }));
 

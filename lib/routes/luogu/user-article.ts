@@ -39,7 +39,7 @@ async function handler(ctx) {
     const { uid } = ctx.req.param();
 
     const link = `${baseUrl}/user/${uid}/article`;
-    const response = await ofetch(link, { responseType: 'text' });
+    const response = await ofetch(link);
     const { articles, user } = getPageData<{ articles: { result: LuoguArticle[] }; user: { name: string; slogan: string; avatar: string } }>(response);
     const item = await pMap(
         articles.result,

@@ -42,7 +42,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const date = $item.next().find('kbd').text().split('day, ', 2)[1]?.trim();
+            const date = $item.next().find('kbd').text().split('day, ', 2)[1];
 
             return {
                 title: $item.text(),

@@ -53,7 +53,7 @@ async function handler(ctx) {
                 title: element.find('div.title').text(),
                 link: `https://www.tgbus.com${a.attr('href')}`,
                 description: element.find('div.content').text(),
-                pubDate: parseDate(element.find('div.info span:nth-child(3)').text().trim(), 8),
+                pubDate: parseDate(element.find('div.info span:nth-child(3)').text(), 8),
             };
         });
 

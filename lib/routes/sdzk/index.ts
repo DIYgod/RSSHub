@@ -70,7 +70,7 @@ async function handler(ctx) {
                 const date = /发布(?:时间|日期)：\s*(\d{4}-\d{2}-\d{2})/.exec(info)?.[1];
 
                 content('.details-policy-box > h1').remove();
-                item.description = content('#UCAP-CONTENT, .details-policy-box, .txt').first().html();
+                item.description = content('#UCAP-CONTENT, .details-policy-box, .txt').html();
                 item.pubDate = date ? parseDate(date, 8) : undefined;
 
                 return { description: item.description, pubDate: item.pubDate };

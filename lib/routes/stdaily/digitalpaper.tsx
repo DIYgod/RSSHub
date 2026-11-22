@@ -99,7 +99,7 @@ async function handler(): Promise<Data> {
                                         {articleVo.content ? raw(articleVo.content) : null}
                                     </>
                                 ),
-                                pubDate: articleVo.periodTime ? parseDate(`${articleVo.periodTime}T00:00:00Z`) : undefined,
+                                pubDate: parseDate(`${articleVo.periodTime}T00:00:00Z`),
                                 author: articleVo.author,
                                 link: `https://epaper.stdaily.com/statics/technology-site/index.html#/home?isDetail=1&currentNewsId=${article.id}&currentVersionName=${articleVo.editionName}&currentVersion=${Number(section.editionCode)}&timeValue=${articleVo.periodTime}`,
                             };

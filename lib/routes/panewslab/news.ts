@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { getArticles, getLimit, processArticles, rootUrl } from './utils';
+import { getArticles, processArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/news',
@@ -14,7 +15,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const articles = await getArticles({ type: 'NEWS', isShowInList: true, take: getLimit(ctx.req.query('limit'), 50) });
+    const articles = await getArticles({ type: 'NEWS', isShowInList: true, take: getRouteLimit(ctx, 50) });
     const items = await processArticles(articles, false);
 
     return {

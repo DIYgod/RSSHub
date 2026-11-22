@@ -155,8 +155,7 @@ async function handler(ctx: Context) {
                 });
                 item.title = title;
                 item.description = description;
-                const publishedTime = meta('article:published_time');
-                item.pubDate = publishedTime ? parseDate(publishedTime) : undefined;
+                item.pubDate = parseDate(meta('article:published_time'));
                 item.category = metaProps.filter((props) => props.property === 'article:tag').map((props) => props.content);
                 item.author = meta('article:author');
                 item.content = {
@@ -165,8 +164,7 @@ async function handler(ctx: Context) {
                 };
                 item.image = image;
                 item.banner = image;
-                const modifiedTime = meta('article:modified_time');
-                item.updated = modifiedTime ? parseDate(modifiedTime) : undefined;
+                item.updated = parseDate(meta('article:modified_time'));
 
                 return item;
             }),

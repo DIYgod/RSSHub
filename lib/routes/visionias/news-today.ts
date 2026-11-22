@@ -1,10 +1,6 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
-import NotFoundError from '@/errors/types/not-found';
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -77,28 +73,9 @@ async function handler(ctx): Promise<Data> {
 async function processCurrentNews(currentUrl: string) {
     const response = await ofetch(new URL(currentUrl, baseUrl).href);
     const $ = load(response);
-    const items = $('#table-of-content > ul > li > a')
+    const links = $('#table-of-content > ul > li > a')
         .toArray()
-        .map((item) => {
-            const href = $(item).attr('href');
-            if (!href) {
-                throw new NotFoundError('A VisionIAS News Today table of contents entry has no article link');
-            }
-            const titleElement = $(item).children('span.flex-1');
-            const title = titleElement.length ? titleElement.text() : copyContent($(item), $).children('span').remove().end().text();
-            return {
-                title,
-                link: new URL(href, baseUrl).href,
-            };
-        });
-    const news = await pMap(items, (item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6'), { concurrency: 3, stopOnError: false });
+        .map((item) => new URL(item.attribs.href, baseUrl).href);
+    const news = await pMap(links, (link) => extractNews(link), { concurrency: 3, stopOnError: false });
     return news.flat();
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

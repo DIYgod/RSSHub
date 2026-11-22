@@ -202,12 +202,12 @@ async function handler() {
             const description = await cache.tryGet(`rockstargames:newswire-body:v3:${link}`, async () => {
                 const { post: article } = await graphql(postQuery, { id_hash: post.id, locale });
                 const { subtitle, tina } = article ?? {};
-                const videoIds = [...new Set(collectVideoIds(tina?.payload?.content))];
+                const videoIds = collectVideoIds(tina?.payload?.content);
                 const videos = new Map(
                     await pMap(
                         videoIds,
                         async (id) => {
-                            const video = await cache.tryGet(`rockstargames:video:v1:${locale}:${id}`, async (): Promise<Video | undefined> => (await graphql(videoQuery, { id, locale })).video ?? undefined);
+                            const video = await cache.tryGet(`rockstargames:video:v1:${locale}:${id}`, async (): Promise<Video | undefined> => (await graphql(videoQuery, { id, locale })).video);
                             return [id, video] as const;
                         },
                         { concurrency: 3 }
@@ -220,7 +220,7 @@ async function handler() {
                 title: post.title,
                 link,
                 // timestamps carry no timezone and are always rockstar's local time (new york), regardless of locale
-                pubDate: post.created ? parseDate(post.created, 'M/D/YY, h:mm A', 'America/New_York') : undefined,
+                pubDate: parseDate(post.created, 'M/D/YY, h:mm A', 'America/New_York'),
                 category: [...(post.primary_tags ?? []), ...(post.secondary_tags ?? [])].map((tag) => tag.name),
                 description,
             };

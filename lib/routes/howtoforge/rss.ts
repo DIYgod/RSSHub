@@ -35,7 +35,7 @@ async function handler() {
             const pubDate = $item.find('pubDate').text();
             return {
                 link,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
+                pubDate: parseDate(pubDate),
                 title,
                 description,
             };

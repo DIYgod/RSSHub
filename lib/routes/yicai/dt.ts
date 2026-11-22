@@ -17,13 +17,6 @@ const columns = {
     visualization: 4,
 };
 
-function getPublicationDate(value?: string | number): Temporal.Instant | undefined {
-    if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-
 type ArticleDetails = Pick<DataItem, 'author' | 'description'>;
 
 async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
@@ -146,8 +139,8 @@ async function handler(ctx) {
             author: item.creatername,
             category: [item.channelrootname, item.channelname, item.NewsTypeName].filter(Boolean),
             guid: `yicai-dt-${item.newsid}`,
-            pubDate: getPublicationDate(item.utc_createdate),
-            updated: getPublicationDate(item.utc_lastdate),
+            pubDate: parseDate(item.utc_createdate),
+            updated: parseDate(item.utc_lastdate),
             enclosure_url: enclosureUrl,
             enclosure_type: video?.type,
             upvotes: item.newsscore ?? 0,

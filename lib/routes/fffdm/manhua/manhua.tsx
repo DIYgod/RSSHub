@@ -57,12 +57,10 @@ async function handler(ctx) {
     const response = await got(`${host}/api/manhua/${id}`);
     const data = response.data;
 
-    const chapters: Array<{ url: string; time?: string; pubDate?: Temporal.Instant }> = data.mhlist.map((item) => ({ ...item, pubDate: item.time ? parseDate(item.time) : undefined }));
+    const chapters: Array<{ url: string; time: string }> = data.mhlist;
     const limit = getRouteLimit(ctx);
-    const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates = limit === undefined || (sorted && chapters.some((item) => !item.pubDate)) ? chapters : (sorted ? chapters.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!)) : chapters).slice(0, limit);
     const chapterDetails = await pMap(
-        candidates,
+        chapters.slice(0, limit),
         async (item) => {
             const url = `${host}/api/manhua/${id}/${item.url}`;
             const picContent = await cache.tryGet(`${url}#pictures`, () => getPictures(url));
@@ -79,7 +77,7 @@ async function handler(ctx) {
                     </div>
                 ),
                 link: `${host}/${id}/${item.url}/`,
-                pubDate: item.pubDate,
+                pubDate: parseDate(item.time),
             };
         },
         { concurrency: 3 }

@@ -1,7 +1,6 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode, Element } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -39,7 +38,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(`${pubDateStr.trim()}T00:00:00Z`) : undefined,
+                pubDate: pubDateStr ? parseDate(`${pubDateStr}T00:00:00Z`) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 language,
             };
@@ -61,8 +60,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('div.content_title').text();
                 const body = $$('#zoom');
                 const description = body.html();
-                const textBody = copyNodes(body);
-                textBody.find('script, style').remove();
+                body.find('style').remove();
                 const pubDateStr: string | undefined = $$('div.gyj_ly')
                     .text()
                     .match(/发布时间：\s*([\d-]+\s+[\d:]+)/)?.[1];
@@ -75,7 +73,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     category: categories,
                     content: {
                         html: description,
-                        text: textBody.text(),
+                        text: body.text(),
                     },
                     language,
                 };
@@ -262,12 +260,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
-}

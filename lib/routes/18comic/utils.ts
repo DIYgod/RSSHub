@@ -80,7 +80,7 @@ const getApiDomains = () =>
             let domains: string[] = [];
             try {
                 const response = await got(apiDomainServer);
-                const { Server } = JSON.parse(decrypt(String(response.body).trim(), 'diosfjckwpqpdfjkvnqQjsik'));
+                const { Server } = JSON.parse(decrypt(response.body, 'diosfjckwpqpdfjkvnqQjsik'));
                 domains = Server.filter((domain) => typeof domain === 'string' && /^[\w.-]+$/.test(domain));
             } catch {
                 // use the fallback domains

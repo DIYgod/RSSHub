@@ -96,7 +96,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
             title: entry.title,
             description,
             link: url,
-            pubDate: articleDate ? parseDate(articleDate, 'MMMM D, YYYY') : undefined,
+            pubDate: parseDate(articleDate, 'MMMM D, YYYY'),
         } satisfies DataItem;
     });
 }

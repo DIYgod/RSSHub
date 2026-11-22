@@ -49,11 +49,10 @@ async function handler() {
                 const $detail = load(detail);
                 const author = $detail('.arti-metas span')
                     .toArray()
-                    .map((span) => $detail(span).text().trim())
+                    .map((span) => $detail(span).text())
                     .find((text) => text.startsWith('作者：'))
-                    ?.replace(/^作者：/, '')
-                    .trim();
-                return { description: $detail('.wp_articlecontent').html(), author: author || undefined };
+                    ?.replace(/^作者：/, '');
+                return { description: $detail('.wp_articlecontent').html(), author };
             });
             return { ...item, ...detail };
         },

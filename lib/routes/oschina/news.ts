@@ -4,9 +4,10 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { baseUrl, blogBaseUrl, getBlog, getBlogListCategory, getLimit, getNews } from './utils';
+import { baseUrl, blogBaseUrl, getBlog, getBlogListCategory, getNews } from './utils';
 
 const configs = {
     0: {
@@ -119,7 +120,7 @@ class ContentUnavailableError extends Error {}
 
 async function handler(ctx) {
     let { category = '0' } = ctx.req.param();
-    const limit = getLimit(ctx.req.query('limit'), 30);
+    const limit = getRouteLimit(ctx, 30);
 
     switch (category) {
         case 'all':

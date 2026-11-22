@@ -145,14 +145,14 @@ async function handler(ctx: Context): Promise<Data> {
         return {
             title,
             description,
-            pubDate: item.announcement_body.posttime === undefined || item.announcement_body.posttime === null ? undefined : parseDate(item.announcement_body.posttime, 'X'),
+            pubDate: parseDate(item.announcement_body.posttime, 'X'),
             link: new URL(`games/${appid}/announcements/detail/${item.announcement_body.gid}`, rootUrl).href,
             category: item.announcement_body.tags,
             content: {
                 html: description,
                 text: item.announcement_body.body,
             },
-            updated: item.announcement_body.updatetime === undefined || item.announcement_body.updatetime === null ? undefined : parseDate(item.announcement_body.updatetime, 'X'),
+            updated: parseDate(item.announcement_body.updatetime, 'X'),
             image: capsuleImage ? new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href : undefined,
             banner: titleImage ? new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href : undefined,
         };

@@ -33,7 +33,7 @@ async function handler() {
         title: item.title!,
         description: item.content,
         author: item.creator,
-        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        pubDate: parseDate(item.pubDate!),
         link: item.link,
         guid: item.guid,
     }));

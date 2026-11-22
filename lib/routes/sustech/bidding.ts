@@ -43,13 +43,10 @@ async function handler() {
 
     const list: Array<DataItem & { link: string }> = $('.index-wrap.index-2 ul li')
         .toArray()
-        .flatMap((item) => {
+        .map((item) => {
             const $item = $(item);
-            const itemPubdate = $item.find('li > span').text();
             const a = $item.find('li > a');
-            const href = a.attr('href');
-            const title = a.text();
-            return href && title ? { pubDate: itemPubdate ? parseDate(itemPubdate, 8) : undefined, title, link: new URL(href, link).href } : [];
+            return { pubDate: parseDate($item.find('li > span').text(), 8), title: a.text(), link: `${link}${a.attr('href')}` };
         });
     const items = await pMap(
         list,
@@ -57,11 +54,7 @@ async function handler() {
             const detail = await cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const content = load(response.data);
-                const description = content('.detail-wrap .text-wrap').html();
-                if (!description) {
-                    throw new Error(`The tender page has no public article content: ${item.link}`);
-                }
-                return { description };
+                return { description: content('.detail-wrap .text-wrap').html() };
             });
             return { ...item, ...detail };
         },

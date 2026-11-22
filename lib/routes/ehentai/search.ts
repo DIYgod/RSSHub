@@ -33,7 +33,7 @@ async function handler(ctx) {
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
     const bittorrent = queryToBoolean(routeParams.get('bittorrent')) ?? false;
     const embedThumb = queryToBoolean(routeParams.get('embed_thumb')) ?? false;
-    const items = await EhAPI.getSearchItems(cache, params, page, bittorrent, embedThumb, ctx);
+    const items = await EhAPI.getSearchItems(cache, params, page, bittorrent, embedThumb);
     let title = params || 'Search';
     const match = /f_search=([^&]+)/.exec(title);
     if (match !== null) {

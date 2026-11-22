@@ -76,7 +76,7 @@ const fetchNewsDetail = (item: NewsApiItem, link: string, baseUrl: string): Prom
         const html = await fetchHtml(link);
         const $ = load(html);
         const $prose = $('article .prose').first();
-        const $target = $prose.length > 0 ? $prose : $('main').first();
+        const $target = $prose.length > 0 ? $prose : $('main');
 
         let description = '';
         if ($target.length > 0) {
@@ -113,20 +113,8 @@ async function handler(ctx: Context): Promise<Data> {
         },
     });
 
-    const seenLinks = new Set<string>();
-    const rawItems = apiResponse.data ?? [];
-    const deduplicatedItems: Array<{ item: NewsApiItem; link: string }> = [];
-    for (const item of rawItems) {
-        const link = resolveNewsLink(item, config.baseUrl);
-        if (seenLinks.has(link)) {
-            continue;
-        }
-        seenLinks.add(link);
-        deduplicatedItems.push({ item, link });
-    }
-
-    const targetItems = deduplicatedItems.slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
-    const items = await pMap(targetItems, ({ item, link }) => fetchNewsDetail(item, link, config.baseUrl), {
+    const targetItems = (apiResponse.data ?? []).slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
+    const items = await pMap(targetItems, (item) => fetchNewsDetail(item, resolveNewsLink(item, config.baseUrl), config.baseUrl), {
         concurrency: DETAIL_CONCURRENCY,
     });
 

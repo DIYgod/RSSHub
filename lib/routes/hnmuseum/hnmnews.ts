@@ -42,12 +42,11 @@ export const route: Route = {
                 const href = $a.attr('href');
                 const link = new URL(href!, baseUrl).href;
                 const dateString = $item.find('.date-display-single').attr('content');
-                const pubDate = dateString ? parseDate(dateString, 8) : undefined;
 
                 return {
                     title,
                     link,
-                    pubDate,
+                    pubDate: dateString ? parseDate(dateString, 8) : undefined,
                 };
             });
 
@@ -58,11 +57,7 @@ export const route: Route = {
                 description: await cache.tryGet(`hnmuseum:news-body:${item.link}`, async () => {
                     const response = await got(item.link);
                     const article = load(response.data);
-                    const description = article('.field-name-body .field-item').first().html();
-                    if (!description?.trim()) {
-                        throw new Error(`The museum news article has no main content: ${item.link}`);
-                    }
-                    return description;
+                    return article('.field-name-body .field-item').html();
                 }),
             }),
             { concurrency: 3 }

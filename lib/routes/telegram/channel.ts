@@ -710,8 +710,7 @@ async function handler(ctx) {
                 }
 
                 /* pubDate */
-                const publishedAt = $item.find('.tgme_widget_message_date time').attr('datetime');
-                const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
+                const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime')!);
 
                 /* ----- finished parsing ----- */
 
@@ -758,7 +757,7 @@ async function handler(ctx) {
                     messageTitle += (messageTitle && titleText ? ': ' : '') + titleText;
                 }
 
-                messageTitle = messageTitle === '' ? mediaTag || (pubDate && toRFC822(pubDate)) || '' : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
+                messageTitle = messageTitle === '' ? mediaTag || toRFC822(pubDate!) : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
 
                 let description = '';
                 if (showFwdFrom) {

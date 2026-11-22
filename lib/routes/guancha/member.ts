@@ -70,11 +70,7 @@ async function handler(ctx) {
         case 'courses':
             items = response.data.data.courses.map((item) => {
                 let description = '';
-                const publicationDates = item.items
-                    .filter((lesson) => lesson.publish_time)
-                    .map((lesson) => parseDate(lesson.publish_time, 8))
-                    .filter((date) => date !== undefined);
-                const pubDate = publicationDates.length ? parseDate(Math.max(...publicationDates.map((date) => date.epochMilliseconds))) : undefined;
+                const pubDate = parseDate(Math.max(...item.items.map((lesson) => parseDate(lesson.publish_time, 8)!.epochMilliseconds)));
 
                 for (const i of item.items) {
                     description += `<a href="${rootUrl}/zaixianke/content.html?id=${i.id}">${i.title}</a><br>`;
@@ -110,7 +106,7 @@ async function handler(ctx) {
                     enclosure_length: item.media_size,
                     itunes_duration: itunesDuration,
                     enclosure_type: 'audio/mpeg',
-                    pubDate: ([undefined, null, ''] as unknown[]).includes(item.created_at) ? undefined : Number.isNaN(+item.created_at) ? parseDate(item.created_at, 8) : parseDate(item.created_at * 1000),
+                    pubDate: Number.isNaN(+item.created_at) ? parseDate(item.created_at, 8) : parseDate(item.created_at * 1000),
                 };
             });
     }

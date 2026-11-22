@@ -30,16 +30,16 @@ export const route: Route = {
     url: 'daily.zhihu.com/*',
 };
 
-function getStoryContent(body?: string) {
-    const $ = load(body ?? '', null, false);
+function getStoryContent(body: string) {
+    const $ = load(body, null, false);
     const authors = $('.answer > .meta > .author')
         .toArray()
         .map((element) => $(element).text().replace(/，$/, ''))
         .filter(Boolean);
     $('.headline, .answer > .meta').remove();
     return {
-        author: [...new Set(authors)].join(', ') || undefined,
-        description: $('.content-inner').html() ?? $.html(),
+        author: authors.join(', '),
+        description: $('.content-inner').html(),
     };
 }
 

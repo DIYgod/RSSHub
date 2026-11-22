@@ -41,10 +41,10 @@ async function handler(ctx: Context) {
         link: track.permalink_url,
         guid: track.permalink_url,
         author: track.user.username,
-        pubDate: track.display_date ? parseDate(track.display_date) : undefined,
+        pubDate: parseDate(track.display_date),
         description: `<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(track.permalink_url)}"></iframe>${track.description ? `<p>${track.description.replaceAll('\n', '<br>')}</p>` : ''}`,
-        image: track.artwork_url?.replace('-large.', '-t500x500.'),
-        category: [track.genre, ...parseTags(track.tag_list)].filter(Boolean),
+        image: track.artwork_url.replace('-large.', '-t500x500.'),
+        category: [track.genre, ...parseTags(track.tag_list)],
     }));
 
     return {

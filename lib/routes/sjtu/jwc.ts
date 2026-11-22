@@ -8,8 +8,6 @@ import { parseDate } from '@/utils/time';
 
 const urlRoot = 'https://jwc.sjtu.edu.cn';
 
-class CampusAccessError extends Error {}
-
 async function getFullArticle(link) {
     const response = await got(link);
     if (!response) {
@@ -17,7 +15,7 @@ async function getFullArticle(link) {
     }
     const $ = load(response.body);
     if ($('title').text() === '系统提示' && $('body').text().includes('该栏目内容已设置访问权限，请切换到校内IP访问。')) {
-        throw new CampusAccessError(`Article ${link} requires a campus IP address; open the original page from the campus network.`);
+        return;
     }
     const content = $('.content-con');
     if (content.length === 0) {
@@ -119,21 +117,9 @@ async function handler(ctx) {
             const timeElement = $(e).find('.sj');
             const day = timeElement.find('h2').text();
             const yearAndMonth = timeElement.find('p').text();
-            const pubDate = yearAndMonth && day ? parseDate(`${yearAndMonth}.${day} +0000`, 'YYYY.MM.DD ZZ') : undefined;
-            const articlePromise = cache.tryGet(`sjtu:jwc:details:v4:${link}`, async () => ({ description: await getFullArticle(link) }));
-            let detailResult;
-            try {
-                detailResult = await articlePromise;
-            } catch (error) {
-                if (error instanceof CampusAccessError) {
-                    return { title, link, pubDate };
-                }
-                throw error;
-            }
-            {
-                const details = detailResult;
-                return { title, link, pubDate, ...details };
-            }
+            const pubDate = parseDate(`${yearAndMonth}.${day} +0000`, 'YYYY.MM.DD ZZ');
+            const details = await cache.tryGet(`sjtu:jwc:details:v4:${link}`, async () => ({ description: await getFullArticle(link) }));
+            return { title, link, pubDate, ...details };
         },
         { concurrency: 3 }
     );

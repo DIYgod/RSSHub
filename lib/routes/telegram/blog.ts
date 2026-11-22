@@ -37,35 +37,32 @@ async function handler() {
     const $$ = load(res);
     const items = await pMap(
         $$('.dev_blog_card_link_wrap').toArray(),
-        (each) => {
+        async (each) => {
             const $ = $$(each);
             const link = new URL($.attr('href')!, 'https://telegram.org').href;
             const title = $.find('.dev_blog_card_title').text();
-            return mapResolvedValue(
-                cache.tryGet(`telegram:blog-content:v2:${link}`, async () => {
-                    const result = await ofetch(link);
-                    const $ = load(result);
-                    const publishedAt = $('[property="article:published_time"]').attr('content');
-                    const content = $('#dev_page_content');
-                    const footer = content.children('p').last();
-                    const signature = footer.children('em');
-                    let author: string | undefined;
-                    if (footer.children().length === 1 && signature.length === 1 && signature.children('br').length === 1) {
-                        const sourceDate = signature.contents().first().text();
-                        const sourceAuthor = signature.contents().last().text();
-                        if (/^[A-Z][a-z]+ \d{1,2},? \d{4},?$/.test(sourceDate) && sourceAuthor) {
-                            author = sourceAuthor;
-                            footer.remove();
-                        }
+            const detail = await cache.tryGet(`telegram:blog-content:v2:${link}`, async () => {
+                const result = await ofetch(link);
+                const $ = load(result);
+                const content = $('#dev_page_content');
+                const footer = content.children('p').last();
+                const signature = footer.children('em');
+                let author: string | undefined;
+                if (footer.children().length === 1 && signature.length === 1 && signature.children('br').length === 1) {
+                    const sourceDate = signature.contents().first().text();
+                    const sourceAuthor = signature.contents().last().text();
+                    if (/^[A-Z][a-z]+ \d{1,2},? \d{4},?$/.test(sourceDate) && sourceAuthor) {
+                        author = sourceAuthor;
+                        footer.remove();
                     }
-                    return {
-                        pubDate: publishedAt ? parseDate(publishedAt) : undefined,
-                        description: content.html(),
-                        author,
-                    };
-                }),
-                (detail) => ({ title, link, ...detail })
-            );
+                }
+                return {
+                    pubDate: parseDate($('[property="article:published_time"]').attr('content')!),
+                    description: content.html(),
+                    author,
+                };
+            });
+            return { title, link, ...detail };
         },
         { concurrency: 3 }
     );
@@ -74,8 +71,4 @@ async function handler() {
         link,
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
 }

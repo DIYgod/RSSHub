@@ -31,7 +31,7 @@ async function fetchDetail(link: string) {
     });
     const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
     const categoryEls: Element[] = $$('div.post-header-text-cat p a').toArray();
-    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
+    const categories: string[] = categoryEls.map((el) => $$(el).text()).filter(Boolean);
     const authorEls: Element[] = $$('meta[name="author"]').toArray();
     const authors: DataItem['author'] = authorEls.map((authorEl) => {
         const $$authorEl: Cheerio<Element> = $$(authorEl);
@@ -59,8 +59,7 @@ async function fetchDetail(link: string) {
     return processedItem;
 }
 const handler = async (ctx: Context): Promise<Data> => {
-    const requestedLimit = Number(ctx.req.query('limit') ?? '30');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
+    const limit = Number(ctx.req.query('limit') ?? '30');
     const targetUrl: string = new URL('news', baseUrl).href;
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -68,7 +67,6 @@ const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('article.post')
         .slice(0, limit)
         .toArray()
-        .filter((el) => $(el).find('h4 a').attr('href'))
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('h4 a');
@@ -92,31 +90,26 @@ const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: getDate(updatedStr),
+                updated: parseDate(updatedStr),
                 language,
             };
             return processedItem;
         });
     items = await pMap(
         items,
-        (item) => {
-            if (!item.link) {
-                return item;
-            }
-            return mapResolvedValue(
-                cache.tryGet(`x410:news:detail:v5:${item.link}`, () => fetchDetail(item.link!)),
-                (detail) => ({
-                    ...item,
-                    description: detail.description,
-                    pubDate: detail.pubDate,
-                    category: detail.category,
-                    author: detail.author,
-                    content: detail.content,
-                    image: detail.image,
-                    banner: detail.banner,
-                    updated: detail.updated ?? item.updated,
-                })
-            );
+        async (item) => {
+            const detail = await cache.tryGet(`x410:news:detail:v5:${item.link}`, () => fetchDetail(item.link!));
+            return {
+                ...item,
+                description: detail.description,
+                pubDate: detail.pubDate,
+                category: detail.category,
+                author: detail.author,
+                content: detail.content,
+                image: detail.image,
+                banner: detail.banner,
+                updated: detail.updated ?? item.updated,
+            };
         },
         { concurrency: 3, stopOnError: false }
     );
@@ -159,7 +152,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}

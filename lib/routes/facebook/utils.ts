@@ -38,17 +38,14 @@ const providerVariables = {
     __relay_internal__pv__StoriesShouldIncludeFbNotesrelayprovider: false,
 };
 
-const collectStories = (value: any, stories: any[]) => {
+const collectStories = (value: any): any[] => {
     if (!value || typeof value !== 'object') {
-        return;
+        return [];
     }
     if (value.__typename === 'Story') {
-        stories.push(value);
-        return;
+        return [value];
     }
-    for (const child of Object.values(value)) {
-        collectStories(child, stories);
-    }
+    return Object.values(value).flatMap((child) => collectStories(child));
 };
 
 const findPageInfo = (value: any): { has_next_page: boolean; end_cursor: string } | undefined => {
@@ -217,13 +214,7 @@ export const fetchStories = (friendlyName: string, docId: string, variables: Rec
             useDefaultActor: false,
         },
         limit,
-        (lines) => {
-            const stories: any[] = [];
-            for (const data of lines) {
-                collectStories(data, stories);
-            }
-            return stories;
-        }
+        (lines) => lines.flatMap((data) => collectStories(data))
     );
 
 export const storiesToItems = (stories: any[]) =>

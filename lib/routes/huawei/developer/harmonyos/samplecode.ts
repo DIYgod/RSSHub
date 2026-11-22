@@ -7,13 +7,6 @@ const md = MarkdownIt({
     html: true,
 });
 
-function getPublicationDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 export const route: Route = {
     path: '/developer/harmonyos/sample-code',
     categories: ['programming'],
@@ -60,7 +53,7 @@ async function handler(): Promise<Data> {
         link: item.link,
         description: md.render(item.description),
         category: item.keywords,
-        pubDate: getPublicationDate(item.updateTime),
+        pubDate: parseDate(item.updateTime),
         author: 'HarmonyOS',
         id: item.id,
         image: item.effectPictureUrl,

@@ -53,14 +53,7 @@ async function handler(ctx: Context) {
         .map((element) => {
             const dateCategory = $(element).find('.search-result__eyebrow').text();
             const [date, category] = dateCategory.split(' / ', 2);
-            const calendar = date?.replace(/^(\d{4})(?:年|년\s*)(\d{1,2})(?:月|월\s*)(\d{1,2})(?:日|일)$/, '$1-$2-$3');
-            const publicationDate = calendar
-                ? (parseDate(calendar) ??
-                  parseDate(
-                      calendar.replace(/^([a-z])([a-z]{2})[a-z]*\.?/i, (_, first, rest) => first.toUpperCase() + rest.toLowerCase()),
-                      'MMM D, YYYY'
-                  ))
-                : undefined;
+            const calendar = date.replace(/^(\d{4})(?:年|년\s*)(\d{1,2})(?:月|월\s*)(\d{1,2})(?:日|일)$/, '$1-$2-$3');
             const titleElement = $(element).find('.search-result__title a');
             const title = titleElement.text();
             const link = titleElement.attr('href');
@@ -69,7 +62,12 @@ async function handler(ctx: Context) {
             return {
                 title,
                 link: `${baseUrl}${link}`,
-                pubDate: publicationDate,
+                pubDate:
+                    parseDate(calendar) ??
+                    parseDate(
+                        calendar.replace(/^([a-z])([a-z]{2})[a-z]*\.?/i, (_, first, rest) => first.toUpperCase() + rest.toLowerCase()),
+                        'MMM D, YYYY'
+                    ),
                 description: summary,
                 author: 'Google',
                 category: [category],

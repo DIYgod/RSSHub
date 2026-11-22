@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { escapeAttribute } from 'entities';
 import pMap from 'p-map';
 
@@ -72,19 +71,18 @@ export async function getPostItems(params: {
         if (!category) {
             throw new Error(`No public category found for Voronoi post ${post.pid}`);
         }
-        const images = (post.webp_images?.length ? post.webp_images : post.images?.length ? post.images : post.webp_image ? [post.webp_image] : post.image ? [post.image] : []).filter(Boolean);
         return {
             title: post.headline,
             link: `https://www.voronoiapp.com/${category.slug}/${post.link}`,
-            pubDate: parsePostDate(post.published_at),
-            description: images.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n') + '\n' + post.description,
-            image: images[0] ? cdnUrl + images[0] : undefined,
+            pubDate: parseDate(post.published_at),
+            description: post.webp_images.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n') + '\n' + post.description,
+            image: cdnUrl + post.webp_images[0],
             author: post.author.first_name + ' ' + post.author.last_name,
-            updated: parsePostDate(post.updated_at),
-            category: [category.title, ...(post.tags ?? [])],
-            enclosure_url: post.dataset ? `https://cdn.voronoiapp.com/public/${post.dataset}` : undefined,
-            enclosure_type: post.dataset ? 'text/csv' : undefined,
-            enclosure_title: post.dataset || undefined,
+            updated: parseDate(post.updated_at),
+            category: [category.title, ...post.tags],
+            enclosure_url: `https://cdn.voronoiapp.com/public/${post.dataset}`,
+            enclosure_type: 'text/csv',
+            enclosure_title: post.dataset,
             upvotes: post.likes,
             comments: post.commented,
         };
@@ -92,85 +90,6 @@ export async function getPostItems(params: {
     return items;
 }
 const cdnUrl = 'https://cdn.voronoiapp.com/public/';
-function parsePostDate(timestamp?: number | string) {
-    return timestamp === undefined ? undefined : parseDate(timestamp);
-}
-type SearchDetails = {
-    publishedAt?: string;
-    images?: string[];
-    dataset?: string;
-    tags?: string[];
-    upvotes?: number;
-    comments?: number;
-};
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
-function parseJson(text: string): JsonValue | undefined {
-    try {
-        return JSON.parse(text);
-    } catch {
-        return undefined;
-    }
-}
-function collectSearchDetails(value: JsonValue | undefined, post: SearchPost, details: SearchDetails): void {
-    if (!value || typeof value !== 'object') {
-        return;
-    }
-    if ('@type' in value && value['@type'] === 'NewsArticle' && 'headline' in value && value.headline === post.headline) {
-        if ('datePublished' in value && typeof value.datePublished === 'string' && value.datePublished) {
-            details.publishedAt = value.datePublished;
-        }
-        if ('image' in value && Array.isArray(value.image)) {
-            details.images = value.image.filter((image): image is string => typeof image === 'string' && Boolean(image));
-        }
-    }
-    if ('pid' in value && value.pid === post.pid && 'headline' in value && value.headline === post.headline) {
-        if ('dataset' in value && typeof value.dataset === 'string' && value.dataset.endsWith('.csv')) {
-            details.dataset = value.dataset;
-        }
-        if ('tags' in value && Array.isArray(value.tags)) {
-            details.tags = value.tags.filter((tag): tag is string => typeof tag === 'string');
-        }
-        if ('likes' in value && typeof value.likes === 'number') {
-            details.upvotes = value.likes;
-        }
-        if ('commented' in value && typeof value.commented === 'number') {
-            details.comments = value.commented;
-        }
-    }
-    if ('__html' in value && typeof value.__html === 'string') {
-        collectSearchDetails(parseJson(value.__html), post, details);
-    }
-    const streamLines = Object.values(value);
-    for (const child of streamLines) {
-        collectSearchDetails(child, post, details);
-    }
-}
-function extractSearchDetails(response: string, post: SearchPost): SearchDetails {
-    const $ = load(response);
-    const details: SearchDetails = {};
-    const streamLines = $('script').toArray();
-    for (const script of streamLines) {
-        const text = $(script).text();
-        if ($(script).attr('type') === 'application/ld+json') {
-            collectSearchDetails(parseJson(text), post, details);
-        }
-        const match = text.match(/self\.__next_f\.push\((\[[\s\S]*\])\)/);
-        if (!match) {
-            continue;
-        }
-        const frame = parseJson(match[1]);
-        if (!Array.isArray(frame) || frame[0] !== 1 || typeof frame[1] !== 'string') {
-            continue;
-        }
-        const streamLines = frame[1].split('\n');
-        // The public server stream includes the article schema and main post data.
-        for (const line of streamLines) {
-            const payload = line.slice(line.indexOf(':') + 1);
-            collectSearchDetails(parseJson(payload), post, details);
-        }
-    }
-    return details;
-}
 async function getSearchItems(keyword: string, categories: PostCategory[], limit: number): Promise<DataItem[]> {
     const posts = await ofetch<SearchPost[]>('https://api.voronoiapp.com/search', {
         query: { size: limit, page: 0, target: 'posts-data', q: keyword },
@@ -183,25 +102,21 @@ async function getSearchItem(post: SearchPost, categories: PostCategory[]): Prom
         throw new Error(`No public category found for Voronoi post ${post.pid}`);
     }
     const link = `https://www.voronoiapp.com/${category.slug}/${post.link}`;
-    const { publishedAt, images, dataset, tags, upvotes, comments } = await cache.tryGet(`voronoiapp:search-detail:v1:${link}`, async () => {
-        const response = await ofetch<string>(link);
-        return extractSearchDetails(response, post);
-    });
-    const itemImages = images?.length ? images : post.preview_images;
+    const detail = await cache.tryGet(`voronoiapp:post:${post.pid}`, () => ofetch<Post>('https://api.voronoiapp.com/post', { query: { pid: post.pid } }));
     return {
         title: post.headline,
         link,
-        pubDate: publishedAt ? parseDate(publishedAt) : undefined,
-        updated: parsePostDate(post.updated_at),
-        description: `${itemImages.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n')}\n${post.description}`,
-        image: itemImages[0] ? cdnUrl + itemImages[0] : undefined,
+        pubDate: parseDate(detail.published_at),
+        updated: parseDate(detail.updated_at),
+        description: `${detail.images.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n')}\n${post.description}`,
+        image: cdnUrl + detail.images[0],
         author: post.author.first_name + ' ' + post.author.last_name,
-        category: [category.title, ...(tags ?? [])],
-        enclosure_url: dataset ? cdnUrl + dataset : undefined,
-        enclosure_type: dataset ? 'text/csv' : undefined,
-        enclosure_title: dataset,
-        upvotes,
-        comments,
+        category: [category.title, ...detail.tags],
+        enclosure_url: detail.dataset ? cdnUrl + detail.dataset : undefined,
+        enclosure_type: detail.dataset ? 'text/csv' : undefined,
+        enclosure_title: detail.dataset,
+        upvotes: detail.likes,
+        comments: detail.commented,
     };
 }
 export const CategoryParam = {

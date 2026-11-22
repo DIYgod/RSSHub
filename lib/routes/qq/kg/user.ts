@@ -41,7 +41,7 @@ async function handler(ctx) {
         data: {
             nickname: string;
             head_img_url: string;
-            ugclist: Array<{ shareid: string; ksong_mid: string; title?: string; ctime: number; avatar: string }>;
+            ugclist: Array<{ shareid: string; ksong_mid: string; title?: string; avatar: string }>;
         };
         share: { content: string };
     }>(script, 'window.__DATA__');
@@ -61,7 +61,7 @@ async function handler(ctx) {
                 link,
                 guid: `ksong:${item.ksong_mid}`,
                 author,
-                pubDate: item_info.ctime ? parseDate(item_info.ctime, 'X') : item.ctime ? parseDate(item.ctime, 'X') : undefined,
+                pubDate: parseDate(item_info.ctime, 'X'),
                 itunes_item_image: item_info.itunes_item_image || item.avatar,
                 enclosure_url: item_info.enclosure_url,
                 enclosure_type: 'audio/mp4',

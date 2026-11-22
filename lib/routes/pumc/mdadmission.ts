@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -31,9 +32,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer -- Preserve the existing positive-integer limit acceptance range and default.
-    const limit = Number.isInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://mdadmission.pumc.edu.cn';
     const currentUrl = `${rootUrl}/mdweb/site!noticeList?param.infoTypeId=&rows=${limit}&pages=1`;
@@ -48,12 +47,11 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('h4.media-heading a');
-            const published = $item.find('span').first().text();
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: published ? parseDate(published, 'DDYYYY-MM') : undefined,
+                pubDate: parseDate($item.find('span').first().text(), 'DDYYYY-MM'),
             };
         });
 

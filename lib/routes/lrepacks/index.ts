@@ -85,11 +85,11 @@ const handler = async (ctx) => {
                 return {
                     title,
                     description,
-                    pubDate: data?.datePublished ? parseDate(data.datePublished) : undefined,
-                    author: data?.author?.name,
+                    pubDate: parseDate(data.datePublished),
+                    author: data.author.name,
                     content: { text: $$('div.entry-content').text() },
                     image,
-                    updated: data?.dateModified ? parseDate(data.dateModified) : undefined,
+                    updated: parseDate(data.dateModified),
                 };
             });
             const description = item.description + detail.description;

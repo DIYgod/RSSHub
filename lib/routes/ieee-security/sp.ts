@@ -49,7 +49,7 @@ async function handler() {
         .toArray()
         .filter((element) => $(element).text() === 'SP Conference Information')
         .map((element) => ({
-            year: Number($(element).closest('td').find('b').first().text()),
+            year: Number($(element).closest('td').find('b').text()),
             link: new URL($(element).attr('href')!, indexUrl).href,
         }))
         .filter((conference) => conference.year >= 2020 && conference.year <= Temporal.Now.zonedDateTimeISO('UTC').year);
@@ -68,35 +68,27 @@ async function fetchPapers(conference: { year: number; link: string }) {
     return await cache.tryGet(conference.link, async () => {
         const homeResponse = await ofetch<string>(conference.link);
         const home = load(homeResponse);
-        const paperPath = home('a[href="accepted-papers.html"], a[href="program-papers.html"]').first().attr('href');
+        const paperPath = home('a[href="accepted-papers.html"], a[href="program-papers.html"]').attr('href');
         if (!paperPath) {
             throw new Error(`S&P ${conference.year} does not provide an accepted papers page`);
         }
         const paperUrl = new URL(paperPath, conference.link).href;
         const response = await ofetch<string>(paperUrl);
         const $ = load(response);
-        const pageYear = Number(
-            $('title')
-                .text()
-                .match(/Security and Privacy (\d{4})/)?.[1]
-        );
-        if (pageYear !== conference.year) {
-            throw new Error(`S&P ${conference.year} returned a papers page for ${pageYear || 'an unknown year'}`);
-        }
         // New sites group accepted papers by cycle; older archives use panels.
         return $('.tab-content .list-group-item, div.panel-body > div.list-group-item')
             .toArray()
-            .filter((element) => $(element).find('b').first().text().trim() !== 'TBD')
+            .filter((element) => $(element).find('b').text().trim() !== 'TBD')
             .map((element) => {
                 const item = $(element);
-                const title = item.find('b').first().text();
-                const anchor = item.find('b a[href^="#"]').first().attr('href');
+                const title = item.find('b').text();
+                const anchor = item.find('b a[href^="#"]').attr('href');
                 const authors = item.find('.authorlist');
                 const authorNodes = authors.contents().toArray();
                 const authorEnd = authorNodes.findIndex((node) => $(node).is('br'));
                 const author = authors.length
                     ? authorNodes
-                          .slice(0, authorEnd === -1 ? undefined : authorEnd)
+                          .slice(0, authorEnd)
                           .filter((node) => !$(node).is('sup'))
                           .map((node) => $(node).text())
                           .join('')

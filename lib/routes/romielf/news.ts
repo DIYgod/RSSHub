@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
                 link,
                 description: details.description,
                 author: details.author,
-                pubDate: item.publish_time ? parseDate(item.publish_time * 1000) : temotime ? (temotime.endsWith('前') ? parseRelativeDate(temotime) : parseRelativeDate(temotime, 8)) : undefined,
+                pubDate: item.publish_time ? parseDate(item.publish_time * 1000) : temotime.endsWith('前') ? parseRelativeDate(temotime) : parseRelativeDate(temotime, 8),
                 category: item.tags.map((tag) => tag.name),
                 image: item.covers[0]?.path_url,
             };

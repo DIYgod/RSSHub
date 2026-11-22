@@ -40,9 +40,8 @@ async function handler(ctx) {
     const list = $('.topic_list .topic')
         .toArray()
         .map((elem) => ({ elem, pubDate: parseDate($('.lastpost .time', elem).text(), 8) }));
-    const orderedList = list;
     const items = await Promise.all(
-        orderedList.map(({ elem, pubDate }) => {
+        list.map(({ elem, pubDate }) => {
             const link = new URL($('.subject a', elem).attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const html = await ofetch(link);

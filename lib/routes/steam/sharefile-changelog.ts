@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
@@ -50,9 +49,6 @@ Helpful route parameters:
                 // changelogHeadline is local time
                 const changelogHeadline = $item.find('.headline').text();
                 const changelogTimestamp = $item.find('p').attr('id');
-                if (!changelogTimestamp || !/^\d+$/.test(changelogTimestamp)) {
-                    throw new NotFoundError(`Workshop ${sharefileID} changelog entry has no valid timestamp ID at ${url}`);
-                }
                 const changeDetail = $item.find('p').html();
 
                 return {
@@ -60,7 +56,7 @@ Helpful route parameters:
                     guid: `${sharefileID}:${changelogTimestamp}`,
                     link: `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}`,
                     description: changeDetail,
-                    pubDate: parseDate(changelogTimestamp, 'X'),
+                    pubDate: parseDate(changelogTimestamp!, 'X'),
                 };
             });
 

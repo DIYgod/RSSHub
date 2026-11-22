@@ -52,10 +52,10 @@ async function handler(ctx) {
 
     const list: Array<DataItem & { link: string }> = response.list.map((item) => ({
         title: item.title,
-        pubDate: item.publishAt ? parseDate(`${item.publishAt} +0800`, 'YYYY-MM-DD HH:mm:ss ZZ') : undefined,
+        pubDate: parseDate(`${item.publishAt} +0800`, 'YYYY-MM-DD HH:mm:ss ZZ'),
         author: item.articleAuthor.map((entry) => ({ name: entry.author.name })),
         category: [...item.articleChannel.map((e) => e.channel.title), ...item.articleKeyword.map((e) => e.keyword.title)],
-        updated: item.updatedAt ? parseDate(item.updatedAt) : undefined,
+        updated: parseDate(item.updatedAt),
         link: new URL(`/article/${item.oldId}`, rootUrl).href,
     }));
 
@@ -70,7 +70,7 @@ async function handler(ctx) {
                 content('.notify_wordings').remove();
                 content('#premium_block').remove();
 
-                const description = (content('[data-test-comp="ArticleCover"]').first().html() ?? '') + (content('div[data-test-comp="ArticleContent"]').html() ?? '');
+                const description = (content('[data-test-comp="ArticleCover"]').html() ?? '') + (content('div[data-test-comp="ArticleContent"]').html() ?? '');
                 const published = content('meta[property="article:published_time"]').attr('content');
                 return { description, pubDate: published ? parseDate(published) : undefined };
             });

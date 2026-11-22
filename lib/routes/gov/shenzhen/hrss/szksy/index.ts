@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'http://hrss.sz.gov.cn/';
 
@@ -50,12 +50,10 @@ async function handler(ctx) {
         .map((item) => {
             const tag = $(item).find('div.list_name a');
             const tag2 = $(item).find('span:eq(1)');
-            const date = tag2.text().trim();
-            const pubDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: tag.text().trim(),
                 link: tag.attr('href'),
-                pubDate,
+                pubDate: parseDate(tag2.text(), 'YYYY-MM-DD', 8),
             };
         });
 

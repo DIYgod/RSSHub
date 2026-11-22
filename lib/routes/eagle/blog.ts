@@ -86,26 +86,16 @@ async function handler(ctx): Promise<Data> {
             author: $(item).find('span[class*="__blog-card__author-name"]').text(),
             category: [$(item).find('a[class*="__blog-card__category"]').text()],
         }));
-    const candidates = list;
     const items = await pMap(
-        candidates,
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);
-                const body = content('div[class*="__blog-post__content"]');
-                if (!body.length) {
-                    throw new Error(`The Eagle article body was not found at ${item.link}. Please check the original page.`);
-                }
-                item.description = body.html();
-                const published = content('meta[property="article:published_time"]').attr('content');
-                const modified = content('meta[property="article:modified_time"]').attr('content');
-                item.pubDate = published ? parseDate(published) : undefined;
-                item.updated = modified ? parseDate(modified) : undefined;
-                item.author = content('meta[property="article:author"]').attr('content') ?? item.author;
-                const section = content('meta[property="article:section"]').attr('content');
-                item.category = section ? [section] : item.category;
+                item.description = content('div[class*="__blog-post__content"]').html();
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
+                item.updated = parseDate(content('meta[property="article:modified_time"]').attr('content')!);
 
                 return item;
             }),

@@ -40,7 +40,7 @@ async function handler(ctx) {
     const typelist = ['学院要闻', '学院公告', '学术活动'];
     const urlList = ['xyyw/list.htm', 'xygg/list.htm', 'xshd/list.htm'];
     const type = Number(ctx.req.param('type') ?? 0);
-    if (!Number.isSafeInteger(type) || type < 0 || type >= urlList.length) {
+    if (!Object.hasOwn(urlList, type)) {
         throw new InvalidParameterError('The notice type must be 0, 1, or 2');
     }
     const link = new URL(urlList[type], host).href;

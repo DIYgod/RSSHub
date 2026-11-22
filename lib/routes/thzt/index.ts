@@ -23,12 +23,11 @@ async function getArticleDetails(link: string): Promise<Pick<DataItem, 'author' 
     const details = await cache.tryGet(link, async () => {
         const response = await got(`${baseUrl}/${link}`);
         const $ = load(response.data);
-        const articlePubDate = $('meta[property="article:published_time"]').attr('content') || $('span.post-time > time').attr('datetime');
         return {
             author,
-            pubDate: articlePubDate ? parseDate(articlePubDate) : undefined,
+            pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
             description: $('div.post-body').html(),
-            category: [$('span.post-category>span>a>span').first().text()],
+            category: [$('span.post-category>span>a>span').text()],
         };
     });
     return { author: details.author, pubDate: details.pubDate, description: details.description, category: details.category };

@@ -44,14 +44,7 @@ async function handler(ctx) {
 
     const temp = await pMap(collectionId, getArticleList, { concurrency: 3 });
     const posts = temp.flat().filter(Boolean);
-    const links = new Set<string>();
-    const list = parseList(posts).filter((item) => {
-        if (links.has(item.link)) {
-            return false;
-        }
-        links.add(item.link);
-        return true;
-    });
+    const list = parseList(posts);
 
     const result = await ProcessFeed(list);
 

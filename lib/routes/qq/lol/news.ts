@@ -8,12 +8,12 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { category = 23 } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://lol.qq.com';
     const apiBaseUrl = 'https://apps.game.qq.com';

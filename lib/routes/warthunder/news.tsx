@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const renderDescription = (desc: { description?: string; imglink?: string }) => renderToString(<WarthunderDescription description={desc.description} imglink={desc.imglink} />);
 
@@ -43,13 +43,6 @@ export const route: Route = {
 The \`pubDate\` provided under UTC time zone, so please ignore the specific time!!!`,
 };
 
-function parseSourceTime(value: string) {
-    if (!value.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), 'D MMMM YYYY', 0);
-}
-
 async function handler() {
     const rootUrl = 'https://warthunder.com/en/news/';
 
@@ -61,7 +54,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const pubDate = parseSourceTime($item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text());
+            const pubDate = parseDate($item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text(), 'D MMMM YYYY', 0);
             const category: string[] = [];
             if ($item.find('div.widget__pin').length !== 0) {
                 category.push('pinned');
@@ -90,16 +83,7 @@ async function handler() {
             const details = await cache.tryGet<Pick<DataItem, 'description'>>(`warthunder:detail:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                const content = $('section.article').first();
-                if (!content.length) {
-                    throw new Error(`War Thunder article has no body: ${item.link}`);
-                }
-                content.find('script, style').remove();
-                content.find('img[data-src]').each((_, element) => {
-                    const image = $(element);
-                    image.attr('src', image.attr('data-src'));
-                });
-                return { description: content.html() || undefined };
+                return { description: $('section.article').html() };
             });
             return { ...item, ...details };
         },

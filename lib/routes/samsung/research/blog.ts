@@ -46,10 +46,10 @@ async function handler() {
 
     let items: Array<DataItem & { link: string }> = response.data.value.map((item) => ({
         title: item.title,
-        author: item.authorList?.map((author) => ({ name: author.name })) ?? item.authorName,
+        author: item.authorList.map((author) => ({ name: author.name })),
         link: `${rootUrl}${item.urlLink}`,
         category: [item.catagoryCode, item.hashTag1, item.hashTag2],
-        pubDate: item.publicationDtsStr ? parseDate(item.publicationDtsStr.replace(/On /, ''), 'MMMM D, YYYY') : undefined,
+        pubDate: parseDate(item.publicationDtsStr.replace(/On /, ''), 'MMMM D, YYYY'),
     }));
 
     items = await pMap(

@@ -52,9 +52,10 @@ async function handler(ctx): Promise<Data> {
     switch (server) {
         case 'jp': {
             const link = 'https://priconne-redive.jp/news/';
-            const loadedSource1 = (await got(link)).data;
-            const $ = load(loadedSource1);
-            const client = await cache.tryGet('priconne-redive:jp:public-client', () => getPublicJpClient($, link));
+            const client = await cache.tryGet('priconne-redive:jp:public-client', async () => {
+                const loadedSource1 = (await got(link)).data;
+                return getPublicJpClient(load(loadedSource1), link);
+            });
             const headers = { 'X-MICROCMS-API-KEY': client.apiKey };
             const query = new URLSearchParams({
                 fields: 'id,title,categories,display_date,thumbnail,display_flag',
@@ -73,7 +74,7 @@ async function handler(ctx): Promise<Data> {
                         return {
                             title: detail.title,
                             description: detail.body_html,
-                            pubDate: detail.display_date ? parseDate(detail.display_date) : undefined,
+                            pubDate: parseDate(detail.display_date),
                             category: detail.categories,
                         };
                     })),
@@ -86,13 +87,9 @@ async function handler(ctx): Promise<Data> {
             const link = 'https://www.princessconnect.so-net.tw/news';
             const loadedSource2 = (await got(link)).data;
             const $ = load(loadedSource2);
-            const links = [
-                ...new Set(
-                    $('a[href^="/news/newsDetail/"]')
-                        .toArray()
-                        .map((item) => new URL($(item).attr('href')!, link).href)
-                ),
-            ];
+            const links = $('.news_con li a[href^="/news/newsDetail/"]')
+                .toArray()
+                .map((item) => new URL($(item).attr('href')!, link).href);
             const items = await pMap(
                 links,
                 async (link) => ({
@@ -131,7 +128,7 @@ async function handler(ctx): Promise<Data> {
                 async (item) => ({
                     title: item.title,
                     link: `https://game.bilibili.com/pcr/news.html#detail=${item.id}`,
-                    pubDate: item.ctime ? parseDate(item.ctime, 8) : undefined,
+                    pubDate: parseDate(item.ctime, 8),
                     ...(await cache.tryGet(`priconne-redive:cn:article:${item.id}`, async () => {
                         const response = await got(`https://api.biligame.com/news/${item.id}`);
                         return { description: response.data.data.content };
@@ -155,7 +152,7 @@ interface JpArticle {
     id: string;
     title: string;
     categories: string[];
-    display_date?: string;
+    display_date: string;
     body_html?: string;
 }
 
@@ -175,7 +172,7 @@ async function getPublicJpClient($: CheerioAPI, pageUrl: string): Promise<{ base
             .toArray()
             .flatMap((match) =>
                 match[1].split(',').map((binding) => {
-                    const [exported, local = exported] = binding.split(/\s+as\s+/).map((name) => name.trim());
+                    const [exported, local = exported] = binding.split(/\s+as\s+/, 2);
                     return { exported, local, url: new URL(match[2], script.url).href };
                 })
             );
@@ -183,16 +180,7 @@ async function getPublicJpClient($: CheerioAPI, pageUrl: string): Promise<{ base
             const binding = bindings.find((binding) => binding.local === local);
             const configScript = scripts.find((script) => script.url === binding?.url);
             const exports = configScript?.body.match(/export\s*\{([^}]+)\}/)?.[1].split(',');
-            const exported = exports
-                ?.find(
-                    (entry) =>
-                        entry
-                            .split(/\s+as\s+/)
-                            .at(-1)
-                            ?.trim() === binding?.exported
-                )
-                ?.split(/\s+as\s+/, 1)[0]
-                ?.trim();
+            const exported = exports?.find((entry) => entry.split(/\s+as\s+/).at(-1) === binding?.exported)?.split(/\s+as\s+/, 1)[0];
             return exported ? configScript?.body.match(new RegExp(`\\b${exported}\\s*=\\s*([\`"'])(.*?)\\1`))?.[2] : undefined;
         });
         if (values[0] && values[1] && /^[\w-]+$/.test(values[0])) {
@@ -205,5 +193,5 @@ async function getPublicJpClient($: CheerioAPI, pageUrl: string): Promise<{ base
 interface CnArticle {
     id: number;
     title: string;
-    ctime?: string;
+    ctime: string;
 }

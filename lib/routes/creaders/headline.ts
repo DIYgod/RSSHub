@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
         });
 
     const limit = getRouteLimit(ctx, 10);
-    const selected = limit && ctx.req.query('sorted') !== 'false' ? list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : list;
+    const selected = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     const items = await Promise.all(
         selected.slice(0, limit).map((item) =>
             cache.tryGet(item.link!, async () => {

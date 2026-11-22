@@ -23,7 +23,7 @@ const processArticle = (items: DataItem[], cache) =>
                     cookieJar,
                 });
                 const content = load(detailResponse.data);
-                return { description: content('#article_content').html() ?? undefined };
+                return { description: content('#article_content').html() };
             });
             return { ...item, ...detail };
         },

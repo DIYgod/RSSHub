@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import { getMimeType } from 'hono/utils/mime';
 
@@ -22,20 +21,8 @@ const renderVideo = (url, poster) =>
     );
 
 const getImageMimeType = (image: string) => {
-    const mimeType = getMimeType(new URL(image).pathname)?.split(';', 1)[0];
+    const mimeType = getMimeType(new URL(image).pathname);
     return mimeType?.startsWith('image/') ? mimeType : undefined;
-};
-
-const renderImage = (description: string, image: string) => {
-    const $ = load(description, null, false);
-    if (
-        $('img[src]')
-            .toArray()
-            .some((element) => $(element).attr('src') === image)
-    ) {
-        return description;
-    }
-    return description + renderToString(<img src={image} />);
 };
 
 export const route: Route = {
@@ -113,7 +100,7 @@ async function handler(ctx) {
                 const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
                     title: item.content,
-                    description: enclosure?.url && !enclosureType ? renderImage(item.rich_content, enclosure.url) : item.rich_content,
+                    description: enclosure?.url && !enclosureType ? item.rich_content + renderToString(<img src={enclosure.url} />) : item.rich_content,
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
                     author: user?.name,

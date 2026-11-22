@@ -68,24 +68,19 @@ async function handler(ctx) {
     const { data: response } = await got(currentUrl);
     const $ = load(response);
     const refCode = section === 'top-stories' ? 'top-stories' : 'latest';
-    const seen = new Set<string>();
-    const list: Array<DataItem & { link: string }> = $('a[href]')
+    const list: Array<DataItem & { link: string }> = $('main a[href]')
         .toArray()
         .flatMap((element) => {
             const anchor = $(element);
-            const url = new URL(anchor.attr('href') || '', baseUrl);
+            const url = new URL(element.attribs.href, baseUrl);
             if (url.searchParams.get('ref') !== refCode) {
                 return [];
             }
             url.search = '';
-            if (seen.has(url.href)) {
-                return [];
-            }
-            seen.add(url.href);
             return {
-                title: anchor.find('[data-testid="heading-test-id"]').first().text(),
+                title: anchor.find('[data-testid="heading-test-id"]').text(),
                 link: url.href,
-                image: anchor.find('img').first().attr('src'),
+                image: anchor.find('img').attr('src'),
             };
         });
 
@@ -95,9 +90,9 @@ async function handler(ctx) {
             const detail = await cache.tryGet(`straitstimes:article:v3:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const content = load(response);
-                const body = content('.storyline-wrapper').first();
+                const body = content('.storyline-wrapper');
                 body.find('.more-on-this-topic-wrapper').remove();
-                let description = (content('.hero-media-wrapper').first().html() ?? '') + (body.html() ?? '');
+                let description = (content('.hero-media-wrapper').html() ?? '') + (body.html() ?? '');
                 const liveBlogId = content('.live-blog-coverage')
                     .attr('data-testid')
                     ?.match(/^live-coverage-test-id-(\d+)$/)?.[1];

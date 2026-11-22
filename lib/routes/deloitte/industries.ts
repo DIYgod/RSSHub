@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
               const $ele = $(ele);
               return {
                   title: $ele.find('.cmp-mosaic-grid__title h4').text(),
-                  link: new URL($ele.find('a[href]').first().attr('href')!, rootUrl).href,
+                  link: new URL($ele.find('a[href]').attr('href')!, rootUrl).href,
                   description: $ele.find('.cmp-mosaic-grid__text .cmp-text').html(),
               };
           })
@@ -71,7 +71,7 @@ async function handler(ctx: Context) {
 
                       const content = s('.content-width-700--with-padding:has(.cmp-text), .bodyresponsivegridcontainer .cmp-text').filter((_, element) => !s(element).parents('.content-width-700--with-padding:has(.cmp-text)').length);
                       normalizeImages(s, content);
-                      content.find('script, style, h1, .cmp-feedback-banner').remove();
+                      content.find('style, h1, .cmp-feedback-banner').remove();
                       item.description = content.length
                           ? content
                                 .toArray()

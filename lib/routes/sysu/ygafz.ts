@@ -48,11 +48,10 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('.date').text().trim();
             return {
                 title: $item.find('p').text(),
                 link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($item.find('.date').text().trim(), 'YYYY-MM-DD', 8),
             };
         });
 
@@ -67,7 +66,7 @@ async function handler(ctx) {
                     author: $('.article-submit')
                         .text()
                         .match(/发布人：(.*)/)?.[1],
-                    description: ($('div[data-block-plugin-id="entity_field:node:body"]').html() ?? '') + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? '') || undefined,
+                    description: $('div[data-block-plugin-id="entity_field:node:body"]').html() + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? ''),
                 };
             })),
         }),

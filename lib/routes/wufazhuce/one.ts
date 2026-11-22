@@ -50,9 +50,9 @@ function extractMainContent($: CheerioAPI) {
         .join('');
 }
 function parsePhotoDate($: CheerioAPI) {
-    const day = $('.one-pubdate .dom').text().trim();
-    const month = $('.one-pubdate .may').text().trim();
-    if (!/^(?:[1-9]|[12]\d|3[01])$/.test(day) || !/^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(month)) {
+    const day = $('.one-pubdate .dom').text();
+    const month = $('.one-pubdate .may').text();
+    if (!day) {
         return;
     }
     return parseDateStrict(`${day} ${month}`, 'D MMM YYYY', 8);

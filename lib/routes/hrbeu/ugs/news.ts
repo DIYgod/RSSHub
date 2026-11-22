@@ -261,7 +261,7 @@ async function handler(ctx) {
             return {
                 title: $e.find('a').attr('title')!,
                 link: new URL($e.find('a').attr('href')!, baseUrl).href,
-                pubDate: $e.find('.date').text() ? parseDate($e.find('.date').text(), 8) : undefined,
+                pubDate: parseDate($e.find('.date').text(), 8),
             };
         });
 

@@ -13,7 +13,7 @@ type SourceBlock = { type: string; content?: string; name?: string; data?: Array
 
 function renderBlock(block: SourceBlock) {
     if (block.type === 'text') {
-        return block.content ?? '';
+        return block.content;
     }
     if (block.type === 'videoList') {
         const clips = (block.data ?? [])
@@ -79,13 +79,12 @@ async function handler() {
         }),
         { concurrency: 3 }
     );
-    const uniqueItems = new Map(resolvedItems.map((item) => [item.guid, item])).values().toArray();
 
     const result = {
         title: 'Schwab Network - Markets Overview',
         description: 'Latest news and updates from Schwab Network.',
         link: url,
-        item: uniqueItems,
+        item: resolvedItems,
     };
     return result;
 }

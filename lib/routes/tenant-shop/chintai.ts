@@ -79,7 +79,7 @@ const parseList = (html: string, host: string): ListCard[] => {
             const href = a.attr('href');
             const title = a.text();
             const id = href?.match(/\/detail\/e-(\d+)/)?.[1];
-            if (!href || !title.trim() || !id) {
+            if (!href || !title || !id) {
                 return null;
             }
             const iconRow = (icon: string): string | null => clean($el.find(`div.add img[src$="/${icon}.png"]`).parent().text());

@@ -84,7 +84,7 @@ const processItems = async (currentUrl: string): Promise<Data> => {
                         .find('div.second-main~div.row>div.col-3')
                         .toArray()
                         .find((el) => content(el).text().includes('Date added'));
-                    const dateText = dateEl ? content(dateEl).next().text().trim() : null;
+                    const dateText = dateEl ? content(dateEl).next().text() : null;
                     if (dateText) {
                         // ProjectJAV uses DD/MM/YYYY format
                         detail.pubDate = parseDate(dateText, 'DD/MM/YYYY');

@@ -32,16 +32,16 @@ async function handler() {
     const { data } = await got(`${baseUrl}/feed`);
     const feed = await parser.parseString(data);
     const items = feed.items.map((item) => ({
-        title: item.title ?? '',
+        title: item.title!,
         link: item.link,
-        description: item['content:encoded'] ?? item.content,
-        author: item.creator ?? item.author,
+        description: item['content:encoded'],
+        author: item.creator,
         category: item.categories,
-        pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
+        pubDate: parseDate(item.isoDate!),
     }));
 
     return {
-        title: feed.title ?? 'Backlinko',
+        title: feed.title!,
         description: feed.description,
         link: `${baseUrl}/blog`,
         language: 'en' as const,

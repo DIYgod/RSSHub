@@ -4,12 +4,10 @@ import type { Node } from 'oxc-parser';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import { parseScriptSource } from '@/utils/parse-js';
 
-export type Notice = {
-    '1': { value: string };
-    '6'?: { value: string };
+type Notice = {
     id: number;
     title: string;
-    publishTime?: string;
+    publishTime: string;
     dataUrl: string;
     url: string;
     author?: string;
@@ -47,10 +45,7 @@ const getLiteralValue = (node: Node | undefined, bindings: Map<string, Node>) =>
 
 export const getPreviewUrl = async (html: string, baseUrl: string) => {
     const $ = load(html);
-    const source = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => /\b(?:var|let|const)\s+previewUrl\s*=/.test(source));
+    const source = $('script:contains("previewUrl")').text();
     if (!source) {
         throw new Error('The ECUST continuing education homepage no longer provides its public preview URL.');
     }
@@ -71,10 +66,7 @@ export const getPreviewUrl = async (html: string, baseUrl: string) => {
 
 export const getNotices = async (html: string) => {
     const $ = load(html);
-    const source = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => source.includes('window.__NUXT__'));
+    const source = $('script:contains("window.__NUXT__")').text();
     if (!source) {
         throw new Error('The ECUST continuing education page did not provide its public notice data.');
     }

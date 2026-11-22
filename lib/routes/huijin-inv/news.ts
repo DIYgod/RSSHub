@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://www.huijin-inv.cn';
 
@@ -21,10 +21,6 @@ async function handler(): Promise<Data> {
     let redirectPath: string | undefined;
     $scripts.each((_, el) => {
         const redirectScript = $entry(el).text();
-        if (redirectScript === null) {
-            return;
-        }
-
         // Get the real index page by JS redirection href. The path may change.
         const match = redirectScript.match(/window\.location\.href\s*=\s*["']([^"']+)["']/);
         if (match) {
@@ -37,7 +33,7 @@ async function handler(): Promise<Data> {
     const redirectURL = new URL(redirectPath, ENTRY_URL).href;
     const indexPage = await ofetch(redirectURL);
     const $: CheerioAPI = load(indexPage);
-    const title = $('title').text()?.trim();
+    const title = $('title').text();
     const author = $('div.logo a').attr('title');
     const list: Array<DataItem & { link: string }> = $('div.infor-list-item')
         .toArray()
@@ -45,7 +41,6 @@ async function handler(): Promise<Data> {
             const item = $(listItem);
             const title = item.find('h1').text();
             const pubDate = `${item.find('span.year').text()}.${item.find('span.day').text()}`;
-            const date = /^\d{4}\.\d{2}\.\d{2}$/.test(pubDate) ? parseDateStrict(pubDate, 'YYYY.MM.DD', 8) : undefined;
             const href = item.find('a').attr('href');
             if (!href) {
                 throw new Error('Huijin returned a news item without an article URL.');
@@ -55,7 +50,7 @@ async function handler(): Promise<Data> {
             return {
                 title,
                 link,
-                pubDate: date,
+                pubDate: parseDate(pubDate, 'YYYY.MM.DD', 8),
                 description,
             };
         });
@@ -66,12 +61,8 @@ async function handler(): Promise<Data> {
                 const response = await ofetch(item.link);
                 const $detail = load(response);
                 const content = $detail('.infor-txt-l .infor-txt-con');
-                content.children('span').first().remove();
-                const description = content.html();
-                if (!description?.trim()) {
-                    throw new Error(`Huijin article content was not found at ${item.link}.`);
-                }
-                return { description };
+                content.children('span').remove();
+                return { description: content.html() };
             });
             return { ...item, description: detail.description };
         },

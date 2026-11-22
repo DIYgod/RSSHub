@@ -4,7 +4,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 async function loadContent(link) {
     const response = await got(link);
@@ -51,7 +51,7 @@ function processFeed(list, caches) {
                     title: item.plaintextPrimaryHeadline,
                     link: itemUrl,
                     guid: itemUrl,
-                    pubDate: item.date ? parseDate(item.date) : undefined,
+                    pubDate: parseDate(item.date),
                     author: bylineString,
                 };
 
@@ -69,12 +69,7 @@ const getData = async (ctx, url, title, description) => {
 
     const data = response.data;
 
-    const limit = getRouteLimit(ctx, 25);
-    const datesKnown = data.articles.every((article) => article.date && parseDate(article.date));
-    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        data.articles.sort((a, b) => compareDates(parseDate(b.date), parseDate(a.date)));
-    }
-    const list = data.articles.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(25, limit));
+    const list = data.articles.slice(0, getRouteLimit(ctx, 25));
     const result = await processFeed(list, cache);
 
     return {

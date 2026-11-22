@@ -64,7 +64,7 @@ async function handler(ctx: Context) {
             title: `${item.nm} ${rating}`,
             description: `<img src="${item.img.replace('w.h', '1000.1000')}"> <br> ${rating} <br> 演员：${item.star} <br> 上映信息：${item.showInfo}`,
             link: `https://maoyan.com/films/${item.id}`,
-            pubDate: item.rt ? parseDate(item.rt, 8) : undefined,
+            pubDate: parseDate(item.rt, 8),
         };
     });
 

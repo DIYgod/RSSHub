@@ -101,12 +101,8 @@ async function handler(ctx) {
                 try {
                     const { data: response } = await got(item.link!);
                     const $ = load(response);
-                    const pdfLink = $('.pdf-link').attr('href');
-                    const enclosureUrl = pdfLink ? new URL(pdfLink, item.link).href : undefined;
-                    if (enclosureUrl) {
-                        item.enclosure_url = enclosureUrl;
-                        item.enclosure_type = 'application/pdf';
-                    }
+                    item.enclosure_url = $('.pdf-link').attr('href');
+                    item.enclosure_type = 'application/pdf';
 
                     if (category === 'stock') {
                         const { stockName, stockCode, emRatingName, ratingChange, indvInduName } = tempOriginItem;

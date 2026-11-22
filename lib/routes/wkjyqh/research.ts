@@ -8,12 +8,6 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value: string | number | undefined) => {
-    if (typeof value !== 'number' && !value) {
-        return;
-    }
-    return parseDate(value, 8);
-};
 export const route: Route = {
     path: '/research/:variety?/:type?',
     categories: ['finance'],
@@ -67,24 +61,22 @@ async function handler(ctx) {
     const list: DataItem[] = apiResponse.results[0].data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.url, baseUrl).href,
-        pubDate: parsePublicationDate(item.publish_date) ?? parsePublicationDate(item.create_date),
+        pubDate: parseDate(item.publish_date || item.create_date, 8),
     }));
-    const items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`wkjyqh:detail:v3:${item.link}`, async () => {
-                    const response = await ofetch(item.link!, { allowH2: false });
-                    const $ = load(response);
-                    const content = $('.article_detail');
-                    const pubDate = parsePublicationDate(content.find('b#time').text());
-                    content.find('h2, .tips').remove();
-                    return { pubDate, description: content.html()?.trim() };
-                });
-                return { ...item, pubDate: detail.pubDate ?? item.pubDate, description: detail.description };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wkjyqh:detail:v3:${item.link}`, async () => {
+                const response = await ofetch(item.link!, { allowH2: false });
+                const $ = load(response);
+                const content = $('.article_detail');
+                const pubDate = parseDate(content.find('b#time').text(), 8);
+                content.find('h2, .tips').remove();
+                return { pubDate, description: content.html()?.trim() };
+            });
+            return { ...item, pubDate: detail.pubDate, description: detail.description };
+        },
+        { concurrency: 3 }
     );
     return {
         title: '五矿期货 - 研究报告',
@@ -93,11 +85,4 @@ async function handler(ctx) {
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

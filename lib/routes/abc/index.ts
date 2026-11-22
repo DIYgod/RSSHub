@@ -154,8 +154,7 @@ async function handler(ctx) {
                     item.description =
                         renderDescription({
                             description:
-                                (content('div[data-component="FeatureMedia"]').html() || '') +
-                                (content('#body div[data-component="LayoutContainer"] div').first().html() || content('[class*="ArticleRender_article"]').first().html() || ''),
+                                (content('div[data-component="FeatureMedia"]').html() || '') + (content('#body div[data-component="LayoutContainer"] div').first().html() || content('[class*="ArticleRender_article"]').html() || ''),
                         }) + item.description;
 
                     item.category = content('meta[property="article:tag"]')

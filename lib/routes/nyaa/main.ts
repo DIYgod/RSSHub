@@ -54,7 +54,8 @@ const toDataItems = (item: Parser.Item & NyaaItem): DataItem[] => {
             guid: item.guid,
             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             description: item.description,
-            ...(item.link && { enclosure_url: item.link, enclosure_type: 'application/x-bittorrent' }),
+            enclosure_url: item.link,
+            enclosure_type: 'application/x-bittorrent',
         },
     ];
 };

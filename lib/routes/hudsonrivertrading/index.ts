@@ -97,22 +97,19 @@ async function handler(ctx): Promise<Data> {
     const apiUrl = `${apiBase}/posts?${searchParams.join('&')}`;
     const data = await ofetch<WordpressPost[]>(apiUrl);
 
-    const items = data.map((post) => {
-        const pubDate = post.date_gmt ? parseDate(post.date_gmt, 0) : post.date ? parseDate(post.date) : undefined;
-        return {
-            title: post.title?.rendered,
-            description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
-            link: post.link,
-            pubDate,
-            author: post._embedded?.author?.[0]?.name,
-            category: Array.isArray(post._embedded?.['wp:term'])
-                ? post._embedded['wp:term']
-                      .flat()
-                      .map((term: any) => term?.name)
-                      .filter(Boolean)
-                : undefined,
-        };
-    });
+    const items = data.map((post) => ({
+        title: post.title?.rendered,
+        description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
+        link: post.link,
+        pubDate: post.date_gmt ? parseDate(post.date_gmt, 0) : parseDate(post.date),
+        author: post._embedded?.author?.[0]?.name,
+        category: Array.isArray(post._embedded?.['wp:term'])
+            ? post._embedded['wp:term']
+                  .flat()
+                  .map((term: any) => term?.name)
+                  .filter(Boolean)
+            : undefined,
+    }));
 
     const sectionLabel = sectionParam && Object.hasOwn(SECTION_LABELS, sectionParam) ? ` - ${SECTION_LABELS[sectionParam]}` : '';
 

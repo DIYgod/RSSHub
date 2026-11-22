@@ -111,7 +111,7 @@ async function handler(ctx: Context): Promise<Data | Response> {
             continue;
         }
         const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
-        const pubDate = story.date === undefined ? undefined : parseDate(story.date * 1000);
+        const pubDate = parseDate(story.date * 1000);
         const media = await unwrapMedia(story.media);
         if (!media) {
             // cannot load the story
@@ -120,7 +120,7 @@ async function handler(ctx: Context): Promise<Data | Response> {
 
         const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
         item.push({
-            title: story.caption ?? (pubDate && toRFC822(pubDate)) ?? '',
+            title: story.caption ?? toRFC822(pubDate!),
             description,
             pubDate,
             link: `https://t.me/${username}/s/${story.id}`,

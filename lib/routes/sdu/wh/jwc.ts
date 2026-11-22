@@ -44,7 +44,7 @@ async function handler(ctx) {
     const items = $('.articleul li');
     const out = await pMap(
         items.toArray(),
-        async (item, _index) => {
+        async (item) => {
             const $item = $(item);
             const anchor = $item.find('a');
             const dateElement = $item.find('div:last-of-type');

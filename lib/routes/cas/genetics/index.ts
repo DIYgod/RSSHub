@@ -48,7 +48,6 @@ async function handler(ctx) {
             });
     } else if (path.slice(0, 4) === 'dqyd') {
         items = $('div.list-tab ul li')
-            .filter((_, item) => ($(item).find('a').first().attr('href') ?? '') !== '')
             .toArray()
             .map((item) => {
                 const $item = $(item);

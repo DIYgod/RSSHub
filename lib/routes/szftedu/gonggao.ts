@@ -34,7 +34,7 @@ async function getArticle(link: string): Promise<Partial<DataItem>> {
     const response = await got(trueLink);
     const $ = load(response.data);
     const item: Partial<DataItem> = { description: link.startsWith('http') ? await getArticleContent($, trueLink) : $('div.TRS_Editor').html() };
-    const articleDate = link.startsWith('http') ? await getArticlePubDate($) : undefined;
+    const articleDate = getArticlePubDate(response.data);
     const date = $('.item').first().text().replace('发布时间：', '').trim();
     if (articleDate) {
         item.pubDate = articleDate;
@@ -51,14 +51,11 @@ async function handler() {
 
     const lists = $('div.pagenews04 div ul li')
         .toArray()
-        .map((el): DataItem => {
-            const date = $('span[class=canedit]', el).text().trim();
-            return {
-                title: $('a', el).text(),
-                link: $('a', el).attr('href'),
-                pubDate: date ? parseDate(date, 'YYYY.MM.DD', 8) : undefined,
-            };
-        });
+        .map((el): DataItem => ({
+            title: $('a', el).text(),
+            link: $('a', el).attr('href'),
+            pubDate: parseDate($('span[class=canedit]', el).text(), 'YYYY.MM.DD', 8),
+        }));
 
     const items = await pMap(lists, async (item) => ({ ...item, ...(await cache.tryGet(`szftedu:gonggao:article:${item.link}`, () => getArticle(item.link!))) }), { concurrency: 3 });
 

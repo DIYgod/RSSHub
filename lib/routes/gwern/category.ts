@@ -40,10 +40,7 @@ async function handler(ctx: Context) {
                 const res = await ofetch(link);
                 const $$ = load(res);
 
-                const time = $$('meta[name="dc.date.issued"]').attr('content') || $$('meta[name="citation_publication_date"]').attr('content') || $$('span#page-creation').text();
-                const pubDate = time ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(time) ? `${time}T00:00:00Z` : time) : undefined;
-
-                $$('a').removeAttr('data-popup-title').removeAttr('data-popup-title-html').removeAttr('data-popup-author').removeAttr('data-popup-abstract').removeAttr('data-popup-doi').removeAttr('data-popup-date');
+                const time = $$('meta[name="dc.date.issued"]').attr('content');
 
                 return {
                     title: $$('header > h1').text(),
@@ -51,7 +48,7 @@ async function handler(ctx: Context) {
                     description: $$('div#markdownBody').html()!.replace('&shy;', ''),
                     link,
                     guid: link,
-                    pubDate,
+                    pubDate: parseDate(`${time}T00:00:00Z`),
                 };
             });
         },

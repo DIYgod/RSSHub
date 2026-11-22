@@ -46,22 +46,18 @@ async function handler() {
     });
     const detailedItems = await pMap(
         items,
-        async (item) =>
-            item.link
-                ? {
-                      ...item,
-                      ...(await cache.tryGet(`scnu:yjs:v3:${item.link}`, async () => {
-                          const loadedSource1 = (await got(item.link!)).data;
-                          const article = load(loadedSource1);
-                          const date = article('h1').next('p').find('span').first().text();
-                          const category = article('.tag a')
-                              .toArray()
-                              .map((element) => article(element).text().trim())
-                              .filter(Boolean);
-                          return { description: article('.article').html() ?? undefined, ...(category.length && { category }), pubDate: date ? parseDate(date, 'YYYY-MM-DD HH:mm:ss', 8) : undefined };
-                      })),
-                  }
-                : item,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`scnu:yjs:v3:${item.link}`, async () => {
+                const loadedSource1 = (await got(item.link)).data;
+                const article = load(loadedSource1);
+                const date = article('h1').next('p').find('span').first().text();
+                const category = article('.tag a')
+                    .toArray()
+                    .map((element) => article(element).text().trim());
+                return { description: article('.article').html(), ...(category.length && { category }), pubDate: parseDate(date, 'YYYY-MM-DD HH:mm:ss', 8) };
+            })),
+        }),
         { concurrency: 3 }
     );
 

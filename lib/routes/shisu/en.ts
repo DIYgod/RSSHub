@@ -39,7 +39,7 @@ async function process(baseUrl: string, section: any): Promise<Data> {
             return {
                 title: i.find('h3>a').text(),
                 link,
-                pubDate: i.find('p.time').text() ? parseDate(`${i.find('p.time').text()} +0800`, 'DD MMMM YYYY ZZ') : undefined,
+                pubDate: parseDate(`${i.find('p.time').text()} +0800`, 'DD MMMM YYYY ZZ'),
                 itunes_item_image: `${baseUrl}${img}`,
             };
         });
@@ -51,7 +51,7 @@ async function process(baseUrl: string, section: any): Promise<Data> {
                 const r = await ofetch(item.link);
                 const $ = load(r);
                 return {
-                    author: /\|\s*By\s+([^|]+)/i.exec($('.time').text())?.[1]?.trim(),
+                    author: /\|\s*By\s+([^|]+)/i.exec($('.time').text())?.[1].trim(),
                     description: $('.details-con')
                         .html()!
                         .replaceAll(/<o:p>[\s\S]*?<\/o:p>/g, '')

@@ -44,7 +44,7 @@ async function handler(ctx) {
                 link: item.link,
                 guid: item.guid,
                 author: item.creator || undefined,
-                description: item['content:encoded'] ?? item.content,
+                description: item['content:encoded'],
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             };
         }),

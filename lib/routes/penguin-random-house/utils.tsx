@@ -23,35 +23,14 @@ const parseBookInList = (element) => {
 };
 
 const parsePubDate = (data) => {
-    for (const element of data('script[type="application/ld+json"]').toArray()) {
-        let metadata;
-        try {
-            metadata = JSON.parse(data(element).text());
-        } catch {
-            continue;
-        }
-        const entries = Array.isArray(metadata) ? metadata : metadata['@graph'] || [metadata];
-        for (const entry of entries) {
-            const date = entry.mainEntity?.datePublished || entry.datePublished;
-            if (typeof date === 'string' && date) {
-                return parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00Z` : date);
-            }
-        }
-    }
-
-    const dateString = data('script')
-        .toArray()
-        .map((element) => data(element).text())
-        .find((text) => text.includes('post_date'));
-    const dateMatch = dateString?.match(/"post_date":"([^"]+)"/);
-    if (dateMatch) {
-        return parseDate(/^\d{4}-\d{2}-\d{2}$/.test(dateMatch[1]) ? `${dateMatch[1]}T00:00:00Z` : dateMatch[1]);
-    }
+    const metadata = JSON.parse(data('script[type="application/ld+json"]').text());
+    const date = metadata.mainEntity?.datePublished || metadata.datePublished;
+    return parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00Z` : date);
 };
 
 const parseBooks = (element) => {
     const $ = load(element);
-    const description = $('.read-down-text').first().html() || '';
+    const description = $('.read-down-text').html();
 
     const mainBlock = $('.awesome-list>li')
         .toArray()
@@ -73,9 +52,8 @@ const parseArticle = (element) => {
     const descriptionBlock = renderArticleHeader(imageSrc!, imageAlt!, description!);
 
     const mainBlock = $('.main-content')
-        .first()
         .children()
-        .not('.lf-header, .copy-top, .photo-credit, .newsletter-container, .modal, script')
+        .not('.lf-header, .copy-top, .photo-credit, .newsletter-container, .modal')
         .toArray()
         .map((element) => $.html(element))
         .join('');

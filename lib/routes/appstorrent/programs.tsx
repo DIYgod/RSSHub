@@ -58,8 +58,6 @@ async function handler(ctx?: Context): Promise<Data> {
             cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const response = await got(item.link, gotOptions);
                 const $ = load(response.data);
-                $('script').remove();
-                const icon = $('.cover-hero__icon img').attr('src');
 
                 const pubDate = publicationDates.get(item.link);
 
@@ -71,7 +69,7 @@ async function handler(ctx?: Context): Promise<Data> {
                     description: renderToString(
                         <>
                             <p>
-                                {icon ? <img src={new URL(icon, baseUrl).href} /> : null}
+                                <img src={new URL($('.cover-hero__icon img').attr('src')!, baseUrl).href} />
                                 <br />
                                 <b>Version</b>: {item.version}
                                 <br />
@@ -85,13 +83,11 @@ async function handler(ctx?: Context): Promise<Data> {
                                 <br />
                             </p>
                             <b>Description</b>:<div>{raw($('.cover-hero-body__desc').html() ?? '')}</div>
-                            <b>Change Log</b>:<div>{raw($('.media-card--text .body-content').first().html() ?? '')}</div>
+                            <b>Change Log</b>:<div>{raw($('.media-card--text .body-content').html() ?? '')}</div>
                             <b>Screenshots</b>
                             {$('.screenshots img')
                                 .toArray()
-                                .map((img) => $(img).attr('src'))
-                                .filter((src): src is string => Boolean(src))
-                                .map((src) => new URL(src, baseUrl).href)
+                                .map((img) => new URL($(img).attr('src')!, baseUrl).href)
                                 .map((src) => (
                                     <img src={src} />
                                 ))}

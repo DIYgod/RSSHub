@@ -20,13 +20,6 @@ export const route: Route = {
     url: 'wallpaperhub.app/wallpapers',
 };
 
-function parseSourceTime(value?: string | number) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler() {
     const link = 'https://wallpaperhub.app/api/v1/wallpapers/?limit=20&page=&query=&width=&height=&tags=';
     const response = await got({
@@ -34,21 +27,18 @@ async function handler() {
         url: link,
     });
 
-    const list = response.data.entities.map((item) => {
-        const imageUrl = item.entity.variations?.[0]?.resolutions?.[0]?.url || item.entity.thumbnail;
-        return {
-            title: item.entity.title,
-            description: renderToString(
-                <>
-                    <p>{item.entity.description}</p>
-                    {imageUrl ? <img src={imageUrl} /> : null}
-                </>
-            ),
-            pubDate: parseSourceTime(item.entity.created),
-            category: item.entity.tags,
-            link: `https://wallpaperhub.app/wallpapers/${item.entity.id}`,
-        };
-    });
+    const list = response.data.entities.map((item) => ({
+        title: item.entity.title,
+        description: renderToString(
+            <>
+                <p>{item.entity.description}</p>
+                <img src={item.entity.variations[0].resolutions[0].url || item.entity.thumbnail} />
+            </>
+        ),
+        pubDate: parseDate(item.entity.created),
+        category: item.entity.tags,
+        link: `https://wallpaperhub.app/wallpapers/${item.entity.id}`,
+    }));
 
     return {
         title: 'WallpaperHub',

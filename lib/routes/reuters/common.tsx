@@ -312,17 +312,16 @@ async function handler(ctx) {
                           content('.title').remove();
                           content('.article-metadata').remove();
 
-                          item.title = content('meta[property="og:title"]').attr('content') || item.title;
+                          item.title = content('meta[property="og:title"]').attr('content');
                           const publishedTime = detailHtml.match(/"datePublished":"(.*?)","dateModified/)?.[1];
                           if (publishedTime) {
                               item.pubDate = parseDate(publishedTime);
                           }
-                          const authors = (detailHtml.match(/\{"@type":"Person","name":"(.*?)"\}/g) ?? []).flatMap((person) => {
-                              const name = person.match(/"name":"(.*?)"/)?.[1];
-                              return name ? [name] : [];
-                          });
-                          item.author = authors.join(', ') || item.author;
-                          item.description = content('article').html() || item.description;
+                          item.author = detailHtml
+                              .match(/\{"@type":"Person","name":"(.*?)"\}/g)
+                              ?.map((person) => person.match(/"name":"(.*?)"/)?.[1])
+                              .join(', ');
+                          item.description = content('article').html();
 
                           return item;
                       })

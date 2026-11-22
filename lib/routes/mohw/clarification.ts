@@ -43,16 +43,13 @@ async function handler() {
 
     let items = $('section.list a[title]')
         .toArray()
-        .flatMap((item): DataItem[] => {
+        .map((item): DataItem => {
             const $item = $(item);
 
-            const title = $item.attr('title');
-            const href = $item.attr('href');
-            if (!title || !href) {
-                return [];
-            }
-
-            return [{ title, link: new URL(href, rootUrl).href }];
+            return {
+                title: $item.attr('title')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
+            };
         });
 
     items = await pMap(
@@ -67,8 +64,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 const description = content('article.cpArticle').html();
-                const date = content('meta[name="DC.Date"]').attr('content');
-                const pubDate = date ? parseDate(date, 8) : undefined;
+                const pubDate = parseDate(content('meta[name="DC.Date"]').attr('content')!, 8);
 
                 return { description, pubDate };
             });

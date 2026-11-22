@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -31,14 +32,9 @@ export const route: Route = {
 | ---- | ---- | ---- | ---- | ---- | ---- |`,
 };
 
-function parsePubDate(value?: number) {
-    return typeof value === 'number' && Number.isFinite(value) ? parseDate(value * 1000) : undefined;
-}
-
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 16;
+    const limit = getRouteLimit(ctx, 16);
 
     const rootUrl = 'https://www.topys.cn';
     const currentUrl = `${rootUrl}${keyword ? `/search/${keyword}` : '/api/web/article/get_article_list'}`;
@@ -64,7 +60,7 @@ async function handler(ctx) {
                   title: matches[2],
                   category: matches[3].split(','),
                   link: `${rootUrl}/article/${matches[1]}`,
-                  pubDate: parsePubDate(Number(matches[4])),
+                  pubDate: parseDate(matches[4] * 1000),
               };
           })
         : response.data.data.map((item) => ({
@@ -72,7 +68,7 @@ async function handler(ctx) {
               author: item.editor,
               category: item.keyword.split(','),
               link: `${rootUrl}/article/${item.id}`,
-              pubDate: parsePubDate(item.istop_time),
+              pubDate: parseDate(item.istop_time * 1000),
           }));
 
     items = await pMap(

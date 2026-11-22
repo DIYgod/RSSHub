@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
@@ -58,21 +60,20 @@ async function handler(ctx) {
             .values()
             .toArray()
             .map((story) => {
-                const content = story.content ?? {};
+                const content = story.content;
                 const image = content.immagine?.[0]?.immagine?.filename;
-                const date = story.first_published_at ?? story.published_at;
                 return {
                     title: content.titolo || story.name,
                     link: `https://www.treccani.it/${story.full_slug}`,
                     author: content.nomeAutore || undefined,
                     category: story.tag_list,
-                    pubDate: date ? parseDate(date) : undefined,
-                    updated: story.updated_at ? parseDate(story.updated_at) : undefined,
+                    pubDate: parseDate(story.first_published_at),
+                    updated: parseDate(story.updated_at),
                     description: renderToString(
                         <>
                             {image && <img src={image} alt="" />}
                             <p>{getRichText(content.abstract ?? content.descrizione)}</p>
-                            {content.videoId && <iframe src={`https://www.youtube.com/embed/${content.videoId}`} allowfullscreen />}
+                            {content.videoId && raw(renderYoutube(true, content.videoId))}
                         </>
                     ),
                 };

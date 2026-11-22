@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://wallhaven.cc';
@@ -37,18 +38,6 @@ The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wa
 :::`,
 };
 
-function parseLimit(value: string | undefined, defaultLimit: number) {
-    const limit = Number(value);
-    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
-}
-
-function parseSourceTime(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const filter = ctx.req.param('filter') ?? 'latest';
     const needDetails = /^(?:true|yes|t|y)$/i.test(ctx.req.param('needDetails') ?? 'false');
@@ -58,14 +47,12 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('li > figure.thumb')
-        .slice(0, parseLimit(ctx.req.query('limit'), 24))
+        .slice(0, getRouteLimit(ctx, 24))
         .toArray()
         .map((item): DataItem => {
-            const image = $(item).find('img.lazyload').first();
-            const imageUrl = image.attr('data-src') || image.attr('src');
-            if (imageUrl) {
-                image.attr('src', imageUrl);
-            }
+            const image = $(item).find('img.lazyload');
+            const imageUrl = image.attr('data-src');
+            image.attr('src', imageUrl);
             return {
                 title: imageUrl?.split('/').pop() || '',
                 description: image.toString(),
@@ -85,11 +72,11 @@ async function handler(ctx) {
                     return {
                         title: content('meta[name="title"]').attr('content')!,
                         author: content('.username').text(),
-                        pubDate: parseSourceTime(content('time').attr('datetime')),
+                        pubDate: parseDate(content('time').attr('datetime')!),
                         category: content('.tagname')
                             .toArray()
                             .map((tag) => content(tag).text()),
-                        description: content('div.scrollbox').html() ?? '',
+                        description: content('div.scrollbox').html(),
                     };
                 });
                 return { ...item, ...details };

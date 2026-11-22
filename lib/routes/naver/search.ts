@@ -208,9 +208,9 @@ function extractCafeItems(html: string) {
             const titleEl = $el.find('.title_link');
             const title = titleEl.text();
             const link = titleEl.attr('href') || '';
-            const author = $el.find('.name').text().trim();
-            const timeText = $el.find('.sub').text().trim();
-            const description = $el.find('.dsc_link').text().trim();
+            const author = $el.find('.name').text();
+            const timeText = $el.find('.sub').text();
+            const description = $el.find('.dsc_link').text();
 
             if (!title || !link) {
                 return null;

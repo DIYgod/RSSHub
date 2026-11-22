@@ -13,7 +13,6 @@ async function fetch(address) {
         .match(/时间：(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/)?.[1];
     const content = $('[name="_newscontent_fromname"]');
     content.children('h1, .details-time').remove();
-    content.find('script').remove();
     return {
         description: content.html(),
         link: address,

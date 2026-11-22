@@ -4,6 +4,7 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -43,8 +44,8 @@ interface JsonLdNode {
     '@type'?: string;
     '@graph'?: JsonLdNode[];
     datePublished?: string;
-    image?: string | string[] | { url?: string };
-    author?: JsonLdAuthor | JsonLdAuthor[];
+    image?: string | { url?: string };
+    author?: JsonLdAuthor[];
 }
 
 interface NextFileAsset {
@@ -115,59 +116,32 @@ const extractRssExcerpt = (rawDescription: string): string => {
 
 const parseRssFeed = (xml: string, limit: number): RssEntry[] => {
     const $ = load(xml, { xml: true });
-    const seenLinks = new Set<string>();
-    const entries: RssEntry[] = [];
-
-    $('item').each((_, el) => {
-        if (entries.length >= limit) {
-            return;
-        }
-        const $item = $(el);
-        const link = parseArticleUrl($item.find('link').first().text().trim());
-        const title = $item.find('title').first().text();
-        if (!link || !title || seenLinks.has(link)) {
-            return;
-        }
-        seenLinks.add(link);
-        entries.push({
-            title,
-            link,
-            pubDateRaw: $item.find('pubDate').first().text().trim(),
-            authorRaw: $item
-                .find(String.raw`dc\:creator`)
-                .first()
-                .text()
-                .trim(),
-            excerpt: extractRssExcerpt($item.find('description').first().text()),
-        });
-    });
-
-    return entries;
+    return $('item')
+        .toArray()
+        .flatMap((el) => {
+            const $item = $(el);
+            const link = parseArticleUrl($item.find('link').text());
+            const title = $item.find('title').text();
+            if (!link || !title) {
+                return [];
+            }
+            return {
+                title,
+                link,
+                pubDateRaw: $item.find('pubDate').text(),
+                authorRaw: $item.find(String.raw`dc\:creator`).text(),
+                excerpt: extractRssExcerpt($item.find('description').first().text()),
+            };
+        })
+        .slice(0, limit);
 };
 
-const findArticleLdInParsed = (parsed: JsonLdNode | JsonLdNode[]): JsonLdNode | undefined => {
-    const candidates = Array.isArray(parsed) ? parsed : (parsed['@graph'] ?? [parsed]);
+const findArticleLdInParsed = (parsed: JsonLdNode): JsonLdNode | undefined => {
+    const candidates = parsed['@graph'] ?? [parsed];
     return candidates.find((node) => node['@type'] === 'Article' || node['@type'] === 'BlogPosting');
 };
 
-const findArticleLdNode = ($: CheerioAPI): JsonLdNode | undefined => {
-    for (const el of $('script[type="application/ld+json"]').toArray()) {
-        const raw = $(el).text().trim();
-        if (!raw) {
-            continue;
-        }
-        try {
-            const parsed = JSON.parse(raw) as JsonLdNode | JsonLdNode[];
-            const found = findArticleLdInParsed(parsed);
-            if (found) {
-                return found;
-            }
-        } catch {
-            // Ignore malformed JSON-LD blocks on auxiliary embeds.
-        }
-    }
-    return undefined;
-};
+const findArticleLdNode = ($: CheerioAPI): JsonLdNode | undefined => findArticleLdInParsed(JSON.parse($('script[type="application/ld+json"]:contains("Article")').text()));
 
 const extractLdImageUrl = (node: JsonLdNode | undefined): string | undefined => {
     if (!node?.image) {
@@ -176,9 +150,6 @@ const extractLdImageUrl = (node: JsonLdNode | undefined): string | undefined => 
     if (typeof node.image === 'string') {
         return unwrapCdnImageUrl(node.image);
     }
-    if (Array.isArray(node.image)) {
-        return unwrapCdnImageUrl(node.image[0]);
-    }
     return unwrapCdnImageUrl(node.image.url);
 };
 
@@ -186,8 +157,7 @@ const extractLdAuthors = (node: JsonLdNode | undefined): DataItem['author'] | un
     if (!node?.author) {
         return undefined;
     }
-    const list = Array.isArray(node.author) ? node.author : [node.author];
-    const mapped = list
+    const mapped = node.author
         .filter((entry) => Boolean(entry.name?.trim()))
         .map((entry) => {
             const name = entry.name!.trim();
@@ -210,17 +180,8 @@ const parseSanityFileUrl = (ref: string | undefined): string | undefined => {
 
 const decodeFlightChunk = (scriptText: string): string => {
     const prefix = 'self.__next_f.push(';
-    const startIdx = scriptText.indexOf(prefix);
-    const endIdx = scriptText.lastIndexOf(')');
-    if (startIdx === -1 || endIdx <= startIdx + prefix.length) {
-        return '';
-    }
-    try {
-        const tuple = JSON.parse(scriptText.slice(startIdx + prefix.length, endIdx)) as [number, string?];
-        return typeof tuple[1] === 'string' ? tuple[1] : '';
-    } catch {
-        return '';
-    }
+    const tuple = JSON.parse(scriptText.slice(scriptText.indexOf(prefix) + prefix.length, scriptText.lastIndexOf(')'))) as [number, string];
+    return tuple[1];
 };
 
 const extractBalancedObjectEnd = (source: string, openBraceIndex: number): number => {
@@ -263,7 +224,7 @@ const extractBalancedObjectEnd = (source: string, openBraceIndex: number): numbe
 };
 
 const extractResponsiveVideos = ($: CheerioAPI): ResponsiveVideoUrls[] => {
-    const flightStream = $('script')
+    const flightStream = $('script:contains("self.__next_f.push")')
         .toArray()
         .map((el) => decodeFlightChunk($(el).text()))
         .join('');
@@ -391,12 +352,6 @@ const normalizeImages = ($: CheerioAPI, $content: Cheerio<Element>): void => {
 };
 
 const resolveEmbedWatchUrl = (embedUrl: URL): string => {
-    if (isAllowedHost(embedUrl.hostname, ['youtube.com', 'youtube-nocookie.com']) && embedUrl.pathname.startsWith('/embed/')) {
-        const videoId = embedUrl.pathname.slice('/embed/'.length).split('/', 1)[0];
-        if (videoId) {
-            return `https://www.youtube.com/watch?v=${videoId}`;
-        }
-    }
     if (isAllowedHost(embedUrl.hostname, ['fast.wistia.net', 'fast.wistia.com']) && embedUrl.pathname.startsWith('/embed/iframe/')) {
         return `${embedUrl.origin}${embedUrl.pathname}`;
     }
@@ -420,12 +375,13 @@ const cleanIframes = ($: CheerioAPI, $content: Cheerio<Element>, articleUrl: str
             return;
         }
 
-        $iframe.replaceWith(renderEmbed(parsed.href, resolveEmbedWatchUrl(parsed), title));
+        const youtubeId = isAllowedHost(parsed.hostname, ['youtube.com', 'youtube-nocookie.com']) && parsed.pathname.startsWith('/embed/') ? parsed.pathname.slice('/embed/'.length).split('/', 1)[0] : undefined;
+        $iframe.replaceWith(youtubeId ? renderYoutube(true, youtubeId) : renderEmbed(parsed.href, resolveEmbedWatchUrl(parsed), title));
     });
 };
 
 const stripUtilityAttributes = ($: CheerioAPI, $content: Cheerio<Element>): void => {
-    $content.find('script, style, noscript, template, svg, form').remove();
+    $content.find('svg').remove();
     $content.find('*').each((_, el) => {
         const $el = $(el);
         $el.removeAttr('class');
@@ -448,7 +404,7 @@ const extractMainColumn = ($: CheerioAPI): Cheerio<Element> | undefined => {
         return undefined;
     }
     const mainColumn = grid.children().length > 1 ? grid.children().eq(1) : grid.children().eq(0);
-    if (mainColumn.length === 0 || !mainColumn.html()?.trim()) {
+    if (mainColumn.length === 0 || !mainColumn.html()) {
         return undefined;
     }
     return mainColumn;
@@ -479,8 +435,8 @@ const parseArticlePage = (html: string, entry: RssEntry): ParsedArticleDetails =
     normalizeImages($, $content);
     stripUtilityAttributes($, $content);
 
-    const firstBodyImage = unwrapCdnImageUrl($content.find('img').first().attr('src'));
-    const cleanedHtml = $content.html()?.trim() ?? '';
+    const firstBodyImage = unwrapCdnImageUrl($content.find('img').attr('src'));
+    const cleanedHtml = $content.html();
 
     return {
         description: cleanedHtml || renderFallbackDescription(entry.excerpt),
@@ -506,13 +462,13 @@ const resolveItemAuthor = (detailsAuthor: DataItem['author'] | undefined, rssAut
 
 const fetchArticleDetails = (entry: RssEntry): Promise<ParsedArticleDetails> =>
     cache.tryGet<ParsedArticleDetails>(`sierra:blog:${entry.link}`, async () => {
-        const html = await ofetch(entry.link, { responseType: 'text' });
+        const html = await ofetch(entry.link);
         return parseArticlePage(html, entry);
     });
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
-    const rssXml = await ofetch(RSS_URL, { responseType: 'text' });
+    const rssXml = await ofetch(RSS_URL);
     const entries = parseRssFeed(rssXml, limit);
 
     const detailsList = await pMap(entries, (entry) => fetchArticleDetails(entry), { concurrency: DETAIL_CONCURRENCY });

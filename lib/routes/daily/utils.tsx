@@ -96,7 +96,7 @@ export const getList = (edges: FeedEdge[]): DataItem[] =>
             }),
             author: node.author?.name,
             itunes_item_image: post.image,
-            pubDate: node.createdAt ? parseDate(node.createdAt) : undefined,
+            pubDate: parseDate(node.createdAt),
             upvotes: node.numUpvotes,
             comments: node.numComments,
             category: node.tags,

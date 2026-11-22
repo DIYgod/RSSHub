@@ -54,8 +54,8 @@ async function handler(ctx) {
                     title: item.title ?? '',
                     link: link.href,
                     description: item.content,
-                    author: item.creator ?? item.author,
-                    pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
+                    author: item.creator,
+                    pubDate: item.isoDate,
                 };
             }),
         };
@@ -68,7 +68,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $(`${category === '' ? '#news-river ' : ''}.river`)
+    let items = $('.river')
         .slice(0, limit)
         .toArray()
         .map((item): DataItem => {

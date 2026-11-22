@@ -25,8 +25,8 @@ export async function fetchArticles(path: string) {
             const $element = $(element);
             const link = baseUrl + $element.attr('href');
             return await cache.tryGet(link, async (): Promise<DataItem> => {
-                const title = $element.find('h3, p.font-bold').first().text();
-                const author = $element.find('div[class~="text-[16px]"]').text().trim();
+                const title = $element.find('h3, p.font-bold').text();
+                const author = $element.find('div[class~="text-[16px]"]').text();
                 const image = $element.find('img').attr('src');
                 const imageUrl = image?.startsWith('/_next/image') ? image.split('url=', 2)[1].split('&', 1)[0] : image;
                 const decodedImageUrl = imageUrl ? new URL(decodeURIComponent(imageUrl), baseUrl).href : '';
@@ -117,7 +117,7 @@ export async function fetchArticles(path: string) {
                     guid: link,
                     itunes_item_image: podcastData?.image || decodedImageUrl,
                     category: tags,
-                    pubDate: pubDate ? parseDate(pubDate) : undefined,
+                    pubDate: parseDate(pubDate),
                     enclosure_url: podcastData?.mediaUrl,
                     itunes_duration: podcastData?.itunes_duration,
                     enclosure_type: podcastData?.mediaUrl ? 'audio/mpeg' : undefined,

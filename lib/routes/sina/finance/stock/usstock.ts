@@ -56,7 +56,7 @@ async function handler(ctx) {
     const list = response.data.map((item): DataItem & { link: string } => ({
         title: item.title,
         link: item.url,
-        pubDate: item.ctime ? parseDate(item.ctime, 'X') : undefined,
+        pubDate: parseDate(item.ctime, 'X'),
         author: item.media,
     }));
 

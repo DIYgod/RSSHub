@@ -65,7 +65,7 @@ async function handler() {
             description: renderToString(<>{raw(item.description.replaceAll('\n', '<br>'))}</>),
             category: item.category,
             // the article publish time
-            pubDate: item.date ? parseDate(item.date.replaceAll('.', '-'), 0) : undefined,
+            pubDate: parseDate(item.date.replaceAll('.', '-'), 0),
             // the article link
             link: `${url}/${item.id}`,
         })),

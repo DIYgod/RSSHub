@@ -1,19 +1,7 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 export const route: Route = {
     path: '/gb/offer',
@@ -57,11 +45,10 @@ async function handler() {
             url.searchParams.delete('itm_content');
             url.searchParams.delete('itm_element');
             url.searchParams.delete('itm_campaign');
-            const content = copyElements(card);
-            content.find('.hri-content-card__headers, .hri-compact-card__link, .hri-content-card__footer, script, style, button, svg').remove();
+            card.find('.hri-content-card__headers, .hri-compact-card__link, .hri-content-card__footer, button, svg').remove();
             return {
                 title,
-                description: content.html() || undefined,
+                description: card.html(),
                 link: url.href,
                 guid: `${url.href}#${title}`,
             };

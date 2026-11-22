@@ -31,7 +31,7 @@ async function handler() {
 
     const items = json.props.pageProps.issues.map((item) => ({
         title: item.title,
-        pubDate: item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined,
+        pubDate: parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ'),
         description: item.summary,
         link: `/issues/${item.slug}`,
     }));

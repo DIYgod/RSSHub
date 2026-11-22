@@ -32,7 +32,7 @@ async function handler(ctx) {
             link: article.href.split('?', 1)[0],
             pubDate: parseDate(article.timestamp, 'X'),
             category: [article.category_label],
-            description: `${article.thumbnail ? `<img src="${article.thumbnail}">` : ''}<p>${escapeText(article.summary)}</p>`,
+            description: `<img src="${article.thumbnail}"><p>${escapeText(article.summary)}</p>`,
         })),
     };
 }

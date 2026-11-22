@@ -6,7 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
-import { compareDates, parseDate, toInstant } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -39,12 +39,10 @@ async function handler(ctx: Context) {
                 author: '教务部',
             };
         });
-    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.pubDate && toInstant(item.pubDate) !== undefined)) {
-        if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-        }
-        list.splice(getRouteLimit(ctx, hasItemFilters(ctx) ? list.length : 10));
+    if (ctx.req.query('sorted') !== 'false') {
+        list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
+    list.splice(getRouteLimit(ctx, hasItemFilters(ctx) ? list.length : 10));
 
     const items = await pMap(
         list,

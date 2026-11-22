@@ -29,10 +29,7 @@ const extractArticleInfo = ($article: CheerioAPI, pageURL: string) => {
     return { title, content, pageURL };
 };
 
-const parseDateString = (dateString: string | undefined) => {
-    const date = dateString?.match(/\d{4}\/\d{2}\/\d{2}/)?.[0];
-    return date ? parseDate(`${date.replaceAll('/', '-')}T00:00:00Z`) : undefined;
-};
+const parseDateString = (dateString: string) => parseDate(`${dateString.replaceAll('/', '-')}T00:00:00Z`);
 
 // Create a feed item from a sidebar entry.
 const createDataItem = (item: Element, $: CheerioAPI): Promise<DataItem> => {
@@ -44,7 +41,7 @@ const createDataItem = (item: Element, $: CheerioAPI): Promise<DataItem> => {
     return cache.tryGet(pageURL, async () => {
         const $article = await fetchPageContent(pageURL);
         const { title, content } = extractArticleInfo($article, pageURL);
-        const pubDate = parseDateString(dateString);
+        const pubDate = parseDateString(dateString!);
 
         return {
             title,
@@ -57,7 +54,7 @@ const createDataItem = (item: Element, $: CheerioAPI): Promise<DataItem> => {
 
 const handler = async (): Promise<Data> => {
     const $home = await fetchPageContent(ROOT_URL);
-    const newsPath = $home('nav a[href^="/zh-cn/news/"]').first().attr('href');
+    const newsPath = $home('nav a[href^="/zh-cn/news/"]').attr('href');
     if (!newsPath) {
         throw new Error('DeepSeek news navigation link was not found on the documentation homepage');
     }
@@ -65,9 +62,7 @@ const handler = async (): Promise<Data> => {
     const $ = await fetchPageContent(newsUrl);
     const newsList = $(NEWS_LIST_SELECTOR);
 
-    const entries = newsList.toArray();
-    const selected = entries;
-    const items: DataItem[] = await pMap(selected, (li) => createDataItem(li, $), { concurrency: 3 });
+    const items: DataItem[] = await pMap(newsList.toArray(), (li) => createDataItem(li, $), { concurrency: 3 });
 
     return {
         title: 'DeepSeek 新闻',

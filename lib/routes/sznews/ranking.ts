@@ -27,17 +27,13 @@ async function getArticle(originalLink: string): Promise<Partial<DataItem>> {
     }
 
     const content = load(detailResponse);
-    const articleDate = detailResponse
-        .match(/<!--enpproperty[\s\S]*?<date>([^<]+)<\/date>/)?.[1]
-        ?.trim()
-        .replace(/:(\d{1,3})$/, (_, milliseconds: string) => `:${milliseconds.padStart(3, '0')}`);
-    const date = articleDate || content('.a_time').text().trim() || content('.article-info span').first().text().replace('发布时间：', '').trim();
+    const date = detailResponse.match(/<!--enpproperty[\s\S]*?<date>([^<]+)<\/date>/)[1].replace(/:(\d{1,3})$/, (_, milliseconds: string) => `:${milliseconds.padStart(3, '0')}`);
 
     return {
         link,
         description: content('.article-content').html() ?? undefined,
         author: content('.a_source').text().replace('来源： ', '') || undefined,
-        pubDate: date ? parseDate(date, articleDate ? 'YYYY-MM-DD HH:mm:ss:SSS' : undefined, 8) : undefined,
+        pubDate: parseDate(date, 'YYYY-MM-DD HH:mm:ss:SSS', 8),
     };
 }
 

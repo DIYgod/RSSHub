@@ -63,9 +63,7 @@ const parsePage = async (items: Element[], type) => {
                         .text()
                         .match(/[:：]?\s*(.+)/);
                     const author = authorText ? authorText[1].trim() : '';
-                    if (date) {
-                        details.pubDate = parseDate(date, 8);
-                    }
+                    details.pubDate = parseDate(date, 8);
                     details.author = author;
                 }
                 return details;

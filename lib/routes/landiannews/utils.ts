@@ -35,11 +35,8 @@ async function fetchNewsItems(apiUrl: string) {
         description: item.content.rendered,
         link: item.link,
         pubDate: getPubDate(item.date_gmt, item.date),
-        author: item._embedded?.author?.[0]?.name,
-        category: item._embedded?.['wp:term']
-            ?.flat()
-            .filter(Boolean)
-            .map((term) => term.name),
+        author: item._embedded.author[0].name,
+        category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));
 }
 

@@ -67,10 +67,8 @@ async function handler(ctx: Context): Promise<Data> {
     if (!list.length) {
         throw new NotFoundError(`The official ${menu.title} page currently provides no articles. Please check ${currentUrl}.`);
     }
-    const orderedList = list;
-    const entries = orderedList;
     const item = await Promise.all(
-        entries.map((entry) =>
+        list.map((entry) =>
             cache.tryGet(entry.link, async () => {
                 const { data: detail } = await got(entry.link);
                 const $detail = load(detail);

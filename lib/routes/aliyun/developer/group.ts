@@ -50,9 +50,9 @@ async function handler(ctx) {
         item: list.toArray().map((item) => {
             const $item = $(item);
             const date = $item.find('.time').text();
-            const href = $item.find('a').first().attr('href');
+            const href = $item.find('a').attr('href');
             return {
-                title: $item.find('h3').first().text() || $item.find('.question-title').text() || $item.find('a p').text(),
+                title: $item.find('h3').text(),
                 link: href ? new URL(href, link).href : undefined,
                 pubDate: /^\d{4}-\d{2}-\d{2}/.test(date) ? parseDate(date, 8) : undefined,
                 author: $item.find('.user').text() || undefined,

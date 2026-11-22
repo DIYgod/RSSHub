@@ -5,7 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -14,30 +14,15 @@ const md = MarkdownIt({
 export const rootUrl = 'https://utgd.net';
 export const apiRootUrl = 'https://api.utgd.net';
 
-function parsePublicationDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-
-    return parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss', 8);
-}
-
 export const parseResult = (results, limit) =>
-    results.slice(0, limit).map((item) => {
-        const id = item.id;
-        if ((typeof id !== 'number' || !Number.isFinite(id)) && (typeof id !== 'string' || !id)) {
-            throw new Error('Article identifier is missing or invalid');
-        }
-
-        return {
-            id: String(id),
-            title: item.title,
-            link: `${rootUrl}/article/${id}`,
-            author: item.article_author_displayname ?? item.article_author_display_name,
-            pubDate: parsePublicationDate(item.article_published_time),
-            category: item.article_category.map((c) => c.category_name),
-        };
-    });
+    results.slice(0, limit).map((item) => ({
+        id: String(item.id),
+        title: item.title,
+        link: `${rootUrl}/article/${item.id}`,
+        author: item.article_author_displayname ?? item.article_author_display_name,
+        pubDate: parseDate(item.article_published_time, 'YYYY-MM-DD HH:mm:ss', 8),
+        category: item.article_category.map((c) => c.category_name),
+    }));
 
 export const parseArticle = async (item) => {
     const details = await cache.tryGet<Pick<DataItem, 'description' | 'category'>>(`untag:article-details:v2:${item.id}`, async () => {

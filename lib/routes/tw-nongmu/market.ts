@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate, toInstant, toISOString } from '@/utils/time';
+import { parseDate, toInstant } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -20,21 +20,11 @@ export const route: Route = {
     handler,
     url: 'www.tw-nongmu.com/market.html',
 };
-function getListPublicationDate(value: string): Temporal.Instant | undefined {
-    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value) ?? /^(\d{4})年(\d{1,2})月(\d{1,2})日$/.exec(value);
-    if (!match) {
-        return;
-    }
-    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    const date = parseDate(`${calendarDate}T00:00:00Z`);
-    return date && toISOString(date).startsWith(calendarDate) ? date : undefined;
-}
 async function getArticleItem(item: { title: string; link: string; pubDate?: Temporal.Instant }): Promise<DataItem> {
     const article = await finishArticleItem({ title: item.title, link: item.link });
     delete article.mpName;
     article.description = article.description?.replace(/<p>📍发表于：[^<]*<\/p>(?=<p><a href="[^"]*">🔗️ 阅读原文<\/a><\/p>$|$)/, '').replace(/<p><a href="[^"]*">🔗️ 阅读原文<\/a><\/p>$/, '');
-    const date = article.pubDate ? toInstant(article.pubDate) : undefined;
-    return { ...article, pubDate: date ?? item.pubDate };
+    return { ...article, pubDate: article.pubDate ? toInstant(article.pubDate) : item.pubDate };
 }
 async function handler() {
     const baseUrl = 'https://www.tw-nongmu.com';
@@ -49,7 +39,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link: a.attr('href')!,
-                pubDate: getListPublicationDate($item.find('.date').text()),
+                pubDate: parseDate($item.find('.date').text(), ['YYYY-MM-DD', 'YYYY年M月D日']),
             };
         });
     const items = await pMap(list, getArticleItem, { concurrency: 3 });

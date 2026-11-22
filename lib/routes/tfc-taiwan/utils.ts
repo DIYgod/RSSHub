@@ -10,13 +10,11 @@ const bylinePattern = /^[（(]?記者[：／]([^；;）)]+)[；;]\s*責任編輯
 
 const parsePostItem = (item) => {
     const $ = load(item.content.rendered, null, false);
-    const byline = $('p')
-        .filter((_, element) => bylinePattern.test($(element).text().trim()))
-        .first();
-    const author = bylinePattern.exec(byline.text().trim())?.[1].trim();
+    const byline = $('p').filter((_, element) => bylinePattern.test($(element).text()));
+    const author = bylinePattern.exec(byline.text())?.[1];
     byline.remove();
     const titleText = $('<span>').html(item.title.rendered).text();
-    $('style, script, .wp-block-outermost-social-sharing').remove();
+    $('style, .wp-block-outermost-social-sharing').remove();
     $('.wp-block-kadence-advancedheading')
         .filter((_, element) => $(element).text() === titleText || /^發佈：\d{4}-\d{2}-\d{2}$/.test($(element).text()))
         .remove();
@@ -28,11 +26,11 @@ const parsePostItem = (item) => {
         .remove();
     return {
         title: item.title.rendered,
-        pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
-        updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
+        pubDate: parseDate(`${item.date_gmt}Z`),
+        updated: parseDate(`${item.modified_gmt}Z`),
         link: item.link,
         description: $.html(),
-        image: item.yoast_head_json.og_image?.[0]?.url,
+        image: item.yoast_head_json.og_image[0].url,
         author: author ?? item.author_info.display_name,
         category: item.category_info.map((cat) => cat.name),
     };
@@ -41,7 +39,7 @@ const parsePostItem = (item) => {
 export const parseItem = (postsResponse) => postsResponse.map((item) => parsePostItem(item));
 
 export const parsePost = (limit, categoryId) =>
-    cache.tryGet(`tfc-taiwan:posts:${categoryId ?? 'latest'}:${limit ?? 10}`, () =>
+    cache.tryGet(`tfc-taiwan:posts:${categoryId ?? 'latest'}:${limit}`, () =>
         ofetch(`${baseUrl}/wp-json/wp/v2/posts`, {
             query: {
                 categories: categoryId,

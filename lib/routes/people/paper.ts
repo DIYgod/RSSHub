@@ -24,9 +24,8 @@ type PaperArticle = DataItem & {
 
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
-const parseCalendarDate = (date: string) =>
-    // UTC midnight represents the source calendar day, not its publication time.
-    parseDateStrict(date, 'YYYY年MM月DD日', 0);
+// UTC midnight represents the source calendar day, not its publication time.
+const parseCalendarDate = (date: string) => parseDateStrict(date, 'YYYY年MM月DD日', 0);
 
 const getEditionDate = (url: string) => {
     const match = /\/(\d{4})(\d{2})\/(\d{2})\//.exec(url);
@@ -88,7 +87,7 @@ const getArticleDetail = async (article: PaperArticle): Promise<PaperArticle> =>
         return {
             title: /\S/.test(title) ? title : undefined,
             description: content.html()?.trim(),
-            pubDate: parseCalendarDate(date),
+            pubDate: date ? parseCalendarDate(date) : undefined,
             author: author || undefined,
         };
     });
@@ -131,10 +130,7 @@ async function handler(ctx) {
     }
 
     const editionDate = getEditionDate(pages[0].url);
-    const pubDate = parseCalendarDate(editionDate);
-    if (!pubDate) {
-        throw new Error('Invalid People’s Daily edition date');
-    }
+    const pubDate = parseCalendarDate(editionDate)!;
     const targetPages = selectedPage ? [selectedPage] : pages;
     const articleLists = await pMap(targetPages, (page) => getArticles(page, pubDate), { concurrency: 3, stopOnError: false });
     const articles = articleLists.flat().slice(0, limit);

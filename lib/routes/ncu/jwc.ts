@@ -45,8 +45,7 @@ async function handler(): Promise<Data> {
             const el = $(item);
             const linkEl = el.find('a');
 
-            const titleText = linkEl.find('span.text-gray-700').text();
-            const title = titleText.trim() ? titleText : linkEl.text();
+            const title = linkEl.find('span.text-gray-700').text() || linkEl.text();
             const rawLink = linkEl.attr('href');
             const link = rawLink ? new URL(rawLink, baseUrl).href : '';
 

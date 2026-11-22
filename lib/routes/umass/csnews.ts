@@ -24,13 +24,11 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.news-teaser__title a');
-            const date = $item.find('.news-teaser__date').text().trim();
-            const pubDate = date ? parseDateStrict(date, 'MMMM D, YYYY') : undefined;
             return {
                 title: a.text(),
                 description: $item.find('.news-teaser__summary').text().trim(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate,
+                pubDate: parseDateStrict($item.find('.news-teaser__date').text(), 'MMMM D, YYYY'),
                 category: $item.find('.news-teaser__category a').text(),
             };
         });

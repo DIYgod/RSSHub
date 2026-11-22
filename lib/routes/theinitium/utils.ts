@@ -184,8 +184,8 @@ export async function postsToItems(posts: GhostPost[]) {
                 category: categories,
                 description,
                 link: post.url,
-                pubDate: post.published_at ? parseDate(post.published_at) : undefined,
-                updated: post.updated_at ? parseDate(post.updated_at) : undefined,
+                pubDate: parseDate(post.published_at),
+                updated: parseDate(post.updated_at),
                 guid: post.uuid,
                 banner: post.feature_image,
             };

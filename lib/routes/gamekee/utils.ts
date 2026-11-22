@@ -21,8 +21,8 @@ interface ContentDetail {
     content: string;
     content_json: string | ContentNode[];
     content_cdn?: string;
-    user?: { username?: string };
-    updated_at?: number;
+    user: { username: string };
+    updated_at: number;
 }
 
 export const headers = { 'game-alias': 'www', 'device-num': '1' };
@@ -65,7 +65,7 @@ export async function getDetail(id: number): Promise<Pick<DataItem, 'description
     const description = detail.editor_type === 0 ? String(content ?? '') : renderNodes(typeof content === 'string' ? JSON.parse(content) : (content ?? []));
     return {
         description,
-        author: detail.user?.username,
-        updated: detail.updated_at ? parseDate(detail.updated_at, 'X') : undefined,
+        author: detail.user.username,
+        updated: parseDate(detail.updated_at, 'X'),
     };
 }

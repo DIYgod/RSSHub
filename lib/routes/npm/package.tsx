@@ -62,7 +62,7 @@ async function handler(ctx) {
                 ),
                 link: `https://www.npmjs.com/package/${name}`,
                 guid: `https://www.npmjs.com/package/${name}${packageVersion.modified}`,
-                pubDate: packageVersion.modified ? parseDate(packageVersion.modified) : undefined,
+                pubDate: parseDate(packageVersion.modified),
             },
         ],
     };

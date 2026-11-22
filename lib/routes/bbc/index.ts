@@ -91,7 +91,7 @@ async function handler(ctx): Promise<Data> {
 
                 return {
                     title: item.title || '',
-                    description: description || '',
+                    description,
                     pubDate: item.pubDate,
                     link: item.link,
                     category: category ?? item.categories ?? [],

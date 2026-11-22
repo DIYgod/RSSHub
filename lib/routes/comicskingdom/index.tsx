@@ -39,16 +39,14 @@ async function handler(ctx) {
             order: 'desc',
         },
     });
-    const items = comics
-        .filter((comic) => new URL(comic.link).pathname.startsWith(`/${name}/`))
-        .map((comic) => ({
-            title: comic.title.rendered,
-            author: comic.ck_comic_byline.replace(/^By\s+/, ''),
-            category: 'comic',
-            description: renderToString(<img src={comic.assets.single.url} alt={comic.assets.single.altText} />),
-            pubDate: parseDate(`${comic.date_gmt}Z`),
-            link: new URL(new URL(comic.link).pathname, baseURL).href,
-        }));
+    const items = comics.map((comic) => ({
+        title: comic.title.rendered,
+        author: comic.ck_comic_byline.replace(/^By\s+/, ''),
+        category: 'comic',
+        description: renderToString(<img src={comic.assets.single.url} alt={comic.assets.single.altText} />),
+        pubDate: parseDate(`${comic.date_gmt}Z`),
+        link: new URL(new URL(comic.link).pathname, baseURL).href,
+    }));
 
     return {
         title: comics[0]?.ck_comic_feature_name || name,

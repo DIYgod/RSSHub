@@ -117,7 +117,7 @@ export async function track(ctx) {
             return {
                 title: itemTitle,
                 description: itemDescription,
-                pubDate: Number.isFinite(thisItemTimestamp) ? parseDate(thisItemTimestamp) : undefined,
+                pubDate: parseDate(thisItemTimestamp),
                 link,
                 guid: itemGuid.slice(0, 32),
             };

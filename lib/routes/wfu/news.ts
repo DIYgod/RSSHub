@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 // Adapted from the university news route.
 
@@ -26,11 +26,8 @@ async function loadContent(link) {
     const response = await got.get(link);
     const $ = load(response.data);
     const body = $('div.wp_articlecontent');
-    if (body.length !== 1) {
-        throw new Error(`Article body not found at ${link}`);
-    }
     const author = extractArticleAuthor($, body);
-    return { description: body.html() ?? undefined, author };
+    return { description: body.html(), author };
 }
 
 function parseFooterAuthor(text: string) {
@@ -65,7 +62,7 @@ function extractArticleAuthor($, body) {
     }
     const author = parseFooterAuthor(text);
     footer.remove();
-    return author || undefined;
+    return author;
 }
 
 export const route: Route = {
@@ -110,23 +107,6 @@ export const route: Route = {
 | 学术纵横 |   xszh   |`,
 };
 
-function parsePublicationDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    const calendarDate = /^\d{4}-\d{2}-\d{2}$/.test(value.trim());
-    // UTC midnight encodes a calendar day, not a source publication instant.
-    return calendarDate ? parseDateStrict(value.trim(), 'YYYY-MM-DD') : parseDate(value, 8);
-}
-
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-
 async function handler(ctx) {
     // Fetch the first page of the selected category.
     const type = ctx.req.param('type') ?? 'wyyw';
@@ -140,38 +120,36 @@ async function handler(ctx) {
     // Read the first-page article list.
     const list = $('div[frag=窗口1]>ul>li');
 
-    const result = await unwrapFirstFailure(
-        pMap(
-            list.toArray(),
-            async (item) => {
-                const $item = $(item);
-                const itemUrl = new URL($item.find('a').attr('href')!, listPageUrl).href; // Resolve the article URL.
-                const itemTitle = $item.find('a>div.txt>h1').text(); // Read the list title.
-                const pubDate = parsePublicationDate($item.find('a>div.txt>span.date').text().split('：', 2)[1]); // Read the source publication date.
+    const result = await pMap(
+        list.toArray(),
+        async (item) => {
+            const $item = $(item);
+            const itemUrl = new URL($item.find('a').attr('href')!, listPageUrl).href; // Resolve the article URL.
+            const itemTitle = $item.find('a>div.txt>h1').text(); // Read the list title.
+            const pubDate = parseDate($item.find('a>div.txt>span.date').text().split('：', 2)[1], 0); // Read the source publication date.
 
-                // Keep the current list metadata.
-                // Keep the title and link.
-                const single = {
-                    title: itemTitle,
-                    pubDate,
-                    link: itemUrl,
-                    guid: itemUrl,
-                };
+            // Keep the current list metadata.
+            // Keep the title and link.
+            const single = {
+                title: itemTitle,
+                pubDate,
+                link: itemUrl,
+                guid: itemUrl,
+            };
 
-                // Cache the article body and author separately from list metadata.
+            // Cache the article body and author separately from list metadata.
 
-                try {
-                    const other = await cache.tryGet(`wfu:news:authored-content:${itemUrl}`, () => loadContent(itemUrl));
-                    return { ...single, description: other.description, author: other.author };
-                } catch (error) {
-                    if (error instanceof Error && error.name === 'FetchError') {
-                        return single;
-                    }
-                    throw error;
+            try {
+                const other = await cache.tryGet(`wfu:news:authored-content:${itemUrl}`, () => loadContent(itemUrl));
+                return { ...single, description: other.description, author: other.author };
+            } catch (error) {
+                if (error instanceof Error && error.name === 'FetchError') {
+                    return single;
                 }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

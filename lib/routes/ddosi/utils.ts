@@ -10,10 +10,10 @@ type Post = {
     content: { rendered: string };
     link: string;
     date_gmt: string;
-    _embedded?: {
-        author?: Array<{ name: string }>;
-        'wp:term'?: Array<Array<{ name: string }>>;
-        'wp:featuredmedia'?: Array<{ source_url: string }>;
+    _embedded: {
+        author: Array<{ name: string }>;
+        'wp:term': Array<Array<{ name: string }>>;
+        'wp:featuredmedia': Array<{ source_url: string }>;
     };
 };
 
@@ -46,8 +46,8 @@ export const getFirstPage = async (url: string): Promise<DataItem[]> => {
         link: post.link,
         description: post.content.rendered,
         pubDate: parseDate(`${post.date_gmt}Z`),
-        author: post._embedded?.author?.map((author) => author.name).join(', '),
-        category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
-        image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+        author: post._embedded.author.map((author) => author.name).join(', '),
+        category: post._embedded['wp:term'].flat().map((term) => term.name),
+        image: post._embedded['wp:featuredmedia'][0].source_url,
     }));
 };

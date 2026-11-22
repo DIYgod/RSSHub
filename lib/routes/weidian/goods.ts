@@ -35,15 +35,11 @@ async function handler(ctx: Context) {
     return {
         title: `${shopName || id} 商铺上新`,
         link,
-        item: goods.map((good) => {
-            const dateValue = good.time;
-            const date = typeof dateValue === 'number' || (typeof dateValue === 'string' && dateValue.trim()) ? parseDate(good.time, 'x') : undefined;
-            return {
-                title: good.itemName,
-                description: `价格：${Number.parseInt(good.itemPrice) / 100}<br><img src="${good.itemMainPic}">`,
-                link: `https://weidian.com/item.html?itemID=${good.itemId}`,
-                pubDate: date,
-            };
-        }),
+        item: goods.map((good) => ({
+            title: good.itemName,
+            description: `价格：${Number.parseInt(good.itemPrice) / 100}<br><img src="${good.itemMainPic}">`,
+            link: `https://weidian.com/item.html?itemID=${good.itemId}`,
+            pubDate: parseDate(good.time, 'x'),
+        })),
     };
 }

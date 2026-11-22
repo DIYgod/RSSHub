@@ -10,13 +10,12 @@ import { parseDate } from '@/utils/time';
 async function getArticle(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'pubDate' | 'author' | 'content' | 'language'>> {
     const { data: detailResponse } = await got(link);
     const $ = load(detailResponse);
-    const description = $('div#desContent').html() ?? undefined;
-    const pubDate = $('div.time span').text().trim();
+    const description = $('div#desContent').html();
 
     return {
         title: $('h2.title').text(),
         description,
-        pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+        pubDate: parseDate($('div.time span').text(), 'YYYY-MM-DD', 8),
         author: $('meta[name="author"]').prop('content'),
         content: {
             html: description,
@@ -55,7 +54,7 @@ const handler = async (ctx) => {
 
     let items: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.doctitle,
-        pubDate: item.docpubtime === undefined || item.docpubtime === null || String(item.docpubtime).trim() === '' ? undefined : parseDate(item.docpubtime, 'x'),
+        pubDate: parseDate(item.docpubtime, 'x'),
         link: item.docpuburl,
         category: item.navigation,
     }));

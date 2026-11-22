@@ -49,13 +49,12 @@ async function handler(ctx) {
             const title = $item.find('a').text();
             const link = $item.find('a').attr('href');
 
-            const dateText = $item.find("span[class='news_meta']").text();
-            const date = dateText.trim() ? parseDate(dateText) : undefined;
+            const date = $item.find("span[class='news_meta']").text();
 
             return {
                 title,
                 description: '',
-                pubDate: date,
+                pubDate: parseDate(date),
                 link,
             };
         });
@@ -71,7 +70,7 @@ async function handler(ctx) {
             const description = await cache.tryGet(`zjut:news:details:${link}`, async () => {
                 const itemsResponse = await got(`${host}${item.link}`);
                 const $ = load(itemsResponse.data);
-                return $('div[class="wp_articlecontent"]').html() ?? '';
+                return $('div[class="wp_articlecontent"]').html();
             });
             return { ...item, link, description };
         },

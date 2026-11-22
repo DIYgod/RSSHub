@@ -43,21 +43,9 @@ function getArticle(item: DataItem) {
     return cache.tryGet(item.link!, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
-        const article = $('article.article').first();
-        if (!article.length) {
-            throw new Error(`No article content found at ${item.link}.`);
-        }
-        article.find('[src], a[href]').each((_, element) => {
-            const node = $(element);
-            const attribute = node.is('a') ? 'href' : 'src';
-            const value = node.attr(attribute);
-            if (value) {
-                node.attr(attribute, new URL(value, item.link).href);
-            }
-        });
         return {
             ...item,
-            description: article.html()!,
+            description: $('article.article').html(),
             author: $('.author span')
                 .toArray()
                 .map(
@@ -85,12 +73,11 @@ async function handler(ctx): Promise<Data> {
         .slice(0, requestedLimit)
         .map((element): DataItem => {
             const node = $(element);
-            const anchor = node.find('a[href]').first();
-            const date = node.find('time').text();
+            const anchor = node.find('a[href]');
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, rootUrl).href,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(node.find('time').text(), 'YYYY-MM-DD', 8),
             };
         });
 

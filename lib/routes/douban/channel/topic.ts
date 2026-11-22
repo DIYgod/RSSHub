@@ -75,8 +75,8 @@ async function handler(ctx) {
                     return {
                         title: item.title,
                         description,
-                        author: item.author?.name,
-                        pubDate: item.create_time ? parseDate(item.create_time, 8) : undefined,
+                        author: item.author.name,
+                        pubDate: parseDate(item.create_time, 8),
                         link: item.url,
                     };
                 }

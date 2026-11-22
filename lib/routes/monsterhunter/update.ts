@@ -28,13 +28,12 @@ async function handler() {
         .toArray()
         .map((element) => {
             const $item = $2(element);
-            const date = $item
+            const [, year, month, day] = $item
                 .find('.date')
                 .text()
-                .match(/(\d{4})年(\d+)月(\d+)日/);
+                .match(/(\d{4})年(\d+)月(\d+)日/)!;
             return {
-                pubDate: date ? parseDate(`${date[1]}-${date[2]}-${date[3]}`, 0) : undefined,
-                title: $item.find('h3').text(),
+                pubDate: parseDate(`${year}-${month}-${day}`, 0),
                 link: url2 + $item.attr('href'),
             };
         });
@@ -46,18 +45,14 @@ async function handler() {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
                 const title = $('.page-ttl').text();
-                const release = $('.conts')
-                    .text()
-                    .match(/(\d{4})年(\d+)月(\d+)日[^\n]*?UTC[_ ]*(\d+)(?::(\d+)|点)/);
                 $('.page-ttl').remove();
 
                 return {
                     title,
-                    pubDate: release ? parseDate(`${release[1]}-${release[2]}-${release[3]} ${release[4]}:${release[5] ?? '00'}`, 0) : undefined,
                     description: $('.conts').html(),
                 };
             });
-            return { ...details, title: details.title || item.title, pubDate: details.pubDate || item.pubDate, link: item.link, author: 'MONSTER HUNTER WORLD: ICEBORNE' };
+            return { ...details, pubDate: item.pubDate, link: item.link, author: 'MONSTER HUNTER WORLD: ICEBORNE' };
         },
         { concurrency: 3 }
     );

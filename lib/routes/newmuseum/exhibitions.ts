@@ -51,26 +51,21 @@ interface MuseumBlock {
 interface Exhibition {
     title: string;
     link: string;
-    dateGmt?: string;
-    modifiedGmt?: string;
+    dateGmt: string;
+    modifiedGmt: string;
     exhibitionIntro?: string;
-    featuredImage?: { node?: MuseumImage };
-    heroAsset?: { desktop?: MuseumImage };
-    exhibitionType?: { nodes?: Array<{ name: string }> };
-    blocks?: MuseumBlock[];
-}
-
-interface MuseumData {
-    props?: { pageProps?: { __TEMPLATE_QUERY_DATA__?: { page?: { blocks?: MuseumBlock[] }; exhibition?: Exhibition } } };
+    featuredImage: { node: MuseumImage };
+    heroAsset: { desktop: MuseumImage };
+    exhibitionType: { nodes: Array<{ name: string }> };
+    blocks: MuseumBlock[];
 }
 
 function getPageData(html: string) {
-    const data: MuseumData = JSON.parse(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s.exec(html)?.[1] ?? '');
-    const pageData = data.props?.pageProps?.__TEMPLATE_QUERY_DATA__;
-    if (!pageData) {
+    const nextData = /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s.exec(html)?.[1];
+    if (!nextData) {
         throw new Error('New Museum page data is unavailable');
     }
-    return pageData;
+    return JSON.parse(nextData).props.pageProps.__TEMPLATE_QUERY_DATA__;
 }
 
 const collections = {
@@ -88,33 +83,29 @@ async function handler(ctx) {
     }
     const link = 'https://www.newmuseum.org/exhibitions/';
 
-    const pageData = getPageData(await ofetch<string>(link));
-    const list = (pageData.page?.blocks ?? [])
-        .filter((block) => block.exhibitions && collections[state].has(JSON.parse(block.attributesJSON || '{}').title))
-        .flatMap((block) => block.exhibitions ?? [])
-        .filter((exhibition) => exhibition.title && exhibition.link);
+    const response = await ofetch<string>(link);
+    const blocks: MuseumBlock[] = getPageData(response).page.blocks;
+    const list = blocks.filter((block) => block.exhibitions && collections[state].has(JSON.parse(block.attributesJSON || '{}').title)).flatMap((block) => block.exhibitions ?? []);
     const items = await pMap(
         list,
         async (item) => {
             const detail = await cache.tryGet(`${item.link}:exhibition-body`, async () => {
-                const exhibition = getPageData(await ofetch<string>(item.link)).exhibition;
-                if (!exhibition) {
-                    throw new Error(`New Museum exhibition data is unavailable: ${item.link}`);
-                }
-                const image = exhibition.heroAsset?.desktop ?? exhibition.featuredImage?.node;
+                const detailResponse = await ofetch<string>(item.link);
+                const exhibition: Exhibition = getPageData(detailResponse).exhibition;
+                const image = exhibition.heroAsset.desktop;
                 return {
                     description:
-                        (image?.sourceUrl ? `<figure><img src="${escapeUTF8(image.sourceUrl)}" alt="${escapeUTF8(image.altText || '')}">${image.caption ? `<figcaption>${image.caption}</figcaption>` : ''}</figure>` : '') +
+                        `<figure><img src="${escapeUTF8(image.sourceUrl)}" alt="${escapeUTF8(image.altText || '')}">${image.caption ? `<figcaption>${image.caption}</figcaption>` : ''}</figure>` +
                         (exhibition.exhibitionIntro ? `<div>${exhibition.exhibitionIntro}</div>` : '') +
-                        (exhibition.blocks ?? [])
+                        exhibition.blocks
                             .filter((block) => block.name && articleBlocks.has(block.name))
-                            .map((block) => block.saveContent || '')
+                            .map((block) => block.saveContent)
                             .join(''),
-                    pubDate: exhibition.dateGmt ? parseDate(`${exhibition.dateGmt}Z`) : undefined,
-                    updated: exhibition.modifiedGmt ? parseDate(`${exhibition.modifiedGmt}Z`) : undefined,
+                    pubDate: parseDate(`${exhibition.dateGmt}Z`),
+                    updated: parseDate(`${exhibition.modifiedGmt}Z`),
                 };
             });
-            return { title: item.title, link: item.link, image: item.featuredImage?.node?.sourceUrl, category: item.exhibitionType?.nodes?.map((type) => type.name), ...detail };
+            return { title: item.title, link: item.link, image: item.featuredImage.node.sourceUrl, category: item.exhibitionType.nodes.map((type) => type.name), ...detail };
         },
         { concurrency: 3 }
     );

@@ -49,8 +49,7 @@ async function handler(ctx) {
             const details = await cache.tryGet(`${url}:article-body:authors`, async () => {
                 const data = await ofetch(url);
                 const $ = load(data);
-                const metadata: { author?: Array<{ name?: string; sameAs?: string }> } = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
-                const author = metadata.author?.flatMap((author) => (author.name ? [{ name: author.name, url: author.sameAs || undefined }] : []));
+                const metadata: { author: Array<{ name: string; sameAs: string }> } = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
                 const description = $('#main-content');
                 description.find('h1').remove();
                 description.find('.article-body__footer').remove();
@@ -59,7 +58,7 @@ async function handler(ctx) {
                 description.find('div[class^="ContentHeaderByline-"]').remove();
                 return {
                     description: description.html(),
-                    author: author?.length ? author : undefined,
+                    author: metadata.author.map((author) => ({ name: author.name, url: author.sameAs || undefined })),
                 };
             });
             return { title: item.dangerousHed, pubDate: item.pubDate, link: url, ...details };

@@ -28,14 +28,10 @@ export async function handler(ctx) {
     const type = getSubPath(ctx).split('/', 2)[1];
     const { data: response } = await got(`${baseUrl}/ajax/${type}/${name}`);
 
-    const items = response.data.stories.flatMap((story) => {
+    const items = response.data.stories.map((story) => {
         const $ = load(story.html, null, false);
         const content = $('.story__main');
         const title = content.find('.story__title a');
-        const link = title.attr('href');
-        if (!link) {
-            return [];
-        }
         const date = content.find('time').attr('datetime');
 
         fixImage(content);
@@ -51,9 +47,8 @@ export async function handler(ctx) {
             category: content
                 .find('.tags__tag[data-tag]')
                 .toArray()
-                .map((tag) => $(tag).attr('data-tag'))
-                .filter((tag): tag is string => Boolean(tag)),
-            link: new URL(link, baseUrl).href,
+                .map((tag) => tag.attribs['data-tag']),
+            link: title.attr('href'),
         };
     });
 

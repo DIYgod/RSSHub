@@ -60,7 +60,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: $e.find('.news_meta').text() ? parseDate($e.find('.news_meta').text(), 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($e.find('.news_meta').text(), 'YYYY-MM-DD', 8),
             };
         });
 
@@ -81,7 +81,7 @@ async function handler(ctx) {
                 }
                 const $ = load(response.data);
 
-                return { description: $('div.wp_articlecontent, #js_content').first().html() };
+                return { description: $('div.wp_articlecontent, #js_content').html() };
             })),
         }),
         { concurrency: 3 }

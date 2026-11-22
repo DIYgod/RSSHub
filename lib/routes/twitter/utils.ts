@@ -4,13 +4,7 @@ import { createElement } from '@/utils/jsx';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { parseDate, parseDateStrict } from '@/utils/time';
 
-const getPublicationDate = (value?: string | number): Temporal.Instant | undefined => {
-    if ((typeof value !== 'string' && typeof value !== 'number') || (typeof value === 'string' && !value.trim())) {
-        return undefined;
-    }
-    return parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY');
-};
-
+const getPublicationDate = (value: string | number) => parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY');
 const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
@@ -339,9 +333,8 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                         author.screen_name
                     }/status/${quoteData.id_str}</a></small>`;
                 }
-                const quoteDate = getPublicationDate(quoteData.created_at);
-                if (showTimestampInDescription && quoteDate) {
-                    quote += `<br><small>${quoteDate}`;
+                if (showTimestampInDescription) {
+                    quote += `<br><small>${getPublicationDate(quoteData.created_at)}`;
                     quote += '</small>';
                     if (readable) {
                         quote += `<br clear='both' /><div style='clear: both'></div>`;
@@ -356,7 +349,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         }
 
         // Make title
-        let title = mergedParams.showLikesCountInTitle && Number.isFinite(item.favorite_count) ? `[${item.favorite_count}] ` : '';
+        let title = mergedParams.showLikesCountInTitle ? `[${item.favorite_count}] ` : '';
         if (showAuthorInTitle) {
             title += originalItem.user?.name + ': ';
         }
@@ -466,12 +459,11 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
             description += `<br clear='both' /><div style='clear: both'></div>`;
         }
 
-        const itemDate = getPublicationDate(item.created_at);
-        if (showTimestampInDescription && itemDate) {
+        if (showTimestampInDescription) {
             if (readable) {
                 description += '<hr>';
             }
-            description += `<small>${itemDate}</small>`;
+            description += `<small>${getPublicationDate(item.created_at)}</small>`;
         }
 
         const link =

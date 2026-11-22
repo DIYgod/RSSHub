@@ -16,7 +16,7 @@ const createItem = (item) => ({
     link: item.link,
     description: item.contentSnippet,
     category: item.categories,
-    pubDate: item.isoDate || item.pubDate ? parseDate(item.isoDate ?? item.pubDate) : undefined,
+    pubDate: parseDate(item.pubDate),
 });
 
 async function handler(): Promise<Data> {

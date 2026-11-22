@@ -11,7 +11,7 @@ const markdown = MarkdownIt();
 
 type Media = { __typename?: string; item: string; cover?: string; altTag?: string; title?: string };
 type Metadata = { content?: string; title?: string; tags?: string[]; image?: Media; video?: Media; audio?: Media; asset?: Media; attachments?: Media[]; raw?: string };
-type Post = { id: string; slug: string; timestamp?: string; isDeleted: boolean; metadata: Metadata; repostOf?: Post };
+type Post = { id: string; slug: string; timestamp: string; isDeleted: boolean; metadata: Metadata; repostOf?: Post };
 type Account = { address: string; username?: { localName: string }; metadata?: { name?: string; bio?: string; picture?: string } };
 type GraphqlVariables = { request: { username: { localName: string; namespace: string } } | { filter: { authors: string[]; postTypes: string[] }; pageSize: string } };
 type GraphqlResult<T> = { data?: T; errors?: Array<{ message: string }> };
@@ -34,11 +34,11 @@ const renderMedia = (media: Media | undefined, kind = media?.__typename): string
     }
     switch (kind) {
         case 'MediaVideo':
-            return String(html`<video controls src="${media.item}" poster="${media.cover || ''}"></video>`);
+            return String(html`<video controls src="${media.item}" poster="${media.cover}"></video>`);
         case 'MediaAudio':
             return String(html`<audio controls src="${media.item}"></audio>`);
         default:
-            return String(html`<img src="${media.item}" alt="${media.altTag || ''}" />`);
+            return String(html`<img src="${media.item}" alt="${media.altTag}" />`);
     }
 };
 
@@ -97,7 +97,7 @@ async function handler(ctx) {
                         renderMedia(metadata.asset) +
                         (metadata.attachments || []).map((media) => renderMedia(media)).join(''),
                     link: `https://hey.xyz/posts/${post.slug}`,
-                    pubDate: post.timestamp ? parseDate(post.timestamp) : undefined,
+                    pubDate: parseDate(post.timestamp),
                     guid: post.id,
                     author: account.metadata?.name || handle,
                     category: metadata.tags,

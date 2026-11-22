@@ -59,13 +59,9 @@ async function handler(ctx) {
     const list = $('.product')
         .toArray()
         .map((element) => {
-            const title = $(element).find('.product-tile__name').first().text();
-            if (!title) {
-                return null;
-            }
-            const pricing = $(element).find('product-tile-pricing').first();
+            const pricing = $(element).find('product-tile-pricing');
             const data = {
-                title,
+                title: $(element).find('.product-tile__name').text(),
                 link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
                 description: '',
                 category: pricing.attr('primary-category'),
@@ -73,7 +69,7 @@ async function handler(ctx) {
             let imgUrl: string | URL = new URL($(element).find('[itemprop="image"]').attr('content')!);
             imgUrl = extractSfrmUrl(imgUrl);
 
-            const price = pricing.attr('sale-price-formatted') ?? '';
+            const price = pricing.attr('sale-price-formatted');
             data.description =
                 price +
                 renderToString(
@@ -82,8 +78,7 @@ async function handler(ctx) {
                     </div>
                 );
             return data;
-        })
-        .filter((item) => item !== null);
+        });
     return {
         language: 'en' as const,
         title: `Patagonia - New Arrivals - ${category.toUpperCase()}`,

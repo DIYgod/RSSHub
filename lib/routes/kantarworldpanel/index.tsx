@@ -122,7 +122,7 @@ async function handler(ctx) {
                 link,
                 description: renderToString(
                     <>
-                        {description || undefined}
+                        {description}
                         {imageSrc ? (
                             <figure>
                                 <img src={imageSrc} />

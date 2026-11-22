@@ -159,7 +159,7 @@ function renderNodeContent(node: any): string {
                 return `<${tag}>${renderNodeContent(item)}</${tag}>`;
             }
             if (item.nodeType === 'hyperlink') {
-                return `<a href="${escapeAttribute(new URL(item.data.uri, 'https://supercell.com').href)}">${renderNodeContent(item)}</a>`;
+                return `<a href="${escapeAttribute(item.data.uri)}">${renderNodeContent(item)}</a>`;
             }
             return '';
         })
@@ -237,33 +237,24 @@ async function handler(ctx: Context) {
             const link = `${rootUrl}${article.linkUrl}`;
             const pubDate = parseDate(article.publishDate);
 
-            const resolvedValue1 = await recoverArticle(
-                cache.tryGet(`supercell:article:v2:${link}`, async () => {
+            let detail: { description: string };
+            try {
+                detail = await cache.tryGet(`supercell:article:v2:${link}`, async () => {
                     const dataUrl = `${rootUrl}/_next/data/${buildId}${article.linkUrl}.json`;
                     const { data: articleData } = await got(dataUrl);
-                    const pageProps = articleData.pageProps;
-                    let content = '';
-                    if (pageProps?.bodyCollection && Array.isArray(pageProps.bodyCollection)) {
-                        content = pageProps.bodyCollection.map((block: any) => renderBlock(block)).join('');
-                    }
-                    if (!content) {
-                        throw new Error(`Article content was not found: ${link}`);
-                    }
-                    return { description: content };
-                }),
-                article
-            );
-            {
-                const detail = resolvedValue1;
-                return {
-                    title: article.title,
-                    link,
-                    pubDate,
-                    category: article.category,
-                    author: 'Supercell',
-                    ...detail,
-                };
+                    return { description: articleData.pageProps.bodyCollection.map((block: any) => renderBlock(block)).join('') };
+                });
+            } catch {
+                detail = { description: article.descriptionForNewsArchive || '' };
             }
+            return {
+                title: article.title,
+                link,
+                pubDate,
+                category: article.category,
+                author: 'Supercell',
+                ...detail,
+            };
         },
         { concurrency: 3 }
     );
@@ -274,12 +265,4 @@ async function handler(ctx: Context) {
         item: items,
         language: (locale || 'en') as Language,
     };
-}
-
-async function recoverArticle<T>(promise: Promise<T>, article: { descriptionForNewsArchive?: string }) {
-    try {
-        return await promise;
-    } catch {
-        return { description: article.descriptionForNewsArchive || '' };
-    }
 }

@@ -76,11 +76,10 @@ async function handler(ctx) {
     const content = $('.news-list li');
     const list = content.toArray().map((elem): DataItem & { link: string } => {
         const $elem = $(elem);
-        const dateText = $elem.find('.time').text().trim();
         return {
             link: new URL($elem.find('a').attr('href')!, host).href,
             title: $elem.find('h3').text().trim(),
-            pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined,
+            pubDate: parseDate($elem.find('.time').text(), 'YYYY-MM-DD', 8),
         };
     });
 
@@ -90,13 +89,12 @@ async function handler(ctx) {
             const article = await cache.tryGet(`nudt:article:${item.link}`, async () => {
                 const detailResponse = await collegeGot({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-                const dateText = content('p.time').first().text().trim();
-                const pubDate = dateText ? parseDate(dateText, 8) : undefined;
+                const pubDate = parseDate(content('p.time').first().text(), 8);
                 content('h1').remove();
                 content('div.time-browse').remove();
                 return { pubDate, description: content('div.content').html() };
             });
-            return { ...item, ...article, pubDate: article.pubDate ?? item.pubDate };
+            return { ...item, ...article };
         },
         { concurrency: 3 }
     );

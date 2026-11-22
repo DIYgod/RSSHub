@@ -31,7 +31,7 @@ async function handler() {
         item: response.articles.map((article) => {
             const $ = load(article.body, null, false);
             $('p')
-                .filter((_, paragraph) => $(paragraph).find('strong').first().text().startsWith('Posted:'))
+                .filter((_, paragraph) => $(paragraph).find('strong').text().startsWith('Posted:'))
                 .remove();
             return {
                 title: article.title,

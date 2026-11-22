@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -20,13 +17,15 @@ async function handler() {
     const link = 'https://developers.weixin.qq.com/miniprogram/dev/framework/release/';
     const response = await ofetch(link);
     const $ = load(response);
-    const name = copyNodes($('#docContent .content h1')).find('a.header-anchor').remove().end().text();
+    const name = $('#docContent .content h1').find('a.header-anchor').remove().end().text();
 
     const items = $('#docContent .content h2')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const title = copyNodes($item).find('a.header-anchor').remove().end().text();
+            const anchor = $item.find('a.header-anchor');
+            anchor.remove();
+            const title = $item.text();
             const date = /\d{4}[.-]\d{2}[.-]\d{2}/.exec(title)?.[0];
             return {
                 title,
@@ -47,13 +46,4 @@ async function handler() {
         item: items,
         description: name,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

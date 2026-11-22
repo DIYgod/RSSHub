@@ -52,12 +52,12 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const date = ($item.find('p > span:nth-child(1)').text() || $item.children('span').text()).replaceAll(/[[\]]/g, '');
+            const date = $item.children('span').text().replaceAll(/[[\]]/g, '');
             return {
-                title: $item.find('h2, h4').first().text(),
+                title: $item.find('h4').text(),
                 link: new URL($item.find('a').attr('href')!, rootUrl).href,
                 author: $item.find('p > span:nth-child(2)').text(),
-                pubDate: date ? parseDate(date, ['YYYY-MM-DD', 'YYYY年MM月DD日'], 8) : undefined,
+                pubDate: parseDate(date, 'YYYY年MM月DD日', 8),
             };
         });
 

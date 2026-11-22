@@ -54,9 +54,6 @@ export const route: Route = {
 async function handler(ctx) {
     const topicId = Number(ctx.req.param('id'));
     const { type = 'all' } = ctx.req.param();
-    if (!Number.isSafeInteger(topicId) || topicId <= 0) {
-        throw new InvalidParameterError('The forum ID must be a positive integer from the forum URL.');
-    }
     if (!threadTypes.has(type)) {
         throw new InvalidParameterError('Unsupported thread ordering. Choose all, newest, hot, or essence.');
     }
@@ -76,7 +73,7 @@ async function handler(ctx) {
 
     const limit = getRouteLimit(ctx);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates = limit === undefined || (sorted && threads.some((item) => !item.pubDate)) ? threads : (sorted ? threads.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : threads).slice(0, limit);
+    const candidates = limit === undefined ? threads : (sorted ? threads.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : threads).slice(0, limit);
     const posts = await pMap(
         candidates,
         async (item) => {

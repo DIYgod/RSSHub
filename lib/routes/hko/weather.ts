@@ -13,8 +13,7 @@ const handler = async () => {
         xmlMode: true,
     });
 
-    const sourceDate = $('pubDate').text();
-    const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
+    const pubDate = parseDate($('pubDate').text());
     const description = $('item').first().find('description');
 
     const $$ = load(description.text());

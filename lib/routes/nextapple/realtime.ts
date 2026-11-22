@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const publishedAt = $('meta[property="article:published_time"]').attr('content');
                 const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
                 postMetaElement.remove();
-                const article = $('.article-body').first();
+                const article = $('.article-body');
                 const introduction = article
                     .children('header')
                     .children('blockquote, figure, video, iframe, div:has(video), div:has(iframe)')
@@ -70,7 +70,7 @@ async function handler(ctx) {
 
                 return {
                     title,
-                    author: $('meta[name="author"]').attr('content') || undefined,
+                    author: $('meta[name="author"]').attr('content'),
                     description,
                     category,
                     pubDate,

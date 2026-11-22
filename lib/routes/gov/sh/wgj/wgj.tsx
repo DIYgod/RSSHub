@@ -1,21 +1,9 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDateStrict } from '@/utils/time';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 export const route: Route = {
     path: '/wgj/:page?',
@@ -79,18 +67,14 @@ async function handler() {
                 const $ = load(detailResponse.data);
                 const dateElement = $('.content').children('[align="right"], p[style*="right"]').last();
                 const dateText = dateElement.text().trim();
-                const article = copyElements($('.content').first());
-                if (!article.length) {
-                    throw new Error(`Approval document content was not found: ${item.link}`);
-                }
+                const article = $('.content');
                 article.children('h1, h2').remove();
                 article
                     .children()
                     .filter((_, element) => $(element).attr('align') === 'right' || /text-align\s*:\s*right/.test($(element).attr('style') ?? ''))
                     .remove();
                 item.description = article.html();
-                const pubDate = dateText ? parseDateStrict(dateText, 'YYYY-MM-DD', 8) : undefined;
-                item.pubDate = pubDate;
+                item.pubDate = parseDateStrict(dateText, 'YYYY-MM-DD', 8);
 
                 return item;
             })

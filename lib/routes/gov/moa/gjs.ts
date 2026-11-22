@@ -46,7 +46,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
+                pubDate: parseDate(pubDateStr, 8),
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 language,
             };

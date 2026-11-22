@@ -37,19 +37,17 @@ async function handler(ctx: Context) {
 
     const items = $(`${selector} li`)
         .toArray()
-        .filter((item) => $(item).find('.name a').attr('href'))
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('.name a');
             const title = $link.text();
-            const image = $item.find('.cover img');
-            const img = (image.attr('data-src') || image.attr('src'))?.replace(/\?.+/, '');
+            const img = $item.find('.cover img').attr('data-src')?.replace(/\?.+/, '');
             const desc = $item.find('.desc').text().trim() || $item.find('.stats').text().trim();
 
             return {
                 title,
                 link: new URL($link.attr('href')!, 'https://www.xiachufang.com').href,
-                description: html`${img ? html`<img src="${img}" /><br />` : ''}${desc}`.toString(),
+                description: html`<img src="${img}" /><br />${desc}`.toString(),
             };
         });
 

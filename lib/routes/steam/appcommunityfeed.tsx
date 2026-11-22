@@ -1,5 +1,7 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -92,7 +94,7 @@ It can also access community hub contents that require a logged-in account.
 const SteamAppCommunityDescription = ({ image, videoId, description }: { image?: string; videoId?: string; description?: string }) => (
     <>
         {image ? <img src={image} /> : null}
-        {videoId ? <iframe src={`https://www.youtube-nocookie.com/embed/${videoId}`} title="YouTube video player" allowFullScreen /> : null}
+        {videoId ? raw(renderYoutube(true, videoId)) : null}
         <p>{description}</p>
     </>
 );

@@ -36,12 +36,10 @@ const handler = async (ctx: Context): Promise<Data> => {
                     {card.find('p').text() && <blockquote>{card.find('p').text()}</blockquote>}
                 </>
             );
-            const date = card.find('h3').prev('div').text();
-            const pubDate = date ? parseDate(date, 0) : undefined;
             return {
                 title,
                 description,
-                pubDate,
+                pubDate: parseDate(card.find('h3').prev('div').text(), 0),
                 link: new URL(card.attr('href')!, baseUrl).href,
                 category: [],
                 content: { html: description, text: card.find('p').text() },
@@ -54,12 +52,12 @@ const handler = async (ctx: Context): Promise<Data> => {
     items = await pMap(
         items,
         async (item) => {
-            const description = await cache.tryGet(`mathpix:article:${item.link}`, async () => {
+            const content = await cache.tryGet(`mathpix:article:v2:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
-                const detail = load(response);
-                return detail('#setText').html() ?? undefined;
+                const article = load(response)('#setText');
+                return { html: article.html(), text: article.text() };
             });
-            return { ...item, description, content: { html: description, text: description ? load(description).text() : undefined } };
+            return { ...item, description: content.html, content };
         },
         { concurrency: 3 }
     );

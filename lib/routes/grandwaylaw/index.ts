@@ -32,8 +32,7 @@ async function handler(): Promise<Data> {
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = a.find('span');
-            const dateText = date.text().trim();
-            const pubDate = dateText ? parseDate(dateText, 'YYYY.MM.DD', 8) : undefined;
+            const pubDate = parseDate(date.text(), 'YYYY.MM.DD', 8);
             date.remove();
             return {
                 title: a.text(),

@@ -78,8 +78,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('div.detail_tit h1').text();
-                const contentHtml = $$('div#detail_content').html();
-                const description: string | undefined = contentHtml ? renderDescription({ description: contentHtml }) : (item.description ?? undefined);
+                const description: string | undefined = renderDescription({ description: $$('div#detail_content').html() || undefined });
                 const pubDateStr: string | undefined = $$('meta[property="og:release_date"]').attr('content');
                 const categories: string[] = $$('META[name="keywords"]').attr('content')?.split(/,/) ?? [];
                 const authorEls: Element[] = [...$$('META[name="author"]').toArray(), ...$$('META[name="source"]').toArray()];

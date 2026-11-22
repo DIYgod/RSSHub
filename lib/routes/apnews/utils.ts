@@ -10,13 +10,13 @@ export function removeDuplicateByKey(items, key: string) {
 }
 
 export async function fetchPage(url: string): Promise<string> {
-    let response = await ofetch.raw<string, 'text'>(url, { responseType: 'text', ignoreResponseError: true });
+    let response = await ofetch.raw<string>(url, { ignoreResponseError: true });
     const cookies = response.headers
         .getSetCookie()
         .map((cookie) => cookie.split(';', 1)[0])
         .join('; ');
     if (response.status === 403 && cookies) {
-        response = await ofetch.raw<string, 'text'>(url, { responseType: 'text', headers: { Cookie: cookies }, ignoreResponseError: true });
+        response = await ofetch.raw<string>(url, { headers: { Cookie: cookies }, ignoreResponseError: true });
     }
     if (!response.ok || !response._data) {
         throw new Error(`AP News returned ${response.status} for ${url}. Check that the official source is public and available.`);
@@ -60,9 +60,6 @@ export function fetchMetadata(link: string) {
             };
         }
         const screen = await fetchScreen(path);
-        if (!screen.title) {
-            throw new Error(`AP News did not return an article title for ${link}`);
-        }
         return {
             title: screen.title,
             description: screen.description,

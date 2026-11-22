@@ -4,9 +4,8 @@ import { escapeAttribute, escapeText } from 'entities';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
-
-import { parseCreatedAt } from './utils';
 
 export const route: Route = {
     path: '/user/:id',
@@ -143,7 +142,7 @@ async function handler(ctx) {
             const single = {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
                 description: `${content}${linkTemplate}${imgTemplate}`.replace(/(?:<br>|\s)+$/, ''),
-                pubDate: parseCreatedAt(item.createdAt),
+                pubDate: parseDate(item.createdAt),
                 link: getLink(item.id, item.type),
                 _extra: repostContent && {
                     links: [

@@ -10,15 +10,13 @@ type Product = {
     currencyCode: string;
     price: number;
     discountPrice: number;
-    selectedColour?: { image?: { url: string } };
-    mainImage?: { url: string };
+    selectedColour: { image: { url: string } };
 };
 
 const formatPrice = (price: number, currency: string) => new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(price);
 
 function generateRssData(item: Product, productUrl: string): DataItem {
-    const currentPrice = item.discountPrice ?? item.price;
-    const image = item.selectedColour?.image?.url || item.mainImage?.url;
+    const image = item.selectedColour.image.url;
 
     return {
         title: item.name,
@@ -26,8 +24,8 @@ function generateRssData(item: Product, productUrl: string): DataItem {
         image,
         description: renderProductDescription({
             shortDescription: item.shortDescription,
-            originalPrice: currentPrice < item.price ? formatPrice(item.price, item.currencyCode) : undefined,
-            price: formatPrice(currentPrice, item.currencyCode),
+            originalPrice: item.discountPrice < item.price ? formatPrice(item.price, item.currencyCode) : undefined,
+            price: formatPrice(item.discountPrice, item.currencyCode),
             image,
         }),
     };
@@ -39,10 +37,7 @@ export async function getProductList(pageUrl: string, productUrl: string): Promi
     if (!state) {
         throw new Error('The Arc’teryx catalog page did not contain its product data.');
     }
-    const products: Product[] = JSON.parse(state).props?.pageProps?.initialProductList;
-    if (!Array.isArray(products)) {
-        throw new TypeError('The Arc’teryx catalog response did not contain a product list.');
-    }
+    const products: Product[] = JSON.parse(state).props.pageProps.initialProductList;
 
     return products.map((item) => generateRssData(item, productUrl));
 }

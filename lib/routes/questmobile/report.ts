@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -14,19 +15,7 @@ import { renderDescription } from './templates/description';
  *
  * @returns {Array} - An array of objects containing the key-value pairs.
  */
-const parseTree = (tree) => {
-    const result: Array<{ key: any; value: any }> = [];
-    for (const obj of tree) {
-        const { key, value, children } = obj;
-        result.push({ key, value });
-
-        if (children && children.length > 0) {
-            result.push(...parseTree(children));
-        }
-    }
-
-    return result;
-};
+const parseTree = (tree): Array<{ key: any; value: any }> => tree.flatMap(({ key, value, children }) => [{ key, value }, ...(children && children.length > 0 ? parseTree(children) : [])]);
 
 export const route: Route = {
     path: '/report/:industry?/:label?',
@@ -159,8 +148,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { industry, label } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.questmobile.com.cn';
     const apiUrl = new URL('api/v2/report/article-list', rootUrl).href;
@@ -205,7 +193,7 @@ async function handler(ctx) {
         }),
         category: [...(item.industryList ?? []), ...(item.labelList ?? [])],
         guid: `questmobile-report#${item.id}`,
-        pubDate: item.publishTime ? parseDate(item.publishTime, 8) : undefined,
+        pubDate: parseDate(item.publishTime, 8),
     }));
 
     items = await pMap(
@@ -229,10 +217,6 @@ async function handler(ctx) {
                     .find('span')
                     .toArray()
                     .map((c) => content(c).text());
-                const date = content('div.data span').attr('datetime') || content('div.data span').text();
-                if (date) {
-                    item.pubDate = parseDate(date, 8);
-                }
 
                 return item;
             }),

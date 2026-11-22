@@ -1,7 +1,4 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -49,33 +46,32 @@ async function handler(ctx) {
         });
     items = await pMap(
         items,
-        (item) =>
-            mapResolvedValue(
-                cache.tryGet(`xjtu:std:content:v2:${item.link}`, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
+        async (item) => {
+            const detail = await cache.tryGet(`xjtu:std:content:v2:${item.link}`, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
+                const content = load(detailResponse.data);
+                const body = content('[name="_newscontent_fromname"] .v_news_content');
+                content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                    .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
+                    .each((_, attachment) => {
+                        const attachmentWrapper1 = content('<p/>');
+                        attachmentWrapper1.append(attachment);
+                        body.append(attachmentWrapper1);
                     });
-                    const content = load(detailResponse.data);
-                    const body = content('[name="_newscontent_fromname"] .v_news_content').first();
-                    content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
-                        .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
-                        .each((_, attachment) => {
-                            const attachmentWrapper1 = content('<p/>');
-                            attachmentWrapper1.append(copyContent(content(attachment), content));
-                            body.append(attachmentWrapper1);
-                        });
-                    const date = content('.conttime span')
-                        .first()
-                        .text()
-                        .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    return {
-                        description: body.html() ?? undefined,
-                        pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
-                    };
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+                const date = content('.conttime span')
+                    .first()
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                return {
+                    description: body.html(),
+                    pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                };
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -83,16 +79,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

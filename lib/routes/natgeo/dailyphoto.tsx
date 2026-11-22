@@ -9,11 +9,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-const getPhotoDate = (caption: { preHeading?: string; title?: string }) => {
-    const date = caption.preHeading || caption.title?.match(/^[A-Z][a-z]+ \d{1,2}, \d{4}(?= \|)/)?.[0];
-    return date ? parseDate(date, 'MMMM D, YYYY', 0) : undefined;
-};
-
 const renderDescription = (img) =>
     renderToString(
         <>
@@ -61,7 +56,7 @@ async function handler() {
         title: item.meta.title,
         description: renderDescription(item.img),
         link: rootUrl + item.locator,
-        pubDate: getPhotoDate(item.caption),
+        pubDate: parseDate(item.caption.title.split(' | ', 1)[0], 'MMMM D, YYYY', 0),
         author: item.img.crdt,
     }));
 

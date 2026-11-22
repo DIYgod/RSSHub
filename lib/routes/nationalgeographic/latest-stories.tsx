@@ -176,7 +176,7 @@ async function handler() {
                     description: bodyTile.dscrptn,
                     body: bodyTile.bdy,
                 });
-                const pubDate = bodyTile.pbDt ? parseDate(bodyTile.pbDt) : undefined;
+                const pubDate = parseDate(bodyTile.pbDt);
 
                 return { author, description, pubDate };
             });

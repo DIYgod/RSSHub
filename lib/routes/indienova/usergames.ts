@@ -55,7 +55,7 @@ async function handler() {
                 const $ = load(response);
 
                 item.description = [$('.cover-image').prop('outerHTML'), $('.tab-container').html(), $('.swiper-wrapper').prop('outerHTML'), $('.postcontent').html()].join('');
-                const releaseDate = $('.gamedb-release').text().replaceAll(/[()]/g, '').trim();
+                const releaseDate = $('.gamedb-release').text().replaceAll(/[()]/g, '');
                 item.pubDate = releaseDate ? parseDate(releaseDate, 8) : undefined;
 
                 return item;

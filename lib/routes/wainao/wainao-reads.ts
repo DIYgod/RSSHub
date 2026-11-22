@@ -51,7 +51,7 @@ type Story = {
     headlines: { basic: string };
     description?: { basic?: string };
     canonical_url: string;
-    publish_date?: string;
+    publish_date: string;
     credits?: { by?: Array<{ name: string }> };
     taxonomy?: { primary_section?: { name?: string }; tags?: Array<{ text: string }> };
     content_elements?: ContentElement[];
@@ -131,13 +131,6 @@ async function fetchStoryBody(uri: string, getReactStory: (url: string) => Promi
     };
 }
 
-function parseSourceTime(value?: string | number) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler() {
     const apiUrl = 'https://www.wainao.me/pf/api/v3/content/fetch/content-api-collections?query={"content_alias":"wainao-hero"}&_website=wainao';
     const baseUrl = 'https://www.wainao.me';
@@ -149,7 +142,7 @@ async function handler() {
             noGoto: true,
             closeTimeout: 0,
             onBeforeLoad: async (_, context) => {
-                await context!.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+                await context!.route('**/*', (route) => (['document', 'script', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
             },
         });
         const { context } = await browserPromise;
@@ -160,19 +153,10 @@ async function handler() {
             const source = await page.content();
             const $ = load(source);
             const article = $('#root > .App').first();
-            article.find('h1.intro__title, .credits, script, style, button, input, select').remove();
+            article.find('h1.intro__title, .credits, button').remove();
             if (!article.text().trim()) {
                 throw new EmbeddedStoryUnavailableError('');
             }
-            article.find('[src], [href], [poster]').each((_, element) => {
-                const media = $(element);
-                for (const attribute of ['src', 'href', 'poster']) {
-                    const value = media.attr(attribute);
-                    if (value && !value.startsWith('data:')) {
-                        media.attr(attribute, new URL(value, url).href);
-                    }
-                }
-            });
             article.find('[class]').removeAttr('class');
             article.find('[style]').removeAttr('style');
             return { description: article.html()! };
@@ -197,10 +181,10 @@ async function handler() {
                 title: item.headlines.basic,
                 ...(await getStoryBody(item.canonical_url)),
                 link: baseUrl + item.canonical_url,
-                pubDate: parseSourceTime(item.publish_date),
+                pubDate: parseDate(item.publish_date),
                 author: item.credits?.by?.map((author) => ({ name: author.name })),
                 category: [...new Set([item.taxonomy?.primary_section?.name, ...(item.taxonomy?.tags?.map((tag) => tag.text) ?? [])].filter((category): category is string => Boolean(category)))],
-                image: item.promo_items?.basic?.url || '',
+                image: item.promo_items?.basic?.url,
             }),
             { concurrency: 3, stopOnError: false }
         );

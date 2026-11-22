@@ -57,7 +57,7 @@ const descpPage = (link, cache) =>
 
         return {
             title: `${intro.dwmc}（${intro.xzyjmc}）`,
-            pubDate: intro.fbrq ? parseDate(intro.fbrq, 'YYYY-MM-DD', 8) : undefined,
+            pubDate: parseDate(intro.fbrq, 'YYYY-MM-DD', 8),
             description: renderDesc(intro),
             link: String(link.replace('data', 'view')),
         };

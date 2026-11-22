@@ -60,7 +60,7 @@ async function handler(ctx) {
                 .find('div.date')
                 .text()
                 .replaceAll(/(.*)\/(.*)/g, '$2-$1');
-            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
+            const pubDate = parseDate(dateText, 8);
             return {
                 title: title!,
                 pubDate,

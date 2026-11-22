@@ -17,25 +17,23 @@ interface WordPressPost {
     link: string;
     title: { rendered: string };
     content: { rendered: string };
-    date_gmt?: string;
-    modified_gmt?: string;
-    parsely?: { meta?: { author?: Array<{ name?: string }> } };
-    _embedded?: {
-        'wp:term'?: WordPressTerm[][];
-        'wp:featuredmedia'?: Array<{ source_url?: string; alt_text?: string; caption?: { rendered?: string } }>;
+    date_gmt: string;
+    modified_gmt: string;
+    parsely: { meta: { author: Array<{ name: string }> } };
+    _embedded: {
+        'wp:term': WordPressTerm[][];
+        'wp:featuredmedia': Array<{ source_url: string; alt_text: string; caption: { rendered: string } }>;
     };
 }
 
 function renderPost(post: WordPressPost) {
-    const image = post._embedded?.['wp:featuredmedia']?.[0];
+    const image = post._embedded['wp:featuredmedia'][0];
     return renderToString(
         <>
-            {image?.source_url ? (
-                <figure>
-                    <img src={image.source_url} alt={image.alt_text} />
-                    {image.caption?.rendered ? <figcaption>{raw(image.caption.rendered)}</figcaption> : null}
-                </figure>
-            ) : null}
+            <figure>
+                <img src={image.source_url} alt={image.alt_text} />
+                {image.caption.rendered ? <figcaption>{raw(image.caption.rendered)}</figcaption> : null}
+            </figure>
             {raw(post.content.rendered)}
         </>
     );
@@ -85,15 +83,11 @@ async function handler(ctx) {
         item: posts.map((post) => ({
             title: load(post.title.rendered).text(),
             link: post.link,
-            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
-            updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
-            author:
-                post.parsely?.meta?.author
-                    ?.map((author) => author.name)
-                    .filter(Boolean)
-                    .join(', ') || undefined,
-            category: post._embedded?.['wp:term']
-                ?.flat()
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            updated: parseDate(`${post.modified_gmt}Z`),
+            author: post.parsely.meta.author.map((author) => author.name).join(', '),
+            category: post._embedded['wp:term']
+                .flat()
                 .filter((term) => term.taxonomy === 'category' || term.taxonomy === 'post_tag')
                 .map((term) => term.name),
             description: renderPost(post),

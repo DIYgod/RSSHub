@@ -1,7 +1,5 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
@@ -11,30 +9,18 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 interface ArticleSchema {
-    '@type'?: string | string[];
-    '@graph'?: ArticleSchema[];
+    '@type'?: string;
     datePublished?: string;
-    articleBody?: string;
-    liveBlogUpdate?: Array<{ articleBody?: string }>;
-    author?: Array<{ name?: string }> | { name?: string };
+    liveBlogUpdate?: Array<{ articleBody: string }>;
+    author?: { name?: string };
 }
 
 function getLiveBlogDescription(schema?: ArticleSchema) {
-    return schema?.liveBlogUpdate?.flatMap((update) => (typeof update.articleBody === 'string' && update.articleBody.trim() ? `<p>${escapeUTF8(update.articleBody)}</p>` : [])).join('') || undefined;
+    return schema?.liveBlogUpdate?.flatMap((update) => (update.articleBody.trim() ? `<p>${escapeUTF8(update.articleBody)}</p>` : [])).join('');
 }
 
-function getArticleSchema(content: CheerioAPI) {
-    return content('script[type="application/ld+json"]')
-        .toArray()
-        .flatMap((element): ArticleSchema[] => {
-            try {
-                const schema: ArticleSchema | ArticleSchema[] = JSON.parse(content(element).text());
-                return Array.isArray(schema) ? schema : (schema['@graph'] ?? [schema]);
-            } catch {
-                return [];
-            }
-        })
-        .find((schema) => ['NewsArticle', 'LiveBlogPosting'].some((type) => (Array.isArray(schema['@type']) ? schema['@type'].includes(type) : schema['@type'] === type)));
+function getArticleSchema(content: CheerioAPI): ArticleSchema {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle"), script[type="application/ld+json"]:contains("LiveBlogPosting")').text());
 }
 
 export const route: Route = {
@@ -91,19 +77,18 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 const schema = getArticleSchema(content);
 
-                content('.roadblock').remove();
-                content('.sdc-site-layout-sticky-region, .ui-vendor-checkd, .sdc-article-related-stories, .sdc-article-strapline, .sdc-site-live-on-sky').remove();
+                content('.sdc-site-layout-sticky-region, .ui-vendor-checkd, .sdc-article-related-stories, .sdc-article-strapline').remove();
                 content('.sdc-site-video').each((_, element) => {
                     const video = content(element);
-                    const poster = copyNodes(video.find('.sdc-site-video__poster img').first());
-                    const caption = copyNodes(video.find('.sdc-site-video__caption').first());
+                    const poster = video.find('.sdc-site-video__poster img');
+                    const caption = video.find('.sdc-site-video__caption');
                     video.empty();
                     video.append(poster, caption);
                 });
 
-                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').first().html() ?? schema?.articleBody ?? getLiveBlogDescription(schema);
+                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').html() ?? getLiveBlogDescription(schema);
                 const pubDate = schema?.datePublished ? parseDate(schema.datePublished) : undefined;
-                const author = Array.isArray(schema?.author) ? schema.author.flatMap((author) => (author.name ? { name: author.name } : [])) : schema?.author?.name;
+                const author = schema?.author?.name;
 
                 return { description, pubDate, author };
             });
@@ -117,13 +102,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

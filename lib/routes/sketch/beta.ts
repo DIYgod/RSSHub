@@ -30,7 +30,7 @@ async function handler() {
                 title: version,
                 description: $('.beta__release-notes').html(),
                 link,
-                pubDate: released ? parseDate(`${released} +0000`, 'D MMMM YYYY ZZ') : undefined,
+                pubDate: parseDate(`${released} +0000`, 'D MMMM YYYY ZZ'),
                 guid: version,
             },
         ],

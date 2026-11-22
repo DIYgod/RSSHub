@@ -42,13 +42,9 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item).prev();
-            const date = $(item)
-                .text()
-                .match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
 
             return {
                 title: $item.text(),
-                pubDate: date ? parseDate(`${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}`, 8) : undefined,
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
         });

@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
         link: item.link,
         guid: item.guid.rendered,
         description: item.content.rendered,
-        pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
+        pubDate: parseDate(item.date_gmt, 0),
         author: item._embedded.author.map((author) => author.name).join(', '),
         category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));

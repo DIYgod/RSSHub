@@ -115,14 +115,10 @@ function getArticle(item: ArticleSummary): Promise<DataItem> {
         const $content = $('[data-block-id="LongFormContent"] [data-testid="content"]');
         // The header contains duplicate publication labels for responsive layouts.
         const published = $header.find('[data-baseweb="typo-labellarge"]').first().text();
-        const authors = [
-            ...new Set(
-                $('[data-block-id="ArticleAuthor"] [data-testid="authors-grid"] [role="img"][aria-label]')
-                    .toArray()
-                    .map((author) => $(author).attr('aria-label'))
-                    .filter((author): author is string => Boolean(author))
-            ),
-        ];
+        const authors = $('[data-block-id="ArticleAuthor"] [data-testid="authors-grid"] [role="img"][aria-label]')
+            .toArray()
+            .map((author) => $(author).attr('aria-label'))
+            .filter((author): author is string => Boolean(author));
         const categories = $('[data-block-id="ArticleCategories"] [data-baseweb="tag"] [title]')
             .toArray()
             .map((tag) => $(tag).attr('title'))

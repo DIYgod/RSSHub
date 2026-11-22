@@ -5,10 +5,12 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import playwright from '@/utils/playwright';
+import parser from '@/utils/rss-parser';
 import { isOnSite } from '@/utils/valid-host';
 
-import utils, { getRssFeed } from './utils';
+import utils from './utils';
 
 export const route: Route = {
     path: '/:lang?',
@@ -83,10 +85,10 @@ async function handler(ctx) {
     }
 
     const context = lang === 'en' ? await playwright() : undefined;
-    let tasks: Promise<DataItem[]> | undefined;
     try {
-        const feed = await getRssFeed(rssUrl);
-        tasks = pMap(
+        const xml = await ofetch(rssUrl);
+        const feed = await parser.parseString(xml);
+        const items = await pMap(
             feed.items.slice(0, 10),
             async (item) => {
                 let link = item.link;
@@ -170,7 +172,6 @@ async function handler(ctx) {
             },
             { concurrency: 3, stopOnError: false }
         );
-        const items = await tasks;
         return {
             title,
             link: 'https://cn.nytimes.com',
@@ -178,9 +179,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        if (tasks) {
-            await Promise.allSettled([tasks]);
-        }
         await context?.close();
     }
 }

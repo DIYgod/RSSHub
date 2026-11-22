@@ -15,7 +15,7 @@ export interface TraderData {
 }
 
 export async function fetchTopTraders(): Promise<TraderData[]> {
-    const response = await ofetch<{ data?: { pnlLeaderboard: { data: TraderData[] } }; errors?: Array<{ message: string }> }>('https://api.hyperdash.com/graphql', {
+    const response = await ofetch<{ data: { pnlLeaderboard: { data: TraderData[] } }; errors?: Array<{ message: string }> }>('https://api.hyperdash.com/graphql', {
         method: 'POST',
         body: {
             query: `query PnlLeaderboard($category: PnlLeaderboardCategory!, $window: PnlLeaderboardWindow!, $pageSize: Int!) {
@@ -26,8 +26,8 @@ export async function fetchTopTraders(): Promise<TraderData[]> {
             variables: { category: 'all', window: 'd30', pageSize: 28 },
         },
     });
-    if (response.errors?.length || !Array.isArray(response.data?.pnlLeaderboard?.data)) {
-        throw new Error(`Hyperdash leaderboard API failed: ${response.errors?.map((error) => error.message).join('; ') || 'missing leaderboard data'}`);
+    if (response.errors?.length) {
+        throw new Error(`Hyperdash leaderboard API failed: ${response.errors.map((error) => error.message).join('; ')}`);
     }
     return response.data.pnlLeaderboard.data;
 }

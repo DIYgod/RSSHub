@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -29,8 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const label = ctx.req.param('label') ?? '';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.mygopen.com';
     const currentUrl = `${rootUrl}${label ? `/search/label/${label}` : ''}`;

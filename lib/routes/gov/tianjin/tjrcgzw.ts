@@ -33,12 +33,11 @@ export const route: Route = {
                 const title = $('a').text().trim();
                 const href = $('a').attr('href') || '';
                 const date = $('span').text().trim();
-                const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                 const link = href.includes('http') ? href : new URL(href, url).href;
                 return {
                     title: `天津人才工作网:${title}`,
                     link,
-                    pubDate,
+                    pubDate: parseDateStrict(date, 'YYYY-MM-DD', 8),
                     author: '天津人才工作网',
                     description: `
                         <h4>${noticeCate}</h4>

@@ -35,13 +35,12 @@ async function handler(): Promise<Data> {
                 const date = $('#articleInfo')
                     .text()
                     .match(/\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?/)?.[0];
-                const pubDate = date ? parseDate(date, 8) : undefined;
 
                 return {
                     title: $('h2').text(),
                     author: '广州航海学院教务处',
                     link: itemUrl,
-                    pubDate,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     description: $('div .body').html(),
                     guid: itemUrl,
                 };

@@ -46,12 +46,11 @@ async function handler(ctx) {
                 .replace(/UTC.*/, '');
             const author = $('div.article_author span span', header).text().trim();
             const feedName = $('div.article_author a.feed_link', header).text().trim();
-            const parsedDate = pubDate ? parseDateStrict(pubDate.trim(), 'MMM DD YYYY HH:mm:ss', 0) : undefined;
             return {
                 title: $('a.title_link', header).text(),
                 link: $('a.title_link', header).attr('href'),
                 author: author ? [author, feedName].filter(Boolean).join(' via ') : undefined,
-                pubDate: parsedDate,
+                pubDate: pubDate ? parseDateStrict(pubDate.trim(), 'MMM DD YYYY HH:mm:ss', 0) : undefined,
                 description: $(item).html(),
             };
         }),

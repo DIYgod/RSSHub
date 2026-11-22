@@ -43,18 +43,6 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const parseTimestamp = (timestamp?: { seconds?: string | number; nanos?: number }) => {
-    const value = timestamp?.seconds;
-    if (value === undefined || value === '') {
-        return;
-    }
-    const seconds = Number(typeof value === 'string' && value.startsWith('$n') ? value.slice(2) : value);
-    if (!Number.isFinite(seconds)) {
-        return;
-    }
-    return parseDate(seconds * 1000 + Math.floor((timestamp?.nanos ?? 0) / 1_000_000));
-};
-
 async function handler() {
     const rootUrl = 'https://manus.im/blog';
 
@@ -62,7 +50,6 @@ async function handler() {
         headers: {
             RSC: '1',
         },
-        responseType: 'text',
     });
 
     let blogList;
@@ -87,12 +74,12 @@ async function handler() {
         throw new Error('Failed to parse blogList from RSC data');
     }
 
-    const list: Array<DataItem & { _contentUrl?: string }> = blogList.groups.flatMap(
+    const list: Array<DataItem & { _contentUrl: string }> = blogList.groups.flatMap(
         (group) =>
             group.blogs?.map((blog) => ({
                 title: blog.title,
                 link: `https://manus.im/blog/${blog.recordUid}`,
-                pubDate: parseTimestamp(blog.createdAt),
+                pubDate: parseDate(Number(blog.createdAt.seconds.slice(2)) * 1000 + Math.floor(blog.createdAt.nanos / 1_000_000)),
                 description: blog.desc,
                 category: [group.kindName],
                 _contentUrl: blog.contentUrl,
@@ -102,22 +89,17 @@ async function handler() {
     const items: DataItem[] = await pMap(
         list,
         async ({ _contentUrl: contentUrl, ...item }) => {
-            let description = item.description ?? '';
-            if (typeof description !== 'string') {
-                description = String(description);
-            }
-            if (contentUrl) {
-                try {
-                    const body = await cache.tryGet<{ description: string }>(`manus:article-body:v2:${item.link}`, async () => {
-                        let contentText = await ofetch(contentUrl, { responseType: 'text' });
-                        // Manus video embeds need a video element instead of an image.
-                        contentText = contentText.replaceAll(/!\[.*?\]\((.+?\.(mp4|mov|webm))\)/gi, '<video controls preload="metadata"><source src="$1"></video>');
-                        return { description: md.render(contentText) };
-                    });
-                    description = body.description;
-                } catch {
-                    // Keep the source's summary without caching a failed article request.
-                }
+            let description = item.description;
+            try {
+                const body = await cache.tryGet<{ description: string }>(`manus:article-body:v2:${item.link}`, async () => {
+                    let contentText = await ofetch(contentUrl, { responseType: 'text' });
+                    // Manus video embeds need a video element instead of an image.
+                    contentText = contentText.replaceAll(/!\[.*?\]\((.+?\.(mp4|mov|webm))\)/gi, '<video controls preload="metadata"><source src="$1"></video>');
+                    return { description: md.render(contentText) };
+                });
+                description = body.description;
+            } catch {
+                // Keep the source's summary without caching a failed article request.
             }
             return { ...item, description };
         },

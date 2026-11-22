@@ -55,13 +55,11 @@ async function handler(ctx) {
         }));
 
     const ids = list.map((item) => item.id);
-    const posts = ids.length
-        ? await cache.tryGet(`startuplatte:posts:v1:${ids.join(',')}`, () =>
-              ofetch<WordPressPost[]>(`${rootUrl}/wp-json/wp/v2/posts`, {
-                  query: { include: ids.join(','), per_page: ids.length, _embed: 'author,wp:term' },
-              })
-          )
-        : [];
+    const posts = await cache.tryGet(`startuplatte:posts:v1:${ids.join(',')}`, () =>
+        ofetch<WordPressPost[]>(`${rootUrl}/wp-json/wp/v2/posts`, {
+            query: { include: ids.join(','), per_page: ids.length, _embed: 'author,wp:term' },
+        })
+    );
 
     const items = list.map((item) => {
         const post = posts.find((post) => post.id === item.id);
@@ -72,9 +70,9 @@ async function handler(ctx) {
             title: item.title,
             link: item.link,
             description: post.content.rendered,
-            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
-            author: post._embedded?.author?.map((author) => author.name).join(', '),
-            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            author: post._embedded.author.map((author) => author.name).join(', '),
+            category: post._embedded['wp:term'].flat().map((term) => term.name),
         };
     });
 
@@ -87,10 +85,10 @@ async function handler(ctx) {
 
 interface WordPressPost {
     id: number;
-    date_gmt?: string;
+    date_gmt: string;
     content: { rendered: string };
-    _embedded?: {
-        author?: Array<{ name: string }>;
-        'wp:term'?: Array<Array<{ name: string }>>;
+    _embedded: {
+        author: Array<{ name: string }>;
+        'wp:term': Array<Array<{ name: string }>>;
     };
 }

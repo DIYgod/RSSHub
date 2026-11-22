@@ -7,14 +7,9 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-function parseGmtDate(value: number | string) {
-    return parseDate(typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(value) ? `${value}Z` : value);
-}
-
 const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') ?? '50');
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl = 'https://www.xwenming.com';
@@ -56,19 +51,19 @@ const handler = async (ctx: Context): Promise<Data> => {
 
         const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
         const authors: DataItem['author'] =
-            item._embedded?.author?.map((author) => ({
+            item._embedded?.author.map((author) => ({
                 name: author.name,
                 url: author.link,
                 avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
             })) ?? [];
         const guid: string = item.guid?.rendered ?? item.guid;
-        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? undefined;
+        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
         const updated: number | string | undefined = item.modified_gmt;
 
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? parseGmtDate(pubDate) : undefined,
+            pubDate: pubDate ? parseDate(`${pubDate}Z`) : undefined,
             link: linkUrl ?? guid,
             category: categories,
             author: authors,
@@ -79,7 +74,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: updated ? parseGmtDate(updated) : undefined,
+            updated: updated ? parseDate(`${updated}Z`) : undefined,
             language,
         };
 

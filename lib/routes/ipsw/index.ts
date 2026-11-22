@@ -30,9 +30,6 @@ function getFirmwareUrl(onclick: string | undefined) {
 }
 
 function parseReleaseDate(text: string) {
-    if (!text) {
-        return;
-    }
     return parseDate(text.replaceAll(/(\d+)(?:st|nd|rd|th)\b/g, '$1'), ['MMMM D, YYYY', 'D MMM YYYY', 'D MMMM YYYY'], 0);
 }
 
@@ -95,7 +92,7 @@ async function handler(ctx) {
                 });
                 const $ = load(response.data);
                 const description = $('div.selector__wizard').html();
-                const releaseDate = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text();
+                const releaseDate = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text() : $('tr.firmware').first().find('td').eq(2).text();
                 return {
                     title,
                     link: itemUrl,

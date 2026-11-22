@@ -45,32 +45,25 @@ interface ArticleDetails {
 
 const parseFeed = (xml: string): FeedEntry[] => {
     const $ = load(xml, { xml: true });
-    const seen = new Set<string>();
 
     return $('item')
         .toArray()
         .map((el) => {
             const $item = $(el);
             return {
-                title: $item.find('title').first().text().trim(),
-                link: $item.find('link').first().text().trim(),
-                pubDate: $item.find('pubDate').first().text().trim() || undefined,
-                category: $item.find('category').first().text().trim() || undefined,
-                summary: $item.find('description').first().text().trim() || undefined,
+                title: $item.find('title').text().trim(),
+                link: $item.find('link').text(),
+                pubDate: $item.find('pubDate').text(),
+                category: $item.find('category').text(),
+                summary: $item.find('description').text(),
             };
         })
-        .filter((entry) => {
-            if (!entry.title || !entry.link || seen.has(entry.link)) {
-                return false;
-            }
-            seen.add(entry.link);
-            return true;
-        });
+        .filter((entry) => entry.title && entry.link);
 };
 
-const cleanContent = ($: CheerioAPI, $content: Cheerio<Element>, baseUrl: string): string => {
+const cleanContent = ($: CheerioAPI, $content: Cheerio<Element>): string => {
     // Ads, the "Ask Value Research" widget and other non-article blocks
-    $content.find('script, style, noscript, form, button, .vr-adv-container, .large-ad, .googleadservices, .nps-widget-container').remove();
+    $content.find('form, button, .vr-adv-container, .large-ad, .googleadservices, .nps-widget-container').remove();
     $content
         .find('*')
         .addBack()
@@ -78,23 +71,7 @@ const cleanContent = ($: CheerioAPI, $content: Cheerio<Element>, baseUrl: string
         .filter((_, node) => node.type === 'comment')
         .remove();
 
-    $content.find('img').each((_, el) => {
-        const $img = $(el);
-        const src = $img.attr('data-src') || $img.attr('src');
-        if (!src) {
-            $img.remove();
-            return;
-        }
-        $img.attr('src', new URL(src, baseUrl).href);
-        for (const attr of ['data-src', 'srcset', 'sizes', 'loading', 'fetchpriority', 'layout']) {
-            $img.removeAttr(attr);
-        }
-    });
-
-    $content.find('a[href]').each((_, el) => {
-        const $a = $(el);
-        $a.attr('href', new URL($a.attr('href')!, baseUrl).href);
-    });
+    $content.find('img').removeAttr('srcset sizes loading fetchpriority layout');
 
     $content.find('*').removeAttr('class').removeAttr('style').removeAttr('id');
     $content.find('p, div').each((_, el) => {
@@ -113,19 +90,19 @@ const parseAuthors = ($: CheerioAPI, selector: string): DataItem['author'] => {
         .map((el) => {
             const $a = $(el);
             const href = $a.attr('href');
-            return { name: $a.text().trim(), url: href ? new URL(href, rootUrl).href : undefined };
+            return { name: $a.text(), url: href ? new URL(href, rootUrl).href : undefined };
         })
         .filter((author) => author.name);
     if (authors.length > 0) {
         return authors;
     }
-    const metaAuthor = $('meta[name="author"]').attr('content')?.trim();
+    const metaAuthor = $('meta[name="author"]').attr('content');
     return metaAuthor ? [{ name: metaAuthor }] : undefined;
 };
 
 // Regular story pages (/stories/<id>/<slug>/)
-const parseStory = ($: CheerioAPI, url: string): ArticleDetails | undefined => {
-    const $article = $('article.story-details-text').first();
+const parseStory = ($: CheerioAPI): ArticleDetails | undefined => {
+    const $article = $('article.story-details-text');
     if ($article.length === 0) {
         return undefined;
     }
@@ -147,30 +124,30 @@ const parseStory = ($: CheerioAPI, url: string): ArticleDetails | undefined => {
     }
     return {
         description: renderDescription({
-            subhead: $('p.story-subhead').first().text().trim() || undefined,
-            bodyHtml: cleanContent($, $article, url),
+            subhead: $('p.story-subhead').text().trim() || undefined,
+            bodyHtml: cleanContent($, $article),
             lockedNotice,
         }),
         pubDate: $('meta[property="article:published_time"]').attr('content'),
         author: parseAuthors($, '.story-date a.story-listing-slug-name'),
-        section: $('meta[property="article:section"]').attr('content')?.trim(),
+        section: $('meta[property="article:section"]').attr('content'),
         image: $('meta[property="og:image"]').attr('content'),
     };
 };
 
 // Some stories redirect to video pages (/videos/watch/<id>/<slug>/) with a YouTube player and a transcript
-const parseVideo = ($: CheerioAPI, url: string): ArticleDetails | undefined => {
-    const $desc = $('.video-desc').first();
-    const youtubeId = $('.vro-video[data-vid]').first().attr('data-vid');
+const parseVideo = ($: CheerioAPI): ArticleDetails | undefined => {
+    const $desc = $('.video-desc');
+    const youtubeId = $('.vro-video[data-vid]').attr('data-vid');
     if ($desc.length === 0 && !youtubeId) {
         return undefined;
     }
     const $transcript = $desc.find('.time-segment-container').first();
     return {
         description: renderDescription({
-            subhead: $desc.find('.section-title_sub__title').first().text().trim() || undefined,
+            subhead: $desc.find('.section-title_sub__title').text().trim() || undefined,
             youtubeId: youtubeId && youtubeIdPattern.test(youtubeId) ? youtubeId : undefined,
-            bodyHtml: $transcript.length > 0 ? cleanContent($, $transcript, url) : '',
+            bodyHtml: $transcript.length > 0 ? cleanContent($, $transcript) : '',
         }),
         pubDate: $('meta[itemprop="uploadDate"]').attr('content'),
         author: parseAuthors($, '.video-desc a.story-listing-slug-name'),
@@ -190,7 +167,7 @@ const fetchItem = (entry: FeedEntry): Promise<DataItem> =>
 
         let html: string;
         try {
-            html = await ofetch(entry.link, { responseType: 'text' });
+            html = await ofetch(entry.link);
         } catch (error) {
             if ((error as { response?: { status?: number } }).response?.status === 404) {
                 logger.warn(`valueresearchonline: article not found, keeping feed summary: ${entry.link}`);
@@ -200,7 +177,7 @@ const fetchItem = (entry: FeedEntry): Promise<DataItem> =>
         }
 
         const $ = load(html);
-        const details = parseStory($, entry.link) ?? parseVideo($, entry.link);
+        const details = parseStory($) ?? parseVideo($);
         if (!details) {
             return item;
         }
@@ -220,7 +197,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 20);
     const link = `${rootUrl}/knowledge-center/${section}/`;
 
-    const xml = await ofetch(`${link}rss/`, { responseType: 'text' });
+    const xml = await ofetch(`${link}rss/`);
     const entries = parseFeed(xml).slice(0, limit);
     const items = await pMap(entries, (entry) => fetchItem(entry), { concurrency: 5 });
 

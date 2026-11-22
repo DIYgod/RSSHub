@@ -36,16 +36,15 @@ async function handler() {
             const category = $item
                 .children('category')
                 .toArray()
-                .map((node) => $(node).text())
-                .filter((value) => value.trim());
+                .map((node) => $(node).text());
             return {
                 link,
-                pubDate: getSourceDate(pubDate),
-                updated: getSourceDate($item.children(String.raw`atom\:updated`).text()),
+                pubDate: parseDate(pubDate),
+                updated: parseDate($item.children(String.raw`atom\:updated`).text()),
                 title,
                 description,
-                author: author.trim() ? author : undefined,
-                category: category.length ? category : undefined,
+                author,
+                category,
             };
         });
     return {
@@ -54,10 +53,4 @@ async function handler() {
         link: currentUrl,
         item: items,
     };
-}
-function getSourceDate(value: string): Temporal.Instant | undefined {
-    if (!value.trim()) {
-        return;
-    }
-    return parseDate(value);
 }

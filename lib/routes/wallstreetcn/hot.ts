@@ -29,17 +29,6 @@ export const route: Route = {
     url: 'wallstreetcn.com/',
 };
 
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    const seconds = Number(value);
-    if (!Number.isFinite(seconds)) {
-        return;
-    }
-    return parseDate(seconds * 1000);
-}
-
 async function handler(ctx) {
     const period = ctx.req.param('period') ?? 'day';
 
@@ -55,7 +44,7 @@ async function handler(ctx) {
     let items = response.data.data[`${period}_items`].map((item) => ({
         guid: item.id,
         link: item.uri,
-        pubDate: parseSourceTime(item.display_time),
+        pubDate: parseDate(item.display_time * 1000),
     }));
 
     items = await pMap<DataItem, DataItem>(
@@ -73,7 +62,7 @@ async function handler(ctx) {
 
                     const details: Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> = {
                         title: data.title || data.content_text,
-                        author: data.source_name || data.author?.display_name,
+                        author: data.source_name || data.author.display_name,
                         description: data.content + (data.content_more ?? ''),
                         category: data.asset_tags?.map((tag) => tag.name) ?? [],
                     };

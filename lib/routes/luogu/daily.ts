@@ -38,14 +38,14 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 47327;
     const link = `https://www.luogu.com.cn/discuss/${id}`;
-    const response = await ofetch(link, { responseType: 'text' });
+    const response = await ofetch(link);
     const { post } = getPageData<{ post: { content: string } }>(response);
     const dailyLink = post.content.match(/<(https?:[^>]+)>/)?.[1];
     if (!dailyLink) {
         throw new Error('The Luogu daily index does not contain an article or collection link. Check the discussion ID.');
     }
     // the link is taken from a user-written post
-    const dailyResponse = await ofetch(dailyLink, { responseType: 'text', publicOnly: true });
+    const dailyResponse = await ofetch(dailyLink, { publicOnly: true });
     const data = getPageData<{ articles?: { result: LuoguArticle[] }; article?: LuoguArticle }>(dailyResponse);
     const articles = data.articles?.result ?? (data.article ? [data.article] : undefined);
     if (!articles) {

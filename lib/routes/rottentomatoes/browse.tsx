@@ -49,7 +49,7 @@ async function handler(ctx) {
                 pubDate: releaseDate ? parseDate(releaseDate, 'MMM DD, YYYY') : undefined,
                 description: renderToString(
                     <>
-                        {item.posterUri && <img src={item.posterUri} alt="" />}
+                        <img src={item.posterUri} alt="" />
                         {item.criticsScore.scorePercent && <p>Tomatometer: {item.criticsScore.scorePercent}</p>}
                         {item.audienceScore.scorePercent && <p>Popcornmeter: {item.audienceScore.scorePercent}</p>}
                     </>

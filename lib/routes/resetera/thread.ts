@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { compareDates, parseDate } from '@/utils/time';
+import { compareDates } from '@/utils/time';
 
 const BASE = 'https://www.resetera.com';
 
@@ -25,15 +25,6 @@ const absolutize = (u?: string, root = BASE) => {
 // Extract post IDs for sorting.
 const getPostId = (link?: string) => Number(link?.match(/post-(\d+)/)?.[1] || 0);
 
-// Choose the first image from a srcset.
-const pickFromSrcset = (v?: string) =>
-    v
-        ? v
-              .split(',')
-              .map((s) => s.trim().split(' ', 1)[0])
-              .find(Boolean)
-        : undefined;
-
 const handler: Route['handler'] = async (ctx) => {
     const { id } = ctx.req.param();
     const threadRoot = `${BASE}/threads/${id}/`;
@@ -42,27 +33,20 @@ const handler: Route['handler'] = async (ctx) => {
     const html = await ofetch<string>(targetUrl);
     const $ = load(html);
 
-    const seen = new Set<string>();
     const items = $('article.message')
         .toArray()
         .map((el) => {
             const $el = $(el);
 
             // Author
-            const author = $el.find('.message-author, .username, .message-name a, [itemprop="name"]').first().text().trim() || '';
+            const author = $el.find('.message-author, .username, .message-name a, [itemprop="name"]').first().text();
 
             // Permanent post link
-            const perma = $el.find('.message-attribution-opposite a[href*="/post-"]').last().attr('href') || $el.find('.message-attribution-opposite a[href*="#post"]').last().attr('href') || '';
-            const link = perma ? absolutize(perma, threadRoot) : targetUrl;
-            if (!link || seen.has(link)) {
-                return null;
-            }
-            seen.add(link);
+            const perma = $el.find('.message-attribution-opposite a[href*="#post"]').last().attr('href');
+            const link = absolutize(perma, threadRoot);
 
             // Publication time
-            const timeEl = $el.find('time').first();
-            const dataTime = Number(timeEl.attr('data-time') || 0);
-            const pubDate = timeEl.attr('datetime') || (dataTime ? parseDate(dataTime, 'X') : undefined);
+            const pubDate = $el.find('time').attr('datetime');
 
             // Main post content
             const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper');
@@ -74,14 +58,9 @@ const handler: Route['handler'] = async (ctx) => {
 
             // Collect images after removing quotes.
             const imgs = $body
-                .find('img, picture source')
+                .find('img')
                 .toArray()
-                .map((node) => {
-                    const $n = $(node);
-                    const src = $n.attr('src') || $n.attr('data-src') || $n.attr('data-original') || $n.attr('data-url') || pickFromSrcset($n.attr('srcset')) || pickFromSrcset($n.attr('data-srcset'));
-                    return absolutize(src || '', threadRoot);
-                })
-                .filter((u): u is string => !!u);
+                .map((node) => $(node).attr('src'));
 
             const hasImage = imgs.length > 0;
 
@@ -109,8 +88,7 @@ const handler: Route['handler'] = async (ctx) => {
                 pubDate,
                 category: hasImage ? ['image'] : undefined,
             };
-        })
-        .filter((post) => post !== null);
+        });
 
     // Sort newest posts first, falling back to publication time.
     items.sort((a, b) => {

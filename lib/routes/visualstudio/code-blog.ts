@@ -41,18 +41,18 @@ async function fetchArticle(link: string): Promise<Pick<DataItem, 'description'>
     const $ = load(data);
 
     // Release notes keep the body on <main>; blog posts moved it to <article>, with the title, byline and an "On this page" menu around the text
-    const article = $('.docs-main-content.body').first();
+    const article = $('.docs-main-content.body');
     if (!article.length) {
         throw new NotFoundError(`No VS Code article body was found at ${link}`);
     }
-    article.children('h1').first().remove();
+    article.children('h1').remove();
     article.find('.blog-post-header, .blog-mobile-navigation').remove();
     article
         .children('p')
         .slice(0, 2)
         .each((_, element) => {
             const paragraph = $(element);
-            const text = paragraph.text().trim();
+            const text = paragraph.text();
             if (
                 paragraph.hasClass('release-metadata') ||
                 /^(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,\s+\d{4}\s+by\b/.test(text) ||
@@ -67,19 +67,19 @@ async function fetchArticle(link: string): Promise<Pick<DataItem, 'description'>
 }
 
 async function handler(): Promise<Data> {
-    const feedData = await ofetch('https://code.visualstudio.com/feed.xml', { responseType: 'text' });
+    const feedData = await ofetch('https://code.visualstudio.com/feed.xml');
     const feed = await parser.parseString(feedData);
     const feedXml = load(feedData, { xml: true });
     const modifiedDates = new Map(
         feedXml('entry')
             .toArray()
-            .map((entry) => [feedXml(entry).find('link').first().attr('href'), feedXml(entry).find('updated').text()])
+            .map((entry) => [feedXml(entry).find('link').attr('href'), parseDate(feedXml(entry).find('updated').text())])
     );
     const categories = new Map(
         feedXml('entry')
             .toArray()
             .map((entry) => [
-                feedXml(entry).find('link').first().attr('href'),
+                feedXml(entry).find('link').attr('href'),
                 feedXml(entry)
                     .find('category')
                     .toArray()
@@ -103,8 +103,8 @@ async function handler(): Promise<Data> {
                 title,
                 link,
                 description: detail.description,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                updated: modifiedDates.get(link) ? parseDate(modifiedDates.get(link)!) : undefined,
+                pubDate: item.pubDate,
+                updated: modifiedDates.get(link),
                 author: item.author ?? item.creator,
                 category: categories.get(link),
             };

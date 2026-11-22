@@ -42,7 +42,7 @@ const fetchFullText = async (link: string): Promise<string | undefined> => {
 };
 
 const toDataItem = async (article: ResearchArticle, link: string): Promise<DataItem> => {
-    const authors = (article.authors ?? []).map((author) => author.fullName?.trim()).filter(Boolean);
+    const authors = (article.authors ?? []).map((author) => author.fullName).filter(Boolean);
     const coverImage = article.coverImage ? renderImage(article.coverImage, article.title) : '';
     return {
         title: article.title,
@@ -66,17 +66,14 @@ async function handler(ctx: Context): Promise<Data> {
         throw new InvalidParameterError(`Unknown or empty filter "${filter}". Use one of: all, ${tagSlugs.join(', ')}.`);
     }
 
-    // Links double as GUIDs, so drop entries without a link and keep the first of any duplicates.
-    const entries = new Map<string, ResearchArticle>();
-    for (const article of filtered) {
+    // Links double as GUIDs, so drop entries without a link.
+    const entries = filtered.flatMap((article) => {
         const link = resolveLink(article);
-        if (link && !entries.has(link)) {
-            entries.set(link, article);
-        }
-    }
+        return link ? { article, link } : [];
+    });
 
-    const limited = [...entries].slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
-    const items = await pMap(limited, ([link, article]) => toDataItem(article, link), { concurrency: DETAIL_CONCURRENCY });
+    const limited = entries.slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
+    const items = await pMap(limited, ({ article, link }) => toDataItem(article, link), { concurrency: DETAIL_CONCURRENCY });
 
     const filterLabel = filter ? filtered.flatMap((article) => article.tags ?? []).find((tag) => tag.slug === filter)?.label : undefined;
 

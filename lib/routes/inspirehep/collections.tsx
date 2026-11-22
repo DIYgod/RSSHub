@@ -4,8 +4,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-import { baseUrl, parseRecordDate } from './utils';
+import { baseUrl } from './utils';
 
 interface CollectionRecord {
     id: string;
@@ -99,8 +100,8 @@ async function handler(ctx) {
                     `${collectionNames[collection]} ${record.id}`,
                 link: `${baseUrl}/${collection}/${record.id}`,
                 guid: `${collection}:${record.id}`,
-                pubDate: parseRecordDate(record.created),
-                updated: parseRecordDate(record.updated),
+                pubDate: parseDate(record.created),
+                updated: parseDate(record.updated),
                 author: metadata.speakers?.map((speaker) => speaker.name).join(', '),
                 category: metadata.inspire_categories?.map((category) => category.term) ?? metadata.project_type ?? metadata.institution_type ?? metadata.ranks,
                 description: renderToString(

@@ -38,10 +38,10 @@ async function handler(ctx) {
 
     const list = $('a[data-article-id]')
         .toArray()
-        .flatMap((element) => {
+        .map((element) => {
             const anchor = $(element);
             const id = anchor.attr('data-article-id');
-            return id ? { title: anchor.text(), link: `${rootUrl}/${id}`, id } : [];
+            return { title: anchor.text(), link: `${rootUrl}/${id}`, id };
         });
 
     let articles: Promise<CheerioAPI> | undefined;
@@ -52,11 +52,8 @@ async function handler(ctx) {
             const details = await cache.tryGet(`${item.link}:pubmed-xml:v2`, async () => {
                 const content = await getArticles();
                 const article = content('PubmedArticle').filter((_, element) => content(element).find('MedlineCitation > PMID').text() === id);
-                if (!article.length) {
-                    throw new Error(`PubMed returned no article for PMID ${id}`);
-                }
-                const electronicDate = article.find('ArticleDate[DateType="Electronic"]').first();
-                const publicationDate = electronicDate.length ? electronicDate : article.find('JournalIssue > PubDate').first();
+                const electronicDate = article.find('ArticleDate[DateType="Electronic"]');
+                const publicationDate = electronicDate.length ? electronicDate : article.find('JournalIssue > PubDate');
                 const date =
                     publicationDate.find('MedlineDate').text() ||
                     publicationDate
@@ -66,18 +63,17 @@ async function handler(ctx) {
                         .join(' ');
                 return {
                     title: article.find('ArticleTitle').text(),
-                    doi: article.find('ArticleId[IdType="doi"]').first().text() || undefined,
-                    pubDate: date ? parseDate(date, ['YYYY M D', 'YYYY MMM D', 'YYYY MMMM D', 'YYYY M', 'YYYY MMM', 'YYYY MMMM', 'YYYY']) : undefined,
+                    doi: article.find('ArticleId[IdType="doi"]').first().text(),
+                    pubDate: parseDate(date, ['YYYY M D', 'YYYY MMM D', 'YYYY MMMM D', 'YYYY M', 'YYYY MMM', 'YYYY MMMM', 'YYYY']),
                     author: article
                         .find('AuthorList > Author')
                         .toArray()
                         .map((element) => {
                             const author = content(element);
                             return {
-                                name: author.find('CollectiveName').text() || [author.find('ForeName').text() || author.find('Initials').text(), author.find('LastName').text()].filter(Boolean).join(' '),
+                                name: author.find('CollectiveName').text() || `${author.find('ForeName').text()} ${author.find('LastName').text()}`,
                             };
-                        })
-                        .filter((author) => author.name),
+                        }),
                     description: renderToString(
                         <>
                             {article
@@ -88,7 +84,7 @@ async function handler(ctx) {
                                     return (
                                         <>
                                             {abstract.attr('Label') ? <h3>{abstract.attr('Label')}</h3> : null}
-                                            <p>{raw(abstract.html() ?? '')}</p>
+                                            <p>{raw(abstract.html())}</p>
                                         </>
                                     );
                                 })}

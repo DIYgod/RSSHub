@@ -35,8 +35,8 @@ async function handler(ctx) {
         title: item.title,
         link: item.external_url,
         description: item.content_html || item.summary,
-        pubDate: item.date_published?.trim() ? parseDate(item.date_published) : undefined,
-        author: item.author?.name,
+        pubDate: parseDate(item.date_published),
+        author: item.author.name,
         category: item.tags,
         image: item.image,
     }));

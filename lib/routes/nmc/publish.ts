@@ -35,7 +35,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     // Lead-time forecasts list one image per forecast hour of a single issue, labeled like
     // "20261109 14:00 01小时" (e.g. 近海海雾预报) or "024小时" with the issue time below it
     // (e.g. 降水量预报), so each issue becomes one item with the image the page shows.
-    const isLeadTimeForecast = leadTimeRegex.test($('div[data-img]').first().attr('data-time') ?? '');
+    const isLeadTimeForecast = leadTimeRegex.test($('div[data-img]').attr('data-time') ?? '');
 
     const items: DataItem[] =
         $('div.row div[data-img]').length === 0

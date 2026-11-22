@@ -70,7 +70,7 @@ async function handler(ctx) {
                 .map((video) => `<video src="${video.originUrl}" poster="${video.video_img_url}" controls="controls"></video>`)
                 .join('') +
             item.post.content,
-        pubDate: Number.isFinite(item.post.publishTime) ? parseDate(item.post.publishTime) : undefined,
+        pubDate: parseDate(item.post.publishTime),
         author: item.post.blogInfo.blogNickName,
         category: item.post.tag.split(','),
     }));

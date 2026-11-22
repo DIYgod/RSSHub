@@ -72,31 +72,27 @@ async function handler(ctx) {
             link: string;
             eid: string;
         }
-    > = pageData.props.pageProps.podcast.episodes.map((item) => {
-        const pubDate = !isNullish(item.pubDate) && String(item.pubDate).trim() ? parseDate(item.pubDate) : undefined;
-        return {
-            title: item.title,
-            enclosure_url: item.enclosure.url,
-            itunes_duration: item.duration,
-            enclosure_type: 'audio/mpeg',
-            link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
-            eid: item.eid,
-            pubDate,
-            itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
-        };
-    });
+    > = pageData.props.pageProps.podcast.episodes.map((item) => ({
+        title: item.title,
+        enclosure_url: item.enclosure.url,
+        itunes_duration: item.duration,
+        enclosure_type: 'audio/mpeg',
+        link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
+        eid: item.eid,
+        pubDate: parseDate(item.pubDate),
+        itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
+    }));
     const items = await pMap(
         episodes,
-        ({ eid, ...item }) =>
-            mapResolvedValue(
-                cache.tryGet(`xiaoyuzhou:podcast:content:v2:${item.link}`, async () => {
-                    const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${pageData.buildId}/episode/${eid}.json`;
-                    const response = await ofetch(episodeLink);
-                    const episodeItem = response.pageProps.episode;
-                    return { description: episodeItem.shownotes || episodeItem.description || '' };
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+        async ({ eid, ...item }) => {
+            const detail = await cache.tryGet(`xiaoyuzhou:podcast:content:v2:${item.link}`, async () => {
+                const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${pageData.buildId}/episode/${eid}.json`;
+                const response = await ofetch(episodeLink);
+                const episodeItem = response.pageProps.episode;
+                return { description: episodeItem.shownotes || episodeItem.description };
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -108,11 +104,4 @@ async function handler(ctx) {
         item: items,
         description: pageData.props.pageProps.podcast.description,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}
-function isNullish(value: unknown): value is null | undefined {
-    return value === null || value === undefined;
 }

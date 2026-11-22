@@ -1,10 +1,7 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
@@ -37,37 +34,29 @@ export const route: Route = {
 };
 
 export async function getItems(feed: Awaited<ReturnType<typeof parser.parseURL>>) {
-    const entries: Array<DataItem & { link: string }> = feed.items.flatMap((item) =>
-        item.link
-            ? {
-                  title: item.title!,
-                  pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                  link: item.link,
-                  author: item.creator || '量子位',
-                  category: item.categories,
-                  description: '', // Initialize description field
-              }
-            : []
-    );
+    const entries = feed.items.map((item) => ({
+        title: item.title!,
+        pubDate: parseDate(item.pubDate!),
+        link: item.link,
+        author: item.creator,
+        category: item.categories,
+        description: '', // Initialize description field
+    }));
 
     const resolvedEntries = await pMap(
         entries,
         async (entry) => {
             const details = await cache.tryGet(`${entry.link}:qbitai-main-content`, async () => {
-                const response = await ofetch(entry.link);
+                const response = await ofetch(entry.link!);
                 const $ = load(response);
-                const body = copyNodes($('.article'));
+                const body = $('.article');
                 body.children('h1').first().remove();
                 body.find('.article_info, .line_font').remove();
                 const byline = body.children('blockquote').first();
                 if (/量子位\s*\|\s*公众号\s*QbitAI/.test(byline.text())) {
                     byline.remove();
                 }
-                const description = body.html();
-                if (!description) {
-                    throw new Error(`Could not extract the article content from ${entry.link}`);
-                }
-                return { description };
+                return { description: body.html() };
             });
             return { ...entry, ...details };
         },
@@ -87,13 +76,4 @@ async function handler(ctx) {
         link: `https://www.qbitai.com/category/${category}`,
         item: await getItems(feed),
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

@@ -25,13 +25,9 @@ export async function getFullText(item: DataItem & { link: string }) {
     content('.articlekeywordGroup').remove();
 
     const topImage = content('.fullPic').html();
-    const authors = [
-        ...new Set(
-            content('.paragraph a.author')
-                .toArray()
-                .map((author) => content(author).text())
-        ),
-    ];
+    const authors = content('.paragraph a.author')
+        .toArray()
+        .map((author) => content(author).text());
 
     item.description = (topImage === null ? '' : topImage) + content('.paragraph').eq(0).html();
     item.author = authors.length ? authors.join(', ') : undefined;

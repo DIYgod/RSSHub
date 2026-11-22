@@ -27,7 +27,7 @@ const documentMimeTypes = {
 };
 
 function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
+    if (!value) {
         return;
     }
     return parseDate(value, 8);
@@ -94,7 +94,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
 
                 let processedItem: Partial<DataItem> = {
-                    title: title || undefined,
+                    title,
                     description,
                     pubDate: parsePublicationDate(pubDateStr),
                     content: {

@@ -23,13 +23,12 @@ const extractImageUrl = (value?: string) => value?.match(/"url":"(.*?)"/)?.[1];
 
 const getVideoUrl = (link: string) =>
     cache.tryGet(`dedao:video:${link}`, async () => {
-        const response = await ofetch(link);
+        const response = await ofetch<string>(link);
         const state = response.match(/window\.__INITIAL_STATE__\s*=\s*(\{.+?\});<\/script>/s)?.[1];
-        const videoUrl = state ? JSON.parse(state).noteDetail?.video?.video_url : undefined;
-        if (!videoUrl) {
+        if (!state) {
             throw new Error(`No public video playback URL found on ${link}.`);
         }
-        return videoUrl as string;
+        return JSON.parse(state).noteDetail.video.video_url as string;
     });
 
 export const route: Route = {

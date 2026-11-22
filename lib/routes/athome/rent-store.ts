@@ -31,7 +31,7 @@ const LIST_DEADLINE_MS = 26000;
  * The SSR document carries the listing data. Scripts and API requests are also allowed so the
  * authentication interstitial can finish; unrelated resources do not need to be downloaded.
  */
-const ALLOWED_RESOURCES = new Set(['document', 'script', 'xhr', 'fetch']);
+const ALLOWED_RESOURCES = new Set(['document', 'script', 'fetch']);
 /** A detail document is a fraction of the list page's size, so it needs nothing like the same window. */
 const DETAIL_STATE_TIMEOUT = 10000;
 const DEFAULT_LIMIT = 10;
@@ -121,8 +121,7 @@ const listOf = (html: string): Bukken[] => {
     if (payload === null) {
         throw new Error('athome: the SSR state holds no listing response; the internal API may have been renamed');
     }
-    const list = payload.bukkenData?.bukkenList;
-    return Array.isArray(list) ? list : [];
+    return payload.bukkenData?.bukkenList ?? [];
 };
 
 interface PropertyData {

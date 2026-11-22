@@ -41,7 +41,7 @@ async function handler(ctx) {
                     title: title.text(),
                     link: title.attr('href'),
                     author: author.text().trim(),
-                    description: `${cover ? `<img src="${cover}">` : ''}${book.find('.introduce').html() || ''}`,
+                    description: `<img src="${cover}">${book.find('.introduce').html() || ''}`,
                     pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
                 };
             }),

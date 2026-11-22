@@ -8,15 +8,6 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-async function getOptionalPublicationDate(link: string): Promise<Temporal.Instant | undefined> {
-    try {
-        return await getPublicationDate(link);
-    } catch {
-        // The original route retains listing metadata if the dedicated date lookup fails.
-        return;
-    }
-}
-
 const baseUrl = 'https://jwc.jiangnan.edu.cn';
 
 const map = {
@@ -100,7 +91,7 @@ async function handler(ctx: Context) {
         async (item) => ({
             ...item,
             // An unavailable full date must not turn a month/day into a guessed year.
-            pubDate: await getOptionalPublicationDate(item.link!),
+            pubDate: await getPublicationDate(item.link!),
         }),
         { concurrency: 3 }
     );

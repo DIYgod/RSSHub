@@ -38,9 +38,6 @@ async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
     const data = JSON.parse($('#__NEXT_DATA__').text()).props.pageProps;
-    if (!data.episode || !Array.isArray(data.comments)) {
-        throw new Error('Xiaoyuzhou did not return the episode and its public comments.');
-    }
 
     return {
         title: `${data.episode.title} - 热门评论`,

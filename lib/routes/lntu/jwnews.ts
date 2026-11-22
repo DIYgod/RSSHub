@@ -25,7 +25,6 @@ async function handler() {
         async (item) => {
             const itemLink = new URL($('a', item).attr('href')!, link).href;
 
-            const date = $(item).find('p.date').text();
             const article = await cache.tryGet(itemLink, async () => {
                 const result = await ofetch(itemLink);
                 const $article = load(result);
@@ -44,7 +43,7 @@ async function handler() {
             });
             return {
                 ...article,
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($(item).find('p.date').text(), 8),
             };
         },
         { concurrency: 3 }

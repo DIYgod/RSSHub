@@ -65,7 +65,7 @@ async function handler() {
     const items = response.data.result.map((item) => ({
         title: `【${currStatusName[item.currStatus]}】${item.stockAuditName}`,
         description: renderToString(<SseRenewalDescription item={item} currStatus={currStatusName[item.currStatus]} updateDate={formatAuditDate(item.updateDate)} auditApplyDate={formatAuditDate(item.auditApplyDate)} />),
-        pubDate: item.updateDate ? parseDate(item.updateDate, 8) : undefined,
+        pubDate: parseDate(item.updateDate, 8),
         link: `${host}/renewal/xmxq/index.shtml?auditId=${item.stockAuditNum}`,
         author: item.stockAuditName,
     }));

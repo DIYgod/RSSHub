@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/time';
 
@@ -202,8 +203,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const queryString = id ? `?cid=${id}` : '';
     const currentUrl = new URL(id ? `newsclass.aspx${queryString}` : '', rootUrl).href;

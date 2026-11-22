@@ -51,13 +51,11 @@ async function handler(ctx: Context) {
             title: $item.find('a').text(),
             link: new URL(path, host).href,
             path,
-            pubDate: parseDate($item.find('.span-time, .time').first().text(), 8),
+            pubDate: parseDate($item.find('.time').text(), 8),
         };
     });
-    const ordered = candidates;
-    const selected = ordered;
     const items = await Promise.all(
-        selected.map((item) =>
+        candidates.map((item) =>
             cache.tryGet(item.link, async () => {
                 const result = await got(item.link);
                 const $ = load(result.data);

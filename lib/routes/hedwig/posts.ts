@@ -46,7 +46,7 @@ export const route: Route = {
             return {
                 title: item.subject,
                 description,
-                pubDate: item.publishAt ? parseDate(item.publishAt) : undefined,
+                pubDate: parseDate(item.publishAt),
                 link: `${baseUrl}/i/${item.urlFriendlyName}`,
             };
         });

@@ -71,8 +71,8 @@ async function handler(): Promise<Data> {
                     .text()
                     .match(/比赛时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1];
 
-                // Drop inline scripts, HTML comments and the hidden raw data block, keep only the visible content
-                $body.find('script, div[style*="display:none"]').remove();
+                // Drop HTML comments and the hidden raw data block, keep only the visible content
+                $body.find('div[style*="display:none"]').remove();
                 $body
                     .contents()
                     .filter((_, node) => node.type === 'comment')

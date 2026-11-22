@@ -96,7 +96,7 @@ async function handler(ctx) {
                 const description = await cache.tryGet(`guancha:personal:article:${link}`, async () => {
                     const detail = await got(link);
                     const content = load(detail.data);
-                    return content('.article-txt-content').html() ?? undefined;
+                    return content('.article-txt-content').html();
                 });
                 return {
                     title: item.title,

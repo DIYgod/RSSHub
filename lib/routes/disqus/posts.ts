@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
                 title: `${item.author.name}: ${item.raw_message}`,
                 description: item.message,
                 author: item.author.name,
-                pubDate: parseDate(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(item.createdAt) ? `${item.createdAt}Z` : item.createdAt),
+                pubDate: parseDate(`${item.createdAt}Z`),
                 link: new URL(`#comment-${item.id}`, thread.link).href,
             };
         }),

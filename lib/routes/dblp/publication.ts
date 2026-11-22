@@ -1,6 +1,7 @@
+import { setTimeout } from 'node:timers/promises';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/:field',
@@ -9,7 +10,7 @@ export const route: Route = {
     parameters: { field: 'Research field' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -26,6 +27,12 @@ export const route: Route = {
     handler,
 };
 
+const cookieOf = (headers: Headers) =>
+    headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
+
 async function handler(ctx) {
     const field = ctx.req.param('field');
     const link = new URL('https://dblp.org/search');
@@ -33,21 +40,30 @@ async function handler(ctx) {
 
     const apiUrl = new URL('https://dblp.org/search/publ/api');
     apiUrl.search = new URLSearchParams({ q: field, format: 'json', h: '10' }).toString();
-    let response = await ofetch(apiUrl.href, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-    });
-    if (!response?.result?.hits) {
-        const { page, destroy } = await getPlaywrightPage(apiUrl.href, { noGoto: true, closeTimeout: 0 });
-        try {
-            await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'other'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-            await page.goto(apiUrl.href, { waitUntil: 'domcontentloaded' });
-            await page.waitForSelector('body > pre');
-            response = JSON.parse((await page.locator('body > pre').textContent()) ?? '');
-        } finally {
-            await destroy();
-        }
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    };
+    const first = await ofetch.raw(apiUrl.href, { headers });
+    let response = first._data;
+    const challengeData = typeof response === 'string' ? response.match(/<script id="anubis_challenge" type="application\/json">(.*?)<\/script>/s)?.[1] : undefined;
+    if (challengeData) {
+        const { challenge } = JSON.parse(challengeData);
+        await setTimeout((challenge.difficulty + 1) * 1000);
+        const passUrl = new URL('https://dblp.org/.within.website/x/cmd/anubis/api/pass-challenge');
+        passUrl.search = new URLSearchParams({ redir: apiUrl.pathname + apiUrl.search, challenge: challenge.randomData, id: challenge.id }).toString();
+        const pass = await ofetch.raw(passUrl.href, {
+            headers: {
+                cookie: cookieOf(first.headers),
+            },
+            redirect: 'manual',
+            ignoreResponseError: true,
+        });
+        response = await ofetch(apiUrl.href, {
+            headers: {
+                ...headers,
+                cookie: cookieOf(pass.headers),
+            },
+        });
     }
     if (!response?.result?.hits) {
         throw new Error('DBLP did not return publication search data. The source may be showing an anti-bot challenge.');

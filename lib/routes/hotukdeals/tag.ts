@@ -104,10 +104,7 @@ async function handler(ctx) {
 
             return cache.tryGet(itemLink, async () => {
                 const threadDetail = await getThreadDetail(itemLink);
-                const category = (threadDetail.groups ?? []).map((group) => group.threadGroupName);
-                if (thread.merchant?.merchantName) {
-                    category.push(thread.merchant.merchantName);
-                }
+                const category = [...(threadDetail.groups ?? []).map((group) => group.threadGroupName), ...(thread.merchant?.merchantName ? [thread.merchant.merchantName] : [])];
 
                 return {
                     title: thread.title,

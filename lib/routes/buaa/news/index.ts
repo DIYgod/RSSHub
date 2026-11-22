@@ -35,26 +35,23 @@ async function handler(ctx: Context): Promise<Data> {
     const { data: response } = await got(link);
 
     const $ = load(response);
-    const title = $('.position-box a').last().text() || $('.subnav span').text();
-    const list: DataItem[] = $('.twlist > ul > li, .mainleft > .listlefttop > .listleftop1')
+    const title = $('.position-box a').last().text();
+    const list: DataItem[] = $('.twlist > ul > li')
         .toArray()
         .map((item_) => {
             const item = $(item_);
-            const title = item.find('.pub_info h3, h2 > a');
-            const link = item.find('a').first();
+            const title = item.find('.pub_info h3');
+            const link = item.find('a');
             const yearMonth = item.find('.pub_date span').text();
             const day = item.find('.pub_date b').text();
-            const date = yearMonth && day ? `${yearMonth.replace('.', '-')}-${day}` : item.find('h2 em').text().replaceAll(/[[\]]/g, '');
             return {
                 title: title.text(),
                 link: new URL(link.attr('href')!, baseUrl).href,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(`${yearMonth.replace('.', '-')}-${day}`, 'YYYY-MM-DD', 8),
             };
         });
-    const orderedList = list;
-    const entries = orderedList;
     const result = await Promise.all(
-        entries.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);

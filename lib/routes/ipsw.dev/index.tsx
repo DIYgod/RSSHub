@@ -28,28 +28,20 @@ async function handler(ctx) {
 
     const $ = load(resp.data);
 
-    const productName = $('#identifier_info_content .font-semibold').first().text() || productID;
+    const productName = $('#identifier_info_content .font-semibold').text();
 
-    const builds = new Set<string>();
     const list = $('.firmware')
         .toArray()
-        .map((element): DataItem | undefined => {
+        .map((element): DataItem => {
             const ele = $(element);
             const version = ele.find('.versions-info > div').first().text();
             const build = ele.find('.build-id').text();
-            if (!build) {
-                throw new Error('IPSW.dev did not provide a firmware build identifier.');
-            }
-            if (builds.has(build)) {
-                return undefined;
-            }
-            builds.add(build);
             const date = ele.find('td:nth-child(3)').text();
             const size = ele.find('td:nth-child(4)').text();
             return {
                 title: `${productName} - ${version}`,
                 link: `https://ipsw.dev/download/${productID}/${build}`,
-                pubDate: date ? parseDate(date, 'MMMM D, YYYY', 0) : undefined,
+                pubDate: parseDate(date, 'MMMM D, YYYY', 0),
                 guid: build,
                 description: renderToString(
                     <table>
@@ -74,8 +66,7 @@ async function handler(ctx) {
                     </table>
                 ),
             };
-        })
-        .filter((item): item is DataItem => item !== undefined);
+        });
 
     return {
         title: `${productName} Released`,

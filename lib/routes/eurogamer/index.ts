@@ -22,7 +22,6 @@ const extractListItems = ($: CheerioAPI, itemSelector: string, linkSelector: str
     $(itemSelector)
         .find(linkSelector)
         .toArray()
-        .filter((el) => $(el).attr('href'))
         .map((el) => {
             const a = $(el);
             return {
@@ -144,7 +143,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     const currentUrl = isLatest ? `${BASE_URL}/latest` : `${BASE_URL}/${category}`;
     const limit = getRouteLimit(ctx, 25);
-    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit ?? 25, 25);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit, 25);
 
     const html = await ofetch(currentUrl);
     const $ = load(html);

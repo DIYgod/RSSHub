@@ -23,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const listingContent = await ofetch(baseUrl, { responseType: 'text' });
+    const listingContent = await ofetch(baseUrl);
     const $ = load(listingContent);
     const item = $('.aw-common-list > div')
         .toArray()
@@ -31,14 +31,13 @@ async function handler() {
             const row = $(element);
             const link = row.find('a').first().attr('href');
             const value = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.exec(row.find('.text-color-999').first().text())?.[0];
-            const date = value ? parseDate(`${value.replace(' ', 'T')}:00+08:00`) : undefined;
             return {
                 title: row.find('a').first().text(),
                 link,
-                description: row.find('.all-content').html() ?? row.find('.markitup-box').html() ?? undefined,
-                pubDate: date,
+                description: row.find('.all-content').html(),
+                pubDate: value ? parseDate(`${value.replace(' ', 'T')}:00+08:00`) : undefined,
                 guid: link ? Buffer.from(link).toBase64() : undefined,
-                author: row.find('.aw-user-name').first().text() || undefined,
+                author: row.find('.aw-user-name').text(),
             };
         });
     return { link: baseUrl, title: '发现', description: '人人都是自媒体-发现', language: 'zh-CN' as const, item };

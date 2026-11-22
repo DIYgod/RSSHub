@@ -111,8 +111,8 @@ async function handler(ctx: Context) {
                         .find('.tag')
                         .toArray()
                         .map((tag) => $(tag).text().trim()),
-                    enclosure_url: torrentHref ? new URL(torrentHref, rootUrl).href : undefined,
-                    enclosure_type: torrentHref ? 'application/x-bittorrent' : undefined,
+                    enclosure_url: `${rootUrl}${torrentHref}`,
+                    enclosure_type: 'application/x-bittorrent',
                 };
             }),
     };

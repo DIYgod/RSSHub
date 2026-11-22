@@ -52,9 +52,8 @@ async function handler(ctx) {
     const feed = $('div.list > a')
         .toArray()
         .map((item) => new URL($(item).attr('href') ?? '', 'https://news.ebc.net.tw').href);
-    const candidates = feed;
     const items = await pMap(
-        candidates,
+        feed,
         (url) =>
             cache.tryGet(url, async () => {
                 const response = await got(url);

@@ -1,6 +1,5 @@
 import Parser from 'rss-parser';
 
-import { config } from '@/config';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { formatDate, parseDate } from '@/utils/time';
@@ -17,9 +16,6 @@ export async function getData(username: string, title: string) {
     const parser = new Parser<object, LetterboxdItem>({
         customFields: {
             item: ['letterboxd:filmTitle', 'letterboxd:watchedDate', 'letterboxd:rewatch', 'letterboxd:memberRating', 'letterboxd:memberLike'],
-        },
-        headers: {
-            'User-Agent': config.ua,
         },
     });
     const feedUrl = `https://letterboxd.com/${username}/rss/`;

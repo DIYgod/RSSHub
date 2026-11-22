@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/post';
 
@@ -61,7 +61,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link,
             description,
-            pubDate: parsePublicationDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
             author: item._embedded.author[0].name,
         };
     });
@@ -71,15 +71,4 @@ async function handler(ctx) {
         link: `${rootUrl}/archives/category/${category.slug}`,
         item: items,
     };
-}
-
-function parsePublicationDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    const match = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,3})?(?:Z|\+00:00)?$/.exec(value);
-    if (!match || !parseDateStrict(match[1], 'YYYY-MM-DDTHH:mm:ss')) {
-        return;
-    }
-    return parseDate(value.endsWith('Z') || value.endsWith('+00:00') ? value : `${value}Z`);
 }

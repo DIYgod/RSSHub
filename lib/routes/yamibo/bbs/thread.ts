@@ -70,11 +70,11 @@ async function handler(ctx: Context): Promise<Data> {
             const createTime = $tr
                 .find(`#authorposton${postId}`)
                 .text()
-                .match(/\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}/)?.[0];
+                .match(/\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}/)![0];
 
             return {
                 title: `${floor} - ${nickName}`,
-                author: nickName || undefined,
+                author: nickName,
                 link,
                 description,
                 pubDate: getDate(createTime),

@@ -73,7 +73,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
 
-            const a = $item.find('a[href]').first();
+            const a = $item.find('a[href]');
             const date = $item.find('.date');
 
             return {
@@ -97,7 +97,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
         language,
-        image: new URL($('div.top-logo img, .logo img').first().prop('src') || '/favicon.ico', rootUrl).href,
+        image: new URL($('div.top-logo img, .logo img').prop('src') || '/favicon.ico', rootUrl).href,
         subtitle: columnName,
         author: siteName,
     };

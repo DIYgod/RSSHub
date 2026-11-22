@@ -34,7 +34,7 @@ const handler = async (ctx) => {
 
         return {
             title: item.articleTitle,
-            pubDate: item.pubDate ? parseDate(item.pubDate, 8) : undefined,
+            pubDate: parseDate(item.pubDate, 8),
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
@@ -55,9 +55,9 @@ const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = data.pubDate ? parseDate(data.pubDate, 8) : item.pubDate;
+                item.pubDate = parseDate(data.pubDate, 8);
                 item.link = data.linkUrl || new URL(data.articleUrl, rootUrl).href;
-                item.category = data.parentColumns?.map((c) => c.columnName);
+                item.category = data.parentColumns.map((c) => c.columnName);
                 item.guid = guid;
                 item.id = guid;
                 item.content = {
@@ -71,8 +71,7 @@ const handler = async (ctx) => {
         )
     );
 
-    const imageSource = $('header img').last().prop('src');
-    const image = imageSource ? new URL(imageSource, rootUrl).href : undefined;
+    const image = new URL($('header img').last().prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text()}${$('div.tit').text() ? ` - ${$('div.tit').text()}` : ''}`,

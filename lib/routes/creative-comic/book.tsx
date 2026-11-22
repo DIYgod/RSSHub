@@ -74,8 +74,8 @@ async function handler(ctx) {
                 return {
                     title: [c.vol_name, c.name].filter(Boolean).join(' - '),
                     description: renderChapterDescription(pages, c.image1),
-                    pubDate: c.online_at ? parseDate(c.online_at, 8) : undefined,
-                    updated: c.updated_at ? parseDate(c.updated_at, 8) : undefined,
+                    pubDate: parseDate(c.online_at, 8),
+                    updated: parseDate(c.updated_at, 8),
                     link: `https://www.creative-comic.tw/reader_comic/${c.id}`,
                     author: book.author.map((author) => author.name).join(', '),
                     category: book.tags.map((tag) => tag.name),

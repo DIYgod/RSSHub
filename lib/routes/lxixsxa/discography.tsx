@@ -75,7 +75,7 @@ async function handler() {
                 </>
             ),
             // the article publish time
-            pubDate: item.releaseDate ? parseDate(item.releaseDate.replaceAll('.', '-'), 0) : undefined,
+            pubDate: parseDate(item.releaseDate.replaceAll('.', '-'), 0),
             // the article link
             link: `${url}/${item.referID}`,
         })),

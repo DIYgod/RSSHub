@@ -42,8 +42,7 @@ export const route: Route = {
                 const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
-                const date = $link.find('em').text();
-                const pubDate = date ? parseDate(date, 8) : undefined;
+                const pubDate = parseDate($link.find('em').text(), 8);
                 const title = $link.attr('title') || $link.find('p').text() || $link.text();
 
                 const metadata = { title, link, pubDate };

@@ -13,7 +13,7 @@ interface Chapter {
     isPaidPublication: boolean;
     isPaidStory: boolean;
     volume_name: string;
-    firstPassTime?: string;
+    firstPassTime: string;
 }
 
 interface Page {
@@ -80,15 +80,12 @@ async function handler(ctx: Context): Promise<Data> {
     );
 
     const page: Page = initialState.page;
-    if (!Array.isArray(page?.chapterListWithVolume) || page.chapterListWithVolume.some((volume) => !Array.isArray(volume))) {
-        throw new Error('Fanqie Novel did not return a public chapter directory for this book. Check the book ID and whether the book is still available on the website.');
-    }
     const items = page.chapterListWithVolume.flatMap((volume) =>
         volume.map((chapter) => ({
             title: chapter.title,
             link: `https://fanqienovel.com/reader/${chapter.itemId}`,
             description: chapter.volume_name,
-            pubDate: chapter.firstPassTime ? parseDate(chapter.firstPassTime, 'X') : undefined,
+            pubDate: parseDate(chapter.firstPassTime, 'X'),
             author: page.author,
         }))
     );

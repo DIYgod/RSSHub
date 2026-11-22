@@ -52,9 +52,7 @@ async function handler() {
                     title: $('h1').text(),
                     author: $('meta[property="my:author"]').attr('content'),
                     description: article.html(),
-                    category: [...JSON.parse($('meta[name="my:category"]').attr('content') || '[]'), ...JSON.parse($('meta[name="my:tags"]').attr('content') || '[]')]
-                        .map((tag: { name?: string; slug?: string }) => tag.name || tag.slug)
-                        .filter((tag): tag is string => typeof tag === 'string' && Boolean(tag)),
+                    category: [...JSON.parse($('meta[name="my:category"]').attr('content')!), ...JSON.parse($('meta[name="my:tags"]').attr('content')!)].map((tag: { name?: string; slug: string }) => tag.name || tag.slug),
                     pubDate: parseDate($('meta[property="my:publish_date"]').attr('content')!),
                     link,
                 };

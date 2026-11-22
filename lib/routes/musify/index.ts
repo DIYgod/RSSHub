@@ -7,7 +7,6 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
@@ -21,24 +20,29 @@ const audioTypes = {
 } satisfies Record<string, string>;
 const isAudioExtension = (key: string): key is keyof typeof audioTypes => Object.hasOwn(audioTypes, key);
 
+function djb2(value: string) {
+    let hash = 5381;
+    for (const byte of Buffer.from(value)) {
+        hash = ((hash << 5) + hash + byte) >>> 0;
+    }
+    return hash.toString(16);
+}
+
 async function fetchList(url: string) {
     const response = await ofetch<string>(url);
-    if (!/location\.replace\(["']\/__mzverify\?/.test(response)) {
+    const challenge = response.match(/var n="(.*?)",M="(.*?)"/);
+    if (!challenge) {
         return response;
     }
 
-    const { page, destroy } = await getPlaywrightPage(url, {
-        closeTimeout: 0,
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-        },
-    });
-    try {
-        await page.waitForSelector('div.playlist__item');
-        return await page.content();
-    } finally {
-        await destroy();
-    }
+    const [, n, m] = challenge;
+    const target = new URL(url);
+    const verify = await ofetch.raw(`${target.origin}/__mzverify?n=${encodeURIComponent(n)}&t=${djb2(n + m)}&r=${encodeURIComponent(target.pathname + target.search)}`, { redirect: 'manual' });
+    const cookie = verify.headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
+    return ofetch<string>(url, { headers: { cookie } });
 }
 
 const handler = async (ctx: Context): Promise<Data> => {
@@ -65,7 +69,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             const name: string | undefined = $el.attr('data-name');
 
             const title: string = [artist, name].filter(Boolean).join(' - ');
-            const linkUrl: string | undefined = $el.find('a.strong, .tracklist__title a').first().attr('href');
+            const linkUrl: string | undefined = $el.find('a.strong, .tracklist__title a').attr('href');
             const authorEls: Element[] = $el.find('div.playlist__heading a, .tracklist__artist a').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {
                 const $authorEl: Cheerio<Element> = $(authorEl);
@@ -143,7 +147,7 @@ To subscribe to [Latest](https://musify.club/en), where the source URL is \`http
     categories: ['multimedia'],
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportRadar: true,
         supportBT: false,

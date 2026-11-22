@@ -25,11 +25,11 @@ const getList = (data): NewsItem[] =>
         return {
             id: ID,
             title: `${title}  [${sectors.join(', ')}]`,
-            description: value.Details ?? title,
+            description: value.Details,
             securityID,
             link: NewsitemSecurities?.length === 0 ? '' : `${baseUrl}${securitySlug}/${securityID}?section=news`,
             guid: String(ID),
-            pubDate: createdOn ? parseDate(/^\d{4}-\d{2}-\d{2}T00:00:00$/.test(createdOn) ? `${createdOn}Z` : createdOn) : undefined,
+            pubDate: parseDate(/^\d{4}-\d{2}-\d{2}T00:00:00$/.test(createdOn) ? `${createdOn}Z` : createdOn),
             category: [...industries, ...sectors],
         };
     });

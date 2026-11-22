@@ -48,7 +48,7 @@ async function handler(ctx) {
         title: item.title,
         link: item.link_url,
         description: item.text,
-        pubDate: item.date ? parseDate(item.date, 9) : undefined,
+        pubDate: parseDate(item.date, 9),
         category: item.cate,
         guid: rootUrl + new URL(item.link_url).pathname,
     }));

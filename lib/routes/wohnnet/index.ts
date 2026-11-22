@@ -84,7 +84,6 @@ Examples:
 
         const items = $('a:has(> .realty)')
             .toArray()
-            .filter((el) => $(el).attr('href')?.trim())
             .map((el) => {
                 const $el = $(el);
                 const href = $el.attr('href');

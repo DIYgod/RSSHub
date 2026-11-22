@@ -49,13 +49,6 @@ export const route: Route = {
     handler,
 };
 
-function getPublicationDate(value: string | undefined) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const login = ctx.req.param('login');
     const filter = ctx.req.param('filter')?.toLowerCase() || 'all';
@@ -104,7 +97,7 @@ async function handler(ctx) {
         title: item.title,
         link: `https://www.twitch.tv/videos/${item.id}`,
         author: displayName,
-        pubDate: getPublicationDate(item.publishedAt),
+        pubDate: parseDate(item.publishedAt),
         description: `<img style="max-width: 100%;" src="${item.previewThumbnailURL}"><br/><img style="max-width: 100%;" src="${item.animatedPreviewURL}">`,
         category: item.game && [item.game.displayName], // item.game may be null
     }));

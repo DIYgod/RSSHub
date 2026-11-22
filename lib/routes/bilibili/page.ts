@@ -53,7 +53,7 @@ async function handler(ctx) {
         const response = await got(`https://api.bilibili.com/x/player/pagelist?${query}`, {
             headers: { Referer: link },
         });
-        if (response.data.code !== 0 || !Array.isArray(response.data.data)) {
+        if (response.data.code !== 0) {
             throw new Error(`Bilibili page list request failed: code = ${response.data.code}, message = ${response.data.message}`, { cause: error });
         }
         respdata = { title: bvid || `av${aid}`, aid, bvid, pages: response.data.data };

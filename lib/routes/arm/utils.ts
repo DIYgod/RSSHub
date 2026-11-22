@@ -76,7 +76,7 @@ const renderBody = (post: WpPost, featured?: WpFeaturedMedia) => {
     const rawHtml = post.content?.rendered || post.excerpt?.rendered || '';
     const $ = load(rawHtml, null, false);
 
-    $('script, style').remove();
+    $('style').remove();
     $('img').each((_, el) => {
         const src = $(el).attr('src');
         if (src?.startsWith('http://')) {
@@ -128,16 +128,12 @@ const toDataItem = (post: WpPost): DataItem => {
         .map((author) => cleanText(author.name!))
         .filter((name) => name !== '' && name.toLowerCase() !== 'anonymous');
 
-    const categories = [
-        ...new Set(
-            (post._embedded?.['wp:term'] ?? [])
-                .filter((group): group is WpTerm[] => Array.isArray(group))
-                .flat()
-                .filter((term) => !term.code && typeof term.name === 'string')
-                .map((term) => cleanText(term.name!))
-                .filter(Boolean)
-        ),
-    ];
+    const categories = (post._embedded?.['wp:term'] ?? [])
+        .filter((group): group is WpTerm[] => Array.isArray(group))
+        .flat()
+        .filter((term) => !term.code && typeof term.name === 'string')
+        .map((term) => cleanText(term.name!))
+        .filter(Boolean);
 
     const featuredUrl = featured?.source_url?.replace(/^http:\/\//, 'https://');
 

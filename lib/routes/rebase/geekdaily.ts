@@ -23,26 +23,19 @@ export const route: Route = {
     name: 'Web3 Geek Daily',
     maintainers: ['gaoyifan'],
     handler: async () => {
-        const response = await ofetch(currentUrl, { responseType: 'text' });
+        const response = await ofetch(currentUrl);
         const $ = load(response);
         const feed = await parser.parseString(await ofetch(`${currentUrl}/rss.xml`, { responseType: 'text' }));
         const cards = $('article.episode-card').toArray();
         const items = await pMap(
             cards,
             (card) => {
-                const href = $(card).find('h2 a').attr('href');
-                if (!href) {
-                    throw new Error('Rebase episode is missing its article link');
-                }
-                const link = new URL(href, rootUrl).href;
+                const link = `${rootUrl}${$(card).find('h2 a').attr('href')}`;
                 return cache.tryGet(`rebase:geekdaily:v2:${link}`, async (): Promise<DataItem> => {
-                    const pageSource1 = await ofetch(link, { responseType: 'text' });
+                    const pageSource1 = await ofetch(link);
                     const detail = load(pageSource1);
                     const article = detail('article#episode-body');
-                    if (!article.length || !article.find('#episode-items').length) {
-                        throw new Error('Rebase episode content is missing');
-                    }
-                    const title = article.find('h1').first().text();
+                    const title = article.find('h1').text();
                     const date = article.find('.detail-body-lead p').first().text();
                     const author = article
                         .find('.detail-body-lead p')
@@ -55,8 +48,8 @@ export const route: Route = {
                         title,
                         link,
                         description: article.html(),
-                        pubDate: published ? parseDate(published) : date ? parseDate(`${date} +0000`, 'YYYY年M月D日 ZZ') : undefined,
-                        author: author || undefined,
+                        pubDate: published ? parseDate(published) : parseDate(`${date} +0000`, 'YYYY年M月D日 ZZ'),
+                        author,
                     };
                 });
             },

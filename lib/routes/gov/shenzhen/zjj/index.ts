@@ -123,7 +123,7 @@ function getListDataItems($: CheerioAPI): DataItem[] {
         .map((item) => {
             const $item = $(item);
             const $a = $item.find('a');
-            const date = $item.find('span:not(.fgType)').text().trim();
+            const date = $item.find('span:not(.fgType)').text();
 
             return {
                 title: $a.attr('title') || $a.text(),
@@ -142,7 +142,7 @@ function getTableDataItems($: CheerioAPI): DataItem[] {
         .map((row) => {
             const $row = $(row);
             const $a = $row.find('td.t2 a');
-            const date = $row.find('td.t3').text().trim();
+            const date = $row.find('td.t3').text();
 
             return {
                 title: $a.attr('title') || $a.text(),

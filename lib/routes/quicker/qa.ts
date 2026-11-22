@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { parseDateText } from './utils';
 
@@ -45,8 +46,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
+    const limit = getRouteLimit(ctx, 25);
     const category = ctx.req.param('category') ?? 'all';
     const state = ctx.req.param('state') ?? '';
 
@@ -98,7 +98,7 @@ async function handler(ctx) {
 
                 item.description = content('.topic-body').html();
                 item.author = content('.user-link').first().text();
-                item.pubDate = parseDateText(pubDate) ?? item.pubDate;
+                item.pubDate = parseDateText(pubDate);
 
                 return item;
             }),

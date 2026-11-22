@@ -108,14 +108,7 @@ async function handler(ctx) {
                 updated: parseDate(`${item.modified_gmt}Z`),
                 image,
                 author: item._embedded.author[0].name,
-                category: [
-                    ...new Set<string>(
-                        item._embedded?.['wp:term']
-                            ?.flat()
-                            .map((term) => term.name)
-                            .filter(Boolean)
-                    ),
-                ],
+                category: item._embedded['wp:term'].flat().map((term) => term.name),
             };
             return single;
         });

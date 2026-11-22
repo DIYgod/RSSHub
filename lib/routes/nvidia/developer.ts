@@ -73,7 +73,7 @@ export const route: Route = {
             language,
             item: posts.map((post) => {
                 const $ = load(post.content.rendered, null, false);
-                $('script, style, button, .heading-anchor-link').remove();
+                $('button, .heading-anchor-link').remove();
                 return {
                     title: decodeHTML(post.title.rendered),
                     link: post.link,

@@ -36,20 +36,16 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.list-media')
         .toArray()
-        .flatMap((item) => {
+        .map((item) => {
             const $item = $(item);
             const $links = $item.find('h5.title a');
             const $article = $links.last();
-            const href = $article.attr('href');
-            if (!href) {
-                return [];
-            }
             const date = $item.find('.time span').last().text() + '-' + $item.find('.time .puls').text();
             return {
                 title: '「' + $links.first().text() + '」' + $article.text(),
                 description: $item.find('p.summary').text(),
                 pubDate: parseDate(date, 8),
-                link: new URL(href, baseUrl).href,
+                link: new URL($article.attr('href')!, baseUrl).href,
             };
         });
 

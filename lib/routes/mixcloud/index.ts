@@ -182,7 +182,7 @@ export async function handler(ctx) {
                 title: cloudcast.name,
                 author: cloudcast.owner?.displayName || username,
                 description: richDescription,
-                pubDate: cloudcast.publishDate ? parseDate(cloudcast.publishDate) : undefined,
+                pubDate: parseDate(cloudcast.publishDate),
                 guid: Buffer.from(cloudcast.id, 'base64').toString(),
                 link: `${MIXCLOUD_CONFIG.host}/${cloudcast.owner?.username || username}/${cloudcast.slug}`,
                 itunes_item_image: cloudcast.picture?.url || '',

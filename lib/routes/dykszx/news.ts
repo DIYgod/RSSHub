@@ -47,7 +47,7 @@ async function handler(ctx) {
             return cache.tryGet(`dykszx:article:${href}`, async () => {
                 const newsContent = await getContent(href);
                 return {
-                    title: newsContent.title || item.children[0].children[0].data,
+                    title: newsContent.title,
                     description: newsContent.content,
                     link: newsContent.newsPage,
                     pubDate: parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss', 8),

@@ -45,15 +45,11 @@ const handler = async (ctx) => {
                 const title = $$('h2.xxgk_title, h1.bjjMTitle').text();
                 const content = $$('div.gsj_htmlcon_bot').length ? $$('div.gsj_htmlcon_bot') : $$('div.TRS_Editor');
                 const description = content.html();
-                const contentId = $$('meta[name="contentid"]').prop('content');
-                const guid = contentId ? `moa-${contentId}` : item.link;
+                const guid = `moa-${$$('meta[name="contentid"]').prop('content')}`;
 
                 item.title = title || item.title;
                 item.description = description;
-                const pubDate = $$('meta[name="PubDate"]').prop('content');
-                if (pubDate) {
-                    item.pubDate = parseDate(pubDate, 8);
-                }
+                item.pubDate = parseDate($$('meta[name="PubDate"]').prop('content'), 8);
                 item.category = [
                     ...new Set([
                         $$('meta[name="SiteName"]').prop('content'),

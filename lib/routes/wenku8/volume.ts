@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    if (!/^\d+$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) <= 0) {
+    if (!/^\d+$/.test(id)) {
         throw new InvalidParameterError('id must be a positive integer novel ID.');
     }
     const aid = Number(id);

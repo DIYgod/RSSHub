@@ -55,7 +55,7 @@ async function handler() {
             link: item.link,
             pubDate: parseDate(item.item_datetime, 8),
             description,
-            category: [item.channel_name, ...(item.keyword?.map((tag) => tag.name) || [])].filter(Boolean),
+            category: [item.channel_name, ...item.keyword.map((tag) => tag.name)],
         };
     });
 

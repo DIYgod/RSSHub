@@ -29,8 +29,8 @@ const handler = async (ctx: Context): Promise<Data> => {
     if (!sectionObj) {
         throw new Error(`Invalid section ID: ${id}. No matching official section was found.`);
     }
-    const sectionId: number | undefined = sectionObj?.id ?? undefined;
-    const sectionLink: string | undefined = sectionObj?.link ?? undefined;
+    const sectionId: number | undefined = sectionObj.id;
+    const sectionLink: string | undefined = sectionObj.link;
 
     const response = await ofetch(apiUrl, {
         query: {

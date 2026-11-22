@@ -1,9 +1,9 @@
 import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
-import { formatDate } from '@/utils/time';
+import { formatDate, parseDate } from '@/utils/time';
 
-import { constructTopicEntry, parseCreatedAt } from './utils';
+import { constructTopicEntry } from './utils';
 
 export const route: Route = {
     path: '/topic/text/:id',
@@ -45,9 +45,9 @@ async function handler(ctx) {
 
     const result = data.result;
     result.item = data.posts.map((item) => {
-        const pubDate = parseCreatedAt(item.createdAt);
+        const pubDate = parseDate(item.createdAt)!;
         return {
-            title: pubDate ? `${data.topic.content} ${formatDate(pubDate, 'MM月DD日')}` : data.topic.content,
+            title: `${data.topic.content} ${formatDate(pubDate, 'MM月DD日')}`,
             description: escapeText(item.content).replaceAll('\n', '<br>'),
             pubDate,
             link: `https://m.okjike.com/originalPosts/${item.id}`,

@@ -59,8 +59,8 @@ async function handler(ctx: Context) {
         item: response.items.map((item) => ({
             title: `${'★★★★★☆☆☆☆☆'.slice(5 - item.score, 10 - item.score)} ${item.name}`,
             description: item.content,
-            pubDate: item.udpublishtm ? parseDate(item.udpublishtm, 8) : undefined,
-            updated: item.updatetime ? parseDate(item.updatetime, 8) : undefined,
+            pubDate: parseDate(item.udpublishtm, 8),
+            updated: parseDate(item.updatetime, 8),
             link: `https://www.nosetime.com/xiangshui/${item.id}-${item.iurl}.html`,
             guid: `nosetime:review:${item.udid}`,
             author: userinfo.uname,

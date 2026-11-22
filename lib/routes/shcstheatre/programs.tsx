@@ -151,7 +151,7 @@ async function handler() {
                     title: data.SCS_WEB_BRIEFNAME,
                     link: link.href,
                     description: renderDescription(data),
-                    pubDate: data.SJ_DATE_PC ? parseDate(data.SJ_DATE_PC, 8) : undefined,
+                    pubDate: parseDate(data.SJ_DATE_PC, 8),
                 };
             });
         },

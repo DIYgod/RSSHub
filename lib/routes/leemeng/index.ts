@@ -2,12 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseDateStrict } from '@/utils/time';
-
-const getPubDate = (date: string) => {
-    const calendarDate = date.trim().split(' ', 1)[0];
-    return /^\d{4}-\d{2}-\d{2}$/.test(calendarDate) && parseDateStrict(calendarDate, 'YYYY-MM-DD') ? parseDate(`${calendarDate}T00:00:00Z`) : undefined;
-};
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -45,7 +40,7 @@ async function handler() {
                     .toArray()
                     .map((tag) => $(tag).text()),
                 // hero article uses .page-header__date, list articles use .blog-date
-                pubDate: getPubDate($(elem).find('.blog-date a, .page-header__date').text()),
+                pubDate: parseDate(`${$(elem).find('.blog-date a, .page-header__date').text().trim().split(' ', 1)[0]}T00:00:00Z`),
             };
         });
 

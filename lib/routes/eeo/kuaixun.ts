@@ -83,8 +83,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1').first().text() || $$('h2.title').text() || item.title;
-                const articleHtml = $$('div.xx_boxsing, div#mainBody').html();
-                const description: string | undefined = articleHtml ? renderDescription({ description: articleHtml }) : (item.description ?? undefined);
+                const description: string | undefined = renderDescription({ description: $$('div.xx_boxsing, div#mainBody').html() || undefined });
                 const pubDateStr: string | undefined = $$('h1').next().find('span').first().text() || $$('div.from').text();
                 const authors: DataItem['author'] = $$('h1').next().contents().first().text() || $$('span.showMoreAuthor').text() || item.author;
 
@@ -95,7 +94,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     author: authors,
                     content: {
                         html: description,
-                        text: articleHtml ? $$('div.xx_boxsing, div#mainBody').text() : item.content?.text,
+                        text: $$('div.xx_boxsing, div#mainBody').text(),
                     },
                     language,
                 };

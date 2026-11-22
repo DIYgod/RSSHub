@@ -15,12 +15,6 @@ type Note = {
     upt: number;
     id: string;
 };
-function parsePublishedDate(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-    return parseDate(value);
-}
 export const route: Route = {
     path: '/xueba',
     categories: ['study'],
@@ -52,8 +46,7 @@ async function handler() {
         }),
     });
     const authors: Record<string, string> = {};
-    const streamLines = response.xuebas;
-    for (const author of streamLines) {
+    for (const author of response.xuebas) {
         authors[author.uid] = author.name;
     }
     const list = response.notes.map((item) => ({
@@ -61,15 +54,12 @@ async function handler() {
         title: item.title,
         author: item.userId,
         description: item.description,
-        pubDate: parsePublishedDate(item.upt),
+        pubDate: parseDate(item.upt),
         link: `http://note.youdao.com/publicshare/?type=${item.type}&id=${item.id}`,
     }));
     const items = await pMap(
         list,
         async (item) => {
-            if (item.type !== 'note' && item.type !== 'notebook') {
-                throw new Error('Unsupported Youdao shared content type');
-            }
             let description: string | undefined = item.description;
             try {
                 const article = await cache.tryGet(`youdao:xueba:v3:${item.link}`, async () => {
@@ -77,9 +67,6 @@ async function handler() {
                     const contentResponse = await ofetch(`http://note.youdao.com/yws/public/${item.type}/${id}`, { parseResponse: JSON.parse });
                     let description: string | undefined;
                     if (item.type === 'note') {
-                        if (typeof contentResponse.content !== 'string') {
-                            throw new TypeError('Youdao shared note response is missing its text content');
-                        }
                         description = contentResponse.content;
                     } else {
                         const notes = contentResponse[2];

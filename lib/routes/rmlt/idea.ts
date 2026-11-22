@@ -36,12 +36,11 @@ async function handler() {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
-                const date = content('.date').text().trim();
                 return {
                     ...item,
                     title: content('.article-title').text(),
                     description: content('.article-content').html(),
-                    pubDate: date ? parseDate(date, 'YYYY-MM-DD HH:mm', 8) : undefined,
+                    pubDate: parseDate(content('.date').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
             }),
         { concurrency: 3 }

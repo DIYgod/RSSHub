@@ -23,7 +23,7 @@ const ProcessFeed = (list: Element[], cache, current) =>
                 if (new URL($url).hostname === 'mp.weixin.qq.com') {
                     const timestamp = data.match(/\bct\s*=\s*["'](\d+)["']/)?.[1];
                     return {
-                        title: $('meta[property="og:title"]').attr('content') || $('#activity-name').text(),
+                        title: $('meta[property="og:title"]').attr('content'),
                         description: fixArticleContent($('#js_content')),
                         link: $url,
                         author: $('meta[name="author"]').attr('content') || $('#js_name').text(),

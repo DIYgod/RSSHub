@@ -84,11 +84,11 @@ async function handler() {
                 if (!description) {
                     throw new Error(`Cannot find the article content on ${item.link}.`);
                 }
-                const article = JSON.parse($detail('script[type="application/ld+json"]').first().text() || '{}');
+                const article = JSON.parse($detail('script[type="application/ld+json"]').text());
                 return {
                     description,
-                    pubDate: article.datePublished ? parseDate(article.datePublished) : undefined,
-                    updated: article.dateModified ? parseDate(article.dateModified) : undefined,
+                    pubDate: parseDate(article.datePublished),
+                    updated: parseDate(article.dateModified),
                 };
             });
             return { ...item, ...details };

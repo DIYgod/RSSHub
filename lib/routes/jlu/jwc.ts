@@ -43,12 +43,10 @@ async function handler() {
 
             const link = new URL(linkEl.attr('href')!, baseUrl).href;
 
-            const date = /^\d{4}-\d{1,2}$/.test(yearMonth) && /^\d{1,2}$/.test(day) ? `${yearMonth}-${day}` : undefined;
-
             return {
                 title,
                 link,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(`${yearMonth}-${day}`, 'YYYY-MM-DD', 8),
             };
         }),
     };

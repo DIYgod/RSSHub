@@ -222,9 +222,9 @@ export default {
                     throw new Error('暂时无法获取快递信息，请稍后重试...');
                 }
                 // Use a short cache duration until the parcel is complete.
-                await (query.ischeck === '0' ? cache.set(queryKey, query ?? '', 180) : cache.set(queryKey, query ?? ''));
+                await (query.ischeck === '0' ? cache.set(queryKey, query, 180) : cache.set(queryKey, query));
             } else {
-                await cache.set(queryKey, query ?? ''); // Error, cache as well
+                await cache.set(queryKey, query); // Error, cache as well
                 throw new Error(`[${query.status}]信息有误，请重新检查后订阅：${query.message}`);
             }
         }

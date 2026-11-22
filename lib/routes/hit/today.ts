@@ -7,10 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 8);
+    return value ? parseDate(value, 8) : undefined;
 }
 
 export const route: Route = {

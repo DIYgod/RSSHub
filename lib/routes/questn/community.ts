@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -32,10 +33,8 @@ export const route: Route = {
 async function handler(ctx) {
     const url = 'https://api.questn.com/consumer/explore/entity_list/';
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const count = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const params = {
-        count: String(count),
+        count: String(getRouteLimit(ctx, 20)),
         page: '1',
         community_url: ctx.req.param('communityUrl') || 'questn', // default to questn
     };

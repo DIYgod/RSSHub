@@ -62,19 +62,11 @@ async function handler(ctx) {
             title: item.title,
             description: item.content_rendered,
             content: { text: item.content, html: item.content_rendered },
-            pubDate: parsePublicationDate(item.created),
+            pubDate: parseDate(item.created, 'X'),
             link: item.url,
             author: item.member.username,
             comments: item.replies,
             category: [item.node.title],
         })),
     };
-}
-
-function parsePublicationDate(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-
-    return parseDate(value, 'X');
 }

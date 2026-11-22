@@ -36,12 +36,11 @@ interface FeedEntry {
 }
 
 const resolveHttpUrl = (rawUrl: string | undefined, baseUrl: string): string | undefined => {
-    const trimmed = rawUrl?.trim();
-    if (!trimmed) {
+    if (!rawUrl) {
         return undefined;
     }
     try {
-        const parsed = new URL(trimmed, baseUrl);
+        const parsed = new URL(rawUrl, baseUrl);
         return SAFE_HTTP_PROTOCOLS.has(parsed.protocol) ? parsed.href : undefined;
     } catch {
         return undefined;
@@ -87,7 +86,7 @@ const pickCoverImage = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl: stri
 };
 
 const pruneNoiseAndStyles = ($body: Cheerio<Element>, $: CheerioAPI) => {
-    $body.find('header, footer, nav, button, script, style, noscript, template, details.kimi-contents, [class*="animate-pulse"], a.anchor').remove();
+    $body.find('button, style, details.kimi-contents').remove();
     $body
         .find('[style]')
         .filter((_, el) => $(el).closest('svg').length === 0)
@@ -118,10 +117,7 @@ const pruneEmptyDivs = ($body: Cheerio<Element>, $: CheerioAPI) => {
 
 const extractArticleContent = ($: CheerioAPI, articleUrl: string) => {
     const $article = $('article').first();
-    const $candidate = $article
-        .children('div')
-        .not(String.raw`.lg\:hidden`)
-        .first();
+    const $candidate = $article.children('div').not(String.raw`.lg\:hidden`);
     const $body = $candidate.length > 0 ? $candidate : $article;
     if ($body.length === 0) {
         return { bodyHtml: '', image: resolveHttpUrl($('meta[property="og:image"]').attr('content'), articleUrl) };
@@ -133,14 +129,14 @@ const extractArticleContent = ($: CheerioAPI, articleUrl: string) => {
 
     const image = pickCoverImage($, $body, articleUrl);
     const hasContent = Boolean($body.text().trim()) || $(MEDIA_KEEP_SELECTOR, $body).length > 0;
-    const bodyHtml = hasContent ? ($body.html() || '').trim() : '';
+    const bodyHtml = hasContent ? $body.html()?.trim() : '';
 
     return { bodyHtml, image };
 };
 
 const extractCategories = (rawCategories: string[] | undefined): string[] | undefined => {
-    const unique = [...new Set((rawCategories ?? []).map((tag) => tag.trim()).filter(Boolean))];
-    return unique.length > 0 ? unique : undefined;
+    const categories = (rawCategories ?? []).filter(Boolean);
+    return categories.length > 0 ? categories : undefined;
 };
 
 const toFeedEntry = (item: RssItem): FeedEntry | undefined => {
@@ -152,31 +148,14 @@ const toFeedEntry = (item: RssItem): FeedEntry | undefined => {
     return {
         title: item.title,
         link,
-        summary: (item.contentSnippet ?? item.content ?? '').trim(),
+        summary: item.contentSnippet ?? item.content ?? '',
         pubDate: rawDate ? parseDate(rawDate) : undefined,
-        author: item.creator?.trim() || undefined,
+        author: item.creator,
         category: extractCategories(item.categories),
     };
 };
 
-const mapFeedEntries = (items: RssItem[], limit: number): FeedEntry[] => {
-    const seen = new Set<string>();
-    const entries: FeedEntry[] = [];
-
-    for (const item of items) {
-        const entry = toFeedEntry(item);
-        if (!entry || seen.has(entry.link)) {
-            continue;
-        }
-        seen.add(entry.link);
-        entries.push(entry);
-        if (entries.length >= limit) {
-            break;
-        }
-    }
-
-    return entries;
-};
+const mapFeedEntries = (items: RssItem[], limit: number): FeedEntry[] => items.flatMap((item) => toFeedEntry(item) ?? []).slice(0, limit);
 
 const fetchArticleDetail = (entry: FeedEntry) =>
     cache.tryGet(`vllm:blog:${entry.link}`, async () => {
@@ -200,7 +179,7 @@ const fetchArticleDetail = (entry: FeedEntry) =>
 
 async function handler(ctx: Context): Promise<Data> {
     const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
-    const rssXml = await ofetch(RSS_URL, { responseType: 'text' });
+    const rssXml = await ofetch<string>(RSS_URL);
     const feed = await parser.parseString(rssXml);
     const entries = mapFeedEntries(feed.items, limit);
 

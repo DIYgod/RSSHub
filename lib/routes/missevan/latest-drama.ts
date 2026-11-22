@@ -21,9 +21,10 @@ async function handler() {
     const items = await pMap(
         response.info.Datas,
         async (item) => {
-            const dramaUrl = `https://www.missevan.com/dramaapi/getdrama?drama_id=${item.id}`;
-            const dramaResponse = await ofetch(dramaUrl);
-            const soundId = dramaResponse.info?.episodes?.episode?.[0]?.sound_id;
+            const soundId = await cache.tryGet(`missevan:drama:${item.id}:${item.newest}`, async () => {
+                const dramaResponse = await ofetch(`https://www.missevan.com/dramaapi/getdrama?drama_id=${item.id}`);
+                return dramaResponse.info.episodes.episode[0]?.sound_id;
+            });
             if (!soundId) {
                 return;
             }

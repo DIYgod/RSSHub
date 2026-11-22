@@ -44,11 +44,10 @@ async function handler() {
             list.toArray().map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
-                const pubDate = parseDateStrict($item.find('.m-date').text().trim(), 'YYYY-MM-DD', 8);
                 return {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate,
+                    pubDate: parseDateStrict($item.find('.m-date').text().trim(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

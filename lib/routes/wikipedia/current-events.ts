@@ -63,25 +63,8 @@ async function getRenderedWikiContent(pageName: string): Promise<string> {
             'User-Agent': config.trueUA,
         },
     });
-    if (typeof data.parse?.text?.['*'] !== 'string' || data.parse.title?.replaceAll(' ', '_') !== pageName) {
-        throw new Error(`Wikipedia rendered content was unavailable for ${pageName}`);
-    }
     const $ = load(data.parse.text['*']);
     const content = $('.current-events-content');
-    if (content.length !== 1) {
-        throw new Error(`Wikipedia current events body was not found for ${pageName}`);
-    }
-    content.find('style, script').remove();
-    content.find('[href], [src], [poster]').each((_, element) => {
-        const node = $(element);
-        const streamLines = ['href', 'src', 'poster'];
-        for (const attribute of streamLines) {
-            const value = node.attr(attribute);
-            if (value) {
-                node.attr(attribute, new URL(value, `https://en.wikipedia.org/wiki/${pageName}`).href);
-            }
-        }
-    });
     return content.text().trim() ? content.html()! : '';
 }
 async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<string, string>> {
@@ -141,11 +124,12 @@ async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<str
             hasMore = false;
         }
     }
-    const results = await unwrapFirstFailure(
-        pMap(publishedPages, async (pageName) => [pageName, await cache.tryGet(`wikipedia:current-events:article:${pageName}`, async () => await getRenderedWikiContent(pageName), config.cache.contentExpire)] as const, {
+    const results = await pMap(
+        publishedPages,
+        async (pageName) => [pageName, await cache.tryGet(`wikipedia:current-events:article:${pageName}`, async () => await getRenderedWikiContent(pageName), config.cache.contentExpire)] as const,
+        {
             concurrency: 3,
-            stopOnError: false,
-        })
+        }
     );
     return Object.fromEntries(results);
 }
@@ -269,11 +253,4 @@ function determineDates(includeToday: string) {
     const startOffset = shouldIncludeToday ? 0 : 1;
     const dates = Array.from({ length: 7 }, (_, i) => now.toPlainDate().subtract({ days: i + startOffset }));
     return dates;
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

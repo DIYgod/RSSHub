@@ -31,8 +31,8 @@ async function handler() {
                 title: item.title ?? '',
                 link: item.link,
                 guid: item.guid ?? item.id,
-                description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
-                author: item.creator ?? item.author,
+                description: item.content,
+                author: item.creator,
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 category: item.categories,
             }))

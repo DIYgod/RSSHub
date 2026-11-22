@@ -99,7 +99,7 @@ const processPost: (post: any) => DataItem = (post) => {
         id: post.id_string,
         title: post.title ?? post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,
-        pubDate: typeof post.timestamp === 'number' && Number.isFinite(post.timestamp) ? parseDate(post.timestamp * 1000) : undefined,
+        pubDate: parseDate(post.timestamp * 1000),
         category: post.tags,
         description,
     };

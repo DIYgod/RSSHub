@@ -35,20 +35,7 @@ export interface ResearchArticle {
 
 const flightChunkPattern = /self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g;
 
-const decodeFlightData = (html: string): string => {
-    const chunks: string[] = [];
-    for (const match of html.matchAll(flightChunkPattern)) {
-        try {
-            const decoded = JSON.parse(match[1]);
-            if (typeof decoded === 'string') {
-                chunks.push(decoded);
-            }
-        } catch {
-            // Ignore malformed RSC flight chunks
-        }
-    }
-    return chunks.join('');
-};
+const decodeFlightData = (html: string): string => Array.from(html.matchAll(flightChunkPattern), (match) => JSON.parse(match[1])).join('');
 
 // Returns the JSON array that follows `key`, skipping brackets inside string literals.
 const extractJsonArray = (text: string, key: string): string | undefined => {
@@ -95,7 +82,7 @@ const extractJsonArray = (text: string, key: string): string | undefined => {
 };
 
 export const fetchResearchArticles = async (): Promise<ResearchArticle[]> => {
-    const html = await ofetch(researchUrl, { responseType: 'text' });
+    const html = await ofetch(researchUrl);
     const json = extractJsonArray(decodeFlightData(html), '"researchItems":[');
     if (!json) {
         throw new Error(`Could not find research items on ${researchUrl}. The page structure may have changed.`);
@@ -118,14 +105,14 @@ const unwrap = ($: CheerioAPI, element: Element) => {
     $(element).replaceWith($(element).contents());
 };
 
-const cleanArticleContent = ($: CheerioAPI, link: string): string | undefined => {
-    const content = $('div.post-content').first();
+const cleanArticleContent = ($: CheerioAPI): string | undefined => {
+    const content = $('div.post-content');
     if (content.length === 0) {
         return undefined;
     }
 
     // Decorative elements: heading link icons and the animated duplicate of pull quotes.
-    content.find('[aria-hidden="true"], svg, script, style, noscript, button').remove();
+    content.find('[aria-hidden="true"], svg, button').remove();
     // Heading self-anchors and image zoom wrappers
     for (const element of content.find('a[href^="#"], div[data-rmiz], div[data-rmiz-content]').toArray()) {
         unwrap($, element);
@@ -133,13 +120,6 @@ const cleanArticleContent = ($: CheerioAPI, link: string): string | undefined =>
     for (const element of content.find('a[href*="/cdn-cgi/l/email-protection#"]').toArray()) {
         const encoded = $(element).attr('href')!.split('#', 2)[1];
         $(element).attr('href', `mailto:${decodeCloudflareEmail(encoded)}`);
-    }
-    for (const element of content.find('a[href], img[src], iframe[src]').toArray()) {
-        const attribute = element.tagName === 'a' ? 'href' : 'src';
-        const value = $(element).attr(attribute)!;
-        if (!value.startsWith('mailto:')) {
-            $(element).attr(attribute, new URL(value, link).href);
-        }
     }
     // Site styles target a dark theme and would render poorly in feed readers.
     content.find('*').removeAttr('class').removeAttr('style').removeAttr('data-nimg').removeAttr('data-sanity-edit-target').removeAttr('loading').removeAttr('decoding');
@@ -149,8 +129,8 @@ const cleanArticleContent = ($: CheerioAPI, link: string): string | undefined =>
 
 export const fetchArticleContent = (link: string): Promise<string> =>
     cache.tryGet(`tryprofound:blog:${link}`, async () => {
-        const html = await ofetch(link, { responseType: 'text' });
-        const content = cleanArticleContent(load(html), link);
+        const html = await ofetch(link);
+        const content = cleanArticleContent(load(html));
         if (!content) {
             throw new Error(`Could not find the article body (div.post-content) on ${link}. The page structure may have changed.`);
         }

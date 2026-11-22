@@ -80,8 +80,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '1';
-    const requestedLimit = Number(ctx.req.param('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;
+    const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 15;
     const itemLimit = getRouteLimit(ctx, 100);
     const isFull = /t|y/i.test(ctx.req.param('isFull') ?? 'true');
 

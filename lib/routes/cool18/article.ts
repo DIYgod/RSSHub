@@ -7,19 +7,16 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 export async function getArticle(item: DataItem): Promise<DataItem | undefined> {
-    if (!item.link) {
-        return item;
-    }
-    let detail: { description: string; datePublished?: string; author?: string };
+    let detail: { description?: string; datePublished: string; author: string };
     try {
         detail = await cache.tryGet(`cool18:article:${item.link}`, async () => {
             const response = await ofetch(item.link!);
             const $ = load(response);
-            const metadata = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
+            const metadata = JSON.parse($('script[type="application/ld+json"]').text());
             return {
-                description: $('pre').html()?.replaceAll('<font color="#E6E6DD">cool18.com</font>', '') || '',
-                datePublished: typeof metadata.datePublished === 'string' ? metadata.datePublished : undefined,
-                author: typeof metadata.author?.name === 'string' ? metadata.author.name : undefined,
+                description: $('pre').html()?.replaceAll('<font color="#E6E6DD">cool18.com</font>', ''),
+                datePublished: metadata.datePublished,
+                author: metadata.author.name,
             };
         });
     } catch (error) {
@@ -28,11 +25,10 @@ export async function getArticle(item: DataItem): Promise<DataItem | undefined> 
         }
         throw error;
     }
-    const pubDate = detail.datePublished ? parseDate(detail.datePublished) : undefined;
     return {
         ...item,
         description: detail.description,
         author: item.author || detail.author,
-        pubDate: pubDate ?? item.pubDate,
+        pubDate: parseDate(detail.datePublished),
     };
 }

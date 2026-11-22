@@ -35,12 +35,12 @@ async function handler(ctx: Context) {
             const date = $item
                 .find('.news_time')
                 .text()
-                .match(/\d{4}-\d{1,2}-\d{1,2}/)?.[0];
+                .match(/\d{4}-\d{1,2}-\d{1,2}/)![0];
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, link).href,
                 description: $item.find('.news_abstract').text().trim(),
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         });
 

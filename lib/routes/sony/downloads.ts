@@ -65,7 +65,7 @@ async function handler(ctx) {
         } else if (url.startsWith('//')) {
             absoluteUrl = 'https:' + url;
         }
-        return { title: item.title, pubDate: item.publicationDate ? parseDate(item.publicationDate) : undefined, url: absoluteUrl };
+        return { title: item.title, pubDate: parseDate(item.publicationDate), url: absoluteUrl };
     });
     return {
         title: `Sony - ${productId.toUpperCase()}`,

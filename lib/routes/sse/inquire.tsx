@@ -55,9 +55,9 @@ async function handler() {
     const items = response.data.result.map((item) => ({
         title: item.docTitle,
         description: renderToString(<SseInquireDescription item={item} />),
-        pubDate: item.createTime ? parseDate(item.createTime, 8) : undefined,
+        pubDate: parseDate(item.createTime, 8),
         link: `https://${item.docURL}`,
-        category: item.extWTFL ? [item.extWTFL] : undefined,
+        category: [item.extWTFL],
     }));
 
     return {

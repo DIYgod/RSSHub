@@ -47,7 +47,7 @@ async function handler() {
             const date = $item.find('.news_metat').text();
             const a = $item.find('.news_title a');
             return {
-                title: a.attr('title') ?? a.text(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, rootUrl).href,
                 pubDate: parseDate(date, 8),
             };

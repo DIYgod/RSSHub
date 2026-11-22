@@ -29,10 +29,9 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('a');
-            const dateText = $item.find('span').text().replaceAll(/[[\]]/g, '');
             return {
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: dateText ? parseDate(dateText, 8) : undefined,
+                pubDate: parseDate($item.find('span').text().replaceAll(/[[\]]/g, ''), 8),
             };
         });
 

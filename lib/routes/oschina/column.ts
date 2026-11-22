@@ -6,19 +6,18 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { getLimit, getNews } from './utils';
+import { getNews } from './utils';
 
 interface NewsResponse {
-    code: number;
-    message: string;
     result: {
         id: number;
         title: string;
         detail: string;
         pubTime: string;
-        lastUpdate: string | null;
+        lastUpdate: string;
         tags: string | null;
         coverUrl: string;
         userVo: { name: string; spaceUrl: string; portraitUrl: string };
@@ -27,7 +26,7 @@ interface NewsResponse {
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = getLimit(ctx.req.query('limit'), 10);
+    const limit = getRouteLimit(ctx, 10);
     const baseUrl = 'https://www.oschina.net';
     const targetUrl = new URL(`news/column?columnId=${id}`, baseUrl).href;
     const response = await ofetch(targetUrl);
@@ -36,25 +35,19 @@ const handler = async (ctx: Context): Promise<Data> => {
     const list = $('div.news-item')
         .slice(0, limit)
         .toArray()
-        .flatMap((element) => {
-            const link = $(element).attr('data-url');
-            return link ? { link: new URL(link, baseUrl).href } : [];
-        });
+        .map((element) => ({ link: $(element).attr('data-url')! }));
     const items: DataItem[] = await pMap(
         list,
         async (item) => {
             const newsId = new URL(item.link).pathname.split('/', 3)[2];
             const details = await cache.tryGet(`oschina:column:news:${newsId}`, async () => {
                 const response: NewsResponse = await getNews(Number(newsId));
-                if (response.code !== 200) {
-                    throw new Error(`Unable to fetch OSCHINA news ${newsId}: ${response.message}`);
-                }
                 const news = response.result;
                 return {
                     title: news.title,
                     description: news.detail,
                     pubDate: parseDate(news.pubTime, 8),
-                    updated: news.lastUpdate ? parseDate(news.lastUpdate) : undefined,
+                    updated: parseDate(news.lastUpdate),
                     category: news.tags ? news.tags.split(',') : undefined,
                     author: [{ name: news.userVo.name, url: news.userVo.spaceUrl, avatar: news.userVo.portraitUrl }],
                     image: news.coverUrl,

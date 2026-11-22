@@ -28,8 +28,7 @@ async function handler() {
             const author = heading
                 .find('span')
                 .text()
-                .replace(/^作者：\s*/, '')
-                .trim();
+                .replace(/^作者：\s*/, '');
             heading.find('span').remove();
             const title = heading.text();
             const subUrl = $item.find('a').attr('href');

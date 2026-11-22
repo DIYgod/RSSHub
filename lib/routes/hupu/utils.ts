@@ -4,32 +4,22 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export function extractForumThreadDates($: CheerioAPI): Map<string, Temporal.Instant> {
     const prefix = 'window.$$data=';
-    const script = $('script')
-        .toArray()
-        .map((element) => $(element).text().trim())
-        .find((content) => content.startsWith(prefix));
+    const script = $('script:contains("window.$$data=")').text();
     const dates = new Map<string, Temporal.Instant>();
     if (!script) {
         return dates;
     }
 
-    const data = JSON.parse(script.slice(prefix.length).replace(/;\s*$/, '')) as {
-        topic?: { threads?: { list?: Array<{ url?: string; createdAt?: number }> } };
+    const data = JSON.parse(script.slice(prefix.length)) as {
+        topic?: { threads?: { list?: Array<{ url: string; createdAt: number }> } };
     };
     const threads = data.topic?.threads?.list ?? [];
     for (const thread of threads) {
-        if (!(thread.url && typeof thread.createdAt === 'number' && Number.isFinite(thread.createdAt) && thread.createdAt > 0)) {
-            continue;
-        }
-
-        const date = parseDate(thread.createdAt);
-        if (date) {
-            dates.set(thread.url, date);
-        }
+        dates.set(thread.url, parseDate(thread.createdAt)!);
     }
     return dates;
 }
@@ -40,17 +30,12 @@ export function extractNextData<T = unknown>(html: string, url?: string): T {
         throw new Error(`Failed to find __NEXT_DATA__ script tag in page${url ? `: ${url}` : ''}`);
     }
 
-    try {
-        return JSON.parse(scriptMatch[1]);
-    } catch (error) {
-        throw new Error(`Failed to parse __NEXT_DATA__ JSON: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
-    }
+    return JSON.parse(scriptMatch[1]);
 }
 
 interface ThreadNextData {
     props: {
         pageProps: {
-            detail?: { thread?: { createdAt?: number } };
             threadData: {
                 data: {
                     moduleConfigList: {
@@ -251,16 +236,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
 
             // Extract matchId from __NEXT_DATA__
             let matchId: string | null = null;
-            let detailPubDate: Temporal.Instant | undefined;
             try {
                 const nextData = extractNextData<ThreadNextData>(html, item.link);
-                const timestamp = nextData.props?.pageProps?.detail?.thread?.createdAt;
-                if (typeof timestamp === 'number' && Number.isFinite(timestamp) && timestamp > 0) {
-                    const date = parseDate(timestamp);
-                    if (date) {
-                        detailPubDate = date;
-                    }
-                }
                 const contentStr = nextData.props?.pageProps?.threadData?.data?.moduleConfigList?.content?.moduleContent?.content;
                 if (contentStr) {
                     const matchContent: MatchContent = JSON.parse(contentStr);
@@ -271,9 +248,6 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
             }
 
             const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
-            const pubDateString = content('.second-line-user-info span:not([class])').text();
-            const fullDate = pubDateString ? parseDateStrict(pubDateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8) : undefined;
-            const pubDate = [item.pubDate, detailPubDate, fullDate].find((date) => date instanceof Temporal.Instant);
             const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                 .toArray()
                 .map((c) => content(c).text())
@@ -321,10 +295,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 author,
                 category: categories.length > 0 ? categories : item.category,
                 description,
-                pubDate,
             };
         } catch {
-            // no-empty
             return item;
         }
     });

@@ -18,12 +18,9 @@ async function handler(): Promise<Data> {
     const data = await ofetch(rootUrl);
 
     const $ = load(data);
-    const title = $('meta[property="og:title"]').attr('content');
+    const title = $('meta[property="og:title"]').attr('content')!;
     const articleUrl = $('link[rel="canonical"]').attr('href');
-    const article: { datePublished?: string } = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
-    if (!title) {
-        throw new Error('The latest Phrack article has no title.');
-    }
+    const article = JSON.parse($('script[type="application/ld+json"]').text());
 
     return {
         title: 'phrack',
@@ -34,8 +31,8 @@ async function handler(): Promise<Data> {
             {
                 title,
                 description: $('.md-article-area').html(),
-                link: articleUrl ? new URL(articleUrl, rootUrl).href : rootUrl,
-                pubDate: article.datePublished ? parseDate(article.datePublished) : undefined,
+                link: articleUrl,
+                pubDate: parseDate(article.datePublished),
                 author: $('meta[property="og:author"]').attr('content'),
             },
         ],

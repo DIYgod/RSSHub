@@ -6,6 +6,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 interface Program {
@@ -53,8 +54,7 @@ function getMediaUrl(channelId: string, mediaId: number) {
 
 async function handler(ctx) {
     const channelId = ctx.req.param('id');
-    const limit = Number(ctx.req.query('limit'));
-    const pageSize = Number.isSafeInteger(limit) && limit > 0 ? limit : 30;
+    const pageSize = getRouteLimit(ctx, 30);
 
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${channelId}`;
     const response = await ofetch(channelUrl, {

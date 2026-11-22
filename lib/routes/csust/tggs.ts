@@ -26,8 +26,7 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const articles = items;
-    const enrichedItems = await Promise.all(articles.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
+    const enrichedItems = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
 
     return {
         title: '长沙理工大学 - 通告公示',

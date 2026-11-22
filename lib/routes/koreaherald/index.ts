@@ -55,7 +55,7 @@ async function handler(ctx) {
                 return {
                     title: metadata.headline,
                     link: url,
-                    pubDate: metadata.datePublished ? parseDate(metadata.datePublished) : undefined,
+                    pubDate: parseDate(metadata.datePublished),
                     updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
                     author: metadata.author.name,
                     description: $('article.article-body').html(),

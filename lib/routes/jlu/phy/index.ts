@@ -71,7 +71,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: /^\d{4}-\d{1,2}-\d{1,2}$/.test(pubDate) ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8),
                 };
             }),
         };

@@ -48,10 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const content = load(detailResponse);
 
                 item.description = content('#vsb_content').html();
-                const date = content('.timestyle45401')
-                    .text()
-                    .match(/\d{4}-\d{1,2}-\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?/)?.[0];
-                item.pubDate = date ? parseDate(date, 8) : undefined;
+                item.pubDate = parseDate(content('.timestyle45401').text(), 8);
 
                 return item;
             }),

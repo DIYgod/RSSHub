@@ -82,12 +82,11 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('main#main h1').last().text();
+                const title: string = $$('main#main h1').text();
                 const author = $$('main#main > p')
                     .first()
                     .text()
-                    .match(/^\s*by\s+(.+)/i)?.[1]
-                    .trim();
+                    .match(/^\s*by\s+(.+)/i)?.[1];
 
                 $$('main#main')
                     .contents()

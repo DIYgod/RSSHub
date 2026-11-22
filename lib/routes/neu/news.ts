@@ -60,15 +60,13 @@ async function handler(ctx) {
 
     const items = $('.n_left li[id^="line_"]')
         .toArray()
-        .flatMap((item): Array<DataItem & { link: string }> => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const href = $item.find('a').attr('href');
-            const title = $item.find('h2, h3').text();
-            if (!href || !title) {
-                return [];
-            }
-            const date = $item.find('time').text();
-            return [{ title, link: new URL(href, baseUrl).href, pubDate: date ? parseDate(date, 'MM/DD/YYYY', 8) : undefined }];
+            return {
+                title: $item.find('h2, h3').text(),
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('time').text(), 'MM/DD/YYYY', 8),
+            };
         });
 
     const results = await pMap(

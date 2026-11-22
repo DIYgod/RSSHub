@@ -38,7 +38,7 @@ async function handler(ctx) {
         link: `https://www.furaffinity.net/journal/${id}/#cid:${item.id}`,
         guid: item.id,
         description: item.text,
-        pubDate: item.posted_at ? parseDate(item.posted_at) : undefined,
+        pubDate: parseDate(item.posted_at),
         author: [{ name: item.name, ...(item.avatar && { avatar: new URL(item.avatar, 'https://www.furaffinity.net').href }) }],
     }));
 

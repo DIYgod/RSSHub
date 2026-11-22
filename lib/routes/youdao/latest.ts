@@ -13,12 +13,6 @@ type Collection = {
     shareKey: string;
     type: 'note' | 'notebook';
 };
-function parsePublishedDate(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-    return parseDate(value);
-}
 export const route: Route = {
     path: '/latest',
     categories: ['study'],
@@ -41,16 +35,13 @@ async function handler() {
     const list = response.Clt.map((item) => ({
         type: item.type,
         title: `${item.name} 保存了 ${item.title}`,
-        pubDate: parsePublishedDate(item.time),
+        pubDate: parseDate(item.time),
         link: `https://note.youdao.com/publicshare/?id=${item.shareKey}`,
         guid: `${item.shareKey}:${item.time}:${item.name}`,
     }));
     const items = await pMap(
         list,
         async (item) => {
-            if (item.type !== 'note' && item.type !== 'notebook') {
-                throw new Error('Unsupported Youdao shared content type');
-            }
             const article = await cache.tryGet(`youdao:latest:v4:${item.type}:${item.link}`, async () => {
                 const id = item.link.split('?id=', 2)[1];
                 const contentResponse = await ofetch(`https://note.youdao.com/yws/public/${item.type}/${id}`, { parseResponse: JSON.parse });
@@ -59,9 +50,6 @@ async function handler() {
                     const notes = contentResponse[2];
                     description = notes.map((note) => `<h3><a href="${escapeAttribute(`https://note.youdao.com/publicshare?id=${id}#${note.p}`)}">${escapeText(note.tl)}</a></h3>`).join('');
                 } else {
-                    if (typeof contentResponse.content !== 'string') {
-                        throw new TypeError('Youdao shared note response is missing its text content');
-                    }
                     description = contentResponse.content;
                 }
                 return { description };

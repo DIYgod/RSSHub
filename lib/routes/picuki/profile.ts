@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
@@ -7,7 +6,6 @@ import { renderUserEmbed } from '@/routes/tiktok/templates/user';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/profile/:id/:type?/:functionalFlag?',
@@ -46,7 +44,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -85,26 +83,7 @@ async function handler(ctx) {
                 },
             });
         } catch (error) {
-            if (error instanceof FetchError && error.statusCode === 403) {
-                const { page, destroy } = await getPlaywrightPage(profileUrl, {
-                    closeTimeout: 0,
-                    onBeforeLoad: async (page) => {
-                        const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.route('**/*', (route) => {
-                            const request = route.request();
-                            return expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
-                        });
-                    },
-                });
-                try {
-                    await page.waitForSelector('.content');
-                    response = await page.content();
-                } finally {
-                    await destroy();
-                }
-            } else {
-                throw new NotFoundError(error instanceof Error ? error.message : String(error));
-            }
+            throw new NotFoundError(error instanceof Error ? error.message : String(error));
         }
 
         const $ = load(response);

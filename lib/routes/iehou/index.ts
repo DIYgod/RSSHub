@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value: string) => (value ? parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8) : undefined);
+const parsePublicationDate = (value: string) => parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8);
 
 const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
@@ -23,8 +23,7 @@ const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     let items = $('li.list-group-item div.subject h2')
-        // Detail pages can refine the list date, so retain the default pool for core sorting.
-        .slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(100, limit))
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -57,7 +56,7 @@ const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parsePublicationDate($$('i.icon-clock-o').parent().contents().last().text().trim());
+                item.pubDate = parsePublicationDate($$('i.icon-clock-o').parent().contents().last().text());
                 item.author = $$('img.avatar-1').parent().contents().last().text().trim();
                 item.content = {
                     html: description,

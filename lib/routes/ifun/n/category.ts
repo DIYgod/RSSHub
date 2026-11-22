@@ -5,16 +5,13 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 
-import { apiRoot, author, getRecords, language, processItems, rootUrl } from './util';
+import { apiRoot, author, language, processItems, rootUrl } from './util';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 
     const apiCategoryResponse = await ofetch(`${apiRoot}/categories/list`);
-    if (apiCategoryResponse?.code !== 200 || !Array.isArray(apiCategoryResponse.data)) {
-        throw new Error('iRead did not return its categories. Check whether the source API has changed.');
-    }
     const categoryName: string | undefined = id ? apiCategoryResponse.data.find((item) => String(item.categoryid) === id)?.category : undefined;
     if (id && !categoryName) {
         throw new Error(`Unknown iRead category ID: ${id}. See the supported category IDs in the route documentation.`);
@@ -24,7 +21,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         method: 'POST',
         body: { current: 1, pageSize: limit, searchText: '', ...(categoryName && { category: categoryName }) },
     });
-    const items: DataItem[] = processItems(getRecords(apiResponse), limit);
+    const items: DataItem[] = processItems(apiResponse.data.list, limit);
 
     return {
         title: `${author}${categoryName ? ` - ${categoryName}` : ''}`,

@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -19,11 +18,10 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context): Promise<Data> {
-    const response = await ofetch(listUrl, { responseType: 'text' });
+async function handler(): Promise<Data> {
+    const response = await ofetch(listUrl);
     const $ = load(response);
-    const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
-    const list = $('article.fun-table-row')
+    const items = $('article.fun-table-row')
         .toArray()
         .map((element) => {
             const row = $(element);
@@ -33,11 +31,12 @@ async function handler(ctx: Context): Promise<Data> {
             if (!href || !href.startsWith('/grant/')) {
                 throw new Error('Funresearch returned an unexpected project announcement link.');
             }
+            const date = row.find('time').attr('datetime');
             return {
                 title: anchor.text(),
                 link: new URL(href, rootUrl).href,
                 author: cells.eq(2).text(),
-                date: row.find('time').first().attr('datetime'),
+                pubDate: date ? parseDate(date, 8) : undefined,
                 category: [
                     cells
                         .eq(0)
@@ -47,18 +46,11 @@ async function handler(ctx: Context): Promise<Data> {
                 ].filter(Boolean),
             };
         });
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : list.length;
 
     return {
         title: '泛研网 - 项目申报',
         link: listUrl,
         language: 'zh-CN',
-        item: list.slice(0, limit).map((item) => ({
-            title: item.title,
-            link: item.link,
-            author: item.author,
-            pubDate: item.date ? parseDate(item.date, 8) : undefined,
-            category: item.category,
-        })),
+        item: items,
     };
 }

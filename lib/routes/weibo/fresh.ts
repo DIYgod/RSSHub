@@ -61,14 +61,14 @@ async function handler(ctx) {
     }
     const link = `https://weibo.com/a/hot/${id}.html`;
     const response = await weiboUtils.tryWithCookies(async (cookies, verifier) => {
-        const response = await ofetch.raw(link, { headers: { Cookie: cookies, Referer: 'https://weibo.com/a/hot/realtime' }, responseType: 'text' });
+        const response = await ofetch.raw(link, { headers: { Cookie: cookies, Referer: 'https://weibo.com/a/hot/realtime' } });
         verifier({ data: response._data });
         return response;
     });
-    const $ = load(response._data!);
+    const $ = load(response._data);
     const serverDate = response.headers.get('date');
     const reference = serverDate ? parseDate(serverDate) : undefined;
-    const title = $('h2.list_title').first().text();
+    const title = $('h2.list_title').text();
     if (!title) {
         throw new Error('The Weibo fresh-topic page is unavailable. Verify the topic ID and WEIBO_COOKIES if login is required.');
     }
@@ -82,15 +82,15 @@ async function handler(ctx) {
             const images = $item
                 .find('.pic > img')
                 .toArray()
-                .map((image) => `<img src="${escapeAttribute(new URL($(image).attr('src')!, link).href)}">`)
+                .map((image) => `<img src="${escapeAttribute($(image).attr('src')!)}">`)
                 .join('');
-            const date = $item.find('.subinfo_box > span.subinfo:not(.subinfo_rgt)').first().text();
+            const date = $item.find('.subinfo_box > span.subinfo:not(.subinfo_rgt)').text();
             return {
                 title: content.text(),
                 description: `${content.html() || ''}${images}`,
                 link: new URL($item.attr('href')!, link).href,
                 author: $item.find('.subinfo_box a .subinfo').text(),
-                pubDate: date ? parseFreshDate(date, reference) : undefined,
+                pubDate: parseFreshDate(date, reference),
             };
         });
 

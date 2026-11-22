@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -26,12 +26,10 @@ async function handler() {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const sourceDate = $item.find('div.box-blog time').text().trim();
-                const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY.MM.DD HH:mm', 9) : undefined;
                 return {
                     title: $item.find('p.ttl').text(),
                     link: $item.find('a').attr('href'),
-                    pubDate: date,
+                    pubDate: parseDate($item.find('div.box-blog time').text(), 'YYYY.MM.DD HH:mm', 9),
                     author: $item.find('p.ttl').next().text().trim(),
                     description: `<img src="${$item.find('img.js-replaceImage').attr('src')}">`,
                 };

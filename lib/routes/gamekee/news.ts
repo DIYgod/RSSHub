@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
         };
     });
     const limit = getRouteLimit(ctx);
-    if (limit && (ctx.req.query('sorted') === 'false' || list.every((item) => item.pubDate))) {
+    if (limit) {
         if (ctx.req.query('sorted') !== 'false') {
             list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }

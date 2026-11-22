@@ -78,13 +78,6 @@ interface KemonoAttachment {
     path?: string;
 }
 
-function parsePublishedDate(value?: string | number | null) {
-    if (!value && value !== 0) {
-        return;
-    }
-    return parseDate(value);
-}
-
 function buildApiUrl(source: string, userId?: string, contentType?: string): string {
     if (source === 'posts') {
         return `${KEMONO_API_URL}/posts`;
@@ -123,7 +116,7 @@ async function fetchUserProfile(source: string, userId: string): Promise<string>
     try {
         const profileUrl = `${KEMONO_API_URL}/${source}/user/${userId}/profile`;
         const response = await got({ method: 'get', url: profileUrl, headers });
-        return typeof response.data.name === 'string' ? response.data.name : '';
+        return response.data.name;
     } catch {
         return '';
     }
@@ -283,7 +276,7 @@ async function processDiscordMessages(channels: any[], limit: number) {
                         title: message.content || 'Discord Message',
                         description: renderDiscordMessage(message),
                         author: `${message.author.username}#${message.author.discriminator}`,
-                        pubDate: parsePublishedDate(message.published),
+                        pubDate: parseDate(message.published),
                         category: channel.name,
                         guid: `kemono:discord:${message.server}:${message.channel}:${message.id}`,
                         link: `https://discord.com/channels/${message.server}/${message.channel}/${message.id}`,
@@ -297,10 +290,10 @@ async function processDiscordMessages(channels: any[], limit: number) {
 
 function processAnnouncements(announcements: any[], authorName: string, source: string, userId: string, limit: number) {
     return announcements.slice(0, limit).map((announcement) => {
-        const displayDate = parsePublishedDate(announcement.published) ?? parsePublishedDate(announcement.added);
+        const displayDate = parseDate(announcement.published || announcement.added);
 
         return {
-            title: displayDate ? `Announcement from ${formatDate(displayDate, 'ddd MMM DD YYYY')}` : 'Announcement',
+            title: `Announcement from ${formatDate(displayDate!, 'ddd MMM DD YYYY')}`,
             description: `<div>${announcement.content || ''}</div>`,
             author: authorName || undefined,
             pubDate: displayDate,
@@ -318,7 +311,7 @@ function processFancards(fancards: any[], authorName: string, source: string, us
             title: `Fancard ${fancard.id}`,
             description: `<img src="${imageUrl}" alt="Fancard ${fancard.id}" />`,
             author: authorName || undefined,
-            pubDate: parsePublishedDate(fancard.added),
+            pubDate: parseDate(fancard.added),
             guid: `kemono:${source}:${userId}:fancard:${fancard.id}`,
             link: imageUrl,
             enclosure_url: imageUrl,
@@ -366,7 +359,7 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
                 title: post.title || 'Untitled Post',
                 description,
                 author: authorName || undefined,
-                pubDate: parsePublishedDate(post.published),
+                pubDate: parseDate(post.published),
                 guid: `kemono:${post.service}:${post.user}:post:${post.id}`,
                 link: `${KEMONO_ROOT_URL}/${post.service}/user/${post.user}/post/${post.id}`,
                 ...generateEnclosureInfo(description),

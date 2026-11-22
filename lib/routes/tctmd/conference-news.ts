@@ -75,15 +75,11 @@ async function handler() {
                 const content = load(detailResponse.data);
                 const articleBody = content('.field--name-field-body-content').html() || '';
                 const introText = content('.field--name-field-intro-text').text().trim();
-                const date = content('time').first().attr('datetime');
-                const author = content('.node-meta__text a').first().text().trim();
                 return {
                     description: articleBody ? (introText ? `<p><strong>${introText}</strong></p>` : '') + articleBody : introText || undefined,
-                    pubDate: date ? parseDate(date) : undefined,
-                    author: author || undefined,
                 };
             });
-            return { ...detail, ...item, description: detail.description, pubDate: item.pubDate ?? detail.pubDate, author: item.author || detail.author };
+            return { ...item, description: detail.description };
         },
         { concurrency: 3 }
     );

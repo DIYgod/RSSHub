@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/music/latest/:area?',
@@ -77,14 +77,13 @@ async function handler(ctx) {
             item: res.data.subject_collection_items.map((item) => {
                 const title = `${item.title}-${item.info}`;
                 const link = `https://music.douban.com/subject/${item.id}/`;
-                const rating = item.rating ? `<strong>评分:</strong> ${item.rating.value.toFixed(1)}` : item.null_rating_reason || '';
+                const rating = item.rating ? `<strong>评分:</strong> ${item.rating.value.toFixed(1)}` : item.null_rating_reason;
                 const description = `
                     <img src="${item.cover.url}" /><br>
                     ${item.recommend_comment || item.description || ''}<br>
                     ${rating}
                 `;
-                const date = item.pubdate?.find((date: string) => /^\d{4}-\d{1,2}-\d{1,2}$/.test(date));
-                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0) : undefined;
+                const pubDate = parseDate(item.pubdate[0], 0);
 
                 return {
                     title,

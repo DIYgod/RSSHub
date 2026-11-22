@@ -7,6 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
@@ -49,8 +50,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const limit = getRouteLimit(ctx, 20);
     const rootUrl = 'https://www.perplexity.ai/hub/blog';
 
     const { page, destroy, context } = await getPlaywrightPage(rootUrl, {

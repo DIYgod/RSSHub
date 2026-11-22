@@ -82,7 +82,7 @@ const fetchEditionData = (paperData: string) =>
     });
 
 const buildTitle = (xy: ArticleItem): string => {
-    let title = xy.title ?? '';
+    let title = xy.title;
     if (xy.guideTitle && /\S/.test(xy.guideTitle)) {
         title = title && /\S/.test(title) ? `${xy.guideTitle} ${title}` : xy.guideTitle;
     }
@@ -103,7 +103,7 @@ const extractAuthor = (xy: ArticleItem): string | undefined => {
             .replaceAll(/\s+/g, ' ')
             .trim();
     }
-    return author || undefined;
+    return author;
 };
 
 const matchPage = (page: PaperPage, req: string): boolean => {
@@ -156,7 +156,7 @@ const parseArticlesFromPages = (pages: PaperPage[]): DataItem[] => {
             }
 
             const title = buildTitle(xy);
-            const isGenericOrMedia = xy.type === '图片' || /^(?:图片|短讯|快讯|广告)$/.test(xy.title?.trim() ?? '');
+            const isGenericOrMedia = xy.type === '图片' || /^(?:图片|短讯|快讯|广告)$/.test(xy.title.trim());
             const signature = isGenericOrMedia ? undefined : buildArticleSignature(title, xy.content);
 
             if (xy.id && seenIds.has(xy.id)) {

@@ -49,10 +49,7 @@ export const route: Route = {
 const abstractBatchSize = 40;
 
 async function fetchAbstracts(dois: string[]) {
-    const batches: string[][] = [];
-    for (let offset = 0; offset < dois.length; offset += abstractBatchSize) {
-        batches.push(dois.slice(offset, offset + abstractBatchSize));
-    }
+    const batches = Array.from({ length: Math.ceil(dois.length / abstractBatchSize) }, (_, index) => dois.slice(index * abstractBatchSize, (index + 1) * abstractBatchSize));
     const results = await pMap(
         batches,
         async (batch) => {
@@ -76,7 +73,6 @@ async function fetchAbstracts(dois: string[]) {
 
 const renderAbstract = (abstract: string) => {
     const $ = load(abstract);
-    $('script, style').remove();
     return (
         $('body')
             .find('*')
@@ -114,7 +110,7 @@ async function handler(ctx) {
             category: item.categories,
         };
     });
-    const dois = [...new Set(items.flatMap((item) => (item.doi ? [item.doi.toLowerCase()] : [])))].sort();
+    const dois = items.flatMap((item) => (item.doi ? [item.doi.toLowerCase()] : [])).toSorted();
     const abstracts = await fetchAbstracts(dois);
     return {
         title: feed.title ?? `${journal} | Current Issue`,

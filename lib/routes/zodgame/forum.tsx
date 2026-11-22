@@ -53,19 +53,17 @@ async function handler(ctx) {
 
     const info = response.data.Variables;
 
-    const threadList: Array<DataItem & { tid: string }> = info.forum_threadlist
-        .map((item) => {
-            const type = info.threadtypes?.types?.[item.typeid];
-            return {
-                tid: item.tid,
-                title: type ? `[${type}] ${item.subject}` : item.subject,
-                author: item.author,
-                link: `${rootUrl}/forum.php?mod=viewthread&tid=${item.tid}&extra=page%3D1`,
-                category: type,
-                pubDate: parseDate(item.dbdateline * 1000),
-            };
-        })
-        .filter((item) => item !== undefined);
+    const threadList: Array<DataItem & { tid: string }> = info.forum_threadlist.map((item) => {
+        const type = info.threadtypes?.types?.[item.typeid];
+        return {
+            tid: item.tid,
+            title: type ? `[${type}] ${item.subject}` : item.subject,
+            author: item.author,
+            link: `${rootUrl}/forum.php?mod=viewthread&tid=${item.tid}&extra=page%3D1`,
+            category: type,
+            pubDate: parseDate(item.dbdateline * 1000),
+        };
+    });
 
     // fulltext
     const items = await pMap(

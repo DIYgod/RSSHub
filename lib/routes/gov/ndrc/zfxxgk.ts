@@ -29,11 +29,10 @@ const handler = async (ctx) => {
             const $item = $(item);
 
             const a = $item.find('a.xxgk_list1');
-            const publishedDate = $item.find('td').last().text().trim();
 
             return {
                 title: a.text(),
-                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
+                pubDate: parseDate($item.find('td').last().text(), 8),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
@@ -48,11 +47,11 @@ const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('meta[name="ArticleTitle"]').prop('content');
-                const article = $$('div.article, div.zhengwen').first();
+                const article = $$('div.article, div.zhengwen');
                 article.append($$('table.enclosure, div.downloadbtn'));
                 const description = article.html();
 
-                item.title = title || item.title;
+                item.title = title;
                 item.description = description;
                 item.category = [...new Set([$$('meta[name="ContentSource"]').prop('content'), $$('meta[name="ColumnName"]').prop('content'), $$('meta[name="ColumnType"]').prop('content')])].filter(Boolean);
                 item.author = $$('meta[name="ContentSource"]').prop('content');
@@ -69,8 +68,7 @@ const handler = async (ctx) => {
         { concurrency: 3 }
     );
 
-    const imageSrc = $('div.zwgklogo img').prop('src');
-    const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
+    const image = new URL($('div.zwgklogo img').prop('src')!, currentUrl).href;
 
     return {
         title: `${$('meta[name="SiteName"]').prop('content')} - ${$('div.zwgktoptitle').text()}`,

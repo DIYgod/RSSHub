@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import type { Page, Response } from 'patchright';
 
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 type ArticleMetadata = { abstract?: string; insertDate?: string };
@@ -36,7 +35,7 @@ async function createArticleBrowser(articleUrl: string): Promise<ArticleBrowser>
     const browser = await getPlaywrightPage(articleUrl, { noGoto: true, closeTimeout: 0 });
     try {
         await browser.context.route('**/*', async (route) => {
-            await (['document', 'script', 'stylesheet', 'xhr', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort());
+            await (['document', 'script', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort());
         });
         let onResponse: (response: Response) => void;
         const blocked = new Promise<boolean>((resolve) => {
@@ -94,20 +93,15 @@ export async function withArticleMetadataBrowser<T>(callback: (getBrowser: GetAr
     }
 }
 
-export function fetchArticleMetadata(link: string, getBrowser?: GetArticleBrowser) {
+export function fetchArticleMetadata(link: string, getBrowser: GetArticleBrowser) {
     const articleUrl = new URL(link, 'https://ieeexplore.ieee.org').href;
     return cache.tryGet(`ieee:article-metadata:v2:${articleUrl}`, async (): Promise<ArticleMetadata> => {
-        const response = await ofetch.raw<string, 'text'>(articleUrl, { responseType: 'text' });
-        const metadata = parseMetadata(response._data ?? '');
-        if (!getBrowser || response.status !== 202 || metadata.abstract || metadata.insertDate) {
-            return metadata;
-        }
         if (new URL(articleUrl).origin !== 'https://ieeexplore.ieee.org') {
             throw new Error('The IEEE article browser requires an IEEE Xplore URL.');
         }
         const browser = await getBrowser(articleUrl);
         if (browser.unavailable) {
-            return metadata;
+            return {};
         }
         if (articleUrl === browser.initialUrl) {
             return browser.initialMetadata;
@@ -119,7 +113,7 @@ export function fetchArticleMetadata(link: string, getBrowser?: GetArticleBrowse
         if (result.status === 420) {
             // Keep the API summary if IEEE blocks further metadata in this session.
             browser.unavailable = true;
-            return metadata;
+            return {};
         }
         if (result.status < 200 || result.status >= 300) {
             throw new Error(`The IEEE article browser source returned HTTP ${result.status}.`);

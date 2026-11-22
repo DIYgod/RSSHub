@@ -28,7 +28,7 @@ const fetchAllArticles = (data) => {
         const r = {
             title: c.find('h3 a[href]').text(),
             link: base + c.find('h3 a[href]').attr('href'),
-            pubDate: parseDate(c.find('p').text().trim(), 'YYYY-MM-DD', 8),
+            pubDate: parseDate(c.find('p').text(), 'YYYY-MM-DD', 8),
         };
         return r;
     });

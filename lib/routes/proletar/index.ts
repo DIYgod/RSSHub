@@ -48,18 +48,12 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                const metadata = content('script[type="application/ld+json"]')
-                    .toArray()
-                    .flatMap((script) => {
-                        const data = JSON.parse(content(script).text());
-                        return Array.isArray(data) ? data : (data['@graph'] ?? [data]);
-                    })
-                    .find((entry) => entry['@type'] === 'BlogPosting');
+                const metadata = JSON.parse(content('script[type="application/ld+json"]').text());
                 return {
                     author: content('.post-author').text(),
                     description: content('#content').html()!,
-                    pubDate: parseSourceDate(metadata?.datePublished),
-                    updated: parseSourceDate(metadata?.dateModified),
+                    pubDate: parseDate(metadata.datePublished),
+                    updated: parseDate(metadata.dateModified),
                 };
             })),
         }),
@@ -71,11 +65,4 @@ async function handler(ctx: Context) {
         link: currentUrl,
         item: items,
     };
-}
-
-function parseSourceDate(value?: string): Temporal.Instant | undefined {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    return parseDate(value);
 }

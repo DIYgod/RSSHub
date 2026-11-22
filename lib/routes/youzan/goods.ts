@@ -6,13 +6,6 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value?: number): Temporal.Instant | undefined => {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-    return parseDate(value);
-};
-
 export const route: Route = {
     path: '/goods/:id',
     categories: ['shopping'],
@@ -44,7 +37,7 @@ async function handler(ctx: Context) {
         title: good.title,
         description: `价格：${escapeText(good.price)}<br>${good.picture.map((picture) => `<img src="${escapeAttribute(picture.url)}">`).join('')}`,
         link: `https://detail.youzan.com/show/goods?alias=${good.alias}`,
-        pubDate: parsePublicationDate(good.created_date_time),
+        pubDate: parseDate(good.created_date_time),
     }));
 
     return {

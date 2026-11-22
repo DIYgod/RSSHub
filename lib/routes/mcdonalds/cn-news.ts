@@ -46,12 +46,11 @@ async function handler(ctx: Context) {
             cache.tryGet(newsUrl, async () => {
                 const result = await ofetch(newsUrl);
                 const $ = load(result);
-                const date = $('h3 ~ time').text();
 
                 return {
                     title: $('h3').text(),
                     link: newsUrl,
-                    pubDate: date ? parseDate(date.replaceAll('.', '-'), 8) : undefined,
+                    pubDate: parseDate($('h3 ~ time').text().replaceAll('.', '-'), 8),
                     description: $('.cmsPage').html(),
                 };
             }),

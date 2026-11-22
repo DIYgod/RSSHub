@@ -149,7 +149,7 @@ async function handler(ctx) {
         }),
         category: item.categories,
         guid: item.id,
-        pubDate: isOneOf(item.publishedAt, [undefined, null]) || item.publishedAt === '' ? undefined : parseDate(item.publishedAt),
+        pubDate: parseDate(item.publishedAt),
         parkingLocationId: item.parkingLocationId,
     }));
     items = await Promise.all(
@@ -193,9 +193,4 @@ async function handler(ctx) {
         subtitle: description,
         author,
     };
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

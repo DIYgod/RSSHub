@@ -66,8 +66,7 @@ export const route: Route = {
                 const link = href ? new URL(href, `${baseUrl}/${type}/list.htm`).href : undefined;
 
                 // Extract the publication date.
-                const dateStr = $timeDiv.text().trim();
-                const pubDate = dateStr ? parseDate(dateStr, 'YYYY-MM-DD', 8) : undefined;
+                const pubDate = parseDate($timeDiv.text(), 'YYYY-MM-DD', 8);
 
                 return {
                     title: title!,
@@ -111,9 +110,6 @@ export const route: Route = {
                         });
                     }
 
-                    if (!$description.length) {
-                        throw new Error(`Could not find the graduate notice content: ${item.link}`);
-                    }
                     return { description: $description.html() };
                 });
                 return { ...item, ...detail };

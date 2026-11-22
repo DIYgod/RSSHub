@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -32,8 +33,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type1, type2 } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const limit = getRouteLimit(ctx, 20);
     const baseUrl = 'https://mall.nanhua.net';
     const apiBase = `${baseUrl}/mall/nh/api`;
     const link = `${baseUrl}/mall/r/w/reportNew/report-list.html?type1=${type1}&type2=${type2}`;

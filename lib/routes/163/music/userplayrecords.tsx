@@ -34,7 +34,7 @@ const renderDescription = (record, song, index) =>
         </div>
     );
 function getItem(records) {
-    return (records ?? []).map((record, index) => {
+    return records.map((record, index) => {
         const song = record.song;
 
         const artists_paintext = song.ar.map((a) => a.name).join('/');

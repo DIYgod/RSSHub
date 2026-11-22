@@ -1,67 +1,21 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
-const rootUrl = 'https://zhxy.hubu.edu.cn';
-const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
-
-function isHttp2ProtocolError(error: unknown): error is Error {
-    return error instanceof Error && (error.message.includes('NGHTTP2_PROTOCOL_ERROR') || isHttp2ProtocolError(error.cause));
-}
-
-async function fetchHtml(url: string, page?: Page): Promise<string> {
-    if (!page) {
-        const { data } = await got(url);
-        return data;
-    }
-    return await page.evaluate(async (url) => {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HUBU resource and environment college returned HTTP ${response.status}.`);
-        }
-        return await response.text();
-    }, url);
-}
-
 const handler = async (ctx) => {
-    try {
-        return await fetchFeed(ctx);
-    } catch (error) {
-        if (!(error instanceof FetchError) || !isHttp2ProtocolError(error)) {
-            throw error;
-        }
-    }
-    const { category = 'index/tzgg' } = ctx.req.param();
-    const url = `${rootUrl}/${category}.htm`;
-    const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
-    try {
-        await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
-        const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
-        if (!response?.ok() || new URL(page.url()).origin !== rootUrl) {
-            throw new Error('HUBU resource and environment college did not provide its public website.');
-        }
-        return await fetchFeed(ctx, page);
-    } finally {
-        await destroy();
-    }
-};
-
-const fetchFeed = async (ctx, page?: Page) => {
     const { category = 'index/tzgg' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 
+    const rootUrl = 'https://zhxy.hubu.edu.cn';
     const currentUrl = `${rootUrl}/${category}.htm`;
 
-    const response = await fetchHtml(currentUrl, page);
+    const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
@@ -71,25 +25,19 @@ const fetchFeed = async (ctx, page?: Page) => {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const dateText = $item.find('span').text().replaceAll(/[[\]]/g, '').trim();
-            const calendarDate = /^\d{4}-\d{2}-\d{2}$/.test(dateText);
-            const date = dateText ? (calendarDate ? parseDateStrict(dateText, 'YYYY-MM-DD', 8) : parseDate(dateText)) : undefined;
 
             return {
                 title: $item.contents().first().text(),
-                pubDate: date,
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 language,
             };
         });
 
-    items = items.slice(0, Math.max(20, limit));
-    if (ctx.req.query('sorted') === 'false') {
-        items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate instanceof Temporal.Instant)) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
-        items = items.slice(0, limit);
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
+    items = items.slice(0, limit);
 
     items = await pMap(
         items,
@@ -99,7 +47,7 @@ const fetchFeed = async (ctx, page?: Page) => {
                 return item;
             }
             const detail = await cache.tryGet(`hubu:content:${item.link}`, async () => {
-                const detailResponse = await fetchHtml(item.link, page);
+                const { data: detailResponse } = await got(item.link);
                 const $$ = load(detailResponse);
                 const title = $$('div.ar_title h1').text();
                 if (!title) {
@@ -111,9 +59,7 @@ const fetchFeed = async (ctx, page?: Page) => {
                     description,
                     category: $$('META[Name="keywords"]')
                         .toArray()
-                        .flatMap((c) => ($$(c).attr('content') ?? '').split(','))
-                        .map((tag) => tag.trim())
-                        .filter(Boolean),
+                        .flatMap((c) => ($$(c).attr('content') ?? '').split(',')),
                     content: {
                         html: description,
                         text: $$('div.v_news_content').text(),
@@ -183,7 +129,7 @@ export const route: Route = {
 
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportRadar: true,
         supportBT: false,

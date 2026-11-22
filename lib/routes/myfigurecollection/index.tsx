@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isOnSite, isValidHost } from '@/utils/valid-host';
 
 const shortcuts = {
@@ -43,8 +44,7 @@ export const route: Route = {
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? '';
     const category = ctx.req.param('category') ?? 'figure';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
+    const limit = getRouteLimit(ctx, 25);
     if (language && !isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }

@@ -105,7 +105,7 @@ async function handler(ctx) {
         const image = $(element);
         const src = image.attr(':src')?.match(/^is_show\s*\?\s*'((?:https?:)?\/\/[^']+)'/)?.[1];
         if (src) {
-            image.attr('src', new URL(src, host).href);
+            image.attr('src', src);
         }
     });
 

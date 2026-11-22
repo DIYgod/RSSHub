@@ -37,7 +37,7 @@ async function handler(ctx) {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, baseUrl).href,
                 author: username,
-                category: row.find('td').eq(2).find('a').first().text(),
+                category: row.find('td').eq(2).find('a').text(),
                 ...(timestamp && { pubDate: parseDate(timestamp, 'X') }),
             };
         });

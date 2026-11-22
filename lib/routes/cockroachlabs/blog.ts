@@ -52,7 +52,7 @@ async function handler(ctx) {
     const articleList = html('a[href^="/blog/"]')
         .filter((_, element) => html(element).children('h2, p').length > 0)
         .map((_, element) => ({
-            title: html(element).children('h2, p').first().text(),
+            title: html(element).children('h2, p').text(),
             link: new URL(html(element).attr('href')!, rootUrl).href,
         }));
 

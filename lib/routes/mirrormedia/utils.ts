@@ -9,12 +9,7 @@ export async function getArticle(item) {
 
         const content = load(detailResponse);
 
-        let blocks = content('article > figure, article > blockquote, article > .order-8');
-        if (!blocks.length) {
-            blocks = new URL(item.link).pathname.startsWith('/external/')
-                ? content(':is([class^=external-article-brief],[class*=external-article-content])')
-                : content(':is([class^=brief__BriefContainer],[class^=article-content__Wrapper])');
-        }
+        const blocks = content('article > figure, article > blockquote, article > .order-8');
         blocks.find('[class^=gpt-placeholder], [class^=article-right-arrow]').remove();
         blocks
             .find('div, p')

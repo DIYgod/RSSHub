@@ -56,7 +56,7 @@ async function handler() {
             return [
                 {
                     title: a.text(),
-                    pubDate: getPublicationDate($item.find('.Article_PublishDate').text()),
+                    pubDate: parseDate($item.find('.Article_PublishDate').text()),
                     link,
                 },
             ];
@@ -101,11 +101,4 @@ function getNoticeLink(href: string | undefined, baseUrl: string) {
     } catch {
         return;
     }
-}
-
-function getPublicationDate(value: string) {
-    if (!value.trim()) {
-        return;
-    }
-    return parseDate(value);
 }

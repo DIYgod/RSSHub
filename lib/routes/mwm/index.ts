@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -34,8 +35,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'bqym';
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'http://www.mwm.net.cn';
     const currentUrl = `${rootUrl}/web/${category === 'bqym' ? `bqym?pagesize=${limit}` : category}`;

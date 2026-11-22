@@ -45,13 +45,10 @@ async function handler() {
                 return null;
             }
 
-            const body = await cache.tryGet<{ description: string; author?: string }>(`magnumphotos:article-body:v2:${link}`, async () => {
+            const body = await cache.tryGet(`magnumphotos:article-body:v2:${link}`, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
                 const description = $('#content');
-                if (!description.length) {
-                    throw new Error(`Magnum Photos article content was not found at ${link}. The source layout may have changed.`);
-                }
                 const writer = description
                     .find('.story__footer__line.author')
                     .text()
@@ -61,14 +58,9 @@ async function handler() {
                     .toArray()
                     .map((element) => $(element).text())
                     .join(', ');
-                const footerPhotographers = description
-                    .find('.story__footer a.photographer .name')
-                    .toArray()
-                    .map((element) => $(element).text().trim())
-                    .join(', ');
-                const author = writer || photographers || footerPhotographers || undefined;
+                const author = writer || photographers;
                 description.find('ul.share, .socials, h1, .story__header__type, .story__header__photographer, .story__footer, .teasers').remove();
-                return { description: description.html() ?? '', author };
+                return { description: description.html(), author };
             });
             return {
                 title,

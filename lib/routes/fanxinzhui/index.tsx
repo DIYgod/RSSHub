@@ -54,14 +54,10 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    const sorted = ctx.req.query('sorted') !== 'false';
-    const allDated = items.every((item) => item.pubDate);
-    if (sorted && allDated) {
+    if (ctx.req.query('sorted') !== 'false') {
         items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    if (!sorted || allDated) {
-        items = items.slice(0, limit);
-    }
+    items = items.slice(0, limit);
 
     const links = [...new Set(items.map((item) => item.link))];
     const details = new Map(

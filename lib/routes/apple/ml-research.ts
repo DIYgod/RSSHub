@@ -169,35 +169,16 @@ const getCategoryFeedInfo = (category: MlCategory): CategoryFeedInfo => {
 const stripTags = (rawHtml: string | undefined): string => (rawHtml ? load(rawHtml).text() : '');
 
 const extractNextData = ($: CheerioAPI): MlNextData | undefined => {
-    const payload = $('script#__NEXT_DATA__').first().text();
+    const payload = $('script#__NEXT_DATA__').text();
     if (!payload) {
         return undefined;
     }
-    try {
-        return JSON.parse(payload) as MlNextData;
-    } catch {
-        return undefined;
-    }
+    return JSON.parse(payload) as MlNextData;
 };
 
-const addTagNames = (seen: Set<string>, items: MlTag[] | undefined) => {
-    if (!items) {
-        return;
-    }
-    for (const item of items) {
-        const name = item.name?.trim();
-        if (name) {
-            seen.add(name);
-        }
-    }
-};
+const extractTagNames = (items: MlTag[] | undefined): string[] => (items ?? []).map((item) => item.name?.trim()).filter((name): name is string => Boolean(name));
 
-const extractCategoryNames = (post: MlPost): string[] => {
-    const seen = new Set<string>();
-    addTagNames(seen, post.tags);
-    addTagNames(seen, post.events);
-    return seen.values().toArray();
-};
+const extractCategoryNames = (post: MlPost): string[] => [...extractTagNames(post.tags), ...extractTagNames(post.events)];
 
 const extractAuthorNames = (authorsOrdered: string | null | undefined, authors: MlAuthor[] | undefined): string[] => {
     if (authorsOrdered) {
@@ -209,14 +190,7 @@ const extractAuthorNames = (authorsOrdered: string | null | undefined, authors: 
     if (!authors) {
         return [];
     }
-    const list: string[] = [];
-    for (const author of authors) {
-        const name = author.name?.trim();
-        if (name) {
-            list.push(name);
-        }
-    }
-    return list;
+    return authors.map((author) => author.name?.trim()).filter((name): name is string => Boolean(name));
 };
 
 const resolveDataAuthors = (post: MlPost | undefined, entry: IndexEntry): DataItem['author'] => {
@@ -226,12 +200,12 @@ const resolveDataAuthors = (post: MlPost | undefined, entry: IndexEntry): DataIt
 };
 
 const toIndexEntry = (post: MlPost): IndexEntry | undefined => {
-    const slug = post.slug?.trim();
+    const slug = post.slug;
     const link = slug ? buildArticleUrl(slug) : undefined;
     if (!slug || !link) {
         return undefined;
     }
-    const publishedRaw = post.published?.trim();
+    const publishedRaw = post.published;
     return {
         slug,
         title: post.title ? stripTags(post.title) : slug,
@@ -246,34 +220,15 @@ const toIndexEntry = (post: MlPost): IndexEntry | undefined => {
 const parseIndexPage = (html: string): IndexEntry[] => {
     const $ = load(html);
     const posts = extractNextData($)?.props?.pageProps?.posts ?? [];
-    const entries: IndexEntry[] = [];
-
-    for (const post of posts) {
-        const entry = toIndexEntry(post);
-        if (entry) {
-            entries.push(entry);
-        }
-    }
-
-    return entries;
+    return posts.flatMap((post) => toIndexEntry(post) ?? []);
 };
 
 const fetchMergedIndex = async (category: MlCategory, limit: number): Promise<IndexEntry[]> => {
     const urls = category === 'highlights' ? [HIGHLIGHTS_URL] : category === 'research' ? [RESEARCH_URL] : [HIGHLIGHTS_URL, RESEARCH_URL];
-    const pages = await Promise.all(urls.map((url) => ofetch(url, { responseType: 'text' })));
+    const pages = await Promise.all(urls.map((url) => ofetch(url)));
 
-    const bySlug = new Map<string, IndexEntry>();
-    for (const html of pages) {
-        for (const entry of parseIndexPage(html)) {
-            if (!bySlug.has(entry.slug)) {
-                bySlug.set(entry.slug, entry);
-            }
-        }
-    }
-
-    return bySlug
-        .values()
-        .toArray()
+    return pages
+        .flatMap((html) => parseIndexPage(html))
         .toSorted((a, b) => (b.publishedRaw ?? '').localeCompare(a.publishedRaw ?? ''))
         .slice(0, limit);
 };
@@ -286,7 +241,7 @@ const extractHeroMedia = ($: CheerioAPI, articleUrl: string): HeroMedia => {
 
     const $video = $hero.find('video').first();
     if ($video.length) {
-        const $source = $video.find('source[src]').first();
+        const $source = $video.find('source[src]');
         const videoUrl = parseHttpUrl($source.attr('src') || $video.attr('src'), articleUrl)?.href;
         if (videoUrl) {
             const posterUrl = resolveValidCoverUrl($video.attr('poster'), articleUrl);
@@ -297,14 +252,14 @@ const extractHeroMedia = ($: CheerioAPI, articleUrl: string): HeroMedia => {
         }
     }
 
-    const $img = $hero.find('img').first();
+    const $img = $hero.find('img');
     const heroImageUrl = resolveValidCoverUrl($img.attr('src'), articleUrl);
     if (!heroImageUrl) {
         return {};
     }
     return {
         heroImageUrl,
-        heroImageAlt: $img.attr('alt')?.trim(),
+        heroImageAlt: $img.attr('alt'),
     };
 };
 
@@ -319,34 +274,23 @@ const resolvePostLinkLabel = (rawType: string | undefined): string => {
 };
 
 const extractResourceLinks = ($: CheerioAPI, post: MlPost | undefined, articleUrl: string): ResourceLink[] => {
-    const seen = new Set<string>();
-    const links: ResourceLink[] = [];
-
-    $('[data-testid="links"] a[href]').each((_, el) => {
-        const $el = $(el);
-        const href = parseHttpUrl($el.attr('href'), articleUrl)?.href;
-        const label = $el.text().replaceAll(/\s+/g, ' ').trim();
-        if (!href || !label || seen.has(href)) {
-            return;
-        }
-        seen.add(href);
-        links.push({ label, href });
-    });
+    const links = $('[data-testid="links"] a[href]')
+        .toArray()
+        .flatMap((el) => {
+            const $el = $(el);
+            const href = parseHttpUrl($el.attr('href'), articleUrl)?.href;
+            const label = $el.text().replaceAll(/\s+/g, ' ').trim();
+            return href && label ? { label, href } : [];
+        });
 
     if (links.length > 0 || !post?.links) {
         return links;
     }
 
-    for (const item of post.links) {
+    return post.links.flatMap((item) => {
         const href = parseHttpUrl(item.url, articleUrl)?.href;
-        if (!href || seen.has(href)) {
-            continue;
-        }
-        seen.add(href);
-        links.push({ label: resolvePostLinkLabel(item.type), href });
-    }
-
-    return links;
+        return href ? { label: resolvePostLinkLabel(item.type), href } : [];
+    });
 };
 
 const replaceInteractiveCharts = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl: string) => {
@@ -373,7 +317,7 @@ const replaceInteractiveCharts = ($: CheerioAPI, $body: Cheerio<Element>, articl
         }
 
         noticedFigures.add(figureNode);
-        const figId = $figure.attr('id')?.trim();
+        const figId = $figure.attr('id');
         const headingText = $figure.find('.figure-canvas h3, .figure-canvas h4').first().text().replaceAll(/\s+/g, ' ').trim();
         const chartUrl = figId ? `${articleUrl}#${figId}` : articleUrl;
         $panel.replaceWith(renderChartNotice(chartUrl, headingText));
@@ -386,17 +330,8 @@ const normalizeMediaElements = ($: CheerioAPI, $body: Cheerio<Element>, articleU
     $body.find('video').each((_, el) => {
         const $video = $(el);
         $video.attr('controls', '');
-        if (!$video.attr('preload')) {
-            $video.attr('preload', 'metadata');
-        }
-        const videoSrc = parseHttpUrl($video.attr('src'), articleUrl)?.href;
-        if (videoSrc) {
-            $video.attr('src', videoSrc);
-        }
-        const posterSrc = resolveValidCoverUrl($video.attr('poster'), articleUrl);
-        if (posterSrc) {
-            $video.attr('poster', posterSrc);
-        } else {
+        $video.attr('preload', 'metadata');
+        if (!resolveValidCoverUrl($video.attr('poster'), articleUrl)) {
             $video.removeAttr('poster');
         }
     });
@@ -404,30 +339,23 @@ const normalizeMediaElements = ($: CheerioAPI, $body: Cheerio<Element>, articleU
     $body.find('audio').each((_, el) => {
         const $audio = $(el);
         $audio.attr('controls', '');
-        const audioSrc = parseHttpUrl($audio.attr('src'), articleUrl)?.href;
-        if (audioSrc) {
-            $audio.attr('src', audioSrc);
-        }
     });
 
     $body.find('source[src]').each((_, el) => {
         const $source = $(el);
-        const sourceUrl = parseHttpUrl($source.attr('src'), articleUrl)?.href;
-        if (sourceUrl) {
-            $source.attr('src', sourceUrl);
-        } else {
+        if (!parseHttpUrl($source.attr('src'), articleUrl)) {
             $source.remove();
         }
     });
 };
 
 const cleanBodyHtml = ($: CheerioAPI, articleUrl: string): CleanedBody => {
-    const $body = $('.post-article, .postBody').first();
+    const $body = $('.post-article, .postBody');
     if (!$body.length) {
         return { bodyHtml: '' };
     }
 
-    $body.find('script, style, noscript, iframe, button, .js-only, .dotnav, .paddlenav, .katex-html, [hidden]').remove();
+    $body.find('button, .dotnav, .paddlenav, .katex-html').remove();
     $body.find('h1').each((_, el) => {
         el.tagName = 'h2';
     });
@@ -439,15 +367,15 @@ const cleanBodyHtml = ($: CheerioAPI, articleUrl: string): CleanedBody => {
         .filter((_, el) => $(el).closest('svg').length === 0)
         .removeAttr('style');
 
-    const firstBodyImage = resolveValidCoverUrl($body.find('img').first().attr('src'), articleUrl);
+    const firstBodyImage = resolveValidCoverUrl($body.find('img').attr('src'), articleUrl);
     return {
-        bodyHtml: $body.html()?.trim() ?? '',
+        bodyHtml: $body.html() ?? '',
         firstBodyImage,
     };
 };
 
 const buildDetailTitle = ($: CheerioAPI, post: MlPost | undefined, fallbackTitle: string): string => {
-    const headingTitle = $('h1').first().text();
+    const headingTitle = $('h1').text();
     if (headingTitle) {
         return headingTitle;
     }
@@ -476,7 +404,7 @@ const parseDetailPage = (html: string, entry: IndexEntry): ParsedDetail => {
     return {
         title: buildDetailTitle($, post, entry.title),
         description,
-        pubDateRaw: post?.published?.trim() || entry.publishedRaw,
+        pubDateRaw: post?.published || entry.publishedRaw,
         author: resolveDataAuthors(post, entry),
         category: resolveDetailCategories(post, entry),
         image: socialCover ?? ogImage ?? hero.heroImageUrl ?? firstBodyImage,
@@ -494,7 +422,7 @@ const buildFallbackDetail = (entry: IndexEntry): ParsedDetail => ({
 const fetchPostDetail = async (entry: IndexEntry): Promise<ParsedDetail> => {
     try {
         return await cache.tryGet<ParsedDetail>(`apple:ml-research:${entry.link}`, async () => {
-            const html = await ofetch(entry.link, { responseType: 'text' });
+            const html = await ofetch(entry.link);
             return parseDetailPage(html, entry);
         });
     } catch {

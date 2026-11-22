@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
             description: detail.content.rendered,
             pubDate: parseDate(`${detail.date_gmt}Z`),
             category: post.tag.map((tag) => decodeHTML(tag.name)),
-            image: post.thumb?.url,
+            image: post.thumb.url,
         };
     });
 

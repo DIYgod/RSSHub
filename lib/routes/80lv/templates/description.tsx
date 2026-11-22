@@ -3,6 +3,8 @@ import { raw } from 'hono/html';
 import type { Child } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
+
 import type { ArticleBlock, ArticleBlockContent, ArticleDetail, ArticleListItem } from '../utils';
 import { extractPlainText, isHostnameOrSubdomain, pickImageUrl, resolveHttpUrl, resolveSafeUrl, sanitizeRichHtml } from '../utils';
 
@@ -136,7 +138,7 @@ const renderVideoBlock = (content: ArticleBlockContent): Child => {
         }
         const ytId = extractYouTubeId(parsed);
         if (ytId) {
-            return <iframe src={`https://www.youtube.com/embed/${ytId}`} allowfullscreen />;
+            return raw(renderYoutube(true, ytId));
         }
         const vimeoEmbedUrl = resolveVimeoEmbedUrl(parsed);
         if (vimeoEmbedUrl) {
@@ -192,7 +194,7 @@ const renderInstagramBlockquote = (content: ArticleBlockContent): Child => {
         return null;
     }
     const $ = load(content.value, null, false);
-    const permalink = resolveHttpUrl($('[data-instgrm-permalink]').attr('data-instgrm-permalink') || $('a[href]').first().attr('href'));
+    const permalink = resolveHttpUrl($('[data-instgrm-permalink]').attr('data-instgrm-permalink') || $('a[href]').attr('href'));
     if (!permalink) {
         return null;
     }

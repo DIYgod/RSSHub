@@ -56,11 +56,9 @@ async function handler(ctx) {
             throw new NotFoundError(`Aqara ${filterType} "${filterKeyword}" was not found in region "${filterRegion}". Use a category or tag from the current official website.`);
         }
 
-        if (filter.id) {
-            filterName = filter.name ?? filterKeyword;
-            currentUrl = filter.link ?? currentUrl;
-            apiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${pageSize}&${filterType}=${filter.id}`;
-        }
+        filterName = filter.name ?? filterKeyword;
+        currentUrl = filter.link ?? currentUrl;
+        apiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${pageSize}&${filterType}=${filter.id}`;
     }
 
     const { data: response } = await got(apiUrl);
@@ -75,18 +73,9 @@ async function handler(ctx) {
         content('figure img').each((_, el) => {
             const image = content(el);
             const imageSrc = image.prop('data-actualsrc') ?? image.prop('data-original') ?? image.prop('src');
-            if (!imageSrc) {
-                return;
-            }
             image.attr('src', imageSrc.replace(/(-\d+x\d+)/, ''));
-            const width = image.prop('data-rawwidth') ?? image.prop('width');
-            const height = image.prop('data-rawheight') ?? image.prop('height');
-            if (width) {
-                image.attr('width', width);
-            }
-            if (height) {
-                image.attr('height', height);
-            }
+            image.attr('width', image.prop('data-rawwidth') ?? image.prop('width'));
+            image.attr('height', image.prop('data-rawheight') ?? image.prop('height'));
         });
 
         return {
@@ -96,8 +85,8 @@ async function handler(ctx) {
             author: item._embedded.author.map((a) => a.name).join('/'),
             category: terminologies.flat().map((c) => c.name),
             guid: item.guid?.rendered ?? item.guid,
-            pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
-            updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
         };
     });
 

@@ -75,15 +75,8 @@ async function handler(ctx) {
             },
         });
 
-        if (!Array.isArray(data) || data.length < 2) {
-            throw new Error('Wise did not return two daily exchange-rate records for this currency pair.');
-        }
-
         const yData = data.at(-1);
         const byDate = data.at(-2);
-        if ([yData, byDate].some((record) => !record || !Number.isFinite(record.value) || record.value <= 0 || typeof record.time !== 'number' || !parseDate(record.time))) {
-            throw new Error('Wise returned an invalid daily exchange rate or timestamp for this currency pair.');
-        }
         const yRate = yData.value;
         const byRate = byDate.value;
         const yesterday = formatDate(parseDate(yData.time)!, 'YYYY-MM-DD');

@@ -64,11 +64,11 @@ async function handler(ctx: Context) {
         },
         limit
     );
-    const group = stories[0]?.to;
+    const group = stories[0].to;
 
     return {
-        title: group?.name ?? `Facebook Group ${id}`,
-        link: group?.url ?? `${baseUrl}/groups/${id}`,
+        title: group.name,
+        link: group.url,
         item: storiesToItems(stories),
     };
 }

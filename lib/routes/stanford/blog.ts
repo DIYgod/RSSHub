@@ -10,7 +10,7 @@ interface HazyPost {
     title: string;
     author: string;
     slug: string;
-    dateString?: string;
+    dateString: string;
     external?: string;
 }
 
@@ -57,7 +57,7 @@ async function handler(): Promise<Data> {
         link: `${baseUrl}/blog/${post.slug}`,
         api: `${baseUrl}/_next/data/${buildId}/blog/${post.slug}.json`,
         author: load(post.author, undefined, false).text(),
-        pubDate: post.dateString ? parseDate(`${post.dateString} +0000`, 'MMM D, YYYY ZZ') : undefined,
+        pubDate: parseDate(`${post.dateString} +0000`, 'MMM D, YYYY ZZ'),
     }));
 
     const items = await pMap(
@@ -73,7 +73,7 @@ async function handler(): Promise<Data> {
                     const $external = load(externalHtml);
                     content = [$external('main img').first().toString(), $external('main [class^="Post_description"]').toString(), $external('main [class^="Post_content"]').html()].filter(Boolean).join('');
                 }
-                return { description: content || '' };
+                return { description: content };
             });
             return { ...item, ...detail };
         },

@@ -100,7 +100,7 @@ async function handler() {
 
 function extractNewsCards($: CheerioAPI) {
     const cards = new Map<string, { title: string; link: string }>();
-    $('a[href]').each((_, element) => {
+    $('.content-left a[href]').each((_, element) => {
         const anchor = $(element);
         const href = anchor.attr('href');
         const title = anchor.find('.focus-item-info-text').text() || anchor.text();
@@ -164,7 +164,7 @@ function getDescription($: CheerioAPI): string | null {
         const videoCover = scripts.match(/videoCover:\s*("(?:\\.|[^"\\])*")/)?.[1];
         const poster = videoCover ? new URL(JSON.parse(videoCover), 'https://m.sohu.com').href : undefined;
         const source = jsx('source', { src: JSON.parse(videoUrl), type: 'video/mp4' });
-        return renderToString(jsx('video', { controls: true, poster }, source));
+        return renderToString(jsx('video', { controls: true, preload: 'metadata', poster }, source));
     }
     const imageList = $('script:contains("imageList")').text();
     if (imageList) {

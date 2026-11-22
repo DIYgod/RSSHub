@@ -4,16 +4,9 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://www.tynu.edu.cn';
-
-function getPublicationDate(value: string): Temporal.Instant | undefined {
-    if (!value) {
-        return;
-    }
-    return parseDateStrict(value, 'YYYYMM-DD');
-}
 
 async function getArticleItem(item: DataItem & { link: string }): Promise<DataItem> {
     const detail = await cache.tryGet<Pick<DataItem, 'description'>>(item.link, async () => {
@@ -53,7 +46,7 @@ async function handler() {
             return {
                 title: $item.find('.content_list_txt h3').text(),
                 link: new URL($item.find($('a')).attr('href')!, baseUrl).href,
-                pubDate: getPublicationDate($item.find('.content_list_time').text().replaceAll(/\s/g, '')),
+                pubDate: parseDate($item.find('.content_list_time').text().replaceAll(/\s/g, ''), 'YYYYMM-DD'),
             };
         });
 

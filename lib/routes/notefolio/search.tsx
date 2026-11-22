@@ -236,11 +236,11 @@ async function handler(ctx) {
                 // 文章正文
                 description,
                 // 文章发布日期
-                pubDate: publishedAt ? parseDate(publishedAt) : undefined,
+                pubDate: parseDate(publishedAt),
                 // 如果有的话，文章作者
                 author: user.nick,
                 // 如果有的话，文章分类
-                category: [...new Set([...categories.flatMap((label) => categoryMap.filter((category) => category.category === label).map((category) => category.keywords)), ...(item.notefolioInfo?.tags ?? [])])],
+                category: [...new Set([...categories.flatMap((label) => categoryMap.filter((category) => category.category === label).map((category) => category.keywords)), ...(item.notefolioInfo.tags ?? [])])],
             };
         }) || [];
 

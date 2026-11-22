@@ -33,7 +33,6 @@ async function handler(ctx) {
     const out = await getNoticeList(ctx, url, host, '.news_list li.news', 'a', {
         title: '.arti_title',
         content: '.wp_articlecontent',
-        date: '.arti_update',
     });
 
     return {

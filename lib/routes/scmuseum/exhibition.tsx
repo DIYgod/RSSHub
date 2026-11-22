@@ -87,7 +87,7 @@ export const route: Route = {
 
                     const description = renderToString(
                         <div>
-                            {item.description ? raw(item.description) : null}
+                            {raw(item.description)}
                             <img src={imgUrl} />
                             <br />
                             <p>

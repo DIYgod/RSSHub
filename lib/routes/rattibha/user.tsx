@@ -35,7 +35,7 @@ async function handler(ctx) {
         .map((element) => ({
             title: $(element).find('.tc-text').text(),
             author: $(element).find('.tc-name').text(),
-            link: new URL($(element).attr('href') ?? '', baseUrl).href,
+            link: `${baseUrl}${$(element).attr('href')}`,
         }))
         .filter((item, index, items) => items.findIndex((other) => other.link === item.link) === index);
     const items = await pMap(
@@ -46,9 +46,6 @@ async function handler(ctx) {
                 const detail = load(pageSource1);
                 const lang = detail('html').attr('lang');
                 const language: Language | undefined = ['en', 'fr', 'es'].includes(lang ?? '') ? (lang as 'en' | 'fr' | 'es') : undefined;
-                if (!detail('.tweet-content').length) {
-                    throw new Error(`Rattibha did not return a thread body for ${item.link}`);
-                }
                 return {
                     listingTitle: item.title,
                     title: detail('.tweet-text').first().text() || item.title,

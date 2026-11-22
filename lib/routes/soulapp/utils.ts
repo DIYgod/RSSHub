@@ -131,7 +131,7 @@ export const parsePost = (item) => {
         author: item.signature,
         description: content,
         category: item.innerTags?.map((tag) => `${tag.name} (${tag.tagIdEcpt})`),
-        pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime),
+        pubDate: parseDate(item.createTime),
         guid: item.postIdEcpt,
         link: `${shareRoot}?postIdEcpt=${item.postIdEcpt}`,
     };

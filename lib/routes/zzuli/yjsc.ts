@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('td a').attr('title') ?? '',
                 link: $item.find('td a').attr('href'),
-                pubDate: getPublicationDate($item.find('td div').text()),
+                pubDate: parseDate($item.find('td div').text()),
             };
         });
 
@@ -56,11 +56,4 @@ async function handler(ctx: Context) {
         link,
         item: items,
     };
-}
-
-function getPublicationDate(value: string) {
-    if (!value.trim()) {
-        return;
-    }
-    return parseDate(value, 'YYYY-MM-DD');
 }

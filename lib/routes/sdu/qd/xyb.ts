@@ -54,7 +54,7 @@ async function handler(ctx) {
             return {
                 title: a.text().slice(1).trim(),
                 link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDate($e.find('b').text().trim(), 8),
+                pubDate: parseDate($e.find('b').text(), 8),
             };
         });
 

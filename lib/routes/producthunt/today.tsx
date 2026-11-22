@@ -55,7 +55,7 @@ async function handler(): Promise<Data> {
         throw new Error('Product Hunt’s Today list is unavailable. /producthunt/feed provides the general feed.', { cause: error });
     }
 
-    const data = parseTransport(response).flatMap((snapshot) => snapshot.events ?? []);
+    const data = parseTransport(response).flatMap((snapshot) => snapshot.events);
     const todayList = data.find((event) => event.type === 'next' && event.value?.data?.homefeed)?.value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0')?.node;
     if (!todayList) {
         throw new Error('Product Hunt did not return the Today list. /producthunt/feed provides the general feed.');
@@ -94,7 +94,7 @@ async function handler(): Promise<Data> {
                     }
 
                     return {
-                        author: post.user?.name,
+                        author: post.user.name,
                         description: renderDescription({
                             tagline: post.tagline,
                             description: post.description,
@@ -144,7 +144,7 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
                 }
 
                 if (item.mediaType === 'video' && item.metadata?.platform === 'youtube' && item.metadata.videoId) {
-                    return raw(renderYoutube(true, item.metadata.videoId, undefined, undefined));
+                    return raw(renderYoutube(true, item.metadata.videoId));
                 }
 
                 return null;
@@ -166,7 +166,7 @@ function parseTransport(html: string) {
     );
 }
 
-function findPost(value, slug: string): (DescriptionProps & { user?: { name?: string } }) | undefined {
+function findPost(value, slug: string): (DescriptionProps & { user: { name: string } }) | undefined {
     if (!value || typeof value !== 'object') {
         return;
     }

@@ -93,7 +93,7 @@ async function handler(ctx) {
             return {
                 title: $item.attr('title') || $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: $item.prev().text() ? parseDate($item.prev().text(), 8) : undefined,
+                pubDate: parseDate($item.prev().text(), 8),
             };
         });
 

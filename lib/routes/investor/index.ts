@@ -8,15 +8,9 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value?: string) => {
-    const date = value?.trim();
-    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !parseDateStrict(date, 'YYYY-MM-DD')) {
-        return;
-    }
-    return parseDate(`${date}T00:00:00+08:00`);
-};
+const parsePublicationDate = (value?: string) => (value ? parseDate(`${value.trim()}T00:00:00+08:00`) : undefined);
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'home/zxdt' } = ctx.req.param();

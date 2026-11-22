@@ -64,9 +64,9 @@ async function handler(ctx) {
         return {
             title: `${actionMap[post.action]} ${title}`,
             description,
-            author: posts.result.aux.uinf[postData.uid]?.nickname ?? postData.uid,
+            author: posts.result.aux.uinf[postData.uid].nickname,
             pubDate: parseDate(post.cdate),
-            updated: postData.udate ? parseDate(postData.udate) : undefined,
+            updated: parseDate(postData.udate),
             link: `${baseUrl}/post/${post.activity.pstid}`,
         };
     });

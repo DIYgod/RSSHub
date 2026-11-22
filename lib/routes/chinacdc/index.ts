@@ -37,7 +37,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const language = $('html').prop('lang') as Language;
 
     let items: DataItem[] = $('ul.xw_list li')
-        .filter((_, item) => ($(item).find('a').first().prop('href') ?? '').trim().length > 0)
+        .filter((_, item) => ($(item).find('a').prop('href') ?? '').trim().length > 0)
         .toArray()
         .map((item): DataItem => {
             const $item: Cheerio<Element> = $(item);

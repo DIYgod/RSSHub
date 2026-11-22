@@ -54,7 +54,7 @@ async function handler(ctx: Context) {
             description: item.s,
             link: new URL(item.l, rootLink).href,
             author: item.a,
-            image: item.i || undefined,
+            image: item.i,
         })),
     };
 }

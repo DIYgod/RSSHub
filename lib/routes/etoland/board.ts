@@ -4,11 +4,11 @@ import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { solveWafChallenge } from '@/routes/juejin/utils';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate, toInstant } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:bo_table',
@@ -95,7 +95,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const articles = extractArticleList(load(response));
     const limit = getRouteLimit(ctx, 25);
-    const items: DataItem[] = articles.map((article) => ({
+    const items = articles.map((article) => ({
         title: article.subject,
         link: `${baseUrl}/b/${article.boTable}/view/${encodeURIComponent(article.slug)}`,
         author: article.member.nickname,
@@ -104,8 +104,7 @@ async function handler(ctx: Context): Promise<Data> {
         comments: article.commentCount,
     }));
 
-    const hasDates = items.every((item) => item.pubDate && toInstant(item.pubDate));
-    if (ctx.req.query('sorted') !== 'false' && hasDates) {
+    if (ctx.req.query('sorted') !== 'false') {
         items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
 
@@ -113,6 +112,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `eTOLAND - ${articles[0].boTableName}`,
         link,
         language: 'ko',
-        item: items.slice(0, ctx.req.query('sorted') === 'false' || hasDates ? limit : Math.max(limit ?? 25, 25)),
+        item: items.slice(0, limit),
     };
 }

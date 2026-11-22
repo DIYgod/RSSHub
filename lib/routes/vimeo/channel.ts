@@ -46,11 +46,11 @@ async function handler(ctx) {
     const list = $('ol li.clearfix');
     const description = await pMap(
         list.toArray(),
-        (item) => {
+        async (item) => {
             const $item = $(item);
             const link = $item.find('.more').attr('href');
-            return recoverFailure(
-                cache.tryGet(link!, async () => {
+            try {
+                return await cache.tryGet(link!, async () => {
                     const response2 = await got({
                         method: 'get',
                         url: `https://vimeo.com${link}/description?breeze=1`,
@@ -63,15 +63,14 @@ async function handler(ctx) {
                     const $2 = load(articledata);
                     $2('span').remove();
                     return $2.html();
-                }),
-                (error) => {
-                    if (error.response?.status === 451) {
-                        // The public channel summary remains available when the description is legally unavailable.
-                        return $item.find('.description').html() ?? '';
-                    }
-                    throw error;
+                });
+            } catch (error) {
+                if (error instanceof FetchError && error.response?.status === 451) {
+                    // The public channel summary remains available when the description is legally unavailable.
+                    return $item.find('.description').html();
                 }
-            );
+                throw error;
+            }
         },
         { concurrency: 3, stopOnError: false }
     );
@@ -82,27 +81,16 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('.title a').text();
             const author = $item.find('.meta a').text();
-            const publicationTime = $item.find('time').attr('datetime');
             return {
                 title,
                 description: renderDescription({
                     videoUrl: $item.find('.more').attr('href')!,
                     vdescription: description[index] || '',
                 }),
-                pubDate: publicationTime ? parseDate(publicationTime) : undefined,
+                pubDate: parseDate($item.find('time').attr('datetime')!),
                 link: `https://vimeo.com${$item.find('.more').attr('href')}`,
                 author,
             };
         }),
     };
-}
-async function recoverFailure<T, U>(promise: Promise<T>, recover: (error: FetchError) => U | Promise<U>): Promise<T | U> {
-    try {
-        return await promise;
-    } catch (error) {
-        if (!(error instanceof FetchError)) {
-            throw error;
-        }
-        return recover(error);
-    }
 }

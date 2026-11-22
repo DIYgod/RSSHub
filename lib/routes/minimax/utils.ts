@@ -145,26 +145,18 @@ const collectRscRowArticleVideos = (rowBody: string, urls: string[]) => {
     }
 };
 
-const collectNextFChunks = ($: CheerioAPI): string => {
-    const chunks: string[] = [];
-    $('script').each((_, el) => {
-        const text = $(el).text();
-        if (!text.includes('__next_f')) {
-            return;
-        }
-        for (const match of text.matchAll(/self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g)) {
-            try {
-                const decoded = JSON.parse(match[1]);
-                if (typeof decoded === 'string') {
-                    chunks.push(decoded);
-                }
-            } catch {
-                // Ignore malformed RSC flight chunks
-            }
-        }
-    });
-    return chunks.join('');
-};
+const collectNextFChunks = ($: CheerioAPI): string =>
+    $('script:contains("self.__next_f.push")')
+        .toArray()
+        .flatMap((el) =>
+            Array.from(
+                $(el)
+                    .text()
+                    .matchAll(/self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g),
+                (match) => JSON.parse(match[1]) as string
+            )
+        )
+        .join('');
 
 const advanceNextFRow = (buf: Buffer, pos: number, urls: string[]): number => {
     const colonIdx = buf.indexOf(0x3a, pos);
@@ -174,8 +166,7 @@ const advanceNextFRow = (buf: Buffer, pos: number, urls: string[]): number => {
     const prefix = buf.subarray(colonIdx + 1, colonIdx + 24).toString('utf8');
     const textFrame = /^T([0-9a-f]+),/.exec(prefix);
     if (textFrame) {
-        const nextPos = colonIdx + 1 + textFrame[0].length + Number.parseInt(textFrame[1], 16);
-        return Number.isFinite(nextPos) && nextPos > pos ? nextPos : -1;
+        return colonIdx + 1 + textFrame[0].length + Number.parseInt(textFrame[1], 16);
     }
     const newlineIdx = buf.indexOf(0x0a, colonIdx + 1);
     const endIdx = newlineIdx === -1 ? buf.length : newlineIdx;
@@ -204,8 +195,6 @@ export const extractRscVideoUrls = ($: CheerioAPI, baseUrl: string): string[] =>
 };
 
 export const normalizeRichContent = ($root: Cheerio<Element>, $: CheerioAPI, baseUrl: string, rscVideoUrls: string[] = []): string => {
-    $root.find('script, style, noscript').remove();
-
     // Remove visual CSS glyph layer from KaTeX blocks while keeping accessible MathML
     $root.find('.katex').each((_, el) => {
         const $katex = $(el);
@@ -233,7 +222,7 @@ export const normalizeRichContent = ($root: Cheerio<Element>, $: CheerioAPI, bas
 
     $root.find('img').each((_, el) => {
         const $img = $(el);
-        const resolved = unwrapNextImageUrl($img.attr('src') || $img.attr('data-src'), baseUrl);
+        const resolved = unwrapNextImageUrl($img.attr('src'), baseUrl);
         if (resolved) {
             $img.attr('src', resolved);
         }
@@ -241,30 +230,6 @@ export const normalizeRichContent = ($root: Cheerio<Element>, $: CheerioAPI, bas
         const style = $img.attr('style');
         if (style?.includes('position:absolute')) {
             $img.removeAttr('style');
-        }
-    });
-
-    $root.find('video, audio, source').each((_, el) => {
-        const $el = $(el);
-        const resolvedSrc = resolveAbsoluteUrl($el.attr('src'), baseUrl);
-        if (resolvedSrc) {
-            $el.attr('src', resolvedSrc);
-        }
-        const resolvedPoster = resolveAbsoluteUrl($el.attr('poster'), baseUrl);
-        if (resolvedPoster) {
-            $el.attr('poster', resolvedPoster);
-        }
-    });
-
-    $root.find('a[href]').each((_, el) => {
-        const $link = $(el);
-        const href = $link.attr('href')?.trim();
-        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-            return;
-        }
-        const resolvedHref = resolveAbsoluteUrl(href, baseUrl);
-        if (resolvedHref) {
-            $link.attr('href', resolvedHref);
         }
     });
 

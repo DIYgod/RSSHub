@@ -174,13 +174,11 @@ async function handler(ctx: Context) {
             const a = element.find('a');
             const dateText = element.find('span').text();
             const href = a.attr('href');
-            const itemTitle = a.attr('title') || a.text();
+            const itemTitle = a.attr('title');
 
             if (!href || !itemTitle) {
                 return null;
             }
-
-            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
 
             const fullLink = new URL(href, link).href;
 
@@ -189,19 +187,19 @@ async function handler(ctx: Context) {
                 const content = load(contentResponse.data);
                 const article = content('.v_news_content');
                 const description = article.length ? article.html() : new URL(fullLink).hostname === 'www.jxeea.cn' ? content('#zoom').html() : undefined;
-                return { description: description ?? undefined };
+                return { description };
             });
 
             return {
                 title: itemTitle,
                 link: fullLink,
-                pubDate,
+                pubDate: parseDate(dateText, 8),
                 ...detail,
             };
         })
     );
 
-    const result = items.filter((item): item is { title: string; link: string; pubDate: Temporal.Instant | undefined; description: string | undefined } => item !== null);
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Temporal.Instant; description: string | null | undefined } => item !== null);
 
     return {
         title,

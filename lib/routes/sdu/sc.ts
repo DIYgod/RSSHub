@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate($e.find('.date').text().trim(), 8),
+                pubDate: parseDate($e.find('.date').text(), 8),
             };
         });
 

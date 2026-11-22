@@ -7,6 +7,7 @@ import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -37,7 +38,7 @@ export const route: Route = {
 interface Project {
     link: string;
     title: { rendered: string };
-    date_gmt?: string;
+    date_gmt: string;
     _embedded: { 'wp:term': Array<Array<{ name: string }>> };
 }
 
@@ -45,8 +46,7 @@ async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const baseUrl = 'https://www.unit-image.fr';
     const apiUrl = `${baseUrl}/wp-json/wp/v2`;
-    const requestedLimit = Math.trunc(Number(ctx.req.query('limit')));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 10;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     let category;
     if (type) {
         category = await cache.tryGet(`unit-image:category:${type}`, async () => {
@@ -71,9 +71,9 @@ async function handler(ctx: Context) {
                 const response = await ofetch(post.link);
                 const $ = load(response);
                 const content = $('main');
-                content.find('script, style, noscript, input, .post_title').remove();
+                content.find('style, noscript, input, .post_title').remove();
                 content.find('.youtube-player').each((_, el) => {
-                    $(el).replaceWith(renderYoutube(true, $(el).attr('data-id'), undefined, undefined));
+                    $(el).replaceWith(renderYoutube(true, $(el).attr('data-id')));
                 });
                 content.find('.comparison-img').each((_, el) => {
                     const image = $(el)
@@ -86,7 +86,7 @@ async function handler(ctx: Context) {
             return {
                 title: post.title.rendered,
                 link: post.link,
-                pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+                pubDate: parseDate(`${post.date_gmt}Z`),
                 category: post._embedded['wp:term'].flat().map((term) => term.name),
                 ...details,
             };

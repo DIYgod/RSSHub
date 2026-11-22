@@ -82,10 +82,9 @@ async function handler(ctx: Context): Promise<Data> {
 
                 const basicInfo = content('div.topic_detail_header').find('div.info').text();
                 const match = dateTimeRegex.exec(basicInfo);
-                const pubDate = match ? parseDateStrict(match[1], 'YYYY-MM-DD HH:mm', 8) : undefined;
 
                 return {
-                    pubDate,
+                    pubDate: match ? parseDateStrict(match[1], 'YYYY-MM-DD HH:mm', 8) : undefined,
                     description: content('div.content').html(),
                 };
             });

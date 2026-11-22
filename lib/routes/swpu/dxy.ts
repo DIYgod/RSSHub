@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -20,8 +17,7 @@ async function getArticle(link: string): Promise<Partial<DataItem>> {
             .find('a[href*="DownloadAttachUrl"]')
             .filter((_, elem) => !$(elem).closest('.v_news_content').length)
             .each((_, elem) => {
-                const attachment = copyNodes($(elem));
-                content.append($('<p>').append(attachment));
+                content.append($('<p>').append($(elem)));
             });
         const pdfPath = content
             .find('script')
@@ -108,13 +104,4 @@ async function handler(ctx): Promise<Data> {
         language: 'zh-CN',
         item: out,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

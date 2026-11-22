@@ -1,4 +1,3 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -68,37 +67,30 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const child = $(element).children();
-            const published = $(child[2]).text().trim();
             const info: DataItem = {
                 title: $(child[1]).find('a').attr('title')!,
                 link: $(child[1]).find('a').attr('href')!.startsWith('../') ? new URL($(child[1]).find('a').attr('href')!, noticeType[type].url).href : $(child[1]).find('a').attr('href'),
-                pubDate: published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($(child[2]).text(), 'YYYY-MM-DD', 8),
             };
             return info;
         });
     items = await pMap(
         items.filter((item) => item.link),
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`ustc:index:detail:${item.link}`, async () => {
-                const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustc:index:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description'> = {};
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
                     const content = $('div.v_news_content');
                     details.description = content.html();
                     if (details.description) {
-                        const links = new Set(mapElements(content.find('a[href]'), (_, element) => new URL($(element).attr('href')!, item.link).href));
                         const attachments = $('<ul>');
                         $('ul a[href*="/system/_content/download.jsp"]').each((_, element) => {
-                            const href = new URL($(element).attr('href')!, item.link).href;
-                            if (links.has(href)) {
-                                return;
-                            }
                             const attachmentWrapper1 = $('<li>');
-                            const attachmentAnchor1 = $('<a>').attr('href', href).text($(element).text());
+                            const attachmentAnchor1 = $('<a>').attr('href', $(element).attr('href')).text($(element).text());
                             attachmentWrapper1.append(attachmentAnchor1);
                             attachments.append(attachmentWrapper1);
-                            links.add(href);
                         });
                         if (attachments.children().length) {
                             details.description += $.html(attachments);
@@ -109,7 +101,7 @@ async function handler(ctx) {
                 }
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );
@@ -119,7 +111,4 @@ async function handler(ctx) {
         link: noticeType[type].url,
         item: items,
     };
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }

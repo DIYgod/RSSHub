@@ -5,13 +5,6 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 8);
-}
-
 export const route: Route = {
     path: '/libNews',
     categories: ['university'],
@@ -48,7 +41,7 @@ async function handler() {
     const list = response.data.datas.datas.map((item) => ({
         title: item['1'].value,
         link: `${host}/engine2/d/${item.id}/${engineInstanceId}/0?t=${typeId}&p=${pageId}`,
-        pubDate: parsePublicationDate(item['6']?.value),
+        pubDate: parseDate(item['6'].value, 8),
         image: item['0'].value ? new URL(item['0'].value, host).href : undefined,
     }));
 

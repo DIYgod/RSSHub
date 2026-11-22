@@ -93,7 +93,7 @@ function authorName(reference: Reference | null | undefined, users: Map<string, 
 function DiscussionDescription({ firstPost, comments, discussionId, users }: { firstPost: Post; comments: Post[]; discussionId: string; users: Map<string, User> }) {
     return (
         <>
-            {raw(firstPost.attributes.contentHtml ?? '')}
+            {raw(firstPost.attributes.contentHtml)}
             <hr />
             <h2>最新 {comments.length} 条评论</h2>
             {comments.length ? (
@@ -106,7 +106,7 @@ function DiscussionDescription({ firstPost, comments, discussionId, users }: { f
                             {' · '}
                             <time datetime={post.attributes.createdAt}>{post.attributes.createdAt}</time>
                         </p>
-                        {raw(post.attributes.contentHtml ?? '')}
+                        {raw(post.attributes.contentHtml)}
                     </section>
                 ))
             ) : (

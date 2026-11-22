@@ -87,7 +87,7 @@ export const route: Route = {
                     title: $('a', e).text(),
                     pubDate: date ? parseDate(date, 8) : undefined,
                     link: $('a', e).attr('href'),
-                    category: [$('.newIcon', e).text()].filter(Boolean),
+                    category: [$('.newIcon', e).text()],
                 };
             });
 

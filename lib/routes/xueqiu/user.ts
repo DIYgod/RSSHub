@@ -76,7 +76,7 @@ const buildTitle = (item: Status, detail: StatusDetail): string => {
 };
 
 const buildDescription = (detail: StatusDetail): string => {
-    let text = detail.text?.trim() ? detail.text : detail.description || '';
+    let text = detail.text || detail.description || '';
     const images = Array.isArray(detail.image_info_list) ? detail.image_info_list : [];
     for (const img of images) {
         if (img?.filename) {
@@ -84,7 +84,7 @@ const buildDescription = (detail: StatusDetail): string => {
         }
     }
     const retweet = detail.retweeted_status;
-    const retweetText = retweet?.text?.trim() ? retweet.text : retweet?.description;
+    const retweetText = retweet?.text || retweet?.description;
     if (retweetText) {
         text += `<blockquote>${retweet?.user?.screen_name ?? ''}:&nbsp;${retweetText}</blockquote>`;
     }
@@ -93,7 +93,7 @@ const buildDescription = (detail: StatusDetail): string => {
 
 // For long posts, and for reposts of long posts, the timeline leaves `text` empty and only sends a shortened `description`.
 // Everywhere else the timeline text matches show.json, so the detail request can be skipped.
-const hasFullText = (item: Status): boolean => item.truncated === false && Boolean(item.text?.trim()) && (!item.retweeted_status || Boolean(item.retweeted_status.text?.trim()));
+const hasFullText = (item: Status): boolean => item.truncated === false && Boolean(item.text) && (!item.retweeted_status || Boolean(item.retweeted_status.text));
 
 // Build a feed item from the timeline list data alone (no detail request).
 const buildListItem = (item: Status) => ({

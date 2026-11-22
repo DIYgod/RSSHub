@@ -52,7 +52,7 @@ async function handler() {
     const items = movies.map((movie) => ({
         title: `${movie.sc ? `[${movie.sc}分] ` : ''}${movie.nm}`,
         link: `https://www.maoyan.com/films/${movie.id}`,
-        pubDate: movie.rt ? parseDate(movie.rt, 8) : undefined,
+        pubDate: parseDate(movie.rt, 8),
         description: `
             <img src="${movie.img}" />
             <p><strong>${movie.nm}</strong></p>

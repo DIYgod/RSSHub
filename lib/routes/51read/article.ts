@@ -73,7 +73,7 @@ const buildItem = (url: string, bookUrl: string) =>
             },
         });
         const $ = load(html);
-        $('.wr-source-content div, .wr-source-content script, .js_chapter_more_text, .wr-source-content p[style*="text-align:center"]').remove();
+        $('.wr-source-content div, .js_chapter_more_text, .wr-source-content p[style*="text-align:center"]').remove();
 
         return {
             title: $('h1').text(),

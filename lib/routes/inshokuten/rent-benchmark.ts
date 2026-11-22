@@ -66,8 +66,7 @@ const parseDetail = (html: string, base: Pick<RentBenchmarkExtra, 'area_kind' | 
             .match(/（([^）]+)）/)?.[1] ?? null;
     const buckets = $('input[name^="js-circle-graph-val"]')
         .toArray()
-        .map((el) => Number($(el).attr('value')))
-        .filter((n) => Number.isFinite(n));
+        .map((el) => Number($(el).attr('value')));
     const trend = $('#rate-total')
         .eq(1)
         .find('tr')

@@ -48,27 +48,14 @@ async function handler(ctx: Context) {
         title: 'DailyArt',
         link: 'https://www.getdailyart.com/',
         language: (language === 'jp' ? 'ja' : language) as Language,
-        item: uniqueArtworks([daily, ...archival.data])
-            .slice(0, limit)
-            .map((artwork: Artwork): DataItem => ({
-                title: artwork.name,
-                description: `<img src="${artwork.image}"><p>${[artwork.date, artwork.size, artwork.technique, artwork.museum?.name, artwork.copyrights].filter(Boolean).join(' · ')}</p>${md.render(artwork.description)}`,
-                author: artwork.authors.map((author) => author.name).join(', '),
-                category: artwork.genre ? [artwork.genre.name] : undefined,
-                pubDate: parseDate(artwork.publish_date),
-                link: artwork.share_url.split('?', 1)[0].replace('//getdailyart.com/', '//www.getdailyart.com/'),
-                guid: `getdailyart:${artwork.id}`,
-            })),
+        item: [daily, ...archival.data].slice(0, limit).map((artwork: Artwork): DataItem => ({
+            title: artwork.name,
+            description: `<img src="${artwork.image}"><p>${[artwork.date, artwork.size, artwork.technique, artwork.museum?.name, artwork.copyrights].filter(Boolean).join(' · ')}</p>${md.render(artwork.description)}`,
+            author: artwork.authors.map((author) => author.name).join(', '),
+            category: artwork.genre ? [artwork.genre.name] : undefined,
+            pubDate: parseDate(artwork.publish_date),
+            link: artwork.share_url.split('?', 1)[0].replace('//getdailyart.com/', '//www.getdailyart.com/'),
+            guid: `getdailyart:${artwork.id}`,
+        })),
     };
-}
-
-function uniqueArtworks(artworks: Artwork[]) {
-    const seenIds = new Set<number>();
-    return artworks.filter((artwork) => {
-        if (seenIds.has(artwork.id)) {
-            return false;
-        }
-        seenIds.add(artwork.id);
-        return true;
-    });
 }

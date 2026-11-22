@@ -67,7 +67,7 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                return isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+                return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
         },
     });
@@ -98,7 +98,6 @@ async function handler() {
                                   return { date: (await categoryDates)[newsLink] };
                               })
                             : { date: undefined };
-                        const parsedDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                         let prefix = '【其他】';
                         for (const code in prefixes) {
                             if (newsLink.search('info/' + code) === -1) {
@@ -111,7 +110,7 @@ async function handler() {
                         return {
                             title: newsTitle,
                             link: newsLink,
-                            pubDate: parsedDate,
+                            pubDate: date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined,
                         };
                     },
                     { concurrency: 3 }
@@ -128,9 +127,4 @@ async function handler() {
     } finally {
         await destroy();
     }
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

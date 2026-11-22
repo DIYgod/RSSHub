@@ -42,7 +42,7 @@ export function fetchDetail(list: Array<{ href?: string; publishDate: string }>,
             });
             return {
                 ...article,
-                pubDate: item.publishDate ? parseDate(item.publishDate, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(item.publishDate, 'YYYY-MM-DD', 8),
             };
         },
         { concurrency: 3 }

@@ -44,7 +44,7 @@ async function handler(ctx) {
             title: item.title,
             description: renderEshopUsDescription(item),
             link: `https://www.nintendo.com${item.url}`,
-            pubDate: item.releaseDate ? parseDate(item.releaseDate) : undefined,
+            pubDate: parseDate(item.releaseDate),
         })),
     };
 }

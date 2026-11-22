@@ -83,8 +83,8 @@ async function handler(ctx) {
                 const date = content('.xq-head')
                     .find('span')
                     .text()
-                    .match(/发布时间：(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)?.[1];
-                item.pubDate = date ? parseDate(date, 'YYYY-MM-DD HH:mm', 8) : undefined;
+                    .match(/发布时间：(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)![1];
+                item.pubDate = parseDate(date, 'YYYY-MM-DD HH:mm', 8);
 
                 return item;
             }),

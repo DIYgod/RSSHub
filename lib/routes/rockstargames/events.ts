@@ -58,7 +58,7 @@ async function handler(ctx: Context) {
         link: `${baseUrl}/events?gameId=${gameId}`,
         item: events?.map((x) => ({
             title: x.headerText,
-            guid: x.EventId ? String(x.EventId) : `${baseUrl}/events/${x.urlHash}/${x.slug}/1`,
+            guid: String(x.EventId),
             category: eventTypeName[x.eventType] || x.eventType,
             description: (x.imgUrl ? `<img src="${x.imgUrl}"><br>` : '') + x.description,
             pubDate: parseDate(x.startDate),

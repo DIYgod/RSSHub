@@ -62,8 +62,7 @@ async function handler(ctx) {
                 category: $story
                     .find('.tags__tag[data-tag]')
                     .toArray()
-                    .map((tag) => $(tag).attr('data-tag'))
-                    .filter((tag): tag is string => Boolean(tag)),
+                    .map((tag) => tag.attribs['data-tag']),
             };
         });
 

@@ -11,13 +11,6 @@ import { parseDate } from '@/utils/time';
 const baseUrl = 'https://cn.club.vmall.com';
 const apiUrl = 'https://sgw-cn.c.huawei.com/forward/club/content_h5';
 
-function getPublicationDate(value?: string | number) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value, 'x');
-}
-
 export const route: Route = {
     path: '/community/user/:uid?',
     example: '/huawei/community/user/1000014645695',
@@ -36,7 +29,7 @@ async function requestApi(path: string, body: { threadId: string; pageIndex: num
         headers: { 'SGW-APP-ID': appId, Origin: baseUrl, Referer: `${baseUrl}/` },
         body,
     });
-    if (String(response.errcode) !== '0' || !response.data) {
+    if (response.errcode !== '0' || !response.data) {
         throw new Error(`Huawei community did not return public data: ${response.errmsg || response.errMsg || 'check the user or post ID'}.`);
     }
     return response.data;
@@ -51,21 +44,16 @@ async function getItem(post) {
             throw new Error('Huawei community returned a post without an exact share ID.');
         }
         const detail = await requestApi('queryThreadDetail/1', { threadId, pageIndex: 1, pageSize: 20, orderBy: 1 }, '5881CD5912A8D0AA39AEC96F2EC2388A');
-        const $ = load(detail.content || '', undefined, false);
-        const references = detail.links || [];
-        for (const reference of references) {
-            const url = new URL(reference.path, baseUrl);
-            if (['http:', 'https:'].includes(url.protocol)) {
-                $(`link[id="${reference.id}"]`).replaceWith(
-                    $('<a>')
-                        .attr('href', url.href)
-                        .text(reference.name || '查看原文')
-                );
-            }
+        const $ = load(detail.content, undefined, false);
+        for (const reference of detail.links) {
+            $(`link[id="${reference.id}"]`).replaceWith(
+                $('<a>')
+                    .attr('href', reference.path)
+                    .text(reference.name || '查看原文')
+            );
         }
-        const images = detail.imgInfoList || [];
-        for (const image of images) {
-            const element = $('<img>').attr('src', image.mediumPath || image.path);
+        for (const image of detail.imgInfoList) {
+            const element = $('<img>').attr('src', image.mediumPath);
             const placeholder = $(`img[id="${image.imgId}"]`);
             if (placeholder.length) {
                 placeholder.replaceWith(element);
@@ -75,17 +63,17 @@ async function getItem(post) {
         }
         return {
             title: detail.subject,
-            author: detail.authorInfo?.name,
-            pubDate: getPublicationDate(detail.publishTime),
+            author: detail.authorInfo.name,
+            pubDate: parseDate(detail.publishTime, 'x'),
             description: `<div style="white-space: pre-wrap">${$.html()}</div>`,
         };
     });
     return {
-        title: detail.title || post.title,
+        title: detail.title,
         link,
-        author: detail.author || post.author,
-        pubDate: detail.pubDate || getPublicationDate(post.dateline),
-        category: post.businessTypeName ? [post.businessTypeName] : undefined,
+        author: detail.author,
+        pubDate: detail.pubDate,
+        category: [post.businessTypeName],
         description: detail.description,
     };
 }

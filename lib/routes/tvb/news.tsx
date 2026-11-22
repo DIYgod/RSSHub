@@ -44,11 +44,8 @@ const titles = {
     },
 };
 
-type ArticleImage = { big?: string; medium?: string; thumbnail?: string; image_title?: string };
-
-function renderImage(image: ArticleImage) {
-    const imageUrl = image.big || image.medium || image.thumbnail;
-    return imageUrl ? <img src={imageUrl} alt={image.image_title || undefined} /> : null;
+function renderImage(image: { big: string }) {
+    return <img src={image.big} />;
 }
 
 function renderParagraph(text: string) {
@@ -115,14 +112,14 @@ async function handler(ctx) {
         },
     });
 
-    if (response.data.meta?.status === 'failed') {
+    if (response.data.meta.status === 'failed') {
         throw new Error(`TVB could not retrieve ${category} news (${response.data.meta.error || 'unknown source error'}). Please try again later.`);
     }
 
     const items = response.data.content.map((item) => ({
         title: item.title,
         link: `${linkRootUrl}/${language}/${category}/${item.id}`,
-        pubDate: item.publish_datetime ? parseDate(item.publish_datetime) : undefined,
+        pubDate: parseDate(item.publish_datetime),
         category: [...item.category.map((c) => c.title), ...item.tags],
         description: renderToString(
             <>

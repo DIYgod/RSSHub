@@ -61,7 +61,7 @@ const request = async (path: string, payload: JsonObject, uuid: string, publicKe
             timestamp: String(timestamp),
         },
     });
-    if (typeof response.encryptData !== 'string' || !response.encryptData) {
+    if (!response.encryptData) {
         throw new Error(`The State Grid API returned no encrypted response for ${path} (code: ${response.code ?? 'unknown'}, message: ${response.message ?? 'unavailable'}). Check the official outage notice page and retry later.`);
     }
     return sm4Decrypt(response.encryptData, uuid);

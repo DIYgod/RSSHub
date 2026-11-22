@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
                 title: $item.find(String.raw`dc\:title`).text(),
                 author: $item.find(String.raw`dc\:creator`).text(),
                 description: $item.find('description').text(),
-                category: section ? [section] : undefined,
+                category: [section],
                 link: address,
                 guid: address,
                 doi: $item.find(String.raw`dc\:identifier`).text(),

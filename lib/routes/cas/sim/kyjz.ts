@@ -60,7 +60,7 @@ async function handler() {
 
                 item.title = $('p.wztitle').text();
                 item.author = reg.exec(author)![1].trim();
-                item.description = $('.TRS_Editor, .TRS_UEDITOR').first().html();
+                item.description = $('.TRS_Editor, .TRS_UEDITOR').html();
                 return item;
             })
         )

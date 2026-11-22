@@ -15,7 +15,7 @@ export function parseHostRateLimits(value?: string): HostRateLimits {
             throw new Error(`Invalid hostname or policy in REQUEST_RATE_LIMITS: ${hostname}`);
         }
         const { points, duration } = policy as HostRateLimits[string];
-        if (!Number.isSafeInteger(points) || points <= 0 || !Number.isFinite(duration) || duration <= 0) {
+        if (!Number.isInteger(points) || points <= 0 || !(duration > 0)) {
             throw new Error(`REQUEST_RATE_LIMITS for ${hostname} requires positive integer points and positive duration in seconds.`);
         }
         normalized[host] = { points, duration };

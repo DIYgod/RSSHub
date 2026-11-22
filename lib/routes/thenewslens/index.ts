@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -38,8 +39,7 @@ export async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     $('h1.title').remove();
 

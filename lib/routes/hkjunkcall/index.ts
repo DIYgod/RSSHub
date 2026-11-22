@@ -73,8 +73,7 @@ async function handler() {
                 item.guid = item.link!.split('/').pop();
                 item.description = content('.card').html();
                 const sourceDate = detailResponse.data.match(/<br \/>(\d+-\d+-\d+)<\/div><\/a>/)?.[1];
-                const pubDate = sourceDate ? parseDate(sourceDate) : undefined;
-                item.pubDate = pubDate;
+                item.pubDate = sourceDate ? parseDate(sourceDate) : undefined;
 
                 return { guid: item.guid, description: item.description, pubDate: item.pubDate };
             });

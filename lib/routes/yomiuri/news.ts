@@ -63,18 +63,6 @@ function resolveLink(href: string | undefined, baseUrl: string) {
     }
 }
 
-function parseArticleDate(value: string | undefined) {
-    const match = value?.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})?$/);
-    if (!match) {
-        return;
-    }
-    const [hour, minute, second = '0'] = match.slice(4, 7);
-    if (Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59) {
-        return;
-    }
-    return parseDate(value!, 9);
-}
-
 async function handler(ctx) {
     const { category = 'news' } = ctx.req.param();
     const url = `https://www.yomiuri.co.jp/${category}`;
@@ -92,12 +80,11 @@ async function handler(ctx) {
                 const a = $item.find('h3 a');
                 return {
                     title: a.text(),
-                    link: resolveLink(a.attr('href'), url),
-                    pubDate: parseArticleDate($item.find('time').attr('datetime')),
+                    link: `https://www.yomiuri.co.jp${a.attr('href')}`,
+                    pubDate: parseDate($item.find('time').attr('datetime')!, 9),
                     locked: $item.find('.icon-locked').length,
                 };
-            })
-            .filter((item) => item.link);
+            });
     } else {
         $('.p-category-reading-recommend').remove();
         list = $('.layout-contents__main .c-list-title')
@@ -109,7 +96,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: resolveLink(a.attr('href'), url),
-                    pubDate: parseArticleDate(parent.find('time').attr('datetime')),
+                    pubDate: parseDate(parent.find('time').attr('datetime')!, 9),
                     locked: parent.find('.c-list-member-only').length,
                 };
             })
@@ -138,12 +125,12 @@ async function handler(ctx) {
                 return {
                     description: mainContent.html(),
                     author: author.length ? author : undefined,
-                    pubDate: parseArticleDate($('meta[property="article:published_time"]').attr('content')),
-                    updated: parseArticleDate($('meta[property="article:modified_time"]').attr('content')),
-                    category: $('.p-header-category__breadcrumbs li a').last().text() || $('.p-header-category-breadcrumbs li a').last().text() || undefined,
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
+                    updated: parseDate($('meta[property="article:modified_time"]').attr('content')!),
+                    category: $('.p-header-category__breadcrumbs li a').last().text(),
                 };
             });
-            return { ...item, ...article, pubDate: article.pubDate ?? item.pubDate, title: article.category ? `[${article.category}] ${item.title}` : item.title };
+            return { ...item, ...article, title: `[${article.category}] ${item.title}` };
         },
         { concurrency: 3, stopOnError: false }
     );

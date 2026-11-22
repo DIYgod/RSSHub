@@ -55,52 +55,11 @@ interface CatalogCollege {
 }
 
 function catalogJson<T>(script: string, name: string): T {
-    const declaration = new RegExp(`var\\s+${name}\\s*=\\s*`).exec(script);
-    if (!declaration) {
+    const json = new RegExp(`var ${name} = (.+);$`, 'm').exec(script)?.[1];
+    if (!json) {
         throw new Error(`The admissions catalog no longer provides ${name}.`);
     }
-    const start = declaration.index + declaration[0].length;
-    let depth = 0;
-    let quoted = false;
-    let escaped = false;
-    for (let index = start; index < script.length; index++) {
-        const character = script[index];
-        if (quoted) {
-            if (escaped) {
-                escaped = false;
-            } else if (character === '\\') {
-                escaped = true;
-            } else if (character === '"') {
-                quoted = false;
-            }
-        } else {
-            switch (character) {
-                case '"':
-                    quoted = true;
-
-                    break;
-
-                case '{':
-                case '[':
-                    depth++;
-
-                    break;
-
-                case '}':
-                case ']':
-                    depth--;
-                    if (depth === 0) {
-                        return JSON.parse(script.slice(start, index + 1));
-                    }
-
-                    break;
-
-                default:
-                // Do nothing
-            }
-        }
-    }
-    throw new Error(`The admissions catalog contains incomplete ${name} data.`);
+    return JSON.parse(json);
 }
 
 async function catalogDescription(link: string, page: string) {
@@ -162,7 +121,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: $elem.find('td div').text() ? parseDate(`${$elem.find('td div').text()}T00:00:00+08:00`) : undefined,
+                pubDate: parseDate(`${$elem.find('td div').text()}T00:00:00+08:00`),
             };
         });
 

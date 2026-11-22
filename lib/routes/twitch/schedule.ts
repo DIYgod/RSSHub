@@ -31,13 +31,6 @@ export const route: Route = {
     handler,
 };
 
-function getPublicationDate(value: string | undefined) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const login = ctx.req.param('login');
 
@@ -85,9 +78,6 @@ async function handler(ctx) {
     const channelShellData = response.data[0].data;
     const streamScheduleData = response.data[1].data;
 
-    if (!channelShellData || !streamScheduleData) {
-        throw new Error('Twitch schedule API returned no channel or schedule data');
-    }
     if (!streamScheduleData.user?.id) {
         throw new InvalidParameterError('Username does not exist');
     }
@@ -101,7 +91,7 @@ async function handler(ctx) {
         link: `https://www.twitch.tv/${login}`,
         author: displayName,
         description: `EndAt: ${item.endAt}`,
-        pubDate: getPublicationDate(item.startAt),
+        pubDate: parseDate(item.startAt),
         category: item.categories.map((item) => item.name),
     }));
 

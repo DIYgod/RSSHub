@@ -143,14 +143,10 @@ const ProcessItems = (items, ctx) => {
                 if (!payload) {
                     throw new Error(`The Hong Kong 01 article is missing its source data: ${item.link}`);
                 }
-                const content = JSON.parse(payload);
-                const article = content.props?.initialProps?.pageProps?.article;
-                if (!article) {
-                    throw new Error(`The Hong Kong 01 source data is missing the article: ${item.link}`);
-                }
+                const article = JSON.parse(payload).props.initialProps.pageProps.article;
 
                 return renderDescription({
-                    image: article.originalImage?.cdnUrl,
+                    image: article.originalImage.cdnUrl,
                     teasers: article.teaser,
                     blocks: article.blocks,
                 });

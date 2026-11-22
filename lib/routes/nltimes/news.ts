@@ -114,7 +114,7 @@ async function handler(ctx) {
             if (url.origin !== baseUrl) {
                 return [];
             }
-            const date = card.find('time').first().attr('datetime') ?? card.find('.news-card__date').first().text();
+            const date = card.find('time').attr('datetime') ?? card.find('.news-card__date').first().text();
             return {
                 title: heading.text(),
                 link: url.href,

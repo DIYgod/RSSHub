@@ -35,11 +35,10 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const day = $item.find('.pic em').text();
             const yearMonth = $item.find('.pic span').contents().last().text();
-            const pubDate = parseDateStrict(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], 8);
             return {
                 title: $item.find('.txt h3').text(),
                 link: new URL($item.attr('href')!, link).href,
-                pubDate,
+                pubDate: parseDateStrict(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], 8),
             };
         })
         .slice(0, getRouteLimit(ctx, 10));

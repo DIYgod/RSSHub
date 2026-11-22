@@ -2,10 +2,9 @@ import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 
-export const fetchItems = <T extends DataItem>(items: T[], mapper: (item: T) => Promise<T>): Promise<T[]> => {
-    const selected = items;
-    return pMap(
-        selected,
+export const fetchItems = <T extends DataItem>(items: T[], mapper: (item: T) => Promise<T>): Promise<T[]> =>
+    pMap(
+        items,
         async (item) => {
             const { title, link, pubDate } = item;
             const result = await mapper(item);
@@ -13,4 +12,3 @@ export const fetchItems = <T extends DataItem>(items: T[], mapper: (item: T) => 
         },
         { concurrency: 3 }
     );
-};

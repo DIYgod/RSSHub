@@ -48,7 +48,7 @@ async function handler() {
         const category = item.term.title;
 
         const link = new URL(item.link.href, BASE_URL).href;
-        const pubDate = item.publishedAt ? parseDate(item.publishedAt) : undefined;
+        const pubDate = parseDate(item.publishedAt);
         return {
             title,
             link,
@@ -68,13 +68,10 @@ async function handler() {
 
                 // Update the description to post's main content
                 $('.agent, .tt-none').remove();
-                const sections = $('.toc-body > section[id]');
-                item.description = sections.length
-                    ? sections
-                          .toArray()
-                          .map((section) => $(section).html())
-                          .join('')
-                    : $('section[class^="blog_sections"]').first().html();
+                item.description = $('.toc-body > section[id]')
+                    .toArray()
+                    .map((section) => $(section).html())
+                    .join('');
                 return item;
             }),
         { concurrency: 3 }

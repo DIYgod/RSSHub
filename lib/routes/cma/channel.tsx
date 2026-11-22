@@ -148,7 +148,7 @@ async function handler(ctx) {
             author: itemAuthor,
             guid: `cma${article.link}#${article.releaseTime.replaceAll(/\s/g, '-')}`,
             pubDate: parseDate(article.releaseTime, 8),
-            enclosure_url: article.image ? new URL(article.image, rootUrl).href : undefined,
+            enclosure_url: new URL(article.image, rootUrl).href,
             enclosure_type: article.image ? `image/${article.image.split(/\./).pop()?.toLowerCase().replace(/^jpg$/, 'jpeg')}` : undefined,
         },
     ];

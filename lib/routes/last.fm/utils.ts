@@ -7,8 +7,8 @@ import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://www.last.fm';
-const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch']);
-const staticOrigins = new Set([baseUrl, 'https://cdn.jsdelivr.net', 'https://www.googletagmanager.com', 'https://cdn.snigelweb.com', 'https://a.pub.network', 'https://fonts.googleapis.com']);
+const resourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+const staticOrigins = new Set([baseUrl, 'https://cdn.jsdelivr.net']);
 const timeZoneError = 'Last.fm did not provide a valid display time zone. Configure LASTFM_API_KEY to use the official API.';
 // four steps may wait 30 seconds each
 const browserCloseTimeout = 130000;
@@ -19,7 +19,7 @@ function isPublicRequestAllowed(request: Request, pagePath: string) {
     if (!resourceTypes.has(resourceType)) {
         return false;
     }
-    if (resourceType === 'script' || resourceType === 'stylesheet') {
+    if (resourceType === 'script') {
         return staticOrigins.has(url.origin);
     }
     if (url.origin !== baseUrl) {
@@ -36,11 +36,7 @@ function parsePublicDate(value: string, timeZone: string) {
     if (!wallTime || wallTime.toLocaleString('en-US', { weekday: 'long' }) !== value.split(' ', 1)[0]) {
         throw new Error('Last.fm returned an unrecognised track timestamp. Configure LASTFM_API_KEY to use the official API.');
     }
-    const date = wallTime.toZonedDateTime(timeZone);
-    if (!date.toPlainDateTime().equals(wallTime)) {
-        throw new Error('Last.fm returned an invalid local track timestamp. Configure LASTFM_API_KEY to use the official API.');
-    }
-    return date.toInstant();
+    return wallTime.toZonedDateTime(timeZone).toInstant();
 }
 
 function addRecentGuids(items: DataItem[]) {
@@ -80,41 +76,28 @@ export async function getPublicTracks(user: string, type: 'recent' | 'loved'): P
 
         const content = await page.content();
         const $ = load(content);
-        const timeZone = $('.footer-timezone strong').text().trim();
-        try {
-            if (!timeZone) {
-                throw new Error('Missing time zone');
-            }
-            new Intl.DateTimeFormat('en', { timeZone }).resolvedOptions();
-        } catch {
-            throw new Error(timeZoneError);
-        }
+        const timeZone = $('.footer-timezone strong').text();
 
         const items = $('.chartlist-row')
             .toArray()
             .map((element): DataItem => {
                 const row = $(element);
                 const track = row.find('.chartlist-name a');
-                const trackPath = track.attr('href');
                 const title = track.attr('title') || track.text();
-                const author = row.find('.chartlist-artist a').text().trim();
+                const author = row.find('.chartlist-artist a').text();
                 const timestamp = row.find('.chartlist-timestamp [title]').attr('title');
-                const nowPlaying = row.hasClass('chartlist-row--now-scrobbling');
-                if (!trackPath || !title || !author || (!timestamp && !nowPlaying)) {
-                    throw new Error('Last.fm returned an incomplete track row. Configure LASTFM_API_KEY to use the official API.');
-                }
                 const image = row.find('.chartlist-image img').attr('src');
                 return {
                     title: `${title} - ${author}`,
                     author,
-                    description: image ? html`<img src="${image}" />`.toString() : undefined,
+                    description: html`<img src="${image}" />`.toString(),
                     pubDate: timestamp ? parsePublicDate(timestamp, timeZone) : undefined,
-                    link: new URL(trackPath, baseUrl).href,
+                    link: `${baseUrl}${track.attr('href')}`,
                 };
             });
 
         return {
-            title: `${type === 'recent' ? 'Recent' : 'Loved'} Tracks by ${$('h1.header-title a').text().trim()} - Last.fm`,
+            title: `${type === 'recent' ? 'Recent' : 'Loved'} Tracks by ${$('h1.header-title a').text()} - Last.fm`,
             link,
             item: type === 'recent' ? addRecentGuids(items) : items,
         };

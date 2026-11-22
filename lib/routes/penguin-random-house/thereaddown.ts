@@ -39,7 +39,7 @@ async function handler(ctx) {
         .map((element) => ({
             url: $(element).find('a').attr('href'),
             title: $(element).find('.archive-module-text').not('.full').first().text(),
-            category: $(element).find('.module-label').first().text().trim() || undefined,
+            category: $(element).find('.module-label').text().trim(),
         }));
 
     const out = await utils.parseList(itemArray, ctx, utils.parseBooks);

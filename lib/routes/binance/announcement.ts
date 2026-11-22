@@ -52,7 +52,6 @@ const handler: Route['handler'] = async (ctx) => {
     const rawType = ctx.req.param('type');
     const rawLang = ctx.req.param('lang');
     const limit = getRouteLimit(ctx, 20);
-    const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
 
     let type = rawType;
     let language = normalizeLanguage(rawLang);
@@ -79,7 +78,7 @@ const handler: Route['handler'] = async (ctx) => {
     const listUrl = new URL(`${baseUrl}/bapi/apex/v1/public/apex/cms/article/list/query`);
     listUrl.searchParams.set('type', '1');
     listUrl.searchParams.set('pageNo', '1');
-    listUrl.searchParams.set('pageSize', String(pageSize));
+    listUrl.searchParams.set('pageSize', String(limit));
     if (catalogId) {
         listUrl.searchParams.set('catalogId', String(catalogId));
     }
@@ -106,7 +105,7 @@ const handler: Route['handler'] = async (ctx) => {
 
     const item = itemsWithDate
         .toSorted((a, b) => b.releaseDate - a.releaseDate)
-        .slice(0, pageSize)
+        .slice(0, limit)
         .map(({ releaseDate: _releaseDate, ...rest }) => rest);
 
     const catalogName = catalogId ? catalogs.find((catalog) => catalog.catalogId === catalogId)?.catalogName : undefined;

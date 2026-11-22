@@ -34,7 +34,7 @@ async function handler(ctx: Context) {
 
             return {
                 title,
-                pubDate: parseDate($('.date', ep).text().trim(), 'YYYY-M-D', 8),
+                pubDate: parseDate($('.date', ep).text(), 'YYYY-M-D', 8),
                 link,
             };
         });
@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
                     .toArray()
                     .map((element) => {
                         const image = content(element);
-                        image.attr('src', new URL(image.attr('data-url')!, item.link).href);
+                        image.attr('src', image.attr('data-url'));
                         image.removeAttr('data-url rel ondragstart onselectstart oncontextmenu class');
                         return image.toString();
                     })

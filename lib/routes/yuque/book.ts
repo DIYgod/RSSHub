@@ -112,7 +112,7 @@ async function handler(ctx) {
                                 },
                             });
                             const { info } = data.data;
-                            $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
+                            $v.replaceWith(`<video controls preload='metadata' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
                         })
                 );
 

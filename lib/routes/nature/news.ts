@@ -40,11 +40,10 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const publishedAt = $item.find('.c-article-item__date').text().trim();
             return {
                 title: $item.find('h3').text(),
                 link: baseUrl + $item.find('a').attr('href'),
-                pubDate: publishedAt ? parseDate(publishedAt, 0) : undefined,
+                pubDate: parseDate($item.find('.c-article-item__date').text(), 0),
             };
         });
 

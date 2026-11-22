@@ -2,7 +2,6 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
-import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
@@ -55,8 +54,7 @@ async function handler(ctx): Promise<Data> {
             const postedAtText = publishedRaw.replace('Published at: ', '');
             const pubDate = parseDate(postedAtText, 'MMMM D, YYYY h:mm:ss A', 0);
 
-            const nativeTag = $el.attr('ng-click')?.match(/^tag\('([^']+)'\)$/)?.[1];
-            const guid = nativeTag ? `crush:${nativeTag}` : `${targetUrl}#${md5(description)}`;
+            const guid = `crush:${$el.attr('ng-click')?.match(/^tag\('([^']+)'\)$/)?.[1]}`;
 
             const item: DataItem = {
                 title: description,

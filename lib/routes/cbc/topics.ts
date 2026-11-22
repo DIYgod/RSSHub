@@ -94,7 +94,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head title').first().text(),
+        title: $('head title').text(),
         link: url,
         item: out.filter((x): x is NewsItem => 'title' in x && Boolean(x.title)),
     };

@@ -6,12 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-const parsePublicationDate = (value: string | number | undefined, format?: string) => {
-    if (typeof value !== 'number' && !value) {
-        return;
-    }
-    return parseDate(value, format);
-};
 export const route: Route = {
     path: '/news/:type',
     categories: ['game'],
@@ -37,7 +31,7 @@ interface News {
     title: string;
     publishTime: string | number;
     author: string;
-    tagDTOList?: Array<{
+    tagDTOList: Array<{
         name: string;
     }>;
     thumbnail?: string;
@@ -57,55 +51,38 @@ async function handler(ctx) {
     });
     const data: Array<{
         news: News;
-    }> = response.data.result.filter((item) => !isNullish(item.news));
-    const items = await unwrapFirstFailure(
-        pMap(
-            data,
-            async (item) => {
-                const entity = item.news;
-                const newsId = entity.newsId;
-                const newsLink = `https://news.wmpvp.com/news.html?id=${newsId}&gameTypeStr=${type}`;
-                const detail = await cache.tryGet(`wmpvp:detail:v2:${newsLink}`, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: `https://appactivity.wmpvp.com/steamcn/app/news/getAppNewsById?gameType=${type}&newsId=${newsId}`,
-                    });
-                    return {
-                        description: detailResponse.data.result.news.content,
-                    };
+    }> = response.data.result.filter((item) => item.news !== undefined);
+    const items = await pMap(
+        data,
+        async (item) => {
+            const entity = item.news;
+            const newsId = entity.newsId;
+            const newsLink = `https://news.wmpvp.com/news.html?id=${newsId}&gameTypeStr=${type}`;
+            const detail = await cache.tryGet(`wmpvp:detail:v2:${newsLink}`, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: `https://appactivity.wmpvp.com/steamcn/app/news/getAppNewsById?gameType=${type}&newsId=${newsId}`,
                 });
                 return {
-                    title: entity.title,
-                    pubDate: parsePublicationDate(entity.publishTime),
-                    link: newsLink,
-                    guid: newsLink,
-                    author: entity.author,
-                    category: entity.tagDTOList?.map((tag) => tag.name),
-                    image: entity.thumbnail,
-                    description: detail.description,
+                    description: detailResponse.data.result.news.content,
                 };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+            });
+            return {
+                title: entity.title,
+                pubDate: parseDate(entity.publishTime),
+                link: newsLink,
+                guid: newsLink,
+                author: entity.author,
+                category: entity.tagDTOList.map((tag) => tag.name),
+                image: entity.thumbnail,
+                description: detail.description,
+            };
+        },
+        { concurrency: 3 }
     );
     return {
         title: `完美世界电竞 - ${TYPE_MAP[type]} 资讯`,
         link: 'https://news.wmpvp.com/',
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-function isNullish(value: unknown): value is null | undefined {
-    return isOneOf(value, [null, undefined]);
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

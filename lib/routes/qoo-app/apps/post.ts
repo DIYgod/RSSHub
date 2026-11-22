@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import { appsUrl, createPageFetcher, fixImg, newsUrl } from '../utils';
+import { appsUrl, fixImg, newsUrl } from '../utils';
 
 export const route: Route = {
     path: ['/apps/:lang/post/:id', '/apps/post/:id'],
@@ -18,7 +18,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -30,53 +30,48 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageFetcher = createPageFetcher();
-    try {
-        const { id, lang = '' } = ctx.req.param();
-        const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-post/${id}`;
+    const { id, lang = '' } = ctx.req.param();
+    const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-post/${id}`;
 
-        const response = await pageFetcher.get(link);
-        const $ = load(response);
+    const { data: response } = await got(link);
+    const $ = load(response);
 
-        const list = $('.qoo-post-item')
-            .toArray()
-            .map((item): DataItem & { postId?: string } => {
-                const $item = $(item);
-                const a = $item.find('a');
-                return {
-                    title: a.attr('title')!,
-                    link: a.attr('href'),
-                    // description: item.find('.img-list').html() + item.find('.text-view').html(),
-                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
-                    author: $item.find('cite.name').text(),
-                    postId: a.attr('href')!.split('/').pop(),
-                };
-            });
+    const list = $('.qoo-post-item')
+        .toArray()
+        .map((item): DataItem & { postId?: string } => {
+            const $item = $(item);
+            const a = $item.find('a');
+            return {
+                title: a.attr('title')!,
+                link: a.attr('href'),
+                // description: item.find('.img-list').html() + item.find('.text-view').html(),
+                pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
+                author: $item.find('cite.name').text(),
+                postId: a.attr('href')!.split('/').pop(),
+            };
+        });
 
-        const items = await pMap(
-            list,
-            (item) =>
-                cache.tryGet(item.link!, async () => {
-                    const { data } = await got(`${newsUrl}${lang ? `/${lang}` : ''}/wp-json/wp/v2/posts/${item.postId}`);
-                    const $ = load(data.content.rendered, null, false);
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const { data } = await got(`${newsUrl}${lang ? `/${lang}` : ''}/wp-json/wp/v2/posts/${item.postId}`);
+                const $ = load(data.content.rendered, null, false);
 
-                    fixImg($);
+                fixImg($);
 
-                    item.description = $.html();
-                    item.pubDate = parseDate(data.date_gmt, 0);
+                item.description = $.html();
+                item.pubDate = parseDate(data.date_gmt, 0);
 
-                    return item;
-                }),
-            { concurrency: 3 }
-        );
+                return item;
+            }),
+        { concurrency: 3 }
+    );
 
-        return {
-            title: $('head title').text(),
-            link,
-            language: $('html').attr('lang') as Language,
-            item: items,
-        };
-    } finally {
-        await pageFetcher.close();
-    }
+    return {
+        title: $('head title').text(),
+        link,
+        language: $('html').attr('lang') as Language,
+        item: items,
+    };
 }

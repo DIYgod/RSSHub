@@ -6,7 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hangye/:caty?',
@@ -44,13 +44,12 @@ async function handler(ctx: Context) {
             cache.tryGet(`uisdc:hangye:v3:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
-                const pubDate = parseDateStrict(content('.meta-time').attr('title') ?? '', 'YYYY-MM-DD HH:mm:ss', 8);
 
                 return {
                     title: content('.post-title').text(),
                     link: item.link,
                     description: content('.article').html(),
-                    pubDate,
+                    pubDate: parseDate(content('.meta-time').attr('title') ?? '', 'YYYY-MM-DD HH:mm:ss', 8),
                 };
             }),
         { concurrency: 3 }

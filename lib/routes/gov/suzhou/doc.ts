@@ -33,18 +33,15 @@ export const route: Route = {
 
 async function handler() {
     const link = 'https://www.suzhou.gov.cn/szsrmzf/cslm/contnet.shtml?sitecode=szsrmzf&CN_NAME=%E6%94%BF%E7%AD%96%E6%96%87%E4%BB%B6';
-    const response = await ofetch<{ data: { list: Array<{ TITLE: string; URL: string; PUBLISHED_TIME_FORMAT?: string }> } }>('https://www.suzhou.gov.cn/szinf/xxgk/interfacesWebZcwj/loadData?&pageSize=15', {
+    const response = await ofetch<{ data: { list: Array<{ TITLE: string; URL: string; PUBLISHED_TIME_FORMAT: string }> } }>('https://www.suzhou.gov.cn/szinf/xxgk/interfacesWebZcwj/loadData?&pageSize=15', {
         method: 'POST',
         body: new URLSearchParams({ pageIndex: '1' }),
     });
-    const list = response.data.list.map((item): DataItem => {
-        const pubDate = item.PUBLISHED_TIME_FORMAT ? parseDateStrict(item.PUBLISHED_TIME_FORMAT, 'YYYY-MM-DD', 8) : undefined;
-        return {
-            title: item.TITLE,
-            link: new URL(item.URL, link).href,
-            pubDate,
-        };
-    });
+    const list = response.data.list.map((item): DataItem => ({
+        title: item.TITLE,
+        link: new URL(item.URL, link).href,
+        pubDate: parseDateStrict(item.PUBLISHED_TIME_FORMAT, 'YYYY-MM-DD', 8),
+    }));
 
     const items = await Promise.all(
         list.map((item) =>

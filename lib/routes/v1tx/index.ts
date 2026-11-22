@@ -1,13 +1,10 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -41,11 +38,7 @@ async function handler() {
         list,
         async (item) => {
             const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'updated' | 'author' | 'category'>>(`v1tx:article-details:v5:${item.link}`, async () => {
-                const detailUrl = new URL(item.link!);
-                if (detailUrl.hostname === 'www.v1tx.com') {
-                    detailUrl.hostname = 'v1tx.com';
-                }
-                const { data: response } = await got(detailUrl.href);
+                const { data: response } = await got(item.link);
                 const $ = load(response);
                 const data = JSON.parse($('script[type="application/ld+json"]').text());
                 $('.entry-content figure > picture > source, noscript').remove();
@@ -57,24 +50,21 @@ async function handler() {
                     }
                     delete img.attribs.srcset;
                 });
-                const pubDate = parsePublicationDate(data.datePublished ?? $('.entry-content').first().closest('article').find('time.published').attr('datetime'));
-                const updated = parsePublicationDate(data.dateModified ?? $('.entry-content').first().closest('article').find('time.updated').attr('datetime'));
                 const description = $('.entry-content').html();
-                const author = $('.entry-content').first().closest('article').find('.entry-header .author a').first().text() || undefined;
-                const category = $('.entry-content')
-                    .first()
-                    .closest('article')
-                    .find('.entry-header .category-links a, .entry-footer .tags-links a')
-                    .toArray()
-                    .map((node) => {
-                        const category = copyContent($(node), $);
-                        category.find('.tag-hash').remove();
-                        return category.text();
-                    })
-                    .filter(Boolean);
-                return { description, pubDate, updated, author, category };
+                const article = $('.entry-content').closest('article');
+                article.find('.tag-hash').remove();
+                return {
+                    description,
+                    pubDate: parseDate(data.datePublished),
+                    updated: parseDate(data.dateModified),
+                    author: article.find('.entry-header .author a').text(),
+                    category: article
+                        .find('.entry-header .category-links a, .entry-footer .tags-links a')
+                        .toArray()
+                        .map((node) => $(node).text()),
+                };
             });
-            return { ...item, description: details.description, pubDate: details.pubDate, updated: details.updated, author: details.author, category: details.category };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );
@@ -85,19 +75,4 @@ async function handler() {
         image: `${baseUrl}/wp-content/uploads/2018/10/cropped-Favicon.webp`,
         item: items,
     };
-}
-function parsePublicationDate(value?: string) {
-    const match = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:Z|[+-]\d{2}:\d{2})$/.exec(value ?? '');
-    if (!match || !parseDateStrict(match[1], 'YYYY-MM-DDTHH:mm:ss')) {
-        return;
-    }
-    return parseDate(value!);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

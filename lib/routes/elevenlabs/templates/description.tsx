@@ -27,7 +27,7 @@ export const renderTable = (rows: TableCell[][]) =>
 export const renderAudio = (src: string) =>
     renderToString(
         <>
-            <audio src={src} controls preload="none" />
+            <audio src={src} controls preload="metadata" />
             <p>
                 <a href={src}>Listen to the audio</a>
             </p>
@@ -37,7 +37,7 @@ export const renderAudio = (src: string) =>
 export const renderVideo = (src: string, poster?: string) =>
     renderToString(
         <>
-            <video src={src} poster={poster} controls preload="none" />
+            <video src={src} poster={poster} controls preload="metadata" />
             <p>
                 <a href={src}>Watch the video</a>
             </p>

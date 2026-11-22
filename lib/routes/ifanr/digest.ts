@@ -8,10 +8,6 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-function parseTimestamp(value: number | string) {
-    return value ? parseDate(value, 'X') : undefined;
-}
-
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 20);
 
@@ -42,14 +38,14 @@ const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: parseTimestamp(pubDate),
+            pubDate: parseDate(pubDate, 'X'),
             link: new URL(linkUrl, baseUrl).href,
             guid,
             id: guid,
             content: {
                 html: description,
             },
-            updated: parseTimestamp(updated),
+            updated: parseDate(updated, 'X'),
             language,
             _extra: {
                 links: [

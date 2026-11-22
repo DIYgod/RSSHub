@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.cnbeta.com.tw';
 
-const ProcessItems = (items, limit: number = 60) =>
+const ProcessItems = (items, limit: number) =>
     Promise.all(
         items.slice(0, limit).map((item) =>
             cache.tryGet(item.link, async () => {

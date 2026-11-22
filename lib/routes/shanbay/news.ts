@@ -5,6 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 interface NewsArticle {
@@ -60,8 +61,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { category = 'aaaaa' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(Math.floor(requestedLimit)) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;
+    const limit = getRouteLimit(ctx, 15);
     const apiUrl = 'https://apiv3.shanbay.com';
     const baseUrl = 'https://web.shanbay.com/reading/web-news';
     const headers = {
@@ -84,7 +84,7 @@ async function handler(ctx: Context) {
         },
     });
 
-    const articles: NewsArticle[] = response.objects.slice(0, limit);
+    const articles: NewsArticle[] = response.objects;
     const items = await pMap(
         articles,
         async (article) => ({

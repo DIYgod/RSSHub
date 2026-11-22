@@ -39,13 +39,6 @@ function renderContent(content: string) {
     return $.html();
 }
 
-function parsePubDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(`${value} +08:00`, 'YYYY-MM-DD HH:mm:ss Z');
-}
-
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
 
@@ -56,7 +49,7 @@ async function handler(ctx: Context) {
         title: item.title,
         author: item.nickname,
         description: renderContent(item.content),
-        pubDate: parsePubDate(item.createTime),
+        pubDate: parseDate(`${item.createTime} +08:00`, 'YYYY-MM-DD HH:mm:ss Z'),
         link: `${rootUrl}/article/${item.articleId}`,
     }));
 

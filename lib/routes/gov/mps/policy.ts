@@ -42,11 +42,11 @@ function getItem(item: DataItem, page: Page) {
         const response = await page.content();
         const $ = load(response);
         const content = $('#ztdx, #UCAP-CONTENT, .pages_content').first();
-        content.find('script, style, .btn, button').remove();
+        content.find('style, .btn, button').remove();
         const date = $('meta[name="PubDate"]').attr('content');
         return {
             ...item,
-            title: $('.bTitle').first().text() || $('meta[name="ArticleTitle"]').attr('content') || item.title,
+            title: $('.bTitle').text() || $('meta[name="ArticleTitle"]').attr('content') || item.title,
             description: content.html(),
             pubDate: date ? parseDate(date.replaceAll(/\s+/g, ' '), 8) : item.pubDate,
             author: $('meta[name="ContentSource"]').attr('content'),
@@ -64,7 +64,7 @@ async function handler(ctx) {
     const { page, destroy } = await getPlaywrightPage(link, {
         closeTimeout: 0,
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         },
     });
     try {
@@ -79,11 +79,10 @@ async function handler(ctx) {
             .map((element): DataItem => {
                 const row = $(element);
                 const anchor = row.find('a[href]');
-                const publishedDate = row.find('span').text();
                 return {
                     title: anchor.text(),
                     link: new URL(anchor.attr('href')!, link).href,
-                    pubDate: publishedDate ? parseDate(publishedDate, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate(row.find('span').text(), 'YYYY-MM-DD', 8),
                 };
             });
         return { title: `${name} - 中华人民共和国公安部`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };

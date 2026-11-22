@@ -1,22 +1,10 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 export const route: Route = {
     path: '/recommend/:annotation?',
@@ -54,20 +42,12 @@ async function handler(ctx: Context) {
             const link = href ? new URL(href, url).href : undefined;
 
             return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
-                let description: string | null;
+                let description = $item.find('div.contson').html();
                 const onclick = $item.find('img[onclick]').attr('onclick');
                 if (annotation && onclick) {
                     const annotationHtml = await getContent(onclick, annotation);
                     const annotationContent = load(annotationHtml);
                     description = annotationContent('.contson').html();
-                } else {
-                    const content = copyElements($item.find('div.contson'));
-                    content
-                        .find('p')
-                        .filter((_, element) => $(element).find('a[href*="shiwenv_"]').length > 0)
-                        .remove();
-                    content.find('p.source').remove();
-                    description = content.html();
                 }
 
                 return {

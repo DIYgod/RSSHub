@@ -47,9 +47,9 @@ async function handler() {
                 author,
             };
         });
-    const selected = list;
+
     const items = await Promise.all(
-        selected.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);

@@ -1,21 +1,13 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+
+import { domain, parseCalendarDate } from '../util';
 
 class ArticleAccessError extends Error {}
-function parseCalendarDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
-}
 const gsIndexMap = new Map([
     [0, 'xwdt.htm'],
     [1, 'xs_ts.htm'],
@@ -76,64 +68,45 @@ async function handler(ctx) {
                 pubDate: parseCalendarDate($item.find('span').text()),
             };
         });
-    items = await unwrapFirstFailure(
-        pMap(
-            items,
-            async (item) => {
-                try {
-                    const detail = await cache.tryGet(`whu:gs:categorized-content:${item.link}`, async () => {
-                        const detail = await got(item.link);
-                        const content = load(detail.data);
-                        if (content('title').text() === '用户验证' && content('body').text().includes('验证码')) {
-                            throw new ArticleAccessError(`Article access verification required at ${item.link}`);
-                        }
-                        if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
-                            throw new ArticleAccessError(`Article access permission required at ${item.link}`);
-                        }
-                        if (content('form[name=_newscontent_fromname]').length !== 1) {
-                            throw new Error(`Article body not found at ${item.link}`);
-                        }
-                        const body = content('.v_news_content');
-                        if (body.length !== 1) {
-                            throw new Error(`Article main body not found at ${item.link}`);
-                        }
-                        body.find('script, style').remove();
-                        const downloads = content('form[name=_newscontent_fromname] a[href*="news.DownloadAttachUrl"]').filter((_, element) => content(element).parents('.v_news_content').length === 0);
-                        body.find('img[src]').each((_, element) => {
-                            const image = content(element);
-                            const src = image.attr('src');
-                            if (src) {
-                                image.attr('src', new URL(src, item.link).href);
-                            }
-                        });
-                        body.find('a[href]')
-                            .add(downloads)
-                            .each((_, element) => {
-                                const anchor = content(element);
-                                const href = anchor.attr('href');
-                                if (href) {
-                                    anchor.attr('href', new URL(href, item.link).href);
-                                }
-                            });
-                        const attachments = content('<ul></ul>');
-                        downloads.each((_, element) => {
-                            const attachmentWrapper1 = content('<li></li>');
-                            attachmentWrapper1.append(copyContent(content(element), content));
-                            attachments.append(attachmentWrapper1);
-                        });
-                        const category = content('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
-                        return { description: body.html()! + (downloads.length ? `\n${content.html(attachments)}` : ''), category: category?.length ? category : undefined };
-                    });
-                    return { ...item, description: detail.description, category: detail.category };
-                } catch (error) {
-                    if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
-                        return item;
+    items = await pMap(
+        items,
+        async (item) => {
+            const hostname = new URL(item.link!).hostname;
+            if (hostname !== domain && !hostname.endsWith(`.${domain}`)) {
+                return item;
+            }
+            try {
+                const detail = await cache.tryGet(`whu:gs:categorized-content:${item.link}`, async () => {
+                    const detail = await got(item.link);
+                    const content = load(detail.data);
+                    if (content('title').text() === '用户验证' && content('body').text().includes('验证码')) {
+                        throw new ArticleAccessError(`Article access verification required at ${item.link}`);
                     }
-                    throw error;
+                    if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
+                        throw new ArticleAccessError(`Article access permission required at ${item.link}`);
+                    }
+                    const body = content('.v_news_content');
+                    if (!body.length) {
+                        throw new Error(`Article main body not found at ${item.link}`);
+                    }
+                    body.find('style').remove();
+                    const downloads = content('form[name=_newscontent_fromname] a[href*="news.DownloadAttachUrl"]').filter((_, element) => content(element).parents('.v_news_content').length === 0);
+                    const attachments = downloads
+                        .toArray()
+                        .map((element) => `<li>${content.html(element)}</li>`)
+                        .join('');
+                    const category = content('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
+                    return { description: body.html()! + (downloads.length ? `\n<ul>${attachments}</ul>` : ''), category };
+                });
+                return { ...item, description: detail.description, category: detail.category };
+            } catch (error) {
+                if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
+                    return item;
                 }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
     return {
         title: `武汉大学研究生院 - ${feedTitle}`,
@@ -141,19 +114,4 @@ async function handler(ctx) {
         description: '武大研究生院',
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

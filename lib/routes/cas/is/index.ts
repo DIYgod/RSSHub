@@ -54,7 +54,7 @@ async function handler(ctx) {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.description = $('.TRS_Editor, .TRS_UEDITOR').first().html();
+                item.description = $('.TRS_Editor, .TRS_UEDITOR').html();
                 return item;
             })
         )

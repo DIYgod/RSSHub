@@ -11,7 +11,7 @@ import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const toSize = (raw) => {
     const matches = raw.match(/(\d+(\.\d+)?)(\D\w*)/);
@@ -109,13 +109,12 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('date').last().text();
 
             return {
                 link: $item.attr('href'),
                 guid: $item.find('date').first().text(),
                 // This is a calendar release date, represented at UTC midnight.
-                pubDate: date && parseDateStrict(date, 'YYYY-MM-DD') ? parseDate(date, 0) : undefined,
+                pubDate: parseDate($item.find('date').last().text(), 0),
                 title: '',
             };
         });

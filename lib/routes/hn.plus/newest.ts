@@ -45,10 +45,6 @@ async function handler(): Promise<Data> {
         headers: { accept: 'application/json' },
     });
 
-    if (!Array.isArray(posts)) {
-        throw new TypeError('Konek /contents returned an unexpected response');
-    }
-
     return {
         title: 'Deep Web Konek - Newest',
         link: `${baseUrl}/newest`,

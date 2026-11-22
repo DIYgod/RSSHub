@@ -77,7 +77,7 @@ async function handler(ctx) {
             description: await cache.tryGet(`qztc:home:article:v2:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const detail = load(response);
-                return detail('.wp_articlecontent').html() ?? '';
+                return detail('.wp_articlecontent').html();
             }),
         }),
         { concurrency: 3 }

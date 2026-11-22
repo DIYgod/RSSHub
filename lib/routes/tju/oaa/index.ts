@@ -13,7 +13,7 @@ const getArticle = async (link: string) => {
     try {
         const response = await got(link);
         const $ = load(response.data);
-        return { description: $('.v_news_content').html() ?? undefined };
+        return { description: $('.v_news_content').html() };
     } catch {
         // Keep the source listing when an article detail is unavailable.
         return {};
@@ -72,11 +72,7 @@ async function handler(ctx) {
             subtitle = '新闻动态';
             path = 'xwdt.htm';
     }
-    const response = await got(oaa_base_url + path, {
-        headers: {
-            Referer: oaa_base_url,
-        },
-    });
+    const response = await got(oaa_base_url + path);
     const $ = load(response.data);
     const list = $('.notice_l > ul > li > dl > dt')
         .toArray()

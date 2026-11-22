@@ -59,12 +59,8 @@ export const route: Route = {
             title: item.TITLE,
             link: 'news/' + item.MEDIA_CD,
             description: item.READ_COPY ?? undefined,
-            pubDate: item.PUBLISH_DATE ? parseDate(item.PUBLISH_DATE, 'YYYY-MM-DD', 9) : undefined,
-            category: item.MEDIA_TYPES
-                ? item.MEDIA_TYPES.split(',')
-                      .map((id) => tagIdNameMapping[id.replaceAll('"', '').trim()])
-                      .filter(Boolean)
-                : [],
+            pubDate: parseDate(item.PUBLISH_DATE, 'YYYY-MM-DD', 9),
+            category: item.MEDIA_TYPES ? item.MEDIA_TYPES.split(',').map((id) => tagIdNameMapping[id.replaceAll('"', '')]) : [],
         }));
         return {
             title: `ISCT News - ${lang}`,

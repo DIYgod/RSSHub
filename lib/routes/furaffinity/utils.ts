@@ -9,7 +9,7 @@ interface Comment {
     name: string;
     avatar?: string;
     text: string;
-    posted_at?: string;
+    posted_at: string;
 }
 
 interface CommentFeed {
@@ -23,7 +23,7 @@ interface Journal {
     title: string;
     link: string;
     description: string;
-    posted_at?: string;
+    posted_at: string;
 }
 
 interface Artwork {
@@ -61,7 +61,7 @@ export async function getCommissions(username: string): Promise<Commission[]> {
             throw error;
         }
         const link = `https://www.furaffinity.net/commissions/${username}/`;
-        const html = await ofetch(link, { responseType: 'text' });
+        const html = await ofetch(link);
         const $ = load(html);
         if ($('#no-images').length) {
             return [];
@@ -78,8 +78,8 @@ export async function getCommissions(username: string): Promise<Commission[]> {
                     throw new Error(`Fur Affinity returned a commission type without its name on ${link}.`, { cause: error });
                 }
                 const preview = commission.find('.preview');
-                const permalink = preview.find('a[href]').first().attr('href');
-                const thumbnail = preview.find('img').first().attr('src');
+                const permalink = preview.find('a[href]').attr('href');
+                const thumbnail = preview.find('img').attr('src');
                 return {
                     title,
                     description: `${commission.find('.desc').html() ?? ''}${commission.find('.info').html() ?? ''}`,
@@ -95,23 +95,23 @@ export async function getCommissions(username: string): Promise<Commission[]> {
 
 export async function getPublicUser(username: string): Promise<{ name: string; description: string }> {
     const link = `https://www.furaffinity.net/user/${username}/`;
-    const html = await ofetch(link, { responseType: 'text' });
+    const html = await ofetch(link);
     const $ = load(html);
-    const name = $('userpage-nav-user-details .js-displayName').first().text();
-    const profile = $('.userpage-profile').first();
+    const name = $('userpage-nav-user-details .js-displayName').text();
+    const profile = $('.userpage-profile');
     if (!name || !profile.length) {
         throw new Error(`Fur Affinity did not return a public user profile for ${username}.`);
     }
-    const sections = $('.userpage-right-column').filter((_, element) => ['Stats', 'User Profile', 'Contact Information'].includes($(element).find('.section-header h2').first().text().trim()));
+    const sections = $('.userpage-right-column').filter((_, element) => ['Stats', 'User Profile', 'Contact Information'].includes($(element).find('.section-header h2').text()));
     const watchCounts = $('.watched-by-block .section-header, .is-watching-block .section-header');
     return {
         name,
         description: `${$('userpage-nav-avatar').html() ?? ''}${$('userpage-nav-user-details .user-title').html() ?? ''}${profile.html() ?? ''}${sections
             .toArray()
-            .map((element) => $(element).html() ?? '')
+            .map((element) => $(element).html())
             .join('')}${watchCounts
             .toArray()
-            .map((element) => $(element).html() ?? '')
+            .map((element) => $(element).html())
             .join('')}`,
     };
 }
@@ -119,7 +119,7 @@ export async function getPublicUser(username: string): Promise<{ name: string; d
 export async function getWatchList(username: string, direction: 'to' | 'by'): Promise<{ users: Array<{ name: string; link: string; guid: string }>; count?: number }> {
     // FAExport provides display names without the corresponding profile permalinks.
     const link = `https://www.furaffinity.net/watchlist/${direction}/${username}/`;
-    const [html, profileHtml] = await Promise.all([ofetch(link, { responseType: 'text' }), ofetch(`https://www.furaffinity.net/user/${username}/`, { responseType: 'text' })]);
+    const [html, profileHtml] = await Promise.all([ofetch(link), ofetch(`https://www.furaffinity.net/user/${username}/`)]);
     const $ = load(html);
     const profile = load(profileHtml);
     if (!$('.watch-list').length) {
@@ -148,7 +148,7 @@ export async function getArtwork(apiUrl: string, link: string, mode: string, cat
         if (!(error instanceof FetchError) || !error.statusCode || error.statusCode < 500 || mode !== 'sfw') {
             throw error;
         }
-        const html = await ofetch(link, { responseType: 'text' });
+        const html = await ofetch(link);
         const $ = load(html);
         const gallery = category ? $(isGalleryCategory(category) ? gallerySelectors[category] : undefined) : $.root();
         return gallery
@@ -157,9 +157,9 @@ export async function getArtwork(apiUrl: string, link: string, mode: string, cat
             .map((element): Artwork => {
                 const artwork = $(element);
                 const id = artwork.attr('id')!.slice(4);
-                const anchor = artwork.find('figcaption a[href^="/view/"]').first();
-                const author = artwork.find('figcaption a[href^="/user/"]').first();
-                const thumbnail = artwork.find('img').first().attr('src');
+                const anchor = artwork.find('figcaption a[href^="/view/"]');
+                const author = artwork.find('figcaption a[href^="/user/"]');
+                const thumbnail = artwork.find('img').attr('src');
                 const permalink = anchor.attr('href');
                 if (!permalink || !thumbnail || !author.attr('href')) {
                     throw new Error(`Fur Affinity returned public artwork without its permalink, thumbnail, or artist on ${link}.`, { cause: error });
@@ -183,25 +183,20 @@ export async function getJournals(username: string): Promise<Journal[]> {
             throw error;
         }
         const link = `https://www.furaffinity.net/journals/${username}/`;
-        const html = await ofetch(link, { responseType: 'text' });
+        const html = await ofetch(link);
         const $ = load(html);
         return $('section[id^="jid:"]')
             .toArray()
             .map((element): Journal => {
                 const journal = $(element);
                 const id = journal.attr('id')!.slice(4);
-                const timestamp = Number(journal.find('.section-header .popup_date').first().attr('data-time'));
-                const postedAt = Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000) : undefined;
-                const permalink = journal.find(`.section-footer a[href="/journal/${id}/"]`).attr('href');
-                if (!permalink) {
-                    throw new Error(`Fur Affinity returned a journal without its permalink on ${link}.`, { cause: error });
-                }
+                const timestamp = Number(journal.find('.section-header .popup_date').attr('data-time'));
                 return {
                     id,
                     title: journal.find('.section-header h2').text(),
-                    link: new URL(permalink, link).href,
+                    link: `https://www.furaffinity.net/journal/${id}/`,
                     description: journal.find('.section-body .journal-body').html() ?? '',
-                    posted_at: postedAt && toISOString(postedAt),
+                    posted_at: toISOString(parseDate(timestamp * 1000)!),
                 };
             });
     }
@@ -218,10 +213,10 @@ export async function getComments(kind: 'journal' | 'submission', id: string): P
             throw error;
         }
         const link = `https://www.furaffinity.net/${kind === 'submission' ? 'view' : 'journal'}/${id}/`;
-        const html = await ofetch(link, { responseType: 'text' });
+        const html = await ofetch(link);
         const $ = load(html);
         const title = kind === 'journal' ? $('#c-journalTitleTop__subject').text() : $('.submission-title h2').text();
-        const owner = $('userpage-nav-avatar a').attr('href') ?? $('.submission-title').parent().find('a[href^="/user/"]').first().attr('href');
+        const owner = $('userpage-nav-avatar a').attr('href') ?? $('.submission-title').parent().find('a[href^="/user/"]').attr('href');
         const name = owner?.split('/', 3)[2];
         if (!title || !name) {
             throw new Error(`Fur Affinity did not return public ${kind} metadata for ${link}.`, { cause: error });
@@ -236,13 +231,12 @@ export async function getComments(kind: 'journal' | 'submission', id: string): P
                     throw new Error(`Fur Affinity returned a comment without its ID or author on ${link}.`, { cause: error });
                 }
                 const timestamp = Number(comment.attr('data-timestamp'));
-                const postedAt = Number.isFinite(timestamp) && timestamp > 0 ? parseDate(timestamp * 1000) : undefined;
                 return {
                     id: anchor.slice(4),
                     name: author,
                     avatar: comment.find('.comment_useravatar').attr('src'),
                     text: comment.find('.comment_text').html() ?? '',
-                    posted_at: postedAt && toISOString(postedAt),
+                    posted_at: toISOString(parseDate(timestamp * 1000)!),
                 };
             });
         return { title, name, comments };

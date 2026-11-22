@@ -42,7 +42,6 @@ export const route: Route = {
 async function handler(ctx) {
     const { path = 'bshff/ylqxbzhgl/qxggtzh' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
-    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
     const rootUrl = 'https://www.nifdc.org.cn';
     const currentUrl = new URL(`nifdc/${path}/`, rootUrl).href;
@@ -52,7 +51,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('div.list ul li')
-        .slice(0, candidateLimit)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);

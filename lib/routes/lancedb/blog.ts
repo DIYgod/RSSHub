@@ -10,10 +10,9 @@ const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const baseUrl = 'https://lancedb.com';
     const url = category ? `${baseUrl}/blog/category/${encodeURIComponent(category)}` : `${baseUrl}/blog`;
-    const response = await ofetch.raw(url, { responseType: 'text' });
-    const currentUrl = response.url || url;
-    const $ = load(response._data ?? '');
-    const links = new Set<string>();
+    const response = await ofetch.raw(url);
+    const currentUrl = response.url;
+    const $ = load(response._data);
 
     const items = $('.blog_item-big, .blog_item')
         .toArray()
@@ -21,21 +20,17 @@ const handler = async (ctx: Context): Promise<Data> => {
             const $el = $(el);
             const href = $el.find('.blog_item-link').attr('href');
             const title = $el.find('.blog-item-title').text();
-            if (!href || !title) {
+            if (!href) {
                 return [];
             }
             const link = new URL(href, currentUrl).href;
-            if (links.has(link)) {
-                return [];
-            }
-            links.add(link);
             const dateStr = $el.find('.blog_author-and-date > div').last().text();
 
             return {
                 title,
                 link,
                 description: $el.find('.blog_item-description').text(),
-                pubDate: dateStr ? parseDate(dateStr, 'MMMM D, YYYY') : undefined,
+                pubDate: parseDate(dateStr, 'MMMM D, YYYY'),
                 author: $el
                     .find('.blog-item-author')
                     .toArray()

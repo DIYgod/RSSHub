@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -32,12 +31,10 @@ async function handler(ctx: Context) {
             .toArray()
             .map((item) => {
                 const td = $(item).find('td');
-                const rawDate = td.eq(2).text();
-                const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
                 return {
                     title: td.eq(0).text(),
-                    description: html`文件大小：${td.eq(3).text()}`.toString(),
-                    pubDate,
+                    description: `文件大小：${td.eq(3).text()}`,
+                    pubDate: parseDateStrict(td.eq(2).text(), 'YYYY-MM-DD', 8),
                     link,
                     guid: td.eq(0).text(),
                 };

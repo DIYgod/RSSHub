@@ -115,7 +115,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const author = '10000万联网';
-    const title: string = $('h2').first().text() || $('title').text();
+    const title: string = $('h2').text();
     const logoSrc: string | undefined = $('a.navbar-brand img').attr('src');
 
     return {

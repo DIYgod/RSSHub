@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category',
@@ -33,12 +33,6 @@ function removeEditorialFooter($, body) {
         notice.remove();
     }
 }
-function parsePublicationDate(value: string | undefined) {
-    if (!value) {
-        return;
-    }
-    return parseDateStrict(value, 'YYYY年MM月DD日 HH:mm:ss', 8);
-}
 async function handler(ctx: Context) {
     const { category } = ctx.req.param();
     const base = 'https://www.whb.cn';
@@ -55,41 +49,29 @@ async function handler(ctx: Context) {
                 link: new URL(title.attr('href')!, url).href,
             };
         });
-    const items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`whb:main-article:${item.link}`, async () => {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
-                    const body = $('.content_info');
-                    if (body.length !== 1) {
-                        throw new Error(`Article body not found at ${item.link}`);
-                    }
-                    removeEditorialFooter($, body);
-                    const dateAndAuthor = $('.content_other').text();
-                    const dateString = dateAndAuthor.match(/(?:^|\n)\s*日期[:：]\s*([^\n]+)/)?.[1]?.trim();
-                    return {
-                        author: dateAndAuthor.match(/(?:^|\n)\s*作者[:：]\s*([^\n]+)/)?.[1]?.trim() || undefined,
-                        description: body.html(),
-                        pubDate: parsePublicationDate(dateString),
-                    };
-                });
-                return { ...item, author: detail.author, description: detail.description, pubDate: detail.pubDate };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`whb:main-article:${item.link}`, async () => {
+                const response = await ofetch(item.link!);
+                const $ = load(response);
+                const body = $('.content_info');
+                removeEditorialFooter($, body);
+                const dateAndAuthor = $('.content_other').text();
+                const dateString = dateAndAuthor.match(/(?:^|\n)\s*日期[:：]\s*([^\n]+)/)![1];
+                return {
+                    author: dateAndAuthor.match(/(?:^|\n)\s*作者[:：]\s*([^\n]+)/)![1],
+                    description: body.html(),
+                    pubDate: parseDate(dateString, 'YYYY年MM月DD日 HH:mm:ss', 8),
+                };
+            });
+            return { ...item, author: detail.author, description: detail.description, pubDate: detail.pubDate };
+        },
+        { concurrency: 3 }
     );
     return {
         title: `文汇报 - ${categoryName}`,
         link: url,
         item: items.filter((item) => item.description),
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

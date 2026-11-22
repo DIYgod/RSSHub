@@ -9,21 +9,12 @@ import { parseDate } from '@/utils/time';
 import { fixArticleContent } from '@/utils/wechat-mp';
 
 function getWechatAuthor(content: CheerioAPI) {
-    const author = content('script')
-        .toArray()
-        .map((element) => {
-            try {
-                const literal = content(element)
-                    .text()
-                    .match(/\bvar\s+author\s*=\s*("(?:\\.|[^"\\])*")/)?.[1];
-                return literal ? JSON.parse(literal) : undefined;
-            } catch {
-                return;
-            }
-        })
-        .find((value) => typeof value === 'string' && value.trim());
+    const literal = content('script:contains("var author = ")')
+        .text()
+        .match(/\bvar\s+author\s*=\s*("(?:\\.|[^"\\])*")/)?.[1];
+    const author: string | undefined = literal ? JSON.parse(literal) : undefined;
 
-    return typeof author === 'string' ? author : content('#js_name').text().trim() || undefined;
+    return author?.trim() ? author : content('#js_name').text().trim();
 }
 
 function parseWechatPublication(content: string) {
@@ -44,18 +35,17 @@ async function fetchDetails(url: string): Promise<{ description?: string; pubDat
             return { description: fixArticleContent(wechatContent) || undefined, pubDate: parseWechatPublication(response), author: getWechatAuthor($) };
         }
 
-        const content = $('.v_news_content').first();
+        const content = $('.v_news_content');
         if (!content.length) {
             return {};
         }
 
         const attachments = $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"], .art-body a[href*="DownloadAttachUrl"]')
-            .filter((_, link) => !$(link).closest('.v_news_content').length)
             .toArray()
             .map((link) => `<li>${$.html(link)}</li>`)
             .join('');
 
-        return { description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined };
+        return { description: `${content.html()}${attachments ? `<ul>${attachments}</ul>` : ''}` };
     } catch {
         return {};
     }

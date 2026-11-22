@@ -36,13 +36,6 @@ export const route: Route = {
 type NewsItem = DataItem & { link: string; description: string };
 type Detail = { description?: string };
 
-function parsePublishedTime(value: string | number | null | undefined) {
-    if ([undefined, null, ''].includes(value as string | null | undefined)) {
-        return;
-    }
-    return parseDate(value!, 8);
-}
-
 async function handler(ctx) {
     const limit = getRouteLimit(ctx, 100);
 
@@ -77,7 +70,7 @@ async function handler(ctx) {
         author: item.author,
         category: item.keywords.split(/-|,/),
         guid: `news-${item.contentId}`,
-        pubDate: parsePublishedTime(item.publishTime),
+        pubDate: parseDate(item.publishTime, 8),
     }));
 
     items = await pMap(

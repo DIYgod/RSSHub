@@ -41,7 +41,7 @@ const handler: Route['handler'] = async (ctx) => {
     // Map through each list item to extract details
     const contentLinkList = listItems.toArray().map((element) => {
         const date = $(element).find('span.ui-right-time').text();
-        const title = $(element).find('a').attr('title') || $(element).find('.ui-card-title').text();
+        const title = $(element).find('.ui-card-title').text();
         const relativeLink = $(element).find('a').attr('href')!;
         const absoluteLink = `https://www.catticenter.com${relativeLink}`;
         const formattedDate = parseDate(date, 'YYYY-MM-DD', 8);

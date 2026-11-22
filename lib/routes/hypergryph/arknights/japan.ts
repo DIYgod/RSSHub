@@ -28,8 +28,6 @@ export const route: Route = {
     url: 'www.arknights.jp/news',
 };
 
-const parsePublicationDate = (value: number) => (Number.isFinite(value) && value > 0 ? parseDate(value) : undefined);
-
 async function handler(ctx: Context): Promise<Data> {
     const limit = getRouteLimit(ctx, 9);
 
@@ -44,7 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
     const newsList = response.data.rows.map((item) => ({
         title: item.title,
         description: item.content,
-        pubDate: parsePublicationDate(item.publishTime),
+        pubDate: parseDate(item.publishTime),
         link: `https://www.arknights.jp/news/${item.id}`,
     }));
 

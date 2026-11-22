@@ -55,28 +55,22 @@ export const route: Route = {
         const $ = load(replaceItem.data);
         const items: DataItem[] = $('.news-row')
             .toArray()
-            .map((element): DataItem | null => {
+            .map((element): DataItem => {
                 const $element = $(element);
                 const $titleLink = $element.find('.title a');
                 const $category = $element.find('.category');
                 const $date = $element.find('.location-date time');
 
-                const title = $titleLink.text();
-                const link = $titleLink.attr('href')!;
                 const category = $category.text().trim();
                 const date = $date.attr('datetime') || '';
 
-                if (/\S/.test(title) && link) {
-                    return {
-                        title,
-                        link,
-                        category: [category],
-                        pubDate: date ? parseDate(date) : undefined,
-                    };
-                }
-                return null;
-            })
-            .filter((item) => item !== null);
+                return {
+                    title: $titleLink.text(),
+                    link: $titleLink.attr('href'),
+                    category: [category],
+                    pubDate: date ? parseDate(date) : undefined,
+                };
+            });
 
         return {
             title: language === 'fr' ? 'Premier ministre du Canada | Nouvelles' : 'Prime Minister of Canada | News',

@@ -25,7 +25,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    if (!/^\d+$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) <= 0) {
+    if (!/^\d+$/.test(id)) {
         throw new InvalidParameterError('id must be a positive integer novel ID.');
     }
     const index = Number.parseInt(String(id / 1000));
@@ -42,14 +42,12 @@ async function handler(ctx) {
 
     const name = $('#title').text();
 
-    const chapterItems: any[] = [];
-
-    $('.ccss>a').each((_, el) => {
-        chapterItems.push({
+    const chapterItems = $('.ccss>a')
+        .toArray()
+        .map((el) => ({
             title: $(el).text(),
             link: `https://www.wenku8.net/novel/${index}/${id}/` + $(el).attr('href'),
-        });
-    });
+        }));
 
     return {
         title: `轻小说文库 ${name}`,

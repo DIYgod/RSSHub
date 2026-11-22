@@ -46,7 +46,7 @@ async function handler() {
     const list: DataItem[] = response.products.map((product) => ({
         title: product.title,
         link: `${host}/products/${product.handle}`,
-        pubDate: product.published_at ? parseDate(product.published_at) : undefined,
+        pubDate: parseDate(product.published_at),
         category: product.tags,
         description:
             product.body_html +

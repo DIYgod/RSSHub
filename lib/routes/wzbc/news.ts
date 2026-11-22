@@ -10,11 +10,7 @@ import { parseDateStrict } from '@/utils/time';
 
 const host = 'https://www.wzbc.edu.cn';
 function parseSourceDate(value: string) {
-    const text = value.trim();
-    if (!/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/.test(text)) {
-        return;
-    }
-    return parseDateStrict(text, text.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', 8);
+    return parseDateStrict(value, value.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss', 8);
 }
 const parserAbb = ($: CheerioAPI) => ({
     title: $('title').text(),
@@ -89,13 +85,12 @@ async function handler(ctx: Context) {
                         .replace(/^时间[：:]/, '')
                 );
                 return {
-                    description: $('.pro-con.deat .bottom').html() || undefined,
+                    description: $('.pro-con.deat .bottom').html(),
                     author:
                         $('.pro-con.deat .top .auth')
                             .text()
-                            .replace(/^作者[：:]\s*/, '')
-                            .trim() || undefined,
-                    ...(pubDate && { pubDate }),
+                            .replace(/^作者[：:]\s*/, '') || undefined,
+                    pubDate,
                 } satisfies Pick<DataItem, 'description' | 'pubDate' | 'author'>;
             });
             return { ...item, ...detail };

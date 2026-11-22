@@ -60,21 +60,20 @@ async function handler(ctx: Context) {
         throw new Error('The language specified does not exist');
     }
 
-    const response = await ofetch(`${baseURL}api/${channel}`, { responseType: 'text' });
+    const response = await ofetch(`${baseURL}api/${channel}`);
     const $ = load(response, { xml: true });
 
     const list = $('item')
         .toArray()
         .map((e) => {
             const $e = $(e);
-            const publicationTime = $e.find('pubDate').text();
             return {
                 title: $e.find('title').text(),
                 link: $e.find('guid').text(),
-                pubDate: publicationTime ? parseDate(publicationTime) : undefined,
+                pubDate: parseDate($e.find('pubDate').text()),
                 description: $e.find('description').text(),
                 author: $e.find('author').text() || undefined,
-                image: $e.find('enclosure[type^="image/"]').first().attr('url') || undefined,
+                image: $e.find('enclosure[type^="image/"]').attr('url'),
                 category: $e
                     .find('category')
                     .toArray()
@@ -94,9 +93,9 @@ async function handler(ctx: Context) {
 
     return {
         title: $('channel title').first().text(),
-        link: $('channel > link').text() || baseURL,
-        description: $('channel > description').text() || undefined,
-        image: $('channel > image > url').text() || undefined,
+        link: $('channel > link').text(),
+        description: $('channel > description').text(),
+        image: $('channel > image > url').text(),
         // The shared Language union does not include the RSS source's ISO 639 code for Cantonese.
         language: $('channel > language').text() === 'yue' ? ('yue' as Language) : undefined,
         item: items,

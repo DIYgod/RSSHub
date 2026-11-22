@@ -41,15 +41,11 @@ async function handler(ctx) {
     const res = await got(link);
     const $ = load(res.data);
 
-    const list: Array<{ link: URL; title: string; date?: string }> = [];
-
-    $(config.list)
+    const list = $(config.list)
         .slice(0, 10)
-        .each((i, e) => {
+        .toArray()
+        .map((e) => {
             const temp = new URL($(e).attr('href')!, link);
-            if (temp.hostname !== hostname || list.some((item) => item.link.href === temp.href)) {
-                return;
-            }
             const date = $(e)
                 .text()
                 .match(/（(\d{4}-\d{2}-\d{2})）/);
@@ -59,8 +55,9 @@ async function handler(ctx) {
                     const href = $(element).attr('href');
                     return href && new URL(href, link).href === temp.href;
                 });
-            list.push({ link: temp, title: nativeTitle ? $(nativeTitle).attr('title')! : $(e).text(), date: date?.[1] });
-        });
+            return { link: temp, title: nativeTitle ? $(nativeTitle).attr('title')! : $(e).text(), date: date?.[1] };
+        })
+        .filter((item, index, items) => item.link.hostname === hostname && items.findIndex((other) => other.link.href === item.link.href) === index);
 
     const out = await pMap(
         list,

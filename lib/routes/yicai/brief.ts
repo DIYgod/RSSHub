@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 import { rootUrl } from './utils';
@@ -43,11 +43,10 @@ async function handler(ctx) {
         title: item.indexTitle,
         link: `${rootUrl}${item.url}`,
         description: renderDescription({
-            intro: typeof item.LiveContent === 'string' ? item.LiveContent : undefined,
-            image: { src: getImageUrl(item.LiveImages) },
-            description: typeof item.LiveContent === 'string' && item.LiveContent ? undefined : item.newcontent,
+            intro: item.LiveContent,
+            image: { src: item.LiveImages },
         }),
-        pubDate: getPublicationDate(item.CreateDate, item.datekey, item.hm),
+        pubDate: parseDate(item.CreateDate, 8),
     }));
 
     return {
@@ -55,33 +54,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-
-function getPublicationDate(value?: string, dateKey?: string, time?: string): Temporal.Instant | undefined {
-    if (typeof value === 'string' && value.trim()) {
-        const hasOffset = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
-        const date = hasOffset ? parseDate(value) : parseDateStrict(value, ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 8);
-        if (date) {
-            return date;
-        }
-    }
-    if (typeof dateKey !== 'string' || !dateKey.trim() || typeof time !== 'string' || !time.trim()) {
-        return;
-    }
-    return parseDateStrict(`${dateKey.trim()} ${time.trim()}`, ['YYYY-MM-DD HH:mm', 'YYYY.MM.DD HH:mm'], 8);
-}
-
-function getImageUrl(value?: string): string | undefined {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    try {
-        const url = new URL(value);
-        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
-            return value;
-        }
-    } catch {
-        // Ignore unsupported source image URLs.
-    }
-    return;
 }

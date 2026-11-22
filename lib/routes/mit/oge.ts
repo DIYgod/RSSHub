@@ -61,7 +61,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: date.trim() ? parseDate(date.trim(), 'MMMM D, YYYY', 0) : undefined,
+                pubDate: parseDate(date, 'MMMM D, YYYY', 0),
                 author: author?.trim(),
             };
         });
@@ -74,9 +74,9 @@ async function handler(ctx: Context) {
                 const $$ = load(detailResponse);
 
                 const description = $$('.blog-main .col-12').first();
-                description.children('h2').first().remove();
+                description.children('h2').remove();
                 description.children('p.meta-date').remove();
-                return { description: description.html() ?? undefined };
+                return { description: description.html() };
             });
             return { ...item, ...details };
         },

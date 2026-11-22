@@ -39,7 +39,6 @@ async function handler() {
         .map((item) => ({
             title: $(item).find('a').text(),
             link: $(item).find('a').attr('href'),
-            time: $(item).closest('.heroPost, .post-outer-container').find('time.published').attr('datetime'),
         }));
 
     const out = await pMap(
@@ -59,7 +58,7 @@ async function handler() {
                     link,
                     guid: link,
                     description: text,
-                    pubDate: time ? parseDate(time) : undefined,
+                    pubDate: parseDate(time!),
                 };
             }),
         { concurrency: 3 }

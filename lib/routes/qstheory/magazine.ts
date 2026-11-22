@@ -145,7 +145,7 @@ async function handler(ctx) {
     const items = await pMap(list, (item) => cache.tryGet(`qstheory:magazine:${item.link}`, () => getItem(item, true)), { concurrency: 3 });
 
     const title = isLatest ? $('head title').text() : $$('h1').text() || $$('head title').text();
-    const issueCover = $$('.highlight img').first().attr('src');
+    const issueCover = $$('.highlight img').attr('src');
     const muluCover = $('.zxdk_left .book img').attr('src');
     const image = issueCover ? new URL(issueCover, targetIssueUrl).href : muluCover ? new URL(muluCover, muluUrl).href : undefined;
 

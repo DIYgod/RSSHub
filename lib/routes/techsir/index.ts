@@ -47,12 +47,12 @@ async function handler() {
                 });
 
                 const $ = load(response.data);
-                const description = $('#article-content').html() || $('.kg-card-markdown').html();
-                const date = $('time[itemprop="datePublished"]').attr('datetime') || $('meta[property="article:published_time"]').attr('content') || $('time.time').text();
+                const description = $('#article-content').html();
+                const date = $('time[itemprop="datePublished"]').attr('datetime');
                 return {
                     description,
                     pubDate: date ? parseDate(date, 8) : undefined,
-                    author: $('[itemprop="author"]').first().text() || $('a.author').text(),
+                    author: $('[itemprop="author"]').text(),
                 };
             });
             return { ...item, ...detail };

@@ -38,16 +38,14 @@ async function handler() {
 
     const list = $('#ts_div .list li')
         .toArray()
-        .filter((item) => $(item).find('a').attr('ahref'))
         .map((item) => {
             const $item = $(item);
             const a = $item.find('a');
-            const date = $item.find('span').text();
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('ahref')!, baseUrl).href,
-                pubDate: date ? parseDate(date, 'YYYY.MM.DD', 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 'YYYY.MM.DD', 8),
             };
         });
 

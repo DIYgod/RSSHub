@@ -40,11 +40,9 @@ async function handler() {
         .map((element) => {
             const item = $(element);
             const href = item.find('a.ui-list-link').attr('href');
-            const date = item.find('.ui-add-data').text();
             return {
-                title: item.find('a.ui-list-link').text(),
                 link: href ? new URL(href, baseUrl).href : undefined,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(item.find('.ui-add-data').text(), 'YYYY-MM-DD', 8),
                 guid: href ? Buffer.from(href).toBase64() : undefined,
             };
         })
@@ -57,7 +55,7 @@ async function handler() {
                 const $ = load(response.data);
                 return {
                     ...item,
-                    title: $('.article_main .catalog-title').text() || item.title,
+                    title: $('.article_main .catalog-title').text(),
                     description: $('.article_main .txt').html(),
                 };
             })

@@ -11,7 +11,7 @@ export class SourceClient {
                 noGoto: true,
                 closeTimeout: 0,
                 onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+                    await page.route('**/*', (route) => (['document'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
                 },
             });
             this.page = instance.page;

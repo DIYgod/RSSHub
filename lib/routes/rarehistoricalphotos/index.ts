@@ -1,5 +1,6 @@
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://rarehistoricalphotos.com';
@@ -21,12 +22,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? Math.min(Math.floor(requestedLimit), 100) || undefined : undefined;
-
     const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
-            per_page: limit,
+            per_page: Math.min(getRouteLimit(ctx, 10), 100),
         },
     });
 
@@ -34,7 +32,7 @@ async function handler(ctx) {
         title: item.title.rendered,
         description: item.content.rendered,
         link: item.link,
-        pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
+        pubDate: parseDate(item.date_gmt, 0),
     }));
 
     return {

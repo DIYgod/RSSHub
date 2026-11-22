@@ -44,7 +44,7 @@ const getPlurk = (plurkGuid, item, author) => {
         title: item.content_raw ?? ($.text() || plurkGuid),
         description: $.html(),
         guid: plurkGuid,
-        link: item.link_url || (item.plurk_id === undefined ? undefined : `${baseUrl}/p/${BigInt(item.plurk_id).toString(36)}`),
+        link: item.link_url || `${baseUrl}/p/${BigInt(item.plurk_id).toString(36)}`,
         author: author || undefined,
         pubDate: item.posted ? parseDate(item.posted) : undefined,
     };

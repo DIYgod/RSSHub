@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     const items = [...$('.tab-pane > .row > .card')].map((item): DataItem => {
         const date = $(item).find('.d-flex.mt-3.ms-sm-auto').text()?.split(':', 2)?.[1];
-        const dateObject = date ? parseDate(`${date.trim()}T00:00:00Z`) : undefined;
+        const dateObject = date ? parseDate(`${date}T00:00:00Z`) : undefined;
 
         return {
             title: $(item).find('a.btn-link').text(),

@@ -3,6 +3,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, parseArticleDate, parseUserArticle } from './utils';
 
@@ -30,10 +31,7 @@ export const route: Route = {
 };
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    // Preserve the existing positive-integer limit without introducing a new upper bound.
-    // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer
-    const limit = Number.isInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 12;
+    const limit = getRouteLimit(ctx, 12);
     const link = `${baseUrl}/u/${id}`;
     const data = (await got(link)).data;
     const $ = load(data);

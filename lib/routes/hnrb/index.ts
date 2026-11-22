@@ -64,41 +64,43 @@ async function handler(ctx) {
     const matches = response.data.match(/images\/(\d{4}-\d{2}\/\d{2})\/\d{2}\/\d+_brief/);
     const link = `${rootUrl}/hnrb_epaper/html/${matches[1]}`;
 
-    const urls = $('tbody')
+    const firstPageUrls = $('tbody')
         .eq(1)
         .find('a')
         .toArray()
         .map((a) => `${link}/${$(a).attr('href')!.replace(/\.\//, '')}`)
         .filter((a) => a.endsWith('div=-1'));
 
-    if (!id) {
-        // The paper links every page twice (the page dropdown and the page list), so keep each page once
-        const pageUrls = new Set(
-            $('#pageLink')
+    // The paper links every page twice (the page dropdown and the page list), so keep each page once
+    const pageUrls = id
+        ? []
+        : [
+              ...new Set(
+                  $('#pageLink')
+                      .toArray()
+                      .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
+              ),
+          ].slice(1);
+    const boardArticles = await pMap(
+        pageUrls,
+        async (p) => {
+            const pageResponse = await got({
+                method: 'get',
+                url: p,
+            });
+
+            const page = load(pageResponse.data);
+
+            return page('tbody')
+                .eq(1)
+                .find('a')
                 .toArray()
-                .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
-        );
-        const boardArticles = await pMap(
-            [...pageUrls].slice(1),
-            async (p) => {
-                const pageResponse = await got({
-                    method: 'get',
-                    url: p,
-                });
-
-                const page = load(pageResponse.data);
-
-                return page('tbody')
-                    .eq(1)
-                    .find('a')
-                    .toArray()
-                    .map((a) => `${link}/${page(a).attr('href')!.replace(/\.\//, '')}`)
-                    .filter((a) => a.endsWith('div=-1'));
-            },
-            { concurrency: 3 }
-        );
-        urls.push(...boardArticles.flat());
-    }
+                .map((a) => `${link}/${page(a).attr('href')!.replace(/\.\//, '')}`)
+                .filter((a) => a.endsWith('div=-1'));
+        },
+        { concurrency: 3 }
+    );
+    const urls = [...firstPageUrls, ...boardArticles.flat()];
 
     const items = await pMap(
         urls,

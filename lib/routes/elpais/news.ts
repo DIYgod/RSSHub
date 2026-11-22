@@ -7,7 +7,7 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -26,16 +26,14 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx, 20);
     const sourceOrder = ctx.req.query('sorted') === 'false';
     const sourceItems = feed.items
-        .filter((item): item is typeof item & { title: string; link: string } => Boolean(item.title && item.link))
+        .filter((item): item is typeof item & { title: string; link: string; pubDate: string } => Boolean(item.title && item.link && item.pubDate))
         .slice(0, Math.max(20, limit))
-        .map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
-    const datesComplete = sourceItems.every((item) => item.pubDate);
-    if (!sourceOrder && datesComplete) {
-        sourceItems.sort((first, second) => Temporal.Instant.compare(second.pubDate!, first.pubDate!));
+        .map((item) => ({ ...item, pubDate: parseDate(item.pubDate) }));
+    if (!sourceOrder) {
+        sourceItems.sort((first, second) => compareDates(second.pubDate, first.pubDate));
     }
-    const selectedItems = sourceOrder || datesComplete ? sourceItems.slice(0, limit) : sourceItems;
     const items = await pMap(
-        selectedItems,
+        sourceItems.slice(0, limit),
         async (item) => ({
             title: item.title,
             link: item.link,
@@ -52,9 +50,9 @@ async function handler(ctx) {
                                 .toArray()
                                 .flatMap((element) => JSON.parse($(element).text()))
                                 .find((entry) => entry.articleBody);
-                            const content = $('[data-dtm-region="articulo_cuerpo"]').first();
+                            const content = $('[data-dtm-region="articulo_cuerpo"]');
                             if (metadata?.isAccessibleForFree === true && content.length) {
-                                content.find('aside, script, .ad, .a_b').remove();
+                                content.find('aside').remove();
                                 return { description: content.html() ?? undefined };
                             }
                         } catch (error) {
@@ -62,9 +60,7 @@ async function handler(ctx) {
                         }
                         return {};
                     })
-                ).description ??
-                item.content ??
-                '',
+                ).description ?? item.content,
         }),
         { concurrency: 3 }
     );

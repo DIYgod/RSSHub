@@ -79,7 +79,7 @@ async function handler(ctx) {
                     });
                 }
                 item.description = linkifyText(item.description);
-                item.title = item.pubDate ? `${data.topic.content} ${formatDate(item.pubDate, 'MM月DD日')}` : data.topic.content;
+                item.title = `${data.topic.content} ${formatDate(item.pubDate, 'MM月DD日')}`;
                 return item;
             })
         );

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // Used to classify links by hostname.
@@ -109,7 +109,7 @@ async function dealChannel(suburl, selectors) {
                 // Keep the calendar date from the list as a fallback.
                 // Ordinary articles may declare a more precise publication time.
                 // Disclosure and external articles may only expose the list date.
-                pubDate: dateraw ? (/^\d{4}/.test(dateraw) ? parseDate(dateraw, 8) : parseRelativeDate(dateraw)) : undefined,
+                pubDate: parseDate(dateraw, 8),
             };
         });
 
@@ -161,7 +161,7 @@ async function dealNormalPage(link, item) {
     }
 
     // normal news
-    item.title = $('meta[name="ArticleTitle"]').attr('content') || item.title;
+    item.title = $('meta[name="ArticleTitle"]').attr('content');
     const metaElements = $('.bjjMAuthorBox span.dc_2').toArray();
 
     // The page header places the source in its first field.
@@ -169,16 +169,9 @@ async function dealNormalPage(link, item) {
     const source = $(metaElements[2]).text();
     item.author = `${author} ${source}`;
 
-    // Prefer the precise publication time declared by the article.
-    // Whitespace between the date and time can vary.
-    const exactTime = $(metaElements[0]).text();
-    const dateMatch = /\d{4}-\d{2}-\d{2}/.exec(exactTime);
-    const timeMatch = /\d{2}:\d{2}/.exec(exactTime);
     const pubDate = $('meta[name="PubDate"]').attr('content');
     if (pubDate) {
         item.pubDate = parseDate(pubDate, 8);
-    } else if (dateMatch && timeMatch) {
-        item.pubDate = parseDate(`${dateMatch[0]} ${timeMatch[0]}`, 8);
     }
 
     item.description = $('.arc_body').html();
@@ -194,11 +187,8 @@ async function dealGovpublicPage(link, item) {
     const response = await got.get(link);
     const $ = load(response.data);
 
-    item.title = $('meta[name="ArticleTitle"]').attr('content') || item.title;
+    item.title = $('meta[name="ArticleTitle"]').attr('content');
     const body = $('.gsj_htmlcon_bot');
-    const dateMatch = $('.pubtime')
-        .text()
-        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/);
     const pubDate = $('meta[name="PubDate"]').attr('content');
     const [, author] = $('.pubtime.source')
         ?.text()
@@ -206,9 +196,6 @@ async function dealGovpublicPage(link, item) {
 
     if (pubDate) {
         item.pubDate = parseDate(pubDate, 8);
-    } else if (dateMatch) {
-        const [, year, month, date] = dateMatch;
-        item.pubDate = parseDate(`${year}-${month}-${date}`, 8);
     }
     item.author = author;
     item.description = body.html();
@@ -226,12 +213,12 @@ async function dealLatestDataChannel() {
             isLatestMessage: true,
         },
     });
-    const table: Array<DataItem & { id: string; date?: string }> = res.data.result.table;
+    const table: Array<DataItem & { id: string; date: string }> = res.data.result.table;
     const items = await pMap(
         table,
         (item) => {
             const { date, id } = item;
-            item.pubDate = date ? parseDate(date, 8) : undefined;
+            item.pubDate = parseDate(date, 8);
             const link = (item.link = `http://zdscxx.moa.gov.cn:8080/nyb/pc/messageView.jsp?id=${id}`);
 
             return cache.tryGet(link, async () => {

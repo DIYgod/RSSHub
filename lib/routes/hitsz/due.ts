@@ -8,13 +8,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 8);
-}
-
 const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
 
@@ -67,10 +60,6 @@ const handler = async (ctx) => {
     // 提取所有文章链接
     // 修复：用flatMap替代for循环+push（同步逻辑优化）
     const articlePromises: Array<DataItem & { link: string }> = pageResponses.flatMap((response, i) => {
-        if (!response) {
-            return [];
-        }
-
         const category = categories[i];
         const $ = load(response.data);
         const listItemsOnPage = $('ul.box-main-list li, .list-main li, .list-main-modular li').toArray();
@@ -90,7 +79,7 @@ const handler = async (ctx) => {
                 return {
                     title,
                     link: new URL(linkUrl, baseUrl).href,
-                    pubDate: parsePublicationDate(pubDateStr),
+                    pubDate: parseDate(pubDateStr, 8),
                     category,
                     // 使用标题作为描述
                 };
@@ -125,7 +114,6 @@ const handler = async (ctx) => {
                 const content = $('.v_news_content').html() ?? $('.wp_articlecontent').html() ?? '';
                 const attachments = $('.page-main-fj a[href]')
                     .toArray()
-                    .filter((element) => $(element).attr('href'))
                     .map((element) => String(html`<p><a href="${new URL($(element).attr('href')!, item.link).href}">${$(element).text()}</a></p>`))
                     .join('');
                 return { description: content + attachments || undefined };

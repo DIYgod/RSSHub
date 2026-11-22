@@ -22,12 +22,6 @@ export const route: Route = {
     maintainers: ['changlan'],
     handler,
 };
-function parsePublicationDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value);
-}
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
     const baseUrl = `https://blog.wenxuecity.com/myblog/${id}/all.html`;
@@ -42,43 +36,30 @@ async function handler(ctx: Context) {
                 title: $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, 'https://blog.wenxuecity.com').href,
                 author,
-                pubDate: parsePublicationDate($item.find('span.atc_tm.BLK_txtc').text()),
+                pubDate: parseDate($item.find('span.atc_tm.BLK_txtc').text()),
             };
         });
-    const out = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`wenxuecity:blog:article:${item.link}`, async () => {
-                    const result = await ofetch(item.link, {
-                        headers: {
-                            Referer: baseUrl,
-                        },
-                    });
-                    const content = load(result);
-                    const body = content('div.articalContent');
-                    if (body.length !== 1) {
-                        throw new Error(`Article body not found at ${item.link}`);
-                    }
-                    return {
-                        description: body.html(),
-                    };
+    const out = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wenxuecity:blog:article:${item.link}`, async () => {
+                const result = await ofetch(item.link, {
+                    headers: {
+                        Referer: baseUrl,
+                    },
                 });
-                return { ...item, description: detail.description };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                const content = load(result);
+                return {
+                    description: content('div.articalContent').html(),
+                };
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
     return {
         title: $('head > title').text(),
         link: baseUrl,
         item: out,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

@@ -64,11 +64,10 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                const article = content('#nr, #ctx .article > article').first();
+                const article = content('#nr, #ctx .article > article');
                 article.find('.wants').remove();
                 item.description = article.html();
-                const date = content('.author span.date').first().text();
-                item.pubDate = date ? parseDate(date, 8) : undefined;
+                item.pubDate = parseDate(content('.author span.date').text(), 8);
 
                 return item;
             }),

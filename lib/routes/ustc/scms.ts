@@ -51,41 +51,38 @@ async function handler(ctx) {
     const response = await got(`${host}/${id}/list.htm`);
     const $ = load(response.data);
     const pageTitle = info?.title ?? $('head > title').text();
-    const list = $('.col_news_list .news_list > li').length ? $('.col_news_list .news_list > li') : $('#wp_news_w6 > .wp_article_list > .list_item');
-    let items = list.toArray().map((item): DataItem => {
-        const elem = $(item);
-        const anchor = elem.find('.Article_Title > a, a').first();
-        const title = anchor.attr('title') ?? (elem.find('.news_title').length ? elem.find('.news_title').text() : anchor.text());
-        let link = anchor.attr('href');
-        link = link!.startsWith('/') ? host + link : link;
-        const published = elem.find('.Article_PublishDate, .news_meta').text().trim();
-        const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
-        return {
-            title,
-            pubDate,
-            link,
-        };
-    });
+    let items = $('.col_news_list .news_list > li')
+        .toArray()
+        .map((item): DataItem => {
+            const elem = $(item);
+            const title = elem.find('.news_title').text();
+            let link = elem.find('a').attr('href');
+            link = link!.startsWith('/') ? host + link : link;
+            const pubDate = parseDate(elem.find('.news_meta').text(), 'YYYY-MM-DD', 8);
+            return {
+                title,
+                pubDate,
+                link,
+            };
+        });
     items = await pMap(
         items,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`ustc:scms:detail:${item.link}`, async () => {
-                const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`ustc:scms:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description' | 'author'> = {};
                 try {
                     const response = await got(item.link);
                     const $detail = load(response.data);
                     details.description = $detail('div.wp_articlecontent').html();
-                    details.author =
-                        $detail('.arti_publisher')
-                            .text()
-                            .replace(/^发布者[：:]\s*/, '')
-                            .trim() || undefined;
+                    details.author = $detail('.arti_publisher')
+                        .text()
+                        .replace(/^发布者[：:]\s*/, '');
                 } catch {
                     // Intranet only contents
                 }
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );

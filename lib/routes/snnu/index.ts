@@ -42,8 +42,7 @@ export const route: Route = {
                 const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
-                const date = $item.find('.date.date2').text();
-                const pubDate = date ? parseDate(date, 8) : undefined;
+                const pubDate = parseDate($item.find('.date.date2').text(), 8);
 
                 let title = $item.find('a .txt h3').text();
                 if (!title) {

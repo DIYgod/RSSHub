@@ -1,7 +1,6 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode, Element } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -43,54 +42,54 @@ const handler = async (ctx: Context): Promise<Data> => {
     items = (
         await pMap(
             items,
-            (item) => {
+            async (item) => {
                 if (!item.link) {
                     return item;
                 }
-                return mapResolvedValue(
-                    cache.tryGet(`xjtu:zs:content:v5:${item.link}`, async (): Promise<DataItem> => {
-                        const detailResponse = await ofetch(item.link!);
-                        const $$: CheerioAPI = load(detailResponse);
-                        const title: string = $$('div.show01 h5').text();
-                        const body = $$('div.v_news_content').first();
-                        if (!body.html()?.trim()) {
-                            throw new Error(`Unable to find article content at ${item.link}`);
-                        }
-                        const attachmentLinks = new Set(mapElements(body.find('a[href]'), (_, attachment) => $$(attachment).attr('href')));
-                        $$('[name="_newscontent_fromname"] a[href*="download.jsp"]')
-                            .filter((_, attachment) => {
-                                const href = $$(attachment).attr('href')!;
-                                if ($$(attachment).closest('.v_news_content').length || attachmentLinks.has(href)) {
-                                    return false;
-                                }
-                                attachmentLinks.add(href);
-                                return true;
-                            })
-                            .each((_, attachment) => {
-                                const attachmentWrapper1 = $$('<p/>');
-                                attachmentWrapper1.append(copyContent($$(attachment), $$));
-                                body.append(attachmentWrapper1);
-                            });
-                        const description: string | undefined = body.html() ?? undefined;
-                        const pubDateStr: string | undefined = $$('div.show01 i')
-                            .text()
-                            ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
-                        const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
-                        const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                        const processedItem: DataItem = {
-                            title,
-                            description,
-                            pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
-                            category: categories,
-                            content: {
-                                html: description,
-                                text: body.text(),
-                            },
-                        };
-                        return processedItem;
-                    }),
-                    (detail) => ({ ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate, language })
-                );
+                const detail = await cache.tryGet(`xjtu:zs:content:v5:${item.link}`, async (): Promise<DataItem> => {
+                    const detailResponse = await ofetch(item.link!);
+                    const $$: CheerioAPI = load(detailResponse);
+                    const title: string = $$('div.show01 h5').text();
+                    const body = $$('div.v_news_content');
+                    const attachmentLinks = new Set(
+                        body
+                            .find('a[href]')
+                            .toArray()
+                            .map((attachment) => $$(attachment).attr('href'))
+                    );
+                    $$('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                        .filter((_, attachment) => {
+                            const href = $$(attachment).attr('href')!;
+                            if ($$(attachment).closest('.v_news_content').length || attachmentLinks.has(href)) {
+                                return false;
+                            }
+                            attachmentLinks.add(href);
+                            return true;
+                        })
+                        .each((_, attachment) => {
+                            const attachmentWrapper1 = $$('<p/>');
+                            attachmentWrapper1.append(attachment);
+                            body.append(attachmentWrapper1);
+                        });
+                    const description = body.html();
+                    const pubDateStr: string | undefined = $$('div.show01 i')
+                        .text()
+                        ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
+                    const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
+                    const categories: string[] = categoryEls.map((el) => $$(el).text()).filter(Boolean);
+                    const processedItem: DataItem = {
+                        title,
+                        description,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
+                        category: categories,
+                        content: {
+                            html: description,
+                            text: body.text(),
+                        },
+                    };
+                    return processedItem;
+                });
+                return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate, language };
             },
             { concurrency: 3, stopOnError: false }
         )
@@ -170,18 +169,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
-}

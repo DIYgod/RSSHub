@@ -114,7 +114,7 @@ async function handler(ctx) {
                 return { description: $('.entry').html(), date, author: auhor };
             });
             const description = data.description;
-            const pubDate = data.date ? parseDate(data.date, 8) : undefined;
+            const pubDate = parseDate(data.date, 8);
             const author = data.author;
             const result = {
                 title: title!,

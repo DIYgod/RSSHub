@@ -42,12 +42,11 @@ async function handler(): Promise<Data> {
             const $section = load(section);
             const month = $section('h1').remove().text();
             const title = $section('h2').first().remove().text();
-            const date = month ? parseDate(month) : undefined;
             return {
                 title: `${month} - ${title}`,
                 description: $section.html(),
                 link: url,
-                pubDate: date,
+                pubDate: parseDate(month),
                 guid: `webcatalog-${month}-${title}`,
             };
         });

@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -23,7 +21,6 @@ const handler: Route['handler'] = async (ctx) => {
     const { type, lang = 'zh-CN' } = ctx.req.param<'/bitget/announcement/:type/:lang?'>();
     const languageCode = lang.replace('-', '_');
     const headers = {
-        Referer: baseUrl,
         accept: 'application/json, text/plain, */*',
         'content-type': 'application/json;charset=UTF-8',
         language: languageCode,
@@ -66,14 +63,9 @@ const handler: Route['handler'] = async (ctx) => {
             )
         )
     );
-    const response = responses[0];
-
-    if (!response) {
-        throw new Error('Failed to fetch announcements');
-    }
     const items = responses
         .flatMap((response) => response.data.items)
-        .toSorted((a, b) => Number(b.sendTime || 0) - Number(a.sendTime || 0))
+        .toSorted((a, b) => Number(b.sendTime) - Number(a.sendTime))
         .slice(0, pageSize);
     const data = await Promise.all(
         items.map((item) =>
@@ -88,30 +80,15 @@ const handler: Route['handler'] = async (ctx) => {
                     image: item.imgUrl,
                 };
 
-                if (item.openUrl && (item.businessType === 20 || item.businessType === 70)) {
+                if (item.businessType === 20 || item.businessType === 70) {
                     try {
                         const itemResponse = await ofetch<string>(item.openUrl ?? '', {
                             headers,
                         });
-                        const $ = load(itemResponse);
-                        const queryState = $('script')
-                            .toArray()
-                            .map(
-                                (element) =>
-                                    $(element)
-                                        .text()
-                                        .match(/window\.__ZEUS_REACT_QUERY_STATE__\s*=\s*(\{.+\})/s)?.[1]
-                            )
-                            .find(Boolean);
+                        const queryState = itemResponse.match(/window\.__ZEUS_REACT_QUERY_STATE__\s*=\s*(\{.+?\})<\/script>/s)?.[1];
                         if (queryState) {
                             const article = JSON.parse(queryState).queries.find((query) => query.queryKey[0] === 'articles')?.state.data?.articleDetails;
-                            dataItem.description = article?.content || item.content || '';
-                        } else {
-                            const nextData = $('script#__NEXT_DATA__').text();
-                            if (nextData) {
-                                const pageProps = JSON.parse(nextData).props.pageProps;
-                                dataItem.description = pageProps.details?.content || pageProps.pageInitInfo?.ruleContent || item.content || '';
-                            }
+                            dataItem.description = article?.content || item.content;
                         }
                     } catch (error: any) {
                         if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {

@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/scs/:type',
@@ -66,13 +66,11 @@ async function handler(ctx: Context) {
             return {
                 link: new URL($('a', elem).attr('href')!, link).href,
                 title: $('a', elem).text(),
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate(date, 8),
             };
         });
     const limit = getRouteLimit(ctx, 10);
-    const sorted = ctx.req.query('sorted') !== 'false';
-    const datesAvailable = items.every((item) => item.pubDate);
-    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!)).slice(0, limit) : items.slice(0, sorted ? Math.max(10, limit) : limit);
+    const selectedItems = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit);
 
     return { link, title: $('title').text(), item: selectedItems };
 }

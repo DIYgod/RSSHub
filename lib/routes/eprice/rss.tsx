@@ -56,7 +56,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
 
                 // remove unwanted elements
-                $('noscript, script, style, .related-link-block').remove();
+                $('noscript, style').remove();
                 $('div[id^=dablewidget]').remove();
                 $('div[class^=parallax-ads]').remove();
                 $('.adsbygoogle, .join-eprice-fb, .teads').remove();

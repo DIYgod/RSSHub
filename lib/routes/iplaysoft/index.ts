@@ -31,7 +31,7 @@ const handler = async (ctx): Promise<Data> => {
                 title: item.title,
                 description,
                 link: item.link,
-                author: item.author ?? item.creator,
+                author: item.creator,
                 pubDate: parseDate(item.pubDate),
             };
         })

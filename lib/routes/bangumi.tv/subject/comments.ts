@@ -19,10 +19,7 @@ export const getComments = async (subjectID, minLength) => {
                 rate = $rateEl.attr('class')!.match(/stars(\d)/)![1];
             }
 
-            const commentId = $el.find('.likes_grid[id]').attr('id') ?? $el.attr('id');
-            if (!commentId) {
-                throw new Error('Bangumi comment is missing its native HTML ID. The source page layout may have changed.');
-            }
+            const commentId = $el.find('.likes_grid[id]').attr('id');
 
             const dateString = $el.find('small.grey').text().slice(2);
 

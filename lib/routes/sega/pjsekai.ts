@@ -38,7 +38,7 @@ async function handler() {
         id: number;
         title: string;
         path: string;
-        startAt?: number;
+        startAt: number;
         informationTag: string;
     }> = response.data || [];
     const list = await pMap(
@@ -65,7 +65,7 @@ async function handler() {
             const item = {
                 title: post.title,
                 link,
-                pubDate: post.startAt === undefined ? undefined : parseDate(post.startAt),
+                pubDate: parseDate(post.startAt),
                 description,
                 category: post.informationTag, // event,gacha,music,bug,information
                 guid,

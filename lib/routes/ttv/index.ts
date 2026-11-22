@@ -8,7 +8,7 @@ import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-type ArticleMetadata = { '@type'?: string; headline?: string; dateModified?: string; author?: { name?: string } };
+type ArticleMetadata = { '@type': string; headline: string; dateModified: string; author: { name: string } };
 
 function parseArticleByline(text: string): { author: string; credit?: string } | undefined {
     const editor = /^編輯／([\p{Script=Han}、\s]{1,40})$/u.exec(text);
@@ -27,17 +27,8 @@ function parseArticleByline(text: string): { author: string; credit?: string } |
     }
 }
 
-function getArticleMetadata(content: CheerioAPI): ArticleMetadata | undefined {
-    for (const element of content('script[type="application/ld+json"]').toArray()) {
-        try {
-            const metadata: ArticleMetadata = JSON.parse(content(element).text());
-            if (metadata['@type'] === 'NewsArticle') {
-                return metadata;
-            }
-        } catch {
-            // Ignore malformed structured data and retain available HTML metadata.
-        }
-    }
+function getArticleMetadata(content: CheerioAPI): ArticleMetadata {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text());
 }
 
 async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'title' | 'pubDate' | 'updated' | 'category' | 'description' | 'author'>> {
@@ -60,23 +51,20 @@ async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'title'
             paragraph.remove();
         }
     });
-    const publishedTime = content('meta[property="article:published_time"]').attr('content');
-    const category = content('div.article-body ul.tag')
+    const tags = content('div.article-body ul.tag')
         .find('a')
         .toArray()
         .map((t) => content(t).text());
     const section = content("meta[property='article:section']").attr('content');
-    if (section && !category.includes(section)) {
-        category.push(section);
-    }
+    const category = section && !tags.includes(section) ? [...tags, section] : tags;
 
     return {
-        title: metadata?.headline || content('h1').text() || content('title').text(),
-        pubDate: publishedTime ? parseDate(publishedTime) : undefined,
-        updated: metadata?.dateModified ? parseDate(metadata.dateModified) : undefined,
+        title: metadata.headline,
+        pubDate: parseDate(content('meta[property="article:published_time"]').attr('content')!),
+        updated: parseDate(metadata.dateModified),
         category,
-        description: main.html() || undefined,
-        author: author || metadata?.author?.name,
+        description: main.html(),
+        author: author || metadata.author.name,
     };
 }
 
@@ -123,7 +111,6 @@ async function handler(ctx) {
     let items = $('div.news-list li')
         .slice(0, getRouteLimit(ctx, 30))
         .toArray()
-        .filter((item) => $(item).find('a').attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
 
@@ -143,7 +130,7 @@ async function handler(ctx) {
                 pubDate: details.pubDate,
                 updated: details.updated,
                 author: details.author,
-                category: Array.isArray(details.category) ? details.category.filter((category) => typeof category === 'string') : details.category,
+                category: details.category,
                 description: details.description,
             };
         },

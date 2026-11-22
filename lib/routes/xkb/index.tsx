@@ -33,16 +33,9 @@ export const route: Route = {
 | 天下   | 355 |`,
 };
 
-function parseSourceDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function fetchArticleContent(contentUrl: string): Promise<Pick<DataItem, 'description'>> {
     const detailResponse = await got({ method: 'get', url: contentUrl });
-    return { description: detailResponse.data.htmlContent ?? '' };
+    return { description: detailResponse.data.htmlContent };
 }
 
 async function handler(ctx) {
@@ -71,14 +64,14 @@ async function handler(ctx) {
                     ) : null}
                 </>
             ),
-            pubDate: parseSourceDate(item.docPubTime),
+            pubDate: parseDate(item.docPubTime),
             link: 'https://www.xkb.com.cn/detail?id=' + item.id,
             contentUrl: item.contentUrl,
             author: item.metaInfo.author || undefined,
             chnlName: item.metaInfo.chnlName,
         }));
 
-    const chnlName = list[0]?.chnlName ?? '';
+    const chnlName = list[0].chnlName;
     const items = await pMap(
         list,
         async (item) => {

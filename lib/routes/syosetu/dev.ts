@@ -45,12 +45,12 @@ async function handler(): Promise<Data> {
     const contents = logContainer
         .find('dd')
         .toArray()
-        .map((element) => $(element).html() ?? '');
+        .map((element) => $(element).html());
 
     const updates = dates
         .map((date, index) => ({
             date,
-            content: contents[index] ?? '',
+            content: contents[index],
         }))
         .filter((update) => update.content);
 
@@ -61,7 +61,7 @@ async function handler(): Promise<Data> {
         item: updates.map((update) => ({
             title: update.date,
             description: update.content,
-            pubDate: update.date ? parseDate(update.date, 'YYYY/MM/DD', 9) : undefined,
+            pubDate: parseDate(update.date, 'YYYY/MM/DD', 9),
             guid: `syosetu:dev:${update.date}`,
         })),
     };

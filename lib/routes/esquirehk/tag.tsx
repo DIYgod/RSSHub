@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import { destr } from 'destr';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import type { JSX } from 'hono/jsx/jsx-runtime';
 import pMap from 'p-map';
 
 import { renderYoutube } from '@/routes/youtube/utils';
@@ -98,68 +97,57 @@ const handler = async (ctx) => {
     };
 };
 
+const renderPageMedia = (page, index) => {
+    switch (page.type) {
+        case 'image': {
+            const image = page.image?.large || page.image?.desktop || page.image?.mobile;
+            return <img key={`image-${index}`} src={image?.src} alt={image?.alt} />;
+        }
+        case 'video_block': {
+            const videoId = page.source?.split('&', 1)[0];
+            return <div key={`video-${index}`}>{raw(renderYoutube(true, videoId))}</div>;
+        }
+        case 'ctc_product_list':
+            return (
+                <span key={`products-${index}`}>
+                    {page.products?.map((product, productIndex) => {
+                        const img = product.image?.desktop || product.image?.mobile;
+                        return (
+                            <span key={`product-${productIndex}`}>
+                                <img src={img?.src} alt={img?.alt} />
+                                <br />
+                                {product.brand}
+                                <br />
+                                {product.name}
+                                <br />
+                                HKD ${product.price}
+                                <br />
+                                <a href={product.url}>SHOP NOW</a>
+                            </span>
+                        );
+                    })}
+                </span>
+            );
+        default:
+            return null;
+    }
+};
+
 const renderSubpages = (subpages): string =>
     renderToString(
         <>
-            {subpages?.map((page, index) => {
-                const blocks: Array<JSX.Element | null> = [];
-
-                switch (page.type) {
-                    case 'image': {
-                        const image = page.image?.large || page.image?.desktop || page.image?.mobile;
-                        blocks.push(<img key={`image-${index}`} src={image?.src} alt={image?.alt} />);
-
-                        break;
-                    }
-                    case 'video_block': {
-                        const videoId = page.source?.split('&', 1)[0];
-                        blocks.push(<div key={`video-${index}`}>{raw(renderYoutube(true, videoId, undefined, undefined))}</div>);
-
-                        break;
-                    }
-                    case 'ctc_product_list':
-                        blocks.push(
-                            <span key={`products-${index}`}>
-                                {page.products?.map((product, productIndex) => {
-                                    const img = product.image?.desktop || product.image?.mobile;
-                                    return (
-                                        <span key={`product-${productIndex}`}>
-                                            <img src={img?.src} alt={img?.alt} />
-                                            <br />
-                                            {product.brand}
-                                            <br />
-                                            {product.name}
-                                            <br />
-                                            HKD ${product.price}
-                                            <br />
-                                            <a href={product.url}>SHOP NOW</a>
-                                        </span>
-                                    );
-                                })}
-                            </span>
-                        );
-
-                        break;
-
-                    default:
-                        break;
-                }
-
-                if (page.title) {
-                    blocks.push(
+            {subpages?.map((page, index) => (
+                <span key={`page-${index}`}>
+                    {renderPageMedia(page, index)}
+                    {page.title ? (
                         <h2 key={`title-${index}`}>
                             {page.order ? `${page.order} ` : ''}
                             {page.title}
                         </h2>
-                    );
-                }
-
-                if (page.description?.raw) {
-                    blocks.push(<span key={`description-${index}`}>{raw(page.description.raw)}</span>);
-                }
-
-                return <span key={`page-${index}`}>{blocks}</span>;
-            })}
+                    ) : null}
+                    {page.description?.raw ? <span key={`description-${index}`}>{raw(page.description.raw)}</span> : null}
+                </span>
+            ))}
         </>
     );
 

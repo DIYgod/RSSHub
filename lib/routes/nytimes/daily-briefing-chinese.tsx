@@ -7,13 +7,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-const getPublicationDate = (value?: string | number | null): Temporal.Instant | undefined => {
-    if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
-        return undefined;
-    }
-    return parseDate(value);
-};
-
 export const route: Route = {
     path: '/daily_briefing_chinese',
     categories: ['traditional-media'],
@@ -56,7 +49,7 @@ async function handler() {
         if (key.startsWith('Article:') && item.url) {
             items.push({
                 link: item.url,
-                pubDate: getPublicationDate(item.firstPublished),
+                pubDate: parseDate(item.firstPublished),
             });
         }
     }

@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-const parseFeedDate = (date: string) => parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date.trim()) ? `${date.trim()}T00:00:00Z` : date);
+const parseFeedDate = (date: string) => parseDate(`${date}T00:00:00Z`);
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { topic } = ctx.req.param();

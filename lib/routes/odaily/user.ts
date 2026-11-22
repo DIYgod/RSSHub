@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 type AuthorPost = { id: number; title: string; publishTimestamp: number; tags: Array<{ name: string }> };
-type AuthorPostDetail = { content: string; author?: { nickname: string } };
+type AuthorPostDetail = { content: string; author: { nickname: string } };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
@@ -45,7 +45,7 @@ async function handler(ctx) {
             const link = `${rootUrl}/post/${item.id}`;
             const detail = await cache.tryGet(link + ':body', async () => {
                 const response = await ofetch<{ data: AuthorPostDetail }>(`https://web-api.odaily.news/post/detail/${item.id}`);
-                return { description: response.data.content, author: response.data.author?.nickname };
+                return { description: response.data.content, author: response.data.author.nickname };
             });
             return { title: item.title, link, pubDate: parseDate(item.publishTimestamp), category: item.tags.map((tag) => tag.name), ...detail };
         },

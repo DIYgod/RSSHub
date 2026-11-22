@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
     const { page, destroy } = await getPlaywrightPage(currentUrl, { noGoto: true, closeTimeout: 0 });
     try {
         await page.route('**/*', async (route) => {
-            await (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort());
+            await (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort());
         });
         await page.goto(currentUrl, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('.list ul li a');
@@ -71,7 +71,7 @@ async function handler(ctx: Context) {
                     }
                     const detailHtml = detailResponse.text;
                     const content = load(detailHtml);
-                    const author = content('.l_news_time').text().split('来源：', 2)[1]?.trim();
+                    const author = content('.l_news_time').text().split('来源：', 2)[1];
                     content('.cntt, .l_news_time').remove();
 
                     return {

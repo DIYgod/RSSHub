@@ -16,7 +16,7 @@ export const route: Route = {
 };
 
 function parsePublicationMetadata(text: string) {
-    const label = /作者\s*[:：]( *)/.exec(text);
+    const label = /作者\s*[:：] */.exec(text);
     if (!label) {
         return;
     }
@@ -24,10 +24,6 @@ function parsePublicationMetadata(text: string) {
     const date = / (\d{4})[-/年](\d{1,2})[-/月](\d{1,2})日?/.exec(remainder);
     if (date) {
         return [text.slice(label.index, label.index + label[0].length + date.index + date[0].length), remainder.slice(0, date.index), date[1], date[2], date[3]];
-    }
-    const immediateDate = label[1] && /^(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})日?/.exec(remainder);
-    if (immediateDate) {
-        return [text.slice(label.index, label.index + label[0].length + immediateDate[0].length), '', immediateDate[1], immediateDate[2], immediateDate[3]];
     }
 }
 
@@ -49,10 +45,7 @@ async function handler(ctx: Context) {
         .map((e) => {
             const link = $(e).find('h3 > a').attr('href');
             const body = $(e).find('.post-body');
-            const metadataElement = body
-                .children('p')
-                .filter((_, element) => /^\s*作者\s*[:：]/.test($(element).text()))
-                .first();
+            const metadataElement = body.children('p').filter((_, element) => /^\s*作者\s*[:：]/.test($(element).text()));
             const metadata = parsePublicationMetadata(metadataElement.text().replaceAll(/\s+/g, ' '));
             const publicationDate = metadata ? parseDateStrict(`${metadata[2]}-${metadata[3].padStart(2, '0')}-${metadata[4].padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
             const lastModified = link ? lastModifiedDates.get(link) : undefined;

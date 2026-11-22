@@ -54,17 +54,14 @@ async function handler() {
     });
     const detailedItems = await pMap(
         items,
-        async (item) =>
-            item.link
-                ? {
-                      ...item,
-                      description: await cache.tryGet(`scnu:cs:v1:${item.link}`, async () => {
-                          const loadedSource1 = (await got(item.link!, { allowH2: false })).data;
-                          const article = load(loadedSource1);
-                          return article('.article-content').html() ?? undefined;
-                      }),
-                  }
-                : item,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`scnu:cs:v1:${item.link}`, async () => {
+                const loadedSource1 = (await got(item.link, { allowH2: false })).data;
+                const article = load(loadedSource1);
+                return article('.article-content').html();
+            }),
+        }),
         { concurrency: 3 }
     );
 

@@ -38,18 +38,18 @@ export const route: Route = {
             image: item.IMG_PATH,
             link: `https://cn.ktown4u.com/iteminfo?goods_no=${item.GOODS_NO}`,
             description: desc(item),
-            pubDate: item.RELEASE_DT ? parseDate(`${item.RELEASE_DT}T00:00:00Z`) : undefined,
+            pubDate: parseDate(`${item.RELEASE_DT}T00:00:00Z`),
         }));
 
         return {
-            title: rssTitle(data, grpNo),
+            title: rssTitle(data),
             link: `https://cn.ktown4u.com/artistBrandlist?grp_no=${grpNo}&grp_no2=${grpNo2}`,
             item: items,
         };
     },
 };
 
-const rssTitle = (data, grpNo) => `ktown4u ${data[0]?.GRP_NM ?? grpNo}`;
+const rssTitle = (data) => `ktown4u ${data[0].GRP_NM}`;
 
 const desc = (item) => {
     const saleState = item.SALE_YN === 'N' ? '【售罄】' : '';

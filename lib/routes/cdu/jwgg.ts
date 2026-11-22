@@ -42,8 +42,7 @@ async function handler() {
             const anchor = element.find('a[href]');
             const title = anchor.attr('title') || anchor.text();
             const link = new URL(anchor.attr('href')!, url).href;
-            const date = element.find('.span').text();
-            const pubDate = date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDate(element.find('.span').text(), 'YYYY-MM-DD', 8);
 
             return {
                 title,

@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -39,7 +40,7 @@ const findNamesByUuids = (data: any[], uuids: string[]): string[] => {
     return uuids.flatMap((uuid) => allItems.filter((item) => item.uuid === uuid || item.name === uuid).map((item) => item.name)).filter(Boolean);
 };
 
-const resolveMediaUrl = (source: string | undefined) => (source ? new URL(source, 'https://image.lceda.cn').href : undefined);
+const resolveMediaUrl = (source: string) => new URL(source, 'https://image.lceda.cn').href;
 
 const md = MarkdownIt({
     html: true,
@@ -48,8 +49,7 @@ const md = MarkdownIt({
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') ?? 15);
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const baseUrl = 'https://oshwhub.com';
     const apiUrl: string = new URL('api/project', baseUrl).href;
@@ -146,7 +146,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const origin: string | undefined = originOptions.find((opt) => opt.value === result.origin)?.label ?? undefined;
                 const tags: string[] = findNamesByUuids(projectTagsData, result.project_tags ?? []);
 
-                const categories: string[] = [...new Set([...[item.category ?? []].flat(), origin ?? undefined, ...tags, result.license].filter((value): value is string => Boolean(value)))];
+                const categories: string[] = [...new Set([...[item.category].flat(), origin, ...tags, result.license].filter((value): value is string => Boolean(value)))];
                 const authors: DataItem['author'] = new Map(
                     [result.owner, result.creator, ...result.members].map((author) => {
                         const item = {

@@ -78,7 +78,7 @@ async function handler(ctx) {
                 return {
                     description: $('.ot_main_r .content').html(),
                     author: $('.math_time_l > span:nth-child(3)').text().trim(),
-                    pubDate: date ? parseDate(`${date}T00:00:00+08:00`) : undefined,
+                    pubDate: parseDate(`${date}T00:00:00+08:00`),
                     itunes_item_image: img ? `${url}${img}` : undefined,
                 };
             });

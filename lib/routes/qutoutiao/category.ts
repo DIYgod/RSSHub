@@ -21,7 +21,7 @@ export const route: Route = {
     handler,
 };
 
-type SourceArticle = { title: string; url: string; detail_url: string; detail?: string | null; show_time: number; nickname: string };
+type SourceArticle = { title: string; url: string; detail_url: string; detail?: string | null; nickname: string };
 
 async function handler(ctx: Context) {
     const { cid } = ctx.req.param();
@@ -33,14 +33,13 @@ async function handler(ctx: Context) {
         async (item) => {
             const { description, publishedAt } = await cache.tryGet(`qutoutiao:article:v3:${item.detail_url}`, async () => {
                 const detail = await ofetch(item.detail_url);
-                return { description: detail.detail, publishedAt: detail.publish_info?.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1] };
+                return { description: detail.detail, publishedAt: detail.publish_info.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)[1] };
             });
-            const publishedDate = publishedAt ? parseDate(publishedAt, 8) : undefined;
             return {
                 title: item.title,
                 link: item.url,
                 description: description ?? item.detail,
-                pubDate: publishedDate ?? parseDate(item.show_time, 'X'),
+                pubDate: parseDate(publishedAt, 8),
                 guid: item.url.split('?', 1)[0],
                 author: item.nickname,
             };

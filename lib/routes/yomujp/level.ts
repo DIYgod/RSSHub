@@ -1,12 +1,11 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import { parseDateStrict } from '@/utils/time';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:level?',
@@ -32,30 +31,17 @@ export const route: Route = {
     handler,
     url: 'yomujp.com/',
 };
-function parseGmtDate(value: string | undefined) {
-    if (!value) {
-        return;
-    }
-    const date = parseDateStrict(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 0);
-    if (date) {
-        return date;
-    }
-}
 function getAuthor($: CheerioAPI) {
     const paragraph = $('.elementor-widget-text-editor > .elementor-widget-container p')
         .toArray()
         .find((paragraph) => /^\s*文[：:]/.test($(paragraph).text()));
     if (paragraph) {
-        const credit = copyContent($(paragraph), $);
+        const credit = $(paragraph);
         credit.find('br').replaceWith('\n');
-        return (
-            credit
-                .text()
-                .trimStart()
-                .replace(/^文[：:][^\S\r\n]*/, '')
-                .split('\n', 1)[0]
-                .trim() || undefined
-        );
+        return credit
+            .text()
+            .replace(/^文[：:][^\S\r\n]*/, '')
+            .split('\n', 1)[0];
     }
     return (
         $('section:last-of-type p:first-of-type')
@@ -66,26 +52,25 @@ function getAuthor($: CheerioAPI) {
 }
 async function handler(ctx): Promise<Data> {
     const level = formatLevel(ctx.req.param('level'));
-    const requestedLimit = Number(ctx.req.query('limit') ?? 10);
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.min(Math.floor(requestedLimit), 100) : 10;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const url = new URL('https://yomujp.com/wp-json/wp/v2/posts');
     url.searchParams.append('categories', getLevel(level));
     url.searchParams.append('per_page', `${limit}`);
     const posts = await get(url);
     const item = posts.map((post) => {
         const $ = load(post.content.rendered);
-        const audio = $('audio > source').first();
+        const audio = $('audio > source');
         const description = $('.elementor-widget-text-editor > .elementor-widget-container, .elementor-widget-image > .elementor-widget-container')
             .toArray()
             .filter((el) => !/^\s*文[：:]/.test($(el).text()))
-            .map((el) => $(el).html() ?? '')
+            .map((el) => $(el).html())
             .join('');
         return {
             title: post.title.rendered,
             author: getAuthor($),
             description,
-            pubDate: parseGmtDate(post.date_gmt),
-            updated: parseGmtDate(post.modified_gmt),
+            pubDate: parseDate(post.date_gmt, 0),
+            updated: parseDate(post.modified_gmt, 0),
             guid: md5(post.guid.rendered),
             link: post.link,
             itunes_item_image: $('section:nth-of-type(2) img').attr('src'),
@@ -142,11 +127,3 @@ const get = async (url) => {
     const response = await got({ method: 'get', url });
     return response.data;
 };
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
-}

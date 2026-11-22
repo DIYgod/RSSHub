@@ -110,8 +110,5 @@ function parsePublicationDate(value?: string) {
     if (!value) {
         return;
     }
-    const date = parseDateStrict(value, ['YYYY-MM-DD HH:mm:ss', 'YYYY年MM月DD日'], 8);
-    if (date) {
-        return date;
-    }
+    return parseDateStrict(value, ['YYYY-MM-DD HH:mm:ss', 'YYYY年MM月DD日'], 8);
 }

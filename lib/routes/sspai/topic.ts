@@ -81,7 +81,7 @@ async function handler(ctx) {
                     link: itemUrl,
                     author,
                     category: item.tags?.map((tag) => tag.title),
-                    pubDate: date ? parseDate(date * 1000) : undefined,
+                    pubDate: parseDate(date * 1000),
                     ...details,
                 };
             }

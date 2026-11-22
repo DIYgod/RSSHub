@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { categories, convertToQueryString, getInfo, processItems, rootUrl, title } from './util';
@@ -57,8 +58,7 @@ async function handler(ctx) {
         category = `ac/${category}`;
     }
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const queryString = convertToQueryString(category);
     const currentUrl = new URL(`newsclass.aspx${queryString}`, rootUrl).href;

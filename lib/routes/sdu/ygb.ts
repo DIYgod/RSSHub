@@ -61,7 +61,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title') || a.text(),
                 link,
-                pubDate: parseDate($e.find('b').text().trim().slice(1, -1), 8),
+                pubDate: parseDate($e.find('b').text().slice(1, -1), 8),
             };
         });
 

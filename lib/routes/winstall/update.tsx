@@ -22,11 +22,7 @@ const renderDesc = (installers?: string[]) =>
 async function getBuildId(baseUrl: string): Promise<string> {
     const { data } = await got(baseUrl);
     const $ = load(data);
-    const buildId = JSON.parse($('#__NEXT_DATA__').text()).buildId;
-    if (typeof buildId !== 'string' || !buildId) {
-        throw new Error(`Application build ID missing at ${baseUrl}`);
-    }
-    return buildId;
+    return JSON.parse($('#__NEXT_DATA__').text()).buildId;
 }
 
 export const route: Route = {

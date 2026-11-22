@@ -14,11 +14,9 @@ const maxFiles = 16; // the most files Misskey attaches to one note
 const maxLines = 500;
 
 const renderText = (text: string) => {
-    const lines = text.split('\n');
+    const allLines = text.split('\n');
     // keep the first lines as they are and fold the remainder into the last one
-    if (lines.length > maxLines) {
-        lines.push(lines.splice(maxLines - 1).join(' '));
-    }
+    const lines = allLines.length > maxLines ? [...allLines.slice(0, maxLines - 1), allLines.slice(maxLines - 1).join(' ')] : allLines;
     return lines.map((line, index) => (
         <>
             {index > 0 ? <br /> : null}

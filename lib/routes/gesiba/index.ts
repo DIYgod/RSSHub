@@ -26,7 +26,7 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter`
 
         const searchPage = await ofetch<string>(`${BASE_URL}/immobilien/wohnungen`);
         const $searchPage = load(searchPage);
-        const component = $searchPage('.sprig-component[data-hx-vals]').first();
+        const component = $searchPage('.sprig-component[data-hx-vals]');
         const endpoint = component.attr('data-hx-get');
         const values = component.attr('data-hx-vals');
         if (!endpoint || !values) {

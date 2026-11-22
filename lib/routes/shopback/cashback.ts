@@ -46,7 +46,6 @@ async function handler(ctx) {
                 guid: `${link}#${hash}`,
                 description: `<p>${escapeText(rate)}</p>`,
             };
-        })
-        .filter((item) => item.title && item.description);
-    return { title: `${name || store} - ShopBack cashback`, link, item: items };
+        });
+    return { title: `${name} - ShopBack cashback`, link, item: items };
 }

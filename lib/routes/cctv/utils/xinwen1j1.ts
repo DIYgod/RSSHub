@@ -19,17 +19,9 @@ async function loadContent(link, guid) {
     return { description };
 }
 
-const processFeed = (data, ctx: Context) => {
-    let list = data.list;
-    const limit = getRouteLimit(ctx);
-    if (limit !== undefined) {
-        if (ctx.req.query('sorted') !== 'false') {
-            list = list.toSorted((a, b) => b.focus_date - a.focus_date);
-        }
-        list = list.slice(0, limit);
-    }
-    return Promise.all(
-        list.map(async (data) => {
+const processFeed = (data, ctx: Context) =>
+    Promise.all(
+        data.list.slice(0, getRouteLimit(ctx)).map(async (data) => {
             const title = data.title;
             const itemUrl = data.url;
             const itemDate = parseDate(data.focus_date);
@@ -47,7 +39,6 @@ const processFeed = (data, ctx: Context) => {
             return { ...single, ...other };
         })
     );
-};
 export const xinwen1j1 = async (ctx: Context) => {
     const baseUrl = 'https://api.cntv.cn/NewVideo/getVideoListByColumn?id=TOPC1451559066181661&n=20&sort=desc&p=1&mode=0&serviceId=tvcctv';
     const res = await got({

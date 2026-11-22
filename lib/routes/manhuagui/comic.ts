@@ -89,9 +89,7 @@ async function handler(ctx) {
         };
     }
     const coverImgSrc = $('.book-cover img').attr('src');
-    const updateStatus = $('.status > span')
-        .filter((_, element) => /最近[于於]/.test($(element).text()))
-        .first();
+    const updateStatus = $('.status > span').filter((_, element) => /最近[于於]/.test($(element).text()));
     const dateText = updateStatus.text().match(/最近[于於]\s*\[([^\]]+)\]/)?.[1];
     const updateDate = dateText ? parseDate(dateText, 0) : undefined;
     const latestChapterHref = updateStatus.find('a').attr('href');

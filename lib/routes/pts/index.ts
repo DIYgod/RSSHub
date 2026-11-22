@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -34,9 +35,7 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer -- Preserve the existing positive-integer limit acceptance range and default.
-    const limit = Number.isInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
     const rootUrl = 'https://news.pts.org.tw';
     const currentUrl = `${rootUrl}${getSubPath(ctx)}`;
 
@@ -77,10 +76,8 @@ export async function handler(ctx) {
                 const author = content('.reporter-container a')
                     .toArray()
                     .map((e) => ({ name: content(e).text() }));
-                const published = content('.article-time .mr-2 time').text();
-                const modified = content('.article-time span:nth-child(2) time').text();
-                const pubDate = published ? parseDate(published, 8) : undefined;
-                const updated = modified ? parseDate(modified, 8) : undefined;
+                const pubDate = parseDate(content('.article-time .mr-2 time').text(), 8);
+                const updated = parseDate(content('.article-time span:nth-child(2) time').text(), 8);
                 const category = content('.tag-list')
                     .first()
                     .find('.blue-tag')

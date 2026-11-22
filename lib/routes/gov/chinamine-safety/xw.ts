@@ -73,12 +73,11 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const pubDate = $item.parent().find('span').text();
 
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($item.parent().find('span').text(), 8),
             };
         });
 

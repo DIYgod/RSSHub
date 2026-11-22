@@ -56,7 +56,7 @@ async function handler(ctx): Promise<Data> {
             const second = item.meta.secondDuration - minute * 60;
             return {
                 title: item.meta.title,
-                pubDate: item.created ? parseDate(item.created) : undefined,
+                pubDate: parseDate(item.created),
                 link: `https://show.gotokeep.com/entries/${item.id}`,
                 author: item.author.username,
                 description: renderDescription(item, minute, second, images, videoUrl, poster),

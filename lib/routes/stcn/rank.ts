@@ -57,17 +57,12 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.detail-title').text();
                 const description = $$('div.detail-content').html();
-                const pubDateStr: string | undefined = $$('div.detail-info')
-                    .children('span')
-                    .filter((_, el) => /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?$/.test($$(el).text()))
-                    .last()
-                    .text();
+                const pubDateStr: string | undefined = $$('div.detail-info').children('span').last().text();
                 const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [];
                 const authors: DataItem['author'] =
                     $$('div.detail-info')
                         .children('span')
                         .filter((_, el) => $$(el).text().startsWith('作者：'))
-                        .first()
                         .text()
                         .replace(/^作者：/, '') || $$('div.detail-info span').first().text().split(/：/).pop();
                 const upDatedStr: string | undefined = pubDateStr;

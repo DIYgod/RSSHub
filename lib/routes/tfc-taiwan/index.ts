@@ -11,7 +11,7 @@ const handler = async (ctx): Promise<Data> => {
     const postsResponse = await parsePost(limit, undefined);
 
     const pageInfo = pageResponse.yoast_head_json;
-    const image = pageInfo.og_image?.[0]?.url;
+    const image = pageInfo.og_image[0].url;
     const items = parseItem(postsResponse);
 
     return {

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got'; // Shared request helper.
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -23,13 +23,9 @@ async function handler() {
     const items = response.map((item) => ({
         title: item.title.rendered,
         link: item.link,
-        author:
-            item._embedded?.author
-                ?.map((author) => author.name)
-                .filter(Boolean)
-                .join(', ') || undefined,
-        category: [...new Set<string>(item._embedded?.['wp:term']?.flatMap((terms) => terms.map((term) => term.name).filter((name) => typeof name === 'string')))],
-        pubDate: parsePublicationDate(item.date_gmt),
+        author: item._embedded.author.map((author) => author.name).join(', '),
+        category: [...new Set<string>(item._embedded['wp:term'].flatMap((terms) => terms.map((term) => term.name)))],
+        pubDate: parseDate(item.date_gmt, 0),
         description: item.content.rendered,
     }));
     return {
@@ -38,10 +34,4 @@ async function handler() {
         description: '免费节点分享网站',
         item: items,
     };
-}
-function parsePublicationDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    return parseDateStrict(value, 'YYYY-MM-DDTHH:mm:ss', 0);
 }

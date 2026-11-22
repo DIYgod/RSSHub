@@ -14,12 +14,12 @@ export const renderVideo = (desktopSrc?: string, mobileSrc?: string, captionHtml
     return renderToString(
         <>
             {secondarySrc ? (
-                <video controls preload="none">
+                <video controls preload="metadata">
                     {desktopSrc && <source src={desktopSrc} type={getVideoMimeType(desktopSrc)} />}
                     <source src={secondarySrc} type={getVideoMimeType(secondarySrc)} />
                 </video>
             ) : (
-                <video src={primarySrc} controls preload="none" />
+                <video src={primarySrc} controls preload="metadata" />
             )}
             <p>
                 <a href={primarySrc}>Watch the video</a>

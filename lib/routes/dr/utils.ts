@@ -1,5 +1,3 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
 import { escapeUTF8 } from 'entities';
 import pMap from 'p-map';
 
@@ -124,7 +122,7 @@ const findArticleResource = (value: any, pathname: string): ArticleResource | un
     if (!value || typeof value !== 'object') {
         return;
     }
-    if (value.urlPathId === pathname && Array.isArray(value.body)) {
+    if (value.urlPathId === pathname) {
         return value;
     }
     for (const child of Object.values(value)) {
@@ -135,42 +133,25 @@ const findArticleResource = (value: any, pathname: string): ArticleResource | un
     }
 };
 
-const extractFlightArticle = ($: CheerioAPI, link: string) => {
-    const pathname = new URL(link, rootUrl).pathname;
-    for (const script of $('script').toArray()) {
-        const payload = $(script)
-            .text()
-            .match(/self\.__next_f\.push\((\[.*\])\)/s)?.[1];
-        if (!payload) {
-            continue;
-        }
-        const chunk = JSON.parse(payload);
-        if (chunk[0] !== 1 || typeof chunk[1] !== 'string') {
-            continue;
-        }
-        const records = chunk[1].split('\n');
+const extractFlightArticle = (html: string, link: string) => {
+    const pathname = new URL(link).pathname;
+    for (const [, payload] of html.matchAll(/<script>self\.__next_f\.push\((\[.*?\])\)<\/script>/gs)) {
+        const records: string[] = JSON.parse(payload)[1].split('\n');
         for (const record of records) {
             const json = record.slice(record.indexOf(':') + 1);
             if (!json.startsWith('{') && !json.startsWith('[')) {
                 continue;
             }
-            try {
-                const resource = findArticleResource(JSON.parse(json), pathname);
-                if (resource) {
-                    return resource;
-                }
-            } catch {
-                // Ignore non-JSON React Flight records and retain the official RSS fallback.
+            const resource = findArticleResource(JSON.parse(json), pathname);
+            if (resource) {
+                return resource;
             }
         }
     }
 };
 
-const extractDRArticle = (html: string, link?: string) => {
-    const $ = load(html);
-    const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
-    const viewProps = nextData.props?.pageProps?.viewProps;
-    const resource = viewProps?.resource ?? viewProps?.article ?? extractFlightArticle($, link ?? $('link[rel="canonical"]').attr('href') ?? rootUrl);
+const extractDRArticle = (html: string, link: string) => {
+    const resource = extractFlightArticle(html, link);
     if (!resource) {
         return null;
     }
@@ -206,8 +187,9 @@ const fetchDRArticle = async (item: FeedItem) => {
 
     try {
         return await cache.tryGet(`dr:article:${item.link}`, async () => {
-            const html = await ofetch(item.link!);
-            const article = extractDRArticle(html, item.link);
+            const link = item.link!;
+            const html = await ofetch(link);
+            const article = extractDRArticle(html, link);
             if (!article) {
                 throw new Error(`Unable to extract the full article from ${item.link}`);
             }

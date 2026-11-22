@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -15,15 +16,14 @@ export const route: Route = {
 };
 
 function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
-    if (!value?.trim()) {
+    if (!value) {
         return;
     }
     return parseDate(`${value} +08:00`, `${format} Z`);
 }
 
 async function handler(ctx: Context) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 12;
+    const limit = getRouteLimit(ctx, 12);
     const response = await ofetch('https://trade.tpre.cn/up/biz/project/anmuas/enterprise-assets/page', {
         query: {
             projectInformation: '',

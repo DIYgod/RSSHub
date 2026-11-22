@@ -13,13 +13,13 @@ const isRestId = (value: unknown): value is string => typeof value === 'string' 
 const getUserResult = (response: any) => {
     const errors = response?.errors;
     if (errors !== undefined && errors !== null && (!Array.isArray(errors) || errors.length > 0)) {
-        const codes = Array.isArray(errors) ? [...new Set(errors.map((error) => error?.code).filter((code) => Number.isSafeInteger(code)))] : [];
+        const codes = Array.isArray(errors) ? [...new Set(errors.map((error) => error?.code))] : [];
         throw new Error(`Twitter API user lookup failed${codes.length ? ` (codes: ${codes.join(', ')})` : ''}`);
     }
 
     // Some third-party providers return errors with HTTP 200 outside GraphQL.
     const code = response?.code;
-    if (Number.isSafeInteger(code) && code >= 400) {
+    if (code >= 400) {
         if (code === 404 && response.message === 'User not found') {
             throw new InvalidParameterError('Twitter API could not find this user');
         }

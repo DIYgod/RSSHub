@@ -39,11 +39,7 @@ const extractTranscript = ($: CheerioAPI): string | undefined => {
     if (startIdx === -1 || endIdx === -1) {
         return undefined;
     }
-    const transcript = paragraphs
-        .eq(startIdx)
-        .nextUntil(paragraphs.eq(endIdx))
-        .filter((_, p) => $(p).text().trim() !== '')
-        .toString();
+    const transcript = paragraphs.eq(startIdx).nextUntil(paragraphs.eq(endIdx)).toString();
     return transcript || undefined;
 };
 
@@ -84,9 +80,8 @@ const parseArticle = async (item: ArticleListItem) => {
         worksheetExt: worksheet.worksheetExt,
     });
 
-    const detailDateStr = $('.sigle-meta__date').text();
     const publishedTime = $('meta[property="article:published_time"]').attr('content');
-    const pubDate = publishedTime ? parseDate(publishedTime) : detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY', 0) : item.pubDate;
+    const pubDate = publishedTime ? parseDate(publishedTime) : item.pubDate;
 
     return {
         title: item.title,

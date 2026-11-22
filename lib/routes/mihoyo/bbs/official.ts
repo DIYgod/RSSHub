@@ -154,9 +154,6 @@ async function handler(ctx) {
     if (!Object.hasOwn(GITS_MAP, gids) || !Object.hasOwn(TYPE_MAP, type)) {
         throw new InvalidParameterError('Unknown game ID or notice type; use a documented combination.');
     }
-    if (!Number.isSafeInteger(Number(page_size)) || Number(page_size) <= 0) {
-        throw new InvalidParameterError('page_size must be a positive safe integer.');
-    }
     if (last_id && last_id !== '0') {
         throw new InvalidParameterError('Only the first page is supported; omit last_id or use 0.');
     }

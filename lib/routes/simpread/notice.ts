@@ -25,7 +25,7 @@ async function handler() {
             guid: `simpread:notice:${item.id}`,
             description: md.render(item.content),
             link: 'https://simpread.pro/changelog.html',
-            pubDate: item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD HH:mm ZZ') : undefined,
+            pubDate: parseDate(`${item.date} +0000`, 'YYYY-MM-DD HH:mm ZZ'),
             title: `${item.category.name}-${item.title}`,
             author: 'SimpRead',
             category: item.category.name,

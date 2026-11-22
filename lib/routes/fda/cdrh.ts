@@ -41,7 +41,7 @@ async function handler(ctx) {
         .toArray()
         .flatMap((heading) => {
             const $heading = $(heading);
-            const date = $heading.text().trim();
+            const date = $heading.text();
             if (!/^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(date)) {
                 return [];
             }

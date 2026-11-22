@@ -7,7 +7,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDateStrict, toInstant } from '@/utils/time';
+import { parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const getPublicationDate = (html: string) => {
@@ -71,10 +71,10 @@ async function handler(ctx) {
                 const detailPage = await fetchPage(item.link!);
                 detailPage.$('.paper_num, #rwb_tjyd').remove();
 
-                const mainContent = detailPage.$('#rwb_zw').length ? detailPage.$('#rwb_zw').first() : detailPage.$('#rm_txt_zw').first();
+                const mainContent = detailPage.$('#rwb_zw').length ? detailPage.$('#rwb_zw') : detailPage.$('#rm_txt_zw');
 
                 return {
-                    description: (mainContent.length ? mainContent.html() : detailPage.$('.rm_txt_con, .show_text').first().html()) ?? undefined,
+                    description: mainContent.length ? mainContent.html() : detailPage.$('.rm_txt_con, .show_text').html(),
                     pubDate: getPublicationDate(detailPage.html),
                 };
             });
@@ -82,15 +82,6 @@ async function handler(ctx) {
         },
         { concurrency: 3, stopOnError: false }
     );
-
-    for (const item of items) {
-        const date = item.pubDate === undefined || item.pubDate === null ? undefined : toInstant(item.pubDate);
-        if (date) {
-            item.pubDate = date;
-        } else {
-            delete item.pubDate;
-        }
-    }
 
     return {
         title: $('title').text(),

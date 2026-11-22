@@ -58,34 +58,23 @@ const handler = async (ctx) => {
         },
     });
 
-    const seenWorkIds = new Set<string>();
-
     const items = response.results
-        .filter((work) => reconstructAbstract(work.abstract_inverted_index).trim())
+        .filter((work) => reconstructAbstract(work.abstract_inverted_index))
         .map((work) => {
             const abstract = reconstructAbstract(work.abstract_inverted_index);
             const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
             const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
-
-            const pubDate = work.publication_date ? parseDateStrict(work.publication_date, 'YYYY-MM-DD', 0) : undefined;
 
             return {
                 title: work.title || 'Untitled',
                 link: doiUrl,
                 description: abstract,
                 author: authors,
-                pubDate,
+                pubDate: parseDateStrict(work.publication_date, 'YYYY-MM-DD', 0),
                 // OpenAlex id is immutable and stable across metadata updates.
                 guid: work.id,
                 category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
             };
-        })
-        .filter((item) => {
-            if (seenWorkIds.has(item.guid)) {
-                return false;
-            }
-            seenWorkIds.add(item.guid);
-            return true;
         });
 
     // Get journal and filter type names for title

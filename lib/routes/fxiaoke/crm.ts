@@ -74,9 +74,8 @@ async function handler(ctx) {
                 });
 
                 item.description = firstViewBox.html();
-                const published = $('meta[property="article:published_time"]').attr('content');
                 const modified = $('meta[property="article:modified_time"]').attr('content');
-                item.pubDate = published ? parseDate(published) : undefined;
+                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
                 item.updated = modified ? parseDate(modified) : undefined;
                 return item;
             })

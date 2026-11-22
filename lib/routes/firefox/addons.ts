@@ -60,7 +60,7 @@ async function handler(ctx) {
                 title: version,
                 description: getLocalizedText(versionInfo.release_notes),
                 link,
-                pubDate: versionInfo.file.created ? parseDate(versionInfo.file.created) : undefined,
+                pubDate: parseDate(versionInfo.file.created),
                 guid: version,
                 author: info.authors.map((author) => author.name).join(', '),
                 category: info.categories,

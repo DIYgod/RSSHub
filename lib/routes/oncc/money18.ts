@@ -5,6 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { formatDate, parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/money18';
@@ -45,9 +46,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'exp';
-    // oxlint-disable-next-line unicorn/prefer-number-coercion -- Preserve decimal-prefix semantics shared with RSSHub's common limit parser.
-    const parsedLimit = Number.parseInt(ctx.req.query('limit') ?? '', 10);
-    const limit = Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://money18.on.cc';
     const currentUrl = `${rootUrl}/finnews/news_${id === 'industry' ? 'industry.html' : `breaking.html?section=${id}`}`;
@@ -85,7 +84,7 @@ async function handler(ctx) {
     if (id === 'ipo') {
         items = response.data.articles.map((item) => ({
             title: item.title,
-            author: item.authorname || undefined,
+            author: item.authorname,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
             description: renderDescription({
                 images: item.hasHdPhoto ? [`https://hk.on.cc/hk/bkn${item.hdEnlargeThumbnail}`] : undefined,

@@ -19,7 +19,7 @@ const parseContent = (htmlString) => {
         $('<br>').appendTo(content);
     });
     return {
-        author: info[0] || undefined,
+        author: info[0],
         description: content.html(),
     };
 };
@@ -42,7 +42,6 @@ async function handler(ctx) {
         .join(' - ');
     const list = $('#ny-main > div.ny.wp > ul > li')
         .toArray()
-        .filter((item) => $(item).find('a').attr('href'))
         .map((item: any) => {
             const $item = $(item);
             const title = $item.find('a').text();
@@ -68,11 +67,7 @@ async function handler(ctx) {
             try {
                 const detail = await cache.tryGet(`xjtu:dean:content:v2:${item.link}`, async () => {
                     const response = await ofetch(item.link!);
-                    const result = parseContent(response);
-                    if (!result.description?.trim()) {
-                        throw new Error(`Unable to find article content at ${item.link}`);
-                    }
-                    return result;
+                    return parseContent(response);
                 });
                 return { ...item, ...detail };
             } catch {

@@ -7,7 +7,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+
+import { parseCalendarDate } from './util';
 
 interface Post extends DataItem {
     external: boolean;
@@ -122,12 +123,6 @@ function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
         external,
     };
 }
-function parseCalendarDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
-}
 async function getDetail(item: Post): Promise<Post> {
     const link = item.link;
     if (!link) {
@@ -146,19 +141,13 @@ async function getDetail(item: Post): Promise<Post> {
             if (requiresArticleAuthentication($)) {
                 throw new ArticleAccessError(`Article access permission or authentication required at ${link}`);
             }
-            const body = $('div.content div.v_news_content');
-            if (body.length !== 1) {
-                throw new Error(`Article body not found at ${link}`);
-            }
-            const category = $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
             return {
-                category: category?.length ? category : undefined,
+                category: $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean),
                 title: $('div.content div.content_title h1').text(),
-                listTitle: item.title,
-                description: body.html(),
+                description: $('div.content div.v_news_content').html(),
             };
         });
-        return { ...item, title: detail.listTitle === item.title ? detail.title || item.title : item.title, description: detail.description, category: detail.category };
+        return { ...item, title: detail.title, description: detail.description, category: detail.category };
     } catch (error) {
         if (error instanceof ArticleAccessError) {
             return { ...item, description: undefined };
@@ -198,7 +187,7 @@ async function handleIndex(): Promise<Post[]> {
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // Combine all first-page news groups.
-    const fullList = await unwrapFirstFailure(pMap([...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList], async (item) => await getDetail(item), { concurrency: 3, stopOnError: false }));
+    const fullList = await pMap([...xyxwList, ...tzggList, ...xsdtList, ...xsjzList, ...jxdtList, ...xgdtList], async (item) => await getDetail(item), { concurrency: 3 });
     return fullList;
 }
 /**
@@ -232,20 +221,18 @@ async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
     } else {
         throw new Error('No such sub type.');
     }
-    const urlPosts = await unwrapFirstFailure(
-        pMap(
-            urlList,
-            async (url) => {
-                const response = await ofetch(url.url);
-                const $ = load(response);
-                return $('div.neiinner > div.nav_right > div.right_inner > div.list > ul > li')
-                    .toArray()
-                    .map((item) => parseListLinkDateItem($(item), url.base));
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+    const urlPosts = await pMap(
+        urlList,
+        async (url) => {
+            const response = await ofetch(url.url);
+            const $ = load(response);
+            return $('div.neiinner > div.nav_right > div.right_inner > div.list > ul > li')
+                .toArray()
+                .map((item) => parseListLinkDateItem($(item), url.base));
+        },
+        { concurrency: 3 }
     );
-    const fullList = await unwrapFirstFailure(pMap(urlPosts.flat(), async (item) => await getDetail(item), { concurrency: 3, stopOnError: false }));
+    const fullList = await pMap(urlPosts.flat(), async (item) => await getDetail(item), { concurrency: 3 });
     return fullList;
 }
 export const route: Route = {
@@ -305,10 +292,3 @@ export const route: Route = {
         };
     },
 };
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}

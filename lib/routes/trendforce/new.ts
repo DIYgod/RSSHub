@@ -8,12 +8,6 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-function parseGmtDate(value: number | string | undefined) {
-    if (value === undefined || value === '') {
-        return;
-    }
-    return parseDate(typeof value === 'string' && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? `${value}Z` : value);
-}
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
     const apiSlug = 'wp-json/wp/v2';
@@ -39,18 +33,18 @@ const handler = async (ctx: Context): Promise<Data> => {
         const terminologies = item._embedded?.['wp:term'];
         const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
         const authors: DataItem['author'] =
-            item._embedded?.author?.map((author) => ({
+            item._embedded?.author.map((author) => ({
                 name: author.name,
                 url: author.url,
                 avatar: undefined,
             })) ?? [];
         const guid: string = item.guid?.rendered ?? item.guid;
-        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? undefined;
-        const updated: number | string | undefined = item.modified_gmt;
+        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
+        const updated: number | string = item.modified_gmt;
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: parseGmtDate(pubDate),
+            pubDate: parseDate(`${pubDate}Z`),
             link: linkUrl ?? guid,
             category: categories,
             author: authors,
@@ -62,7 +56,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: parseGmtDate(updated),
+            updated: parseDate(`${updated}Z`),
             language,
         };
         return processedItem;

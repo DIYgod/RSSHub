@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://u9a9.com';
 
@@ -46,14 +46,12 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('td').eq(1).find('a');
-            const date = $item.find('td').eq(4).text().trim();
-            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
             return {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate,
+                pubDate: parseDate($item.find('td').eq(4).text(), 'YYYY-MM-DD HH:mm:ss', 8),
 
-                enclosure_url: new URL($item.find('td').eq(2).find('a').first().attr('href')!, baseUrl).href,
+                enclosure_url: new URL($item.find('td').eq(2).find('a').attr('href')!, baseUrl).href,
                 enclosure_type: 'application/x-bittorrent',
             };
         });

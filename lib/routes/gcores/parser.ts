@@ -152,19 +152,13 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
         entity: entityMap[range.key],
     }));
     const boundaries = [...new Set([0, text.length, ...styleRanges.flatMap((range) => [range.start, range.end]), ...mappedEntityRanges.flatMap((range) => [range.start, range.end])])].sort((a, b) => a - b);
-    const resultParts: string[] = [];
-
-    for (const [index, start] of boundaries.entries()) {
+    const resultParts = boundaries.flatMap((start, index) => {
         // Non-text entities replace their entire range and must only be rendered once.
-        for (const range of mappedEntityRanges) {
-            if (range.start === start && range.entity && (range.entity.type !== 'LINK' || range.start === range.end)) {
-                resultParts.push(createEntityElement(range.entity, ''));
-            }
-        }
+        const entityParts = mappedEntityRanges.filter((range) => range.start === start && range.entity && (range.entity.type !== 'LINK' || range.start === range.end)).map((range) => createEntityElement(range.entity, ''));
 
         const end = boundaries[index + 1];
         if (end === undefined || mappedEntityRanges.some((range) => range.entity && range.entity.type !== 'LINK' && range.start <= start && range.end >= end)) {
-            continue;
+            return entityParts;
         }
 
         let styledText = escapeText(text.slice(start, end));
@@ -182,8 +176,8 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
                 styledText = createEntityElement(range.entity, styledText);
             }
         }
-        resultParts.push(styledText);
-    }
+        return [...entityParts, styledText];
+    });
 
     return `${blockType.element ? `<${blockType.element}>` : ''}${resultParts.join('').replaceAll('\n', '<br>')}${blockType.element ? `</${blockType.element}>` : ''}`;
 };

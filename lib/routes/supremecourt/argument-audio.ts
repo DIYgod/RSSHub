@@ -54,9 +54,9 @@ async function handler(ctx: Context) {
                 content('audio source[type="audio/mp3"]').attr('type', 'audio/mpeg');
 
                 return {
-                    description: content('#pagemaindiv').html() ?? undefined,
+                    description: content('#pagemaindiv').html(),
                     caseName,
-                    pubDate: arguedDate ? parseDate(arguedDate, 'MM/DD/YY', 'America/New_York') : undefined,
+                    pubDate: parseDate(arguedDate, 'MM/DD/YY', 'America/New_York'),
                     itunes_item_image: imageUrl,
                     enclosure_url: content('audio source').attr('src'),
                     enclosure_type: 'audio/mpeg',

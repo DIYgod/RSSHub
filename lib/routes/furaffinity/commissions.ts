@@ -35,13 +35,13 @@ async function handler(ctx) {
     const data = await getCommissions(username);
     const items = data.map((item) => {
         const $ = load(item.description, undefined, false);
-        const typeName = $('h4').first().text() || item.title;
-        $('h4').first().remove();
+        const typeName = $('h4').text() || item.title;
+        $('h4').remove();
         return {
             title: typeName,
             link: item.submission.link,
-            guid: `${item.submission.id ?? 'commission'}:${typeName}`,
-            description: `${$.root().html() ?? ''}${item.submission.thumbnail ? `<br><img src="${item.submission.thumbnail}">` : ''}`,
+            guid: `${item.submission.id}:${typeName}`,
+            description: `${$.root().html() ?? ''}<br><img src="${item.submission.thumbnail}">`,
             author: username,
         };
     });

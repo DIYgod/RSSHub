@@ -122,18 +122,6 @@ async function handler(ctx) {
                     url: link,
                 });
                 const $ = load(postDetail.data);
-                $('.card')
-                    .eq(0)
-                    .find('.message img')
-                    .each((_, item) => {
-                        const $item = $(item);
-
-                        const src = $item.attr('src');
-                        if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
-                            $item.attr('src', `https://bbs.kanxue.com/${src}`);
-                        }
-                    });
-
                 return $('.card').eq(0).find('.message').html();
             });
             return {

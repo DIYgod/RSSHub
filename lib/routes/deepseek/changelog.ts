@@ -21,12 +21,11 @@ const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataItem[] =>
                 title: $title.text(),
                 link: anchor ? `${updatesUrl}#${anchor}` : updatesUrl,
                 ...(date && { pubDate: parseDate(`${date}T00:00:00Z`) }),
-                description:
-                    $content
-                        .not($title)
-                        .toArray()
-                        .map((element) => $.html(element))
-                        .join('') || undefined,
+                description: $content
+                    .not($title)
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join(''),
             };
         })
         .filter((item) => item.title);

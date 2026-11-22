@@ -132,12 +132,11 @@ const SAFE_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
 const SAFE_HTTP_PROTOCOLS = new Set(['http:', 'https:']);
 
 const parseUrlWithProtocols = (raw: string | undefined, protocols: Set<string>): string | undefined => {
-    const trimmed = raw?.trim();
-    if (!trimmed) {
+    if (!raw) {
         return undefined;
     }
     try {
-        const parsed = new URL(trimmed, SITE_URL);
+        const parsed = new URL(raw, SITE_URL);
         return protocols.has(parsed.protocol) ? parsed.href : undefined;
     } catch {
         return undefined;
@@ -230,7 +229,7 @@ export const sanitizeRichHtml = (rawHtml?: string): string => {
         return '';
     }
     const $ = load(rawHtml, null, false);
-    $('script, style, ins, .ad-unit, .ecom-root, [data-pogo], [data-google-query-id]').remove();
+    $('script').remove();
 
     $('a').each((_, el) => {
         const $el = $(el);
@@ -252,5 +251,5 @@ export const sanitizeRichHtml = (rawHtml?: string): string => {
         }
     });
 
-    return $.html().trim();
+    return $.html();
 };

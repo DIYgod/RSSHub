@@ -56,7 +56,7 @@ async function handler(ctx) {
     const workList = data.props.pageProps.workList.map((item) => ({
         title: item.title,
         link: item.pageUrl,
-        pubDate: [undefined, null, ''].includes(item.publishTime) ? undefined : parseDate(item.publishTime, 'x'),
+        pubDate: item.publishTime ? parseDate(item.publishTime, 'x') : undefined,
         category: [item.objectTypeStr, item.cateStr, item.subCateStr, ...item.tags],
     }));
 

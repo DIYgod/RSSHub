@@ -36,14 +36,12 @@ const handler = async (ctx) => {
     let items = $('ul.notice-list li')
         .slice(0, limit)
         .toArray()
-        .filter((item) => $(item).find('div.notice-list-tt a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const date = $item.find('div.notice-date').text();
 
             return {
                 title: $item.find('div.notice-list-tt a').text(),
-                pubDate: date ? parseDate(date, 'YYYY/MM/DD', 8) : undefined,
+                pubDate: parseDate($item.find('div.notice-date').text(), 'YYYY/MM/DD', 8),
                 link: new URL($item.find('div.notice-list-tt a').prop('href')!, rootUrl).href,
                 category: $item
                     .find('div.notice-label')
@@ -58,7 +56,7 @@ const handler = async (ctx) => {
         async (item) => {
             const details = await cache.tryGet(item.link, () => fetchArticleDetails(item.link));
 
-            return { ...item, title: details.title || item.title, description: details.description, content: details.content };
+            return { ...item, title: details.title, description: details.description, content: details.content };
         },
         { concurrency: 3, stopOnError: false }
     );

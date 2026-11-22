@@ -44,7 +44,6 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('div.list-con ul li')
         .toArray()
-        .filter((item) => $(item).find('a').attr('href'))
         .map((item_) => {
             const item = $(item_);
             const a = item.find('a');
@@ -70,12 +69,8 @@ async function handler(ctx) {
                 const detail = await cache.tryGet(`xjtu:yz:content:v1:${item.link}`, async () => {
                     const res = await ofetch(item.link!);
                     const content = load(res);
-                    const body = content('#vsb_content').html();
-                    if (!body?.trim()) {
-                        throw new Error(`Unable to find article content at ${item.link}`);
-                    }
                     return {
-                        description: body + (content('form ul').length > 0 ? content('form ul').html() : ''),
+                        description: content('#vsb_content').html()! + (content('form ul').length > 0 ? content('form ul').html() : ''),
                     };
                 });
                 return { ...item, ...detail };

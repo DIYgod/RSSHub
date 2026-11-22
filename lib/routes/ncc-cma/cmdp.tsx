@@ -54,7 +54,7 @@ const handler = async (ctx) => {
                     </figure>
                 ) : null
             );
-            const guid = date ? `ncc-cma#${id}#${date}` : image;
+            const guid = `ncc-cma#${id}#${date}`;
 
             return {
                 title: itemTitle,

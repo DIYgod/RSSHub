@@ -95,7 +95,7 @@ export async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                const processElementText = (el) => content(el).text().split(/：/).pop()!.trim() || content(el).next().text().trim();
+                const processElementText = (el) => content(el).text().split(/：/).pop()!.trim() || content(el).next().text();
 
                 const author = content('meta[name="author"]').prop('content');
 
@@ -122,24 +122,20 @@ export async function handler(ctx) {
                 const manuscriptId = content('meta[name="manuscriptId"]').prop('content');
 
                 item.title = content('meta[name="ArticleTitle"]').prop('content') || content('div.share-title').first().text() || item.title;
-                item.description = content('div.TRS_UEDITOR').first().html() || content('div#UCAP-CONTENT, td#UCAP-CONTENT').first().html();
+                item.description = content('div.TRS_UEDITOR').html() || content('div#UCAP-CONTENT, td#UCAP-CONTENT').html();
                 item.author = [agency, source, author].filter(Boolean).join('/');
                 item.category = [...new Set([subject, column, ...keywords].filter(Boolean))];
-                item.guid = manuscriptId ? `gov-zhengce-${manuscriptId}` : item.link;
-                const published = content('meta[name="firstpublishedtime"]').prop('content');
-                const modified = content('meta[name="lastmodifiedtime"]').prop('content');
-                item.pubDate = published ? parseDate(published, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
-                item.updated = modified ? parseDate(modified, 'YYYY-MM-DD-HH:mm:ss', 8) : undefined;
+                item.guid = `gov-zhengce-${manuscriptId}`;
+                item.pubDate = parseDate(content('meta[name="firstpublishedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss', 8);
+                item.updated = parseDate(content('meta[name="lastmodifiedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss', 8);
 
                 return item;
             })
         )
     );
 
-    const imageSrc = $('img.wordlogo').prop('src');
-    const iconSrc = $('link[rel~="icon"]').prop('href');
-    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
-    const icon = iconSrc ? new URL(iconSrc, rootUrl).href : undefined;
+    const image = new URL($('img.wordlogo').prop('src')!, rootUrl).href;
+    const icon = new URL($('link[rel~="icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="lanmu"]').prop('content');
     const author = $('div.header_logo a[aria-label]').prop('aria-label');
 

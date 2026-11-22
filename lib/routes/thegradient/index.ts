@@ -39,7 +39,7 @@ async function handler() {
                 return null;
             }
             const link = new URL(href, rootUrl).href;
-            const pubDate = dateStr ? parseDate(`${dateStr}T00:00:00Z`) : undefined;
+            const pubDate = parseDate(`${dateStr}T00:00:00Z`);
             return {
                 title,
                 link,
@@ -63,14 +63,11 @@ async function handler() {
                         description: $detail('.c-content').html(),
                         category: $detail('meta[property="article:tag"]')
                             .toArray()
-                            .map((tag) => $detail(tag).attr('content')!)
-                            .filter(Boolean),
-                        author:
-                            $detail('.c-widget-author__title')
-                                .toArray()
-                                .map((author) => $detail(author).text().trim())
-                                .filter(Boolean)
-                                .join(', ') || undefined,
+                            .map((tag) => $detail(tag).attr('content')!),
+                        author: $detail('.c-widget-author__title')
+                            .toArray()
+                            .map((author) => $detail(author).text().trim())
+                            .join(', '),
                     };
                 } catch {
                     return {};

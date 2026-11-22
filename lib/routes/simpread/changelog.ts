@@ -84,7 +84,7 @@ async function handler() {
                     guid: `simpread:changelog:${versionType}:${version}:${year}:${monthDay}`,
                     description: detail.html(),
                     link: 'https://simpread.pro/changelog.html',
-                    pubDate: year && monthDay ? parseDate(`${year}-${monthDay.replace('.', '-')} +0000`, 'YYYY-MM-DD ZZ') : undefined,
+                    pubDate: parseDate(`${year}-${monthDay!.replace('.', '-')} +0000`, 'YYYY-MM-DD ZZ'),
                     title: `${versionType}${version}`,
                     author: 'SimpRead',
                 };

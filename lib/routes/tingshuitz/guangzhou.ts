@@ -33,7 +33,7 @@ async function handler() {
         title,
         link,
         description: digest || undefined,
-        pubDate: sendtime ? parseDate(sendtime, 'X') : undefined,
+        pubDate: parseDate(sendtime, 'X'),
     }));
 
     return {

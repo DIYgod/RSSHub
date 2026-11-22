@@ -64,46 +64,40 @@ async function handler(ctx) {
 
     const list: DataItem[] = $('div.book-info')
         .toArray()
-        .flatMap((item): DataItem[] => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
-            const href = a.attr('href');
-            if (!href) {
-                return [];
-            }
-            return [
-                {
-                    title: a.text(),
-                    link: new URL(href, link).href,
-                    pubDate: getPublicationDate($item.find('.update').text()),
-                    category: [],
-                    description: '',
-                    image: '',
-                    author: '',
-                },
-            ];
+            return {
+                title: a.text(),
+                link: a.attr('href'),
+                pubDate: parseDate($item.find('.update').text()),
+                category: [],
+                description: '',
+                image: '',
+                author: '',
+            };
         });
 
     const items = await pMap(
         list,
         async (item) => {
-            const detail = await cache.tryGet(String(item.link), async () => {
-                const response = await ofetch(String(item.link));
+            const detail = await cache.tryGet(item.link ?? '', async () => {
+                const response = await ofetch(item.link ?? '');
                 const $ = load(response);
-                const links = String(item.link).split('/');
+                const links = (item.link ?? '').split('/');
                 const imageUrl = $('.book-cover img').attr('src');
                 const category = [
                     ...new Set([
-                        types[String(links.at(-2))],
+                        types[links.at(-2) ?? ''],
                         ...$('.book-info__categories .category')
                             .toArray()
                             .map((tag) => $(tag).text()),
                     ]),
-                ].filter((tag) => typeof tag === 'string' && tag.length > 0);
+                ];
                 return {
                     category,
-                    description: $('.intro-content').html() ?? undefined,
-                    image: imageUrl ? new URL(imageUrl, String(item.link)).href : undefined,
+                    description: $('.intro-content').html(),
+                    image: imageUrl ? new URL(imageUrl, item.link).href : undefined,
                     author: $('.author').text(),
                 };
             });
@@ -117,11 +111,4 @@ async function handler(ctx) {
         link,
         item: items,
     };
-}
-
-function getPublicationDate(value: string) {
-    if (!value.trim()) {
-        return;
-    }
-    return parseDate(value);
 }

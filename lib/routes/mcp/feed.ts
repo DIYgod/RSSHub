@@ -41,13 +41,13 @@ async function handler(ctx) {
             const card = $(element);
             const submittedAt = card.find('span[title]').attr('title');
             const image = card.find('img').first();
-            const description = card.children('p').first();
+            const description = card.children('p');
             return {
                 title: card.find('h3').text(),
                 link: new URL(card.attr('href')!, link).href,
                 description: `${$.html(image)}${$.html(description)}`,
                 author: card.find('h3').parent().next('p').text() || undefined,
-                pubDate: submittedAt ? parseDate(`${submittedAt} +0000`, 'MM/DD/YYYY, h:mm A ZZ') : undefined,
+                pubDate: parseDate(`${submittedAt} +0000`, 'MM/DD/YYYY, h:mm A ZZ'),
             };
         });
 

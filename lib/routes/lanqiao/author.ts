@@ -76,7 +76,7 @@ async function handler(ctx) {
                 author: course.teacher.name,
                 category: course.tags,
                 pubDate: course.open_time ? parseDate(course.open_time) : undefined,
-                updated: course.updated_time ? parseDate(course.updated_time) : undefined,
+                updated: parseDate(course.updated_time),
                 link: `https://www.lanqiao.cn/courses/${course.id}/`,
             };
         },

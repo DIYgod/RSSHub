@@ -11,13 +11,12 @@ const fetchDescription = (item: DataItem): Promise<DataItem> =>
     cache.tryGet(item.link!, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
-        const content = $('article .bfl-editorial-stack, article div[class*="lg:max-w-[720px]"]').first();
-        content.find('script, style').remove();
+        const content = $('article .bfl-editorial-stack, article div[class*="lg:max-w-[720px]"]');
         const intro = $('article header .bfl-editorial__body > p:not([class*="meta"])')
             .toArray()
             .map((element) => $.html(element))
             .join('');
-        const metadata = $('article > script[type="application/ld+json"]').first().text();
+        const metadata = $('article > script[type="application/ld+json"]').text();
         const authors = metadata ? JSON.parse(metadata).author : undefined;
 
         return {

@@ -5,7 +5,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const columns: Array<{ value: string; label: string }> = [
     { value: '0', label: '全部' },
@@ -30,32 +30,6 @@ const columns: Array<{ value: string; label: string }> = [
 ];
 
 const columnNames: Record<string, string> = Object.fromEntries(columns.map(({ value, label }) => [value, label]));
-
-function resolveLink(href: string | undefined, baseUrl: string) {
-    if (!href) {
-        return;
-    }
-
-    try {
-        const url = new URL(href, baseUrl);
-        if (url.protocol === 'http:' || url.protocol === 'https:') {
-            return url.href;
-        }
-    } catch {
-        return;
-    }
-}
-
-function parsePublicationDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-
-    const date = parseDateStrict(value.trim(), ['YYYY-MM-DD', 'YYYY年M月D日'], 8);
-    if (date) {
-        return date;
-    }
-}
 
 export const route: Route = {
     path: '/materials/:id?',
@@ -110,16 +84,13 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h3').text(),
-                link: resolveLink($item.find('a.article-link').attr('href') ?? $item.attr('href'), currentUrl),
+                link: `${rootUrl}${$item.find('a.article-link').attr('href')}`,
                 category: $item
                     .find('.article-column')
                     .toArray()
-                    .map((column) => $(column).text().trim())
-                    .filter(Boolean),
-                pubDate: parsePublicationDate($item.find('.article-meta time').text()),
+                    .map((column) => $(column).text()),
             };
-        })
-        .filter((item) => item.link);
+        });
 
     items = await pMap(
         items,
@@ -132,19 +103,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('#zx-material-marker-root img[data-src]').each((_, image) => {
-                    const $image = content(image);
-                    $image.attr('src', $image.attr('data-src')).removeAttr('data-src');
-                });
-
                 return {
                     description: content('#zx-material-marker-root').html()!,
-                    author: content('meta[property="article:author"]').attr('content') || undefined,
-                    pubDate: parsePublicationDate(content('meta[property="article:published_time"]').attr('content')),
+                    author: content('meta[property="article:author"]').attr('content'),
+                    pubDate: parseDate(content('meta[property="article:published_time"]').attr('content')!, 8),
                 };
             });
 
-            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+            return { ...item, ...detail };
         },
         { concurrency: 3, stopOnError: false }
     );

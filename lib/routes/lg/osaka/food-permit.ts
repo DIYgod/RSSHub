@@ -27,10 +27,7 @@ const permitKey = (no: string): [number, number] | null => {
     return m ? [Number(m[1]), Number(m[2])] : null;
 };
 
-const toNumber = (v: string | null | undefined): number | null => {
-    const n = v ? Number(v) : NaN;
-    return Number.isFinite(n) ? n : null;
-};
+const toNumber = (v: string | null | undefined): number | null => (v ? Number(v) : null);
 
 /** The publisher's 経度 / 緯度 columns have been swapped in past releases, so the pair is ordered by value (in Japan lon > lat). */
 const coords = (raw: Row) => {
@@ -45,7 +42,7 @@ const coords = (raw: Row) => {
 const fetchRows = async (): Promise<Row[]> => {
     const html: string = await ofetch(PAGE);
     const $ = load(html);
-    const link = $('a[href$=".csv"]')
+    const link = $('#mol_contents a[href$=".csv"]')
         .toArray()
         .map((a) => new URL($(a).attr('href')!, PAGE).href)
         // only follow links on the site itself

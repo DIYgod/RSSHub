@@ -26,7 +26,7 @@ const decode = (text: string) =>
     text.replaceAll(/&(#x[\da-f]+|#\d+|\w+);/gi, (whole, name: string) => {
         if (name.startsWith('#')) {
             const code = name[1].toLowerCase() === 'x' ? Number.parseInt(name.slice(2), 16) : Number(name.slice(1));
-            return Number.isFinite(code) && code <= 0x10_ff_ff ? String.fromCodePoint(code) : whole;
+            return code <= 0x10_ff_ff ? String.fromCodePoint(code) : whole;
         }
         return entities.get(name.toLowerCase()) ?? whole;
     });

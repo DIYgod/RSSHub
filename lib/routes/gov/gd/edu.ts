@@ -74,7 +74,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: getPublicationDate($(item).find('span.time').text()),
+                pubDate: parseDate($(item).find('span.time').text(), 8),
             };
         });
 
@@ -82,7 +82,7 @@ async function handler(ctx: Context) {
         list.map(async (item) => {
             if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                 const article = await getWechatArticle(item.link!);
-                return { ...item, ...article, pubDate: article.pubDate ?? item.pubDate };
+                return { ...item, ...article };
             }
             return cache.tryGet(item.link!, async () => {
                 if (!new URL(item.link!).hostname.endsWith('.gd.gov.cn')) {
@@ -92,7 +92,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse);
                 item.description = content('div.article').html();
                 item.author = content('meta[name="ContentSource"]').attr('content');
-                item.pubDate = getPublicationDate(content('div.message span.time').text().replace('时间：', '')) ?? getPublicationDate(content('meta[name="PubDate"]').attr('content')) ?? item.pubDate;
+                item.pubDate = parseDate(content('div.message span.time').text().replace('时间：', ''), 8);
                 return item;
             });
         })
@@ -105,14 +105,10 @@ async function handler(ctx: Context) {
     };
 }
 
-function getPublicationDate(dateText: string | undefined) {
-    return dateText ? parseDate(dateText, 8) : undefined;
-}
-
 function getWechatArticle(link: string) {
     // Older route caches contain only list metadata under the raw article URL.
     return cache.tryGet(`${link}:gov-gd-wechat`, async () => {
-        const response = await ofetch<string, 'text'>(link, { responseType: 'text' });
+        const response = await ofetch(link);
         const $ = load(response);
         const content = $('#js_content');
         if (!content.length) {
@@ -125,12 +121,10 @@ function getWechatArticle(link: string) {
                 element.attr('src', src).removeAttr('data-src');
             }
         });
-        const timestamp = response.match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)?.[1];
-        const pubDate = timestamp ? parseDate(Number(timestamp) * 1000) : undefined;
         return {
             description: fixArticleContent(content),
-            author: $('meta[name="author"]').attr('content') || $('#js_name').text().trim() || undefined,
-            pubDate,
+            author: $('meta[name="author"]').attr('content') || $('#js_name').text().trim(),
+            pubDate: parseDate(Number(response.match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)[1]) * 1000),
         };
     });
 }

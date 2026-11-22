@@ -39,9 +39,7 @@ async function handler() {
         const $item = $(item);
         return {
             title: $item.find('h3.item_title').text(),
-            author: $item.find('.item_source').text(),
             category: '中华网军事',
-            pubDate: parseDate($item.find('em.item_time').text(), 8),
             link: $item.find('h3.item_title a').attr('href'),
         };
     });
@@ -50,16 +48,13 @@ async function handler() {
             cache.tryGet(entry.link!, async () => {
                 const { data: detail } = await got(entry.link!);
                 const $$ = load(detail);
-                const articleDate = $$('#chan_newsInfo .time').text();
                 return {
                     ...entry,
-                    title: $$('h1').text() || entry.title,
                     description: $$('#chan_newsDetail').html(),
-                    pubDate: articleDate ? parseDate(articleDate, 8) : entry.pubDate,
-                    author:
-                        $$('#chan_newsInfo .source')
-                            .text()
-                            .replace(/^来源：\s*/, '') || entry.author,
+                    pubDate: parseDate($$('#chan_newsInfo .time').text(), 8),
+                    author: $$('#chan_newsInfo .source')
+                        .text()
+                        .replace(/^来源：\s*/, ''),
                 };
             })
         )

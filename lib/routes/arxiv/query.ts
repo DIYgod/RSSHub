@@ -25,12 +25,9 @@ async function handler(ctx: Context) {
 
     const apiUrl = new URL(`https://export.arxiv.org/api/query?${query}`);
     apiUrl.searchParams.set('start', '0');
-    const limit = Number(ctx.req.query('limit'));
-    if (Number.isSafeInteger(limit) && limit > 0) {
-        const maxResults = Number(apiUrl.searchParams.get('max_results') ?? '10');
-        const candidateLimit = getRouteLimit(ctx, maxResults);
-        apiUrl.searchParams.set('max_results', String(Math.min(candidateLimit, maxResults)));
-    }
+    const maxResults = Number(apiUrl.searchParams.get('max_results') ?? '10');
+    const candidateLimit = getRouteLimit(ctx, maxResults);
+    apiUrl.searchParams.set('max_results', String(Math.min(candidateLimit, maxResults)));
     const response = await ofetch(apiUrl.href, { responseType: 'text' });
 
     const $ = load(response, { xmlMode: true });

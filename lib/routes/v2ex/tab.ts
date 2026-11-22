@@ -7,7 +7,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tab/:tabid',
@@ -53,8 +53,7 @@ async function handler(ctx) {
                 .closest('.cell')
                 .find('a.node')
                 .toArray()
-                .map((node) => $(node).text())
-                .filter(Boolean),
+                .map((node) => $(node).text()),
         }));
 
     const items = await pMap(
@@ -74,7 +73,7 @@ async function handler(ctx) {
                 return {
                     description: $('div.topic_content').html() ?? undefined,
                     author: $('div.header > small > a').text(),
-                    pubDate: parsePublicationDate($('.header small span[title]').attr('title')),
+                    pubDate: parseDate($('.header small span[title]').attr('title')!),
                 };
             });
 
@@ -94,13 +93,4 @@ async function handler(ctx) {
         description: `V2EX-tab-${tabid}`,
         item: items,
     };
-}
-
-function parsePublicationDate(value?: string) {
-    const match = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) ([+-]\d{2}:\d{2})$/.exec(value ?? '');
-    if (!match || !parseDateStrict(match[1], 'YYYY-MM-DD HH:mm:ss')) {
-        return;
-    }
-
-    return parseDate(match[1].replace(' ', 'T') + match[2]);
 }

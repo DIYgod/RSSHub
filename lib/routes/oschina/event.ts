@@ -6,13 +6,12 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { apiBaseUrl, getLimit } from './utils';
+import { apiBaseUrl } from './utils';
 
 interface EventResponse {
-    code: number;
-    message: string;
     result: {
         id: number;
         topic: string;
@@ -28,7 +27,7 @@ interface EventResponse {
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit = getLimit(ctx.req.query('limit'), 30);
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = 'https://www.oschina.net';
     const targetUrl = new URL(`event?tab=${category}`, baseUrl).href;
     const response = await ofetch(new URL('action/ajax/get_more_event_list', baseUrl).href, {
@@ -39,20 +38,13 @@ const handler = async (ctx: Context): Promise<Data> => {
     const list = $('div.event-item')
         .slice(0, limit)
         .toArray()
-        .flatMap((element) => {
-            const item = $(element);
-            const link = item.find('a.summary').attr('href') ?? /window\.open\(['"]([^'"]+)['"]/.exec(item.attr('onclick') ?? '')?.[1];
-            return link ? { link: new URL(link, baseUrl).href } : [];
-        });
+        .map((element) => ({ link: /window\.open\(['"]([^'"]+)['"]/.exec($(element).attr('onclick')!)![1] }));
     const items: DataItem[] = await pMap(
         list,
         async (item) => {
             const eventId = new URL(item.link).pathname.split('/', 3)[2];
             const details = await cache.tryGet(`oschina:event:details:${eventId}`, async () => {
                 const response = await ofetch<EventResponse>(`${apiBaseUrl}/oschinapi/event/id`, { query: { id: eventId } });
-                if (response.code !== 200) {
-                    throw new Error(`Unable to fetch OSCHINA event ${eventId}: ${response.message}`);
-                }
                 const event = response.result;
                 return {
                     title: event.topic,
@@ -60,7 +52,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     pubDate: parseDate(event.createTime, 8),
                     updated: parseDate(event.updateTime, 8),
                     image: event.imgUrl,
-                    category: [event.province + event.city].filter(Boolean),
+                    category: [event.province + event.city],
                     author: [{ name: event.userVo.name, url: event.userVo.spaceUrl, avatar: event.userVo.portraitUrl }],
                 };
             });

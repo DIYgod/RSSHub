@@ -71,8 +71,8 @@ async function handler(ctx) {
     }));
     return {
         title: `中国环球电视网 CGTN Podcast - ${data.info}`,
-        link: `https://radio.cgtn.com/podcast/column/${category}/${getTitleSlug(data.data[0]?.programTitle ?? id)}/${id}`,
+        link: `https://radio.cgtn.com/podcast/column/${category}/${getTitleSlug(data.data[0].programTitle)}/${id}`,
         item: items,
-        description: String(data.info),
+        description: data.info,
     };
 }

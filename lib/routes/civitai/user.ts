@@ -82,7 +82,7 @@ async function handler(ctx) {
         link: `https://civitai.com/articles/${item.id}`,
         id: item.id,
         pubDate: parseDate(item.publishedAt),
-        updated: item.updatedAt ? parseDate(item.updatedAt) : undefined,
+        updated: parseDate(item.updatedAt),
         author: item.user?.username,
         category: item.tags.map((tag) => tag.name),
         image: `https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${item.coverImage.url}/${item.coverImage.name}`,
@@ -106,7 +106,7 @@ async function handler(ctx) {
 
     return {
         title: `${username} Creator Profile | Civitai`,
-        description: userProfile.profile?.message?.replaceAll('\n', ' ') || userProfile.profile?.bio,
+        description: userProfile.profile.message?.replaceAll('\n', ' ') || userProfile.profile.bio,
         link: `https://civitai.com/user/${username}/articles`,
         image: userProfile.image,
         item: items,

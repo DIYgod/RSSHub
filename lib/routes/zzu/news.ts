@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -33,25 +32,6 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- |
 | ywsd     | jxky     | jcdt     | mtzd     |`,
 };
-class ArticleUnavailableError extends Error {
-    constructor(public author?: string) {
-        super('Article content is unavailable');
-    }
-}
-function parsePublishedDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
-    if (!match) {
-        return;
-    }
-    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    if (!parseDateStrict(calendarDate, 'YYYY-MM-DD')) {
-        return;
-    }
-    return parseDate(value);
-}
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
@@ -87,39 +67,24 @@ async function handler(ctx) {
                 title,
                 link,
                 description,
-                pubDate: parsePublishedDate(pubDateText),
+                pubDate: parseDate(pubDateText),
             };
         });
     const items = await pMap(
         list,
-        async (item) => {
-            try {
-                const details = await cache.tryGet(`zzu:news:details:v4:${item.link}`, async () => {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    const author =
-                        $('.notice-detail-info-text:contains("信息来源：")')
-                            .text()
-                            .replace(/^\s*信息来源：/, '')
-                            .replaceAll(/\s+/g, ' ')
-                            .trim() || undefined;
-                    const description = $('.v_news_content').html();
-                    if (!description?.trim()) {
-                        throw new ArticleUnavailableError(author);
-                    }
-                    return { author, description };
-                });
-                return { ...item, author: details.author, description: details.description || item.description };
-            } catch (error) {
-                if (error instanceof ArticleUnavailableError) {
-                    return { ...item, author: error.author };
-                }
-                if (error instanceof FetchError) {
-                    return item;
-                }
-                throw error;
-            }
-        },
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
+                item.author =
+                    $('.notice-detail-info-text:contains("信息来源：")')
+                        .text()
+                        .replace(/^\s*信息来源：/, '')
+                        .replaceAll(/\s+/g, ' ')
+                        .trim() || undefined;
+                item.description = $('.v_news_content').html() || item.description;
+                return item;
+            }),
         { concurrency: 3 }
     );
     return {

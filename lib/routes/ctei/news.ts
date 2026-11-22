@@ -44,9 +44,8 @@ async function handler(ctx: Context) {
         });
 
     const uniqueItems = new Map(list.map((item) => [item.link, item])).values().toArray();
-    const articles = uniqueItems;
     const items = await Promise.all(
-        articles.map((item) =>
+        uniqueItems.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);

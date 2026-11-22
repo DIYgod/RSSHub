@@ -68,11 +68,10 @@ async function handler(ctx) {
             const mimeType = (getMimeType(pathname) ?? getMimeType(pathname, documentMimeTypes))?.split(';', 1)[0];
             const enclosureType = mimeType && mimeType !== 'text/html' && mimeType !== 'application/xhtml+xml' ? mimeType : undefined;
 
-            const pubDate = $item.find('span').text();
             return {
                 title: $item.contents().first().text(),
                 link,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 8),
                 enclosure_url: enclosureType ? link : undefined,
                 enclosure_type: enclosureType,
             };

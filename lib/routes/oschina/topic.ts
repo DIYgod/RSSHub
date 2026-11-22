@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -44,17 +43,13 @@ async function handler(ctx) {
     const topicName = $('.topic-info > .topic-header > h3').text();
     const list: Array<DataItem & { link: string }> = $('#questionList .question-item')
         .toArray()
-        .flatMap((item) => {
+        .map((item) => {
             const $item = $(item);
-            const href = $item.find('.header').attr('href');
-            if (!href) {
-                return [];
-            }
             const date = $item.find('.extra > .list > .item:nth-of-type(2)').text();
             return {
                 title: $item.find('.header').text(),
                 description: $item.find('.description').html(),
-                link: new URL(href, topicUrl).href,
+                link: new URL($item.find('.header').attr('href')!, topicUrl).href,
                 author: $item.find('.extra > .list > .item:nth-of-type(1)').text(),
                 pubDate: /\//.test(date) ? parseDate(date, ['YYYY/MM/DD HH:mm', 'MM/DD HH:mm'], 8) : parseRelativeDate(date, 8),
             };
@@ -63,23 +58,12 @@ async function handler(ctx) {
     const resultItem = await pMap(
         list,
         async (item) => {
-            try {
-                const description = await cache.tryGet(`oschina:topic:body:${item.link}`, async () => {
-                    const content = await loadContent(item.link);
-                    content('.ad-wrap').remove();
-                    const description = content('#articleContent').html();
-                    if (!description) {
-                        throw new Error('The question page does not contain article content');
-                    }
-                    return description;
-                });
-                return { ...item, description };
-            } catch (error) {
-                if (error instanceof FetchError && error.response?.status === 403) {
-                    return item;
-                }
-                throw error;
-            }
+            const description = await cache.tryGet(`oschina:topic:body:${item.link}`, async () => {
+                const content = await loadContent(item.link);
+                content('.ad-wrap').remove();
+                return content('#articleContent').html();
+            });
+            return { ...item, description };
         },
         { concurrency: 3 }
     );

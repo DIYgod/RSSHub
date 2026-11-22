@@ -33,7 +33,6 @@ const handler = async (ctx) => {
             const $item = $(item);
 
             const title = $item.find('h2').text();
-            const date = $item.find('span').text();
             const description = renderDescription({
                 intro: $item.find('div.deheng_newscontent p').text(),
             });
@@ -41,7 +40,7 @@ const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: date ? parseDate(date, 'YYYY/M/D', 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 'YYYY/M/D', 8),
                 link: $item.find('a').prop('href'),
             };
         });

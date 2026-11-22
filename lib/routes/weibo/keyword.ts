@@ -53,9 +53,6 @@ async function handler(ctx) {
                 });
                 verifier(_r);
                 const cards = _r.data?.data?.cards;
-                if (!Array.isArray(cards)) {
-                    throw new TypeError(_r.data?.msg || 'Weibo keyword search returned an invalid response.');
-                }
                 const statuses = cards.filter((card) => card.mblog).map((card) => card.mblog);
                 if (!statuses.length) {
                     const message = 'Weibo keyword search returned no posts. Please retry later or check the keyword on Weibo.';

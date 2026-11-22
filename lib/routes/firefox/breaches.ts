@@ -12,7 +12,6 @@ interface Breach {
     Description: string;
     AddedDate: string;
     ModifiedDate: string;
-    DataClasses: string[];
 }
 
 interface BreachCatalogue {
@@ -21,29 +20,24 @@ interface BreachCatalogue {
 }
 
 function getBreaches($: CheerioAPI): BreachCatalogue {
-    const payload = $('script')
+    const payload = $('script:contains("self.__next_f.push")')
         .toArray()
         .flatMap((script) => {
             const match = $(script)
                 .text()
-                .trim()
                 .match(/^self\.__next_f\.push\(([\s\S]*)\);?$/);
             if (!match) {
                 return [];
             }
-            try {
-                const chunk = JSON.parse(match[1]);
-                return chunk[0] === 1 && typeof chunk[1] === 'string' ? [chunk[1]] : [];
-            } catch {
-                return [];
-            }
+            const chunk = JSON.parse(match[1]);
+            return chunk[0] === 1 && typeof chunk[1] === 'string' ? [chunk[1]] : [];
         })
         .join('');
     const row = payload.match(/[0-9a-f]+:(\["\$","\$L[0-9a-f]+",null,\{"allBreaches":[^\n]+)/);
-    const breaches = row ? JSON.parse(row[1])[3].allBreaches : undefined;
-    if (!Array.isArray(breaches)) {
-        throw new TypeError('Mozilla Monitor did not provide its public breach catalogue.');
+    if (!row) {
+        throw new Error('Mozilla Monitor did not provide its public breach catalogue.');
     }
+    const breaches = JSON.parse(row[1])[3].allBreaches;
     return { breaches, payload };
 }
 
@@ -96,7 +90,7 @@ async function handler() {
     const $ = load(response.data);
     const { breaches, payload } = getBreaches($);
     const categories = new Map(
-        $('a[href*="/breach-details/"]')
+        $('ul[class$="_breachList"] a[href*="/breach-details/"]')
             .toArray()
             .map((card) => [
                 decodeURIComponent($(card).attr('href')!.split('/').pop()!),
@@ -114,9 +108,9 @@ async function handler() {
         description: getDescription(breach.Description, payload),
         link: `${baseUrl}/en/breach-details/${encodeURIComponent(breach.Name)}`,
         guid: String(breach.Id),
-        pubDate: parseDate(breach.AddedDate.startsWith('$D') ? breach.AddedDate.slice(2) : breach.AddedDate),
-        updated: parseDate(breach.ModifiedDate.startsWith('$D') ? breach.ModifiedDate.slice(2) : breach.ModifiedDate),
-        category: categories.get(breach.Name) ?? breach.DataClasses,
+        pubDate: parseDate(breach.AddedDate.slice(2)),
+        updated: parseDate(breach.ModifiedDate.slice(2)),
+        category: categories.get(breach.Name),
     }));
 
     return {

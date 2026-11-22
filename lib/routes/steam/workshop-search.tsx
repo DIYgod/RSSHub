@@ -43,92 +43,32 @@ Language Parameter:
         const response = await ofetch(url);
         const $ = load(response);
 
-        const appName = $('div.apphub_AppName').first().text();
-        const workshopDescription = $('div.customBrowseText').first().text();
         const appIcon = $('div.apphub_AppIcon').children('img').attr('src');
 
-        const ssrText = $('#valve-ssr-data').text();
-        if (ssrText) {
-            const ssr: { renderContext: { queryData: string } } = JSON.parse(ssrText);
-            const state: WorkshopQueryState = JSON.parse(ssr.renderContext.queryData);
-            const browse = state.queries.find((query) => query.queryKey[0] === 'workshop_browse')?.state.data;
-            const app = state.queries.find((query) => query.queryKey[0] === 'apphub')?.state.data;
-            const config = state.queries.find((query) => query.queryKey[0] === 'workshop_config_v8')?.state.data;
-            return {
-                title: `${app?.name ?? appName} Steam Workshop Content`,
-                link: url,
-                description: config?.workshop_desc ?? workshopDescription,
-                icon: appIcon,
-                item:
-                    browse?.results?.map((entry) => ({
-                        title: entry.title,
-                        link: `https://steamcommunity.com/sharedfiles/filedetails/?id=${entry.publishedfileid}`,
-                        description: renderToString(<SteamWorkshopDescription image={entry.preview_url} description={entry.short_description} />),
-                        author: browse.creator_player_link_details?.find((player) => player.public_data.steamid === entry.creator)?.public_data.persona_name,
-                        pubDate: entry.time_created ? parseDate(entry.time_created, 'X') : undefined,
-                        updated: entry.time_updated ? parseDate(entry.time_updated, 'X') : undefined,
-                        category: entry.tags?.map((tag) => tag.display_name ?? tag.tag),
-                    })) ?? [],
-            };
-        }
-
-        const items = $('div.workshopBrowseItems .workshopItem')
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const publishedFileId = $item.find('a').first().attr('data-publishedfileid');
-                const entryTitle = $item.find('.workshopItemTitle').first().text();
-                const authorNickName = $item.find('.workshop_author_link').first().text();
-                const previewImage = $item.find('.workshopItemPreviewImage').first().attr('src');
-                const ratingImage = $item.find('.fileRating').first().attr('src');
-                // Some items are flaged as 'accepted for game' and 'incompatible item'
-                const checkMarkImages: string[] = [];
-                $($item)
-                    .find('.workshop_checkmark')
-                    .each((index, element) => {
-                        const checkMarkElement = $(element);
-                        const style = checkMarkElement.attr('style');
-                        // Only add checkmark image if it is not set to 'display: none'
-                        if (!style || !style.includes('display: none;')) {
-                            checkMarkImages.push(checkMarkElement.attr('src') || '');
-                        }
-                    });
-                // const script_tag = item.next('script');
-                // console.log(`script_tag:${script_tag.text()}`);
-                const hoverContent = $item.next('script').text();
-                const regex = /SharedFileBindMouseHover\(\s*"sharedfile_\d+",\s*(?:true|false),\s*(\{.*?\})\s*\);/;
-                const match = hoverContent.match(regex);
-
-                let entryDescription = '';
-
-                if (match) {
-                    const jsonString = match[1];
-                    // console.log(jsonString);
-                    const data = JSON.parse(jsonString);
-                    if (data.id === publishedFileId) {
-                        entryDescription = data.description;
-                    }
-                }
-
-                return {
-                    title: entryTitle,
-                    link: `https://steamcommunity.com/sharedfiles/filedetails/?id=${publishedFileId}`,
-                    description: renderToString(<SteamWorkshopDescription image={previewImage} rating={ratingImage} checkmark={checkMarkImages} description={entryDescription} />),
-                    author: authorNickName,
-                };
-            });
-
+        const ssr: { renderContext: { queryData: string } } = JSON.parse($('#valve-ssr-data').text());
+        const state: WorkshopQueryState = JSON.parse(ssr.renderContext.queryData);
+        const browse = state.queries.find((query) => query.queryKey[0] === 'workshop_browse')?.state.data;
+        const app = state.queries.find((query) => query.queryKey[0] === 'apphub')?.state.data;
+        const config = state.queries.find((query) => query.queryKey[0] === 'workshop_config_v8')?.state.data;
         return {
-            title: `${appName} Steam Workshop Content`,
-            link: `https://steamcommunity.com/workshop/browse/?appid=${appid}${routeParams ? `&${routeParams}` : ''}`,
-            item: items,
+            title: `${app?.name} Steam Workshop Content`,
+            link: url,
+            description: config?.workshop_desc,
             icon: appIcon,
-            description: workshopDescription,
+            item: browse?.results.map((entry) => ({
+                title: entry.title,
+                link: `https://steamcommunity.com/sharedfiles/filedetails/?id=${entry.publishedfileid}`,
+                description: renderToString(<SteamWorkshopDescription image={entry.preview_url} description={entry.short_description} />),
+                author: browse.creator_player_link_details.find((player) => player.public_data.steamid === entry.creator)?.public_data.persona_name,
+                pubDate: parseDate(entry.time_created, 'X'),
+                updated: parseDate(entry.time_updated, 'X'),
+                category: entry.tags.map((tag) => tag.display_name),
+            })),
         };
     },
 };
 
-const SteamWorkshopDescription = ({ image, rating, checkmark, description }: { image?: string; rating?: string; checkmark?: string[]; description?: string }) => (
+const SteamWorkshopDescription = ({ image, description }: { image?: string; description?: string }) => (
     <>
         {image ? (
             <>
@@ -136,10 +76,6 @@ const SteamWorkshopDescription = ({ image, rating, checkmark, description }: { i
                 <br />
             </>
         ) : null}
-        {rating ? <img src={rating} /> : null}
-        {checkmark?.map((mark) => (
-            <img src={mark} />
-        ))}
         <p>{description}</p>
     </>
 );
@@ -151,8 +87,8 @@ interface WorkshopQueryState {
             data?: {
                 name?: string;
                 workshop_desc?: string;
-                results?: WorkshopEntry[];
-                creator_player_link_details?: Array<{ public_data: { steamid: string; persona_name: string } }>;
+                results: WorkshopEntry[];
+                creator_player_link_details: Array<{ public_data: { steamid: string; persona_name: string } }>;
             };
         };
     }>;
@@ -164,7 +100,7 @@ interface WorkshopEntry {
     title: string;
     preview_url?: string;
     short_description?: string;
-    time_created?: number;
-    time_updated?: number;
-    tags?: Array<{ tag: string; display_name?: string }>;
+    time_created: number;
+    time_updated: number;
+    tags: Array<{ tag: string; display_name: string }>;
 }

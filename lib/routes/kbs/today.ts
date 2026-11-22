@@ -61,13 +61,12 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('h2 a');
-            const date = $item.find('.date').text();
 
             return {
                 title: a.text(),
                 category: $item.find('.cate').text(),
                 link: `${rootUrl}/service${a.attr('href')!.replace('./', '/')}`,
-                pubDate: date ? parseDate(date, 9) : undefined,
+                pubDate: parseDate($item.find('.date').text(), 9),
             };
         });
 

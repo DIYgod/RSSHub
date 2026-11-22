@@ -40,7 +40,6 @@ function getItem(item: DataItem, page: Page) {
         const response = await page.content();
         const $ = load(response);
         const content = $('.detail_content');
-        content.find('script, style, button').remove();
         const date = $('meta[name="PubDate"]').attr('content');
         return {
             ...item,
@@ -73,9 +72,6 @@ async function handler(ctx) {
         await page.locator('body').filter({ hasText: '"results":' }).waitFor();
         const apiText = await page.locator('body').textContent();
         const apiResponse: { results: NewsItem[] } = JSON.parse(apiText!);
-        if (!Array.isArray(apiResponse.results)) {
-            throw new TypeError('The news API no longer returns an article list.');
-        }
         const limit = getRouteLimit(ctx, 20);
         // Detail metadata can refine dates and titles from the search result.
         const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);

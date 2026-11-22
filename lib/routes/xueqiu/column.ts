@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const configuredCookie = config.xueqiu.cookies;
     if (!configuredCookie) {
-        const response = await ofetch.raw(baseUrl, { responseType: 'text' });
+        const response = await ofetch.raw(baseUrl);
         for (const cookie of response.headers.getSetCookie()) {
             cookieJar.setCookieSync(cookie, baseUrl);
         }
@@ -65,17 +65,8 @@ async function handler(ctx) {
         throw new Error('The Xueqiu column profile is unavailable. Verify the user ID and refresh XUEQIU_COOKIES.');
     }
 
-    const response = await got(`${baseUrl}/statuses/original/timeline.json`, {
-        headers,
-        searchParams: {
-            user_id: id,
-            page: 1,
-        },
-    });
-    const data =
-        !configuredCookie && typeof response.data === 'string' && isBrowserVerification(response.data)
-            ? await getAnonymousTimeline(`${baseUrl}/statuses/original/timeline.json?${new URLSearchParams({ user_id: id, page: '1' })}`, pageUrl)
-            : response.data;
+    const timelineUrl = `${baseUrl}/statuses/original/timeline.json?${new URLSearchParams({ user_id: id, page: '1' })}`;
+    const data = configuredCookie ? (await got(timelineUrl, { headers })).data : await getAnonymousTimeline(timelineUrl, pageUrl);
 
     if (!Array.isArray(data?.list)) {
         throw new TypeError('The Xueqiu column API did not return a timeline. Refresh XUEQIU_COOKIES and verify access to the column on Xueqiu.');
@@ -105,7 +96,7 @@ async function getAnonymousTimeline(url: string, pageUrl: string) {
         noGoto: true,
         closeTimeout: 0,
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         },
     });
     try {
@@ -127,15 +118,5 @@ async function getAnonymousTimeline(url: string, pageUrl: string) {
         return JSON.parse(content ?? '');
     } finally {
         await destroy();
-    }
-}
-
-function isBrowserVerification(data: string) {
-    const $ = load(data);
-    try {
-        const payload = JSON.parse($('#renderData').text());
-        return Object.keys(payload).some((key) => key.startsWith('_waf_') && typeof payload[key] === 'string');
-    } catch {
-        return false;
     }
 }

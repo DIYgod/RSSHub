@@ -103,7 +103,11 @@ const b64V2Enc = (data: Uint8Array, variant: number) => {
 // https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm
 const genReqSign = (query: string, body: string, ts: number) => {
     const params = new URLSearchParams(query);
-    const keys = [...new Set(params.keys())].filter((k) => k !== 'ultra_sign').toSorted((a, b) => Number(a > b) - Number(a < b));
+    const keys = params
+        .keys()
+        .toArray()
+        .filter((k) => k !== 'ultra_sign')
+        .toSorted((a, b) => Number(a > b) - Number(a < b));
     const acc = keys.map((k) => k + params.getAll(k).join('')).join('');
     const bts = BigInt(ts);
     const h1 = md5v2(Buffer.from(acc + bts.toString(16)));

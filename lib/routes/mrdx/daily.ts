@@ -73,8 +73,8 @@ async function handler() {
                 // The publisher and publication date are separated by repeated spaces.
                 const [author, pubDate] = getElementChildrenInnerText($('.shijian')[0])
                     .split(' ')
-                    .filter((item) => item !== '')
-                    .map((item) => item.trim());
+                    .map((item) => item.trim())
+                    .filter((item) => item !== '');
 
                 const content = $('.contenttext');
                 const metadata = content.children('table').filter((_, element) => $(element).text().includes('稿件来源'));
@@ -83,7 +83,7 @@ async function handler() {
                     .match(/稿件来源[：:]\s*新华每日电讯\s*([^\n]+)/)?.[1]
                     ?.trim();
                 metadata.remove();
-                content.find('script, style, meta').remove();
+                content.find('style, meta').remove();
                 const byline = content
                     .children('div')
                     .contents()

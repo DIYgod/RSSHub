@@ -25,10 +25,7 @@ async function getItem(item: DataItem) {
         const { data: response } = await got(item.link!, { responseType: 'buffer' });
         const $ = load(iconv.decode(response, 'gbk'));
         const content = $('.inner_content');
-        content.find('script, style').remove();
-        content.find('img[src]').each((_, image) => {
-            $(image).attr('src', new URL($(image).attr('src')!, baseUrl).href);
-        });
+        content.find('style').remove();
         const downloads = $('.resourcesmain a[href]')
             .toArray()
             .filter((element) => /^(?:magnet:\?xt=urn:btih:[a-z0-9]{32,40}|https?:\/\/|ed2k:\/\/)/i.test($(element).attr('href')!))
@@ -42,21 +39,12 @@ async function getItem(item: DataItem) {
 async function handler(ctx) {
     const { data: response } = await got(baseUrl, { responseType: 'buffer' });
     const $ = load(iconv.decode(response, 'gbk'));
-    const seen = new Set<string>();
     const limit = getRouteLimit(ctx, 20);
     const items = $('li:has(.date)')
         .toArray()
         .map((element) => {
             const anchor = $(element).find('a[href]').last();
-            const date = $(element).find('.date').text();
-            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: date ? parseDate(date, 8) : undefined };
-        })
-        .filter((item) => {
-            if (seen.has(item.link)) {
-                return false;
-            }
-            seen.add(item.link);
-            return true;
+            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: parseDate($(element).find('.date').text(), 8) };
         })
         .slice(0, limit);
     return { title: '破晓电影 - 最近更新', link: baseUrl, language: 'zh-CN' as const, item: await pMap(items, getItem, { concurrency: 3 }) };

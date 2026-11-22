@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://job.xjtu.edu.cn';
 const arr = {
@@ -21,22 +21,16 @@ interface Article {
     id: string;
     title: string;
     url: string;
-    releaseDate?: string;
-    updateDate?: string;
-    publisher?: string;
-    category?: {
+    releaseDate: string;
+    updateDate: string;
+    publisher: string;
+    category: {
         name: string;
     };
-    articleData?: {
-        content?: string;
+    articleData: {
+        content: string;
     };
 }
-const parseSourceDate = (value?: string) => {
-    if (!value || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?$/.test(value)) {
-        return;
-    }
-    return parseDateStrict(value, value.length === 16 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm:ss', 8);
-};
 export const route: Route = {
     path: '/job/:subpath?',
     categories: ['university'],
@@ -89,43 +83,37 @@ async function handler(ctx) {
     }
     const items = await pMap(
         list,
-        (article) => {
+        async (article) => {
             const item: DataItem & {
                 link: string;
             } = {
                 title: article.title,
                 link: new URL(article.url, baseUrl).href,
-                pubDate: parseSourceDate(article.releaseDate),
-                updated: parseSourceDate(article.updateDate),
-                author: article.publisher || undefined,
-                category: article.category?.name ? [article.category.name] : undefined,
+                pubDate: parseDate(article.releaseDate, 8),
+                updated: parseDate(article.updateDate, 8),
+                author: article.publisher,
+                category: [article.category.name],
             };
             if (!item.link.startsWith(`${baseUrl}/`)) {
                 return item;
             }
-            return mapResolvedValue(
-                cache.tryGet(`xjtu:job:content:v1:${item.link}`, async () => {
-                    const detail = await ofetch<{
-                        state: number;
-                        object?: {
-                            article?: Article;
-                            fileMap?: Array<{
-                                fileUrl: string;
-                                fileName: string;
-                            }>;
-                        };
-                    }>(`${baseUrl}/f/newsCenter/ajax_view`, {
-                        query: { id: article.id },
-                    });
-                    const content = detail.object?.article?.articleData?.content;
-                    if (detail.state !== 1 || typeof content !== 'string' || !content) {
-                        throw new Error('The employment website did not return the article body. Please retry later.');
-                    }
-                    const attachments = detail.object?.fileMap?.map((file) => ({ fileUrl: new URL(file.fileUrl, baseUrl).href, name: file.fileName })) ?? [];
-                    return { description: content + renderToString(<XjtuAttachments items={attachments} />) };
-                }),
-                (detail) => ({ ...item, description: detail.description })
-            );
+            const detail = await cache.tryGet(`xjtu:job:content:v1:${item.link}`, async () => {
+                const detail = await ofetch<{
+                    object: {
+                        article: Article;
+                        fileMap?: Array<{
+                            fileUrl: string;
+                            fileName: string;
+                        }>;
+                    };
+                }>(`${baseUrl}/f/newsCenter/ajax_view`, {
+                    query: { id: article.id },
+                });
+                const content = detail.object.article.articleData.content;
+                const attachments = detail.object.fileMap?.map((file) => ({ fileUrl: new URL(file.fileUrl, baseUrl).href, name: file.fileName })) ?? [];
+                return { description: content + renderToString(<XjtuAttachments items={attachments} />) };
+            });
+            return { ...item, description: detail.description };
         },
         { concurrency: 3, stopOnError: false }
     );
@@ -154,7 +142,3 @@ const XjtuAttachments = ({
         ))}
     </>
 );
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}

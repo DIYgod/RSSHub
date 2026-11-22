@@ -11,7 +11,7 @@ export default function getItems(data) {
             return {
                 title,
                 link,
-                description: image ? data('<img>').attr({ src: image, alt: title }).toString() : undefined,
+                description: data('<img>').attr({ src: image, alt: title }).toString(),
                 author,
             };
         });

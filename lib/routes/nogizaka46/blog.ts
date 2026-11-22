@@ -97,7 +97,7 @@ async function handler(ctx) {
             list.map((item) => ({
                 title: item.title,
                 link: item.link,
-                pubDate: item.date ? parseDate(item.date, 9) : undefined,
+                pubDate: parseDate(item.date, 9),
                 author: item.name,
                 description: item.text,
                 guid: rootUrl + new URL(item.link).pathname,

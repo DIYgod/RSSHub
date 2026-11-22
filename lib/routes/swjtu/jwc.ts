@@ -76,7 +76,7 @@ const getItem = async (item) => {
             throw error;
         }
     });
-    return { title: newsTitle, pubDate: newsTime ? parseDate(newsTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined, link, ...details };
+    return { title: newsTitle, pubDate: parseDate(newsTime, 'YYYY-MM-DD HH:mm:ss', 8), link, ...details };
 };
 
 export const route: Route = {

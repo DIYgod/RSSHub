@@ -25,21 +25,13 @@ async function loadContent(link: string): Promise<Pick<DataItem, 'description' |
         .text()
         .match(/作者[：:](.*?)(?=(?:浏览次数|发布时间)[：:]|$)/s)?.[1]
         .trim();
-    // Resolve relative image links.
-    $('img').each((_, element) => {
-        const image = $(element);
-        const src = image.attr('src');
-        if (src) {
-            image.attr('src', new URL(src, link).href);
-        }
-    });
     // Replace the source video player with a video element.
     $('.vsbcontent_video').each((_, el) => {
         const src = $(el).find('script').attr('vurl');
         $(el).html(src ? `<video width="100%" src="${new URL(src, link).href}"></video>` : '');
     });
     return {
-        description: $('div[id^=vsb_content]').html() ?? '',
+        description: $('div[id^=vsb_content]').html(),
         author: author || undefined,
     };
 }
@@ -76,20 +68,18 @@ async function handler(ctx) {
         link: newsLink,
         description: `温州大学 - ${newsTitle}`,
         item: await pMap(
-            list.toArray().filter((item) => $(item).children('a').attr('href')),
+            list.toArray(),
             async (item): Promise<DataItem> => {
                 const $item = $(item);
                 const $a1 = $item.children('a');
                 const $originUrl = $a1.attr('href');
                 const $itemUrl = new URL($originUrl!, baseUrl).href;
-                const rawDate = $item.children('samp').text();
-                const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
                 const detail = await cache.tryGet(`wzu:detail:v3:${$itemUrl}`, () => loadContent($itemUrl));
                 return {
                     title: $a1.attr('title') ?? '',
                     description: detail.description,
                     author: detail.author,
-                    pubDate,
+                    pubDate: parseDateStrict($item.children('samp').text(), 'YYYY-MM-DD', 8),
                     link: $itemUrl,
                 };
             },

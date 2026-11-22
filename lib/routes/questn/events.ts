@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { parseFilterStr } from './util';
@@ -58,8 +59,6 @@ async function handler(ctx) {
         count?: string;
     } = parseFilterStr(ctx.req.param('filter'));
 
-    const requestedLimit = Number(parsedFilter.count || ctx.req.query('limit'));
-    const count = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const params = {
         category: parsedFilter.category || '200',
         status_filter: parsedFilter.status_filter || '100',
@@ -67,7 +66,7 @@ async function handler(ctx) {
         rewards_filter: parsedFilter.rewards_filter || parsedFilter.reward_filter || '0',
         chain_filter: parsedFilter.chain_filter || '0',
         search: parsedFilter.search || '',
-        count: String(count),
+        count: parsedFilter.count || String(getRouteLimit(ctx, 20)),
         page: '1',
     };
 

@@ -11,25 +11,23 @@ import { formatDescription, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
 let innertubePromise: Promise<Innertube> | undefined;
-const getInnertube = () => {
-    if (!innertubePromise) {
-        // Lazy init to avoid network calls during import time (e.g. when building)
-        innertubePromise = recoverFailure(
-            Innertube.create({
-                fetch: (input, init) => {
-                    const url = input instanceof Request ? input.url : input.toString();
-                    return fetch(url, {
-                        method: input?.method,
-                        ...init,
-                    });
-                },
-            }),
-            () => {
-                innertubePromise = undefined;
-            }
-        );
+const getInnertube = async () => {
+    // Lazy init to avoid network calls during import time (e.g. when building)
+    innertubePromise ??= Innertube.create({
+        fetch: (input, init) => {
+            const url = input instanceof Request ? input.url : input.toString();
+            return fetch(url, {
+                method: input?.method,
+                ...init,
+            });
+        },
+    });
+    try {
+        return await innertubePromise;
+    } catch (error) {
+        innertubePromise = undefined;
+        throw error;
     }
-    return innertubePromise;
 };
 type VideoLockupView = YTNodes.LockupView & { content_id: string };
 const isVideoLockup = (video: Helpers.YTNode): video is VideoLockupView => video instanceof YTNodes.LockupView && video.content_id !== undefined;
@@ -174,11 +172,3 @@ export const getShowsByChannelId = async (channelId: string): Promise<Data> => {
             }),
     };
 };
-async function recoverFailure<T>(promise: Promise<T>, onFailure: () => void): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        onFailure();
-        throw error;
-    }
-}

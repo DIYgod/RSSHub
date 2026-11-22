@@ -39,7 +39,7 @@ async function handler(ctx) {
             title: item.title,
             description: utils.renderUGCDescription(embed, item.pic, item.desc || item.title, item.aid, undefined, item.bvid),
             link: item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-            pubDate: item.pubdate ? parseDate(item.pubdate, 'X') : undefined,
+            pubDate: parseDate(item.pubdate, 'X'),
         })),
     };
 }

@@ -7,13 +7,6 @@ import { parseDate, toRFC822 } from '@/utils/time';
 export const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
 export const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
 
-export const getPubDate = (takenAt?: number | string): Temporal.Instant | undefined => {
-    if ((typeof takenAt !== 'number' && typeof takenAt !== 'string') || (typeof takenAt === 'string' && !takenAt.trim()) || !Number.isFinite(Number(takenAt))) {
-        return undefined;
-    }
-    return parseDate(takenAt, 'X');
-};
-
 export interface ThreadItem {
     post: {
         user?: {
@@ -21,7 +14,7 @@ export interface ThreadItem {
             full_name: string;
             profile_pic_url: string;
         };
-        taken_at?: number;
+        taken_at: number;
         code: string;
         caption?: {
             text: string;
@@ -120,7 +113,7 @@ export const buildContent = (item, options) => {
     if (options.showAuthorInDesc) {
         description += '<p>';
         if (options.showAuthorAvatarInDesc) {
-            description += `<img src="${escapeAttribute(item.post.user?.profile_pic_url ?? '')}" width="48px" height="48px"> `;
+            description += `<img src="${escapeAttribute(item.post.user?.profile_pic_url)}" width="48px" height="48px"> `;
         }
         description += `<strong>@${escapeText(item.post.user?.username ?? '')}</strong>`;
         if (embededPost) {
@@ -153,13 +146,10 @@ export const buildContent = (item, options) => {
         }
         description += '— ';
         if (options.showQuotedAuthorAvatarInDesc) {
-            description += `<img src="${escapeAttribute(embededPost.user?.profile_pic_url ?? '')}" width="24px" height="24px"> `;
+            description += `<img src="${escapeAttribute(embededPost.user?.profile_pic_url)}" width="24px" height="24px"> `;
         }
-        description += `@${escapeText(embededPost.user?.username ?? '')}`;
-        const quotedDate = getPubDate(embededPost.taken_at);
-        if (quotedDate) {
-            description += ` — <a href="${escapeAttribute(threadUrl(embededPost.code))}">${escapeText(toRFC822(quotedDate))}</a>`;
-        }
+        description += `@${escapeText(embededPost.user?.username ?? '')} — `;
+        description += `<a href="${escapeAttribute(threadUrl(embededPost.code))}">${escapeText(toRFC822(parseDate(embededPost.taken_at, 'X')!))}</a>`;
         description += '</blockquote>';
     }
     return { title, description };

@@ -48,11 +48,10 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
-            const dateText = $item.next().text();
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, currentUrl).href,
-                pubDate: dateText ? parseDate(dateText, '[YYYY-MM-DD HH:mm]', 8) : undefined,
+                pubDate: parseDate($item.next().text(), '[YYYY-MM-DD HH:mm]', 8),
             };
         });
 

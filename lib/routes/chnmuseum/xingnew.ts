@@ -51,8 +51,7 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    // Preserve the legacy body and support the current article template.
-                    item.description = $('.cj_xw_cong').first().html() || $('.content_main').first().html();
+                    item.description = $('.content_main').html();
                     const pubDate = $('meta[name="PubDate"]').attr('content');
                     if (pubDate) {
                         item.pubDate = parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8);

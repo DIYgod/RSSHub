@@ -61,10 +61,7 @@ const parseTuwenFromRaw = (raw) =>
         }
     });
 
-const selectDynamics = (items) => {
-    const candidates = items.filter((item) => item.entityType !== 'sponsorCard' && item.url);
-    return candidates;
-};
+const selectDynamics = (items) => items.filter((item) => item.entityType !== 'sponsorCard' && item.url);
 
 const parseDynamic = async (item) => {
     const pubDate = parseDate(item.dateline, 'X');

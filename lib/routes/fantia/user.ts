@@ -80,8 +80,7 @@ async function handler(ctx: Context) {
                         'X-Requested-With': 'XMLHttpRequest',
                     },
                 });
-                const image = contentResponse.post?.thumb?.original ?? contentResponse.post?.thumb_micro;
-                return image ? `<img src="${image}">` : '';
+                return `<img src="${contentResponse.post?.thumb?.original ?? contentResponse.post.thumb_micro}">`;
             });
             return {
                 ...item,

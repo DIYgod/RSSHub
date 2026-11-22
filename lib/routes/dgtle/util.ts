@@ -24,7 +24,7 @@ type LiveDataItem = DataItem & { live_status?: any };
 const selectItems = <T extends { created_at?: number | string }>(ctx: Context, defaultLimit: number, dataList: T[]): T[] => {
     const limit = getRouteLimit(ctx, defaultLimit);
     const pool = dataList.slice(0, Math.max(defaultLimit, limit));
-    const ordered = ctx.req.query('sorted') === 'false' ? pool : pool.toSorted((a, b) => Number(b.created_at ?? 0) - Number(a.created_at ?? 0));
+    const ordered = ctx.req.query('sorted') === 'false' ? pool : pool.toSorted((a, b) => Number(b.created_at) - Number(a.created_at));
     return ordered.slice(0, limit);
 };
 
@@ -67,7 +67,7 @@ const ProcessItems = async (ctx: Context, defaultLimit: number, dataList: any[])
             id: guid,
             content: {
                 html: description,
-                text: item.content ? load(item.content).text() : undefined,
+                text: load(item.content).text(),
             },
             image,
             banner: image,
@@ -113,7 +113,7 @@ const ProcessItems = async (ctx: Context, defaultLimit: number, dataList: any[])
                     );
                 });
 
-                const article = $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').first();
+                const article = $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box');
                 const description: string | undefined = renderDescription({
                     description: article.html() ?? undefined,
                 });

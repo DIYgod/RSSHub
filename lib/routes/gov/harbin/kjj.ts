@@ -28,7 +28,7 @@ async function handler() {
         title: item.title,
         link: item.url,
         description: item.contentHtml,
-        pubDate: item.publishedTimeStr ? parseDate(item.publishedTimeStr, 8) : undefined,
+        pubDate: parseDate(item.publishedTimeStr, 8),
         category: item.channelName,
     }));
 

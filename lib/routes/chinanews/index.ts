@@ -22,8 +22,7 @@ function getAuthor(content: CheerioAPI) {
     const source = content('#source_baidu, a.source, .source_wrapper')
         .first()
         .text()
-        .replace(/^来源\s*[:：]\s*/, '')
-        .trim();
+        .replace(/^来源\s*[:：]\s*/, '');
     if (source) {
         return source;
     }
@@ -77,11 +76,8 @@ async function handler(ctx) {
                     item.description = content('div.content_desc').html();
                     const videoUrl = detailResponse.data.match(/\bsource\s*:\s*["'](https?:\/\/[^"']+\.mp4(?:\?[^"']*)?)["']/)?.[1];
                     if (videoUrl) {
-                        const video = content('<video controls></video>').attr('src', videoUrl);
                         const poster = detailResponse.data.match(/addVariable\(["']vsimg["']\s*,\s*["']([^"']+)["']/)?.[1];
-                        if (poster) {
-                            video.attr('poster', poster);
-                        }
+                        const video = content('<video controls></video>').attr('src', videoUrl).attr('poster', poster);
                         item.description = video.toString() + (item.description ?? '');
                         item.enclosure_url = videoUrl;
                         item.enclosure_type = 'video/mp4';

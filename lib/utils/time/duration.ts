@@ -6,7 +6,7 @@
  */
 export function parseDuration(duration: number | string | undefined | null): number | undefined {
     if (typeof duration === 'number') {
-        return Number.isFinite(duration) && duration >= 0 ? duration : undefined;
+        return duration >= 0 ? duration : undefined;
     }
     if (typeof duration !== 'string') {
         return;
@@ -15,6 +15,5 @@ export function parseDuration(duration: number | string | undefined | null): num
     if (!/^(?:\d+:(?:[0-5]?\d:)?[0-5]?\d|\d+)(?:\.\d+)?$/.test(text)) {
         return;
     }
-    const seconds = text.split(':').reduce((total, part) => total * 60 + Number(part), 0);
-    return Number.isFinite(seconds) ? seconds : undefined;
+    return text.split(':').reduce((total, part) => total * 60 + Number(part), 0);
 }

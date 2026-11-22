@@ -20,11 +20,10 @@ type Article = {
     title: string;
     slug: string;
     content: string;
-    perex?: string;
-    publishedAt?: number;
-    editedAt?: number | null;
-    credit?: string;
-    author?: string;
+    perex: string;
+    publishedAt: number;
+    editedAt: number | null;
+    credit: string;
     images: Array<{
         url: string;
         altText?: string;
@@ -115,22 +114,22 @@ async function fetchArticle(id: string): Promise<DataItem> {
     }>(apiUrl, { query: { _hash: 'na', articleId: id, projectId } });
     const article = response.data.findCatArticleById;
     const link = new URL(`article/${article.slug}-${article.id}`, rootUrl).href;
-    const image = article.images.find((image) => image.variantTypeId === 4) ?? article.images.find((image) => image.variantTypeId === 3) ?? article.images[0];
+    const image = article.images.find((image) => image.variantTypeId === 4);
     const inlineImages = /\[image(?:\s|\])/.test(article.content) ? await fetchInlineImages(link) : new Map<string, string>();
     const content = bbobHTML(article.content, [createArticlePreset(inlineImages), escapeSourceText]);
     return {
         title: article.title,
         link,
         guid: article.id,
-        pubDate: article.publishedAt === undefined ? undefined : parseDate(article.publishedAt * 1000),
-        updated: isNullish(article.editedAt) ? undefined : parseDate(article.editedAt * 1000),
-        author: article.credit || article.author,
+        pubDate: parseDate(article.publishedAt * 1000),
+        updated: article.editedAt ? parseDate(article.editedAt * 1000) : undefined,
+        author: article.credit,
         category: article.translatedTags.map((tag) => tag.label),
         image: image?.url,
         description: renderToString(
             <>
                 {image ? <img src={image.url} alt={image.altText} /> : null}
-                {article.perex ? <p>{article.perex}</p> : null}
+                <p>{article.perex}</p>
                 {raw(content)}
             </>
         ),
@@ -173,11 +172,4 @@ async function handler() {
         link: rootUrl,
         item: items,
     };
-}
-function isNullish(value: unknown): value is null | undefined {
-    return isOneOf(value, [null, undefined]);
-}
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

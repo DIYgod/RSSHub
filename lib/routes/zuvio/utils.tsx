@@ -33,7 +33,7 @@ const renderSections = (sections) => {
                 break;
 
             case 'youtube':
-                output += renderYouTubeSection(section);
+                output += renderYoutube(true, section.youtube_id);
 
                 break;
 
@@ -93,8 +93,6 @@ const renderImageSection = (section): string =>
     );
 
 const renderTextSection = (section): string => renderToString(<>{section.content}</>).replaceAll('\n', '<br>');
-
-const renderYouTubeSection = (section): string => renderYoutube(true, section.youtube_id, undefined, undefined);
 
 const renderLinkSection = (section): string =>
     renderToString(

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 import { renderComment } from '../templates/comment';
-import { appsUrl, createPageFetcher, userUrl } from '../utils';
+import { appsUrl, userUrl } from '../utils';
 
 export const route: Route = {
     path: ['/user/:lang/appComment/:uid', '/user/appComment/:uid'],
@@ -17,7 +17,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -29,40 +29,35 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageFetcher = createPageFetcher();
-    try {
-        const { uid, lang = '' } = ctx.req.param();
-        const link = `${userUrl}${lang ? `/${lang}` : ''}/${uid}`;
+    const { uid, lang = '' } = ctx.req.param();
+    const link = `${userUrl}${lang ? `/${lang}` : ''}/${uid}`;
 
-        const response = await pageFetcher.get(link);
-        const { data } = await got(`${userUrl}/getUserAppCommentList`, {
-            searchParams: {
-                fid: uid,
-            },
-        });
+    const { data: response } = await got(link);
+    const { data } = await got(`${userUrl}/getUserAppCommentList`, {
+        searchParams: {
+            fid: uid,
+        },
+    });
 
-        const $ = load(response);
-        const username = $('.person .name').text();
+    const $ = load(response);
+    const username = $('.person .name').text();
 
-        const items = data.list.map((item) => ({
-            title: `${username} ▶ ${item.app.name}`,
-            link: `${appsUrl}/comment-detail/${item.comment.id}`,
-            description: renderComment({
-                rating: item.score,
-                text: item.comment.content,
-            }),
-            pubDate: parseDate(item.comment.created_at, 'YYYY-MM-DD', 8),
-            author: username,
-        }));
+    const items = data.list.map((item) => ({
+        title: `${username} ▶ ${item.app.name}`,
+        link: `${appsUrl}/comment-detail/${item.comment.id}`,
+        description: renderComment({
+            rating: item.score,
+            text: item.comment.content,
+        }),
+        pubDate: parseDate(item.comment.created_at, 'YYYY-MM-DD', 8),
+        author: username,
+    }));
 
-        return {
-            title: $('head title').text(),
-            link,
-            image: decodeURIComponent($('.person div.slot').attr('data-args')!).replace('avatar=', '').split('?', 1)[0],
-            language: $('html').attr('lang') as Language,
-            item: items,
-        };
-    } finally {
-        await pageFetcher.close();
-    }
+    return {
+        title: $('head title').text(),
+        link,
+        image: decodeURIComponent($('.person div.slot').attr('data-args')!).replace('avatar=', '').split('?', 1)[0],
+        language: $('html').attr('lang') as Language,
+        item: items,
+    };
 }

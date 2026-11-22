@@ -55,7 +55,7 @@ async function handler(ctx) {
         minVersion: 'TLSv1.3',
     });
 
-    const list: Array<{ title: string; link: string; author: string }> = response.data.results.slice(0, limit).map((item) => {
+    const list: Array<{ title: string; link: string; author: string }> = response.data.results.map((item) => {
         const link = new URL(item.item_url);
         link.searchParams.delete('from');
         return { title: item.title, link: link.href, author: item.album_artist || item.band_name };

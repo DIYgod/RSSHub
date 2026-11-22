@@ -86,8 +86,8 @@ const getItem = async (item) => {
         .find('.date')
         .text()
         .match(/(\d{4})\/(\d{1,2})/);
-    const day = calendar.find('.day').text().trim();
-    const pubDate = getCalendarDate(yearMonth && /^\d{1,2}$/.test(day) ? [yearMonth[1], yearMonth[2], day] : undefined);
+    const day = calendar.find('.day').text();
+    const pubDate = getCalendarDate(yearMonth ? [yearMonth[1], yearMonth[2], day] : undefined);
     return { title, link, pubDate, ...(await cache.tryGet(`swjtu:scai:article:${link}`, () => getArticle(link))) };
 };
 

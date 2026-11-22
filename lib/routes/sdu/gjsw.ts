@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: parseDate($e.find('.fr').text().trim(), 8),
+                pubDate: parseDate($e.find('.fr').text(), 8),
             };
         });
 

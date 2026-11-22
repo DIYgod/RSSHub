@@ -106,7 +106,7 @@ async function handler(ctx: Context) {
 
                 return {
                     description: md.render(response.details),
-                    pubDate: response.release_time ? parseDate(response.release_time, 0) : undefined,
+                    pubDate: parseDate(response.release_time, 0),
                     author: response.author,
                 };
             })),

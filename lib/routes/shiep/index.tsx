@@ -90,17 +90,22 @@ async function handler(ctx) {
 
     const items = await pMap(
         list,
-        async (item) => ({
-            ...item,
-            ...(await recoverArticle(
-                cache.tryGet(`shiep:article-v4:${item.link}`, async () => {
+        async (item) => {
+            try {
+                const article = await cache.tryGet(`shiep:article-v4:${item.link}`, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
                     const content = $(descriptionSelector).html();
                     return { description: content ? renderToString(<>{raw(content)}</>) : undefined };
-                })
-            )),
-        }),
+                });
+                return { ...item, ...article };
+            } catch (error) {
+                if (error instanceof FetchError) {
+                    return item;
+                }
+                throw error;
+            }
+        },
         { concurrency: 3 }
     );
 
@@ -109,15 +114,4 @@ async function handler(ctx) {
         link,
         item: items,
     };
-}
-
-async function recoverArticle<T>(promise: Promise<T>) {
-    try {
-        return await promise;
-    } catch (error) {
-        if (error instanceof FetchError) {
-            return {};
-        }
-        throw error;
-    }
 }

@@ -19,13 +19,13 @@ type VideoEmbed = {
 
 type QuotedRecord = {
     $type?: string;
-    uri?: string;
-    author?: {
+    uri: string;
+    author: {
         handle: string;
         displayName?: string;
     };
-    value?: {
-        text?: string;
+    value: {
+        text: string;
     };
     embeds?: Embed[];
     record?: QuotedRecord;
@@ -92,7 +92,7 @@ export const renderPost = ({ text, embed }: PostProps): string =>
     );
 
 function renderQuotedRecord(record?: QuotedRecord) {
-    if (record?.$type !== 'app.bsky.embed.record#viewRecord' || !record.uri?.includes('/app.bsky.feed.post/') || !record.author?.handle || typeof record.value?.text !== 'string') {
+    if (record?.$type !== 'app.bsky.embed.record#viewRecord') {
         return null;
     }
 

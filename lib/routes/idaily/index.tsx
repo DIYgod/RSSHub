@@ -62,18 +62,17 @@ async function handler(ctx): Promise<Data> {
                 author: item.author || undefined,
                 category: item.tags?.map((c) => c.name),
                 guid: `idaily-${item.guid}`,
-                pubDate: item.pubdate_timestamp ? parseDate(item.pubdate_timestamp, 'X') : undefined,
-                updated: item.lastupdate_timestamp ? parseDate(item.lastupdate_timestamp, 'X') : undefined,
+                pubDate: parseDate(item.pubdate_timestamp, 'X'),
+                updated: parseDate(item.lastupdate_timestamp, 'X'),
                 enclosure_url: image,
-                enclosure_type: image ? getMimeType(new URL(image).pathname) : undefined,
+                enclosure_type: getMimeType(new URL(image).pathname),
             };
         });
 
-    const canSort = articles.every((item) => item.pubDate !== undefined);
-    if (ctx.req.query('sorted') !== 'false' && canSort) {
+    if (ctx.req.query('sorted') !== 'false') {
         articles.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    const items = articles.slice(0, ctx.req.query('sorted') === 'false' || canSort ? limit : Math.max(100, limit));
+    const items = articles.slice(0, limit);
 
     const { data: currentResponse } = await got(currentUrl);
 

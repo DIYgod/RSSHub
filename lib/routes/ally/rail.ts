@@ -81,13 +81,10 @@ async function handler(ctx) {
             };
         })
         .filter((item) => item !== null);
-    const uniqueItems: DataItem[] = [];
-    for (const item of items) {
-        if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
-            uniqueItems.push(item);
-        }
-    }
-    items = uniqueItems.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 20));
+    items = items
+        .filter((item, index, all) => all.findIndex((other) => other.link === item.link) === index)
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
+        .slice(0, getRouteLimit(ctx, 20));
 
     items = await Promise.all(
         items.map((item) =>

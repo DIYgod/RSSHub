@@ -52,15 +52,11 @@ async function handler() {
                 itemUrl = host + path;
             }
             const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustb:yzxc:detail:${itemUrl}`, async () => {
-                let description;
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                if ($('.article') && $('.article').html()) {
-                    description = $('.article').html()!.trim();
-                }
-                return { description };
+                return { description: $('.article').html()?.trim() };
             });
-            return { title: titleText, link: itemUrl, pubDate: time ? parseDate(time, 'YYYY-MM-DD', 8) : undefined, ...details };
+            return { title: titleText, link: itemUrl, pubDate: parseDate(time, 'YYYY-MM-DD', 8), ...details };
         },
         { concurrency: 3 }
     );

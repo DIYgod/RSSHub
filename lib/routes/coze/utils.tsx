@@ -17,15 +17,14 @@ const productTypes = {
 interface ProductMeta {
     id: string;
     entity_type: number;
-    entity_version?: number;
+    entity_version: number;
     name: string;
     description?: string;
-    listed_at?: number;
-    category?: { name: string };
+    listed_at: number;
+    category: { name: string };
     covers?: Array<{ url: string }>;
     readme?: string;
-    introduction?: { introduction: string };
-    user_info?: { user_id: string | number; name: string };
+    user_info: { user_id: string | number; name: string };
 }
 
 interface Product {
@@ -35,11 +34,11 @@ interface Product {
 interface ProductListResponse {
     code: number;
     message: string;
-    data?: { products: Product[] };
+    data: { products: Product[] };
 }
 
 interface DeltaZone {
-    ops?: Array<{ insert?: string | object }>;
+    ops: Array<{ insert: string }>;
 }
 
 export function getProductType(type: string) {
@@ -73,29 +72,24 @@ const getProductLink = (meta: ProductMeta) => {
 };
 
 function getIntroduction(meta: ProductMeta) {
-    const value = meta.readme || meta.introduction?.introduction;
-    if (!value) {
+    if (!meta.readme) {
         return '';
     }
-    try {
-        const zones = JSON.parse(value) as Record<string, DeltaZone>;
-        return Object.values(zones)
-            .flatMap((zone) => zone.ops ?? [])
-            .map((operation) => (typeof operation.insert === 'string' ? operation.insert : ''))
-            .join('');
-    } catch {
-        return value;
-    }
+    const zones = JSON.parse(meta.readme) as Record<string, DeltaZone>;
+    return Object.values(zones)
+        .flatMap((zone) => zone.ops)
+        .map((operation) => operation.insert)
+        .join('');
 }
 
 export const getItems = (products: Product[]): DataItem[] =>
     products.map(({ meta_info: meta }) => ({
         title: meta.name,
         link: getProductLink(meta),
-        guid: meta.entity_version ? `${meta.id}:${meta.entity_version}` : meta.id,
-        author: meta.user_info?.name,
-        pubDate: meta.listed_at ? parseDate(meta.listed_at, 'X') : undefined,
-        category: meta.category?.name ? [meta.category.name] : undefined,
+        guid: `${meta.id}:${meta.entity_version}`,
+        author: meta.user_info.name,
+        pubDate: parseDate(meta.listed_at, 'X'),
+        category: [meta.category.name],
         description: renderToString(
             <>
                 {meta.description ? <p>{meta.description}</p> : undefined}
@@ -113,11 +107,11 @@ export async function getProducts(type: string, limit: number, userId?: string) 
         parseResponse,
         query: userId ? { entity_type: entityType, user_id: userId, source: 1, cursor: 0, limit } : { entity_type: entityType, page_num: 1, page_size: limit, sort_type: 2 },
     });
-    if (response.code !== 0 || !Array.isArray(response.data?.products)) {
+    if (response.code !== 0) {
         throw new Error(`Coze did not return a public product list (${response.code}: ${response.message}).`);
     }
     const products = response.data.products;
-    if (userId && products.some((product) => String(product.meta_info.user_info?.user_id) !== userId)) {
+    if (userId && products.some((product) => String(product.meta_info.user_info.user_id) !== userId)) {
         throw new Error('Coze returned products from a different creator. Check the numeric user ID in the profile URL.');
     }
     return products;

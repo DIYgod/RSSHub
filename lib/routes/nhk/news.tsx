@@ -84,7 +84,7 @@ async function handler(ctx) {
         description: item.description,
         link: `${baseUrl}${item.page_url}`,
         pubDate: item.public_at ? parseDate(item.public_at, 'x') : undefined,
-        updated: item.updated_at ? parseDate(item.updated_at, 'x') : undefined,
+        updated: parseDate(item.updated_at, 'x'),
         category: item.categories.name,
         id: item.id,
     }));
@@ -103,7 +103,7 @@ async function handler(ctx) {
                         <>
                             {imageSrc ? (
                                 <>
-                                    <img src={new URL(imageSrc, baseUrl).href} alt={img?.alt} />
+                                    <img src={imageSrc} alt={img?.alt} />
                                     <br />
                                 </>
                             ) : null}
@@ -117,7 +117,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${Object.values<any>(meta.config.navigation.header).find((h) => h.keyname === 'topstories' || h.keyname === 'top')?.name ?? 'Top Stories'} | NHK WORLD-JAPAN News`,
+        title: `${Object.values<any>(meta.config.navigation.header).find((h) => h.keyname === 'topstories' || h.keyname === 'top')?.name} | NHK WORLD-JAPAN News`,
         link: `${baseUrl}/nhkworld/${lang}/news/list/`,
         item: items,
     };

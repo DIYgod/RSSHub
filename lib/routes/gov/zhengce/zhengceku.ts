@@ -34,10 +34,7 @@ async function handler(ctx) {
             title: ($) => $('h4 > a').text(),
             link: ($) => $('h4 > a').attr('href'),
             // The list provides calendar dates, represented at UTC midnight.
-            pubDate: ($) => {
-                const date = $('h4 > .date').text().trim();
-                return date ? parseDate(date, 0) : undefined;
-            },
+            pubDate: ($) => parseDate($('h4 > .date').text().trim(), 0),
         },
     });
 }

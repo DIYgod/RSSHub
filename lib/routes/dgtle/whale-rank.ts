@@ -50,8 +50,8 @@ async function handler(ctx: Context) {
 
     const items = response.items.map((item) => ({
         title: item.content,
-        pubDate: item.created_at ? parseDate(item.created_at, 'X') : undefined,
-        updated: item.updated_at ? parseDate(item.updated_at, 'X') : undefined,
+        pubDate: parseDate(item.created_at, 'X'),
+        updated: parseDate(item.updated_at, 'X'),
         author: item.author.username,
         description: `<img src=${item.attachment.pic_url.split('?', 1)[0]} />`,
         link: item.attachment.pic_url.split('?', 1)[0],

@@ -28,39 +28,27 @@ async function handler() {
         })
         .map((element) => {
             const card = $(element);
-            const image = card.find('[data-bgsrc]').first().attr('data-bgsrc');
             return {
                 title: card.attr('title')!,
                 link: new URL(card.attr('href')!, link).href,
-                image,
-                summary: card.find('h4.gDqesd, .hwdZXd').first().text(),
+                image: card.find('[data-bgsrc]').attr('data-bgsrc'),
             };
         });
-    const uniqueItems = new Map(items.map((item) => [item.link, item])).values().toArray();
     const details = await pMap(
-        uniqueItems,
-        async ({ image, summary, ...item }) => {
+        items,
+        async ({ image, ...item }) => {
             const metadata = await cache.tryGet<Partial<Pick<DataItem, 'title' | 'author' | 'summary'>>>(`google:arts-and-culture:content:${item.link}`, async () => {
-                const response = await ofetch.raw<string, 'text'>(item.link, { responseType: 'text', ignoreResponseError: true });
-                if (response.status === 404) {
-                    return {};
-                }
-                if (!response.ok) {
-                    throw new Error(`Google Arts & Culture story returned HTTP ${response.status}: ${item.link}`);
-                }
-                const $ = load(response._data!);
-                const structuredData = $('script[type="application/ld+json"]')
-                    .toArray()
-                    .map((element) => parseMetadata($(element).text()))
-                    .find(Boolean);
-                const title = $('h1').first().text() || structuredData?.name;
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                const structuredData: StoryMetadata = JSON.parse($('script[type="application/ld+json"]:contains("WebPage")').text());
+                const title = $('h1').text() || structuredData.name;
                 return {
                     ...(title && { title }),
-                    author: structuredData?.creator?.name,
-                    summary: structuredData?.headline || $('meta[name="description"]').attr('content') || undefined,
+                    author: structuredData.creator?.name,
+                    summary: structuredData.headline || $('meta[name="description"]').attr('content'),
                 };
             });
-            return { ...item, ...metadata, description: renderDescription(image, metadata.summary || summary) };
+            return { ...item, ...metadata, description: renderDescription(image, metadata.summary) };
         },
         { concurrency: 3 }
     );
@@ -72,18 +60,6 @@ interface StoryMetadata {
     headline?: string;
     creator?: { name?: string };
 }
-
-const parseMetadata = (content: string): StoryMetadata | undefined => {
-    try {
-        const metadata = JSON.parse(content);
-        if (metadata?.['@type'] === 'WebPage') {
-            return metadata;
-        }
-    } catch {
-        // Ignore unrelated malformed structured data.
-    }
-    return undefined;
-};
 
 const renderDescription = (image: string | undefined, summary: string | undefined) =>
     renderToString(

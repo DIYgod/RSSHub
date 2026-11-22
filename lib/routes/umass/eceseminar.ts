@@ -37,9 +37,8 @@ async function handler() {
                     ? await cache.tryGet(`umass:ece:event-date:v1:${link}`, async () => {
                           const sourceContent1 = await source.get(link);
                           const $article = load(sourceContent1);
-                          const datetime = $article('time[datetime]').first().attr('datetime');
-                          const date = datetime ? parseDate(datetime) : undefined;
-                          return { pubDate: date };
+                          const datetime = $article('time[datetime]').attr('datetime');
+                          return { pubDate: datetime ? parseDate(datetime) : undefined };
                       })
                     : { pubDate: undefined };
                 return {

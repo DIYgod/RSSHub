@@ -45,8 +45,7 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
-            const dateText = $item.find('span').text();
-            const date = dateText.trim() ? parseDate(dateText, 8) : undefined;
+            const date = parseDate($item.find('span').text(), 8);
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,

@@ -1,7 +1,4 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
-import type { Context } from 'hono';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -58,17 +55,7 @@ function getThumbnail(cache, thumbnailUrl) {
         try {
             const buffer = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(thumbnailUrl, { responseType: 'arrayBuffer', headers: headers.cookie && isGalleryUrl(thumbnailUrl, true) ? { Cookie: headers.cookie } : undefined });
             const data = Buffer.from(buffer._data!).toBase64();
-            const ext = path.extname(new URL(thumbnailUrl).pathname).slice(1).toLowerCase();
-            const imageTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' };
-            const contentType = buffer.headers.get('content-type')?.split(';', 1)[0].toLowerCase();
-            if (contentType && !contentType.startsWith('image/')) {
-                return thumbnailUrl;
-            }
-            const mimeType = contentType === 'image/jpg' ? 'image/jpeg' : contentType?.startsWith('image/') ? contentType : imageTypes[ext];
-            if (!mimeType) {
-                return thumbnailUrl;
-            }
-            return `data:${mimeType};base64,${data}`;
+            return `data:${buffer.headers.get('content-type')};base64,${data}`;
         } catch (error) {
             logger.warn('Cannot download thumbnail: ' + thumbnailUrl, error);
             return thumbnailUrl;
@@ -103,7 +90,7 @@ function parseElement($, element, layout: string, includeBittorrent: string | bo
         const url = new URL(thumbnail);
         thumbnail = config.ehentai.img_proxy + url.pathname + url.search;
     }
-    const description = thumbnail ? `<img src='${thumbnail}' alt='thumbnail'>` : undefined;
+    const description = `<img src='${thumbnail}' alt='thumbnail'>`;
     if (!title || !link) {
         return;
     }
@@ -134,7 +121,7 @@ function parseElement($, element, layout: string, includeBittorrent: string | bo
     return item;
 }
 
-async function parsePage(cache, data, includeBittorrent: string | boolean, embedThumbnail: string | boolean, ctx: Context, torrentState: TorrentState) {
+async function parsePage(cache, data, includeBittorrent: string | boolean, embedThumbnail: string | boolean, torrentState: TorrentState) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -235,10 +222,10 @@ async function updateBittorrentUrl(cache, items, torrentState: TorrentState) {
     return items;
 }
 
-async function gatherItemsByPage(cache, url, includeBittorrent: string | boolean, embedThumbnail: string | boolean, ctx: Context) {
+async function gatherItemsByPage(cache, url, includeBittorrent: string | boolean, embedThumbnail: string | boolean) {
     const response = await ehgot(url);
     const torrentState: TorrentState = {};
-    const items = await parsePage(cache, response.data, includeBittorrent, embedThumbnail, ctx, torrentState);
+    const items = await parsePage(cache, response.data, includeBittorrent, embedThumbnail, torrentState);
     return (await updateBittorrentUrl(cache, items, torrentState)).map((item) => {
         delete item.thumbnail;
         delete item.bittorrentPageUrl;
@@ -252,23 +239,23 @@ function checkFirstPage(page?: string) {
     }
 }
 
-function getFavoritesItems(cache, favcat, inlineSet, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+function getFavoritesItems(cache, favcat, inlineSet, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false) {
     checkFirstPage(page);
-    return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&inline_set=${inlineSet}`, getBittorrent, embedThumb, ctx);
+    return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&inline_set=${inlineSet}`, getBittorrent, embedThumb);
 }
 
-function getSearchItems(cache, params = '', page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+function getSearchItems(cache, params = '', page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false) {
     checkFirstPage(page);
     const query = new URLSearchParams(params);
     for (const key of ['next', 'prev', 'page']) {
         query.delete(key);
     }
-    return gatherItemsByPage(cache, `?${query}`, getBittorrent, embedThumb, ctx);
+    return gatherItemsByPage(cache, `?${query}`, getBittorrent, embedThumb);
 }
 
-function getTagItems(cache, tag, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+function getTagItems(cache, tag, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false) {
     checkFirstPage(page);
-    return gatherItemsByPage(cache, `tag/${encodeURIComponent(tag)}`, getBittorrent, embedThumb, ctx);
+    return gatherItemsByPage(cache, `tag/${encodeURIComponent(tag)}`, getBittorrent, embedThumb);
 }
 
 export default { getFavoritesItems, getSearchItems, getTagItems, hasCookie, fromEx };

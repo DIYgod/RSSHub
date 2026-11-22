@@ -104,7 +104,7 @@ async function extractFullText(slug: string, buildId: string): Promise<{ descrip
         return {
             description: $.html(),
             imageUrl: article.imageUrl,
-            category: [...new Set([...article.categories, ...article.tags.map((tag) => (typeof tag === 'string' ? tag : tag.name))])],
+            category: [...new Set([...article.categories, ...article.tags.map((tag) => tag.name)])],
         };
     } catch (error) {
         logger.error('Error extracting full text from Blockworks:', error);

@@ -60,16 +60,7 @@ async function handler(ctx) {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
         $('.primis-ad, .article-ad, .editorskit-no-mobile').remove();
-        // lazyload images
-        $('img').each((_, e) => {
-            const $e = $(e);
-            const src = $e.attr('data-src') || $e.attr('src') || $e.attr('srcset')?.match(/^\s*(\S+)\s+\d+[wx](?:,|$)/)?.[1];
-            if (src) {
-                $e.attr('src', src);
-            }
-            $e.removeAttr('data-src');
-            $e.removeAttr('srcset');
-        });
+        $('img').removeAttr('srcset');
         return {
             title: item.title.rendered,
             author: item.yoast_head_json.author,
@@ -80,7 +71,7 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: item.date_gmt && item.date_gmt !== '0000-00-00T00:00:00' ? parseDate(`${item.date_gmt}Z`) : undefined,
+            pubDate: parseDate(`${item.date_gmt}Z`),
         };
     });
 

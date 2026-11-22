@@ -6,8 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import getCookie from '../utils/pypasswaf';
-
 const host = 'https://aao.nuaa.edu.cn/';
 
 const map = new Map([
@@ -25,7 +23,7 @@ export const route: Route = {
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -52,13 +50,7 @@ async function handler(ctx) {
     const getDescription = Boolean(ctx.req.param('getDescription'));
 
     const link = new URL(suffix, host).href;
-    const cookie = await getCookie(host);
-    const gotConfig = {
-        headers: {
-            cookie,
-        },
-    };
-    const response = await got(link, gotConfig);
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('#news_list .news_ul .p-list-item a')
@@ -87,7 +79,7 @@ async function handler(ctx) {
                         const arr = itemUrl.split('.');
                         const pageType = arr.at(-1);
                         if (pageType === 'htm' || pageType === 'html') {
-                            const response = await got(itemUrl, gotConfig);
+                            const response = await got(itemUrl);
                             const $ = load(response.data);
                             const content = $('.wp_articlecontent');
                             if (!content.length) {
@@ -102,7 +94,7 @@ async function handler(ctx) {
                                 .find((text) => /^作者\s*[:：]/.test(text));
                             return {
                                 description: content.html() ?? undefined,
-                                author: authorLabel?.replace(/^作者\s*[:：]\s*/, '').trim() || undefined,
+                                author: authorLabel?.replace(/^作者\s*[:：]\s*/, '') || undefined,
                             };
                         }
                         return {};

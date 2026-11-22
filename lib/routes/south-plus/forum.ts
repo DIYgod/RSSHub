@@ -29,17 +29,16 @@ const parseThread = async (item: DataItem, headers: ForumHeaders): Promise<DataI
             if (content.length === 0) {
                 throw new Error('The source did not expose the first post; check thread access permissions.');
             }
-            const fields: Pick<DataItem, 'description' | 'pubDate' | 'author'> = { description: content.html() };
+            const fields: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {
+                description: content.html(),
+                author: $('.r_two a[href*="action-show-uid"] strong').first().text(),
+            };
             const dateMatch = $('.tiptop .fl.gray')
                 .first()
                 .text()
                 .match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
             if (dateMatch) {
                 fields.pubDate = parseDate(dateMatch[1], 'YYYY-MM-DD HH:mm', 8);
-            }
-            const author = $('.r_two a[href*="action-show-uid"] strong');
-            if (author.length > 0) {
-                fields.author = author.first().text().trim();
             }
             return fields;
         });
@@ -103,17 +102,17 @@ async function handler(ctx): Promise<Data> {
             const author = $row.find('a.bl[href*="action-show-uid"]').text().trim();
 
             // Thread post date in column 2 (div.f10.gray2)
-            const postDateText = $row.find('div.f10.gray2').text().trim();
+            const postDateText = $row.find('div.f10.gray2').text();
 
             // Last post date in column 4 (a.f10)
             const lastPostDateText = $row.find('td.tal.y-style a.f10').text().trim();
 
             // Preserve publication and last-reply clocks separately in the site's UTC+8 timezone.
-            const pubDate = postDateText ? parseDate(postDateText, 'YYYY-MM-DD', 8) : undefined;
-            const updated = lastPostDateText ? parseDate(lastPostDateText, 'YYYY-MM-DD HH:mm', 8) : undefined;
+            const pubDate = parseDate(postDateText, 'YYYY-MM-DD', 8);
+            const updated = parseDate(lastPostDateText, 'YYYY-MM-DD HH:mm', 8);
 
             // Thread category tag (e.g. [自购], [公告]) in column 1
-            const category = $row.find('a.s8').text().trim();
+            const category = $row.find('a.s8').text();
 
             return {
                 title,

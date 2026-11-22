@@ -31,12 +31,10 @@ async function handler(): Promise<Data> {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h3 a');
-            const date = $item.find('.list_time').text().trim();
-            const pubDate = date ? parseDate(date, 'YYYY年MM月DD日', 8) : undefined;
             return {
                 title: a.attr('title') ?? a.text(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate,
+                pubDate: parseDate($item.find('.list_time').text(), 'YYYY年MM月DD日', 8),
             };
         });
 

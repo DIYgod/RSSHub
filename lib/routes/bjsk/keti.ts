@@ -52,12 +52,11 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('.date').text();
 
             return {
                 title: $item.find('.zizizi').text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($item.find('.date').text(), 8),
             };
         });
 
@@ -70,12 +69,8 @@ async function handler(ctx) {
                 });
 
                 const content = load(detailResponse.data);
-                const date = content('div.d_information p span').first().text();
 
                 item.description = content('.d_text').html();
-                if (!item.pubDate && date) {
-                    item.pubDate = parseDate(date, 8);
-                }
                 item.author = content('div.d_information p span').last().text();
 
                 return item;

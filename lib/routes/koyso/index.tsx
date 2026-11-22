@@ -122,7 +122,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                 const published = $$('meta[property="article:published_time"]').attr('content');
                 const modified = $$('meta[property="article:modified_time"]').attr('content');
-                const content = $$('div.content_body').length ? $$('div.content_body') : $$('div.game_content');
+                const content = $$('div.content_body');
                 const description = item.description + (content.html() || '');
 
                 const processedItem: DataItem = {

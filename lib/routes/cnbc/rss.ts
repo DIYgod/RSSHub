@@ -37,9 +37,8 @@ async function handler(ctx) {
     const feed = await parser.parseURL(`https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=${id}`);
 
     const articles = feed.items.filter((item) => item.link && !item.link.startsWith('https://www.cnbc.com/select/'));
-    const selected = articles;
     const items = await Promise.all(
-        selected.map((item) =>
+        articles.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);

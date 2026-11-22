@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { escapeText } from 'entities';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
@@ -36,14 +35,13 @@ async function getData(url: string) {
 function getItem(entry) {
     const link = `${baseUrl}/share/feed/${entry.id}`;
     return cache.tryGet(link, async () => {
-        const data = await getData(link);
-        const feed = data?.feed || entry;
+        const { feed } = await getData(link);
         return {
-            title: feed.title || entry.title,
+            title: feed.title,
             link,
-            author: feed.source?.name,
-            pubDate: feed.displayTime || entry.displayTime ? parseDate(feed.displayTime || entry.displayTime, 'x') : undefined,
-            description: feed.content || `<p>${escapeText(feed.text || '')}</p>`,
+            author: feed.source.name,
+            pubDate: parseDate(feed.displayTime, 'x'),
+            description: feed.content,
             category: feed.tags,
         };
     });

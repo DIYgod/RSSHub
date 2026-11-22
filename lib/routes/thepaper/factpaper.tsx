@@ -53,7 +53,7 @@ async function handler(ctx) {
         title: item.title,
         guid: item.proveId,
         link: `${rootUrl}/detail?id=${item.proveId}`,
-        pubDate: item.publishTime ? parseDate(`${item.publishTime.replace(' ', 'T')}+08:00`) : undefined,
+        pubDate: parseDate(`${item.publishTime.replace(' ', 'T')}+08:00`),
     }));
 
     const items = await pMap(

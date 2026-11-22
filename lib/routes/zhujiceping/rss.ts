@@ -1,7 +1,4 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -33,16 +30,16 @@ async function handler() {
             const link = element.find('h2 > a').attr('href');
             const description = element.find('p.note').text();
             const dateraw = element.find('time').text();
-            const category = copyContent(element.find('.meta .cat'), $);
-            category.find('i').remove();
+            element.find('.meta .cat i').remove();
             return {
                 title: title!,
                 description,
                 link,
                 image: element.find('a.focus img.thumb').attr('src'),
-                category: category
+                category: element
+                    .find('.meta .cat')
                     .toArray()
-                    .map((category) => $(category).text().trim())
+                    .map((category) => $(category).text())
                     .filter(Boolean),
                 pubDate: parseDate(dateraw, 'YYYY-MM-DD'),
             };
@@ -52,12 +49,4 @@ async function handler() {
         link: url,
         item: list,
     };
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

@@ -60,7 +60,7 @@ const handler = async (ctx) => {
         title: item.title,
         link: item.id,
         guid: `moa-zdscxx-${item.id}`,
-        pubDate: item.date ? parseDate(item.date, 8) : undefined,
+        pubDate: parseDate(item.date, 8),
     }));
 
     items = await pMap(
@@ -79,7 +79,7 @@ const handler = async (ctx) => {
                 item.link = new URL(`nyb/pc/messageView.jsp?id=${item.link}`, rootUrl).href;
                 item.description = data.content;
                 item.author = data.source;
-                item.pubDate = data.date ? parseDate(data.date, 8) : undefined;
+                item.pubDate = parseDate(data.date, 8);
 
                 return item;
             }),

@@ -52,17 +52,12 @@ function getNotice(item) {
             headers,
             query: { id: item.bulletinId, language: 'zh', website: 'cn' },
         });
-        const info = response.data?.info;
-        if (!response.data?.success || !info) {
-            throw new Error(`Unable to retrieve Aliyun notice ${item.bulletinId}: ${response.message || response.data?.message || 'missing notice details'}`);
-        }
-        const detail = info.detailList?.[0];
-        const publishTime = detail?.publishTime ?? info.publishTime ?? item.publishTime;
+        const detail = response.data.info.detailList[0];
         return {
-            title: detail?.title || info.title || item.title,
+            title: detail.title,
             link,
-            pubDate: publishTime ? parseDate(publishTime, 'x') : undefined,
-            description: detail?.contentHtml || item.content,
+            pubDate: parseDate(detail.publishTime, 'x'),
+            description: detail.contentHtml,
         };
     });
 }
@@ -74,9 +69,6 @@ async function handler(ctx) {
         headers,
         query: { pageNo: 1, pageSize: limit, bulletinType: type === 'all' ? undefined : type },
     });
-    if (!response.data?.success || !Array.isArray(response.data.info)) {
-        throw new Error(`Unable to retrieve Aliyun notices: ${response.message || response.data?.message || 'missing notice list'}`);
-    }
     return {
         title: '阿里云公告',
         link: `${rootUrl}/notice/list?notice-type=${type}`,

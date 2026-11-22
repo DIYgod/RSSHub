@@ -57,14 +57,11 @@ async function handler(ctx) {
     const languageCode = languageCodes[language];
     const { data } = await got(`${rootUrl}/data_pr.json`);
     const list = data
-        .map((item): DataItem => {
-            const publishedDate = item[`date_${languageCode}`];
-            return {
-                title: item[`name_${languageCode}`],
-                link: new URL(item[`link_${languageCode}`], currentUrl).href,
-                pubDate: publishedDate ? parseDate(publishedDate, language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日', 8) : undefined,
-            };
-        })
+        .map((item): DataItem => ({
+            title: item[`name_${languageCode}`],
+            link: new URL(item[`link_${languageCode}`], currentUrl).href,
+            pubDate: parseDate(item[`date_${languageCode}`], language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日', 8),
+        }))
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await pMap(

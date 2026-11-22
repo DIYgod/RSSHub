@@ -75,19 +75,7 @@ function generateJavas(arch: string, javaType: string, data: RuntimeInManifest[]
 }
 
 function generateArch(arch: string, data: any, javaType: string): DataItem[] {
-    const items: DataItem[] = [];
-
-    if (javaType === 'all') {
-        for (const k in data) {
-            if (!Object.hasOwn(data, k)) {
-                continue;
-            }
-            items.push(...generateJavas(arch, k, data[k]));
-        }
-    } else {
-        items.push(...generateJavas(arch, javaType, data[javaType]));
-    }
-    return items;
+    return javaType === 'all' ? Object.keys(data).flatMap((k) => generateJavas(arch, k, data[k])) : generateJavas(arch, javaType, data[javaType]);
 }
 
 async function handler(ctx: Context) {
@@ -110,18 +98,7 @@ async function handler(ctx: Context) {
         throw new InvalidParameterError('Unknown Java runtime type; use a type listed in the runtime manifest.');
     }
 
-    const items: DataItem[] = [];
-
-    if (arch === 'all') {
-        for (const k in data) {
-            if (!Object.hasOwn(data, k)) {
-                continue;
-            }
-            items.push(...generateArch(k, data[k], javaType));
-        }
-    } else {
-        items.push(...generateArch(arch, data[arch], javaType));
-    }
+    const items = arch === 'all' ? Object.keys(data).flatMap((k) => generateArch(k, data[k], javaType)) : generateArch(arch, data[arch], javaType);
 
     const title = 'Minecraft Java运行时';
 

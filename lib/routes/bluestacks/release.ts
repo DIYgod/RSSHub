@@ -50,7 +50,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href')!, pageUrl).href,
+                link: $item.attr('href'),
             };
         });
 

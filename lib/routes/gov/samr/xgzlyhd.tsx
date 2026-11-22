@@ -202,7 +202,7 @@ async function handler(ctx) {
         author: `${item.lyr} ⇄ ${item.fzsjCn}`,
         category: [item.fzsjCn],
         guid: `${currentUrl}#${item.zj}`,
-        pubDate: item.pubtime ? parseDate(item.pubtime, 8) : undefined,
+        pubDate: parseDate(item.pubtime, 8),
     }));
 
     const { data: currentResponse } = await got(currentUrl);

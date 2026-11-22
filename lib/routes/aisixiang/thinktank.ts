@@ -39,8 +39,6 @@ async function handler(ctx) {
 
     const title = `${$('h2').first().text()}${type}`;
 
-    let items: any[] = [];
-
     const targetList = $('h3')
         .toArray()
         .filter((h) => (type ? $(h).text() === type : true));
@@ -48,18 +46,17 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Not found ${type} in ${id}: ${currentUrl}`);
     }
 
-    for (const l of targetList) {
-        items.push(...$(l).parent().find('ul li a').toArray());
-    }
+    const items = targetList
+        .flatMap((l) => $(l).parent().find('ul li a').toArray())
+        .slice(0, limit)
+        .map((item) => {
+            const $item = $(item);
 
-    items = items.slice(0, limit).map((item) => {
-        const $item = $(item);
-
-        return {
-            title: $item.text().split('：').pop(),
-            link: new URL($item.prop('href')!, rootUrl).href,
-        };
-    });
+            return {
+                title: $item.text().split('：').pop(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+            };
+        });
 
     return {
         item: await ProcessFeed(limit, items),

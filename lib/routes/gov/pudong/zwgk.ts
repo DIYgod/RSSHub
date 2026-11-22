@@ -42,7 +42,7 @@ async function handler() {
     const list = data.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: item.display_date === undefined || item.display_date === null ? undefined : parseDate(item.display_date),
+        pubDate: parseDate(item.display_date),
     }));
 
     const items = await pMap(

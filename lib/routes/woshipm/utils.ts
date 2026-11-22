@@ -3,15 +3,12 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.woshipm.com';
 
-function parseArticleDate(value?: string) {
-    if (!value || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})?)?$/.test(value)) {
-        return;
-    }
-    return /(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? parseDate(value) : parseDateStrict(value, value.includes('T') ? 'YYYY-MM-DDTHH:mm:ss' : 'YYYY-MM-DD', 8);
+function parseArticleDate(value: string) {
+    return parseDate(value, 8);
 }
 
 const fetchArticleDetails = (link: string) =>
@@ -24,9 +21,8 @@ const fetchArticleDetails = (link: string) =>
             .match(/"datePublished"\s*:\s*"([^"]+)"/)?.[1];
         const category = $('.taglist a[rel="tag"]')
             .toArray()
-            .map((tag) => $(tag).text().trim())
-            .filter(Boolean);
-        return { description: $('.article--content').html(), pubDate: parseArticleDate(publishedAt), author: $('.author a.ui-captionStrong').text().trim() || undefined, category: category.length ? category : undefined };
+            .map((tag) => $(tag).text());
+        return { description: $('.article--content').html(), pubDate: publishedAt ? parseArticleDate(publishedAt) : undefined, author: $('.author a.ui-captionStrong').text(), category: category.length ? category : undefined };
     });
 
 const parseArticle = async <T extends Pick<DataItem, 'link'>>(item: T): Promise<T & Pick<DataItem, 'description' | 'category'>> => {

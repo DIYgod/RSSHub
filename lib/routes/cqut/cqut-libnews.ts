@@ -23,7 +23,7 @@ async function handler() {
 
     const { page, destroy } = await getPlaywrightPage(link, { noGoto: true });
     try {
-        await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        await page.route('**/*', (route) => (['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         const [apiResponse] = await Promise.all([page.waitForResponse((response) => response.url().includes('/type/more-datas'), { timeout: 30000 }), page.goto(link, { waitUntil: 'domcontentloaded' })]);
         const { data } = await apiResponse.json();
 

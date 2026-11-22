@@ -69,7 +69,7 @@ async function handler(ctx) {
         title: item.title,
         link: item.url,
         description: item.desc,
-        pubDate: item.date ? parseDate(item.date, 8) : undefined,
+        pubDate: parseDate(item.date, 8),
     }));
 
     items = await pMap(

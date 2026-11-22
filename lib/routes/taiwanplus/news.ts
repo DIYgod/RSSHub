@@ -1,4 +1,3 @@
-import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { escapeAttribute, escapeText } from 'entities';
 import pMap from 'p-map';
@@ -25,42 +24,21 @@ export const route: Route = {
     handler,
 };
 
-function getVideoData($: CheerioAPI) {
-    const payload: unknown[] = JSON.parse($('#__NUXT_DATA__').text() || '[]');
-    return payload.some((value): value is Record<string, number> => typeof value === 'object' && value !== null && !Array.isArray(value) && Object.hasOwn(value, 'vodId') && Object.hasOwn(value, 'transcript')) ? payload : undefined;
-}
-
 async function getItem(item: DataItem) {
     const details = await cache.tryGet(`${item.link}:transcript:v3`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
-        const articles = $('script[type="application/ld+json"]')
-            .toArray()
-            .flatMap((script) => {
-                const data = JSON.parse($(script).text());
-                return data['@graph'] ?? [data];
-            });
-        const article = articles.find((entry) => entry['@type'] === 'NewsArticle');
-        const details: Omit<DataItem, 'title' | 'link'> = {};
-        if (article) {
-            details.pubDate = parseDate(article.datePublished);
-            details.updated = article.dateModified ? parseDate(article.dateModified) : undefined;
-            details.author = article.author?.name;
-            const image = Array.isArray(article.image) ? article.image[0] : article.image;
-            const payload = getVideoData($);
-            const video = payload?.find((value): value is Record<string, number> => typeof value === 'object' && value !== null && !Array.isArray(value) && Object.hasOwn(value, 'vodId') && Object.hasOwn(value, 'transcript'));
-            const transcript = video && payload ? payload[video.transcript] : undefined;
-            const tags = video && payload ? payload[video.tags] : undefined;
-            details.category = Array.isArray(tags)
-                ? tags.flatMap((reference) => {
-                      const tag = typeof reference === 'number' && payload ? payload[reference] : undefined;
-                      const name = tag && typeof tag === 'object' && 'tagName' in tag && typeof tag.tagName === 'number' && payload ? payload[tag.tagName] : undefined;
-                      return typeof name === 'string' ? [name] : [];
-                  })
-                : undefined;
-            details.description = `${image ? `<img src="${escapeAttribute(image)}">` : ''}<p>${escapeText(article.description ?? '')}</p>${typeof transcript === 'string' ? transcript : ''}`;
-        }
-        return details;
+        const article = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text())['@graph'].find((entry) => entry['@type'] === 'NewsArticle');
+        const payload = JSON.parse($('#__NUXT_DATA__').text());
+        const video = payload.find((value) => value?.vodId !== undefined && value.transcript !== undefined);
+        const tags = payload[video.tags];
+        return {
+            pubDate: parseDate(article.datePublished),
+            updated: article.dateModified ? parseDate(article.dateModified) : undefined,
+            author: article.author?.name,
+            category: Array.isArray(tags) ? tags.map((reference) => payload[payload[reference].tagName]) : undefined,
+            description: `<img src="${escapeAttribute(article.image[0])}"><p>${escapeText(article.description)}</p>${payload[video.transcript]}`,
+        };
     });
     return { ...item, ...details };
 }
@@ -71,17 +49,9 @@ async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
-    const seen = new Set<string>();
     const items = $('a.news[href]')
         .toArray()
         .map((element) => ({ title: $(element).find('h2, h3').text(), link: new URL($(element).attr('href')!, baseUrl).href }))
-        .filter((item) => {
-            if (seen.has(item.link)) {
-                return false;
-            }
-            seen.add(item.link);
-            return true;
-        })
         .slice(0, limit);
     return {
         title: $('title').text(),
