@@ -1379,8 +1379,10 @@ void (async () => {
     }
 })();
 
+const requestValue = () => getRequestConfig((overrides) => buildValue({ ...envs, ...overrides }) as unknown as Config) ?? value;
+
 export const config: Config = new Proxy(value, {
-    get: (target, property, receiver) => Reflect.get(getRequestConfig((overrides) => buildValue({ ...envs, ...overrides }) as unknown as Config) ?? target, property, receiver),
+    get: (_target, property: keyof Config) => requestValue()[property],
 });
 
 export const setConfig = (env: ConfigEnv) => {

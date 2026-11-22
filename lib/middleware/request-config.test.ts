@@ -31,7 +31,9 @@ const enable = () => {
     process.env.ACCESS_KEY = 'key';
 };
 
-const withHeader = (value: unknown) => ({ headers: { 'X-RSSHub-Config': typeof value === 'string' ? value : JSON.stringify(value) } });
+type HeaderValue = string | Record<string, string | number>;
+
+const withHeader = (value: HeaderValue) => ({ headers: { 'X-RSSHub-Config': typeof value === 'string' ? value : JSON.stringify(value) } });
 
 describe('request-config', () => {
     it('does nothing without the header, even when enabled', async () => {
