@@ -100,7 +100,8 @@ async function handler() {
             $('script')
                 .text()
                 .match(/urlWithParams\s*=\s*"([^"]+)"/)![1]
-                .replaceAll(String.raw`\u002F`, '/');
+                .replaceAll(String.raw`\u002F`, '/')
+                .replace('allowMsgpackOfResult%22%3Atrue', 'allowMsgpackOfResult%22%3Afalse');
 
         // Cache it again
         cache.set(ENTRY_URL, dataSourceUrl);
