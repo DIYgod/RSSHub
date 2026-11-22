@@ -35,6 +35,7 @@ type RouteCacheKeyParts = {
     origin: string;
     prefix: string;
     query: string;
+    requestConfig?: string;
 };
 
 /**
@@ -43,7 +44,9 @@ type RouteCacheKeyParts = {
  */
 export const routeCacheKey = (parts: RouteCacheKeyParts) =>
     createHash('sha256')
-        .update(JSON.stringify([parts.path, parts.format, parts.limit ?? '', parts.sorted ?? '', parts.filtered, parts.fulltext ?? false, parts.origin, parts.prefix, parts.query]))
+        .update(
+            JSON.stringify([parts.path, parts.format, parts.limit ?? '', parts.sorted ?? '', parts.filtered, parts.fulltext ?? false, parts.origin, parts.prefix, parts.query, ...(parts.requestConfig ? [parts.requestConfig] : [])])
+        )
         .digest('hex');
 
 export const getRouteCacheKey = (ctx: Context) => {
@@ -64,5 +67,7 @@ export const getRouteCacheKey = (ctx: Context) => {
         origin: requestUrl.origin,
         prefix: ctx.req.header('x-forwarded-prefix') ?? '',
         query: routeQuery.toString(),
+        // Feeds built with credentials of the request must never be served to a request with other credentials
+        requestConfig: ctx.req.header('x-rsshub-config'),
     });
 };

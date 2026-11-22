@@ -4,6 +4,7 @@ import { ofetch } from 'ofetch';
 
 import type { HostRateLimits } from '@/utils/host-rate-limit';
 import { parseHostRateLimits } from '@/utils/host-rate-limit';
+import { applyRequestConfig } from '@/utils/request-config';
 
 type ConfigEnvKeys =
     // App config
@@ -52,6 +53,7 @@ type ConfigEnvKeys =
     | 'PAC_SCRIPT'
     // Access control
     | 'ACCESS_KEY'
+    | 'ALLOW_REQUEST_CONFIG'
     // Logging
     | 'DEBUG_INFO'
     | 'LOGGER_LEVEL'
@@ -335,6 +337,7 @@ export type Config = {
     pacScript?: string;
     // access control
     accessKey?: string;
+    allowRequestConfig: boolean;
     // logging
     debugInfo: string;
     loggerLevel: string;
@@ -892,6 +895,7 @@ const calculateValue = () => {
         pacScript: envs.PAC_SCRIPT,
         // access control
         accessKey: envs.ACCESS_KEY,
+        allowRequestConfig: toBoolean(envs.ALLOW_REQUEST_CONFIG, false),
         // logging
         // 是否显示 Debug 信息，取值 'true' 'false' 'some_string' ，取值为 'true' 时永久显示，取值为 'false' 时永远隐藏，取值为 'some_string' 时请求带上 '?debug=some_string' 显示
         debugInfo: envs.DEBUG_INFO || 'true',
@@ -1372,7 +1376,13 @@ void (async () => {
     }
 })();
 
-export const config: Config = value;
+// Route namespaces read the config at call time, so a request can see its own overrides (see `@/middleware/request-config`)
+export const config: Config = new Proxy(value, {
+    get: (target, property, receiver) => {
+        const base = Reflect.get(target, property, receiver);
+        return typeof property === 'string' && typeof base === 'object' && base !== null && !Array.isArray(base) ? applyRequestConfig(property, base) : base;
+    },
+});
 
 export const setConfig = (env: ConfigEnv) => {
     envs = Object.assign(process.env, env);
