@@ -1,5 +1,8 @@
+import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
+
 import type { BrowserContext, Page } from 'patchright';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import playwright from '@/utils/playwright';
 import { constructCookieArray, getCookies, limitContentLength, limitNavigation, parseCookieArray, setCookies } from '@/utils/playwright-utils';
@@ -13,6 +16,43 @@ afterEach(async () => {
     }
 
     vi.resetModules();
+});
+
+// A local stand-in for httpbingo.org's cookie endpoints, so the browser tests do not depend on an external service
+const cookieServer = createServer((req, res) => {
+    const url = new URL(req.url ?? '/', 'http://127.0.0.1');
+    if (url.pathname === '/cookies/set') {
+        res.setHeader(
+            'Set-Cookie',
+            [...url.searchParams].map(([name, value]) => `${name}=${value}; Path=/`)
+        );
+    }
+    const cookies = Object.fromEntries(
+        (req.headers.cookie ?? '')
+            .split('; ')
+            .filter(Boolean)
+            .map((item) => {
+                const index = item.indexOf('=');
+                return index === -1 ? ['', item] : [item.slice(0, index), item.slice(index + 1)];
+            })
+    );
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ cookies }));
+});
+let cookieServerUrl = '';
+const cookieServerHost = '127.0.0.1';
+
+beforeAll(async () => {
+    await new Promise<void>((resolve) => {
+        cookieServer.listen(0, cookieServerHost, resolve);
+    });
+    cookieServerUrl = `http://${cookieServerHost}:${(cookieServer.address() as AddressInfo).port}`;
+});
+
+afterAll(async () => {
+    await new Promise((resolve) => {
+        cookieServer.close(resolve);
+    });
 });
 
 describe('browser cookie utils', () => {
@@ -68,21 +108,21 @@ describe('browser cookie utils', () => {
         }
     });
 
-    it('getCookies httpbingo', async () => {
+    it('getCookies', async () => {
         context = await playwright();
         const page = await context.newPage();
-        await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
+        await page.goto(`${cookieServerUrl}/cookies/set?foo=bar&baz=qux`, {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(['foo=bar', 'baz=qux'].toSorted((a, b) => a.localeCompare(b)));
+        expect((await getCookies(page, cookieServerHost)).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(['foo=bar', 'baz=qux'].toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
 
-    it('setCookies httpbingo', async () => {
+    it('setCookies', async () => {
         context = await playwright();
         const page = await context.newPage();
-        // httpbingo.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
-        await setCookies(page, cookieStrExampleCom, 'httpbingo.org');
-        await page.goto('https://httpbingo.org/cookies', {
+        // the server cannot tell a cookie with an empty name from its value, so we cannot use cookieStrAll here
+        await setCookies(page, cookieStrExampleCom, cookieServerHost);
+        await page.goto(`${cookieServerUrl}/cookies`, {
             waitUntil: 'domcontentloaded',
         });
         const data = await page.evaluate(() => JSON.parse(document.body.textContent || ''));
