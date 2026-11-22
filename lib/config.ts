@@ -4,6 +4,7 @@ import { ofetch } from 'ofetch';
 
 import type { HostRateLimits } from '@/utils/host-rate-limit';
 import { parseHostRateLimits } from '@/utils/host-rate-limit';
+import { getRequestConfig } from '@/utils/request-config';
 
 type ConfigEnvKeys =
     // App config
@@ -52,6 +53,7 @@ type ConfigEnvKeys =
     | 'PAC_SCRIPT'
     // Access control
     | 'ACCESS_KEY'
+    | 'ALLOW_REQUEST_CONFIG'
     // Logging
     | 'DEBUG_INFO'
     | 'LOGGER_LEVEL'
@@ -335,6 +337,7 @@ export type Config = {
     pacScript?: string;
     // access control
     accessKey?: string;
+    allowRequestConfig: boolean;
     // logging
     debugInfo: string;
     loggerLevel: string;
@@ -808,7 +811,7 @@ const getAssetsUrl = (rootUrl: string, assetsUrl?: string) => {
     return url.href.replace(/\/+$/, '');
 };
 
-const calculateValue = () => {
+const buildValue = (envs: ConfigEnv) => {
     const bilibili_cookies: Record<string, string | undefined> = {};
     const email_config: Record<string, string | undefined> = {};
     const discuz_cookies: Record<string, string | undefined> = {};
@@ -892,6 +895,7 @@ const calculateValue = () => {
         pacScript: envs.PAC_SCRIPT,
         // access control
         accessKey: envs.ACCESS_KEY,
+        allowRequestConfig: toBoolean(envs.ALLOW_REQUEST_CONFIG, false),
         // logging
         // 是否显示 Debug 信息，取值 'true' 'false' 'some_string' ，取值为 'true' 时永久显示，取值为 'false' 时永远隐藏，取值为 'some_string' 时请求带上 '?debug=some_string' 显示
         debugInfo: envs.DEBUG_INFO || 'true',
@@ -1346,7 +1350,10 @@ const calculateValue = () => {
         },
     };
 
-    Object.assign(value, _value);
+    return _value;
+};
+const calculateValue = () => {
+    Object.assign(value, buildValue(envs));
 };
 calculateValue();
 void (async () => {
@@ -1372,7 +1379,9 @@ void (async () => {
     }
 })();
 
-export const config: Config = value;
+export const config: Config = new Proxy(value, {
+    get: (target, property, receiver) => Reflect.get(getRequestConfig((overrides) => buildValue({ ...envs, ...overrides }) as unknown as Config) ?? target, property, receiver),
+});
 
 export const setConfig = (env: ConfigEnv) => {
     envs = Object.assign(process.env, env);
