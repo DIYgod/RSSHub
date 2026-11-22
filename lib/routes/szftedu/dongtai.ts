@@ -56,7 +56,7 @@ async function handler() {
             return {
                 title: $('a', el).text(),
                 link: $('a', el).attr('href'),
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 'YYYY.MM.DD', 8) : undefined,
             };
         });
 
