@@ -271,6 +271,7 @@ jobs:
         timeout-minutes: 5
         permissions:
             contents: write
+            actions: write
         steps:
             - name: Prepare release notes
               id: notes
@@ -278,7 +279,7 @@ jobs:
                   IMAGE_REPOSITORY: ${{ needs.release.outputs.repo-name }}
                   DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
               run: |
-                  echo "tag=v$(date -u +%Y.%m.%d)-${GITHUB_RUN_NUMBER}.${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+                  echo "tag=v$(date -u +%Y.%-m.%-d)-${GITHUB_RUN_NUMBER}.g${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
                   image_repository="${GITHUB_REPOSITORY,,}"
                   cat > "$RUNNER_TEMP/release-notes.md" <<EOF
                   Source commit: $GITHUB_SHA
@@ -299,6 +300,12 @@ jobs:
                   name: ${{ steps.notes.outputs.tag }}
                   target_commitish: ${{ github.sha }}
                   body_path: ${{ runner.temp }}/release-notes.md
+
+            - name: npm publish
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  TAG: ${{ steps.notes.outputs.tag }}
+              run: gh workflow run npm-publish.yml --repo "$GITHUB_REPOSITORY" --ref "$TAG"
 
     description:
         runs-on: ubuntu-slim
