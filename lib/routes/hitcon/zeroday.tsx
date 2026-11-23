@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -21,6 +21,9 @@ export const route: Route = {
             source: ['zeroday.hitcon.org/vulnerability/:status?'],
         },
     ],
+    features: {
+        requirePuppeteer: true,
+    },
     handler,
     description: `| 缺省   | all  | closed | disclosed | patching |
 | ------ | ---- | ------ | --------- | -------- |
@@ -28,6 +31,18 @@ export const route: Route = {
 };
 
 const baseUrl = 'https://zeroday.hitcon.org/vulnerability';
+
+async function getList(url: string) {
+    const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await page.waitForSelector('.zdui-strip-list > li', { timeout: 10000 });
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
 
 const titleMap = {
     all: '全部',
@@ -46,7 +61,7 @@ async function handler(ctx: Context): Promise<Data> {
         url += `/${status}`;
     }
 
-    const response = await ofetch(url, { minVersion: 'TLSv1.3' });
+    const response = await getList(url);
 
     const $ = load(response);
     const items: DataItem[] = $('.zdui-strip-list>li')

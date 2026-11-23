@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { html } from 'hono/html';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/search/:query',
@@ -13,7 +13,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -42,6 +42,18 @@ function renderDescription(video: VideoThumb): string {
     return html`<img src="${video.thumb}" alt="${video.title}" style="max-width:100%" />`.toString();
 }
 
+async function fetchSearch(apiUrl: string): Promise<string> {
+    const { page, destroy } = await getPlaywrightPage(apiUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
+        await page.goto(apiUrl, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('.video-img-box', { state: 'attached' });
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
+
 async function handler(ctx) {
     const { query } = ctx.req.param();
 
@@ -57,7 +69,7 @@ async function handler(ctx) {
     const baseUrl = `https://jable.tv/search/${encodedQuery}/`;
     const apiUrl = `${baseUrl}?${params.toString()}`;
 
-    const response = await ofetch(apiUrl, { minVersion: 'TLSv1.3' });
+    const response = await fetchSearch(apiUrl);
     const $ = load(response);
 
     const videos: VideoThumb[] = $('.video-img-box')
