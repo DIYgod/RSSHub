@@ -37,7 +37,7 @@ interface PluginInput {
     worktree?: string;
 }
 
-interface PluginOptions {
+export interface PluginOptions {
     port?: number | string;
     publicUrl?: string;
     env?: Record<string, string | number | boolean | null>;

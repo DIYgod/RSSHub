@@ -1,4 +1,5 @@
 // https://github.com/yetone/magpie/blob/main/internal/gui/pagebridge.js
+import type { PluginOptions } from './plugin';
 
 interface MagpieTheme {
     dark: boolean;
@@ -19,18 +20,19 @@ interface Magpie {
     visible: boolean;
     onTheme(fn: (theme: MagpieTheme) => void): void;
     onVisibility(fn: (visible: boolean) => void): void;
-    onAction(fn: (action: { id: string; provider?: MagpieNamed; agent?: MagpieNamed }) => unknown): void;
+    onAction(fn: (action: { id: string; provider?: MagpieNamed; agent?: MagpieNamed }) => void | Promise<void>): void;
     options: {
-        get(): Promise<Record<string, unknown>>;
-        set(options: Record<string, unknown>): Promise<Record<string, unknown>>;
+        get(): Promise<PluginOptions>;
+        set(options: PluginOptions): Promise<PluginOptions>;
     };
-    read(name: string, params?: unknown): Promise<unknown>;
     image: {
-        copy(png: Blob): Promise<unknown>;
+        copy(png: Blob): Promise<{ ok: boolean }>;
         save(png: Blob, name: string): Promise<{ path: string }>;
     };
 }
 
-interface Window {
-    magpie?: Magpie;
+declare global {
+    interface Window {
+        magpie?: Magpie;
+    }
 }

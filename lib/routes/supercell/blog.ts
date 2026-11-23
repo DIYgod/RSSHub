@@ -237,15 +237,16 @@ async function handler(ctx: Context) {
             const link = `${rootUrl}${article.linkUrl}`;
             const pubDate = parseDate(article.publishDate);
 
-            let detail: { description: string };
+            let description: string;
             try {
-                detail = await cache.tryGet(`supercell:article:v2:${link}`, async () => {
+                const detail = await cache.tryGet(`supercell:article:v2:${link}`, async () => {
                     const dataUrl = `${rootUrl}/_next/data/${buildId}${article.linkUrl}.json`;
                     const { data: articleData } = await got(dataUrl);
                     return { description: articleData.pageProps.bodyCollection.map((block: any) => renderBlock(block)).join('') };
                 });
+                description = detail.description;
             } catch {
-                detail = { description: article.descriptionForNewsArchive || '' };
+                description = article.descriptionForNewsArchive || '';
             }
             return {
                 title: article.title,
@@ -253,7 +254,7 @@ async function handler(ctx: Context) {
                 pubDate,
                 category: article.category,
                 author: 'Supercell',
-                ...detail,
+                description,
             };
         },
         { concurrency: 3 }
