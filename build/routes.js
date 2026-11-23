@@ -33846,7 +33846,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -54339,7 +54339,7 @@ export default {
         "maintainers": [
           "jack2game"
         ],
-        "url": "dealstreetasia.com/",
+        "url": "www.dealstreetasia.com/",
         "location": "home.ts",
         "module": () => import('@/routes/dealstreetasia/home.ts')
       },
@@ -54364,7 +54364,7 @@ export default {
         "maintainers": [
           "jack2game"
         ],
-        "url": "dealstreetasia.com/",
+        "url": "www.dealstreetasia.com/",
         "location": "section.ts",
         "module": () => import('@/routes/dealstreetasia/section.ts')
       }
@@ -75981,6 +75981,38 @@ export default {
   },
   "iqiyi": {
     "routes": {
+      "/user/video/:uid": {
+        "path": "/user/video/:uid",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/iqiyi/user/video/2289191062",
+        "parameters": {
+          "uid": "用户名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "iqiyi.com/u/:uid/*"
+            ]
+          }
+        ],
+        "name": "用户视频",
+        "maintainers": [
+          "talengu",
+          "JimenezLi"
+        ],
+        "location": "video.ts",
+        "module": () => import('@/routes/iqiyi/video.ts')
+      },
       "/album/:id": {
         "path": "/album/:id",
         "categories": [
@@ -76005,38 +76037,6 @@ export default {
         "description": "::: tip\n可抓取內容根据服务器所在地区而定\n:::",
         "location": "album.tsx",
         "module": () => import('@/routes/iqiyi/album.tsx')
-      },
-      "/user/video/:uid": {
-        "path": "/user/video/:uid",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/iqiyi/user/video/2289191062",
-        "parameters": {
-          "uid": "用户名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "iqiyi.com/u/:uid/*"
-            ]
-          }
-        ],
-        "name": "用户视频",
-        "maintainers": [
-          "talengu",
-          "JimenezLi"
-        ],
-        "location": "video.ts",
-        "module": () => import('@/routes/iqiyi/video.ts')
       }
     },
     "apiRoutes": {},
@@ -82933,7 +82933,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -91348,7 +91348,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -114852,8 +114852,8 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -125357,7 +125357,6 @@ export default {
           "GammaPi"
         ],
         "features": {
-          "requirePuppeteer": true,
           "antiCrawler": true
         },
         "location": "ecenews.ts",
@@ -125382,7 +125381,6 @@ export default {
         ],
         "description": "Note: The [source website](https://www.umass.edu/engineering/events) may be empty when there are no upcoming events. This is normal and will cause rsshub fail to fetch this feed.",
         "features": {
-          "requirePuppeteer": true,
           "antiCrawler": true
         },
         "location": "eceseminar.ts",
@@ -125406,7 +125404,6 @@ export default {
           "GammaPi"
         ],
         "features": {
-          "requirePuppeteer": true,
           "antiCrawler": true
         },
         "location": "ipoevents.ts",
@@ -125430,7 +125427,6 @@ export default {
           "GammaPi"
         ],
         "features": {
-          "requirePuppeteer": true,
           "antiCrawler": true
         },
         "location": "ipostories.ts",
@@ -131526,7 +131522,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -131555,7 +131551,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -131588,7 +131584,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -131623,7 +131619,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -131658,7 +131654,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -131697,7 +131693,7 @@ export default {
               "description": "需要登录才能访问的专栏请配置雪球登录 Cookie。"
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -131796,7 +131792,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -150942,7 +150938,7 @@ export default {
           "DIYgod"
         ],
         "features": {
-          "requirePuppeteer": true
+          "antiCrawler": true
         },
         "parameters": {
           "section": "documents（政策文件，默认）或 interpretations（政策解读）"
@@ -160759,7 +160755,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -160789,7 +160785,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -160846,7 +160842,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -167098,7 +167094,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -167721,7 +167717,7 @@ export default {
           "id": "新鲜事页面 URL 中的标识，例如 7574046780235777_1 或 60e8c3bf5b9c0e70_0。保留末尾的栏目类型。"
         },
         "features": {
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "requireConfig": [
             {
@@ -167763,7 +167759,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -167876,7 +167872,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -167942,7 +167938,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -168063,7 +168059,7 @@ export default {
               "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,

@@ -5426,12 +5426,12 @@
   "/iqilu/v/:category{.+}?": [
     "nczitzk"
   ],
-  "/iqiyi/album/:id": [
-    "TonyRL"
-  ],
   "/iqiyi/user/video/:uid": [
     "talengu",
     "JimenezLi"
+  ],
+  "/iqiyi/album/:id": [
+    "TonyRL"
   ],
   "/iqnew/latest": [
     "nczitzk"
