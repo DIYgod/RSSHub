@@ -1,11 +1,10 @@
 import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 import { renderComment } from '../templates/comment';
-import { appsUrl } from '../utils';
+import { appsUrl, createPageFetcher } from '../utils';
 
 export const route: Route = {
     path: ['/apps/:lang/comment/:id', '/apps/comment/:id'],
@@ -17,7 +16,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -32,37 +31,38 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { id, lang = '' } = ctx.req.param();
-    const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-comment/${id}`;
+    const pageFetcher = createPageFetcher();
+    try {
+        const { id, lang = '' } = ctx.req.param();
+        const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-comment/${id}`;
 
-    const { data: response } = await got(link, {
-        searchParams: {
-            sort: 'create',
-        },
-    });
-    const $ = load(response);
+        const response = await pageFetcher.get(link, { sort: 'create' });
+        const $ = load(response);
 
-    const items = $('.qoo-post-item')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const author = $item.find('.qoo-clearfix .name a').eq(0).text();
-            return {
-                title: `${author} ▶ ${$item.find('.qoo-clearfix .name a').eq(1).text()}`,
-                link: $item.find('a.bg-click-wrap').attr('href'),
-                description: renderComment({
-                    rating: $item.find('.qoo-rating-bar').text().trim(),
-                    text: $item.find('.text-view').html() ?? undefined,
-                }),
-                pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss', 8),
-                author,
-            };
-        });
+        const items = $('.qoo-post-item')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const author = $item.find('.qoo-clearfix .name a').eq(0).text();
+                return {
+                    title: `${author} ▶ ${$item.find('.qoo-clearfix .name a').eq(1).text()}`,
+                    link: $item.find('a.bg-click-wrap').attr('href'),
+                    description: renderComment({
+                        rating: $item.find('.qoo-rating-bar').text().trim(),
+                        text: $item.find('.text-view').html() ?? undefined,
+                    }),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss', 8),
+                    author,
+                };
+            });
 
-    return {
-        title: $('head title').text(),
-        link,
-        language: $('html').attr('lang') as Language,
-        item: items,
-    };
+        return {
+            title: $('head title').text(),
+            link,
+            language: $('html').attr('lang') as Language,
+            item: items,
+        };
+    } finally {
+        await pageFetcher.close();
+    }
 }

@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-import { getBjxCookie } from './utils';
+import { getBjxPage } from './utils';
 
 export const route: Route = {
     path: '/gf/:type',
@@ -13,7 +12,7 @@ export const route: Route = {
     parameters: { type: '分类，北极星光伏最后的`type`字段' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -31,22 +30,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const link = `https://guangfu.bjx.com.cn/${type}/`;
-    const cookie = await getBjxCookie(link);
-    const data = await ofetch(link, { headers: { cookie } });
-    const $ = load(data);
-    const list = $('div.cc-list-content ul li');
-    return {
-        title: $('title').text(),
-        description: $('meta[name="Description"]').attr('content'),
-        link,
-        item: list.toArray().map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('a').attr('title')!,
-                link: $item.find('a').attr('href'),
-                pubDate: parseDate($item.find('span').text(), 8),
-            };
-        }),
-    };
+    const { page, destroy } = await getBjxPage(`https://guangfu.bjx.com.cn/${type}/`);
+    try {
+        const data = await page.content();
+        const $ = load(data);
+        const list = $('div.cc-list-content ul li');
+        return {
+            title: $('title').text(),
+            description: $('meta[name="Description"]').attr('content'),
+            link: `https://guangfu.bjx.com.cn/${type}/`,
+            item: list.toArray().map((item) => {
+                const $item = $(item);
+                return {
+                    title: $item.find('a').attr('title')!,
+                    link: $item.find('a').attr('href'),
+                    pubDate: parseDate($item.find('span').text(), 8),
+                };
+            }),
+        };
+    } finally {
+        await destroy();
+    }
 }

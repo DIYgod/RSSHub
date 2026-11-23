@@ -4,7 +4,10 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { queryToBoolean } from '@/utils/readable-social';
 import { formatDate } from '@/utils/time';
 
@@ -17,14 +20,20 @@ interface DouyinImage {
 interface DouyinUser {
     nickname: string;
     sec_uid: string;
-    avatar_thumb: DouyinImage;
+    avatar_thumb?: DouyinImage;
 }
 
 interface DouyinRoom {
     id_str: string;
     status: number;
     title: string;
-    cover: DouyinImage;
+    cover?: DouyinImage;
+    owner?: DouyinUser;
+}
+
+interface RoomData {
+    room: DouyinRoom;
+    owner: DouyinUser;
 }
 
 interface StreamPayload {
@@ -35,7 +44,19 @@ interface StreamPayload {
     };
 }
 
+interface EnterResponse {
+    status_code: number;
+    data?: { data?: DouyinRoom[]; user?: DouyinUser };
+}
+
 const firstSeenRequests = new Map<string, Promise<number>>();
+const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch']);
+
+function getRoomData(room?: DouyinRoom, owner?: DouyinUser): RoomData | undefined {
+    if (typeof room?.id_str === 'string' && /^\d+$/.test(room.id_str) && typeof room.status === 'number' && typeof room.title === 'string' && owner?.nickname) {
+        return { room, owner };
+    }
+}
 
 function parseRoomScript(script: string) {
     const match = /^\s*self\.__pace_f\.push\((\[.*\])\);?\s*$/s.exec(script);
@@ -65,6 +86,53 @@ function parseRoomHtml(html: string) {
     }
 }
 
+async function getEnterResponse(page: Page) {
+    try {
+        const response = await page.waitForResponse(
+            (response) => {
+                const url = new URL(response.url());
+                return url.hostname === 'live.douyin.com' && url.pathname.replace(/\/$/, '') === '/webcast/room/web/enter';
+            },
+            { timeout: config.requestTimeout }
+        );
+        return (await response.json()) as EnterResponse;
+    } catch {
+        logger.debug('Douyin live room API response was unavailable.');
+    }
+}
+
+async function getBrowserRoomData(pageUrl: string) {
+    const { page, destroy } = await getPlaywrightPage(pageUrl, { noGoto: true, closeTimeout: 0 });
+    let enterResponse: ReturnType<typeof getEnterResponse> | undefined;
+    try {
+        await page.route('**/*', (route) => (resourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        enterResponse = getEnterResponse(page);
+        logger.http(`Requesting ${pageUrl}`);
+        await page.goto(pageUrl, { waitUntil: 'domcontentloaded' });
+        const streamedData = parseRoomHtml(await page.content());
+        if (streamedData) {
+            return streamedData;
+        }
+        const response = await enterResponse;
+        if (response && response.status_code !== 0) {
+            throw new Error(`Douyin live room API returned status code ${response.status_code}.`);
+        }
+        const room = response?.data?.data?.[0];
+        const data = getRoomData(room, response?.data?.user ?? room?.owner);
+        if (!data) {
+            throw new Error('Douyin did not return live room data. Check that the room URL is accessible and Playwright is configured.');
+        }
+        return data;
+    } finally {
+        try {
+            await destroy();
+        } finally {
+            // Settle the response reader even when streamed HTML or navigation ends first.
+            await enterResponse;
+        }
+    }
+}
+
 async function getFirstSeen(roomId: string) {
     const existing = firstSeenRequests.get(roomId);
     if (existing) {
@@ -88,10 +156,10 @@ export const route: Route = {
         showTime: '是否在标题后添加本场首次检测时间，0/1/true/false，默认 false。',
     },
     description:
-        '读取公开页面中的直播状态。showTime 开启时，标题后显示 RSSHub 本场首次检测时间（UTC+8），并非源站实际开播时刻，也不会作为 pubDate。时间按本场真实 room ID 缓存 30 天，重复读取不会延长有效期。内存缓存重启或清除缓存会重置记录，建议使用 Redis 保持记录稳定。',
+        '优先读取公开页面中的直播状态，必要时使用 Playwright 读取页面或直播间接口。showTime 开启时，标题后显示 RSSHub 本场首次检测时间（UTC+8），并非源站实际开播时刻，也不会作为 pubDate。时间按本场真实 room ID 缓存 30 天，重复读取不会延长有效期。内存缓存重启或清除缓存会重置记录，建议使用 Redis 保持记录稳定。',
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -118,19 +186,23 @@ async function handler(ctx) {
     const { room: roomInfo, owner: roomOwner } = await cache.tryGet(
         `douyin:live:room:${rid}`,
         async () => {
-            const html = await ofetch(pageUrl);
-            const data = parseRoomHtml(html);
-            if (!data) {
-                throw new Error('Douyin did not return live room data. Check that the room ID is correct.');
+            try {
+                const html = await ofetch(pageUrl, { retry: 0, timeout: config.requestTimeout });
+                const data = parseRoomHtml(html);
+                if (data) {
+                    return data;
+                }
+            } catch {
+                logger.debug('Douyin public page did not provide live room data; trying Playwright.');
             }
-            return data;
+            return await getBrowserRoomData(pageUrl);
         },
         config.cache.routeExpire,
         false
     );
 
     const nickname = roomOwner.nickname;
-    const userAvatar = roomOwner.avatar_thumb.url_list[0];
+    const userAvatar = roomOwner.avatar_thumb?.url_list[0];
     const showTime = queryToBoolean(ctx.req.param('showTime')) ?? false;
     const firstSeen = await getFirstSeen(roomInfo.id_str);
     const suffix = showTime ? `（本场首次检测：${formatDate(Temporal.Instant.fromEpochMilliseconds(firstSeen), 'YYYY-MM-DD HH:mm:ss', 8)} UTC+8）` : '';
@@ -140,7 +212,7 @@ async function handler(ctx) {
         if (roomInfo.status === 2) {
             items.push({
                 title: `开播：${roomInfo.title}${suffix}`,
-                description: `<img src="${roomInfo.cover.url_list[0]}">`,
+                description: roomInfo.cover?.url_list[0] ? `<img src="${roomInfo.cover.url_list[0]}">` : undefined,
                 link: pageUrl,
                 author: nickname,
                 guid: roomInfo.id_str, // roomId is unique for each live event
@@ -158,7 +230,7 @@ async function handler(ctx) {
     return {
         title: `${nickname}的抖音直播间 - 抖音直播`,
         description: `欢迎来到${nickname}的抖音直播间，${nickname}与大家一起记录美好生活 - 抖音直播`,
-        image: getOriginAvatar(userAvatar),
+        image: userAvatar ? getOriginAvatar(userAvatar) : undefined,
         link: pageUrl,
         item: items,
         allowEmpty: true,

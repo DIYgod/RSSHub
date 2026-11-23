@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import { getMimeType } from 'hono/utils/mime';
+import { FetchError } from 'ofetch';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const urlPath = 'dm539/new';
 
@@ -13,7 +15,7 @@ export const route: Route = {
     example: '/missav/new',
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -34,11 +36,34 @@ export const route: Route = {
     url: 'missav.ws/dm397/new',
 };
 
+async function fetchList(url: string) {
+    try {
+        return await ofetch<string>(url, { minVersion: 'TLSv1.3' });
+    } catch (error) {
+        if (!(error instanceof FetchError) || error.status !== 403) {
+            throw error;
+        }
+    }
+
+    const { page, destroy } = await getPlaywrightPage(url, {
+        closeTimeout: 0,
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (['document'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
+    });
+    try {
+        await page.waitForSelector('.grid .group .text-secondary');
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
+
 async function handler() {
     const baseUrl = 'https://missav.ws';
     const url = `${baseUrl}/${urlPath}`;
 
-    const response = await ofetch(url, { minVersion: 'TLSv1.3' });
+    const response = await fetchList(url);
 
     const $ = load(response);
 

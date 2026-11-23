@@ -1,19 +1,29 @@
-import type { FetchResponse } from 'ofetch';
+import type { APIRequestContext } from 'patchright';
 
-import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-const posList = [7, 34, 35, 21, 0, 16, 4, 26, 11, 30, 15, 3, 32, 38, 31, 39, 5, 10, 14, 13, 2, 12, 8, 17, 18, 22, 9, 23, 33, 24, 36, 25, 20, 6, 28, 27, 1, 37, 19, 29];
-
-export const getAcwScV2 = (response: FetchResponse<string>) => {
-    const arg1 = response._data!.match(/var arg1='(.*?)'/)![1];
-    const acwTc = response.headers
-        .getSetCookie()
-        .find((cookie) => cookie.startsWith('acw_tc='))!
-        .split(';', 1)[0];
-    return `${acwTc}; acw_sc__v2=1234cf0d46-${posList.map((index) => arg1[index]).join('')}`;
+export const getBjxPage = async (url: string) => {
+    const instance = await getPlaywrightPage(url, {
+        closeTimeout: 0,
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', async (request) => {
+                await (['document', 'script', 'xhr', 'fetch'].includes(request.request().resourceType()) ? request.continue() : request.abort());
+            });
+        },
+    });
+    try {
+        await instance.page.waitForSelector('.cc-list-content li');
+        return instance;
+    } catch (error) {
+        await instance.destroy();
+        throw error;
+    }
 };
 
-export const getBjxCookie = async (url: string) => {
-    const response = await ofetch.raw<string>(url);
-    return getAcwScV2(response);
+export const fetchBjxPage = async (url: string, context: APIRequestContext) => {
+    const response = await context.get(url);
+    if (!response.ok()) {
+        throw new Error(`Unable to fetch the article (${response.status()}): ${url}`);
+    }
+    return await response.text();
 };

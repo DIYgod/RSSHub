@@ -1,14 +1,14 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
+import type { APIRequestContext } from 'patchright';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
-import { getBjxCookie } from './utils';
+import { fetchBjxPage, getBjxPage } from './utils';
 
 export const route: Route = {
     path: '/huanbao',
@@ -17,7 +17,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -36,41 +36,45 @@ export const route: Route = {
 
 async function handler() {
     const listURL = 'https://huanbao.bjx.com.cn/yw/';
-    const cookie = await getBjxCookie(listURL);
-    const html = await ofetch(listURL, { headers: { cookie } });
-    const $ = load(html);
-    let items = $('.cc-layout-3 .cc-list-content li')
-        .toArray()
-        .map((e) => {
-            const $e = $(e);
-            return {
-                title: $e.find('a').attr('title')!,
-                link: $e.find('a').attr('href')!,
-                pubDate: parseDate($e.find('span').text()),
-            };
-        });
+    const { page, context, destroy } = await getBjxPage(listURL);
+    try {
+        const html = await page.content();
+        const $ = load(html);
+        let items = $('.cc-layout-3 .cc-list-content li')
+            .toArray()
+            .map((e) => {
+                const $e = $(e);
+                return {
+                    title: $e.find('a').attr('title')!,
+                    link: $e.find('a').attr('href')!,
+                    pubDate: parseDate($e.find('span').text()),
+                };
+            });
 
-    items = await pMap(
-        // Limit concurrent article requests to avoid per-IP throttling.
-        items,
-        // only follow links on the site itself
-        (item) => (isOnSite(item.link, 'bjx.com.cn') ? fetchPage(item.link, cookie) : item),
-        { concurrency: 3 }
-    );
+        items = await pMap(
+            // Limit concurrent article requests to avoid per-IP throttling.
+            items,
+            // only follow links on the site itself
+            (item) => (isOnSite(item.link, 'bjx.com.cn') ? fetchPage(item.link, context.request) : item),
+            { concurrency: 3 }
+        );
 
-    return {
-        title: '北极星环保 - 环保行业垂直门户网站',
-        link: listURL,
-        item: items,
-    };
+        return {
+            title: '北极星环保 - 环保行业垂直门户网站',
+            link: listURL,
+            item: items,
+        };
+    } finally {
+        await destroy();
+    }
 }
 
-const fetchPage = (link: string, cookie: string) =>
+const fetchPage = (link: string, context: APIRequestContext) =>
     cache.tryGet(link, async () => {
         // Long articles can span multiple pages.
         const pages: CheerioAPI[] = [];
 
-        const html = await ofetch(link, { headers: { cookie } });
+        const html = await fetchBjxPage(link, context);
         const $page = load(html);
         pages.push($page);
 
@@ -89,7 +93,7 @@ const fetchPage = (link: string, cookie: string) =>
                     continue;
                 }
                 /* eslint-disable no-await-in-loop */
-                const html = await ofetch(sublink, { headers: { cookie } });
+                const html = await fetchBjxPage(sublink, context);
                 pages.push(load(html));
             }
         }
