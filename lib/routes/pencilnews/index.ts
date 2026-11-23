@@ -13,7 +13,7 @@ interface SourceArticle {
         create_at: string;
     };
     author?: { profile?: { name?: string } };
-    cate?: { name?: string };
+    cate: { name: string };
 }
 
 export const route: Route = {
@@ -64,9 +64,9 @@ async function handler() {
                     title: info.title,
                     description: content,
                     link,
-                    author: article.author?.profile?.name || '',
+                    author: article.author?.profile?.name,
                     pubDate: parseDate(info.create_at, 8),
-                    category: article.cate?.name ? [article.cate.name] : [],
+                    category: [article.cate.name],
                     guid: String(articleId),
                 };
             });

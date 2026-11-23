@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const rootURL = 'http://www.zzb.sz.gov.cn/';
@@ -65,22 +65,19 @@ async function handler(ctx) {
     if (currentCategory) {
         const data = await ofetch<{
             category: { name: string; post_per_page: number };
-            articles: Array<{ title: string; url: string; abstract: string; author: string; visible_publish_time?: number; date?: string }>;
+            articles: Array<{ title: string; url: string; abstract: string; author: string; visible_publish_time: number }>;
         }>(new URL(`/postmeta/i/${currentCategory.id}.json`, rootURL).href);
         return {
             title: `深圳组工在线 - ${data.category.name}`,
             link: new URL(`/${currentCategory.path}/index.html?pub_point=${currentCategory.path}`, rootURL).href,
-            item: data.articles.slice(0, data.category.post_per_page).map((item) => {
-                const pubDate = item.visible_publish_time ? parseDate(item.visible_publish_time, 'X') : item.date ? parseDateStrict(item.date, 'YYYY-MM-DD', 8) : undefined;
-                return {
-                    title: item.title,
-                    link: new URL(item.url, rootURL).href,
-                    description: item.abstract && item.abstract !== item.title ? item.abstract : undefined,
-                    author: item.author || undefined,
-                    category: data.category.name,
-                    pubDate,
-                };
-            }),
+            item: data.articles.slice(0, data.category.post_per_page).map((item) => ({
+                title: item.title,
+                link: new URL(item.url, rootURL).href,
+                description: item.abstract && item.abstract !== item.title ? item.abstract : undefined,
+                author: item.author || undefined,
+                category: data.category.name,
+                pubDate: parseDate(item.visible_publish_time, 'X'),
+            })),
         };
     }
 

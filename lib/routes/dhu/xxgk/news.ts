@@ -6,8 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import { selectItems } from '../utils';
-
 const siteUrl = 'https://xxgk.dhu.edu.cn';
 const baseUrl = 'https://xxgk.dhu.edu.cn/1737/list.htm';
 
@@ -48,7 +46,7 @@ async function handler() {
         });
 
     const items = await pMap(
-        selectItems(list),
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 // Some article bodies are restricted to the university network.

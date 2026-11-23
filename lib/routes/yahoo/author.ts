@@ -20,10 +20,7 @@ export const route: Route = {
 async function fetchArticle(link: string) {
     const detailResponse = await ofetch(link);
     const content = load(detailResponse);
-    const metadata = content('script[type="application/ld+json"]')
-        .toArray()
-        .map((element) => JSON.parse(content(element).text()))
-        .find((data) => data['@type'] === 'NewsArticle');
+    const metadata = JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text());
     content('button').remove();
     const cover = content('div.story-cover');
     cover.find('img').removeAttr('style');
@@ -54,10 +51,7 @@ async function handler(ctx: Context) {
     const $ = load(response._data!);
     const title = $('meta[property="og:title"]').attr('content') ?? '';
     const description = $('meta[property="og:description"]').attr('content');
-    const list: Array<{ link: string }> = $('script[type="application/ld+json"]')
-        .toArray()
-        .map((item) => JSON.parse($(item).text()))
-        .find((data) => data.hasPart?.mainEntity?.itemListElement)
+    const list: Array<{ link: string }> = JSON.parse($('script[type="application/ld+json"]:contains("itemListElement")').text())
         .hasPart.mainEntity.itemListElement.slice(0, 10)
         .map((item) => ({
             link: item.url,

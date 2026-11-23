@@ -24,8 +24,8 @@ async function handler() {
         item: response.data.map((game) => ({
             title: game.names.international,
             link: game.weblink,
-            pubDate: game.created ? parseDate(game.created) : undefined,
-            description: renderToString(<>{game.assets['cover-large']?.uri && <img src={game.assets['cover-large'].uri} alt="" />}</>),
+            pubDate: parseDate(game.created),
+            description: renderToString(<img src={game.assets['cover-large'].uri} alt="" />),
         })),
     };
 }

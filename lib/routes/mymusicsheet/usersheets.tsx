@@ -177,7 +177,7 @@ async function handler(ctx) {
 
         if (item.price === 0) {
             finalPrice = 'Free';
-        } else if (!Number.isNaN(price) && Number.isFinite(price)) {
+        } else {
             const rate = Number(rates[iso]);
             if (rate) {
                 finalPrice = `${(price * rate).toFixed(2)} ${iso}`;
@@ -230,7 +230,7 @@ const MymusicSheetDescription = ({
     };
 }) => (
     <div className="item-description">
-        {youtubeId ? raw(renderYoutube(true, youtubeId, undefined, undefined)) : null}
+        {youtubeId ? raw(renderYoutube(true, youtubeId)) : null}
         {content.musicName ? <p>Music Name: {content.musicName}</p> : null}
         {content.musicMemo ? <p>Music Memo: {content.musicMemo}</p> : null}
         {content.musicianName ? <p>Musician Name: {content.musicianName}</p> : null}

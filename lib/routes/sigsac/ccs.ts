@@ -95,22 +95,15 @@ async function fetchYearPage(year: number, sourceIndex = 0): Promise<YearPage | 
     try {
         if (source.type === 'json') {
             const json = await ofetch<AcceptedPapersJson>(pageUrl);
-            if (isAcceptedPapersJson(json)) {
-                return { pageUrl, json };
-            }
-        } else {
-            const html = await ofetch<string>(pageUrl);
-            return { pageUrl, html };
+            return { pageUrl, json };
         }
+        const html = await ofetch<string>(pageUrl);
+        return { pageUrl, html };
     } catch {
         // Try the next known layout for this year.
     }
 
     return fetchYearPage(year, sourceIndex + 1);
-}
-
-function isAcceptedPapersJson(value: AcceptedPapersJson): boolean {
-    return Array.isArray(value?.firstCycle) || Array.isArray(value?.secondCycle);
 }
 
 function parseYearPage(page: YearPage): DataItem[] | Promise<DataItem[]> {
@@ -119,19 +112,18 @@ function parseYearPage(page: YearPage): DataItem[] | Promise<DataItem[]> {
 
 function parseAcceptedPage(html: string, pageUrl: string): DataItem[] | Promise<DataItem[]> {
     const $ = load(html);
-    const seenLinks = new Set<string>();
 
     // 2023 is the only year that hides the paper list behind program.js and XML data.
     if ($('#acceptPaper').length) {
-        return parseProgramPage($, pageUrl, seenLinks);
+        return parseProgramPage($, pageUrl);
     }
 
     // Newer pages use tables; 2020 and 2021 still use div.papers-item blocks.
-    const tableItems = parsePaperTables($, pageUrl, seenLinks);
-    return tableItems.length ? tableItems : parseLegacyPapers($, pageUrl, seenLinks);
+    const tableItems = parsePaperTables($, pageUrl);
+    return tableItems.length ? tableItems : parseLegacyPapers($, pageUrl);
 }
 
-async function parseProgramPage($: CheerioAPI, pageUrl: string, seenLinks: Set<string>): Promise<DataItem[]> {
+async function parseProgramPage($: CheerioAPI, pageUrl: string): Promise<DataItem[]> {
     const source = $('script[src]')
         .toArray()
         .map((element) => $(element).attr('src'))
@@ -147,7 +139,7 @@ async function parseProgramPage($: CheerioAPI, pageUrl: string, seenLinks: Set<s
         if (!paperPath || !authorPath) {
             throw new Error('ACM CCS program is missing its public paper or author data URL');
         }
-        const [papers, authors] = await Promise.all([ofetch(new URL(paperPath, pageUrl).href, { responseType: 'text' }), ofetch(new URL(authorPath, pageUrl).href, { responseType: 'text' })]);
+        const [papers, authors] = await Promise.all([ofetch(new URL(paperPath, pageUrl).href), ofetch(new URL(authorPath, pageUrl).href)]);
         return { papers, authors };
     });
 
@@ -179,53 +171,53 @@ async function parseProgramPage($: CheerioAPI, pageUrl: string, seenLinks: Set<s
                     }
                     return { name };
                 });
-            return [createItem({ title, linkTitle, author, pageUrl, seenLinks })];
+            return [createItem({ title, linkTitle, author, pageUrl })];
         });
 }
 
-function parsePaperTables($: CheerioAPI, pageUrl: string, seenLinks: Set<string>): DataItem[] {
-    const items: DataItem[] = [];
+function parsePaperTables($: CheerioAPI, pageUrl: string): DataItem[] {
+    return $('table')
+        .toArray()
+        .flatMap((table) => {
+            const $table = $(table);
+            const cycle = getCycle($, table);
 
-    $('table').each((_, table) => {
-        const $table = $(table);
-        const cycle = getCycle($, table);
+            return $table
+                .find('tr')
+                .toArray()
+                .flatMap((row) => {
+                    const $cells = $(row).find('td');
+                    if ($cells.length < 2) {
+                        return [];
+                    }
 
-        for (const row of $table.find('tr').toArray()) {
-            const $cells = $(row).find('td');
-            if ($cells.length < 2) {
-                continue;
-            }
+                    const $titleCell = $cells.eq(0);
+                    const title = getCellText($titleCell, ' ');
+                    const linkTitle = normalizeText(title);
+                    if (!linkTitle || /^title$/i.test(linkTitle)) {
+                        return [];
+                    }
 
-            const $titleCell = $cells.eq(0);
-            const title = getCellText($titleCell, ' ');
-            const linkTitle = normalizeText(title);
-            if (!linkTitle || /^title$/i.test(linkTitle)) {
-                continue;
-            }
-
-            const $authorCell = $cells.eq(1);
-            items.push(
-                createItem({
-                    title,
-                    linkTitle,
-                    author: getCellText($authorCell),
-                    pageUrl,
-                    cycle,
-                    seenLinks,
-                })
-            );
-        }
-    });
-
-    return items;
+                    const $authorCell = $cells.eq(1);
+                    return [
+                        createItem({
+                            title,
+                            linkTitle,
+                            author: getCellText($authorCell),
+                            pageUrl,
+                            cycle,
+                        }),
+                    ];
+                });
+        });
 }
 
-function parseLegacyPapers($: CheerioAPI, pageUrl: string, seenLinks: Set<string>): DataItem[] {
+function parseLegacyPapers($: CheerioAPI, pageUrl: string): DataItem[] {
     return $('div.papers-item')
         .toArray()
         .flatMap((element) => {
             const $item = $(element);
-            const title = getCellText($item.find('b').first(), ' ');
+            const title = getCellText($item.find('b'), ' ');
             const linkTitle = normalizeText(title);
             if (!linkTitle) {
                 return [];
@@ -234,16 +226,14 @@ function parseLegacyPapers($: CheerioAPI, pageUrl: string, seenLinks: Set<string
                 createItem({
                     title,
                     linkTitle,
-                    author: getCellText($item.find('p').first()),
+                    author: getCellText($item.find('p')),
                     pageUrl,
-                    seenLinks,
                 }),
             ];
         });
 }
 
 function parseAcceptedPapersJson(data: AcceptedPapersJson, pageUrl: string): DataItem[] {
-    const seenLinks = new Set<string>();
     const cycles: Array<[string, AcceptedPaper[] | undefined]> = [
         ['First Cycle', data.firstCycle],
         ['Second Cycle', data.secondCycle],
@@ -259,7 +249,7 @@ function parseAcceptedPapersJson(data: AcceptedPapersJson, pageUrl: string): Dat
                 ?.map((paperAuthor) => paperAuthor.name)
                 .filter(Boolean)
                 .join(', ');
-            return [createItem({ title: paper.title, linkTitle, author, pageUrl, cycle, seenLinks })];
+            return [createItem({ title: paper.title, linkTitle, author, pageUrl, cycle })];
         })
     );
 }
@@ -279,24 +269,15 @@ function getCellText($cell: Cheerio<Element>, separator = ', '): string {
     return $cell.text();
 }
 
-function createItem({ title, linkTitle, author, pageUrl, cycle, seenLinks }: { title: string; linkTitle: string; author: DataItem['author']; pageUrl: string; cycle?: string; seenLinks: Set<string> }): DataItem {
-    const encodedTitle = encodeURIComponent(linkTitle);
-    let link = `${pageUrl}#${encodedTitle}`;
-    let duplicateIndex = 2;
-    while (seenLinks.has(link)) {
-        link = `${pageUrl}#${encodedTitle}-${duplicateIndex}`;
-        duplicateIndex++;
-    }
-    seenLinks.add(link);
-
+function createItem({ title, linkTitle, author, pageUrl, cycle }: { title: string; linkTitle: string; author: DataItem['author']; pageUrl: string; cycle?: string }): DataItem {
     return {
         title,
         author,
-        link,
+        link: `${pageUrl}#${encodeURIComponent(linkTitle)}`,
         category: cycle ? [cycle] : undefined,
     };
 }
 
 function normalizeText(value: string): string {
-    return value.replaceAll(/\s+/g, ' ').trim();
+    return value.replaceAll(/\s+/g, ' ');
 }

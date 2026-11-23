@@ -39,28 +39,15 @@ async function handler() {
     });
 
     const $ = load(response.data);
-    const list = $('ul.news_list.list2')
-        .children()
-        .toArray()
-        .flatMap((item) => {
-            const href = $(item).find('.news_title > a').attr('href');
-            if (!href) {
-                return [];
-            }
-            const link = new URL(href, `${host}/tzggsh/list1.htm`);
-            if (!['http:', 'https:'].includes(link.protocol)) {
-                return [];
-            }
-            return { element: item, link: link.href };
-        });
+    const list = $('ul.news_list.list2').children().toArray();
 
     const items = await pMap(
         list,
         (item) => {
-            const $item = $(item.element);
+            const $item = $(item);
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
-            const itemUrl = item.link;
+            const itemUrl = new URL($item.find('.news_title > a').attr('href')!, `${host}/tzggsh/list1.htm`).href;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (new URL(itemUrl).origin === host) {

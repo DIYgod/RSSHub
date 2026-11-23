@@ -44,7 +44,7 @@ async function handler(ctx) {
                 title: $item.find('span.post-archive__title').text(),
                 link: $item.find('span.post-archive__title > a').attr('href'),
                 pubDate: parseDate($item.find('span.post-archive__item_date').text().split('|', 1)[0], 'MMMM D, YYYY', 0),
-                description: $item.find('div.post-archive__excerpt').html() ?? undefined,
+                description: $item.find('div.post-archive__excerpt').html(),
             };
         })
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);

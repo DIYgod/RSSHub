@@ -56,8 +56,7 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
         .find('h3 span:contains(时间)')
         .text()
         .replace(/^时间：/, '');
-    const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
-    return { description, author, pubDate };
+    return { description, author, pubDate: parseDateStrict(rawDate, 'YYYY-MM-DD', 8) };
 }
 
 async function handler(ctx) {
@@ -78,19 +77,17 @@ async function handler(ctx) {
 
     const list = $('.vsb-space.n_right .list .cleafix')
         .toArray()
-        .filter((item) => $(item).find('.list_wen a').first().attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('.list_wen a').eq(0).attr('href');
+            const a = $item.find('.list_wen a').attr('href');
             const link = new URL(a!, 'http://renshichu.xaut.edu.cn/' + categoryPaths[category]).href;
             const title = $item.find('.list_wen a.tit').text();
             const yearMonth = $item.find('.list_time .month').text();
             const day = $item.find('.list_time .day').text();
-            const pubDate = yearMonth && day ? parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title,
                 link,
-                pubDate,
+                pubDate: parseDateStrict(`${yearMonth}-${day}`, 'YYYY-MM-DD', 8),
             };
         });
     return {

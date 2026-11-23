@@ -47,13 +47,6 @@ function handleDuplicates(array) {
     return Object.values(objects);
 }
 
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
     const headers = {
@@ -75,8 +68,8 @@ async function handler(ctx) {
                     id: item.id,
                     title: item.headline.text,
                     link: item.link.url,
-                    pubDate: parseSourceTime(item.link.display_date),
-                    updated: parseSourceTime(item.link.last_modified),
+                    pubDate: parseDate(item.link.display_date),
+                    updated: parseDate(item.link.last_modified),
                 };
                 if (item.blurbs?.items[0]?.text) {
                     object.description = item.blurbs?.items[0]?.text;
@@ -109,11 +102,10 @@ async function handler(ctx) {
                     return {
                         title: response.data.title,
                         category: response.data.items.filter((entry) => entry.type === 'kicker' && entry.content).map((entry) => entry.content),
-                        author:
-                            response.data.items
-                                .filter((entry) => entry.type === 'byline')
-                                ?.flatMap((entry) => entry.authors?.map((author) => author.name) ?? [])
-                                ?.join(', ') || undefined,
+                        author: response.data.items
+                            .filter((entry) => entry.type === 'byline')
+                            .flatMap((entry) => entry.authors.map((author) => author.name))
+                            .join(', '),
                         description: renderDescription(response.data.items),
                         enclosure_url: audio?.rawUrl,
                         enclosure_type: audio ? 'audio/mpeg' : undefined,

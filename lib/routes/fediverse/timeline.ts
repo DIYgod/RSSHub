@@ -36,7 +36,7 @@ const activityPubTypes = new Set(['application/activity+json', 'application/ld+j
 
 function renderAttachment(attachment) {
     if (attachment.mediaType?.startsWith('video/')) {
-        return html`<video controls src="${attachment.url}"></video>`;
+        return html`<video controls preload="metadata" src="${attachment.url}"></video>`;
     }
     const width = attachment.width ? html` width="${attachment.width}"` : '';
     const height = attachment.height ? html` height="${attachment.height}"` : '';
@@ -98,8 +98,7 @@ async function handler(ctx) {
     const firstOutbox = await ofetch(outbox.first, requestOptions);
 
     const items = firstOutbox.orderedItems.filter((item) => ['Announce', 'Create', 'Update'].includes(item.type)).map((item) => ({ ...item, pubDate: item.published ? parseDate(item.published) : undefined }));
-    const candidates = items;
-    const resolvedItems = await pMap(candidates, async (item: any) => ({ ...item, object: item.object.type ? item.object : await cache.tryGet(item.object, () => ofetch(item.object, requestOptions)) }), { concurrency: 3 });
+    const resolvedItems = await pMap(items, async (item: any) => ({ ...item, object: item.object.type ? item.object : await cache.tryGet(item.object, () => ofetch(item.object, requestOptions)) }), { concurrency: 3 });
 
     return {
         title: `${self.name || self.preferredUsername} (Fediverse@${account})`,

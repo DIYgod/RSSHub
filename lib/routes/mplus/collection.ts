@@ -20,26 +20,25 @@ export const route: Route = {
     handler,
 };
 
-async function getItem(object) {
+function getItem(object) {
     const link = `${baseUrl}/tc/collection/objects/${object.slugTitle}/`;
-    const details = await cache.tryGet(link, async () => {
+    return cache.tryGet(link, async () => {
         const response = await ofetch(link);
         const $ = load(response);
         const content = $('.ModalsCollectionObjectDetails');
         const category = $('.ModalsCollectionObjectDetails-tag')
             .toArray()
             .map((tag) => $(tag).text());
-        content.find('script, style, button, svg, .ModalsCollectionObjectDetails-tags').remove();
+        content.find('button, svg, .ModalsCollectionObjectDetails-tags').remove();
         const image = $('meta[property="og:image"]').attr('content');
         return {
-            title: object.title.zh_hant?.txt || object.title.en.txt,
+            title: object.title.zh_hant.txt || object.title.en.txt,
             link,
-            author: $('.ModalsCollectionObjectInfo-makerPrimary').text() || undefined,
+            author: $('.ModalsCollectionObjectInfo-makerPrimary').text(),
             category,
             description: `${image ? `<img src="${escapeAttribute(image)}">` : ''}${content.html() || ''}`,
         };
     });
-    return { ...details, title: object.title.zh_hant?.txt || object.title.en.txt, link };
 }
 
 async function handler(ctx) {

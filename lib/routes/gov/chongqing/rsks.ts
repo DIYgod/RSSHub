@@ -29,12 +29,11 @@ async function handler() {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const title = $item.find('a').first();
-            const pubDate = $item.find('span').text();
+            const title = $item.find('a');
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, rsksUrl).href,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
@@ -48,7 +47,7 @@ async function handler() {
                 if (pubDate) {
                     item.pubDate = parseDate(pubDate, 8);
                 }
-                item.description = $('.trs_editor_view').first().html();
+                item.description = $('.trs_editor_view').html();
                 return item;
             })
         )

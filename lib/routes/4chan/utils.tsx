@@ -15,8 +15,8 @@ const parseParams = (routeParams?: string) => {
         excludeSticky: !!queryToBoolean(parsed.get('excludeSticky')),
         includeLastReplies: !!queryToBoolean(parsed.get('showLastReplies')),
         includeReplyCount: !!queryToBoolean(parsed.get('showReplyCount')),
-        maxReplies: Number.isFinite(maxReplies) ? maxReplies : undefined,
-        minReplies: Number.isFinite(minReplies) ? minReplies : undefined,
+        maxReplies,
+        minReplies,
         revealSpoilers: !!queryToBoolean(parsed.get('revealSpoilers')),
         showThreadFeed: !!queryToBoolean(parsed.get('showThreadFeed')),
     };

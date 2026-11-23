@@ -31,7 +31,7 @@ async function getItem(item: DataItem) {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.PagesMagazineArticle-body, .PagesExhibitionsDetail-story');
-        content.find('script, style, button, svg, img[src^="data:"]').remove();
+        content.find('button, svg, img[src^="data:"]').remove();
         const image = $('meta[property="og:image"]').attr('content');
         const metadata = $('.PagesMagazineArticleHeroInfo-published').text();
         const date = metadata.match(/\d{4}年\d{1,2}月\d{1,2}日/);
@@ -56,24 +56,16 @@ async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
     const selectors = section === 'magazine' ? '.CommonMagazineItem-link[href]' : 'a.CommonExhibitionsItem[href], .PagesTodayHeroCarousel a[href]';
-    const seen = new Set<string>();
     const items = $(selectors)
         .toArray()
         .map((element): DataItem => {
             const card = $(element);
             const date = card.find('.CommonTitleColors-titleText').first().text();
             return {
-                title: card.find('h3, .PagesTodayHeroCarousel-itemTitle').first().text(),
+                title: card.find('h3, .PagesTodayHeroCarousel-itemTitle').text(),
                 link: new URL(card.attr('href')!, baseUrl).href,
                 pubDate: /\d{4}年/.test(date) ? parseDate(date, 'YYYY年M月D日') : undefined,
             };
-        })
-        .filter((item) => {
-            if (seen.has(item.link!)) {
-                return false;
-            }
-            seen.add(item.link!);
-            return true;
         })
         .slice(0, getRouteLimit(ctx, 20));
     return { title: $('title').text(), link, language: 'zh-TW' as const, item: await pMap(items, getItem, { concurrency: 3 }) };

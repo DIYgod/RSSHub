@@ -64,7 +64,7 @@ const handler = async (ctx) => {
                 };
             });
             const description = (item.description ?? '') + (detail.description ?? '');
-            return { ...item, ...detail, description, content: { ...detail.content, html: description }, language };
+            return { ...item, ...detail, description, content: { ...detail.content, html: description } };
         },
         { concurrency: 3 }
     );

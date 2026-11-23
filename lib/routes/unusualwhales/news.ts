@@ -36,7 +36,7 @@ async function handler(): Promise<Data> {
         link: item.url,
         guid: item.id,
         author: item.source,
-        pubDate: item.created_at ? parseDate(item.created_at) : undefined,
+        pubDate: parseDate(item.created_at),
         category: item.tickers,
     }));
 

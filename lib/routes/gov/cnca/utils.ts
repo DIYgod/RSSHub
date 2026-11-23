@@ -44,8 +44,7 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
                 item.description = $('.detail_messge').html();
                 item.author = $('#source').text();
                 const dateText = $('meta[name="PubDate"]').attr('content');
-                const date = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm', 8) : undefined;
-                item.pubDate = date ?? item.pubDate;
+                item.pubDate = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm', 8) : item.pubDate;
 
                 return item;
             });

@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -21,17 +22,9 @@ export const route: Route = {
     handler,
 };
 
-function parsePubDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx: Context) {
     const { username } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const headers = {
         'trakt-api-key': '201dc70c5ec6af530f12f079ea1922733f6e1085ad7b02f36d8e011b75bcea7d',
@@ -64,7 +57,7 @@ async function handler(ctx: Context) {
                 author: username,
                 category: [entry.type, ...media.genres, ...media.subgenres],
                 description: `${poster ? `<img src="https://${poster}" style="max-width: 100%;"><br>` : ''}${media.overview ?? ''}`,
-                pubDate: parsePubDate(entry.listed_at),
+                pubDate: parseDate(entry.listed_at),
             };
         }),
     };

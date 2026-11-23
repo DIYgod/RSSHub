@@ -66,7 +66,7 @@ async function handler(ctx) {
         async (item) => {
             const title = $(item).find('a').attr('title');
             const link = rootUrl + $(item).find('a').attr('href');
-            const pubDate = parseDateStrict($(item).find('span').text().trim(), 'YYYY.MM.DD', 8);
+            const pubDate = parseDateStrict($(item).find('span').text(), 'YYYY.MM.DD', 8);
 
             const desc = await cache.tryGet(link, async () => {
                 const response = await got.get(link);

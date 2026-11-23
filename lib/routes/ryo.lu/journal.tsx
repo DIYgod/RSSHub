@@ -102,7 +102,7 @@ async function handler(ctx): Promise<Data> {
     const suffix = lang === 'zh' ? 'Zh' : lang === 'ja' ? 'Ja' : '';
     const items = entries.map((entry) => {
         const title = entry[`title${suffix}` as const] ?? entry.title;
-        const text = (entry[`text${suffix}` as const] ?? entry.text) || '';
+        const text = entry[`text${suffix}` as const] ?? entry.text;
 
         const description = renderToString(
             <>
@@ -121,7 +121,7 @@ async function handler(ctx): Promise<Data> {
                 {entry.youtube && (
                     <>
                         <br />
-                        {raw(renderYoutube(true, entry.youtube, undefined, undefined))}
+                        {raw(renderYoutube(true, entry.youtube))}
                     </>
                 )}
                 {entry.links?.map((link) => (
@@ -144,7 +144,7 @@ async function handler(ctx): Promise<Data> {
             description,
             link: `${baseUrl}/journal/${entry.slug ?? entry.id}?locale=${lang}`,
             guid: entry.id,
-            pubDate: entry.dateTime ? parseDate(`${entry.dateTime}T00:00:00Z`) : undefined,
+            pubDate: parseDate(`${entry.dateTime}T00:00:00Z`),
         };
     });
 

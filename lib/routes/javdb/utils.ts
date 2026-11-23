@@ -47,13 +47,10 @@ const processItems = async (ctx, currentUrl, title) => {
         });
 
     if (!hasItemFilters(ctx)) {
-        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate)) {
+        if (ctx.req.query('limit') && ctx.req.query('sorted') !== 'false') {
             items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
         }
-        // Keep the default candidate pool when a source date is unavailable.
-        if (ctx.req.query('sorted') === 'false' || !ctx.req.query('limit') || items.every((item) => item.pubDate)) {
-            items = items.slice(0, limit);
-        }
+        items = items.slice(0, limit);
     }
 
     items = await pMap(

@@ -48,7 +48,6 @@ async function handler(ctx): Promise<Data> {
                 .text()
                 .match(/\d{4}年\d{1,2}月\d{1,2}日\s*\(\d{2}:\d{2}\)/)?.[0]
                 .replace(/\s*\(/, ' (');
-            const parsedDate = sourceDate ? parseDateStrict(sourceDate, ['YYYY年MM月DD日 (HH:mm)', 'YYYY年M月D日 (HH:mm)'], 9) : undefined;
             const i: DataItem = {
                 title: title.find('tbody tr td').text(),
                 link: title.find('tbody tr td a').attr('href'),
@@ -56,7 +55,7 @@ async function handler(ctx): Promise<Data> {
                     .find('div.blog_data div.data_r a[href*="category="]')
                     .toArray()
                     .map((a) => $(a).text()),
-                pubDate: parsedDate,
+                pubDate: sourceDate ? parseDateStrict(sourceDate, ['YYYY年MM月DD日 (HH:mm)', 'YYYY年M月D日 (HH:mm)'], 9) : undefined,
             };
             body.find('a img').each((_, el) => {
                 $(el).attr('src', $(el).parent('a').attr('href'));

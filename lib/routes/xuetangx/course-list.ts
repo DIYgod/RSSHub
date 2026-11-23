@@ -58,13 +58,6 @@ export const route: Route = {
     handler,
 };
 
-function parseSourceDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx: Context) {
     const { classify, status, sellingType } = ctx.req.param();
     const baseUrl = 'https://www.xuetangx.com';
@@ -84,8 +77,8 @@ async function handler(ctx: Context) {
     });
 
     const item = response.data.product_list.map((product) => {
-        const authors: Array<{ name: string }> = (product.teacher ?? []).filter((teacher) => teacher.name).map((teacher) => ({ name: teacher.name }));
-        const categories = [...new Set<string>([...(product.classify_name ?? []), ...(product.tag_titles ?? [])].filter(Boolean))];
+        const authors: Array<{ name: string }> = product.teacher.map((teacher) => ({ name: teacher.name }));
+        const categories = [...new Set([...product.classify_name, ...product.tag_titles])];
         return {
             title: product.name,
             link: `${baseUrl}/course/${product.sign}`,
@@ -94,9 +87,9 @@ async function handler(ctx: Context) {
         ${product.sell_type_name} / 报名人数: ${product.count}<br>
         <img src="${product.cover}">`,
             author: authors.length ? authors : undefined,
-            category: categories.length ? categories : undefined,
-            pubDate: parseSourceDate(product.created),
-            updated: parseSourceDate(product.modified),
+            category: categories,
+            pubDate: parseDate(product.created),
+            updated: parseDate(product.modified),
         };
     });
 

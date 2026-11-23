@@ -49,7 +49,7 @@ const originalImage = (url: string): string => (url.startsWith('http') ? url : `
 const Image: FC<{ src?: string; alt?: string; caption?: string }> = ({ src, alt, caption }) =>
     src ? (
         <figure>
-            <img src={originalImage(src)} alt={alt || undefined} />
+            <img src={originalImage(src)} alt={alt} />
             {caption ? <figcaption>{caption}</figcaption> : null}
         </figure>
     ) : null;
@@ -125,7 +125,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
     const type = node.type;
 
     if (type === 'text') {
-        return <Marked marks={node.marks}>{node.text ?? node.data ?? ''}</Marked>;
+        return <Marked marks={node.marks}>{node.text ?? node.data}</Marked>;
     }
     if (type === 'comment' || dropTypes.has(type)) {
         return null;

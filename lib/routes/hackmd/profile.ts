@@ -34,15 +34,12 @@ async function handler(ctx) {
         title: `${profile.name}'s Profile`,
         link: `https://hackmd.io/@${path}`,
         description: `${profile.name}'s profile on HackMD`,
-        item: data.notes.map((note) => {
-            const pubDate = note.publishedAt ? parseDate(note.publishedAt) : undefined;
-            return {
-                title: note.title,
-                description: `<pre>${note.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</pre>`,
-                pubDate,
-                category: note.tags,
-                link: `https://hackmd.io/@${path}/${note.permalink || note.shortId}`,
-            };
-        }),
+        item: data.notes.map((note) => ({
+            title: note.title,
+            description: `<pre>${note.content}</pre>`,
+            pubDate: parseDate(note.publishedAt),
+            category: note.tags,
+            link: `https://hackmd.io/@${path}/${note.permalink || note.shortId}`,
+        })),
     };
 }

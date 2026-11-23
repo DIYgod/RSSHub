@@ -8,16 +8,11 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
 import { fetchArticle, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
 
+import { parseCalendarDate } from './util';
+
 const baseUrl = 'https://swrh.whu.edu.cn';
-function parseCalendarDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
-}
 class ArticleAccessError extends Error {}
 function requiresArticleAuthentication($: CheerioAPI) {
     if ($('title').text() === '系统提示' && $('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
@@ -43,12 +38,7 @@ async function getArticleDetails(link: string) {
     if (body.length !== 1) {
         throw new Error(`Article body not found at ${link}`);
     }
-    body.find('img[src]').each((_, element) => {
-        const image = $(element);
-        image.attr('src', new URL(image.attr('src')!, link).href);
-    });
-    const category = $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
-    return { description: body.html()!.trim(), category: category?.length ? category : undefined };
+    return { description: body.html()!.trim(), category: $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean) };
 }
 async function getWechatPage(url: string, remainingRedirects = 5): Promise<CheerioAPI> {
     const response = await ofetch.raw<string>(url, { redirect: 'manual' });
@@ -75,7 +65,7 @@ async function getWechatDetails(link: string) {
         return { description: (await fetchArticle(link)).description, category: undefined };
     }
     const body = $('#js_content');
-    const originalLink = body.text() ? (body.text().length < 80 ? body.find('a').first().attr('href') : undefined) : $('#js_share_source').attr('data-url');
+    const originalLink = body.text() ? (body.text().length < 80 ? body.find('a').attr('href') : undefined) : $('#js_share_source').attr('data-url');
     if (body.length !== 1 && !originalLink) {
         throw new Error(`WeChat article body not found at ${link}`);
     }
@@ -176,25 +166,23 @@ async function handler(ctx) {
                           };
                       }
                   );
-    let items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                try {
-                    const detail = await cache.tryGet(`whu:swrh:absolute-media:${item.link}`, async () =>
-                        // Select the WeChat parser for the official article host.
-                        new URL(item.link).hostname === 'mp.weixin.qq.com' ? await getWechatDetails(item.link) : await getArticleDetails(item.link)
-                    );
-                    return { ...item, description: detail.description, category: detail.category };
-                } catch (error) {
-                    if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
-                        return item;
-                    }
-                    throw error;
+    let items = await pMap(
+        list,
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(`whu:swrh:absolute-media:${item.link}`, async () =>
+                    // Select the WeChat parser for the official article host.
+                    new URL(item.link).hostname === 'mp.weixin.qq.com' ? await getWechatDetails(item.link) : await getArticleDetails(item.link)
+                );
+                return { ...item, description: detail.description, category: detail.category };
+            } catch (error) {
+                if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
+                    return item;
                 }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
     items = items.filter((item) => item !== null);
     return {
@@ -202,11 +190,4 @@ async function handler(ctx) {
         link,
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

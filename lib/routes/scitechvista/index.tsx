@@ -97,39 +97,35 @@ async function handler(): Promise<Data> {
 
     const detailedItems = await pMap(
         items,
-        async (item) =>
-            item.link
-                ? {
-                      ...item,
-                      ...(await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'category'>>(`scitechvista:article:v3:${item.link}`, async () => {
-                          const pageSource1 = await ofetch(item.link!);
-                          const article = load(pageSource1);
-                          const category = article('.DetailContent a.badge-LightGray')
-                              .toArray()
-                              .map((element) =>
-                                  article(element)
-                                      .text()
-                                      .replace(/\(\d+\)$/, '')
-                                      .trim()
-                              )
-                              .filter(Boolean);
-                          article('.DetailContent .Stv-Sticker').remove();
-                          const description = article('.DetailContent')
-                              .toArray()
-                              .filter((element) => !article(element).find('h2.kf-det-title').length)
-                              .map((element) => article(element).html())
-                              .join('');
-                          const author = article('.Article-AuthorRow')
-                              .first()
-                              .find('.Author')
-                              .toArray()
-                              .map((element) => article(element).text().trim())
-                              .filter(Boolean)
-                              .join(', ');
-                          return { description, ...(author && { author }), ...(category.length && { category }) };
-                      })),
-                  }
-                : item,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'category'>>(`scitechvista:article:v3:${item.link}`, async () => {
+                const pageSource1 = await ofetch(item.link!);
+                const article = load(pageSource1);
+                const category = article('.DetailContent a.badge-LightGray')
+                    .toArray()
+                    .map((element) =>
+                        article(element)
+                            .text()
+                            .replace(/\(\d+\)$/, '')
+                    )
+                    .filter(Boolean);
+                article('.DetailContent .Stv-Sticker').remove();
+                const description = article('.DetailContent')
+                    .toArray()
+                    .filter((element) => !article(element).find('h2.kf-det-title').length)
+                    .map((element) => article(element).html())
+                    .join('');
+                const author = article('.Article-AuthorRow')
+                    .first()
+                    .find('.Author')
+                    .toArray()
+                    .map((element) => article(element).text())
+                    .filter(Boolean)
+                    .join(', ');
+                return { description, author, category };
+            })),
+        }),
         { concurrency: 3 }
     );
 

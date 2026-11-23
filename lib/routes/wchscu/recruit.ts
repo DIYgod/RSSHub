@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const handler = async () => {
     const rootUrl = 'https:///www.wchscu.cn';
@@ -16,10 +16,9 @@ const handler = async () => {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const date = parseDateStrict($item.find('span.s2').text(), 'YYYY.MM.DD');
             return {
                 title: $item.find('span.s1').text(),
-                pubDate: date,
+                pubDate: parseDate($item.find('span.s2').text(), 'YYYY.MM.DD'),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });

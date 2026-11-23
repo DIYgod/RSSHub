@@ -37,7 +37,7 @@ async function handler() {
                 title: name.text(),
                 link,
                 description: description.text(),
-                pubDate: date ? parseRelativeDate(date) : undefined,
+                pubDate: parseRelativeDate(date),
             };
         });
     return {

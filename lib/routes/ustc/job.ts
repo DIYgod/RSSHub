@@ -39,14 +39,7 @@ const rand = 0.01234567890123456;
 const apiRootUrl = 'https://ustc.ahbys.com';
 const rootUrl = 'https://job.ustc.edu.cn';
 
-function parseRecruitmentDate(value?: string): Temporal.Instant | undefined {
-    if (!value) {
-        return undefined;
-    }
-    return parseDate(value, 8);
-}
-
-async function getRecruitmentDetails(category: string, id?: number): Promise<Pick<DataItem, 'title' | 'description'>> {
+async function getRecruitmentDetails(category: string, id?: number): Promise<Pick<DataItem, 'description'>> {
     const eventResponse = category === 'Doublechoice' ? await got({ method: 'post', url: `${rootUrl}/Ajax/jywapi.ashx`, form: { action: 'recruitinfo', rid: id } }) : undefined;
     const detailResponse = await got({
         method: (() => {
@@ -80,30 +73,14 @@ async function getRecruitmentDetails(category: string, id?: number): Promise<Pic
         form: category === 'Doublechoice' ? { action: 'recruitcompany', rid: id, pageindex: 1, pagesize: 100 } : category === 'joblist2' ? { action: 'jobinfo2', jid: id } : undefined,
     });
 
-    const title = (() => {
-        switch (category) {
-            case 'RecruitList':
-            case 'Broadcast':
-                return detailResponse.data.Theme;
-            case 'Doublechoice':
-                return;
-            case 'joblist2':
-                return detailResponse.data.JobName;
-            default:
-                throw new Error(`Unknown category: ${category}`);
-        }
-    })();
-
     const description = (() => {
         switch (category) {
             case 'RecruitList':
             case 'Broadcast':
                 return detailResponse.data.Description;
 
-            case 'Doublechoice': {
-                const content = [eventResponse?.data.Description, renderCompanyList(detailResponse.data, rootUrl)].filter(Boolean).join('');
-                return content || undefined;
-            }
+            case 'Doublechoice':
+                return [eventResponse?.data.Description, renderCompanyList(detailResponse.data, rootUrl)].filter(Boolean).join('');
 
             case 'joblist2':
                 return detailResponse.data.PostionDesc;
@@ -112,7 +89,7 @@ async function getRecruitmentDetails(category: string, id?: number): Promise<Pic
         }
     })();
 
-    return { title, description };
+    return { description };
 }
 
 const titles = {
@@ -194,28 +171,28 @@ async function handler(ctx) {
                 return {
                     ID: item.ID,
                     title: item.Theme,
-                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    pubDate: parseDate(item.HoldDate),
                     link: `${rootUrl}/Specialrecruitment/info.aspx?itemid=${item.ID}`,
                 };
             case 'Doublechoice':
                 return {
                     ID: item.ID,
                     title: item.Theme,
-                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    pubDate: parseDate(item.HoldDate),
                     link: `${rootUrl}/Campusdouble/info.aspx?itemid=${item.ID}`,
                 };
             case 'Broadcast':
                 return {
                     ID: item.ID,
                     title: item.Theme,
-                    pubDate: parseRecruitmentDate(item.HoldDate),
+                    pubDate: parseDate(item.HoldDate),
                     link: `${rootUrl}/airtalk/info.aspx?itemid=${item.ID}`,
                 };
             case 'joblist2':
                 return {
                     ID: item.JID,
                     title: item.JobName,
-                    updated: parseRecruitmentDate(item.UpdateDate),
+                    updated: parseDate(item.UpdateDate),
                     link: `${rootUrl}/Recruitment/info.aspx?itemid=${item.JID}`,
                 };
             default:
@@ -226,8 +203,8 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         async ({ ID, ...item }) => {
-            const details = await cache.tryGet<Pick<DataItem, 'title' | 'description'>>(`ustc:job:detail:${item.link}`, () => getRecruitmentDetails(category, ID));
-            return { ...item, ...details, title: item.title ?? details.title };
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustc:job:detail:${item.link}`, () => getRecruitmentDetails(category, ID));
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );

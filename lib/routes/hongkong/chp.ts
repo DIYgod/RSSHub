@@ -128,7 +128,7 @@ async function handler(ctx) {
 
         return {
             link,
-            pubDate: item.PublishDate ? parseDate(item.PublishDate, 8) : undefined,
+            pubDate: parseDate(item.PublishDate, 8),
             description: item[`Content_${language}`] ?? '',
             title: sanitizeHtml(item[`Title_${language}`] ?? '', { allowedTags: [], allowedAttributes: {} }),
         };

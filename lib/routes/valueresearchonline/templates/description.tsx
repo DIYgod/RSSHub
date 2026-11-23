@@ -1,6 +1,8 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
+
 interface DescriptionProps {
     subhead?: string;
     youtubeId?: string;
@@ -18,7 +20,7 @@ export const renderDescription = ({ subhead, youtubeId, bodyHtml, lockedNotice }
             )}
             {youtubeId && (
                 <>
-                    <iframe src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} width={640} height={360} frameborder="0" allowFullscreen />
+                    {raw(renderYoutube(true, youtubeId))}
                     <p>
                         <a href={`https://www.youtube.com/watch?v=${youtubeId}`}>Watch on YouTube</a>
                     </p>

@@ -1,3 +1,5 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
@@ -37,7 +39,7 @@ interface RoomData {
 interface StreamPayload {
     state?: {
         roomStore?: {
-            roomInfo?: { room?: DouyinRoom; anchor?: DouyinUser };
+            roomInfo?: { room?: DouyinRoom; anchor: DouyinUser };
         };
     };
 }
@@ -63,29 +65,21 @@ function parseRoomScript(script: string) {
     }
     try {
         // Decode the streamed JSON data without executing the website's scripts.
-        const chunk: unknown = JSON.parse(match[1]);
-        if (!Array.isArray(chunk) || typeof chunk[1] !== 'string') {
-            return;
+        const chunk: [number, string] = JSON.parse(match[1]);
+        const value: unknown[] = JSON.parse(chunk[1].slice(chunk[1].indexOf(':') + 1));
+        const info = (value[3] as StreamPayload | undefined)?.state?.roomStore?.roomInfo;
+        if (info?.room) {
+            return { room: info.room, owner: info.anchor };
         }
-        const separator = chunk[1].indexOf(':');
-        if (separator === -1) {
-            return;
-        }
-        const value: unknown = JSON.parse(chunk[1].slice(separator + 1));
-        if (!Array.isArray(value)) {
-            return;
-        }
-        const payload = value[3] as StreamPayload | undefined;
-        const info = payload?.state?.roomStore?.roomInfo;
-        return getRoomData(info?.room, info?.anchor ?? info?.room?.owner);
     } catch {
         return;
     }
 }
 
 function parseRoomHtml(html: string) {
-    for (const [, script] of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)) {
-        const data = parseRoomScript(script);
+    const $ = load(html);
+    for (const script of $('script:contains("roomStore")').toArray()) {
+        const data = parseRoomScript($(script).text());
         if (data) {
             return data;
         }
@@ -193,7 +187,7 @@ async function handler(ctx) {
         `douyin:live:room:${rid}`,
         async () => {
             try {
-                const html = await ofetch(pageUrl, { responseType: 'text', retry: 0, timeout: config.requestTimeout });
+                const html = await ofetch(pageUrl, { retry: 0, timeout: config.requestTimeout });
                 const data = parseRoomHtml(html);
                 if (data) {
                     return data;

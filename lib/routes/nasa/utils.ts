@@ -8,8 +8,8 @@ interface APODPost {
     link: string;
     title: { rendered: string };
     content: { rendered: string };
-    date_gmt?: string;
-    parsely?: { meta?: { author?: Array<{ name: string }> } };
+    date_gmt: string;
+    parsely: { meta: { author: Array<{ name: string }> } };
 }
 
 export async function getAPODItems(limit: number): Promise<DataItem[]> {
@@ -19,14 +19,14 @@ export async function getAPODItems(limit: number): Promise<DataItem[]> {
 
     return data.map((post) => {
         const $ = load(post.content.rendered);
-        const description = `${$('.media-detail-hero__media').html() ?? ''}${$('.media-detail-hero__description').prop('outerHTML') ?? ''}`;
+        const description = `${$('.media-detail-hero__media').html()}${$('.media-detail-hero__description').prop('outerHTML')}`;
 
         return {
             title: post.title.rendered,
             link: post.link,
             description,
-            author: post.parsely?.meta?.author?.map((author) => author.name).join(', '),
-            pubDate: post.date_gmt && post.date_gmt !== '0000-00-00T00:00:00' ? parseDate(`${post.date_gmt}Z`) : undefined,
+            author: post.parsely.meta.author.map((author) => author.name).join(', '),
+            pubDate: parseDate(`${post.date_gmt}Z`),
         };
     });
 }

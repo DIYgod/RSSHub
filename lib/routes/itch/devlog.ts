@@ -77,10 +77,9 @@ async function handler(ctx) {
 
                 const infoJson = content('script[type="application/ld+json"]:contains("@type":"BlogPosting")');
                 const info = JSON.parse(content(infoJson).text());
-                const date = info.datePublished ? parseDate(info.datePublished) : undefined;
                 return {
                     author: info.author.name,
-                    pubDate: date,
+                    pubDate: parseDate(info.datePublished),
                     description: renderDescription({
                         images: content('.post_image')
                             .toArray()

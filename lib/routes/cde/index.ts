@@ -177,7 +177,7 @@ async function handler(ctx) {
 
                 const desc = $('div.news_detail_box');
                 desc.find('div.news_detail_title, div.news_detail_date').remove();
-                item.description = desc.html() || undefined;
+                item.description = desc.html();
 
                 return item;
             })

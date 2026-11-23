@@ -39,8 +39,7 @@ async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     const [detailResponse, finalUrl] = await getFinalContentAndUrl(link);
     const $ = load(detailResponse);
     const description = $('div#articleBox').html();
-    const pubDateStr = $('span.yearMsg').text() && $('span.timeMsg').text() ? `${$('span.yearMsg').text()} ${$('span.timeMsg').text()}` : undefined;
-    const pubDate = getPublicationDate(pubDateStr);
+    const pubDate = parseDate(`${$('span.yearMsg').text()} ${$('span.timeMsg').text()}`, 8);
     return {
         title: $('div.articleTitle h1').text(),
         link: finalUrl,
@@ -93,9 +92,9 @@ const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: getPublicationDate(pubDateStr),
+                pubDate: parseDate(pubDateStr, 8),
                 link: linkUrl,
-                updated: getPublicationDate(upDatedStr),
+                updated: parseDate(upDatedStr, 8),
                 language,
             };
 
@@ -105,15 +104,10 @@ const handler = async (ctx: Context): Promise<Data> => {
     items = await pMap(
         items,
         async (item) => {
-            if (!item.link) {
-                return item;
-            }
             const details = await cache.tryGet<ArticleDetails>(`ynet:article:v3:${item.link}`, () => fetchArticleDetails(item.link!));
             return {
                 ...item,
                 ...details,
-                pubDate: details.pubDate ?? item.pubDate,
-                updated: details.updated ?? item.updated,
             };
         },
         { concurrency: 3, stopOnError: false }
@@ -124,7 +118,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        image: getImageUrl($('div.cul_logo img').attr('src'), targetUrl),
+        image: `https:${$('div.cul_logo img').attr('src')}`,
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
         id: targetUrl,
@@ -171,25 +165,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-
-function getPublicationDate(value?: string): Temporal.Instant | undefined {
-    if (typeof value !== 'string' || !value.trim()) {
-        return;
-    }
-    return parseDate(value, 8);
-}
-
-function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
-    if (!value) {
-        return;
-    }
-    try {
-        const url = new URL(value, baseUrl);
-        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
-            return url.href;
-        }
-    } catch {
-        // Ignore unsupported source image URLs.
-    }
-    return;
-}

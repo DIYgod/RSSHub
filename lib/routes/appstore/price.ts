@@ -70,7 +70,7 @@ async function handler(ctx) {
             description: `<a href="${link}" target="_blank">Go to App Store</a>`,
             link,
             guid: id + result.priceLastChangeDate,
-            pubDate: result.priceLastChangeDate ? parseDate(result.priceLastChangeDate, 'YYYY-MM-DD') : undefined,
+            pubDate: parseDate(result.priceLastChangeDate, 'YYYY-MM-DD'),
         };
         item.push(single);
     }

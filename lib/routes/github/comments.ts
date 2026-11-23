@@ -2,7 +2,6 @@ import { escapeAttribute, escapeText } from 'entities';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
@@ -88,21 +87,18 @@ const timelineQuery = `
     }
 `;
 
-interface GraphqlTimelineItem {
+type GraphqlTimelineItem = {
     id: string;
-    __typename: 'ClosedEvent' | 'IssueComment' | 'CrossReferencedEvent' | 'RenamedTitleEvent' | 'PullRequestReview';
     actor?: { login: string };
     author?: { login: string };
-    createdAt?: string;
-    submittedAt?: string;
     url?: string;
-    body?: string;
-    bodyHTML?: string;
-    state?: string;
-    previousTitle?: string;
-    currentTitle?: string;
-    source?: { number: number; title: string; url: string };
-}
+} & (
+    | { __typename: 'ClosedEvent'; createdAt: string }
+    | { __typename: 'IssueComment'; createdAt: string; body: string; bodyHTML: string }
+    | { __typename: 'CrossReferencedEvent'; createdAt: string; source: { number: number; title: string; url: string } }
+    | { __typename: 'RenamedTitleEvent'; createdAt: string; previousTitle: string; currentTitle: string }
+    | { __typename: 'PullRequestReview'; submittedAt: string; body: string; bodyHTML: string; state: string }
+);
 
 interface GraphqlIssue {
     id: string;
@@ -116,7 +112,7 @@ interface GraphqlIssue {
     author?: { login: string };
     timelineItems: {
         pageInfo: { hasPreviousPage: boolean };
-        nodes: Array<GraphqlTimelineItem | null>;
+        nodes: GraphqlTimelineItem[];
     };
 }
 
@@ -335,25 +331,16 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
 }
 
 async function singleIssueGraphql(ctx, user: string, repo: string, number: number, limit: number, headers) {
-    const response = await ofetch.raw<{
-        data?: { repository?: { issueOrPullRequest?: GraphqlIssue } };
-        errors?: Array<{ message: string }>;
-    }>(`${apiUrl}/graphql`, {
+    const response = await ofetch.raw(`${apiUrl}/graphql`, {
         method: 'POST',
         headers,
         body: { query: timelineQuery, variables: { user, repo, number, limit } },
     });
-    if (response._data?.errors?.length) {
+    if (response._data.errors) {
         throw new Error(`GitHub GraphQL timeline request failed: ${response._data.errors.map((error) => error.message).join('; ')}`);
     }
-    if (!response._data?.data) {
-        throw new Error('GitHub GraphQL timeline request returned no data.');
-    }
-    const issue = response._data?.data?.repository?.issueOrPullRequest;
-    if (!issue) {
-        throw new NotFoundError(`GitHub issue or pull request ${user}/${repo}#${number} was not found or is inaccessible to GITHUB_ACCESS_TOKEN.`);
-    }
-    const items = issue.timelineItems.nodes.flatMap((item) => (item ? renderGraphqlTimelineItem(item, issue, user, repo) : []));
+    const issue: GraphqlIssue = response._data.data.repository.issueOrPullRequest;
+    const items = issue.timelineItems.nodes.map((item) => renderGraphqlTimelineItem(item, issue, user, repo));
     if (!issue.timelineItems.pageInfo.hasPreviousPage && issue.timelineItems.nodes.length < limit) {
         const actor = issue.author?.login ?? 'ghost';
         items.unshift({
@@ -385,37 +372,30 @@ async function singleIssueGraphql(ctx, user: string, repo: string, number: numbe
     return ret;
 }
 
-function renderGraphqlTimelineItem(item: GraphqlTimelineItem, issue: GraphqlIssue, user: string, repo: string): DataItem[] {
+function renderGraphqlTimelineItem(item: GraphqlTimelineItem, issue: GraphqlIssue, user: string, repo: string): DataItem {
     const actor = item.actor?.login ?? item.author?.login ?? 'ghost';
     const subject = `${user}/${repo}: ${issue.__typename === 'PullRequest' ? 'Pull request' : 'Issue'} #${issue.number}`;
-    const createdAt = item.__typename === 'PullRequestReview' ? item.submittedAt : item.createdAt;
     const base = {
         author: actor,
-        pubDate: createdAt ? parseDate(createdAt) : undefined,
+        pubDate: parseDate(item.__typename === 'PullRequestReview' ? item.submittedAt : item.createdAt),
         link: item.url ?? issue.url,
         guid: item.id,
     };
     switch (item.__typename) {
         case 'ClosedEvent':
-            return [{ ...base, title: `${actor} closed ${subject}` }];
+            return { ...base, title: `${actor} closed ${subject}` };
         case 'IssueComment':
-            return [{ ...base, title: `${actor} commented on ${subject}`, description: item.bodyHTML || md.render(item.body ?? '') }];
+            return { ...base, title: `${actor} commented on ${subject}`, description: item.bodyHTML || md.render(item.body) };
         case 'CrossReferencedEvent':
-            return item.source
-                ? [
-                      {
-                          ...base,
-                          title: `${actor} cross-referenced on ${subject}`,
-                          description: `${escapeText(actor)} mentioned this issue in <a href="${escapeAttribute(item.source.url)}"><b>${escapeText(item.source.title)}</b> #${item.source.number}</a>`,
-                          link: item.source.url,
-                      },
-                  ]
-                : [];
+            return {
+                ...base,
+                title: `${actor} cross-referenced on ${subject}`,
+                description: `${escapeText(actor)} mentioned this issue in <a href="${escapeAttribute(item.source.url)}"><b>${escapeText(item.source.title)}</b> #${item.source.number}</a>`,
+                link: item.source.url,
+            };
         case 'RenamedTitleEvent':
-            return [{ ...base, title: `${actor} renamed on ${subject}`, description: `${escapeText(actor)} changed the title <del>${escapeText(item.previousTitle ?? '')}</del> ${escapeText(item.currentTitle ?? '')}` }];
-        case 'PullRequestReview':
-            return item.submittedAt ? [{ ...base, title: `${actor} reviewed on ${subject}`, description: item.bodyHTML || (item.body ? md.render(item.body) : item.state?.replaceAll('_', ' ')) }] : [];
+            return { ...base, title: `${actor} renamed on ${subject}`, description: `${escapeText(actor)} changed the title <del>${escapeText(item.previousTitle)}</del> ${escapeText(item.currentTitle)}` };
         default:
-            return [];
+            return { ...base, title: `${actor} reviewed on ${subject}`, description: item.bodyHTML || (item.body ? md.render(item.body) : item.state.replaceAll('_', ' ')) };
     }
 }

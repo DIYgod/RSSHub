@@ -58,7 +58,7 @@ export const route: Route = {
         if (language !== 'en') {
             throw new NotFoundError('Unsupported language. Use en or zh-CN.');
         }
-        const response = await ofetch(`${rootUrl}/rss`, { responseType: 'text' });
+        const response = await ofetch(`${rootUrl}/rss`);
         const feed = await parser.parseString(response);
 
         return {

@@ -45,11 +45,10 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('.text i').text();
             return {
                 title: $item.find('b').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($item.find('.text i').text(), 8),
             };
         });
 
@@ -61,10 +60,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse);
 
                 item.description = content('.text-content').html();
-                const date = content('meta[name="PubDate"]').attr('content');
-                if (date) {
-                    item.pubDate = parseDate(date, 8);
-                }
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
                 return item;
             }),
         { concurrency: 3 }

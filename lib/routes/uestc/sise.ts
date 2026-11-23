@@ -70,7 +70,7 @@ async function handler(ctx) {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                return isOneOf(request.resourceType(), ['document', 'script']) ? route.continue() : route.abort();
+                return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
         },
     });
@@ -97,11 +97,10 @@ async function handler(ctx) {
                           };
                       })
                     : { date: undefined };
-                const parsedDate = date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined;
                 return {
                     title: newsTitle,
                     link: newsLink,
-                    pubDate: parsedDate,
+                    pubDate: date ? parseDateStrict(date, 'YYYY-MM-DD', 8) : undefined,
                 };
             },
             { concurrency: 1 }
@@ -115,9 +114,4 @@ async function handler(ctx) {
     } finally {
         await destroy();
     }
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

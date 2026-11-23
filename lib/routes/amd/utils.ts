@@ -1,23 +1,22 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { compareDates, parseDate } from '@/utils/time';
 
 export async function fetchArticle(link: string) {
-    const response = await ofetch(link, { responseType: 'text' });
+    const response = await ofetch(link);
     const $ = load(response);
-    const article = $('.article-body, .full-news-article, .press-components .article-container, [role=main] .col-lg-8').first();
+    const article = $('.article-body, .full-news-article, .press-components .article-container, [role=main] .col-lg-8');
     if (!article.length) {
         throw new Error(`AMD article content not found: ${link}`);
     }
 
-    const metadata = $('script[type="application/ld+json"]')
-        .toArray()
-        .map((element) => JSON.parse($(element).text()))
-        .find((data) => data['@type'] === 'NewsArticle' || data['@type'] === 'BlogPosting');
-    const pubDate = metadata?.datePublished ?? $('article header time').first().attr('datetime');
+    const jsonLd = $('script[type="application/ld+json"]:contains("NewsArticle"), script[type="application/ld+json"]:contains("BlogPosting")').text();
+    const metadata = jsonLd ? JSON.parse(jsonLd) : undefined;
+    const pubDate = metadata?.datePublished ?? $('article header time').attr('datetime');
     const author =
         (metadata?.author
             ? [metadata.author]
@@ -37,16 +36,8 @@ export async function fetchArticle(link: string) {
         article.find('h1, .related-documents-line, .spr-ir-news-article-date').remove();
     }
     article.children('div:has(> .cmp-title), p:has(> .fa-calendar)').remove();
-    article.find('script, style, button').remove();
-    article.find('[data-gated-youtube][data-video-id]').each((_, element) => {
-        const video = $(element);
-        const videoId = encodeURIComponent(video.attr('data-video-id')!);
-        const iframe = $('<iframe>')
-            .attr('src', `https://www.youtube.com/embed/${videoId}`)
-            .attr('title', video.attr('data-title') ?? 'YouTube video player')
-            .attr('allowfullscreen', '');
-        video.replaceWith(iframe);
-    });
+    article.find('button').remove();
+    article.find('[data-gated-youtube][data-video-id]').replaceWith((_, element) => renderYoutube(true, $(element).attr('data-video-id')));
 
     return {
         title: metadata?.headline ?? $('meta[property="og:title"]').attr('content'),
@@ -59,7 +50,7 @@ export async function fetchArticle(link: string) {
 }
 
 export async function fetchChineseNews(limit: number | undefined, pressOnly = false) {
-    const response = await ofetch('https://www.amd.com/zh-cn/newsroom.html', { responseType: 'text' });
+    const response = await ofetch('https://www.amd.com/zh-cn/newsroom.html');
     const $ = load(response);
     const selector = pressOnly ? '.card-title a[href^="/zh-cn/newsroom/press-releases/"]' : '.card-title a[href^="/zh-cn/newsroom/press-releases/"], .card-title a[href^="/zh-cn/blogs/"]';
     const items = $(selector)

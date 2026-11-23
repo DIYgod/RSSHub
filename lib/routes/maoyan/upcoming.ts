@@ -19,7 +19,7 @@ async function handler() {
         title: `${item.nm} ${item.comingTitle}`,
         description: `<img src="${item.img.replace('w.h', '1000.1000')}"> <br> 演员：${item.star} <br> 上映信息：${item.showInfo || item.comingTitle}`,
         link: `https://maoyan.com/films/${item.id}`,
-        pubDate: item.rt ? parseDate(item.rt, 8) : undefined,
+        pubDate: parseDate(item.rt, 8),
     }));
 
     return {

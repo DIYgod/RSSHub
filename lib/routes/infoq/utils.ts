@@ -26,12 +26,10 @@ const processFeed = async (list, cache) => {
                 const content = data.content_url ? (await got(data.content_url)).body : data.content;
                 const description = addCoverToDescription(parseContent(content), data.article_cover);
 
-                const date = ([undefined, null, ''] as unknown[]).includes(e.publish_time) ? undefined : parseDate(e.publish_time, 'x');
-
                 return {
                     title: data.article_title,
                     description,
-                    pubDate: date,
+                    pubDate: parseDate(e.publish_time, 'x'),
                     category,
                     author,
                     link,
@@ -53,7 +51,7 @@ const parseToSimpleTexts = (content) =>
                 parseToSimpleTexts(i.content)
                     .map((v) => `<p>${v}</p>`)
                     .join(''),
-            text: () => escapeText(i.text ?? ''),
+            text: () => escapeText(i.text),
             heading: () => {
                 if (i.content) {
                     const level = i.attrs.level;

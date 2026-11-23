@@ -74,9 +74,9 @@ async function handler(ctx: Context) {
             title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }));
-    const entries = list;
+
     const items = await Promise.all(
-        entries.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);

@@ -70,7 +70,7 @@ const getArticle = async (link) => {
     return $('.article-viewer').html();
 };
 
-export const getShortMsgDescription = (msg, content = msg.content) => html`${content.split('\n').map((line) => html`${line}<br />`)}${(msg.pic_list ?? []).map((url) => html`<img src="${url}" />`)}`.toString();
+export const getShortMsgDescription = (msg, content = msg.content) => html`${content.split('\n').map((line) => html`${line}<br />`)}${msg.pic_list.map((url) => html`<img src="${url}" />`)}`.toString();
 
 export const parseList = (data) =>
     data.map((item) => {

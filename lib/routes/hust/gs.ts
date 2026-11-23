@@ -25,7 +25,7 @@ const handler = async (ctx) => {
 
             const a = $item.find('a');
             const link = a.prop('href');
-            const pubDate = parseDateStrict($item.find('span.time').text().trim(), 'YYYY-MM-DD', 8);
+            const pubDate = parseDateStrict($item.find('span.time').text(), 'YYYY-MM-DD', 8);
 
             return {
                 title: a.text(),

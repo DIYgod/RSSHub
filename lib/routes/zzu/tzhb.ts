@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tzhb/:type',
@@ -30,21 +30,6 @@ export const route: Route = {
 | -------- | -------- |
 | gzdt     | tzgg     |`,
 };
-
-function parsePublishedDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
-    if (!match) {
-        return;
-    }
-    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    if (!parseDateStrict(calendarDate, 'YYYY-MM-DD')) {
-        return;
-    }
-    return parseDate(value);
-}
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
@@ -73,7 +58,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: parsePublishedDate(pubDateText),
+                pubDate: parseDate(pubDateText),
             };
         });
 

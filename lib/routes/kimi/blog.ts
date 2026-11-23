@@ -18,11 +18,11 @@ const extractKimiDetail = (html: string, link: string) => {
     const $ = load(html);
     hydrateNextSuspenseSlots($);
 
-    const h1Text = $('main h1').first().text();
+    const h1Text = $('main h1').text();
     const title = h1Text || undefined;
 
-    const $section = $('main section.pb-20').first();
-    const $target = $section.length > 0 ? $section : $('main').first();
+    const $section = $('main section.pb-20');
+    const $target = $section.length > 0 ? $section : $('main');
     const content = normalizeContentContainer($target, $, link);
 
     return {
@@ -33,20 +33,20 @@ const extractKimiDetail = (html: string, link: string) => {
 
 const extractExternalDetail = (html: string, entry: ParsedBlogEntry) => {
     const $ = load(html);
-    const metaSummary = $('meta[name="description"]').attr('content')?.trim() || $('meta[property="og:description"]').attr('content')?.trim();
+    const metaSummary = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content');
 
     if (entry.kind === 'github') {
-        const content = normalizeContentContainer($('article.markdown-body').first(), $, entry.link);
+        const content = normalizeContentContainer($('article.markdown-body'), $, entry.link);
         return { ...content, metaSummary };
     }
 
     if (entry.kind === 'huggingface') {
-        const content = normalizeContentContainer($('main .prose').first(), $, entry.link);
+        const content = normalizeContentContainer($('main .prose'), $, entry.link);
         return { ...content, metaSummary };
     }
 
     if (entry.kind === 'github-pages') {
-        const content = normalizeContentContainer($('body').first(), $, entry.link);
+        const content = normalizeContentContainer($('body'), $, entry.link);
         return { ...content, metaSummary };
     }
 

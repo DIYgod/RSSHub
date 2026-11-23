@@ -45,21 +45,17 @@ async function ProcessList(newsUrl: string, _baseUrl: string, listName: string, 
     const items = $(listName)
         .toArray()
         .flatMap((item): NuaItem[] => {
-            const anchor = $(item).find('a').first();
+            const anchor = $(item).find('a');
             const href = anchor.attr('href');
             if (!href) {
                 return [];
             }
-            const link = new URL(href, newsUrl);
-            if (link.protocol !== 'https:' && link.protocol !== 'http:') {
-                return [];
-            }
             const type = pageType(href);
-            const dateText = $(item).find(listDate).first().text();
+            const dateText = $(item).find(listDate).text();
 
             return [
                 {
-                    link: link.href,
+                    link: new URL(href, newsUrl).href,
                     title: anchor.attr('title') || anchor.text(),
                     pubDate: parseListDate(dateText),
                     type,

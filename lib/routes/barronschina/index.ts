@@ -42,14 +42,13 @@ type ApiResponse<T> = {
 type Article = {
     guid: number;
     title: string;
-    content?: string;
-    summary?: string;
-    published_at?: number;
+    content: string;
+    published_at: number;
     item_type: 'article' | 'news';
     barron_author?: string;
     authors?: Array<{ nickname: string }>;
     column_list?: Array<{ title: string }>;
-    cover_image?: { original?: { url?: string } };
+    cover_image: { original: { url: string } };
 };
 
 const rootUrl = 'https://www.barrons.com.cn';
@@ -63,12 +62,12 @@ const apiHeaders = {
 
 const toItem = (article: Article): DataItem => ({
     title: article.title,
-    description: article.content || article.summary,
+    description: article.content,
     link: `${rootUrl}/${article.item_type === 'news' ? 'news' : 'articles'}/${article.guid}`,
-    pubDate: article.published_at ? parseDate(article.published_at, 'X') : undefined,
+    pubDate: parseDate(article.published_at, 'X'),
     author: article.barron_author || article.authors?.map((author) => author.nickname).join(', '),
     category: article.column_list?.map((column) => column.title),
-    image: article.cover_image?.original?.url,
+    image: article.cover_image.original.url,
 });
 
 async function handler(ctx) {

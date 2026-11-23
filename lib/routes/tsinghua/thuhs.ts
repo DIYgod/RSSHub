@@ -25,7 +25,7 @@ async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'descri
     const response = await ofetch(link);
     const $ = load(response);
 
-    return { description: $('.v_news_content').html() || '' };
+    return { description: $('.v_news_content').html() };
 }
 
 export const route: Route = {

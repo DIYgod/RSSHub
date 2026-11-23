@@ -30,12 +30,10 @@ export async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const href = $item.find('a').attr('href');
-            const dateText = $item.find('span').text();
-            const date = dateText ? parseDate(dateText, 8) : undefined;
             return {
                 title: $item.find('a').attr('title')!,
                 link: href,
-                pubDate: date,
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
@@ -49,11 +47,10 @@ export async function handler(ctx) {
                     const { data } = await got(item.link!);
                     const content = load(data);
                     const dateText = content('meta[name="PubDate"]').attr('content');
-                    const date = dateText ? parseDate(dateText, 8) : undefined;
                     return {
-                        description: content('#zoomcon').html() ?? undefined,
-                        author: content('meta[name="ContentSource"]').attr('content') || undefined,
-                        pubDate: date,
+                        description: content('#zoomcon').html(),
+                        author: content('meta[name="ContentSource"]').attr('content'),
+                        pubDate: dateText ? parseDate(dateText, 8) : undefined,
                     };
                 });
                 return { ...item, description: detail.description, pubDate: detail.pubDate ?? item.pubDate, author: detail.author };

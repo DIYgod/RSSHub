@@ -6,16 +6,9 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/time';
+import parser from '@/utils/rss-parser';
 
-import { getRssFeed } from './utils';
-
-const getCategory = (category: string | { _?: string }): string[] => {
-    if (typeof category === 'string') {
-        return [category];
-    }
-    return category && typeof category === 'object' && '_' in category && typeof category._ === 'string' ? [category._] : [];
-};
+const getCategory = (category: string | { _: string }) => (typeof category === 'string' ? category : category._);
 
 export const route: Route = {
     path: '/rss/:cat?',
@@ -52,7 +45,8 @@ export const route: Route = {
 async function handler(ctx) {
     const url = `https://rss.nytimes.com/services/xml/rss/nyt/${ctx.req.param('cat') ?? 'HomePage'}.xml`;
 
-    const rss = await getRssFeed(url);
+    const xml = await ofetch(url);
+    const rss = await parser.parseString(xml);
 
     return {
         ...rss,
@@ -81,8 +75,7 @@ async function handler(ctx) {
                             ...e,
                             description: e.content,
                             author: e.creator,
-                            category: e.categories?.flatMap(getCategory),
-                            pubDate: e.pubDate ? parseDate(e.pubDate) : undefined,
+                            category: e.categories?.map(getCategory),
                         };
                     }
                     throw error;

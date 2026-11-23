@@ -31,14 +31,14 @@ function getNews(data, listingUrl: string) {
     return $('.zy_left li[id^="line_u6_"]')
         .toArray()
         .map((element) => {
-            const anchor = $(element).find('a').first();
-            const published = anchor.find('.time > span').first().text().trim();
+            const anchor = $(element).find('a');
+            const published = anchor.find('.time > span').first().text();
             const image = anchor.find('.pic img').attr('src');
             return {
                 title: anchor.find('h1').text(),
                 link: new URL(anchor.attr('href')!, listingUrl).href,
                 pubDate: published ? parseDate(published, 'YYYY.MM.DD', 8) : undefined,
-                description: anchor.find('p').prop('outerHTML') ?? undefined,
+                description: anchor.find('p').prop('outerHTML'),
                 image: image ? new URL(image, listingUrl).href : undefined,
             };
         });

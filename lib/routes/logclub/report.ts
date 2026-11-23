@@ -15,7 +15,7 @@ interface SourceReport {
     img_url?: string;
     author?: string;
     channel_name: string;
-    release_time?: string;
+    release_time: string;
 }
 
 export const route: Route = {
@@ -87,50 +87,48 @@ async function handler(ctx) {
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: item.release_time ? parseDate(item.release_time, 8) : undefined,
+        pubDate: parseDate(item.release_time, 8),
     }));
 
     items = await pMap(
         items,
-        async (item) => {
-            const detailResponse = await cache.tryGet(`logclub:html:${item.link}`, async () => {
-                const { data } = await got(item.link);
-                return data;
-            });
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data: detailResponse } = await got(item.link);
 
-            const content = load(detailResponse);
+                const content = load(detailResponse);
 
-            content('img').each((_, el) => {
-                const $el = content(el);
-                $el.replaceWith(
-                    renderDescription({
-                        image: {
-                            src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                            alt: $el.prop('title'),
-                        },
-                    })
-                );
-            });
+                content('img').each((_, el) => {
+                    const $el = content(el);
+                    $el.replaceWith(
+                        renderDescription({
+                            image: {
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
+                            },
+                        })
+                    );
+                });
 
-            item.title = content('h1').first().text();
-            item.description += renderDescription({
-                description: content('div.article-cont').html() ?? undefined,
-            });
-            item.author = content('div.lc-infos a')
-                .toArray()
-                .map((a) => content(a).text())
-                .join('/');
-            item.category = [
-                ...new Set([
-                    ...(item.category ?? []),
-                    ...content('div.article-label-r a.label')
-                        .toArray()
-                        .map((c) => content(c).text()),
-                ]),
-            ].filter(Boolean);
+                item.title = content('h1').first().text();
+                item.description += renderDescription({
+                    description: content('div.article-cont').html() ?? undefined,
+                });
+                item.author = content('div.lc-infos a')
+                    .toArray()
+                    .map((a) => content(a).text())
+                    .join('/');
+                item.category = [
+                    ...new Set([
+                        ...(item.category ?? []),
+                        ...content('div.article-label-r a.label')
+                            .toArray()
+                            .map((c) => content(c).text()),
+                    ]),
+                ].filter(Boolean);
 
-            return item;
-        },
+                return item;
+            }),
         { concurrency: 3 }
     );
 

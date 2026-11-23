@@ -23,7 +23,7 @@ const getItem = (item: DataItem & { link: string }) =>
     cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
-        return { ...item, description: $('.articleDiv').html() ?? undefined };
+        return { ...item, description: $('.articleDiv').html() };
     });
 
 export const route: Route = {
@@ -83,10 +83,9 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('.subListTime').text(), 8),
             };
         });
-    const selectedList = list;
     return {
         title: `${section.name}${title}`,
         link,
-        item: await Promise.all(selectedList.map((item) => getItem(item))),
+        item: await Promise.all(list.map((item) => getItem(item))),
     };
 }

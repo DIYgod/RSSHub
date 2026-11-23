@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -119,10 +119,7 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Temporal.Instant 
 
         const month = monthMapping.get(monthAbbreviation) ?? '';
 
-        const date = `20${year}-${month}-${day}`;
-        if (month && parseDateStrict(date, 'YYYY-MM-DD')) {
-            return parseDate(`${date}T00:00:00+08:00`);
-        }
+        return parseDate(`20${year}-${month}-${day}T00:00:00+08:00`);
     }
 
     return undefined;

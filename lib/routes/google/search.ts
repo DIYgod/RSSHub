@@ -43,7 +43,7 @@ async function handler(ctx) {
                 onBeforeLoad: async (page) => {
                     await page.setExtraHTTPHeaders({ 'Accept-Language': language });
                     await page.route('**/*', async (route) => {
-                        await (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort());
+                        await (['document'].includes(route.request().resourceType()) ? route.continue() : route.abort());
                     });
                 },
             });

@@ -85,17 +85,17 @@ function extractPosts(html: string): Post[] {
 // Dates in the flight data are ISO strings prefixed with `$D`.
 const publishedAt = (post: Post) => Temporal.Instant.from(post.publishDate.replace(/^\$D/, ''));
 
-function cleanBody(html: string, link: string): string | undefined {
+function cleanBody(html: string, link: string) {
     const $ = load(html);
     const body = $('#post-body');
     if (body.length === 0) {
-        return undefined;
+        return;
     }
 
     // Sponsored intro: the callout plus the divider that follows it.
     body.find('.sponsor-block').each((_, element) => {
         const next = $(element).next();
-        if (next.find('hr').length > 0 && next.find('img').length === 0 && next.text().trim() === '') {
+        if (next.find('hr').length > 0 && next.find('img').length === 0 && next.text() === '') {
             next.remove();
         }
         $(element).remove();
@@ -112,14 +112,8 @@ function cleanBody(html: string, link: string): string | undefined {
         }
         $(element).attr('href', url.href);
     });
-    body.find('img[src]').each((_, element) => {
-        const url = URL.parse($(element).attr('src')!, link);
-        if (url) {
-            $(element).attr('src', url.href);
-        }
-    });
 
-    return body.html() ?? undefined;
+    return body.html();
 }
 
 async function handler(ctx: Context): Promise<Data> {
@@ -133,25 +127,18 @@ async function handler(ctx: Context): Promise<Data> {
 
     const sorted = sort === 'newest' ? posts.toSorted((a, b) => Temporal.Instant.compare(publishedAt(b), publishedAt(a))) : posts.toSorted((a, b) => (b.readers ?? 0) - (a.readers ?? 0));
 
-    const seen = new Set<string>();
-    const list: DataItem[] = [];
-    for (const post of sorted) {
-        const link = `${listUrl}/${post.slug}`;
-        if (seen.has(link)) {
-            continue;
-        }
-        seen.add(link);
+    const list: DataItem[] = sorted.map((post) => {
         const authors = post.authors?.map((author) => author.name).filter(Boolean);
-        list.push({
+        return {
             title: post.title,
-            link,
+            link: `${listUrl}/${post.slug}`,
             description: post.subtitle,
             pubDate: parseDate(post.publishDate.replace(/^\$D/, '')),
             author: authors?.length ? authors.join(', ') : undefined,
             category: post.tags,
             image: post.thumbnailUrl,
-        });
-    }
+        };
+    });
 
     const items = await pMap(
         list.slice(0, getRouteLimit(ctx, 20)),

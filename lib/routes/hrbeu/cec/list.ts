@@ -50,7 +50,7 @@ async function handler(ctx) {
             const link = new URL($(item).attr('href')!, `${rootUrl}/${id}/list.htm`).href;
             return {
                 title: $(item).find('span.column-news-title').text(),
-                pubDate: $(item).find('span.column-news-date').text() ? parseDate($(item).find('span.column-news-date').text(), 8) : undefined,
+                pubDate: parseDate($(item).find('span.column-news-date').text(), 8),
                 link,
             };
         });

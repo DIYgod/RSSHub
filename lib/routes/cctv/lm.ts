@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/lm/:id?',
@@ -69,7 +69,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let list = response.data.data.list.map((item) => ({
+    const list = response.data.data.list.slice(0, getRouteLimit(ctx)).map((item) => ({
         url: item.url,
         guid: item.guid,
         image: item.image,
@@ -78,13 +78,6 @@ async function handler(ctx) {
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));
-    const limit = getRouteLimit(ctx);
-    if (limit !== undefined) {
-        if (ctx.req.query('sorted') !== 'false') {
-            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-        }
-        list = list.slice(0, limit);
-    }
 
     const items = await Promise.all(
         list.map((item) =>

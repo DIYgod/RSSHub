@@ -97,7 +97,7 @@ async function handler(ctx) {
             // 文章正文
             description: item.summary,
             // 文章发布时间
-            pubDate: item.publiced_at ? parseDate(item.publiced_at, 8) : undefined,
+            pubDate: parseDate(item.publiced_at, 8),
             // 文章链接
             link: `https://nosec.org/home/detail/${item.id}.html`,
             author: item.username,

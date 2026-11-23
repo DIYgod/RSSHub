@@ -5,6 +5,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
@@ -53,13 +54,12 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
     const { data: detailResponse } = await got(link);
     const $ = load(detailResponse);
     const description = $('div.article-content').html();
-    const imageSrc = $('div.article-content img').first().attr('src');
+    const imageSrc = $('div.article-content img').attr('src');
     const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
     const rawDate = $('time').text();
-    const pubDate = rawDate ? parseDateStrict(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], 8) : undefined;
     return {
         description,
-        pubDate,
+        pubDate: rawDate ? parseDateStrict(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], 8) : undefined,
         category: $('b.bq-wg')
             .toArray()
             .map((element) => $(element).text()),
@@ -71,8 +71,7 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
 }
 async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') ?? '22');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 22;
+    const limit = getRouteLimit(ctx, 22);
     let currentUrl = new URL(id === 'latest' ? '' : `html/${id}.html`, rootUrl).href;
     const { data: firstResponse } = await got(currentUrl);
     let $;
@@ -94,37 +93,23 @@ async function handler(ctx) {
         DataItem & {
             link: string;
         }
-    > = query
-        .toArray()
-        .filter((item) => $(item).attr('href'))
-        .map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.prop('title') ?? $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
-                language,
-            };
-        });
+    > = query.toArray().map((item) => {
+        const $item = $(item);
+        return {
+            title: $item.prop('title') ?? $item.text(),
+            link: new URL($item.prop('href'), rootUrl).href,
+            language,
+        };
+    });
     items = await pMap(
         items,
-        (item) =>
-            mapResolvedValue(
-                cache.tryGet(`x6d:detail:v4:${item.link}`, () => fetchDetail(item.link)),
-                (detail) => ({
-                    ...item,
-                    description: detail.description,
-                    pubDate: detail.pubDate,
-                    category: detail.category,
-                    author: detail.author,
-                    content: detail.content,
-                    image: detail.image,
-                    banner: detail.banner,
-                })
-            ),
+        async (item) => {
+            const detail = await cache.tryGet(`x6d:detail:v4:${item.link}`, () => fetchDetail(item.link));
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
-    const imageSrc = $('div.header-logo img').attr('src');
-    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
+    const image = new URL($('div.header-logo img').prop('src'), rootUrl).href;
     return {
         title: $('title').text().split(/\s-/, 1)[0],
         description: $('meta[name="description"]').prop('content'),
@@ -133,8 +118,4 @@ async function handler(ctx) {
         image,
         language,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
 }

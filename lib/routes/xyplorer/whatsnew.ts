@@ -27,13 +27,12 @@ async function handler() {
             const $item = $(item);
             const title = $item.prev().prev().text();
             const date = $item.prev().text().replace('released ', '');
-            const pubDate = date ? parseDateStrict(date, 'DD-MMM-YYYY') : undefined;
             return {
                 guid: `${currentUrl}#${encodeURIComponent(title)}`,
                 link: currentUrl,
                 description: `<ul>${$item.html()}</ul>`,
                 title,
-                pubDate,
+                pubDate: parseDateStrict(date, 'DD-MMM-YYYY'),
             };
         });
 

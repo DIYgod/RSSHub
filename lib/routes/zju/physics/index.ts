@@ -63,10 +63,9 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const dateText = $item.find('.date').text() || `${$item.find('.time .y').text()}-${$item.find('.time .d').text()}`;
-            const date = parseDateStrict(dateText.trim(), 'YYYY-MM-DD');
             return {
                 title: $item.find('h3').text(),
-                pubDate: date,
+                pubDate: parseDateStrict(dateText, 'YYYY-MM-DD'),
 
                 link: new URL($item.find('a').attr('href')!, link).href,
                 // link: `http://10.14.122.238/${item.find('a').attr('href')}`,

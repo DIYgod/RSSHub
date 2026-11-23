@@ -72,7 +72,7 @@ async function handler(ctx) {
         await page.goto(config.url, { waitUntil: 'domcontentloaded' });
         const selector = `iframe[src*="${section === 'insights' ? 'insights-research-results' : 'search-market-results'}"]`;
         await page.waitForSelector(selector, { state: 'attached' });
-        const src = await page.locator(selector).first().getAttribute('src');
+        const src = await page.locator(selector).getAttribute('src');
         const iframeUrl = new URL(src!, config.url);
         // only follow links on the site itself
         if (!isOnSite(iframeUrl.href, 'cbre.com.cn', 'cbre.com.hk')) {
@@ -106,11 +106,11 @@ async function handler(ctx) {
     const item: DataItem[] = data.results.slice(0, getRouteLimit(ctx, 9)).map((result) => {
         const report = result.raw;
         const pdf = report.sprinklrattachmenturl;
-        const attachment = pdf && new URL(pdf).pathname.toLowerCase().endsWith('.pdf') ? pdf : undefined;
+        const attachment = new URL(pdf).pathname.toLowerCase().endsWith('.pdf') ? pdf : undefined;
         return {
             title: result.title,
             link: new URL(result.clickUri, config.url).href,
-            pubDate: report.publishdate ? parseDate(report.publishdate.replaceAll('/', '-').replace('@', 'T')) : undefined,
+            pubDate: parseDate(report.publishdate.replaceAll('/', '-').replace('@', 'T')),
             description: `<p>${escapeText(report.longdescription || report.shortdescription || result.excerpt || '')}</p>`,
             category: [...(report.themename || []), ...(report.propertytypename || []), ...(report.topicname || [])],
             enclosure_url: attachment,

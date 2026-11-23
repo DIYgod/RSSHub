@@ -102,7 +102,7 @@ async function handler(ctx) {
             const infoTime = rightNode.find('.type-time').text();
             return {
                 title: infoTitle,
-                pubDate: infoTime ? parseRelativeDate(infoTime) : undefined,
+                pubDate: parseRelativeDate(infoTime),
                 link: new URL(relativeLink!, baseUrl).href,
                 category: [infoType, typeName],
                 typeName,

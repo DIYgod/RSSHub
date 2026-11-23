@@ -32,8 +32,8 @@ async function getTopic(link: string) {
     const response = await got(link);
     const $ = load(response.data);
     return {
-        topicTitle: $('meta[property="og:title"]').attr('content') ?? $('title').text(),
-        topicDescription: $('meta[property="og:description"]').attr('content') ?? $('meta[name="description"]').attr('content'),
+        topicTitle: $('meta[property="og:title"]').attr('content'),
+        topicDescription: $('meta[property="og:description"]').attr('content'),
     };
 }
 

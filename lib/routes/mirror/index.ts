@@ -37,29 +37,30 @@ async function handler(ctx) {
     const rootUrl = 'https://mirror.xyz';
     const currentUrl = id.endsWith('.eth') ? `${rootUrl}/${id}` : `https://${id}.mirror.xyz`;
 
-    const response = await ofetch.raw(currentUrl, { responseType: 'text' });
+    const response = await ofetch.raw(currentUrl);
     const redirectedUrl = new URL(response.url);
     if (['paragraph.com', 'www.paragraph.com'].includes(redirectedUrl.hostname) && redirectedUrl.pathname.startsWith('/@')) {
         const publication = redirectedUrl.pathname.split('/', 2)[1];
-        const feed = await parser.parseString(await ofetch(`https://paragraph.com/api/blogs/rss/${encodeURIComponent(publication)}`, { responseType: 'text' }));
+        const rss = await ofetch(`https://paragraph.com/api/blogs/rss/${encodeURIComponent(publication)}`);
+        const feed = await parser.parseString(rss);
         return {
             title: `${feed.title} - Mirror`,
             description: feed.description,
             image: feed.image?.url,
-            link: feed.link ?? redirectedUrl.href,
+            link: feed.link,
             item: feed.items.map((item) => ({
-                title: item.title ?? '',
-                description: item['content:encoded'] ?? item.content ?? item.summary,
+                title: item.title!,
+                description: item['content:encoded'],
                 link: item.link,
                 guid: item.guid,
                 author: item.creator ?? item.author,
-                pubDate: item.isoDate || item.pubDate ? parseDate(item.isoDate ?? item.pubDate!) : undefined,
+                pubDate: parseDate(item.pubDate!),
                 category: item.categories,
             })),
         };
     }
 
-    const dataMatch = response._data?.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/);
+    const dataMatch = response._data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/);
     if (!dataMatch) {
         throw new Error('Mirror publication data was not found. Check whether the publication has moved to Paragraph.');
     }

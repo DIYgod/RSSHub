@@ -72,7 +72,7 @@ async function handler(ctx) {
     const items = data.map((item) => ({ ...item, pubDate: parseDate(item.PublishDate, 8) }));
     const limit = getRouteLimit(ctx);
     const sorted = ctx.req.query('sorted') !== 'false';
-    const candidates = limit === undefined || (sorted && items.some((item) => !item.pubDate)) ? items : (sorted ? items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : items).slice(0, limit);
+    const candidates = limit === undefined ? items : (sorted ? items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)) : items).slice(0, limit);
     const posts = await pMap(
         candidates,
         async ({ Title, Summary, OutLink, HomeImagePath, Id, pubDate }) => ({
@@ -82,9 +82,6 @@ async function handler(ctx) {
                 ? renderDescription({ image: HomeImagePath, description: Summary })
                 : await cache.tryGet(`https://cqnews.web.sdo.com/api/news/newsDetail?gameCode=ff&id=${Id}`, async () => {
                       const response = await got(`https://cqnews.web.sdo.com/api/news/newsDetail?gameCode=ff&id=${Id}`);
-                      if (String(response.data.Code) !== '0' || !response.data.Data?.Content) {
-                          throw new Error(`The official news API did not provide article ${Id}. Check that the article remains publicly available.`);
-                      }
                       return response.data.Data.Content;
                   }),
             pubDate,

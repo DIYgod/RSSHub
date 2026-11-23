@@ -123,7 +123,7 @@ async function handler(ctx) {
 async function getLatestNews(uid: 'bm' | 'yw' | 'gd', originDomain: string) {
     // 部门政务 was folded into 政务联播, which publishes the same JSON list as 要闻.
     const link = new URL(uid === 'bm' ? '/lianbo/' : '/yaowen/liebiao/', originDomain).href;
-    const articles = await ofetch<Array<{ TITLE: string; URL: string; DOCRELPUBTIME?: string }>>(new URL('YAOWENLIEBIAO.json', link).href);
+    const articles = await ofetch<Array<{ TITLE: string; URL: string; DOCRELPUBTIME: string }>>(new URL('YAOWENLIEBIAO.json', link).href);
     // The official page displays the first 20 records from this JSON list.
     const items = await pMap(
         articles.slice(0, 20),
@@ -134,7 +134,7 @@ async function getLatestNews(uid: 'bm' | 'yw' | 'gd', originDomain: string) {
                 ...detail,
                 title: article.TITLE,
                 link: url,
-                pubDate: detail.pubDate ?? (article.DOCRELPUBTIME ? parseDate(article.DOCRELPUBTIME, 8) : undefined),
+                pubDate: detail.pubDate ?? parseDate(article.DOCRELPUBTIME, 8),
             };
         },
         { concurrency: 3 }
@@ -152,7 +152,7 @@ function getArticle(url: string) {
         const $ = load(response.data);
         const date = $('meta[name="firstpublishedtime"]').attr('content');
         return {
-            description: $('#UCAP-CONTENT, .pages_content').first().html() ?? undefined,
+            description: $('#UCAP-CONTENT, .pages_content').first().html(),
             pubDate: date ? parseDate(date, ['YYYY-MM-DD-HH:mm:ss', 'YYYY-MM-DD HH:mm:ss'], 8) : undefined,
             author: $('meta[name="author"]').attr('content'),
             category: ($('meta[name="keywords"]').attr('content') ?? '').split(/[,;]/).filter(Boolean),
@@ -163,12 +163,9 @@ function getArticle(url: string) {
 async function getPolicyFiles() {
     const rootUrl = 'https://sousuo.www.gov.cn';
     const link = new URL('/zcwjk/policyDocumentLibrary?q=&t=zhengcelibrary&orpro=', rootUrl).href;
-    const response = await ofetch<{ code: number; searchVO: { catMap: Record<string, { listVO: Array<{ title: string; url: string; pubtime?: number }> }> } }>(new URL('/search-gov/data', rootUrl).href, {
+    const response = await ofetch<{ searchVO: { catMap: Record<string, { listVO: Array<{ title: string; url: string }> }> } }>(new URL('/search-gov/data', rootUrl).href, {
         query: { t: 'zhengcelibrary', q: '', p: 1, n: 5, inpro: '' },
     });
-    if (response.code !== 200 || !response.searchVO?.catMap) {
-        throw new TypeError('The official policy library did not return its document list.');
-    }
     // The official first page displays five records from each document category.
     const articles = Object.values(response.searchVO.catMap).flatMap((category) => category.listVO);
     const item = await pMap(
@@ -179,7 +176,6 @@ async function getPolicyFiles() {
                 ...detail,
                 title: article.title,
                 link: article.url,
-                pubDate: detail.pubDate ?? (article.pubtime ? parseDate(article.pubtime) : undefined),
             };
         },
         { concurrency: 3 }

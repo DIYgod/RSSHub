@@ -30,17 +30,14 @@ async function handler() {
 
     const feed = await parser.parseURL(link);
 
-    const list: DataItem[] = feed.items.map((item) => {
-        const pubDate = item.pubDate ? parseDate(item.pubDate) : undefined;
-        return {
-            title: item.title || '',
-            link: item.link,
-            guid: item.guid,
-            pubDate,
-            author: item.creator,
-            category: item.categories,
-        };
-    });
+    const list: DataItem[] = feed.items.map((item) => ({
+        title: item.title || '',
+        link: item.link,
+        guid: item.guid,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        author: item.creator,
+        category: item.categories,
+    }));
     const items = await pMap(
         list,
         async (item) => {
@@ -54,7 +51,7 @@ async function handler() {
 
                 $('.paywall').remove();
                 $('.loading-indicator').remove();
-                return $('.article-dropcap').html() ?? undefined;
+                return $('.article-dropcap').html();
             });
             return { ...item, description };
         },
@@ -63,7 +60,7 @@ async function handler() {
 
     return {
         title: 'Foreign Affairs - RSS',
-        link: feed.link || 'https://www.foreignaffairs.com/',
+        link: feed.link,
         item: items,
     };
 }

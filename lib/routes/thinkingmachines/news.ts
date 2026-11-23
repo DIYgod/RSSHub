@@ -52,7 +52,7 @@ async function handler() {
         async (item) => ({
             title: item.title,
             link: item.link,
-            pubDate: item.dateStr ? parseDate(`${item.dateStr}T00:00:00Z`) : undefined,
+            pubDate: parseDate(`${item.dateStr}T00:00:00Z`),
             ...(await cache.tryGet(item.link, async () => {
                 const articleResponse = await ofetch(item.link);
                 const $article = load(articleResponse);

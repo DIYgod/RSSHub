@@ -4,10 +4,10 @@ import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
-import { fetchWithPage } from '@/utils/playwright-request';
+import ofetch from '@/utils/ofetch';
 import { isOnSite } from '@/utils/valid-host';
+
+import { getGatekeeperHeaders } from './gatekeeper';
 
 const rootUrl = 'https://www.baozimh.com';
 
@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: { name: '漫画名称，在漫画链接可以得到(`comic/` 后的那段)' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -34,94 +34,76 @@ export const route: Route = {
     handler,
 };
 
-const allowPageRequests = async (page: Page) => {
-    await page.route('**/*', async (request) => {
-        await (['document', 'script', 'xhr', 'fetch'].includes(request.request().resourceType()) ? request.continue() : request.abort());
-    });
-};
-
 async function handler(ctx): Promise<Data> {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/comic/${name}`;
 
-    const { page, destroy } = await getPlaywrightPage(url, {
-        closeTimeout: 0,
-        onBeforeLoad: allowPageRequests,
-    });
-    try {
-        await page.waitForSelector('#chapter-items');
-        const html = await page.content();
-        const $ = load(html);
-        const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
-        const list = $('#chapter-items')
-            .first()
-            .children()
-            .toArray()
-            .map((item): DataItem => {
-                const title = $(item).find('span').text();
-                const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
+    const headers = await getGatekeeperHeaders();
+    const response = await ofetch(url, { headers });
+    const $ = load(response);
+    const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
+    const list = $('#chapter-items')
+        .first()
+        .children()
+        .toArray()
+        .map((item): DataItem => {
+            const title = $(item).find('span').text();
+            const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
 
-                return {
-                    title,
-                    link,
-                };
+            return {
+                title,
+                link,
+            };
+        });
+
+    // more chapters
+    const otherList = $('#chapters_other_list')
+        .first()
+        .children()
+        .toArray()
+        .map((item): DataItem => {
+            const title = $(item).find('span').text();
+            const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
+
+            return {
+                title,
+                link,
+            };
+        });
+    const combinedList = [...list, ...otherList].toReversed();
+
+    const items = await pMap(
+        combinedList,
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'baozimh.com')) {
+                return item;
+            }
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, { headers });
+                const $ = load(detailResponse);
+                item.description = renderToString(
+                    <>
+                        {$('.comic-contain')
+                            .find('amp-img')
+                            .toArray()
+                            .map((img) => (
+                                <img src={$(img).attr('src')} />
+                            ))}
+                    </>
+                );
+
+                return item;
             });
+        },
+        { concurrency: 3 }
+    );
 
-        // more chapters
-        const otherList = $('#chapters_other_list')
-            .first()
-            .children()
-            .toArray()
-            .map((item): DataItem => {
-                const title = $(item).find('span').text();
-                const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
-
-                return {
-                    title,
-                    link,
-                };
-            });
-        const combinedList = [...list, ...otherList].toReversed();
-
-        const items = await pMap(
-            combinedList,
-            (item) => {
-                // only follow links on the site itself
-                if (!isOnSite(item.link, 'baozimh.com')) {
-                    return item;
-                }
-                return cache.tryGet(item.link!, async () => {
-                    const detailResponse = await fetchWithPage(page, item.link!);
-                    if (!detailResponse.ok) {
-                        throw new Error(`Unable to fetch comic chapter (${detailResponse.status}): ${item.link}`);
-                    }
-                    const html = detailResponse.text;
-                    const $ = load(html);
-                    item.description = renderToString(
-                        <>
-                            {$('.comic-contain')
-                                .find('amp-img')
-                                .toArray()
-                                .map((img) => (
-                                    <img src={$(img).attr('src')} />
-                                ))}
-                        </>
-                    );
-
-                    return item;
-                });
-            },
-            { concurrency: 3 }
-        );
-
-        return {
-            title: `包子漫画-${comicTitle}`,
-            description: $('.comics-detail__desc').text(),
-            link: url,
-            language: 'zh-TW',
-            item: items,
-        };
-    } finally {
-        await destroy();
-    }
+    return {
+        title: `包子漫画-${comicTitle}`,
+        description: $('.comics-detail__desc').text(),
+        link: url,
+        language: 'zh-TW',
+        item: items,
+    };
 }

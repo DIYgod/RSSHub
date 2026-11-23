@@ -8,15 +8,14 @@ import ofetch from '@/utils/ofetch';
 async function fetchDetails(url: string) {
     const response = await ofetch(url);
     const $ = load(response);
-    const content = $('.v_news_content').first();
+    const content = $('.v_news_content');
     const attachments = $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"]')
-        .filter((_, link) => !$(link).closest('.v_news_content').length)
         .toArray()
         .map((link) => `<li>${$.html(link)}</li>`)
         .join('');
 
     return {
-        description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined,
+        description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}`,
     };
 }
 

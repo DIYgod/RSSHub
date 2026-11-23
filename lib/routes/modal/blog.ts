@@ -59,17 +59,15 @@ interface JsonLdAuthor {
 }
 
 interface JsonLdBlogPosting {
-    '@type'?: string;
-    author?: JsonLdAuthor | JsonLdAuthor[];
+    author: JsonLdAuthor | JsonLdAuthor[];
 }
 
 const resolveHttpUrl = (rawUrl: string | undefined, baseUrl: string): string | undefined => {
-    const trimmed = rawUrl?.trim();
-    if (!trimmed) {
+    if (!rawUrl) {
         return undefined;
     }
     try {
-        const parsed = new URL(trimmed, baseUrl);
+        const parsed = new URL(rawUrl, baseUrl);
         return SAFE_HTTP_PROTOCOLS.has(parsed.protocol) ? parsed.href : undefined;
     } catch {
         return undefined;
@@ -94,73 +92,50 @@ const isRasterImageUrl = (imageUrl: string): boolean => {
     }
 };
 
-const extractAtomEntries = ($: CheerioAPI, limit: number): AtomEntry[] => {
-    const seen = new Set<string>();
-    const entries: AtomEntry[] = [];
-
-    $('feed > entry').each((_, el) => {
-        if (entries.length >= limit) {
-            return false;
-        }
-        const $entry = $(el);
-        const title = $entry.children('title').first().text();
-        const rawLink = $entry.children('link[rel="alternate"]').first().attr('href') || $entry.children('link').first().attr('href');
-        const link = resolveHttpUrl(rawLink, BLOG_URL);
-        if (!title || !link || seen.has(link)) {
-            return;
-        }
-        seen.add(link);
-        const authors = $entry
-            .children('author')
-            .toArray()
-            .map((authorEl) => $(authorEl).children('name').first().text().trim())
-            .filter(Boolean);
-        const updated = $entry.children('published').first().text().trim() || $entry.children('updated').first().text().trim();
-        entries.push({
-            title,
-            link,
-            summary: $entry.children('summary').first().text().trim(),
-            updated,
-            authors,
-        });
-    });
-
-    return entries;
-};
+const extractAtomEntries = ($: CheerioAPI, limit: number): AtomEntry[] =>
+    $('feed > entry')
+        .toArray()
+        .flatMap((el) => {
+            const $entry = $(el);
+            const title = $entry.children('title').text();
+            const rawLink = $entry.children('link[rel="alternate"]').attr('href') || $entry.children('link').attr('href');
+            const link = resolveHttpUrl(rawLink, BLOG_URL);
+            if (!title || !link) {
+                return [];
+            }
+            const authors = $entry
+                .children('author')
+                .toArray()
+                .map((authorEl) => $(authorEl).children('name').text())
+                .filter(Boolean);
+            const updated = $entry.children('published').first().text().trim() || $entry.children('updated').text();
+            return {
+                title,
+                link,
+                summary: $entry.children('summary').text().trim(),
+                updated,
+                authors,
+            };
+        })
+        .slice(0, limit);
 
 const extractJsonLdAuthors = ($: CheerioAPI): string[] => {
-    const names: string[] = [];
-    $('script[type="application/ld+json"]').each((_, el) => {
-        try {
-            const parsed = JSON.parse($(el).text()) as JsonLdBlogPosting;
-            if (parsed['@type'] !== 'BlogPosting' || !parsed.author) {
-                return;
-            }
-            const list = Array.isArray(parsed.author) ? parsed.author : [parsed.author];
-            for (const item of list) {
-                const name = item.name?.trim();
-                if (name) {
-                    names.push(name);
-                }
-            }
-        } catch {
-            // Ignore malformed JSON-LD blocks
-        }
-    });
-    return names;
+    const { author } = JSON.parse($('script[type="application/ld+json"]:contains("BlogPosting")').text()) as JsonLdBlogPosting;
+    const list = Array.isArray(author) ? author : [author];
+    return list.map((item) => item.name).filter((name): name is string => Boolean(name));
 };
 
 const extractHeaderMeta = ($: CheerioAPI, articleUrl: string) => {
-    const $header = $('article').first().children('header').first();
+    const $header = $('article').first().children('header');
     const $headerDivs = $header.children('div');
-    const category = $headerDivs.eq(0).children('div').first().find('span').first().text().trim();
+    const category = $headerDivs.eq(0).children('div').find('span').text();
     const headerAuthors = $headerDivs
         .eq(0)
         .find('span.text-v2-primary-neutral-100')
         .toArray()
-        .map((el) => $(el).text().trim())
+        .map((el) => $(el).text())
         .filter(Boolean);
-    const heroImage = resolveHttpUrl($headerDivs.eq(1).find('img').first().attr('src'), articleUrl);
+    const heroImage = resolveHttpUrl($headerDivs.eq(1).find('img').attr('src'), articleUrl);
 
     return { category, headerAuthors, heroImage };
 };
@@ -268,7 +243,7 @@ const extractCssVariables = ($: CheerioAPI): Map<string, string> => {
     for (const styleEl of $('style').toArray()) {
         const cssText = $(styleEl).text();
         for (const match of cssText.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;}\n]+)/gi)) {
-            const name = match[1].trim();
+            const name = match[1];
             const value = match[2].trim();
             if (value && !value.includes('var(')) {
                 vars.set(name, value);
@@ -283,7 +258,7 @@ const resolveCssVars = (rawValue: string, vars: Map<string, string>): string => 
     for (let pass = 0; pass < 2 && resolved.includes('var('); pass++) {
         resolved = resolved.replaceAll(/var\(\s*(--[a-z0-9-]+)\s*(?:,([^)]*))?\)/gi, (_, name: string, fallback?: string) => vars.get(name) ?? fallback?.trim() ?? '');
     }
-    return resolved.trim();
+    return resolved;
 };
 
 const setMissingAttr = ($el: Cheerio<Element>, attr: string, val: string | undefined) => {
@@ -333,7 +308,7 @@ const normalizeSvgNode = ($node: Cheerio<Element>, vars: Map<string, string>) =>
 const activateInteractiveSvgState = ($svg: Cheerio<Element>, $: CheerioAPI, vars: Map<string, string>) => {
     const $states = $svg.find('[data-compare-state]');
     if ($states.length > 0) {
-        const activeState = $svg.find('[data-compare-button][aria-pressed="true"]').first().attr('data-compare-button') || $states.first().attr('data-compare-state');
+        const activeState = $svg.find('[data-compare-button][aria-pressed="true"]').attr('data-compare-button') || $states.attr('data-compare-state');
         for (const el of $states.toArray()) {
             const $state = $(el);
             if ($state.attr('data-compare-state') === activeState) {
@@ -372,12 +347,8 @@ const normalizeBodySvgs = ($body: Cheerio<Element>, $: CheerioAPI, vars: Map<str
 };
 
 const pruneNoiseAndStyles = ($body: Cheerio<Element>, $: CheerioAPI, vars: Map<string, string>) => {
-    $body.find('dialog.lightbox, .lightbox, [data-lightbox-trigger], [data-lightbox-image], header, footer, nav, button, [role="tablist"], script, noscript, template, svg[aria-hidden="true"]').remove();
+    $body.find('dialog.lightbox, .lightbox, [data-lightbox-trigger], [data-lightbox-image], button, [role="tablist"], svg[aria-hidden="true"]').remove();
     normalizeBodySvgs($body, $, vars);
-    $body
-        .find('style')
-        .filter((_, el) => $(el).closest('svg').length === 0)
-        .remove();
     $body
         .find('[style]')
         .filter((_, el) => $(el).closest('svg').length === 0)
@@ -417,11 +388,11 @@ const extractArticleDetails = ($: CheerioAPI, entry: AtomEntry) => {
     const cssVars = extractCssVariables($);
     const { category, headerAuthors, heroImage } = extractHeaderMeta($, entry.link);
     const rawAuthors = headerAuthors.length > 0 ? headerAuthors : entry.authors.length > 0 ? entry.authors : extractJsonLdAuthors($);
-    const mergedAuthors = [...new Set(rawAuthors.filter(Boolean))];
+    const mergedAuthors = rawAuthors.filter(Boolean);
     const author = mergedAuthors.length > 0 ? mergedAuthors.join(', ') : undefined;
     const metaDescription = $('meta[name="description"]').attr('content')?.trim();
 
-    const $body = $('.article-body').first();
+    const $body = $('.article-body');
     if ($body.length === 0) {
         return {
             bodyHtml: '',
@@ -437,7 +408,7 @@ const extractArticleDetails = ($: CheerioAPI, entry: AtomEntry) => {
     pruneEmptyDivs($body, $);
 
     const hasContent = Boolean($body.text().trim()) || $(MEDIA_KEEP_SELECTOR, $body).length > 0;
-    const bodyHtml = hasContent ? ($body.html() || '').trim() : '';
+    const bodyHtml = hasContent ? $body.html() : '';
 
     return {
         bodyHtml,
@@ -478,7 +449,7 @@ async function handler(ctx: Context): Promise<Data> {
         concurrency: DETAIL_CONCURRENCY,
     });
 
-    const feedTitle = $feed('feed > title').first().text().trim() || 'Modal Blog';
+    const feedTitle = $feed('feed > title').text() || 'Modal Blog';
     const feedSubtitle = $feed('feed > subtitle').first().text().trim() || 'Engineering deep dives, product updates, and stories from Modal.';
 
     return {

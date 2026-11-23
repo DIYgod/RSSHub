@@ -21,36 +21,22 @@ const renderDescription = (data, showImages = false): string =>
         </>
     );
 const extractDateFromImageUrl = (imageUrl) => {
-    const matchResult = typeof imageUrl === 'string' ? imageUrl.match(/(\d{6})\/(\d{2})/) : undefined;
-    return matchResult ? matchResult.slice(1, 3).join('') : undefined;
+    const matchResult = imageUrl.match(/(\d{6})\/(\d{2})/);
+    return matchResult ? matchResult.slice(1, 3).join('') : null;
 };
-
-function getThumbnail(e): string | undefined {
-    const image = e.find('img').first();
-    const thumbnail = image.data('mediumthumb') || image.data('image');
-    return typeof thumbnail === 'string' && thumbnail ? thumbnail : undefined;
-}
-
-function parsePublishDate(e): Temporal.Instant | undefined {
-    const imageDate = extractDateFromImageUrl(e.find('img').data('mediumthumb'));
-    const date = imageDate ? parseDateStrict(imageDate, 'YYYYMMDD') : undefined;
-    if (date) {
-        return date;
-    }
-}
 
 const parseItems = (e, showImages = false) => ({
     title: e.find('span.title a').text(),
     link: defaultDomain + e.find('span.title a').attr('href'),
     description: renderDescription(
         {
-            poster: getThumbnail(e),
+            poster: e.find('img').data('mediumthumb'),
             previewVideo: e.find('img').data('mediabook'),
         },
         showImages
     ),
     author: e.find('.usernameWrap a').text(),
-    pubDate: parsePublishDate(e),
+    pubDate: parseDateStrict(extractDateFromImageUrl(e.find('img').data('mediumthumb')), 'YYYYMMDD'),
 });
 
 const getRadarDomin = (path: string) => [

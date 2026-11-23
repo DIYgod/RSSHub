@@ -81,9 +81,7 @@ async function handler(ctx) {
 
                 const published = detailResponse.data.match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)?.[1];
                 item.pubDate = published ? parseDate(published, 'X') : undefined;
-                item.description = content('#js_content')
-                    .html()!
-                    .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
+                item.description = content('#js_content').html();
 
                 return item;
             }),

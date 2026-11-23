@@ -31,7 +31,7 @@ export const route: Route = {
 | portraits    | characters |`,
 };
 
-const parseYear = (value: string) => (/^\d{4}$/.test(value) ? parseDateStrict(`${value}-01-01`, 'YYYY-MM-DD') : undefined);
+const parseYear = (value: string) => parseDateStrict(`${value}-01-01`, 'YYYY-MM-DD');
 
 async function handler(ctx) {
     const { category = 'portraits' } = ctx.req.param();

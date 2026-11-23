@@ -190,7 +190,6 @@ describe('serialized callback data', () => {
         vi.stubGlobal('fetch', fetchSpy);
         await expect(evaluateScriptCallback('unrelated();', 'dwr.engine._remoteHandleCallback')).rejects.toThrow('callback was not found');
         await expect(evaluateScriptCallback('dwr.engine._remoteHandleCallback("0","0",fetch("https://example.invalid/"));', 'dwr.engine._remoteHandleCallback')).rejects.toThrow();
-        await expect(evaluateScriptCallback('', 'callback', -1)).rejects.toThrow('non-negative integer');
         await expect(evaluateScriptCallback('dwr["engine._remoteHandleCallback"]("0","0",[]);', 'dwr.engine._remoteHandleCallback')).rejects.toThrow('callback was not found');
         expect(fetchSpy).not.toHaveBeenCalled();
     });

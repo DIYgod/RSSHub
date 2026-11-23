@@ -79,8 +79,7 @@ async function handler(ctx) {
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                const published = content('.sj').text();
-                item.pubDate = published ? parseDate(published, 'YYYY.MM.DD', 8) : undefined;
+                item.pubDate = parseDate(content('.sj').text(), 'YYYY.MM.DD', 8);
                 item.description = content('#vsb_content_500 .v_news_content').html() || item.description; // 提取内容区详情
 
                 return { description: item.description, pubDate: item.pubDate }; // 返回完整的item

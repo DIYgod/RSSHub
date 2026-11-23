@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import { fetchGoogleNews } from '@/utils/google-news';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { parseCachedItem } from './utils';
@@ -33,8 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const topic = ctx.req.param('topic');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 30;
+    const limit = getRouteLimit(ctx, 30);
     const pageUrl = `https://www.scmp.com/topics/${topic}`;
     try {
         const { data: pageResponse } = await got(pageUrl);

@@ -57,7 +57,7 @@ async function handler(ctx) {
     const items = response.data.result.map((item) => ({
         title: item.TITLE,
         description: `${pdfHost}${item.URL}`,
-        pubDate: item.ADDDATE ? parseDate(item.ADDDATE, 8) : undefined,
+        pubDate: parseDate(item.ADDDATE, 8),
         link: `${pdfHost}${item.URL}`,
         author: item.SECURITY_NAME || undefined,
     }));

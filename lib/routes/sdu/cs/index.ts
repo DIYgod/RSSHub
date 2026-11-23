@@ -82,7 +82,7 @@ async function handler(ctx) {
             return {
                 title: a.text().trim(),
                 link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDate($e.find('.fr').text().trim(), 8),
+                pubDate: parseDate($e.find('.fr').text(), 8),
             };
         });
 

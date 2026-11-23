@@ -54,8 +54,8 @@ async function handler() {
             const linkElement = $item.find('.w-list-link');
             const imgElement = $item.find('.w-listpic-in');
 
-            const title = titleElement.text() || '';
-            const dateText = dateElement.text() || '';
+            const title = titleElement.text();
+            const dateText = dateElement.text();
             const href = linkElement.attr('href') || '';
             const imgSrc = imgElement.attr('src') || '';
 
@@ -64,7 +64,7 @@ async function handler() {
 
             return {
                 title,
-                pubDate: dateText ? parseRelativeDate(dateText) : undefined,
+                pubDate: parseRelativeDate(dateText),
                 link: href.startsWith('http') ? href : `https://www.zhizhuan100.com.cn${href}`,
                 description: `<img src="${imgSrc.startsWith('//') ? 'https:' + imgSrc : imgSrc}" alt="${title}">`,
                 guid: id,

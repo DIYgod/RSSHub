@@ -35,7 +35,7 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
         const response = await got(link);
         const content = load(response.body);
         return {
-            description: content('[id^="vsb_content"]').first().html() ?? undefined,
+            description: content('[id^="vsb_content"]').html(),
             author:
                 content('.main_contit p')
                     .text()
@@ -61,16 +61,13 @@ async function handler(ctx) {
     const list = $('.main_conRCb a')
         .slice(0, 20)
         .toArray()
-        .filter((item) => $(item).attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
             const link = new URL($item.attr('href')!, rootUrl + categoryPaths[category]).href;
-            const rawDate = $item.find('span').text();
-            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: $item.find('em').text(),
                 link,
-                pubDate,
+                pubDate: parseDateStrict($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
     return {

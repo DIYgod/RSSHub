@@ -63,10 +63,9 @@ async function handler() {
                 const articlePubDate = $('tr.added-on.field td.field-body').text();
 
                 item.author = author;
-                const pubDate = item.pubDate || articlePubDate;
-                item.pubDate = pubDate ? toInstant(pubDate) : undefined;
+                item.pubDate = toInstant(item.pubDate || articlePubDate);
                 $('div.document > h1.title, div.document > table.docinfo').remove();
-                item.description = $('div.document').first().html();
+                item.description = $('div.document').html();
 
                 return item;
             })

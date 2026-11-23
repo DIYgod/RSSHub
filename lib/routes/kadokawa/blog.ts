@@ -91,8 +91,7 @@ const handler = async (ctx) => {
         { concurrency: 3 }
     );
 
-    const imageSrc = $('meta[property="og:image"]').prop('content');
-    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
+    const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
 
     return {
         title: $('title').text(),

@@ -52,7 +52,7 @@ function process($) {
         return {
             title: title.text(),
             link: baseUrl + title.parent().attr('href'),
-            description: (summary.text().trim() === title.text().trim() ? '' : (summary.prop('outerHTML') ?? '')) + ($el.find('.post-content').prop('outerHTML') ?? ''),
+            description: (summary.text().trim() === title.text().trim() ? '' : summary.prop('outerHTML')) + $el.find('.post-content').prop('outerHTML'),
             pubDate: $el.find('time').attr('datetime'),
             author: $el.find('h4').text().trim(),
             itunes_item_image: $el.find('img').attr('src'),

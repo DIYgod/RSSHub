@@ -40,7 +40,7 @@ async function handler(ctx: Context) {
                 title,
                 link: `${currentUrl}#${encodeURIComponent(title)}`,
                 description: $item.html(),
-                pubDate: date ? parseDate(`${date} +0000`, 'YYYY/MM/DD ZZ') : undefined,
+                pubDate: parseDate(`${date} +0000`, 'YYYY/MM/DD ZZ'),
             };
         });
 

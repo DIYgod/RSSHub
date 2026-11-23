@@ -96,18 +96,17 @@ async function handler(ctx) {
             author,
             category: [bookStatus],
             guid: `jjwxc-${id}-${bookId}#${bookWords}`,
-            pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(bookUpdatedTime) ? parseDate(bookUpdatedTime, 8) : undefined,
+            pubDate: parseDate(bookUpdatedTime, 8),
         },
     ];
 
     const logoEl = $('div.logo a img');
-    const imageSource = logoEl.prop('src');
-    const image = imageSource ? new URL(imageSource, currentUrl).href : undefined;
+    const image = `https:${logoEl.prop('src')}`;
     const icon = new URL('favicon.ico', rootUrl).href;
 
     return {
         item: items,
-        title: `${logoEl.prop('alt')?.replace(/logo/, '') || '晋江文学城'} | ${author} - 最近更新`,
+        title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author} - 最近更新`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
         language: 'zh' as const,

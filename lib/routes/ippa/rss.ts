@@ -28,7 +28,7 @@ async function handler() {
         item: list.map((item) => ({
             title: item.title.rendered,
             link: item.link,
-            pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
+            pubDate: parseDate(`${item.date_gmt}Z`),
             description: item.content.rendered,
         })),
     };

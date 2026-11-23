@@ -88,7 +88,7 @@ async function handler() {
                         showPlaceName: detail.data.showPlaceName,
                         projectDesp: detail.data.projectDesp,
                     },
-                    saleBeginTimeStr: show.data.showInfoDetailList?.[0]?.saleBeginTimeStr,
+                    saleBeginTimeStr: show.data.showInfoDetailList?.[0].saleBeginTimeStr,
                 };
             });
             const description = renderToString(

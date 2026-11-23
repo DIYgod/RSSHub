@@ -56,9 +56,9 @@ async function handler(ctx) {
                   link: item.url,
                   description: renderToString(
                       <>
-                          {item.image && <img src={item.image} alt={item.image_description ?? ''} />}
+                          {item.image && <img src={item.image} alt={item.image_description} />}
                           {item.description && <p>{item.description}</p>}
-                          {type === 'tags' && item.history?.[0] && (
+                          {type === 'tags' && (
                               <p>
                                   {item.history[0].uses} posts by {item.history[0].accounts} accounts
                               </p>

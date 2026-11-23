@@ -44,14 +44,13 @@ async function handler() {
                     .find('strong')
                     .filter((_, element) => /^作者[：:]/.test($d(element).text()))
                     .toArray();
-                const author =
-                    authors
-                        .map((element) =>
-                            $d(element)
-                                .text()
-                                .replace(/^作者[：:]\s*/, '')
-                        )
-                        .join(', ') || undefined;
+                const author = authors
+                    .map((element) =>
+                        $d(element)
+                            .text()
+                            .replace(/^作者[：:]\s*/, '')
+                    )
+                    .join(', ');
                 $d(authors).remove();
 
                 return {

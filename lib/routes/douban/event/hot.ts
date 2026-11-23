@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/event/hot/:locationId',
@@ -18,13 +18,6 @@ export const route: Route = {
     name: '热门同城活动',
     maintainers: ['xyqfer'],
     handler,
-};
-
-const getPubDate = (dateText?: string): Temporal.Instant | undefined => {
-    if (!dateText || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateText)) {
-        return undefined;
-    }
-    return parseDateStrict(dateText, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0);
 };
 
 async function handler(ctx) {
@@ -51,7 +44,7 @@ async function handler(ctx) {
             return {
                 title,
                 description,
-                pubDate: getPubDate(date),
+                pubDate: parseDate(date, 0),
                 link: url,
             };
         }),

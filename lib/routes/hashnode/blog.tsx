@@ -96,7 +96,7 @@ async function handler(ctx: Context) {
 
     const oldUrl = `https://${username}.hashnode.dev`;
     const url = `https://${subdomain}.hashnode.dev`;
-    const response = await ofetch.raw<string, 'text'>(`${url}/rss.xml`, { responseType: 'text', redirect: 'manual', ignoreResponseError: true });
+    const response = await ofetch.raw<string>(`${url}/rss.xml`, { redirect: 'manual', ignoreResponseError: true });
     if (response.status === 404) {
         throw new NotFoundError(`Hashnode did not find a public blog for "${username}". Use the blog's hashnode.dev subdomain.`);
     }

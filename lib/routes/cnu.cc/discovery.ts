@@ -46,10 +46,9 @@ async function handler(ctx: Context) {
                 link: $item.find('a.cnu-discovery-card-link').attr('href'),
             };
         });
-    const candidates = list;
 
     const out = await Promise.all(
-        candidates.map(async (item) => {
+        list.map(async (item) => {
             try {
                 return await cache.tryGet(item.link!, async () => {
                     const response = await cnuFetch(item.link!);

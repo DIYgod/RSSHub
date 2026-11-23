@@ -5,6 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -38,8 +39,7 @@ async function handler(ctx) {
 
     // get category number
     const categorySlug = ctx.req.param('category') || '';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.min(Math.floor(requestedLimit), 100) : 10;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
 
     let category;
     if (categorySlug) {
@@ -91,15 +91,15 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
-            updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
             // image,
             author:
-                item._embedded?.author
-                    ?.map((author) => author.name)
+                item._embedded.author
+                    .map((author) => author.name)
                     .filter(Boolean)
                     .join(', ') || undefined,
-            category: item._embedded?.['wp:term']?.flat().map((term) => term.name),
+            category: item._embedded['wp:term'].flat().map((term) => term.name),
         };
         return single;
     });

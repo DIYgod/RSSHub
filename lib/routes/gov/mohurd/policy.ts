@@ -37,11 +37,10 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
-            const publishedDate = $item.find('.date-info').text();
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
+                pubDate: parseDate($item.find('.date-info').text(), 8),
             };
         })
         .slice(0, 1);

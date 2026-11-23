@@ -64,14 +64,12 @@ async function handler(ctx) {
         item: list?.toArray().map((item) => {
             const $item = $(item);
             const h2 = $item.find('h2');
-            const created = $item.find('.script-list-created-date relative-time').attr('datetime');
-            const updated = $item.find('.script-list-updated-date relative-time').attr('datetime');
             return {
                 title: h2.find('a').text(),
                 description: h2.find('.description').text(),
                 link: new URL(h2.find('a').attr('href')!, 'https://greasyfork.org').href,
-                pubDate: created ? parseDate(created) : undefined,
-                updated: updated ? parseDate(updated) : undefined,
+                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')!),
+                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')!),
                 author: $item
                     .find('.script-list-author a')
                     .toArray()

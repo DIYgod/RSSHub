@@ -59,7 +59,7 @@ async function handler(ctx) {
         title: item.title,
         link: `https://tech.dewu.com/article?id=${item.id}`,
         description: item.html_content,
-        pubDate: item.created_at ? parseDate(item.created_at, 8) : undefined,
+        pubDate: parseDate(item.created_at, 8),
         author: item.operator,
         category: item.category_info?.name ? [item.category_info.name] : [],
         image: item.img_url,

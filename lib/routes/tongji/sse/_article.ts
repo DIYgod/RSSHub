@@ -11,10 +11,10 @@ export default async function getArticle(link: string) {
 
     const $ = load(data);
     const title = $('div.view-title').text();
-    const content = $('.v_news_content').first().html() ?? $('#vsb_content').html();
+    const content = $('.v_news_content').html();
 
     return {
-        title: title || undefined,
-        description: (content ?? '') + ($('ul[style]').html() ?? '') || undefined,
+        title,
+        description: content + ($('ul[style]').html() ?? ''),
     };
 }

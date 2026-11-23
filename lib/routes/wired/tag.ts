@@ -8,12 +8,6 @@ import { parseDate } from '@/utils/time';
 
 import type { Item } from './types';
 
-const parsePublicationDate = (value: string | number | undefined) => {
-    if (typeof value !== 'number' && !value) {
-        return;
-    }
-    return parseDate(value) ?? parseDate(value, 'MMM D, YYYY h:mm A', 'America/New_York');
-};
 export const route: Route = {
     path: '/tag/:tag',
     example: '/wired/tag/facebook',
@@ -57,54 +51,51 @@ async function handler(ctx) {
         title: item.dangerousHed,
         description: item.dangerousDek,
         link: `${baseUrl}${item.url}`,
-        pubDate: parsePublicationDate(item.date),
         author: item.contributors.author.items.map((author) => author.name).join(', '),
         category: [item.rubric.name],
     }));
-    const items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`wired:detail:v4:${item.link}`, async () => {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
-                    const preloadedState = JSON.parse(
-                        $('script:contains("window.__PRELOADED_STATE__")')
-                            .text()
-                            .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
-                    );
-                    const headerLeadAsset = $('div[data-testid*="ContentHeaderLeadAsset"]');
-                    headerLeadAsset.find('button').remove();
-                    // false postive: 'some' does not exist on type 'Cheerio<Element>'
-                    // oxlint-disable-next-line unicorn/prefer-array-some
-                    if (headerLeadAsset.find('video')) {
-                        headerLeadAsset.find('video').attr('src', $('link[rel="preload"][as="video"]').attr('href'));
-                        headerLeadAsset.find('video').attr('controls', '');
-                        headerLeadAsset.find('video').attr('preload', 'metadata');
-                        headerLeadAsset.find('video').removeAttr('autoplay');
-                    }
-                    const content = $('.body__inner-container')
-                        .toArray()
-                        .map((el) => {
-                            const $el = $(el);
-                            $el.find('noscript').each((_, el) => {
-                                const $e = $(el);
-                                $e.replaceWith($e.html() || '');
-                            });
-                            return $el.html();
-                        })
-                        .join('');
-                    return {
-                        description: ($('div[class^=ContentHeaderDek]').prop('outerHTML') || '') + headerLeadAsset.prop('outerHTML') + content,
-                        tags: preloadedState.transformed.article.tagCloud.tags.map((t: { tag: string }) => t.tag),
-                        pubDate: parsePublicationDate($('meta[property="article:published_time"]').attr('content')),
-                        updated: parsePublicationDate($('meta[property="article:modified_time"]').attr('content')),
-                    };
-                });
-                return { ...item, pubDate: detail.pubDate ?? item.pubDate, updated: detail.updated, description: detail.description, category: [...new Set([...item.category, ...detail.tags])] };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wired:detail:v4:${item.link}`, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                const preloadedState = JSON.parse(
+                    $('script:contains("window.__PRELOADED_STATE__")')
+                        .text()
+                        .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
+                );
+                const headerLeadAsset = $('div[data-testid*="ContentHeaderLeadAsset"]');
+                headerLeadAsset.find('button').remove();
+                // false postive: 'some' does not exist on type 'Cheerio<Element>'
+                // oxlint-disable-next-line unicorn/prefer-array-some
+                if (headerLeadAsset.find('video')) {
+                    headerLeadAsset.find('video').attr('src', $('link[rel="preload"][as="video"]').attr('href'));
+                    headerLeadAsset.find('video').attr('controls', '');
+                    headerLeadAsset.find('video').attr('preload', 'metadata');
+                    headerLeadAsset.find('video').removeAttr('autoplay');
+                }
+                const content = $('.body__inner-container')
+                    .toArray()
+                    .map((el) => {
+                        const $el = $(el);
+                        $el.find('noscript').each((_, el) => {
+                            const $e = $(el);
+                            $e.replaceWith($e.html() || '');
+                        });
+                        return $el.html();
+                    })
+                    .join('');
+                return {
+                    description: ($('div[class^=ContentHeaderDek]').prop('outerHTML') || '') + headerLeadAsset.prop('outerHTML') + content,
+                    tags: preloadedState.transformed.article.tagCloud.tags.map((t: { tag: string }) => t.tag),
+                    pubDate: parseDate(preloadedState.transformed.coreDataLayer.content.publishDate),
+                    updated: parseDate(preloadedState.transformed.coreDataLayer.content.modifiedDate),
+                };
+            });
+            return { ...item, pubDate: detail.pubDate, updated: detail.updated, description: detail.description, category: [...new Set([...item.category, ...detail.tags])] };
+        },
+        { concurrency: 3 }
     );
     return {
         title: preloadedState.transformed['head.title'],
@@ -114,11 +105,4 @@ async function handler(ctx) {
         language: 'en' as const satisfies Language,
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
 }

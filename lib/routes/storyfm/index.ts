@@ -42,8 +42,8 @@ async function handler() {
             return {
                 title: anchor.text(),
                 link: anchor.attr('href'),
-                description: [$item.find('.zoom-image-container-progression img').first().toString(), $item.find('.e-ep__description').toString(), $item.find('audio').first().toString()].join(''),
-                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                description: [$item.find('.zoom-image-container-progression img').toString(), $item.find('.e-ep__description').toString(), $item.find('audio').toString()].join(''),
+                pubDate: parseDate(`${date}T00:00:00Z`),
                 enclosure_url: source.attr('src'),
                 enclosure_type: source.attr('type'),
             };

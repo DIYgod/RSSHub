@@ -5,32 +5,10 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDateStrict } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
-
-function extractLecturer(value: string): string | undefined {
-    for (const marker of value.matchAll(/授课专家[：:]/g)) {
-        const originalTail = value.slice(marker.index + marker[0].length);
-        const tail = originalTail.trimStart();
-        if (!tail) {
-            if (/[^\r\n\u{2028}\u{2029}]$/u.test(originalTail)) {
-                return '';
-            }
-            continue;
-        }
-        const separator = /\s单\s*位[：:]/.exec(tail);
-        const candidate = separator ? tail.slice(0, separator.index).trimEnd() : /^(.+)$/.exec(tail)?.[1];
-        if (candidate !== undefined && !/[\r\n\u{2028}\u{2029}]/u.test(candidate)) {
-            return candidate.trim();
-        }
-        const leadingWhitespace = originalTail.slice(0, Math.max(0, originalTail.length - tail.length - 1));
-        if (/^单\s*位[：:]/.test(tail) && /[^\r\n\u{2028}\u{2029}]/u.test(leadingWhitespace)) {
-            return '';
-        }
-    }
-}
 
 export const route: Route = {
     path: '/gjlckjdjt/:category?',
@@ -96,10 +74,7 @@ async function handler(ctx) {
             };
         });
 
-    items = items.slice(0, Math.max(30, limit));
-    if (ctx.req.query('sorted') !== 'false') {
-        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-    }
+    items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     items = items.slice(0, limit);
 
     items = await Promise.all(
@@ -119,8 +94,7 @@ async function handler(ctx) {
                 content('video, embed.edui-faked-video').each((_, e) => {
                     const $e = content(e);
 
-                    const src = $e.prop('src');
-                    const videoUrl = src ? new URL(src, item.link).href : undefined;
+                    const videoUrl = new URL($e.prop('src')!, item.link).href;
                     item.enclosure_url ??= videoUrl;
 
                     $e.replaceWith(
@@ -133,7 +107,10 @@ async function handler(ctx) {
                 });
 
                 item.title = content('div.tit').text();
-                item.author = extractLecturer(content('.tit1').text());
+                item.author = content('.tit1')
+                    .text()
+                    .split(/\s+单\s*位/, 1)[0]
+                    .replace(/^授课专家[：:]/, '');
                 item.description += content('div.zhengwen').html();
                 item.pubDate = getPublicationDate(item.link);
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
@@ -165,5 +142,5 @@ function getPublicationDate(link: string) {
     if (!date) {
         return;
     }
-    return parseDateStrict(date, 'YYYYMMDD', 8);
+    return parseDate(date, 'YYYYMMDD', 8);
 }

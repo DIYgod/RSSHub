@@ -22,7 +22,6 @@ it.each([
     [null, undefined],
     [undefined, undefined],
     [-1, undefined],
-    [Infinity, undefined],
 ])('parseDuration(%j) is %j', (duration, seconds) => {
     expect(parseDuration(duration)).toBe(seconds);
 });

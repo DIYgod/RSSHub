@@ -10,20 +10,9 @@ import cache from './cache';
 
 const getOpusPubDate = ($: CheerioAPI) => {
     const prefix = 'window.__INITIAL_STATE__=';
-    const stateScript = $('script')
-        .toArray()
-        .map((script) => $(script).text())
-        .find((script) => script.startsWith(prefix));
-    const stateEnd = stateScript?.lastIndexOf(';(function');
-    if (stateScript && stateEnd !== undefined && stateEnd > prefix.length) {
-        const state = JSON.parse(stateScript.slice(prefix.length, stateEnd));
-        const timestamp = state.detail?.modules?.find((module) => module.module_author)?.module_author?.pub_ts;
-        if (timestamp) {
-            return parseDate(timestamp, 'X');
-        }
-    }
-    const displayTime = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
-    return displayTime ? parseDate(displayTime, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
+    const stateScript = $(`script:contains("${prefix}")`).text();
+    const state = JSON.parse(stateScript.slice(prefix.length, stateScript.lastIndexOf(';(function')));
+    return parseDate(state.detail.modules.find((module) => module.module_author).module_author.pub_ts, 'X');
 };
 
 export const route: Route = {
@@ -64,10 +53,9 @@ async function handler(ctx) {
     const link = `https://space.bilibili.com/${uid}/article`;
     const description = `${name} 的 bilibili 图文`;
     const cookie = await cache.getCookie();
-    const entries = data.items;
 
     const item = await Promise.all(
-        entries
+        data.items
             .map((item) => {
                 const url = new URL(item.jump_url, 'https://www.bilibili.com');
                 // only send the cookie to bilibili.com hosts

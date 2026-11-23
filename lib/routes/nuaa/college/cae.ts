@@ -6,8 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import getCookie from '../utils/pypasswaf';
-
 const host = 'https://cae.nuaa.edu.cn/';
 
 const map = new Map([
@@ -29,7 +27,6 @@ export const route: Route = {
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     name: '自动化学院',
     maintainers: ['Xm798'],
-    features: { requirePuppeteer: true },
     handler,
     description: `| 综合新闻 | 党委行政 | 人事 / 合作 | 研究生培养 | 本科生培养 | 学生工作 | 通知公告 | 学术信息 | 答辩公告 |
 | -------- | -------- | ----------- | ---------- | ---------- | -------- | -------- | -------- | -------- |
@@ -41,13 +38,7 @@ async function handler(ctx) {
     const suffix = map.get(type)!.suffix;
     const getDescription = Boolean(ctx.req.param('getDescription'));
     const link = new URL(suffix, host).href;
-    const cookie = await getCookie(host);
-    const gotConfig = {
-        headers: {
-            cookie,
-        },
-    };
-    const response = await got(link, gotConfig);
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('#wp_news_w6 ul li')
@@ -75,12 +66,9 @@ async function handler(ctx) {
                     const arr = itemUrl.split('.');
                     const pageType = arr.at(-1);
                     if (pageType === 'htm' || pageType === 'html') {
-                        const response = await got(itemUrl, gotConfig);
+                        const response = await got(itemUrl);
                         const $ = load(response.data);
                         const content = $('.wp_articlecontent');
-                        if (!content.length) {
-                            throw new Error('Article content was not found at ' + itemUrl);
-                        }
                         return content.html() ?? undefined;
                     }
                     return '';

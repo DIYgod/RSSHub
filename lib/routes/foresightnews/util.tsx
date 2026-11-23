@@ -51,7 +51,7 @@ const processItems = async (apiUrl, ctx: Context, ...parameters) => {
     const buffer = Buffer.from(response.data?.list ?? response.data, 'base64');
     const nativeItems = JSON.parse(String(zlib.inflateSync(buffer)));
 
-    let items: DataItem[] = (nativeItems?.list ?? nativeItems).map((item) => {
+    const items: DataItem[] = (nativeItems?.list ?? nativeItems).map((item) => {
         const sourceType = item.source_type ?? (item.source_link ? (item.column?.title ? 'article' : 'news') : item.event_type ? 'event' : constants.defaultType);
 
         item = item.source_type ? item[item.source_type] : item;
@@ -69,7 +69,6 @@ const processItems = async (apiUrl, ctx: Context, ...parameters) => {
         ].filter((v, index, self) => v && self.indexOf(v) === index);
 
         const link = new URL(`${params[sourceType]}/detail/${item.id}`, rootUrl).href;
-        const pubDate = item.published_at ? parseDate(item.published_at * 1000) : undefined;
 
         return {
             title: item.title,
@@ -94,19 +93,10 @@ const processItems = async (apiUrl, ctx: Context, ...parameters) => {
             author: item.column?.title ?? item.author?.username,
             category: categories,
             guid: `foresightnews-${sourceType}#${item.id}`,
-            pubDate,
+            pubDate: item.published_at ? parseDate(item.published_at * 1000) : undefined,
             updated: item.last_update_at ? parseDate(item.last_update_at * 1000) : undefined,
         };
     });
-
-    const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = items.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (!nativeOrder && allDated) {
-        items = items.toSorted((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
-    }
-    if (nativeOrder || allDated) {
-        items = items.slice(0, limit);
-    }
 
     return { items, info };
 };

@@ -30,7 +30,7 @@ export const route: Route = {
                 return {
                     title: a.find('.headline-6').text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
+                    pubDate: parseDate(date, 'MMMM D, YYYY'),
                     category: item
                         .find('.not-glue.caption')
                         .toArray()
@@ -44,8 +44,8 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
                     return {
-                        description: $('.blog-detail-wrapper.js-gt-blog-detail-wrapper').html() ?? undefined,
-                        author: $('.basic-hero--blog-detail__description p').eq(1).text() || undefined,
+                        description: $('.blog-detail-wrapper.js-gt-blog-detail-wrapper').html(),
+                        author: $('.basic-hero--blog-detail__description p').eq(1).text(),
                     };
                 });
                 return { ...item, ...content };

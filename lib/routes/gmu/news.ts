@@ -83,32 +83,30 @@ async function handler(ctx: Context) {
             const a = element.find('a');
             const dateText = element.find('.sj .p2').length ? `${element.find('.sj .p2').text()}-${element.find('.sj .p1').text()}` : element.find('.sj').text();
             const href = a.attr('href');
-            const title = a.attr('title') || a.find('.bt, .p_bt').text();
+            const title = a.attr('title');
 
             if (!href || !title) {
                 return null;
             }
-
-            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
 
             const fullLink = new URL(href, link).href;
 
             const detail = await cache.tryGet(`gmu:news:${fullLink}:content`, async () => {
                 const contentResponse = await got(fullLink);
                 const content = load(contentResponse.data);
-                return { description: content('.v_news_content').html() ?? undefined };
+                return { description: content('.v_news_content').html() };
             });
 
             return {
                 title,
                 link: fullLink,
-                pubDate,
+                pubDate: parseDate(dateText, 8),
                 ...detail,
             };
         })
     );
 
-    const result = items.filter((item): item is { title: string; link: string; pubDate: Temporal.Instant | undefined; description: string | undefined } => item !== null);
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Temporal.Instant; description: string | null } => item !== null);
 
     return {
         title: `赣南医科大学 - ${newsType.title}`,

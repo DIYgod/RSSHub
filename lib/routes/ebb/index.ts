@@ -25,7 +25,7 @@ async function handler() {
         title: item.name_chi,
         link: `https://ebb.io/anime/${item.anime_id}x${item.season_id}`,
         description: `${item.season_title} - ${item.episode_title}`,
-        updated: item.last_updated ? parseDate(item.last_updated) : undefined,
+        updated: parseDate(item.last_updated),
         guid: `${item.anime_id}-${item.season_id}-${item.episode_title}`,
     }));
 

@@ -24,7 +24,7 @@ type ComicArticle = {
     subtitle: string;
     charge: boolean;
     thumbnailUrl: string;
-    serviceDateDescription?: string;
+    serviceDateDescription: string;
 };
 
 async function handler(ctx: Context) {
@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
                   });
             return {
                 title: article.subtitle,
-                pubDate: article.serviceDateDescription ? parseDate(article.serviceDateDescription, 'YY.MM.DD', 9) : undefined,
+                pubDate: parseDate(article.serviceDateDescription, 'YY.MM.DD', 9),
                 link,
                 ...detail,
             };

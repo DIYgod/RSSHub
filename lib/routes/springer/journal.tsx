@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
+import type { BrowserContext } from 'patchright';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
 
@@ -40,18 +40,25 @@ async function handler(ctx) {
     const journal = ctx.req.param('journal');
     const jrnlUrl = `${host}/journal/${journal}/volumes-and-issues`;
 
-    const source = new JournalSource();
+    const { context, destroy } = await getPlaywrightPage('about:blank', {
+        noGoto: true,
+        closeTimeout: 0,
+        javaScriptEnabled: false,
+        onBeforeLoad: async (_, context) => {
+            await context!.route('**/*', (request) => (request.request().resourceType() === 'document' && new URL(request.request().url()).hostname === 'link.springer.com' ? request.continue() : request.abort()));
+        },
+    });
     try {
-        const response = await source.get(jrnlUrl);
+        const response = await getHtml(context, jrnlUrl);
         const $ = load(response);
         const jrnlName = $('span.app-journal-masthead__title').text().trim();
-        const issuePath = $('li.c-list-group__item a[href]').first().attr('href');
+        const issuePath = $('li.c-list-group__item a[href]').attr('href');
         if (!issuePath) {
             throw new Error('Springer returned no issues for this journal. Verify its journal code and public volumes page.');
         }
         const issueUrl = new URL(issuePath, host).href;
 
-        const response2 = await source.get(issueUrl);
+        const response2 = await getHtml(context, issueUrl);
         const $2 = load(response2);
         const list = $2('main .app-card-open__heading a[href]')
             .toArray()
@@ -68,7 +75,7 @@ async function handler(ctx) {
             list,
             async (item) => {
                 const details = await cache.tryGet(`springer:article:v3:${item.link}`, async () => {
-                    const response3 = await source.get(item.link);
+                    const response3 = await getHtml(context, item.link);
                     const $3 = load(response3);
                     const publicationDate = $3('meta[name="dc.date"]').attr('content');
                     return {
@@ -100,59 +107,23 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await source.destroy();
+        await destroy();
     }
 }
 
-class JournalSource {
-    private session?: Awaited<ReturnType<typeof getPlaywrightPage>>;
-    private queue: Promise<void> = Promise.resolve();
-
-    async get(url: string): Promise<string> {
-        const response = await ofetch.raw(url, { responseType: 'text', ignoreResponseError: true });
-        if (response.status !== 200) {
-            throw new Error(`Springer returned HTTP ${response.status} for ${url}. Check that the journal and article remain publicly available.`);
-        }
-        const html = response._data ?? '';
-        if (!html.includes('<title>Client Challenge</title>')) {
-            return html;
-        }
-        const pending = (async () => {
-            await this.queue;
-            this.session ??= await getPlaywrightPage('about:blank', {
-                noGoto: true,
-                closeTimeout: 0,
-                javaScriptEnabled: false,
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (request) => (request.request().resourceType() === 'document' && new URL(request.request().url()).hostname === 'link.springer.com' ? request.continue() : request.abort()));
-                },
-            });
-            const response = await this.session.page.goto(url, { waitUntil: 'load', timeout: 30000 });
-            if (!response || response.status() !== 200) {
-                throw new Error(`Springer browser response failed for ${url}. Only publicly readable journal pages are supported.`);
-            }
-            const html = await response.text();
-            if (html.includes('<title>Client Challenge</title>')) {
-                throw new Error('Springer returned a client challenge in the browser. Retry when the public page is available.');
-            }
-            return html;
-        })();
-        this.queue = settleRequest(pending);
-        return pending;
-    }
-
-    async destroy() {
-        await this.queue;
-        if (this.session) {
-            await this.session.destroy();
-        }
-    }
-}
-
-async function settleRequest(promise: Promise<unknown>): Promise<void> {
+async function getHtml(context: BrowserContext, url: string): Promise<string> {
+    const page = await context.newPage();
     try {
-        await promise;
-    } catch {
-        // Keep queue scheduling alive; the caller still receives the original request rejection.
+        const response = await page.goto(url, { waitUntil: 'load', timeout: 30000 });
+        if (!response || response.status() !== 200) {
+            throw new Error(`Springer browser response failed for ${url}. Only publicly readable journal pages are supported.`);
+        }
+        const html = await response.text();
+        if (html.includes('<title>Client Challenge</title>')) {
+            throw new Error('Springer returned a client challenge in the browser. Retry when the public page is available.');
+        }
+        return html;
+    } finally {
+        await page.close();
     }
 }

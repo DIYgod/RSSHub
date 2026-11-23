@@ -32,7 +32,7 @@ type ArticleDetails = {
 };
 
 const getPage = async (url: string) => {
-    const response = await ofetch.raw(url, { responseType: 'text' });
+    const response = await ofetch.raw(url);
     return { data: (response._data as string) ?? '', url: response.url || url };
 };
 
@@ -62,82 +62,51 @@ const removeComments = ($element: Cheerio<any>) => {
         .remove();
 };
 
-const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string): ArticleLink[] => {
-    const seen = new Set<string>();
-    return $('a[href]')
+const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string): ArticleLink[] =>
+    $('#articlelist a[href]')
         .toArray()
         .flatMap((element) => {
             const link = resolveLink($(element).attr('href'), baseUrl);
-            if (!link || !isArticleUrl(link) || seen.has(link)) {
+            if (!link || !isArticleUrl(link)) {
                 return [];
             }
-            seen.add(link);
             const title = $(element).text().replaceAll(/\s+/g, ' ').trim();
             if (title && /责编|责任编辑/.test(title)) {
                 return [];
             }
             return {
-                title: title || undefined,
+                title,
                 link,
                 category: categoryName ? [categoryName] : undefined,
             };
         });
-};
 
 const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instant): Promise<DataItem> => {
     try {
         const details = await cache.tryGet<ArticleDetails>(`ce:paper:${article.link}`, async () => {
             const page = await getPage(article.link);
             const $ = load(page.data);
-            const title = $('#Title, .m-article-content h1, .article-title, h1').first().text().replaceAll(/\s+/g, ' ').trim() || $('title').text().trim();
-            const content = $('#ozoom, #articleContent, .articleContent, .m-article-main, .m-article-text, article')
-                .filter((_, element) => $(element).text().trim().length > 0 || $(element).find('img').length > 0)
-                .first();
+            const title = $('#Title, .m-article-content h1, .article-title, h1').text().replaceAll(/\s+/g, ' ').trim() || $('title').text().trim();
+            const content = $('#ozoom, #articleContent, .articleContent, .m-article-main, .m-article-text, article').filter((_, element) => $(element).text().trim().length > 0 || $(element).find('img').length > 0);
 
             const attachment = $('.attachment');
             if (attachment.find('img').length > 0 || attachment.text().trim().length > 0) {
                 content.prepend(attachment);
             }
 
-            // Resolve relative links and images in content
-            content.find('img').each((_, element) => {
-                const src = $(element).attr('src');
-                if (!src) {
-                    return;
-                }
-                const resolved = resolveLink(src, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('src', resolved);
-            });
-            content.find('a').each((_, element) => {
-                const href = $(element).attr('href');
-                if (!href) {
-                    return;
-                }
-                const resolved = resolveLink(href, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('href', resolved);
-            });
-
             // Strip all comment nodes (including Founder enpproperty metadata comments)
             removeComments(content);
 
             const authorText = $('#Author, .author, .mob-author, .m-article-author, .appellation')
-                .first()
                 .text()
                 .replace(/^作者[:：]\s*/, '')
-                .replaceAll(/\s+/g, ' ')
-                .trim();
-            const enpAuthor = page.data.match(/<author>([^<]*)<\/author>/)?.[1]?.trim();
-            const rawAuthor = enpAuthor || authorText || undefined;
-            const author = rawAuthor?.replace(/^[□■◆▲·•\s]+/, '').trim() || undefined;
+                .replaceAll(/\s+/g, ' ');
+            const enpAuthor = page.data.match(/<author>([^<]*)<\/author>/)?.[1];
+            const rawAuthor = enpAuthor || authorText;
+            const author = rawAuthor.replace(/^[□■◆▲·•\s]+/, '') || undefined;
 
             return {
-                title: title || undefined,
+                title,
                 description: content.html()?.trim(),
                 author,
             };
@@ -203,21 +172,7 @@ const fetchTargetArticles = async (targetNodes: NodeLink[], limit: number): Prom
         { concurrency, stopOnError: false }
     );
 
-    const targetArticles: ArticleLink[] = [];
-    const seenLinks = new Set<string>();
-    for (const links of nodeResults) {
-        for (const link of links) {
-            if (seenLinks.has(link.link)) {
-                continue;
-            }
-            seenLinks.add(link.link);
-            targetArticles.push(link);
-            if (targetArticles.length >= limit) {
-                return targetArticles;
-            }
-        }
-    }
-    return targetArticles;
+    return nodeResults.flat().slice(0, limit);
 };
 
 export const route: Route = {

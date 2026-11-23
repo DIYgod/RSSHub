@@ -54,7 +54,7 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: date && parseDate(date) ? parseDate(date, 8) : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
             };
         })
         .filter((item): item is { title: string; link: string; pubDate: Temporal.Instant | undefined } => item !== null);
@@ -78,7 +78,7 @@ async function handler() {
                     link: item.link,
                     description,
                     author,
-                    pubDate: date && parseDate(date) ? parseDate(date, 8) : undefined,
+                    pubDate: date ? parseDate(date, 8) : undefined,
                 };
             });
             return { ...item, ...details, title: details.title || item.title, pubDate: details.pubDate ?? item.pubDate };

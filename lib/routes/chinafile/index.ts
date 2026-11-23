@@ -7,8 +7,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseDateStrict } from '@/utils/time';
 
-function parseFeedDate(date?: string) {
-    return date ? parseDateStrict(date, 'dddd, MMMM D, YYYY - h:mma', 'America/New_York') : undefined;
+function parseFeedDate(date: string) {
+    return parseDateStrict(date, 'dddd, MMMM D, YYYY - h:mma', 'America/New_York');
 }
 
 export const route: Route = {
@@ -73,7 +73,7 @@ async function handler(ctx: Context) {
                 return {
                     title: item.title,
                     id: item.guid,
-                    pubDate: publishedAt ? parseDate(publishedAt) : parseFeedDate(item.pubDate),
+                    pubDate: publishedAt ? parseDate(publishedAt) : parseFeedDate(item.pubDate!),
                     updated: updatedAt,
                     author: item.creator,
                     link: url,

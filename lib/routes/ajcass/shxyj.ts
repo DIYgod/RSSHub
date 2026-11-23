@@ -61,10 +61,10 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const articleTitle = $item.find('a').first().text().trim();
-                const articleLink = $item.find('a').first().attr('href');
-                const summary = $item.find('li').eq(1).text().replace('[摘要]', '').trim();
-                const authors = $item.find('li').eq(2).text().replace('作者：', '').trim();
+                const articleTitle = $item.find('a').first().text();
+                const articleLink = $item.find('a').attr('href');
+                const summary = $item.find('li').eq(1).text().replace('[摘要]', '');
+                const authors = $item.find('li').eq(2).text().replace('作者：', '');
 
                 if (articleTitle && articleLink) {
                     return {

@@ -30,7 +30,7 @@ const handler = async (ctx) => {
 
             return {
                 title: $item.find('strong').text(),
-                pubDate: $item.find('div.list-dated').text().split(/\|/).pop()?.trim() ? parseDate($item.find('div.list-dated').text().split(/\|/).pop()!, 9) : undefined,
+                pubDate: parseDate($item.find('div.list-dated').text().split(/\|/).pop()!, 9),
                 link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
@@ -70,7 +70,7 @@ const handler = async (ctx) => {
                 );
                 const image = $$('meta[property="og:image"]').prop('content');
 
-                item.title = title || item.title;
+                item.title = title;
                 item.description = description;
                 const publishedTime = $$('meta[property="article:published_time"]').prop('content');
                 item.pubDate = publishedTime ? parseDate(publishedTime) : item.pubDate;

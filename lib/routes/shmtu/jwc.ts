@@ -58,20 +58,18 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
     const info = type === 'jwgg' ? '教务公告' : '教务新闻';
 
-    const response = await got(`${host}/${type}/list.htm`, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await got(`${host}/${type}/list.htm`);
 
     const $ = load(response.data);
     const list = $('.news_list .news')
         .toArray()
-        .flatMap((item) => {
+        .map((item) => {
             const $item = $(item);
-            const href = $item.find('a[href]').attr('href');
-            const title = $item.find('.news_title .ttbox').text();
-            return href && title ? { title, link: new URL(href, host).href, pubDate: parseDate($item.find('.news_time').text(), 8) } : [];
+            return {
+                title: $item.find('.news_title .ttbox').text(),
+                link: new URL($item.find('a[href]').attr('href')!, host).href,
+                pubDate: parseDate($item.find('.news_time').text(), 8),
+            };
         });
 
     const result = await processFeed(list, cache);

@@ -66,7 +66,7 @@ const magnitudes = { 0: 6, 5: 3, 8: 4, 9: 5 };
 
 async function handler(ctx) {
     let type = Number(ctx.req.param('type') ?? '1');
-    if (!Number.isSafeInteger(type) || !Object.hasOwn(typeMappings, type)) {
+    if (!Object.hasOwn(typeMappings, type)) {
         throw new InvalidParameterError('Invalid earthquake type. Use 1, 2, 5, 7, 8, 9, or 0.');
     }
     // Preserve the existing aliases for types omitted from the route documentation.
@@ -81,13 +81,7 @@ async function handler(ctx) {
     const items = earthquakes
         // Match the official table's exclusion of minor Beijing events.
         .filter((earthquake) => !(earthquake.location.startsWith('北京') && earthquake.magnitude < 2))
-        .map((earthquake) => {
-            const pubDate = parseDate(`${earthquake.time.replace(' ', 'T')}+08:00`);
-            if (!pubDate) {
-                throw new TypeError(`CEIC returned an invalid earthquake time for ${earthquake.id}. Please check the official table.`);
-            }
-            return { earthquake, pubDate };
-        })
+        .map((earthquake) => ({ earthquake, pubDate: parseDate(`${earthquake.time.replace(' ', 'T')}+08:00`)! }))
         .filter(({ earthquake, pubDate }) => pubDate.epochMilliseconds >= earliest && (type === 1 || type === 2 || (type === 7 ? earthquake.magnitude < 3 : earthquake.magnitude >= magnitudes[type])))
         // The previous route always exposed at most 20 events, even with a larger limit.
         .slice(0, Math.min(20, getRouteLimit(ctx, 20)))

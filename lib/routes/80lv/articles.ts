@@ -22,15 +22,15 @@ const formatTitle = (detail: ArticleDetail, listItem: ArticleListItem): string =
 };
 
 const formatAuthors = (detail: ArticleDetail, listItem: ArticleListItem): string | undefined => {
-    const names = [detail.aside?.author?.name?.trim(), detail.aside?.interviewer?.name?.trim(), listItem.author?.name?.trim()].filter((name): name is string => Boolean(name));
+    const names = [detail.aside?.author?.name, detail.aside?.interviewer?.name, listItem.author?.name].filter((name): name is string => Boolean(name));
     const unique = [...new Set(names)];
     return unique.length > 0 ? unique.join(', ') : undefined;
 };
 
 const extractTags = (detail: ArticleDetail, listItem: ArticleListItem): string[] | undefined => {
     const rawTags = detail.aside?.tags ?? listItem.tags ?? [];
-    const unique = [...new Set(rawTags.map((tag) => tag.name?.trim()).filter((name): name is string => Boolean(name)))];
-    return unique.length > 0 ? unique : undefined;
+    const names = rawTags.map((tag) => tag.name).filter((name): name is string => Boolean(name));
+    return names.length > 0 ? names : undefined;
 };
 
 const resolveCoverImage = (detail: ArticleDetail, listItem: ArticleListItem): string | undefined =>
@@ -98,19 +98,7 @@ async function handler(ctx: Context): Promise<Data> {
         query: buildListQuery(limit, category),
     });
 
-    const seenSlugs = new Set<string>();
-    const targetItems: ArticleListItem[] = [];
-    const listItems = listRes.items ?? [];
-    for (const item of listItems) {
-        if (!item.slug || seenSlugs.has(item.slug)) {
-            continue;
-        }
-        seenSlugs.add(item.slug);
-        targetItems.push(item);
-        if (targetItems.length >= limit) {
-            break;
-        }
-    }
+    const targetItems = (listRes.items ?? []).filter((item) => item.slug).slice(0, limit);
 
     const items = await pMap(targetItems, (listItem) => fetchArticleDetail(listItem), {
         concurrency: DETAIL_CONCURRENCY,

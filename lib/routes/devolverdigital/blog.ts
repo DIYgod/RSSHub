@@ -56,14 +56,10 @@ async function fetchPage() {
             .map((content) => {
                 const $post = $(content).parent();
                 const $title = $post.find('h1');
-                const link = $post.find('a[href^="https://www.devolverdigital.com/propaganda/"]').attr('href');
-                if (!link) {
-                    throw new Error('Devolver Digital article permalink was not found');
-                }
                 parsePostImages($, content);
                 return {
                     title: $title.text(),
-                    link,
+                    link: $post.find('a[href^="https://www.devolverdigital.com/propaganda/"]').attr('href'),
                     category: [$title.prev().children().first().text()],
                     author: $title.next().text().replace(/^By /, ''),
                     pubDate: parseDate($title.prev().children().last().text(), 'MMMM D, YYYY', 0),

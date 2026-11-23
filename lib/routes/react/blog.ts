@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -14,7 +11,7 @@ const handler: Route['handler'] = async () => {
 
     const $ = load(data);
 
-    const list = $('a[href^="/blog/"]').slice(0, 20).toArray();
+    const list = $('article a[href^="/blog/"]').slice(0, 20).toArray();
     const item = await pMap(
         list,
         (item) => {
@@ -25,10 +22,7 @@ const handler: Route['handler'] = async () => {
 
                 const $ = load(data);
 
-                const content = copyNodes($('article div.max-w-7xl').first());
-                if (!content.length || !content.html()) {
-                    throw new Error('React blog article content is missing');
-                }
+                const content = $('article div.max-w-7xl').first();
                 const metadata = content.find('p.whitespace-pre-wrap').first();
                 const date = metadata.text().split(/\s+by/, 1)[0];
                 const author = metadata
@@ -42,8 +36,8 @@ const handler: Route['handler'] = async () => {
                     title: $('h1').first().text(),
                     link,
                     description: content.html(),
-                    author: author || undefined,
-                    pubDate: date ? parseDate(`${date} +0000`, date.split(' ', 1)[0].length === 3 ? 'MMM D, YYYY ZZ' : 'MMMM D, YYYY ZZ') : undefined,
+                    author,
+                    pubDate: parseDate(`${date} +0000`, date.split(' ', 1)[0].length === 3 ? 'MMM D, YYYY ZZ' : 'MMMM D, YYYY ZZ'),
                 };
             });
         },
@@ -74,12 +68,3 @@ export const route: Route = {
     },
     handler,
 };
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
-}

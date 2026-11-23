@@ -17,7 +17,7 @@ type ContentParagraph = {
 const LkongContent = ({ content }: { content: ContentParagraph[] }) => (
     <>
         {content?.map((paragraph) =>
-            paragraph.type === 'image' && paragraph.url ? (
+            paragraph.type === 'image' ? (
                 <img src={paragraph.url} />
             ) : paragraph.type === 'paragraph' ? (
                 <p>

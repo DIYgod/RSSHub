@@ -61,8 +61,7 @@ async function handler(ctx) {
         },
     });
 
-    const body = typeof response === 'string' ? JSON.parse(response) : response;
-    const data = typeof body === 'string' ? JSON.parse(body) : body;
+    const data = JSON.parse(JSON.parse(response));
 
     let items: Array<DataItem & { link: string }> = data.items.map((item) => ({
         title: item.title,

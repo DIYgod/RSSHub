@@ -56,14 +56,13 @@ async function handler() {
             const authors = $item
                 .find('author')
                 .toArray()
-                .map((author) => ({ name: $(author).find('name').text(), url: $(author).find('uri').text() || undefined }))
-                .filter((author) => author.name);
+                .map((author) => ({ name: $(author).find('name').text(), url: $(author).find('uri').text() || undefined }));
             // Extract a version such as v5.3.6.
             const version = text.match(/v\d+\.\d+\.\d+/)?.[0];
             return {
                 version,
-                pubDate: date ? parseDate(date) : undefined,
-                author: authors.length ? authors : undefined,
+                pubDate: parseDate(date),
+                author: authors,
             };
         })
         .filter((item) => item.version);

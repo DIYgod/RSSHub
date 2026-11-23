@@ -94,10 +94,9 @@ function parseEvents(response: string) {
             const link = $('div.event > h4 > a', event).attr('href');
 
             // compute event description
-            const eventDate = eventYear && eventMonth && eventDay ? `${eventYear}-${eventMonth}-${eventDay}` : undefined;
             const eventDescription = [
-                eventLocation ? `開催場所 ${eventLocation}` : undefined,
-                eventDate ? `開催日 ${eventDate}` : undefined,
+                `開催場所 ${eventLocation}`,
+                `開催日 ${eventYear}-${eventMonth}-${eventDay}`,
                 eventTimeObj.openHr ? `開場 ${eventTimeObj.openHr}:${eventTimeObj.openMin}` : undefined,
                 eventTimeObj.startHr ? `開演 ${eventTimeObj.startHr}:${eventTimeObj.startMin}` : undefined,
                 eventTimeObj.closeHr ? `終演 ${eventTimeObj.closeHr}:${eventTimeObj.closeMin}` : undefined,

@@ -62,9 +62,9 @@ const getPostContent = (list: PostListItem[], { language }) =>
                 if (res.data.retcode !== 0) {
                     throw new Error(`HoYoLAB article API returned ${res.data.retcode}: ${res.data.message}`);
                 }
-                const author = res?.data?.data?.post?.user?.nickname || '';
-                let content = res?.data?.data?.post?.post?.content || '';
-                if (content === language || !content) {
+                const author = res.data.data.post.user.nickname;
+                let content = res.data.data.post.post.content;
+                if (content === language) {
                     content = post.content;
                 }
                 const description = renderPostDescription({

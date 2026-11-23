@@ -61,14 +61,11 @@ async function handler(ctx) {
     const list = $('div.issue-item')
         .slice(0, 10)
         .toArray()
-        .map((item): DataItem => {
-            const date = parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text());
-            return {
-                title: $(item).find('h5.issue-item__title').text(),
-                link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
-                pubDate: date,
-            };
-        });
+        .map((item): DataItem => ({
+            title: $(item).find('h5.issue-item__title').text(),
+            link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
+            pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
@@ -81,7 +78,7 @@ async function handler(ctx) {
                 });
                 const detail = load(detailResponse.data);
                 item.author = detail('div.accordion-tabbed.loa-accordion').text();
-                item.description = detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '';
+                item.description = detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html();
 
                 return item;
             })

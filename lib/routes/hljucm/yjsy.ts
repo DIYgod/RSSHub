@@ -58,18 +58,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                details.description = content('#vsb_newscontent, .v_news_content').first().html();
-                if (!details.description?.trim()) {
-                    throw new Error(`The university article has no main content: ${item.link}`);
-                }
+                details.description = content('#vsb_newscontent, .v_news_content').html();
                 const dateText = content('.timestyle56043, .ArticleMessage span')
                     .first()
                     .text()
                     .replaceAll(/[年月]/g, '-')
                     .replaceAll('日', '');
                 const dateMatch = dateText.match(/\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?/);
-                const pubDate = dateMatch ? parseDate(dateMatch[0], 8) : undefined;
-                details.pubDate = pubDate;
+                details.pubDate = dateMatch ? parseDate(dateMatch[0], 8) : undefined;
 
                 const files = detailResponse.data.match(/<span>附件【<a href="(.*)"><span>(.*)<\/span><\/a>】<\/span>/g);
 

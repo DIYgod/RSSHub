@@ -1,21 +1,9 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/time';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 const host = 'https://guangdiu.com';
 
@@ -62,7 +50,7 @@ async function handler() {
                 const $ = load(detailResponse.data);
 
                 const description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
-                const publishTime = copyElements($('.dinfoweibo').first()).children(':not(.latesttime)').remove().end().text().trim();
+                const publishTime = $('.dinfoweibo').children(':not(.latesttime)').remove().end().text().trim();
                 const pubDate = publishTime ? parseRelativeDate(publishTime) : undefined;
 
                 return { description, pubDate };

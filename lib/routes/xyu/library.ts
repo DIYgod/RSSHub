@@ -6,22 +6,17 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDateStrict } from '@/utils/time';
 
-function parsePublicationDate(value: string) {
-    return parseDateStrict(value, 'YYYY-MM-DD');
-}
-
 async function fetchDetails(url: string) {
     const response = await ofetch(url);
     const $ = load(response);
-    const content = $('.v_news_content').first();
+    const content = $('.v_news_content');
     const attachments = $('.art-body a[href*="DownloadAttachUrl"]')
-        .filter((_, link) => !$(link).closest('.v_news_content').length)
         .toArray()
         .map((link) => `<li>${$.html(link)}</li>`)
         .join('');
 
     return {
-        description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined,
+        description: `${content.html()}${attachments ? `<ul>${attachments}</ul>` : ''}`,
     };
 }
 
@@ -66,7 +61,7 @@ async function handler() {
             const link = relativeUrl ? new URL(relativeUrl, baseUrl).href : '';
             // Read the source date-only publication label.
             const dateText = $item.find('.date').text().trim() || $item.text().match(/\d{4}-\d{2}-\d{2}/)?.[0] || '';
-            const pubDate = parsePublicationDate(dateText);
+            const pubDate = parseDateStrict(dateText, 'YYYY-MM-DD');
 
             return {
                 title,

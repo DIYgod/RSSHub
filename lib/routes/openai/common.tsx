@@ -20,7 +20,6 @@ const fetchArticleDetails = async (url: string) => {
     const html = await ofetch(normalizedUrl, {
         // OpenAI article pages return Cloudflare 403 challenges when Undici negotiates HTTP/2.
         allowH2: false,
-        responseType: 'text',
     });
     const $ = load(html);
 
@@ -72,8 +71,7 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
         async (element): Promise<DataItem> => {
             const id = $(element).find('guid').text();
             const title = $(element).find('title').text();
-            const publishedAt = $(element).find('pubDate').text();
-            const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
+            const pubDate = parseDate($(element).find('pubDate').text());
             const link = $(element).find('link').text();
             const { content, categories, author, link: articleLink } = await cache.tryGet(`openai:news:detail:v2:${id}`, () => fetchArticleDetails(link));
 

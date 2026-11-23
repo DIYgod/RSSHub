@@ -8,6 +8,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDateStrict } from '@/utils/time';
 
 function getYouTubeVideoId(url: URL) {
@@ -42,7 +43,7 @@ async function fetchArticle(link: string) {
     const url = new URL(link);
     if (['youtube.com', 'www.youtube.com', 'youtu.be'].includes(url.hostname)) {
         const videoId = getYouTubeVideoId(url);
-        return { description: videoId ? renderDescription(videoId) : undefined, author: undefined };
+        return { description: videoId ? renderYoutube(true, videoId) : undefined, author: undefined };
     }
 
     const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(link, { responseType: 'arrayBuffer' });
@@ -90,11 +91,9 @@ async function handler(ctx) {
 
     const $ = load(data);
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const validLimit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0;
-    const limit = validLimit ? requestedLimit : 30;
+    const limit = getRouteLimit(ctx);
     let items = $('li a')
-        .slice(4, validLimit ? undefined : 30)
+        .slice(4, limit ? undefined : 30)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -129,5 +128,3 @@ async function handler(ctx) {
         item: items,
     };
 }
-
-const renderDescription = (youTube: string): string => (youTube ? renderYoutube(true, youTube, undefined, undefined) : '');

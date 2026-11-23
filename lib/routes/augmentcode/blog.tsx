@@ -41,7 +41,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    let items: DataItem[] = $('a[href^="/blog/"]:has(h2, h3)')
+    let items: DataItem[] = $('a.group[href^="/blog/"]:has(h2, h3)')
         .slice(0, limit)
         .toArray()
         .map((el) => {
@@ -49,13 +49,11 @@ const handler = async (ctx: Context): Promise<Data> => {
             const title = $el.find('h2, h3').first().text();
             const timestamp = $el
                 .find('[title^="Unix:"]')
-                .first()
                 .attr('title')
                 ?.match(/^Unix:\s*(\d+)$/)?.[1];
             const image = $el
                 .find('img')
                 .filter((_, image) => $(image).attr('alt') === title)
-                .first()
                 .attr('src');
             const authors = $el
                 .find('[class*="-space-x"] img')
@@ -64,7 +62,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             return {
                 title,
                 link: new URL($el.attr('href')!, baseUrl).href,
-                pubDate: timestamp ? parseDate(Number(timestamp)) : undefined,
+                pubDate: parseDate(Number(timestamp)),
                 author: authors,
                 image: image ? new URL(image, baseUrl).href : undefined,
                 language,
@@ -81,7 +79,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('h1').first().text();
+                const title: string = $$('h1').text();
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content') ?? item.image;
                 const description: string | undefined = renderDescription({
                     images: image
@@ -105,11 +103,8 @@ const handler = async (ctx: Context): Promise<Data> => {
                         avatar: undefined,
                     };
                 });
-                const articleMetadata = $$('script[type="application/ld+json"]')
-                    .toArray()
-                    .map((el) => JSON.parse($$(el).text()))
-                    .find((metadata) => metadata['@type'] === 'BlogPosting');
-                const upDatedStr: string | undefined = $$('meta[property="article:modified_time"]').attr('content') ?? articleMetadata?.dateModified;
+                const articleMetadata = JSON.parse($$('script[type="application/ld+json"]:contains("BlogPosting")').text());
+                const upDatedStr: string | undefined = articleMetadata?.dateModified;
 
                 const processedItem: DataItem = {
                     title,

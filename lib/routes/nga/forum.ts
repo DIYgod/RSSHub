@@ -59,14 +59,7 @@ async function handler(ctx) {
 
     const forumname = homePage.data.forumname;
 
-    const seen = new Set<number>();
-    const list = homePage.data.result.data.filter(({ tid }) => {
-        if (!tid || seen.has(tid)) {
-            return false;
-        }
-        seen.add(tid);
-        return true;
-    });
+    const list = homePage.data.result.data.filter(({ tid }) => tid);
 
     const resultItem = await pMap(
         list,

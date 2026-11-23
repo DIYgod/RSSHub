@@ -91,14 +91,13 @@ export async function fetchHacktivityEdges(querystring: string) {
 export function parseItem(item) {
     const author = item.reporter?.username;
     const summary = item.report.report_generated_content?.hacktivity_summary;
-    const pubDate = item.latest_disclosable_activity_at ? parseDate(item.latest_disclosable_activity_at) : undefined;
 
     return {
         title: item.report.title,
         description: summary ? markdownIt.render(summary) : undefined,
-        category: [item.team.name, item.report.substate, item.severity_rating, ...(item.cve_ids ?? [])].filter(Boolean),
+        category: [item.team.name, item.report.substate, item.severity_rating, ...item.cve_ids].filter(Boolean),
         author,
-        pubDate,
+        pubDate: parseDate(item.latest_disclosable_activity_at),
         link: `https://hackerone.com/reports/${item.report.databaseId}`,
     };
 }
@@ -112,14 +111,8 @@ export function parseItems(items: Array<Parameters<typeof parseItem>[0]>) {
                 return parsed;
             }
             const body = await cache.tryGet(`hackerone:report-body:${item.report.databaseId}`, async () => {
-                const report = await ofetch<{ vulnerability_information?: string; summaries?: Array<{ content?: string }> }>(`${parsed.link}.json`);
-                const content =
-                    report.vulnerability_information ||
-                    report.summaries
-                        ?.map((summary) => summary.content)
-                        .filter(Boolean)
-                        .join('\n\n');
-                return { description: content ? markdownIt.render(content) : undefined };
+                const report = await ofetch<{ vulnerability_information: string }>(`${parsed.link}.json`);
+                return { description: markdownIt.render(report.vulnerability_information) };
             });
             return { ...parsed, ...body };
         },

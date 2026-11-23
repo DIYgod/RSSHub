@@ -75,7 +75,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(`${baseUrl}/blog/wp-json/wp/v2/posts`, { searchParams });
     const items = response.map((item) => {
-        const media = item._embedded['wp:featuredmedia']?.[0];
+        const media = item._embedded['wp:featuredmedia'][0];
         const mediaDetails = media?.media_details;
         const mediaSize = mediaDetails?.sizes.large || mediaDetails?.sizes.full;
         return {

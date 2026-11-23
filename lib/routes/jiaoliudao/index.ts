@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -30,8 +30,8 @@ async function handler(ctx) {
     const items = data.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: parseGmtDate(item.date_gmt),
-        updated: parseGmtDate(item.modified_gmt),
+        pubDate: parseDate(`${item.date_gmt}Z`),
+        updated: parseDate(`${item.modified_gmt}Z`),
         link: item.link,
     }));
 
@@ -41,8 +41,4 @@ async function handler(ctx) {
         link: baseUrl,
         item: items,
     };
-}
-
-function parseGmtDate(value?: string): Temporal.Instant | undefined {
-    return value && parseDateStrict(value, 'YYYY-MM-DDTHH:mm:ss') ? parseDate(`${value}Z`) : undefined;
 }

@@ -57,7 +57,7 @@ async function handler(ctx) {
         }),
         author: item.nick_name,
         guid: `imiker-${item.id}`,
-        pubDate: item.add_time_timestamp !== undefined && item.add_time_timestamp !== null ? parseDate(item.add_time_timestamp * 1000) : undefined,
+        pubDate: parseDate(item.add_time_timestamp * 1000),
         upvotes: item.count?.vote_count ?? 0,
         comments: item.count?.answer_count ?? 0,
     }));

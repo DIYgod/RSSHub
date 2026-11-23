@@ -19,14 +19,13 @@ export const route: Route = {
             .map((item) => {
                 const element = $(item);
                 const a = element.find('a').eq(1);
-                const date = element.find('p.info').text();
 
                 return {
                     title: a.text(),
                     link: a.attr('href'),
                     description: element.find('p.excerpt').text(),
                     category: element.find('a').last().text(),
-                    pubDate: date ? parseDate(`${date} GMT`) : undefined,
+                    pubDate: parseDate(`${element.find('p.info').text()} GMT`),
                 };
             });
 

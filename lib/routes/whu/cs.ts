@@ -1,31 +1,15 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict, toInstant } from '@/utils/time';
+import { parseDate } from '@/utils/time';
+
+import { parseCalendarDate } from './util';
 
 const baseUrl = 'https://cs.whu.edu.cn';
 class ArticleAccessError extends Error {}
-function parseCalendarDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), 'YYYY-MM-DD', 0);
-}
-function parsePublicationDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
-        return parseCalendarDate(value);
-    }
-    return parseDateStrict(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
-}
 export const route: Route = {
     path: '/cs/:type',
     categories: ['university'],
@@ -83,76 +67,57 @@ async function handler(ctx) {
                 };
             }
         );
-    const results = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                try {
-                    const detail = await cache.tryGet(`whu:cs:main-content:${item.link}`, async () => {
-                        const response = await got(item.link);
-                        const $ = load(response.data);
-                        if ($('.prompt').length || ($('title').text() === '用户验证' && $('body').text().includes('验证码'))) {
-                            throw new ArticleAccessError(`Article access permission or verification required at ${item.link}`);
-                        }
-                        // Campus-only articles either redirect to the CAS login or show a no-permission notice in place of the body
-                        if ($('script').text().includes('cas.whu.edu.cn/authserver/login') || $('[id^="vsb_content"]').text().includes('您无权限访问该条文章')) {
-                            throw new ArticleAccessError(`Article access authentication required at ${item.link}`);
-                        }
-                        const content = $('.v_news_content');
-                        if (content.length !== 1) {
-                            throw new Error(`Article body not found at ${item.link}`);
-                        }
-                        content.find('script, style').remove();
-                        const downloads = $('.content a[href*="news.DownloadAttachUrl"]').filter((_, element) => $(element).parents('.v_news_content').length === 0);
-                        content.find('img').each((_, element) => {
-                            const image = $(element);
-                            const src = image.attr('orisrc') ?? image.attr('src');
-                            if (src) {
-                                image.attr('src', new URL(src, item.link).href);
-                            }
-                            image.removeAttr('orisrc');
-                            image.removeAttr('vurl');
-                        });
-                        content
-                            .find('a[href]')
-                            .add(downloads)
-                            .each((_, element) => {
-                                const anchor = $(element);
-                                const href = anchor.attr('href');
-                                if (href) {
-                                    anchor.attr('href', new URL(href, item.link).href);
-                                }
-                            });
-                        const attachments = $('<ul></ul>');
-                        downloads.each((_, element) => {
-                            const attachmentWrapper1 = $('<li></li>');
-                            attachmentWrapper1.append(copyContent($(element), $));
-                            attachments.append(attachmentWrapper1);
-                        });
-                        const category = $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
-                        return {
-                            category: category?.length ? category : undefined,
-                            description: content.html()! + (downloads.length ? `\n${$.html(attachments)}` : ''),
-                            publicationDate: $('meta[name="PubDate"]').attr('content'),
-                            listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
-                        };
-                    });
-                    const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
-                    return {
-                        ...item,
-                        description: detail.description,
-                        category: detail.category,
-                        pubDate: detail.listDate === listDate ? (parsePublicationDate(detail.publicationDate) ?? item.pubDate) : item.pubDate,
-                    };
-                } catch (error) {
-                    if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
-                        return item;
+    const results = await pMap(
+        list,
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(`whu:cs:main-content:${item.link}`, async () => {
+                    const response = await got(item.link);
+                    const $ = load(response.data);
+                    if ($('.prompt').length || ($('title').text() === '用户验证' && $('body').text().includes('验证码'))) {
+                        throw new ArticleAccessError(`Article access permission or verification required at ${item.link}`);
                     }
-                    throw error;
+                    // Campus-only articles either redirect to the CAS login or show a no-permission notice in place of the body
+                    if ($('script').text().includes('cas.whu.edu.cn/authserver/login') || $('[id^="vsb_content"]').text().includes('您无权限访问该条文章')) {
+                        throw new ArticleAccessError(`Article access authentication required at ${item.link}`);
+                    }
+                    const content = $('.v_news_content');
+                    content.find('style').remove();
+                    const downloads = $('.content a[href*="news.DownloadAttachUrl"]').filter((_, element) => $(element).parents('.v_news_content').length === 0);
+                    content.find('img').each((_, element) => {
+                        const image = $(element);
+                        const src = image.attr('orisrc');
+                        if (src) {
+                            image.attr('src', src);
+                        }
+                        image.removeAttr('orisrc');
+                        image.removeAttr('vurl');
+                    });
+                    const attachments = downloads
+                        .toArray()
+                        .map((element) => `<li>${$.html(element)}</li>`)
+                        .join('');
+                    const category = $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
+                    return {
+                        category,
+                        description: content.html()! + (downloads.length ? `\n<ul>${attachments}</ul>` : ''),
+                        publicationDate: $('meta[name="PubDate"]').attr('content'),
+                    };
+                });
+                return {
+                    ...item,
+                    description: detail.description,
+                    category: detail.category,
+                    pubDate: detail.publicationDate ? parseDate(detail.publicationDate, 8) : item.pubDate,
+                };
+            } catch (error) {
+                if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
+                    return item;
                 }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
     const items = results;
     return {
@@ -160,26 +125,4 @@ async function handler(ctx) {
         link,
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
-}
-function isNullish(value: unknown): value is null | undefined {
-    return isOneOf(value, [null, undefined]);
-}
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

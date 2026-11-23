@@ -19,10 +19,7 @@ export const route: Route = {
 async function fetchArticle(link: string) {
     const response = await ofetch(link);
     const $ = load(response);
-    const metadata = $('script[type="application/ld+json"]')
-        .toArray()
-        .map((element) => JSON.parse($(element).text()))
-        .find((data) => data['@type'] === 'NewsArticle');
+    const metadata = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
     const body = $('.grid-cols-article-mobile').first().children('p, h2, h3, h4, ul, ol, blockquote, figure');
     return {
         author: metadata.author.name,

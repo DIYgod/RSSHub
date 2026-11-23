@@ -9,14 +9,6 @@ import { parseRelativeDate } from '@/utils/time';
 
 import { isYouTubeChannelId } from './utils';
 
-const parsePostDate = (value: string | undefined) => {
-    const dateText = value?.split('(', 1)[0].trim();
-    if (!dateText) {
-        return;
-    }
-    return parseRelativeDate(dateText);
-};
-
 const renderCommunityDescription = (runs, media) =>
     renderToString(
         <>
@@ -85,7 +77,7 @@ async function handler(ctx) {
                 description: renderCommunityDescription(post.contentText.runs, media),
                 link: `https://www.youtube.com/post/${post.postId}`,
                 author: post.authorText.runs[0].text,
-                pubDate: parsePostDate(post.publishedTimeText?.runs?.[0]?.text),
+                pubDate: parseRelativeDate(post.publishedTimeText.runs[0].text.split('(', 1)[0].trim()),
             };
         });
 

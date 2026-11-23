@@ -34,7 +34,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.Article_Title a');
-            const href = a.attr('href')?.trim();
+            const href = a.attr('href');
             if (!href) {
                 return null;
             }
@@ -53,7 +53,7 @@ async function handler() {
                 const $detail = load(detail);
                 return {
                     ...item,
-                    description: $detail('div.Article_Content').html() ?? '',
+                    description: $detail('div.Article_Content').html(),
                     author: $detail('.info_xx .Article_Author').text() || undefined,
                 };
             })

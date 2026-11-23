@@ -40,11 +40,10 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const pubDate = $item.find('span').text();
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, link).href,
-                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 

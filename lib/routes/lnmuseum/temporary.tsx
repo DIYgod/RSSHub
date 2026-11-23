@@ -57,7 +57,7 @@ export const route: Route = {
                 return list.map((item) => {
                     const title = item.name;
                     const itemLink = `${baseUrl}/#/exhibition/detail?id=${item.id}&pageType=1`;
-                    const pubDate = item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime, 8);
+                    const pubDate = parseDate(item.createTime, 8);
                     const startDate = item.beginTime;
                     const endDate = item.endTime;
                     const location = item.address;

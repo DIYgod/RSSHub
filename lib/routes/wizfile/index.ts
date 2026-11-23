@@ -5,12 +5,6 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://antibody-software.com';
-const parsePublicationDate = (value: string | number | undefined, format?: string) => {
-    if (typeof value !== 'number' && !value) {
-        return;
-    }
-    return parseDate(value, format);
-};
 export const route: Route = {
     path: '/updates',
     categories: ['program-update'],
@@ -44,11 +38,11 @@ async function handler() {
             const title = $(item)
                 .text()
                 .replace(/\(.*?\)/, '');
-            const pubDate = parsePublicationDate(
+            const pubDate = parseDate(
                 $(item)
                     .find('span')
                     .text()
-                    .match(/\((.*?)\)/)?.[1]
+                    .match(/\((.*?)\)/)![1]
             );
             const description = $(item).next().html();
             return {

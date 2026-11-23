@@ -57,7 +57,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 return {
-                    description: content('div.post_content').html() ?? '',
+                    description: content('div.post_content').html(),
                     pubDate: parseDate(content('div.time > span').text(), 8),
                 };
             });

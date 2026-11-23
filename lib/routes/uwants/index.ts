@@ -67,7 +67,7 @@ async function handler(ctx: Context) {
 
                 return {
                     author: cite.eq(0).text(),
-                    description: content('.archiver_post').html() ?? undefined,
+                    description: content('.archiver_post').html(),
                     pubDate: date ? parseDate(date, 'YYYY-M-D hh:mm A', 8) : undefined,
                 };
             });

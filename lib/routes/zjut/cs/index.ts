@@ -50,8 +50,7 @@ async function handler(ctx): Promise<Data> {
                 } else if (!link.startsWith('http')) {
                     link = 'https://' + host + '/jsp/' + link;
                 }
-                const dateText = cheerioItem.find('.datetime').text().slice(1, -1);
-                const pubDate = dateText.trim() ? parseDate(dateText, 8) : undefined;
+                const pubDate = parseDate(cheerioItem.find('.datetime').text().slice(1, -1), 8);
 
                 return {
                     title,

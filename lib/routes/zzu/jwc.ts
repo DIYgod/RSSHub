@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -31,21 +31,6 @@ export const route: Route = {
 | xwkd     | tzgg     |`,
 };
 
-function parsePublishedDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
-    if (!match) {
-        return;
-    }
-    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
-    if (!parseDateStrict(calendarDate, 'YYYY-MM-DD')) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
@@ -63,24 +48,19 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a[href]').first();
-            const href = $link.attr('href');
-            if (!href) {
-                return;
-            }
-            const link = new URL(href, typeDict[type][1]).href;
+            const $link = $element.find('a[href]');
+            const link = new URL($link.attr('href')!, typeDict[type][1]).href;
             const title = $link.find('h3').text();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').text().trim();
+            const pubDateText = $element.find('span').text();
 
             return {
                 title,
                 link,
-                pubDate: parsePublishedDate(pubDateText),
+                pubDate: parseDate(pubDateText),
             };
-        })
-        .filter((item) => item !== undefined);
+        });
 
     return {
         title: `郑大教务部-${typeDict[type][0]}`,

@@ -56,9 +56,8 @@ async function handler(ctx) {
         link: `https://open.dewu.com/#/declaration/read?articleId=${item.id}`,
         pubDate: parseDate(item.publishTime, 8),
     }));
-    const selected = list;
     const result = await pMap(
-        selected,
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 const { documentId, ...feedItem } = item;

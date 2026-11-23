@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/time';
 interface ContentNode {
     type?: string;
     text?: string;
-    children?: ContentNode[];
+    children: ContentNode[];
     strong?: boolean;
     emphasis?: boolean;
     delete?: boolean;
@@ -52,21 +52,19 @@ const parseContentNode = (node: ContentNode): string => {
         }
         return text;
     }
-    const children = parseContentToHtml(node.children ?? []);
+    const children = parseContentToHtml(node.children);
     switch (node.type) {
         case 'paragraph':
             return `<p>${children}</p>`;
         case 'image':
             return parseImageNode(node);
-        case 'heading': {
-            const depth = node.depth && node.depth >= 1 && node.depth <= 6 ? node.depth : 2;
-            return `<h${depth}>${children}</h${depth}>`;
-        }
+        case 'heading':
+            return `<h${node.depth}>${children}</h${node.depth}>`;
         case 'code':
-            return `<pre><code${node.lang ? ` class="language-${escapeUTF8(node.lang)}"` : ''}>${(node.children ?? []).map((child) => escapeUTF8(child.text ?? '')).join('')}</code></pre>`;
+            return `<pre><code${node.lang ? ` class="language-${escapeUTF8(node.lang)}"` : ''}>${children}</code></pre>`;
         case 'list': {
             const tag = node.ordered ? 'ol' : 'ul';
-            const startAttr = node.ordered && node.start !== undefined && node.start !== 1 ? ` start="${node.start}"` : '';
+            const startAttr = node.ordered && node.start !== 1 ? ` start="${node.start}"` : '';
             return `<${tag}${startAttr}>${children}</${tag}>`;
         }
         case 'listItem':
@@ -76,8 +74,8 @@ const parseContentNode = (node: ContentNode): string => {
         case 'link':
             return node.url ? `<a href="${escapeUTF8(node.url)}"${node.title ? ` title="${escapeUTF8(node.title)}"` : ''}>${children}</a>` : children;
         case 'table': {
-            const [header, ...rows] = node.children ?? [];
-            return `<table><thead><tr>${(header?.children ?? []).map((cell) => `<th>${parseContentToHtml(cell.children ?? [])}</th>`).join('')}</tr></thead><tbody>${parseContentToHtml(rows)}</tbody></table>`;
+            const [header, ...rows] = node.children;
+            return `<table><thead><tr>${header.children.map((cell) => `<th>${parseContentToHtml(cell.children)}</th>`).join('')}</tr></thead><tbody>${parseContentToHtml(rows)}</tbody></table>`;
         }
         case 'tableRow':
             return `<tr>${children}</tr>`;
@@ -92,18 +90,17 @@ const parseContentNode = (node: ContentNode): string => {
 
 const parseContentToHtml = (content: ContentNode[]): string => content.map((node) => parseContentNode(node)).join('');
 
-async function getArticleDescription(link: string, slug: string): Promise<string | undefined> {
+async function getArticleDescription(link: string, slug: string): Promise<string> {
     const details = await cache.tryGet(link, async () => {
         const response = await ofetch(`https://tidb.net/blog/api/posts/${slug}/detail`, { query: { visit: true } });
-        return { description: response.content ? parseContentToHtml(JSON.parse(response.content)) : undefined };
+        return { description: parseContentToHtml(JSON.parse(response.content)) };
     });
     return details.description;
 }
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
-    const limit = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 20;
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
@@ -170,9 +167,9 @@ const handler = async (ctx: Context): Promise<Data> => {
             if (!item.link) {
                 return item;
             }
-            const description = (await getArticleDescription(item.link, String(item.guid))) ?? item.description;
+            const description = await getArticleDescription(item.link, item.guid ?? '');
             const guid = `tidb-blog-${item.guid}`;
-            return { ...item, description, guid, id: guid, content: { html: description, text: description ? load(description).text() : undefined } };
+            return { ...item, description, guid, id: guid, content: { html: description, text: load(description).text() } };
         },
         { concurrency: 3 }
     );

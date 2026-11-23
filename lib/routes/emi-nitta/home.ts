@@ -43,7 +43,7 @@ const config = {
 const getDate = (o: Cheerio<any>) => {
     const match = /(\d{4}\.\d+\.\d+)/.exec(o.text());
     const date = match ? match[1] : o.attr('datetime');
-    return date ? (parseDate(date, 9) ?? parseDate(date, 'YYYY.M.D', 9)) : undefined;
+    return parseDate(date!, 9) ?? parseDate(date!, 'YYYY.M.D', 9);
 };
 
 async function handler(ctx: Context) {

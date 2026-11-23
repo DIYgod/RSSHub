@@ -31,8 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://paulgraham.com';
     const currentUrl = new URL('articles.html', rootUrl).href;
@@ -46,11 +45,7 @@ async function handler(ctx) {
         .toArray()
         .flatMap((item): DataItem[] => {
             const $item = $(item);
-            const href = $item.attr('href');
-            if (!href) {
-                return [];
-            }
-            const link = new URL(href, rootUrl).href;
+            const link = new URL($item.attr('href')!, rootUrl).href;
             if (seenLinks.has(link)) {
                 return [];
             }

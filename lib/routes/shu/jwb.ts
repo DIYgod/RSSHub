@@ -37,7 +37,7 @@ export const route: Route = {
 | notice   | news | policy         |`,
 };
 
-function restorePdfContent($: CheerioAPI, link: string) {
+function restorePdfContent($: CheerioAPI) {
     $('.v_news_content script').each((_, element) => {
         const script = $(element).html() || '';
         const pdfPath = script.match(/showVsbpdfIframe\(["']([^"']+)["']/)?.[1];
@@ -45,15 +45,11 @@ function restorePdfContent($: CheerioAPI, link: string) {
             return;
         }
         const content = $('<div></div>');
-        content.append($('<a>PDF</a>').attr('href', new URL(pdfPath, link).href));
+        content.append($('<a>PDF</a>').attr('href', pdfPath));
         const pagesJson = script.match(/var\s+vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])/)?.[1];
-        const pages: unknown = pagesJson ? JSON.parse(pagesJson) : [];
-        if (Array.isArray(pages)) {
-            for (const page of pages) {
-                if (typeof page === 'string') {
-                    content.append($('<img>').attr('src', new URL(page, link).href));
-                }
-            }
+        const pages: string[] = pagesJson ? JSON.parse(pagesJson) : [];
+        for (const page of pages) {
+            content.append($('<img>').attr('src', page));
         }
         $(element).replaceWith(content);
     });
@@ -81,7 +77,7 @@ async function handler(ctx) {
             const details = await cache.tryGet(`shu:jwb:v3:${item.link}`, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
-                restorePdfContent($, item.link);
+                restorePdfContent($);
                 item.author = $('[id$=_lblUser]').text().trim();
                 item.description = $('.v_news_content').html() || item.title;
                 return { description: item.description, author: item.author };

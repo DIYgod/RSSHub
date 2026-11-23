@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const xmut = 'https://yjs.xmut.edu.cn';
 export const route: Route = {
@@ -21,25 +21,15 @@ export const route: Route = {
 |   tzgg   |   xwdt   |   xstj   |   yjsjw  |`,
 };
 function parseArticleContent($: CheerioAPI, link: string) {
-    const body = $('body .mainWrap .main_content .v_news_content').first();
+    const body = $('body .mainWrap .main_content .v_news_content');
     const description = body.html();
     if (!description) {
         return description;
     }
-    const seen = new Set(
-        body
-            .find('a[href]')
-            .toArray()
-            .map((element) => new URL($(element).attr('href')!, link).href)
-    );
     const attachments = $('<ul class="rsshub-attachments"></ul>');
     $('a[href*="/system/_content/download.jsp"]').each((_, element) => {
         const anchor = $(element);
         const url = new URL(anchor.attr('href')!, link);
-        if (!['http:', 'https:'].includes(url.protocol) || seen.has(url.href)) {
-            return;
-        }
-        seen.add(url.href);
         const attachmentWrapper1 = $('<li></li>');
         const attachmentAnchor1 = $('<a></a>').attr('href', url.href).text(anchor.text());
         attachmentWrapper1.append(attachmentAnchor1);
@@ -51,13 +41,6 @@ async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'descri
     const detailResponse = await got(link, { headers: { referer: xmut } });
     const $ = load(detailResponse.data);
     return { description: parseArticleContent($, link) };
-}
-function parseSourceDate(value?: string) {
-    const dateText = value?.match(/\d{4}-\d{2}-\d{2}/)?.[0];
-    if (!dateText) {
-        return;
-    }
-    return parseDateStrict(dateText, 'YYYY-MM-DD', 8);
 }
 async function handler(ctx) {
     const { category = 'yjsc' } = ctx.req.param();
@@ -75,7 +58,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('em').text(),
                 link: `${xmut}/` + $item.find('a').attr('href'),
-                pubDate: parseSourceDate($item.find('span').text()),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
     const itemPromises = await pMap(

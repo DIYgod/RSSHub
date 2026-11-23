@@ -38,10 +38,6 @@ export const route: Route = {
     description: '支持分类：早报、评测、糖纸众测、产品',
 };
 
-function parseTimestamp(value: number | string) {
-    return value ? parseDate(value, 'X') : undefined;
-}
-
 async function handler(ctx) {
     const name = ctx.req.param('name');
     if (!Object.hasOwn(PATH_LIST, name)) {
@@ -68,7 +64,7 @@ async function handler(ctx) {
                 title: item.post_title,
                 description,
                 link: item.post_url,
-                pubDate: parseTimestamp(item.published_at),
+                pubDate: parseDate(item.published_at, 'X'),
                 author: item.created_by.name,
             };
         })

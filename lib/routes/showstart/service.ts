@@ -21,7 +21,7 @@ interface Activity {
 interface ActivityDetail {
     content: string;
     picture?: string[];
-    styles?: string;
+    styles: string;
 }
 
 async function fetchActivityList(
@@ -62,23 +62,20 @@ const price = (price?: string) => (price ? `<p>票价：${price}</p>` : '');
 async function formatActivity(item: Activity) {
     const link = `${HOST}/event/${item.id}`;
     const detail = await cache.tryGet(`showstart:details:v2:${link}`, async () => {
-        const pageSource1 = await ofetch(link, { responseType: 'text' });
+        const pageSource1 = await ofetch(link);
         const script = pageSource1.match(/<script>(window\.__NUXT__=[\s\S]*?)<\/script>/)?.[1];
         if (!script) {
             throw new Error('ShowStart event page is missing its public detail data');
         }
-        const data = await evaluateScriptData<{ data: Array<{ detail?: ActivityDetail }> }>(script, '__NUXT__');
-        const detail = data.data[0]?.detail;
-        if (!detail) {
-            throw new Error('ShowStart event page is missing its event content');
-        }
+        const data = await evaluateScriptData<{ data: Array<{ detail: ActivityDetail }> }>(script, '__NUXT__');
+        const { detail } = data.data[0];
         return { content: detail.content, picture: detail.picture, styles: detail.styles };
     });
     const gallery = (detail.picture || []).filter((src) => src !== item.poster && !detail.content.includes(src));
     return {
         title: item.title,
         link,
-        category: detail.styles?.split(',').filter(Boolean),
+        category: detail.styles.split(','),
         description: [image(item.poster), time(item.showTime), address(item.cityName, item.siteName), performers(item.performers), price(item.price), detail.content, ...gallery.map((src) => image(src))].join(''),
     };
 }

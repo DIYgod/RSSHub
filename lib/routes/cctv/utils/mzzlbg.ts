@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const getMzzlbg = async (ctx: Context) => {
     const url = 'https://api.cntv.cn/video/videolistById?serviceId=cbox&vsid=C10354&em=01&p=1&n=50';
@@ -14,14 +14,7 @@ export const getMzzlbg = async (ctx: Context) => {
     });
 
     const data = response.data;
-    const limit = getRouteLimit(ctx);
-    let videos = data.video;
-    if (limit !== undefined) {
-        if (ctx.req.query('sorted') !== 'false') {
-            videos = videos.toSorted((a, b) => compareDates(b.ptime, a.ptime));
-        }
-        videos = videos.slice(0, limit);
-    }
+    const videos = data.video.slice(0, getRouteLimit(ctx));
 
     const resultItem = await Promise.all(
         videos.map(async (video) => {

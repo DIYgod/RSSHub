@@ -76,8 +76,8 @@ async function handler(ctx: Context) {
                     description: content('article').html(),
                     title: content('.container-title').text(),
                     author: content('.source').text().replace('来源：', ''),
-                    pubDate: pubDate ? parseDate(Number(pubDate)) : undefined,
-                    updated: updated ? parseDate(Number(updated)) : undefined,
+                    pubDate: parseDate(Number(pubDate)),
+                    updated: parseDate(Number(updated)),
                 };
             }),
         { concurrency: 3 }

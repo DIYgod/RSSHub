@@ -22,11 +22,7 @@ const getTagId = (tid: string) =>
             throw new Error(`Failed to find the tag id of ${tid}`);
         }
 
-        const tag = nextData.props.apolloState[node.__ref];
-        if (!tag?.id) {
-            throw new Error(`Failed to resolve the tag reference of ${tid}`);
-        }
-        return tag.id;
+        return nextData.props.apolloState[node.__ref].id;
     });
 
 const handler = async (ctx) => {

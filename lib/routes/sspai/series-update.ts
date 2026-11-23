@@ -48,7 +48,7 @@ async function handler(ctx) {
                 description,
                 author: seriesInfo.data.data.author.nickname,
                 link: `https://sspai.com/post/${item.id}`,
-                pubDate: item.released_at ? parseDate(item.released_at * 1000) : undefined,
+                pubDate: parseDate(item.released_at * 1000),
             };
         })
     );

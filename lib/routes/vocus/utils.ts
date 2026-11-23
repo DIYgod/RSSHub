@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { isTag } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
@@ -14,8 +13,8 @@ interface ArticleList {
     title: string;
     abstract?: string;
     createdAt: string;
-    lastPublishAt?: string;
-    updatedAt?: string;
+    lastPublishAt: string;
+    updatedAt: string;
     user: {
         fullname: string;
     };
@@ -24,17 +23,14 @@ interface ArticleEntry {
     articleId: string;
     item: DataItem;
 }
-function parseArticleDate(value?: string) {
-    return value && value !== '0001-01-01T00:00:00Z' ? parseDate(value) : undefined;
-}
 const processList = (articleData: ArticleList[]): ArticleEntry[] =>
     articleData.map((article) => ({
         articleId: article._id,
         item: {
             title: article.title,
             description: article.abstract,
-            pubDate: parseArticleDate(article.lastPublishAt),
-            updated: parseArticleDate(article.updatedAt),
+            pubDate: parseDate(article.lastPublishAt),
+            updated: parseDate(article.updatedAt),
             link: `${baseUrl}/article/${article._id}`,
             author: article.user.fullname,
         },
@@ -45,14 +41,9 @@ async function fetchArticle(articleId: string, link: string): Promise<Pick<DataI
     } = await got(`${apiUrl}/api/article/${articleId}`, { headers: { referer: link } });
     const $ = load(article.content, null, false);
     $('div.draft--imgNormal').each((_, element) => {
-        if (isTag(element)) {
-            element.name = 'figure';
-        }
+        element.name = 'figure';
     });
     $('.image-block-prerender').each((_, element) => {
-        if (!(isTag(element) && element.attribs['data-src'])) {
-            return;
-        }
         element.name = 'img';
         element.attribs.src = element.attribs['data-src'];
     });

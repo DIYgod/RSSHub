@@ -17,36 +17,26 @@ export const getDetails = async (link) => {
     // Fetch the article.
     const response = await got(link);
     const $ = load(response.data);
-    // Prepare detail fields.
-    const tags: string[] = [];
-    const authors: string[] = [];
-    const origins: string[] = [];
-    const characters: string[] = [];
     // Extract article details.
-    const thumbnailHref = $(thumbnailSelector).find('img').attr('src');
-    const thumbnailUrl = thumbnailHref ? new URL(thumbnailHref, link).href : undefined;
+    const thumbnailUrl = $(thumbnailSelector).find('img').attr('src');
     const videoTitle = $(titleSelector).text();
     // Read taxonomy labels.
-    $(articleSelector)
+    const authors = $(articleSelector)
         .find(authorSelector)
-        .each((i, el) => {
-            authors[i] = $(el).text().trim();
-        });
-    $(articleSelector)
+        .toArray()
+        .map((el) => $(el).text());
+    const origins = $(articleSelector)
         .find(originsSelector)
-        .each((i, el) => {
-            origins[i] = $(el).text().trim();
-        });
-    $(articleSelector)
+        .toArray()
+        .map((el) => $(el).text().trim());
+    const characters = $(articleSelector)
         .find(charactersSelector)
-        .each((i, el) => {
-            characters[i] = $(el).text().trim();
-        });
-    $(articleSelector)
+        .toArray()
+        .map((el) => $(el).text().trim());
+    const tags = $(articleSelector)
         .find(tagsSelector)
-        .each((i, el) => {
-            tags[i] = $(el).text().trim();
-        });
+        .toArray()
+        .map((el) => $(el).text());
     // Extract article details.
     const desc = $(articleSelector).find(descriptionSelector).text();
     const iwaraUrl = $(iwaraSelector).attr('href');
@@ -57,8 +47,7 @@ export const getDetails = async (link) => {
         authors: authors.join(' '),
         origins: origins.join(' '),
         characters: characters.join(' '),
-        tags: tags.join(' '),
-        tagList: tags.map((tag) => tag.trim()).filter(Boolean),
+        tagList: tags,
         desc,
         iwaraUrl,
         articleLink: link,

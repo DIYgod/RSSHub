@@ -16,7 +16,7 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://www.voidtools.com/Changes.txt';
 
-    const response = await ofetch(rootUrl, { responseType: 'text' });
+    const response = await ofetch(rootUrl);
 
     const items = response
         .replaceAll('\r\n', '\n')

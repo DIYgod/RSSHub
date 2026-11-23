@@ -15,5 +15,5 @@ export const renderItem = (item) => ({
         .flat()
         .map((term) => term.name)
         .filter(Boolean),
-    pubDate: item.date_gmt ? parseDate(item.date_gmt, 0) : undefined,
+    pubDate: parseDate(item.date_gmt, 0),
 });

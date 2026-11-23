@@ -119,7 +119,7 @@ export const route: Route = {
             title: item.title,
             link: `https://grupoanimal.mx/estados/${item.slug}`,
             author: item.notasGlobales.informacionDeLaNota.autor,
-            pubDate: item.dateGmt ? parseDate(`${item.dateGmt}Z`) : undefined,
+            pubDate: parseDate(`${item.dateGmt}Z`),
             category: item.tags.nodes.map((label) => label.name),
             description: item.notasGlobales.contenido,
         }));

@@ -29,7 +29,7 @@ const ProcessFeed = (limit, items) =>
                     .map((element) => content(element).text())
                     .join(' ');
                 const authorPrefix = `${authors}：`;
-                item.title = author && title.startsWith(authorPrefix) ? title.slice(authorPrefix.length) : title;
+                item.title = title.startsWith(authorPrefix) ? title.slice(authorPrefix.length) : title;
                 item.description = content('div.article-content').html();
                 item.author = author;
                 item.category = content('u')

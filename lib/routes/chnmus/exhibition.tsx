@@ -110,7 +110,7 @@ export const route: Route = {
                         ?.replaceAll(/(展览|开展)时间：/g, '')
                         ?.trim();
 
-                    const { startDate, endDate } = parseDateRange(fullDuration || '');
+                    const { startDate, endDate } = parseDateRange(fullDuration);
                     const { imgUrl, itemLink } = item;
 
                     const description = renderToString(

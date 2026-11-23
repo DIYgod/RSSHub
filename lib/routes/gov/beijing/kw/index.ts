@@ -51,11 +51,10 @@ async function handler(ctx) {
             .map((item) => {
                 const node = $(item);
                 const anchor = node.find('a');
-                const pubDate = node.find('span').text();
                 return {
                     title: anchor.attr('title') || anchor.text(),
                     link: new URL(anchor.attr('href')!, url).href,
-                    pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate(node.find('span').text(), 'YYYY-MM-DD', 8),
                 };
             });
     } else {
@@ -80,7 +79,7 @@ async function handler(ctx) {
                 if (pubDate) {
                     item.pubDate = parseDate(pubDate, 8);
                 }
-                const article = $('.TRS_UEDITOR').first();
+                const article = $('.TRS_UEDITOR');
                 article.append($('.fujian').html() ?? '');
                 item.description = article.html() || $('#zoom').html() || $('div.left.zhengce_right').html();
 

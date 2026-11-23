@@ -33,7 +33,7 @@ interface HospitalNotice {
     summary?: string;
     url: string;
     username?: string;
-    releasetime?: number;
+    releasetime: number;
 }
 
 const url = 'https://hospital.nju.edu.cn/xwgg/ggtz/index.html';
@@ -55,7 +55,7 @@ async function handler() {
         description: item.summary,
         link: new URL(item.url, url).href,
         author: item.username,
-        pubDate: item.releasetime === undefined ? undefined : parseDate(item.releasetime, 'x'),
+        pubDate: parseDate(item.releasetime, 'x'),
     }));
 
     return {

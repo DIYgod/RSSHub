@@ -1,7 +1,5 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -17,14 +15,7 @@ const restoreReleaseSiblings = ($: CheerioAPI) => {
         if (releaseStart === -1) {
             return;
         }
-        const leadingItem = clearContent(copyContent($item, $)).append(nodes.slice(0, releaseStart));
-        $item.replaceWith(
-            leadingItem.toString() +
-                nodes
-                    .slice(releaseStart)
-                    .map((node) => $.html(node))
-                    .join('')
-        );
+        $item.after(nodes.slice(releaseStart));
     });
 };
 export const route: Route = {
@@ -97,16 +88,4 @@ async function handler(ctx) {
         link,
         item: changelogs,
     };
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
-}
-function clearContent<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    selection.empty();
-    return selection;
 }

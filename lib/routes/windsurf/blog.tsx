@@ -10,46 +10,18 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
-function parsePublicationDate(value: string | number | undefined) {
-    if (value === undefined || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) && !parseDateStrict(value.slice(0, 10), 'YYYY-MM-DD')) {
-        return;
-    }
-    return parseDate(value);
-}
 async function getArticleContent(link: string) {
     const response = await ofetch(link);
     const $ = load(response);
     const body = $('.blog-prose');
-    if (body.length !== 1) {
-        throw new Error(`Blog article content not found at ${link}`);
-    }
-    const description = body.html()!;
+    const description = body.html();
     const metadata = $('script[type="application/ld+json"]')
         .toArray()
-        .map(
-            (
-                element
-            ): {
-                '@type'?: string;
-                author?:
-                    | Array<{
-                          name?: string;
-                      }>
-                    | {
-                          name?: string;
-                      };
-            } => JSON.parse($(element).text())
-        )
+        .map((element) => JSON.parse($(element).text()))
         .find((record) => record['@type'] === 'BlogPosting');
-    const sourceAuthor = metadata?.author;
-    const authors = (Array.isArray(sourceAuthor) ? sourceAuthor : [sourceAuthor]).flatMap((author) => (author?.name?.trim() ? { name: author.name } : []));
-    const author = authors.length === 1 ? authors[0].name : authors.length ? authors : undefined;
-    return { description, content: { html: description, text: body.text() }, author };
+    return { description, content: { html: description, text: body.text() }, author: metadata.author.name };
 }
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
@@ -87,7 +59,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: parsePublicationDate(pubDate),
+            pubDate: parseDate(pubDate),
             link: linkUrl ? new URL(`blog/${linkUrl}`, baseUrl).href : undefined,
             category: categories,
             author: authors.length ? authors : undefined,
@@ -103,25 +75,23 @@ const handler = async (ctx: Context): Promise<Data> => {
         };
         return processedItem;
     });
-    const items = await unwrapFirstFailure(
-        pMap(
-            candidates,
-            async (item) => {
-                if (!item.link) {
+    const items = await pMap(
+        candidates,
+        async (item) => {
+            if (!item.link) {
+                return item;
+            }
+            try {
+                const details = await cache.tryGet(`windsurf:blog:article-author:${item.link}`, () => getArticleContent(item.link!));
+                return { ...item, description: details.description, content: details.content, author: item.author ?? details.author };
+            } catch (error) {
+                if (error instanceof FetchError && error.response?.status === 404) {
                     return item;
                 }
-                try {
-                    const details = await cache.tryGet(`windsurf:blog:article-author:${item.link}`, () => getArticleContent(item.link!));
-                    return { ...item, description: details.description, content: details.content, author: item.author ?? details.author };
-                } catch (error) {
-                    if (error instanceof FetchError && error.response?.status === 404) {
-                        return item;
-                    }
-                    throw error;
-                }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
     return {
         title,
@@ -160,10 +130,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}

@@ -66,6 +66,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('#jmzhanshi1 dl')
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -78,7 +79,7 @@ async function handler(ctx) {
                 .find('dd')
                 .last()
                 .text()
-                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                .match(/\d{4}-\d{2}-\d{2}/)![0];
 
             return {
                 title: a.prop('title') ?? '',
@@ -89,17 +90,10 @@ async function handler(ctx) {
                         alt: image.prop('alt'),
                     },
                 }),
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
                 itunes_item_image: image.prop('src'),
             };
         });
-
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Temporal.Instant)) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
-    }
-    if (ctx.req.query('sorted') === 'false' || items.every((item) => item.pubDate instanceof Temporal.Instant)) {
-        items = items.slice(0, limit);
-    }
 
     items = await pMap(
         items,

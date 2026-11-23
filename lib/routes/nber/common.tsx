@@ -32,10 +32,9 @@ export async function handler(ctx) {
                 const $ = load(response);
                 const downloadLink = $('meta[name="citation_pdf_url"]').attr('content');
                 const fullAbstract = $('.page-header__intro-inner').html();
-                const publishedAt = $('meta[name="citation_publication_date"]').attr('content');
                 return {
                     author: $('meta[name="dcterms.creator"]').attr('content'),
-                    pubDate: publishedAt ? parseDate(publishedAt, 'YYYY/MM/DD', 0) : undefined,
+                    pubDate: parseDate($('meta[name="citation_publication_date"]').attr('content')!, 'YYYY/MM/DD', 0),
                     doi: $('meta[name="citation_doi"]').attr('content'),
                     description: renderToString(
                         <>

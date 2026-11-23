@@ -45,7 +45,7 @@ function getItem(header) {
         return {
             title: header.title_text.text,
             link,
-            description: `${header.image?.url ? `<img src="${escapeAttribute(header.image.url)}">` : ''}${description}`,
+            description: `<img src="${escapeAttribute(header.image.url)}">${description}`,
             pubDate: parseDate(header.first_published_at),
             updated: parseDate(header.updated_at),
             author:

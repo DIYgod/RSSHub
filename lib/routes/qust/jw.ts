@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: itemTitle,
                 link: itemUrl,
-                pubDate: linkElement.find('.sj .p1').text() ? parseDate(linkElement.find('.sj .p1').text(), 8) : undefined,
+                pubDate: parseDate(linkElement.find('.sj .p1').text(), 8),
             };
         });
 

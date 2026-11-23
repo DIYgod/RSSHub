@@ -37,7 +37,7 @@ async function handler() {
                 title,
                 description,
                 link,
-                pubDate: dateraw ? parseDate(dateraw, 'YYYY年MM月DD日', 8) : undefined,
+                pubDate: parseDate(dateraw, 'YYYY年MM月DD日', 8),
             };
         });
     return {

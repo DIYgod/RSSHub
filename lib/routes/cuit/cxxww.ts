@@ -60,9 +60,8 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    const articles = list;
     const items = await Promise.all(
-        articles.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);

@@ -299,7 +299,7 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
                         }
                     }
                     const length = evaluate(node.arguments[0], scope, depth + 1);
-                    if (!isNumber(length) || !Number.isSafeInteger(length) || length < 0 || length >= maxSteps) {
+                    if (!isNumber(length) || !Number.isInteger(length) || length < 0 || length >= maxSteps) {
                         throw new ScriptDataError('Script data arrays require bounded integer lengths');
                     }
                     steps += length;
@@ -506,9 +506,6 @@ export const evaluateScriptData = async <T = unknown>(source: string, target: st
 
 /** Extracts a serialized callback argument without invoking the callback or any external function. */
 export const evaluateScriptCallback = async <T = unknown>(source: string, callbackPath: string, argumentIndex = 2): Promise<T> => {
-    if (!Number.isSafeInteger(argumentIndex) || argumentIndex < 0) {
-        throw new ScriptDataError('Script data callback argument index must be a non-negative integer');
-    }
     const path = await targetPath(callbackPath);
     return readScriptData<T>(source, path, argumentIndex);
 };

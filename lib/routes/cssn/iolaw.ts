@@ -41,7 +41,7 @@ async function handler(ctx) {
                 title,
                 link: url,
                 author: '中国法学网',
-                pubtime: publishedAt ? parseDate(publishedAt, 8) : undefined,
+                pubtime: parseDate(publishedAt, 8),
             };
         });
 

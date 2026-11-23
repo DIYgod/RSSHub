@@ -1,10 +1,10 @@
-import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -64,32 +64,9 @@ export const route: Route = {
 | [Widgets](https://www.tradingview.com/blog/en/category/widgets/)                               | category/widgets              |`,
 };
 
-function getCategories(content: CheerioAPI): string[] | undefined {
-    const structuredData = content('script[type="application/ld+json"]').first().text();
-    if (!structuredData) {
-        return undefined;
-    }
-    try {
-        const data = JSON.parse(structuredData);
-        const nodes = Array.isArray(data) ? data : (data['@graph'] ?? [data]);
-        const sections = nodes.find((node) => [node['@type']].flat().includes('BlogPosting'))?.articleSection;
-        return typeof sections === 'string' ? [sections] : Array.isArray(sections) ? sections.filter((section) => typeof section === 'string') : undefined;
-    } catch {
-        return undefined;
-    }
-}
-
-function parsePubDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const { category = 'en' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 22;
+    const limit = getRouteLimit(ctx, 22);
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL(`blog/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
@@ -115,10 +92,6 @@ async function handler(ctx) {
                         alt: title,
                     },
                 }),
-                category: $item
-                    .find('a.tv-category-link')
-                    .toArray()
-                    .map((c) => $(c).text().trim()),
             };
         });
 
@@ -130,7 +103,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                const title = content('h1.single-title').text() || undefined;
+                const title = content('h1.single-title').text();
                 const description = renderDescription({
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
@@ -141,13 +114,13 @@ async function handler(ctx) {
                 return {
                     title,
                     description,
-                    author: content('meta[name="author"]').prop('content') || undefined,
-                    category: getCategories(content),
-                    pubDate: parsePubDate(content('meta[property="article:published_time"]').prop('content')),
-                    updated: parsePubDate(content('meta[property="article:modified_time"]').prop('content')),
+                    author: content('meta[name="author"]').prop('content'),
+                    category: JSON.parse(content('script[type="application/ld+json"]').text())['@graph'].find((node) => node['@type'] === 'BlogPosting').articleSection,
+                    pubDate: parseDate(content('meta[property="article:published_time"]').prop('content')),
+                    updated: parseDate(content('meta[property="article:modified_time"]').prop('content')),
                 };
             });
-            return { ...item, ...detail, title: detail.title ?? item.title, category: detail.category ?? item.category };
+            return { ...item, ...detail };
         },
         { concurrency: 3 }
     );

@@ -69,8 +69,7 @@ export const route: Route = {
                 const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', configTarget.url).href;
 
-                const date = $item.find('.spani').text();
-                const pubDate = date ? parseDate(date, 8) : undefined;
+                const pubDate = parseDate($item.find('.spani').text(), 8);
                 const title = $link.text();
 
                 const metadata = { title, link, pubDate };

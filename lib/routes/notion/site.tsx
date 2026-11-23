@@ -14,8 +14,8 @@ interface PublicBlock {
     content?: string[];
     properties?: { title?: Array<[string, unknown?]> };
     format?: { slug?: string };
-    created_time?: number;
-    last_edited_time?: number;
+    created_time: number;
+    last_edited_time: number;
 }
 
 export const route: Route = {
@@ -111,8 +111,7 @@ async function handler(ctx) {
     }
     const children = await fetchBlocks(baseUrl, root.content, spaceId);
     const pages = root.content.map((id) => children[id]).filter((block) => block?.type === 'page');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
+    const limit = Number(ctx.req.query('limit')) || 20;
     const items = await pMap(
         pages.slice(0, limit),
         (child) =>
@@ -121,8 +120,8 @@ async function handler(ctx) {
                 return {
                     title: getText(child),
                     link: `${baseUrl}/${child.format?.slug ?? child.id.replaceAll('-', '')}`,
-                    pubDate: child.created_time ? parseDate(child.created_time) : undefined,
-                    updated: child.last_edited_time ? parseDate(child.last_edited_time) : undefined,
+                    pubDate: parseDate(child.created_time),
+                    updated: parseDate(child.last_edited_time),
                     description: renderToString(<>{child.content?.map((id) => blocks[id] && renderBlock(blocks[id]))}</>),
                 };
             }),

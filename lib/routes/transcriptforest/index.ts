@@ -102,8 +102,7 @@ function parsePubDate(value?: string) {
 }
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
     const rootUrl = 'https://www.transcriptforest.com';
     const { data: firstResponse } = await got(rootUrl);
     const data = JSON.parse(firstResponse.match(/(\{"props".*"scriptLoader":\[\]\})<\/script>/)?.[1]);

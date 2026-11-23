@@ -48,8 +48,8 @@ export const route: Route = {
                 let title = $a.text();
 
                 const $pEls = $item.find('.text .t2 .p');
-                let fullDuration = $pEls.eq(0).text().replaceAll('时间：', '').trim();
-                const location = $pEls.eq(1).text().replaceAll('地点：', '').trim();
+                let fullDuration = $pEls.eq(0).text().replaceAll('时间：', '');
+                const location = $pEls.eq(1).text().replaceAll('地点：', '');
 
                 // if title or duration ends with ..., need to fetch the detail page to get the full info
                 if (title.endsWith('...') || fullDuration.endsWith('...')) {
@@ -68,7 +68,7 @@ export const route: Route = {
                         title = detailTitle;
                     }
 
-                    const detailDuration = $detail('.universal2 .txt_box .infor .item .t').eq(0).text().trim();
+                    const detailDuration = $detail('.universal2 .txt_box .infor .item .t').eq(0).text();
                     if (detailDuration) {
                         fullDuration = detailDuration;
                     }

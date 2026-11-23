@@ -45,7 +45,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $($item).find('p').text(),
-                pubDate: $item.find('span.date').text() ? parseDate(`${$item.find('span.date').text().replaceAll('.', '-')}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${$item.find('span.date').text().replaceAll('.', '-')}T00:00:00Z`),
                 link: baseUrl + $($item).attr('href'),
             };
         });
@@ -58,7 +58,7 @@ async function handler() {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                return { description: $('div.page div.common_width div.col-md-9').first().html() };
+                return { description: $('div.page div.common_width div.col-md-9').html() };
             })),
         }),
         { concurrency: 3 }

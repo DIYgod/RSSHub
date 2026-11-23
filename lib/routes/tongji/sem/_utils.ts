@@ -50,9 +50,9 @@ export async function getArticle(articleUrl: string) {
             const html = response.body;
             const $ = load(html);
 
-            const articleContentElement = $('.leftmain_news').first();
+            const articleContentElement = $('.leftmain_news');
             articleContentElement.find('.leftmain_news_title, .leftmain_news_time').remove();
-            return { description: articleContentElement.html() ?? undefined };
+            return { description: articleContentElement.html() };
         } catch {
             // console.error(error);
         }

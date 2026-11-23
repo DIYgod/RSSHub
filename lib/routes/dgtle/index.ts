@@ -10,7 +10,7 @@ interface HomeItem {
     aid: number;
     title: string;
     summary: string;
-    created_at?: number;
+    created_at: number;
     user_name?: string;
 }
 
@@ -34,11 +34,9 @@ async function handler() {
     });
 
     const articleItems: HomeItem[] = response.data.dataList.flat().filter((item) => item.type === 1 || item.type === 4);
-    const ordered = articleItems;
-    const selected = ordered;
 
     const items = await pMap(
-        selected,
+        articleItems,
         async (item) => {
             const isArticle = item.type === 1;
             const dlink = isArticle ? `https://opser.api.dgtle.com/v1/article/view/${item.aid}` : `https://opser.api.dgtle.com/v1/feeds/inst/${item.aid}`;
@@ -48,7 +46,7 @@ async function handler() {
                 return {
                     title: isArticle ? item.title : item.summary,
                     description: isArticle ? detail.content : detail.content + detail.imgs_url.map((dimg) => `<img src="${dimg.path.split('?', 1)[0]}">`).join(''),
-                    pubDate: item.created_at ? parseDate(item.created_at, 'X') : undefined,
+                    pubDate: parseDate(item.created_at, 'X'),
                     link: isArticle ? `https://www.dgtle.com/article-${item.aid}-1.html` : `https://www.dgtle.com/inst-${item.aid}-1.html`,
                     category: isArticle ? '文章' : '兴趣动态',
                     author: item.user_name,

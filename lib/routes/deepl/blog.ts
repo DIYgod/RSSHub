@@ -10,23 +10,12 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-const getUpdatedDate = ($: CheerioAPI) => {
-    for (const element of $('script[type="application/ld+json"]').toArray()) {
-        try {
-            const metadata = JSON.parse($(element).text());
-            if (metadata['@type'] === 'BlogPosting' && metadata.dateModified) {
-                return parseDate(metadata.dateModified);
-            }
-        } catch {
-            continue;
-        }
-    }
-};
+const getUpdatedDate = ($: CheerioAPI) => parseDate(JSON.parse($('script[type="application/ld+json"]:contains("BlogPosting")').text()).dateModified);
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
@@ -46,6 +35,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const feedItems = new Map(feed.items.map((item) => [item.link, item]));
 
     let items: DataItem[] = $('h4, h6')
+        .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el).parent().parent();
@@ -92,8 +82,6 @@ const handler = async (ctx: Context): Promise<Data> => {
 
             return processedItem;
         });
-    const orderedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
-    items = orderedItems.slice(0, limit);
 
     items = await Promise.all(
         items.map((item) => {
@@ -104,10 +92,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
-                const article = $$('[data-contentful-field-id="text"]').first();
-                if (!article.length) {
-                    throw new Error(`DeepL blog article content was not found at ${item.link}`);
-                }
+                const article = $$('[data-contentful-field-id="text"]');
 
                 const title: string = $$('h1[data-contentful-field-id="title"]').text();
                 const description: string | undefined =

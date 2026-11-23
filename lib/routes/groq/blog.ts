@@ -51,7 +51,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const article = $('article');
                 return {
                     ...post,
-                    description: article.find('[class*="ArticleLayout_body__"]').html() ?? undefined,
+                    description: article.find('[class*="ArticleLayout_body__"]').html(),
                     author: article.find('[class*="ArticleLayout_byline__"]').text().trim() || undefined,
                     image: $('meta[property="og:image"]').attr('content'),
                 };

@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
             description: await cache.tryGet(`qzcea:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
-                return content('div.newm').html() ?? undefined;
+                return content('div.newm').html();
             }),
         }),
         { concurrency: 3 }

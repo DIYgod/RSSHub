@@ -13,7 +13,7 @@ interface DescriptionData {
 
 const CzechStepByStepDescription = ({ videoId, transcriptHtml, exerciseHref, worksheetHref, worksheetExt }: DescriptionData) => (
     <div>
-        {videoId && raw(renderYoutube(true, videoId, undefined, undefined))}
+        {videoId && raw(renderYoutube(true, videoId))}
 
         {transcriptHtml && (
             <>

@@ -4,9 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
-
-import getCookie from '../utils/pypasswaf';
+import { parseDateStrict } from '@/utils/time';
 
 const host = 'https://cs.nuaa.edu.cn/';
 
@@ -27,7 +25,7 @@ export const route: Route = {
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -40,13 +38,6 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | ---------- | ---------- | -------- |
 | tzgg     | rdxw     | xkky     | jxdt     | be         | me         | xsgz     |`,
 };
-
-interface ArticleSummary {
-    title?: string;
-    link?: string;
-    description?: string;
-    date?: string;
-}
 
 interface ArticleData {
     description?: string;
@@ -68,52 +59,32 @@ async function handler(ctx) {
     const suffix = map.get(type)!.suffix;
 
     const link = new URL(suffix, host).href;
-    const cookie = await getCookie(host);
-    const gotConfig = {
-        headers: {
-            cookie,
-        },
-    };
-    const response = await got(link, gotConfig);
+    const response = await got(link);
     const $ = load(response.data);
 
-    const perCount = Number.parseInt($('.per_count', '#wp_paging_w6').text());
-    const allCount = Number.parseInt($('.all_count', '#wp_paging_w6').slice(1).text());
-    const modernList = $('.page-con-list .page-con-item');
-    const isModernLayout = modernList.length > 0;
-    const list: ArticleSummary[] = isModernLayout
-        ? modernList.toArray().map((element) => ({
-              title: $(element).find('h2').text(),
-              link: $(element).find('a').attr('href'),
-              description: $(element).find('p').html() ?? undefined,
-              date: undefined,
-          }))
-        : $('#news_list ul li')
-              .slice(0, Math.min(perCount, allCount))
-              .toArray()
-              .map((element) => ({
-                  title: $(element).find('a').attr('title'),
-                  link: $(element).find('a').attr('href'),
-                  date: $(element).find('span').text(),
-                  description: undefined,
-              }));
+    const list = $('.page-con-list .page-con-item')
+        .toArray()
+        .map((element) => ({
+            title: $(element).find('h2').text(),
+            link: $(element).find('a').attr('href'),
+            description: $(element).find('p').html() ?? undefined,
+        }));
 
     const out = await pMap(
         list,
         async (info) => {
             const title = info.title || 'tzgg';
-            const date = info.date;
-            let pubDate = date ? parseDate(date) : undefined;
+            let pubDate: Temporal.Instant | undefined;
             let author: string | undefined;
             const itemUrl = new URL(info.link!, host).href;
-            let description = isModernLayout ? info.description : title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+            let description = info.description;
 
             if (getDescription) {
                 const detail = await cache.tryGet<ArticleData>('nuaa:cs:article:byline:' + itemUrl, async () => {
                     const arr = itemUrl.split('.');
                     const pageType = arr.at(-1);
                     if (pageType === 'htm' || pageType === 'html') {
-                        const response = await got(itemUrl, gotConfig);
+                        const response = await got(itemUrl);
                         const $ = load(response.data);
                         const metadata = $('.infoA > span')
                             .toArray()
@@ -122,15 +93,15 @@ async function handler(ctx) {
                         const byline = metadata.find((text) => /^作者\s*[:：]/.test(text));
                         return {
                             description: $('.wp_articlecontent').html() ?? undefined,
-                            publishedDate: publication?.replace(/^时间\s*[:：]\s*/, '').trim(),
-                            author: byline?.replace(/^作者\s*[:：]\s*/, '').trim() || undefined,
+                            publishedDate: publication?.replace(/^时间\s*[:：]\s*/, ''),
+                            author: byline?.replace(/^作者\s*[:：]\s*/, '') || undefined,
                         };
                     }
                     return { description: '' };
                 });
                 description = detail.description;
                 author = detail.author;
-                pubDate = parsePublicationDate(detail.publishedDate) ?? pubDate;
+                pubDate = parsePublicationDate(detail.publishedDate);
             }
 
             return {

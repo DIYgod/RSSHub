@@ -42,8 +42,8 @@ async function handler() {
     const candidates = list.toArray().map((element) => {
         const item = $(element);
         const href = item.find('a').attr('href') || '';
-        const title = item.find('h5').text().trim();
-        const day = item.find('h3').text().trim();
+        const title = item.find('h5').text();
+        const day = item.find('h3').text();
         const yearMonth = item.find('h6').text().trim();
         const dateString = yearMonth + '/' + day;
         const fullLink = href.startsWith('http') ? href : new URL(href, site).href;
@@ -63,11 +63,11 @@ async function handler() {
                 let author = '';
                 const authorSpans = $$('.nav01 h6 .ll span');
                 authorSpans.each((_, el) => {
-                    const text = $$(el).text().trim();
+                    const text = $$(el).text();
                     if (text.includes('责任编辑：')) {
-                        author = text.replace('责任编辑：', '').trim();
+                        author = text.replace('责任编辑：', '');
                     } else if (text.includes('文字：')) {
-                        author = text.replace('文字：', '').trim();
+                        author = text.replace('文字：', '');
                     }
                 });
 

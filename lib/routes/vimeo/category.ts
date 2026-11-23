@@ -84,12 +84,12 @@ async function handler(ctx) {
                 videoUrl: item.uri.replace('/videos', ''),
                 vdescription: item.description || '',
             }),
-            pubDate: item.created_time ? parseDate(item.created_time) : undefined,
-            updated: item.modified_time ? parseDate(item.modified_time) : undefined,
+            pubDate: parseDate(item.created_time),
+            updated: parseDate(item.modified_time),
             link: item.link,
-            image: item.pictures?.sizes?.at(-1)?.link,
+            image: item.pictures.sizes.at(-1).link,
             author: item.user.name,
-            category: [...(item.categories ?? []).map((category) => category.name), ...(item.tags ?? []).map((tag) => tag.name)],
+            category: [...item.categories.map((category) => category.name), ...item.tags.map((tag) => tag.name)],
         })),
     };
 }

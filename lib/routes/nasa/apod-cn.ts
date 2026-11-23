@@ -41,7 +41,7 @@ async function handler(ctx) {
     const items = data.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: item.date_gmt && item.date_gmt !== '0000-00-00T00:00:00' ? parseDate(`${item.date_gmt}Z`) : undefined,
+        pubDate: parseDate(`${item.date_gmt}Z`),
         link: item.link,
     }));
 

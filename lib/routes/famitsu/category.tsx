@@ -132,7 +132,7 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 link: `https://www.famitsu.com/article/${publicationDate}/${item.id}`,
-                pubDate: item.publishedAt ? parseDate(item.publishedAt) : undefined,
+                pubDate: parseDate(item.publishedAt!),
                 category: [...new Set([item.mainCategory.nameJa, ...(item.subCategories?.map((c) => c.nameJa) ?? [])])],
                 publicationDate,
                 articleId: item.id,
@@ -151,7 +151,7 @@ async function handler(ctx) {
                 });
 
                 const articleDetail = data.pageProps.articleDetailData;
-                item.updated = articleDetail.updatedAt ? parseDate(articleDetail.updatedAt) : undefined;
+                item.updated = parseDate(articleDetail.updatedAt);
                 item.author = articleDetail.authors?.map((a) => a.name_ja).join(', ') ?? articleDetail.user.name_ja;
                 item.description = render({
                     bannerImage: articleDetail.ogpImageUrl ?? articleDetail.thumbnailUrl,

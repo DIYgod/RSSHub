@@ -35,11 +35,10 @@ async function handler(ctx) {
     const $ = load(detailResponse);
 
     const itemElements = $('div[name=download-list] .module-downlist.selected .module-row-one.active .module-row-info').toArray();
-    const entries = itemElements;
 
     // 使用缓存处理所有项目
     const items = await Promise.all(
-        entries.map(async (element) => {
+        itemElements.map(async (element) => {
             const $row = $(element);
             const title = $row.find('.module-row-title h4').text().trim();
             const link = $row.find('.module-row-text').attr('href');

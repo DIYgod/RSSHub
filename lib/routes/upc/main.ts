@@ -24,26 +24,9 @@ function getCareerApi(link: string) {
     return url.origin === 'https://career.upc.edu.cn' && match ? `${url.origin}/career/news/data/${match[1]}/${match[2]}` : undefined;
 }
 
-async function getCareerContent(apiUrl: string, link: string): Promise<Pick<DataItem, 'description'>> {
+async function getCareerContent(apiUrl: string): Promise<Pick<DataItem, 'description'>> {
     const { data } = await got.post(apiUrl, { form: {} });
-    if (data?.code !== 200 || typeof data.data?.newsContent !== 'string') {
-        throw new ArticleBodyUnavailableError(`The UPC career source did not expose a public article body (code ${data?.code}).`);
-    }
-    const $ = load(data.data.newsContent, null, false);
-    $('script, style').remove();
-    if (!$.text().trim() && !$('img, video, audio, iframe, a[href], table').length) {
-        throw new ArticleBodyUnavailableError('The UPC career source returned an empty article body.');
-    }
-    $('[src], [href], [poster]').each((_, element) => {
-        const media = $(element);
-        for (const attribute of ['src', 'href', 'poster']) {
-            const value = media.attr(attribute);
-            if (value && !value.startsWith('data:')) {
-                media.attr(attribute, new URL(value, link).href);
-            }
-        }
-    });
-    return { description: $.html() };
+    return { description: data.data.newsContent };
 }
 export const route: Route = {
     path: '/main/:type',
@@ -85,7 +68,7 @@ async function handler(ctx) {
                 title: a.text(),
                 description: $item.find('.li-right-zy a').text(),
                 link: link!.startsWith('http') ? link! : `${baseUrl}/${link}`,
-                pubDate: $item.find('.li-left').text() ? parseDate($item.find('.li-left').text(), 'DDYYYY-MM', 8) : undefined,
+                pubDate: parseDate($item.find('.li-left').text(), 'DDYYYY-MM', 8),
             };
         });
 
@@ -96,7 +79,7 @@ async function handler(ctx) {
             try {
                 const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`upc:main:public-detail:v1:${item.link}`, async () => {
                     if (careerApi) {
-                        return getCareerContent(careerApi, item.link);
+                        return getCareerContent(careerApi);
                     }
                     const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
                     if (!item.link.startsWith(`${baseUrl}/`) || item.link.includes('content.jsp')) {
@@ -111,9 +94,8 @@ async function handler(ctx) {
                     const detailContent = $('.v_news_content').html();
 
                     // author,
-                    details.description = detailContent ?? '';
-                    const published = $('.nr-xinxi i').first().text().trim();
-                    details.pubDate = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
+                    details.description = detailContent;
+                    details.pubDate = parseDate($('.nr-xinxi i').first().text(), 'YYYY-MM-DD HH:mm:ss', 8);
 
                     return details;
                 });

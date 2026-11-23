@@ -90,8 +90,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
                 content('.s .more').remove();
-                const date = content('.xg1.hm').contents().first().text().trim();
-                item.pubDate = date ? parseDate(date, 'YYYY-M-D HH:mm', 8) : undefined;
+                item.pubDate = parseDate(content('.xg1.hm').contents().first().text(), 'YYYY-M-D HH:mm', 8);
                 item.description = (content('.s a').html()?.trim() ?? '') + (content('.video').html() ?? '');
                 return item;
             }),

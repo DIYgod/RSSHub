@@ -83,7 +83,7 @@ async function handler() {
                     }
                 });
 
-                return { description: $.html(), image: article.originalUrl || undefined };
+                return { description: $.html(), image: article.originalUrl };
             });
             const metadata = { ...item };
             Reflect.deleteProperty(metadata, 'permalink');

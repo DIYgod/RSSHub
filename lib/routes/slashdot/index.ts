@@ -6,10 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
-function parsePublicationDate(value: string | undefined) {
-    if (!value) {
-        return;
-    }
+function parsePublicationDate(value: string) {
     const date = value
         .replace(/on\s\w+?day\s/, '')
         .replace('@', '')
@@ -78,8 +75,12 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 description: $item.find('.body').html(),
-                author: getPostedAuthor(details.find('.story-byline').text()),
-                pubDate: parsePublicationDate(details.find('time').attr('datetime')),
+                author: details
+                    .find('.story-byline')
+                    .text()
+                    .replaceAll(/\s+/g, ' ')
+                    .match(/Posted by (.+?) on /)?.[1],
+                pubDate: parsePublicationDate(details.find('time').attr('datetime')!),
             };
         });
 
@@ -89,35 +90,4 @@ async function handler(ctx) {
         link,
         item: list,
     };
-}
-
-function getPostedAuthor(text: string) {
-    for (const prefix of text.matchAll(/Posted\s+by/g)) {
-        const start = prefix.index + prefix[0].length;
-        let bodyStart = start;
-        while (bodyStart < text.length && /\s/.test(text[bodyStart])) {
-            bodyStart++;
-        }
-        if (bodyStart === start) {
-            continue;
-        }
-        let marker = text.indexOf('on', bodyStart);
-        while (marker !== -1) {
-            if (/\s/.test(text[marker - 1] ?? '') && /\s/.test(text[marker + 2] ?? '')) {
-                let authorEnd = marker;
-                while (authorEnd > bodyStart && /\s/.test(text[authorEnd - 1])) {
-                    authorEnd--;
-                }
-                if (authorEnd > bodyStart) {
-                    return text.slice(bodyStart, authorEnd).trim();
-                }
-            }
-            marker = text.indexOf('on', marker + 2);
-        }
-        if (bodyStart - start >= 3 && text.startsWith('on', bodyStart) && /\s/.test(text[bodyStart + 2] ?? '')) {
-            return '';
-        }
-        // A later prefix cannot succeed without also supplying a delimiter for this first prefix.
-        return;
-    }
 }

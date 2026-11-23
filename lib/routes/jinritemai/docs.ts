@@ -44,10 +44,10 @@ async function handler(ctx) {
     const list = response.data.data.articles.map((item) => ({
         title: item.title,
         id: String(item.id),
-        category: item.dirName ? [item.dirName] : undefined,
+        category: [item.dirName],
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}/${item.id}`,
-        pubDate: parseTimestamp(item.createTime),
-        updated: parseTimestamp(item.updateTime),
+        pubDate: parseDate(item.createTime * 1000),
+        updated: parseDate(item.updateTime * 1000),
     }));
 
     const result = await Promise.all(
@@ -68,8 +68,4 @@ async function handler(ctx) {
         link: `https://op.jinritemai.com/docs/notice-docs/${dirId}`,
         item: result,
     };
-}
-
-function parseTimestamp(value?: number): Temporal.Instant | undefined {
-    return typeof value === 'number' ? parseDate(value, 'X') : undefined;
 }

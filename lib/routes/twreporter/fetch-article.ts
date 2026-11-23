@@ -3,13 +3,13 @@ import { escapeText } from 'entities';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 import { renderImage } from './templates/image';
-import { renderYouTube } from './templates/youtube';
 
 interface TableConfig {
     title: string;
@@ -76,9 +76,6 @@ function parseCsv(value: string): Array<Record<string, string>> {
     return rows.map((cells) => Object.fromEntries(headers.map((header, index) => [header, cells[index]])));
 }
 async function renderEmbeddedCode(embed): Promise<string> {
-    if (!embed.embeddedCodeWithoutScript) {
-        return '';
-    }
     const $ = load(embed.embeddedCodeWithoutScript, null, false);
     const tables = $('twreporter-table').toArray();
     await pMap(
@@ -94,9 +91,6 @@ async function renderEmbeddedCode(embed): Promise<string> {
                     const csv = await ofetch<string, 'text'>(sourceUrl, { responseType: 'text' });
                     const config = await ofetch<TableConfig>(configUrl);
                     const rows = parseCsv(csv);
-                    if (!Array.isArray(config.columns) || !Array.isArray(config.footnotes) || config.columns.some((column) => rows.some((row) => !Object.hasOwn(row, column.key)))) {
-                        throw new Error('The source table configuration does not match its CSV columns');
-                    }
                     const headings = config.columns.map((column) => `<th>${escapeText(column.label)}</th>`).join('');
                     const body = rows.map((row) => `<tr>${config.columns.map((column) => `<td style="white-space: pre-line">${escapeText(row[column.key] ?? '—')}</td>`).join('')}</tr>`).join('');
                     const footnotes = config.footnotes.map((note) => `<p class="table-footnote">${escapeText(note)}</p>`).join('');
@@ -158,7 +152,7 @@ function format(type, content) {
             case 'youtube': {
                 const video = content[0].youtubeId;
                 const id = video.split('?', 1)[0];
-                block = renderYouTube({ video: id });
+                block = renderYoutube(true, id);
                 break;
             }
             case 'quoteby': {
@@ -178,7 +172,7 @@ async function fetch(slug: string): Promise<Pick<DataItem, 'author' | 'descripti
         const response = await ofetch(url);
         return response.data;
     });
-    const authors = [...new Set([...(post.writers ?? []), ...(post.photographers ?? [])].map((author) => author.name).filter((name) => typeof name === 'string' && name.length > 0))];
+    const authors = [...new Set([...(post.writers ?? []), ...(post.photographers ?? [])].map((author) => author.name))];
     // Prioritize hero_image, but fall back to og_image if it's missing
     const imageSource = post.hero_image ?? post.og_image;
     const bannerImage = imageSource?.resized_targets.desktop.url;
@@ -200,35 +194,28 @@ async function fetch(slug: string): Promise<Pick<DataItem, 'author' | 'descripti
 interface ArticleSummary {
     title: string;
     slug: string;
-    published_date?: string;
-    category_set?: Array<{
-        category?: {
-            name?: string;
+    published_date: string;
+    category_set: Array<{
+        category: {
+            name: string;
         };
         subcategory?: {
-            name?: string;
+            name: string;
         };
     }>;
-    tags?: Array<{
-        name?: string;
+    tags: Array<{
+        name: string;
     }>;
 }
 export async function getArticleItem(item: ArticleSummary): Promise<DataItem> {
     const detail = await fetch(item.slug);
-    const date = item.published_date ? parseDate(item.published_date) : undefined;
     const link = `https://www.twreporter.org/a/${item.slug}`;
     return {
         title: item.title,
         link,
         guid: link,
-        pubDate: date,
-        category: [
-            ...new Set(
-                [...(item.category_set ?? []).flatMap((entry) => [entry.category?.name, entry.subcategory?.name]), ...(item.tags ?? []).map((tag) => tag.name)].filter(
-                    (name): name is string => typeof name === 'string' && name.length > 0
-                )
-            ),
-        ],
+        pubDate: parseDate(item.published_date),
+        category: [...new Set([...item.category_set.flatMap((entry) => [entry.category.name, entry.subcategory?.name]), ...item.tags.map((tag) => tag.name)].filter((name) => name !== undefined))],
         author: detail.author,
         description: detail.description,
     };

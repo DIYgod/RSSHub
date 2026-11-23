@@ -129,7 +129,6 @@ export const route: Route = {
                         .children('div')
                         .filter((_, element) => $(element).children('a.site-link').length > 0)
                         .remove();
-                    content.find('script').remove();
                     const documentBase = new URL($('base').attr('href') || itemLink, itemLink).href;
                     content.find('[src], [href]').each((_, element) => {
                         for (const attribute of ['src', 'href']) {

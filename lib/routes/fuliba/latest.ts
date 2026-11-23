@@ -57,7 +57,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
-                item.description = content('article.article-content').html() ?? undefined;
+                item.description = content('article.article-content').html();
                 return item;
             }),
         { concurrency: 5 }

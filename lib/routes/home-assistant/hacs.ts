@@ -46,7 +46,7 @@ async function handler() {
             link: `https://github.com/${item.full_name}`,
             guid: item.full_name,
             category: item.topics,
-            updated: item.last_updated ? parseDate(item.last_updated) : undefined,
+            updated: parseDate(item.last_updated),
         })),
     };
 }

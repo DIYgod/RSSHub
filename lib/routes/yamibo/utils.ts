@@ -49,7 +49,6 @@ function getEditingPanels($item: Cheerio<Element>) {
 
 export function getUpdated($item: Cheerio<Element>) {
     const calendar = getEditingPanels($item)
-        .first()
         .text()
         .match(/\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}/)?.[0];
     return getDate(calendar);

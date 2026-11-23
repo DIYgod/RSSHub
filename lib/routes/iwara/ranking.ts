@@ -4,8 +4,9 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-import { apiRootUrl, parseCreatedAt, parseThumbnail, rootUrl, typeMap } from './utils';
+import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -68,9 +69,9 @@ async function handler(ctx) {
                 title: item.title,
                 author: item.user.name,
                 link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-                category: item.tags?.map((i) => i.id) || [],
+                category: item.tags.map((i) => i.id),
                 description: parseThumbnail(type, item),
-                pubDate: parseCreatedAt(item.createdAt),
+                pubDate: parseDate(item.createdAt),
             }));
         },
         config.cache.routeExpire,

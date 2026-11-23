@@ -60,9 +60,9 @@ async function handler(ctx) {
                 });
                 const content = load(detailResponse.data);
                 const date = content('head')
-                    .html()
-                    ?.match(/\bpublishDate\s*=\s*"(\d{14})\s*"/)?.[1];
-                item.pubDate = date ? parseDate(date, 'YYYYMMDDHHmmss', 8) : undefined;
+                    .html()!
+                    .match(/\bpublishDate\s*=\s*"(\d{14})\s*"/)![1];
+                item.pubDate = parseDate(date, 'YYYYMMDDHHmmss', 8);
 
                 item.description = content('.tujitop').html();
 

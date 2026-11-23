@@ -46,7 +46,6 @@ async function handler() {
                 .nextUntil('h2')
                 .find('a')
                 .filter((_, anchor) => ['detail', "what's new"].includes($(anchor).text().toLowerCase()))
-                .first()
                 .attr('href');
             const guid = `${currentUrl}#${title}`;
             return {

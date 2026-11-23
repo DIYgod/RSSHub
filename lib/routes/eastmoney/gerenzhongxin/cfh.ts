@@ -69,7 +69,7 @@ export async function handler(ctx) {
             const description = await cache.tryGet(`eastmoney:cfh:content:${item.post_source_id}`, async () => {
                 const { data } = await got(link);
                 const $ = load(data);
-                return $('.xeditor_content').html() || descriptionContent;
+                return $('.xeditor_content').html();
             });
 
             return {

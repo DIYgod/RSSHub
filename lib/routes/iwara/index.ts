@@ -3,8 +3,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
-import { apiRootUrl, parseCreatedAt, parseThumbnail, rootUrl, typeMap } from './utils';
+import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const apiUrlMap = {
     video: `${apiRootUrl}/videos`,
@@ -61,9 +62,9 @@ async function handler(ctx) {
         title: item.title,
         author: username,
         link: `${rootUrl}/${type}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-        category: item.tags?.map((i) => i.id) || [],
+        category: item.tags.map((i) => i.id),
         description: parseThumbnail(type, item),
-        pubDate: parseCreatedAt(item.createdAt),
+        pubDate: parseDate(item.createdAt),
     }));
 
     return {

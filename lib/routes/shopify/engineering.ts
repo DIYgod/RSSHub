@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://shopify.engineering';
@@ -42,8 +43,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const topic = ctx.req.param('topic');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const link = topic ? `${baseUrl}/topics/${topic}` : `${baseUrl}/latest`;
 
     const response = await ofetch(link);

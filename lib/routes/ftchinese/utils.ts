@@ -52,7 +52,7 @@ const processQuiz = ($: CheerioAPI) => {
         return;
     }
 
-    questions.find('script, style, .pagetitle').remove();
+    questions.find('style, .pagetitle').remove();
     questions.find('[onclick]').removeAttr('onclick');
     return questions
         .toArray()
@@ -79,7 +79,7 @@ const getData = async ({ site = 'www', channel }) => {
     const candidates: Array<{ title: string; link: string; pubDate?: Temporal.Instant; description?: string; author?: string }> = feed.items.map((item) => ({
         ...item,
         link: item.link.replace('http://', 'https://'),
-        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        pubDate: parseDate(item.pubDate),
     }));
     const items = await pMap(
         candidates,

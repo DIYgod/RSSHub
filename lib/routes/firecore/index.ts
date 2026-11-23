@@ -40,7 +40,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('.release-version').text();
             const date = $item.find('.card-body > div').first().find('span.text-muted').text();
-            const pubDate = date ? parseDate(date, 'MMM D, YYYY') : undefined;
+            const pubDate = parseDate(date, 'MMM D, YYYY');
             const content = $item.find('.card-body').children().slice(1);
             return {
                 title,

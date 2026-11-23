@@ -46,12 +46,11 @@ async function handler() {
             const $item = $(item);
 
             const link = $item.attr('href');
-            const pubDate = $item.parent().find('span').text();
 
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : `${rootUrl}${link!.replace(/^\./, '/tzgg')}`,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($item.parent().find('span').text(), 8),
             };
         });
 

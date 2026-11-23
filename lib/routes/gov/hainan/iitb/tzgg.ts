@@ -33,14 +33,14 @@ async function handler() {
 
         const titleElement = elem.find('.list-right_title a');
         const link = titleElement.attr('href') || '';
-        const title = titleElement.text() || '';
+        const title = titleElement.text();
         const dateText = elem.find('td[align="left"]').text().replace('发布时间：', '').trim();
         const department = elem.find('.column-name').text().trim();
 
         return {
             title,
             link: new URL(link, targetUrl).href,
-            pubDate: dateText ? parseDate(dateText, 8) : undefined,
+            pubDate: parseDate(dateText, 8),
             category: department,
         };
     });
@@ -60,9 +60,7 @@ async function handler() {
                 const content = $('ucapcontent').html();
 
                 item.author = author;
-                if (pubDate) {
-                    item.pubDate = parseDate(pubDate, 8);
-                }
+                item.pubDate = parseDate(pubDate, 8);
                 item.description = content;
 
                 return item;

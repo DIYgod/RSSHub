@@ -13,7 +13,7 @@ export const route: Route = {
 
 async function handler() {
     const rootUrl = 'https://sesame.ninja/release_notes.txt';
-    const response = await ofetch(rootUrl, { responseType: 'text' });
+    const response = await ofetch(rootUrl);
 
     const items = response
         .split('\r\n\r\n')
@@ -27,7 +27,7 @@ async function handler() {
                 title,
                 guid: title,
                 link: rootUrl,
-                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${date}T00:00:00Z`),
                 description: `<ul><li>${splits.join('</li><li>')}</li></ul>`,
             };
         });

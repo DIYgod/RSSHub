@@ -5,16 +5,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { compareDates, parseDateStrict } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { parseJSONP } from './jsonp-helper';
-
-const parseMediaDate = (date?: string): Temporal.Instant | undefined => {
-    if (typeof date !== 'string' || !/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(date)) {
-        return;
-    }
-    return parseDateStrict(date, ['YYYY.MM.DD', 'YYYY.M.D', 'YYYY.MM.D', 'YYYY.M.DD']);
-};
 
 export const route: Route = {
     path: '/media',
@@ -49,17 +42,17 @@ async function handler() {
     const officialUrl = 'https://www.yoasobi-music.jp/media';
     const title = 'LATEST MEDIA';
 
-    const response = await ofetch<string, 'text'>(api, { responseType: 'text' });
+    const response = await ofetch(api);
 
     const data = Object.entries<Array<{ date: string; youbi: string; startTime?: string; endTime?: string; media: string; program?: string; note: string }>>(parseJSONP(response).items)
         .flatMap(([mediaType, items]) => items.map((item) => ({ ...item, mediaType })))
-        .toSorted((a, b) => compareDates(parseMediaDate(b.date), parseMediaDate(a.date)))
+        .toSorted((a, b) => compareDates(parseDate(b.date, 'YYYY.M.D'), parseDate(a.date, 'YYYY.M.D')))
         .map((item) => ({
             date: item.date,
             weekDay: item.youbi,
-            startTime: item.startTime || undefined,
-            endTime: item.endTime || undefined,
-            tvStation: item.media || undefined,
+            startTime: item.startTime,
+            endTime: item.endTime,
+            tvStation: item.media,
             title: item.program || item.media,
             description: item.note,
             guid: `yoasobi:media:${createHash('sha256')
@@ -80,7 +73,7 @@ async function handler() {
             title: i.title,
             // the article content
             description: renderDescription(i.date, i.weekDay, i.startTime && i.endTime && i.tvStation ? `${i.startTime} ~ ${i.endTime} ${i.tvStation}` : undefined, i.description),
-            pubDate: parseMediaDate(i.date),
+            pubDate: parseDate(i.date, 'YYYY.M.D'),
             // specify guid because the link is not unique
             guid: i.guid,
             // the article link
@@ -93,7 +86,7 @@ const renderDescription = (date: string, weekDay: string, postFix: string | unde
     renderToString(
         <>
             <p>
-                {date} [{weekDay}] {postFix || undefined}
+                {date} [{weekDay}] {postFix}
             </p>
             {raw(description)}
         </>

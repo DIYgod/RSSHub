@@ -28,19 +28,11 @@ async function handler(ctx) {
     const link = 'https://wap.ciweimao.com/';
     const response = await ofetch(link);
     const $ = load(response);
-    const seen = new Set<string>();
     const list = $('.cnt-box')
         .eq(sections[section].index)
         .find('a[href*="/book/"]')
         .toArray()
         .map((element) => $(element).attr('href')!)
-        .filter((url) => {
-            if (seen.has(url)) {
-                return false;
-            }
-            seen.add(url);
-            return true;
-        })
         .slice(0, getRouteLimit(ctx, 20));
     const items = await pMap(
         list,
@@ -55,7 +47,7 @@ async function handler(ctx) {
                     link: itemLink,
                     author,
                     category: content('meta[property="og:novel:category"]').attr('content'),
-                    description: `${cover ? `<img src="${cover}" />` : ''}${content('.book-desc').html() || ''}`,
+                    description: `<img src="${cover}" />${content('.book-desc').html()}`,
                 };
             }),
         { concurrency: 3 }

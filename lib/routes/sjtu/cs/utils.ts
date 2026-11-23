@@ -23,8 +23,8 @@ function parseListing(content: string): ListItem[] {
         .map((el) => {
             const $el = $(el);
             const href = $el.attr('href');
-            const day = $el.find('.time p').text().trim();
-            const yearMonth = $el.find('.time span').text().trim();
+            const day = $el.find('.time p').text();
+            const yearMonth = $el.find('.time span').text();
             return {
                 title: $el.find('.tit').text(),
                 link: href ? new URL(href, host).href : '',

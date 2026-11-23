@@ -57,9 +57,8 @@ async function handler(ctx: Context) {
             };
         });
 
-    const ordered = list;
     const items = await pMap(
-        ordered,
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);

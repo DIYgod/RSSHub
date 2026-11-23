@@ -75,7 +75,7 @@ export const route: Route = {
 
                 const title = anchor.text();
                 const link = new URL(anchor.attr('href')!, baseUrl).href;
-                const date = item.find('span').text().trim();
+                const date = item.find('span').text();
                 const pubDate = date ? parseDate(`${date}T00:00:00Z`) : undefined;
 
                 return cache.tryGet(link, async () => {

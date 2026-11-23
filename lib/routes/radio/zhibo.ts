@@ -2,6 +2,7 @@ import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { getAudioType } from './index';
@@ -43,8 +44,7 @@ async function handler(ctx) {
     const KEY = 'f0fc4c668392f9f9a447e48584c214ee';
 
     const id = ctx.req.param('id');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const size = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 100;
+    const size = getRouteLimit(ctx, 100);
 
     const params = `columnId=${id}&pageNo=0&pageSize=${size}`;
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
         enclosure_url = enclosure_url.endsWith('.m3u8') ? item.downloadUrl : enclosure_url;
         const enclosure_type = getAudioType(enclosure_url);
 
-        const dateString = formatProgramDate(item.programDate ?? item.startTime);
+        const dateString = formatProgramDate(item.programDate);
 
         return {
             guid: item.id,

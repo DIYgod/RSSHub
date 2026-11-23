@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -56,8 +53,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'author' | 'desc
             .find('a[href*="DownloadAttachUrl"]')
             .filter((_, elem) => !$(elem).closest('.v_news_content').length)
             .each((_, elem) => {
-                const attachment = copyNodes($(elem));
-                content.append($('<p>').append(attachment));
+                content.append($('<p>').append($(elem)));
             });
         const pdfPath = content
             .find('script')
@@ -72,8 +68,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'author' | 'desc
         const author = $('.article-abstract span')
             .filter((_, elem) => $(elem).text().startsWith('文章作者：'))
             .text()
-            .slice('文章作者：'.length)
-            .trim();
+            .slice('文章作者：'.length);
         if (author) {
             details.author = author;
         }
@@ -107,7 +102,6 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $('em', elem).text(),
-            ...(/\d{4}-\d{2}-\d{2}/.test($('span', elem).text()) && { pubDate: parseDate($('span', elem).text(), 'YYYY-MM-DD', 8) }),
             link: joinUrl('https://www.swpu.edu.cn/scs/index/', $('a', elem).attr('href')),
         }));
 
@@ -128,13 +122,4 @@ async function handler(ctx): Promise<Data> {
         language: 'zh-CN',
         item: out,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

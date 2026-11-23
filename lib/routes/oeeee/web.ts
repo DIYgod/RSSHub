@@ -41,7 +41,7 @@ async function handler(ctx) {
         }),
         pubDate: parseDate(item.datetime, 8),
         link: item.linkurl,
-        author: item.author || undefined,
+        author: item.author,
     }));
 
     const channelEname = response.data.find((item) => item.linkurl)?.channel_ename ?? '';

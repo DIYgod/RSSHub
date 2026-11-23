@@ -29,8 +29,8 @@ async function handler() {
     const host = 'http://dili.bdatu.com/jiekou/mains/p1.html';
     const data = await got(host);
 
-    const album = data.data.album.find((album) => Number(album.ds) === 1) ?? data.data.album.find((album) => Number(album.timing) === 1);
-    if (!album || !/^[1-9]\d*$/.test(String(album.id))) {
+    const album = data.data.album.find((album) => Number(album.timing) === 1);
+    if (!album) {
         throw new Error('The source did not provide a current daily photo album. Please try again when a new album is published.');
     }
     const { id: albumId, addtime } = album;
@@ -44,7 +44,7 @@ async function handler() {
             title: item.title,
             link: item.url,
             description: `<img src="${item.url}"><br>` + item.content,
-            pubDate: addtime ? parseDate(addtime, 8) : undefined,
+            pubDate: parseDate(addtime, 8),
             guid: item.id,
         };
         out.push(info);

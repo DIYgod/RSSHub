@@ -88,7 +88,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                             .attr('content')
                             ?.split(/,/)
                             .map((c) => c.trim()) ?? [];
-                    const authors: DataItem['author'] = $$('span.author').first().text();
+                    const authors: DataItem['author'] = $$('span.author').text();
 
                     let processedItem: DataItem = {
                         title,

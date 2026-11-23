@@ -57,10 +57,7 @@ async function handler() {
             cache.tryGet(item.link!, async () => {
                 const res = await got({ method: 'get', url: item.link });
                 const content = load(res.data);
-                const pubDate = content('meta[name="PubDate"]').attr('content');
-                if (pubDate) {
-                    item.pubDate = parseDate(pubDate, 8);
-                }
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
                 item.description = content('.arc_cont').html();
                 return item;
             })

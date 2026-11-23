@@ -33,7 +33,7 @@ export const route: Route = {
 interface Article {
     id: number;
     title: string;
-    published_at?: string;
+    published_at: string;
     url: string;
     file_items: Array<{ url: string; file_title: string }>;
 }
@@ -58,23 +58,16 @@ async function handler() {
             const item = {
                 title: article.title,
                 link: `${baseUrl}/#/common/detail?current_id=99&id=99&article_id=${article.id}`,
-                pubDate: article.published_at ? parseDate(article.published_at, 8) : undefined,
+                pubDate: parseDate(article.published_at, 8),
             };
-            const resolvedValue1 = await cache.tryGet(item.link, async () => {
-                const detail = await got(article.url);
-                const description = detail.data.data.content;
-                if (typeof description !== 'string') {
-                    throw new TypeError(`The announcement has no public article content: ${item.link}`);
-                }
-                return { description };
+            const detail = await cache.tryGet(item.link, async () => {
+                const response = await got(article.url);
+                return { description: response.data.data.content };
             });
-            {
-                const detail = resolvedValue1;
-                return {
-                    ...item,
-                    description: detail.description + article.file_items.map((file) => `<p><a href="${escapeAttribute(file.url)}">${escapeText(file.file_title)}</a></p>`).join(''),
-                };
-            }
+            return {
+                ...item,
+                description: detail.description + article.file_items.map((file) => `<p><a href="${escapeAttribute(file.url)}">${escapeText(file.file_title)}</a></p>`).join(''),
+            };
         },
         { concurrency: 3 }
     );

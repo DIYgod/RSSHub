@@ -20,23 +20,15 @@ export const route: Route = {
         const link = 'https://podwise.ai/explore';
         const response = await ofetch(link);
         const $ = load(response);
-        const seen = new Set<string>();
         const items = $('main article:has(a[href*="/collections/"])')
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('h2, h3').first().text(),
+                    title: $item.find('h2, h3').text(),
                     link: new URL($item.find('a[href*="/collections/"]').attr('href')!, link).href,
                     description: $item.find('p').first().text(),
                 };
-            })
-            .filter((item) => {
-                if (seen.has(item.link)) {
-                    return false;
-                }
-                seen.add(item.link);
-                return true;
             });
 
         return {

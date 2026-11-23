@@ -99,7 +99,7 @@ async function handler(ctx) {
                         title: `《HelloGitHub》第 ${id} 期`,
                         link: `${rootUrl}/periodical/volume/${id}`,
                         description: renderVolume(data.pageProps.volume.data),
-                        pubDate: data.pageProps.volume.publish_at ? parseDate(data.pageProps.volume.publish_at, 8) : undefined,
+                        pubDate: parseDate(data.pageProps.volume.publish_at, 8),
                     };
                 },
                 config.cache.routeExpire,

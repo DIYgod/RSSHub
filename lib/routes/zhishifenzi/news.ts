@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                return { description: content('.inner_content').html() ?? undefined, pubDate: parseRelativeDate(content('.inner_view_from').text()) };
+                return { description: content('.inner_content').html(), pubDate: parseRelativeDate(content('.inner_view_from').text()) };
             });
             return { ...item, ...detail };
         })

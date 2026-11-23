@@ -2,71 +2,39 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict, toInstant } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 type ArticleMetadata = {
-    '@type': string;
-    headline?: string;
-    datePublished?: string;
-    author?: {
-        name?: string;
+    headline: string;
+    datePublished: string;
+    author: {
+        name: string;
     };
 };
-function getArticleMetadata(content: CheerioAPI): ArticleMetadata | undefined {
-    return content('script[type="application/ld+json"]')
-        .toArray()
-        .map((element): ArticleMetadata => JSON.parse(content(element).text().trim().replace(/;$/, '')))
-        .find((article) => ['Article', 'NewsArticle'].includes(article['@type']));
+function getArticleMetadata(content: CheerioAPI): ArticleMetadata {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("Article")').text().trim().replace(/;$/, ''));
 }
-function getPublicationDate(value?: string): Temporal.Instant | undefined {
-    if (!value?.trim()) {
-        return undefined;
-    }
-    return parseDate(value);
-}
-function getCalendarDate(value: string): Temporal.Instant | undefined {
-    if (!value.trim()) {
-        return undefined;
-    }
-    const date = parseDateStrict(value.trim(), 'D MMMM YYYY', 0);
-    // A calendar-only source date uses UTC midnight without implying a publication instant.
-    return date;
-}
-type ArticleDetails = Pick<DataItem, 'description' | 'category' | 'author'> & {
-    listTitle?: string;
-    listDate?: number;
-    calendarDate: string;
-    articleTitle?: string;
-    publicationDate?: string;
-};
-async function getArticleDetails(
-    item: Partial<DataItem> & {
-        link: string;
-    }
-): Promise<ArticleDetails> {
+async function getArticleDetails(item) {
     const detailResponse = await got({ method: 'get', url: item.link });
     const content = load(detailResponse.data);
     const tags = content('.sf-item-header-wrapper .sf-tags-list-item')
         .toArray()
-        .map((element) => content(element).text().trim())
-        .filter(Boolean);
+        .map((element) => content(element).text());
     const article = getArticleMetadata(content);
     const body = content('.sf-detail-body-wrapper');
     if (!body.length) {
         throw new Error(`WHO article content not found: ${item.link}`);
     }
     return {
+        ...item,
+        title: article.headline,
+        author: article.author.name,
         description: body.html(),
         category: tags.length ? tags : undefined,
-        calendarDate: content('.sf-item-header-wrapper .timestamp').text(),
-        listTitle: item.title,
-        listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
-        articleTitle: article?.headline,
-        publicationDate: article?.datePublished,
-        author: article?.author?.name,
+        pubDate: parseDate(article.datePublished),
     };
 }
 export const route: Route = {
@@ -124,7 +92,7 @@ async function handler(ctx) {
         list = response.data.value.map((item) => ({
             title: item.Title,
             link: `${currentUrl}/detail/${item.ItemDefaultUrl.replace(/^\/+/, '')}`,
-            pubDate: getPublicationDate(item.PublicationDateAndTime),
+            pubDate: parseDate(item.PublicationDateAndTime),
         }));
     } else {
         list = $list.toArray().map((item) => {
@@ -135,42 +103,10 @@ async function handler(ctx) {
             };
         });
     }
-    const items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`who:details:${item.link}`, async () => await getArticleDetails(item));
-                const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
-                return {
-                    ...item,
-                    title: detail.listTitle === item.title ? (detail.articleTitle ?? item.title) : item.title,
-                    author: detail.author,
-                    description: detail.description,
-                    category: detail.category,
-                    pubDate: detail.listDate === listDate ? (getPublicationDate(detail.publicationDate) ?? item.pubDate ?? getCalendarDate(detail.calendarDate)) : item.pubDate,
-                };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
-    );
+    const items = await pMap(list, (item) => cache.tryGet(item.link, () => getArticleDetails(item)), { concurrency: 3 });
     return {
         title: `${$('meta[property="og:title"]').attr('content')} - WHO`,
         link: currentUrl,
         item: items,
     };
-}
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-function isNullish(value: unknown): value is null | undefined {
-    return isOneOf(value, [null, undefined]);
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

@@ -35,8 +35,8 @@ async function handler() {
             const pubDate = $item.find('pubDate').text();
             return {
                 link,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
-                author: $item.find(String.raw`dc\:creator`).text() || undefined,
+                pubDate: parseDate(pubDate),
+                author: $item.find(String.raw`dc\:creator`).text(),
                 category: $item
                     .find('category')
                     .toArray()

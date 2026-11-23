@@ -2,25 +2,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { parseDate, toISOString } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
-
-function parseCalendarDate(sourceDate: string | undefined): Temporal.Instant | undefined {
-    if (typeof sourceDate !== 'string' || !sourceDate.trim()) {
-        return;
-    }
-
-    const value = sourceDate.trim();
-    const isCalendarDay = /^\d{4}-\d{2}-\d{2}$/.test(value);
-    // UTC midnight represents the calendar day, not a source publication instant.
-    const date = parseDate(isCalendarDay ? `${value}T00:00:00Z` : value);
-    if (!date || (isCalendarDay && toISOString(date).slice(0, 10) !== value)) {
-        return;
-    }
-
-    return date;
-}
 
 export const route = {
     path: '/exhibitionIndex/:type',
@@ -72,7 +56,7 @@ export const route = {
             place: string;
             start_date_format: string;
             end_date_format: string;
-            intro?: string;
+            intro: string;
         }> = response.data?.list ?? [];
 
         const items = list.map((item) => {
@@ -98,14 +82,14 @@ export const route = {
                         <b>闭展：</b>
                         {endDate || '未定/常设'}
                     </p>
-                    {typeof item.intro === 'string' && item.intro.trim() ? <p style={{ whiteSpace: 'pre-wrap' }}>{item.intro}</p> : undefined}
+                    {item.intro ? <p style={{ whiteSpace: 'pre-wrap' }}>{item.intro}</p> : undefined}
                 </div>
             );
 
             return {
                 title: item.exhibition_name,
                 link,
-                pubDate: parseCalendarDate(startDate),
+                pubDate: startDate ? parseDate(startDate, 0) : undefined,
                 description,
                 _extra: {
                     museumName,

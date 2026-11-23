@@ -45,16 +45,15 @@ export const route: Route = {
                 cache.tryGet(link, async () => {
                     const entry = feed.items.find((item) => item.link === link);
                     if (entry?.title) {
-                        const html = entry['content:encoded'] ?? entry.content;
-                        const content = load(html ?? '');
-                        const date = entry.isoDate ?? entry.pubDate;
+                        const html = entry['content:encoded'];
+                        const content = load(html);
                         return {
                             title: entry.title,
                             link,
-                            author: entry.creator ?? entry.author,
-                            pubDate: date ? parseDate(date) : undefined,
+                            author: entry.creator,
+                            pubDate: entry.isoDate ? parseDate(entry.isoDate) : undefined,
                             category: entry.categories,
-                            itunes_item_image: content('img').first().attr('src'),
+                            itunes_item_image: content('img').attr('src'),
                             content: { html },
                         };
                     }

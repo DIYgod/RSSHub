@@ -66,7 +66,7 @@ async function handler(ctx) {
         return {
             title: isComplaint ? $item.find('h2, .img-plate-blk__title').text() : $item.text(),
             link: new URL($item.attr('href')!, rootUrl).href,
-            pubDate: publishedAt ? parseDate(publishedAt, 'YYYY.MM', 8) : undefined,
+            pubDate: parseDate(publishedAt, 'YYYY.MM', 8),
         };
     });
 
@@ -93,7 +93,7 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        language: ($('html').attr('lang') ?? (language === 'tc' ? 'zh-HK' : 'zh-CN')) as Language,
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

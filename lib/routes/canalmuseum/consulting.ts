@@ -67,7 +67,7 @@ export const route: Route = {
                 const $a = $el.find('a');
                 const title = $a.find('.t1').text();
                 const dateText = $a.find('.date1').text();
-                const pubDate = dateText ? parseDate(dateText, 'YYYY.MM.DD', 8) : undefined;
+                const pubDate = parseDate(dateText, 'YYYY.MM.DD', 8);
                 const href = $a.attr('href') ?? '';
                 const link = new URL(href, baseUrl).href;
 

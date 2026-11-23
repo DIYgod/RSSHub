@@ -49,16 +49,15 @@ async function handler(ctx) {
     const response = await got(`${host}/${id}/list.htm`);
     const $ = load(response.data);
     const list = $('div[portletmode=simpleList]')
-        .find('div.card, article')
+        .find('div.card')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const anchor = $item.find('.card-title > a, h4 > a[title]').first();
+            const anchor = $item.find('.card-title > a');
             const title = anchor.attr('title') ?? anchor.text();
             let link = anchor.attr('href');
             link = link!.startsWith('/') ? host + link : link;
-            const published = $item.find('time').first().text().replace('发布时间：', '').trim();
-            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDate($item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD', 8);
             return {
                 title,
                 pubDate,
@@ -68,8 +67,8 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`ustc:eeis:detail:${item.link}`, async () => {
-                const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustc:eeis:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description'> = {};
                 try {
                     const response = await got(item.link);
                     const desc = load(response.data)('div.wp_articlecontent').html();
@@ -79,7 +78,7 @@ async function handler(ctx) {
                 }
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );

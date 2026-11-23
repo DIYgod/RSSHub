@@ -12,7 +12,6 @@ interface IncidentUpdate {
     status: string;
     body: string;
     display_at: string;
-    created_at: string;
     updated_at: string;
 }
 
@@ -47,7 +46,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             return {
                 title: `${type} - ${incident.name}`,
                 description,
-                pubDate: parseDate(update.display_at ?? update.created_at),
+                pubDate: parseDate(update.display_at),
                 updated: parseDate(update.updated_at),
                 link: incident.shortlink,
                 category: [type],

@@ -46,11 +46,10 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item): DataItem => {
             const $item = $(item);
             const $aTag = $item.find('a');
-            const publishedDate = $item.find('span').text();
 
             return {
-                title: $aTag.attr('title') || $aTag.text(),
-                pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
+                title: $aTag.text(),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: new URL($aTag.attr('href')!, link).href,
             };
         });

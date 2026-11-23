@@ -46,7 +46,7 @@ async function handler(ctx: Context) {
     const shotList: Array<DataItem & { link: string }> = data.compositionsData.list.map((item) => ({
         title: item.title,
         link: `https://www.meihua.info/article/${item.compositionId}`,
-        pubDate: item.gmtPublish !== undefined && item.gmtPublish !== null ? parseDate(item.gmtPublish) : undefined,
+        pubDate: parseDate(item.gmtPublish),
     }));
 
     const items = await pMap(

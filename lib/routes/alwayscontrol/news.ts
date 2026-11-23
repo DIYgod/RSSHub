@@ -39,7 +39,7 @@ async function handler(): Promise<Data> {
     // 获取新闻列表页面
     const response = await got(listUrl);
     const $ = load(response.data);
-    const image = $('header img').first().attr('src');
+    const image = $('header img').attr('src');
 
     // 解析新闻列表
     const list = $('div.grid > a')

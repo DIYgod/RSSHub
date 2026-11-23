@@ -34,7 +34,7 @@ async function handler(ctx) {
         await buildData({
             link,
             url: link,
-            title: ($) => $('.name-main').text().trim() + ' - 用户 - 绿洲',
+            title: ($) => $('.name-main').text() + ' - 用户 - 绿洲',
             description: ($) => $('.desc').text().trim(),
             item: {
                 item: '.container .status-item',

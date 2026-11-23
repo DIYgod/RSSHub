@@ -65,12 +65,12 @@ async function handler(ctx: Context) {
         limit
     );
 
-    const actor = stories[0]?.comet_sections.content.story.actors[0];
+    const actor = stories[0].comet_sections.content.story.actors[0];
 
     return {
-        title: actor?.name ?? `Facebook Page ${id}`,
-        link: actor?.url ?? `${baseUrl}/${id}`,
-        image: actor?.profile_picture.uri,
+        title: actor.name,
+        link: actor.url,
+        image: actor.profile_picture.uri,
         item: storiesToItems(stories),
     };
 }

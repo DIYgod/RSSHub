@@ -60,14 +60,13 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 content('.ss-inline-share-wrapper').remove();
                 const dateText = content('meta[property="article:published_time"]').attr('content');
-                const date = dateText ? parseDate(dateText) : undefined;
                 return {
                     description: content('.post-content').html(),
                     author: content('.author-name .author-popup').text(),
                     category: content('a[rel="category tag"]')
                         .toArray()
                         .map((tag) => content(tag).text()),
-                    pubDate: date,
+                    pubDate: dateText ? parseDate(dateText) : undefined,
                 };
             });
             return { ...item, ...detail };

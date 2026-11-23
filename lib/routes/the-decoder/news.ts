@@ -51,7 +51,6 @@ function hasPublicBody({ content }: Post) {
     }
 
     const $ = load(content.rendered, undefined, false);
-    $('script, style, template, noscript').remove();
     return /\S/.test($.root().text()) || $(':is(img, iframe, audio, video, audio source, video source)[src]:not([src=""]), img[srcset]:not([srcset=""]), img[data-src]:not([data-src=""])').length > 0;
 }
 

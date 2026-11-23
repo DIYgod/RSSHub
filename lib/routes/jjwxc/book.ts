@@ -8,7 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { renderBookDescription } from './templates/book';
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const author = $('meta[name="Author"]').prop('content');
-    const keywords = $('meta[name="Keywords"]').prop('content')?.split(/,/) ?? [];
+    const keywords = $('meta[name="Keywords"]').prop('content').split(/,/);
 
     keywords.pop();
 
@@ -85,20 +85,17 @@ async function handler(ctx) {
                 author,
                 category: [isVip ? 'VIP' : '', ...(category?.split(/\s/) ?? [])].filter(Boolean),
                 guid: `jjwxc-${id}#${chapterId}`,
-                pubDate: /\d{4}-\d{1,2}-\d{1,2}/.test(chapterUpdatedTime) ? parseDate(chapterUpdatedTime, 8) : undefined,
+                pubDate: parseDate(chapterUpdatedTime, 8),
                 isVip,
                 isLock,
             };
         });
 
     items = items.toReversed();
-    const datesKnown = items.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    if (ctx.req.query('sorted') === 'false' || datesKnown) {
-        items = items.slice(0, limit);
-    }
+    items = items.slice(0, limit);
 
     items = await pMap(
         items,
@@ -128,13 +125,12 @@ async function handler(ctx) {
     );
 
     const logoEl = $('div.logo a img');
-    const imageSource = logoEl.prop('src');
-    const image = imageSource ? new URL(imageSource, currentUrl).href : undefined;
+    const image = `https:${logoEl.prop('src')}`;
     const icon = new URL('favicon.ico', rootUrl).href;
 
     return {
         item: items.map(({ isVip: _isVip, isLock: _isLock, ...item }) => item),
-        title: `${logoEl.prop('alt')?.replace(/logo/, '') || '晋江文学城'} | ${author ?? ''}${keywords[0] ?? ''}`,
+        title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author}${keywords[0]}`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
         language: 'zh' as const,

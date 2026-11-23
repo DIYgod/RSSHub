@@ -49,13 +49,10 @@ async function handler() {
                 return {
                     title: $item.next().text(),
                     link: `${rootUrl}/${$item.next().attr('href')}`,
-                    pubDate: parseDate(`${$item.find('.date-year').text()}-${$item.find('.date-day').text()}`, 'YYYY-MM-DD', 8),
                 };
             });
-        const orderedList = list;
-        const entries = orderedList;
         const items = await Promise.all(
-            entries.map((item) =>
+            list.map((item) =>
                 cache.tryGet(item.link!, async () => {
                     const detailResponse = await fetchWithPage(page, item.link!, { timeout: 12000 });
                     const detailContent = detailResponse.text;

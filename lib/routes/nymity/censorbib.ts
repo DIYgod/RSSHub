@@ -37,16 +37,10 @@ async function handler() {
             const linkToPaper = c.find("img.icon[title='Link to paper']").parent().attr('href');
             return {
                 title,
-                description: [
-                    other,
-                    download ? $('<a>').attr('href', new URL(download, url).href).text('Download').toString() : undefined,
-                    downloadBibTex ? $('<a>').attr('href', new URL(downloadBibTex, url).href).text('BibTeX').toString() : undefined,
-                ]
-                    .filter(Boolean)
-                    .join('<br/><br/>'),
+                description: [other, $('<a>').attr('href', download).text('Download').toString(), $('<a>').attr('href', downloadBibTex).text('BibTeX').toString()].join('<br/><br/>'),
                 author,
                 guid: id,
-                link: linkToPaper ? new URL(linkToPaper, url).href : `${url}#${encodeURIComponent(id)}`,
+                link: new URL(linkToPaper!, url).href,
             };
         });
 

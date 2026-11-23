@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict, toInstant } from '@/utils/time';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -24,26 +24,10 @@ function getAttachmentMimeType(title: string) {
     const extension = title.split('.').pop()?.toLowerCase();
     return extension && isAttachmentExtension(extension) ? attachmentMimeTypes[extension] : undefined;
 }
-function parseCalendarDate(value: string | undefined, format: string | string[] = 'YYYY-MM-DD') {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDateStrict(value.trim(), format, 0);
-}
-function parsePublicationDate(value: string | undefined) {
-    if (!value?.trim()) {
-        return;
-    }
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
-        return parseCalendarDate(value);
-    }
-    return parseDateStrict(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
-}
+const parseCalendarDate = (value: string, format: string | string[] = 'YYYY-MM-DD') => parseDateStrict(value, format, 0);
 type ArticleDetails = Pick<DataItem, 'description' | 'author' | 'category' | 'guid' | 'enclosure_url' | 'enclosure_type'> & {
     articleTitle?: string;
     publicationDate?: string;
-    listTitle: DataItem['title'];
-    listDate?: number;
 };
 /**
  * Process the meta information from the HTML content.
@@ -80,15 +64,12 @@ const getItemDetail = async (item, rootUrl): Promise<ArticleDetails> => {
     if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
         throw new ArticleAccessError(`Article access permission required at ${item.link}`);
     }
-    if (content('div.v_news_content').length !== 1) {
-        throw new Error(`Article body not found at ${item.link}`);
-    }
     // Resolve each image while preserving its surrounding content and captions.
     content('div.v_news_content img').each((_, element) => {
         const image = content(element);
-        const source = image.attr('orisrc') || image.attr('src');
+        const source = image.attr('orisrc');
         if (source) {
-            image.attr('src', new URL(source, item.link).href);
+            image.attr('src', source);
         }
     });
     // Missing the `src` properties for the videos.
@@ -131,8 +112,6 @@ const getItemDetail = async (item, rootUrl): Promise<ArticleDetails> => {
     const meta = processMeta(content);
     const details: ArticleDetails = {
         articleTitle: getMeta(meta, 'ArticleTitle'),
-        listTitle: item.title,
-        listDate: isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds,
         publicationDate: getMeta(meta, 'PubDate'),
         description: renderDescription({ description: description ?? undefined, attachments }),
         author: getMeta(meta, 'ContentSource'),
@@ -160,46 +139,33 @@ const processItems = async <
     items: T[],
     rootUrl: string
 ): Promise<T[]> =>
-    await unwrapFirstFailure(
-        pMap<T, T>(
-            items,
-            async (item) => {
-                const hostname = new URL(item.link).hostname;
-                if (hostname !== domain && !hostname.endsWith(`.${domain}`)) {
+    await pMap<T, T>(
+        items,
+        async (item) => {
+            const hostname = new URL(item.link).hostname;
+            if (hostname !== domain && !hostname.endsWith(`.${domain}`)) {
+                return item;
+            }
+            try {
+                const detail = await cache.tryGet(`whu:details:download-mime:${item.link}`, async () => await getItemDetail(item, rootUrl));
+                return {
+                    ...item,
+                    title: detail.articleTitle ?? item.title,
+                    description: detail.description,
+                    author: detail.author,
+                    category: detail.category,
+                    guid: detail.guid,
+                    pubDate: detail.publicationDate ? parseDate(detail.publicationDate, 8) : item.pubDate,
+                    enclosure_url: detail.enclosure_url,
+                    enclosure_type: detail.enclosure_type,
+                };
+            } catch (error) {
+                if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
                     return item;
                 }
-                try {
-                    const detail = await cache.tryGet(`whu:details:download-mime:${item.link}`, async () => await getItemDetail(item, rootUrl));
-                    const listDate = isNullish(item.pubDate) ? undefined : toInstant(item.pubDate)?.epochMilliseconds;
-                    return {
-                        ...item,
-                        title: detail.listTitle === item.title ? (detail.articleTitle ?? item.title) : item.title,
-                        description: detail.description,
-                        author: detail.author,
-                        category: detail.category,
-                        guid: detail.guid,
-                        pubDate: detail.listDate === listDate ? (parsePublicationDate(detail.publicationDate) ?? item.pubDate) : item.pubDate,
-                        enclosure_url: detail.enclosure_url,
-                        enclosure_type: detail.enclosure_type,
-                    };
-                } catch (error) {
-                    if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
-                        return item;
-                    }
-                    throw error;
-                }
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 export { domain, getMeta, parseCalendarDate, processItems, processMeta };
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-function isNullish(value: unknown): value is null | undefined {
-    return value === null || value === undefined;
-}

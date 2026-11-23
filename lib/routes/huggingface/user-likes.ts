@@ -27,13 +27,6 @@ const getRepoLink = (repo: LikedRepo): string => {
     }
 };
 
-function getPublicationDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 export const route: Route = {
     path: '/activity/:user/likes',
     categories: ['programming'],
@@ -75,7 +68,7 @@ async function handler(ctx) {
             link: getRepoLink(like.repo),
             description: `${user} liked this ${repoType}.`,
             category: [repoType],
-            pubDate: getPublicationDate(like.createdAt),
+            pubDate: parseDate(like.createdAt),
         };
     });
 

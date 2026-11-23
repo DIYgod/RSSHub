@@ -39,26 +39,8 @@ function getPdfImages(source: string, articleUrl: string): string[] {
     if (!imageData) {
         return [];
     }
-    let images: unknown;
-    try {
-        images = JSON.parse(imageData);
-    } catch {
-        return [];
-    }
-    if (!Array.isArray(images)) {
-        return [];
-    }
-    return images.flatMap((image) => {
-        if (typeof image !== 'string') {
-            return [];
-        }
-        try {
-            const imageUrl = new URL(image, articleUrl);
-            return ['https:', 'http:'].includes(imageUrl.protocol) ? [imageUrl.href] : [];
-        } catch {
-            return [];
-        }
-    });
+    const images: string[] = JSON.parse(imageData);
+    return images.map((image) => new URL(image, articleUrl).href);
 }
 
 async function tryGetFullText(link, type) {
@@ -110,7 +92,7 @@ function tryGetAttachments(articleData, articleBody, type, articleUrl) {
             .toArray()
             .map((item) => {
                 const element = articleData(item);
-                const anchor = element.is('a') ? element : element.find('a').first();
+                const anchor = element.is('a') ? element : element.find('a');
                 const href = anchor.attr('href');
                 if (!href) {
                     return '';
@@ -154,7 +136,6 @@ async function getArticle(link: string, type: string) {
         ...media,
         pubDate: parsePublicationDate(
             articleData('h1')
-                .first()
                 .next()
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/)?.[0],

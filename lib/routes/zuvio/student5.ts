@@ -26,13 +26,6 @@ export const route: Route = {
     handler,
 };
 
-const getPublicationDate = (value?: string): Temporal.Instant | undefined => {
-    if (typeof value !== 'string' || !/\S/.test(value)) {
-        return undefined;
-    }
-    return parseDate(value, 8);
-};
-
 async function handler(ctx): Promise<Data> {
     const { board = '' } = ctx.req.param();
     const selectedBoard = board ? (await getBoards()).find((item) => item.boardId === board) : undefined;
@@ -56,7 +49,7 @@ async function handler(ctx): Promise<Data> {
     let items = data.articles.map((item) => ({
         title: item.title,
         description: item.abstract,
-        pubDate: getPublicationDate(item.created_at),
+        pubDate: parseDate(item.created_at, 8),
         link: `${rootUrl}/article/${item.id}`,
         api: `${apiUrl}/article/${item.id}`,
         author: `${item.university} ${item.user_name}`,

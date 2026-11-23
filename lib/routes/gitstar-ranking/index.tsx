@@ -100,7 +100,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 id: guid,
                 content: {
                     html: description,
-                    text: $(description ?? '').text(),
+                    text: $(description).text(),
                 },
                 image,
                 banner: image,

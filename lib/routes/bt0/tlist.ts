@@ -1,6 +1,6 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate, parseRelativeDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 import { genSize, getApiData } from './util';
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
         guid: `bt0:resource:${item.id}`,
         description: `《${item.title}》  导演: ${item.daoyan}<br>编剧: ${item.bianji}<br>演员: ${item.yanyuan}<br>简介: ${item.conta.trim()}`,
         link: host + item.aurl,
-        pubDate: item.ezt ? parseDate(item.ezt, 'X') : item.eztime.endsWith('前') ? parseRelativeDate(item.eztime) : item.eztime,
+        pubDate: parseDate(item.ezt, 'X'),
         enclosure_type: 'application/x-bittorrent',
         enclosure_url: item.zlink,
         enclosure_length: genSize(item.zsize),

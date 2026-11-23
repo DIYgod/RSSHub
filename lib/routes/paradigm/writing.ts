@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
@@ -37,51 +37,35 @@ interface ArticleSchema {
     datePublished: string;
     dateModified: string;
     author: Array<{ name: string; url: string }>;
-    articleSection: string | string[];
+    articleSection: string;
 }
 
 async function handler() {
     const url = `${baseUrl}/writing`;
     const response = await got(url);
     const $ = load(response.data);
-    const nextText = $('#__NEXT_DATA__').text();
-    const nextData = nextText ? JSON.parse(nextText) : undefined;
-    const list: Array<DataItem & { link: string; api?: string }> = nextData
-        ? nextData.props.pageProps.posts.map((item) => ({
-              title: item.title,
-              link: `${baseUrl}${item.slug}`,
-              api: `${baseUrl}/_next/data/${nextData.buildId}${item.slug}.json`,
-              author: item.authors.map((author) => author.name).join(', '),
-              pubDate: parseDate(item.originalDate),
-              category: item.tags,
-          }))
-        : $('#all-writing .item-link')
-              .toArray()
-              .flatMap((element) => {
-                  const item = $(element);
-                  const href = item.attr('href');
-                  return href ? { title: item.find('h2').text(), link: new URL(href, baseUrl).href, image: item.find('img').attr('src') } : [];
-              });
+    const list = $('#all-writing .item-link')
+        .toArray()
+        .map((element) => {
+            const item = $(element);
+            return { title: item.find('h2').text(), link: new URL(element.attribs.href, baseUrl).href, image: item.find('img').attr('src') };
+        });
     const items = await pMap(
         list,
         async (item) => {
             const details = await cache.tryGet(`paradigm:article:body:${item.link}`, async () => {
-                const response = await got(item.api ?? item.link);
-                const $ = load(item.api ? response.data.pageProps.content : response.data);
-                $('.toc').remove();
-                if (item.api) {
-                    return { description: $.html() };
-                }
-                const schema: ArticleSchema | undefined = $('script[type="application/ld+json"]')
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const schema: ArticleSchema = $('script[type="application/ld+json"]')
                     .toArray()
                     .map((element) => JSON.parse($(element).text()))
                     .find((item) => item['@type'] === 'Article');
                 return {
                     description: $('article .story-item__body').html(),
-                    author: schema?.author.map((author) => ({ name: author.name, url: author.url })),
-                    pubDate: schema?.datePublished ? parseDate(schema.datePublished) : undefined,
-                    updated: schema?.dateModified ? parseDate(schema.dateModified) : undefined,
-                    category: schema?.articleSection ? [schema.articleSection].flat() : undefined,
+                    author: schema.author.map((author) => ({ name: author.name, url: author.url })),
+                    pubDate: parseDate(schema.datePublished),
+                    updated: parseDate(schema.dateModified),
+                    category: [schema.articleSection],
                 };
             });
             return { ...item, ...details };

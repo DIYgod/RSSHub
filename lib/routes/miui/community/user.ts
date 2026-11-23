@@ -51,7 +51,7 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: item.title || `${authorName} 的动态`,
                 description: item.textContent,
-                pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime),
+                pubDate: parseDate(item.createTime),
                 author: item.author.name,
                 link: `${pageRoot}?postId=${item.id}`,
                 image: item.pic || item.cover || '',

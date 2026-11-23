@@ -53,23 +53,15 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('main .view-content > .views-row')
         .toArray()
-        .flatMap((row): Array<DataItem & { link: string }> => {
+        .map((row): DataItem & { link: string } => {
             const $row = $(row);
-            const anchor = $row.find('.views-field-title h3 a').first();
-            const title = anchor.text();
-            const href = anchor.attr('href');
-            if (!title || !href) {
-                return [];
-            }
-            const datetime = $row.find('time[datetime]').first().attr('datetime');
-            return [
-                {
-                    title,
-                    link: new URL(href, baseUrl).href,
-                    author: $row.find('.username a').first().text() || undefined,
-                    pubDate: datetime ? parseDate(datetime) : undefined,
-                },
-            ];
+            const anchor = $row.find('.views-field-title h3 a');
+            return {
+                title: anchor.text(),
+                link: new URL(anchor.attr('href')!, baseUrl).href,
+                author: $row.find('.username a').text(),
+                pubDate: parseDate($row.find('time[datetime]').attr('datetime')!),
+            };
         });
 
     const items = await pMap(
@@ -78,7 +70,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                const article = $('article.node--type-post').first();
+                const article = $('article.node--type-post');
                 item.category = article
                     .find('.field--name-field-peopo-term .field__item a, .field--name-field-tags .field__item a, .field--name-field-area-term .field__item a')
                     .toArray()
@@ -88,7 +80,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((element) => $.html(element))
                     .join('');
-                const body = article.find('.node__content > .field--name-body').first().html() ?? '';
+                const body = article.find('.node__content > .field--name-body').html() ?? '';
                 item.description = media + body;
                 return item;
             }),

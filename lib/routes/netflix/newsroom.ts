@@ -1,6 +1,7 @@
 import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -91,8 +92,6 @@ const renderImage = ({ url, alt, caption }: { url: string; alt?: string; caption
     `<figure><img src="${escapeUTF8(url)}" alt="${escapeUTF8(alt || '')}">${caption ? `<figcaption>${escapeUTF8(caption)}</figcaption>` : ''}</figure>`;
 const renderVideo = ({ url, poster, contentType }: { url: string; poster?: string; contentType: string }) =>
     `<video controls preload="metadata"${poster ? ` poster="${escapeUTF8(poster)}"` : ''}><source src="${escapeUTF8(url)}" type="${escapeUTF8(contentType)}"></video>`;
-const renderYoutube = (youtubeId) =>
-    `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${youtubeId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
 
 const render = (node) => {
     if (!node) {
@@ -207,7 +206,7 @@ const render = (node) => {
             const embedLink = node.data.embedLink ?? Object.values<string>(node.data.target.fields.embedLink)[0];
             if (embedLink.startsWith('https://www.youtube.com/') || embedLink.startsWith('https://youtu.be/')) {
                 const youtubeId = embedLink.split('youtube.com/watch?v=', 2)[1]?.split('&', 1)[0] || embedLink.split('youtu.be/', 2)[1]?.split('?', 1)[0];
-                return renderYoutube(youtubeId);
+                return renderYoutube(true, youtubeId);
             }
             return `<a href="${escapeUTF8(embedLink)}" target="_blank" rel="noopener noreferrer">${escapeUTF8(node.data.title ?? embedLink)}</a>`;
         }
@@ -272,7 +271,7 @@ async function handler(ctx) {
                         contentType: 'video/mp4',
                     });
                 } else if (slug.youtubeHero) {
-                    description += renderYoutube(slug.youtubeHero.videoLink.split('youtube.com/watch?v=', 2)[1]);
+                    description += renderYoutube(true, slug.youtubeHero.videoLink.split('youtube.com/watch?v=', 2)[1]);
                 } else if (slug.heroGallery?.length) {
                     for (const image of slug.heroGallery) {
                         description += renderImage({

@@ -23,11 +23,11 @@ export async function getNotifList() {
             const imageElement = $(articleElement).find('.news-img img');
 
             const link = titleElement.attr('href');
-            const title = titleElement.attr('title') ?? titleElement.text();
+            const title = titleElement.attr('title');
             if (!link || !title) {
                 return [];
             }
-            const pubDate = timeElement.text().trim();
+            const pubDate = timeElement.text();
 
             return {
                 title,
@@ -47,7 +47,7 @@ export async function getArticle(link: string) {
         });
         const html = response.body;
         const $ = load(html);
-        const articleContentElement = $('.post-content article').first();
+        const articleContentElement = $('.post-content article');
         const content = articleContentElement.html();
 
         return { description: content };

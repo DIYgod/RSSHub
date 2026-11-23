@@ -79,7 +79,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.title').text(),
                 link: `${$item.attr('href')!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
-                pubDate: year && day ? parseDate(`${year}-${day} +0000`, 'YYYY-MM-DD ZZ') : undefined,
+                pubDate: parseDate(`${year}-${day} +0000`, 'YYYY-MM-DD ZZ'),
             };
         });
 

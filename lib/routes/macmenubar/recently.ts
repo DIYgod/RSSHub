@@ -46,7 +46,7 @@ async function handler(ctx) {
     const items = response.data.map((post) => {
         const title = post.title.rendered;
         const link = post.link;
-        const pubDate = post.date_gmt ? parseDate(post.date_gmt, 0) : undefined;
+        const pubDate = parseDate(post.date_gmt, 0);
         const description = post.content.rendered;
         return {
             title,

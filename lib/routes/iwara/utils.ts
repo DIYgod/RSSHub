@@ -1,5 +1,3 @@
-import { parseDate, parseDateStrict } from '@/utils/time';
-
 export const rootUrl = 'https://www.iwara.tv';
 export const apiRootUrl = 'https://api.iwara.tv';
 export const apiqRootUrl = 'https://apiq.iwara.tv';
@@ -27,11 +25,4 @@ export const parseThumbnail = (type: 'video' | 'image', item: any) => {
     }
 
     return '';
-};
-
-export const parseCreatedAt = (value?: string) => {
-    if (typeof value !== 'string' || !value || !parseDateStrict(value.slice(0, 19), 'YYYY-MM-DDTHH:mm:ss')) {
-        return;
-    }
-    return parseDate(value);
 };

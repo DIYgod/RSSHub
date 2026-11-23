@@ -33,9 +33,8 @@ async function handler(ctx) {
     const response = await got.get(link);
     const $ = load(response.data);
     const version = $('.c-release-version').text();
-    const itemLink = $('link[rel="canonical"]').attr('href') || link;
-    const date = $('.c-release-date').text().trim();
-    const pubDate = date ? parseDate(date, 'MMMM D, YYYY') : undefined;
+    const itemLink = $('link[rel="canonical"]').attr('href');
+    const pubDate = parseDate($('.c-release-date').text(), 'MMMM D, YYYY');
 
     return {
         title: `Firefox ${platform} release notes`,

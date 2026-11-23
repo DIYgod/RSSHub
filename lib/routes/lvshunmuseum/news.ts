@@ -50,15 +50,11 @@ export const route: Route = {
                     const $detail = load(detailResponse);
 
                     const $content = $detail('.newsdetail_content');
-                    $content.find('img').each((_, img) => {
-                        const $img = $detail(img);
-                        $img.attr('src', new URL($img.attr('src')!, baseUrl).href);
-                    });
 
                     return {
                         ...item,
                         title: $detail('.newsdetail_title > h1').text(),
-                        description: $content.html() || undefined,
+                        description: $content.html(),
                     };
                 }),
             { concurrency: 3 }

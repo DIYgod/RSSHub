@@ -47,13 +47,9 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const href = $item.attr('href');
-            if (!href) {
-                throw new Error('IQnew did not provide an article link.');
-            }
 
             return {
-                link: new URL(href, url).href,
+                link: rootUrl + $item.attr('href'),
                 title: '',
             };
         });
@@ -71,8 +67,7 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gb2312'));
 
                 item.title = content('.main-article .title').text();
-                const date = content('.time').eq(0).text();
-                item.pubDate = date ? parseDate(date, 8) : undefined;
+                item.pubDate = parseDate(content('.time').eq(0).text(), 8);
                 item.description = content('.content-intro').html();
                 item.author = content('.author a').text();
                 item.category = content('.keyword > a')

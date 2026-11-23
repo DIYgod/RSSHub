@@ -41,7 +41,7 @@ async function handler(ctx) {
             // Trying to get the description will return 429 (Too Many Requests).
             const description = item.find('.beatmap-pack__body').html();
             const pubDate = parseDate(item.find('.beatmap-pack-item-header__date, .beatmap-pack__date').text(), 'YYYY-MM-DD');
-            const author = item.find('.beatmap-pack-item-header__details strong, .beatmap-pack__author--bold').text().trim();
+            const author = item.find('.beatmap-pack-item-header__details strong, .beatmap-pack__author--bold').text();
 
             return {
                 title,

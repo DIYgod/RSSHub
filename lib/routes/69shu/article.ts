@@ -59,20 +59,15 @@ const createItem = (url: string) =>
         const decryptionMap = parseObject(/_\d+\s?=\s?\{[\s\S]+?\}/, $('.txtnav+script').text());
         const content = $('.txtnav');
         const encryptedContent = content.html() || '';
-        const title = chaptername || content.find('h1').text() || $('h1').first().text();
-        const pubDate = content
+        const title = chaptername || content.find('h1').text();
+        const pubDate = content.find('.txtinfo span').first().text();
+        const author = content
             .find('.txtinfo span')
-            .first()
+            .eq(1)
             .text()
-            .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-        const author =
-            content
-                .find('.txtinfo span')
-                .eq(1)
-                .text()
-                .replace(/^作者[：:]\s*/, '') || undefined;
+            .replace(/^作者[：:]\s*/, '');
 
-        content.find('h1, .txtinfo, #txtright, .bottom-ad, script').remove();
+        content.find('h1, .txtinfo, #txtright, .bottom-ad').remove();
         content
             .contents()
             .filter((_, node) => node.type === 'text' && $(node).text().trim() === title)
@@ -81,7 +76,7 @@ const createItem = (url: string) =>
         return {
             title,
             description: Object.keys(decryptionMap).length ? decrypt(encryptedContent, articleid, chapterid, decryptionMap) : content.html(),
-            pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+            pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8),
             author,
             link: url,
         };

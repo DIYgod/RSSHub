@@ -1,7 +1,6 @@
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
-import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -44,9 +43,9 @@ async function handler(ctx: Context) {
     const list: Array<DataItem & { link: string }> = response.results.map((item) => ({
         guid: String(item.id),
         title: item.title,
-        category: item.typeName ? [item.typeName] : undefined,
+        category: [item.typeName],
         link: `${rootUrl}/article/${item.id}`,
-        pubDate: item.gmtCreate ? parseDate(item.gmtCreate, 8) : undefined,
+        pubDate: parseDate(item.gmtCreate, 8),
     }));
 
     const items = await pMap(
@@ -54,11 +53,7 @@ async function handler(ctx: Context) {
         async (item) => {
             const detail = await cache.tryGet(`ssydt:article:detail:v3:${item.link}`, async () => {
                 const detailResponse = await ofetch<ArticleDetailResponse>(`${rootUrl}/api/article/webArticles/${item.guid}`);
-                const description = detailResponse.results?.ssArticleArticleText?.content;
-                if (!description) {
-                    throw new NotFoundError(`Article ${item.guid} has no public content in the official detail response.`);
-                }
-                return { description };
+                return { description: detailResponse.results.ssArticleArticleText.content };
             });
             return { ...item, ...detail };
         },
@@ -73,7 +68,7 @@ async function handler(ctx: Context) {
 }
 
 interface ArticleDetailResponse {
-    results?: {
-        ssArticleArticleText?: { content?: string };
+    results: {
+        ssArticleArticleText: { content: string };
     };
 }

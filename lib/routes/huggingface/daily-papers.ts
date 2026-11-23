@@ -4,13 +4,6 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { formatDate, parseDate } from '@/utils/time';
 
-function getPublicationDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 export const route: Route = {
     path: '/daily-papers/:cycle?/:voteFliter?',
     categories: ['programming'],
@@ -85,7 +78,7 @@ async function handler(ctx) {
             title: item.title,
             link: `https://arxiv.org/abs/${item.paper.id}`,
             description: item.paper.summary.replaceAll('\n', ' '),
-            pubDate: getPublicationDate(item.publishedAt),
+            pubDate: parseDate(item.publishedAt),
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
         }))

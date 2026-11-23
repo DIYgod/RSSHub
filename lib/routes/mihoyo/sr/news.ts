@@ -1,6 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const categories = {
@@ -80,8 +81,7 @@ async function handler(ctx) {
     if (!categories[location]?.[category]?.id) {
         throw new InvalidParameterError('Unknown location or category; use a documented combination.');
     }
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
     const url =
         location === 'zh-cn'
             ? `https://api-takumi-static.mihoyo.com/content_v2_user/app/1963de8dc19e461c/getContentList?iPage=1&iPageSize=${limit}&sLangKey=zh-cn&isPreview=0&iChanId=${categories[location][category].id}`

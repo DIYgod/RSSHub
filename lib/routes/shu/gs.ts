@@ -94,19 +94,11 @@ async function handler(ctx) {
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
                 if (url.hostname === 'www.kankanews.com') {
-                    const script = content('script')
-                        .toArray()
-                        .map((element) => content(element).html() || '')
-                        .find((text) => text.startsWith('window.__NUXT__='));
+                    const script = content('script:contains("window.__NUXT__=")').html();
                     if (script) {
-                        const data = await evaluateScriptData<{ data?: Array<{ newsDetail?: { video_info?: { play_url?: string; cover?: string } } }> }>(script, '__NUXT__');
-                        const video = data.data?.[0]?.newsDetail?.video_info;
-                        if (video?.play_url) {
-                            item.description = content('<video controls></video>')
-                                .attr('src', video.play_url)
-                                .attr('poster', video.cover || '')
-                                .toString();
-                        }
+                        const data = await evaluateScriptData<{ data: Array<{ newsDetail: { video_info: { play_url: string; cover: string } } }> }>(script, '__NUXT__');
+                        const video = data.data[0].newsDetail.video_info;
+                        item.description = content('<video controls preload="metadata"></video>').attr('src', video.play_url).attr('poster', video.cover).toString();
                     }
                 } else {
                     item.description = content('#vsb_content .v_news_content').html() || item.description;

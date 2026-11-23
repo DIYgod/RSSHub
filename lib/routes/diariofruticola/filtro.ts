@@ -53,7 +53,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('h1.my-2').text();
-                    const article = $$('div.ck-content').first();
+                    const article = $$('div.ck-content');
                     const description = article.html();
                     const pubDateStr = $$('meta[property="article:published_time"]').attr('content');
                     const upDatedStr = $$('meta[property="article:modified_time"]').attr('content');

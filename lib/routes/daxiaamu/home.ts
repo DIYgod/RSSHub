@@ -32,10 +32,10 @@ async function handler() {
         item: posts.map((item) => ({
             title: item.title.rendered,
             description: item.content.rendered,
-            pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
+            pubDate: parseDate(`${item.date_gmt}Z`),
             link: item.link,
             author: item._embedded.author.map((a) => a.name).join(', '),
-            category: item._embedded['wp:term']?.flatMap((terms) => terms.map((term) => term.name)),
+            category: item._embedded['wp:term'].flatMap((terms) => terms.map((term) => term.name)),
         })),
     };
 }

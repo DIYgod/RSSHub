@@ -87,7 +87,6 @@ export const route: Route = {
                     const $ = load(article);
                     const content = $('.site-article');
                     content.children('.title, .issue-date-and-source').remove();
-                    content.find('script').remove();
                     const documentBase = new URL($('base').attr('href') || itemLink, itemLink).href;
                     content.find('[src], [href]').each((_, element) => {
                         for (const attribute of ['src', 'href']) {

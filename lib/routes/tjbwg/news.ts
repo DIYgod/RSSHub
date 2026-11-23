@@ -11,7 +11,7 @@ import { namespace } from './namespace';
 const getArticle = async (link: string) => {
     const response = await ofetch(link);
     const $ = load(response);
-    return { description: $('.newsD_con').first().html() ?? undefined };
+    return { description: $('.newsD_con').html() };
 };
 
 export const route: Route = {

@@ -82,7 +82,7 @@ async function handler(ctx): Promise<Data> {
                     return { outdated: true };
                 }
                 const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                const description = $('p[itemprop="description"]').first().html() ?? undefined;
+                const description = $('p[itemprop="description"]').html();
                 return { pubDate, description };
             });
             if (detail.outdated) {

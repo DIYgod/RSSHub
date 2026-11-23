@@ -17,9 +17,8 @@ const getPage = async (url: string, redirectsRemaining = 3): Promise<{ data: str
     }
 
     const cookie = config.taoguba.cookie?.trim();
-    const response = await ofetch.raw<string, 'text'>(url, {
+    const response = await ofetch.raw<string>(url, {
         headers: cookie ? { Cookie: cookie } : undefined,
-        responseType: 'text',
         redirect: 'manual',
     });
     if (response.status >= 300 && response.status < 400) {

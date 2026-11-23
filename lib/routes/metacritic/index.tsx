@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { sorts, types } from './util';
@@ -73,8 +74,7 @@ export async function handler(ctx) {
     if (!Object.hasOwn(sorts, sort)) {
         throw new InvalidParameterError('Unknown sort; use metascore, userscore, popular, or new.');
     }
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.metacritic.com';
     const rootApiUrl = 'https://backend.metacritic.com';

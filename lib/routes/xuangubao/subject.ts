@@ -30,11 +30,7 @@ function parseMessageDate(value?: string | number | null) {
     if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) {
         return;
     }
-    const timestamp = Number(value);
-    if (!Number.isFinite(timestamp)) {
-        return;
-    }
-    return parseDate(timestamp, 'X');
+    return parseDate(Number(value), 'X');
 }
 
 async function fetchMessageContent(detailUrl: string, referer: string): Promise<Pick<DataItem, 'description'>> {

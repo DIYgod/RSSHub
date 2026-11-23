@@ -47,10 +47,10 @@ async function handler(ctx) {
         }
         seen.add(hash);
         groups.at(-1)!.push({
-            title: anchor.text() || name,
+            title: anchor.text(),
             link: `${link}#${hash}`,
             guid: hash,
-            description: `<a href="${magnet}">${anchor.html() || name}</a>`,
+            description: `<a href="${magnet}">${anchor.html()}</a>`,
             enclosure_url: magnet,
             enclosure_type: 'application/x-bittorrent',
         });

@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 return {
                     pubDate: parseDate($('.writeTime3').text(), 8),
-                    description: $('.pc_content').html() ?? '',
+                    description: $('.pc_content').html(),
                 };
             })),
         }),

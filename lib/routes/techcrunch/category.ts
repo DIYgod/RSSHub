@@ -28,8 +28,7 @@ async function handler(ctx) {
     const { data } = await got(`${host}/wp-json/wp/v2/posts?categories=${categoryId}`);
     const items = data.map((item) => {
         const head = item.yoast_head_json;
-        const article = head.schema?.['@graph']?.find((node) => node['@type'] === 'NewsArticle');
-        const date = item.date_gmt || head.article_published_time;
+        const article = head.schema['@graph'].find((node) => node['@type'] === 'NewsArticle');
         const $ = load(item.content.rendered, null, false);
         return {
             title: item.title.rendered,
@@ -38,7 +37,7 @@ async function handler(ctx) {
                 rendered: $.html(),
             }),
             link: item.link,
-            pubDate: date ? parseDate(date, 0) : undefined,
+            pubDate: parseDate(item.date_gmt, 0),
             author: head.author,
             category: [...new Set<string>([...(article?.articleSection ?? []), ...(article?.keywords ?? [])])].map((category) => $('<span>').html(category).text()),
         };

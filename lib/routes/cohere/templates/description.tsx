@@ -3,6 +3,8 @@ import { raw } from 'hono/html';
 import type { Child } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
+
 import { resolveSafeUrl, SITE_URL } from '../utils';
 
 interface SanitySpan {
@@ -184,7 +186,7 @@ const renderEmbedHtml = (rawHtml?: string) => {
         return null;
     }
     const $ = load(rawHtml, null, false);
-    $('style, script').remove();
+    $('style').remove();
     const html = $.html().trim();
     return html ? raw(html) : null;
 };
@@ -278,7 +280,7 @@ const blockRenderers = new Map<string, (block: SanityBlock) => Node>([
             }
             const id = youtubeIdFromUrl(url);
             return id ? (
-                <iframe src={`https://www.youtube.com/embed/${id}`} allowfullscreen></iframe>
+                raw(renderYoutube(true, id))
             ) : (
                 <p>
                     <a href={url}>{url}</a>

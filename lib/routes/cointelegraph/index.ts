@@ -86,11 +86,8 @@ async function extractFullText(url: string): Promise<string | undefined> {
         const response = await ofetch(url);
         const $ = load(response);
         const content = $('[data-testid="post__body"]');
-        if (!content.text().trim()) {
-            return;
-        }
 
-        const cover = $('[data-testid="post-cover__image"]').first();
+        const cover = $('[data-testid="post-cover__image"]');
         cover.removeAttr('srcset sizes');
 
         return $.html(cover) + content.html();

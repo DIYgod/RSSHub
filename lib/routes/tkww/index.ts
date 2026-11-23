@@ -8,7 +8,7 @@ import got from '@/utils/got';
 
 const flattenColumns = (columns) => columns.flatMap((column) => [column, ...flattenColumns(column.children ?? [])]);
 
-type Story = DataItem & { url: string; jsonUrl: string; publishTime?: string; summary?: string; keywords?: string[]; tags?: string[] };
+type Story = DataItem & { url: string; jsonUrl: string; publishTime?: string; summary?: string; keywords: string[]; tags: string[] };
 
 export const route: Route = {
     path: '/:column{.+}?',
@@ -80,7 +80,7 @@ async function handler(ctx) {
                 ...item,
                 link: item.url,
                 pubDate: item.publishTime,
-                category: [...new Set([...(item.keywords ?? []), ...(item.tags ?? [])])],
+                category: [...new Set([...item.keywords, ...item.tags])],
                 ...article,
             };
         },

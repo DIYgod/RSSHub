@@ -49,8 +49,7 @@ async function handler(ctx) {
 
     const items: Array<DataItem | null> = await Promise.all(
         list.map((item) => {
-            const href = $(item).attr('href') ?? $(item).find('a').attr('href');
-            const link = new URL(href!, url).href;
+            const link = $(item).attr('href')!;
             return cache.tryGet<DataItem | null>(link, () => getWork(link, author));
         })
     );
@@ -69,8 +68,8 @@ async function handler(ctx) {
 interface ChangbaWork {
     enc_workpath?: string;
     enc_duetpath?: string;
-    song?: { name: string };
-    title?: string;
+    song: { name: string };
+    title: string;
     headcontent?: string;
 }
 
@@ -80,9 +79,7 @@ interface ChangbaResponse {
     data_type: string;
     data?: {
         userwork?: ChangbaWork;
-        newuserwork?: ChangbaWork;
-        enc_workpath?: string;
-        enc_duetpath?: string;
+        newuserwork: ChangbaWork;
         isduet?: boolean;
         workCover?: string;
         jsSecret: string;
@@ -112,14 +109,14 @@ async function getWork(link: string, author: string): Promise<DataItem | null> {
     if (response.code !== 0 || !data || !work) {
         return null;
     }
-    const encryptedMedia = data.isduet ? (data.enc_duetpath ?? work.enc_duetpath) : (data.enc_workpath ?? work.enc_workpath);
+    const encryptedMedia = data.isduet ? work.enc_duetpath : work.enc_workpath;
     if (!encryptedMedia) {
         return null;
     }
     const mp3 = decodeMedia(encryptedMedia, data.jsSecret);
     return {
-        title: work.song?.name || data.newuserwork?.song?.name || work.title || link,
-        description: renderToString(<ChangbaWorkDescription desc={`${work.headcontent ? `「${work.headcontent}」` : ''}${work.title ?? ''}`} mp3url={mp3} />),
+        title: work.song.name || data.newuserwork.song.name,
+        description: renderToString(<ChangbaWorkDescription desc={`${work.headcontent ? `「${work.headcontent}」` : ''}${work.title}`} mp3url={mp3} />),
         link,
         author,
         itunes_item_image: data.workCover,

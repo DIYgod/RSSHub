@@ -65,21 +65,19 @@ async function handler(ctx) {
     const info = type === 'notes' ? '通知公告' : '学术讲座';
 
     const currentUrl = `${host}/${type === 'notes' ? '12191' : 'xsjz'}/list.htm`;
-    const response = await got(currentUrl, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
     const list = $('.tz-ul li')
         .toArray()
-        .flatMap((item) => {
+        .map((item) => {
             const $item = $(item);
             const anchor = $item.find('a[href]');
-            const href = anchor.attr('href');
-            const title = anchor.attr('title') || $item.find('.tz-ul-tt').text();
-            return href && title ? { title, link: new URL(href, host).href, pubDate: parseDate($item.find('.one-center-bottom-date').text(), 8) } : [];
+            return {
+                title: anchor.attr('title')!,
+                link: new URL(anchor.attr('href')!, host).href,
+                pubDate: parseDate($item.find('.one-center-bottom-date').text(), 8),
+            };
         });
 
     const result = await processFeed(list, cache);

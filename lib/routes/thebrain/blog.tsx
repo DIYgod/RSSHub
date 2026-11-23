@@ -14,42 +14,6 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-
-const parseCalendarDate = (value: string | undefined) => {
-    const match = value && /^([A-Z]+) (\d{1,2}), (\d{4})$/i.exec(value);
-    if (!match) {
-        return;
-    }
-    const month = monthNames.indexOf(match[1].slice(0, 3).toLowerCase());
-    if (month === -1) {
-        return;
-    }
-    return Temporal.PlainDate.from({ year: Number(match[3]), month: month + 1, day: 1 })
-        .add({ days: Number(match[2]) - 1 })
-        .toZonedDateTime('UTC')
-        .toInstant();
-};
-
-function parseRedirectPath(refresh: string | undefined) {
-    if (!refresh) {
-        return refresh;
-    }
-    const prefix = /^\s*\d+(?:\.\d+)?\s*;\s*url\s*=(\s*)["']?/i.exec(refresh);
-    if (!prefix) {
-        return;
-    }
-    const remainder = refresh.slice(prefix[0].length);
-    if (!remainder) {
-        return /\s$/.test(prefix[0]) ? prefix[0].at(-1) : prefix[1].at(-1);
-    }
-    const quoteIndex = remainder.search(/["']/);
-    if (quoteIndex !== -1) {
-        return quoteIndex > 0 && !remainder.slice(quoteIndex + 1).trim() ? remainder.slice(0, quoteIndex) : undefined;
-    }
-    return remainder.trimEnd() || remainder[0];
-}
-
 const baseUrl = 'https://www.thebrain.com';
 
 interface BlogDetails {
@@ -63,12 +27,9 @@ const fetchDetails = async (link: string): Promise<BlogDetails> => {
     const response = await ofetch(link);
     const $ = load(response);
     const refresh = $('meta[http-equiv="refresh" i]').attr('content');
-    const redirectPath = parseRedirectPath(refresh);
+    const redirectPath = refresh?.split('url=', 2)[1];
     if (redirectPath) {
         const destination = new URL(redirectPath, link);
-        if (destination.protocol !== 'https:' && destination.protocol !== 'http:') {
-            throw new Error('TheBrain blog redirect does not point to a web page.');
-        }
         if (destination.origin !== baseUrl) {
             return { redirect: { link: destination.href, headlines: [] } };
         }
@@ -99,78 +60,35 @@ const fetchDetails = async (link: string): Promise<BlogDetails> => {
     }
 
     const modernBody = $('main .cms-markdown').first().parent();
-    if (modernBody.length) {
-        const header = modernBody.children().first();
-        const author = header.find('a[href^="/blog/authors/"]').last();
-        const authorHref = author.attr('href');
-        const description = modernBody
-            .children('.cms-markdown, div[class="mb-8"]')
-            .toArray()
-            .map((element) => $(element).html())
-            .join('');
-        return {
-            item: {
-                title: modernBody.find('h2').first().text(),
-                description,
-                pubDate: parseCalendarDate(header.find('p').text()),
-                category: modernBody
-                    .find('a[href^="/blog/tags/"], a[href^="/blog/categories/"]')
-                    .toArray()
-                    .map((element) => $(element).text()),
-                author: author.text() ? [{ name: author.text(), url: authorHref ? new URL(authorHref, baseUrl).href : undefined }] : undefined,
-                content: { html: description },
-            },
-        };
-    }
-
-    const title = $('h2.gradient-heading').text() || $('h1.gradient-heading').text();
-    $('h2.gradient-heading, div#shareDiv').remove();
-    const description = ($('div.blog-content').html() || $('div.docs-section').html()) ?? undefined;
-    const pubDateStr = $('div.blog-meta').text();
-    const category = [
-        ...new Set(
-            $('a.under-category')
-                .toArray()
-                .map((element) => $(element).text())
-                .filter(Boolean)
-        ),
-    ];
-    const author = $('img.avatar')
+    const author = modernBody.children().first().find('a[href^="/blog/authors/"]').last();
+    const authorHref = author.attr('href');
+    const description = modernBody
+        .children('.cms-markdown, div[class="mb-8"]')
         .toArray()
-        .map((element) => {
-            const authorElement = $(element).parent().next().find('a');
-            const authorHref = authorElement.attr('href');
-            const avatarSrc = $(element).attr('src');
-            return {
-                name: authorElement.text(),
-                url: authorHref ? new URL(authorHref, baseUrl).href : undefined,
-                avatar: avatarSrc ? new URL(avatarSrc.split(/\?/, 1)[0], baseUrl).href : undefined,
-            };
-        });
+        .map((element) => $(element).html())
+        .join('');
     return {
         item: {
-            ...(title && { title }),
-            ...(description && { description, content: { html: description } }),
-            ...(pubDateStr && { pubDate: parseDate(pubDateStr) }),
-            category,
-            author,
+            description,
+            category: modernBody
+                .find('a[href^="/blog/tags/"], a[href^="/blog/categories/"]')
+                .toArray()
+                .map((element) => $(element).text()),
+            author: [{ name: author.text(), url: authorHref ? new URL(authorHref, baseUrl).href : undefined }],
+            content: { html: description },
         },
     };
 };
 
 const enrichItem = async (item: DataItem): Promise<DataItem> => {
-    if (!item.link) {
-        return item;
-    }
-
     const detail = await cache.tryGet(`thebrain:blog:v2:${item.link}`, () => fetchDetails(item.link!));
     if (detail.redirect) {
         const destination = detail.redirect;
         let description = item.description;
-        if (destination.description && destination.headlines.some((headline) => normalizeHeadline(headline) === normalizeHeadline(item.title ?? ''))) {
+        if (destination.description && destination.headlines.some((headline) => normalizeHeadline(headline) === normalizeHeadline(item.title))) {
             const body = load(destination.description, null, false);
             const headings = body('h1, h2').slice(0, 2);
-            if (normalizeHeadline(headings.first().text()) === normalizeHeadline(item.title ?? '')) {
+            if (normalizeHeadline(headings.first().text()) === normalizeHeadline(item.title)) {
                 headings.first().remove();
             } else if (
                 normalizeHeadline(
@@ -178,7 +96,7 @@ const enrichItem = async (item: DataItem): Promise<DataItem> => {
                         .toArray()
                         .map((element) => body(element).text())
                         .join(' ')
-                ) === normalizeHeadline(item.title ?? '')
+                ) === normalizeHeadline(item.title)
             ) {
                 headings.remove();
             }
@@ -195,8 +113,6 @@ const enrichItem = async (item: DataItem): Promise<DataItem> => {
     return {
         ...item,
         ...detail.item,
-        title: item.title || detail.item?.title || '',
-        pubDate: item.pubDate ?? detail.item?.pubDate,
     };
 };
 
@@ -209,11 +125,8 @@ const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    const legacyRows = $('div.blog-row');
-    const modern = !legacyRows.length;
-    const rows = modern ? $('h4 > a[href^="/blog/"]').closest('div.flex.flex-row') : legacyRows;
-
-    let items: DataItem[] = rows
+    let items: DataItem[] = $('h4 > a[href^="/blog/"]')
+        .closest('div.flex.flex-row')
         .slice(0, limit)
         .toArray()
         .filter((el) => isTag(el))
@@ -222,9 +135,9 @@ const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('h4 a');
 
             const title: string = $aEl.text();
-            const imageSrc = $el.find(modern ? 'img' : 'div.round-corner-images img').attr('src');
-            const image = imageSrc ? (modern ? new URL(imageSrc, baseUrl).href : `https:${imageSrc.split(/\?/, 1)[0]}`) : undefined;
-            const summary = $el.find(modern ? '.cms-markdown' : 'p.small-text + *').html();
+            const imageSrc = $el.find('img').attr('src');
+            const image = imageSrc ? new URL(imageSrc, baseUrl).href : undefined;
+            const summary = $el.find('.cms-markdown').html();
             const description: string | undefined = renderToString(
                 <>
                     {image ? (
@@ -235,13 +148,12 @@ const handler = async (ctx: Context): Promise<Data> => {
                     {summary ? raw(summary) : null}
                 </>
             );
-            const pubDateStr: string | undefined = $el.find(modern ? 'h4 + p' : 'p.small-text').text();
             const linkUrl: string | undefined = $aEl.attr('href');
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: modern ? parseCalendarDate(pubDateStr) : pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: parseDate($el.find('h4 + p').text(), 'MMM D, YYYY', 0),
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,

@@ -23,8 +23,7 @@ async function handler() {
         async (item) => {
             const $item = $(item);
             const title = $item.find('.news_title a').text();
-            const date = $item.find('.news_date').text().trim();
-            const pubDate = date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDate($item.find('.news_date').text(), 'YYYY-MM-DD', 8);
             const singleUrl = new URL($item.find('.news_title a').attr('href')!, host).href;
             const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`usst:jwc:detail:${singleUrl}`, async () => {
                 if (new URL(singleUrl).hostname === 'webpro.usst.edu.cn') {
@@ -46,9 +45,8 @@ async function handler() {
                 return {
                     description: $detail('.wp_articlecontent').html(),
                     author:
-                        $detail('.arti_info.info1 .item_con').text().trim() ||
+                        $detail('.arti_info.info1 .item_con').text() ||
                         $detail('.arti_publisher')
-                            .first()
                             .text()
                             .replace(/^发布者[：:]\s*/, '')
                             .trim() ||

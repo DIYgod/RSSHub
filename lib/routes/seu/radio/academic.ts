@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: $e.find('.Article_PublishDate').text() ? parseDate(`${$e.find('.Article_PublishDate').text()}T00:00:00+08:00`) : undefined,
+                pubDate: parseDate(`${$e.find('.Article_PublishDate').text()}T00:00:00+08:00`),
             };
         });
 
@@ -58,11 +58,8 @@ async function handler() {
             const external = new URL(item.link!).hostname === 'mp.weixin.qq.com';
             try {
                 const detail = await cache.tryGet(item.link!, async () => {
-                    const response = await ofetch.raw(item.link!, { responseType: 'text' });
+                    const response = await ofetch.raw(item.link!);
                     const html = response._data;
-                    if (html === undefined) {
-                        throw new Error(`No article response body was returned for ${item.link}.`);
-                    }
                     const $ = load(html);
                     const content = external ? $('#js_content') : $('.wp_articlecontent');
                     if (external) {

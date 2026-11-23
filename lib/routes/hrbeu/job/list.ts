@@ -46,8 +46,8 @@ type NewsItem = {
     title: string;
     url: string;
     isExternalLink: boolean;
-    releaseDate?: string;
-    updateDate?: string;
+    releaseDate: string;
+    updateDate: string;
     description?: string;
     publisher?: string;
 };
@@ -73,8 +73,8 @@ async function handler(ctx) {
                     title: item.title,
                     link: new URL(item.url, rootUrl).href,
                     guid: item.id,
-                    pubDate: item.releaseDate ? parseDate(item.releaseDate, 8) : undefined,
-                    updated: item.updateDate ? parseDate(item.updateDate, 8) : undefined,
+                    pubDate: parseDate(item.releaseDate, 8),
+                    updated: parseDate(item.updateDate, 8),
                     author: item.publisher,
                     description: item.description,
                 };

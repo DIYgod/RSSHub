@@ -36,16 +36,11 @@ async function handler() {
             const $link = $item.find('td a').last();
             const $date = $item.find('.listing-date');
 
-            const href = $link.attr('href');
             const title = $link.text();
             const dateStr = $date.text();
 
-            if (!href || !title) {
-                throw new Error('Hamel returned a directory entry without its article title or link.');
-            }
-
-            const link = new URL(href, rootUrl).href;
-            const pubDate = dateStr ? parseDate(dateStr, 'M/D/YY', 0) : undefined;
+            const link = new URL($link.attr('href')!, rootUrl).href;
+            const pubDate = parseDate(dateStr, 'M/D/YY', 0);
 
             return {
                 title,
@@ -63,18 +58,15 @@ async function handler() {
                         const detailResponse = await got(item.link);
                         let $detail = load(detailResponse.data);
                         let articleUrl = item.link!;
-                        const redirectMap = /var redirects = (\{[^;]*\});/.exec($detail('script').text());
+                        const redirectMap = /var redirects = (\{[^;]*\});/.exec($detail('script:contains("var redirects")').text());
                         if ($detail('title').text() === 'Redirect' && redirectMap) {
-                            const destination = JSON.parse(redirectMap[1])[''];
-                            if (typeof destination === 'string') {
-                                const target = new URL(destination, item.link);
-                                if (target.origin !== new URL(item.link!).origin) {
-                                    throw new Error('Hamel linked a redirect outside the original article site.');
-                                }
-                                const redirectedResponse = await got(target.href);
-                                $detail = load(redirectedResponse.data);
-                                articleUrl = target.href;
+                            const target = new URL(JSON.parse(redirectMap[1])[''], item.link);
+                            if (target.origin !== new URL(item.link!).origin) {
+                                throw new Error('Hamel linked a redirect outside the original article site.');
                             }
+                            const redirectedResponse = await got(target.href);
+                            $detail = load(redirectedResponse.data);
+                            articleUrl = target.href;
                         }
                         const content = $detail('.content, .post-content, .post__content, blockquote.abstract').first();
                         if (content.is('blockquote.abstract')) {

@@ -1,7 +1,4 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
@@ -53,21 +50,14 @@ export const route: Route = {
 [\`https://news.toranoana.jp/category/media\`](https://news.toranoana.jp/category/media)→\`/toranoana/news/media\`
 :::`,
 };
-function parsePubDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(/z|[+-]\d{2}:?\d{2}$/i.test(value) ? value : `${value}Z`);
-}
 function getCategories(content: string) {
     const $ = load(content);
-    return mapElements(
-        $('h2')
-            .filter((_, heading) => ['この記事のカテゴリー', 'この記事のタグ'].includes($(heading).text()))
-            .next('div')
-            .find('a'),
-        (_, link) => $(link).text()
-    );
+    return $('h2')
+        .filter((_, heading) => ['この記事のカテゴリー', 'この記事のタグ'].includes($(heading).text()))
+        .next('div')
+        .find('a')
+        .toArray()
+        .map((link) => $(link).text());
 }
 async function handler(ctx): Promise<Data> {
     const { category = '' } = ctx.req.param();
@@ -90,9 +80,9 @@ async function handler(ctx): Promise<Data> {
                 rendered: string;
             };
             link: string;
-            date_gmt?: string;
-            _embedded?: {
-                author?: Array<{
+            date_gmt: string;
+            _embedded: {
+                author: Array<{
                     name: string;
                 }>;
             };
@@ -100,7 +90,7 @@ async function handler(ctx): Promise<Data> {
     >(apiUrl, {
         query: {
             per_page: 20,
-            _embed: 'wp:featuredmedia,author',
+            _embed: 'author',
         },
     });
     if (!posts || !posts.length) {
@@ -112,23 +102,20 @@ async function handler(ctx): Promise<Data> {
             title: post.title.rendered,
             link: post.link,
             description: await cache.tryGet(`toranoana:body:${post.link}`, async () => {
-                const response = await ofetch(post.link, { responseType: 'text' });
+                const response = await ofetch(post.link);
                 const $ = load(response);
-                const content = $('.post-contents').first();
-                if (!content.length) {
-                    throw new Error(`Article content not found: ${post.link}`);
-                }
-                content.prepend(copyContent($('.post-main-img img').first(), $));
+                const content = $('.post-contents');
+                content.prepend($.html($('.post-main-img img')));
                 content.find('img[data-src]').each((_, image) => {
                     const element = $(image);
                     element.attr('src', element.attr('data-src'));
                 });
                 return $.html(content);
             }),
-            pubDate: parsePubDate(post.date_gmt),
+            pubDate: parseDate(`${post.date_gmt}Z`),
             category: getCategories(post.content.rendered),
             guid: post.link,
-            author: post._embedded?.author?.map((author) => author.name).join(', ') || undefined,
+            author: post._embedded.author.map((author) => author.name).join(', '),
         }),
         { concurrency: 3 }
     );
@@ -139,15 +126,4 @@ async function handler(ctx): Promise<Data> {
         item: items.filter(Boolean),
         language: 'ja',
     };
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

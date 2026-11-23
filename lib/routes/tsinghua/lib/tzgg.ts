@@ -8,11 +8,11 @@ import { parseDate } from '@/utils/time';
 
 type ArticleDetails = Pick<DataItem, 'description' | 'author' | 'updated'>;
 type XiumiDocument = {
-    cubes?: Array<{
-        pages?: Array<{
-            layers?: Array<{
-                _comp?: {
-                    _$raHTML?: string;
+    cubes: Array<{
+        pages: Array<{
+            layers: Array<{
+                _comp: {
+                    _$raHTML: string;
                 };
             }>;
         }>;
@@ -20,37 +20,30 @@ type XiumiDocument = {
 };
 async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     const response = await ofetch(link);
-    const $ = load(response);
     if (new URL(link).hostname === 'c.xiumius.cn') {
         const encodedInfo = response.match(/injectedData\.showInfo\s*=\s*JSON\.parse\(decodeURIComponent\("([^"]+)"/);
         if (encodedInfo) {
             const info: {
-                show_data_url?: string;
-                owner?: {
-                    nickname?: string;
+                show_data_url: string;
+                owner: {
+                    nickname: string;
                 };
-                updated_at?: string;
+                updated_at: string;
             } = JSON.parse(decodeURIComponent(encodedInfo[1]));
-            if (info.show_data_url) {
-                const dataUrl = new URL(info.show_data_url, link);
-                if (dataUrl.protocol === 'https:' && dataUrl.hostname === 'sd.xiumius.cn' && dataUrl.pathname.startsWith('/xmi/pd/')) {
-                    const document = await ofetch<XiumiDocument>(dataUrl.href);
-                    const description = document.cubes
-                        ?.flatMap((cube) => cube.pages ?? [])
-                        .flatMap((page) => page.layers ?? [])
-                        .map((layer) => layer._comp?._$raHTML)
-                        .filter(Boolean)
-                        .join('');
-                    return {
-                        description: description || undefined,
-                        author: info.owner?.nickname,
-                        updated: info.updated_at ? parseDate(info.updated_at) : undefined,
-                    };
-                }
-            }
+            const document = await ofetch<XiumiDocument>(new URL(info.show_data_url, link).href);
+            return {
+                description: document.cubes
+                    .flatMap((cube) => cube.pages)
+                    .flatMap((page) => page.layers)
+                    .map((layer) => layer._comp._$raHTML)
+                    .join(''),
+                author: info.owner.nickname,
+                updated: parseDate(info.updated_at),
+            };
         }
     }
-    return { description: $('.v_news_content').html() || undefined };
+    const $ = load(response);
+    return { description: $('.v_news_content').html() };
 }
 export const route: Route = {
     path: '/lib/tzgg/:category?',
@@ -126,14 +119,14 @@ async function handler(ctx) {
             } => {
                 const $item = $(item);
                 const title = $item.find('a').text();
-                const time = $item.find('.notice-date').text().trim();
+                const time = $item.find('.notice-date').text();
                 const a = $item.find('a').attr('href');
                 const itemCategory = category ? feedTitle : $item.find('.notice-label').text();
                 const fullUrl = new URL(a!, host).href;
                 return {
                     title,
                     link: fullUrl,
-                    pubDate: time ? parseDate(time, 'YYYY/MM/DD', 8) : undefined,
+                    pubDate: parseDate(time, 'YYYY/MM/DD', 8),
                     category: itemCategory,
                 };
             }

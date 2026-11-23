@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:caty?',
@@ -24,19 +24,9 @@ export const route: Route = {
     handler,
 };
 const rootUrl = 'https://yuancheng.work/';
-function parseGmtDate(value: string | undefined) {
-    if (!value) {
-        return;
-    }
-    const date = parseDateStrict(value.replace(/(?:Z|\+00:00)$/, ''), ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], 0);
-    if (date) {
-        return date;
-    }
-}
 async function handler(ctx: Context) {
     const { caty = 'all' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') ?? 10);
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.min(Math.floor(requestedLimit), 100) : 10;
+    const limit = Number(ctx.req.query('limit') ?? 10);
     let category;
     if (caty !== 'all') {
         const slug = `remote-${caty}-jobs`;
@@ -52,7 +42,7 @@ async function handler(ctx: Context) {
     }
     const posts = await ofetch(`${rootUrl}wp-json/wp/v2/posts`, {
         query: {
-            per_page: limit === 10 ? undefined : limit,
+            per_page: limit === 10 ? undefined : Math.min(limit, 100),
             categories: category?.id,
             _embed: '',
         },
@@ -62,7 +52,7 @@ async function handler(ctx: Context) {
         link: post.link,
         guid: post.guid.rendered,
         description: post.content.rendered,
-        pubDate: parseGmtDate(post.date_gmt),
+        pubDate: parseDate(post.date_gmt, 0),
         author: post._embedded.author.map((author) => author.name).join(', '),
         category: post._embedded['wp:term'].flat().map((term) => term.name),
     }));

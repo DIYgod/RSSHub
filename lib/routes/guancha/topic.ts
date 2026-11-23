@@ -79,9 +79,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const time = content('.time1').text();
                 return {
-                    pubDate: time ? parseRelativeDate(time, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8) : undefined,
+                    pubDate: parseRelativeDate(content('.time1').text(), ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8),
                     author: content('.user-main h4 a').first().text(),
                     description: content('.article-txt-content').html(),
                 };

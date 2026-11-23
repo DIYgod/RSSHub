@@ -44,7 +44,7 @@ async function handler(ctx) {
     }
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
-        const pubDate = Number.isFinite(item.time_scheduled) ? parseDate(item.time_scheduled) : undefined;
+        const pubDate = parseDate(item.time_scheduled);
         const videoUrl = item.video_url || item.media?.[0]?.url || '';
         const posterUrl = item.poster_url || item.image_auto_url || '';
 

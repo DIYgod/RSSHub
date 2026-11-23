@@ -34,7 +34,7 @@ async function handler() {
         title: 'Zread - 热门项目',
         link: 'https://zread.ai/trending',
         language: 'zh-CN' as const,
-        item: (response.data[0]?.repos ?? []).map((repository) => ({
+        item: response.data[0].repos.map((repository) => ({
             title: `${repository.owner}/${repository.name}`,
             link: repository.url,
             description: renderToString(<p>{repository.description_zh || repository.description}</p>),

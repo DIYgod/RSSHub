@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { getPlaywrightPage } from '@/utils/playwright';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://cqe.uestc.edu.cn/';
 
@@ -79,11 +79,7 @@ async function handler(ctx) {
             const $item = $(item);
             const newsTitle = $item.find('a').attr('title');
             const newsLink = baseUrl + $item.find('a').attr('href')!.slice(3);
-            const newsDate = $item
-                .find('span')
-                .text()
-                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-            const newsPubDate = newsDate ? parseDateStrict(newsDate, 'YYYY-MM-DD', 8) : undefined;
+            const newsPubDate = parseDate($item.find('span').text().slice(1, -1), 8);
 
             return {
                 title: newsTitle!,

@@ -11,19 +11,6 @@ import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-const getPdfUrl = (element: Cheerio<Element>): string | undefined => {
-    const pdfUrl = element.attr('data') || element.attr('onclick')?.match(/togglePdf\('.*?',\s'(.*?)',\sthis\)/)?.[1];
-    if (!pdfUrl) {
-        return undefined;
-    }
-    try {
-        const url = new URL(pdfUrl, 'https://papers.cool');
-        return ['http:', 'https:'].includes(url.protocol) ? url.href : undefined;
-    } catch {
-        return undefined;
-    }
-};
-
 const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
@@ -61,19 +48,15 @@ const handler = async (ctx: Context): Promise<Data> => {
                     avatar: undefined,
                 };
             });
-            const paperId = $el.attr('id');
-            const doi = paperId && /^10\.\d{4,9}\/\S+$/.test(paperId) ? paperId : undefined;
-            const link = linkUrl ? new URL(linkUrl, baseUrl).href : undefined;
-            const guid = paperId ? `papers.cool-${paperId}` : link;
+            const guid = `papers.cool-${$el.attr('id')}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             let processedItem: DataItem = {
                 title,
                 pubDate: pubDateStr ? parseDate(pubDateStr, 0) : undefined,
-                link,
+                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
-                doi,
                 guid,
                 id: guid,
                 updated: upDatedStr ? parseDate(upDatedStr, 0) : undefined,
@@ -81,7 +64,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             };
 
             const $enclosureEl: Cheerio<Element> = $el.find('a.title-pdf');
-            const enclosureUrl = getPdfUrl($enclosureEl);
+            const enclosureUrl = $enclosureEl.attr('data');
 
             if (enclosureUrl) {
                 processedItem = {
@@ -94,10 +77,9 @@ const handler = async (ctx: Context): Promise<Data> => {
             }
 
             const summary = $el.find('p.summary').text();
-            const kimiId = $el.find('a.title-kimi').attr('id');
             const description: string = renderDescription({
                 pdfUrl: enclosureUrl,
-                kimiUrl: kimiId ? new URL(`#${kimiId}`, targetUrl).href : undefined,
+                kimiUrl: new URL(`#${$el.find('a.title-kimi').attr('id')}`, targetUrl).href,
                 summary,
             });
 
@@ -111,8 +93,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             };
 
             return processedItem;
-        })
-        .filter((item) => item.guid);
+        });
 
     return {
         title: $('title').text(),

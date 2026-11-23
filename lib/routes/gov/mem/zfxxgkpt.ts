@@ -57,11 +57,10 @@ async function handler(ctx) {
                 return null;
             }
             const link = new URL(href, iframeUrl).href;
-            const pubDate = $(item).find('.fbsj').text();
             return {
                 title: aLabel.contents().first().text(),
                 link,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($(item).find('.fbsj').text(), 8),
             };
         })
         .filter((item) => item !== null);
@@ -83,8 +82,8 @@ async function handler(ctx) {
                 return {
                     ...item,
                     description,
-                    author: author || undefined,
-                    category: category || undefined,
+                    author,
+                    category,
                 };
             })
         )

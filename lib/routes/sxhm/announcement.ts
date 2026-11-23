@@ -45,7 +45,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: dateStr ? parseDate(dateStr, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate(dateStr, 'YYYY-MM-DD', 8),
                 };
             });
 

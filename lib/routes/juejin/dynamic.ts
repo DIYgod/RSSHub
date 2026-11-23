@@ -36,8 +36,8 @@ async function handler(ctx) {
             cursor: 0,
         },
     });
-    const list = response.data?.list;
-    if (!Array.isArray(list) || !list.length) {
+    const list = response.data.list;
+    if (!list.length) {
         throw new Error(`No activities were returned for Juejin user ${id}; check the user profile and source API availability.`);
     }
 

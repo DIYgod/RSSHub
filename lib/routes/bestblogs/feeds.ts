@@ -50,8 +50,8 @@ async function handler(ctx) {
         title: article.title,
         link: article.url,
         description: article.summary,
-        pubDate: article.publishTimeStamp ? parseDate(article.publishTimeStamp) : undefined,
-        author: article.authors?.map((name) => ({ name })),
+        pubDate: parseDate(article.publishTimeStamp),
+        author: article.authors.map((name) => ({ name })),
         category: article.category,
     }));
 

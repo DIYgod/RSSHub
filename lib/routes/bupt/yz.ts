@@ -89,10 +89,8 @@ async function handler(ctx: Context) {
                 };
             })
             .filter((item) => item.pubDate);
-        const orderedList = list;
-        const entries = orderedList;
         const result = await Promise.all(
-            entries.map((item) => {
+            list.map((item) => {
                 // only follow links on the site itself
                 if (!isOnSite(item.link, 'bupt.edu.cn')) {
                     return item;

@@ -35,10 +35,7 @@ export const route: Route = {
 | 全部新闻 | 港股直擊 | 香港財經 | 地產新聞 | 中國財經 | 國際財經      | 時事脈搏 | 即巿股評 | 重要通告     | 港交所通告 |`,
 };
 
-function getArticleLink(href: string | undefined, baseUrl: string) {
-    if (!href) {
-        throw new Error('The Hong Kong Economic Journal listing is missing an article link.');
-    }
+function getArticleLink(href: string, baseUrl: string) {
     const url = new URL(href, baseUrl);
     const articlePath = url.pathname.match(/^(.+\/article\/\d+)(?:\/.*)?$/)?.[1];
     if (!articlePath) {
@@ -66,7 +63,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: getArticleLink($item.attr('href'), baseUrl),
+                link: getArticleLink($item.attr('href')!, baseUrl),
             };
         });
 

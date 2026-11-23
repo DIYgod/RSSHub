@@ -72,10 +72,10 @@ async function handler(ctx) {
         description = $('channel > description').text();
         list = $('item')
             .toArray()
-            .flatMap((item) => {
+            .map((item) => {
                 const $item = $(item);
                 const link = $item.find('link').text();
-                return link ? { link: new URL(link, currentUrl).href } : [];
+                return { link: new URL(link, currentUrl).href };
             });
     } else {
         title = $('head > title').text();
@@ -122,12 +122,10 @@ async function handler(ctx) {
                 );
 
                 const ldJson = JSON.parse($('script[type="application/ld+json"]').text() || '[]').find((obj) => obj['@type'] === 'NewsArticle');
-                const authors = Array.isArray(ldJson?.author) ? ldJson.author : [ldJson?.author];
-                article.author ||=
-                    authors
-                        .map((author) => (typeof author === 'string' ? author : author?.name))
-                        .filter(Boolean)
-                        .join(', ') || undefined;
+                article.author ||= ldJson?.author
+                    .map((author) => author?.name)
+                    .filter(Boolean)
+                    .join(', ');
                 const pubDateMatch = ldJson && ldJson.datePublished;
                 const updatedMatch = ldJson && ldJson.dateModified;
                 if (pubDateMatch) {

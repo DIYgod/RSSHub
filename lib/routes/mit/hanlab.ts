@@ -44,7 +44,7 @@ async function handler() {
             const link = new URL(el.attr('href') ?? '', rootUrl).href;
             const description = el.find('p.text-tldr').html();
             const dateText = el.find('div.text-date').text();
-            const pubDate = dateText.trim() ? parseDate(dateText.trim(), 'MMM D, YYYY', 0) : undefined;
+            const pubDate = parseDate(dateText, 'MMM D, YYYY', 0);
 
             return {
                 title,

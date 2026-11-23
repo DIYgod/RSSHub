@@ -87,10 +87,6 @@ async function handler(ctx) {
                             content: $(item).find('ul').toString(),
                         }));
 
-                    if (!numStats.length && !tableData.length && !$('.tab-pane li').length) {
-                        throw new Error(`Statistics are unavailable for ${country} on ${dateFormatted}: the source returned no statistics data.`);
-                    }
-
                     const content = renderToString(
                         <article>
                             <div className="stats">

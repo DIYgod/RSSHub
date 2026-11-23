@@ -203,8 +203,8 @@ export default async function handler(ctx: Context) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
-        const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text.split('\n', 1)[0] || (pubDate && toRFC822(pubDate)) || '';
+        const pubDate = parseDate(message.date * 1000)!;
+        const title = message.text.split('\n', 1)[0] || toRFC822(pubDate);
         item.push({
             title,
             description,

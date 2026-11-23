@@ -3,6 +3,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const titles = {
@@ -52,29 +53,13 @@ export const route: Route = {
 | medicine     | 医药  |`,
 };
 
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    const seconds = Number(value);
-    if (!Number.isFinite(seconds)) {
-        return;
-    }
-    return parseDate(seconds * 1000);
-}
-
-function parseLimit(value: string | undefined, defaultLimit: number) {
-    const limit = Number(value);
-    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
-}
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
 
     const rootUrl = 'https://wallstreetcn.com';
     const apiRootUrl = 'https://api-one.wallstcn.com';
     const currentUrl = `${rootUrl}/news/${category}`;
-    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${parseLimit(ctx.req.query('limit'), 25)}`;
+    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${getRouteLimit(ctx, 25)}`;
 
     const response = await got({
         method: 'get',
@@ -87,7 +72,7 @@ async function handler(ctx) {
             type: item.resource_type,
             guid: item.resource.id,
             link: item.resource.uri,
-            pubDate: parseSourceTime(item.resource.display_time),
+            pubDate: parseDate(item.resource.display_time * 1000),
         }));
 
     items = await pMap<DataItem & { type?: string }, DataItem | null>(
@@ -112,7 +97,7 @@ async function handler(ctx) {
 
                     const details: Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> = {
                         title: data.title || data.content_text,
-                        author: data.source_name || data.author?.display_name,
+                        author: data.source_name || data.author.display_name,
                         description: data.content + (data.content_more ?? ''),
                         category: data.asset_tags?.map((tag) => tag.name) ?? [],
                     };

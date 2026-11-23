@@ -54,7 +54,7 @@ async function handler() {
             description: await cache.tryGet(`${item.link}:body`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                return $('.news_contents_editor').html() ?? '';
+                return $('.news_contents_editor').html();
             }),
         }),
         { concurrency: 3 }

@@ -17,7 +17,7 @@ const apiHeaders = (site) => {
 const mediaParse = (media_attachments) =>
     media_attachments
         .map((item) => {
-            const selectedUrl = escapeUTF8(item.remote_url ?? item.url ?? '');
+            const selectedUrl = escapeUTF8(item.remote_url ?? item.url);
             const description = escapeUTF8(item.description ?? '');
             switch (item.type) {
                 case 'gifv':

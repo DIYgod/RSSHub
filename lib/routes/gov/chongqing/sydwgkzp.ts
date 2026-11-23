@@ -59,11 +59,10 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a');
-            const pubDate = $item.find('span').text();
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, sydwgkzpUrl).href,
-                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 

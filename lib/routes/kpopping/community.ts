@@ -27,7 +27,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         const link = `https://kpopping.com/community/${item.slug}`;
         const dateStr = item.publishedAt ?? item.createdAt;
         const pubDate = dateStr ? parseDate(dateStr) : undefined;
-        const category = [item.category, ...(item.tags ?? [])].filter(Boolean);
+        const category = [item.category, ...(item.tags ?? [])];
         const author = item.authorName;
 
         return {

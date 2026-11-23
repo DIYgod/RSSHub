@@ -4,13 +4,6 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-function parsePortalDate(sourceDate: string) {
-    if (!sourceDate.trim()) {
-        return;
-    }
-    return parseDate(sourceDate, 'YYYY-MM-DD, HH:mm', 8);
-}
-
 export const route: Route = {
     path: '/portal',
     categories: ['bbs'],
@@ -70,7 +63,7 @@ async function handler() {
                     description: $item.find('.portal_news_content .row18').html(),
                     link: new URL($item.find('.maintitle p:nth-child(2) > a').attr('href')!, 'https://trow.cc').href,
                     author: $item.find('.postdetails a').text(),
-                    pubDate: parsePortalDate(dateraw.slice(3)),
+                    pubDate: parseDate(dateraw.slice(3), 'YYYY-MM-DD, HH:mm', 8),
                 };
             }),
     };

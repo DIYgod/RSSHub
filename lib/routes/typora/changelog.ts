@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, toISOString } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/changelog',
@@ -30,29 +30,13 @@ export const route: Route = {
     url: 'support.typora.io/',
 };
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-function getPublicationDate(value: string): Temporal.Instant | undefined {
-    const match = /^([A-Z][a-z]+) (\d{1,2}), (\d{4})$/.exec(value.replaceAll(/\s+/g, ' ').trim());
-    if (!match) {
-        return;
-    }
-    const month = months.indexOf(match[1]) + 1;
-    if (!month) {
-        return;
-    }
-    const calendarDate = `${match[3]}-${String(month).padStart(2, '0')}-${match[2].padStart(2, '0')}`;
-    const date = parseDate(`${calendarDate}T00:00:00Z`);
-    return date && toISOString(date).startsWith(calendarDate) ? date : undefined;
-}
-
 async function getArticleItem(item: DataItem & { link: string }): Promise<DataItem> {
     const details = await cache.tryGet<Pick<DataItem, 'pubDate' | 'description'>>(`typora:changelog:${item.link}`, async () => {
         const { data } = await got(item.link);
         const $ = load(data);
         const publication = $('#header .post-meta > div').filter((_, element) => $(element).children('div').first().text() === 'Published');
         return {
-            pubDate: getPublicationDate(publication.find('time').text()),
+            pubDate: parseDate(publication.find('time').text(), 'MMMM D, YYYY', 0),
             description: $('#post-content').html(),
         };
     });

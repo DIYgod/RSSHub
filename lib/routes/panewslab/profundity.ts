@@ -1,7 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { getArticles, getLimit, processArticles, rootUrl } from './utils';
+import { getArticles, processArticles, rootUrl } from './utils';
 
 const categories = {
     精选: '',
@@ -37,7 +38,7 @@ async function handler(ctx) {
     if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError(`Unknown article category: ${category}`);
     }
-    const articles = await getArticles({ isInDepth: true, take: getLimit(ctx.req.query('limit'), 25), ...(categories[category] && { tagId: categories[category] }) });
+    const articles = await getArticles({ isInDepth: true, take: getRouteLimit(ctx, 25), ...(categories[category] && { tagId: categories[category] }) });
     return {
         title: `PANews - ${category}`,
         link: `${rootUrl}/zh/in-depth`,

@@ -7,14 +7,6 @@ import { parseDate } from '@/utils/time';
 const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
 
-function parseUnixDate(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-
-    return parseDate(value * 1000);
-}
-
 export const route: Route = {
     path: '/',
     categories: ['travel'],
@@ -41,12 +33,12 @@ async function handler() {
     const items = metadata.activities.map((item) => ({
         title: item.title + '-' + (item.map?.name || 'Japan'),
         link: baseUrl + item.id.toString(),
-        pubDate: parseUnixDate(item.public_at),
-        updated: parseUnixDate(item.updated_at),
-        author: typeof item.user?.name === 'string' ? item.user.name : undefined,
-        category: typeof item.activity_type?.name === 'string' && item.activity_type.name ? [item.activity_type.name] : undefined,
-        image: typeof item.image?.url === 'string' && item.image.url ? item.image.url : undefined,
-        description: typeof item.description === 'string' && item.description ? `<p>${escapeText(item.description).replaceAll('\n', '<br>\n')}</p>` : undefined,
+        pubDate: parseDate(item.public_at * 1000),
+        updated: parseDate(item.updated_at * 1000),
+        author: item.user.name,
+        category: [item.activity_type.name],
+        image: item.image?.url,
+        description: item.description ? `<p>${escapeText(item.description).replaceAll('\n', '<br>\n')}</p>` : undefined,
     }));
 
     return {

@@ -39,7 +39,7 @@ export const route: Route = {
                     title: $item.find('h2').text(),
                     link: new URL($item.find('a.feed-card-link').attr('href')!, baseUrl).href,
                     description: $item.find('p[data-smart-excerpt]').text(),
-                    category: [$item.find('.feed-card-badge').text().trim()],
+                    category: [$item.find('.feed-card-badge').text()],
                     image: $item.find('img').attr('src'),
                 };
             })
@@ -52,7 +52,7 @@ export const route: Route = {
                     const page = await ofetch(item.link!);
                     const $page = load(page);
 
-                    item.pubDate = parseDate($page('time[datetime]').first().attr('datetime')!);
+                    item.pubDate = parseDate($page('time[datetime]').attr('datetime')!);
                     item.description = $page('.article-content').html() ?? item.description;
 
                     return item;

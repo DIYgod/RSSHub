@@ -74,10 +74,8 @@ async function handler(ctx) {
             accept: 'application/json',
         },
     });
-    const orderedThreads = res.ThreadIndex;
-    const candidates = orderedThreads;
     const items = await pMap(
-        candidates,
+        res.ThreadIndex,
         (thread) => {
             const link = 'https://bbs.deepin.org/post/' + thread.id;
             return cache.tryGet(link, async () => {

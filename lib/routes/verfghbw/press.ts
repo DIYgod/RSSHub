@@ -56,12 +56,11 @@ async function handler() {
                 const $$ = load(detail.data);
 
                 return {
-                    description: $$('.news-text-wrap').html() ?? undefined,
-                    pubDate: parsePublicationDate($$('.news-single time').attr('datetime')),
+                    description: $$('.news-text-wrap').html(),
+                    pubDate: parseDateStrict($$('.news-single time').prop('datetime'), 'YYYY-MM-DD', 0),
                     category: $$('.news-list-category')
                         .toArray()
-                        .map((element) => $$(element).text().trim())
-                        .filter(Boolean),
+                        .map((element) => $$(element).text().trim()),
                 };
             });
 
@@ -81,14 +80,4 @@ async function handler() {
         description: 'Pressemitteilungen des Verfassungsgerichtshof für das Land Baden-Württemberg',
         item: items,
     };
-}
-
-function parsePublicationDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-
-    const date = parseDateStrict(value, 'YYYY-MM-DD', 0);
-    // Preserve the source calendar day without inferring a publication time.
-    return date;
 }

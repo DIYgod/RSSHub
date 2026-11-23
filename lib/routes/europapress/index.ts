@@ -56,7 +56,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { category = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 10);
-    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit ?? 10, 10);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit, 10);
 
     const rootUrl = 'https://www.europapress.es';
     const currentUrl = `${rootUrl}${category ? `/${category}` : ''}`;

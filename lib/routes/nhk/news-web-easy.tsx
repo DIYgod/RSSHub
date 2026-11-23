@@ -110,7 +110,7 @@ async function handler(ctx) {
                         },
                     });
                     const $ = load(data);
-                    return $('.article-body').html() ?? '';
+                    return $('.article-body').html();
                 })),
         }),
         { concurrency: 3 }

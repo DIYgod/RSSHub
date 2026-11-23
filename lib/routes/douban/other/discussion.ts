@@ -42,11 +42,10 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
-            const date = $item.find('.time').text();
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($item.find('.time').text(), 8),
                 author: $item.find('a').eq(1).text(),
             };
         });

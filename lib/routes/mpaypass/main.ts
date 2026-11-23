@@ -38,18 +38,15 @@ async function handler(ctx) {
 
     const $ = load(data);
 
-    const titleCn = type ? $(`a[href="${titleUrl}"]`).first().text().trim() : '最新文章';
+    const titleCn = type ? $(`a[href="${titleUrl}"]`).first().text() : '最新文章';
     const list = $(type ? '.pl-item' : '.new-list-with-img .nli-item')
         .toArray()
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item
-                    .find(type ? '.pl-title' : '.nli-title')
-                    .text()
-                    .trim(),
+                title: $item.find(type ? '.pl-title' : '.nli-title').text(),
                 link: (type ? $item.find('.pl-title a') : $item).attr('href'),
-                time: $item.find('time').text().trim(),
+                time: $item.find('time').text(),
                 category: $item
                     .find('.pl-tag')
                     .toArray()

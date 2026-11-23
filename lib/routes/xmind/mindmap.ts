@@ -17,13 +17,6 @@ export const route: Route = {
 | en      | es      | de      | fr       | zh   | jp     |`,
 };
 
-function parseCreated(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx: Context) {
     const { lang = '' } = ctx.req.param();
 
@@ -36,7 +29,7 @@ async function handler(ctx: Context) {
             title: item.topic,
             link: `https://www.xmind.net/${item.id}`,
             description: `<img src="${item.previewUrl}">`,
-            pubDate: parseCreated(item.created),
+            pubDate: parseDate(item.created),
             author: item.profileName,
         })),
     };

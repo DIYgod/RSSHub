@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import { parseDate, toInstant } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/archives',
@@ -53,7 +53,7 @@ async function handler(ctx) {
             const link = new URL($item.find('.title a').attr('href')!, currentUrl).href;
             const dateStr = $item.find('.date').text().trim();
             const publishedDate = dates.get(link);
-            const pubDate = publishedDate ? parseDate(publishedDate) : dateStr ? parseDate(dateStr, 0) : undefined;
+            const pubDate = publishedDate ? parseDate(publishedDate) : parseDate(dateStr, 0);
 
             return {
                 title,
@@ -61,7 +61,6 @@ async function handler(ctx) {
                 pubDate,
             };
         });
-    const hasDates = items.every((item) => dates.has(item.link!) && item.pubDate && toInstant(item.pubDate));
 
     items = await pMap(
         items,
@@ -70,11 +69,6 @@ async function handler(ctx) {
                 try {
                     const detailResponse = await got(item.link);
                     const $detail = load(detailResponse.data);
-
-                    const published = $detail('.post-info time[datetime]').attr('datetime');
-                    if (published && !hasDates) {
-                        item.pubDate = parseDate(published.replace(/\sUTC$/, ''), 'YYYY-MM-DD HH:mm:ss ZZ');
-                    }
 
                     // Keep every article paragraph and section, excluding page metadata and subscription widgets.
                     item.description = $detail('.post > .paragraph, .post > .sect1')

@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { processImage } from './utils';
@@ -39,9 +40,6 @@ async function handler(ctx) {
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少知乎用户登录后的 Cookie 值');
     }
-    const limitValue = ctx.req.query('limit');
-    const requestedLimit = limitValue && /^\d+$/.test(limitValue) ? Number(limitValue) : NaN;
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 15;
     const response = await got({
         method: 'get',
         url: 'https://www.zhihu.com/api/v3/moments',
@@ -50,7 +48,7 @@ async function handler(ctx) {
         },
         searchParams: {
             desktop: true,
-            limit,
+            limit: getRouteLimit(ctx, 15),
         },
     });
     const feeds = response.data.data;

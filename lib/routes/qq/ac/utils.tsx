@@ -6,6 +6,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://ac.qq.com';
 const mobileRootUrl = 'https://m.ac.qq.com';
@@ -27,16 +28,15 @@ export const parseComicPage = ($: CheerioAPI) => {
     return {
         author: $('.works-author-name, .author-wr')
             .toArray()
-            .map((a) => $(a).text().trim())
+            .map((a) => $(a).text())
             .join(', '),
-        image: $('.works-cover img, .head-cover').first().attr('src'),
-        description: $('.works-intro-short, .head-info-desc').first().text(),
+        image: $('.works-cover img, .head-cover').attr('src'),
+        description: $('.works-intro-short, .head-info-desc').text(),
         chapters: desktop ? chapters.toReversed() : chapters,
     };
 };
 const ProcessItems = async (ctx, currentUrl, time, title) => {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -89,7 +89,7 @@ export { mobileRootUrl, ProcessItems, rootUrl };
 
 const QqAcDescription = ({ image, description, chapters }: { image?: string; description: string; chapters: Array<{ link?: string; title?: string; image?: string }> }) => (
     <>
-        {image ? <img src={image} /> : null}
+        <img src={image} />
         {description === '' ? null : <p>{description}</p>}
         {chapters.map((chapter) => (
             <div>

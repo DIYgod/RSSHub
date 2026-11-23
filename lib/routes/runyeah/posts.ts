@@ -48,11 +48,7 @@ async function handler(ctx: Context) {
             description: await cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.body);
-                const body = $('article .article-content[itemprop="articleBody"]');
-                if (!body.length) {
-                    throw new Error('Runyeah article body is missing');
-                }
-                return body.html();
+                return $('article .article-content[itemprop="articleBody"]').html();
             }),
         }),
         { concurrency: 3 }

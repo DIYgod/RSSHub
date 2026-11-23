@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
@@ -14,7 +14,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -26,49 +26,38 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = 'http://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
-    const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });
-    try {
-        await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-        await page.goto(link, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('font.newslist_style');
-        const pageContent = await page.content();
-        const $ = load(pageContent);
-        const list = $('font.newslist_style')
-            .toArray()
-            .map((item): DataItem => {
-                const a = $(item).find('a[title]');
-                return {
-                    title: a.attr('title')!,
-                    link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
-                };
+    const link = 'https://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
+    const response = await ofetch(link);
+    const $ = load(response);
+    const list = $('font.newslist_style')
+        .toArray()
+        .map((item): DataItem => {
+            const a = $(item).find('a[title]');
+            return {
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
+            };
+        });
+    const items = await pMap(
+        list,
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'pbc.gov.cn')) {
+                return item;
+            }
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                item.description = content('#zoom').html();
+                item.pubDate = parseDate(content('#shijian').text(), 8);
+                return item;
             });
-        const items = await pMap(
-            list,
-            (item) => {
-                // only follow links on the site itself
-                if (!isOnSite(item.link, 'pbc.gov.cn')) {
-                    return item;
-                }
-                return cache.tryGet(item.link!, async () => {
-                    await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
-                    await page.waitForSelector('#zoom');
-                    const detailContent = await page.content();
-                    const content = load(detailContent);
-                    item.description = content('#zoom').html();
-                    const dateText = content('#shijian').text().trim();
-                    item.pubDate = dateText ? parseDate(dateText, 8) : undefined;
-                    return item;
-                });
-            },
-            { concurrency: 1 }
-        );
-        return {
-            title: '中国人民银行 - 货币政策司公开市场交易公告',
-            link,
-            item: items,
-        };
-    } finally {
-        await destroy();
-    }
+        },
+        { concurrency: 1 }
+    );
+    return {
+        title: '中国人民银行 - 货币政策司公开市场交易公告',
+        link,
+        item: items,
+    };
 }

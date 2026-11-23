@@ -1,10 +1,8 @@
 import { load } from 'cheerio';
-import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -20,17 +18,9 @@ import { isOnSite } from '@/utils/valid-host';
  */
 const arrayToDictionary = (arr) => Object.fromEntries(arr.map(({ id, ...rest }) => [id, rest]));
 
-const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
+const allowedResourceTypes = new Set(['document', 'fetch']);
 
-function isCertificateTrustError(error: unknown): error is Error {
-    return error instanceof Error && (('code' in error && (error.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' || error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE')) || isCertificateTrustError(error.cause));
-}
-
-async function requestData(page: Page | undefined, url: string, form?: Record<string, string | number>) {
-    if (!page) {
-        const { data } = form ? await got.post(url, { form }) : await got(url);
-        return data;
-    }
+async function requestData(page: Page, url: string, form?: Record<string, string | number>) {
     const body = form ? new URLSearchParams(Object.entries(form).map(([key, value]) => [key, String(value)])).toString() : undefined;
     return await page.evaluate(
         async ({ url, body }) => {
@@ -71,13 +61,6 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    try {
-        return await fetchFeed(ctx);
-    } catch (error) {
-        if (!(error instanceof FetchError) || !isCertificateTrustError(error)) {
-            throw error;
-        }
-    }
     const { page, destroy } = await getPlaywrightPage('https://www.latepost.com/', { noGoto: true, closeTimeout: 0 });
     try {
         await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
@@ -91,7 +74,7 @@ async function handler(ctx): Promise<Data> {
     }
 }
 
-async function fetchFeed(ctx, page?: Page): Promise<Data> {
+async function fetchFeed(ctx, page: Page): Promise<Data> {
     const proma = ctx.req.param('proma');
     const limit = getRouteLimit(ctx, 5);
 
@@ -120,13 +103,11 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
         link: string;
         category: Array<string | undefined>;
         guid: string | number;
-        pubDate?: Temporal.Instant;
     }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.detail_url, rootUrl).href,
         category: [Number(item.is_dj) === 1 ? exclusiveCategory : undefined, item.programa ? columns[item.programa]?.title : undefined, ...item.label.map((c) => c.label)],
         guid: item.id,
-        pubDate: item.release_time ? parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日'], 8) : undefined,
     }));
 
     const items = await pMap(
@@ -168,15 +149,13 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
                 const description = coverHtml + abstractHtml + content('#select-main').html()!.replaceAll('<p><br></p>', '');
                 const author = content('div.article-header-author div.author-link a.label').first().text();
                 const date = content('div.article-header-date').text();
-                const pubDate = date
-                    ? /\d+月\d+日/.test(date)
-                        ? parseDate(date, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm'], 8)
-                        : /ago|^(?:just\s*now|刚刚|剛剛)$|(?:[秒天周月年]|分[钟鍾]?|小[时時]|星期)\s*[前后後]/.test(date)
-                          ? parseRelativeDate(date)
-                          : parseRelativeDate(date, 8)
-                    : undefined;
+                const pubDate = /\d+月\d+日/.test(date)
+                    ? parseDate(date, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm'], 8)
+                    : /ago|^(?:just\s*now|刚刚|剛剛)$|(?:[秒天周月年]|分[钟鍾]?|小[时時]|星期)\s*[前后後]/.test(date)
+                      ? parseRelativeDate(date)
+                      : parseRelativeDate(date, 8);
 
-                return { title, description, author, pubDate, comments: Number(commentResponse.count ?? commentResponse.data?.length ?? 0) };
+                return { title, description, author, pubDate, comments: Number(commentResponse.count) };
             });
             return {
                 ...item,
@@ -185,7 +164,7 @@ async function fetchFeed(ctx, page?: Page): Promise<Data> {
                 author: article.author,
                 category,
                 guid: `latepost-${item.guid}`,
-                pubDate: article.pubDate ?? item.pubDate,
+                pubDate: article.pubDate,
                 comments: article.comments,
             };
         },

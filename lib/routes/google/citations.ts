@@ -51,7 +51,7 @@ async function handler(ctx) {
 
         const author = $item.find('.gsc_a_t div').eq(0).text();
         const publication = $item.find('.gsc_a_t div').eq(1).text();
-        const year = $item.find('.gsc_a_y').text().trim();
+        const year = $item.find('.gsc_a_y').text();
         return {
             title: $item.find('.gsc_a_t a').text(),
             author,

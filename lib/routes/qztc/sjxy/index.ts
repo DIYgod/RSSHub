@@ -90,7 +90,7 @@ async function handler(ctx) {
                 }
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                return $('.wp_articlecontent').html() ?? '';
+                return $('.wp_articlecontent').html();
             }),
         }),
         { concurrency: 3 }

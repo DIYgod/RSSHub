@@ -56,17 +56,12 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
                 const description = content('.content').html();
-                if (!description) {
-                    throw new Error(`Outage notice content was not found: ${item.link}`);
-                }
-                const publishedAt = content('.article-info .time')
-                    .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)?.[0];
+                const publishedAt = content('.article-info .time').text().slice(5);
                 const editor = content('.article-info .form')
                     .toArray()
                     .map((element) => content(element).text())
                     .find((text) => text.startsWith('编辑：'));
-                return { description, pubDate: publishedAt ? parseDate(publishedAt, 8) : undefined, author: editor?.slice(3) };
+                return { description, pubDate: parseDate(publishedAt, 8), author: editor?.slice(3) };
             });
             return { ...item, ...detail };
         },

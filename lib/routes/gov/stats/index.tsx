@@ -75,7 +75,7 @@ export const route: Route = {
 };
 
 function parsePublicationDate(date: string) {
-    return date ? parseDateStrict(date, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY/MM/DD', 'YYYY-MM-DD'], 8) : undefined;
+    return parseDateStrict(date, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY/MM/DD', 'YYYY-MM-DD'], 8);
 }
 
 async function handler(ctx) {
@@ -102,7 +102,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $($('a.pchide').length === 0 ? 'a[title]' : '.list-content a.pchide')
-        .slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit))
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -129,7 +129,7 @@ async function handler(ctx) {
 
                 if (/news\.cn|www\.gov\.cn/.test(item.link!)) {
                     if (content('.year').text()) {
-                        item.pubDate = parsePublicationDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`);
+                        item.pubDate = parsePublicationDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').first().text()}`);
                         item.author = content('.source')
                             .text()
                             .replace(/来源：/, '')
@@ -171,11 +171,6 @@ async function handler(ctx) {
             })
         )
     );
-
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Temporal.Instant)) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
-        items = items.slice(0, limit);
-    }
 
     return {
         title: $('title').text(),

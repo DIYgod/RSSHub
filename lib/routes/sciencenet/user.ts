@@ -6,6 +6,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -33,8 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://blog.sciencenet.cn';
     const currentUrl = `${rootUrl}/u/${id}`;

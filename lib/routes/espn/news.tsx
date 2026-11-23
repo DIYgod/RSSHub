@@ -102,7 +102,7 @@ export const route: Route = {
                     title: itemDetail.headline,
                     link: itemDetail.links.web.href,
                     author: itemDetail.byline,
-                    pubDate: item.date ? parseDate(item.date) : undefined,
+                    pubDate: parseDate(item.date),
                     // for videos and shortstops, no need to extract full text below
                     description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : itemType === 'Shortstop' ? itemDetail.headline : '',
                 };
@@ -124,11 +124,7 @@ export const route: Route = {
 
                         if (typeof article === 'string') {
                             const $ = load(article);
-                            const content = $('.Story__Body');
-                            if (!content.length) {
-                                throw new Error(`ESPN did not return the article body for ${item.link}`);
-                            }
-                            item.description = content.html() ?? '';
+                            item.description = $('.Story__Body').html() ?? '';
                             return item;
                         }
 

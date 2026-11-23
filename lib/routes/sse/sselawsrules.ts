@@ -41,7 +41,7 @@ const handler = async (ctx) => {
                 if (!date || !href || !title) {
                     return [];
                 }
-                return [{ title, pubDate: parseDate(date, 8), link: new URL(href.startsWith('/sse/') ? href.slice(4) : href, rootUrl).href }];
+                return [{ title, pubDate: parseDate(date, 8), link: new URL(href.slice(4), rootUrl).href }];
             })
             .slice(0, limit);
     }

@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import NotFoundError from '@/errors/types/not-found';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -49,25 +48,10 @@ async function handler(): Promise<Data> {
 
 async function processNews(page) {
     const $ = load(page);
-    const divItems = $('#monthly-table-of-content>div').toArray();
-    const linkItems = divItems.flatMap((item) => {
-        const mainTitle = $(item).find('button>div:nth-child(2) div.text-left').text();
-        return $(item)
-            .find('div>ul>li')
-            .toArray()
-            .map((li) => {
-                const itemTitle = $(li).find('a').text();
-                const link = $(li).find('a').attr('href');
-                if (!link) {
-                    throw new NotFoundError('The VisionIAS monthly listing does not provide a link');
-                }
-                return {
-                    title: `${itemTitle} - ${mainTitle}`,
-                    link: new URL(link, baseUrl).href,
-                };
-            });
-    });
-    const news = await pMap(linkItems, (item) => extractNews(item, 'main > div > div.flex.flex-col> div.flex.flex-col.w-full.mt-10'), { concurrency: 3, stopOnError: false });
+    const links = $('#monthly-table-of-content>div div>ul>li a')
+        .toArray()
+        .map((a) => new URL(a.attribs.href, baseUrl).href);
+    const news = await pMap(links, (link) => extractNews(link), { concurrency: 3, stopOnError: false });
 
     return news.flat();
 }

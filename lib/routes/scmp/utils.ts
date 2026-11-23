@@ -93,9 +93,6 @@ const parseItem = async (item) => {
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
     const data = nextData.props.pageProps.payload.data;
     const article = data.article ?? data.node;
-    if (!article) {
-        return item;
-    }
 
     // item.nextData = article;
 
@@ -103,11 +100,7 @@ const parseItem = async (item) => {
     item.description = renderArticleField(article.subHeadline) + renderHTML(article.images.find((i) => i.type === 'leading')) + renderArticleField(article.body);
     item.updated = parseDate(article.updatedDate, 'x');
     item.category = [...new Set([...article.topics.map((t) => t.name), ...(article.sectionsV2?.flatMap((t) => t.value.map((v) => v.name)) ?? []), ...article.keywords.flatMap((keyword) => (keyword ? keyword.split(', ') : []))])];
-    item.author =
-        article.authors
-            .map((author) => author.name)
-            .filter(Boolean)
-            .join(', ') || undefined;
+    item.author = article.authors.map((author) => author.name).join(', ');
 
     // N.B. gallery in article is not rendered
     // e.g., { type: 'div', attribs: { class: 'scmp-photo-gallery', 'data-gallery-nid': '3239409' }}

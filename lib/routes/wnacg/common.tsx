@@ -88,43 +88,41 @@ export async function handler(ctx) {
                 };
             }
         );
-    const items = await unwrapFirstFailure(
-        pMap(
-            list,
-            async (item) => {
-                const detail = await cache.tryGet(`wnacg:detail:v4:${item.link}`, async () => {
-                    const { data: descRes } = await got(item.link, {
-                        headers: {
-                            referer: encodeURI(url),
-                        },
-                    });
-                    let $ = load(descRes);
-                    const author = $('.uwuinfo p').first().text();
-                    const category = $('.tagshow')
-                        .toArray()
-                        .map((item) => $(item).text());
-                    $('.addtags').remove();
-                    const description = $('.uwconn').html();
-                    const { data } = await got(`${baseUrl}/photos-gallery-aid-${item.aid}.html`, {
-                        headers: {
-                            referer: `${baseUrl}/photos-slide-aid-${item.aid}.html`,
-                        },
-                    });
-                    $ = load(data);
-                    const imgList = parseImageList($('script').text());
-                    const descriptionHtml = renderToString(
-                        <>
-                            {description ? raw(description) : null}
-                            <br />
-                            {imgList ? imgList.map((img) => <img src={new URL(img.url, baseUrl).href} alt={img.caption} />) : null}
-                        </>
-                    );
-                    return { author, category, description: descriptionHtml };
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wnacg:detail:v4:${item.link}`, async () => {
+                const { data: descRes } = await got(item.link, {
+                    headers: {
+                        referer: encodeURI(url),
+                    },
                 });
-                return { ...item, author: detail.author, category: detail.category, description: detail.description };
-            },
-            { concurrency: 3, stopOnError: false }
-        )
+                let $ = load(descRes);
+                const author = $('.uwuinfo p').first().text();
+                const category = $('.tagshow')
+                    .toArray()
+                    .map((item) => $(item).text());
+                $('.addtags').remove();
+                const description = $('.uwconn').html();
+                const { data } = await got(`${baseUrl}/photos-gallery-aid-${item.aid}.html`, {
+                    headers: {
+                        referer: `${baseUrl}/photos-slide-aid-${item.aid}.html`,
+                    },
+                });
+                $ = load(data);
+                const imgList = parseImageList($('script:contains("imglist")').text());
+                const descriptionHtml = renderToString(
+                    <>
+                        {description ? raw(description) : null}
+                        <br />
+                        {imgList ? imgList.map((img) => <img src={img.url} alt={img.caption} />) : null}
+                    </>
+                );
+                return { author, category, description: descriptionHtml };
+            });
+            return { ...item, author: detail.author, category: detail.category, description: detail.description };
+        },
+        { concurrency: 3 }
     );
     return {
         title: $('head title').text(),
@@ -132,14 +130,6 @@ export async function handler(ctx) {
         item: items,
     };
 }
-async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
-    try {
-        return await promise;
-    } catch (error) {
-        throw error instanceof AggregateError ? error.errors[0] : error;
-    }
-}
-
 function escapeJsonControls(value: string): string {
     return Array.from(value, (character) => {
         const code = character.charCodeAt(0);

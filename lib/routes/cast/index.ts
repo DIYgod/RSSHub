@@ -15,8 +15,7 @@ async function parsePage(html: string) {
             .toArray()
             .map((el) => {
                 const a = $(el).find('a');
-                const heading = a.find('[title]').first();
-                const title = heading.attr('title') || a.attr('title') || a.text();
+                const title = a.find('[title]').attr('title')!;
                 let articleUrl = a.attr('href');
 
                 if (articleUrl?.startsWith('http')) {
@@ -35,7 +34,7 @@ async function parsePage(html: string) {
                     return {
                         title,
                         pubDate,
-                        description: article('#zoom, .fybjq.fyxqbjq').first().html(),
+                        description: article('.fybjq.fyxqbjq').html(),
                         link: articleUrl,
                     };
                 });

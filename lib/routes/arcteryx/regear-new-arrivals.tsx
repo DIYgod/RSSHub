@@ -55,18 +55,18 @@ function getProductItem(product: Product): DataItem | undefined {
     const conditions = getAvailableOptions(product, variants, 'Condition');
     const prices = variants.map((variant) => Number(variant.price));
     const originalPrices = variants.filter((variant) => variant.compare_at_price).map((variant) => Number(variant.compare_at_price));
-    const image = product.images[0]?.src;
+    const image = product.images[0].src;
 
     return {
         title: product.title,
         link: `${host}/products/${product.handle}`,
-        pubDate: product.published_at ? parseDate(product.published_at) : undefined,
-        updated: product.updated_at ? parseDate(product.updated_at) : undefined,
+        pubDate: parseDate(product.published_at),
+        updated: parseDate(product.updated_at),
         category: product.tags,
         image,
         description: renderToString(
             <div>
-                <div>{raw(product.body_html || '')}</div>
+                <div>{raw(product.body_html)}</div>
                 {sizes.length ? (
                     <>
                         Available Sizes: {sizes.join(', ')}
@@ -87,7 +87,7 @@ function getProductItem(product: Product): DataItem | undefined {
                 ) : null}
                 Resale Price: {formatPriceRange(prices)}
                 <br />
-                {image ? <img src={image} /> : null}
+                <img src={image} />
             </div>
         ),
     };
@@ -122,12 +122,7 @@ export const route: Route = {
 
 async function handler() {
     const url = `${host}/collections/new-arrivals`;
-    const requestedLimit = 24;
-    const limit = Math.min(Math.max(requestedLimit, 1), 250);
-    const response = await ofetch<{ products: Product[] }>(`${url}/products.json`, { query: { limit } });
-    if (!Array.isArray(response.products)) {
-        throw new TypeError('The Arc’teryx RESALE response did not contain a product list.');
-    }
+    const response = await ofetch<{ products: Product[] }>(`${url}/products.json`, { query: { limit: 24 } });
 
     return {
         title: 'Arcteryx - Regear - New Arrivals',

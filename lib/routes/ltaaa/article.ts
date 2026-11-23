@@ -82,7 +82,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                 const pubDateStr: string | undefined = $$('i.icon-time').next().text().trim();
                 const categoryEls: Element[] = $$('span.keywords a').toArray();
-                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
+                const categories: string[] = categoryEls.map((el) => $$(el).text()).filter(Boolean);
                 const authorEls: Element[] = $$('i.icon-user').first().nextAll('a').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => {
                     const $$authorEl: Cheerio<Element> = $$(authorEl);
@@ -96,7 +96,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                 $$('div.post-tip').each((_, el) => {
                     const $$el: Cheerio<Element> = $$(el);
-                    const content: string = $$el.html() ?? '';
+                    const content = $$el.html();
 
                     if (content) {
                         $$el.replaceWith(`<h1>${content}</h1>`);

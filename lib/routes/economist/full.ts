@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 const getArticleDetail = (link) =>
     cache.tryGet(link, async () => {
@@ -54,14 +54,12 @@ async function handler(ctx) {
 
     const limit = getRouteLimit(ctx, 30);
     const sourceOrder = ctx.req.query('sorted') === 'false';
-    const candidates = feed.items.slice(0, Math.max(30, limit)).map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
-    const datesComplete = candidates.every((item) => item.pubDate !== undefined);
-    if (!sourceOrder && datesComplete) {
-        candidates.sort((first, second) => Temporal.Instant.compare(second.pubDate!, first.pubDate!));
+    const candidates = feed.items.slice(0, Math.max(30, limit)).map((item) => ({ ...item, pubDate: parseDate(item.pubDate!) }));
+    if (!sourceOrder) {
+        candidates.sort((first, second) => compareDates(second.pubDate, first.pubDate));
     }
-    const selected = sourceOrder || datesComplete ? candidates.slice(0, limit) : candidates;
     const items = await pMap(
-        selected,
+        candidates.slice(0, limit),
         async (item) => {
             const path = item.link!.slice(item.link!.lastIndexOf('/') + 1);
             const isNotCollection = !/^\d{4}-\d{2}-\d{2}$/.test(path);

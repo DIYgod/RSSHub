@@ -5,8 +5,9 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
-import { buildContent, getPubDate, parseRouteOptions, profileUrl, threadUrl } from './utils';
+import { buildContent, parseRouteOptions, profileUrl, threadUrl } from './utils';
 
 export const route: Route = {
     path: '/:user/post/:id/:routeParams?',
@@ -67,7 +68,7 @@ async function handler(ctx: Context) {
             author: post.user?.username,
             title,
             description,
-            pubDate: getPubDate(post.taken_at),
+            pubDate: parseDate(post.taken_at, 'X'),
             link: threadUrl(post.code),
         };
     });

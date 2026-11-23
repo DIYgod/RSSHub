@@ -75,13 +75,6 @@ const radarCategories = {
     wealth: ['sraw007', 'sraw009', 'sraw010', 'sraw011', 'sraw012', 'sraw014', 'sraw018', 'sraw019', 'sraw015', 'sraw015-07', 'sraw015-08', 'sraw015-09', 'sraw015-10', 'sraw020', 'sraw020-1', 'sraw020-2', 'sraw020-3', 'sraw020-4'],
 };
 
-const parseOptionalDate = (value: string | undefined, offset?: number) => {
-    if (!value) {
-        return;
-    }
-    return parseDate(value, undefined, offset) ?? parseDate(value, 'HH:mm YYYY/MM/DD', offset);
-};
-
 const renderImage = (alt, src) =>
     renderToString(
         <figure>
@@ -228,8 +221,8 @@ async function handler(ctx) {
                               },
                           }));
 
-                    item.pubDate = parseOptionalDate(data.displayDate, 8);
-                    item.updated = parseOptionalDate(data.lastModifiedDate, 8);
+                    item.pubDate = parseDate(data.displayDate, 8) ?? parseDate(data.displayDate, 'HH:mm YYYY/MM/DD', 8);
+                    item.updated = parseDate(data.lastModifiedDate, 8) ?? parseDate(data.lastModifiedDate, 'HH:mm YYYY/MM/DD', 8);
                     item.author = data.authors?.map((e) => e.name).join(', ');
                     item.description = data.content.full || data.content.partial;
                     item.category = data.contentTags?.map((e) => e.name);
@@ -274,8 +267,8 @@ async function handler(ctx) {
                 );
 
                 item.description = $('div.article-detail-body-container').html()!;
-                item.pubDate = parseOptionalDate(ldJson.datePublished);
-                item.updated = parseOptionalDate(ldJson.dateModified);
+                item.pubDate = parseDate(ldJson.datePublished);
+                item.updated = parseDate(ldJson.dateModified);
 
                 return { pubDate: item.pubDate, updated: item.updated, description: item.description, category: item.category };
             });

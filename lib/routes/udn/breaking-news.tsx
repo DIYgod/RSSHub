@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 type ArticleSummary = {
     title: string;
@@ -110,12 +110,10 @@ async function handler(ctx) {
                 };
             });
 
-            const date = item.time?.date;
-            const pubDate = date ? parseDateStrict(date, 'YYYY-MM-DD HH:mm', 8) : undefined;
             return {
                 ...details,
                 title: item.title,
-                pubDate,
+                pubDate: parseDate(item.time.date, 'YYYY-MM-DD HH:mm', 8),
                 link,
             };
         },

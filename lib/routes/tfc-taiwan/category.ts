@@ -26,7 +26,7 @@ const handler = async (ctx): Promise<Data> => {
 
     const postsResponse = await parsePost(limit, categoryInfo.id);
     const items = parseItem(postsResponse);
-    const image = categoryInfo.yoast_head_json.og_image?.[0]?.url;
+    const image = categoryInfo.yoast_head_json.og_image[0].url;
 
     return {
         title: categoryInfo.yoast_head_json.title,

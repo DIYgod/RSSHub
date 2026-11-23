@@ -72,7 +72,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         const existingItem = items.get(guid);
         if (existingItem) {
             if (existingItem.description !== description) {
-                existingItem.description = [existingItem.description, description].filter(Boolean).join('<br>');
+                existingItem.description = [existingItem.description, description].join('<br>');
                 existingItem.content = { html: existingItem.description };
             }
             continue;

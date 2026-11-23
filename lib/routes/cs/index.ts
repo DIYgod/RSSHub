@@ -258,7 +258,7 @@ async function handler(ctx) {
                   const $item = $(item);
 
                   return {
-                      title: $item.find('h3').text().trim(),
+                      title: $item.find('h3').text(),
                       link: new URL($item.prop('href')!, currentUrl).href,
                       pubDate: parseDate($item.find('em').text(), 8),
                   };
@@ -284,7 +284,7 @@ async function handler(ctx) {
 
                     const detailTitle = content('article.cont_article header h1').text().trim();
                     item.title = detailTitle || item.title;
-                    item.description = content('article.cont_article section').html() || item.description;
+                    item.description = content('article.cont_article section').html();
                     item.author = content('div.artc_info em').text().trim() || item.author;
                     const detailCategories = content('div.artc_route div a')
                         .slice(1)
@@ -293,7 +293,7 @@ async function handler(ctx) {
                     if (detailCategories.length) {
                         item.category = detailCategories;
                     }
-                    const publishedAt = content('.time').prop('datetime') || content('.artc_info time').prop('datetime') || content('.artc_info time').text().trim();
+                    const publishedAt = content('.artc_info time').text().trim();
                     if (publishedAt) {
                         item.pubDate = parseDate(publishedAt, 8);
                     }
@@ -307,7 +307,7 @@ async function handler(ctx) {
     );
 
     const title = $('title').text();
-    const imageSrc = $('div.logo_cs a img').prop('src') || $('link[rel="shortcut icon"], link[rel="icon"]').first().attr('href');
+    const imageSrc = $('div.logo_cs a img').prop('src') || $('link[rel="shortcut icon"], link[rel="icon"]').attr('href');
     const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
     const icon = new URL('favicon.ico', rootUrl).href;
 

@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
@@ -330,8 +331,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const requestedLimit = Number(ctx.req.query('limit') || '50');
-    const limit = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.thoughtco.com';
     const currentUrl = new URL(category, rootUrl).href;
@@ -394,10 +394,8 @@ async function handler(ctx) {
                             .map((c) => c.trim())
                     ),
                 ];
-                const publishedDate = detailResponse.match(/"datePublished": "(.*?)"/)?.[1];
-                const modifiedDate = detailResponse.match(/"dateModified": "(.*?)"/)?.[1];
-                item.pubDate = publishedDate ? parseDate(publishedDate) : undefined;
-                item.updated = modifiedDate ? parseDate(modifiedDate) : undefined;
+                item.pubDate = parseDate(detailResponse.match(/"datePublished": "(.*?)"/)[1]);
+                item.updated = parseDate(detailResponse.match(/"dateModified": "(.*?)"/)[1]);
 
                 return item;
             }),

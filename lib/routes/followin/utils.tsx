@@ -3,6 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,27 +13,17 @@ import { compareDates, parseDate } from '@/utils/time';
 const apiUrl = 'https://api.followin.io';
 const baseUrl = 'https://followin.io';
 const favicon = `${baseUrl}/favicon.ico`;
-const getYouTubeEmbedUrl = (info) => {
-    if (info.source_name !== 'youtube' || !URL.canParse(info.source_url)) {
-        return;
-    }
-    const sourceUrl = new URL(info.source_url);
-    const videoId = sourceUrl.searchParams.get('v');
-    if ((sourceUrl.origin === 'https://www.youtube.com' || sourceUrl.origin === 'https://youtube.com') && sourceUrl.pathname === '/watch' && videoId && info.videos?.includes(videoId)) {
-        return `https://www.youtube.com/embed/${encodeURIComponent(videoId)}`;
-    }
-};
 const renderContent = (info) => {
     const description = info.translated_full_content || info.full_content || info.translated_content || info.content;
-    const videoUrl = getYouTubeEmbedUrl(info);
-    return info.images?.length || videoUrl
+    const videoId = info.source_name === 'youtube' ? info.videos[0] : undefined;
+    return info.images.length || videoId
         ? renderToString(
               <>
-                  {raw(description || '')}
-                  {info.images?.map((image) => (
+                  {raw(description)}
+                  {info.images.map((image) => (
                       <img src={image} />
                   ))}
-                  {videoUrl ? <iframe src={videoUrl} width="640" height="360" allowfullscreen /> : null}
+                  {videoId ? raw(renderYoutube(true, videoId)) : null}
               </>
           )
         : description;
@@ -44,8 +35,8 @@ const renderThread = (list) =>
                 <>
                     {raw((item.translated_content || item.content).replaceAll('\n', '<br>'))}
                     <br />
-                    {item.images?.length ? item.images.map((image) => <img src={image} />) : null}
-                    {item.link_previews?.length
+                    {item.images.length ? item.images.map((image) => <img src={image} />) : null}
+                    {item.link_previews.length
                         ? item.link_previews.map((linkPreview) => (
                               <a href={linkPreview.link}>
                                   {linkPreview.title}
@@ -94,18 +85,15 @@ const getApi = async (path: string, lang: string, body: Record<string, number | 
 };
 
 const parseList = (list, lang): DataItem[] =>
-    list.map((item) => {
-        const pubDate = item.publish_time === undefined || item.publish_time === null ? undefined : parseDate(item.publish_time, 'x');
-        return {
-            id: String(item.id),
-            title: item.translated_title || item.title,
-            description: item.translated_content || item.content,
-            link: `${baseUrl}/${lang === 'en' ? '' : `${lang}/`}feed/${item.id}`,
-            ...(pubDate !== undefined && { pubDate }),
-            category: item.tags?.map((tag) => tag.name) ?? [],
-            author: item.nickname,
-        };
-    });
+    list.map((item) => ({
+        id: String(item.id),
+        title: item.translated_title || item.title,
+        description: item.translated_content || item.content,
+        link: `${baseUrl}/${lang === 'en' ? '' : `${lang}/`}feed/${item.id}`,
+        pubDate: parseDate(item.publish_time, 'x'),
+        category: item.tags.map((tag) => tag.name),
+        author: item.nickname,
+    }));
 
 const parseItem = async (item: DataItem, lang: string): Promise<DataItem> => {
     const detail = await cache.tryGet(`followin:api-detail-media:${lang}:${item.id}`, async () => {
@@ -113,7 +101,7 @@ const parseItem = async (item: DataItem, lang: string): Promise<DataItem> => {
         const thread = info.has_thread ? await getApi('/feed/thread', lang, { feed_id: Number(item.id) }) : undefined;
         return {
             description: thread ? renderThread(thread.list) : renderContent(info),
-            category: info.tags?.map((tag) => tag.name) ?? [],
+            category: info.tags.map((tag) => tag.name),
         };
     });
     return {
@@ -128,15 +116,10 @@ const getPoolSize = (ctx: Context, defaultLimit: number) => Math.max(defaultLimi
 const processList = (list, lang: string, ctx: Context, defaultLimit: number) => {
     const limit = getRouteLimit(ctx, defaultLimit);
     let items = parseList(list, lang);
-    const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = items.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (!nativeOrder && allDated) {
+    if (ctx.req.query('sorted') !== 'false') {
         items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    if (nativeOrder || allDated) {
-        items = items.slice(0, limit);
-    }
-    return pMap(items, (item) => parseItem(item, lang), { concurrency: 3 });
+    return pMap(items.slice(0, limit), (item) => parseItem(item, lang), { concurrency: 3 });
 };
 
 export { baseUrl, favicon, getApi, getPoolSize, processList };

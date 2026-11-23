@@ -43,11 +43,10 @@ async function handler() {
             list.toArray().map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
-                const date = $item.find('.gpArticleDate').text();
                 return {
                     title: a.find('.gpArticleTitle').text(),
                     link: new URL(a.attr('href')!, link).href,
-                    pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                    pubDate: parseDate($item.find('.gpArticleDate').text(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

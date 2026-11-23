@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
@@ -21,18 +22,9 @@ export const route: Route = {
     url: 'www.warhammer-community.com/en-gb/all-news-and-features/',
 };
 
-function parsePublicationDate(dateUniversal: string | undefined, date: string | undefined) {
-    return dateUniversal ? parseDateStrict(dateUniversal, 'YYYY-MM-DD', 0) : date ? parseDateStrict(date, 'D MMM YY', 0) : undefined;
-}
-
-function parseLimit(value: string | undefined, defaultLimit: number) {
-    const limit = Number(value);
-    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
-}
-
 async function handler(ctx) {
     const baseUrl = 'https://www.warhammer-community.com';
-    const limit = parseLimit(ctx.req.query('limit'), 16);
+    const limit = getRouteLimit(ctx, 16);
 
     const response = await ofetch(`${baseUrl}/api/search/news/`, {
         method: 'POST',
@@ -54,7 +46,7 @@ async function handler(ctx) {
         link: `${baseUrl}/en-gb${item.uri}/`,
         description: item.excerpt,
         image: `https://assets.warhammer-community.com/${item.image.path}`,
-        pubDate: parsePublicationDate(item.date_universal, item.date),
+        pubDate: parseDateStrict(item.date_universal, 'YYYY-MM-DD', 0),
         category: item.topics.map((topic) => topic.title),
     }));
 
@@ -66,9 +58,9 @@ async function handler(ctx) {
                 const $ = load(response);
                 const content = $('.article-content');
                 content.find('button').remove();
-                return { description: content.html() || undefined };
+                return { description: content.html() };
             });
-            return { ...item, ...details, description: details.description || item.description };
+            return { ...item, description: details.description || item.description };
         },
         { concurrency: 3 }
     );

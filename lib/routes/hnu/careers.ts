@@ -44,7 +44,7 @@ async function handler() {
             const ret = {
                 title: company.company_name,
                 link: `${rootUrl}detail/career?id=${company.career_talk_id}`,
-                description: company.address + ' - ' + [company.meet_day, company.meet_time].filter(Boolean).join(' ') + ' - ' + company.professionals,
+                description: company.address + ' - ' + company.meet_day + ' ' + company.meet_time + ' - ' + company.professionals,
                 category: company.company_property + ' - ' + company.city_name,
             };
             return ret;

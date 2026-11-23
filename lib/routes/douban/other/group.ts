@@ -81,8 +81,7 @@ async function handler(ctx) {
                 });
                 const $ = load(detailResponse.data);
 
-                const date = $('.create-time').text();
-                result.pubDate = date ? parseDate(date, 8) : undefined;
+                result.pubDate = parseDate($('.create-time').text(), 8);
                 result.description = $('.rich-content').html();
                 return result;
             });

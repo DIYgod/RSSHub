@@ -5,6 +5,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -46,8 +47,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const time = ctx.req.param('time') ?? '5';
     const sort = ctx.req.param('sort') ?? '1';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'http://blog.sciencenet.cn';
     const currentUrl = `${rootUrl}/blog.php?mod=${type}&type=list&op=${time}&ord=${sort}`;

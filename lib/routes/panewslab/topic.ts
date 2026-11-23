@@ -1,7 +1,8 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { apiBaseUrl, apiHeaders, getArticles, getLimit, processArticles, rootUrl } from './utils';
+import { apiBaseUrl, apiHeaders, getArticles, processArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -26,7 +27,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const series = await ofetch<{ name: string; desc: string; cover: string }>(`${apiBaseUrl}/series/${id}`, { headers: apiHeaders });
-    const articles = await getArticles({ seriesId: id, take: getLimit(ctx.req.query('limit'), 25) });
+    const articles = await getArticles({ seriesId: id, take: getRouteLimit(ctx, 25) });
     return {
         title: `PANews - ${series.name}`,
         description: series.desc,

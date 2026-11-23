@@ -43,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.tit').text(),
                 link: new URL($item.attr('href')!, listUrl).href,
-                pubDate: $item.find('.date .mon').text() && $item.find('.date .day').text() ? parseDate(`${$item.find('.date .mon').text()}-${$item.find('.date .day').text()}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${$item.find('.date .mon').text()}-${$item.find('.date .day').text()}T00:00:00Z`),
             };
         });
 

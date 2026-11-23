@@ -30,8 +30,7 @@ export const route: Route = {
                 const $a = $(el);
                 const $li = $a.find('li');
                 const title = $li.find('.title').text();
-                const dateText = $li.find('.time').text();
-                const pubDate = dateText ? parseDate(dateText.replaceAll(/[年月]/g, '-').replace('日', ''), 0) : undefined;
+                const pubDate = parseDate($li.find('.time').text(), 0);
                 const href = $a.attr('href')!;
                 const link = new URL(href, baseUrl).href;
 

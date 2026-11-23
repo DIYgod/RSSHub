@@ -24,7 +24,7 @@ export interface ArticleItem {
     dailyPushUrl?: string;
 }
 
-const allowedRequestTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+const allowedRequestTypes = new Set(['document']);
 
 async function preparePage(page: Page) {
     await page.route('**/*', async (route) => {
@@ -245,19 +245,8 @@ function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string)
  * Parse all articles from the page
  */
 export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
-    const publishedDates = new Map<string, string>();
-    $('script[type="application/ld+json"]').each((_, el) => {
-        const metadata = JSON.parse($(el).text());
-        if (metadata['@type'] !== 'ItemList') {
-            return;
-        }
-        const entries = metadata.itemListElement ?? [];
-        for (const { item } of entries) {
-            if (item.url && item.datePublished) {
-                publishedDates.set(item.url, item.datePublished);
-            }
-        }
-    });
+    const metadata = JSON.parse($('script[type="application/ld+json"]:contains("ItemList")').text());
+    const publishedDates = new Map<string, string>(metadata.itemListElement.map(({ item }) => [item.url, item.datePublished]));
 
     return $('article')
         .toArray()

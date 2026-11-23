@@ -83,7 +83,7 @@ async function handler(ctx) {
                     .find('.news-item-category, .list-item-category')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: parseDate($item.find('.news-item-date, .list-item-date').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8),
+                pubDate: parseDate($item.find('.news-item-date, .list-item-date').text(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8),
             };
         });
 
@@ -95,7 +95,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.title = content('.news-detail-title').text();
-                item.description = content('.news-detail-content').html() ?? undefined;
+                item.description = content('.news-detail-content').html();
                 item.author = content('.news-detail-meta-item.author span')
                     .text()
                     .replace(/^(By|作者)[：:]\s*/, '');
@@ -105,16 +105,15 @@ async function handler(ctx) {
                         .toArray()
                         .map((c) => content(c).text()),
                 ];
-                item.pubDate = parseDate(content('.news-detail-meta-item.date span').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8);
+                item.pubDate = parseDate(content('.news-detail-meta-item.date span').text(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 8);
 
                 return item;
             })
         )
     );
 
-    const title = $('a.logo').attr('title') ?? 'DN.com';
-    const iconPath = $('link[rel="icon"]').attr('href');
-    const icon = iconPath ? new URL(iconPath, rootUrl).href : undefined;
+    const title = $('a.logo').attr('title');
+    const icon = new URL($('link[rel="icon"]').attr('href')!, rootUrl).href;
 
     return {
         item: items,

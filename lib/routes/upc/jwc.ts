@@ -27,8 +27,7 @@ const handler = async (ctx) => {
                 link: string;
             } => {
                 const $item = $(item);
-                const a = $item.find('a').first();
-                const published = $item.find('.news_meta').text().trim();
+                const a = $item.find('a');
                 let linkStr = a.attr('href');
 
                 linkStr = linkStr!.replace('http://', 'https://');
@@ -38,7 +37,7 @@ const handler = async (ctx) => {
                 return {
                     title: a.text(),
                     link: linkStr,
-                    pubDate: published ? parseDate(published, 8) : undefined,
+                    pubDate: parseDate($item.find('.news_meta').text(), 8),
                 };
             }
         );
@@ -69,7 +68,7 @@ const handler = async (ctx) => {
                         details.description = dataObj!.content;
                         details.author = dataObj!.author;
                     } else {
-                        const content = $('.read').first();
+                        const content = $('.read');
                         content.find('[pdfsrc]').each((_, el) => {
                             const attachment = $(el);
                             const title = attachment.attr('sudyfile-attr')?.match(/'title':'(.+?)'/)?.[1] ?? 'PDF';
@@ -81,8 +80,7 @@ const handler = async (ctx) => {
                             $('.arti_publisher')
                                 .first()
                                 .text()
-                                .replace(/^发布者[：:]\s*/, '')
-                                .trim() || undefined;
+                                .replace(/^发布者[：:]\s*/, '') || undefined;
                     }
                 } catch {
                     // Some notices require access that is unavailable anonymously.

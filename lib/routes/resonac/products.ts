@@ -35,7 +35,7 @@ async function handler() {
     const groupLists = $('main .m-panel-card-02__item a[href^="/products/"]')
         .toArray()
         .map((el) => ({
-            groupName: $('.m-panel-card-02__title', el).text().trim(),
+            groupName: $('.m-panel-card-02__title', el).text(),
             groupURL: new URL($(el).attr('href')!, baseUrl).href,
         }));
 

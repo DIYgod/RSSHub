@@ -1,10 +1,8 @@
 import type { Context } from 'hono';
-import { FetchError } from 'ofetch';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -23,16 +21,9 @@ type PostsQuery = {
 };
 
 const baseUrl = 'https://www.im2maker.com';
-const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
+const allowedResourceTypes = new Set(['document', 'fetch']);
 
-function isCertificateTrustError(error: unknown): error is Error {
-    return error instanceof Error && (('code' in error && (error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' || error.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY')) || isCertificateTrustError(error.cause));
-}
-
-async function fetchJson<T = any>(url: string, query: Record<string, string | number | undefined>, page?: Page): Promise<T> {
-    if (!page) {
-        return await ofetch<T>(url, { query });
-    }
+async function fetchJson<T = any>(url: string, query: Record<string, string | number | undefined>, page: Page): Promise<T> {
     const target = new URL(url);
     target.search = new URLSearchParams(
         Object.entries(query)
@@ -64,18 +55,7 @@ export const route: Route = {
     handler,
 };
 
-function getGmtDate(value: string | undefined) {
-    return value ? parseDate(`${value.replace(/Z$/, '')}Z`) : undefined;
-}
-
 async function handler(ctx: Context) {
-    try {
-        return await fetchFeed(ctx);
-    } catch (error) {
-        if (!(error instanceof FetchError) || !isCertificateTrustError(error)) {
-            throw error;
-        }
-    }
     const url = `${baseUrl}/wp-json/wp/v2/posts?_embed=&per_page=10`;
     const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
     try {
@@ -90,7 +70,7 @@ async function handler(ctx: Context) {
     }
 }
 
-async function fetchFeed(ctx: Context, page?: Page) {
+async function fetchFeed(ctx: Context, page: Page) {
     const channel = ctx.req.param('channel')?.toLowerCase();
 
     let title = '最新文章';
@@ -103,9 +83,6 @@ async function fetchFeed(ctx: Context, page?: Page) {
     if (channel) {
         const category = await cache.tryGet(`im2maker:category:${channel}`, async () => {
             const categories = await fetchJson<Category[]>(`${baseUrl}/wp-json/wp/v2/categories`, { slug: channel }, page);
-            if (!Array.isArray(categories)) {
-                throw new TypeError('The source did not return its WordPress categories.');
-            }
             if (!categories.length) {
                 throw new InvalidParameterError(`Unknown channel: ${channel}. Check the channel slug in the route documentation.`);
             }
@@ -123,7 +100,7 @@ async function fetchFeed(ctx: Context, page?: Page) {
         link: post.link,
         guid: post.guid.rendered,
         description: post.content.rendered,
-        pubDate: getGmtDate(post.date_gmt),
+        pubDate: parseDate(`${post.date_gmt}Z`),
         author: post._embedded?.author?.[0]?.name,
         category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
     }));

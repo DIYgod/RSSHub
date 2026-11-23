@@ -25,13 +25,9 @@ export const route: Route = {
         const link = `https://podwise.ai/explore/${type}`;
         const pageSource1 = await ofetch(link);
         const $ = load(pageSource1);
-        const links = [
-            ...new Set(
-                $('main a.group[href^="/episodes/"]')
-                    .toArray()
-                    .map((item) => new URL($(item).attr('href')!, link).href)
-            ),
-        ];
+        const links = $('main a.group[href^="/episodes/"]')
+            .toArray()
+            .map((item) => new URL($(item).attr('href')!, link).href);
         const items = await pMap(
             links,
             async (episodeLink): Promise<DataItem> => ({
@@ -42,23 +38,22 @@ export const route: Route = {
                     const data = parseEpisodeData($);
                     const episode = data.episode;
                     const enclosureType = toEnclosureType(episode.LinkType);
-                    const date = episode.PublishTime?.replace(/^\$D/, '');
                     return {
                         title: episode.Title,
                         author: episode.PodName,
                         language: toEpisodeLanguage(episode.Language),
-                        description: renderEpisodeDescription(episode.Description || data.previewContent?.summary),
-                        pubDate: date ? parseDate(date) : undefined,
+                        description: renderEpisodeDescription(episode.Description),
+                        pubDate: parseDate(episode.PublishTime.replace(/^\$D/, '')),
                         itunes_item_image: episode.EpImg || episode.Img,
                         itunes_duration: parseDuration(episode.Duration),
-                        ...(enclosureType && episode.Link && { enclosure_url: episode.Link, enclosure_type: enclosureType }),
+                        ...(enclosureType && { enclosure_url: episode.Link, enclosure_type: enclosureType }),
                     };
                 })),
             }),
             { concurrency: 3 }
         );
         return {
-            title: $('main h1').first().text(),
+            title: $('main h1').text(),
             description: $('meta[name="description"]').attr('content'),
             link,
             item: items,
@@ -69,17 +64,16 @@ export const route: Route = {
 interface EpisodeData {
     episode: {
         Title: string;
-        Description?: string;
+        Description: string;
         Language?: string | null;
         PodName?: string;
-        Link?: string;
+        Link: string;
         LinkType?: string;
-        PublishTime?: string;
+        PublishTime: string;
         Img?: string;
         EpImg?: string;
         Duration?: string;
     };
-    previewContent?: { summary?: string };
 }
 
 function parseEpisodeData($: CheerioAPI): EpisodeData {
@@ -93,7 +87,7 @@ function parseEpisodeData($: CheerioAPI): EpisodeData {
                 return [];
             }
             const frame = JSON.parse(match[1]);
-            return frame[0] === 1 && typeof frame[1] === 'string' ? [frame[1]] : [];
+            return frame[0] === 1 ? [frame[1]] : [];
         })
         .join('');
     const bytes = Buffer.from(stream, 'utf8');
@@ -110,14 +104,7 @@ function parseEpisodeData($: CheerioAPI): EpisodeData {
         const id = bytes.subarray(offset, colon).toString();
         if (bytes[colon + 1] === 84) {
             const comma = bytes.indexOf(',', colon + 2);
-            const size = bytes.subarray(colon + 2, comma).toString();
-            if (comma === -1 || !/^[a-f\d]+$/i.test(size)) {
-                throw new Error('Podwise contains an invalid public text record.');
-            }
-            const end = comma + 1 + Number.parseInt(size, 16);
-            if (end > bytes.length) {
-                throw new Error('Podwise contains an incomplete public text record.');
-            }
+            const end = comma + 1 + Number.parseInt(bytes.subarray(colon + 2, comma).toString(), 16);
             textRecords.set(id, bytes.subarray(comma + 1, end).toString('utf8'));
             offset = end;
             if (bytes[offset] === 10) {
@@ -138,21 +125,14 @@ function parseEpisodeData($: CheerioAPI): EpisodeData {
     for (const record of records) {
         const data: EpisodeData | undefined = record[3]?.data;
         if (data?.episode?.Title) {
-            return {
-                ...data,
-                episode: { ...data.episode, Description: resolveFlightText(data.episode.Description, textRecords) },
-                previewContent: data.previewContent ? { ...data.previewContent, summary: resolveFlightText(data.previewContent.summary, textRecords) } : undefined,
-            };
+            return { ...data, episode: { ...data.episode, Description: resolveFlightText(data.episode.Description, textRecords) } };
         }
     }
     throw new Error('Podwise episode metadata was not found in the public page.');
 }
 
-function resolveFlightText(value: string | undefined, records: Map<string, string>): string | undefined {
-    if (value?.startsWith('$$')) {
-        return value.slice(1);
-    }
-    const reference = value?.match(/^\$([a-f\d]+)$/i);
+function resolveFlightText(value: string, records: Map<string, string>): string {
+    const reference = /^\$([a-f\d]+)$/i.exec(value);
     if (reference) {
         const text = records.get(reference[1]);
         if (text === undefined) {
@@ -160,7 +140,7 @@ function resolveFlightText(value: string | undefined, records: Map<string, strin
         }
         return text;
     }
-    return value === '$undefined' ? undefined : value;
+    return value;
 }
 
 function toEnclosureType(linkType?: string): string | undefined {
@@ -176,10 +156,7 @@ function toEnclosureType(linkType?: string): string | undefined {
     }
 }
 
-function renderEpisodeDescription(description?: string): string | undefined {
-    if (!description) {
-        return;
-    }
+function renderEpisodeDescription(description: string): string {
     return /<\/?[a-z][^>]*>/i.test(description) ? description : `<p>${escape(description).replaceAll('\n', '<br>')}</p>`;
 }
 

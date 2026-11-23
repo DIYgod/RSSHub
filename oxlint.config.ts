@@ -421,7 +421,7 @@ export default defineConfig({
         'unicorn/prefer-negative-index': 'error',
         'unicorn/prefer-node-protocol': 'error',
         'unicorn/prefer-number-coercion': 'error',
-        'unicorn-js/prefer-number-is-safe-integer': 'error',
+        // 'unicorn-js/prefer-number-is-safe-integer': 'error', off
         // "unicorn/prefer-number-properties": "error", // checkNaN: false
         'unicorn-js/prefer-object-define-properties': 'error',
         'unicorn-js/prefer-object-destructuring-defaults': 'error',
@@ -659,6 +659,10 @@ export default defineConfig({
             {
                 selector: 'Identifier[name="_ctx"]',
                 message: 'Usage of `_ctx` is not allowed.',
+            },
+            {
+                selector: 'CallExpression[callee.object.name="Number"][callee.property.name=/^(isSafeInteger|isFinite)$/]',
+                message: 'Number.isSafeInteger() and Number.isFinite() are over-engineered defensive checks.',
             },
             {
                 selector: 'JSXAttribute[name.name="class"]',

@@ -27,8 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { channelId = 68 } = ctx.req.param();
-    const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '30');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '30');
     const response = await got.post('https://manager.whwater.com:4443/website/article/findChannelArticle', {
         form: {
             channelId,
@@ -45,8 +44,8 @@ async function handler(ctx) {
     const items = data.articleArray.map((item) => ({
         title: item.title,
         description: item.content,
-        pubDate: item.publishTime ? parseDate(`${item.publishTime} +0800`, 'YYYY-MM-DD ZZ') : undefined,
-        link: item.articleLink.startsWith('&articleId=') ? `${baseUrl}/IPolicyDetails.shtml?id=31&sid=${channelId}${item.articleLink}` : new URL(item.articleLink, baseUrl).href,
+        pubDate: parseDate(`${item.publishTime} +0800`, 'YYYY-MM-DD ZZ'),
+        link: `${baseUrl}/IPolicyDetails.shtml?id=31&sid=${channelId}${item.articleLink}`,
     }));
 
     return {

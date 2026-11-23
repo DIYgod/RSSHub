@@ -16,10 +16,9 @@ const getSingleRecord = async () => {
 
     return list.toArray().map((item) => {
         const $item = $(item);
-        const date = $item.find('.fbsj4').text();
         return {
             title: $item.find('.btt3 a').text(),
-            pubDate: date ? parseDate(date, 8) : undefined,
+            pubDate: parseDate($item.find('.fbsj4').text(), 8),
             link: new URL($item.find('.btt3 a').attr('href')!, host).href,
         };
     });

@@ -54,14 +54,11 @@ async function handler(ctx) {
     const $ = load(response.data.data.html);
     const list = $('ul > li')
         .toArray()
-        .map((item): DataItem & { link: string } => {
-            const pubDate = $(item).find('span').text();
-            return {
-                title: $(item).find('a').text(),
-                link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
-            };
-        });
+        .map((item): DataItem & { link: string } => ({
+            title: $(item).find('a').text(),
+            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
+            pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD', 8),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

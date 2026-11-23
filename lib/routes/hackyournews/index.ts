@@ -3,11 +3,6 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
-function parseDecimalAttribute(value: string | undefined): number {
-    const integer = value?.match(/^\s*([+-]?\d+)/)?.[1];
-    return integer ? Number(integer) : NaN;
-}
-
 export const route: Route = {
     path: '/',
     categories: ['programming'],
@@ -34,13 +29,12 @@ async function handler() {
         .map((story) => {
             const article = $(story);
             const link = article.find('.story-actions a[href^="https://news.ycombinator.com/item?"]').attr('href');
-            const category = article.attr('data-category');
             return {
                 title: article.find('.story-title').text(),
                 link,
-                category: category ? [category] : undefined,
-                comments: parseDecimalAttribute(article.attr('data-comments')),
-                upvotes: parseDecimalAttribute(article.attr('data-hn-score')),
+                category: article.attr('data-category'),
+                comments: Number(article.attr('data-comments')),
+                upvotes: Number(article.attr('data-hn-score')),
                 description: article
                     .find('.summary-block')
                     .toArray()

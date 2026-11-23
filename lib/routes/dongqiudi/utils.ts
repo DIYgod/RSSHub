@@ -114,9 +114,6 @@ export const processFeed = async (ctx: Context, type, id) => {
             });
     }
 
-    if (ctx.req.query('sorted') !== 'false') {
-        list = list.toSorted((a, b) => (b.pubDate?.epochMilliseconds ?? 0) - (a.pubDate?.epochMilliseconds ?? 0));
-    }
     const out = await pMap(
         list.slice(0, getRouteLimit(ctx)),
         (item) =>

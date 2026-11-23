@@ -19,19 +19,19 @@ interface ComicDetailResponse {
         comicInfo: {
             title: string;
             comicPy: string;
-            statusTagList?: Array<{
+            statusTagList: Array<{
                 tagName: string;
             }>;
-            authorsTagList?: Array<{
+            authorsTagList: Array<{
                 tagName: string;
             }>;
-            cateTagList?: Array<{
+            cateTagList: Array<{
                 tagName: string;
             }>;
-            zoneTagList?: Array<{
+            zoneTagList: Array<{
                 tagName: string;
             }>;
-            themeTagList?: Array<{
+            themeTagList: Array<{
                 tagName: string;
             }>;
             chapterList: Array<{
@@ -102,7 +102,7 @@ async function handler(ctx) {
     const response = await ofetch<ComicDetailResponse>(currentComicUrl, { headers });
 
     const comicInfo = response.data.comicInfo;
-    const status = comicInfo.statusTagList?.[0]?.tagName;
+    const status = comicInfo.statusTagList[0].tagName;
     const data = comicInfo.chapterList[0].data;
     const comicPy = comicInfo.comicPy;
     const comicTitle = comicInfo.title;
@@ -118,15 +118,10 @@ async function handler(ctx) {
             });
 
             return {
-                title: `${status ? `[${status}] | ` : ''}${comicTitle} - ${item.chapter_title}`,
-                category: [
-                    ...(status ? [status] : []),
-                    ...(comicInfo.cateTagList ?? []).map((tag) => tag.tagName),
-                    ...(comicInfo.zoneTagList ?? []).map((tag) => tag.tagName),
-                    ...(comicInfo.themeTagList ?? []).map((tag) => tag.tagName),
-                ],
-                author: comicInfo.authorsTagList?.map((tag) => tag.tagName).join(', '),
-                image: pageUrls[0] || '',
+                title: `[${status}] | ${comicTitle} - ${item.chapter_title}`,
+                category: [status, ...comicInfo.cateTagList.map((tag) => tag.tagName), ...comicInfo.zoneTagList.map((tag) => tag.tagName), ...comicInfo.themeTagList.map((tag) => tag.tagName)],
+                author: comicInfo.authorsTagList.map((tag) => tag.tagName).join(', '),
+                image: pageUrls[0],
                 link: `${baseUrl}/view/${comicPy}/${id}/${item.chapter_id}`,
                 pubDate: parseDate(item.updatetime * 1000),
                 description: renderComic(pageUrls),

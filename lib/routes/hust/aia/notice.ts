@@ -41,7 +41,7 @@ async function handler(ctx) {
             list &&
             list.toArray().map((item) => {
                 const $item = $(item);
-                const pubDate = parseDateStrict(`${$item.find('.date3 div').text().trim()}-${$item.find('.date3 p').text().trim()}`, ['YYYY-MM-DD', 'YYYY-MM-D'], 8);
+                const pubDate = parseDateStrict(`${$item.find('.date3 div').text()}-${$item.find('.date3 p').text()}`, ['YYYY-MM-DD', 'YYYY-MM-D'], 8);
                 return {
                     title: $item.find('a h2').text(),
                     description: $item.find('a div').text() || title,

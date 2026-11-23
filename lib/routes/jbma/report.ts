@@ -9,13 +9,6 @@ import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-const parseGmtDate = (value: string | undefined) => {
-    if (!value) {
-        return;
-    }
-    return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
-};
-
 const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit = Math.min(getRouteLimit(ctx, 50), 100);
@@ -153,7 +146,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         let processedItem: DataItem = {
             title,
             description,
-            pubDate: parseGmtDate(pubDate),
+            pubDate: parseDate(`${pubDate}Z`),
             link: linkUrl ?? guid,
             category: categories,
             author: authors,
@@ -165,7 +158,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: parseGmtDate(updated),
+            updated: parseDate(`${updated}Z`),
             language,
         };
 

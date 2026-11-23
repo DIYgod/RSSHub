@@ -36,7 +36,7 @@ async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
     const articleUrl = new URL(url, rootUrl);
     if (articleUrl.origin !== new URL(rootUrl).origin) {
         return {
-            title: cardTitle ?? 'External Content',
+            title: cardTitle,
             description: 'Read it on external Site',
             link: articleUrl.href,
         };

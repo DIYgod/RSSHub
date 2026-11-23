@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -50,54 +49,6 @@ For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xm
 :::`,
 };
 
-async function fetchFeed(url: string, redirectCount = 0): Promise<string> {
-    let status = 0;
-    let location: string | null = null;
-    let contentType = '';
-    const response = await got(url, {
-        responseType: 'buffer',
-        redirect: 'manual',
-        retry: 0,
-        timeout: 60000,
-        ignoreResponseError: true,
-        headers: {
-            'User-Agent': config.ua,
-            Accept: 'application/rss+xml',
-        },
-        onResponse({ response }) {
-            status = response.status;
-            location = response.headers.get('location');
-            contentType = response.headers.get('content-type') ?? '';
-        },
-    });
-
-    if (status >= 300 && status < 400 && location) {
-        if (redirectCount === 5) {
-            throw new Error('Too many redirects');
-        }
-        return fetchFeed(new URL(location, url).href, redirectCount + 1);
-    }
-    if (status >= 300) {
-        throw new Error(`Status code ${status}`);
-    }
-
-    const charset = contentType.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]?.toLowerCase() ?? '';
-    const encoding = charset === 'utf-8' ? 'utf8' : charset === 'iso-8859-1' ? 'latin1' : charset;
-    const supportedEncodings = ['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex'];
-    return response.body.toString(supportedEncodings.includes(encoding) ? (encoding as BufferEncoding) : 'utf8');
-}
-
-function parsePublicationDate(value: string | undefined): Temporal.Instant | undefined {
-    if (typeof value !== 'string' || !value.trim()) {
-        return;
-    }
-    const date = parseDate(value);
-    if (date) {
-        return date;
-    }
-    return;
-}
-
 async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'author' | 'description'>> {
     const response = await got(link);
     const $ = load(response.data);
@@ -132,7 +83,8 @@ async function handler(ctx) {
             break;
     }
 
-    const feed = await parser.parseString(await fetchFeed(url));
+    const response = await got(url);
+    const feed = await parser.parseString(response.data);
     const items = await pMap(
         feed.items,
         async (item) => {
@@ -140,7 +92,7 @@ async function handler(ctx) {
             return {
                 title: item.title!,
                 link: item.link,
-                pubDate: parsePublicationDate(item.pubDate),
+                pubDate: parseDate(item.pubDate!),
                 author: item.creator ?? details.author,
                 description: details.description,
             };

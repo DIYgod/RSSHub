@@ -22,8 +22,6 @@ const getFromLink = async (link) => {
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = $(item).find('div[style="white-space:nowrap"]').first();
-            const dateText = date.text();
-            const pubDate = dateText ? parseDate(dateText, 8) : undefined;
             // deal with article_link
             let articleLink = a.attr('href');
             if (!articleLink!.startsWith('http')) {
@@ -36,7 +34,7 @@ const getFromLink = async (link) => {
             return {
                 title: a.text(),
                 link: articleLink,
-                pubDate,
+                pubDate: parseDate(date.text(), 8),
             };
         });
     return articleList;
@@ -74,18 +72,18 @@ async function handler(ctx) {
                 const { data: response } = await got(item.link);
                 const content = load(response);
                 const article = content('div.wp_articlecontent, #js_content');
-                article.find('script, style').remove();
+                article.find('style').remove();
                 article.find('[pdfsrc]').each((_, element) => {
                     const pdfUrl = content(element).attr('pdfsrc');
                     if (pdfUrl) {
-                        content(element).replaceWith(content('<a>').attr('href', new URL(pdfUrl, item.link).href).text('PDF'));
+                        content(element).replaceWith(content('<a>').attr('href', pdfUrl).text('PDF'));
                     }
                 });
                 article.find('img[data-src]').each((_, element) => {
                     content(element).attr('src', content(element).attr('data-src')).removeAttr('data-src');
                 });
                 article.find('[style]').removeAttr('style');
-                item.description = article.html() || undefined;
+                item.description = article.html();
                 return item;
             }),
         { concurrency: 3 }

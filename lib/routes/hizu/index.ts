@@ -85,13 +85,6 @@ export const route: Route = {
 | 高新     | 607d37ade4b05c59ac2f3d40 |`,
 };
 
-function parseUpdatedDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const column = ctx.req.param('column') ?? '5dd92265e4b0bf88dd8c1175';
 
@@ -107,18 +100,16 @@ async function handler(ctx) {
     let items = response.data.stories.slice(0, Math.max(50, limit)).map((item) => ({
         title: item.title,
         author: item.author,
-        updated: parseUpdatedDate(item.updated),
+        updated: parseDate(item.updated),
         link: item.jsonUrl,
         category: item.columnName,
-        pubDate: item.published ? parseDate(item.published) : undefined,
+        pubDate: parseDate(item.published),
     }));
 
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate !== undefined)) {
+    if (ctx.req.query('sorted') !== 'false') {
         items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-        items = items.slice(0, limit);
-    } else if (ctx.req.query('sorted') === 'false') {
-        items = items.slice(0, limit);
     }
+    items = items.slice(0, limit);
 
     items = await pMap(
         items,
@@ -130,18 +121,17 @@ async function handler(ctx) {
                 });
 
                 const data = detailResponse.data;
-                if (!data.content && data.mediaStream?.url && data.storyType === 'VIDEO') {
-                    const poster = data.coverImages?.[0]?.url;
+                if (data.storyType === 'VIDEO') {
+                    const poster = data.coverImages[0].url;
                     const summary = data.summary ? html`<p>${data.summary}</p>` : '';
-                    return String(html`<video controls src="${data.mediaStream.url}" poster="${poster}"></video>${summary}`);
+                    return String(html`<video controls preload="metadata" src="${data.mediaStream.url}" poster="${poster}"></video>${summary}`);
                 }
-                if (!data.content && data.mediaStream?.url && data.storyType === 'AUDIO') {
-                    const coverUrl = data.coverImages?.[0]?.url;
-                    const cover = coverUrl ? html`<img src="${coverUrl}" />` : '';
+                if (data.storyType === 'AUDIO') {
+                    const cover = html`<img src="${data.coverImages[0].url}" />`;
                     const summary = data.summary ? html`<p>${data.summary}</p>` : '';
-                    return String(html`${cover}<audio controls src="${data.mediaStream.url}"></audio>${summary}`);
+                    return String(html`${cover}<audio controls preload="metadata" src="${data.mediaStream.url}"></audio>${summary}`);
                 }
-                if (!data.content && data.storyType === 'HREF' && data.originUrl?.startsWith('https://mp.weixin.qq.com/')) {
+                if (data.storyType === 'HREF' && data.originUrl.startsWith('https://mp.weixin.qq.com/')) {
                     const article = await got(data.originUrl);
                     const $ = load(article.data);
                     const main = $('#js_content');

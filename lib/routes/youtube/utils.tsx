@@ -64,7 +64,7 @@ export const getVideos = (id, part, cache) =>
         return res;
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
-export const formatDescription = (description) => (isNullish(description) ? undefined : escapeText(description).replaceAll(/\r\n|\r|\n/g, '<br>'));
+export const formatDescription = (description) => description && escapeText(description).replaceAll(/\r\n|\r|\n/g, '<br>');
 export const renderYoutube = (embed, videoId, img?, description?) =>
     renderToString(
         <>
@@ -136,6 +136,3 @@ export const callApi = async function callApi<T>({ googleApi, youtubeiApi, param
     }
     return await youtubeiApi(params);
 };
-function isNullish(value: unknown): value is null | undefined {
-    return value === null || value === undefined;
-}

@@ -8,8 +8,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import { selectItems } from '../utils';
-
 const baseUrl = 'https://jw.dhu.edu.cn';
 
 const map = {
@@ -62,7 +60,7 @@ async function handler(ctx: Context) {
         });
 
     const items = await pMap(
-        selectItems(list),
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 // Some article bodies are restricted to the university network.

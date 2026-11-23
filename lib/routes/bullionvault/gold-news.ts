@@ -78,7 +78,6 @@ const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('article.article h1').text();
                     const description = $$('div.content').html();
-                    const pubDateStr: string | undefined = $$('div.submitted').text().split(/,/).pop();
                     const categories: string[] = $$('meta[name="news_keywords"]').attr('content')?.split(/,/) ?? [];
                     const authorEls: Element[] = $$('div.view-author-bio').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
@@ -94,14 +93,14 @@ const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: metadata?.datePublished ? parseDate(metadata.datePublished) : pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                        pubDate: parseDate(metadata.datePublished),
                         category: categories,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: metadata?.dateModified ? parseDate(metadata.dateModified) : undefined,
+                        updated: parseDate(metadata.dateModified),
                         language,
                     };
 

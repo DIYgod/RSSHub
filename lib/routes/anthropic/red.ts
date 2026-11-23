@@ -45,11 +45,8 @@ async function handler() {
                 const $ = load(response);
 
                 const publishedTime = $('meta[property="article:published_time"]').attr('content');
-                const legacyDate = $('d-article p').first();
-                const date = publishedTime || legacyDate.text().trim();
-                item.pubDate = date ? parseDate(date) : undefined;
+                item.pubDate = publishedTime ? parseDate(publishedTime) : undefined;
                 $('h3:contains("Subscribe")').remove();
-                legacyDate.remove();
                 const content = $('d-article').length ? $('d-article') : $('#main-content > div > article');
                 content.find('[class$="_Header"], [class$="_ConstellationPanelSlot"]').remove();
                 content.find('img').each((_, e) => {

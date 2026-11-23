@@ -1,6 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { DATA_MAP, RANKING_TYPE_MAP } from './static-data';
 import { post2item } from './utils';
@@ -119,8 +120,6 @@ async function handler(ctx) {
     if (last_id && last_id !== '0') {
         throw new InvalidParameterError('Only the first page is supported; omit lastId or use 0.');
     }
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const pageSize = String(Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20);
     const { gids, title: game_title } = getGameInfo(game);
     if (!gids) {
         throw new InvalidParameterError('Unknown game; use a documented game abbreviation.');
@@ -142,7 +141,7 @@ async function handler(ctx) {
         forum_id,
         cate_id,
         type,
-        page_size: pageSize,
+        page_size: String(getRouteLimit(ctx, 20)),
         last_id,
     }).toString();
     const url = `https://bbs-api.miyoushe.com/post/wapi/getImagePostList?${query}`;

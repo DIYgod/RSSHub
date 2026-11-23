@@ -78,7 +78,7 @@ async function handler(ctx) {
             guid: `${ctx.req.path}#${post.id}`,
             link: `${baseUrl}/post/show/${post.id}`,
             author: post.author,
-            pubDate: post.created_at === undefined ? undefined : parseDate(post.created_at, 'X'),
+            pubDate: parseDate(post.created_at, 'X'),
             description: (() => {
                 const result: string[] = [
                     `<img src="${post.sample_url}" />`,

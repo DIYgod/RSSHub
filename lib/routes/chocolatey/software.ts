@@ -35,13 +35,12 @@ async function handler(ctx: Context) {
                 const $tds = $(row).find('td');
                 const $version = $tds.filter('.version');
                 const href = $version.find('a').attr('href');
-                const version = $version.find('span').first().text();
-                const versionLink = href || (version ? `packages/${name}/${version}` : undefined);
+                const versionLink = href || `packages/${name}/${$version.find('span').text()}`;
                 const time = $tds.eq(3).text();
 
                 return {
                     title: $version.text().trim(),
-                    link: versionLink ? new URL(versionLink, 'https://community.chocolatey.org').href : link,
+                    link: new URL(versionLink, 'https://community.chocolatey.org').href,
                     description: `update_time: ${time}`,
                     pubDate: parseDateStrict(time, 'dddd, MMMM D, YYYY'),
                 };

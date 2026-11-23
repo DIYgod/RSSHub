@@ -12,13 +12,6 @@ const md = MarkdownIt({
     html: true,
 });
 
-function getPublicationDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 export const route: Route = {
     path: '/models/:group',
     categories: ['programming'],
@@ -59,7 +52,7 @@ async function handler(ctx) {
         .map((article) => {
             const $article = $(article);
             const title = $article.find('a > div > header > h4').text();
-            const href = $article.find('a[href]').first().attr('href');
+            const href = $article.find('a[href]').attr('href');
             if (!href) {
                 throw new Error('Hugging Face returned a model card without its repository URL.');
             }
@@ -70,7 +63,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: getPublicationDate(datetime),
+                pubDate: datetime ? parseDate(datetime) : undefined,
             };
         })
         .filter((item) => item.title);

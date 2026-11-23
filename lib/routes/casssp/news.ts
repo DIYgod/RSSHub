@@ -43,12 +43,12 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.closest('.s_layout').find('[class*="e_timeFormat-"]').text().trim();
+            const date = $item.closest('.s_layout').find('[class^="e_timeFormat-"]').text();
 
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         });
 
@@ -67,7 +67,7 @@ async function handler(ctx) {
     );
 
     const image = $('img[la="la"]').first().prop('src');
-    const iconHref = $('link[rel~="icon"]').first().prop('href');
+    const iconHref = $('link[rel~="icon"]').prop('href');
     const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
 
     return {

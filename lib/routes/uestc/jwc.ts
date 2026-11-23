@@ -86,7 +86,7 @@ async function handler(ctx: Context): Promise<Data> {
                 : cache.tryGet(item.link, async () => {
                       const response = await ofetch(item.link);
                       const content = load(response);
-                      item.description = content('.v_news_content').html() ?? undefined;
+                      item.description = content('.v_news_content').html();
                       return item;
                   }),
         { concurrency: 3 }

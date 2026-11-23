@@ -47,7 +47,7 @@ async function handler() {
                     .toArray()
                     .map((elem) => $.html(elem))
                     .join(''),
-                pubDate: $(item).find('.date').text() ? parseDate(`${$(item).find('.date').text().replaceAll('.', '-')}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${$(item).find('.date').text().replaceAll('.', '-')}T00:00:00Z`),
                 link: new URL($(item).attr('href')!, homeUrl).href,
             })),
     };

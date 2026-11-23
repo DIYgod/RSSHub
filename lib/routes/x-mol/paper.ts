@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
@@ -49,13 +50,11 @@ async function handler(ctx) {
     });
     const data = response.data;
     const $ = load(data);
-    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
 
     const newsItem = $('.magazine-model-content-new li')
         .toArray()
-        .slice(0, limit)
-        .filter((item) => $(item).find('.magazine-model-btn a').first().attr('href'))
+        .slice(0, getRouteLimit(ctx, 20))
+        .filter((item) => $(item).find('.magazine-model-btn a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const rawDate = $item
@@ -65,7 +64,7 @@ async function handler(ctx) {
             const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
             return {
                 title: $item.find('.magazine-text-title a').text(),
-                link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
+                link: new URL($item.find('.magazine-model-btn a').attr('href')!, utils.host).href,
                 pubDate,
             };
         });

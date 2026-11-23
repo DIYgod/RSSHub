@@ -23,15 +23,15 @@ const handler: Route['handler'] = async () => {
                 const $ = load(data);
 
                 const publishedAt = $('meta[property="article:published_time"]').attr('content');
-                const metadata: { author?: Array<{ name?: string }> } = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
-                const author = metadata.author?.flatMap((author) => (author.name ? [{ name: author.name }] : []));
+                const metadata: { author: Array<{ name: string }> } = JSON.parse($('script[type="application/ld+json"]').text());
+                const author = metadata.author.map((author) => ({ name: author.name }));
 
                 return {
                     title: $('h1').text(),
                     link,
                     description: $('div.prose').html(),
                     pubDate: publishedAt ? parseDate(publishedAt) : undefined,
-                    author: author?.length ? author : undefined,
+                    author: author.length ? author : undefined,
                 };
             });
         },

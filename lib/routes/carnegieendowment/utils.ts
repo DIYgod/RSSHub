@@ -40,7 +40,6 @@ function getItem(item: DataItem) {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.white-scheme > .cms-html.payload-richtext');
-        content.find('script, style').remove();
         item.description =
             content
                 .toArray()

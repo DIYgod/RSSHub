@@ -2,15 +2,12 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
-
-const isExpiredCertificate = (error: unknown): error is Error => error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
 
 async function getBrowserContent(link: string) {
     const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });
     try {
-        await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 20000 });
         await page.waitForSelector('ul.hl-vod-list li.hl-list-item a.hl-item-thumb[href][title]', { state: 'attached', timeout: 15000 });
         if (new URL(page.url()).origin !== new URL(link).origin) {
@@ -19,25 +16,6 @@ async function getBrowserContent(link: string) {
         return await page.content();
     } finally {
         await destroy();
-    }
-}
-
-async function getContent(link: string) {
-    try {
-        const initResponse = await ofetch.raw<string>(link, {
-            ignoreResponseError: true,
-            redirect: 'manual',
-        });
-        const cookie = initResponse.headers
-            .getSetCookie()
-            .map((c) => c.split(';', 1)[0])
-            .join('; ');
-        return initResponse.ok ? initResponse._data! : await ofetch<string>(link, { headers: { Cookie: cookie } });
-    } catch (error) {
-        if (!isExpiredCertificate(error)) {
-            throw error;
-        }
-        return getBrowserContent(link);
     }
 }
 
@@ -64,7 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://www.secshi.com';
     const link = `${baseUrl}/go/${category}.html`;
 
-    const response = await getContent(link);
+    const response = await getBrowserContent(link);
 
     const $ = load(response);
 

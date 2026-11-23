@@ -107,7 +107,7 @@ async function handler(ctx) {
                     .find((node) => content(node).text().trim());
                 if (header?.type === 'text') {
                     header.data = header.data.replace(/^\s*[A-Za-z]+\s+\d{4}(?:[ \t]*\|[ \t]*Author:[^\r\n]*)?[ \t]*(?:\r?\n)?/, '');
-                } else if (header && /^[A-Za-z]+\s+\d{4}(?:\s*\|\s*Author:.*)?$/.test(content(header).text().trim())) {
+                } else if (header && /^[A-Za-z]+\s+\d{4}(?:\s*\|\s*Author:.*)?$/.test(content(header).text())) {
                     content(header).remove();
                 }
             }

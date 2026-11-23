@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/isso',
@@ -35,7 +35,7 @@ async function handler(ctx: Context) {
         title: post.title.rendered,
         link: post.link,
         description: post.content.rendered,
-        pubDate: parsePublicationDate(post.date_gmt),
+        pubDate: parseDate(post.date_gmt, 0),
         author: post._embedded?.author?.[0]?.name,
         category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
     }));
@@ -45,14 +45,4 @@ async function handler(ctx: Context) {
         link,
         item: items,
     };
-}
-
-function parsePublicationDate(value?: string) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    const date = parseDateStrict(value, 'YYYY-MM-DDTHH:mm:ss', 0);
-    if (date) {
-        return date;
-    }
 }

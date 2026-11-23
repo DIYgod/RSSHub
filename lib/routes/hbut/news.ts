@@ -52,14 +52,14 @@ async function handler(ctx: Context) {
             .toArray()
             .map((elem) => {
                 const $elem = $(elem);
-                const dateMatch = $elem
+                const [, monthDay, year] = $elem
                     .find('.date')
                     .text()
-                    .match(/(\d{2}-\d{2})\s*(\d{4})/);
+                    .match(/(\d{2}-\d{2})\s*(\d{4})/)!;
                 return {
                     link: new URL($elem.attr('href')!, link).href,
                     title: $elem.find('h2, .tit').text().trim(),
-                    pubDate: dateMatch ? parseDate(`${dateMatch[2]}-${dateMatch[1]}`, 8) : undefined,
+                    pubDate: parseDate(`${year}-${monthDay}`, 8),
                 };
             }),
     };

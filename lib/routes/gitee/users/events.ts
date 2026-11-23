@@ -56,7 +56,7 @@ async function handler(ctx) {
         author: item.actor.login,
         pubDate: parseDate(item.created_at),
         guid: item.id,
-        link: item.repo?.full_name ? `https://gitee.com/${item.repo.full_name}` : undefined,
+        link: `https://gitee.com/${item.repo.full_name}`,
         type: item.type,
         repo: item.repo,
         payload: item.payload,
@@ -66,7 +66,7 @@ async function handler(ctx) {
         switch (item.type) {
             case 'CommitCommentEvent':
                 item.title = `commented on commit ${item.payload.comment.commit_id.slice(0, 7)} in ${item.payload.repository.full_name}`;
-                item.description = typeof item.payload.comment.body === 'string' ? md.render(item.payload.comment.body) : undefined;
+                item.description = md.render(item.payload.comment.body);
                 item.link = item.payload.comment.html_url;
                 break;
             case 'CreateEvent':
@@ -74,7 +74,7 @@ async function handler(ctx) {
                 break;
             case 'IssueCommentEvent':
                 item.title = item.payload.issue.title;
-                item.description = typeof item.payload.comment.body === 'string' ? md.render(item.payload.comment.body) : undefined;
+                item.description = md.render(item.payload.comment.body);
                 item.link = item.payload.comment.html_url;
                 break;
             case 'IssueEvent':
@@ -89,7 +89,7 @@ async function handler(ctx) {
                 break;
             case 'PullRequestEvent':
                 item.title = `${item.payload.action} pull request #${item.payload.number} ${item.payload.title} in ${item.repo.full_name}`;
-                item.description = typeof item.payload.body === 'string' ? md.render(item.payload.body) : undefined;
+                item.description = md.render(item.payload.body);
                 item.link = item.payload.html_url;
                 break;
             case 'PushEvent':

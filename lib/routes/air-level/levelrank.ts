@@ -32,14 +32,14 @@ async function handler(ctx) {
     const cards = $('main .card').filter((_, element) => $(element).find('table').length > 0);
     const best = cards.filter((_, element) => $(element).find('.card-header').text().includes('最佳'));
     const worst = cards.filter((_, element) => $(element).find('.card-header').text().includes('最差'));
-    const titleBest = best.find('.card-header').text().trim();
-    const titleWorst = worst.find('.card-header').text().trim();
+    const titleBest = best.find('.card-header').text();
+    const titleWorst = worst.find('.card-header').text();
     const pubTime = $('main p')
         .first()
         .text()
         .match(/数据更新时间：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1];
 
-    if (!pubTime || !best.find('tbody tr').length || !worst.find('tbody tr').length) {
+    if (!pubTime) {
         throw new Error('Unable to find current air quality rankings on the source page.');
     }
 

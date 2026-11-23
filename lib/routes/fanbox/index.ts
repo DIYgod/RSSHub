@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { compareDates } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import type { PostListResponse, UserInfoResponse } from './types';
@@ -57,14 +57,12 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const postListResponse = await ofetch<PostListResponse>(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() });
-    let posts = postListResponse.body.posts.map((post) => ({ ...post, publishedTime: post.publishedDatetime ? (parseDate(post.publishedDatetime)?.epochMilliseconds ?? NaN) : NaN }));
-    const hasDates = posts.every((post) => Number.isFinite(post.publishedTime));
-    const sorted = ctx.req.query('sorted') !== 'false';
-    if (sorted && hasDates) {
-        posts = posts.toSorted((a, b) => b.publishedTime - a.publishedTime);
+    let posts = postListResponse.body.posts;
+    if (ctx.req.query('sorted') !== 'false') {
+        posts = posts.toSorted((a, b) => compareDates(b.publishedDatetime, a.publishedDatetime));
     }
     const detailLimit = getRouteLimit(ctx);
-    if (detailLimit !== undefined && (!sorted || hasDates)) {
+    if (detailLimit !== undefined) {
         posts = posts.slice(0, detailLimit);
     }
     const items: DataItem[] = await pMap(posts, (post) => parseItem(post), { concurrency: 3 });

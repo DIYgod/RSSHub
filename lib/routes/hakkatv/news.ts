@@ -1,5 +1,6 @@
 import { escape } from 'entities';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -83,7 +84,7 @@ async function handler(ctx) {
                 const data = await ofetch(`${apiUrl}/api/news/read/${id}`);
                 return {
                     category: data.tag.map((t) => t.tag),
-                    updated: data.updated_at ? parseDate(data.updated_at, 8) : undefined,
+                    updated: parseDate(data.updated_at, 8),
                     description: escape(data.content).replaceAll('\n', '<br>') + getVideoEmbed(data.video?.youtube_url),
                 };
             })),
@@ -100,10 +101,5 @@ async function handler(ctx) {
 }
 
 function getVideoEmbed(videoUrl?: string) {
-    if (!videoUrl || !URL.canParse(videoUrl)) {
-        return '';
-    }
-    const url = new URL(videoUrl);
-    const id = url.hostname === 'youtu.be' ? url.pathname.slice(1) : ['youtube.com', 'www.youtube.com', 'm.youtube.com'].includes(url.hostname) ? url.searchParams.get('v') : undefined;
-    return id && /^[\w-]{11}$/.test(id) ? `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>` : '';
+    return videoUrl ? renderYoutube(true, new URL(videoUrl).pathname.slice(1)) : '';
 }

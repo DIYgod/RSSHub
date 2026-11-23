@@ -43,7 +43,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 author,
                 content: {
                     html: description,
-                    text: $(description ?? '').text(),
+                    text: $pEl.text(),
                 },
                 updated: pubDate,
                 language,

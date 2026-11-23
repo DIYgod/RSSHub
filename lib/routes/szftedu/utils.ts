@@ -20,57 +20,9 @@ const getString = (node: Node | undefined): string | undefined => {
     return value?.type === 'Literal' && typeof value.value === 'string' ? value.value : undefined;
 };
 
-const getCreateTimes = (node: Node): string[] => {
-    switch (node.type) {
-        case 'Program':
-        case 'BlockStatement':
-            return node.body.flatMap(getCreateTimes);
-
-        case 'VariableDeclaration':
-            return node.declarations.flatMap((declaration) => {
-                if (declaration.id.type === 'Identifier' && declaration.id.name === 'oriCreateTime') {
-                    const value = getString(declaration.init ?? undefined);
-                    return value && /^\d+$/.test(value) ? value : [];
-                }
-                return declaration.init?.type === 'CallExpression' ? getCreateTimes(declaration.init) : [];
-            });
-
-        case 'IfStatement':
-            return [...getCreateTimes(node.consequent), ...(node.alternate ? getCreateTimes(node.alternate) : [])];
-
-        case 'CallExpression':
-            return getCreateTimes(node.callee);
-
-        case 'FunctionExpression':
-        case 'ArrowFunctionExpression':
-            return node.body ? getCreateTimes(node.body) : [];
-
-        default:
-            return [];
-    }
-};
-
-export const getArticlePubDate = async ($: CheerioAPI): Promise<Temporal.Instant | undefined> => {
-    const source = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => /\bvar\s+oriCreateTime\s*=/.test(source));
-    if (!source) {
-        return undefined;
-    }
-    const { program, errors } = await parseScriptSource(source);
-    if (errors.length) {
-        return undefined;
-    }
-    const values = [...new Set(getCreateTimes(program))];
-    if (values.length !== 1) {
-        return undefined;
-    }
-    const timestamp = Number(values[0]);
-    if (!Number.isSafeInteger(timestamp)) {
-        return undefined;
-    }
-    return parseDate(timestamp * 1000);
+export const getArticlePubDate = (html: string): Temporal.Instant | undefined => {
+    const timestamp = /\bvar\s+oriCreateTime\s*=\s*'(\d+)'/.exec(html)?.[1];
+    return timestamp ? parseDate(Number(timestamp) * 1000) : undefined;
 };
 
 const getVideoUrl = (node: Node | undefined, articleUrl: string): string | undefined => {
@@ -92,10 +44,7 @@ export const getArticleContent = async ($: CheerioAPI, articleUrl: string): Prom
     if (!content.length) {
         return undefined;
     }
-    const source = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => /\bvar\s+videoPageInfos\s*=/.test(source));
+    const source = $('script:contains("videoPageInfos")').text();
     if (source) {
         const { program, errors } = await parseScriptSource(source);
         const declaration = program.body

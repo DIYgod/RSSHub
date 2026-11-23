@@ -24,28 +24,18 @@ const wrapperTypes = new Set(['program-previews', 'talk-original-recommendations
 
 const getPrimaryContent = (data: any[], included: any[]): any[] => {
     const records = new Map(included.map((item) => [`${item.type}:${item.id}`, item]));
-    const seen = new Set<string>();
 
-    return data
-        .flatMap((item) => {
-            if (types.has(item.type)) {
-                return [item];
-            }
-            if (wrapperTypes.has(item.type)) {
-                const reference = item.relationships?.[item.attributes?.['content-key']]?.data;
-                const content = reference && records.get(`${reference.type}:${reference.id}`);
-                return content && types.has(content.type) ? [content] : [];
-            }
-            return [];
-        })
-        .filter((item) => {
-            const key = `${item.type}:${item.id}`;
-            if (seen.has(key)) {
-                return false;
-            }
-            seen.add(key);
-            return true;
-        });
+    return data.flatMap((item) => {
+        if (types.has(item.type)) {
+            return [item];
+        }
+        if (wrapperTypes.has(item.type)) {
+            const reference = item.relationships[item.attributes['content-key']].data;
+            const content = reference && records.get(`${reference.type}:${reference.id}`);
+            return content && types.has(content.type) ? [content] : [];
+        }
+        return [];
+    });
 };
 
 const processItems = async (limit: number, query: any, apiUrl: string, targetUrl: string): Promise<Data> => {
@@ -62,12 +52,12 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
     const $: CheerioAPI = load(targetResponse);
     const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
-    const included = response.included ?? [];
+    const included = response.included;
     const data = getPrimaryContent(response.data, included);
 
     const items: DataItem[] = data?.slice(0, limit).map((item): DataItem => {
         const attributes = item.attributes;
-        const relationships = item.relationships ?? {};
+        const relationships = item.relationships;
 
         const title: string = attributes.title;
         const pubDate: number | string = attributes['published-at'];

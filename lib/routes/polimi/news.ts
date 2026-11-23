@@ -30,10 +30,7 @@ async function handler(ctx: Context): Promise<Data> {
                 return href ? new URL(href, 'https://www.polimi.it').href : undefined;
             },
             description: ($) => $('.news-bodytext').html(),
-            pubDate: ($) => {
-                const datetime = $('time').attr('datetime');
-                return datetime ? (/^\d{4}-\d{2}-\d{2}$/.test(datetime) ? parseDate(datetime, undefined, 'Europe/Rome') : parseDate(datetime)) : undefined;
-            },
+            pubDate: ($) => parseDate($('time').attr('datetime')!, undefined, 'Europe/Rome'),
         },
     });
     return { ...data, language: language === 'en' ? 'en' : 'it' };

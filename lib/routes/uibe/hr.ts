@@ -71,10 +71,9 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const pubDate = parseDateStrict(content('#shareTitle').next().text().replace('时间：', '').trim(), 'YYYY-MM-DD', 8);
                 return {
                     description: content('.gp-article').html(),
-                    pubDate,
+                    pubDate: parseDateStrict(content('#shareTitle').next().text().replace('时间：', ''), 'YYYY-MM-DD', 8),
                 };
             });
             return { ...item, ...detail };

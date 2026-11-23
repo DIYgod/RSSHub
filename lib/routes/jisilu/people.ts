@@ -42,7 +42,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = await processItems($$, $$('body'), limit);
 
-    const author = $('meta[name="keywords"]').prop('content')?.split(/,/, 1)[0];
+    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {

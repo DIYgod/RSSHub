@@ -60,12 +60,8 @@ const parseItems = async (cookie: string, item: ArticleItem) => {
             },
         });
         const content = load(response);
-        const description = content('article').html();
-        if (!description) {
-            throw new Error(`No article body was found at ${item.link}.`);
-        }
         return {
-            description,
+            description: content('article').html(),
             category: content('.badge-tag')
                 .toArray()
                 .map((item) => content(item).text()),

@@ -20,7 +20,7 @@ const parseNoteDate = (value: string) => {
     if (/^\d{2}-\d{2}$/.test(date)) {
         return parseDate(date, 'MM-DD', 8);
     }
-    return date ? parseRelativeDate(date) : undefined;
+    return parseRelativeDate(date);
 };
 
 export const route: Route = {

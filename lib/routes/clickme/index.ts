@@ -53,7 +53,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`ClickMe could not find the ${grouping} "${name}". Use a category or tag from the source website.`);
     }
 
-    const categoryName = name === 'new' ? '最新' : (response.data.items[0]?.categoryName?.[0]?.name ?? name);
+    const categoryName = name === 'new' ? '最新' : response.data.items[0].categoryName[0].name;
     const displayedName = grouping === 'tag' ? name : categoryName;
 
     const list = response.data.items.slice(0, getRouteLimit(ctx, 18)).map((item) => ({

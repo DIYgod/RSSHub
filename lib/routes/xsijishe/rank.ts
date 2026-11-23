@@ -104,7 +104,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('h5').text();
             const link = $item.find('a').attr('href');
-            const description = $item.find('img').prop('outerHTML') ?? '';
+            const description = $item.find('img').prop('outerHTML');
 
             if (!title || !link) {
                 return;

@@ -28,7 +28,6 @@ export const getUserInfoFromUID = (uid) =>
             query: {
                 _contentOnly: 1,
             },
-            responseType: 'text',
         });
         const { user } = getPageData<LuoguUserData>(response);
 
@@ -51,7 +50,7 @@ const md = MarkdownIt();
 
 export const getArticleDescription = (link: string) =>
     cache.tryGet(link, async () => {
-        const response = await ofetch(link, { responseType: 'text' });
+        const response = await ofetch(link);
         const { article } = getPageData<{ article: LuoguArticle }>(response);
         return md.render(article.content);
     });

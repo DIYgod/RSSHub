@@ -74,19 +74,17 @@ async function handler() {
             const title = $item.find('.text-secondary');
             const posterSrc = $item.find('img').attr('data-src');
             const video = $item.find('video').attr('data-src');
-            const href = title.attr('href');
-            if (!posterSrc || !video || !href) {
+            if (!posterSrc || !video) {
                 return null;
             }
-            const poster = new URL(posterSrc, url);
-            const videoUrl = new URL(video, url).href;
+            const poster = new URL(posterSrc);
             poster.searchParams.set('class', 'normal');
             return {
                 title: title.text(),
-                link: new URL(href, url).href,
+                link: title.attr('href'),
                 description: renderToString(
                     <video controls preload="metadata" poster={poster.href}>
-                        <source src={videoUrl} type={getMimeType(new URL(videoUrl).pathname)} />
+                        <source src={video} type={getMimeType(video)} />
                     </video>
                 ),
             };

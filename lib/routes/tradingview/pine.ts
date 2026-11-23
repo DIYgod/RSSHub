@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -36,8 +37,7 @@ function parsePubDate(id: string) {
 
 async function handler(ctx) {
     const { version = 'v5' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL(`pine-script-docs/${version}/release-notes/`, rootUrl).href;

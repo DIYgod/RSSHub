@@ -31,13 +31,6 @@ export const route: Route = {
     url: 'hinatazaka46.com/s/official/news/list',
 };
 
-function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 'YYYY.MM.DD', 9);
-}
-
 async function handler(ctx) {
     const rootUrl = 'https://www.hinatazaka46.com';
     const currentUrl = `${rootUrl}/s/official/news/list`;
@@ -51,24 +44,17 @@ async function handler(ctx) {
 
     const limit = getRouteLimit(ctx, 30);
     let items = $('.p-news__list .p-news__item a')
-        .slice(0, Math.max(30, limit))
+        .slice(0, limit)
         .toArray()
-        .map((item): DataItem & { link: string; pubDate: Temporal.Instant | undefined } => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('.c-news__text').text(),
                 link: `${rootUrl}${$item.attr('href')!.split('?', 1)[0]}`,
-                pubDate: parsePublicationDate($item.find('.c-news__date').text()),
+                pubDate: parseDate($item.find('.c-news__date').text(), 'YYYY.MM.DD', 9),
             };
         });
-
-    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate !== undefined)) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate!, a.pubDate!));
-        items = items.slice(0, limit);
-    } else if (ctx.req.query('sorted') === 'false') {
-        items = items.slice(0, limit);
-    }
 
     items = await pMap(
         items,

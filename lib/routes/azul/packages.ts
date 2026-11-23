@@ -24,7 +24,7 @@ const handler = async (ctx: Context): Promise<Data> => {
         query: {
             availability_types: 'ca',
             release_status: 'both',
-            page_size: Number.isFinite(limit) && limit > 0 ? Math.min(Math.ceil(limit), 1000) : 1000,
+            page_size: Math.min(limit, 1000),
             include_fields: 'java_package_features, release_status, support_term, os, arch, hw_bitness, abi, java_package_type, javafx_bundled, sha256_hash, cpu_gen, size, archive_type, certifications, lib_c_type, crac_supported',
             page: 1,
             azul_com: true,

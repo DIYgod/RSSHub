@@ -113,9 +113,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((e) => $(e).text().trim());
                 item.description = content.html();
-                const sourceDate = $('.publishDate').text();
-                const pubDate = sourceDate ? parseDate(sourceDate, 8) : undefined;
-                item.pubDate = pubDate;
+                item.pubDate = parseDate($('.publishDate').text(), 8);
                 item.guid = item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return { author: item.author, category: item.category, description: item.description, pubDate: item.pubDate, guid: item.guid };

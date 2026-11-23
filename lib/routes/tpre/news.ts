@@ -22,7 +22,7 @@ export const route: Route = {
 };
 
 function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
-    if (!value?.trim()) {
+    if (!value) {
         return;
     }
     return parseDate(`${value} +08:00`, `${format} Z`);

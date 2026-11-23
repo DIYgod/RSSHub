@@ -28,7 +28,7 @@ const handler = async (ctx) => {
             const $item = $(item);
 
             const a = $item.find('a');
-            const pubDate = parseDateStrict($item.find('span.time').text().trim(), 'YYYY-MM-DD', 8);
+            const pubDate = parseDateStrict($item.find('span.time').text(), 'YYYY-MM-DD', 8);
 
             return {
                 title: a.text(),
@@ -56,13 +56,7 @@ const handler = async (ctx) => {
                 for (const d of $$('div.article_data').contents().toArray()) {
                     const data = $$(d).text();
 
-                    if (!item.pubDate && data.startsWith('发布')) {
-                        const date = data.split(/：/)?.pop()?.trim();
-                        const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
-                        if (pubDate) {
-                            item.pubDate = pubDate;
-                        }
-                    } else if (!item.author && (data.startsWith('作者') || data.startsWith('编辑'))) {
+                    if (!item.author && (data.startsWith('作者') || data.startsWith('编辑'))) {
                         item.author = data.split(/：/)?.pop() ?? undefined;
                     }
                 }

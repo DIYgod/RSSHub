@@ -98,13 +98,7 @@ async function handler(ctx) {
                 description: await cache.tryGet('lovelive-anime:article:' + item.link, async () => {
                     const detailResp = await got(item.link);
                     const $ = load(detailResp.data);
-                    const content = $('.p-article__content');
-                    for (const image of content.find('img')) {
-                        if (image.attribs.src) {
-                            image.attribs.src = new URL(image.attribs.src, item.link).href;
-                        }
-                    }
-                    return content.html();
+                    return $('.p-article__content').html();
                 }),
             }),
             { concurrency: 3 }

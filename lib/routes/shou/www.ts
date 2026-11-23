@@ -48,7 +48,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(itemUrl);
                 const $detail = load(detailResponse);
 
-                return { description: $detail('.wp_articlecontent').html() || undefined };
+                return { description: $detail('.wp_articlecontent').html() };
             });
             return { title: $item.find('.col_news_title a').text(), link: itemUrl, guid: itemUrl, pubDate: parseDate($item.find('.col_news_date').text(), 8), description: details.description };
         },

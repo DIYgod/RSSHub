@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { fixImg, newsUrl, siteIcon } from './utils';
@@ -29,8 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { lang = '' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 100;
+    const limit = Math.min(getRouteLimit(ctx, 100), 100);
     const apiUrl = `${newsUrl}${lang ? `/${lang}` : ''}/wp-json/wp/v2/posts`;
 
     const { data } = await got(apiUrl, {

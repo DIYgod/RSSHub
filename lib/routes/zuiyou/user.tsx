@@ -8,21 +8,21 @@ import { parseDate } from '@/utils/time';
 interface Image {
     id: number;
     video?: number;
-    urls?: Record<string, { urls: string[] }>;
+    urls: Record<string, { urls: string[] }>;
 }
 
 interface Video {
     url: string;
-    coverUrls?: string[];
+    coverUrls: string[];
 }
 
 interface Post {
     id: number;
     content: string;
     ct: number;
-    imgs?: Image[];
+    imgs: Image[];
     videos?: Record<string, Video>;
-    topic?: { topic: string };
+    topic: { topic: string };
 }
 
 interface InitialState {
@@ -47,7 +47,7 @@ export const route: Route = {
     handler,
 };
 
-const getImageUrl = (image: Image) => image.urls?.origin?.urls[0] ?? image.urls?.['540']?.urls[0] ?? image.urls?.['360']?.urls[0];
+const getImageUrl = (image: Image) => image.urls.origin?.urls[0] ?? image.urls['540'].urls[0];
 
 const renderPost = (post: Post) =>
     renderToString(
@@ -60,10 +60,9 @@ const renderPost = (post: Post) =>
                     </>
                 ))}
             </p>
-            {post.imgs?.map((image) => {
+            {post.imgs.map((image) => {
                 const video = post.videos?.[image.id];
-                const imageUrl = getImageUrl(image);
-                return video ? <video controls src={video.url} poster={video.coverUrls?.[0] ?? imageUrl} /> : imageUrl ? <img src={imageUrl} /> : undefined;
+                return video ? <video controls src={video.url} poster={video.coverUrls[0]} /> : <img src={getImageUrl(image)} />;
             })}
         </>
     );
@@ -79,11 +78,7 @@ async function handler(ctx) {
     if (!stateScript) {
         throw new Error('Zuiyou did not return the public profile data. Check that the profile sharing link is accessible.');
     }
-    const { shareProfile } = JSON.parse(stateScript) as InitialState;
-    if (!shareProfile?.profileInfo || !Array.isArray(shareProfile.posts)) {
-        throw new Error('Zuiyou did not return a public profile and post list.');
-    }
-    const { profileInfo, posts } = shareProfile;
+    const { profileInfo, posts } = (JSON.parse(stateScript) as InitialState).shareProfile;
 
     return {
         title: `${profileInfo.name} - 最右`,
@@ -91,13 +86,13 @@ async function handler(ctx) {
         image: profileInfo.avatarUrl,
         link,
         item: posts.map((post): DataItem => ({
-            title: post.content || `动态 ${post.id}`,
+            title: post.content,
             link: `${baseUrl}/hybrid/share/post?pid=${post.id}`,
             guid: String(post.id),
             author: profileInfo.name,
             pubDate: parseDate(post.ct, 'X'),
             description: renderPost(post),
-            category: post.topic?.topic ? [post.topic.topic] : undefined,
+            category: [post.topic.topic],
         })),
     };
 }

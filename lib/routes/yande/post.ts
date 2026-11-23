@@ -6,12 +6,6 @@ import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-function parseUnixDate(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return;
-    }
-    return parseDate(value * 1000);
-}
 function renderSource(source: string) {
     if (URL.canParse(source) && ['http:', 'https:'].includes(new URL(source).protocol)) {
         return `<a href="${escapeAttribute(source)}">Source</a>`;
@@ -19,14 +13,12 @@ function renderSource(source: string) {
     return `<p>Source: ${escapeText(source)}</p>`;
 }
 function renderDescription(post) {
-    const result = [`<img src="${post.sample_url}" />`, `<p>Rating:${post.rating}</p> <p>Score:${post.score}</p>`];
-    if (post.source) {
-        result.push(renderSource(post.source));
-    }
-    if (post.parent_id) {
-        result.push(`<a href="https://yande.re/post/show/${post.parent_id}">Parent</a>`);
-    }
-    return result.join('');
+    return [
+        `<img src="${post.sample_url}" />`,
+        `<p>Rating:${post.rating}</p> <p>Score:${post.score}</p>`,
+        post.source ? renderSource(post.source) : '',
+        post.parent_id ? `<a href="https://yande.re/post/show/${post.parent_id}">Parent</a>` : '',
+    ].join('');
 }
 export const route: Route = {
     path: '/post/popular_recent/:period?',
@@ -89,13 +81,13 @@ async function handler(ctx) {
             guid: `https://yande.re/post/show/${post.id}`,
             link: `https://yande.re/post/show/${post.id}`,
             author: post.author,
-            pubDate: parseUnixDate(post.created_at),
-            updated: parseUnixDate(post.updated_at),
+            pubDate: parseDate(post.created_at * 1000),
+            updated: parseDate(post.updated_at * 1000),
             description: renderDescription(post),
             media: {
                 content: {
                     url: post.file_url,
-                    type: getImageMime(mime, post.file_ext),
+                    type: `image/${mime[post.file_ext]}`,
                 },
                 thumbnail: {
                     url: post.preview_url,
@@ -104,9 +96,4 @@ async function handler(ctx) {
             category: post.tags.split(/\s+/),
         })),
     };
-}
-
-function getImageMime(mime: Record<string, string>, extension: string): string | undefined {
-    const mimeType = mime[extension];
-    return mimeType ? `image/${mimeType}` : undefined;
 }

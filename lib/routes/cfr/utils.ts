@@ -1,8 +1,8 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { html } from 'hono/html';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -74,34 +74,27 @@ interface CurrentMetadata {
     dateModified?: string;
     uploadDate?: string;
     embedUrl?: string;
-    author?: Array<{ name?: string }> | { name?: string };
-    '@graph'?: CurrentMetadata[];
+    author?: Array<{ name?: string }>;
 }
 
 function parseCurrentPage($: CheerioAPI): DataItem {
-    const metadata = $('script[type="application/ld+json"]')
-        .toArray()
-        .flatMap((script) => {
-            const data = JSON.parse($(script).text()) as CurrentMetadata | CurrentMetadata[];
-            return Array.isArray(data) ? data : (data['@graph'] ?? [data]);
-        })
-        .find((data) => data.headline || data.datePublished || data.uploadDate);
-    const published = metadata?.datePublished ?? metadata?.uploadDate;
-    const authors = metadata?.author ? (Array.isArray(metadata.author) ? metadata.author : [metadata.author]) : [];
-    const video = metadata?.embedUrl ? html`<iframe src="${metadata.embedUrl}" allowfullscreen></iframe>` : '';
-    const figure = $('[data-topper] figure').first();
+    const metadata: CurrentMetadata = JSON.parse($('script[type="application/ld+json"]').text());
+    const published = metadata.datePublished ?? metadata.uploadDate;
+    const videoId = metadata.embedUrl?.match(/youtube\.com\/embed\/([^?]+)/)?.[1];
+    const video = videoId ? renderYoutube(true, videoId) : '';
+    const figure = $('[data-topper] figure');
     const content = $('#page-content');
     content.find('aside, nav').remove();
     return {
-        title: metadata?.headline ?? metadata?.name ?? $('h1').text(),
+        title: metadata.headline ?? metadata.name ?? $('h1').text(),
         pubDate: published ? parseDate(published) : undefined,
-        updated: metadata?.dateModified ? parseDate(metadata.dateModified) : undefined,
+        updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
         author:
-            authors
-                .map((author) => author.name)
+            metadata.author
+                ?.map((author) => author.name)
                 .filter(Boolean)
                 .join(', ') || undefined,
-        description: `${figure.length ? `<figure>${figure.html()}</figure>` : ''}${video}${content.html() ?? ''}`,
+        description: `${figure.length ? `<figure>${figure.html()}</figure>` : ''}${video}${content.html()}`,
     };
 }
 
@@ -300,7 +293,7 @@ function getVideoIframe($ele: Cheerio<Element>) {
 
     const videoId = youtubeSource.src.match(/\?v=([^&]+)/)?.[1];
     if (videoId) {
-        return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+        return renderYoutube(true, videoId);
     }
 }
 

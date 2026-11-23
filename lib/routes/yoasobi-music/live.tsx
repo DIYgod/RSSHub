@@ -1,4 +1,3 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -9,17 +8,6 @@ import got from '@/utils/got';
 import { parseJSONP } from './jsonp-helper';
 
 const normalizeContactText = (value: string): string => value.replaceAll(/\s/g, '');
-const isHttpUrl = (value: unknown): value is string => {
-    if (typeof value !== 'string') {
-        return false;
-    }
-    try {
-        const url = new URL(value);
-        return url.protocol === 'https:' || url.protocol === 'http:';
-    } catch {
-        return false;
-    }
-};
 export const route: Route = {
     path: '/live',
     categories: ['live'],
@@ -85,7 +73,11 @@ async function handler() {
 const renderDescription = (image: string | undefined, description: string, sessions): string => {
     const $ = load(description);
     const mainText = normalizeContactText($.text());
-    const mainLinks = new Set(mapElements($('a[href]'), (_, link) => $(link).attr('href')));
+    const mainLinks = new Set(
+        $('a[href]')
+            .toArray()
+            .map((link) => $(link).attr('href'))
+    );
     return renderToString(
         <>
             {image ? <img src={image} /> : undefined}
@@ -109,7 +101,7 @@ const renderDescription = (image: string | undefined, description: string, sessi
                     {session.saleDate ? <p>発売日: {session.saleDate}</p> : undefined}
                     {session.inquire && !mainText.includes(normalizeContactText(session.inquire)) ? <p>お問い合わせ: {session.inquire}</p> : undefined}
                     {session.inquire_tel && !mainText.includes(normalizeContactText(session.inquire_tel)) ? <p>電話: {session.inquire_tel}</p> : undefined}
-                    {isHttpUrl(session.inquire_url) && !mainLinks.has(session.inquire_url) ? (
+                    {session.inquire_url && !mainLinks.has(session.inquire_url) ? (
                         <p>
                             <a href={session.inquire_url}>お問い合わせ先</a>
                         </p>
@@ -119,6 +111,3 @@ const renderDescription = (image: string | undefined, description: string, sessi
         </>
     );
 };
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
-}

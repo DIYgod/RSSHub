@@ -86,18 +86,14 @@ async function handler(ctx) {
     if (!embeddedData) {
         throw new Error('GitHub Pulse page does not provide the expected public data endpoints.');
     }
-    const paths = JSON.parse(embeddedData).payload?.pulseRoute;
-    if (!paths?.overviewDataPath || !paths.diffstatSummaryPath || !paths.committerDataPath) {
-        throw new Error('GitHub Pulse page is missing its public data endpoints.');
-    }
+    const paths = JSON.parse(embeddedData).payload.pulseRoute;
     const options = { headers: { Accept: 'application/json' } };
     const [overview, diffstat, committers] = await Promise.all([
         ofetch<PulseOverview>(new URL(`${paths.overviewDataPath}/${pulsePeriod}`, baseUrl).href, options),
         ofetch<PulseDiffstat>(new URL(`${paths.diffstatSummaryPath}/${pulsePeriod}`, baseUrl).href, options),
         ofetch<PulseCommitter[]>(new URL(`${paths.committerDataPath}/${pulsePeriod}`, baseUrl).href, options),
     ]);
-    const [periodFrom, periodTo] = overview.rangeLabel?.split(' – ', 2) ?? [];
-    const pubDate = periodTo ? parseDate(periodTo, 'MMMM D, YYYY') : undefined;
+    const [periodFrom, periodTo] = overview.rangeLabel.split(' – ', 2);
     const sections = [
         { heading: 'Releases', entries: overview.releases, dateField: 'createdAt' },
         { heading: 'Merged pull requests', entries: overview.mergedPulls, dateField: 'mergedAt' },
@@ -106,18 +102,6 @@ async function handler(ctx) {
         { heading: 'Opened issues', entries: overview.newIssues, dateField: 'createdAt' },
         { heading: 'Discussions', entries: overview.discussions, dateField: 'createdAt' },
     ] as const;
-    if (
-        overview.period !== pulsePeriod ||
-        !periodFrom ||
-        !pubDate ||
-        !Number.isFinite(overview.totalPullRequests) ||
-        !Number.isFinite(overview.totalIssues) ||
-        !Number.isFinite(diffstat.totalCommits) ||
-        !Array.isArray(committers) ||
-        sections.some(({ entries }) => !Array.isArray(entries))
-    ) {
-        throw new Error('GitHub Pulse returned incomplete statistics or an invalid date range.');
-    }
 
     return {
         title: `${user}/${repo} ${pulsePeriod} Pulse`,
@@ -162,7 +146,7 @@ async function handler(ctx) {
                         ))}
                     </>
                 ),
-                pubDate,
+                pubDate: parseDate(periodTo, 'MMMM D, YYYY'),
             },
         ],
     };

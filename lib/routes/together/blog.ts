@@ -4,6 +4,7 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -40,18 +41,13 @@ interface JsonLdAuthor {
     url?: string;
 }
 
-interface AuthorItem {
-    name: string;
-    url?: string;
-}
-
 interface JsonLdPosting {
     '@type'?: string;
     '@graph'?: JsonLdPosting[];
     headline?: string;
     datePublished?: string;
-    image?: string | string[] | { url?: string };
-    author?: JsonLdAuthor | JsonLdAuthor[];
+    image?: string | { url?: string };
+    author?: JsonLdAuthor;
 }
 
 interface ParsedDetail {
@@ -61,11 +57,6 @@ interface ParsedDetail {
     author?: DataItem['author'];
     category?: string[];
     image?: string;
-}
-
-interface EmbedInfo {
-    src: string;
-    watchUrl: string;
 }
 
 interface CleanedBody {
@@ -105,58 +96,35 @@ const extractRssExcerpt = (rawDescription: string): string => {
 
 const parseRssFeed = (xml: string, limit: number): RssEntry[] => {
     const $ = load(xml, { xml: true });
-    const seenLinks = new Set<string>();
-    const entries: RssEntry[] = [];
+    return $('rss > channel > item')
+        .toArray()
+        .flatMap((el) => {
+            const $item = $(el);
+            const title = $item.find('title').text();
+            const link = parseArticleUrl($item.find('link').text());
+            if (!link) {
+                return [];
+            }
 
-    $('rss > channel > item').each((_, el) => {
-        if (entries.length >= limit) {
-            return;
-        }
-        const $item = $(el);
-        const title = $item.find('title').first().text();
-        const link = parseArticleUrl($item.find('link').first().text().trim());
-        if (!link || seenLinks.has(link)) {
-            return;
-        }
-        seenLinks.add(link);
-
-        const mediaEl = $item.find(String.raw`media\:content, media\:thumbnail, enclosure`).first();
-        const rssImage = parseHttpUrl(mediaEl.attr('url'), link)?.href;
-        entries.push({
-            title,
-            link,
-            pubDateRaw: $item.find('pubDate').first().text().trim(),
-            excerpt: extractRssExcerpt($item.find('description').first().text()),
-            rssImage,
-        });
-    });
-
-    return entries;
+            const mediaEl = $item.find(String.raw`media\:content, media\:thumbnail, enclosure`);
+            const rssImage = parseHttpUrl(mediaEl.attr('url'), link)?.href;
+            return {
+                title,
+                link,
+                pubDateRaw: $item.find('pubDate').text(),
+                excerpt: extractRssExcerpt($item.find('description').text()),
+                rssImage,
+            };
+        })
+        .slice(0, limit);
 };
 
-const findBlogPosting = (parsed: JsonLdPosting | JsonLdPosting[]): JsonLdPosting | undefined => {
-    const items = Array.isArray(parsed) ? parsed : (parsed['@graph'] ?? [parsed]);
+const findBlogPosting = (parsed: JsonLdPosting): JsonLdPosting | undefined => {
+    const items = parsed['@graph'] ?? [parsed];
     return items.find((item) => item['@type'] === 'BlogPosting' || item['@type'] === 'Article');
 };
 
-const extractJsonLdPosting = ($: CheerioAPI): JsonLdPosting | undefined => {
-    for (const el of $('script[type="application/ld+json"]').toArray()) {
-        const raw = $(el).text().trim();
-        if (!raw) {
-            continue;
-        }
-        try {
-            const parsed = JSON.parse(raw) as JsonLdPosting | JsonLdPosting[];
-            const found = findBlogPosting(parsed);
-            if (found) {
-                return found;
-            }
-        } catch {
-            // Ignore malformed auxiliary JSON-LD blocks.
-        }
-    }
-    return undefined;
-};
+const extractJsonLdPosting = ($: CheerioAPI): JsonLdPosting | undefined => findBlogPosting(JSON.parse($('script[type="application/ld+json"]:contains("BlogPosting")').text()));
 
 const splitOutsideParens = (input: string, delimiter: string): string[] => {
     const parts: string[] = [];
@@ -189,40 +157,23 @@ const parseAuthorNames = (rawNames: string): string[] => {
         return [];
     }
 
-    const result: string[] = [];
-    for (const chunk of splitOutsideParens(cleaned, ',')) {
-        for (const piece of splitOutsideParens(chunk, ' and ')) {
-            const name = piece.trim();
-            if (name) {
-                result.push(name);
-            }
-        }
-    }
-    return result;
+    return splitOutsideParens(cleaned, ',')
+        .flatMap((chunk) => splitOutsideParens(chunk, ' and '))
+        .map((piece) => piece.trim())
+        .filter(Boolean);
 };
 
 const extractLdAuthors = (posting: JsonLdPosting | undefined): DataItem['author'] | undefined => {
-    if (!posting?.author) {
+    const rawName = posting?.author?.name?.trim();
+    if (!rawName) {
         return undefined;
     }
-    const rawList = Array.isArray(posting.author) ? posting.author : [posting.author];
-    const items: AuthorItem[] = [];
-
-    for (const entry of rawList) {
-        const rawName = entry.name?.trim();
-        if (!rawName) {
-            continue;
-        }
-        const parsed = parseAuthorNames(rawName);
-        if (parsed.length === 0) {
-            continue;
-        }
-        const url = parsed.length === 1 ? parseHttpUrl(entry.url, TOGETHER_ORIGIN)?.href : undefined;
-        for (const name of parsed) {
-            items.push(url ? { name, url } : { name });
-        }
+    const parsed = parseAuthorNames(rawName);
+    if (parsed.length === 0) {
+        return undefined;
     }
-    return items.length > 0 ? items : undefined;
+    const url = parsed.length === 1 ? parseHttpUrl(posting?.author?.url, TOGETHER_ORIGIN)?.href : undefined;
+    return parsed.map((name) => (url ? { name, url } : { name }));
 };
 
 const extractLdImageUrl = (posting: JsonLdPosting | undefined, articleUrl: string): string | undefined => {
@@ -232,52 +183,37 @@ const extractLdImageUrl = (posting: JsonLdPosting | undefined, articleUrl: strin
     if (typeof posting.image === 'string') {
         return parseHttpUrl(posting.image, articleUrl)?.href;
     }
-    if (Array.isArray(posting.image)) {
-        return parseHttpUrl(posting.image[0], articleUrl)?.href;
-    }
     return parseHttpUrl(posting.image.url, articleUrl)?.href;
 };
 
 const extractCategories = ($: CheerioAPI): string[] | undefined => {
-    const seen = new Set<string>();
-    $('.blog-detail_wrap .tag').each((_, el) => {
-        const label = $(el).text().replaceAll(/\s+/g, ' ').trim();
-        if (label) {
-            seen.add(label);
-        }
-    });
-    const list = seen.values().toArray();
+    const list = $('.blog-detail_wrap .tag')
+        .toArray()
+        .map((el) => $(el).text().replaceAll(/\s+/g, ' '))
+        .filter(Boolean);
     return list.length > 0 ? list : undefined;
 };
 
-const resolveYouTubeWatchUrl = (parsed: URL): string => {
+const resolveYouTubeId = (parsed: URL): string | undefined => {
     const segments = parsed.pathname.split('/').filter(Boolean);
     const id = segments[0] === 'embed' || segments[0] === 'shorts' ? segments[1] : parsed.hostname === 'youtu.be' ? segments[0] : (parsed.searchParams.get('v') ?? undefined);
-    if (id && VIDEO_ID_RE.test(id)) {
-        return `https://www.youtube.com/watch?v=${id}`;
-    }
-    return parsed.href;
+    return id && VIDEO_ID_RE.test(id) ? id : undefined;
 };
 
-const resolveEmbedInfo = (rawSrc: string | undefined, articleUrl: string): EmbedInfo | undefined => {
+const renderIframeEmbed = (rawSrc: string | undefined, articleUrl: string, title: string | undefined): string | undefined => {
     const parsed = parseHttpUrl(rawSrc, articleUrl);
     if (!parsed) {
         return undefined;
     }
     if (isAllowedHost(parsed.hostname, YOUTUBE_HOSTS)) {
-        return {
-            src: parsed.href,
-            watchUrl: resolveYouTubeWatchUrl(parsed),
-        };
+        const id = resolveYouTubeId(parsed);
+        return id ? renderYoutube(true, id) : renderEmbed(parsed.href, parsed.href, title);
     }
     if (isAllowedHost(parsed.hostname, VIMEO_HOSTS)) {
         const segments = parsed.pathname.split('/').filter(Boolean);
         const videoId = segments[0] === 'video' ? segments[1] : segments[0];
         const watchUrl = videoId && NUMERIC_ID_RE.test(videoId) ? `https://vimeo.com/${videoId}` : parsed.href;
-        return {
-            src: parsed.href,
-            watchUrl,
-        };
+        return renderEmbed(parsed.href, watchUrl, title);
     }
     return undefined;
 };
@@ -298,14 +234,14 @@ const replaceHowlerPlayers = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl
 const normalizeVideos = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl: string) => {
     $body.find('video').each((_, el) => {
         const $video = $(el);
-        const $source = $video.find('source[src]').first();
+        const $source = $video.find('source[src]');
         const videoUrl = parseHttpUrl($video.attr('src') || $source.attr('src'), articleUrl)?.href;
         if (!videoUrl) {
             $video.remove();
             return;
         }
         const posterUrl = parseHttpUrl($video.attr('poster'), articleUrl)?.href;
-        const explicitType = $source.attr('type')?.trim();
+        const explicitType = $source.attr('type');
         const videoType = explicitType || (videoUrl.toLowerCase().includes('.webm') ? 'video/webm' : 'video/mp4');
         const rendered = renderVideo(videoUrl, videoType, posterUrl);
         const $embedParent = $video.parent('.w-embed');
@@ -320,12 +256,11 @@ const normalizeVideos = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl: str
 const cleanIframes = ($: CheerioAPI, $body: Cheerio<Element>, articleUrl: string) => {
     $body.find('iframe').each((_, el) => {
         const $frame = $(el);
-        const embed = resolveEmbedInfo($frame.attr('src') || $frame.attr('data-src'), articleUrl);
-        if (!embed) {
+        const rendered = renderIframeEmbed($frame.attr('src') || $frame.attr('data-src'), articleUrl, $frame.attr('title')?.trim());
+        if (!rendered) {
             $frame.remove();
             return;
         }
-        const rendered = renderEmbed(embed.src, embed.watchUrl, $frame.attr('title')?.trim());
         const $embedParent = $frame.parent('.w-embed, .w-video');
         if ($embedParent.length && $embedParent.children().length === 1) {
             $embedParent.replaceWith(rendered);
@@ -351,17 +286,16 @@ const stripDataWfAttrs = ($: CheerioAPI, $body: Cheerio<Element>) => {
 };
 
 const cleanBodyHtml = ($: CheerioAPI, articleUrl: string): CleanedBody => {
-    const $body = $('article.blog-detail_main').first();
-    const $target = $body.length ? $body : $('.blog-detail_article').first();
+    const $body = $('article.blog-detail_main');
+    const $target = $body.length ? $body : $('.blog-detail_article');
     if (!$target.length) {
         return { bodyHtml: '', hasHeroImage: false };
     }
 
-    $target.find('.w-condition-invisible, .w-dyn-bind-empty, [hidden]').remove();
     replaceHowlerPlayers($, $target, articleUrl);
     normalizeVideos($, $target, articleUrl);
     cleanIframes($, $target, articleUrl);
-    $target.find('script, style, noscript, button, svg').remove();
+    $target.find('button, svg').remove();
 
     $target.find('h1').each((_, el) => {
         el.tagName = 'h2';
@@ -369,20 +303,17 @@ const cleanBodyHtml = ($: CheerioAPI, articleUrl: string): CleanedBody => {
 
     $target.find('img').each((_, el) => {
         const $img = $(el);
-        const resolved = parseHttpUrl($img.attr('src') || $img.attr('data-src'), articleUrl);
-        if (!resolved) {
+        if (!parseHttpUrl($img.attr('src'), articleUrl)) {
             $img.remove();
-        } else if (!$img.attr('src')) {
-            $img.attr('src', resolved.href);
         }
     });
 
     stripDataWfAttrs($, $target);
-    const firstBodyImage = parseHttpUrl($target.find('img').first().attr('src'), articleUrl)?.href;
+    const firstBodyImage = parseHttpUrl($target.find('img').attr('src'), articleUrl)?.href;
     const hasHeroImage = $target.find('figure.blog-detail_main-img img').length > 0;
 
     return {
-        bodyHtml: $target.html()?.trim() ?? '',
+        bodyHtml: $target.html() ?? '',
         firstBodyImage,
         hasHeroImage,
     };
@@ -391,14 +322,14 @@ const cleanBodyHtml = ($: CheerioAPI, articleUrl: string): CleanedBody => {
 const extractSlugFallback = (link: string): string => link.split('/').findLast(Boolean) || link;
 
 const resolvePageTitle = ($: CheerioAPI, posting: JsonLdPosting | undefined, fallbackLink: string): string => {
-    const heading = $('h1').first().text();
+    const heading = $('h1').text();
     if (heading) {
         return heading;
     }
     if (posting?.headline) {
         return posting.headline;
     }
-    const docTitle = $('title').first().text();
+    const docTitle = $('title').text();
     return docTitle || extractSlugFallback(fallbackLink);
 };
 
@@ -417,7 +348,7 @@ const parseDetailPage = (html: string, entry: RssEntry): ParsedDetail => {
     return {
         title: entry.title || resolvePageTitle($, posting, entry.link),
         description: coverToPrepend ? renderDescription(bodyHtml, coverToPrepend) : bodyHtml,
-        pubDateRaw: posting?.datePublished?.trim(),
+        pubDateRaw: posting?.datePublished,
         author: extractLdAuthors(posting),
         category: extractCategories($),
         image,
@@ -436,7 +367,7 @@ const buildFallbackDetail = (entry: RssEntry): ParsedDetail => {
 const fetchArticleDetail = async (entry: RssEntry): Promise<ParsedDetail> => {
     try {
         return await cache.tryGet<ParsedDetail>(`together:blog:${entry.link}`, async () => {
-            const html = await ofetch(entry.link, { responseType: 'text' });
+            const html = await ofetch(entry.link);
             return parseDetailPage(html, entry);
         });
     } catch {

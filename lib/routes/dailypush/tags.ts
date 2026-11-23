@@ -57,9 +57,7 @@ async function handler(ctx) {
         const html = await fetchPageHtml(context, url, 'article');
         const $ = load(html);
         const list = parseArticles($, BASE_URL);
-        const orderedList = list;
-        const candidates = orderedList.slice(0, getRouteLimit(ctx, 20));
-        const items = await enhanceItemsWithSummaries(context, candidates);
+        const items = await enhanceItemsWithSummaries(context, list.slice(0, getRouteLimit(ctx, 20)));
 
         const pageTitle = $('title').text() || `DailyPush - ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
 

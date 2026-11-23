@@ -110,13 +110,6 @@ export const getUserArticleList = async (userId: string) => {
     return response.body;
 };
 
-function parseUserTimestamp(timestamp?: string): Temporal.Instant | undefined {
-    if (!timestamp) {
-        return;
-    }
-    return /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2})?$/.test(timestamp) ? parseDate(timestamp, 8) : parseDate(timestamp);
-}
-
 export const parseUserArticleList = (body: string) => {
     const $ = load(body);
     const list = $('.cmt-list');
@@ -127,7 +120,7 @@ export const parseUserArticleList = (body: string) => {
         return {
             title: title.text(),
             link: title.attr('href'),
-            pubDate: parseUserTimestamp(e.attr('data-time')),
+            pubDate: parseDate(e.attr('data-time')!, 8),
             description: e.find('.qzcmt-content-txt span').text(),
         };
     });

@@ -2,8 +2,6 @@
 // Returns a list of videos in a channel.
 // Source: https://www.ganjingworld.com
 
-import { html } from 'hono/html';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
@@ -45,11 +43,11 @@ async function handler(ctx) {
     });
     const title = parsed.data.list.length > 0 ? parsed.data.list[0].channel.name : 'Ganjing World Channel';
     const items = parsed.data.list.map((item) => {
-        const pubDate = Number.isFinite(item.time_scheduled) ? parseDate(item.time_scheduled) : undefined;
+        const pubDate = parseDate(item.time_scheduled);
         const videoUrl = item.video_url || item.media?.[0]?.url || '';
         const posterUrl = item.poster_url || item.image_auto_url || '';
 
-        let description = html`${item.description || ''}`.toString().replaceAll('\n', '<br>');
+        let description = (item.description || '').replaceAll('\n', '<br>');
         if (videoUrl) {
             description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>${description}`;
         } else if (posterUrl) {

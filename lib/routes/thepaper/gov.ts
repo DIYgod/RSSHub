@@ -2,6 +2,7 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import utils from './utils';
 
@@ -25,8 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { pphId } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const pageSize = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
+    const pageSize = getRouteLimit(ctx, 10);
 
     const response = await ofetch('https://api.thepaper.cn/contentapi/cont/pph/gov', {
         method: 'POST',

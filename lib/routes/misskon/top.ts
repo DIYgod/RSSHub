@@ -58,8 +58,7 @@ export const route: Route = {
             .toArray()
             .map((link) => $(link).attr('href'))
             .filter((href): href is string => Boolean(href))
-            .map((href) => new URL(href, topLink).pathname.slice(1, -1))
-            .filter(Boolean);
+            .map((href) => new URL(href, topLink).pathname.slice(1, -1));
         if (!itemSlugs.length) {
             throw new Error(`No ranked posts were found at ${topLink}. Check whether the ranking has entries.`);
         }

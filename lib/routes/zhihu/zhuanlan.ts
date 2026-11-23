@@ -80,7 +80,7 @@ async function handler(ctx) {
             link,
             description,
             pubDate,
-            updated: isNullish(item.updated) || item.updated === '' ? undefined : parseDate(item.updated, 'X'),
+            updated: item.updated ? parseDate(item.updated, 'X') : undefined,
             author,
             image: item.title_image,
         };
@@ -92,7 +92,4 @@ async function handler(ctx) {
         link: url,
         image: column.image_url,
     };
-}
-function isNullish(value: unknown): value is null | undefined {
-    return value === null || value === undefined;
 }

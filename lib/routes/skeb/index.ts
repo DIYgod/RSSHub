@@ -117,7 +117,7 @@ async function handler(ctx): Promise<Data> {
     }
 
     const processItem = workCategories.has(category) ? processWork : processCreator;
-    const items = Object.hasOwn(apiData, category) && Array.isArray(apiData[category]) ? apiData[category].map((item) => processItem(item)).filter((item) => item !== null) : [];
+    const items = apiData[category].map((item) => processItem(item)).filter((item) => item !== null);
 
     return {
         title: `Skeb - ${categoryMap[category]}`,

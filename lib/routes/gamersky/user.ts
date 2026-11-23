@@ -3,7 +3,6 @@ import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, toInstant } from '@/utils/time';
 
 import { getUserArticle, getUserArticleList, parseUserArticleList } from './utils';
 
@@ -33,12 +32,7 @@ async function handler(ctx: Context) {
 
     const body = await getUserArticleList(userId);
     const articles = parseUserArticleList(body);
-    if (ctx.req.query('sorted') === 'false' || articles.list.every((item) => item.pubDate && toInstant(item.pubDate) !== undefined)) {
-        if (ctx.req.query('sorted') !== 'false') {
-            articles.list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-        }
-        articles.list = articles.list.slice(0, getRouteLimit(ctx));
-    }
+    articles.list = articles.list.slice(0, getRouteLimit(ctx));
     if (detail) {
         articles.list = await pMap(articles.list, getUserArticle, { concurrency: 3 });
     }

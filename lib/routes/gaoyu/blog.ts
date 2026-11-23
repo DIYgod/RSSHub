@@ -1,6 +1,5 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import destr from 'destr';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
@@ -77,11 +76,8 @@ const handler = async (ctx: Context): Promise<Data> => {
                 });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
-                const articleMetadata = $$('script[type="application/ld+json"]')
-                    .toArray()
-                    .map((el) => destr<{ '@type'?: string; dateModified?: string }>($$(el).text()))
-                    .find((metadata) => metadata?.['@type'] === 'BlogPosting');
-                const updatedStr = articleMetadata?.dateModified;
+                const articleMetadata: { dateModified?: string } = JSON.parse($$('script[type="application/ld+json"]:contains("BlogPosting")').text());
+                const updatedStr = articleMetadata.dateModified;
 
                 const processedItem: DataItem = {
                     title,
@@ -89,7 +85,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                     image,
                     banner: image,
-                    updated: typeof updatedStr === 'string' && updatedStr ? parseDate(updatedStr) : undefined,
+                    updated: updatedStr ? parseDate(updatedStr) : undefined,
                 };
 
                 return processedItem;

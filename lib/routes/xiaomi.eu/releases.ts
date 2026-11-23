@@ -64,8 +64,6 @@ async function handler() {
                 const detailResponse = await ofetch(item.link);
                 const $$ = load(detailResponse);
                 const floors = $$('.bbWrapper');
-                const date = $$('time').attr('datetime');
-                const pubDate = date?.trim() ? parseDate(date) : undefined;
 
                 return {
                     description: floors
@@ -73,7 +71,7 @@ async function handler() {
                         .toArray()
                         .map((el) => $$(el).html())
                         .join(''),
-                    pubDate,
+                    pubDate: parseDate($$('time').attr('datetime')!),
                 };
             });
             return { ...item, ...detail };

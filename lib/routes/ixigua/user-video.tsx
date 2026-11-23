@@ -7,13 +7,6 @@ import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ixigua.com';
 
-const parsePublishTime = (value?: number | string | null) => {
-    if (!value && value !== 0) {
-        return;
-    }
-    return parseDate(value, 'X');
-};
-
 export const route: Route = {
     path: '/user/video/:uid/:disableEmbed?',
     categories: ['multimedia'],
@@ -68,7 +61,7 @@ async function handler(ctx) {
             title: i.title,
             description: renderToString(<IxiguaVideoDescription i={i} disableEmbed={disableEmbed} />),
             link: `${host}/${i.group_id_str}`,
-            pubDate: parsePublishTime(i.publish_time),
+            pubDate: parseDate(i.publish_time, 'X'),
             author: userInfo.name,
         })),
     };
@@ -82,7 +75,7 @@ const IxiguaVideoDescription = ({ i, disableEmbed }: { i: any; disableEmbed?: st
                 <br />
             </>
         )}
-        {i.large_image_list?.[0]?.url ? <img src={i.large_image_list[0].url} /> : null}
+        <img src={i.large_image_list[0].url} />
         <p>{i.abstract}</p>
     </>
 );

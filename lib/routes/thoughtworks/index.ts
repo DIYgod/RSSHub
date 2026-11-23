@@ -11,9 +11,9 @@ type SearchResult = {
     uri: string;
     excerpt: string;
     raw: {
-        sysauthor?: string | string[];
-        tw_published_date?: number;
-        tw_topic?: string | string[];
+        sysauthor: string[];
+        tw_published_date: number;
+        tw_topic: string[];
     };
 };
 
@@ -35,11 +35,7 @@ const getArticleDescription = (link: string) =>
     cache.tryGet(link, async () => {
         const response = await ofetch(link);
         const $ = load(response);
-        const content = $('main .authorAndDate + .container');
-        if (!content.length) {
-            throw new Error('Thoughtworks article content not found.');
-        }
-        return content.html();
+        return $('main .authorAndDate + .container').html();
     });
 
 async function handler() {
@@ -81,11 +77,11 @@ async function handler() {
             // Main article content
             description: await getArticleDescription(item.uri),
             // Publication date
-            pubDate: item.raw.tw_published_date ? parseDate(item.raw.tw_published_date) : undefined,
-            // Article authors when available
-            author: Array.isArray(item.raw.sysauthor) ? item.raw.sysauthor.map((name) => ({ name })) : item.raw.sysauthor,
-            // Article categories when available
-            category: Array.isArray(item.raw.tw_topic) ? item.raw.tw_topic : item.raw.tw_topic ? [item.raw.tw_topic] : undefined,
+            pubDate: parseDate(item.raw.tw_published_date),
+            // Article authors
+            author: item.raw.sysauthor.map((name) => ({ name })),
+            // Article categories
+            category: item.raw.tw_topic,
         }),
         { concurrency: 3 }
     );

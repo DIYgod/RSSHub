@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -29,12 +29,10 @@ async function handler() {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const sourceDate = $item.find('div.date').text().trim();
-                const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY.MM.DD', 9) : undefined;
                 return {
                     title: $item.find('div.text a').text(),
                     link: $item.find('div.text a').attr('href'),
-                    pubDate: date,
+                    pubDate: parseDate($item.find('div.date').text(), 'YYYY.MM.DD', 9),
                 };
             }),
     };

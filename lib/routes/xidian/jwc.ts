@@ -45,20 +45,19 @@ async function handler(ctx) {
         });
     items = await pMap(
         items,
-        (item) =>
-            mapResolvedValue(
-                cache.tryGet(`xidian:jwc:content:v1:${item.link}`, async () => {
-                    const detailResponse = await got(item.link, {
-                        headers: {
-                            referer: url,
-                        },
-                    });
-                    const content = load(detailResponse.data);
-                    content('.tit, .zd, #div_vote_id').remove();
-                    return { description: content('.con').html() };
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+        async (item) => {
+            const detail = await cache.tryGet(`xidian:jwc:content:v1:${item.link}`, async () => {
+                const detailResponse = await got(item.link, {
+                    headers: {
+                        referer: url,
+                    },
+                });
+                const content = load(detailResponse.data);
+                content('.tit, .zd, #div_vote_id').remove();
+                return { description: content('.con').html() };
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -66,8 +65,4 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
 }

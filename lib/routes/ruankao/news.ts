@@ -39,7 +39,7 @@ const handler: Route['handler'] = async () => {
         const title = $(element).find('a').attr('title')!;
         const link = $(element).find('a').attr('href')!;
 
-        const formattedDate = date ? parseDate(date, 8) : undefined;
+        const formattedDate = parseDate(date, 8);
         return {
             date: formattedDate,
             title,

@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderNote } from '../templates/note';
@@ -32,8 +33,6 @@ async function handler(ctx) {
     const pageFetcher = createPageFetcher();
     try {
         const { id, lang = '' } = ctx.req.param();
-        const requestedLimit = Number(ctx.req.query('limit'));
-        const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 100;
         const api = `${ssoUrl}/api/v1/comments`;
         const link = `${notesUrl}${lang ? `/${lang}` : ''}/note/${id}`;
 
@@ -44,7 +43,7 @@ async function handler(ctx) {
             searchParams: {
                 sort: 'newest',
                 for: 'web',
-                limit,
+                limit: getRouteLimit(ctx, 100),
                 type: 'note',
                 object_id: id,
             },

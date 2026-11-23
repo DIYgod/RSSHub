@@ -19,14 +19,14 @@ async function getHouseList(houseListURL) {
             Referer: 'https://rent.591.com.tw/',
         },
     });
-    if (data.status !== 1 || !Array.isArray(data.data?.items)) {
+    if (data.status !== 1) {
         throw new Error(`591 rental search failed: ${data.msg || 'the source returned no listing data'}`);
     }
     return data.data.items;
 }
 
 const renderHouse = (house) => {
-    const photoList = house.photoList ?? [];
+    const photoList = house.photoList;
 
     return renderToString(
         <>

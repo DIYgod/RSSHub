@@ -83,10 +83,6 @@ async function handler() {
     const props: { entries: [number, AstroSerialized[]] } = JSON.parse(propsRaw);
     const entriesArray = props.entries[1];
 
-    if (!Array.isArray(entriesArray)) {
-        throw new TypeError('Unexpected Cookbook entries format');
-    }
-
     const articles = entriesArray
         .map((item) => decodeAstroValue(item))
         .filter((item): item is AstroValue & CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)

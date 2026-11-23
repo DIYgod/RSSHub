@@ -72,10 +72,7 @@ async function handler(ctx) {
 
     // get urls
     const a = $('div.block_m').find('div.bg_htit > h2 > a');
-    const urls = [...a].flatMap((element) => {
-        const href = $(element).attr('href');
-        return href ? { link: href, title: $(element).text() } : [];
-    });
+    const urls = [...a].map((element) => ({ link: element.attribs.href, title: $(element).text() }));
 
     // get articles
     const msg_list = await pMap(urls, async (item) => ({ ...(await cache.tryGet(item.link, () => get_article(item.link))), title: item.title }), { concurrency: 3 });

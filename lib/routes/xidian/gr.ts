@@ -1,7 +1,4 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -255,27 +252,24 @@ async function handler(ctx) {
         });
     items = await pMap(
         items,
-        (item) =>
-            mapResolvedValue(
-                cache.tryGet(`xidian:gr:content:v2:${item.link}`, async () => {
-                    const detailResponse = await got(item.link, {
-                        headers: {
-                            referer: url,
-                        },
+        async (item) => {
+            const detail = await cache.tryGet(`xidian:gr:content:v2:${item.link}`, async () => {
+                const detailResponse = await got(item.link, {
+                    headers: {
+                        referer: url,
+                    },
+                });
+                const content = load(detailResponse.data);
+                const body = content('[name="_newscontent_fromname"] .v_news_content');
+                content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                    .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
+                    .each((_, attachment) => {
+                        body.append(content('<p/>').append(attachment));
                     });
-                    const content = load(detailResponse.data);
-                    const body = content('[name="_newscontent_fromname"] .v_news_content').first();
-                    content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
-                        .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
-                        .each((_, attachment) => {
-                            const attachmentWrapper1 = content('<p/>');
-                            attachmentWrapper1.append(copyContent(content(attachment), content));
-                            body.append(attachmentWrapper1);
-                        });
-                    return { description: body.html() ?? undefined };
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+                return { description: body.html() };
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -283,16 +277,4 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

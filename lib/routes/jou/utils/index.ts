@@ -61,7 +61,6 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     }
     if (pdfSource) {
         const pdfUrl = new URL(pdfSource, item.link).href;
-        $content.find('script').remove();
         $content.append($('<iframe>').attr('src', pdfUrl));
         $content.append($('<p>').append($('<a>').attr('href', pdfUrl).text('Download PDF')));
     }

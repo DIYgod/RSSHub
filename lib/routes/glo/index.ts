@@ -29,17 +29,15 @@ async function handler() {
             const description = await cache.tryGet(`glo:${itemUrl}:body`, async () => {
                 const response = await ofetch(itemUrl);
                 const $d = load(response);
-                return $d('.editor_con').html() ?? undefined;
+                return $d('.editor_con').html();
             });
             const year = $item.find('.newstime span').text();
             const day = $item.find('.newstime i').text();
-            const pubDate = /^\d{4}$/.test(year) && /^\d{1,2}\/\d{1,2}$/.test(day) ? parseDate(`${year}/${day}`, 'YYYY/MM/DD', 8) : undefined;
-            const author =
-                $item
-                    .find('.hqpl_author')
-                    .text()
-                    .replace(/^作者：\s*/, '')
-                    .trim() || undefined;
+            const pubDate = parseDate(`${year}/${day}`, 'YYYY/MM/DD', 8);
+            const author = $item
+                .find('.hqpl_author')
+                .text()
+                .replace(/^作者：\s*/, '');
             return { title, link: itemUrl, description, pubDate, author };
         })
     );

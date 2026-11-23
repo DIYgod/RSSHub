@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { parseDateText } from './utils';
 
@@ -38,8 +39,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
+    const limit = getRouteLimit(ctx, 25);
     const category = ctx.req.param('category') ?? 'Recent';
 
     const rootUrl = 'https://getquicker.net';
@@ -78,14 +78,12 @@ async function handler(ctx) {
                 content('section').last().remove();
                 content('#app').children().slice(0, 2).remove();
 
-                const dateElement = content('.text-secondary a[title], .text-secondary span[title]')
-                    .filter((_, element) => /\d{4}[-/]/.test(content(element).attr('title') ?? ''))
-                    .first();
+                const dateElement = content('.text-secondary a[title], .text-secondary span[title]').filter((_, element) => /\d{4}[-/]/.test(content(element).attr('title') ?? ''));
                 const pubDate = dateElement.attr('title') || content('.text-secondary a').not('.text-secondary').first().text() || content('div.note-text').find('span').eq(3).text();
 
                 item.author = content('.user-link').first().text();
                 item.description = content('div[data-info="动作信息"]').html() ?? content('#app').html() ?? content('.row').eq(1).html();
-                item.pubDate = parseDateText(pubDate) ?? item.pubDate;
+                item.pubDate = parseDateText(pubDate);
 
                 return item;
             }),

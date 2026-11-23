@@ -23,8 +23,8 @@ const handler: Route['handler'] = async () => {
                 return {
                     title: `Version ${version}`,
                     description: html,
-                    link: new URL($item.find('a[href^="/changelog/"]').first().attr('href')!, 'https://www.raycast.com').href,
-                    pubDate: date ? parseDate(`${date} +0000`, 'MMMM D, YYYY ZZ') : undefined,
+                    link: new URL($item.find('a[href^="/changelog/"]').attr('href')!, 'https://www.raycast.com').href,
+                    pubDate: parseDate(`${date} +0000`, 'MMMM D, YYYY ZZ'),
                 };
             });
     });

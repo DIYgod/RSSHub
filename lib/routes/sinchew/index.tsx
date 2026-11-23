@@ -45,12 +45,11 @@ export async function handler(ctx) {
             const $item = $(item);
 
             const link = $item.attr('href');
-            const date = $item.text();
 
             return {
                 title: $item.attr('data-title')!,
                 link: new URL(link!, currentUrl).href,
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($item.text(), 8),
             };
         });
 
@@ -83,10 +82,7 @@ export async function handler(ctx) {
                 });
 
                 item.description = content('.article-page-content').html();
-                const date = content('meta[property="article:published_time"]').attr('content');
-                if (date) {
-                    item.pubDate = parseDate(date, 8);
-                }
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!, 8);
 
                 return item;
             })

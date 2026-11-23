@@ -62,7 +62,7 @@ async function handler(ctx: Context) {
                     throw new Error('The official article page did not provide its main content.');
                 }
                 page('#aeinfo br').replaceWith('\n');
-                const author = page('#aeinfo').text().trim() || undefined;
+                const author = page('#aeinfo').text();
                 content.find('#aeinfo, #hits').remove();
                 return { ...item, description: content.html(), author };
             }),

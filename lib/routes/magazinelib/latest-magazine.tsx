@@ -77,7 +77,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.link,
             category: item.categories,
-            pubDate: item.date ? parseDate(item.date, 0) : undefined,
+            pubDate: parseDate(item.date, 0),
             description: item.description,
         })),
     };

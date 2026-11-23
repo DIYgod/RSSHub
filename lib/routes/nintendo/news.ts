@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { escapeAttribute, escapeText } from 'entities';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -67,24 +68,23 @@ function isArticle(value: JsonValue): value is Article {
         'bodyCollection' in value &&
         !!value.bodyCollection &&
         typeof value.bodyCollection === 'object' &&
-        'items' in value.bodyCollection &&
-        Array.isArray(value.bodyCollection.items)
+        'items' in value.bodyCollection
     );
 }
 
-function resolveFlightValue(value: JsonValue, records: Map<string, JsonValue>, seen = new Set<string>()): JsonValue {
+function resolveFlightValue(value: JsonValue, records: Map<string, JsonValue>): JsonValue {
     if (typeof value === 'string') {
         const reference = /^\$([\da-f]+)$/.exec(value);
-        if (reference && records.has(reference[1]) && !seen.has(reference[1])) {
-            return resolveFlightValue(records.get(reference[1]), records, new Set([...seen, reference[1]]));
+        if (reference && records.has(reference[1])) {
+            return resolveFlightValue(records.get(reference[1]), records);
         }
         return value;
     }
     if (Array.isArray(value)) {
-        return value.map((entry) => resolveFlightValue(entry, records, seen));
+        return value.map((entry) => resolveFlightValue(entry, records));
     }
     if (value && typeof value === 'object') {
-        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, resolveFlightValue(entry, records, seen)]));
+        return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, resolveFlightValue(entry, records)]));
     }
     return value;
 }
@@ -108,7 +108,7 @@ function findArticle(value: JsonValue, records: Map<string, JsonValue>): Article
 }
 
 function readArticle($: CheerioAPI): Article {
-    const chunks = $('script')
+    const chunks = $('script:contains("self.__next_f.push")')
         .toArray()
         .flatMap((script) => {
             const match = $(script)
@@ -134,9 +134,6 @@ function readArticle($: CheerioAPI): Article {
             // Flight text records use a hexadecimal UTF-8 byte length, and may contain newlines.
             const comma = bytes.indexOf(',', position);
             const length = Number.parseInt(bytes.subarray(position + 1, comma).toString(), 16);
-            if (comma === -1 || !Number.isFinite(length) || comma + 1 + length > bytes.length) {
-                throw new Error('Nintendo article contains an incomplete text record');
-            }
             records.set(id, bytes.subarray(comma + 1, comma + 1 + length).toString());
             position = comma + 1 + length;
         } else {
@@ -168,7 +165,7 @@ function renderBody(block: BodyBlock): string {
         renderNote(block.noteHtml1, block.notePlain1),
         renderImage(block.image2),
         renderNote(block.noteHtml2, block.notePlain2),
-        block.youtube ? `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(block.youtube)}"></iframe>` : '',
+        block.youtube ? renderYoutube(true, block.youtube) : '',
         ...(block.sliderCollection?.items.map((slide) => renderImage(slide.slideImage) + renderNote(slide.noteHtml1, slide.notePlain1)) ?? []),
         ...(block.softwareListCollection?.items
             .filter((software) => software !== null)
@@ -186,17 +183,9 @@ async function handler(ctx) {
     const response = await got(`${rootUrl}/topics/`);
     const $ = load(response.data);
     const limit = getRouteLimit(ctx, 30);
-    const seen = new Set<string>();
-    const list = $('a[href*="/topics/article/"]')
+    const list = $('.ncmn-softUnit > a[href*="/topics/article/"]')
         .toArray()
         .map((element) => ({ title: $(element).find('.ncmn-softUnit__name').text(), link: new URL($(element).attr('href')!, rootUrl).href }))
-        .filter((item) => {
-            if (!item.title || seen.has(item.link)) {
-                return false;
-            }
-            seen.add(item.link);
-            return true;
-        })
         .slice(0, limit);
     const items = await pMap(
         list,
@@ -205,11 +194,7 @@ async function handler(ctx) {
             ...(await cache.tryGet(`nintendo:news:flight:v1:${item.link}`, async () => {
                 const { data } = await got(item.link);
                 const article = readArticle(load(data));
-                const description = article.bodyCollection.items.map(renderBody).join('');
-                if (!description) {
-                    throw new Error(`Nintendo article has no body content: ${item.link}`);
-                }
-                return { description, pubDate: parseDate(article.displayDate), category: article.category };
+                return { description: article.bodyCollection.items.map(renderBody).join(''), pubDate: parseDate(article.displayDate), category: article.category };
             })),
         }),
         { concurrency: 3 }

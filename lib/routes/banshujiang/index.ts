@@ -102,7 +102,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     ...new Set(
                         $$('table tr')
                             .toArray()
-                            .filter((el) => ['语言：', '编程语言：', '移动开发：', '操作系统：', '数据库：', '开源软件：', '其他分类：'].includes($$(el).find('td').first().text().trim()))
+                            .filter((el) => ['语言：', '编程语言：', '移动开发：', '操作系统：', '数据库：', '开源软件：', '其他分类：'].includes($$(el).find('td').first().text()))
                             .map((el) => $$(el).find('td').last().text())
                             .filter(Boolean)
                     ),

@@ -61,9 +61,6 @@ async function handler() {
                     if (!description && $('title').text() === '统一身份认证') {
                         throw new LoginRequiredError('This notice requires campus authentication');
                     }
-                    if (!description) {
-                        throw new Error(`Unable to find notice content at ${item.link}`);
-                    }
                     return description;
                 });
                 return { ...item, author: '中国海洋大学教务处', description };

@@ -31,11 +31,10 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a.article-title');
             const timeElement = $item.find('time');
-            const pubDate = timeElement.attr('datetime');
             return {
                 title: a.attr('title')!,
                 link: `https://daoxuan.cc${a.attr('href')}`,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
+                pubDate: parseDate(timeElement.attr('datetime')!),
                 category: $item
                     .find('.article-meta__tags')
                     .toArray()
@@ -48,11 +47,7 @@ async function handler() {
             const description = await cache.tryGet(`daoxuan:article:${item.link}`, async () => {
                 const detail = await got(item.link);
                 const content = load(detail.data);
-                const article = content('article.article-container');
-                if (!article.length) {
-                    throw new Error(`Daoxuan article content was not found at ${item.link}`);
-                }
-                return article.html();
+                return content('article.article-container').html();
             });
             return { ...item, description };
         },

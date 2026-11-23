@@ -97,7 +97,7 @@ async function handler(ctx) {
                     videoUrl: picked ? item.clip.uri.replace('/videos', '') : item.uri.replace('/videos', ''),
                     vdescription: videoDescription ? videoDescription.replaceAll('\n', '<br>') : '',
                 }),
-                pubDate: !picked && !cat && item.created_time ? parseDate(item.created_time) : undefined,
+                pubDate: !picked && !cat ? parseDate(item.created_time) : undefined,
                 link: `https://vimeo.com${picked ? item.clip.uri.replace('videos/', '') : item.uri.replace('videos/', '')}`,
                 author: profileData.name,
             };

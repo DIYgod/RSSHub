@@ -14,8 +14,7 @@ const md = MarkdownIt({
 
 const FetchGoItems = async (ctx, rewriteId?) => {
     const id = rewriteId || (ctx.req.param('id') ?? 'weekly');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
+    const limit = Number(ctx.req.query('limit') ?? 50);
 
     const rootUrl = 'https://studygolang.com';
     const currentUrl = `${rootUrl}/go/${id}`;
@@ -58,8 +57,7 @@ const FetchGoItems = async (ctx, rewriteId?) => {
 
                 const content = load(detailResponse.data);
 
-                const publishedAt = content('.timeago').first().attr('title');
-                const pubDate = publishedAt ? parseDate(publishedAt, 8) : undefined;
+                const pubDate = parseDate(content('.timeago').attr('title')!, 8);
 
                 let description: string | undefined;
                 try {

@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
@@ -13,15 +10,6 @@ import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 import { parseDateStrict, parseRelativeDate } from '@/utils/time';
-
-function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, element) => cloneNode(element, true));
-    const root = new Document(copy.toArray());
-    copy.each((_, element) => {
-        element.parent = root;
-    });
-    return copy;
-}
 
 const parseSourceClock = (value: string): Temporal.Instant | undefined => {
     const match = /\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/.exec(value);
@@ -120,13 +108,11 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const sourceDate = $item.find('td.by-author em').text().replaceAll(' 发表', '');
-            const date = sourceDate ? parseRelativeDate(sourceDate) : undefined;
             return {
                 title: $item.find('a.xst').text(),
                 link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
-                pubDate: date,
+                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
         })
         // only send the cookie to the site itself
@@ -144,6 +130,7 @@ async function handler(ctx) {
                 });
 
                 const content = load(detailResponse);
+                details.updated = parseSourceClock(content('i.pstatus').text());
 
                 let descriptionList: string[] = [];
                 const indexDiv = content('div#threadindex');
@@ -180,14 +167,13 @@ async function handler(ctx) {
                 const pubDateEm = content('img.authicn').next();
                 const pubDateText = pubDateEm.find('span').prop('title') ?? pubDateEm.text();
                 details.pubDate = parseSourceClock(pubDateText);
-                details.updated = parseSourceClock(content('i.pstatus').text());
 
                 details.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
 
                 return details;
             });
             const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate, author: realAuthorName?.author ?? item.author };
+            return { ...item, ...details, author: realAuthorName?.author ?? item.author };
         })
     );
 
@@ -207,7 +193,7 @@ async function handler(ctx) {
 }
 
 function getDescription($) {
-    const descriptionEl = copyElements($('td.t_f'));
+    const descriptionEl = $('td.t_f');
     descriptionEl.find('i.pstatus').remove();
     descriptionEl.find('div.rnd_ai_pr').remove(); // remove ad image
 

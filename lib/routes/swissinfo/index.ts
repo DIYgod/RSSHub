@@ -30,15 +30,10 @@ async function getArticle(link: string): Promise<Partial<DataItem>> {
 
     const content = load(detailResponse.data);
 
-    content('.si-detail__content .si-grid').remove();
-    content('.si-detail__content .si-teaser, .article-main .teaser-wide-card').remove();
+    content('.article-main .teaser-wide-card').remove();
     content('.show-for-sr, time, address, .si-detail__translation').remove();
 
-    content('.si-detail__content picture').each((_, el) => {
-        content(el).html(`<img src="${content(el).find('source').first().attr('srcset')}">`);
-    });
-
-    const description = content('.si-detail__content, .article-main').first().html();
+    const description = content('.article-main').html();
     const author = content('meta[name="author"]').attr('content');
     const guid = detailResponse.data.match(/content_id: "(.*)",/)?.[1];
 
@@ -80,31 +75,21 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    let $ = load(response.data);
+    const $ = load(response.data);
 
     const title = $('title').text();
     const feedLanguage = feedLanguages.get($('html').attr('lang') ?? '');
 
-    const fragmentPath = $('main div[data-fragment-placeholder]').attr('data-fragment-placeholder');
-    if (fragmentPath) {
-        const fragmentResponse = await got({
-            method: 'get',
-            url: new URL(fragmentPath, rootUrl).href,
-        });
-        $ = load(fragmentResponse.data);
-    }
-
-    const currentTemplate = $('.page-main .teaser-wide-card').length > 0;
-    let items = $(currentTemplate ? '.page-main .teaser-wide-card' : '.si-teaser__link')
+    let items = $('.page-main .teaser-wide-card')
         .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find(currentTemplate ? 'time' : '.si-teaser__date').attr('datetime');
+            const date = $item.find('time').attr('datetime');
 
             return {
-                link: new URL(currentTemplate ? $item.find('.teaser-wide-card__link').attr('href')! : $item.attr('href')!, rootUrl).href,
-                title: $item.find(currentTemplate ? '.teaser-wide-card__title' : '.si-teaser__title').text(),
+                link: new URL($item.find('.teaser-wide-card__link').attr('href')!, rootUrl).href,
+                title: $item.find('.teaser-wide-card__title').text(),
                 pubDate: date ? parseDate(date) : undefined,
             };
         });

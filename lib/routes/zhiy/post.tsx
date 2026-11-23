@@ -102,7 +102,7 @@ async function handler(ctx) {
                 };
             });
 
-            return { title: item.title, pubDate: item.pubDate, link: item.link, guid: item.guid, ...detail, author: detail.author ?? authorName };
+            return { title: item.title, pubDate: item.pubDate, link: item.link, guid: item.guid, ...detail };
         },
         { concurrency: 3 }
     );

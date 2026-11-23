@@ -182,25 +182,28 @@ const toSellPointList = (goodsInfo: CrowdfundingDetailItem['goodsInfo']): string
     [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));
 
 const toSupportList = (detailItem: CrowdfundingDetailItem): Crowdfunding['supportList'] => {
-    const supportList = detailItem.goodsInfo.pids.map((pid) => {
-        const product = detailItem.productInfo[pid];
-        return {
-            image: product.img,
-            name: product.attributeValues.join(' '),
-            price: String((product.onHandPrice?.at(0)?.price ?? product.price) / 100),
-            description: product.name,
-        };
-    });
     const groupBuyGood = detailItem.oneYuanSupport.groupBuyInfo?.good;
-    if (groupBuyGood) {
-        supportList.push({
-            image: groupBuyGood.img,
-            name: '1元支持',
-            price: String(groupBuyGood.groupbuy_price / 100),
-            description: groupBuyGood.groupbuy_summary,
-        });
-    }
-    return supportList;
+    return [
+        ...detailItem.goodsInfo.pids.map((pid) => {
+            const product = detailItem.productInfo[pid];
+            return {
+                image: product.img,
+                name: product.attributeValues.join(' '),
+                price: String((product.onHandPrice?.at(0)?.price ?? product.price) / 100),
+                description: product.name,
+            };
+        }),
+        ...(groupBuyGood
+            ? [
+                  {
+                      image: groupBuyGood.img,
+                      name: '1元支持',
+                      price: String(groupBuyGood.groupbuy_price / 100),
+                      description: groupBuyGood.groupbuy_summary,
+                  },
+              ]
+            : []),
+    ];
 };
 
 const toGoodsList = (detailItem: NewProductDetailItem): NewProduct['goodsList'] =>

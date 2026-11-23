@@ -48,7 +48,7 @@ async function handler() {
             ...(await cache.tryGet(item.link + ':content', async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                return { description: $('[id^="vsb_content"]').first().html(), pubDate: parseCampusDate($('.date').find('span').eq(0).text()) };
+                return { description: $('[id^="vsb_content"]').html(), pubDate: parseCampusDate($('.date').find('span').eq(0).text()) };
             })),
         }),
         { concurrency: 3 }

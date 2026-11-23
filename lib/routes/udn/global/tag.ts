@@ -43,16 +43,13 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items: Array<DataItem & { link: string }> = response.data.lists.map((item) => {
-        const pubDate = item.time?.dateTime ? parseDate(item.time.dateTime) : undefined;
-        return {
-            title: item.title,
-            author: item.author?.title,
-            pubDate,
-            link: item.url,
-            category: item.hash?.map((h) => h.title),
-        };
-    });
+    let items: Array<DataItem & { link: string }> = response.data.lists.map((item) => ({
+        title: item.title,
+        author: item.author?.title,
+        pubDate: parseDate(item.time.dateTime),
+        link: item.url,
+        category: item.hash?.map((h) => h.title),
+    }));
 
     items = await pMap(
         items,

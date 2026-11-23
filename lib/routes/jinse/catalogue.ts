@@ -78,7 +78,7 @@ async function handler(ctx) {
         }),
         author: item.extra.nickname,
         guid: `jinse${/\/lives\//.test(item.extra.topic_url) ? '-lives' : ''}-${item.extra.topic_id}`,
-        pubDate: parseTimestamp(item.extra.published_at),
+        pubDate: parseDate(item.extra.published_at, 'X'),
         upvotes: item.extra.up_counts ?? 0,
         downvotes: item.extra.down_counts ?? 0,
         comments: item.extra.comment_count ?? 0,
@@ -128,8 +128,4 @@ async function handler(ctx) {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
     };
-}
-
-function parseTimestamp(value?: number | string): Temporal.Instant | undefined {
-    return value !== undefined && value !== '' ? parseDate(value, 'X') : undefined;
 }

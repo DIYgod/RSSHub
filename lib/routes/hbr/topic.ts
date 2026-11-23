@@ -119,9 +119,9 @@ interface StoreResult {
         product_core_id: string;
         abstract?: string;
         abstract_short?: string;
-        author?: string[];
+        author: string[];
         hbr_subject?: string[];
-        publication_date?: number;
+        publication_date: number;
     };
 }
 
@@ -129,9 +129,6 @@ async function getStoreFeed(page: TopicPage, link: string) {
     const { url, ...request } = page.staticState.searchAction.payload.requestExecuted;
     delete request.organizationId;
     delete request.accessToken;
-    if (!page.coveoAccessToken || !page.topicFilterExpression || !page.appConfig.storeBaseUrl) {
-        throw new Error('HBR did not provide its public topic search configuration.');
-    }
     const { results } = await ofetch<{ results: StoreResult[] }>(url, {
         method: 'POST',
         headers: { authorization: `Bearer ${page.coveoAccessToken}` },
@@ -147,18 +144,15 @@ async function getStoreFeed(page: TopicPage, link: string) {
         link,
         item: results.map((result): DataItem => {
             const { raw } = result;
-            if (!raw.seo_title || !raw.product_core_id || !result.uri.startsWith('product://')) {
-                throw new Error('HBR returned a store result without its product identity.');
-            }
             const productUrl = new URL(`/product/${raw.seo_title}/${raw.product_core_id}`, page.appConfig.storeBaseUrl);
             productUrl.searchParams.set('sku', result.uri.slice('product://'.length));
             return {
                 title: result.title,
                 link: productUrl.href,
                 description: escape(raw.abstract ?? raw.abstract_short ?? ''),
-                author: raw.author?.join(', '),
+                author: raw.author.join(', '),
                 category: raw.hbr_subject,
-                pubDate: raw.publication_date === undefined ? undefined : parseDate(raw.publication_date, 'x'),
+                pubDate: parseDate(raw.publication_date, 'x'),
             };
         }),
     };

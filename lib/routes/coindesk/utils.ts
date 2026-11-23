@@ -14,10 +14,8 @@ export const parseItem = async (item): Promise<DataItem> => {
     cover.find('img').attr('src', cover.find('img').attr('url')?.split('?', 1)[0]);
     cover.find('img').removeAttr('style srcset url');
 
-    const categories = item.categories?.map((category) => (typeof category === 'string' ? category : category._)).filter(Boolean);
-
     return {
-        title: item.title || ldJson.headline,
+        title: item.title,
         link: item.link,
         guid: item.guid,
         description:
@@ -28,7 +26,7 @@ export const parseItem = async (item): Promise<DataItem> => {
                 .join(''),
         pubDate: parseDate(ldJson.datePublished),
         author: ldJson.author.map((author) => ({ name: author.name })),
-        image: ldJson.image?.url?.split('?', 1)[0],
-        category: categories?.length ? categories : [ldJson.articleSection, ldJson.keywords].flat().filter(Boolean),
+        image: ldJson.image?.url.split('?', 1)[0],
+        category: item.categories?.map((category) => category._) ?? [ldJson.articleSection, ldJson.keywords].flat().filter(Boolean),
     };
 };

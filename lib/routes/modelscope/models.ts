@@ -50,7 +50,7 @@ async function handler(ctx) {
         author: model.Organization.FullName,
         link: `${link}/${model.Path}/${model.Name}`,
         pubDate: parseDate(model.CreatedTime, 'X'),
-        category: [...new Set([...(model.Tasks ?? []).map((task) => task.ChineseName), ...(model.Tags ?? [])])],
+        category: [...new Set([...(model.Tasks ?? []).map((task) => task.ChineseName), ...model.Tags])],
         slug: `/${model.Path}/${model.Name}`,
     }));
 

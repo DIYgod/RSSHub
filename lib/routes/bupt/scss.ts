@@ -55,20 +55,17 @@ async function handler() {
                 }
 
                 const link = new URL($link.attr('href')!, rootUrl).href;
-                const rawDate = $item.find('span').text().replace('发布时间：', '').trim();
+                const rawDate = $item.find('span').text().replace('发布时间：', '');
 
                 return {
-                    title: $link.text().trim(),
+                    title: $link.text(),
                     link,
                     pubDateRaw: rawDate,
-                    pubDate: parseDate(rawDate, 'YYYY-MM-DD', 8),
                 };
             })
             .filter((item) => item !== null);
-        const orderedList = list;
-        const entries = orderedList;
         const items = await Promise.all(
-            entries.map((item) => {
+            list.map((item) => {
                 // only follow links on the site itself
                 if (!isOnSite(item.link, 'bupt.edu.cn')) {
                     return item;

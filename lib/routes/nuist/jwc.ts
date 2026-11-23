@@ -54,7 +54,7 @@ async function handler(ctx) {
             ...(await cache.tryGet(item.link + ':content', async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                return { description: $('[id^="vsb_content"]').first().html() };
+                return { description: $('[id^="vsb_content"]').html() };
             })),
         }),
         { concurrency: 3 }

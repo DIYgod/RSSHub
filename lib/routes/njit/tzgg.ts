@@ -7,7 +7,6 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
 const url = 'https://www.njit.edu.cn/index/tzgg.htm';
-const host = 'https://www.njit.edu.cn';
 
 export const route: Route = {
     path: '/tzgg',
@@ -72,11 +71,7 @@ async function handler() {
                 const single = {
                     title: notice.title,
                     link: itemUrl,
-                    description: $('.v_news_content')
-                        .html()!
-                        .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
-                        .trim(),
+                    description: $('.v_news_content').html()?.trim(),
                     pubDate: notice.pubDate,
                 };
                 return single;

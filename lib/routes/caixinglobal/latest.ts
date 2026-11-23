@@ -45,7 +45,7 @@ async function handler(ctx): Promise<Data> {
         title: e.desc,
         description: e.summ,
         link: e.link,
-        pubDate: e.time ? parseDate(e.time, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+        pubDate: parseDate(e.time, 'YYYY-MM-DD HH:mm:ss', 8),
         category: e.tags.map((t) => t.name),
         nid: e.nid,
         attr: e.attr,

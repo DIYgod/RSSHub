@@ -7,20 +7,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-function extractAuthor(value: string): string | undefined {
-    for (const marker of value.matchAll(/作者：/g)) {
-        const tail = value.slice(marker.index + marker[0].length).trimStart();
-        const sourceIndex = tail.indexOf('来源：');
-        if (sourceIndex === -1) {
-            continue;
-        }
-        const candidate = tail.slice(0, sourceIndex).trimEnd();
-        if (!/[\r\n\u{2028}\u{2029}]/u.test(candidate)) {
-            return candidate || undefined;
-        }
-    }
-}
-
 const titleMap = {
     tzgg: '通知公告',
     zsxx: '硕士招生信息',
@@ -93,14 +79,18 @@ async function handler(ctx) {
             const itemData = await cache.tryGet(item.link, async () => (await got(item.link)).data);
             const content = load(itemData);
 
-            const author = extractAuthor(content('.articleAuthor').text());
+            const author =
+                content('.articleAuthor')
+                    .text()
+                    .match(/作者：(.*)来源：/)?.[1]
+                    .trim() || undefined;
             const eDescription = content('.article').html();
             const files = content('.Annex').html() || '';
 
             const single = {
                 title: item.title,
                 link: item.link,
-                description: (eDescription || '') + files,
+                description: eDescription + files,
                 author,
                 pubDate: item.pubDate,
             };

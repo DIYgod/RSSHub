@@ -67,9 +67,9 @@ async function handler() {
                 pubDate: parseDate(Number.parseInt($item.find('.new_time').attr('data-date')!)),
             };
         });
-    const candidates = items;
+
     items = await pMap(
-        candidates,
+        items,
         (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({

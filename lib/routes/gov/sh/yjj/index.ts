@@ -47,12 +47,10 @@ async function handler(ctx) {
             const $item = $(item);
 
             const link = $item.attr('href');
-            const date = $item.next().text().trim();
-            const pubDate = date ? parseDateStrict(date, ['YYYY.MM.DD', 'YYYY-MM-DD'], 8) : undefined;
 
             return {
                 title: $item.text(),
-                pubDate,
+                pubDate: parseDateStrict($item.next().text(), ['YYYY.MM.DD', 'YYYY-MM-DD'], 8),
                 link: new URL(link!, currentUrl).href,
             };
         });
@@ -72,11 +70,10 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const date = (content('meta[name="pubdate"]').attr('content') || content('meta[name="PubDate"]').attr('content'))?.replaceAll('∶', ':');
-                const pubDate = date ? parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8) : undefined;
+                const date = (content('meta[name="pubdate"]').prop('content') || content('meta[name="PubDate"]').prop('content')).replaceAll('∶', ':');
 
                 item.description = content('#ivs_content').html();
-                item.pubDate = pubDate ?? item.pubDate;
+                item.pubDate = parseDateStrict(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
 
                 return item;
             })

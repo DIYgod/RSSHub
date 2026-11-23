@@ -8,9 +8,10 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import MarkdownIt from '@/utils/markdown-it';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 import { renderSubscriptionImages } from './templates/subscriptions';
-import { apiqRootUrl, imageRootUrl, parseCreatedAt, rootUrl } from './utils';
+import { apiqRootUrl, imageRootUrl, rootUrl } from './utils';
 
 const md = MarkdownIt({
     html: true,
@@ -75,7 +76,7 @@ async function handler() {
 
     const { page, destroy } = await getPlaywrightPage(rootUrl, {
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document', 'fetch', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            await page.route('**/*', (route) => (['document', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
         gotoConfig: {
             waitUntil: 'domcontentloaded',
@@ -151,7 +152,7 @@ async function handler() {
                 link: `${rootUrl}/video/${item.id}`,
                 category: ['Video', ...(item.tags ? item.tags.map((i) => i.id) : [])],
                 imageUrl,
-                pubDate: parseCreatedAt(item.createdAt),
+                pubDate: parseDate(item.createdAt),
                 private: item.private,
             };
         });
@@ -164,7 +165,7 @@ async function handler() {
                 link: `${rootUrl}/image/${item.id}`,
                 category: ['Image', ...(item.tags ? item.tags.map((i) => i.id) : [])],
                 imageUrl,
-                pubDate: parseCreatedAt(item.createdAt),
+                pubDate: parseDate(item.createdAt),
             };
         });
 

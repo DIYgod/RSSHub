@@ -66,10 +66,8 @@ async function handler(ctx) {
             const a = c.find('a');
             const articleHref = a.attr('href');
             const title = a.text();
-            const date = c.find('.times').text();
             return {
                 link: new URL(articleHref!, completeUrl).href,
-                pubDate: date ? parseDate(date, 8) : undefined,
                 title,
             };
         });
@@ -81,16 +79,14 @@ async function handler(ctx) {
                 const article = await cache.tryGet(`gov:cac:article:${item.link}`, async () => {
                     const { data: response } = await got(item.link);
                     const content = load(response);
-                    const pubDate = content('#pubtime').text().trim();
                     return {
-                        description: content('.main-content').html() ?? undefined,
-                        pubDate: pubDate ? parseDate(pubDate, 'YYYY年MM月DD日 HH:mm', 8) : undefined,
+                        description: content('.main-content').html(),
+                        pubDate: parseDate(content('#pubtime').text().trim(), 'YYYY年MM月DD日 HH:mm', 8),
                     };
                 });
                 return {
                     ...item,
                     ...article,
-                    pubDate: article.pubDate ?? item.pubDate,
                 };
             })
         ),

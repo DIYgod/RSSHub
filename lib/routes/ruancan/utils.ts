@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const fetchFeed = async (ctx, currentUrl) => {
@@ -17,9 +18,7 @@ export const fetchFeed = async (ctx, currentUrl) => {
 
     const $ = load(response.data);
 
-    const queryLimit = ctx.req.query('limit');
-    const requestedLimit = queryLimit?.trim() ? Number(queryLimit) : NaN;
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 0 ? Math.floor(requestedLimit) : 15;
+    const limit = getRouteLimit(ctx, 15);
     const list = $('.item-title a');
     let items = (list.length ? list : $('.post-loop-list > .item > a'))
         .slice(0, limit)
@@ -56,9 +55,8 @@ export const fetchFeed = async (ctx, currentUrl) => {
                 const category = content('.entry-info a[rel~="category"]')
                     .toArray()
                     .map((c) => content(c).text());
-                const date = content('.entry-info .entry-date').attr('datetime');
-                const pubDate = date ? parseDate(date) : undefined;
-                const author = content('.entry-info .vcard a').first().text() || undefined;
+                const pubDate = parseDate(content('.entry-info .entry-date').attr('datetime')!);
+                const author = content('.entry-info .vcard a').text();
                 return { description, category, pubDate, author };
             });
             return { ...item, ...detail };

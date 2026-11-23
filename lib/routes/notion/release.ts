@@ -19,10 +19,10 @@ const handler: Route['handler'] = async () => {
         .map((element) => {
             const release = $(element);
             return {
-                title: release.find('h2').first().text(),
-                pubDate: parseDate(release.find('time').first().text(), 'MMMM D, YYYY'),
-                description: release.find('article').first().html(),
-                link: new URL(release.find('a[href^="/releases/"]').first().attr('href')!, link).href,
+                title: release.find('h2').text(),
+                pubDate: parseDate(release.find('time').text(), 'MMMM D, YYYY'),
+                description: release.find('article').html(),
+                link: new URL(release.find('a[href^="/releases/"]').attr('href')!, link).href,
             };
         });
     return {

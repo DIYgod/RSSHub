@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
@@ -35,12 +32,20 @@ const rootUrl = 'http://cse.sysu.edu.cn/';
 
 function getItem($, element) {
     const item = $(element);
-    const anchor = item.find('.title a, h3 a').first();
+    const anchor = item.find('.title a, h3 a');
     const block = item.closest('.block');
     const tab = item.closest('.tab-pane');
-    const category = tab.length ? copyNodes(block.find('.tab-nav a').eq(tab.index())).find('.icon').remove().end().text().trim() : block.find('h2').first().text();
-    const date = item.find('.posttime time').first().attr('datetime')?.trim();
-    const image = item.find('img').first().attr('src');
+    const category = tab.length
+        ? block
+              .find('.tab-nav a')
+              .eq(tab.index())
+              .contents()
+              .filter((_, node) => node.type === 'text')
+              .text()
+              .trim()
+        : block.find('h2').text();
+    const date = item.find('.posttime time').attr('datetime');
+    const image = item.find('img').attr('src');
     // Event times describe the schedule, not the publication date.
     const eventContent = item.hasClass('eventsitem')
         ? item
@@ -53,8 +58,8 @@ function getItem($, element) {
         title: anchor.find('.text').length ? anchor.find('.text').text() : anchor.text(),
         link: new URL(anchor.attr('href'), rootUrl).href,
         pubDate: date ? parseDate(date) : undefined,
-        category: category ? [category] : undefined,
-        description: item.find('.summary').first().html() || eventContent || undefined,
+        category: [category],
+        description: item.find('.summary').html() || eventContent,
         image: image ? new URL(image, rootUrl).href : undefined,
     };
 }
@@ -77,13 +82,4 @@ async function handler(): Promise<Data> {
         language: 'zh-CN',
         item: items.values().toArray(),
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

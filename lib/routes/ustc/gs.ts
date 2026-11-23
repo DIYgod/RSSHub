@@ -56,8 +56,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('a').text();
             const link = new URL($item.find('a').attr('href')!, host).href;
-            const published = $item.find('time').text().trim();
-            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDate($item.find('time').text(), 'YYYY-MM-DD', 8);
             return {
                 title,
                 pubDate,
@@ -67,8 +66,8 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author' | 'enclosure_url' | 'enclosure_type' | 'enclosure_length'>>(`ustc:gs:detail:${item.link}`, async () => {
-                const details: Pick<DataItem, 'description' | 'pubDate' | 'author' | 'enclosure_url' | 'enclosure_type' | 'enclosure_length'> = {};
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'enclosure_url' | 'enclosure_type' | 'enclosure_length'>>(`ustc:gs:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description' | 'enclosure_url' | 'enclosure_type' | 'enclosure_length'> = {};
                 try {
                     if (new URL(item.link!).pathname.endsWith('.pdf')) {
                         const response = await ofetch.raw<unknown, 'arrayBuffer'>(item.link!, { responseType: 'arrayBuffer' });
@@ -80,18 +79,13 @@ async function handler(ctx) {
                         return details;
                     }
                     const response = await got(item.link);
-                    const $detail = load(response.data);
-                    details.description = $detail('article.article').html();
-                    const published = $detail('.info-bar time')
-                        .text()
-                        .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                    details.pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
+                    details.description = load(response.data)('article.article').html();
                 } catch {
                     // Retain the existing optional-detail fallback.
                 }
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );

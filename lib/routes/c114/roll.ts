@@ -52,7 +52,7 @@ const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 const publishedTime = $$('div.r_time, div.article_top > div.time').first().text();
-                item.pubDate = publishedTime ? parseDate(publishedTime, 'YYYY/M/D HH:mm', 8) : undefined;
+                item.pubDate = parseDate(publishedTime, 'YYYY/M/D HH:mm', 8);
                 item.author = $$('div.author, div.article_author').first().text().trim();
                 item.content = {
                     html: description,

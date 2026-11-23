@@ -27,8 +27,8 @@ async function handler(ctx: Context) {
     const items = posts.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
-        updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
+        pubDate: parseDate(`${item.date_gmt}Z`),
+        updated: parseDate(`${item.modified_gmt}Z`),
         link: item.link,
         author: item.yoast_head_json?.author,
     }));

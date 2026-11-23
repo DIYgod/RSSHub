@@ -4,7 +4,7 @@ type ProductItem = {
     shortDescription?: string;
     originalPrice?: string;
     price?: string;
-    image?: string;
+    image: string;
 };
 
 export const renderProductDescription = (item: ProductItem): string =>
@@ -28,6 +28,6 @@ export const renderProductDescription = (item: ProductItem): string =>
                     <br />
                 </>
             ) : null}
-            {item.image ? <img src={item.image} /> : null}
+            <img src={item.image} />
         </div>
     );

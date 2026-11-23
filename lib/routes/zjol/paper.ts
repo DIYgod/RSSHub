@@ -83,10 +83,10 @@ async function handler(ctx) {
         },
         { concurrency: 3 }
     );
-    links.push(...sections.flat());
+    const allLinks = [...links, ...sections.flat()];
 
     const items = await pMap(
-        links.filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true)).slice(0, limit),
+        allLinks.filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true)).slice(0, limit),
         (link) =>
             cache.tryGet(link, async () => {
                 const detailResponse = await got({

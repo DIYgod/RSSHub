@@ -11,18 +11,6 @@ import { parseDate } from '@/utils/time';
 
 import { apiSlug, bakeFeedUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakePageUrl, bakeUrl, fetchData, parseFilterStr } from './util';
 
-const parseGmtDate = (value: string | undefined) => {
-    if (!value) {
-        return;
-    }
-    return parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
-};
-const parseRssDate = (value: string | undefined) => {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-};
 const rewriteImageUrls = ($: CheerioAPI, link: string, cdn: string | undefined) => {
     $('img').each((_, el) => {
         const image = $(el);
@@ -58,12 +46,12 @@ async function handler(ctx) {
             const terminologies = item._embedded?.['wp:term'] ?? [];
             const guid = item.guid?.rendered ?? item.guid;
             const $$ = load(item.content?.rendered ?? item.content);
-            rewriteImageUrls($$, item.link || rootUrl, cdn);
+            rewriteImageUrls($$, item.link, cdn);
             const description = $$.html();
             return {
                 title: item.title?.rendered ?? item.title,
                 description,
-                pubDate: parseGmtDate(item.date_gmt),
+                pubDate: parseDate(`${item.date_gmt}Z`),
                 link: item.link,
                 category: [...new Set(terminologies.flat().map((c) => c.name))],
                 author: item._embedded?.author?.map((a) => a.name).join('/'),
@@ -73,7 +61,7 @@ async function handler(ctx) {
                     html: description,
                     text: $$.text(),
                 },
-                updated: parseGmtDate(item.modified_gmt),
+                updated: parseDate(`${item.modified_gmt}Z`),
             };
         });
         const data = await fetchData(currentUrl, rootUrl);
@@ -93,7 +81,7 @@ async function handler(ctx) {
             return {
                 title: item.title!,
                 description,
-                pubDate: parseRssDate(item.pubDate),
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 link: item.link,
                 category: item.categories,
                 author: item.creator,

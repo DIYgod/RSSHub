@@ -45,7 +45,7 @@ async function handler() {
                 title: item.title,
                 link: item.link,
                 guid: item.guid,
-                description: item['content:encoded'] || item.content,
+                description: item['content:encoded'],
                 pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 category: item.categories,
             };

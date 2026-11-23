@@ -40,10 +40,6 @@ interface FeedArticle {
     created_by: { name: string };
 }
 
-function parseTimestamp(value: number | string) {
-    return value ? parseDate(value, 'X') : undefined;
-}
-
 async function handler() {
     const apiUrl = 'https://sso.ifanr.com/api/v5/wp/web-feed/?limit=20&offset=0';
     const resp = await got({
@@ -64,7 +60,7 @@ async function handler() {
                 title: item.post_title,
                 description,
                 link: item.post_url,
-                pubDate: parseTimestamp(item.created_at),
+                pubDate: parseDate(item.created_at, 'X'),
                 author: item.created_by.name,
             };
         },

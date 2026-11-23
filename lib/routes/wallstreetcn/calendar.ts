@@ -45,17 +45,6 @@ const getMacrodataUrl = (countryId, wscnTicker) => `${rootUrl}/data-analyse/${ws
 const hasValue = (value?: string | number | null) => (value ?? '') !== '';
 const formatValue = (value?: string | number | null, unit: string = '') => (hasValue(value) ? `${value}${unit}` : '-');
 
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    const seconds = Number(value);
-    if (!Number.isFinite(seconds)) {
-        return;
-    }
-    return parseDate(seconds * 1000);
-}
-
 async function handler(ctx) {
     const { section = 'macrodatas' } = ctx.req.param();
 
@@ -81,7 +70,7 @@ async function handler(ctx) {
                   description: `重要性: ${'★'.repeat(item.importance)} 今值: ${formatValue(item.actual, item.unit)} 预期: ${formatValue(item.forecast, item.unit)} 前值: ${formatValue(hasValue(item.revised) ? item.revised : item.previous, item.unit)}${item.foresight ? `\n${item.foresight}` : ''}`,
                   link: item.uri && macrodataSuffix[item.country_id] && getMacrodataUrl(item.country_id, item.wscn_ticker),
                   guid: item.id,
-                  pubDate: parseSourceTime(item.public_date),
+                  pubDate: parseDate(item.public_date, 'X'),
                   category: item.country,
               }))
             : // report
@@ -92,7 +81,7 @@ async function handler(ctx) {
                       description: `${item.code} 预期EPS: ${formatValue(item.eps_estimate)} 实际EPS: ${formatValue(item.reported_eps)} 差异度: ${!hasValue(item.surprise) || item.surprise === -1 ? '-' : (item.surprise * 100).toFixed(2) + '%'}`,
                       link,
                       guid: item.id,
-                      pubDate: parseSourceTime(item.public_date),
+                      pubDate: parseDate(item.public_date, 'X'),
                   }));
 
     return {

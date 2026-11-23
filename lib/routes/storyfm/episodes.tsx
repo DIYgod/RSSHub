@@ -54,7 +54,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${date}T00:00:00Z`),
                 enclosure_type: 'audio/mpeg',
                 enclosure_url: $item.find('audio source').attr('src'),
                 itunes_item_image: $item.find('.zoom-image-container-progression img').attr('src'),
@@ -74,7 +74,7 @@ async function handler() {
 
                 return {
                     author: content('.rs-post__author').text().replace(/By/, '').trim(),
-                    description: content('.rs-post__content').html() || '',
+                    description: content('.rs-post__content').html(),
                 };
             });
             return {

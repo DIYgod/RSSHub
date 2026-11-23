@@ -13,43 +13,24 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
 
     const list = $(listSelector)
         .toArray()
-        .flatMap((item): Array<DataItem & { link: string }> => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const href = $item.find(titleSelector).attr('href');
-            if (!href) {
-                return [];
-            }
-            const date = $item
-                .find('.news_meta')
-                .text()
-                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-            return [
-                {
-                    pubDate: date ? parseDate(date, 8) : undefined,
-                    title: $item.find(titleSelector).attr('title')!,
-                    link: new URL(href, host).href,
-                },
-            ];
+            return {
+                pubDate: parseDate($item.find('.news_meta').text(), 8),
+                title: $item.find(titleSelector).attr('title')!,
+                link: host + $item.find(titleSelector).attr('href'),
+            };
         });
 
     const out = await pMap(
         list,
         (item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch.raw(item.link, { responseType: 'text' });
-                if (response.url) {
-                    item.link = response.url;
-                }
-                const $ = load(response._data ?? '');
-                const title = $(contentSelector.title).text();
-                item.title = title || item.title;
-                item.description = $(contentSelector.content).html() ?? item.description;
-                const date = $(contentSelector.date)
-                    .text()
-                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
-                if (date) {
-                    item.pubDate = parseDate(date, 8);
-                }
+                const response = await ofetch.raw(item.link);
+                item.link = response.url;
+                const $ = load(response._data);
+                item.title = $(contentSelector.title).text();
+                item.description = $(contentSelector.content).html();
                 return item;
             }),
         { concurrency: 6 }

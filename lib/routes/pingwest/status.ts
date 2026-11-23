@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -48,13 +45,9 @@ async function handler() {
             const rightNode = $item.find('.news-info');
             const tag = rightNode.find('.item-tag-list').text();
             const title = rightNode.find('.title').text();
-            const link = rightNode.find('a').last().attr('href');
-            if (!link) {
-                throw new Error('The news card does not contain a link.');
-            }
-            const content = copyNodes(rightNode);
-            content.find('.title, .item-tag-list').remove();
-            let description = content.html() ?? '';
+            const link = rightNode.find('a').last().attr('href')!;
+            rightNode.find('.title, .item-tag-list').remove();
+            let description = rightNode.html() ?? '';
             const imgUrl = $item.find('.news-img img');
             if (imgUrl.length) {
                 imgUrl.attr('src', imgUrl.attr('src')!.split('?x-', 1)[0]);
@@ -75,13 +68,4 @@ async function handler() {
         link: `${baseUrl}/status`,
         item: items,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

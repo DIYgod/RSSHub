@@ -6,8 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import { selectItems } from '../utils';
-
 const baseUrl = 'https://news.dhu.edu.cn/_wp3services/generalQuery?queryObj=articles&siteId=14&columnId=6410&pageIndex=1&rows=20';
 
 export const route: Route = {
@@ -49,7 +47,7 @@ async function handler() {
 
     // item content
     const items = await pMap(
-        selectItems(list),
+        list,
         (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);

@@ -22,19 +22,18 @@ const parsePost = ($: CheerioAPI, post: Cheerio<Element>, base: string): DataIte
         .match(/(\d{4}\/\d{2}\/\d{2})\(.\) (\d{2}:\d{2}:\d{2})/);
 
     post.find('.quote .postvote-slot').remove();
-    const date = dateMatch ? parseDateStrict(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss', 8) : undefined;
 
     return {
         title: post.find('.title').text(),
         link: `${base}pixmicat.php?res=${no}`,
         guid: `komica:${base}${no}`,
         author: post.find('.name').text(),
-        pubDate: date,
+        pubDate: dateMatch ? parseDateStrict(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss', 8) : undefined,
         category: post
             .find('.category a[href*="mode=category"]')
             .toArray()
             .map((a) => $(a).text()),
-        description: (image ? (isVideo ? `<video src="${image}"${thumbnail ? ` poster="${thumbnail}"` : ''} controls></video><br>` : `<img src="${image}"><br>`) : '') + (post.find('.quote').html() ?? ''),
+        description: (image ? (isVideo ? `<video src="${image}" poster="${thumbnail}" controls></video><br>` : `<img src="${image}"><br>`) : '') + (post.find('.quote').html() ?? ''),
     };
 };
 

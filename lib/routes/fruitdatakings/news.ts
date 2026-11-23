@@ -20,8 +20,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const product = ctx.req.param('product') ?? 'cherry';
-    const response = await ofetch.raw(link, { responseType: 'text' });
-    const $ = load(response._data!);
+    const response = await ofetch.raw(link);
+    const $ = load(response._data);
     if (
         $('input[name="keywords"]')
             .toArray()
@@ -34,7 +34,7 @@ async function handler(ctx) {
         .getSetCookie()
         .map((value) => value.split(';', 1)[0])
         .join('; ');
-    const result = await ofetch(link, { method: 'POST', headers: { Referer: link, Cookie: cookie }, body: new URLSearchParams({ csrfmiddlewaretoken: token, keywords: product }), responseType: 'text' });
+    const result = await ofetch(link, { method: 'POST', headers: { Referer: link, Cookie: cookie }, body: new URLSearchParams({ csrfmiddlewaretoken: token, keywords: product }) });
     const news = load(result);
     return {
         title: `Fruit Data Kings - ${product}`,

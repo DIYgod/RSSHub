@@ -36,7 +36,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('div.list-right-tt').text(),
-            pubDate: $(item).find('.news-date-li').text() ? parseDate($(item).find('.news-date-li').text(), 'DDYYYY-MM', 8) : undefined,
+            pubDate: parseDate($(item).find('.news-date-li').text(), 'DDYYYY-MM', 8),
             link: new URL($(item).find('a').attr('href')!, toUrl).href,
             description: $(item).find('div.list-right-p').text(),
         }));

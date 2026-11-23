@@ -12,13 +12,6 @@ const rangeMap = {
     monthly: '月榜',
 };
 
-function parsePublicationTime(value?: number) {
-    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
-        return;
-    }
-    return parseDate(value, 'x');
-}
-
 const parseArticleResult = async (item: DataItem) => {
     const [result] = await Promise.allSettled([parseArticle(item)]);
     return result;
@@ -62,7 +55,7 @@ async function handler(ctx) {
             title: item.articleTitle,
             description: item.articleSummary,
             link: `${baseUrl}/${item.type || 'ai'}/${item.id}.html`,
-            pubDate: parsePublicationTime(item.publishTime),
+            pubDate: parseDate(item.publishTime, 'x'),
             author: item.articleAuthor,
         };
     });

@@ -40,7 +40,7 @@ interface ArticleRecord {
     title: string;
     url: string;
     external_link?: string;
-    pub_date?: string;
+    pub_date: string;
     miAuthor?: string;
     miSummary?: string;
     miCover43?: string;
@@ -79,11 +79,7 @@ export async function getCurrentItems($: CheerioAPI, currentUrl: string): Promis
             const files: string[] = [];
             let count = 0;
             for (let position = 1; position <= Number(index.fileCount) && count < firstPageSize; position++) {
-                const file = index[position];
-                if (!file || !/^mi4_sub_articles_\d{8}\.js$/.test(file)) {
-                    throw new Error(`The current CS article index has no valid data file at position ${position}: ${guideUrl}.`);
-                }
-                files.push(file);
+                files.push(index[position]);
                 count += Number(index[`page_${position}_totalCnt`]);
             }
             const records = (
@@ -97,7 +93,7 @@ export async function getCurrentItems($: CheerioAPI, currentUrl: string): Promis
             return records.slice(0, firstPageSize).map((record): DataItem & { link: string } => ({
                 title: record.title,
                 link: new URL(record.external_link || record.url, currentUrl).href,
-                pubDate: record.pub_date ? parseDate(record.pub_date, 8) : undefined,
+                pubDate: parseDate(record.pub_date, 8),
                 author: record.miAuthor || undefined,
                 summary: record.miSummary || undefined,
                 image: record.miCover43 || undefined,

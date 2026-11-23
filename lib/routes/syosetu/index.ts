@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { ncode } = ctx.req.param();
-    const limit = Math.min(getRouteLimit(ctx, 5) ?? 5, 20);
+    const limit = Math.min(getRouteLimit(ctx, 5), 20);
 
     const { baseUrl, novel } = await fetchNovelInfo(ncode);
     novel.story = novel.story.replaceAll('\n', '<br>') || '';

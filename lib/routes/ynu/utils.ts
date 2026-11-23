@@ -4,81 +4,31 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
-function resolveArticleLink(value: string, baseUrl: string) {
-    const href = value.trim();
-    if (!href || href.startsWith('#')) {
-        return;
-    }
-    try {
-        const url = new URL(href, baseUrl);
-        return isOneOf(url.protocol, ['http:', 'https:']) ? url.href : undefined;
-    } catch {
-        return;
-    }
-}
-function parsePublishedDate(value: string) {
-    const match = /^(\d{4}-\d{2}-\d{2})(?: (\d{2}:\d{2}:\d{2})(?:\.(\d{1,3}))?)?$/.exec(value.trim());
-    if (!match) {
-        return;
-    }
-    const normalized = match[2] ? `${match[1]} ${match[2]}.${(match[3] ?? '0').padEnd(3, '0')}` : match[1];
-    return parseDateStrict(normalized, match[2] ? 'YYYY-MM-DD HH:mm:ss.SSS' : 'YYYY-MM-DD', 8);
-}
-function restorePdfContent($: CheerioAPI, link: string) {
+function restorePdfContent($: CheerioAPI) {
     $('.v_news_content script').each((_, element) => {
         const script = $(element).text();
         const pdfPath = /showVsbpdfIframe\(\s*(['"])(.*?)\1/.exec(script)?.[2];
-        const pdfUrl = pdfPath ? resolveArticleLink(pdfPath, link) : undefined;
-        if (!pdfUrl) {
+        const pagesJson = /var\s+vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])/.exec(script)?.[1];
+        if (!pdfPath || !pagesJson) {
             return;
         }
-        const content = $('<span></span>').append($('<a>PDF</a>').attr('href', pdfUrl));
-        const pagesJson = /var\s+vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])/.exec(script)?.[1];
-        let pages: string[] = [];
-        if (pagesJson) {
-            try {
-                pages = JSON.parse(pagesJson);
-            } catch {
-                pages = [];
-            }
-        }
-        if (Array.isArray(pages)) {
-            for (const page of pages) {
-                const url = typeof page === 'string' ? resolveArticleLink(page, link) : undefined;
-                if (url) {
-                    content.append($('<img>').attr('src', url));
-                }
-            }
+        const pages: string[] = JSON.parse(pagesJson);
+        const content = $('<span></span>').append($('<a>PDF</a>').attr('href', pdfPath));
+        for (const page of pages) {
+            content.append($('<img>').attr('src', page));
         }
         $(element).replaceWith(content);
     });
 }
-function appendArticleAttachments($: CheerioAPI, link: string, description: string | undefined) {
-    const seen = new Set(
-        $('.v_news_content a[href]')
-            .toArray()
-            .map((element) => resolveArticleLink($(element).attr('href') ?? '', link))
-    );
+function appendArticleAttachments($: CheerioAPI, description: string | undefined) {
     const attachments = $('<ul></ul>');
     $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"]').each((_, element) => {
-        const url = resolveArticleLink($(element).attr('href') ?? '', link);
-        if (!url || seen.has(url)) {
-            return;
-        }
-        const parsed = new URL(url);
-        const name = $(element).text().trim();
-        if (parsed.pathname !== '/system/_content/download.jsp' || parsed.searchParams.get('urltype') !== 'news.DownloadAttachUrl' || !name) {
-            return;
-        }
-        seen.add(url);
-        const attachmentWrapper1 = $('<li></li>');
-        const attachmentAnchor1 = $('<a></a>').attr('href', url).text(name);
-        attachmentWrapper1.append(attachmentAnchor1);
-        attachments.append(attachmentWrapper1);
+        const anchor = $('<a></a>').attr('href', $(element).attr('href')).text($(element).text());
+        attachments.append($('<li></li>').append(anchor));
     });
-    return attachments.children().length ? [description, $.html(attachments)].filter(Boolean).join('\n') : description;
+    return attachments.children().length ? `${description}\n${$.html(attachments)}` : description;
 }
 export const processPages = ({
     list,
@@ -94,15 +44,13 @@ export const processPages = ({
     department: string;
 }) =>
     pMap(
-        list.flatMap((item) => {
-            const link = resolveArticleLink(item.path, host);
-            return link ? { ...item, link } : [];
-        }),
-        async ({ link, title, author }) => {
+        list,
+        async ({ path, title, author }) => {
+            const link = new URL(path, host).href;
             const article = await cache.tryGet(`ynu:article:v5:${department}:${link}`, async () => {
                 const response = await ofetch(link);
                 const $ = load(response);
-                restorePdfContent($, link);
+                restorePdfContent($);
                 let dateString = '';
                 switch (department) {
                     case 'grs':
@@ -124,13 +72,13 @@ export const processPages = ({
                 if (department === 'jwc') {
                     const attachment = $('#vsb_content').siblings('ul').html()?.trim();
                     if (attachment) {
-                        description = [description, attachment].filter(Boolean).join('\n');
+                        description += '\n' + attachment;
                     }
                 } else if (department === 'grs') {
-                    description = appendArticleAttachments($, link, description);
+                    description = appendArticleAttachments($, description);
                 }
                 return {
-                    pubDate: parsePublishedDate(dateString),
+                    pubDate: dateString ? parseDate(dateString, 8) : undefined,
                     description,
                 };
             });
@@ -138,7 +86,3 @@ export const processPages = ({
         },
         { concurrency: 3, stopOnError: false }
     );
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
-}

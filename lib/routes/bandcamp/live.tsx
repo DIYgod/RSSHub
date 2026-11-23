@@ -31,25 +31,24 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://bandcamp.com';
     const currentUrl = `${rootUrl}/live`;
-    const limit = 20;
     const response = await got({
         method: 'post',
         url: `${rootUrl}/api/live_events_public_api/4/get_upcoming_live_events`,
-        json: { page_size: Math.min(limit, 20) },
+        json: { page_size: 20 },
         minVersion: 'TLSv1.3',
     });
 
     const items = response.data.items.map((item) => {
-        const image = item.imageId ? `https://f4.bcbits.com/img/${item.isArt ? `a${String(item.imageId).padStart(10, '0')}_2.jpg` : `${item.imageId}_4x3t_500.webp`}` : undefined;
+        const image = `https://f4.bcbits.com/img/a${String(item.imageId).padStart(10, '0')}_2.jpg`;
         return {
             link: item.liveEventUrl,
             title: item.title,
             author: item.artist,
-            pubDate: item.scheduledStartDate ? parseDate(item.scheduledStartDate) : undefined,
+            pubDate: parseDate(item.scheduledStartDate),
             image,
             description: renderToString(
                 <>
-                    {image ? <img src={image} /> : null}
+                    <img src={image} />
                     <p style="white-space: pre-line">{item.description}</p>
                 </>
             ),

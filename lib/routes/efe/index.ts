@@ -55,20 +55,13 @@ interface Post {
     link: string;
     title: { rendered: string };
     content: { rendered: string };
-    date_gmt?: string;
-    modified_gmt?: string;
+    date_gmt: string;
+    modified_gmt: string;
     jetpack_featured_media_url?: string;
-    _embedded?: {
-        author?: Array<{ name: string }>;
-        'wp:term'?: Array<Array<{ name: string }>>;
+    _embedded: {
+        author: Array<{ name: string }>;
+        'wp:term': Array<Array<{ name: string }>>;
     };
-}
-
-function getGmtDate(date?: string) {
-    if (!date) {
-        return;
-    }
-    return parseDate(`${date}Z`);
 }
 
 async function handler(ctx) {
@@ -86,15 +79,15 @@ async function handler(ctx) {
     });
     const items = posts.map((post) => {
         const $ = load(post.content.rendered);
-        $('.auto-banner, script, style').remove();
+        $('.auto-banner, style').remove();
         return {
             title: load(post.title.rendered).text(),
             link: post.link,
             description: $('body').html(),
-            pubDate: getGmtDate(post.date_gmt),
-            updated: getGmtDate(post.modified_gmt),
-            author: post._embedded?.author?.[0]?.name,
-            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            updated: parseDate(`${post.modified_gmt}Z`),
+            author: post._embedded.author[0].name,
+            category: post._embedded['wp:term'].flat().map((term) => term.name),
             image: post.jetpack_featured_media_url,
         };
     });

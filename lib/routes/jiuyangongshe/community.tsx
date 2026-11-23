@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 interface User {
     follow_type: number;
@@ -143,7 +143,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: item.title,
         description: render({ cover: item.cover, content: item.content }),
         link: `${link}/a/${item.article_id}`,
-        pubDate: parseCreatedAt(item.create_time),
+        pubDate: parseDate(item.create_time, 'YYYY-MM-DD HH:mm:ss', 8),
         author: item.user.nickname,
         category: item.stock_list.map((stock) => stock.name),
     }));
@@ -154,8 +154,4 @@ async function handler(ctx: Context): Promise<Data> {
         language: 'zh-CN',
         item: items,
     };
-}
-
-function parseCreatedAt(value?: string): Temporal.Instant | undefined {
-    return value ? parseDateStrict(value, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 }

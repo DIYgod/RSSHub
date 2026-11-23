@@ -45,7 +45,7 @@ async function handler() {
                 description: `${country.html()} vetoed ${agenda.html()}. <br/> <br/> <b>Resolution: </b> ${resolution.html()}<br/><br/>  <b>Meeting Record: </b> ${meeting.html()}`,
                 link: resolution.find('a').attr('href'),
                 guid: vetoNumber === 1 ? guid : `${guid}:${vetoNumber}`,
-                pubDate: date ? parseDate(date, 0) : undefined,
+                pubDate: parseDate(date, 0),
             };
         });
 

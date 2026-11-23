@@ -68,7 +68,7 @@ async function handler(ctx) {
                 });
                 const content = load(detailResponse.data);
 
-                item.description = content('.TRS_Editor, .TRS_UEDITOR').first().html();
+                item.description = content('.TRS_Editor, .TRS_UEDITOR').html();
                 item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!, 8);
 
                 return item;

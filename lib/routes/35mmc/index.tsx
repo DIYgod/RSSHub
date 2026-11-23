@@ -80,8 +80,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categorySlug = ctx.req.param('category');
-    const requestedLimit = getRouteLimit(ctx, 10);
-    const limit = Math.min(Math.max(requestedLimit, 1), 100);
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
 
     const category = categorySlug
         ? await cache.tryGet(`35mmc:category:${categorySlug}`, async () => {

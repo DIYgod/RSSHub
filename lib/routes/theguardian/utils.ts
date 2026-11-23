@@ -5,7 +5,6 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
 
 const rebuildFigure = ($e, $) => {
     const img = $e.find('img');
@@ -56,7 +55,7 @@ export const getFeed = async (cfg: { link: string; title: string; rss: string })
         async (item) => ({
             title: item.title,
             author: item.creator,
-            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            pubDate: item.pubDate,
             link: item.link,
             category: (item.categories as unknown[] | undefined)?.map((category) => (category as { _: string })._),
             description:

@@ -92,7 +92,7 @@ async function handler(ctx) {
         const link = item.pcInfoUrl;
         const title = item.title;
         const author = item.paperMediaSource;
-        const pubDate = item.makeDate ? parseDate(item.makeDate) : undefined;
+        const pubDate = parseDate(item.makeDate);
 
         return {
             title,

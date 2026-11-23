@@ -46,16 +46,16 @@ export const route: Route = {
 interface SearchDocument {
     es_title_t: string;
     es_url_s: string;
-    es_unified_dt?: string;
+    es_unified_dt: string;
     es_description_t?: string;
 }
 
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
     const link = `https://www.spglobal.com/ratings/${language}/`;
-    const html = await ofetch(link, { responseType: 'text' });
+    const html = await ofetch(link);
     const $ = load(html);
-    const list = $('[dynamic-list-url]').first();
+    const list = $('[dynamic-list-url]');
     const searchUrl = list.attr('dynamic-list-url');
     const authPath = list.attr('search-auth-token-endpoint');
     if (!searchUrl || !authPath) {
@@ -74,7 +74,7 @@ async function handler(ctx) {
         link,
         item: response.response.docs.map((item) => ({
             title: item.es_title_t,
-            pubDate: item.es_unified_dt ? parseDate(item.es_unified_dt) : undefined,
+            pubDate: parseDate(item.es_unified_dt),
             link: new URL(item.es_url_s, link).href,
             description: item.es_description_t,
         })),

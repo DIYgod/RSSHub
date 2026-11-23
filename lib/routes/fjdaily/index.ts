@@ -182,9 +182,9 @@ async function handler(ctx) {
     if (list.length === 0) {
         throw new Error(`No articles were found for ${yearMonth}${day}.`);
     }
-    const candidates = list;
+
     const items = await pMap(
-        candidates,
+        list,
         (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link!);

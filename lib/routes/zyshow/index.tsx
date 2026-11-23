@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: `${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`,
-                pubDate: getBroadcastDate(a.text()),
+                pubDate: parseDateStrict(a.text().slice(-8), 'YYYYMMDD'),
                 description: renderToString(<ZyshowDescription subject={$item.find('td').eq(1).text()} />),
                 category: guests.split(/,|;/),
             };
@@ -59,14 +59,6 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-
-function getBroadcastDate(title: string) {
-    const sourceDate = /(\d{8})$/.exec(title)?.[1];
-    if (!sourceDate) {
-        return;
-    }
-    return parseDateStrict(sourceDate, 'YYYYMMDD');
 }
 
 const ZyshowDescription = ({ subject }: { subject: string }) => <p>{subject}</p>;

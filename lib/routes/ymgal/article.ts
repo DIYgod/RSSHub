@@ -5,33 +5,17 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 
 const host = 'https://www.ymgal.games';
 const types = {
     news: '?type=NEWS&page=1',
     column: '?type=COLUMN&page=1',
 };
-function getPublicationTimestamp(value?: string | number): number {
-    if (typeof value === 'number' || (typeof value === 'string' && value.trim())) {
-        return parseDate(value)?.epochMilliseconds ?? NaN;
-    }
-    return NaN;
-}
-function getPublicationDate(value?: string | number): Temporal.Instant | undefined {
-    if (typeof value === 'number' || (typeof value === 'string' && value.trim())) {
-        return parseDate(value, 8);
-    }
-    return;
-}
 async function fetchDescription(itemUrl: string): Promise<Pick<DataItem, 'description'>> {
     const result = await got(itemUrl);
     const $ = load(result.data);
-    const description = $('article').html();
-    if (!description?.trim()) {
-        throw new Error(`Unable to find main article content: ${itemUrl}`);
-    }
-    return { description: description.trim() };
+    return { description: $('article').html()?.trim() };
 }
 export const route: Route = {
     path: '/article/:type?',
@@ -59,17 +43,20 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid article type: use all, news, or column');
     }
     const link = `${host}/co/topic/list` + types[type];
-    let data: any[] = [];
+    let data: any[];
     if (type === 'all') {
-        await pMap(
+        const lists = await pMap(
             Object.values(types),
             async (type) => {
                 const response = await got(`${host}/co/topic/list${type}`);
-                data.push(...response.data.data);
+                return response.data.data;
             },
             { concurrency: 3, stopOnError: false }
         );
-        data = data.toSorted((a, b) => getPublicationTimestamp(b.publishTime) - getPublicationTimestamp(a.publishTime)).slice(0, 10);
+        data = lists
+            .flat()
+            .toSorted((a, b) => compareDates(parseDate(b.publishTime, 8), parseDate(a.publishTime, 8)))
+            .slice(0, 10);
     } else {
         const response = await got(link);
         data = response.data.data;
@@ -82,9 +69,9 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 link: itemUrl,
-                author: typeof item.createAt === 'string' && item.createAt.trim() ? item.createAt : undefined,
-                category: typeof item.topicCategory === 'string' && item.topicCategory.trim() ? [item.topicCategory] : undefined,
-                pubDate: getPublicationDate(item.publishTime),
+                author: item.createAt,
+                category: [item.topicCategory],
+                pubDate: parseDate(item.publishTime, 8),
                 description: details.description,
             };
         },

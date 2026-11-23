@@ -21,12 +21,11 @@ async function handler(ctx: Context) {
     const data = await ofetch(`https://www.itslaw.com/api/judgements?sortType=2&category=CASE&startIndex=0&countPerPage=20&conditions=${encodeURIComponent(conditions)}`);
 
     const items = data.data.searchResult.judgements.map((item) => {
-        const pubDate = item.publishDate ? parseDate(item.publishDate) : undefined;
         const initialization = JSON.stringify({ category: 'CASE', id: String(item.id), anchor: null, detailKeyWords: [''] });
         return {
             title: item.title,
             description: item.courtOpinion,
-            pubDate,
+            pubDate: parseDate(item.publishDate),
             link: `https://www.itslaw.com/detail?initialization=${encodeURIComponent(initialization)}`,
         };
     });

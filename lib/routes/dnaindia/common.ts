@@ -1,49 +1,9 @@
-import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/time';
-
-function getArticleDates($: CheerioAPI) {
-    const chunks = $('script')
-        .toArray()
-        .flatMap((element) => {
-            const match = $(element)
-                .text()
-                .trim()
-                .match(/^self\.__next_f\.push\(([\s\S]*)\);?$/);
-            if (!match) {
-                return [];
-            }
-            try {
-                const chunk: unknown = JSON.parse(match[1]);
-                return Array.isArray(chunk) && typeof chunk[1] === 'string' ? [chunk[1]] : [];
-            } catch {
-                return [];
-            }
-        });
-
-    for (const record of [...chunks.flatMap((chunk) => chunk.split('\n')), ...chunks.join('').split('\n')]) {
-        // A text record has no trailing newline, so the metadata record can start in the middle of a line.
-        const json = record.match(/[\da-f]+:(\{.*)$/)?.[1];
-        if (!json) {
-            continue;
-        }
-        try {
-            const metadata = JSON.parse(json) as { '@type'?: string; datePublished?: string; dateModified?: string };
-            if (metadata?.['@type'] === 'NewsArticle' && (metadata.datePublished || metadata.dateModified)) {
-                return {
-                    pubDate: metadata.datePublished ? parseDate(metadata.datePublished) : undefined,
-                    updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
-                };
-            }
-        } catch {
-            // Other RSC records need not be JSON article metadata.
-        }
-    }
-}
 
 export async function handler(ctx) {
     const { category, topic } = ctx.req.param();
@@ -82,16 +42,9 @@ export async function handler(ctx) {
                 const category = $('div.tags ul li')
                     .toArray()
                     .map((item) => $(item).find('a').text());
-                // Process date
-                const timeText = $('p.dna-update').text();
-                const dateMatch = timeText.match(/Updated\s*:([\w\s,:]+)/);
-                let time = dateMatch ? dateMatch[1].trim() : '';
-                time = time.replace(/\s+IST$/, '');
-                const updated = time ? parseDate(time, 'MMM D, YYYY, hh:mm A', 5.5) : undefined;
-                const articleDates = getArticleDates($);
                 // Get author information
                 const authorMeta = $('meta[name="author"]').attr('content');
-                const author = authorMeta || $('.author_section a[href*="/authors/"]').text().trim() || 'DNA Web Team';
+                const author = authorMeta || 'DNA Web Team';
 
                 // Process description
                 const description = $('div.article-description')
@@ -107,8 +60,8 @@ export async function handler(ctx) {
                     ...item,
                     itunes_item_image,
                     category,
-                    pubDate: articleDates?.pubDate,
-                    updated: articleDates?.updated ?? updated,
+                    pubDate: parseDate(response.match(/\\"datePublished\\":\\"([^\\"]+)\\"/)[1]),
+                    updated: parseDate(response.match(/\\"dateModified\\":\\"([^\\"]+)\\"/)[1]),
                     author,
                     description,
                 };

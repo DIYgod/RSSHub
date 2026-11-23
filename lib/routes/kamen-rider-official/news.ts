@@ -99,7 +99,7 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.news_articles.slice(0, limit).map((item): DataItem => ({
+    const list: Array<Omit<DataItem, 'category'> & { category: string[] }> = response.news_articles.slice(0, limit).map((item) => ({
         title: item.list_title,
         link: new URL(item.path, rootUrl).href,
         description: renderDescription(
@@ -113,11 +113,11 @@ async function handler(ctx) {
         author: item.author,
         category: [item.category_name, item.category_2_name].filter(Boolean),
         guid: `kamen-rider-official-${item.id}`,
-        pubDate: item.release_date ? parseDate(item.release_date) : undefined,
+        pubDate: parseDate(item.release_date),
     }));
 
-    items = await pMap<DataItem, DataItem>(
-        items,
+    const items = await pMap(
+        list,
         async (item) => {
             const detail = await cache.tryGet(`kamen-rider-official:detail:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
@@ -153,7 +153,7 @@ async function handler(ctx) {
                 ...item,
                 ...detail,
                 title: detail.title || item.title,
-                category: [...new Set([...(Array.isArray(item.category) ? item.category : item.category ? [item.category] : []), ...detail.category])],
+                category: [...new Set([...item.category, ...detail.category])],
             };
         },
         { concurrency: 3 }

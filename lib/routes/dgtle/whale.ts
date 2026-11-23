@@ -24,7 +24,7 @@ async function handler(ctx: Context) {
     const cid = Number(ctx.req.param('category'));
 
     const categories = ['精选', '人物', '静物', '二次元', '黑白', '自然', '美食', '电影与游戏', '科技与艺术', '城市与建筑', '萌物', '美女'];
-    if (!Number.isSafeInteger(cid) || cid < 0 || cid >= categories.length) {
+    if (!Object.hasOwn(categories, cid)) {
         throw new InvalidParameterError('Invalid category. Use an integer from 0 through 11.');
     }
 
@@ -34,11 +34,11 @@ async function handler(ctx: Context) {
 
     const items = response.items.map((item) => ({
         title: item.content,
-        pubDate: item.created_at ? parseDate(item.created_at, 'X') : undefined,
-        updated: item.updated_at ? parseDate(item.updated_at, 'X') : undefined,
+        pubDate: parseDate(item.created_at, 'X'),
+        updated: parseDate(item.updated_at, 'X'),
         author: item.author.username,
         description: renderDescription({
-            images: (Array.isArray(item.aid_list) ? item.aid_list : [item.attachment]).map((attachment) => ({
+            images: item.aid_list.map((attachment) => ({
                 src: attachment.pic_url.split('?', 1)[0],
             })),
         }),

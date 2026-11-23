@@ -68,38 +68,23 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const versionDetails = $('.stat').filter((_, element) => $(element).find('dt').text() === 'Latest version');
-    const version = $('dd[itemprop="softwareVersion"]').first().text() || versionDetails.find('dd').first().text();
+    const version = versionDetails.find('dd').first().text();
     if (!version) {
         throw new Error(`FossHub did not provide a software version for ${id}. The source page may have changed.`);
     }
-    const released =
-        $('.ma__upd .v').text() ||
-        versionDetails
-            .find('.rel')
-            .text()
-            .replace(/^Released\s+/, '');
-    const downloads = $('.dwn-dl')
-        .toArray()
-        .map((link) =>
-            $(link)
-                .find('.w')
-                .toArray()
-                .map((entry) => ({
-                    dt: $(entry).find('dt').text(),
-                    dd: $(entry).find('dd').html(),
-                }))
-        );
-    if (!downloads.length) {
-        downloads.push(
-            $('#downloads .dl-link')
-                .toArray()
-                .map((link) => ({
-                    dt: $(link).find('.dl-label').text(),
-                    dd: renderToString(<a href={new URL($(link).attr('href')!, currentUrl).href}>Visit download page</a>),
-                }))
-        );
-    }
-    const pubDate = released ? (/^[A-Z][a-z]{2} \d{1,2}, \d{4}$/.test(released) ? parseDate(`${released} +0000`, 'MMM D, YYYY ZZ') : parseDate(released, 'MMM D, YYYY')) : undefined;
+    const released = versionDetails
+        .find('.rel')
+        .text()
+        .replace(/^Released\s+/, '');
+    const downloads = [
+        $('#downloads .dl-link')
+            .toArray()
+            .map((link) => ({
+                dt: $(link).find('.dl-label').text(),
+                dd: renderToString(<a href={new URL($(link).attr('href')!, currentUrl).href}>Visit download page</a>),
+            })),
+    ];
+    const pubDate = released ? parseDate(`${released} +0000`, 'MMM D, YYYY ZZ') : undefined;
 
     const items = [
         {

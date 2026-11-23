@@ -33,7 +33,7 @@ async function handler(ctx) {
                 const mainvideo = $2('.single-page-vimeo-div').attr('data-video-id');
 
                 let content = mainvideo ? `<iframe ${videostyle} src='https://player.vimeo.com/video/${mainvideo}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>` : '';
-                content += $2('div.portfolio-content > div:nth-child(2)').html() ?? '';
+                content += $2('div.portfolio-content > div:nth-child(2)').html();
 
                 for (const img of $2('div.attachment-grid img').toArray()) {
                     content += `<img ${imgstyle} src="${$2(img).attr('src')}"><br>`;

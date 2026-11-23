@@ -43,7 +43,7 @@ async function handler(ctx) {
     const link = `https://www.teamblind.com/${channel ? `channels/${channel}` : ''}`;
     const response = await ofetch(link);
     const $ = load(response);
-    const flight = $('script')
+    const flight = $('script:contains("self.__next_f.push")')
         .toArray()
         .flatMap((element) => {
             const match = $(element)
@@ -64,7 +64,7 @@ async function handler(ctx) {
     if (!posts?.length) {
         throw new Error('Blind did not return public posts for this channel. Check its current channel URL.');
     }
-    const links = $('a[href^="/post/"]')
+    const links = $('article a[href^="/post/"]')
         .toArray()
         .map((element) => $(element).attr('href')!);
     return {

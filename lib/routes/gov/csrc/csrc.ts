@@ -57,14 +57,13 @@ const handler = async (ctx) => {
 
     const items = response.data.results.slice(0, limit).map((item) => {
         const title = item.title;
-        const date = item.publishedTime !== undefined && item.publishedTime !== null ? parseDate(item.publishedTime) : undefined;
         const description = item.contentHtml;
         const enclosure = item.resList?.[0] ?? undefined;
 
         return {
             title,
             description,
-            pubDate: date,
+            pubDate: parseDate(item.publishedTime),
             link: item.url,
             category: [item.channelName],
             content: {

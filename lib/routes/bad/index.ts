@@ -37,10 +37,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('a.title');
-            const link = $item.find('a.dateline[href^="/t/"]').first().attr('href') ?? $item.find('a.title[href^="/t/"]').first().attr('href');
-            if (!link) {
-                throw new Error('Bad.news entry has no article permalink. Check whether the source layout has changed.');
-            }
+            const link = $item.find('a.dateline[href^="/t/"]').attr('href')!;
 
             $item.find('img').each((_, el) => {
                 $(el).attr('src', $(el).attr('data-echo'));
@@ -50,11 +47,8 @@ async function handler(ctx) {
             });
 
             $item.find('video').each((_, el) => {
-                const source = $(el).attr('data-source');
-                if (source) {
-                    $(el).attr('src', source);
-                    $(el).removeAttr('data-source');
-                }
+                $(el).attr('src', $(el).attr('data-source'));
+                $(el).removeAttr('data-source');
                 $(el).attr('poster', $(el).attr('data-echo'));
                 $(el).removeAttr('data-echo');
                 $(el).removeAttr('onerror');

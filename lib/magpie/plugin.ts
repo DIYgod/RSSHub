@@ -37,7 +37,7 @@ interface PluginInput {
     worktree?: string;
 }
 
-interface PluginOptions {
+export interface PluginOptions {
     port?: number | string;
     publicUrl?: string;
     env?: Record<string, string | number | boolean | null>;
@@ -53,7 +53,7 @@ const TOOL_TIME = 50000;
 
 const portOf = (value: PluginOptions['port']) => {
     const port = Number(value);
-    return Number.isSafeInteger(port) && port > 0 && port < 65536 ? port : DEFAULT_PORT;
+    return port > 0 && port < 65536 ? port : DEFAULT_PORT;
 };
 
 const stringsOf = (env: PluginOptions['env']) => {

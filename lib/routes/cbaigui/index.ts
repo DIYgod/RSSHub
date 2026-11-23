@@ -37,7 +37,7 @@ interface Monster {
     images?: string[];
     attrs: Array<{ attributes: Array<{ name: string }> }>;
     books: Array<{ name: string }>;
-    literatures?: Array<{ origin: string; translate?: string }>;
+    literatures: Array<{ origin: string; translate: string }>;
 }
 
 interface Article {
@@ -61,7 +61,7 @@ async function getItem(entry: Entry): Promise<DataItem> {
     if (entry.kind === 'monsters') {
         const { data } = await ofetch<{ data: Monster }>(`${apiUrl}/monsters/${entry.id}`);
         const images = [...new Set([data.cover_img, ...(data.images ?? [])].filter((src): src is string => Boolean(src)))];
-        const literature = (data.literatures ?? []).map((item) => `${item.origin}${item.translate ?? ''}`).join('');
+        const literature = data.literatures.map((item) => `${item.origin}${item.translate}`).join('');
         return {
             title: data.name,
             link: entry.link,
@@ -105,7 +105,7 @@ async function handler(ctx) {
         if (!match) {
             throw new InvalidParameterError('Use monster, essays, notice, post-tag/<name> or post-category/<path> to choose a section or classification.');
         }
-        const name = String(match[2]).split('/').pop()!;
+        const name = match[2].split('/').pop()!;
         filterName = name;
         const type = match[2].startsWith('词条/') ? 'books' : 'attributes';
         const filterId = await getFilterId(type, name);

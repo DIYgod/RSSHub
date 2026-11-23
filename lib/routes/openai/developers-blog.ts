@@ -66,12 +66,11 @@ const resolveLocaleConfig = (rawLang?: string): LocaleConfig => {
 };
 
 const resolveHttpUrl = (rawUrl: string | undefined, baseUrl: string): string | undefined => {
-    const trimmed = rawUrl?.trim();
-    if (!trimmed) {
+    if (!rawUrl) {
         return undefined;
     }
     try {
-        const parsed = new URL(trimmed, baseUrl);
+        const parsed = new URL(rawUrl, baseUrl);
         return SAFE_HTTP_PROTOCOLS.has(parsed.protocol) ? parsed.href : undefined;
     } catch {
         return undefined;
@@ -87,37 +86,30 @@ const isBlogPostUrl = (url: string, config: LocaleConfig): boolean => {
     }
 };
 
-const extractListEntries = ($: CheerioAPI, listUrl: string, config: LocaleConfig, limit: number): BlogEntry[] => {
-    const seen = new Set<string>();
-    const entries: BlogEntry[] = [];
+const extractListEntries = ($: CheerioAPI, listUrl: string, config: LocaleConfig, limit: number): BlogEntry[] =>
+    $('main a.resource-item[href]')
+        .toArray()
+        .flatMap((el) => {
+            const $card = $(el);
+            const link = resolveHttpUrl($card.attr('href'), listUrl);
+            if (!link || !isBlogPostUrl(link, config)) {
+                return [];
+            }
+            const title = $card.find('.line-clamp-2').text();
+            if (!title) {
+                return [];
+            }
+            return {
+                title,
+                link,
+                summary: $card.find('p.line-clamp-3').text().trim(),
+                topic: $card.children('div').last().text(),
+                listImage: resolveHttpUrl($card.find('img').attr('src'), listUrl),
+            };
+        })
+        .slice(0, limit);
 
-    $('main a.resource-item[href]').each((_, el) => {
-        if (entries.length >= limit) {
-            return false;
-        }
-        const $card = $(el);
-        const link = resolveHttpUrl($card.attr('href'), listUrl);
-        if (!link || seen.has(link) || !isBlogPostUrl(link, config)) {
-            return;
-        }
-        const title = $card.find('.line-clamp-2').first().text();
-        if (!title) {
-            return;
-        }
-        seen.add(link);
-        entries.push({
-            title,
-            link,
-            summary: $card.find('p.line-clamp-3').first().text().trim(),
-            topic: $card.children('div').last().text().trim(),
-            listImage: resolveHttpUrl($card.find('img').first().attr('src'), listUrl),
-        });
-    });
-
-    return entries;
-};
-
-const parseUtcDate = (dateText: string): Temporal.Instant | undefined => parseDateStrict(dateText.trim(), ['MMM D, YYYY', 'MMMM D, YYYY']);
+const parseUtcDate = (dateText: string): Temporal.Instant | undefined => parseDateStrict(dateText, ['MMM D, YYYY', 'MMMM D, YYYY']);
 
 const isDynamicOgCard = (imageUrl: string): boolean => {
     try {
@@ -132,16 +124,16 @@ const pickCoverImage = ($: CheerioAPI, $header: Cheerio<Element>, articleUrl: st
     if (ogImage && !isDynamicOgCard(ogImage)) {
         return ogImage;
     }
-    const heroImage = resolveHttpUrl($header.next('div').find('img').first().attr('src'), articleUrl);
+    const heroImage = resolveHttpUrl($header.next('div').find('img').attr('src'), articleUrl);
     return heroImage ?? listImage ?? ogImage;
 };
 
-const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI): string => {
+const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI) => {
     if ($body.length === 0) {
         return '';
     }
 
-    $body.find('script, style, noscript, template, button, [role="tablist"], .exclude-from-copy, .syntax-highlighter-line-numbers, svg[aria-hidden="true"]').remove();
+    $body.find('script, style, button, [role="tablist"], .exclude-from-copy, .syntax-highlighter-line-numbers, svg[aria-hidden="true"]').remove();
     $body.find('[hidden]').removeAttr('hidden');
     $body.find('.code-block.hidden').removeClass('hidden');
     $body.find('[data-panel], [role="tabpanel"], [role="region"]').removeAttr('inert').removeAttr('aria-hidden');
@@ -168,25 +160,23 @@ const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI): string => {
     });
 
     const hasContent = Boolean($body.text().trim()) || $(MEDIA_KEEP_SELECTOR, $body).length > 0;
-    return hasContent ? ($body.html() || '').trim() : '';
+    return hasContent ? $body.html()?.trim() : '';
 };
 
 const extractArticleDetails = ($: CheerioAPI, entry: BlogEntry) => {
-    const $header = $('main header').first();
+    const $header = $('main header');
     const dateText = $header.find('span.text-default.font-medium').first().text();
-    const topicText = $header.find('span.text-secondary').first().text().trim() || entry.topic;
+    const topicText = $header.find('span.text-secondary').text() || entry.topic;
     const authorText = $header
         .find('p')
         .has('span.font-medium.text-default')
-        .first()
         .text()
         .trim()
         .replace(/^(?:Authors?|作者)\s*[:：]\s*/i, '')
-        .replaceAll(/\s+/g, ' ')
-        .trim();
+        .replaceAll(/\s+/g, ' ');
 
     const image = pickCoverImage($, $header, entry.link, entry.listImage);
-    const bodyHtml = cleanArticleBody($('article#mainContent').first(), $);
+    const bodyHtml = cleanArticleBody($('article#mainContent'), $);
     const description = bodyHtml || renderFallbackDescription(entry.summary, entry.link, entry.title);
 
     return {
@@ -229,8 +219,8 @@ async function handler(ctx: Context): Promise<Data> {
         concurrency: DETAIL_CONCURRENCY,
     });
 
-    const pageTitle = $('main header h1').first().text().trim() || localeConfig.defaultTitle;
-    const pageDescription = $('meta[name="description"]').attr('content')?.trim() || localeConfig.defaultDescription;
+    const pageTitle = $('main header h1').text().trim() || localeConfig.defaultTitle;
+    const pageDescription = $('meta[name="description"]').attr('content') || localeConfig.defaultDescription;
 
     return {
         title: pageTitle,

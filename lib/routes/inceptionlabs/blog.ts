@@ -76,16 +76,11 @@ async function handler() {
             const categoryEl = $el.find('[data-framer-name="Category"]');
             const category = categoryEl.length > 0 ? categoryEl.first().text() : (dateBlocks[0] ?? '');
 
-            // Date: featured cards have a single Date block (the date itself); standard cards have it at index 1
-            const pubDate = dateBlocks.length >= 2 ? dateBlocks[1] : (dateBlocks[0] ?? '');
-
-            const dateTime = $el.find('[data-framer-name="Date"] time[datetime]').last().attr('datetime');
-
             return {
                 title,
                 link,
                 category: category ? [category] : [],
-                pubDate: dateTime ? parseDate(dateTime) : pubDate ? parseDate(`${pubDate} +0000`, 'MMM D, YYYY ZZ') : undefined,
+                pubDate: parseDate($el.find('[data-framer-name="Date"] time[datetime]').attr('datetime')!),
             };
         })
         .filter((post) => post !== null);

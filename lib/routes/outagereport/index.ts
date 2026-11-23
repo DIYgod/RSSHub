@@ -32,8 +32,7 @@ interface StatusCard {
 
 async function handler(ctx) {
     const serviceName = ctx.req.param('name');
-    const threshold = Number(ctx.req.param('count') ?? 10);
-    const watchCount = Number.isFinite(threshold) && threshold > 0 ? threshold : 10;
+    const watchCount = Number(ctx.req.param('count') ?? 10);
     const url = `${baseUrl}${serviceName}`;
     const { card } = await ofetch<StatusCard>(`${baseUrl}api/card/${serviceName}`);
     const now = Temporal.Now.instant().epochMilliseconds;

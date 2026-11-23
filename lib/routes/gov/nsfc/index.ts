@@ -114,7 +114,7 @@ async function handler(ctx) {
             });
 
         return {
-            title: `国家自然科学基金委员会 - ${$('.szyw, .sciences-content-right-title').first().text()}`,
+            title: `国家自然科学基金委员会 - ${$('.szyw, .sciences-content-right-title').text()}`,
             link: currentUrl,
             language: 'zh-CN' as const satisfies Language,
             item: await pMap(

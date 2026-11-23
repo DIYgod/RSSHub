@@ -90,8 +90,6 @@ export interface SearchPost {
     headline: string;
     description: string;
     category_id: number;
-    updated_at?: string;
-    preview_images: string[];
     link: string;
     author: Pick<Author, 'first_name' | 'last_name'>;
 }

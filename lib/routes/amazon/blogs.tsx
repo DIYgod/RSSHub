@@ -66,20 +66,15 @@ const resolveHttpUrl = (rawUrl: string | undefined, baseUrl: string): string | u
 };
 
 const extractCategories = (rawCategories: string[] | undefined): string[] | undefined => {
-    const unique = [...new Set((rawCategories ?? []).map((tag) => normalizeText(tag)).filter(Boolean))];
-    return unique.length > 0 ? unique : undefined;
+    const categories = (rawCategories ?? []).map((tag) => normalizeText(tag)).filter(Boolean);
+    return categories.length > 0 ? categories : undefined;
 };
 
-const extractBoxAuthors = ($: CheerioAPI): string[] => {
-    const authors: string[] = [];
-    for (const el of $('.blog-author-box').toArray()) {
-        const name = normalizeText($(el).find('h2, h3, h4, h5').first().text());
-        if (name) {
-            authors.push(name);
-        }
-    }
-    return authors;
-};
+const extractBoxAuthors = ($: CheerioAPI): string[] =>
+    $('.blog-author-box')
+        .toArray()
+        .map((el) => normalizeText($(el).find('h2, h3, h4, h5').text()))
+        .filter(Boolean);
 
 const isAuthorHeading = ($node: Cheerio<Element>): boolean => $node.is('h1, h2, h3, h4, h5, h6, p') && AUTHOR_HEADING_RE.test(normalizeText($node.text()));
 
@@ -142,12 +137,6 @@ const removeAuthorFooter = ($: CheerioAPI): void => {
         removePrecedingAuthorChrome($footer);
         $footer.remove();
     }
-
-    for (const box of $('.blog-author-box').toArray()) {
-        const $box = $(box);
-        removePrecedingAuthorChrome($box);
-        $box.remove();
-    }
 };
 
 const pickFirstImage = ($: CheerioAPI, baseUrl: string): string | undefined => {
@@ -161,7 +150,7 @@ const pickFirstImage = ($: CheerioAPI, baseUrl: string): string | undefined => {
 };
 
 const cleanRssContent = (rawItem: RssItem, link: string): CleanedContent => {
-    const contentHtml = (rawItem['content:encoded'] ?? rawItem.content)?.trim();
+    const contentHtml = rawItem['content:encoded'] ?? rawItem.content;
     if (!contentHtml) {
         const summary = rawItem.contentSnippet?.trim() ?? '';
         return {
@@ -182,17 +171,7 @@ const cleanRssContent = (rawItem: RssItem, link: string): CleanedContent => {
     };
 };
 
-const parseEnclosureLength = (rawLength: number | string | undefined): number | undefined => {
-    if (typeof rawLength === 'number') {
-        return Number.isFinite(rawLength) && rawLength >= 0 ? rawLength : undefined;
-    }
-    const trimmed = rawLength?.trim();
-    if (!trimmed) {
-        return undefined;
-    }
-    const parsed = Number(trimmed);
-    return Number.isFinite(parsed) && parsed >= 0 ? parsed : undefined;
-};
+const parseEnclosureLength = (rawLength: number | string | undefined): number | undefined => (rawLength ? Number(rawLength) : undefined);
 
 const parseEnclosure = (rawEnclosure: RssItem['enclosure'], blogUrl: string): FeedEnclosure | undefined => {
     const url = resolveHttpUrl(rawEnclosure?.url, blogUrl);
@@ -207,20 +186,7 @@ const parseEnclosure = (rawEnclosure: RssItem['enclosure'], blogUrl: string): Fe
 };
 
 const mergeAuthors = (orderedCandidates: ReadonlyArray<string | undefined>): DataItem['author'] => {
-    const seen = new Set<string>();
-    const names: string[] = [];
-    for (const candidate of orderedCandidates) {
-        const name = normalizeText(candidate);
-        if (!name) {
-            continue;
-        }
-        const key = name.toLowerCase();
-        if (seen.has(key)) {
-            continue;
-        }
-        seen.add(key);
-        names.push(name);
-    }
+    const names = orderedCandidates.map((candidate) => normalizeText(candidate)).filter(Boolean);
     return names.length > 0 ? names.map((name) => ({ name })) : undefined;
 };
 
@@ -236,7 +202,7 @@ const toParsedFeedEntry = (rawItem: RssItem, blogUrl: string): ParsedFeedEntry |
     return {
         title: rawItem.title,
         link,
-        guid: rawItem.guid?.trim() || link,
+        guid: rawItem.guid || link,
         pubDate: rawDate ? parseDate(rawDate) : undefined,
         creator: normalizeText(rawItem.creator) || undefined,
         category: extractCategories(rawItem.categories),
@@ -247,29 +213,12 @@ const toParsedFeedEntry = (rawItem: RssItem, blogUrl: string): ParsedFeedEntry |
     };
 };
 
-const parseFeedEntries = (rawItems: RssItem[], blogUrl: string, limit: number): ParsedFeedEntry[] => {
-    const seenLinks = new Set<string>();
-    const entries: ParsedFeedEntry[] = [];
-
-    for (const rawItem of rawItems) {
-        const entry = toParsedFeedEntry(rawItem, blogUrl);
-        if (!entry || seenLinks.has(entry.link)) {
-            continue;
-        }
-        seenLinks.add(entry.link);
-        entries.push(entry);
-        if (entries.length >= limit) {
-            break;
-        }
-    }
-
-    return entries;
-};
+const parseFeedEntries = (rawItems: RssItem[], blogUrl: string, limit: number): ParsedFeedEntry[] => rawItems.flatMap((rawItem) => toParsedFeedEntry(rawItem, blogUrl) ?? []).slice(0, limit);
 
 const fetchArticlePageMeta = async (link: string): Promise<ArticlePageMeta> => {
     try {
         return await cache.tryGet<ArticlePageMeta>(`amazon:blogs:meta:${link}`, async () => {
-            const html = await ofetch(link, { responseType: 'text', publicOnly: true });
+            const html = await ofetch(link, { publicOnly: true });
             const $ = load(html);
             const ogImage = $('meta[property="og:image"]').attr('content') ?? $('meta[name="twitter:image"]').attr('content');
             const authors = $('[property="author"] [property="name"]')

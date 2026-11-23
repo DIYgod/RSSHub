@@ -40,9 +40,9 @@ async function handler() {
                 const image = $card.find('.doodle-card-img img').attr('src');
 
                 return {
-                    title: $card.find('.doodle-card-content__event').text().trim(),
+                    title: $card.find('.doodle-card-content__event').text(),
                     description: image ? `<img src="https:${image}" />` : undefined,
-                    pubDate: parseDate($card.find('.doodle-card-content__date').text().trim(), 'MMM DD, YYYY'),
+                    pubDate: parseDate($card.find('.doodle-card-content__date').text(), 'MMM DD, YYYY'),
                     guid: image,
                     link: new URL($card.find('a').attr('href') ?? '', link).href,
                 };

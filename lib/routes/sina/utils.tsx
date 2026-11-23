@@ -28,8 +28,8 @@ const parseRollNewsList = (data): Array<DataItem & { link: string }> =>
         description: item.intro,
         link: item.url.replace('http://', 'https://'),
         author: item.media_name,
-        pubDate: item.intime ? parseDate(item.intime, 'X') : undefined,
-        updated: item.mtime ? parseDate(item.mtime, 'X') : undefined,
+        pubDate: parseDate(item.intime, 'X'),
+        updated: parseDate(item.mtime, 'X'),
     }));
 
 const parseArticle = async (item: DataItem & { link: string }): Promise<DataItem> => {
@@ -98,7 +98,7 @@ const parseArticle = async (item: DataItem & { link: string }): Promise<DataItem
                     ) : null}
                 </>
             );
-            details.pubDate = videoData.create_time ? parseDate(videoData.create_time, 'X') : undefined;
+            details.pubDate = parseDate(videoData.create_time, 'X');
         } else if (item.link.startsWith('https://news.sina.com.cn/') || item.link.startsWith('https://mil.news.sina.com.cn/')) {
             details.description = $('#article').html();
             details.category = $('meta[name="keywords"]').attr('content')!.split(',');

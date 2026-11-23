@@ -30,7 +30,7 @@ async function handler() {
                 link: `${rootUrl}#:~:text=${encodeURIComponent(title).replaceAll('-', '%2D')}`,
                 title,
                 description: $item.find('.rln-body').html(),
-                pubDate: dateText ? parseDate(dateText, 'MMMM D, YYYY') : undefined,
+                pubDate: parseDate(dateText!, 'MMMM D, YYYY'),
             };
         });
 

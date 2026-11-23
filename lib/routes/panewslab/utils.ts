@@ -47,8 +47,3 @@ export const processArticles = (articles: Article[], fetchDetails = true): Promi
         },
         { concurrency: 3 }
     );
-
-export const getLimit = (value: string | undefined, defaultValue: number) => {
-    const limit = Number(value ?? defaultValue);
-    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultValue;
-};

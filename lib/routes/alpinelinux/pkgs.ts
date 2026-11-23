@@ -88,7 +88,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: `https://pkgs.alpinelinux.org${e.packageUrl}`,
         guid: `https://pkgs.alpinelinux.org${e.packageUrl}#${e.version}`,
         author: e.maintainer,
-        pubDate: e.buildDate ? parseDate(`${e.buildDate.replace(' ', 'T')}Z`) : undefined,
+        pubDate: parseDate(`${e.buildDate.replace(' ', 'T')}Z`),
     }));
     return {
         title: `${name} - Alpine Linux packages`,

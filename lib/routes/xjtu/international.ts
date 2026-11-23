@@ -50,9 +50,6 @@ async function handler(ctx) {
 
                 const $Des = load(resp.data);
                 const description = $Des('div.ctnCont').html();
-                if (!description?.trim()) {
-                    throw new Error(`Unable to find article content at ${item.link}`);
-                }
 
                 return { description };
             });

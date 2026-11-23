@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/siren/news',
@@ -17,8 +17,6 @@ export const route: Route = {
     url: 'monster-siren.hypergryph.com/info',
 };
 
-const parsePublicationDate = (value: string) => (typeof value === 'string' ? parseDateStrict(value, 'YYYY-MM-DD') : undefined);
-
 async function handler() {
     const response = await ofetch('https://monster-siren.hypergryph.com/api/news', {
         headers: {
@@ -34,7 +32,7 @@ async function handler() {
         description: '塞壬唱片新闻',
         item: data.map((item) => ({
             title: item.title,
-            pubDate: parsePublicationDate(item.date),
+            pubDate: parseDate(item.date, 0),
             link: `https://monster-siren.hypergryph.com/info/${item.cid}`,
         })),
     };

@@ -36,12 +36,7 @@ const renderNodes = (nodes) =>
                 ele = renderNodes(node.children);
             }
             if (Array.isArray(node.images)) {
-                ele += node.images
-                    .map((pic) => {
-                        const imageUrl = pic.uri || pic.url;
-                        return imageUrl ? `<div style="text-align: center;"><img src="${escapeAttribute(new URL(imageUrl, `${apiUrl}/v3/`).href)}" style="max-width: 100%;object-fit: contain;" /></div>` : '';
-                    })
-                    .join('');
+                ele += node.images.map((pic) => `<div style="text-align: center;"><img src="${escapeAttribute(new URL(pic.uri, `${apiUrl}/v3/`).href)}" style="max-width: 100%;object-fit: contain;" /></div>`).join('');
             }
 
             return `<li>${node.text}${ele}</li>`;

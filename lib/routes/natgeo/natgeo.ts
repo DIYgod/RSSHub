@@ -11,7 +11,7 @@ import { parseDateStrict } from '@/utils/time';
 async function loadContent(link) {
     const data = await ofetch(link);
     const $ = load(data);
-    const dtStr = $('.content-title-area').find('h6').first().text().trim();
+    const dtStr = $('.content-title-area').find('h6').text();
 
     $('.splide__arrows, .slide-control, [class^="ad-"], style').remove();
 
@@ -21,7 +21,7 @@ async function loadContent(link) {
     }
     return {
         title: $('h1.content-title').text(),
-        pubDate: dtStr ? parseDateStrict(dtStr, 'MMM.\u{A0}DD\u{A0}YYYY', 8) : undefined,
+        pubDate: parseDateStrict(dtStr, 'MMM.\u{A0}DD\u{A0}YYYY', 8),
         description,
         category: $('.content-tag a')
             .toArray()

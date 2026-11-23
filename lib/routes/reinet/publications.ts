@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, baseUrl).href,
-                pubDate: parseDate(entry.prev('dt').text().trim(), 'YYYY/MM/DD', 9),
+                pubDate: parseDate(entry.prev('dt').text(), 'YYYY/MM/DD', 9),
             };
         });
 

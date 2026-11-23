@@ -38,7 +38,7 @@ export const route: Route = {
 
             return {
                 title: item.title,
-                pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime, 8),
+                pubDate: parseDate(item.createTime, 8),
                 link: itemLink,
             };
         });

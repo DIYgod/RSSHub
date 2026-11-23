@@ -96,7 +96,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${$('.active').text() || list[0]?.category || 'News'} - KBS WORLD`,
+        title: `${$('.active').text() || list[0].category} - KBS WORLD`,
         link: currentUrl,
         language: isLanguageKey(language) ? languages[language] : undefined,
         item: items,

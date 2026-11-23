@@ -125,7 +125,7 @@ async function handler(ctx) {
                     title: item.title,
                     link,
                     description: details.description,
-                    author: details.author ?? item.creator,
+                    author: details.author,
                     category: item.categories,
                     pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 };
@@ -211,25 +211,16 @@ async function handler(ctx) {
 async function getPublicArticleDetails(link: string) {
     const { data } = await got(link);
     const $ = load(data);
-    const teaser = $('.article-paywall').first();
-    const content = teaser.text().trim() ? teaser : $('article.article-content .details').first();
-    content.find('script, style, .advertisement, .ad-center').remove();
+    const teaser = $('.article-paywall');
+    const content = teaser.text() ? teaser : $('article.article-content .details');
     const body = content.html();
-    if (!body || !content.text().trim()) {
+    if (!body || !content.text()) {
         throw new Error(`Cannot find the public article content on ${link}.`);
     }
-    const image = $('#main-article-image img').first().attr('src');
-    const article = $('script[type="application/ld+json"]')
-        .toArray()
-        .flatMap((script) => JSON.parse($(script).text()))
-        .find((data) => data['@type'] === 'NewsArticle');
-    const authors = Array.isArray(article?.author) ? article.author : [article?.author];
-    const author = authors
-        .map((author) => (typeof author === 'string' ? author : author?.name))
-        .filter(Boolean)
-        .join(', ');
+    const image = $('#main-article-image img').attr('src');
+    const article = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
     return {
-        description: `${image ? `<img src="${new URL(image, link).href}">` : ''}${body}`,
-        author: author || undefined,
+        description: `<img src="${image}">${body}`,
+        author: article.author.map((author) => author.name).join(', '),
     };
 }

@@ -57,10 +57,9 @@ async function handler() {
 
                 const $ = load(decoder.decode(response.data));
 
-                const published = $('meta[property="bytedance:published_time"], meta[name="bytedance:published_time"]').attr('content');
                 return {
                     description: $('.art_contextBox').html(),
-                    pubDate: published ? parseDate(published) : undefined,
+                    pubDate: parseDate($('meta[property="bytedance:published_time"]').attr('content')!),
                 };
             })),
         }),

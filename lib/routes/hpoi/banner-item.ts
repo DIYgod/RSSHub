@@ -56,7 +56,7 @@ async function handler() {
                     title: $item.find('.title').text(),
                     link,
                     description: $$('.hpoi-album-content').html() || `<img src="${$item.find('img').attr('src')}">`,
-                    pubDate: $item.find('.time').text().replace('发布时间：', '') ? parseDate($item.find('.time').text().replace('发布时间：', ''), 8) : undefined,
+                    pubDate: parseDate($item.find('.time').text().replace('发布时间：', ''), 8),
                 };
             });
         },

@@ -91,7 +91,7 @@ const render = (data: { image?: string; description?: string }) => {
             }
             const match = originalAuthorPattern.exec(text);
             if (match) {
-                author ||= match[1].trim();
+                author ||= match[1];
                 block.remove();
             } else if (/^原文标题[：:][^\r\n]+$/.test(text)) {
                 block.remove();
@@ -214,14 +214,7 @@ async function handler(ctx) {
     }));
 
     if (channel !== 'newsflash') {
-        try {
-            list = await pMap(list, createArticleItem, { concurrency: 3, stopOnError: false });
-        } catch (error) {
-            if (error instanceof AggregateError) {
-                throw new AggregateError(error.errors, `BlockBeats article details failed: ${error.errors.map(String).join('; ')}`, { cause: error });
-            }
-            throw error;
-        }
+        list = await pMap(list, createArticleItem, { concurrency: 3 });
     }
 
     const items = list.map(({ author, category, description, image, link, pubDate, title }) => ({

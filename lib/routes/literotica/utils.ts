@@ -13,14 +13,14 @@ export const parseList = ($: CheerioAPI, baseUrl: string): Array<DataItem & { li
         .filter((item) => $(item).find('h3 a[href*="/s/"]').length > 0)
         .map((item) => {
             const $item = $(item);
-            const a = $item.find('h3 a[href*="/s/"]').first();
+            const a = $item.find('h3 a[href*="/s/"]');
             const date = $item.find('time').attr('datetime');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                author: $item.find('a[href*="/authors/"]').first().text(),
+                author: $item.find('a[href*="/authors/"]').text(),
                 category: $item.find('a[href*="/c/"]').first().text(),
-                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${date}T00:00:00Z`),
             };
         })
         .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
@@ -33,11 +33,7 @@ export const parseItems = (list: Array<DataItem & { link: string }>) =>
             description: await cache.tryGet(`literotica:body:${item.link}`, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                const content = $('[itemprop="articleBody"]').html();
-                if (!content) {
-                    throw new Error(`Unable to find the story content at ${item.link}`);
-                }
-                return content;
+                return $('[itemprop="articleBody"]').html();
             }),
         }),
         { concurrency: 3 }

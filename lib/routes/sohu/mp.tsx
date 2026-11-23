@@ -104,7 +104,7 @@ async function fetchArticle(item) {
 
         return article;
     });
-    return { ...item, ...detail, author: item.author || detail.author };
+    return { ...item, ...detail };
 }
 
 async function handler(ctx) {

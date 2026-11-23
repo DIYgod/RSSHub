@@ -6,7 +6,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const createSearchParams = (queryString: string, limit: number = 30): URLSearchParams => {
     const params = new URLSearchParams(queryString);
@@ -18,7 +18,7 @@ const createSearchParams = (queryString: string, limit: number = 30): URLSearchP
 const handler = async (ctx: Context): Promise<Data> => {
     const { filters } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
-    const params: URLSearchParams = createSearchParams(filters, ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit));
+    const params: URLSearchParams = createSearchParams(filters, limit);
 
     const baseUrl = 'https://digitalpolicyalert.org';
     const apiBaseUrl = 'https://api.globaltradealert.org';
@@ -75,9 +75,6 @@ const handler = async (ctx: Context): Promise<Data> => {
 
         return processedItem;
     });
-    if (ctx.req.query('sorted') !== 'false') {
-        items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
-    }
     items = items.slice(0, limit);
 
     return {

@@ -98,7 +98,7 @@ async function handler(ctx) {
                           return item;
                       }
                       const description = await fetchArticleBody(item.link!);
-                      return { ...item, description: description ?? item.description };
+                      return { ...item, description };
                   },
                   { concurrency: 3 }
               )

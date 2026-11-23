@@ -4,6 +4,7 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -25,7 +26,7 @@ interface VideoSource {
 }
 
 function httpsUrl(value: string) {
-    if (!value.trim()) {
+    if (!value) {
         return;
     }
     const url = URL.parse(value, SITE_URL);
@@ -111,7 +112,7 @@ function restoreTables($: CheerioAPI, body: Cheerio<Element>) {
 
 function videoSources($: CheerioAPI) {
     // The article's player props are serialized in the Next.js Flight stream.
-    const stream = $('script')
+    const stream = $('script:contains("self.__next_f.push")')
         .toArray()
         .flatMap((element) =>
             Array.from(
@@ -133,7 +134,7 @@ function externalVideo(source: string) {
         return renderEmbed(`https://player.vimeo.com/video${url.pathname}`, url.href);
     }
     if (url?.hostname === 'youtu.be' && shortYoutubeId.test(url.pathname)) {
-        return renderEmbed(`https://www.youtube-nocookie.com/embed${url.pathname}`, url.href);
+        return renderYoutube(true, url.pathname.slice(1));
     }
 }
 
@@ -161,7 +162,7 @@ function restoreVideos($: CheerioAPI, body: Cheerio<Element>, link: string) {
     }
     for (const [index, element] of placeholders.entries()) {
         const placeholder = $(element);
-        const rawPoster = placeholder.find('img').first().attr('src');
+        const rawPoster = placeholder.find('img').attr('src');
         const markup = playerMarkup(sources[index], rawPoster);
         if (!markup) {
             throw new Error(`ElevenLabs blog video source was unsupported: ${link}`);
@@ -189,20 +190,20 @@ function normalizeMedia($: CheerioAPI, body: Cheerio<Element>) {
 
 const fetchDetail = (link: string) =>
     cache.tryGet(`elevenlabs:blog:${link}`, async () => {
-        const html = await ofetch(link, { responseType: 'text', retry: 1, timeout: 10000 });
+        const html = await ofetch(link, { retry: 1, timeout: 10000 });
         const $ = load(html);
-        const body = $(BODY_SELECTOR).first();
+        const body = $(BODY_SELECTOR);
         if (!body.length) {
             throw new Error(`ElevenLabs blog article body was missing: ${link}`);
         }
         restoreFaq($, body);
         restoreVideos($, body, link);
         normalizeMedia($, body);
-        body.find('script, style, noscript, template, button, svg[aria-hidden="true"]').remove();
+        body.find('button, svg[aria-hidden="true"]').remove();
         restoreTables($, body);
         const cover = imageUrl($('meta[property="og:image"]').attr('content') ?? '');
-        const image = cover && cover !== `${SITE_URL}/cover.png` ? cover : body.find('img').first().attr('src');
-        return { description: body.html() ?? '', image };
+        const image = cover && cover !== `${SITE_URL}/cover.png` ? cover : body.find('img').attr('src');
+        return { description: body.html(), image };
     });
 
 async function handler(ctx: Context): Promise<Data> {
@@ -212,9 +213,8 @@ async function handler(ctx: Context): Promise<Data> {
         .toArray()
         .map((element) => readEntry($, element))
         .filter((entry) => entry !== undefined);
-    const uniqueEntries = new Map(entries.map((entry) => [entry.link, entry])).values().toArray();
     const item = await pMap(
-        uniqueEntries.slice(0, getRouteLimit(ctx, DEFAULT_LIMIT)),
+        entries.slice(0, getRouteLimit(ctx, DEFAULT_LIMIT)),
         async (entry) => {
             const detail = await fetchDetail(entry.link);
             return { ...entry, ...detail };

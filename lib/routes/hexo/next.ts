@@ -48,11 +48,9 @@ async function handler(ctx: Context) {
             ...(await cache.tryGet(item.link, async () => {
                 const storyDetail = await ofetch(item.link);
                 const $ = load(storyDetail);
-                const date = $('time').attr('datetime');
-                const pubDate = date ? parseDate(date) : undefined;
 
                 return {
-                    pubDate,
+                    pubDate: parseDate($('time').attr('datetime')!),
                     description: $('.post-body').html(),
                 };
             })),

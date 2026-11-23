@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -48,9 +46,9 @@ type Post = {
     content: { rendered: string };
     date_gmt: string;
     modified_gmt: string;
-    _embedded?: {
-        author?: Array<{ name: string }>;
-        'wp:term'?: Array<Array<{ name: string }>>;
+    _embedded: {
+        author: Array<{ name: string }>;
+        'wp:term': Array<Array<{ name: string }>>;
     };
 };
 
@@ -76,13 +74,13 @@ async function handler(ctx) {
         title: '中国无线电协会业余无线电分会 - CRAC',
         link,
         item: posts.map((post) => ({
-            title: load(post.title.rendered).text(),
+            title: post.title.rendered,
             link: post.link,
             description: post.content.rendered,
-            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
-            updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
-            author: post._embedded?.author?.[0]?.name,
-            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            updated: parseDate(`${post.modified_gmt}Z`),
+            author: post._embedded.author[0].name,
+            category: post._embedded['wp:term'].flat().map((term) => term.name),
         })),
     };
 }

@@ -98,7 +98,7 @@ async function handler(ctx) {
                 });
             }
             const filesHTML = renderSource(i);
-            const pubDate = i.published ? parseDate(i.published) : undefined;
+            const pubDate = parseDate(i.published);
             let $ = load(filesHTML);
             const coomerFiles = $('img, a, audio, video').map((_, el) => $(el).prop('outerHTML')!);
             let desc = '';
@@ -139,7 +139,7 @@ async function handler(ctx) {
             });
 
             return {
-                title: i.title || pubDate?.toString() || 'Untitled Post',
+                title: i.title || pubDate!.toString(),
                 description: desc,
                 author,
                 pubDate,

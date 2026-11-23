@@ -6,6 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const orderbys = (desc: string) => {
@@ -34,8 +35,7 @@ const filters = {
 
 const handler = async (ctx: Context): Promise<Data> => {
     const { query = 's=2&d=1&n=true&dm=true&o=true' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const baseUrl = 'https://scoop.sh';
     const apiBaseUrl = 'https://scoopsearch.search.windows.net';

@@ -81,7 +81,7 @@ async function handler(ctx) {
     });
     const $ = load(response.data);
 
-    const list = $('div[portletmode=simpleList] .li').length ? $('div[portletmode=simpleList] .li') : $('.list tbody table tr');
+    const list = $('div[portletmode=simpleList] .li');
     const entries = list.toArray().map((item): DataItem => {
         const $item = $(item);
         const a = $item.find('a');
@@ -89,7 +89,7 @@ async function handler(ctx) {
         return {
             title: a.attr('title')!,
             link: new URL(href!, link).href,
-            pubDate: $item.find('div[style]').text() ? parseDate($item.find('div[style]').text(), 'YYYY-MM-DD', 8) : undefined,
+            pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD', 8),
         };
     });
 
@@ -109,7 +109,7 @@ async function handler(ctx) {
                     url: item.link,
                 });
                 const $ = load(detailResponse.data);
-                const detailContent = $('.v_news_content, .wp_articlecontent').first();
+                const detailContent = $('.v_news_content, .wp_articlecontent');
                 const authorLabel = $('.arti_publisher')
                     .toArray()
                     .map((element) => $(element).text())
@@ -119,13 +119,13 @@ async function handler(ctx) {
                     .toArray()
                     .map((element) => $(element).text().trim())
                     .find((text) => /^【(?:作者(?:、[^：:]+)?|文字)[：:]/.test(text));
-                details.author = authorLabel?.replace(/^作者[：:]\s*/, '').trim() || parseArticleAuthor(byline) || undefined;
+                details.author = authorLabel?.replace(/^作者[：:]\s*/, '') || parseArticleAuthor(byline);
                 detailContent
                     .find('p')
                     .filter((_, element) => /^【(?:作者(?:、[^：:]+)?|文字)[：:][^【】]+】$/.test($(element).text().trim()))
                     .remove();
                 details.description = detailContent.html();
-                const published = $('.nr-xinxi i').first().text().trim();
+                const published = $('.nr-xinxi i').first().text();
                 details.pubDate = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
 
                 return details;

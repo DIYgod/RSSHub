@@ -40,12 +40,12 @@ export const route: Route = {
                 const $element = $(element);
                 const href = $element.attr('href');
                 const title = $element.find('h6').text();
-                if (!href || !title) {
+                if (!href) {
                     return [];
                 }
                 const month = $element.find('.time p').text();
                 const day = $element.find('.time b').text();
-                return [{ title, link: new URL(href, indexUrl).href, pubDate: month && day ? parseDate(`${month}-${day}`, 8) : undefined }];
+                return [{ title, link: new URL(href, indexUrl).href, pubDate: parseDate(`${month}-${day}`, 8) }];
             });
         const items = await pMap(
             list,
@@ -54,7 +54,7 @@ export const route: Route = {
                     const response = await ofetch<string>(item.link);
                     const content = load(response);
                     const body = content('.articleCon');
-                    body.find('style, script').remove();
+                    body.find('style').remove();
                     const date = content('.articleTit .author')
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}/)?.[0];

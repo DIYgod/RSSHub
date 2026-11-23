@@ -46,7 +46,7 @@ async function handler(ctx) {
     }
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
-        const pubDate = Number.isFinite(item.time_scheduled) ? parseDate(item.time_scheduled) : undefined;
+        const pubDate = parseDate(item.time_scheduled);
 
         const raw = item.text?.replaceAll('\n', '<br>') || '';
         const media = item.media?.[0];

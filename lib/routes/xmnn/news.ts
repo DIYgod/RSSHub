@@ -4,7 +4,8 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
@@ -49,31 +50,15 @@ export const route: Route = {
 | 社会新闻     | shxw    |`,
 };
 
-function parsePublicationDate(value?: string) {
-    const text = value?.trim();
-    if (!text) {
-        return;
-    }
-    return parseDateStrict(text, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], 8);
-}
-
-async function fetchArticleDetail(link: string): Promise<Pick<DataItem, 'title' | 'description' | 'author' | 'pubDate'>> {
+async function fetchArticleDetail(link: string) {
     const { data: detailResponse } = await got(link);
     const content = load(detailResponse);
-    return {
-        title: content('div.cont-h, div.tip h1').text(),
-        description: content('div.TRS_Editor').html(),
-        author: content('span.cont-a-src a')
-            .toArray()
-            .map((a) => ({ name: content(a).text() })),
-        pubDate: parsePublicationDate(content('span.time, div.pubtime div.w').text()),
-    };
+    return content('div.TRS_Editor').html();
 }
 
 async function handler(ctx) {
     const { category = 'xmxw' } = ctx.req.param();
-    const parsedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
-    const limit = Number.isSafeInteger(parsedLimit) && parsedLimit > 0 ? parsedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://news.xmnn.cn';
     const currentUrl = `${rootUrl}/${category}/`;
@@ -87,27 +72,23 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const sourceAuthor = $item.find('div.source').text().trim();
 
             return {
                 title: $item.find('h1').text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 description: $item.find('div.abstract').html(),
-                author: sourceAuthor ? [{ name: sourceAuthor }] : undefined,
-                pubDate: parsePublicationDate($item.find('div.time').text()),
+                author: [{ name: $item.find('div.source').text().trim() }],
+                pubDate: parseDate($item.find('div.time').text().trim(), 8),
             };
         });
 
     const items = await pMap(
         list,
         async (item) => {
-            const detail = await cache.tryGet(`xmnn:article:${item.link}`, () => fetchArticleDetail(item.link));
+            const description = await cache.tryGet(`xmnn:article:${item.link}`, () => fetchArticleDetail(item.link));
             return {
                 ...item,
-                title: item.title || detail.title,
-                description: detail.description ?? item.description,
-                author: item.author ?? detail.author,
-                pubDate: item.pubDate ?? detail.pubDate,
+                description: description ?? item.description,
             };
         },
         { concurrency: 3 }

@@ -75,12 +75,8 @@ async function handler(ctx): Promise<Data> {
     });
 
     const data = response.data;
-    const entries: TopArticle[] = [...data.result];
-    if (ctx.req.query('sorted') !== 'false') {
-        entries.sort((a, b) => b.published_at_int - a.published_at_int);
-    }
-    const limit = getRouteLimit(ctx);
-    const selected = limit ? entries.slice(0, limit) : entries;
+    const entries: TopArticle[] = data.result.toSorted((a, b) => b.published_at_int - a.published_at_int);
+    const selected = entries.slice(0, getRouteLimit(ctx));
 
     // Fetch content for each article
     const items = await pMap(

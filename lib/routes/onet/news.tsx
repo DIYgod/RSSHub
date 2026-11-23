@@ -54,11 +54,11 @@ async function handler() {
 
                 const mainImage = parseMainImage($);
 
-                const description = renderDescription($('#lead, .ods-a-lead-text').first().text()?.trim(), mainImage, content.html()?.trim());
+                const description = renderDescription($('#lead, .ods-a-lead-text').text()?.trim(), mainImage, content.html()?.trim());
 
                 const author = $('.authorNameWrapper span[itemprop="name"], [data-section="author-top"] .ods-m-author-authorship__author-item a span')
                     .toArray()
-                    .map((element) => $(element).text().trim())
+                    .map((element) => $(element).text())
                     .filter(Boolean)
                     .join(', ');
                 const category = $('span.relatedTopic').text()?.trim();
@@ -71,7 +71,7 @@ async function handler() {
                 description,
                 author,
                 category,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                pubDate: parseDate(item.pubDate!),
                 guid: item.id,
             };
         },

@@ -49,9 +49,6 @@ async function handler(ctx): Promise<Data> {
         throw new Error('Gumroad product data was not found on the public product page');
     }
     const { product } = JSON.parse(pageData).props;
-    if (!product) {
-        throw new Error('Gumroad did not return a product on the public product page');
-    }
     const title = product.name;
     const userFullName = product.seller.name;
     const item = [

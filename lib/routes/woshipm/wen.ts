@@ -8,10 +8,7 @@ import { parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://wen.woshipm.com';
 
-function parseQuestionDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
+function parseQuestionDate(value: string) {
     return parseRelativeDate(value);
 }
 
@@ -62,9 +59,8 @@ async function handler() {
                 const $ = load(temp.data);
                 const category = $('.wt-bucong .flag-show .item')
                     .toArray()
-                    .map((tag) => $(tag).text().trim())
-                    .filter(Boolean);
-                return { description: $('.wt-desc').html(), author: $('.people-info-a h3').text().trim() || undefined, category: category.length ? category : undefined };
+                    .map((tag) => $(tag).text());
+                return { description: $('.wt-desc').html(), author: $('.people-info-a h3').text().trim(), category: category.length ? category : undefined };
             })),
         }),
         { concurrency: 3 }

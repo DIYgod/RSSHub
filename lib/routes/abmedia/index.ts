@@ -36,8 +36,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const requestedLimit = getRouteLimit(ctx, 10);
-    const limit = Math.min(Math.max(requestedLimit, 1), 100);
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const url = `${postsAPIUrl}?per_page=${limit}`;
 
     const response = await got.get(url);

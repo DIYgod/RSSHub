@@ -31,7 +31,7 @@ async function fetchDescription(link: string): Promise<DataItem['description']> 
         return undefined;
     }
     const response = await got(link);
-    return load(response.body)('#vsb_content').html() ?? undefined;
+    return load(response.body)('#vsb_content').html();
 }
 async function handler(ctx) {
     let category = ctx.req.param('category');
@@ -48,12 +48,10 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('div.nlist ul li')
         .toArray()
-        .filter((item) => $(item).find('a').attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
             const link = new URL($item.find('a').attr('href')!, 'http://www.xaut.edu.cn/index/' + categoryPaths[category]).href;
-            const rawDate = $item.find('div.time').text();
-            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDateStrict($item.find('div.time').text(), 'YYYY-MM-DD', 8);
             const title = $item.find('h5').text();
             return {
                 title,
@@ -67,19 +65,11 @@ async function handler(ctx) {
         description: '西安理工大学官网-' + categoryTitles[category],
         item: await pMap(
             list,
-            (item) =>
-                mapResolvedValue(
-                    cache.tryGet(`xaut:index:detail:v3:${item.link}`, () => fetchDescription(item.link!)),
-                    (description) => ({
-                        ...item,
-                        description,
-                    })
-                ),
+            async (item) => {
+                const description = await cache.tryGet(`xaut:index:detail:v3:${item.link}`, () => fetchDescription(item.link!));
+                return { ...item, description };
+            },
             { concurrency: 3, stopOnError: false }
         ),
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
 }

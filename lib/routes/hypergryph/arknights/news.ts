@@ -45,15 +45,13 @@ type InitialData = {
     };
 };
 
-const parsePublicationDate = (value: number) => (Number.isFinite(value) && value > 0 ? parseDate(value, 'X') : undefined);
-
 const parseList = (list: NewsItem[]) =>
     list.map((item) => ({
         title: item.title,
         author: item.author,
         description: item.brief.trim().replaceAll('\n', '<br>'),
         link: `https://ak.hypergryph.com/news/${item.cid}`,
-        pubDate: parsePublicationDate(item.displayTime),
+        pubDate: parseDate(item.displayTime, 'X'),
     }));
 
 export const route: Route = {

@@ -60,15 +60,15 @@ async function handler(ctx) {
                 const $ = load(detail);
                 const article = $('article#blogpost');
 
-                const category = article.find('h1').first().siblings('p').first().text().trim();
+                const category = article.find('h1').first().siblings('p').first().text();
 
                 // The byline is a paragraph like "By Mistral" in the hero section
                 const byline = article
                     .find('p')
                     .toArray()
-                    .map((el) => $(el).text().trim())
+                    .map((el) => $(el).text())
                     .find((text) => text.startsWith('By '));
-                const author = byline?.slice('By '.length).trim();
+                const author = byline?.slice('By '.length);
 
                 // The post body container inside <article id="blogpost">
                 let content = article.children('div[class*="border-border-primary"]');
@@ -81,18 +81,9 @@ async function handler(ctx) {
                 if (!content.length) {
                     content = article.children('div').first();
                 }
-                content.find('svg, script, style, mistral-atom-text-vibe').remove();
+                content.find('svg, mistral-atom-text-vibe').remove();
                 content.find('img').each((_, e) => {
-                    const $e = $(e);
-                    $e.removeAttr('srcset sizes loading decoding width height class');
-                    const src = $e.attr('src');
-                    if (src?.startsWith('/')) {
-                        $e.attr('src', `${rootUrl}${src}`);
-                    }
-                });
-                content.find('a[href^="/"]').each((_, e) => {
-                    const $e = $(e);
-                    $e.attr('href', `${rootUrl}${$e.attr('href')}`);
+                    $(e).removeAttr('srcset sizes loading decoding width height class');
                 });
 
                 const html = content.html();
@@ -100,7 +91,7 @@ async function handler(ctx) {
                     ...item,
                     description: html || item.description,
                     category: category ? [category] : undefined,
-                    author: author || undefined,
+                    author,
                 };
             }),
         { concurrency: 5 }

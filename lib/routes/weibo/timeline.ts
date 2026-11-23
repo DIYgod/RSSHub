@@ -193,7 +193,7 @@ async function handler(ctx) {
             const token = rep.data.access_token;
             const uid = rep.data.uid;
             const expires_in = rep.data.expires_in;
-            if (!token || !uid || !Number.isFinite(expires_in) || expires_in <= 0) {
+            if (!token || !uid) {
                 throw new Error('Weibo OAuth did not return a valid access token. Start authorization again.');
             }
             await cache.set('weibotimelineuid' + uid, token, expires_in);

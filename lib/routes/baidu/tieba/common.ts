@@ -74,7 +74,7 @@ export const renderContent = (items: any[] = []) =>
                 case 3:
                     return `<img src="${item.origin_src || item.src}">`;
                 default:
-                    return item.text ?? '';
+                    return item.text;
             }
         })
         .join('');

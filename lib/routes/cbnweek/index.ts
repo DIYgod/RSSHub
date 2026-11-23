@@ -31,7 +31,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    let items = response.data.data.slice(0, limit).map((item) => {
+    let items = response.data.data.map((item) => {
         const post = item.data[0];
         return {
             guid: post.id,
@@ -53,8 +53,8 @@ async function handler(ctx) {
 
                 const detail = detailResponse.data.data;
                 item.description = detail.content;
-                item.author = detail.authors?.map((a) => a.name).join(', ');
-                item.category = detail.topics?.map((t) => t.name);
+                item.author = detail.authors.map((a) => a.name).join(', ');
+                item.category = detail.topics.map((t) => t.name);
 
                 return item;
             })

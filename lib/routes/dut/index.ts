@@ -8,7 +8,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { parseDate } from '@/utils/time';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import defaults from './defaults';
@@ -35,27 +35,25 @@ export const route: Route = {
 };
 
 function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Temporal.Instant | undefined {
-    const time = item.closest('li').find('time').first();
-    const calendarTime = time.text().trim();
+    const time = item.closest('li').find('time');
+    const calendarTime = time.text();
     if (/^\d{4}-\d{2}-\d{2}$/.test(calendarTime)) {
         return parseDate(calendarTime, 'YYYY-MM-DD', 8);
     }
-    const day = time.find('span').text().trim();
+    const day = time.find('span').text();
     const month = time
         .contents()
         .filter((_, element) => element.type === 'text')
-        .text()
-        .trim();
+        .text();
     if (/^\d{1,2}$/.test(day) && /^\d{4}-\d{2}$/.test(month)) {
         return parseDate(`${month}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8);
     }
-    const dateBox = item.find('.date').first();
+    const dateBox = item.find('.date');
     const monthDay = dateBox.find('span').text();
     const year = dateBox
         .contents()
         .filter((_, element) => element.type === 'text')
-        .text()
-        .trim();
+        .text();
     if (/^\d{2}-\d{2}$/.test(monthDay) && /^\d{4}$/.test(year)) {
         return parseDate(`${year}-${monthDay}`, 'YYYY-MM-DD', 8);
     }
@@ -67,7 +65,7 @@ function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Temporal.Ins
     if (calendarDate) {
         return parseDate(calendarDate.replaceAll(/[./]/g, '-'), 'YYYY-MM-DD', 8);
     }
-    const dayIndex = texts.findIndex((text, index) => /^\d{1,2}$/.test(text) && /^\d{4}-\d{2}$/.test(texts[index + 1] ?? ''));
+    const dayIndex = texts.findIndex((text, index) => /^\d{1,2}$/.test(text) && /^\d{4}-\d{2}$/.test(texts[index + 1]));
     if (dayIndex !== -1) {
         return parseDate(`${texts[dayIndex + 1]}-${texts[dayIndex].padStart(2, '0')}`, 'YYYY-MM-DD', 8);
     }
@@ -120,7 +118,7 @@ async function handler(ctx) {
             result.title = $item.text();
             result.pubDate = getCurrentListDate($, $item);
         } else if (['panjin', 'xsgzb', 'pjteach', 'pjxqzwb', 'perdep'].includes(site) && $item.find('h2, h3').length) {
-            result.title = $item.find('h2, h3').first().text();
+            result.title = $item.find('h2, h3').text();
             result.pubDate = getCurrentListDate($, $item);
         } else if (site === 'fldpj') {
             result.title = $item.find('em').text();
@@ -142,15 +140,10 @@ async function handler(ctx) {
         return result;
     });
 
-    const limit = getRouteLimit(ctx, 50);
-    if (ctx.req.query('sorted') === 'false') {
-        items = items.slice(0, limit);
-    } else if (items.every((item) => item.pubDate)) {
-        items.sort((a, b) => Temporal.Instant.compare(b.pubDate as Temporal.Instant, a.pubDate as Temporal.Instant));
-        items = items.slice(0, limit);
-    } else {
-        items = items.slice(0, Math.max(50, limit));
+    if (items.every((item) => item.pubDate)) {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
+    items = items.slice(0, getRouteLimit(ctx, 50));
 
     items = await pMap<DataItem, DataItem>(
         items,

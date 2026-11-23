@@ -28,70 +28,44 @@ interface JsonLdAuthor {
 
 interface JsonLdGraphNode {
     '@id'?: string;
-    '@type'?: string | string[];
+    '@type'?: string;
     name?: string;
     headline?: string;
     datePublished?: string;
-    image?: string[] | string;
-    author?: JsonLdAuthor[] | JsonLdAuthor;
+    image?: string[];
+    author?: JsonLdAuthor;
 }
 
 const extractArticleJsonLd = ($: CheerioAPI) => {
-    const graphNodes: JsonLdGraphNode[] = [];
-    $('script[type="application/ld+json"]').each((_, el) => {
-        try {
-            const parsed = JSON.parse($(el).text());
-            if (Array.isArray(parsed?.['@graph'])) {
-                graphNodes.push(...parsed['@graph']);
-            } else if (parsed && typeof parsed === 'object') {
-                graphNodes.push(parsed);
-            }
-        } catch {
-            // Ignore malformed JSON-LD script
-        }
-    });
+    const graphNodes: JsonLdGraphNode[] = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text())['@graph'];
+    const nodeById = new Map(graphNodes.map((node) => [node['@id'], node]));
 
-    const nodeById = new Map<string, JsonLdGraphNode>();
-    for (const node of graphNodes) {
-        if (node['@id']) {
-            nodeById.set(node['@id'], node);
-        }
-    }
-
-    const articleNode = graphNodes.find((node) => {
-        const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
-        return types.some((t) => ARTICLE_LD_TYPES.has(t ?? ''));
-    });
+    const articleNode = graphNodes.find((node) => ARTICLE_LD_TYPES.has(node['@type'] ?? ''));
 
     if (!articleNode) {
         return {};
     }
 
-    const rawAuthors = Array.isArray(articleNode.author) ? articleNode.author : articleNode.author ? [articleNode.author] : [];
+    const rawAuthors = articleNode.author ? [articleNode.author] : [];
     const authors = rawAuthors.map((author) => author.name || (author['@id'] ? nodeById.get(author['@id'])?.name : undefined)).filter((name): name is string => Boolean(name));
-
-    const imageList = Array.isArray(articleNode.image) ? articleNode.image : articleNode.image ? [articleNode.image] : [];
 
     return {
         headline: articleNode.headline,
         datePublished: articleNode.datePublished,
-        image: imageList[0],
+        image: articleNode.image?.[0],
         author: authors.length > 0 ? authors.join(', ') : undefined,
     };
 };
 
-const extractBlogCategories = ($header: Cheerio<Element>, $: CheerioAPI): string[] => [
-    ...new Set(
-        $header
-            .find('span[class*="rounded-"]')
-            .toArray()
-            .map((span) => $(span).text().trim())
-            .filter((tag) => Boolean(tag) && !tag.toLowerCase().startsWith('by '))
-    ),
-];
+const extractBlogCategories = ($header: Cheerio<Element>, $: CheerioAPI): string[] =>
+    $header
+        .find('span[class*="rounded-"]')
+        .toArray()
+        .map((span) => $(span).text())
+        .filter((tag) => Boolean(tag) && !tag.toLowerCase().startsWith('by '));
 
 const extractBlogBody = ($article: Cheerio<Element>, $: CheerioAPI, baseUrl: string): string => {
-    const $prose = $article.find('.prose').first();
+    const $prose = $article.find('.prose');
     if ($prose.length > 0) {
         return normalizeRichContent($prose, $, baseUrl);
     }
@@ -107,12 +81,12 @@ const fetchBlogDetail = (card: BlogCardMeta, baseUrl: string) =>
         const html = await fetchHtml(card.link);
         const $ = load(html);
         const jsonLd = extractArticleJsonLd($);
-        const $article = $('article').first();
-        const $header = $article.find('header').first();
+        const $article = $('article');
+        const $header = $article.find('header');
 
-        const title = $header.find('h1').first().text() || card.title || jsonLd.headline || '';
+        const title = $header.find('h1').text() || card.title || jsonLd.headline || '';
         const categories = extractBlogCategories($header, $);
-        const headerDate = $header.find('time').first().text().trim();
+        const headerDate = $header.find('time').text();
         const pubDate = toValidDate(jsonLd.datePublished) ?? toValidDate(headerDate || card.listDate);
         const ogImage = unwrapNextImageUrl($('meta[property="og:image"]').attr('content'), baseUrl);
         const image = ogImage ?? unwrapNextImageUrl(jsonLd.image, baseUrl) ?? card.listImage;
@@ -140,24 +114,20 @@ async function handler(ctx: Context): Promise<Data> {
     const listHtml = await fetchHtml(blogUrl);
     const $ = load(listHtml);
 
-    const seenLinks = new Set<string>();
-    const cards: BlogCardMeta[] = [];
-
-    $('a[href^="/blog/"]')
-        .filter((_, el) => $(el).find('article').length > 0)
-        .each((_, el) => {
+    const cards = $('[class^="BlogList_grid__"] > a')
+        .toArray()
+        .flatMap((el) => {
             const $card = $(el);
             const link = resolveAbsoluteUrl($card.attr('href'), config.baseUrl);
-            if (!link || seenLinks.has(link)) {
-                return;
+            if (!link) {
+                return [];
             }
-            seenLinks.add(link);
-            cards.push({
+            return {
                 link,
-                title: $card.find('h2, h3').first().text(),
-                listDate: $card.find('time').first().text().trim(),
-                listImage: unwrapNextImageUrl($card.find('img').first().attr('src'), config.baseUrl),
-            });
+                title: $card.find('h2, h3').text(),
+                listDate: $card.find('time').text(),
+                listImage: unwrapNextImageUrl($card.find('img').attr('src'), config.baseUrl),
+            };
         });
 
     const targetCards = cards.slice(0, getRouteLimit(ctx, DEFAULT_LIMIT));
@@ -165,7 +135,7 @@ async function handler(ctx: Context): Promise<Data> {
         concurrency: DETAIL_CONCURRENCY,
     });
 
-    const pageTitle = $('title').first().text() || `MiniMax Blog (${config.titleSuffix})`;
+    const pageTitle = $('title').text() || `MiniMax Blog (${config.titleSuffix})`;
     const pageDescription = $('meta[name="description"]').attr('content');
 
     return {

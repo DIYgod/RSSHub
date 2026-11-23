@@ -7,13 +7,11 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.re3data.org';
-const getText = ($: CheerioAPI, name: string) =>
-    $(String.raw`r3d\:${name}`)
-        .first()
-        .text();
+const getText = ($: CheerioAPI, name: string) => $(String.raw`r3d\:${name}`).text();
 
 export const route: Route = {
     path: '/subject/:subject',
@@ -43,22 +41,19 @@ async function getRepository(id: string) {
                     .find(String.raw`r3d\:subjectName`)
                     .text(),
             }));
-        const updated = getText($, 'lastUpdate') || getText($, 'entryDate');
-        const repositoryUrl = getText($, 'repositoryUrl');
+        const updated = getText($, 'lastUpdate');
         const item: DataItem = {
             title: getText($, 'repositoryName'),
             link: `${baseUrl}/repository/${id}`,
-            guid: updated ? `${id}:${updated}` : id,
+            guid: `${id}:${updated}`,
             // The registry provides a calendar date, represented at UTC midnight.
-            pubDate: updated ? parseDate(updated, 0) : undefined,
+            pubDate: parseDate(updated, 0),
             description: renderToString(
                 <>
                     <p>{getText($, 'description')}</p>
-                    {repositoryUrl ? (
-                        <p>
-                            <a href={repositoryUrl}>Visit repository</a>
-                        </p>
-                    ) : undefined}
+                    <p>
+                        <a href={getText($, 'repositoryUrl')}>Visit repository</a>
+                    </p>
                 </>
             ),
             category: subjects.map((value) => value.name),
@@ -77,11 +72,9 @@ async function handler(ctx) {
         query: { 'subjects[]': subject },
     });
     const $ = load(xml, { xmlMode: true });
-    const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const ids = $('repository > id')
         .toArray()
-        .slice(0, limit)
+        .slice(0, getRouteLimit(ctx, 20))
         .map((element) => $(element).text());
     const records = await pMap(ids, (id) => getRepository(id), { concurrency: 3 });
     const subjectName = records.flatMap((record) => record.subjects).find((value) => value.id === subject)?.name ?? subject;

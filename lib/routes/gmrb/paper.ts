@@ -26,7 +26,7 @@ type ArticleLink = {
 };
 
 const getPage = async (url: string) => {
-    const response = await ofetch.raw(url, { responseType: 'text' });
+    const response = await ofetch.raw(url);
     return { data: (response._data as string) ?? '', url: response.url || url };
 };
 
@@ -56,58 +56,30 @@ const removeComments = ($element: Cheerio<any>) => {
         .remove();
 };
 
-const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string): ArticleLink[] => {
-    const seen = new Set<string>();
-    return $('a[href]')
+const getArticleLinks = ($: CheerioAPI, baseUrl: string, categoryName?: string): ArticleLink[] =>
+    $('.m-title-list a[href]')
         .toArray()
         .flatMap((element) => {
             const link = resolveLink($(element).attr('href'), baseUrl);
-            if (!link || !isArticleUrl(link) || seen.has(link)) {
+            if (!link || !isArticleUrl(link)) {
                 return [];
             }
-            seen.add(link);
-            const title = $(element).text().replaceAll(/\s+/g, ' ').trim();
             return {
-                title: title || undefined,
+                title: $(element).text().replaceAll(/\s+/g, ' '),
                 link,
                 category: categoryName ? [categoryName] : undefined,
             };
         });
-};
 
 const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instant): Promise<DataItem> => {
     try {
         const details = await cache.tryGet<Partial<DataItem>>(`gmrb:paper:${article.link}`, async () => {
             const page = await getPage(article.link);
             const $ = load(page.data);
-            const title = $('.m-article-content h1, #Title, .article-title, h1').first().text().replaceAll(/\s+/g, ' ').trim() || $('title').text().trim();
+            const title = $('.m-article-content h1, #Title, .article-title, h1').text().replaceAll(/\s+/g, ' ') || $('title').text().trim();
             const content = $('.m-article-main, #ozoom, #articleContent, .articleContent, .m-article-text, .content, article')
                 .filter((_, element) => $(element).text().trim().length > 0 || $(element).find('img').length > 0)
                 .first();
-
-            // Resolve relative links and images in content
-            content.find('img').each((_, element) => {
-                const src = $(element).attr('src');
-                if (!src) {
-                    return;
-                }
-                const resolved = resolveLink(src, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('src', resolved);
-            });
-            content.find('a').each((_, element) => {
-                const href = $(element).attr('href');
-                if (!href) {
-                    return;
-                }
-                const resolved = resolveLink(href, article.link);
-                if (!resolved) {
-                    return;
-                }
-                $(element).attr('href', resolved);
-            });
 
             // Strip all comment nodes (including Founder enpproperty metadata comments)
             removeComments(content);
@@ -118,11 +90,11 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instan
                 .replace(/^作者[:：]\s*/, '')
                 .replaceAll(/\s+/g, ' ')
                 .trim();
-            const enpAuthor = page.data.match(/<author>([^<]*)<\/author>/)?.[1]?.trim() || undefined;
+            const enpAuthor = page.data.match(/<author>([^<]*)<\/author>/)?.[1];
             const author = enpAuthor || authorText || undefined;
 
             return {
-                title: title || undefined,
+                title,
                 description: content.html()?.trim(),
                 author,
             };
@@ -188,21 +160,7 @@ const fetchTargetArticles = async (targetNodes: NodeLink[], limit: number): Prom
         { concurrency, stopOnError: false }
     );
 
-    const targetArticles: ArticleLink[] = [];
-    const seenLinks = new Set<string>();
-    for (const links of nodeResults) {
-        for (const link of links) {
-            if (seenLinks.has(link.link)) {
-                continue;
-            }
-            seenLinks.add(link.link);
-            targetArticles.push(link);
-            if (targetArticles.length >= limit) {
-                return targetArticles;
-            }
-        }
-    }
-    return targetArticles;
+    return nodeResults.flat().slice(0, limit);
 };
 
 export const route: Route = {

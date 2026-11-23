@@ -52,8 +52,7 @@ async function handler(ctx: Context): Promise<Data> {
     const legacyLinks = $(listSelector);
     const links = legacyLinks.length ? legacyLinks : $('main article h3 a[href]');
     const hrefs = [...new Set(links.toArray().map((item) => $(item).attr('href')!))];
-    const selected = hrefs;
-    const items = await pMap(selected, (href) => getDataItem(href), { concurrency: 5 });
+    const items = await pMap(hrefs, (href) => getDataItem(href), { concurrency: 5 });
 
     return {
         title: $('head title').text().replace(' | Council on Foreign Relations', ''),

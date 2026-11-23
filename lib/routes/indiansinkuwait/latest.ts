@@ -53,8 +53,7 @@ async function handler() {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                const date = $('#ctl00_ContentPlaceHolder1_SpanAuthor').text();
-                item.pubDate = date ? parseDateStrict(date, 'dddd, MMMM D, YYYY') : undefined;
+                item.pubDate = parseDateStrict($('#ctl00_ContentPlaceHolder1_SpanAuthor').text(), 'dddd, MMMM D, YYYY');
                 $('#newsdetails h3, #ctl00_ContentPlaceHolder1_SpanAuthor, .noprint, [id^=div-gpt-ad]').remove();
                 item.description = $('#newsdetails').html();
 

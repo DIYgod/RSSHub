@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
-import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -10,13 +9,6 @@ import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
 
 const baseUrl = 'https://nhentai.net';
-
-function parsePublicationDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
-}
 
 const getCookie = async (username, password, cache) => {
     const loginUrl = 'https://nhentai.net/login/';
@@ -81,27 +73,19 @@ const getCookie = async (username, password, cache) => {
     return userTokenCookie;
 };
 
-// Reason: try ofetch first for speed, fall back to Playwright on 403 (anti-bot protection)
 const fetchPage = async (url: string): Promise<string> => {
-    try {
-        return await ofetch(url);
-    } catch (error: unknown) {
-        if (error instanceof FetchError && error.statusCode === 403) {
-            const { page, destroy } = await getPlaywrightPage(url, {
-                onBeforeLoad: async (page) => {
-                    const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                    await page.route('**/*', (route) => {
-                        const request = route.request();
-                        return allowedTypes.has(request.resourceType()) ? route.continue() : route.abort();
-                    });
-                },
+    const { page, destroy } = await getPlaywrightPage(url, {
+        onBeforeLoad: async (page) => {
+            const allowedTypes = new Set(['document']);
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                return allowedTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
-            const content = await page.content();
-            await destroy();
-            return content;
-        }
-        throw error;
-    }
+        },
+    });
+    const content = await page.content();
+    await destroy();
+    return content;
 };
 
 const getSimple = async (url) => {
@@ -183,7 +167,7 @@ const getDetail = async (simple) => {
     return {
         ...simple,
         title: $('div#info > h2').text() || $('div#info > h1').text(),
-        pubDate: parsePublicationDate($('time').attr('datetime')),
+        pubDate: parseDate($('time').attr('datetime')!),
         description: renderDescription(galleryImgs.length, galleryImgs),
     };
 };

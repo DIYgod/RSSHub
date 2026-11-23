@@ -42,7 +42,7 @@ export const route: Route = {
         const dateList = $('#wp_news_w9')
             .find('span.col_news_date')
             .toArray()
-            .map((item) => $(item).text().trim());
+            .map((item) => $(item).text());
 
         const list = $('#wp_news_w9')
             .find('a[title]')
@@ -52,14 +52,12 @@ export const route: Route = {
                 const href = $a.attr('href');
                 const link = href ? new URL(href, `${baseUrl}/${type}/list.htm`).href : undefined;
 
-                const publishedDate = dateList[index];
                 return {
                     title: $a.text(),
                     link,
-                    pubDate: publishedDate ? parseDate(publishedDate, 8) : undefined,
+                    pubDate: parseDate(dateList[index], 8),
                 };
-            })
-            .filter((item) => item.link);
+            });
 
         const items = await pMap(
             list,

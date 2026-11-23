@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ee/jzxx/:category?',
@@ -71,8 +71,8 @@ async function handler(ctx) {
                 const content = load(res.data);
 
                 const infoDiv = content('div.art-tit.cont-tit');
-                const dateText = infoDiv.find('p span:nth-child(1)').text().replace('发布时间：', '').trim();
-                const pubDate = /^\d{4}-\d{2}-\d{2}$/.test(dateText) ? parseDateStrict(dateText, 'YYYY-MM-DD', 8) : dateText ? parseDate(dateText, 8) : undefined;
+                const dateText = infoDiv.find('p span:nth-child(1)').text().replace('发布时间：', '');
+                const pubDate = parseDate(dateText, 8);
 
                 const description = content('div.art-body.wow.fadeInUp')
                     .find('ul li') // Select attachment list items
@@ -83,9 +83,6 @@ async function handler(ctx) {
                     })
                     .end()
                     .html();
-                if (!description?.trim()) {
-                    throw new Error(`Unable to find article content at ${item.link}`);
-                }
 
                 return {
                     title: content('div.art-tit.cont-tit').find('h3').text(),

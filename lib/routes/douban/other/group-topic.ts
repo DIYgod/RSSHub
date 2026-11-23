@@ -36,13 +36,13 @@ function parseReplies($: CheerioAPI, link: string, pageUrl = link): DataItem[] {
         .toArray()
         .map((element): DataItem => {
             const $reply = $(element);
-            const pubtime = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:\s+(\S.*))?$/.exec($reply.find('.pubtime').first().text());
+            const pubtime = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:\s+(\S.*))?$/.exec($reply.find('.pubtime').text());
             return {
                 title: $reply.find('.reply-content').text(),
                 description: $reply.find('.reply-content').html(),
                 link: `${pageUrl}#${$reply.attr('id')}`,
                 guid: `${link}#${$reply.attr('id')}`,
-                author: $reply.find('h4 > a').first().text(),
+                author: $reply.find('h4 > a').text(),
                 pubDate: pubtime ? parseDate(pubtime[1], 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
                 category: pubtime?.[2] ? [`IP属地：${pubtime[2]}`] : undefined,
             };
@@ -58,14 +58,13 @@ function parseGroupTopic(html: string, link: string): GroupTopic {
     if (!title || !content) {
         throw new Error('The Douban group topic is unavailable. Verify the topic ID, account access and DOUBAN_COOKIE.');
     }
-    const created = $('.topic-meta .create-time').text();
     const ipLocation = $('.topic-meta .ip-location').text();
     const post: DataItem = {
         title,
         link,
         description: content,
         author: $('.topic-doc h3 .from a').text(),
-        pubDate: created ? parseDate(created, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+        pubDate: parseDate($('.topic-meta .create-time').text(), 'YYYY-MM-DD HH:mm:ss', 8),
         category: ipLocation ? [`IP属地：${ipLocation}`] : undefined,
         guid: `${link}#content-${md5(`${title}\n${content}`)}`,
     };

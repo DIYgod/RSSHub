@@ -51,11 +51,7 @@ const articleListParser = async ($: CheerioAPI, needFullText, cache) => {
                 authorNode = $item.find('.news-detail .author');
             }
             const title = titleNode.find('a').text();
-            const prefixUrl = titleNode.find('a').attr('href');
-            if (!prefixUrl) {
-                throw new Error('The article card does not contain a link.');
-            }
-            const link = modifiedLink(prefixUrl);
+            const link = modifiedLink(titleNode.find('a').attr('href'));
             const imgUrl = $item.find('.news-img img')?.attr('src')?.split('?x-', 1)[0];
             const author = authorNode.children().first().text();
             const timestamp = authorNode.find('.time').text();

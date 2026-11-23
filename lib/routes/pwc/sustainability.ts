@@ -35,14 +35,14 @@ async function handler() {
     const feedLang: Language = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
 
-    const response = await ofetch(baseUrl, { responseType: 'text' });
+    const response = await ofetch(baseUrl);
     const $ = load(response);
     const collection: { listItemCollection: Publication[] } = JSON.parse($('collection-v3-listing').attr('filter1')!);
 
     const items = collection.listItemCollection.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: item.publishDate ? parseDate(`${item.publishDate} +0000`, 'DD/MM/YY ZZ') : undefined,
+        pubDate: parseDate(`${item.publishDate} +0000`, 'DD/MM/YY ZZ'),
         description: item.description,
         category: item.contentTheme,
     }));

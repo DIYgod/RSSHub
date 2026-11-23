@@ -42,9 +42,7 @@ async function handler(ctx) {
     const response = await got(currentUrl);
     const $ = load(response.data);
     const heading = isNumber ? categoryNames[id] : category === 'news' ? '新闻动态' : '政策法规';
-    const $panel = $('.panel')
-        .filter((_, el) => $(el).children('.panel-heading').text().replaceAll(/\s/g, '') === heading?.replaceAll(/\s/g, ''))
-        .first();
+    const $panel = $('.panel').filter((_, el) => $(el).children('.panel-heading').text().replaceAll(/\s/g, '') === heading?.replaceAll(/\s/g, ''));
     const list: DataItem[] = isNumber
         ? $panel
               .find('table tr:first-child > td > a')
@@ -58,7 +56,7 @@ async function handler(ctx) {
               .toArray()
               .map((el) => {
                   const $item = $(el);
-                  const $title = $item.find('a').first();
+                  const $title = $item.find('a');
                   const date = $item
                       .find('small')
                       .text()
@@ -76,16 +74,14 @@ async function handler(ctx) {
                   cache.tryGet(item.link!, async () => {
                       const detailResponse = await got(item.link);
                       const content = load(detailResponse.data);
-                      const $body = content('.panel-body')
-                          .filter((_, el) => content(el).children('h3').length > 0)
-                          .first();
-                      const date = $body.text().match(/发布时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)?.[1];
+                      const $body = content('.panel-body').filter((_, el) => content(el).children('h3').length > 0);
+                      const date = detailResponse.data.match(/发布时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)[1];
                       $body.children('h3').remove();
                       $body.children('div').first().remove();
                       return {
                           ...item,
                           description: $body.html(),
-                          pubDate: date ? parseDate(date, 8) : undefined,
+                          pubDate: parseDate(date, 8),
                       };
                   })
               )

@@ -3,6 +3,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
@@ -50,39 +51,6 @@ const categories = {
     },
 };
 
-const parseArticles = (response: string): { articleList: Item[] } => {
-    const payload = /^\s*Module\.callback\(([\s\S]*)\);?\s*$/.exec(response)?.[1];
-    if (!payload) {
-        throw new Error('PConline returned an unexpected article list response.');
-    }
-    const tokens = payload.match(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^"']+/gs) || [];
-    if (tokens.join('') !== payload) {
-        throw new Error('PConline returned malformed article list strings.');
-    }
-    const json = tokens
-        .map((token) => {
-            if (token.startsWith('"')) {
-                return token;
-            }
-            if (token.startsWith("'")) {
-                let value = '';
-                for (let index = 1; index < token.length - 1; index++) {
-                    const character = token[index];
-                    if (character === '\\') {
-                        const next = token[++index];
-                        value += next === "'" ? "'" : `\\${next}`;
-                    } else {
-                        value += character === '"' ? String.raw`\"` : character;
-                    }
-                }
-                return JSON.stringify(JSON.parse(`"${value}"`));
-            }
-            return token.replaceAll(/,\s*(?=[}\]])/g, '');
-        })
-        .join('');
-    return JSON.parse(json);
-};
-
 const getContent = (item: DataItem & { link: string }) =>
     cache.tryGet(item.link, async () => {
         const detailResponse = await got({
@@ -108,7 +76,7 @@ const handler = async (ctx) => {
         url: currentUrl,
     });
 
-    const { articleList } = parseArticles(response.data);
+    const { articleList } = await evaluateScriptCallback<{ articleList: Item[] }>(response.data, 'Module.callback', 0);
     const list: Array<DataItem & { link: string }> = articleList.map((item: Item) => ({
         id: item.id,
         title: item.title,

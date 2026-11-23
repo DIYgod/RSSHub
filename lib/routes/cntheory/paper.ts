@@ -102,34 +102,9 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instan
             title = title ? (/^\s*——/.test(subtitle) ? `${title}${subtitle}` : `${title} ${subtitle}`) : subtitle;
         }
 
-        const content = $('cms-content#content, cms-content, #content').first();
-
-        // Resolve relative links and images in content
-        content.find('img').each((_, element) => {
-            const src = $(element).attr('src');
-            if (!src) {
-                return;
-            }
-            const resolved = resolveLink(src, article.link);
-            if (!resolved) {
-                return;
-            }
-            $(element).attr('src', resolved);
-        });
-        content.find('a').each((_, element) => {
-            const href = $(element).attr('href');
-            if (!href) {
-                return;
-            }
-            const resolved = resolveLink(href, article.link);
-            if (!resolved) {
-                return;
-            }
-            $(element).attr('href', resolved);
-        });
+        const content = $('cms-content#content, cms-content, #content');
 
         removeComments(content);
-        content.find('script, style').remove();
 
         const authorCandidate = $('.datesource')
             .toArray()
@@ -137,7 +112,6 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instan
                 $(element)
                     .text()
                     .replace(/\s*字数.*$/, '')
-                    .trim()
             )
             .find((text) => text && !text.includes('《 学习时报 》') && !text.includes('《学习时报》'));
 
@@ -146,7 +120,7 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Temporal.Instan
         return {
             title,
             description: hasText(contentHtml) ? contentHtml : undefined,
-            author: authorCandidate || undefined,
+            author: authorCandidate,
         };
     });
 
@@ -182,7 +156,7 @@ const getEditionLayout = async (indexUrl: string) => {
             const linkElement = layout$(element).find('a[href]').first();
             const href = linkElement.attr('href');
             const match = href?.match(/node_(\d+)\.html/);
-            const name = linkElement.text().replaceAll(/\s+/g, ' ').trim();
+            const name = linkElement.text().replaceAll(/\s+/g, ' ');
             const page = match?.[1] ? match[1].padStart(2, '0') : undefined;
             return {
                 page,
@@ -210,21 +184,7 @@ const fetchTargetArticles = async (targetNodes: NodeLink[], limit: number): Prom
         { concurrency }
     );
 
-    const targetArticles: ArticleLink[] = [];
-    const seenLinks = new Set<string>();
-    for (const links of nodeResults) {
-        for (const link of links) {
-            if (seenLinks.has(link.link)) {
-                continue;
-            }
-            seenLinks.add(link.link);
-            targetArticles.push(link);
-            if (targetArticles.length >= limit) {
-                return targetArticles;
-            }
-        }
-    }
-    return targetArticles;
+    return nodeResults.flat().slice(0, limit);
 };
 
 const matchNode = (node: NodeLink, id: string) => {

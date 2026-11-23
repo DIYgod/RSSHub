@@ -1,45 +1,8 @@
-import { Buffer } from 'node:buffer';
-
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/time';
-
-const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex']);
-const rssEncodingAliases = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' } satisfies Record<string, BufferEncoding>;
-const isRssEncodingAlias = (key: string): key is keyof typeof rssEncodingAliases => Object.hasOwn(rssEncodingAliases, key);
-
-export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
-    const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
-        method: 'GET',
-        headers: { Accept: 'application/rss+xml', 'User-Agent': config.ua },
-        responseType: 'arrayBuffer',
-        redirect: 'manual',
-        ignoreResponseError: true,
-        timeout: config.requestTimeout,
-    });
-    const location = response.headers.get('location');
-    if (response.status >= 300 && response.status < 400 && location) {
-        if (redirectCount === 5) {
-            throw new Error('Too many redirects');
-        }
-        return getRssFeed(new URL(location, feedUrl).href, redirectCount + 1);
-    }
-    if (response.status >= 300) {
-        throw new Error(`Status code ${response.status}`);
-    }
-    const charset =
-        response.headers
-            .get('content-type')
-            ?.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]
-            .toLowerCase() || '';
-    const encoding = (isRssEncodingAlias(charset) && rssEncodingAliases[charset]) || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
-    return parser.parseString(Buffer.from(response._data!).toString(encoding));
-};
 
 const ProcessImage = ($, e) => {
     const photo = $(e).find('figure').find('picture').find('img');

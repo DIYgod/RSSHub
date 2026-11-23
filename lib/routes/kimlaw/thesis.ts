@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.kimlaw.or.kr';
 
@@ -41,13 +41,11 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.list_text_title');
-            const sourceDate = $item.find('.time').attr('title');
-            const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY-MM-DD HH:mm', 9) : undefined;
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('.name').text(),
-                pubDate: date,
+                pubDate: parseDate($item.find('.time').attr('title')!, 9),
             };
         });
 

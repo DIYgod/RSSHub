@@ -173,20 +173,14 @@ const gdgov = async (info, ctx) => {
                     const zcjdLink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idLink.search;
                     const response = await got(zcjdLink);
                     const data = response.data.data;
-                    if (!data?.art_title?.trim()) {
-                        throw new Error(`Policy interpretation title was not found at ${zcjdLink}`);
+                    for (const item of data.jie_du_items) {
+                        item.jd_content = item.jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
                     }
-                    const interpretations = data.jie_du_items ?? [];
-                    for (const item of interpretations) {
-                        item.jd_content = item.jd_content?.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
-                    }
-                    const pubDate = data.pub_time ? parseDate(data.pub_time, 8) : undefined;
-
                     return {
                         link,
                         title: data.art_title,
                         description: renderZcjdpt(data),
-                        pubDate,
+                        pubDate: parseDate(data.pub_time, 8),
                         author: /本/.test(data.pub_unite) ? authorIsMe : data.pub_unite,
                     };
                 });
@@ -204,13 +198,9 @@ const gdgov = async (info, ctx) => {
 
                 // Extract the publication date.
                 const pubDate = pubDateElement === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDateElement).text().trim().match(pubDateMatch)?.[1]?.trim().replaceAll(/(-*$)/g, '');
-                const parsedDate = pubDate ? parseDate(pubDate, pubDateFormat, 8) : undefined;
 
                 // Extract the article title.
                 const title = titleElement === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(titleElement).text().trim().match(titleMatch)?.[1];
-                if (!title?.trim()) {
-                    throw new Error(`Article title was not found at ${link}`);
-                }
                 // Extract the article body.
                 const descriptionContent = descriptionElement.split(',').filter((item) => item !== '');
                 for (let index = 0; index < descriptionContent.length; index++) {
@@ -222,7 +212,7 @@ const gdgov = async (info, ctx) => {
                     link,
                     title,
                     description,
-                    pubDate: parsedDate,
+                    pubDate: pubDate ? parseDate(pubDate, pubDateFormat, 8) : undefined,
                     author: /本/.test(author!) ? authorIsMe : author,
                 };
             });

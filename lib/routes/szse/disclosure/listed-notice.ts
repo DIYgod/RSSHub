@@ -91,7 +91,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 language,
             };
 
-            const enclosureUrl: string | undefined = item.attachPath ? new URL(`download${item.attachPath}`, staticBaseUrl).href : undefined;
+            const enclosureUrl: string | undefined = new URL(`download${item.attachPath}`, staticBaseUrl).href;
 
             if (enclosureUrl) {
                 const enclosureType = `application/${item.attachFormat}`;

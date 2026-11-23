@@ -6,13 +6,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 12;
+    const limit = getRouteLimit(ctx, 12);
     const baseUrl = 'https://magazine.raspberrypi.com';
     const targetUrl = new URL('issues', baseUrl).href;
     const response = await ofetch(targetUrl);
@@ -48,11 +48,11 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const $ = load(response);
                 const article = $('main > section').first();
                 const title = $('meta[property="og:title"]').attr('content') ?? item.title;
-                const image = article.find('img').first().attr('src');
+                const image = article.find('img').attr('src');
                 const content = article.find('.markdown');
                 const gallery = article.find('a[href*="/storage/representations/"]').parent();
                 const description = renderDescription({
-                    images: image ? [{ src: image, alt: title ?? undefined }] : undefined,
+                    images: image ? [{ src: image, alt: title }] : undefined,
                     description: (content.html() ?? '') + (content.next('ul').prop('outerHTML') ?? '') + (gallery.html() ?? ''),
                 });
                 const date = article.find('time').attr('datetime');
@@ -78,7 +78,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     enclosure_url: enclosureUrl,
-                    enclosure_type: enclosureUrl ? 'application/pdf' : undefined,
+                    enclosure_type: 'application/pdf',
                 };
             });
             return { ...item, ...article };

@@ -55,14 +55,6 @@ const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                $$('ignore_js_op img, p img').each((_, el) => {
-                    const $el = $$(el);
-                    const imageUrl = $el.prop('file') || $el.prop('src');
-                    if (imageUrl) {
-                        $el.attr('src', imageUrl);
-                    }
-                });
-
                 item.title = $$('h1.ts, div.c-article-main_content-title').text();
                 item.description = renderDescription({
                     description: $$('td.t_f, div.c-article-main_contentraw').first().html() ?? undefined,

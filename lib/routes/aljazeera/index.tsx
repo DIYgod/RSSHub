@@ -128,7 +128,7 @@ export async function handler(ctx) {
 
     return {
         title: $('title').first().text(),
-        link: isRSS ? $('channel > link').text() || rootUrl : currentUrl,
+        link: isRSS ? $('channel > link').text() : currentUrl,
         language: (isRSS ? $('channel > language').text() : $('html').attr('lang')) as Language,
         item: items,
     };

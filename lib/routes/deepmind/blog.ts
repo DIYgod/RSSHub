@@ -35,29 +35,23 @@ export const route: Route = {
 
 async function handler() {
     const feed = await parser.parseURL('https://www.deepmind.com/blog/rss.xml');
-    const entries = [...feed.items];
-    const selected = entries;
 
     const items = await pMap(
-        selected,
+        feed.items,
         (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
-                const content = $('.article-container__content, #page-content').first();
+                const content = $('.article-container__content, #page-content');
                 content.append($('uni-footnotes').html() ?? '');
-                content.find('.section-cover, section:has(.news-group-section), .uni-blog-article-tags, script, style').remove();
-                content.find('video[poster]').each((_, video) => {
-                    const $video = $(video);
-                    $video.attr('poster', new URL($video.attr('poster')!, item.link).href);
-                });
+                content.find('.section-cover, section:has(.news-group-section), .uni-blog-article-tags, style').remove();
                 content.find('video source[data-src]').each((_, source) => {
                     const $source = $(source);
                     $source.attr('src', $source.attr('data-src'));
                     $source.removeAttr('data-src');
                 });
-                item.description = content.html() || $('.e_container .c_rich-text__cms').html();
+                item.description = content.html();
 
                 delete item.content;
                 delete item.contentSnippet;

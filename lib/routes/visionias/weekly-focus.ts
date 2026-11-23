@@ -28,17 +28,14 @@ export const route: Route = {
     handler,
 };
 async function handler(ctx): Promise<Data> {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit > 0 ? Math.max(1, Math.floor(requestedLimit)) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
     const response = await ofetch(`${baseUrl}/current-affairs/weekly-focus/archive`);
     const $ = load(response);
-    const cards = $('div.weekly-focus-single-card');
-    const articleLinks = cards.length ? cards.slice(0, limit).find('a:has(p)') : $('a[href^="/current-affairs/weekly-focus/20"]').slice(0, limit);
-    const individualLinks = articleLinks.toArray().flatMap((item) => {
-        const href = $(item).attr('href');
-        return href ? { link: new URL(href, baseUrl).href } : [];
-    });
-    const items = await pMap(individualLinks, ({ link }) => extractNews({ link }, 'main > div > div.flex > div.flex.w-full > div.w-full.mt-6'), { concurrency: 3, stopOnError: false });
+    const links = $('.space-y-4 a[href^="/current-affairs/weekly-focus/20"]')
+        .slice(0, limit)
+        .toArray()
+        .map((item) => `${baseUrl}${item.attribs.href}`);
+    const items = await pMap(links, (link) => extractNews(link), { concurrency: 3, stopOnError: false });
     return {
         title: 'Weekly Focus | Current Affairs | Vision IAS',
         link: `${baseUrl}/current-affairs/weekly-focus/archive`,

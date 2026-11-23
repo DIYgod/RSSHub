@@ -46,7 +46,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'description' | 
     const publishedAt = $('.article-date').text().trim();
     return {
         description: content.html()!.trim(),
-        ...(publishedAt && { pubDate: parseDate(publishedAt, 'YYYY年MM月DD日 HH:mm', 8) }),
+        pubDate: parseDate(publishedAt, 'YYYY年MM月DD日 HH:mm', 8),
     };
 }
 
@@ -69,7 +69,6 @@ async function handler(ctx: Context) {
             return {
                 link: new URL($elem.find('a').attr('href')!, link).href,
                 title: $elem.find('a').text(),
-                date: $elem.find('span').text(),
             };
         });
 
@@ -78,7 +77,6 @@ async function handler(ctx: Context) {
         async (info) => ({
             title: info.title,
             link: info.link,
-            pubDate: info.date.trim() ? parseDate(info.date, 8) : undefined,
             ...(await cache.tryGet(`swufe:seie:article:v3:${info.link}`, () => getArticle(info.link))),
         }),
         { concurrency: 3 }

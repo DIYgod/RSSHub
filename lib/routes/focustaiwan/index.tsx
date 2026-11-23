@@ -7,7 +7,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -51,24 +51,12 @@ async function handler(ctx) {
         },
     });
 
-    let list: DataItem[] = response.data.ResultData.Items.map((item) => {
-        const pubDate = item.CreateTime ? parseDate(item.CreateTime, 8) : undefined;
-        return {
-            title: item.HeadLine,
-            link: item.PageUrl,
-            category: item.ClassName,
-            pubDate,
-        };
-    });
-    const limit = getRouteLimit(ctx, 50);
-    const nativeOrder = ctx.req.query('sorted') === 'false';
-    const allDated = list.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (!nativeOrder && allDated) {
-        list = list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
-    }
-    if (nativeOrder || allDated) {
-        list = list.slice(0, limit);
-    }
+    const list: DataItem[] = response.data.ResultData.Items.slice(0, getRouteLimit(ctx, 50)).map((item) => ({
+        title: item.HeadLine,
+        link: item.PageUrl,
+        category: item.ClassName,
+        pubDate: parseDate(item.CreateTime, 8),
+    }));
 
     const items = await pMap(
         list,
@@ -112,7 +100,7 @@ async function handler(ctx) {
 
     return {
         title: response.data.ResultData.MetaData.Title,
-        link: response.data.ResultData.MetaData.CanonicalUrl || `${rootUrl}/${category}`,
+        link: response.data.ResultData.MetaData.CanonicalUrl,
         item: items,
         language: 'en' as const,
         itunes_author: 'Focus Taiwan',

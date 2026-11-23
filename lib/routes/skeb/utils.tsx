@@ -55,29 +55,12 @@ interface Creator {
     nc: number;
 }
 
-function getThumbnailUrl(thumbnail?: { src?: string; srcset?: string }): string {
-    let imageUrl = thumbnail?.src || '';
-    let largestSize = 0;
-    const candidates = thumbnail?.srcset?.split(',') || [];
-    for (const candidate of candidates) {
-        const [url, descriptor] = candidate.trim().split(/\s+/, 2);
-        const size = descriptor ? Number(descriptor.replace(/[wx]$/, '')) : 1;
-        if (!(url && Number.isFinite(size) && size > largestSize)) {
-            continue;
-        }
-
-        imageUrl = url;
-        largestSize = size;
-    }
-    return imageUrl;
-}
-
 export function processWork(work: Work): DataItem | null {
     if (!work || work.private) {
         return null;
     }
 
-    const imageUrl = getThumbnailUrl(work.thumbnail_image_urls);
+    const imageUrl = work.thumbnail_image_urls?.srcset?.split(',').pop()?.trim().split(' ', 1)[0] || '';
     const body = work.body || '';
 
     const audioUrl = work.genre === 'music' || work.genre === 'voice' ? work.preview_url : null;

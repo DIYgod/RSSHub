@@ -9,7 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
-import { compareDates, parseDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const handler = async (ctx: Context): Promise<Data> => {
@@ -29,6 +29,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.m_listpagebox ol li a')
+        .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -46,12 +47,6 @@ const handler = async (ctx: Context): Promise<Data> => {
 
             return processedItem;
         });
-
-    const datesKnown = items.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
-        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
-    }
-    items = items.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit));
 
     items = (
         await Promise.all(

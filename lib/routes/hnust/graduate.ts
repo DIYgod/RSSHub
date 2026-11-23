@@ -29,7 +29,7 @@ async function handler(ctx: Context) {
     if (!Object.hasOwn(map, type)) {
         throw new InvalidParameterError('Invalid type: expected sszs or bszs.');
     }
-    const base = 'https://graduate.hnust.edu.cn/zsgz/' + (Object.hasOwn(map, type) ? map[type] : map.sszs);
+    const base = 'https://graduate.hnust.edu.cn/zsgz/' + map[type];
     const link = `${base}index.htm`;
     const response = await ofetch(link);
     const $ = load(response);

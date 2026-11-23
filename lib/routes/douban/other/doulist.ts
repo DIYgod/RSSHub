@@ -67,22 +67,16 @@ async function handler(ctx) {
             }
 
             if (!link) {
-                const itemId = $(item).attr('id');
-                if (!itemId) {
-                    throw new Error('Douban returned a doulist entry without a source link or entry ID.');
-                }
-                link = `${url}#${encodeURIComponent(itemId)}`;
+                link = `${url}#${$(item).attr('id')}`;
                 title ||= $(item).find('div.bd').text();
                 description ||= $(item).find('div.bd').html() || '';
             }
-
-            const date = $(item).find('div.ft div.actions time').text();
 
             const single = {
                 title,
                 link,
                 description,
-                pubDate: date ? parseDate(date, 8) : undefined,
+                pubDate: parseDate($(item).find('div.ft div.actions time').text(), 8),
             };
             return single;
         });

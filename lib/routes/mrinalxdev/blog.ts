@@ -83,7 +83,7 @@ async function handler() {
                 $('nav').remove();
                 $('footer').remove();
                 $('a[href*="buymeacoffee"]').parent().remove();
-                $('script, style').remove();
+                $('style').remove();
                 $('body > h1').first().remove();
                 $('body > span.text-sm.text-gray-500').remove();
 

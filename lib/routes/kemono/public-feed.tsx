@@ -72,14 +72,14 @@ export function createPublicHandler(rootUrl: string, assetsUrl: string, name: st
             title: `${name} - ${mode === 'popular' ? `Popular posts (${period})` : mode === 'search' ? `Search: ${query}` : `${source}/${id} direct messages`}`,
             link,
             item: posts.slice(0, getRouteLimit(ctx, 25)).map((post) => {
-                const content = load(post.content ?? post.substring ?? '', null, false).html() ?? '';
+                const content = load(post.content ?? post.substring ?? '', null, false).html();
                 const postLink = mode === 'dms' ? `${rootUrl}/${post.service}/user/${post.user}/dms#${post.hash}` : `${rootUrl}/${post.service}/user/${post.user}/post/${post.id}`;
                 return {
                     title: post.title || (mode === 'dms' ? content : 'Untitled Post'),
                     link: postLink,
                     guid: `${name}:${post.service}:${post.user}:${mode === 'dms' ? `dm:${post.hash}` : `post:${post.id}`}`,
                     author: post.artist?.name,
-                    pubDate: post.published ? parseDate(post.published) : undefined,
+                    pubDate: parseDate(post.published),
                     description: renderToString(
                         <>
                             <div>{raw(content)}</div>

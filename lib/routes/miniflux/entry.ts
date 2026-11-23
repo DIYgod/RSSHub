@@ -133,7 +133,7 @@ async function handler(ctx) {
                 }
                 break;
             case 'limit':
-                if (Number.isSafeInteger(Number(option)) && Number(option) > 0 && !setLimit.length) {
+                if (/^[1-9]\d*$/.test(option) && !setLimit.length) {
                     limit = Number(option);
                     setLimit.push(1);
                 }
@@ -177,7 +177,7 @@ async function handler(ctx) {
     if (feeds !== 'all' && feeds !== 'default') {
         const feedsID: string = feeds.replaceAll(/feeds?=/g, '');
         const feedsList = [...new Set(feedsID.split('&'))];
-        if (feedsList.some((feed) => !/^[1-9]\d*$/.test(feed) || !Number.isSafeInteger(Number(feed)))) {
+        if (feedsList.some((feed) => !/^[1-9]\d*$/.test(feed))) {
             throw new InvalidParameterError('Feed IDs must be positive integers separated by &. Use all or default to get every feed.');
         }
 

@@ -1,7 +1,4 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import NotFoundError from '@/errors/types/not-found';
@@ -42,7 +39,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const errorMessage = copyNodes($('.alert_error'));
+    const errorMessage = $('.alert_error');
     errorMessage.find('script').remove();
     const sourceError = errorMessage.text().trim();
     if (sourceError) {
@@ -97,13 +94,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
 }

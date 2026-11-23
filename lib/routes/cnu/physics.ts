@@ -51,7 +51,7 @@ async function handler() {
             // Extract the title.
             const title = a.text().trim() || a.attr('title') || '';
 
-            // 从 onclick 属性中Extract the link.
+            // Extract the link from the onclick attribute.
             const onclick = a.attr('onclick') || '';
             const hrefMatch = onclick.match(/checkXnwk\(['"]([^'"]+)['"]/);
             const href = hrefMatch ? hrefMatch[1] : '';

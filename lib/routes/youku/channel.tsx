@@ -39,23 +39,7 @@ function parsePublicationDate(value: string) {
         return;
     }
     const [, year, month, day, hour = '0', minute = '0', second = '0'] = match;
-    const date = parseDateStrict(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', 8);
-    if (date) {
-        return date;
-    }
-}
-function resolveLink(value: string | undefined, baseUrl: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    try {
-        const url = new URL(value, baseUrl);
-        if (isOneOf(url.protocol, ['http:', 'https:'])) {
-            return url.href;
-        }
-    } catch {
-        return;
-    }
+    return parseDateStrict(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', 8);
 }
 function getProfileDescription($: CheerioAPI) {
     const script = $('script')
@@ -66,34 +50,18 @@ function getProfileDescription($: CheerioAPI) {
     if (!match) {
         return;
     }
-    try {
-        const initialData = JSON.parse(match[1]);
-        const description = initialData.data?.componentList?.find((component) => component.type === 'user')?.moduleList?.[0]?.data?.description;
-        if (typeof description === 'string') {
-            return description;
-        }
-    } catch {
-        return;
-    }
+    return JSON.parse(match[1]).data.componentList.find((component) => component.type === 'user').moduleList[0].data.description;
 }
 function getVideoCategory($: CheerioAPI) {
-    const objects = $('script[type="application/ld+json"]')
+    return $('script[type="application/ld+json"]')
         .toArray()
-        .flatMap((element) => {
-            try {
-                const data = JSON.parse($(element).text());
-                return Array.isArray(data) ? data : Array.isArray(data?.['@graph']) ? data['@graph'] : [data];
-            } catch {
-                return [];
-            }
-        });
-    const genre = objects.find((object) => object?.['@type'] === 'VideoObject')?.genre;
-    return typeof genre === 'string' && genre.trim() ? genre : undefined;
+        .flatMap((element) => JSON.parse($(element).text())['@graph'])
+        .find((object) => object['@type'] === 'VideoObject')?.genre;
 }
 function getVideoCaption($: CheerioAPI) {
-    const description = $('meta[name="description"]').attr('content');
-    const caption = description?.match(/视频内容简介[：:]([\s\S]*)$/)?.[1];
-    return caption?.trim() ? caption : undefined;
+    return $('meta[name="description"]')
+        .attr('content')
+        ?.match(/视频内容简介[：:]([\s\S]*)$/)?.[1];
 }
 async function handler(ctx): Promise<Data> {
     const channelId = ctx.req.param('channelId');
@@ -114,11 +82,12 @@ async function handler(ctx): Promise<Data> {
         const title = $item.find('a.videoitem_videolink').attr('title')!;
         const cover = $item.find('a.videoitem_videolink > img').attr('src');
         const $link = $item.find('a.videoitem_videolink');
-        const link = resolveLink($link.attr('href'), `https://i.youku.com/i/${channelId}/videos`);
+        const href = $link.attr('href');
         const publicationDateText = $item.find('p.videoitem_subtitle').text();
-        if (!link) {
+        if (!href) {
             return [];
         }
+        const link = new URL(href, 'https://i.youku.com').href;
         const description = embed
             ? renderToString(<iframe height={498} width={510} src={`https://player.youku.com/embed/${path.parse(new URL(link).pathname).name.replaceAll(/^id_/g, '')}`} frameBorder="0" allowFullScreen />)
             : cover
@@ -132,9 +101,9 @@ async function handler(ctx): Promise<Data> {
         };
     });
     return {
-        title: $('.userinfo_usernickname').text() || $('.username').text(),
+        title: $('.userinfo_usernickname').text(),
         link: `https://i.youku.com/i/${channelId}`,
-        description: getProfileDescription($) || $('.desc').text(),
+        description: getProfileDescription($),
         item: await pMap(
             items,
             async ({ publicationDateText, ...item }) => {
@@ -153,8 +122,4 @@ async function handler(ctx): Promise<Data> {
             { concurrency: 3, stopOnError: false }
         ),
     };
-}
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

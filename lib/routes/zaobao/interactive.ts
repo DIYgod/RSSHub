@@ -25,7 +25,7 @@ async function handler() {
         link: new URL(i.href, baseUrl).href,
         pubDate: parseDate(i.timestamp, 'X'),
         image: i.thumbnail,
-        category: i.category_label ? [i.category_label] : undefined,
+        category: [i.category_label],
     }));
 
     return {

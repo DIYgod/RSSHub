@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
@@ -22,8 +23,7 @@ const readContentPage = async (context: BrowserContext, url: string): Promise<st
 };
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'https://www.perplexity.ai';
     const targetUrl = `${baseUrl}/changelog`;

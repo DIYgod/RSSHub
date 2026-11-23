@@ -62,13 +62,10 @@ async function handler(ctx: Context) {
     const items = await pMap(
         list,
         async (item) => {
-            if (!item.link?.startsWith(`${host}/`)) {
-                return item;
-            }
             const description = await cache.tryGet(`guat:article:${item.link}`, async () => {
                 const article = await ofetch<string>(item.link!);
                 const $ = load(article);
-                return $('.v_news_content').html() ?? undefined;
+                return $('.v_news_content').html();
             });
             return { ...item, summary: item.description ?? undefined, description };
         },

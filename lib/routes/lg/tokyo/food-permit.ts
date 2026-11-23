@@ -78,10 +78,7 @@ const pick = (row: Row, cols: readonly string[]): string | null => {
     return null;
 };
 
-const toNumber = (v: string | null): number | null => {
-    const n = v === null ? NaN : Number(v);
-    return Number.isFinite(n) ? n : null;
-};
+const toNumber = (v: string | null): number | null => (v === null ? null : Number(v));
 
 /** 渋谷区 stores dates as text (`2026/8/7`), so the current and previous month (JST) are selected with LIKE and sorted locally. */
 const shibuyaQueryUrl = (now: Temporal.Instant): string => {

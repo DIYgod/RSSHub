@@ -10,9 +10,6 @@ type HardwareCatalog = {
 };
 
 function getDevice(catalog: HardwareCatalog, devicePage: string) {
-    if (!catalog || typeof catalog !== 'object' || !Array.isArray(catalog.columns) || !Array.isArray(catalog.entries) || !catalog.entries.length) {
-        throw new Error('OpenWrt did not provide its hardware catalog. Check whether the official ToH JSON endpoint is accessible.');
-    }
     const devicePageIndex = catalog.columns.indexOf('devicepage');
     const entries = catalog.entries.filter((entry) => entry[devicePageIndex] === devicePage);
     const values = (column: string) => {
@@ -58,11 +55,7 @@ async function handler(ctx) {
     const model = ctx.req.param('model');
     const url = `https://openwrt.org/toh/${brand}/${model}`;
     const devicePage = `toh:${brand}:${model}`;
-    const catalog = await cache.tryGet('openwrt:hardware-catalog:v1', async () => {
-        const data = await ofetch<HardwareCatalog>('https://openwrt.org/toh.json');
-        getDevice(data, devicePage);
-        return data;
-    });
+    const catalog = await cache.tryGet('openwrt:hardware-catalog:v1', () => ofetch<HardwareCatalog>('https://openwrt.org/toh.json'));
     const device = getDevice(catalog, devicePage);
 
     return {

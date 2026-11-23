@@ -51,7 +51,7 @@ async function handler() {
                 link: item.link,
                 guid: item.id,
                 description: item.content,
-                author: item.author || item.creator,
+                author: item.author,
                 pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
             };
         }),

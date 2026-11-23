@@ -69,10 +69,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 content('.v_news_content script[vurl]').each((_, element) => {
-                    const videoUrl = content(element).attr('vurl');
-                    if (videoUrl) {
-                        content(element).replaceWith(content('<video controls></video>').attr('src', new URL(videoUrl, item.link).href));
-                    }
+                    content(element).replaceWith(content('<video controls></video>').attr('src', element.attribs.vurl));
                 });
                 item.description = content('.v_news_content').html();
 

@@ -1,7 +1,5 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -11,6 +9,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 type ContentElement = {
@@ -27,8 +26,8 @@ type Story = {
     headlines: {
         basic: string;
     };
-    content_elements?: ContentElement[];
-    publish_date?: number | string;
+    content_elements: ContentElement[];
+    publish_date: number | string;
     website_url: string;
     taxonomy?: {
         primary_section?: {
@@ -40,12 +39,12 @@ type Story = {
             name: string;
         }>;
     };
-    promo_items?: {
-        basic?: {
-            url?: string;
+    promo_items: {
+        basic: {
+            url: string;
         };
     };
-    last_updated_date?: number | string;
+    last_updated_date: number | string;
 };
 function renderDescription(elements: ContentElement[] | undefined, title: string): Pick<DataItem, 'description' | 'content'> {
     const html = renderToString(
@@ -76,23 +75,18 @@ function renderDescription(elements: ContentElement[] | undefined, title: string
 export async function fetchEmbeddedStory(url: string): Promise<Pick<DataItem, 'description' | 'content'>> {
     const response = await ofetch(url);
     const $ = load(response);
-    const article = $('article').first();
+    const article = $('article');
     if (!article.length) {
         throw new Error(`Wainao embedded story has no article: ${url}`);
     }
-    const hero = copyContent(
+    article.prepend(
         article
             .children('header')
             .find('img[src]')
             .filter((_, element) => !$(element).attr('src')?.startsWith('data:'))
-            .first(),
-        $
     );
     article.children('header').remove();
     article.find('#StandardFooter, script, style').remove();
-    if (hero.length) {
-        article.prepend(hero);
-    }
     article.find('img, video, source, iframe').each((_, element) => {
         const media = $(element);
         const src = media.attr('data-src') || media.attr('src');
@@ -113,22 +107,12 @@ export async function fetchEmbeddedStory(url: string): Promise<Pick<DataItem, 'd
     });
     article.find('[class]').removeAttr('class');
     article.find('[style]').removeAttr('style');
-    const description = article.html() || undefined;
+    const description = article.html();
     return { description, content: { html: description, text: article.text() } };
-}
-function parseSourceTime(value?: string | number) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-function parseLimit(value: string | undefined, defaultLimit: number) {
-    const limit = Number(value);
-    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
 }
 const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hotspot' } = ctx.req.param();
-    const limit = parseLimit(ctx.req.query('limit'), 30);
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = 'https://www.wainao.me';
     const targetUrl: string = new URL(`topics/${id}`, baseUrl).href;
     const apiUrl: string = new URL('pf/api/v3/content/fetch/story-feed-sections', baseUrl).href;
@@ -151,23 +135,22 @@ const handler = async (ctx: Context): Promise<Data> => {
         response.content_elements.slice(0, limit),
         async (item): Promise<DataItem> => {
             const title: string = item.headlines.basic;
-            const embedded = item.content_elements?.find((element) => element.type === 'custom_embed');
+            const embedded = item.content_elements.find((element) => element.type === 'custom_embed');
             const embeddedUrl = embedded?.embed?.config?.shorthandScript || embedded?.embed?.config?.url;
             const details = embeddedUrl ? await cache.tryGet<Pick<DataItem, 'description' | 'content'>>(`wainao:embedded-story:${embeddedUrl}`, () => fetchEmbeddedStory(embeddedUrl)) : renderDescription(item.content_elements, title);
             const pubDate = item.publish_date;
             const linkUrl: string | undefined = item.website_url;
             const categories = [item.taxonomy?.primary_section?.name].filter((category): category is string => Boolean(category));
-            const authors: DataItem['author'] =
-                item.credits?.by?.map((author) => ({
-                    name: author.name,
-                })) ?? [];
+            const authors: DataItem['author'] = item.credits?.by?.map((author) => ({
+                name: author.name,
+            }));
             const guid: string = item.website_url;
-            const image = item.promo_items?.basic?.url;
+            const image = item.promo_items.basic.url;
             const updated = item.last_updated_date;
             const processedItem: DataItem = {
                 title,
                 ...details,
-                pubDate: parseSourceTime(pubDate),
+                pubDate: parseDate(pubDate),
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
@@ -175,7 +158,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 id: guid,
                 image,
                 banner: image,
-                updated: parseSourceTime(updated),
+                updated: parseDate(updated),
                 language,
             };
             return processedItem;
@@ -313,11 +296,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
-}

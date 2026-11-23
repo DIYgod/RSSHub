@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const parseSourceDate = (value?: string | number) => {
     if (value === undefined || value === '') {
@@ -17,8 +17,8 @@ export const parseSourceDate = (value?: string | number) => {
 const defaultRssItem = (item) => ({
     title: item.name,
     link: item.link || `https://m.thepaper.cn/${item.cornerLabelDesc === '短剧' ? 'series/' : 'newsDetail_forward_'}${item.contId}`,
-    pubDate: parseSourceDate(item.pubTimeLong) ?? parseSourceDate(item.publishTime),
-    author: item.author || item.authorInfo?.sname || item.trackAuthor || undefined,
+    pubDate: parseDate(item.pubTimeLong),
+    author: item.authorInfo?.sname || item.trackAuthor,
     category: [...(item.tagList?.map((tag) => tag.tag) ?? []), ...(item.nodeInfo?.name ? [item.nodeInfo.name] : [])],
     media: {
         content: {
@@ -45,7 +45,7 @@ async function processItem(item, ctx) {
         return defaultRssItem(item);
     }
     let description = contentDetail.content || contentDetail.summary || contentDetail.desc || '';
-    if (contentDetail.videos && contentDetail.summary && description !== contentDetail.summary) {
+    if (contentDetail.videos) {
         description += contentDetail.summary;
     }
     if (useOldMode) {
@@ -56,20 +56,13 @@ async function processItem(item, ctx) {
             description = renderToString(<ThepaperImageDetail images={contentDetail.images} />) + description;
         }
     }
-    let pubDate = parseSourceDate(item.pubTimeLong) ?? parseSourceDate(contentDetail.publishTime);
-    if (!pubDate && contentDetail.pubTime) {
-        pubDate = parseRelativeDate(contentDetail.pubTime);
-        if (!pubDate) {
-            pubDate = undefined;
-        }
-    }
     const rssItem: DataItem = {
         title: contentDetail.name || contentDetail.shareName,
         link: itemUrl,
         description,
         category: [...(contentDetail.tagList?.map((t) => t.tag) ?? []), ...(contentDetail.nodeInfo?.name ? [contentDetail.nodeInfo.name] : [])],
-        pubDate,
-        author: contentDetail.author || item.author || item.authorInfo?.sname || item.trackAuthor || undefined,
+        pubDate: parseDate(item.pubTimeLong),
+        author: contentDetail.author || item.authorInfo?.sname || item.trackAuthor,
         media: {
             content: {
                 url: item.pic || contentDetail.videos?.coverUrl || contentDetail.bigPic,
@@ -80,7 +73,7 @@ async function processItem(item, ctx) {
         },
     };
     const voiceInfo = contentDetail.voiceInfo;
-    if ([true, 1, '1'].includes(voiceInfo?.isHaveVoice) && /^https?:\/\/\S+\.mp3(?:[?#]|$)/i.test(voiceInfo?.voiceSrc ?? '')) {
+    if (voiceInfo?.isHaveVoice) {
         rssItem.enclosure_type = 'audio/mpeg';
         rssItem.enclosure_url = voiceInfo.voiceSrc;
         rssItem.itunes_item_image = item.pic || contentDetail.videos?.coverUrl;
@@ -91,10 +84,7 @@ export default {
     ProcessItem: processItem,
     ChannelIdToName: (nodeId, nextData) => nextData.props.appProps.menu.channelList.find((c) => c.nodeId.toString() === nodeId.toString()).name,
     ListIdToName: (listId, nextData) => nextData.props.appProps.menu.channelList.flatMap((c) => c.childNodeList || []).find((l) => l.nodeId.toString() === listId.toString())?.name,
-    ExtractLogo: ($: CheerioAPI) => {
-        const source = $('img.imageCover').attr('src');
-        return source ? new URL(source, 'https://m.thepaper.cn').href : undefined;
-    },
+    ExtractLogo: ($: CheerioAPI) => 'https://m.thepaper.cn' + $('img.imageCover').attr('src'),
 };
 const ThepaperVideoDetail = ({
     videos,

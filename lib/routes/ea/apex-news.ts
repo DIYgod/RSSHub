@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -57,9 +58,7 @@ function renderBody(body: string) {
             if (!id || !/^[\w-]{11}$/.test(id)) {
                 return;
             }
-            media = $('<iframe allowfullscreen></iframe>')
-                .attr('src', `https://www.youtube.com/embed/${id}`)
-                .attr('title', $image.attr('alt') ?? '');
+            media = renderYoutube(true, id);
         } else {
             return;
         }
@@ -77,18 +76,11 @@ interface NewsArticle {
     title: string;
     summary: string;
     slug: string;
-    publishingDate?: string;
-}
-
-function getPublishingDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value);
+    publishingDate: string;
 }
 
 async function getPageData<T>(url: string): Promise<T> {
-    const response = await ofetch(url, { responseType: 'text' });
+    const response = await ofetch(url);
     const data = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1];
     if (!data) {
         throw new Error('The EA page no longer contains its public news data. Please check the original page.');
@@ -117,17 +109,14 @@ async function handler(ctx): Promise<Data> {
             title: item.title,
             description: item.summary,
             link: `${rootUrl}/${item.slug}`,
-            pubDate: getPublishingDate(item.publishingDate),
+            pubDate: parseDate(item.publishingDate),
             slug: item.slug,
         }));
-    const sorted = ctx.req.query('sorted') !== 'false';
-    const hasDates = allItems.every((item) => item.pubDate !== undefined);
-    if (sorted && hasDates) {
+    if (ctx.req.query('sorted') !== 'false') {
         allItems.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    const limit = getRouteLimit(ctx);
     const items = await pMap(
-        limit && (!sorted || hasDates) ? allItems.slice(0, limit) : allItems,
+        allItems.slice(0, getRouteLimit(ctx)),
         (item) =>
             cache.tryGet(item.link ?? '', async () => {
                 const { articleDetailsFallback: article } = await getPageData<{ articleDetailsFallback: NewsArticle & { body: string } }>(item.link!);

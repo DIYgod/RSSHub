@@ -42,12 +42,12 @@ export const route: Route = {
 };
 
 const getUserProfile = (profile, user) =>
-    cache.tryGet<{ displayName: string; id: string; link: string; image?: string }>(`behance:profile:${user}`, () =>
+    cache.tryGet<{ displayName: string; id: string; link: string; image: string }>(`behance:profile:${user}`, () =>
         Promise.resolve({
             displayName: profile.displayName,
             id: profile.id,
             link: profile.url,
-            image: profile.images?.size_50?.url?.replace('/user/50/', '/user/source/'),
+            image: profile.images.size_50.url.replace('/user/50/', '/user/source/'),
         })
     );
 

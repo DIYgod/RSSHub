@@ -34,17 +34,14 @@ async function handler(ctx: Context): Promise<Data> {
     const { appid, feature, topicId } = ctx.req.param();
     const currentUrl = `${steamCommunityUrl}/app/${appid}/discussions/${feature}/${topicId}/`;
     const firstPage = parseDiscussionTopicPage(await fetchSteamDiscussionPage(currentUrl), currentUrl);
-    const items = [firstPage.originalPost, ...firstPage.replies];
 
     const lastPageNumber = Math.ceil(firstPage.replyCount / 15);
-    if (lastPageNumber > 1) {
-        const lastPage = parseDiscussionTopicPage(await fetchSteamDiscussionPage(`${currentUrl}?ctp=${lastPageNumber}`), currentUrl);
-        items.push(...lastPage.replies);
-    }
+    const lastPageHtml = lastPageNumber > 1 ? await fetchSteamDiscussionPage(`${currentUrl}?ctp=${lastPageNumber}`) : undefined;
+    const lastPageReplies = lastPageHtml === undefined ? [] : parseDiscussionTopicPage(lastPageHtml, currentUrl).replies;
 
     return {
         title: `${firstPage.title} - ${firstPage.appName}`,
         link: currentUrl,
-        item: items,
+        item: [firstPage.originalPost, ...firstPage.replies, ...lastPageReplies],
     };
 }

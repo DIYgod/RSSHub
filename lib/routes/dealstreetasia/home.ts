@@ -65,7 +65,7 @@ async function fetchPage(): Promise<Data> {
     }));
     const seenLinks = new Set<string>();
     const items = list.filter((item) => {
-        if (!item.link || seenLinks.has(item.link)) {
+        if (seenLinks.has(item.link)) {
             return false;
         }
         seenLinks.add(item.link);

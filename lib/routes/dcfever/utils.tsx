@@ -8,12 +8,7 @@ import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://www.dcfever.com';
 
-const parseTradeDate = (value: string) => {
-    if (!value) {
-        return;
-    }
-    return /^\d{4}-\d{2}-\d{2}/.test(value) ? parseDate(value, 8) : parseRelativeDate(value.replaceAll('小時', '小时'));
-};
+const parseTradeDate = (value: string) => (/^\d{4}-\d{2}-\d{2}/.test(value) ? parseDate(value, 8) : parseRelativeDate(value.replaceAll('小時', '小时')));
 
 const renderTradeDescription = (info, description, photo, details) =>
     renderToString(
@@ -42,12 +37,9 @@ const parseItem = (item) =>
         const $ = load(response);
         const content = $('div[itemprop="articleBody"], .column_article_content_html');
         const authorLine = content.find('p').first();
-        const authorMatch = authorLine
-            .text()
-            .trim()
-            .match(/^文(?:、攝影)?[：:](.+)$/);
+        const authorMatch = authorLine.text().match(/^文(?:、攝影)?[：:](.+)$/);
         if (authorMatch) {
-            item.author = authorMatch[1].trim();
+            item.author = authorMatch[1];
             authorLine.remove();
         }
 

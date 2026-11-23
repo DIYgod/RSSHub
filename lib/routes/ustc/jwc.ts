@@ -1,4 +1,3 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -50,12 +49,12 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const child = $(element).children();
-            const published = $(element).find('.date').text().trim();
+
             const href = type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href');
             const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: href ? new URL(href, noticeUrl).href : undefined,
-                pubDate: published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD', 8),
             };
             return info;
         });
@@ -66,9 +65,11 @@ async function handler(ctx) {
                 const details: Pick<DataItem, 'description' | 'pubDate' | 'author' | 'category' | 'updated'> = {};
                 const response = await got(item.link);
                 const $ = load(response.data);
-                const modified = $('li.meta-last-modified').text().trim();
+                const modified = $('li.meta-last-modified').text();
                 details.updated = modified ? parseDate(modified, 'YYYY-MM-DD HH:mm', 8) : undefined;
-                const categories = mapElements($('li.meta-categories a'), (_, element) => $(element).text());
+                const categories = $('li.meta-categories a')
+                    .toArray()
+                    .map((element) => $(element).text());
                 details.category = categories.length ? categories : undefined;
                 // www.teach ?? pms.cmet ?? news
                 const content = $('main[class=single]');
@@ -94,7 +95,4 @@ async function handler(ctx) {
         link: `${noticeUrl}${type === '' ? '' : '-' + type}`,
         item: items,
     };
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }

@@ -48,9 +48,8 @@ async function handler() {
             };
         });
 
-    const articles = list;
     const items = await Promise.all(
-        articles.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 let $ = load(response);

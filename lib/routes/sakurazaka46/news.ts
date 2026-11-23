@@ -47,12 +47,11 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('.date').text();
 
             return {
                 title: $item.find('.lead').text(),
                 link: `${rootUrl}${$item.attr('href')!.split('?', 1)[0]}`,
-                pubDate: date ? parseDate(`${date.replaceAll('.', '-')}T00:00:00Z`) : undefined,
+                pubDate: parseDate(`${$item.find('.date').text().replaceAll('.', '-')}T00:00:00Z`),
             };
         });
 

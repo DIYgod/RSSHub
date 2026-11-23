@@ -37,12 +37,7 @@ export const route: Route = {
 
 const baseUrl = 'https://ekantipur.com';
 
-const parseArticleDate = (date?: string) => {
-    if (!date) {
-        return;
-    }
-    return /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(date) ? parseDate(date, 5.75) : parseDate(date);
-};
+const parseArticleDate = (date?: string) => (date ? parseDate(date, 5.75) : undefined);
 
 async function handler(ctx) {
     const { channel = 'news' } = ctx.req.param();
@@ -61,15 +56,12 @@ async function handler(ctx) {
             hdnLN: '',
         }),
     });
-    if (typeof response.html !== 'string') {
-        throw new TypeError('The official category API did not provide its first-page news list.');
-    }
     const $ = load(response.html);
     const list = $('.category-description, article.op-essay .info')
         .toArray()
         .map((element): DataItem & { link: string } => {
             const content = $(element);
-            const anchor = content.find('h2 a, h3 a').first();
+            const anchor = content.find('h2 a, h3 a');
             return {
                 title: anchor.text(),
                 link: new URL(anchor.attr('href')!, baseUrl).href,
@@ -83,16 +75,13 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch<string>(item.link);
                 const $ = load(response);
-                const metadata = $('script[type="application/ld+json"]')
-                    .toArray()
-                    .flatMap((element) => JSON.parse($(element).text()))
-                    .find((data) => data['@type'] === 'NewsArticle');
+                const metadata = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
                 const content = $('.news-section-wrap-story .news-inner-wrapper').first();
-                const cover = $('.image-section-wrap figure').first();
+                const cover = $('.image-section-wrap figure');
                 if (!content.length && !cover.length) {
                     throw new Error('The official article page did not provide its main content.');
                 }
-                content.find('.saman-samachar, .saman-news-wrapper, script, style').remove();
+                content.find('.saman-samachar, .saman-news-wrapper, style').remove();
                 content
                     .add(cover)
                     .find('img[data-src]')
@@ -103,11 +92,10 @@ async function handler(ctx) {
                 const tags = $('.news-section-wrap-story a[href*="/tag/"]')
                     .toArray()
                     .map((element) => $(element).text());
-                const authors = metadata?.author ? (Array.isArray(metadata.author) ? metadata.author : [metadata.author]) : [];
                 return {
                     ...item,
                     title: metadata?.headline || item.title,
-                    author: authors.map((author) => author.name).join(' / ') || item.author,
+                    author: metadata?.author?.name || item.author,
                     description: (cover.length ? $.html(cover) : '') + (content.html() || ''),
                     pubDate: parseArticleDate(metadata?.datePublished),
                     updated: parseArticleDate(metadata?.dateModified),

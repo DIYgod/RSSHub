@@ -41,7 +41,7 @@ type CurrentPost = {
     publishTimestamp: number;
     tags: Array<{ name: string }>;
 };
-type CurrentPostDetail = { content: string; author?: { nickname: string } };
+type CurrentPostDetail = { content: string; author: { nickname: string } };
 
 async function handler(ctx) {
     const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 25)) });
@@ -52,7 +52,7 @@ async function handler(ctx) {
             const link = `${rootUrl}/post/${item.id}`;
             const detail = await cache.tryGet(link + ':body', async () => {
                 const response = await ofetch<{ data: CurrentPostDetail }>(`https://web-api.odaily.news/post/detail/${item.id}`);
-                return { description: response.data.content, author: response.data.author?.nickname };
+                return { description: response.data.content, author: response.data.author.nickname };
             });
             return { title: item.title, link, pubDate: parseDate(item.publishTimestamp), category: item.tags.map((tag) => tag.name), ...detail };
         },

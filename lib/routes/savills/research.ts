@@ -3,7 +3,8 @@ import { escapeAttribute } from 'entities';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const sites = {
@@ -18,7 +19,6 @@ export const route: Route = {
     name: '市场研究',
     categories: ['finance'],
     maintainers: ['DIYgod'],
-    features: { requirePuppeteer: true },
     parameters: { site: 'cn：中国简体中文（默认）；hk：香港英文；hk-tc：香港繁体中文。' },
     description: '返回官网最新研究报告的摘要，以及源站提供的 PDF 附件。英文中国站目前返回错误页面；香港英文站也会发布亚太区域研究。',
     radar: [
@@ -31,46 +31,31 @@ export const route: Route = {
 
 async function handler(ctx) {
     const site = ctx.req.param('site') ?? 'cn';
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
     if (!Object.hasOwn(sites, site)) {
         throw new InvalidParameterError('Choose cn, hk or hk-tc.');
     }
     const config = sites[site as keyof typeof sites];
     const baseUrl = `https://${config.host}`;
     const link = `${baseUrl}/insight-and-opinion/research.aspx?rc=${config.region}&p=&t=&f=date&q=&page=1`;
-    const { page, destroy } = await getPlaywrightPage(link, {
-        closeTimeout: 0,
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
-        },
-    });
-    let response;
-    try {
-        await page.waitForSelector('#ListingContainer');
-        response = await page.content();
-    } finally {
-        await destroy();
-    }
+    const response = await ofetch(link);
     const $ = load(response);
     const item = $('#ListingContainer article')
         .toArray()
-        .slice(0, limit)
+        .slice(0, getRouteLimit(ctx, 10))
         .map((element) => {
             const card = $(element);
-            const title = card.find('h3 a').first();
-            const image = card.find('img[data-src]').first().attr('data-src');
-            const pdf = card.find('.sv-card__download-link[href]').first().attr('href');
-            const date = card.find('time').attr('datetime');
+            const title = card.find('h3 a');
+            const image = card.find('img[data-src]').attr('data-src');
+            const pdf = card.find('.sv-card__download-link[href]').attr('href');
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: date ? (/^\d{4}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YYYY-MM-DD', 8) : parseDate(date)) : undefined,
+                pubDate: parseDate(card.find('time').attr('datetime')!, 'YYYY-MM-DD', 8),
                 category: card
                     .find('.sv-card-meta__data, .sv-tag')
                     .toArray()
                     .map((tag) => $(tag).attr('title') || $(tag).text()),
-                description: `${image ? `<img src="${escapeAttribute(new URL(image, baseUrl).href)}">` : ''}${card.find('.sv-card-intro').prop('outerHTML') || ''}`,
+                description: `${image ? `<img src="${escapeAttribute(image)}">` : ''}${card.find('.sv-card-intro').prop('outerHTML') || ''}`,
                 enclosure_url: pdf ? new URL(pdf, baseUrl).href : undefined,
                 enclosure_type: pdf ? 'application/pdf' : undefined,
             };

@@ -60,11 +60,10 @@ async function handler() {
                     url: item.link,
                 });
                 const content = load(detailResponse.data);
-                const published = content('.attr .time').text().trim();
-                const pubDate = published ? parseDate(published, 'YYYY/M/D H:mm:ss', 8) : undefined;
+                const published = content('.attr .time').text();
                 return {
-                    description: content('.subject-content').html() || undefined,
-                    pubDate,
+                    description: content('.subject-content').html(),
+                    pubDate: parseDate(published, 'YYYY/M/D H:mm:ss', 8),
                 };
             });
             return { ...item, ...details, description: details.description || item.description };

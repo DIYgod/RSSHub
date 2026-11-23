@@ -54,7 +54,7 @@ async function handler(): Promise<Data> {
                     link,
                     description: detail.content,
                     author: detail.author,
-                    pubDate: detail.date ? parseDate(detail.date, 'YYYY-MM-DD HH:mm:ss', 7) : undefined,
+                    pubDate: parseDate(detail.date, 'YYYY-MM-DD HH:mm:ss', 7),
                 };
             });
         },

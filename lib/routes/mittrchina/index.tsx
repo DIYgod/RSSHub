@@ -112,7 +112,7 @@ async function handler(ctx) {
                     ...item,
                     description: details.content,
                     author: item.author || details.authors.map((author) => author.username).join(', '),
-                    pubDate: item.pubDate || (details.start_time ? parseDate(details.start_time, 'X') : undefined),
+                    pubDate: item.pubDate || parseDate(details.start_time, 'X'),
                     ...(details.cover && {
                         enclosure_url: details.cover,
                         enclosure_type: getMimeType(new URL(details.cover, 'https://www.mittrchina.com').pathname),

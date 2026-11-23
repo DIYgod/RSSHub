@@ -70,12 +70,10 @@ async function handler(ctx: any) {
             const title = linkEl.text();
             const link = new URL(linkEl.attr('href')!, url).href;
 
-            const date = dateStr.match(/\d{4}-\d{1,2}-\d{1,2}/)?.[0];
-
             return {
                 title,
                 link,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(dateStr, 'YYYY-MM-DD', 8),
             };
         }),
     };

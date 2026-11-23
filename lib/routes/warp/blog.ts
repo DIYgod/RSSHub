@@ -1,7 +1,4 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
 import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -9,7 +6,6 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
-import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -37,12 +33,6 @@ export const route: Route = {
     description: 'Provides a better reading experience (full articles) over the official ones.',
     view: ViewType.Notifications,
 };
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
 async function handler() {
     const feed = await parser.parseURL('https://www.warp.dev/blog/feed.xml');
     if (!feed.title) {
@@ -55,33 +45,26 @@ async function handler() {
             if (!link || !title) {
                 throw new Error('Warp blog feed item has no link or title');
             }
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'pubDate'>>(`warp:detail-with-metadata:${link}`, async () => {
+            const { description } = await cache.tryGet<Pick<DataItem, 'description'>>(`warp:detail-with-metadata:${link}`, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
-                const article = $('main article').first();
-                const authors = mapElements(article.children('header').find('[data-sanity*="path=authors"] span:not([aria-hidden])'), (_, element) => $(element).text());
-                const main = article.children('div').first();
-                if (!main.length) {
-                    throw new Error(`Warp blog article has no body: ${link}`);
-                }
-                const hero = article.children('header').children('[class*="aspect-"]').find('img').first();
-                if (hero.length) {
-                    main.prepend(copyContent(hero, $));
-                }
+                const article = $('main article');
+                const main = article.children('div');
+                main.prepend(article.children('header').children('[class^="aspect-"]').find('img'));
                 // clean HTML
                 main.find('style').remove();
                 main.find('[style]').removeAttr('style');
                 main.find('[class]').removeAttr('class');
                 main.find('[id]').removeAttr('id');
                 main.find('[preload]').removeAttr('preload');
-                return { description: main.html(), author: authors.length ? authors.join(', ') : undefined, pubDate: parseSourceTime(article.children('header').find('time[datetime]').first().attr('datetime')) };
+                return { description: main.html() };
             });
             return {
                 title,
                 link,
-                ...details,
-                pubDate: parseSourceTime(item.pubDate) ?? details.pubDate,
-                author: item.creator || details.author,
+                description,
+                pubDate: item.pubDate,
+                author: item.creator,
                 category: item.categories,
             };
         },
@@ -94,15 +77,4 @@ async function handler() {
         item: items,
         language: 'en',
     } satisfies Data;
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
-}
-function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
-    const nodes = selection.toArray().map((node) => cloneNode(node, true));
-    const root = new Document(nodes);
-    for (const node of nodes) {
-        node.parent = root;
-    }
-    return $(nodes);
 }

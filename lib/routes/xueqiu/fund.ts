@@ -57,7 +57,7 @@ async function handler(ctx) {
         description,
         pubDate: parseDate(end_date, 8),
         link: appUrl,
-        guid: end_date ? `${appUrl}#${end_date}` : undefined,
+        guid: `${appUrl}#${end_date}`,
     };
 
     return {

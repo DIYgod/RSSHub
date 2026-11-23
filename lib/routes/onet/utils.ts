@@ -1,14 +1,14 @@
 import { renderImage } from './templates/image';
 
 const parseMainImage = ($) => {
-    const mainImage = $('figure.mainPhoto, article[data-section="article-lead"] .ods-o-article-photo').first();
-    const img = mainImage.find('img').first();
+    const mainImage = $('figure.mainPhoto, article[data-section="article-lead"] .ods-o-article-photo');
+    const img = mainImage.find('img');
     const url = img.attr('src');
     if (!url) {
         return '';
     }
-    const author = mainImage.find('span.copyright, .ods-a-source-photo').first();
-    const caption = mainImage.find('span.imageDescription, .ods-o-article-photo__caption .ods-a-caption').first();
+    const author = mainImage.find('span.copyright, .ods-a-source-photo');
+    const caption = mainImage.find('span.imageDescription, .ods-o-article-photo__caption .ods-a-caption');
 
     return renderImage({
         url,
@@ -19,7 +19,7 @@ const parseMainImage = ($) => {
 };
 
 const parseArticleContent = ($) => {
-    const content = $('[itemprop="articleBody"], article[data-section="article-body"]').first();
+    const content = $('[itemprop="articleBody"], article[data-section="article-body"]');
     $('*')
         .contents()
         .filter((_, el) => el.nodeType === 8)

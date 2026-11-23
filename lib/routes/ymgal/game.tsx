@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ymgal.games';
 
@@ -49,14 +49,14 @@ async function handler() {
         list &&
         list.map((item) => {
             const $item = $(item);
-            const itemPicUrl = $item.find('.lazy').first().attr('data-original');
+            const itemPicUrl = $item.find('.lazy').attr('data-original');
             const tags = $item.find('.tag-info-list').children();
             const tagInfo = tags.toArray().map((elem) => ({ text: $(elem).text(), date: getReleaseDate($(elem).text()) }));
             return {
                 title: $item.attr('title')!,
                 link: `${host}${$item.attr('href')}`,
                 description: renderDescription(itemPicUrl),
-                category: tagInfo.filter((tag) => !tag.date && tag.text.trim()).map((tag) => tag.text),
+                category: tagInfo.filter((tag) => !tag.date).map((tag) => tag.text),
                 pubDate: tagInfo.find((tag) => tag.date)?.date,
             };
         });
@@ -79,7 +79,7 @@ const renderDescription = (itemPicUrl: string | undefined): string =>
 
 function getReleaseDate(value: string): Temporal.Instant | undefined {
     const date = /^(\d{4}-\d{2}-\d{2})发行$/.exec(value)?.[1];
-    if (!date || !parseDateStrict(date, 'YYYY-MM-DD')) {
+    if (!date) {
         return;
     }
     // The source provides a calendar day; midnight only serializes that day.

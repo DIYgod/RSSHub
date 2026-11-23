@@ -52,7 +52,7 @@ const handler = async (ctx) => {
         });
 
     // Detail dates can replace list dates, so retain the default candidate pool before sorting.
-    items = items.slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(limit ?? 10, 10));
+    items = items.slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(limit, 10));
 
     items = await pMap(
         items,

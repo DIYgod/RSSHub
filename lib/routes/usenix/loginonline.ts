@@ -1,4 +1,3 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -40,7 +39,6 @@ async function handler() {
             return {
                 title: $item.find('.views-field-title').text(),
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
-                pubDate: $item.find('.views-field-field-lv2-publication-date').text().trim() ? parseDate($item.find('.views-field-field-lv2-publication-date').text().trim(), 'MMMM D, YYYY', 0) : undefined,
                 author: $item.find('.views-field-pseudo-author-list').text().trim().replace('Authors: ', ''),
             };
         });
@@ -52,16 +50,16 @@ async function handler() {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 const content = $('.group-article-body-wrapper');
-                details.category = mapElements(content.find('.field-name-field-lv2-article-type .field-item'), (_, element) => $(element).text());
+                details.category = content
+                    .find('.field-name-field-lv2-article-type .field-item')
+                    .toArray()
+                    .map((element) => $(element).text());
                 content.find('.field-name-field-lv2-publication-date, .field-name-field-lv2-article-type, .field-pseudo-field--author-list, .field-name-field-lv2-shepherds').remove();
                 details.description = content.html();
-                const published = $('meta[property="article:published_time"]').attr('content');
-                if (published) {
-                    details.pubDate = parseDate(published);
-                }
+                details.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );
@@ -71,7 +69,4 @@ async function handler() {
         description: 'An open access publication driven by the USENIX community',
         item: items,
     };
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }

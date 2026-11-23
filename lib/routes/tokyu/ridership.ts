@@ -83,8 +83,9 @@ const latestYear = async (): Promise<number> => {
     const $ = load(html);
     const years = $('a[href*="/passengers/"]')
         .toArray()
-        .map((a) => Number(($(a).attr('href') ?? '').match(/\/passengers\/(\d{4})\/?$/)?.[1]))
-        .filter((y) => Number.isSafeInteger(y));
+        .map((a) => ($(a).attr('href') ?? '').match(/\/passengers\/(\d{4})\/?$/)?.[1])
+        .filter((y) => y !== undefined)
+        .map(Number);
     if (years.length === 0) {
         throw new Error('tokyu: no fiscal-year pages linked from the index');
     }
@@ -93,10 +94,10 @@ const latestYear = async (): Promise<number> => {
 
 const handler = async (ctx): Promise<Data> => {
     const year: string | undefined = ctx.req.param('year');
-    const fy = year === undefined ? await cache.tryGet('tokyu/ridership:latest', latestYear) : Number(year);
-    if (!Number.isSafeInteger(fy)) {
+    if (year !== undefined && !/^\d{4}$/.test(year)) {
         throw new TypeError(`tokyu: invalid year "${year}"`);
     }
+    const fy = year ?? (await cache.tryGet('tokyu/ridership:latest', latestYear));
     const link = `${BASE}${fy}/`;
     const page = await cache.tryGet(link, async () => parsePage(await ofetch(link), link));
 

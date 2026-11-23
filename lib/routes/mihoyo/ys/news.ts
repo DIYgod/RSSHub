@@ -1,6 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const categories = {
@@ -113,8 +114,7 @@ async function handler(ctx) {
     if (!categories[category]?.[location]?.id) {
         throw new InvalidParameterError('Unknown location or category; use a documented combination.');
     }
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const params = {
         main: `iPage=1&sLangKey=zh-cn&iChanId=${categories[category][location].id}&iPageSize=${limit}`,
@@ -136,7 +136,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${rootUrl}${currentUrls[location]}/detail/${item.iInfoId}`,
-        pubDate: item.dtStartTime ? parseDate(item.dtStartTime, 8) : undefined,
+        pubDate: parseDate(item.dtStartTime, 8),
         category: item.sCategoryName,
     }));
 

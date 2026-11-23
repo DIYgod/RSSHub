@@ -45,7 +45,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://bgm.tv').href,
-                pubDate: dateString ? parseDate(dateString, 8) : undefined,
+                pubDate: parseDate(dateString, 8),
             };
         });
 

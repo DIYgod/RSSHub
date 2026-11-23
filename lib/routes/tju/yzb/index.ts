@@ -14,7 +14,7 @@ const getArticle = async (link: string) => {
         const response = await got(link, { responseType: 'buffer' });
         const $ = load(iconv.decode(response.data, 'gbk'));
         $('.font_18_b, .font_grey_en').remove();
-        return { description: $('.nav_a10 > table > tbody').html() ?? undefined };
+        return { description: $('.nav_a10 > table > tbody').html() };
     } catch {
         // Keep the source listing when an article detail is unavailable.
         return {};

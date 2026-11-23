@@ -54,7 +54,7 @@ async function handler() {
         guid: item.permalink,
         enclosure_url: item.play_sound_url || undefined,
         enclosure_type: item.play_sound_url ? 'audio/mpeg' : undefined,
-        pubDate: item.written_on ? parseDate(item.written_on) : undefined,
+        pubDate: parseDate(item.written_on),
         author: item.author,
     }));
 

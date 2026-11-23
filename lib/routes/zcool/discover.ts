@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import locations from './locations';
@@ -193,9 +194,7 @@ async function handler(ctx) {
         613: { 672: '休闲/流行服饰', 671: '正装/礼服', 814: '传统/民族服饰', 677: '配饰', 676: '鞋履设计', 673: '儿童服饰', 680: '其他服装', 815: '文章' },
         44: { 417: '文案/策划', 798: 'VR设计', 683: '独立游戏', 45: '其他', 824: '文章' },
     };
-    const limitValue = ctx.req.query('limit');
-    const requestedLimit = limitValue && /^\d+$/.test(limitValue) ? Number(limitValue) : NaN;
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? String(requestedLimit) : '25';
+    const limit = String(getRouteLimit(ctx, 25));
     const queries: DiscoverQueries = {
         cate: '0',
         subCate: ctx.req.param('subCate') ?? '0',
@@ -254,7 +253,7 @@ async function handler(ctx) {
     const list = response.data.datas.map((item) => ({
         title: item.content.title,
         link: item.content.pageUrl,
-        pubDate: [undefined, null, ''].includes(item.content.publishTime) ? undefined : parseDate(item.content.publishTime),
+        pubDate: item.content.publishTime ? parseDate(item.content.publishTime) : undefined,
         author: item.content.creatorObj.username,
         category: item.content.tags,
     }));

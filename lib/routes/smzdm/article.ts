@@ -69,7 +69,7 @@ async function handler(ctx) {
                     },
                 });
                 const $ = load(response);
-                const description = $('article.J_article').html() ?? undefined;
+                const description = $('article.J_article').html();
                 const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("datePublished")').text() || '{}');
                 const releaseDate = $('meta[property="og:release_date"]').attr('content');
                 const pubDate = releaseDate ? parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;

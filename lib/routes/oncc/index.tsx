@@ -73,8 +73,7 @@ async function handler(ctx): Promise<Data> {
         .map((item): DataItem => {
             const title = $(item).find('div.focusTitle > span').text();
             const link = rootUrl + $(item).find('a:nth-child(1)').attr('href');
-            const date = $(item).attr('edittime');
-            const pubDate = date ? parseDate(date, 'YYYYMMDDHHmmss', 8) : undefined;
+            const pubDate = parseDate($(item).prop('edittime'), 'YYYYMMDDHHmmss', 8);
 
             return {
                 title,

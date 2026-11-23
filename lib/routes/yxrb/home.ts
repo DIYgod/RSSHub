@@ -63,8 +63,7 @@ async function handler(ctx) {
                         .first()
                         .contents()
                         .filter((_, e) => e.nodeType === 3)
-                        .text()
-                        .trim(),
+                        .text(),
                     'YYYY-MM-DD HH:mm:ss',
                     8
                 );

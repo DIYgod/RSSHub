@@ -1,4 +1,3 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -67,59 +66,60 @@ async function handler(ctx) {
         });
     items = await pMap(
         items,
-        (item) =>
-            mapResolvedValue(
-                cache.tryGet(`xjtu:2yuan:content:v3:${item.link}`, async () => {
-                    const detail: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-                    const content = load(detailResponse.data);
-                    const body = content('.v_news_content').first();
-                    if (!body.length) {
-                        throw new Error(`Article content was not found at ${item.link}`);
-                    }
-                    const links = new Set(mapElements(body.find('a[href]'), (_, element) => content(element).attr('href')));
-                    const attachments = content('.wznr a[href*="download.jsp"]')
-                        .filter((_, element) => !content(element).closest('.v_news_content').length)
+        async (item) => {
+            const detail = await cache.tryGet(`xjtu:2yuan:content:v3:${item.link}`, async () => {
+                const detail: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
+                const content = load(detailResponse.data);
+                const body = content('.v_news_content');
+                const links = new Set(
+                    body
+                        .find('a[href]')
                         .toArray()
-                        .filter((element) => {
-                            const href = content(element).attr('href')!;
-                            if (links.has(href)) {
-                                return false;
-                            }
-                            links.add(href);
-                            return true;
-                        });
-                    detail.description = body.html()! + attachments.map((element) => `<p>${content.html(element)}</p>`).join('');
-                    const hospitalAuthor = content('.article-sm span')
-                        .filter((_, element) => content(element).text().startsWith('作者：'))
-                        .text()
-                        .replace(/^作者：/, '')
-                        .trim();
-                    const universityArticle = new URL(item.link!).hostname === 'news.xjtu.edu.cn';
-                    const author =
-                        hospitalAuthor ||
-                        (universityArticle
-                            ? content('.zdf .d_write2')
-                                  .filter((_, element) => content(element).find('.d_write').text() === '文字：')
-                                  .find('.spans')
-                                  .text()
-                                  .trim()
-                            : '');
-                    if (author) {
-                        detail.author = author;
-                    }
-                    const dateText = content('.article-sm span').first().text() || (universityArticle ? content('.con-tit .shfffff span').first().text() : '');
-                    const date = dateText.match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/)?.[0];
-                    if (date) {
-                        detail.pubDate = parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD', 8);
-                    }
-                    return detail;
-                }),
-                (detail) => ({ ...item, ...detail })
-            ),
+                        .map((element) => content(element).attr('href'))
+                );
+                const attachments = content('.wznr a[href*="download.jsp"]')
+                    .filter((_, element) => !content(element).closest('.v_news_content').length)
+                    .toArray()
+                    .filter((element) => {
+                        const href = content(element).attr('href')!;
+                        if (links.has(href)) {
+                            return false;
+                        }
+                        links.add(href);
+                        return true;
+                    });
+                detail.description = body.html()! + attachments.map((element) => `<p>${content.html(element)}</p>`).join('');
+                const hospitalAuthor = content('.article-sm span')
+                    .filter((_, element) => content(element).text().startsWith('作者：'))
+                    .text()
+                    .replace(/^作者：/, '')
+                    .trim();
+                const universityArticle = new URL(item.link!).hostname === 'news.xjtu.edu.cn';
+                const author =
+                    hospitalAuthor ||
+                    (universityArticle
+                        ? content('.zdf .d_write2')
+                              .filter((_, element) => content(element).find('.d_write').text() === '文字：')
+                              .find('.spans')
+                              .text()
+                              .trim()
+                        : '');
+                if (author) {
+                    detail.author = author;
+                }
+                const dateText = content('.article-sm span').first().text() || (universityArticle ? content('.con-tit .shfffff span').first().text() : '');
+                const date = dateText.match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/)?.[0];
+                if (date) {
+                    detail.pubDate = parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD', 8);
+                }
+                return detail;
+            });
+            return { ...item, ...detail };
+        },
         { concurrency: 3, stopOnError: false }
     );
     return {
@@ -127,11 +127,4 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
-}
-async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
-    const value = await promise;
-    return mapper(value);
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }

@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/kydt',
@@ -34,14 +34,6 @@ async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'descri
     return { description: $('.v_news_content').html() };
 }
 
-function parseSourceDate(value?: string) {
-    const dateText = value?.match(/\d{4}[.-]\d{2}[.-]\d{2}/)?.[0].replaceAll('.', '-');
-    if (!dateText) {
-        return;
-    }
-    return parseDateStrict(dateText, 'YYYY-MM-DD', 8);
-}
-
 async function handler() {
     const host = 'https://soe.xmu.edu.cn/kxyj/kydt.htm';
     const response = await ofetch(host);
@@ -59,7 +51,7 @@ async function handler() {
             return {
                 title,
                 link: fullUrl,
-                pubDate: parseSourceDate(time),
+                pubDate: parseDate(time, 'YYYY.MM.DD', 8),
             };
         });
 

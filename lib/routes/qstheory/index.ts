@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl as rootUrl, getItem } from './utils';
 
@@ -94,8 +95,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'toutiao' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const currentUrl = config[category].url;
     const response = await ofetch(currentUrl);

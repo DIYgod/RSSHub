@@ -5,43 +5,20 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseDateStrict } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.worldjournal.com';
-const resolveLazyImage = (raw?: string) => {
-    if (!raw) {
-        return;
-    }
-    try {
-        const proxyUrl = new URL(raw, baseUrl);
-        const source = proxyUrl.searchParams.get('u');
-        if (proxyUrl.pathname !== '/gw/photo.php' || !source) {
-            return;
-        }
-        const imageUrl = new URL(source, baseUrl);
-        return ['http:', 'https:'].includes(imageUrl.protocol) ? imageUrl.href : undefined;
-    } catch {
-        return;
-    }
-};
-const parseListingDate = (raw: string) => (raw ? parseDateStrict(raw.trim(), 'YYYY-MM-DD HH:mm', 8) : undefined);
-const parseStructuredDate = (raw?: string) => {
-    if (!raw || !/(?:Z|[+-]\d{2}:\d{2})$/.test(raw)) {
-        return;
-    }
-    return parseDate(raw);
-};
 const extractArticleDates = ($: CheerioAPI) => {
     const structuredData = $('script[type="application/ld+json"]')
         .toArray()
         .map((script) => $(script).text())
         .find((script) => /"@type"\s*:\s*"NewsArticle"/.test(script));
     // Unrelated text in the source JSON-LD can contain invalid control characters.
-    const pubDate = parseStructuredDate(structuredData?.match(/"datePublished"\s*:\s*"([^"]+)"/)?.[1]);
-    const updated = parseStructuredDate(structuredData?.match(/"dateModified"\s*:\s*"([^"]+)"/)?.[1]);
+    const pubDate = structuredData?.match(/"datePublished"\s*:\s*"([^"]+)"/)?.[1];
+    const updated = structuredData?.match(/"dateModified"\s*:\s*"([^"]+)"/)?.[1];
     return {
-        ...(pubDate && { pubDate }),
-        ...(updated && { updated }),
+        ...(pubDate && { pubDate: parseDate(pubDate) }),
+        ...(updated && { updated: parseDate(updated) }),
     };
 };
 export const route: Route = {
@@ -73,7 +50,7 @@ async function handler(ctx) {
                 title: $item.find('h3').text(),
                 description: $item.find('p').html(),
                 link: url!.includes('?from=') ? url!.split('?from=', 1)[0] : url,
-                pubDate: parseListingDate($item.find('.subcate-list__time--roc').text()),
+                pubDate: parseDate($item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm', 8),
             };
         });
     const items = await pMap(
@@ -85,17 +62,21 @@ async function handler(ctx) {
                 const $ = load(response);
                 $('[id^=div-gpt-ad], [class^=udn-ads-], .keywords, .next-page, .udn-ads, .article-content__ads--bd').remove();
                 $('img').each((_, img) => {
-                    const imageUrl = resolveLazyImage(img.attribs['data-src']);
-                    if (!imageUrl) {
+                    if (!img.attribs['data-src']) {
                         return;
                     }
-                    img.attribs.src = imageUrl;
+                    const url = new URL(img.attribs['data-src']);
+                    if (url.pathname !== '/gw/photo.php') {
+                        return;
+                    }
+
+                    img.attribs.src = url.searchParams.get('u') ?? '';
                     delete img.attribs['data-src'];
                 });
                 return {
                     description: $('.article-content__paragraph').html(),
                     category: $('meta[name=news_keywords]').attr('content')?.split(','),
-                    author: $('.article-content__author').text().trim() || undefined,
+                    author: $('.article-content__author').text().trim(),
                     ...extractArticleDates($),
                 };
             })),

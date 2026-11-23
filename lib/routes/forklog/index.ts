@@ -45,7 +45,7 @@ async function handler() {
             author,
             pubDate,
             description,
-            category: post.category?.map((category) => category.name),
+            category: post.category.map((category) => category.name),
             ...(imageSrc && {
                 media: {
                     thumbnail: {

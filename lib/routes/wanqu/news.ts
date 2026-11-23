@@ -28,13 +28,6 @@ export const route: Route = {
     url: 'wanqu.co/',
 };
 
-function parseSourceTime(value?: string | number | null) {
-    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler() {
     const rootUrl = 'https://www.wanqu.co';
     const currentUrl = rootUrl;
@@ -48,7 +41,7 @@ async function handler() {
         .map((item) => ({
             title: $(item).find('a').text(),
             link: $(item).find('a').attr('href'),
-            pubDate: parseSourceTime($(item).find('i.text-helper-color.mr-4').text().trim()),
+            pubDate: parseDate($(item).find('i.text-helper-color.mr-4').text().trim()),
         }));
 
     return {

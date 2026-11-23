@@ -56,7 +56,7 @@ const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
+                pubDate: parseDate(pubDateStr, 8),
                 link: linkUrl,
                 author: authors.length ? authors : undefined,
                 content: {
@@ -84,20 +84,19 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h2.title').text();
-                const article = $$('div.new-detailed').first();
-                article.find('script, style').remove();
-                const description = article.html() ?? item.description;
+                const article = $$('div.new-detailed');
+                const description = article.html();
                 const pubDateStr: string | undefined = $$('span.time').first().text();
                 const authorEls: Element[] = $$('span.user').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => ({ name: $$(authorEl).text().trim() })).filter((author) => author.name);
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
+                    pubDate: parseDate(pubDateStr, 8),
                     author: authors.length ? authors : undefined,
                     content: {
                         html: description,
-                        text: article.length ? article.text() : undefined,
+                        text: article.text(),
                     },
                     language,
                 };

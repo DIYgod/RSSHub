@@ -26,7 +26,7 @@ async function handler(ctx) {
     const { name } = getProductType(type);
     const limit = getLimit(ctx.req.query('limit'));
     const products = await getProducts(type, limit, id);
-    const creator = products[0]?.meta_info.user_info?.name || id;
+    const creator = products[0]?.meta_info.user_info.name || id;
 
     return {
         title: `扣子 - ${creator}的${name}`,

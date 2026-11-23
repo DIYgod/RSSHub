@@ -60,13 +60,13 @@ async function handler() {
             const description = await cache.tryGet(`szse:notice:article:${itemUrl}`, async () => {
                 const response = await got.get(itemUrl);
                 const $ = load(response.data);
-                return $('#desContent').html() ?? undefined;
+                return $('#desContent').html();
             });
             const single = {
                 title,
                 link: itemUrl,
                 description,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
             return single;
         },

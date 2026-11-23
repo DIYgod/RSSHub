@@ -148,7 +148,7 @@ const renderSection = (section) => {
         case 'ElementImageGallery':
             return section.images.map((image) => `<img src="${originalImage(image.url)}">`).join('');
         case 'ElementArticleVideoYouTube':
-            return renderYoutube(true, section.youTubeVideoId, undefined, undefined);
+            return renderYoutube(true, section.youTubeVideoId);
         case 'ElementArticleVideoEmbed':
             return `<video controls preload="metadata" src="${section.asset.url}"></video>`;
         default:

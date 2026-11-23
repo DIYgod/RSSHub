@@ -27,10 +27,9 @@ type ArticleDetails = Pick<DataItem, 'description' | 'pubDate'>;
 async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
     const detailResponse = await ofetch(link);
     const content = load(detailResponse);
-    const publishedTime = content('time').attr('datetime');
     return {
         description: content('.field--name-field-news-body').html(),
-        pubDate: publishedTime ? parseDate(publishedTime) : undefined,
+        pubDate: parseDate(content('time').attr('datetime')!),
     };
 }
 
@@ -49,7 +48,6 @@ async function handler(ctx: Context) {
     const list = $('.featured-stories__headline a')
         .slice(0, 10)
         .toArray()
-        .filter((item) => $(item).attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
             return {

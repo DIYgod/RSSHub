@@ -8,17 +8,12 @@ const getSingleRecord = async (url) => {
     const res = await got(url);
 
     const $ = load(res.data);
-    const list = $('#info-list-ul li, ul.tz-list > li');
+    const list = $('ul.tz-list > li');
 
-    return list.toArray().flatMap((item) => {
+    return list.toArray().map((item) => {
         const $item = $(item);
-        const anchor = $item.find('a').first();
-        const href = anchor.attr('href');
-        if (!href) {
-            return [];
-        }
-        const date = $item.find('.time, .date').text().trim();
-        return { title: anchor.attr('title') || anchor.find('h3').text(), pubDate: date ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00Z` : date) : undefined, link: new URL(href, url).href };
+        const anchor = $item.find('a');
+        return { title: anchor.find('h3').text(), pubDate: parseDate(`${$item.find('.date').text()}T00:00:00Z`), link: new URL(anchor.attr('href')!, url).href };
     });
 };
 
@@ -27,8 +22,7 @@ const getArticle = async (item) => {
         const response = await got(item.link);
         const $ = load(response.data);
 
-        const description = $('.gp-article').length ? `${$('.gp-article').html() ?? ''}${$('.attachment').toString()}` : $('.article-content').html();
-        return { description };
+        return { description: `${$('.gp-article').html()}${$('.attachment').toString()}` };
     });
     return { ...item, ...article };
 };

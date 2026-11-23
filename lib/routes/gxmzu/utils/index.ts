@@ -27,15 +27,8 @@ export function parsePubDate(text?: string): Temporal.Instant | undefined {
         return undefined;
     }
     const [, year, month, day] = match;
-    const dateText = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     const time = text?.match(/(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1];
-    if (time) {
-        const [hours, minutes, seconds = 0] = time.split(':').map(Number);
-        if (hours > 23 || minutes > 59 || seconds > 59) {
-            return undefined;
-        }
-    }
-    return parseDate(`${dateText}${time ? ` ${time}` : ''}`, 8);
+    return parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`, 8);
 }
 
 export function parseNoticeList($: CheerioAPI, pageUrl: string, rowSelector: string, dateSelector: string): NoticeItem[] {

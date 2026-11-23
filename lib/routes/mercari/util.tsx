@@ -408,26 +408,26 @@ const formatItemDetail = (detail: ItemDetail | ShopItemDetail): DataItem => {
         return {
             title: detail.displayName,
             description: renderShopItemDescription(detail),
-            pubDate: detail.createTime ? parseDate(detail.createTime) : undefined,
+            pubDate: parseDate(detail.createTime),
             guid: detail.name,
             link: `${rootShopProductURL}${detail.name}`,
             image: detail.thumbnail,
             language: 'ja',
             author: detail.productDetail.shop.displayName,
-            updated: detail.updateTime ? parseDate(detail.updateTime) : undefined,
+            updated: parseDate(detail.updateTime),
         };
     }
 
     return {
         title: detail.data.name,
         description: renderItemDescription(detail.data),
-        pubDate: detail.data.created !== undefined && detail.data.created !== null ? parseDate(detail.data.created * 1000) : undefined,
+        pubDate: parseDate(detail.data.created * 1000),
         guid: detail.data.id,
         link: `${rootProductURL}${detail.data.id}`,
         image: detail.data.thumbnails[0],
         language: 'ja',
         author: detail.data.seller.name,
-        updated: detail.data.updated !== undefined && detail.data.updated !== null ? parseDate(detail.data.updated * 1000) : undefined,
+        updated: parseDate(detail.data.updated * 1000),
     };
 };
 

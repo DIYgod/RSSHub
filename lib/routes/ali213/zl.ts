@@ -108,15 +108,11 @@ const handler = async (ctx: Context): Promise<Data> => {
                         })
                         .filter((_): _ is { url: string; type: string; content_html: string } => true);
 
-                    const pubTime = $$('div.newstag_l')
-                        .text()
-                        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
-
                     return {
                         ...item,
                         title,
                         description,
-                        pubDate: pubTime ? parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+                        pubDate: parseDate($$('div.newstag_l').text().slice(0, 19), 'YYYY-MM-DD HH:mm:ss', 8),
                         category: $$('.category')
                             .toArray()
                             .map((c) => $$(c).text()),

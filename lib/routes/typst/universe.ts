@@ -33,7 +33,7 @@ interface Package {
     license: string;
     description: string;
     keywords?: string[];
-    updatedAt?: number;
+    updatedAt: number;
     releasedAt: number;
     hasRepo: boolean;
     categories?: string[];
@@ -42,13 +42,6 @@ interface Package {
 
 interface SearchResults {
     packages: Package[];
-}
-
-function getPublicationDate(value: number | undefined): Temporal.Instant | undefined {
-    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
-        return;
-    }
-    return parseDate(value, 'X');
 }
 
 export const route: Route = {
@@ -73,7 +66,7 @@ export const route: Route = {
             title: `${item.name} (${item.version}) | ${item.description}`,
             link: `https://typst.app/universe/package/${item.name}`,
             description: escapeText(item.description),
-            pubDate: getPublicationDate(item.updatedAt),
+            pubDate: parseDate(item.updatedAt, 'X'),
             category: [...new Set([...(item.keywords ?? []), ...(item.categories ?? [])])],
             author: item.authors.join(', '),
         }));

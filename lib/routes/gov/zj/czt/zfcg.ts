@@ -48,19 +48,16 @@ async function handler(ctx: Context) {
     let list: Array<DataItem & { link: string; articleId: string }> = result.data.data.map((article) => ({
         title: article.title,
         link: `${zfcgBaseUrl}/site/detail?categoryCode=${code}&articleId=${encodeURIComponent(article.articleId)}`,
-        pubDate: article.publishDate !== undefined && article.publishDate !== null ? parseDate(article.publishDate) : undefined,
+        pubDate: parseDate(article.publishDate),
         category: article.pathName,
         author: article.author,
         articleId: article.articleId,
     }));
 
-    const datesKnown = list.every((item) => item.pubDate instanceof Temporal.Instant);
-    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
+    if (ctx.req.query('sorted') !== 'false') {
         list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
     }
-    if (limit !== undefined && (ctx.req.query('sorted') === 'false' || datesKnown)) {
-        list = list.slice(0, limit);
-    }
+    list = list.slice(0, limit);
 
     const items = await Promise.all(
         list.map((item) =>

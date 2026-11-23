@@ -73,15 +73,10 @@ const handler = async (ctx) => {
                   .map((item) => {
                       const $item = $(item);
                       const a = $item.find('a').first();
-                      const link = new URL(a.attr('href')!, rootUrl).href;
-                      const recipeId = new URL(link).pathname.match(/^\/recipe-(\d+)\.html$/)?.[1];
-                      if (!recipeId) {
-                          throw new Error('Recipe list entry has an invalid URL');
-                      }
-                      const imageSource = a.find('img').attr('data-src') ?? a.find('img').attr('src');
-                      const image = imageSource ? new URL(imageSource, currentUrl).href.split(/\?/, 1)[0] : undefined;
-                      const guid = `meishichina-${recipeId}`;
-                      return { title: a.attr('title') ?? a.find('div').text(), link, author: $item.find('a.u').text(), guid, id: guid, image, banner: image };
+                      const link = a.attr('href')!;
+                      const image = a.find('img').attr('data-src')!.split(/\?/, 1)[0];
+                      const guid = `meishichina-${link.match(/recipe-(\d+)\.html/)?.[1]}`;
+                      return { title: a.attr('title')!, link, author: $item.find('a.u').text(), guid, id: guid, image, banner: image };
                   })
             : isTab
               ? response.data.slice(0, limit).map((item) => {
@@ -142,7 +137,7 @@ const handler = async (ctx) => {
 
                 $$('img[data-src]').each((_, element) => {
                     const image = $$(element);
-                    image.attr('src', new URL(image.attr('data-src')!, item.link).href).removeAttr('data-src');
+                    image.attr('src', image.attr('data-src')).removeAttr('data-src');
                 });
                 $$('input[type="hidden"]').remove();
                 $$('p.J_photo, p.copyright').remove();

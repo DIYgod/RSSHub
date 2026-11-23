@@ -6,13 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 'YYYY-MM-DD', 8);
-}
-
 const typeMap = {
     tzgg: { name: 'tzgg', url: 'https://news.hfut.edu.cn/tzgg2.htm', root: 'https://news.hfut.edu.cn', title: '合肥工业大学 - 通知公告' },
     jxky: { name: 'jxky', url: 'https://news.hfut.edu.cn/tzgg2.htm', root: 'https://news.hfut.edu.cn', title: '合肥工业大学 - 通知公告 - 教学科研' },
@@ -53,7 +46,7 @@ async function parseArticle(type, $) {
         const $item = $(item);
         const oriLink = $item.find('a').attr('href');
         const linkRes = new URL(oriLink, commLink).href;
-        const pubDate = parsePublicationDate($item.find('i').text());
+        const pubDate = parseDate($item.find('i').text(), 'YYYY-MM-DD', 8);
 
         return {
             title: $item.find('p').text(),

@@ -47,11 +47,7 @@ async function handler() {
             if (!href) {
                 return [];
             }
-            const link = new URL(href, `${base}jwtz.htm`);
-            if (!['http:', 'https:'].includes(link.protocol)) {
-                return [];
-            }
-            return { element: item, link: link.href };
+            return { element: item, link: new URL(href, `${base}jwtz.htm`).href };
         });
     const items = await pMap(
         list,

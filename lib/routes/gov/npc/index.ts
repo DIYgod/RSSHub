@@ -45,11 +45,10 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const dateText = $item.next('span').text();
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, baseurl).href,
-                pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($item.next('span').text(), 'YYYY-MM-DD', 8),
             };
         });
     // Fetch article metadata and content.
@@ -67,14 +66,14 @@ async function handler(ctx) {
                 const title = $('title').text().replace('_中国人大网', '');
                 const time = $('script:contains("fbrq")')
                     .text()
-                    .match(/fbrq = "(.*?)"/)?.[1];
+                    .match(/fbrq = "(.*?)"/)![1];
                 const description = $('#Zoom').html();
 
                 return {
                     title,
                     link,
                     description,
-                    pubDate: time ? parseDate(time, 'YYYY年MM月DD日 HH:mm', 8) : item.pubDate,
+                    pubDate: parseDate(time, 'YYYY年MM月DD日 HH:mm', 8),
                 };
             });
         },

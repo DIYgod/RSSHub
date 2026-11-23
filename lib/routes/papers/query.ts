@@ -1,55 +1,12 @@
-import { Buffer } from 'node:buffer';
-
-import { config } from '@/config';
 import type { Language, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex']);
-const rssEncodingAliases = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' } satisfies Record<string, BufferEncoding>;
-const isRssEncodingAlias = (key: string): key is keyof typeof rssEncodingAliases => Object.hasOwn(rssEncodingAliases, key);
-
-const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
-    const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
-        method: 'GET',
-        headers: { Accept: 'application/rss+xml', 'User-Agent': config.ua },
-        responseType: 'arrayBuffer',
-        redirect: 'manual',
-        ignoreResponseError: true,
-        timeout: config.requestTimeout,
-    });
-    const location = response.headers.get('location');
-    if (response.status >= 300 && response.status < 400 && location) {
-        if (redirectCount === 5) {
-            throw new Error('Too many redirects');
-        }
-        return getRssFeed(new URL(location, feedUrl).href, redirectCount + 1);
-    }
-    if (response.status >= 300) {
-        throw new Error(`Status code ${response.status}`);
-    }
-    const charset =
-        response.headers
-            .get('content-type')
-            ?.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]
-            .toLowerCase() || '';
-    const encoding = (isRssEncodingAlias(charset) && rssEncodingAliases[charset]) || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
-    return parser.parseString(Buffer.from(response._data!).toString(encoding));
-};
-
 const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
-};
-
-const getPublicationDate = (value?: string | number | null): Temporal.Instant | undefined => {
-    if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
-        return undefined;
-    }
-    return parseDate(value);
 };
 
 const handler = async (ctx) => {
@@ -63,7 +20,7 @@ const handler = async (ctx) => {
     feedUrl.searchParams.set('query', keyword);
 
     const site = feedUrl.pathname.split('/', 2)[1];
-    const feed = await getRssFeed(feedUrl.href);
+    const feed = await parser.parseURL(feedUrl.href);
 
     const language: Language = 'en';
 
@@ -73,7 +30,7 @@ const handler = async (ctx) => {
 
         const id = item.link?.split(/\//).pop() ?? '';
         const kimiUrl = item.link;
-        const pdfUrl = id && Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
+        const pdfUrl = Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
 
         const authorString = item.author;
         const description = renderDescription({
@@ -85,7 +42,7 @@ const handler = async (ctx) => {
         return {
             title: title!,
             description,
-            pubDate: getPublicationDate(item.pubDate),
+            pubDate: parseDate(item.pubDate ?? ''),
             link: item.link,
             category: item.categories,
             author: authorString,

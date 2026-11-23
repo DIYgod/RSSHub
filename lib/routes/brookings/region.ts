@@ -42,21 +42,13 @@ async function handler(ctx) {
         headers: { 'x-algolia-application-id': config.application_id, 'x-algolia-api-key': config.search_api_key },
         body: { filters: JSON.parse(options.filter), hitsPerPage: 20, page: 0, distinct: 1 },
     });
-    const seen = new Set<string>();
     const items = result.hits
-        .filter((item) => {
-            if (!item.permalink || seen.has(item.permalink)) {
-                return false;
-            }
-            seen.add(item.permalink);
-            return true;
-        })
         .map((item) => ({
             title: item.post_title,
             link: item.permalink,
-            author: item.display_authors?.join(', '),
+            author: item.display_authors.join(', '),
             category: item.primary_topic,
-            description: `<p>${escapeText(item.content || item.post_excerpt || '')}</p>`,
+            description: `<p>${escapeText(item.content)}</p>`,
             pubDate: parseDate(item.post_date_formatted, 'MMMM D, YYYY'),
         }))
         .toSorted((a, b) => compareDates(b.pubDate, a.pubDate));

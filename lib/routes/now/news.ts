@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const mainCategories = {
@@ -75,8 +76,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '', id = '' } = ctx.req.param();
-    const requestedLimit = Number(ctx.req.query('limit') || '20');
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const hasTopicId = id && Object.hasOwn(categories, category);
 
     const rootUrl = 'https://news.now.com';
@@ -165,9 +165,9 @@ async function handler(ctx) {
                     description: $('.newsLeading').html() ?? '',
                     images,
                     caption: $('.img_caption').prop('outerHTML') ?? '',
-                    pubDate: newsData.publishDate ? parseDate(newsData.publishDate, 'x') : undefined,
+                    pubDate: parseDate(newsData.publishDate, 'x'),
                     updated: newsData.lastModifyDate ? parseDate(newsData.lastModifyDate, 'x') : undefined,
-                    category: [...new Set([newsData.categoryName, ...(newsData.newsTags ?? []).map((t) => t.tag), ...(newsData.newsTopics ?? []).map((t) => t.topicName)])].filter(Boolean),
+                    category: [...new Set([newsData.categoryName, ...(newsData.newsTags ?? []).map((t) => t.tag), ...(newsData.newsTopics ?? []).map((t) => t.topicName)])],
                 };
             });
             return {

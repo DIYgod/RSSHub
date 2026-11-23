@@ -4,7 +4,6 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-import { renderDescription } from '../templates/description';
 import type { ArticleSource } from './utils';
 import { parseArticle } from './utils';
 
@@ -36,12 +35,8 @@ async function handler(ctx) {
     const list: ArticleSource[] = response.data.reportInfo.articleInfo.map((item) => ({
         item: {
             title: item.title,
-            category: item.releaseColName ? [item.releaseColName] : undefined,
-            description: renderDescription({
-                thumb: item.picMiddle,
-                description: item.attAbstract,
-            }),
-            pubDate: item.publishtime ? parseDate(item.publishtime, 8) : undefined,
+            category: [item.releaseColName],
+            pubDate: parseDate(item.publishtime, 8),
             link: item.shareUrl,
         },
         articleId: item.fileId,

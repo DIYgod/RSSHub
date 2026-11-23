@@ -11,7 +11,7 @@ export const view = (link) =>
             const result = await got(link);
             const $ = load(result.data);
             content = $('#vsb_content').html();
-            author = $('.art-body > p').last().text().trim() || $("form[name='_newscontent_fromname'] > div > p:last-of-type").text();
+            author = $('.art-body > p').text().trim() || $("form[name='_newscontent_fromname'] > div > p:last-of-type").text();
             const currentDateText = $('.art-tit .date')
                 .text()
                 .match(/日期：(\d+年\d+月\d+日)/)?.[1];

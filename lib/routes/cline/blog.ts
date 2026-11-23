@@ -16,7 +16,7 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
             const element = $(article);
 
             const title = element.find('h2').text();
-            const link = element.find('a').first().attr('href');
+            const link = element.find('a').attr('href');
             const fullLink = link ? (link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? link : `/${link}`}`) : '';
 
             // Extract date and author with single regex
@@ -26,7 +26,7 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
             const pubDate = metaMatch ? parseDate(metaMatch[2], 'MMMM D, YYYY', 0) : undefined;
 
             const summary = element.find('[class^="Editorial_excerpt"]').text().trim();
-            const imgSrc = element.find('img').attr('src') || '';
+            const imgSrc = element.find('img').attr('src');
 
             return title && link
                 ? {

@@ -58,14 +58,14 @@ export const route: Route = {
 
                 const scriptText = $li.find('p.image script').text();
                 const images: Array<{ savepath: string }> = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]);
-                const imgUrl = new URL(images[0].savepath, baseUrl).href;
+                const imgUrl = images[0].savepath;
 
                 return cache.tryGet(link, async (): Promise<DataItem> => {
                     // Fetch detail page for pubDate
                     const detailHtml = await ofetch(link);
                     const $detail = load(detailHtml);
                     const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
-                    const pubDate = pubDateStr ? parseDate(pubDateStr, 8) : undefined;
+                    const pubDate = parseDate(pubDateStr, 8);
 
                     const description = renderToString(
                         <div>

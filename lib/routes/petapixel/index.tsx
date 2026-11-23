@@ -7,6 +7,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://petapixel.com';
@@ -84,8 +85,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categorySlug = ctx.req.param('category');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 20;
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
 
     const category = categorySlug
         ? await cache.tryGet(`petapixel:category:${categorySlug}`, async () => {

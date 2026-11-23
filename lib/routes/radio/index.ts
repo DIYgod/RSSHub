@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
@@ -41,8 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const size = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 100;
+    const size = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://www.radio.cn';
     const apiRootUrl = 'http://tacc.radio.cn';

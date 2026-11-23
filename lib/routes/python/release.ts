@@ -1,7 +1,6 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode, Element } from 'domhandler';
-import { cloneNode, Document } from 'domhandler';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
@@ -9,12 +8,11 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer -- Preserve the existing positive-integer limit acceptance range and default.
-    const limit = Number.isInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.python.org';
     const targetUrl: string = new URL('downloads', baseUrl).href;
@@ -59,20 +57,20 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.page-title').text();
-                const body = copyNodes($$('section#pep-content'));
+                const body = $$('section#pep-content');
                 const author = body
                     .find('dl.rfc2822 dt')
                     .filter((_, element) => $$(element).text() === 'Author:')
                     .next('dd')
                     .text();
                 body.children('h1.page-title, dl.rfc2822, section#contents').remove();
-                const description: string | undefined = body.html() ?? undefined;
+                const description = body.html();
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    author: author || undefined,
+                    author,
                     content: {
                         html: description,
                         text: body.text(),
@@ -126,12 +124,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-
-function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    const copy = selection.map((_, node) => cloneNode(node, true));
-    const root = new Document(copy.toArray());
-    for (const node of copy) {
-        node.parent = root;
-    }
-    return copy;
-}

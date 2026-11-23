@@ -30,10 +30,6 @@ async function handler() {
             body.find('h3, a[name]:not([href])').remove();
             body.find('p').first().find('b').first().remove();
             body.find('a[href="whatsnew2.htm"]').closest('p').remove();
-            body.find('a[href]').each((_, el) => {
-                const anchor = $(el);
-                anchor.attr('href', new URL(anchor.attr('href')!, currentUrl).href);
-            });
             return {
                 link: currentUrl,
                 guid: `${currentUrl}#${title}`,

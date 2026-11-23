@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const authorMatch = $('.arti_metas')
                     .text()
                     .match(/发布者：(.*)发布时间/);
-                return { author: authorMatch ? authorMatch[1].trim() : undefined, description: $('.entry').html() };
+                return { author: authorMatch?.[1], description: $('.entry').html() };
             })),
         }),
         { concurrency: 3 }

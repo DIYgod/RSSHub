@@ -38,17 +38,13 @@ async function handler() {
             const hktDate = $item.find('HKTDate').text();
             const hktTime = $item.find('HKTTime').text();
             const eventId = $item.find('EventId').text();
-            const pubDate = hktDate && hktTime ? parseDate(hktDate + hktTime, 'YYYYMMDDHHmm', 8) : undefined;
-            if (!eventId) {
-                throw new Error('The Hong Kong Observatory earthquake source is missing an event ID.');
-            }
             const latAndLon = '經緯:[' + $item.find('Lat').text() + ',' + $item.find('Lon').text() + ']';
             return {
                 title: `[震級:${degree}] [地點:${city}]`,
                 link,
                 guid: `hko-earthquake-${eventId}`,
                 description: `${cityString}, ${latAndLon}`,
-                pubDate,
+                pubDate: parseDate(hktDate + hktTime, 'YYYYMMDDHHmm', 8),
             };
         });
 

@@ -46,14 +46,13 @@ async function handler(ctx) {
         },
     });
     const data = response.data.data.list;
-    const entries = data;
 
     return {
         title: 'B站每周必看',
         link: 'https://www.bilibili.com/h5/weekly-recommend',
         description: 'B站每周必看',
         item: await Promise.all(
-            entries.map(async (item) => {
+            data.map(async (item) => {
                 const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                 return {
                     title: item.title,

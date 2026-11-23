@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -33,9 +34,7 @@ All journals at [Current journals](https://pubs.rsc.org/en/journals)
 
 async function handler(ctx) {
     const { id, category = 'allrecentarticles' } = ctx.req.param();
-    const queryLimit = ctx.req.query('limit');
-    const requestedLimit = queryLimit?.trim() ? Number(queryLimit) : NaN;
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 0 ? Math.floor(requestedLimit) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://pubs.rsc.org';
     const currentUrl = new URL(`en/journals/journalissues/${id}#!recentarticles`, rootUrl).href;

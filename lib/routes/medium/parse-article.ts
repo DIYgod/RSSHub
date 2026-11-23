@@ -17,10 +17,9 @@ function isMediumUrl(url: URL) {
 async function fetchArticle(url: string, cookie: string, redirects = 0): Promise<string> {
     // the session is only sent to Medium, and only a Medium host may keep it through a redirect
     const sessionCookie = cookie && isMediumUrl(new URL(url)) ? cookie : '';
-    const response = await ofetch.raw<string, 'text'>(url, {
+    const response = await ofetch.raw<string>(url, {
         headers: sessionCookie ? { cookie: sessionCookie } : {},
         redirect: 'manual',
-        responseType: 'text',
     });
     if (response.status >= 300 && response.status < 400) {
         const location = response.headers.get('location');

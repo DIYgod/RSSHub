@@ -89,7 +89,7 @@ async function handler(ctx) {
 
                     const releaseDate = $('meta[property="og:release_date"]').attr('content');
 
-                    const description = content.html() ?? undefined;
+                    const description = content.html();
                     const pubDate = releaseDate ? parseDate(releaseDate, 8) : undefined;
                     const author = $('meta[property="og:author"]').attr('content');
 

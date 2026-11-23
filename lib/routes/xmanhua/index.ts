@@ -49,15 +49,11 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('div #chapterlistload').find('.detail-list-form-item');
     // The comic page supplies one author for its chapter entries.
-    const authorName = $('body > div.detail-info-1 > div > div > p.detail-info-tip > span:nth-child(1)').text().split('：', 2)[1] || undefined;
-    const categories = [
-        ...new Set(
-            $('.detail-info-tip .item')
-                .toArray()
-                .map((item) => $(item).text())
-                .filter(Boolean)
-        ),
-    ];
+    const authorName = $('body > div.detail-info-1 > div > div > p.detail-info-tip > span:nth-child(1)').text().split('：', 2)[1];
+    const categories = $('.detail-info-tip .item')
+        .toArray()
+        .map((item) => $(item).text())
+        .filter(Boolean);
     const finishedText = $('div.detail-list-form-title')
         .contents()
         .filter((_, node) => node.type === 'text')

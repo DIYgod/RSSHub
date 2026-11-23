@@ -70,8 +70,7 @@ export const route: Route = {
             .map((el) => {
                 const $el = $(el);
                 const $a = $el.find('.listTxt h5 a');
-                const href = $a.attr('href');
-                const link = href ? new URL(href, listUrl).href : undefined;
+                const link = $a.attr('href');
                 const title = $a.attr('title') || $a.text();
 
                 const pubDateRaw = $el.find('.listTxt .prompt > i').text().trim();

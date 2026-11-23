@@ -96,7 +96,7 @@ async function handler(ctx) {
                 ),
                 category: categoryName,
                 link: itemLink,
-                pubDate: createdAt ? parseDate(createdAt, 8) : undefined,
+                pubDate: parseDate(createdAt!, 8),
             };
         },
         { concurrency: 3 }

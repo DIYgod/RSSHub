@@ -24,7 +24,6 @@ type AcceptedPaperPage = {
 };
 
 type ParseState = {
-    seen: Set<string>;
     programUrl?: string;
 };
 
@@ -60,11 +59,11 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const pages = await cache.tryGet(apiUrl, async () => (await got(apiUrl)).data as AcceptedPaperPage[], 24 * 60 * 60);
-    const state: ParseState = { seen: new Set() };
-    let items = (Array.isArray(pages) ? pages : []).flatMap((page) => parsePage(page, state));
+    const state: ParseState = {};
+    let items = pages.flatMap((page) => parsePage(page, state));
 
     const limit = Math.trunc(Number(ctx.req.query('limit')));
-    if (Number.isFinite(limit) && limit > 0) {
+    if (limit > 0) {
         items = items.slice(0, limit);
     }
 
@@ -100,23 +99,18 @@ function parsePage(page: AcceptedPaperPage, state: ParseState): DataItem[] {
     const year = page.link?.match(/\/ndss(\d{4})\/accepted-papers\/?$/i)?.[1];
     state.programUrl ??= year ? rootUrl + '/ndss-program/symposium-' + year + '/' : undefined;
 
-    const makeItem = (title: string, author: string, href?: string): DataItem[] =>
-        title.trim()
-            ? [
-                  {
-                      title,
-                      author,
-                      link: uniqueLink(href, pageUrl, title, state.seen),
-                      pubDate,
-                  },
-              ]
-            : [];
+    const makeItem = (title: string, author: string, href?: string): DataItem => ({
+        title,
+        author,
+        link: itemLink(href, pageUrl, title),
+        pubDate,
+    });
 
     const modern = $('.pt-cv-content-item')
         .toArray()
-        .flatMap((element) => {
+        .map((element) => {
             const $item = $(element);
-            const $title = $item.find('.pt-cv-title a').first();
+            const $title = $item.find('.pt-cv-title a');
             return makeItem($title.text(), $item.find('.pt-cv-ctf-display_authors .pt-cv-ctf-value').text().trim(), $title.attr('href'));
         });
     if (modern.length > 0) {
@@ -125,7 +119,7 @@ function parsePage(page: AcceptedPaperPage, state: ParseState): DataItem[] {
 
     const legacy = $('div h3')
         .toArray()
-        .flatMap((element) => {
+        .map((element) => {
             const $item = $(element);
             return makeItem($item.text(), $item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '), $item.siblings('a').attr('href'));
         });
@@ -135,7 +129,7 @@ function parsePage(page: AcceptedPaperPage, state: ParseState): DataItem[] {
 
     return $('p strong')
         .toArray()
-        .flatMap((element) => {
+        .map((element) => {
             const $item = $(element);
             const author = $item
                 .parent()
@@ -149,23 +143,15 @@ function parsePage(page: AcceptedPaperPage, state: ParseState): DataItem[] {
         });
 }
 
-function uniqueLink(href: string | undefined, pageUrl: string, title: string, seen: Set<string>) {
-    let baseLink = pageUrl + '#' + title;
+function itemLink(href: string | undefined, pageUrl: string, title: string) {
+    let link = pageUrl + '#' + title;
     try {
         if (href) {
-            baseLink = new URL(href, pageUrl).href;
+            link = new URL(href, pageUrl).href;
         }
     } catch {
         // Keep the list-page fragment fallback.
     }
-
-    let link = baseLink;
-    for (let suffix = 2; seen.has(link); suffix++) {
-        const url = new URL(baseLink);
-        url.hash = (url.hash ? url.hash.slice(1) + '-' : '') + suffix;
-        link = url.href;
-    }
-    seen.add(link);
     return link;
 }
 
@@ -180,13 +166,13 @@ async function getProgramAbstracts(programUrl: string | undefined) {
             programUrl,
             async () => {
                 const response = await got(programUrl);
-                const $ = load(String(response.body ?? ''));
+                const $ = load(response.body);
                 const parsed = new Map<string, string>();
                 $('li.list-group-item').each((_, element) => {
                     const $item = $(element);
-                    const $paper = $item.find('a[href*="/ndss-paper/"]').first();
-                    const $abstract = $item.find('[id^="pid"]').first();
-                    if (!$paper.text().trim() || !$abstract.length) {
+                    const $paper = $item.find('a[href*="/ndss-paper/"]');
+                    const $abstract = $item.find('[id^="pid"]');
+                    if (!$paper.text() || !$abstract.length) {
                         return;
                     }
 
@@ -196,7 +182,7 @@ async function getProgramAbstracts(programUrl: string | undefined) {
                     }
 
                     const titleKey = normalizeTitle($paper.text());
-                    if (titleKey && !parsed.has(titleKey)) {
+                    if (titleKey) {
                         parsed.set(titleKey, description);
                     }
                 });
@@ -227,7 +213,7 @@ async function getPaperAbstract(item: DataItem) {
             item.link,
             async () => {
                 const response = await got(detailUrl);
-                const $ = load(String(response.body ?? ''));
+                const $ = load(response.body);
                 const content = extractDescription($, item.author);
                 if (!content) {
                     logger.warn('NDSS: no abstract found for "' + item.title + '" at ' + detailUrl + '; keeping the item without a description.');
@@ -245,7 +231,7 @@ async function getPaperAbstract(item: DataItem) {
 
 function extractDescription($: CheerioAPI, author?: DataItem['author']) {
     for (const selector of descriptionSelectors) {
-        const $candidate = $(selector).first();
+        const $candidate = $(selector);
         if (!$candidate.length) {
             continue;
         }
@@ -260,7 +246,6 @@ function extractDescription($: CheerioAPI, author?: DataItem['author']) {
 
 function cleanDescription($: CheerioAPI, $element: Cheerio<AnyNode>, author?: DataItem['author']) {
     const $content = $element;
-    $content.find('script, style, nav, footer, form, header, .paper-authors, .authors, .author, .paper-author, .share, .social-share').remove();
 
     const authorText = normalize(Array.isArray(author) ? author.map((entry) => entry.name).join(', ') : (author ?? ''));
     $content.find('p').each((_, element) => {

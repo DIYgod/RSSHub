@@ -61,14 +61,7 @@ async function handler(ctx) {
         });
 
     // get articles
-    const articleList = await pMap(
-        detailUrls,
-        async (item) => {
-            const article = await cache.tryGet(`tongji:sse:article:${item.link}`, () => getArticle(item.link));
-            return { ...item, ...article, title: article.title || item.title };
-        },
-        { concurrency: 3 }
-    );
+    const articleList = await pMap(detailUrls, async (item) => ({ ...item, ...(await cache.tryGet(`tongji:sse:article:${item.link}`, () => getArticle(item.link))) }), { concurrency: 3 });
 
     // feed the data
     return {

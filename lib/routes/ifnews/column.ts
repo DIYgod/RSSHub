@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/time';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:cid',
@@ -16,13 +16,6 @@ export const route: Route = {
     maintainers: ['Origami404'],
     handler,
 };
-
-function getPublishedDate(value: string | undefined) {
-    if (!value) {
-        return;
-    }
-    return /^\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?$/.test(value) ? parseDate(`${value.length === 10 ? `${value}T00:00:00` : value.replace(' ', 'T')}+08:00`) : parseRelativeDate(value);
-}
 
 async function handler(ctx: Context) {
     const { cid } = ctx.req.param();
@@ -39,8 +32,8 @@ async function handler(ctx: Context) {
     const list: Array<DataItem & { aid: string }> = data.list.map((item): DataItem & { aid: string } => ({
         title: item.title,
         author: item.createUser,
-        link: `${url}/news.html?${new URLSearchParams({ aid: String(item.fileID) })}`,
-        pubDate: getPublishedDate(item.publishTime),
+        link: `${url}/news.html?aid=${item.fileID}`,
+        pubDate: parseDate(item.publishTime, 8),
         aid: item.fileID,
     }));
 

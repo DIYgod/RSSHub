@@ -6,13 +6,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-function parsePublicationDate(value?: string) {
-    if (!value?.trim()) {
-        return;
-    }
-    return parseDate(value, 8);
-}
-
 const baseUrl = 'https://today.hitwh.edu.cn';
 
 export const route: Route = {
@@ -46,7 +39,7 @@ async function handler() {
     const links = $('.list_list_wrap #wp_news_w10002 ul > li')
         .toArray()
         .map((el): DataItem & { link: string } => ({
-            pubDate: parsePublicationDate($(el).find('.news-time2').text()),
+            pubDate: parseDate($(el).find('.news-time2').text(), 8),
             link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('a').text(),
         }));

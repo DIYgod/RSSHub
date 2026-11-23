@@ -66,12 +66,11 @@ const parsers = {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const timestamp = $item.find('.date').attr('data-timestamp');
                 return {
                     title: $item.find('.title').text(),
                     link: $item.attr('href'),
                     description: $item.find('.desc').text(),
-                    pubDate: timestamp ? parseDate(Number(timestamp)) : undefined,
+                    pubDate: parseDate(Number($item.find('.date').attr('data-timestamp'))),
                     image: $item.find('.article-img img').attr('src'),
                 };
             }),
@@ -80,12 +79,11 @@ const parsers = {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const timestamp = $item.find('.list-time').attr('data-timestamp');
                 return {
                     title: $item.find('.list-title').text(),
                     link: $item.attr('href'),
                     description: $item.find('.list-desc').text(),
-                    pubDate: timestamp ? parseDate(Number(timestamp)) : undefined,
+                    pubDate: parseDate(Number($item.find('.list-time').attr('data-timestamp'))),
                     image: $item.find('.img-box img').attr('src'),
                 };
             }),
@@ -93,9 +91,9 @@ const parsers = {
 
 // Detail parsers.
 const detailParsers = {
-    ow: ($) => $('.deatil-content').first().html(),
-    hs: ($) => $('.article-content').first().html(),
-    wow: ($) => $('.detail').first().html(),
+    ow: ($) => $('.deatil-content').html(),
+    hs: ($) => $('.article-content').html(),
+    wow: ($) => $('.detail').html(),
 };
 
 function getList(category, $) {
@@ -112,9 +110,9 @@ async function fetchDetail(item, category) {
         const $ = load(response);
 
         const parseDetail = detailParsers[category];
-        item.description = parseDetail($) ?? item.description;
+        item.description = parseDetail($);
         if (category === 'hs') {
-            item.author = $('.article-author').first().text();
+            item.author = $('.article-author').text();
         }
         return item;
     });
@@ -136,8 +134,7 @@ async function handler(ctx): Promise<Data> {
         throw new Error('No news found');
     }
 
-    const selectedList = list;
-    const items = await Promise.all(selectedList.map((item) => fetchDetail(item, category)));
+    const items = await Promise.all(list.map((item) => fetchDetail(item, category)));
 
     return {
         title: `${categoryNames[category]}新闻`,

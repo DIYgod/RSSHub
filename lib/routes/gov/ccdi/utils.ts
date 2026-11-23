@@ -46,11 +46,10 @@ export const parseNewsList = async (url, selector, ctx) => {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const pubDate = $item.find('.more').text();
             return {
                 title: $item.find('a').text().trim(),
                 link: new URL($item.find('a').attr('href')!, url).href,
-                pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
+                pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD', 8),
             };
         });
     const title = $('.other_Location')

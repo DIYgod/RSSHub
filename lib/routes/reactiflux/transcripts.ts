@@ -64,10 +64,7 @@ async function handler(ctx) {
 
                 const data = JSON.parse(detailResponse.match(/__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1] ?? '{}');
 
-                const props = data.props?.pageProps;
-                if (!props?.title || typeof props.html !== 'string' || !props.html || typeof data.query?.slug !== 'string' || !data.query.slug) {
-                    throw new Error('Reactiflux transcript content is missing');
-                }
+                const props = data.props.pageProps;
 
                 const title = props.title;
                 const description = props.html;
@@ -75,7 +72,7 @@ async function handler(ctx) {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = props.date ? parseDate(`${props.date} +0000`, 'YYYY-MM-DD ZZ') : undefined;
+                item.pubDate = parseDate(`${props.date} +0000`, 'YYYY-MM-DD ZZ');
                 item.link = new URL(`transcripts/${data.query.slug}`, rootUrl).href;
                 item.author = author;
                 item.guid = guid;

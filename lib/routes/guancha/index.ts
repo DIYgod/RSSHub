@@ -150,9 +150,8 @@ async function handler(ctx) {
             .slice(0, category === 'all' ? total / 3 : total);
     }
 
-    const list = [...newsList, ...redianList, ...gundongList].filter((item, index, items) => items.findIndex((first) => first.link === item.link) === index);
     const items = await Promise.all(
-        list.map(async (item) => {
+        [...newsList, ...redianList, ...gundongList].map(async (item) => {
             const article = await cache.tryGet(`guancha:home:full-article:${item.link}`, async () => {
                 let link = item.link;
                 let detailResponse = await got({
@@ -177,12 +176,9 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 const dateMatch = detailResponse.data.match(/"pubDate"\s*:\s*"([^"]+)"/);
-                const relativeTime = content('.time1').text();
                 const pubDate =
                     dateMatch === null
-                        ? relativeTime
-                            ? parseRelativeDate(relativeTime) // PubDates of posts in 'fengwen' are in an informal format.
-                            : undefined
+                        ? parseRelativeDate(content('.time1').text()) // PubDates of posts in 'fengwen' are in an informal format.
                         : parseDate(dateMatch[1], 8);
 
                 const description = (await getFullText(content, link)) || content('.article-txt-content').html();

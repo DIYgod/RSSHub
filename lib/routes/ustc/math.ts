@@ -57,8 +57,7 @@ async function handler(ctx) {
             const title = elem.find('.Article_Title > a').attr('title');
             let link = elem.find('.Article_Title > a').attr('href');
             link = link!.startsWith('/') ? host + link : link;
-            const published = elem.find('.Article_PublishDate').text().trim();
-            const pubDate = published ? parseDate(published, 'YYYY-MM-DD', 8) : undefined;
+            const pubDate = parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD', 8);
             return {
                 title: title!,
                 pubDate,
@@ -68,23 +67,21 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author'>>(`ustc:math:detail:${item.link}`, async () => {
-                const details: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`ustc:math:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description' | 'author'> = {};
                 try {
                     const response = await got(item.link);
                     const $detail = load(response.data);
                     details.description = $detail('div.wp_articlecontent').html();
-                    details.author =
-                        $detail('.arti_publisher')
-                            .text()
-                            .replace(/^发布者[：:]\s*/, '')
-                            .trim() || undefined;
+                    details.author = $detail('.arti_publisher')
+                        .text()
+                        .replace(/^发布者[：:]\s*/, '');
                 } catch {
                     // Intranet only contents
                 }
                 return details;
             });
-            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            return { ...item, ...details };
         },
         { concurrency: 3 }
     );

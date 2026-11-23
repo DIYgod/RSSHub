@@ -6,6 +6,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://sist.shanghaitech.edu.cn';
@@ -26,8 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isSafeInteger(Math.floor(requestedLimit)) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await ofetch(`${baseUrl}/_wp3services/generalQuery?queryObj=articles`, {
         method: 'POST',
@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
         parseResponse: JSON.parse,
     });
 
-    const list: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.map((item) => ({
         title: item.title,
         link: item.url.replace(/^http:\/\//, 'https://'),
         author: item.publisher,

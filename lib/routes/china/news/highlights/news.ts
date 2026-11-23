@@ -69,12 +69,11 @@ async function handler(ctx) {
             cache.tryGet(entry.link!, async () => {
                 const { data: detail } = await got(entry.link!);
                 const $$ = load(detail);
-                const articleInfo = $$('.article_info, #chan_newsInfo').first();
+                const articleInfo = $$('.article_info, #chan_newsInfo');
                 const articleDate = articleInfo.find('.time').text();
                 return {
                     ...entry,
-                    title: $$('h1').text() || entry.title,
-                    description: $$('#js_article_content, #chan_newsDetail').first().html(),
+                    description: $$('#js_article_content, #chan_newsDetail').html(),
                     pubDate: articleDate ? parseDate(articleDate, 8) : entry.pubDate,
                     author:
                         articleInfo

@@ -63,7 +63,7 @@ async function handler(ctx) {
                     const fullText = $('div.contenttxt').html();
                     const editor = $('div.editor').text();
                     const published = editor.match(/\b\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\b/)?.[0];
-                    const author = published ? editor.slice(0, editor.indexOf(published)).trim() || undefined : undefined;
+                    const author = published ? editor.slice(0, editor.indexOf(published)).trim() : undefined;
                     const time = published ? parseDateStrict(published, 'YYYY-MM-DD HH:mm:ss', 8) : undefined;
                     return {
                         description: fullText,

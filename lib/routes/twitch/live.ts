@@ -25,13 +25,6 @@ export const route: Route = {
     handler,
 };
 
-function getPublicationDate(value: string | undefined) {
-    if (typeof value !== 'string' || !value) {
-        return;
-    }
-    return parseDate(value);
-}
-
 async function handler(ctx) {
     const login = ctx.req.param('login');
 
@@ -119,7 +112,7 @@ async function handler(ctx) {
             author: displayName,
             category: realtimeStreamTagListData.user.stream.freeformTags.map((item) => item.name),
             description: `<img style="max-width: 100%;" src="https://static-cdn.jtvnw.net/previews-ttv/live_user_${login}.jpg">`,
-            pubDate: getPublicationDate(streamMetadataData.user.stream.createdAt),
+            pubDate: parseDate(streamMetadataData.user.stream.createdAt),
             guid: streamMetadataData.user.stream.id,
             link: `https://www.twitch.tv/${login}`,
         });

@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -38,11 +39,8 @@ async function handler(ctx) {
 
     const $ = load(response.data, { xml: true });
 
-    const requestedLimit = Number(ctx.req.query('limit'));
-    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
-
     let items = $('item')
-        .slice(0, limit)
+        .slice(0, getRouteLimit(ctx, 50))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -56,7 +54,7 @@ async function handler(ctx) {
                     .find('category')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: $item.find('pubDate').text() ? parseDate($item.find('pubDate').text()) : undefined,
+                pubDate: parseDate($item.find('pubDate').text()),
             };
         });
 
@@ -73,12 +71,7 @@ async function handler(ctx) {
 
                 content('.aspect-spacer, .post-recs, .author-bio, #js-reg-wrap').remove();
 
-                const description = content('.post__main').html();
-                if (!description) {
-                    throw new Error(`Archived article content was not found: ${item.link}`);
-                }
-
-                return { description };
+                return { description: content('.post__main').html() };
             });
             return { ...item, ...detail };
         },

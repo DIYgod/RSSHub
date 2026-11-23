@@ -47,7 +47,7 @@ function parseListing(json: { content: string }): ListItem[] {
             return {
                 title,
                 link,
-                date: yearMonth && day ? `${yearMonth}-${day}` : '',
+                date: `${yearMonth}-${day}`,
             };
         })
         .filter((it) => it.link && it.title);
@@ -77,7 +77,7 @@ async function enrichItem(item: ListItem): Promise<DataItem> {
         title: item.title,
         link: item.link,
         description: details.description,
-        pubDate: details.pubDate ?? (item.date ? parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ') : undefined),
+        pubDate: details.pubDate ?? parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ'),
     };
 }
 
@@ -86,7 +86,7 @@ async function enrichItemSafely(item: ListItem): Promise<DataItem> {
         return await enrichItem(item);
     } catch (error) {
         logger.warn(`Failed to fetch SJTU CS notice ${item.link}: ${error}`);
-        return { title: item.title, link: item.link, pubDate: item.date ? parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ') : undefined };
+        return { title: item.title, link: item.link, pubDate: parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ') };
     }
 }
 

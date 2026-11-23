@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { html } from 'hono/html';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
@@ -36,11 +36,11 @@ interface VideoThumb {
     id: number;
     title: string;
     pageURL: string;
-    thumbURL?: string;
+    thumbURL: string;
     imageURL?: string;
-    trailerURL?: string;
+    trailerURL: string;
     trailerFallbackUrl?: string;
-    created?: number;
+    created: number;
     duration?: number;
     views?: number;
     isUHD?: boolean;
@@ -74,40 +74,13 @@ function renderDescription(video: VideoThumb): string {
     const thumb = video.imageURL ?? video.thumbURL;
     const duration = video.duration ? formatDuration(video.duration) : '';
     const views = video.views === undefined ? '' : video.views.toLocaleString();
-    const parts: Array<ReturnType<typeof html>> = [];
-    if (video.isUHD) {
-        parts.push(html`<span>4K</span>`);
-    }
-    if (duration) {
-        parts.push(html`<strong>Duration:</strong> ${duration}`);
-    }
-    if (views) {
-        parts.push(html`<strong>Views:</strong> ${views}`);
-    }
+    const parts = [video.isUHD ? html`<span>4K</span>` : undefined, duration ? html`<strong>Duration:</strong> ${duration}` : undefined, views ? html`<strong>Views:</strong> ${views}` : undefined].filter(
+        (part) => part !== undefined
+    );
     const meta = parts.map((part, index) => html`${index ? ' · ' : ''}${part}`);
-    return html(Object.assign(['\n        ', '\n        <p>', '</p>\n    '], { raw: ['\n        ', '\n        <p>', '</p>\n    '] }), thumb ? html`<img src="${thumb}" alt="${video.title}" style="max-width:100%" />` : '', meta)
+    return html(Object.assign(['\n        ', '\n        <p>', '</p>\n    '], { raw: ['\n        ', '\n        <p>', '</p>\n    '] }), html`<img src="${thumb}" alt="${video.title}" style="max-width:100%" />`, meta)
         .toString()
         .trim();
-}
-function getMedia(video: VideoThumb): DataItem['media'] {
-    const media: NonNullable<DataItem['media']> = {};
-    const thumbnail = video.imageURL ?? video.thumbURL;
-    if (thumbnail) {
-        media.thumbnail = { url: thumbnail };
-    }
-    if (video.trailerURL) {
-        media.content = {
-            url: video.trailerURL,
-            type: 'video/mp4',
-        };
-    }
-    return media;
-}
-function getPublicationDate(timestamp?: number) {
-    if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
-        return;
-    }
-    return parseDate(timestamp * 1000);
 }
 async function handler(ctx) {
     const { creators } = ctx.req.param();
@@ -129,10 +102,18 @@ async function handler(ctx) {
     const items = videos.map((video) => ({
         title: `${video.title}${video.isUHD ? ' [4K]' : ''}`,
         link: video.pageURL,
-        pubDate: getPublicationDate(video.created),
+        pubDate: parseDate(video.created * 1000),
         author: creatorName,
         description: renderDescription(video),
-        media: getMedia(video),
+        media: {
+            thumbnail: {
+                url: video.imageURL ?? video.thumbURL,
+            },
+            content: {
+                url: video.trailerURL,
+                type: 'video/mp4',
+            },
+        },
     }));
     return {
         title: `${creatorName} - newest videos on xHamster`,

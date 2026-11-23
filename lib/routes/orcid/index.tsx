@@ -38,15 +38,15 @@ async function handler(ctx) {
     }
 
     const out = works.map((work) => {
-        const { year, month, day } = work.publicationDate ?? {};
-        const publicationDate = year ? [year, month, month ? day : undefined].filter(Boolean).join('-') : undefined;
-        const identifier = work.workExternalIdentifiers.find((entry) => entry.relationship?.value === 'self' && (entry.normalizedUrl?.value || entry.url?.value));
+        const { year, month, day } = work.publicationDate;
+        const publicationDate = [year, month, day].filter(Boolean).join('-');
+        const identifier = work.workExternalIdentifiers.find((entry) => entry.relationship.value === 'self' && entry.normalizedUrl?.value);
 
         const info = {
             title: work.title.value,
-            link: (typeof work.url === 'string' ? work.url : work.url?.value) ?? identifier?.normalizedUrl?.value ?? identifier?.url?.value,
-            pubDate: publicationDate ? parseDate(publicationDate, month ? (day ? 'YYYY-MM-DD' : 'YYYY-MM') : 'YYYY', 0) : undefined,
-            category: work.workType?.value ? [work.workType.value] : undefined,
+            link: identifier?.normalizedUrl.value,
+            pubDate: parseDate(publicationDate, month ? (day ? 'YYYY-MM-DD' : 'YYYY-MM') : 'YYYY', 0),
+            category: [work.workType.value],
             description: renderToString(
                 <>
                     {work.journalTitle?.value ? <h3>{work.journalTitle.value}</h3> : null}

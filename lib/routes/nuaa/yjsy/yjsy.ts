@@ -80,9 +80,6 @@ async function handler(ctx) {
                         const response = await got(itemUrl, gotConfig);
                         const $ = load(response.data);
                         const content = $('.wp_articlecontent');
-                        if (!content.length) {
-                            throw new Error('Article content was not found at ' + itemUrl);
-                        }
                         return content.html() ?? undefined;
                     }
                     return '';

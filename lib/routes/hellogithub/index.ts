@@ -69,9 +69,9 @@ async function handler(ctx) {
         title: `${item.name}: ${item.title}`,
         author: item.author,
         link: `${rootUrl}/repository/${item.item_id}`,
-        updated: item.updated_at ? parseDate(item.updated_at, 8) : undefined,
+        updated: parseDate(item.updated_at, 8),
         description: item.summary,
-        category: item.primary_lang ? [item.primary_lang] : undefined,
+        category: [item.primary_lang],
     }));
 
     return {

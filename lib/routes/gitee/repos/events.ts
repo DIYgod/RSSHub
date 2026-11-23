@@ -79,7 +79,7 @@ async function handler(ctx) {
                 break;
             case 'IssueCommentEvent':
                 item.title = item.payload.issue.title;
-                item.description = typeof item.payload.comment.body === 'string' ? md.render(item.payload.comment.body) : undefined;
+                item.description = md.render(item.payload.comment.body);
                 item.link = item.payload.comment.html_url;
                 break;
             default:

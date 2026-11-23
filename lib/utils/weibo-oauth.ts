@@ -57,7 +57,6 @@ export const consumeWeiboOAuthState = async (nonce: string | undefined): Promise
         state.accessScope !== md5(`weibo:oauth:${config.accessKey}`) ||
         typeof state.feature !== 'string' ||
         (state.routeParams !== undefined && typeof state.routeParams !== 'string') ||
-        !Number.isFinite(state.expiresAt) ||
         state.expiresAt <= Temporal.Now.instant().epochMilliseconds
     ) {
         return;

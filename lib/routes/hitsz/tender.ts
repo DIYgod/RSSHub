@@ -10,8 +10,7 @@ import { parseDate } from '@/utils/time';
 interface TenderRow {
     subject: string;
     syncId: string;
-    syncTime?: string;
-    beginTime?: string;
+    syncTime: string;
     shopTypeName?: string;
 }
 
@@ -33,11 +32,11 @@ interface PurchaseItem {
 }
 
 interface TenderDetails {
-    org?: { name: string };
+    org: { name: string };
     publish: {
         id: string;
         subject: string;
-        timeBegin?: number;
+        timeBegin: number;
         standard: boolean;
         contentType: string;
         content?: string;
@@ -65,7 +64,7 @@ function renderRequirements(requirements?: Requirement[]) {
 function renderPurchase(details: TenderDetails) {
     const enquiry = details.enquiry;
     if (!enquiry) {
-        return details.publish.content || undefined;
+        return details.publish.content;
     }
     const fields = [
         ['付款方式', enquiry.payWay],
@@ -74,9 +73,7 @@ function renderPurchase(details: TenderDetails) {
         ['交货地址', enquiry.receiveAddress],
     ];
     const conditions = fields.filter(([, value]) => value).map(([label, value]) => String(html`<p><strong>${label}：</strong>${value}</p>`));
-    if ((enquiry.budgetOpen || enquiry.budgetLimit) && enquiry.budget !== undefined) {
-        conditions.push(String(html`<p><strong>预算总价：</strong>${enquiry.budgetCurrency} ${enquiry.budget}</p>`));
-    }
+    const budget = (enquiry.budgetOpen || enquiry.budgetLimit) && enquiry.budget !== undefined ? String(html`<p><strong>预算总价：</strong>${enquiry.budgetCurrency} ${enquiry.budget}</p>`) : '';
     const items = (enquiry.items ?? []).map((item) => {
         const fields = [
             ['数量', item.applyNums],
@@ -84,7 +81,7 @@ function renderPurchase(details: TenderDetails) {
             ['品牌', item.brand],
             ['型号', item.model],
             ['服务要求', item.service],
-            ['预算单价', item.unitPrice ? `${item.currency || ''} ${item.unitPrice}` : undefined],
+            ['预算单价', item.unitPrice ? `${item.currency} ${item.unitPrice}` : undefined],
         ];
         return (
             String(html`<h3>${item.name}</h3>`) +
@@ -96,14 +93,7 @@ function renderPurchase(details: TenderDetails) {
         );
     });
     const attachments = (details.publish.attach ?? []).map((file) => String(html`<p><a href="${`https://file.yuncaitong.cn/${file.id}`}">${file.name}</a></p>`));
-    return [details.publish.content || '', ...conditions, renderRequirements(enquiry.quals), renderRequirements(enquiry.busis), ...items, ...attachments].join('') || undefined;
-}
-
-function parseCalendarDate(value?: string) {
-    if (!value) {
-        return;
-    }
-    return parseDate(value, 'YYYY-MM-DD HH:mm:ss', 8);
+    return [details.publish.content || '', ...conditions, budget, renderRequirements(enquiry.quals), renderRequirements(enquiry.busis), ...items, ...attachments].join('') || undefined;
 }
 
 export async function getTenderFeed(): Promise<Data> {
@@ -137,23 +127,20 @@ export async function getTenderFeed(): Promise<Data> {
     const items = await pMap(
         result.resultset,
         async (row): Promise<DataItem> => {
-            const date = (row.syncTime || row.beginTime)?.split(' ', 1)[0].replaceAll('-', '/');
-            if (!row.syncId || !date) {
-                throw new Error('A public procurement notice is missing its native document identifier or storage date.');
-            }
+            const date = row.syncTime.split(' ', 1)[0].replaceAll('-', '/');
             const base = `https://provider.yuncaitong.cn/publish/${date}/${row.syncId}`;
             const detail = await cache.tryGet(`${base}.sson`, async () => {
                 const data = await ofetch<TenderDetails>(`${base}.sson`, { responseType: 'json' });
-                const pubDate = Number.isFinite(data.publish.timeBegin) ? parseDate(data.publish.timeBegin!) : undefined;
+                const pubDate = parseDate(data.publish.timeBegin);
                 if (data.publish.standard) {
-                    return { description: renderPurchase(data), pubDate, author: data.org?.name };
+                    return { description: renderPurchase(data), pubDate, author: data.org.name };
                 }
                 if (data.publish.contentType === 'PDF') {
                     const enclosureUrl = `${base}/content.pdf`;
-                    return { description: String(html`<p><a href="${enclosureUrl}">查看公告 PDF</a></p>`), enclosure_url: enclosureUrl, enclosure_type: 'application/pdf', pubDate, author: data.org?.name };
+                    return { description: String(html`<p><a href="${enclosureUrl}">查看公告 PDF</a></p>`), enclosure_url: enclosureUrl, enclosure_type: 'application/pdf', pubDate, author: data.org.name };
                 }
                 const description = await ofetch(`${base}/content.html`);
-                return { description, pubDate, author: data.org?.name };
+                return { description, pubDate, author: data.org.name };
             });
             return {
                 ...detail,
@@ -161,7 +148,6 @@ export async function getTenderFeed(): Promise<Data> {
                 link: `https://cggl.hitsz.edu.cn/provider/#/publish/${row.syncId}`,
                 guid: row.syncId,
                 category: row.shopTypeName,
-                pubDate: detail.pubDate ?? parseCalendarDate(row.beginTime),
             };
         },
         { concurrency: 3 }
