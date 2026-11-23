@@ -65,7 +65,7 @@ async function handler(ctx) {
                     if (!img.attribs['data-src']) {
                         return;
                     }
-                    const url = new URL(img.attribs['data-src']);
+                    const url = new URL(img.attribs['data-src'], baseUrl);
                     if (url.pathname !== '/gw/photo.php') {
                         return;
                     }
