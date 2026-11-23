@@ -511,6 +511,19 @@
       }
     ]
   },
+  "cspengyuan.com": {
+    "_name": "中证鹏元",
+    "www": [
+      {
+        "title": "信用研究",
+        "docs": "https://docs.rsshub.app/routes/cspengyuan",
+        "source": [
+          "/credit-research/:category"
+        ],
+        "target": "/cspengyuan/research/:category"
+      }
+    ]
+  },
   "datalekt.nl": {
     "_name": "Datalekt",
     ".": [
@@ -649,6 +662,19 @@
           "/"
         ],
         "target": "/daxiaamu/home"
+      }
+    ]
+  },
+  "dblp.org": {
+    "_name": "DBLP",
+    ".": [
+      {
+        "title": "Keyword Search",
+        "docs": "https://docs.rsshub.app/routes/dblp",
+        "source": [
+          "/search"
+        ],
+        "target": "/dblp/:field"
       }
     ]
   },
@@ -1617,6 +1643,19 @@
       }
     ]
   },
+  "bse.cn": {
+    "_name": "北京证券交易所",
+    ".": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/bse",
+        "source": [
+          "/"
+        ],
+        "target": "/bse/:category?/:keyword?"
+      }
+    ]
+  },
   "cn-healthcare.com": {
     "_name": "健康界",
     ".": [
@@ -2437,6 +2476,20 @@
       }
     ]
   },
+  "wfdf.sport": {
+    "_name": "WFDF",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/wfdf",
+        "source": [
+          "/news/",
+          "/"
+        ],
+        "target": "/wfdf/news"
+      }
+    ]
+  },
   "xianbao.fun": {
     "_name": "线报酷",
     "new": [
@@ -2552,19 +2605,6 @@
           "/"
         ],
         "target": "/bitmovin/blog"
-      }
-    ]
-  },
-  "bse.cn": {
-    "_name": "北京证券交易所",
-    ".": [
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/bse",
-        "source": [
-          "/"
-        ],
-        "target": "/bse/:category?/:keyword?"
       }
     ]
   },
@@ -2712,16 +2752,30 @@
       }
     ]
   },
-  "cspengyuan.com": {
-    "_name": "中证鹏元",
+  "crac.org.cn": {
+    "_name": "中国无线电协会业余无线电分会",
     "www": [
       {
-        "title": "信用研究",
-        "docs": "https://docs.rsshub.app/routes/cspengyuan",
+        "title": "最新资讯",
+        "docs": "https://docs.rsshub.app/routes/crac",
         "source": [
-          "/credit-research/:category"
+          "/",
+          "/News/*"
         ],
-        "target": "/cspengyuan/research/:category"
+        "target": "/crac/:type?"
+      }
+    ]
+  },
+  "allspectrum.cn": {
+    "_name": "中国无线电协会业余无线电分会",
+    "zhipu": [
+      {
+        "title": "考试信息",
+        "docs": "https://docs.rsshub.app/routes/crac",
+        "source": [
+          "/CRAC/crac/pages/list_examMsg.html"
+        ],
+        "target": "/crac/exam"
       }
     ]
   },
@@ -2735,19 +2789,6 @@
           "/:name"
         ],
         "target": "/curius/links/:name"
-      }
-    ]
-  },
-  "dblp.org": {
-    "_name": "DBLP",
-    ".": [
-      {
-        "title": "Keyword Search",
-        "docs": "https://docs.rsshub.app/routes/dblp",
-        "source": [
-          "/search"
-        ],
-        "target": "/dblp/:field"
       }
     ]
   },
@@ -2800,6 +2841,19 @@
           "/user/:id"
         ],
         "target": "/gettr/user/:id"
+      }
+    ]
+  },
+  "hiring.cafe": {
+    "_name": "HiringCafe",
+    ".": [
+      {
+        "title": "Jobs",
+        "docs": "https://docs.rsshub.app/routes/hiring.cafe",
+        "source": [
+          "/"
+        ],
+        "target": "/hiring.cafe/jobs/:keywords"
       }
     ]
   },
@@ -3437,6 +3491,20 @@
           "/column/:id"
         ],
         "target": "/barronschina/:id"
+      }
+    ]
+  },
+  "bitget.com": {
+    "_name": "Bitget",
+    "www": [
+      {
+        "title": "Announcement",
+        "docs": "https://docs.rsshub.app/routes/bitget",
+        "source": [
+          "/:lang/promotion/inmail",
+          "/:lang/inmail"
+        ],
+        "target": "/bitget/announcement/all/:lang"
       }
     ]
   },
@@ -5653,6 +5721,67 @@
       }
     ]
   },
+  "dr.dk": {
+    "_name": "DR (Danmarks Radio)",
+    "www": [
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder"
+        ],
+        "target": "/dr/senestenyt"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder/indland"
+        ],
+        "target": "/dr/indland"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder/udland"
+        ],
+        "target": "/dr/udland"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder/penge"
+        ],
+        "target": "/dr/penge"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder/politik"
+        ],
+        "target": "/dr/politik"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/sporten"
+        ],
+        "target": "/dr/sporten"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/dr",
+        "source": [
+          "/nyheder/viden"
+        ],
+        "target": "/dr/viden"
+      }
+    ]
+  },
   "facebook.com": {
     "_name": "Facebook",
     "www": [
@@ -6834,6 +6963,76 @@
       }
     ]
   },
+  "voronoiapp.com": {
+    "_name": "Voronoi",
+    "www": [
+      {
+        "title": "Author Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/author/:username"
+        ],
+        "target": "/voronoiapp/author/:username"
+      },
+      {
+        "title": "Editor's Pick Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/posts/editors-pick"
+        ],
+        "target": "/voronoiapp/editors-pick"
+      },
+      {
+        "title": "Home Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/",
+          "/posts/voronoi"
+        ],
+        "target": "/voronoiapp/home"
+      },
+      {
+        "title": "Latest Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/posts/latest"
+        ],
+        "target": "/voronoiapp/latest"
+      },
+      {
+        "title": "Most Liked Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/posts/most-popular"
+        ],
+        "target": "/voronoiapp/popular/most-popular"
+      },
+      {
+        "title": "Most Discussed Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/posts/most-discussed"
+        ],
+        "target": "/voronoiapp/popular/most-discussed"
+      },
+      {
+        "title": "Most Viewed Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/posts/most-viewed"
+        ],
+        "target": "/voronoiapp/popular/most-viewed"
+      },
+      {
+        "title": "Search Keyword Posts",
+        "docs": "https://docs.rsshub.app/routes/voronoiapp",
+        "source": [
+          "/explore"
+        ],
+        "target": "/voronoiapp/search/:keyword"
+      }
+    ]
+  },
   "wellcee.com": {
     "_name": "Wellcee 唯心所寓",
     "www": [
@@ -6844,37 +7043,6 @@
           "/"
         ],
         "target": "/wellcee/support-city"
-      }
-    ]
-  },
-  "douyin.com": {
-    "_name": "抖音直播",
-    ".": [
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/hashtag/:cid"
-        ],
-        "target": "/douyin/hashtag/:cid"
-      },
-      {
-        "title": "博主",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/user/:uid"
-        ],
-        "target": "/douyin/user/:uid"
-      }
-    ],
-    "live": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/douyin",
-        "source": [
-          "/:rid"
-        ],
-        "target": "/douyin/live/:rid/:showTime?"
       }
     ]
   },
@@ -13552,20 +13720,6 @@
       }
     ]
   },
-  "bitget.com": {
-    "_name": "Bitget",
-    "www": [
-      {
-        "title": "Announcement",
-        "docs": "https://docs.rsshub.app/routes/bitget",
-        "source": [
-          "/:lang/promotion/inmail",
-          "/:lang/inmail"
-        ],
-        "target": "/bitget/announcement/all/:lang"
-      }
-    ]
-  },
   "bjeea.cn": {
     "_name": "北京教育考试院",
     "www": [
@@ -18399,33 +18553,6 @@
       }
     ]
   },
-  "allspectrum.cn": {
-    "_name": "中国无线电协会业余无线电分会",
-    "zhipu": [
-      {
-        "title": "考试信息",
-        "docs": "https://docs.rsshub.app/routes/crac",
-        "source": [
-          "/CRAC/crac/pages/list_examMsg.html"
-        ],
-        "target": "/crac/exam"
-      }
-    ]
-  },
-  "crac.org.cn": {
-    "_name": "中国无线电协会业余无线电分会",
-    "www": [
-      {
-        "title": "最新资讯",
-        "docs": "https://docs.rsshub.app/routes/crac",
-        "source": [
-          "/",
-          "/News/*"
-        ],
-        "target": "/crac/:type?"
-      }
-    ]
-  },
   "crush.ninja": {
     "_name": "CrushNinja",
     "www": [
@@ -20444,6 +20571,37 @@
           "/"
         ],
         "target": "/dorohedoro/news"
+      }
+    ]
+  },
+  "douyin.com": {
+    "_name": "抖音直播",
+    ".": [
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/hashtag/:cid"
+        ],
+        "target": "/douyin/hashtag/:cid"
+      },
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/douyin/user/:uid"
+      }
+    ],
+    "live": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/douyin",
+        "source": [
+          "/:rid"
+        ],
+        "target": "/douyin/live/:rid/:showTime?"
       }
     ]
   },
@@ -25039,19 +25197,6 @@
           "/"
         ],
         "target": "/hinatazaka46/news"
-      }
-    ]
-  },
-  "hiring.cafe": {
-    "_name": "HiringCafe",
-    ".": [
-      {
-        "title": "Jobs",
-        "docs": "https://docs.rsshub.app/routes/hiring.cafe",
-        "source": [
-          "/"
-        ],
-        "target": "/hiring.cafe/jobs/:keywords"
       }
     ]
   },
@@ -48937,6 +49082,14 @@
     "_name": "今日头条",
     "www": [
       {
+        "title": "头条主页",
+        "docs": "https://docs.rsshub.app/routes/toutiao",
+        "source": [
+          "/c/user/token/:token"
+        ],
+        "target": "/toutiao/user/token/:token"
+      },
+      {
         "title": "频道",
         "docs": "https://docs.rsshub.app/routes/toutiao",
         "source": [
@@ -48951,14 +49104,6 @@
           "/"
         ],
         "target": "/toutiao/channel/recommend"
-      },
-      {
-        "title": "头条主页",
-        "docs": "https://docs.rsshub.app/routes/toutiao",
-        "source": [
-          "/c/user/token/:token"
-        ],
-        "target": "/toutiao/user/token/:token"
       }
     ]
   },
@@ -50531,20 +50676,6 @@
           "/myblog/:id/all.html"
         ],
         "target": "/wenxuecity/blog/:id"
-      }
-    ]
-  },
-  "wfdf.sport": {
-    "_name": "WFDF",
-    ".": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/wfdf",
-        "source": [
-          "/news/",
-          "/"
-        ],
-        "target": "/wfdf/news"
       }
     ]
   },
@@ -54057,67 +54188,6 @@
           "/subject/:id/discussion"
         ],
         "target": "/douban/:id/discussion"
-      }
-    ]
-  },
-  "dr.dk": {
-    "_name": "DR (Danmarks Radio)",
-    "www": [
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder"
-        ],
-        "target": "/dr/senestenyt"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder/indland"
-        ],
-        "target": "/dr/indland"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder/udland"
-        ],
-        "target": "/dr/udland"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder/penge"
-        ],
-        "target": "/dr/penge"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder/politik"
-        ],
-        "target": "/dr/politik"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/sporten"
-        ],
-        "target": "/dr/sporten"
-      },
-      {
-        "title": "Nyheder",
-        "docs": "https://docs.rsshub.app/routes/dr",
-        "source": [
-          "/nyheder/viden"
-        ],
-        "target": "/dr/viden"
       }
     ]
   },
@@ -62217,76 +62287,6 @@
           "/:id/introduce"
         ],
         "target": "/vocus/publication/:id"
-      }
-    ]
-  },
-  "voronoiapp.com": {
-    "_name": "Voronoi",
-    "www": [
-      {
-        "title": "Author Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/author/:username"
-        ],
-        "target": "/voronoiapp/author/:username"
-      },
-      {
-        "title": "Editor's Pick Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/posts/editors-pick"
-        ],
-        "target": "/voronoiapp/editors-pick"
-      },
-      {
-        "title": "Home Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/",
-          "/posts/voronoi"
-        ],
-        "target": "/voronoiapp/home"
-      },
-      {
-        "title": "Latest Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/posts/latest"
-        ],
-        "target": "/voronoiapp/latest"
-      },
-      {
-        "title": "Most Liked Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/posts/most-popular"
-        ],
-        "target": "/voronoiapp/popular/most-popular"
-      },
-      {
-        "title": "Most Discussed Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/posts/most-discussed"
-        ],
-        "target": "/voronoiapp/popular/most-discussed"
-      },
-      {
-        "title": "Most Viewed Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/posts/most-viewed"
-        ],
-        "target": "/voronoiapp/popular/most-viewed"
-      },
-      {
-        "title": "Search Keyword Posts",
-        "docs": "https://docs.rsshub.app/routes/voronoiapp",
-        "source": [
-          "/explore"
-        ],
-        "target": "/voronoiapp/search/:keyword"
       }
     ]
   },
