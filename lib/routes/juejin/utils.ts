@@ -13,12 +13,7 @@ import type { Category, Collection, Tag } from './types';
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
 const b64tohex = (str) => Buffer.from(str, 'base64').toHex();
-const s256 = (s1: Uint8Array, s2: string) => {
-    const sha = crypto.createHash('sha256');
-    sha.update(s1);
-    sha.update(s2);
-    return sha.digest('hex');
-};
+const s256 = (s1: Uint8Array, s2: string) => crypto.hash('sha256', Buffer.concat([s1, Buffer.from(s2)]));
 
 /**
  * Solve _wafchallengeid

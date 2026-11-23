@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 const generateRequestHeaders = () => {
     const now = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);

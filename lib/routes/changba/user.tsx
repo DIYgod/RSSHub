@@ -1,4 +1,4 @@
-import { createDecipheriv, createHash } from 'node:crypto';
+import { createDecipheriv } from 'node:crypto';
 
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -7,6 +7,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { md5 } from '@/utils/hash';
 import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
@@ -87,7 +88,7 @@ interface ChangbaResponse {
 }
 
 function decodeMedia(value: string, secret: string): string {
-    const digest = createHash('md5').update(secret).digest('hex');
+    const digest = md5(secret);
     const decipher = createDecipheriv('aes-128-cbc', Buffer.from(digest.slice(16)), Buffer.from(digest.slice(0, 16)));
     return decipher.update(value, 'base64', 'utf8') + decipher.final('utf8');
 }

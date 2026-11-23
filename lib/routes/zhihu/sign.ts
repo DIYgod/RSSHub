@@ -1,4 +1,4 @@
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 import { encrypt } from './execlib/x-zse-96-v3';
 

@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { hash } from 'node:crypto';
 
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
@@ -21,9 +21,7 @@ const solveChallenge = (html: string) => {
     const offset = Number.parseInt(challenge[0], 16);
     const [b0, b1] = [Number(target[1]), Number(target[2])];
     for (let i = 0; i < 100_000_000; i++) {
-        const digest = createHash('sha1')
-            .update(challenge + i)
-            .digest();
+        const digest = hash('sha1', challenge + i, 'buffer');
         if (digest[offset] === b0 && digest[offset + 1] === b1) {
             return `${cookieName}${challenge}${i}`;
         }

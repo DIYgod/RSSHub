@@ -1,9 +1,8 @@
-import { createHash } from 'node:crypto';
-
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { compareDates, parseDate } from '@/utils/time';
 
@@ -55,9 +54,7 @@ async function handler() {
             tvStation: item.media,
             title: item.program || item.media,
             description: item.note,
-            guid: `yoasobi:media:${createHash('sha256')
-                .update(JSON.stringify([item.mediaType, item.date, item.media || '', item.program || '', item.startTime || '', item.endTime || '']))
-                .digest('hex')}`,
+            guid: `yoasobi:media:${sha256(JSON.stringify([item.mediaType, item.date, item.media || '', item.program || '', item.startTime || '', item.endTime || '']))}`,
         }));
 
     return {

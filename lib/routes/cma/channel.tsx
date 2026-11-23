@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { hash } from 'node:crypto';
 
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
@@ -13,10 +13,8 @@ import { parseDate } from '@/utils/time';
 const solveChallenge = (prefix: string, leadingZeroBits: number) => {
     for (let count = 0; count < 100_000_000; count++) {
         const suffix = count.toString(16);
-        const hash = createHash('sha1')
-            .update(prefix + suffix)
-            .digest();
-        if (hash.readUInt32BE(0) >>> (32 - leadingZeroBits) === 0) {
+        const digest = hash('sha1', prefix + suffix, 'buffer');
+        if (digest.readUInt32BE(0) >>> (32 - leadingZeroBits) === 0) {
             return suffix;
         }
     }

@@ -8,7 +8,7 @@ import { getDisplayName } from 'teleproto/Utils.js';
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import { parseDate, toRFC822 } from '@/utils/time';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';

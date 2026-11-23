@@ -1,4 +1,4 @@
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 function link(str: string, ...args: string[]): string {
     let result = args.map((arg) => arg + str).join('');

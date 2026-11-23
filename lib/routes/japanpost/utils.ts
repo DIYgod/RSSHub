@@ -1,18 +1,12 @@
-import crypto from 'node:crypto';
-
 import cityTimezones from 'city-timezones';
 
+import { sha512 } from '@/utils/hash';
 import { parseDate, parseDateStrict } from '@/utils/time';
 
 const utils = {
     even: (collection) => collection.filter((index) => index % 2 === 0),
     odd: (collection) => collection.filter((index) => index % 2 === 1),
-    generateGuid: (t) => {
-        const hash = crypto.createHash('sha512');
-        hash.update(t);
-        const r = hash.digest('hex').toUpperCase();
-        return r;
-    },
+    generateGuid: (t) => sha512(t).toUpperCase(),
     parseDatetime: (t, o, r, tz, l) => {
         const formatJaDate = 'YYYY/MM/DD';
         const formatJaDateTime = 'YYYY/MM/DD HH:mm';

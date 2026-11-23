@@ -1,10 +1,9 @@
-import { createHash } from 'node:crypto';
-
 import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
@@ -34,7 +33,7 @@ const getPage = async (url: string, redirectsRemaining = 3): Promise<{ data: str
 
 const renderPostDetail = async <T extends DataItem>(item: T) => {
     const cookie = config.taoguba.cookie?.trim();
-    const sessionKey = cookie ? createHash('sha256').update(cookie).digest('hex') : 'anonymous';
+    const sessionKey = cookie ? sha256(cookie) : 'anonymous';
     const details = await cache.tryGet(`${item.link}:details:v3:${sessionKey}`, async (): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category'>> => {
         const detailResponse = await getPage(item.link!);
 

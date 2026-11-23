@@ -1,10 +1,9 @@
-import { createHash } from 'node:crypto';
-
 import { load } from 'cheerio';
 import { escapeText } from 'entities';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 
 const markets = { tw: 'com.tw', my: 'my', sg: 'sg', th: 'co.th', kr: 'co.kr', au: 'com.au', id: 'co.id', ph: 'ph' };
@@ -39,7 +38,7 @@ async function handler(ctx) {
             const cells = row.find('td');
             const product = cells.eq(0).text();
             const rate = cells.eq(1).text();
-            const hash = createHash('sha256').update(`${product}:${rate}`).digest('hex');
+            const hash = sha256(`${product}:${rate}`);
             return {
                 title: `${product}: ${rate}`,
                 link: `${link}#${hash}`,

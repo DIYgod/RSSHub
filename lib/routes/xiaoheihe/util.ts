@@ -1,14 +1,8 @@
 // Copied from https://github.com/huandu/heybox-url
 
-import { createHash } from 'node:crypto';
+import { md5 } from '@/utils/hash';
 
 const dict = 'JKMNPQRTX1234OABCDFG56789H';
-
-const md5 = (str) => {
-    const h = createHash('md5');
-    h.update(str);
-    return h.digest();
-};
 
 function c0(v) {
     return c1(v) ^ c2(v) ^ c3(v);
@@ -42,18 +36,15 @@ const checksum = (data) =>
 
 export const calculate = (url, timestamp = 0, nonce = '') => {
     timestamp ||= Math.trunc(Temporal.Now.instant().epochMilliseconds / 1000);
-    nonce ||= md5(Math.random().toString()).toHex().toUpperCase();
+    nonce ||= md5(Math.random().toString()).toUpperCase();
 
     const { pathname } = new URL(url);
     const ts = timestamp + 1;
     const u = '/' + pathname.split('/').filter(Boolean).join('/') + '/';
 
     let key = '';
-    const nonceHash = md5((nonce + dict).replaceAll(/\D/g, ''))
-        .toHex()
-        .toLowerCase();
+    const nonceHash = md5((nonce + dict).replaceAll(/\D/g, '')).toLowerCase();
     const rnd = md5(ts + u + nonceHash)
-        .toHex()
         .replaceAll(/\D/g, '')
         .slice(0, 9)
         .padEnd(9, '0');

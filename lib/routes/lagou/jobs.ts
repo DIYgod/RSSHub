@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
@@ -64,7 +65,7 @@ async function handler(ctx: Context) {
     };
 
     const payload = JSON.stringify({ city, pn: 1, kd: position, px: 'new' });
-    const code = crypto.createHash('sha256').update(`${originHeader}${apiUrl}${payload}`).digest('hex').toUpperCase();
+    const code = sha256(`${originHeader}${apiUrl}${payload}`).toUpperCase();
 
     const response = await ofetch(apiUrl, {
         method: 'POST',

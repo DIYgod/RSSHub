@@ -16,7 +16,7 @@
 //              {"GITHUB_ACCESS_TOKEN": "…"}; they can also go in a `.env` file in the `rsshub`
 //              folder of magpie's config folder. LISTEN_INADDR_ANY=1 opens the server to the network.
 
-import { createHash } from 'node:crypto';
+import { hash } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -99,12 +99,7 @@ const RSSHubPlugin = (input: PluginInput, options?: PluginOptions) => {
         const target = new URL(pathAndQuery, 'http://rsshub');
         const feedUrl = new URL(`${publicUrl}${target.pathname}${target.search}`);
         if (instance.env.ACCESS_KEY) {
-            feedUrl.searchParams.set(
-                'code',
-                createHash('md5')
-                    .update(target.pathname + instance.env.ACCESS_KEY)
-                    .digest('hex')
-            );
+            feedUrl.searchParams.set('code', hash('md5', target.pathname + instance.env.ACCESS_KEY));
         }
         return feedUrl.href;
     };
