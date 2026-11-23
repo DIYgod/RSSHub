@@ -6,6 +6,7 @@ import { getCurrentPath } from '../../lib/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);
 const repoRoot = path.join(__dirname, '../..');
+const pattern = /\.(?:spec|test)\.[cm]?[jt]sx?$/;
 
 export const findOrphanFiles = async (): Promise<string[]> => {
     const folders = ['lib', 'spec', 'specs', 'test', 'tests'].filter((folder) => existsSync(path.join(repoRoot, folder)));
@@ -13,7 +14,7 @@ export const findOrphanFiles = async (): Promise<string[]> => {
     const files = entries.filter((entry) => entry.isFile()).map((entry) => path.relative(repoRoot, path.join(entry.parentPath, entry.name)).replaceAll('\\', '/'));
 
     const candidates = entries
-        .filter((entry) => entry.isFile() && /\.(?:spec|test)\.[cm]?[jt]sx?$/.test(entry.name))
+        .filter((entry) => entry.isFile() && pattern.test(entry.name))
         .map((entry) => {
             const absolute = path.join(entry.parentPath, entry.name);
             return { absolute, relative: path.relative(repoRoot, absolute).replaceAll('\\', '/') };
@@ -34,5 +35,7 @@ export const findOrphanFiles = async (): Promise<string[]> => {
 
     const deprecated = files.filter((relative) => !relative.startsWith('lib/') || relative.startsWith('lib/routes-deprecated/'));
 
-    return [...orphans, ...deprecated];
+    const root = (await fs.readdir(repoRoot)).filter((name) => pattern.test(name));
+
+    return [...orphans, ...deprecated, ...root];
 };
