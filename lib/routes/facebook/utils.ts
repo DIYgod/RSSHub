@@ -153,7 +153,7 @@ const renderStory = (story: any) => {
     return { text: message?.text as string | undefined, html: text + attachments };
 };
 
-export const fetchGraphql = async (friendlyName: string, docId: string, variables: Record<string, string | number | boolean | null>, limit: number, collect: (lines: any[]) => any[]) => {
+export const fetchGraphql = async (friendlyName: string, docId: string, variables: Record<string, unknown>, limit: number, collect: (lines: any[]) => any[], options: { firstPageOnly?: boolean; cacheKey?: string } = {}) => {
     const lsd = randomBytes(16).toBase64({ alphabet: 'base64url', omitPadding: true });
     const jazoest = `2${Array.from(lsd, (char) => char.codePointAt(0)!).reduce((sum, code) => sum + code, 0)}`;
 
@@ -171,16 +171,17 @@ export const fetchGraphql = async (friendlyName: string, docId: string, variable
         : undefined;
 
     const items: any[] = [];
+    const cacheKey = options.cacheKey ?? String(variables.id ?? '');
     let pageInfo = { has_next_page: true, end_cursor: null as string | null };
     while (pageInfo.has_next_page && items.length < limit) {
         const cursor = pageInfo.end_cursor;
         // oxlint-disable-next-line no-await-in-loop - depends on previous response for cursor
         const text = await cache.tryGet<string>(
-            `facebook:${friendlyName}:${variables.id}:${cursor ?? ''}`,
+            `facebook:${friendlyName}:${cacheKey}:${cursor ?? ''}`,
             () =>
                 ofetch(`${baseUrl}/api/graphql/`, {
                     method: 'POST',
-                    headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', ...(cookie && { cookie }) },
+                    headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', 'user-agent': config.trueUA, ...(cookie && { cookie }) },
                     body: new URLSearchParams({
                         lsd,
                         jazoest,
@@ -200,6 +201,9 @@ export const fetchGraphql = async (friendlyName: string, docId: string, variable
             throw new Error(`Facebook GraphQL failed: ${lines[0].errors?.[0]?.message ?? text}`);
         }
         items.push(...collect(lines));
+        if (options.firstPageOnly) {
+            break;
+        }
         pageInfo = next;
     }
     return items.slice(0, limit);

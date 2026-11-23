@@ -1,28 +1,11 @@
-import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 
-import { baseUrl } from './utils';
-
-const browserHeaders = {
-    'user-agent': config.trueUA,
-    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'accept-language': 'en-US,en;q=0.9',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'none',
-    'upgrade-insecure-requests': '1',
-    'sec-ch-ua-platform': '"macOS"',
-    'sec-ch-ua': '"Chromium";v="159", "Not/A)Brand";v="8"',
-    'sec-ch-ua-mobile': '?0',
-    'viewport-width': '1280',
-    dpr: '2',
-};
+import graphqlTemplate from './search-graphql-template.json';
+import { baseUrl, fetchGraphql } from './utils';
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -36,10 +19,6 @@ type SearchResults = {
 
 function isObject(value: JsonValue): value is { [key: string]: JsonValue } {
     return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
-
-function parseJson(text: string): JsonValue {
-    return JSON.parse(text) as JsonValue;
 }
 
 function isSearchResults(value: JsonValue): value is JsonValue & SearchResults {
@@ -77,25 +56,6 @@ function findSearchResults(value: JsonValue, depth = 0): SearchResults | undefin
             return result;
         }
     }
-}
-
-function extractInitialResults(html: string): SearchResults {
-    const $ = load(html);
-
-    for (const script of $('script').toArray()) {
-        try {
-            const data = parseJson($(script).html() ?? '');
-            const results = findSearchResults(data);
-
-            if (results) {
-                return results;
-            }
-        } catch {
-            // Not every script contains JSON.
-        }
-    }
-
-    throw new Error('Facebook search results not found in initial HTML');
 }
 
 function getField(value: JsonValue | undefined, ...keys: string[]): JsonValue | undefined {
@@ -158,7 +118,8 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'FACEBOOK_COOKIE',
-                description: 'Facebook c_user and xs cookies',
+                optional: true,
+                description: 'Facebook c_user and xs cookies. Set this if you see rate limits or restricted results.',
             },
         ],
         antiCrawler: true,
@@ -170,46 +131,40 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { query = '', sort = 'recent' } = ctx.req.param();
-    const cookie = config.facebook.cookie;
-
-    if (!cookie) {
-        throw new ConfigNotFoundError('FACEBOOK_COOKIE is required for Facebook search');
-    }
 
     if (!['recent', 'relevance'].includes(sort)) {
         throw new Error('sort must be recent or relevance');
     }
 
     const limit = getRouteLimit(ctx, 50);
-    const filterObject = sort === 'recent' ? { 'recent_posts:0': JSON.stringify({ name: 'recent_posts', args: '' }) } : {};
-    const encodedFilters = new TextEncoder().encode(JSON.stringify(filterObject)).toBase64();
-
     const searchUrl = new URL(`${baseUrl}/search/posts/`);
     searchUrl.searchParams.set('q', query);
-    searchUrl.searchParams.set('filters', encodedFilters);
-
-    const response = await fetch(searchUrl, {
-        headers: { ...browserHeaders, cookie },
-    });
-
-    if (!response.ok) {
-        throw new Error(`Facebook search returned HTTP ${response.status}`);
-    }
-
-    const results = extractInitialResults(await response.text());
-    const items = new Map<string, NonNullable<ReturnType<typeof toItem>>>();
-
-    const addResults = (page: SearchResults) => {
-        const edges = page.edges ?? [];
-        for (const edge of edges) {
-            const item = toItem(edge);
-            if (item) {
-                items.set(item.guid, item);
-            }
-        }
+    const filters = sort === 'recent' ? [JSON.stringify({ name: 'recent_posts', args: '' })] : [];
+    const variables = {
+        ...graphqlTemplate.variables,
+        args: {
+            ...graphqlTemplate.variables.args,
+            text: query,
+            filters,
+            context: {
+                ...graphqlTemplate.variables.args.context,
+                bsid: crypto.randomUUID(),
+            },
+        },
     };
 
-    addResults(results);
+    const edges = await fetchGraphql(graphqlTemplate.friendlyName, graphqlTemplate.docId, variables, limit, (lines) => lines.flatMap((line) => findSearchResults(line)?.edges ?? []), {
+        firstPageOnly: true,
+        cacheKey: `${query}:${sort}`,
+    });
+    const items = new Map<string, NonNullable<ReturnType<typeof toItem>>>();
+
+    for (const edge of edges) {
+        const item = toItem(edge);
+        if (item) {
+            items.set(item.guid, item);
+        }
+    }
 
     return {
         title: `Facebook Search: ${query}`,
