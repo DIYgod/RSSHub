@@ -119,7 +119,7 @@ export const route: Route = {
             {
                 name: 'FACEBOOK_COOKIE',
                 optional: true,
-                description: 'Facebook c_user and xs cookies. Set this if you see rate limits or restricted results.',
+                description: 'Facebook cookie, only `c_user` and `xs` are required. Set this if you see Rate limit exceeded.',
             },
         ],
         antiCrawler: true,
