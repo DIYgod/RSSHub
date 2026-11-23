@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
@@ -172,7 +173,7 @@ async function handler(ctx: Context) {
     const cookie = config.facebook.cookie;
 
     if (!cookie) {
-        throw new Error('FACEBOOK_COOKIE is required for Facebook search');
+        throw new ConfigNotFoundError('FACEBOOK_COOKIE is required for Facebook search');
     }
 
     if (!['recent', 'relevance'].includes(sort)) {
