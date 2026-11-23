@@ -112,7 +112,7 @@ async function handler(ctx) {
                 title: $item.find('a.xst').text(),
                 link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
-                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
+                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', ''), 8),
             };
         })
         // only send the cookie to the site itself
@@ -173,7 +173,7 @@ async function handler(ctx) {
                 return details;
             });
             const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
-            return { ...item, ...details, author: realAuthorName?.author ?? item.author };
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate, author: realAuthorName?.author ?? item.author };
         })
     );
 
