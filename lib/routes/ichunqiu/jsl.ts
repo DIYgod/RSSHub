@@ -18,7 +18,7 @@ type BinaryOperator = keyof typeof binaryPrecedence;
 
 const isBinaryOperator = (op: string): op is BinaryOperator => Object.hasOwn(binaryPrecedence, op);
 
-export const evaluateJsl = (source: string): string => {
+const evaluateJsl = (source: string): string => {
     let pos = 0;
     const skipSpaces = () => {
         while (source[pos] === ' ') {
