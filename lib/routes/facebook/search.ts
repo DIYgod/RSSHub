@@ -1,3 +1,4 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
@@ -22,23 +23,36 @@ const browserHeaders = {
     dpr: '2',
 };
 
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 type SearchResults = {
-    edges?: any[];
+    edges?: JsonValue[];
     page_info?: {
         has_next_page?: boolean;
         end_cursor?: string;
     };
 };
 
-function findSearchResults(value: unknown, depth = 0): SearchResults | undefined {
-    if (depth > 35 || value === null || typeof value !== 'object') {
-        return;
+function isObject(value: JsonValue): value is { [key: string]: JsonValue } {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function parseJson(text: string): JsonValue {
+    return JSON.parse(text) as JsonValue;
+}
+
+function isSearchResults(value: JsonValue): value is JsonValue & SearchResults {
+    if (!isObject(value) || !Array.isArray(value.edges)) {
+        return false;
     }
 
-    const obj = value as Record<string, any>;
+    const pageInfo = value.page_info;
+    return pageInfo === undefined || (isObject(pageInfo) && (pageInfo.has_next_page === undefined || typeof pageInfo.has_next_page === 'boolean') && (pageInfo.end_cursor === undefined || typeof pageInfo.end_cursor === 'string'));
+}
 
-    if (obj.serpResponse?.results?.edges) {
-        return obj.serpResponse.results;
+function findSearchResults(value: JsonValue, depth = 0): SearchResults | undefined {
+    if (depth > 35 || value === null || typeof value !== 'object') {
+        return;
     }
 
     if (Array.isArray(value)) {
@@ -48,22 +62,28 @@ function findSearchResults(value: unknown, depth = 0): SearchResults | undefined
                 return result;
             }
         }
-    } else {
-        for (const child of Object.values(obj)) {
-            const result = findSearchResults(child, depth + 1);
-            if (result) {
-                return result;
-            }
+        return;
+    }
+
+    const serpResponse = value.serpResponse;
+    if (serpResponse && isObject(serpResponse) && serpResponse.results !== undefined && isSearchResults(serpResponse.results)) {
+        return serpResponse.results;
+    }
+
+    for (const child of Object.values(value)) {
+        const result = findSearchResults(child, depth + 1);
+        if (result) {
+            return result;
         }
     }
 }
 
 function extractInitialResults(html: string): SearchResults {
-    const scripts = html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi);
+    const $ = load(html);
 
-    for (const match of scripts) {
+    for (const script of $('script').toArray()) {
         try {
-            const data = JSON.parse(match[1]);
+            const data = parseJson($(script).html() ?? '');
             const results = findSearchResults(data);
 
             if (results) {
@@ -77,27 +97,46 @@ function extractInitialResults(html: string): SearchResults {
     throw new Error('Facebook search results not found in initial HTML');
 }
 
-function getStory(edge: any) {
-    return edge?.rendering_strategy?.view_model?.click_model?.story;
+function getField(value: JsonValue | undefined, ...keys: string[]): JsonValue | undefined {
+    for (const key of keys) {
+        if (!value || !isObject(value)) {
+            return;
+        }
+        value = value[key];
+    }
+    return value;
 }
 
-function toItem(edge: any) {
-    const story = getStory(edge);
-    if (!story?.post_id) {
+function getString(value: JsonValue | undefined): string | undefined {
+    return typeof value === 'string' ? value : undefined;
+}
+
+function toItem(edge: JsonValue) {
+    const story = getField(edge, 'rendering_strategy', 'view_model', 'click_model', 'story');
+    const postIdValue = getField(story, 'post_id');
+    const postId = typeof postIdValue === 'string' || typeof postIdValue === 'number' ? String(postIdValue) : undefined;
+
+    if (!postId) {
         return;
     }
 
-    const message = story.comet_sections?.content?.story?.message?.text ?? '';
-    const author = story.feedback?.owning_profile?.name ?? story.actors?.[0]?.name ?? 'Facebook user';
-
-    const title = message.trim().split('\n', 1)[0]?.slice(0, 180) || `${author} on Facebook`;
+    const message = getString(getField(story, 'comet_sections', 'content', 'story', 'message', 'text')) ?? '';
+    const actors = getField(story, 'actors');
+    const firstActor = Array.isArray(actors) ? actors[0] : undefined;
+    const author = getString(getField(story, 'feedback', 'owning_profile', 'name')) ?? getString(getField(firstActor, 'name')) ?? 'Facebook user';
+    const title =
+        message
+            .trim()
+            .split(String.raw`\n`, 1)[0]
+            ?.slice(0, 180) || `${author} on Facebook`;
+    const creationTime = getField(story, 'creation_time');
 
     return {
         title,
         description: message,
-        link: story.permalink_url ?? `${baseUrl}/${story.post_id}`,
-        guid: `facebook:${story.post_id}`,
-        pubDate: story.creation_time ? Temporal.Instant.fromEpochMilliseconds(story.creation_time * 1000).toString() : undefined,
+        link: getString(getField(story, 'permalink_url')) ?? `${baseUrl}/${postId}`,
+        guid: `facebook:${postId}`,
+        pubDate: typeof creationTime === 'number' ? Temporal.Instant.fromEpochMilliseconds(creationTime * 1000).toString() : undefined,
         author,
     };
 }
@@ -181,20 +220,20 @@ function extractGraphqlResults(text: string): SearchResults {
             continue;
         }
 
-        let data: any;
+        let data: JsonValue;
         try {
-            data = JSON.parse(trimmed);
+            data = parseJson(trimmed);
         } catch {
             continue;
         }
 
-        if (data.errors?.length || data.error) {
-            throw new Error(`Facebook GraphQL error: ${JSON.stringify(data.errors ?? data.error).slice(0, 500)}`);
+        const errors = getField(data, 'errors') ?? getField(data, 'error');
+        if (errors && (!Array.isArray(errors) || errors.length > 0)) {
+            throw new Error(`Facebook GraphQL error: ${JSON.stringify(errors).slice(0, 500)}`);
         }
 
-        const results = data.data?.serpResponse?.results ?? findSearchResults(data);
-
-        if (results?.edges) {
+        const results = findSearchResults(data);
+        if (results) {
             return results;
         }
     }
@@ -203,16 +242,19 @@ function extractGraphqlResults(text: string): SearchResults {
 }
 
 async function fetchNextPage(query: string, filters: string[], cursor: string, cookie: string): Promise<SearchResults> {
-    const variables: any = structuredClone(graphqlTemplate.variables);
-
-    variables.args ??= {};
-    variables.args.text = query;
-    variables.args.filters = filters;
-    variables.cursor = cursor;
-
-    // A fresh search session identifier.
-    variables.args.context ??= {};
-    variables.args.context.bsid = crypto.randomUUID();
+    const variables = {
+        ...structuredClone(graphqlTemplate.variables),
+        cursor,
+        args: {
+            ...structuredClone(graphqlTemplate.variables.args),
+            text: query,
+            filters,
+            context: {
+                ...structuredClone(graphqlTemplate.variables.args.context),
+                bsid: crypto.randomUUID(),
+            },
+        },
+    };
 
     const lsd = crypto.randomUUID().replaceAll('-', '');
     const jazoest = `2${Array.from(lsd, (char) => char.codePointAt(0)!).reduce((a, b) => a + b, 0)}`;
@@ -336,28 +378,33 @@ async function handler(ctx: Context) {
 
     addResults(results);
 
-    for (let page = 0; page < maxPages && items.size < limit; page++) {
+    const paginate = async (page: number): Promise<void> => {
+        if (page >= maxPages || items.size >= limit) {
+            return;
+        }
         const cursor = results.page_info?.end_cursor;
 
         if (!results.page_info?.has_next_page || !cursor || seenCursors.has(cursor)) {
-            break;
+            return;
         }
 
         seenCursors.add(cursor);
 
         try {
-            // eslint-disable-next-line no-await-in-loop -- Facebook pagination requires the previous page cursor.
             results = await fetchNextPage(query, filters, cursor, cookie);
         } catch (error) {
             if (items.size === 0) {
                 throw error;
             }
 
-            break;
+            return;
         }
 
         addResults(results);
-    }
+        await paginate(page + 1);
+    };
+
+    await paginate(0);
 
     return {
         title: `Facebook Search: ${query}`,
