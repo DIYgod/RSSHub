@@ -4,12 +4,12 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-import graphqlTemplate from './search-graphql-template.json';
 import { baseUrl } from './utils';
 
 const browserHeaders = {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.0.0 Safari/537.36',
+    'user-agent': config.trueUA,
     accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
     'accept-language': 'en-US,en;q=0.9',
     'sec-fetch-dest': 'document',
@@ -124,11 +124,7 @@ function toItem(edge: JsonValue) {
     const actors = getField(story, 'actors');
     const firstActor = Array.isArray(actors) ? actors[0] : undefined;
     const author = getString(getField(story, 'feedback', 'owning_profile', 'name')) ?? getString(getField(firstActor, 'name')) ?? 'Facebook user';
-    const title =
-        message
-            .trim()
-            .split(String.raw`\n`, 1)[0]
-            ?.slice(0, 180) || `${author} on Facebook`;
+    const title = message || `${author} on Facebook`;
     const creationTime = getField(story, 'creation_time');
 
     return {
@@ -136,21 +132,25 @@ function toItem(edge: JsonValue) {
         description: message,
         link: getString(getField(story, 'permalink_url')) ?? `${baseUrl}/${postId}`,
         guid: `facebook:${postId}`,
-        pubDate: typeof creationTime === 'number' ? Temporal.Instant.fromEpochMilliseconds(creationTime * 1000).toString() : undefined,
+        pubDate: typeof creationTime === 'number' ? parseDate(creationTime, 'X') : undefined,
         author,
     };
 }
 
-function getToday() {
-    return Temporal.Now.zonedDateTimeISO('UTC').toPlainDate().toString();
-}
-
 export const route: Route = {
-    path: '/search/:query',
+    path: '/search/:query/:sort?',
     name: 'Search Posts',
     example: '/facebook/search/we%20are%20hiring',
     parameters: {
         query: 'Search phrase',
+        sort: {
+            description: 'Sort order',
+            options: [
+                { value: 'recent', label: 'Recent posts' },
+                { value: 'relevance', label: 'Relevance' },
+            ],
+            default: 'recent',
+        },
     },
     categories: ['social-media'],
     features: {
@@ -167,187 +167,20 @@ export const route: Route = {
     url: 'www.facebook.com',
 };
 
-function dateParts(date: string) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        throw new Error(`Invalid date: ${date}. Expected YYYY-MM-DD`);
-    }
-
-    try {
-        Temporal.PlainDate.from(date, { overflow: 'reject' });
-    } catch {
-        throw new Error(`Invalid date: ${date}. Expected YYYY-MM-DD`);
-    }
-
-    return {
-        year: date.slice(0, 4),
-        month: date.slice(0, 7),
-        day: date,
-    };
-}
-
-function buildFilters(start: string, end: string, sort: string) {
-    const filters: string[] = [];
-
-    if (sort === 'recent') {
-        filters.push(JSON.stringify({ name: 'recent_posts', args: '' }));
-    }
-
-    const startParts = dateParts(start);
-    const endParts = dateParts(end);
-
-    filters.push(
-        JSON.stringify({
-            name: 'creation_time',
-            args: JSON.stringify({
-                start_year: startParts.year,
-                start_month: startParts.month,
-                start_day: startParts.day,
-                end_year: endParts.year,
-                end_month: endParts.month,
-                end_day: endParts.day,
-            }),
-        })
-    );
-
-    return filters;
-}
-
-function extractGraphqlResults(text: string): SearchResults {
-    // Facebook may return newline-delimited GraphQL JSON.
-    for (const line of text.split('\n')) {
-        const trimmed = line.trim();
-        if (!trimmed || trimmed.startsWith('for (;;);')) {
-            continue;
-        }
-
-        let data: JsonValue;
-        try {
-            data = parseJson(trimmed);
-        } catch {
-            continue;
-        }
-
-        const errors = getField(data, 'errors') ?? getField(data, 'error');
-        if (errors && (!Array.isArray(errors) || errors.length > 0)) {
-            throw new Error(`Facebook GraphQL error: ${JSON.stringify(errors).slice(0, 500)}`);
-        }
-
-        const results = findSearchResults(data);
-        if (results) {
-            return results;
-        }
-    }
-
-    throw new Error(`Facebook GraphQL response contained no search results: ${text.slice(0, 300)}`);
-}
-
-async function fetchNextPage(query: string, filters: string[], cursor: string, cookie: string): Promise<SearchResults> {
-    const variables = {
-        ...structuredClone(graphqlTemplate.variables),
-        cursor,
-        args: {
-            ...structuredClone(graphqlTemplate.variables.args),
-            text: query,
-            filters,
-            context: {
-                ...structuredClone(graphqlTemplate.variables.args.context),
-                bsid: crypto.randomUUID(),
-            },
-        },
-    };
-
-    const lsd = crypto.randomUUID().replaceAll('-', '');
-    const jazoest = `2${Array.from(lsd, (char) => char.codePointAt(0)!).reduce((a, b) => a + b, 0)}`;
-
-    const tokenResponse = await fetch(`${baseUrl}/ajax/dtsg/?__a=1`, {
-        headers: { ...browserHeaders, cookie },
-    });
-
-    if (!tokenResponse.ok) {
-        throw new Error(`Facebook token request failed: HTTP ${tokenResponse.status}`);
-    }
-
-    const tokenText = await tokenResponse.text();
-    const token = JSON.parse(tokenText.replace(/^for \(;;\);/, '')).payload?.token;
-
-    const body = new URLSearchParams({
-        av: /(?:^|;\s*)c_user=(\d+)/.exec(cookie)?.[1] ?? '0',
-        __user: /(?:^|;\s*)c_user=(\d+)/.exec(cookie)?.[1] ?? '0',
-        __a: '1',
-        lsd,
-        jazoest,
-        fb_dtsg: token,
-        fb_api_caller_class: 'RelayModern',
-        fb_api_req_friendly_name: graphqlTemplate.friendlyName,
-        doc_id: graphqlTemplate.docId,
-        variables: JSON.stringify(variables),
-    });
-
-    const response = await fetch(`${baseUrl}/api/graphql/`, {
-        method: 'POST',
-        headers: {
-            cookie,
-            'user-agent': browserHeaders['user-agent'],
-            'content-type': 'application/x-www-form-urlencoded',
-            'x-fb-friendly-name': graphqlTemplate.friendlyName,
-            'x-fb-lsd': lsd,
-            origin: baseUrl,
-            referer: `${baseUrl}/search/posts/`,
-        },
-        body,
-    });
-
-    if (response.status === 429) {
-        throw new Error('Facebook rate limited pagination (HTTP 429)');
-    }
-
-    if (!response.ok) {
-        throw new Error(`Facebook GraphQL returned HTTP ${response.status}`);
-    }
-
-    return extractGraphqlResults(await response.text());
-}
-
 async function handler(ctx: Context) {
-    const query = ctx.req.param('query') ?? '';
+    const { query = '', sort = 'recent' } = ctx.req.param();
     const cookie = config.facebook.cookie;
 
     if (!cookie) {
         throw new Error('FACEBOOK_COOKIE is required for Facebook search');
     }
 
-    const params = new URL(ctx.req.url).searchParams;
-    const today = getToday();
-    const start = params.get('start') ?? today;
-    const end = params.get('end') ?? today;
-    const sort = params.get('sort') ?? 'recent';
-    const requestedPages = Number(params.get('pages') ?? '5');
-
     if (!['recent', 'relevance'].includes(sort)) {
         throw new Error('sort must be recent or relevance');
     }
 
-    dateParts(start);
-    dateParts(end);
-
-    if (start > end) {
-        throw new Error('start must not be after end');
-    }
-
-    if (!Number.isSafeInteger(requestedPages) || requestedPages < 0) {
-        throw new Error('pages must be a nonnegative integer');
-    }
-
-    const maxPages = Math.min(requestedPages, 5);
     const limit = getRouteLimit(ctx, 50);
-    const filters = buildFilters(start, end, sort);
-
-    const filterEntries = filters.map((filter) => {
-        const name = JSON.parse(filter).name;
-        return [name === 'recent_posts' ? 'recent_posts:0' : 'rp_creation_time:0', filter];
-    });
-
-    const filterObject = Object.fromEntries(filterEntries);
+    const filterObject = sort === 'recent' ? { 'recent_posts:0': JSON.stringify({ name: 'recent_posts', args: '' }) } : {};
     const encodedFilters = new TextEncoder().encode(JSON.stringify(filterObject)).toBase64();
 
     const searchUrl = new URL(`${baseUrl}/search/posts/`);
@@ -362,9 +195,8 @@ async function handler(ctx: Context) {
         throw new Error(`Facebook search returned HTTP ${response.status}`);
     }
 
-    let results = extractInitialResults(await response.text());
+    const results = extractInitialResults(await response.text());
     const items = new Map<string, NonNullable<ReturnType<typeof toItem>>>();
-    const seenCursors = new Set<string>();
 
     const addResults = (page: SearchResults) => {
         const edges = page.edges ?? [];
@@ -378,42 +210,14 @@ async function handler(ctx: Context) {
 
     addResults(results);
 
-    const paginate = async (page: number): Promise<void> => {
-        if (page >= maxPages || items.size >= limit) {
-            return;
-        }
-        const cursor = results.page_info?.end_cursor;
-
-        if (!results.page_info?.has_next_page || !cursor || seenCursors.has(cursor)) {
-            return;
-        }
-
-        seenCursors.add(cursor);
-
-        try {
-            results = await fetchNextPage(query, filters, cursor, cookie);
-        } catch (error) {
-            if (items.size === 0) {
-                throw error;
-            }
-
-            return;
-        }
-
-        addResults(results);
-        await paginate(page + 1);
-    };
-
-    await paginate(0);
-
     return {
         title: `Facebook Search: ${query}`,
         link: searchUrl.href,
-        description: `Facebook posts matching "${query}" from ${start} to ${end}`,
+        description: `Facebook posts matching "${query}"`,
         item: items
             .values()
             .toArray()
-            .toSorted((a, b) => (b.pubDate ?? '').localeCompare(a.pubDate ?? ''))
+            .toSorted((a, b) => (b.pubDate?.epochMilliseconds ?? 0) - (a.pubDate?.epochMilliseconds ?? 0))
             .slice(0, limit),
     };
 }
