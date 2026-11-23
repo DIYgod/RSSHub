@@ -1152,6 +1152,7 @@ export type RoutePath =
   | `/facebook/page/:id`
   | `/facebook/photos/:id`
   | `/facebook/reels/:id`
+  | `/facebook/search/:keyword`
   | `/famitsu/category/:category?`
   | `/fanbox/:creator`
   | `/fanfou/favorites/:uid`

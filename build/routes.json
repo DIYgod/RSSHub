@@ -21988,6 +21988,32 @@
         "url": "www.facebook.com",
         "location": "reels.ts",
         "module": "() => import('@/routes/facebook/reels.ts')"
+      },
+      "/search/:keyword": {
+        "path": "/search/:keyword",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/facebook/search/rsshub",
+        "parameters": {
+          "keyword": "Search keyword"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FACEBOOK_COOKIE",
+              "description": "Facebook cookie, only `c_user` and `xs` are required."
+            }
+          ],
+          "antiCrawler": true
+        },
+        "name": "Search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.facebook.com",
+        "location": "search.ts",
+        "module": "() => import('@/routes/facebook/search.ts')"
       }
     },
     "apiRoutes": {},
