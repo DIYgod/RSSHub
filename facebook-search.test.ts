@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { config as ConfigType } from '@/config';
 
-import { route } from './search';
+import { route } from './lib/routes/facebook/search';
 
 vi.mock('@/config', async (importOriginal) => {
     const original = await importOriginal<{ config: typeof ConfigType }>();
