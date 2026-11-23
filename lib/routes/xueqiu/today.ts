@@ -14,7 +14,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -34,11 +34,11 @@ export const route: Route = {
 async function handler(ctx) {
     const size = getRouteLimit(ctx, 20);
 
-    const rootUrl = 'https://xueqiu.com';
+    const rootUrl = 'https://www.xueqiu.com';
     const currentUrl = `${rootUrl}/today`;
     const apiUrl = `https://api.xueqiu.com/statuses/hot/listV2.json?since_id=-1&size=${size}`;
 
-    const token = await parseToken(currentUrl);
+    const token = await parseToken();
     const response = await got({
         method: 'get',
         url: apiUrl,

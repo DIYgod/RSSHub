@@ -3,7 +3,6 @@ import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 import type { Data, Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
-// import playwright from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -19,7 +18,7 @@ export const route: Route = {
     name: 'Home',
     maintainers: ['jack2game'],
     handler,
-    url: 'dealstreetasia.com/',
+    url: 'www.dealstreetasia.com/',
 };
 
 async function handler() {
@@ -30,7 +29,7 @@ async function handler() {
 }
 
 async function fetchPage(): Promise<Data> {
-    const baseUrl = 'https://dealstreetasia.com'; // Define base URL
+    const baseUrl = 'https://www.dealstreetasia.com'; // Define base URL
 
     const response = await ofetch(`${baseUrl}/`);
     const $ = load(response);

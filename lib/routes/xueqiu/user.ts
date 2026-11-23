@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -144,7 +144,7 @@ async function handler(ctx) {
     };
 
     const link = `${rootUrl}/u/${id}`;
-    const cookie = await parseToken(link);
+    const cookie = await parseToken();
 
     const response = await ofetch(`${apiUrl}/v4/statuses/user_timeline.json`, {
         query: {

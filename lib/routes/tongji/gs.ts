@@ -1,14 +1,11 @@
-import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
-
-class ArticleBodyUnavailableError extends Error {}
+import { fetchArticle, WeChatMpError } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/gs',
@@ -17,7 +14,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -33,20 +30,21 @@ export const route: Route = {
     handler,
     url: 'gs.tongji.edu.cn/tzgg.htm',
 };
-async function getNoticeContent(link: string, getBrowserContent: (url: string) => Promise<string>) {
-    const source = new URL(link).origin === 'https://mp.weixin.qq.com' ? await getBrowserContent(link) : (await got(link)).body;
-    const $ = load(source);
-    const content = $('.v_news_content, #js_content').first();
-    content.find('img[data-src]').each((_, element) => {
-        $(element).attr('src', $(element).attr('data-src'));
-    });
-    const attachments = mapElements(
-        content
-            .closest('form')
-            .find('ul')
-            .filter((_, element) => content.toArray().every((node) => !$.contains(node, element)) && $(element).find('a[href*="news.DownloadAttachUrl"]').length > 0),
-        (_, element) => $.html(element)
-    ).join('');
+async function getNoticeContent(link: string) {
+    if (new URL(link).origin === 'https://mp.weixin.qq.com') {
+        const { description } = await fetchArticle(link);
+        return { description };
+    }
+    const { body } = await got(link);
+    const $ = load(body);
+    const content = $('.v_news_content');
+    const attachments = content
+        .closest('form')
+        .find('ul')
+        .filter((_, element) => content.toArray().every((node) => !$.contains(node, element)) && $(element).find('a[href*="news.DownloadAttachUrl"]').length > 0)
+        .toArray()
+        .map((element) => $.html(element))
+        .join('');
     return { description: (content.html() ?? '') + attachments };
 }
 async function handler() {
@@ -64,59 +62,28 @@ async function handler() {
             const pubDate = $(item).find('span').text();
             return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8) };
         });
-    let browserPromise: ReturnType<typeof getPlaywrightPage> | undefined;
-    const getBrowserContent = async (url: string) => {
-        browserPromise ??= getPlaywrightPage(url, {
-            noGoto: true,
-            closeTimeout: 0,
-            onBeforeLoad: async (_, context) => {
-                await context!.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-            },
-        });
-        const { context } = await browserPromise;
-        const page = await context.newPage();
-        try {
-            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-            await page.waitForSelector('#js_content', { state: 'attached', timeout: 15000 });
-            return await page.content();
-        } catch (error) {
-            if (error instanceof Error && error.name === 'TimeoutError') {
-                throw new ArticleBodyUnavailableError('WeChat still requires source access verification.');
-            }
-            throw error;
-        } finally {
-            await page.close();
-        }
-    };
-    try {
-        const itemsWithContent = await pMap(
-            items,
-            async (item) => {
-                try {
-                    const detail = await cache.tryGet(`tongji:gs:public-body:v1:${item.link}`, () => getNoticeContent(item.link!, getBrowserContent));
-                    return { ...item, ...detail };
-                } catch (error) {
-                    if (error instanceof ArticleBodyUnavailableError) {
-                        return item;
-                    }
-                    throw error;
+    const itemsWithContent = await pMap(
+        items,
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(`tongji:gs:public-body:v1:${item.link}`, () => getNoticeContent(item.link!));
+                return { ...item, ...detail };
+            } catch (error) {
+                if (error instanceof WeChatMpError) {
+                    return item;
                 }
-            },
-            { concurrency: 3, stopOnError: false }
-        );
-        return {
-            title: '同济大学研究生院',
-            link: baseUrl,
-            description: '同济大学研究生院通知公告',
-            image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
-            icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
-            logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
-            item: itemsWithContent,
-        };
-    } finally {
-        await (await browserPromise)?.destroy();
-    }
-}
-function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
-    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
+                throw error;
+            }
+        },
+        { concurrency: 3, stopOnError: false }
+    );
+    return {
+        title: '同济大学研究生院',
+        link: baseUrl,
+        description: '同济大学研究生院通知公告',
+        image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        item: itemsWithContent,
+    };
 }

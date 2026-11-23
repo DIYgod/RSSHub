@@ -4,7 +4,6 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
 import type { Route } from '@/types';
 
-import { withMediumBrowser } from './browser';
 import { getFollowingFeedQuery } from './graphql.js';
 import parseArticle from './parse-article.js';
 
@@ -20,7 +19,7 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -36,7 +35,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 When Medium blocks article pages, their publicly visible previews may be returned.`,
 };
 
-function handler(ctx) {
+async function handler(ctx) {
     const user = ctx.req.param('user');
 
     const cookie = config.medium.cookies[user];
@@ -44,21 +43,19 @@ function handler(ctx) {
         throw new ConfigNotFoundError(`缺少 Medium 用户 ${user} 登录后的 Cookie 值`);
     }
 
-    return withMediumBrowser(cookie, async (getBrowser) => {
-        const posts = await getFollowingFeedQuery(user, cookie, undefined, getBrowser);
-        ctx.set('json', posts);
+    const posts = await getFollowingFeedQuery(user, cookie);
+    ctx.set('json', posts);
 
-        if (!posts) {
-            // login failed
-            throw new ConfigNotFoundError(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
-        }
+    if (!posts) {
+        // login failed
+        throw new ConfigNotFoundError(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
+    }
 
-        const parsedArticles = await pMap(posts.items, ({ post }) => parseArticle(ctx, post.mediumUrl, { cookie, post }), { concurrency: 3 });
+    const parsedArticles = await pMap(posts.items, ({ post }) => parseArticle(ctx, post.mediumUrl, { cookie, post }), { concurrency: 3 });
 
-        return {
-            title: `${user} Medium Following`,
-            link: 'https://medium.com/?feed=following',
-            item: parsedArticles,
-        };
-    });
+    return {
+        title: `${user} Medium Following`,
+        link: 'https://medium.com/?feed=following',
+        item: parsedArticles,
+    };
 }

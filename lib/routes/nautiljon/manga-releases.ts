@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 const host = 'https://www.nautiljon.com';
@@ -12,7 +12,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -38,29 +38,8 @@ const isVolumeReleased = (releaseDate: string) => {
     return releaseDateToCheck !== undefined && Temporal.Instant.compare(releaseDateToCheck, todayDate) <= 0;
 };
 
-async function getPlanningHTML(url: string) {
-    const { page, destroy } = await getPlaywrightPage(url, {
-        closeTimeout: 0,
-        noGoto: true,
-        javaScriptEnabled: false,
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (request) => (['document'].includes(request.request().resourceType()) ? request.continue() : request.abort()));
-        },
-    });
-    try {
-        const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        if (!response || response.status() >= 400) {
-            throw new Error(`The manga planning page returned HTTP ${response?.status() ?? 'no response'}. Please try again later.`);
-        }
-        await page.locator('table#planning td.p_titre').first().waitFor({ state: 'attached', timeout: 10000 });
-        return await page.content();
-    } finally {
-        await destroy();
-    }
-}
-
 async function handler() {
-    const response = await getPlanningHTML(`${host}/planning/manga/`);
+    const response = await ofetch(`${host}/planning/manga/`);
 
     const $ = load(response);
     const list = $('table#planning tbody tr[data-planning-date]')

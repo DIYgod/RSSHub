@@ -3,7 +3,6 @@ import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 import type { Data, Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
-// import playwright from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
 
 export const route: Route = {
@@ -20,7 +19,7 @@ export const route: Route = {
     name: 'Section',
     maintainers: ['jack2game'],
     handler,
-    url: 'dealstreetasia.com/',
+    url: 'www.dealstreetasia.com/',
 };
 
 async function handler(ctx) {
@@ -31,7 +30,7 @@ async function handler(ctx) {
 }
 
 async function fetchPage(section: string): Promise<Data> {
-    const baseUrl = 'https://dealstreetasia.com'; // Define base URL
+    const baseUrl = 'https://www.dealstreetasia.com'; // Define base URL
 
     const response = await ofetch(`${baseUrl}/section/${section}/`);
     const $ = load(response);
@@ -54,6 +53,6 @@ async function fetchPage(section: string): Promise<Data> {
         title: 'Deal Street Asia - ' + headingText,
         language: 'en',
         item: feedItems,
-        link: 'https://dealstreetasia.com/section/' + section + '/',
+        link: 'https://www.dealstreetasia.com/section/' + section + '/',
     };
 }

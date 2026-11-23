@@ -3,8 +3,7 @@ import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate, parseRelativeDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
@@ -18,26 +17,7 @@ import { isOnSite } from '@/utils/valid-host';
  */
 const arrayToDictionary = (arr) => Object.fromEntries(arr.map(({ id, ...rest }) => [id, rest]));
 
-const allowedResourceTypes = new Set(['document', 'fetch']);
-
-async function requestData(page: Page, url: string, form?: Record<string, string | number>) {
-    const body = form ? new URLSearchParams(Object.entries(form).map(([key, value]) => [key, String(value)])).toString() : undefined;
-    return await page.evaluate(
-        async ({ url, body }) => {
-            const response = await fetch(url, body ? { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body } : undefined);
-            if (!response.ok) {
-                throw new Error(`LatePost returned HTTP ${response.status}: ${url}`);
-            }
-            const text = await response.text();
-            try {
-                return JSON.parse(text);
-            } catch {
-                return text;
-            }
-        },
-        { url, body }
-    );
-}
+const requestData = (url: string, form?: Record<string, string | number>) => ofetch(url, form ? { method: 'POST', body: new URLSearchParams(Object.entries(form).map(([key, value]) => [key, String(value)])) } : undefined);
 
 export const route: Route = {
     path: '/:proma?',
@@ -46,7 +26,7 @@ export const route: Route = {
     parameters: { proma: '栏目 id，见下表，默认为最新报道' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -61,20 +41,6 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const { page, destroy } = await getPlaywrightPage('https://www.latepost.com/', { noGoto: true, closeTimeout: 0 });
-    try {
-        await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
-        const response = await page.goto('https://www.latepost.com/', { waitUntil: 'domcontentloaded' });
-        if (!response?.ok() || new URL(page.url()).origin !== 'https://www.latepost.com') {
-            throw new Error('LatePost did not provide its public website.');
-        }
-        return await fetchFeed(ctx, page);
-    } finally {
-        await destroy();
-    }
-}
-
-async function fetchFeed(ctx, page: Page): Promise<Data> {
     const proma = ctx.req.param('proma');
     const limit = getRouteLimit(ctx, 5);
 
@@ -89,10 +55,10 @@ async function fetchFeed(ctx, page: Page): Promise<Data> {
     const apiCommentUrl = new URL('news/get-comment', rootUrl).href;
     const apiUrl = new URL(proma ? 'news/get-news-data' : 'site/index', rootUrl).href;
 
-    const columnResponse = await requestData(page, apiColumnUrl);
+    const columnResponse = await requestData(apiColumnUrl);
     const columns = arrayToDictionary(columnResponse?.data ?? []);
 
-    const response = await requestData(page, apiUrl, {
+    const response = await requestData(apiUrl, {
         page: 1,
         limit,
         programa: Number(proma),
@@ -119,9 +85,9 @@ async function fetchFeed(ctx, page: Page): Promise<Data> {
                 return { ...item, category, guid: `latepost-${item.guid}` };
             }
             const article = await cache.tryGet(`latepost:article:${item.link}`, async () => {
-                const detailResponse = await requestData(page, item.link);
+                const detailResponse = await requestData(item.link);
 
-                const commentResponse = await requestData(page, apiCommentUrl, {
+                const commentResponse = await requestData(apiCommentUrl, {
                     news_id: item.guid,
                     page: 1,
                     limit: 1,
@@ -173,7 +139,7 @@ async function fetchFeed(ctx, page: Page): Promise<Data> {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    const currentResponse = await requestData(page, currentUrl);
+    const currentResponse = await requestData(currentUrl);
 
     const $ = load(currentResponse);
 

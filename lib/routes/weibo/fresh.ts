@@ -45,7 +45,7 @@ export const route: Route = {
     maintainers: ['DIYgod'],
     parameters: { id: '新鲜事页面 URL 中的标识，例如 7574046780235777_1 或 60e8c3bf5b9c0e70_0。保留末尾的栏目类型。' },
     features: {
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         requireConfig: [{ name: 'WEIBO_COOKIES', optional: true, description: '仅登录可见的新鲜事需要配置。' }],
     },
