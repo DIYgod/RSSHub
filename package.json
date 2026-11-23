@@ -138,7 +138,7 @@
         "tsx": "4.23.15",
         "twitter-api-v2": "1.31.0",
         "ufo": "1.6.4",
-        "undici": "8.12.4",
+        "undici": "8.13.0",
         "uuid": "14.0.3",
         "winston": "3.19.0",
         "x-client-transaction-id": "0.3.3",
