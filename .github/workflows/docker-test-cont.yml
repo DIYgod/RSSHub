@@ -88,7 +88,7 @@ jobs:
               wait: docker-image
 
             - name: Import Docker image and set up Docker container
-              if: (env.TEST_CONTINUE)
+              if: env.TEST_CONTINUE
               working-directory: ../artifacts-${{ github.run_id }}
               run: |
                   set -ex
@@ -104,7 +104,7 @@ jobs:
                     rsshub:latest
 
             - name: Wait for RSSHub startup
-              if: (env.TEST_CONTINUE)
+              if: env.TEST_CONTINUE
               env:
                   TEST_BASEURL: http://localhost:1200
               run: |
@@ -130,7 +130,7 @@ jobs:
                   exit 1
 
             - name: Generate feedback
-              if: (env.TEST_CONTINUE)
+              if: env.TEST_CONTINUE
               id: generate-feedback
               timeout-minutes: 10
               uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -148,6 +148,14 @@ jobs:
                       core.info(`${link}, ${routes}, ${number}`)
                       const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
                       await test({ github, context, core }, link, routes, number)
+
+            - name: Upload route test results
+              if: env.TEST_CONTINUE
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+              with:
+                  name: route-test
+                  path: ${{ runner.temp }}/route-test
+                  if-no-files-found: ignore
 
             - name: Pull Request Labeler
               if: ${{ failure() }}

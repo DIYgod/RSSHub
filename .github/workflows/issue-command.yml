@@ -201,3 +201,11 @@ jobs:
                   name: logs
                   path: logs
                   retention-days: 1
+
+            - name: Upload route test results
+              if: env.TEST_CONTINUE
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+              with:
+                  name: route-test
+                  path: ${{ runner.temp }}/route-test
+                  if-no-files-found: ignore
