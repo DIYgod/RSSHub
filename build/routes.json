@@ -125761,6 +125761,38 @@
     "url": "uraaka-joshi.com",
     "lang": "ja"
   },
+  "uscc": {
+    "routes": {
+      "/research": {
+        "path": "/research",
+        "categories": [
+          "government"
+        ],
+        "example": "/uscc/research",
+        "name": "Research",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.uscc.gov/research"
+            ],
+            "target": "/research"
+          }
+        ],
+        "location": "research.ts",
+        "module": "() => import('@/routes/uscc/research.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "U.S.-China Economic and Security Review Commission",
+    "url": "www.uscc.gov",
+    "categories": [
+      "government"
+    ],
+    "lang": "en"
+  },
   "usenix": {
     "routes": {
       "/loginonline": {

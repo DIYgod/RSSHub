@@ -3608,6 +3608,7 @@ export type RoutePath =
   | `/uraaka-joshi/`
   | `/uraaka-joshi/:id`
   | `/urbandictionary/random`
+  | `/uscc/research`
   | `/usenix/loginonline`
   | `/usenix/usenix-security-sympoium`
   | `/usepanda/feeds/:id`

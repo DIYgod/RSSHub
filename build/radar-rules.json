@@ -50023,6 +50023,19 @@
       }
     ]
   },
+  "uscc.gov": {
+    "_name": "U.S.-China Economic and Security Review Commission",
+    "www": [
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/uscc",
+        "source": [
+          "/research"
+        ],
+        "target": "/uscc/research"
+      }
+    ]
+  },
   "usenix.org": {
     "_name": "USENIX",
     ".": [
