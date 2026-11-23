@@ -9,7 +9,6 @@ export const route: Route = {
     example: '/makerworld/contests',
     name: 'Contests',
     maintainers: ['TonyRL'],
-    features: { requirePuppeteer: true },
     handler,
     radar: [
         {

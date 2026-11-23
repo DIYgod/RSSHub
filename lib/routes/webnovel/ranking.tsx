@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 
 const rankings = {
     power: 'bi_annual/power_rank',
@@ -29,25 +29,9 @@ export const route: Route = {
     name: 'Novel rankings',
     maintainers: ['DIYgod'],
     radar: [{ source: ['webnovel.com/ranking'], target: '/ranking' }],
-    features: { requirePuppeteer: true, antiCrawler: true },
+    features: { antiCrawler: true },
     handler,
 };
-
-async function fetchRanking(link: string) {
-    const { page, destroy } = await getPlaywrightPage(link, {
-        closeTimeout: 0,
-        gotoConfig: { waitUntil: 'domcontentloaded', timeout: 20000 },
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
-        },
-    });
-    try {
-        await page.waitForSelector('.j_rank_wrapper section', { state: 'attached', timeout: 15000 });
-        return await page.content();
-    } finally {
-        await destroy();
-    }
-}
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'power';
@@ -55,7 +39,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Unknown ranking. Supported types: ${Object.keys(rankings).join(', ')}.`);
     }
     const link = `https://www.webnovel.com/ranking/novel/${rankings[type]}`;
-    const response = await fetchRanking(link);
+    const response = await ofetch(link);
     const $ = load(response);
     return {
         title: `WebNovel - ${type} ranking`,

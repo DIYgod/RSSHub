@@ -9,7 +9,6 @@ export const route: Route = {
     example: '/makerworld/trending',
     name: 'Trending Models',
     maintainers: ['TonyRL'],
-    features: { requirePuppeteer: true },
     handler,
     radar: [
         {

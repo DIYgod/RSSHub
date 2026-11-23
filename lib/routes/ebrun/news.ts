@@ -4,8 +4,7 @@ import pMap from 'p-map';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';
 import { isOnSite } from '@/utils/valid-host';
@@ -18,7 +17,6 @@ export const route: Route = {
     name: '最新资讯和快讯',
     categories: ['new-media'],
     maintainers: ['DIYgod'],
-    features: { requirePuppeteer: true },
     parameters: { section: 'information：最新资讯（默认）；newest：快讯。' },
     radar: [
         { source: ['www.ebrun.com/information'], target: '/news/information' },
@@ -27,15 +25,24 @@ export const route: Route = {
     handler,
 };
 
-function getItem(item: DataItem, page: Page) {
+let cookie = '';
+async function fetchPage(url: string) {
+    const response = await ofetch<string>(url, { headers: { cookie } });
+    const challenge = response.match(/cookie="(C3VK=\w+);/);
+    if (!challenge) {
+        return response;
+    }
+    cookie = challenge[1];
+    return ofetch<string>(url, { headers: { cookie } });
+}
+
+function getItem(item: DataItem) {
     // only follow links on the site itself
     if (!isOnSite(item.link, 'ebrun.com')) {
         return item;
     }
     return cache.tryGet(item.link!, async () => {
-        await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('.post-text-title');
-        const response = await page.content();
+        const response = await fetchPage(item.link!);
         const $ = load(response);
         item.description = $('.post-text').html();
         item.pubDate = parseDate($('.post-header .date-time').text(), 'YYYY-MM-DD HH:mm', 8);
@@ -57,24 +64,13 @@ async function handler(ctx) {
     }
     const link = `${baseUrl}/${section}/`;
     const selector = section === 'information' ? '.news-item .title a' : '#quick-list .quick-list__item-title a';
-    const { page, destroy } = await getPlaywrightPage(link, {
-        closeTimeout: 0,
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
-        },
-    });
-    try {
-        await page.waitForSelector(selector);
-        const response = await page.content();
-        const $ = load(response);
-        const requestedLimit = getRouteLimit(ctx, 20);
-        const detailLimit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(20, requestedLimit);
-        const items = $(selector)
-            .toArray()
-            .slice(0, detailLimit)
-            .map((element): DataItem => ({ title: $(element).text(), link: new URL($(element).attr('href')!, baseUrl).href }));
-        return { title: `亿邦动力 - ${section === 'information' ? '最新资讯' : '快讯'}`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };
-    } finally {
-        await destroy();
-    }
+    const response = await fetchPage(link);
+    const $ = load(response);
+    const requestedLimit = getRouteLimit(ctx, 20);
+    const detailLimit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(20, requestedLimit);
+    const items = $(selector)
+        .toArray()
+        .slice(0, detailLimit)
+        .map((element): DataItem => ({ title: $(element).text(), link: new URL($(element).attr('href')!, baseUrl).href }));
+    return { title: `亿邦动力 - ${section === 'information' ? '最新资讯' : '快讯'}`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item), { concurrency: 3 }) };
 }

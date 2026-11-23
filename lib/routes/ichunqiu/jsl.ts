@@ -1,3 +1,8 @@
+import { hash } from 'node:crypto';
+
+import { generateHeaders } from '@/utils/header-generator';
+import ofetch from '@/utils/ofetch';
+
 type Value = number | string | boolean | Value[] | Record<string, never>;
 
 const isEmptyObject = (v: number | string | boolean | Record<string, never>): v is Record<string, never> => typeof v === 'object';
@@ -154,4 +159,59 @@ export const evaluateJsl = (source: string): string => {
         throw new Error(`Unexpected trailing input at ${pos} in JSL expression`);
     }
     return String(toPrimitive(result));
+};
+
+const solveJsl = ({ bts, chars, ct, ha }) => {
+    for (const a of chars) {
+        for (const b of chars) {
+            const answer = bts[0] + a + b + bts[1];
+            if (hash(ha, answer) === ct) {
+                return answer;
+            }
+        }
+    }
+    throw new Error('Failed to solve __jsl_clearance_s');
+};
+
+export const createJslFetch = () => {
+    const cookies = new Map<string, string>();
+    const headers = generateHeaders();
+    const fetchPage = async (url: string) => {
+        const response = await ofetch.raw<string, 'text'>(url, {
+            headers: {
+                ...headers,
+                cookie: [...cookies].map(([name, value]) => `${name}=${value}`).join('; '),
+            },
+            ignoreResponseError: true,
+            responseType: 'text',
+        });
+        for (const cookie of response.headers.getSetCookie()) {
+            const [name, value] = cookie.split(';', 1)[0].split('=', 2);
+            cookies.set(name, value);
+        }
+        return response._data!;
+    };
+
+    return async (url: string) => {
+        // obtain __jsluid_s from set-cookie header
+        let body = await fetchPage(url);
+        for (let round = 0; round < 5; round++) {
+            const assignment = body.match(/document\.cookie=(.+?);location\.href/s);
+            const challenge = body.match(/go\((\{.+?\})\)/s);
+            if (assignment) {
+                // get 1st __jsl_clearance_s
+                const [name, value] = evaluateJsl(assignment[1]).split(';', 1)[0].split('=', 2);
+                cookies.set(name, value);
+            } else if (challenge) {
+                // get 2nd __jsl_clearance_s
+                const puzzle = JSON.parse(challenge[1]);
+                cookies.set(puzzle.tn, solveJsl(puzzle));
+            } else {
+                break;
+            }
+            // oxlint-disable-next-line no-await-in-loop
+            body = await fetchPage(url);
+        }
+        return body;
+    };
 };

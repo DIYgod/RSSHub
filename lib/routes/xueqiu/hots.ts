@@ -13,7 +13,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -31,10 +31,10 @@ export const route: Route = {
 };
 
 async function handler() {
-    const token = await parseToken('https://xueqiu.com');
+    const token = await parseToken();
     const res2 = await got({
         method: 'get',
-        url: 'https://xueqiu.com/statuses/hots.json',
+        url: 'https://api.xueqiu.com/statuses/hots.json',
         searchParams: queryString.stringify({
             a: '1',
             count: '10',

@@ -7,8 +7,13 @@ import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-import { isMediumChallenge } from './browser';
 import type { PostPreview } from './graphql';
+
+function isMediumChallenge(error: any) {
+    const body = error?.data ?? error?.response?._data;
+    const html = typeof body === 'string' ? body : body?.body;
+    return (error?.statusCode ?? error?.status ?? error?.response?.status) === 403 && typeof html === 'string' && /cf-chl|challenge-platform|Just a moment/i.test(html);
+}
 
 function isMediumUrl(url: URL) {
     return url.protocol === 'https:' && (url.hostname === 'medium.com' || url.hostname.endsWith('.medium.com'));
@@ -20,6 +25,7 @@ async function fetchArticle(url: string, cookie: string, redirects = 0): Promise
     const response = await ofetch.raw<string>(url, {
         headers: sessionCookie ? { cookie: sessionCookie } : {},
         redirect: 'manual',
+        minVersion: 'TLSv1.3',
     });
     if (response.status >= 300 && response.status < 400) {
         const location = response.headers.get('location');
