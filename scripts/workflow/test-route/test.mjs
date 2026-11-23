@@ -1,3 +1,6 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
 import jsBeautify from 'js-beautify';
 
 const routeTestFailed = 'auto: not ready to review';
@@ -20,6 +23,13 @@ export default async function test({ github, context, core }, baseUrl, routes, n
         return `${baseUrl}${l}`;
     });
 
+    const artifactDir = path.join(process.env.RUNNER_TEMP, 'route-test');
+    await fs.mkdir(artifactDir, { recursive: true });
+    let summaryTable = `| Route | Result |
+| --- | --- |
+`;
+    const summaryDetails = [];
+
     let commentList = [];
     let successCount = 0;
     let failCount = 0;
@@ -38,6 +48,14 @@ export default async function test({ github, context, core }, baseUrl, routes, n
             success = true;
             successCount++;
             detail = jsBeautify.html(body.replaceAll(/\s+(\n|$)/g, '\n'), { indent_size: 2 });
+
+            const file = path.join(artifactDir, `${lks.slice(baseUrl.length + 1).replaceAll(/[/\\":<>|*?\r\n]/g, '_')}.xml`);
+            try {
+                // oxlint-disable-next-line no-await-in-loop - intended, one at a time
+                await fs.writeFile(file, body);
+            } catch (error) {
+                core.warning(error);
+            }
         } else {
             if (body && !body.includes('ConfigNotFoundError')) {
                 failCount++;
@@ -61,6 +79,9 @@ export default async function test({ github, context, core }, baseUrl, routes, n
 <summary><a href="${lks}">${lks.replaceAll('&', '&amp;')}</a> - ${success ? 'Success ✔️' : '<b>Failed ❌</b>'}</summary>
 
 \`\`\`${success ? 'rss' : ''}`;
+        summaryTable += `| \`${lks.slice(baseUrl.length).replaceAll('|', String.raw`\|`)}\` | ${success ? 'Success ✔️' : '<b>Failed ❌</b>'} |
+`;
+        summaryDetails.push({ head: routeFeedback, detail });
         routeFeedback += `
 ${detail.slice(0, 65300 - routeFeedback.length)}
 \`\`\`
@@ -77,6 +98,21 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
 
     if (comment.length > 0) {
         commentList.push(comment);
+    }
+
+    let summary = summaryTable;
+    for (const { head, detail } of summaryDetails) {
+        const tooLarge = Buffer.byteLength(summary) + Buffer.byteLength(head) + Buffer.byteLength(detail) > 1_000_000; // 1MiB
+        summary += `${head}
+${tooLarge ? 'Too large for the job summary, see the artifact.' : detail}
+\`\`\`
+</details>
+`;
+    }
+    try {
+        await core.summary.addRaw(summary).write();
+    } catch (error) {
+        core.warning(error);
     }
 
     if (commentList.length >= 5) {
