@@ -35,7 +35,7 @@ async function getData(url: string) {
 function getItem(entry) {
     const link = `${baseUrl}/share/feed/${entry.id}`;
     return cache.tryGet(link, async () => {
-        const { feed } = await getData(link);
+        const feed = (await getData(link))?.feed ?? entry;
         return {
             title: feed.title,
             link,
