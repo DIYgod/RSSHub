@@ -27,6 +27,7 @@ async function handler() {
         data: { items: Array<{ title: string; url: string; content: string; releaseTimeStamp: number; keywords: string }> };
     }>('https://api.chaincatcher.com/v1/open-api/news-flash', {
         query: { page: 1, size: 20, lang: 'zh-CN' },
+        responseType: 'json',
     });
     if (!response.result) {
         throw new Error(`ChainCatcher API: ${response.message}`);
