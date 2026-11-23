@@ -52,6 +52,7 @@ async function handler(ctx) {
     const items = $('a.news[href]')
         .toArray()
         .map((element) => ({ title: $(element).find('h2, h3').text(), link: new URL($(element).attr('href')!, baseUrl).href }))
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index)
         .slice(0, limit);
     return {
         title: $('title').text(),
