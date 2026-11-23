@@ -20907,17 +20907,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/design-resources"
+          "/blog/knowledge"
         ],
-        "target": "/eagle/blog/design-resources/cn"
+        "target": "/eagle/blog/knowledge/cn"
       },
       {
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/learn-design"
+          "/blog/design-resources"
         ],
-        "target": "/eagle/blog/learn-design/cn"
+        "target": "/eagle/blog/design-resources/cn"
       },
       {
         "title": "Blog",
@@ -20931,9 +20931,9 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/why-eagle"
+          "/blog/product-news"
         ],
-        "target": "/eagle/blog/why-eagle/cn"
+        "target": "/eagle/blog/product-news/cn"
       }
     ],
     "tw": [
@@ -20941,17 +20941,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/design-resources"
+          "/blog/knowledge"
         ],
-        "target": "/eagle/blog/design-resources/tw"
+        "target": "/eagle/blog/knowledge/tw"
       },
       {
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/learn-design"
+          "/blog/design-resources"
         ],
-        "target": "/eagle/blog/learn-design/tw"
+        "target": "/eagle/blog/design-resources/tw"
       },
       {
         "title": "Blog",
@@ -20965,9 +20965,9 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/why-eagle"
+          "/blog/product-news"
         ],
-        "target": "/eagle/blog/why-eagle/tw"
+        "target": "/eagle/blog/product-news/tw"
       },
       {
         "title": "Blog",
@@ -20983,17 +20983,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/design-resources"
+          "/blog/knowledge"
         ],
-        "target": "/eagle/blog/design-resources/en"
+        "target": "/eagle/blog/knowledge/en"
       },
       {
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/learn-design"
+          "/blog/design-resources"
         ],
-        "target": "/eagle/blog/learn-design/en"
+        "target": "/eagle/blog/design-resources/en"
       },
       {
         "title": "Blog",
@@ -21007,9 +21007,9 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/why-eagle"
+          "/blog/product-news"
         ],
-        "target": "/eagle/blog/why-eagle/en"
+        "target": "/eagle/blog/product-news/en"
       },
       {
         "title": "Blog",

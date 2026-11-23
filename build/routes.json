@@ -58130,15 +58130,15 @@
           },
           {
             "source": [
-              "cn.eagle.cool/blog/design-resources"
+              "cn.eagle.cool/blog/knowledge"
             ],
-            "target": "/blog/design-resources/cn"
+            "target": "/blog/knowledge/cn"
           },
           {
             "source": [
-              "cn.eagle.cool/blog/learn-design"
+              "cn.eagle.cool/blog/design-resources"
             ],
-            "target": "/blog/learn-design/cn"
+            "target": "/blog/design-resources/cn"
           },
           {
             "source": [
@@ -58148,9 +58148,15 @@
           },
           {
             "source": [
-              "cn.eagle.cool/blog/why-eagle"
+              "cn.eagle.cool/blog/product-news"
             ],
-            "target": "/blog/why-eagle/cn"
+            "target": "/blog/product-news/cn"
+          },
+          {
+            "source": [
+              "tw.eagle.cool/blog/knowledge"
+            ],
+            "target": "/blog/knowledge/tw"
           },
           {
             "source": [
@@ -58160,21 +58166,15 @@
           },
           {
             "source": [
-              "tw.eagle.cool/blog/learn-design"
-            ],
-            "target": "/blog/learn-design/tw"
-          },
-          {
-            "source": [
               "tw.eagle.cool/blog/inside-eagle"
             ],
             "target": "/blog/inside-eagle/tw"
           },
           {
             "source": [
-              "tw.eagle.cool/blog/why-eagle"
+              "tw.eagle.cool/blog/product-news"
             ],
-            "target": "/blog/why-eagle/tw"
+            "target": "/blog/product-news/tw"
           },
           {
             "source": [
@@ -58184,15 +58184,15 @@
           },
           {
             "source": [
-              "en.eagle.cool/blog/design-resources"
+              "en.eagle.cool/blog/knowledge"
             ],
-            "target": "/blog/design-resources/en"
+            "target": "/blog/knowledge/en"
           },
           {
             "source": [
-              "en.eagle.cool/blog/learn-design"
+              "en.eagle.cool/blog/design-resources"
             ],
-            "target": "/blog/learn-design/en"
+            "target": "/blog/design-resources/en"
           },
           {
             "source": [
@@ -58202,9 +58202,9 @@
           },
           {
             "source": [
-              "en.eagle.cool/blog/why-eagle"
+              "en.eagle.cool/blog/product-news"
             ],
-            "target": "/blog/why-eagle/en"
+            "target": "/blog/product-news/en"
           },
           {
             "source": [
