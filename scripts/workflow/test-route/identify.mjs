@@ -108,6 +108,9 @@ export default async function identify({ github, context, core }, body, number, 
             return;
         }
         if (issue.state === 'closed') {
+            if (issue.closed_by?.login !== 'github-actions[bot]') {
+                return;
+            }
             await updatePrState('open');
         }
         if (issue.labels.some((e) => e.name === criticalFailure || e.name === routeTestFailed)) {
