@@ -189,7 +189,7 @@
         "globals": "17.14.0",
         "js-beautify": "2.0.3",
         "knip": "6.47.0",
-        "msw": "3.0.6",
+        "msw": "3.0.7",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.79.0",
         "oxlint": "1.94.0",
