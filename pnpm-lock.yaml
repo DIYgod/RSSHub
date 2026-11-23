@@ -199,14 +199,14 @@ importers:
   .:
     dependencies:
       '@bbob/html':
-        specifier: 4.4.1
-        version: 4.4.1
+        specifier: 4.5.0
+        version: 4.5.0
       '@bbob/plugin-helper':
-        specifier: 4.4.1
-        version: 4.4.1
+        specifier: 4.5.0
+        version: 4.5.0
       '@bbob/preset-html5':
-        specifier: 4.4.1
-        version: 4.4.1
+        specifier: 4.5.0
+        version: 4.5.0
       '@googleapis/youtube':
         specifier: 40.1.0
         version: 40.1.0(supports-color@10.2.2)
@@ -446,8 +446,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1
       '@bbob/types':
-        specifier: 4.4.1
-        version: 4.4.1
+        specifier: 4.5.0
+        version: 4.5.0
       '@cloudflare/containers':
         specifier: 0.3.7
         version: 0.3.7
@@ -665,23 +665,23 @@ packages:
   '@bbob/core@4.4.1':
     resolution: {integrity: sha512-+/p5zQryGVbviM6MUCtHZL3TBtsPFLynCClgiWpQgonYunzIifVaPq8wkA3tnYRrz8rTVC2CMEaiGr16/KV+zw==}
 
-  '@bbob/html@4.4.1':
-    resolution: {integrity: sha512-pR2SruL2LmQEDDjZ+HrkW1wFtUkyTJN4tdUWQelLiRggAzR1XOH5ZtVSGfPlWzX5HvdjGjITxkvtCBuGaESegw==}
+  '@bbob/html@4.5.0':
+    resolution: {integrity: sha512-r2vuCoYeH85sLARoXXgKhvz/G5TKM0j69hRI0ntAhL2IrwrsYltrVXCLc63adNcD4puUzFuu20FfF01G7Ow9tQ==}
 
   '@bbob/parser@4.4.1':
     resolution: {integrity: sha512-Hs6caDSsY5zJdZZpj7ohTz4hQZGKPL+ZgZy+qbgDtfD9WV2YGxFGtXQf7PBu/aIRKOrkGgbCQxDYWlCEyONi9w==}
 
-  '@bbob/plugin-helper@4.4.1':
-    resolution: {integrity: sha512-vTjwNiiIHhihyD41DuxrUFVCuGPr1EB1fXvy5+HHnmcvWmOH5BzPSgSEs+KCdpWF+hIDMAho2toAHiDmYurCJQ==}
+  '@bbob/plugin-helper@4.5.0':
+    resolution: {integrity: sha512-zxCAaqcX0/Zd3oSgFqcqVYm5DyYEXVdTzrbXogmwJLbMLMxqYyT1qbpPdniGwEkvutodZgDssM/8oDmSaYw0oA==}
 
-  '@bbob/preset-html5@4.4.1':
-    resolution: {integrity: sha512-rk8T9NnaVQRciHklMY1s5FefswT777XKZ+uQISGToUzrkTPQh2B3E5tLlJN4Z0Cb0n9IKCuDxy6sqaCVfPwxOg==}
+  '@bbob/preset-html5@4.5.0':
+    resolution: {integrity: sha512-xENQ8Q12uHui7vTvtoa5Sh3MjVYeKsLgCleHB2BDFt98BOcaAxVZYwjN6rJQ7GDutrlh9ztyJ7Y1NW5brO4N1g==}
 
   '@bbob/preset@4.4.1':
     resolution: {integrity: sha512-QX68ZKgmX8oLzB7TRaoUlXXX+CN/Mf/TtczH29QIHzwWNTXze04/4njYNulzmIJC7/VcABkK7feEbw8M96rU8Q==}
 
-  '@bbob/types@4.4.1':
-    resolution: {integrity: sha512-IDu7H3J9yMQG0U//0X4Akbbm3SOIKfeLmgPHO4s3s+WPsl+AeGb6dy4XBFLEDcDIN/N3f8WPibhIjLr0gFQ7Fg==}
+  '@bbob/types@4.5.0':
+    resolution: {integrity: sha512-sK///MEcmjnwCc7w/O6KFR2R4ZFXnx4rJmtVxbv1O2G4SgXm2F0pSubiQXOz+7hhVzFPwv7+TlQBZ+e1qFC9gg==}
 
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
@@ -6461,36 +6461,36 @@ snapshots:
   '@bbob/core@4.4.1':
     dependencies:
       '@bbob/parser': 4.4.1
-      '@bbob/plugin-helper': 4.4.1
-      '@bbob/types': 4.4.1
+      '@bbob/plugin-helper': 4.5.0
+      '@bbob/types': 4.5.0
 
-  '@bbob/html@4.4.1':
+  '@bbob/html@4.5.0':
     dependencies:
       '@bbob/core': 4.4.1
-      '@bbob/plugin-helper': 4.4.1
-      '@bbob/types': 4.4.1
+      '@bbob/plugin-helper': 4.5.0
+      '@bbob/types': 4.5.0
 
   '@bbob/parser@4.4.1':
     dependencies:
-      '@bbob/plugin-helper': 4.4.1
-      '@bbob/types': 4.4.1
+      '@bbob/plugin-helper': 4.5.0
+      '@bbob/types': 4.5.0
 
-  '@bbob/plugin-helper@4.4.1':
+  '@bbob/plugin-helper@4.5.0':
     dependencies:
-      '@bbob/types': 4.4.1
+      '@bbob/types': 4.5.0
 
-  '@bbob/preset-html5@4.4.1':
+  '@bbob/preset-html5@4.5.0':
     dependencies:
-      '@bbob/plugin-helper': 4.4.1
+      '@bbob/plugin-helper': 4.5.0
       '@bbob/preset': 4.4.1
-      '@bbob/types': 4.4.1
+      '@bbob/types': 4.5.0
 
   '@bbob/preset@4.4.1':
     dependencies:
-      '@bbob/plugin-helper': 4.4.1
-      '@bbob/types': 4.4.1
+      '@bbob/plugin-helper': 4.5.0
+      '@bbob/types': 4.5.0
 
-  '@bbob/types@4.4.1': {}
+  '@bbob/types@4.5.0': {}
 
   '@bcoe/v8-coverage@1.0.2': {}
 

@@ -66,9 +66,9 @@
         "worker-test": "npm run build:routes && npm run worker-build && vitest run lib/worker.test.ts"
     },
     "dependencies": {
-        "@bbob/html": "4.4.1",
-        "@bbob/plugin-helper": "4.4.1",
-        "@bbob/preset-html5": "4.4.1",
+        "@bbob/html": "4.5.0",
+        "@bbob/plugin-helper": "4.5.0",
+        "@bbob/preset-html5": "4.5.0",
         "@googleapis/youtube": "40.1.0",
         "@honeybadger-io/js": "6.17.2",
         "@hono/node-server": "2.1.9",
@@ -150,7 +150,7 @@
     "devDependencies": {
         "@actions/core": "3.0.1",
         "@actions/github": "9.1.1",
-        "@bbob/types": "4.4.1",
+        "@bbob/types": "4.5.0",
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/oxlint-config": "0.1.0",
         "@cloudflare/playwright": "1.4.0",
