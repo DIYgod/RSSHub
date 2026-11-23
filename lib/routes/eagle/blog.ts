@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eagle', 'why-eagle']);
+const cateList = new Set(['all', 'knowledge', 'design-resources', 'inside-eagle', 'product-news', 'learn-design', 'why-eagle']);
 const languages = { cn: 'zh-CN', tw: 'zh-TW', en: 'en', jp: 'ja', kr: 'ko', es: 'es', de: 'de', ru: 'ru' } satisfies Record<string, Language>;
 
 export const route: Route = {
@@ -45,7 +45,7 @@ export const route: Route = {
             target: '/blog',
         },
         ...['cn', 'tw', 'en'].flatMap((language) => [
-            ...['design-resources', 'learn-design', 'inside-eagle', 'why-eagle'].map((category) => ({
+            ...['knowledge', 'design-resources', 'inside-eagle', 'product-news'].map((category) => ({
                 source: [`${language}.eagle.cool/blog/${category}`],
                 target: `/blog/${category}/${language}`,
             })),
@@ -78,13 +78,12 @@ async function handler(ctx): Promise<Data> {
     const response = await got(url);
     const $ = load(response.data);
     const title = $('title').text();
-    const list = $('div[class*="__blog-card__link"]')
+    const list = $('.post-card')
         .toArray()
         .map((item): DataItem & { link: string } => ({
-            title: $(item).find('h3[class*="__blog-card__title"]').text(),
-            link: new URL($(item).find('a').attr('href')!, host).href,
-            author: $(item).find('span[class*="__blog-card__author-name"]').text(),
-            category: [$(item).find('a[class*="__blog-card__category"]').text()],
+            title: $(item).find('.post-card__title').text(),
+            link: new URL($(item).find('.post-card__title-link').attr('href')!, host).href,
+            category: [$(item).find('.post-card__category').text()],
         }));
     const items = await pMap(
         list,
@@ -93,9 +92,8 @@ async function handler(ctx): Promise<Data> {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);
-                item.description = content('div[class*="__blog-post__content"]').html();
+                item.description = content('.article-content').html();
                 item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
-                item.updated = parseDate(content('meta[property="article:modified_time"]').attr('content')!);
 
                 return item;
             }),
