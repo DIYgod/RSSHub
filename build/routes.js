@@ -93188,20 +93188,39 @@ export default {
       "/blog": {
         "path": "/blog",
         "name": "Blog",
+        "url": "nextjs.org/blog",
+        "example": "/nextjs/blog",
         "categories": [
           "program-update"
         ],
+        "view": 0,
         "maintainers": [
-          "equt"
+          "equt",
+          "ljh12138164"
         ],
-        "example": "/nextjs/blog",
+        "description": "Full-text articles, release notes, and security advisories from the official Next.js blog. Fetches up to 20 entries by default via the official RSS feed; supports the common `limit` query parameter.",
+        "zh": {
+          "name": "博客",
+          "description": "通过官方 RSS 抓取 Next.js 官方博客全文（涵盖版本发布、工程实践与安全通告），默认获取最多 20 篇，支持通用 `limit` 参数。"
+        },
+        "radar": [
+          {
+            "source": [
+              "nextjs.org/blog",
+              "nextjs.org/blog/:slug",
+              "nextjs.org/feed.xml"
+            ],
+            "target": "/blog"
+          }
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
-          "supportScihub": false
+          "supportScihub": false,
+          "supportRadar": true
         },
         "location": "blog.ts",
         "module": () => import('@/routes/nextjs/blog.ts')

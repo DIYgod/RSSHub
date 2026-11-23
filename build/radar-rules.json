@@ -36923,6 +36923,21 @@
       }
     ]
   },
+  "nextjs.org": {
+    "_name": "Next.js",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/nextjs",
+        "source": [
+          "/blog",
+          "/blog/:slug",
+          "/feed.xml"
+        ],
+        "target": "/nextjs/blog"
+      }
+    ]
+  },
   "ngocn2.org": {
     "_name": "NGOCN",
     ".": [
