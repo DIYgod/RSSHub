@@ -676,6 +676,10 @@ export default defineConfig({
                 selector: ':matches(Property[key.name="dangerouslySetInnerHTML"], Property[key.value="dangerouslySetInnerHTML"])',
                 message: 'Usage of `dangerouslySetInnerHTML` is not allowed.',
             },
+            {
+                selector: ':matches(ImportSpecifier[imported.name="createHash"], MemberExpression[property.name="createHash"])',
+                message: 'Usage of `createHash` is not allowed. Use `@/utils/hash` or `hash()` from `node:crypto` instead.',
+            },
         ],
 
         'no-unneeded-ternary': 'error',

@@ -5,7 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 

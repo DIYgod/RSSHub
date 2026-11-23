@@ -2,12 +2,13 @@ import crypto from 'node:crypto';
 
 import CryptoJS from 'crypto-js';
 
+import { sha1 } from '@/utils/hash';
+
 const salt = '6m6pingbinwaktg227gngifoocrfbo95';
 const key = CryptoJS.enc.Utf8.parse('eRtYuIoPaSdFgHqW');
 const iv = CryptoJS.enc.Utf8.parse('Nmc09JkLzX8765Vb');
 
 export const baseUrl = 'https://pubscholar.cn';
-const sha1 = (str: string) => crypto.createHash('sha1').update(str).digest('hex');
 export const uuidv4 = () => crypto.randomUUID();
 
 const generateNonce = (length: number): string => {

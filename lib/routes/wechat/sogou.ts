@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
+import { md5 } from '@/utils/hash';
 import logger from '@/utils/logger';
-import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 import { finishArticleItem, normalizeUrl } from '@/utils/wechat-mp';

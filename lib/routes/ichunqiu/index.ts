@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { hash } from 'node:crypto';
 
 import { load } from 'cheerio';
 
@@ -24,7 +24,7 @@ const solveJsl = ({ bts, chars, ct, ha }) => {
     for (const a of chars) {
         for (const b of chars) {
             const answer = bts[0] + a + b + bts[1];
-            if (createHash(ha).update(answer).digest('hex') === ct) {
+            if (hash(ha, answer) === ct) {
                 return answer;
             }
         }

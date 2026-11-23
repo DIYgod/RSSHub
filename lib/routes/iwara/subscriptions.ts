@@ -1,11 +1,10 @@
-import { createHash } from 'node:crypto';
-
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { sha256 } from '@/utils/hash';
 import MarkdownIt from '@/utils/markdown-it';
 import { getPlaywrightPage } from '@/utils/playwright';
 import { parseDate } from '@/utils/time';
@@ -70,9 +69,7 @@ async function handler() {
 
     const username = config.iwara.username;
     const password = config.iwara.password;
-    const accountKey = createHash('sha256')
-        .update(JSON.stringify([username, password]))
-        .digest('hex');
+    const accountKey = sha256(JSON.stringify([username, password]));
 
     const { page, destroy } = await getPlaywrightPage(rootUrl, {
         onBeforeLoad: async (page) => {

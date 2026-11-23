@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
 import type cacheModule from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import type { Page } from '@/utils/playwright';
 

@@ -1,5 +1,3 @@
-import { createHash } from 'node:crypto';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -14,6 +12,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
 import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
+import { sha256 } from '@/utils/hash';
 import type { LinkResolver } from '@/utils/link-resolver';
 import { createLinkResolver } from '@/utils/link-resolver';
 import markdownit from '@/utils/markdown-it';
@@ -77,7 +76,7 @@ const getAiCompletion = async (prompt: string, text: string) => {
 
 // the content cache is shared by every route and client, so key the completion on what it is
 // generated from (prompt + text) rather than on item.link, which any feed can reuse with other text
-const getAiCacheKey = (type: 'title' | 'description', prompt: string, text: string) => `openai:${type}:${createHash('sha256').update(prompt).update('\0').update(text).digest('hex')}`;
+const getAiCacheKey = (type: 'title' | 'description', prompt: string, text: string) => `openai:${type}:${sha256(`${prompt}\0${text}`)}`;
 
 // the same limit Mercury applies to the pages it fetches itself
 const FULLTEXT_MAX_LENGTH = 5 * 1024 * 1024;

@@ -1,8 +1,7 @@
-import { createHash } from 'node:crypto';
-
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import { sha256 } from '@/utils/hash';
 import { hasItemFilters, itemFilters } from '@/utils/route-limit';
 
 // Query parameters that have their own part in the key, or that the parameter middleware applies to the
@@ -41,10 +40,7 @@ type RouteCacheKeyParts = {
  * The route cache key. Every part a client controls is kept apart in a JSON array and the result is hashed
  * with a collision resistant digest, so no request can name the entry of another one.
  */
-export const routeCacheKey = (parts: RouteCacheKeyParts) =>
-    createHash('sha256')
-        .update(JSON.stringify([parts.path, parts.format, parts.limit ?? '', parts.sorted ?? '', parts.filtered, parts.fulltext ?? false, parts.origin, parts.prefix, parts.query]))
-        .digest('hex');
+export const routeCacheKey = (parts: RouteCacheKeyParts) => sha256(JSON.stringify([parts.path, parts.format, parts.limit ?? '', parts.sorted ?? '', parts.filtered, parts.fulltext ?? false, parts.origin, parts.prefix, parts.query]));
 
 export const getRouteCacheKey = (ctx: Context) => {
     const requestUrl = new URL(ctx.req.url);

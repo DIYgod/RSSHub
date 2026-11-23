@@ -1,11 +1,10 @@
-import { createHash } from 'node:crypto';
-
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { sha256 } from '@/utils/hash';
 import { parseDate } from '@/utils/time';
 
 import { parseJSONP } from './jsonp-helper';
@@ -60,11 +59,7 @@ async function handler(ctx) {
 
         return {
             id: isBio ? undefined : item.id,
-            guid: isBio
-                ? `bio:${createHash('sha256')
-                      .update(JSON.stringify([item.url, item.kiji]))
-                      .digest('hex')}`
-                : `news:${item.id}`,
+            guid: isBio ? `bio:${sha256(JSON.stringify([item.url, item.kiji]))}` : `news:${item.id}`,
             title: isBio ? item.url : item.title,
             category: item.category,
             date: isBio ? item.url : item.date,

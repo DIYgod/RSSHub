@@ -1,6 +1,5 @@
-import crypto from 'node:crypto';
-
 import type { Route } from '@/types';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { formatDate, parseDate } from '@/utils/time';
@@ -16,7 +15,7 @@ const getNonce = (params: Record<string, string | number>) => {
 
     const hashInput = `${queryStr}evst${m}`;
 
-    const md5Hex = crypto.createHash('md5').update(hashInput).digest('hex');
+    const md5Hex = md5(hashInput);
 
     const n = PERMUTAION_MAP.map((idx) => md5Hex[idx]).join('');
 

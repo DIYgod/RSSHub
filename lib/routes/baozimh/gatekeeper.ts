@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { hash } from 'node:crypto';
 
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
@@ -23,7 +23,7 @@ export const getGatekeeperHeaders = async () => {
     const difficultyBits = Number(start._data?.match(/difficultyBits:(\d+)/)?.[1]);
 
     let nonce = 0;
-    while (createHash('sha256').update(`gatekeeper-pow-v1:${challengeId}:${nonce}`).digest().readUInt32BE(0) >= 2 ** (32 - difficultyBits)) {
+    while (hash('sha256', `gatekeeper-pow-v1:${challengeId}:${nonce}`, 'buffer').readUInt32BE(0) >= 2 ** (32 - difficultyBits)) {
         nonce++;
     }
 

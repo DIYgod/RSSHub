@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 import { config } from '@/config';
+import { md5 } from '@/utils/hash';
 import logger from '@/utils/logger';
-import md5 from '@/utils/md5';
 
 import type CacheModule from './base';
 import { stringify } from './base';

@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import type { WeiboOAuthState } from '@/utils/weibo-oauth';
 
 process.env.NODE_NAME = 'mock';

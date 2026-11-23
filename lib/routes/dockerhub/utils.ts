@@ -1,4 +1,4 @@
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 function hash(images) {
     const entries = Object.entries<{ os: string; architecture: string; digest: string }>(images)

@@ -1,4 +1,4 @@
-import { createCipheriv, createHash, randomUUID } from 'node:crypto';
+import { createCipheriv, randomUUID } from 'node:crypto';
 
 import { load } from 'cheerio';
 import type { Context } from 'hono';
@@ -6,6 +6,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { sha1 } from '@/utils/hash';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -72,7 +73,7 @@ const fingerprint = {
     200: '1', // constant
 };
 
-const sha1 = () => createHash('sha1').update(randomUUID()).digest('hex');
+const randomSha1 = () => sha1(randomUUID());
 
 const isImageUrl = (image: string | { src: string }): image is string => typeof image === 'string';
 
@@ -113,13 +114,13 @@ async function handler(ctx: Context) {
             const cipher = createCipheriv('aes-128-cbc', abdrKey, abdrIv);
             const plaintext = JSON.stringify({
                 ...fingerprint,
-                3: sha1(), // sha1 of the canvas rendering
+                3: randomSha1(), // sha1 of the canvas rendering
                 25: `Google Inc. (Apple),ANGLE (Apple, ANGLE Metal Renderer: Apple M${Math.ceil(Math.random() * 6)}, Unspecified Version)`, // WebGL unmasked vendor and renderer
                 27: ua, // navigator.userAgent
-                78: `${sha1()}_${sha1()}`, // composite hash of canvas, plugins, cores, WebGL and platform
-                82: sha1(), // hash of a sample of the page script text
-                85: sha1(), // hash of fields 78, 101, 103 and 82
-                101: sha1(), // per visit id: URL, referrer, user agent, start time and a random value, hashed
+                78: `${randomSha1()}_${randomSha1()}`, // composite hash of canvas, plugins, cores, WebGL and platform
+                82: randomSha1(), // hash of a sample of the page script text
+                85: randomSha1(), // hash of fields 78, 101, 103 and 82
+                101: randomSha1(), // per visit id: URL, referrer, user agent, start time and a random value, hashed
                 103: String(Temporal.Now.instant().epochMilliseconds),
                 108: link, // page URL
                 109: '', // document.referrer

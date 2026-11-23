@@ -4,7 +4,7 @@ import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 const rootUrl = 'https://www.iyingdi.com';
 const infoUrL = 'https://api.iyingdi.com/web/post/info';

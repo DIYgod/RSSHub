@@ -1,7 +1,7 @@
 import { createCipheriv, createDecipheriv, randomUUID } from 'node:crypto';
 
 import { evaluateScriptData } from '@/utils/evaluate-script';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 
 interface Challenge {

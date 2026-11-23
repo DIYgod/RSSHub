@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
 import { parseDate } from '@/utils/time';

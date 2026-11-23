@@ -4,7 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import RejectError from '@/errors/types/reject';
 import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 const stateTtl = 600;
 const statePrefix = 'weibo:oauth:state:';

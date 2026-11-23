@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { md5 } from '@/utils/hash';
 import logger from '@/utils/logger';
-import md5 from '@/utils/md5';
 
 function parseIpLocations(html: string): string[] {
     const $ = load(html);

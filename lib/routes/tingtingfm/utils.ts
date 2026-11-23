@@ -1,4 +1,4 @@
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 const SALT = '1Ftjv0bfpVmqbE38';
 

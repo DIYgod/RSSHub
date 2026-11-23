@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import { parseDate } from '@/utils/time';
 
 import { parseContent } from './parser';

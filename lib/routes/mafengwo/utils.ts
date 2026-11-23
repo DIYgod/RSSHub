@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto';
 
 import CryptoJS from 'crypto-js';
 
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 
 // ?v=vc1jasc

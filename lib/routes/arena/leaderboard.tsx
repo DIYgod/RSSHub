@@ -1,10 +1,9 @@
-import { createHash } from 'node:crypto';
-
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
@@ -75,7 +74,7 @@ async function handler(ctx) {
     const webPage = $('script[type="application/ld+json"]:contains("WebPage")').text();
     const modified = webPage ? JSON.parse(webPage).dateModified : undefined;
     const snapshot = leaderboard.entries.map((entry) => [entry.rank, entry.modelKey, entry.rating]);
-    const hash = createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
+    const hash = sha256(JSON.stringify(snapshot));
     return {
         title: `Arena - ${categories[category]} text leaderboard`,
         link,
