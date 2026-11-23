@@ -30,7 +30,7 @@ export const route: Route = {
                 const $a = $(el);
                 const $li = $a.find('li');
                 const title = $li.find('.title').text();
-                const pubDate = parseDate($li.find('.time').text(), 0);
+                const pubDate = parseDate($li.find('.time').text(), 'YYYY-M-D', 0);
                 const href = $a.attr('href')!;
                 const link = new URL(href, baseUrl).href;
 
