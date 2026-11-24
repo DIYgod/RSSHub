@@ -162,7 +162,6 @@
         "@oxlint/plugins": "1.94.0",
         "@stylistic/eslint-plugin": "6.0.1",
         "@types/crypto-js": "4.2.2",
-        "@types/etag": "1.8.4",
         "@types/fs-extra": "11.0.4",
         "@types/html-to-text": "9.0.4",
         "@types/js-beautify": "1.14.3",

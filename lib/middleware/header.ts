@@ -1,4 +1,4 @@
-import etagCalculate from 'etag';
+import { etag as etagCalculate } from 'etag';
 import type { MiddlewareHandler } from 'hono';
 import { routePath } from 'hono/route';
 
