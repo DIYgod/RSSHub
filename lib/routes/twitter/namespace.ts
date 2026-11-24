@@ -47,6 +47,8 @@ generates
 
 <img loading="lazy" src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
+\`/twitter/user\` and \`/twitter/tweet\` work without any configuration: they read the pages that x.com shows logged-out visitors first. A profile page has the latest original posts of the account, currently about five plus the pinned post, and no reposts or replies, so the feed of an account that posts often can miss posts between two refreshes. The credentials below are only used when those pages cannot serve a request: when x.com does not return them or they have no posts, for \`includeReplies\`, \`includeRts=1\` and \`count\` in \`/twitter/user\`, and in all other routes.
+
 Currently supports two authentication methods:
 
 - Using \`TWITTER_AUTH_TOKEN\` (recommended): Configure a comma-separated list of \`auth_token\` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.
