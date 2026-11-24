@@ -150,8 +150,10 @@ async function handler(ctx) {
             .slice(0, category === 'all' ? total / 3 : total);
     }
 
+    const list = [...newsList, ...redianList, ...gundongList].filter((item, index, all) => all.findIndex((other) => other.link === item.link) === index);
+
     const items = await Promise.all(
-        [...newsList, ...redianList, ...gundongList].map(async (item) => {
+        list.map(async (item) => {
             const article = await cache.tryGet(`guancha:home:full-article:${item.link}`, async () => {
                 let link = item.link;
                 let detailResponse = await got({
