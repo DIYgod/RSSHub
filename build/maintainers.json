@@ -3385,6 +3385,9 @@
   "/chongdiantou/": [
     "Geraldxm"
   ],
+  "/chrome/blog/:lang?": [
+    "ljh12138164"
+  ],
   "/chsi/hotnews": [
     "yanbot-team"
   ],

@@ -47486,6 +47486,66 @@
     "lang": "zh-CN",
     "description": "充电头网是国内最早进行消费类电源技术及其周边配件（快充、充电头、充电器、无线充、车充、车载充电器、数据线、充电线材、移动电源及电芯、USB 插排）评测、拆解的专业机构。"
   },
+  "chrome": {
+    "routes": {
+      "/blog/:lang?": {
+        "path": "/blog/:lang?",
+        "name": "Blog",
+        "url": "developer.chrome.com/blog",
+        "example": "/chrome/blog",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "lang": {
+            "description": "Language code (`hl` parameter on `developer.chrome.com`, supported: en, ar, bn, de, es-419, es, fa, fr, he, hi, id, it, ja, ko, nl, pl, pt-br, ru, th, tr, vi, zh-cn, zh-tw)",
+            "default": "en"
+          }
+        },
+        "description": "Full-text articles from the Chrome for Developers Blog (`developer.chrome.com/blog`), stripping DevSite inline CSS/author header chrome and converting `<devsite-video>` embeds into standard YouTube `<iframe>` players.",
+        "zh": {
+          "name": "博客",
+          "parameters": {
+            "lang": {
+              "description": "语言代码（对应 `developer.chrome.com` 的 `hl` 参数，支持：en, ar, bn, de, es-419, es, fa, fr, he, hi, id, it, ja, ko, nl, pl, pt-br, ru, th, tr, vi, zh-cn, zh-tw）",
+              "default": "en"
+            }
+          },
+          "description": "获取 Chrome for Developers 官方博客全文（基于最新动态接口，清理头部内联样式与作者卡片，并将 `<devsite-video>` 转换为标准 YouTube `<iframe>` 播放器），支持 `:lang?` 参数（默认英文 `en`）。"
+        },
+        "radar": [
+          {
+            "source": [
+              "developer.chrome.com/blog",
+              "developer.chrome.com/blog/:slug"
+            ],
+            "target": "/blog/:lang?"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "blog.tsx",
+        "module": "() => import('@/routes/chrome/blog.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Chrome for Developers",
+    "url": "developer.chrome.com",
+    "lang": "en",
+    "zh": {
+      "name": "Chrome 开发者"
+    }
+  },
   "chsi": {
     "routes": {
       "/hotnews": {

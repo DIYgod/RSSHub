@@ -652,6 +652,7 @@ export type RoutePath =
   | `/chongdiantou/`
   | `/chouti/:subject?`
   | `/chouti/top/:hour?`
+  | `/chrome/blog/:lang?`
   | `/chromium/project-zero-issues`
   | `/chsi/hotnews`
   | `/chsi/kydt`

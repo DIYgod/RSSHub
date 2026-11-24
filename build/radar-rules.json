@@ -16861,6 +16861,20 @@
       }
     ]
   },
+  "chrome.com": {
+    "_name": "Chrome for Developers",
+    "developer": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/chrome",
+        "source": [
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/chrome/blog/:lang?"
+      }
+    ]
+  },
   "chsi.com.cn": {
     "_name": "中国研究生招生信息网",
     "yz": [
