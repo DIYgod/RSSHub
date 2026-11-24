@@ -85,7 +85,7 @@ async function handler(ctx) {
     if (!categories[location]?.[category]?.id) {
         throw new InvalidParameterError('Unknown location or category; use a documented combination.');
     }
-    const limit = getRouteLimit(ctx, 10);
+    const limit = getRouteLimit(ctx, 50);
 
     const params = {
         'zh-cn': `iPageSize=${limit}&iPage=1&sLangKey=zh-cn&isPreview=0&iChanId=${categories[location][category].id}`,
