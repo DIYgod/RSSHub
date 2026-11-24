@@ -176,7 +176,7 @@
         "@vercel/nft": "1.11.10",
         "@vitest/coverage-v8": "5.1.1",
         "cf": "1.0.0-rc.2",
-        "discord-api-types": "0.38.59",
+        "discord-api-types": "0.38.60",
         "domhandler": "6.0.1",
         "eslint": "10.15.0",
         "eslint-plugin-n": "18.5.0",
