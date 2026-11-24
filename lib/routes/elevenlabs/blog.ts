@@ -20,11 +20,6 @@ const BODY_SELECTOR = 'article .rich-text-blog > .typography';
 const DEFAULT_LIMIT = 20;
 const DETAIL_CONCURRENCY = 5;
 
-interface VideoSource {
-    src: string;
-    type: string;
-}
-
 function httpsUrl(value: string) {
     if (!value) {
         return;
@@ -110,8 +105,8 @@ function restoreTables($: CheerioAPI, body: Cheerio<Element>) {
     }
 }
 
-function videoSources($: CheerioAPI) {
-    // The article's player props are serialized in the Next.js Flight stream.
+function externalVideoSources($: CheerioAPI) {
+    // The embedded player props are serialized in the Next.js Flight stream.
     const stream = $('script:contains("self.__next_f.push")')
         .toArray()
         .flatMap((element) =>
@@ -123,7 +118,7 @@ function videoSources($: CheerioAPI) {
             )
         )
         .join('');
-    return Array.from(stream.matchAll(/"ratio":"[^"]+","src":("(?:\\.|[^"\\])*"|\[[^\]\n]*\]),"withBorder":[^,\n]+,"withPlayButtonLabels":/g), (match) => JSON.parse(match[1]) as string | VideoSource[]);
+    return Array.from(stream.matchAll(/"src":("(?:\\.|[^"\\])*"),"withBorder":[^,\n]+,"withPlayButtonLabels":/g), (match) => JSON.parse(match[1]) as string);
 }
 
 function externalVideo(source: string) {
@@ -138,17 +133,12 @@ function externalVideo(source: string) {
     }
 }
 
-function playerMarkup(source: string | VideoSource[], rawPoster: string | undefined) {
-    if (typeof source === 'string') {
-        return externalVideo(source);
-    }
-    const mp4 = source.find((item) => item.type === 'video/mp4');
-    const src = publisherAsset(mp4?.src ?? '');
+function hostedVideo(player: Cheerio<Element>) {
+    const src = publisherAsset(player.find('source[type="video/mp4"]').attr('src') ?? '');
     if (!src) {
         return;
     }
-    const poster = rawPoster ? imageUrl(rawPoster) : undefined;
-    return renderVideo(src, poster);
+    return renderVideo(src, imageUrl(player.find('img').attr('src') ?? ''));
 }
 
 function restoreVideos($: CheerioAPI, body: Cheerio<Element>, link: string) {
@@ -156,14 +146,14 @@ function restoreVideos($: CheerioAPI, body: Cheerio<Element>, link: string) {
     if (!placeholders.length) {
         return;
     }
-    const sources = videoSources($);
-    if (placeholders.length !== sources.length) {
+    const sources = externalVideoSources($);
+    const externalCount = placeholders.filter((element) => !$(element).find('video').length).length;
+    if (externalCount !== sources.length) {
         throw new Error(`ElevenLabs blog video data did not match the article: ${link}`);
     }
-    for (const [index, element] of placeholders.entries()) {
+    for (const element of placeholders) {
         const placeholder = $(element);
-        const rawPoster = placeholder.find('img').attr('src');
-        const markup = playerMarkup(sources[index], rawPoster);
+        const markup = placeholder.find('video').length ? hostedVideo(placeholder) : externalVideo(sources.shift()!);
         if (!markup) {
             throw new Error(`ElevenLabs blog video source was unsupported: ${link}`);
         }
