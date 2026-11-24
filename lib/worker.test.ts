@@ -156,8 +156,9 @@ describe('Worker Integration Tests', () => {
         });
 
         it('should load routes that import the proxy utilities', async () => {
-            // Without Twitter credentials the route fails in its handler, which it only reaches if its modules load
-            const response = await worker.fetch('/twitter/user/x');
+            // Without Twitter credentials the route fails in its handler, which it only reaches if its modules load.
+            // Not /twitter/user, which reads the pages x.com shows logged-out visitors before it needs credentials
+            const response = await worker.fetch('/twitter/keyword/x');
             expect(response.status).toBeGreaterThanOrEqual(400);
             const text = await response.text();
             expect(text).toContain('Twitter API is not configured');
