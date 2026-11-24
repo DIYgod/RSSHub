@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/time';
 
-const cateList = new Set(['all', 'knowledge', 'design-resources', 'inside-eagle', 'product-news', 'learn-design', 'why-eagle']);
+const cateList = new Set(['all', 'thoughts', 'guides', 'design-resources', 'inside-eagle', 'product-news', 'learn-design', 'why-eagle']);
 const languages = { cn: 'zh-CN', tw: 'zh-TW', en: 'en', jp: 'ja', kr: 'ko', es: 'es', de: 'de', ru: 'ru' } satisfies Record<string, Language>;
 
 export const route: Route = {
@@ -45,7 +45,7 @@ export const route: Route = {
             target: '/blog',
         },
         ...['cn', 'tw', 'en'].flatMap((language) => [
-            ...['knowledge', 'design-resources', 'inside-eagle', 'product-news'].map((category) => ({
+            ...['thoughts', 'guides', 'design-resources', 'inside-eagle', 'product-news'].map((category) => ({
                 source: [`${language}.eagle.cool/blog/${category}`],
                 target: `/blog/${category}/${language}`,
             })),
@@ -82,8 +82,8 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((item): DataItem & { link: string } => ({
             title: $(item).find('.post-card__title').text(),
-            link: new URL($(item).find('.post-card__title-link').attr('href')!, host).href,
-            category: [$(item).find('.post-card__category').text()],
+            link: new URL($(item).find('a').attr('href')!, host).href,
+            category: [$(item).find('.post-card__tag').text()],
         }));
     const items = await pMap(
         list,
