@@ -32,7 +32,7 @@ async function handler() {
     const response = await ofetch<{
         result: number;
         message: string;
-        data: { items: Array<{ title: string; url: string; content: string; releaseTimeStamp: number; keywords: string }> };
+        data: { items: Array<{ title: string; url: string; content: string; releaseTimeStamp: number; keywords: string | null }> };
     }>('https://api.chaincatcher.com/v1/open-api/news-flash', {
         query: { type: 'flash', page: 1, size: 20, lang: 'zh-CN' },
         responseType: 'json',
@@ -45,7 +45,7 @@ async function handler() {
         link: item.url,
         description: item.content,
         pubDate: parseDate(item.releaseTimeStamp),
-        category: item.keywords.split(','),
+        category: item.keywords?.split(','),
     }));
 
     return {
