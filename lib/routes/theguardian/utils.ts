@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
+import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -49,7 +50,7 @@ const processFeed = (data: string) => {
 };
 
 export const getFeed = async (cfg: { link: string; title: string; rss: string }): Promise<Data> => {
-    const feed = await parser.parseURL(cfg.rss);
+    const feed = await parser.parseString(await ofetch(cfg.rss, { responseType: 'text', headers: { 'User-Agent': config.trueUA } }));
     const items = await pMap(
         feed.items.slice(0, 10),
         async (item) => ({
@@ -60,7 +61,7 @@ export const getFeed = async (cfg: { link: string; title: string; rss: string })
             category: (item.categories as unknown[] | undefined)?.map((category) => (category as { _: string })._),
             description:
                 (await cache.tryGet(item.link!, async () => {
-                    const response = await ofetch(item.link!);
+                    const response = await ofetch(item.link!, { headers: { 'User-Agent': config.trueUA } });
                     return processFeed(response);
                 })) ?? item.content,
         }),
