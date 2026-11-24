@@ -69,7 +69,7 @@ export const route: Route = {
         },
     ],
     name: '绝区零',
-    maintainers: ['Yeye-0426'],
+    maintainers: ['Coxwtwo'],
     handler,
     url: 'zzz.mihoyo.com/news',
     description: `#### 新闻 {#mi-ha-you-jue-qu-ling-xin-wen}
