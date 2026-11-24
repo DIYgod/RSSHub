@@ -20921,9 +20921,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/knowledge"
+          "/blog/thoughts"
         ],
-        "target": "/eagle/blog/knowledge/cn"
+        "target": "/eagle/blog/thoughts/cn"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/eagle",
+        "source": [
+          "/blog/guides"
+        ],
+        "target": "/eagle/blog/guides/cn"
       },
       {
         "title": "Blog",
@@ -20955,9 +20963,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/knowledge"
+          "/blog/thoughts"
         ],
-        "target": "/eagle/blog/knowledge/tw"
+        "target": "/eagle/blog/thoughts/tw"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/eagle",
+        "source": [
+          "/blog/guides"
+        ],
+        "target": "/eagle/blog/guides/tw"
       },
       {
         "title": "Blog",
@@ -20997,9 +21013,17 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/eagle",
         "source": [
-          "/blog/knowledge"
+          "/blog/thoughts"
         ],
-        "target": "/eagle/blog/knowledge/en"
+        "target": "/eagle/blog/thoughts/en"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/eagle",
+        "source": [
+          "/blog/guides"
+        ],
+        "target": "/eagle/blog/guides/en"
       },
       {
         "title": "Blog",

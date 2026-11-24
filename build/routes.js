@@ -58216,9 +58216,15 @@ export default {
           },
           {
             "source": [
-              "cn.eagle.cool/blog/knowledge"
+              "cn.eagle.cool/blog/thoughts"
             ],
-            "target": "/blog/knowledge/cn"
+            "target": "/blog/thoughts/cn"
+          },
+          {
+            "source": [
+              "cn.eagle.cool/blog/guides"
+            ],
+            "target": "/blog/guides/cn"
           },
           {
             "source": [
@@ -58240,9 +58246,15 @@ export default {
           },
           {
             "source": [
-              "tw.eagle.cool/blog/knowledge"
+              "tw.eagle.cool/blog/thoughts"
             ],
-            "target": "/blog/knowledge/tw"
+            "target": "/blog/thoughts/tw"
+          },
+          {
+            "source": [
+              "tw.eagle.cool/blog/guides"
+            ],
+            "target": "/blog/guides/tw"
           },
           {
             "source": [
@@ -58270,9 +58282,15 @@ export default {
           },
           {
             "source": [
-              "en.eagle.cool/blog/knowledge"
+              "en.eagle.cool/blog/thoughts"
             ],
-            "target": "/blog/knowledge/en"
+            "target": "/blog/thoughts/en"
+          },
+          {
+            "source": [
+              "en.eagle.cool/blog/guides"
+            ],
+            "target": "/blog/guides/en"
           },
           {
             "source": [
