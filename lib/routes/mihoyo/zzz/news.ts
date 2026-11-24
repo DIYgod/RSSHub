@@ -45,7 +45,7 @@ const categories = {
         },
         title: '絕區零',
         link: 'https://zenless.hoyoverse.com/zh-tw/news',
-        apiRootUrl: 'https://api-os-takumi-static.hoyoverse.com/content_v2_user/app/3e9196a4b9274bd7/getContentList',
+        apiRootUrl: 'https://sg-public-api-static.hoyoverse.com/content_v2_user/app/3e9196a4b9274bd7/getContentList',
     },
 };
 
@@ -85,11 +85,11 @@ async function handler(ctx) {
     if (!categories[location]?.[category]?.id) {
         throw new InvalidParameterError('Unknown location or category; use a documented combination.');
     }
-    const limit = getRouteLimit(ctx, 50);
+    const limit = getRouteLimit(ctx, 10);
 
     const params = {
         'zh-cn': `iPageSize=${limit}&iPage=1&sLangKey=zh-cn&isPreview=0&iChanId=${categories[location][category].id}`,
-        'zh-tw': `iPageSize=${limit}&iPage=1&sLangKey=zh-tw&isPreview=0&iChanId=${categories[location][category].id}`,
+        'zh-tw': `iPageSize=${limit}&iPage=1&sLangKey=zh-tw&iChanId=${categories[location][category].id}`,
     };
 
     const apiUrl = `${categories[location].apiRootUrl}?${params[location]}`;
