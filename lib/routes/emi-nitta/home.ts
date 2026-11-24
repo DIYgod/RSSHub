@@ -81,7 +81,7 @@ async function handler(ctx: Context) {
                     description: content('article.details div.body').html(),
                 };
             }),
-        { concurrency: 3 }
+        { concurrency: 1 }
     );
 
     return {
