@@ -43,7 +43,8 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            const detail = await cache.tryGet(`stheadline:article:v6:${item.link}`, async () => {
+            const guid = item.link.slice(0, item.link.lastIndexOf('/'));
+            const detail = await cache.tryGet(`stheadline:article:v6:${guid}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -59,7 +60,7 @@ async function handler(ctx) {
                     category: $("meta[name='keyword']").attr('content')?.split(','),
                 };
             });
-            return { ...item, ...detail, guid: item.link.slice(0, item.link.lastIndexOf('/')) };
+            return { ...item, ...detail, guid };
         },
         { concurrency: 3 }
     );
