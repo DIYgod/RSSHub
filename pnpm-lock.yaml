@@ -283,8 +283,8 @@ importers:
         specifier: 9.0.0
         version: 9.0.0
       etag:
-        specifier: 1.8.1
-        version: 1.8.1
+        specifier: 2.0.0
+        version: 2.0.0
       fanfou-sdk:
         specifier: 6.0.0
         version: 6.0.0
@@ -4151,9 +4151,9 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
-  etag@1.8.1:
-    resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
-    engines: {node: '>= 0.6'}
+  etag@2.0.0:
+    resolution: {integrity: sha512-VAAHisD+mLp44CUBFlxhXE2f/5wi3FA2N3fIrUVfln9I61JtBG3QtY/Zhd23ohEW4cfGlT/Fn6IpM/wmfP6IRA==}
+    engines: {node: '>=22'}
 
   event-emitter@0.3.5:
     resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
@@ -9241,7 +9241,7 @@ snapshots:
 
   esutils@2.0.3: {}
 
-  etag@1.8.1: {}
+  etag@2.0.0: {}
 
   event-emitter@0.3.5:
     dependencies:

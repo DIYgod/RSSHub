@@ -94,7 +94,7 @@
         "destr": "2.0.5",
         "dotenv": "18.0.10",
         "entities": "9.0.0",
-        "etag": "1.8.1",
+        "etag": "2.0.0",
         "fanfou-sdk": "6.0.0",
         "google-play-scraper": "10.1.4",
         "header-generator": "2.1.90",
