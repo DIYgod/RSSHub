@@ -57,7 +57,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
 
     const rootUrl = 'https://wallstreetcn.com';
-    const apiRootUrl = 'https://api-one.wallstcn.com';
+    const apiRootUrl = 'https://api-one-wscn.awtmt.com';
     const currentUrl = `${rootUrl}/news/${category}`;
     const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${getRouteLimit(ctx, 25)}`;
 

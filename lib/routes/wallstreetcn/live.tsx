@@ -48,7 +48,7 @@ async function handler(ctx) {
     const score = ctx.req.param('score') ?? 1;
 
     const rootUrl = 'https://wallstreetcn.com';
-    const apiRootUrl = 'https://api-one.wallstcn.com';
+    const apiRootUrl = 'https://api-one-wscn.awtmt.com';
     const currentUrl = `${rootUrl}/live/${category}`;
     const apiUrl = `${apiRootUrl}/apiv1/content/lives?channel=${category}-channel&limit=${getRouteLimit(ctx, 100)}`;
 
