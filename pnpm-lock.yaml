@@ -283,8 +283,8 @@ importers:
         specifier: 9.0.0
         version: 9.0.0
       etag:
-        specifier: 1.8.1
-        version: 1.8.1
+        specifier: 2.0.0
+        version: 2.0.0
       fanfou-sdk:
         specifier: 6.0.0
         version: 6.0.0
@@ -481,9 +481,6 @@ importers:
       '@types/crypto-js':
         specifier: 4.2.2
         version: 4.2.2
-      '@types/etag':
-        specifier: 1.8.4
-        version: 1.8.4
       '@types/fs-extra':
         specifier: 11.0.4
         version: 11.0.4
@@ -3035,9 +3032,6 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
-  '@types/etag@1.8.4':
-    resolution: {integrity: sha512-f1z/UMth8gQ6636NBqhFmJ3zES7EuDcUnV6K1gl1osHp+85KPKX+VixYWUpqLkw1fftCagyHJjJOZjZkEi2rHw==}
-
   '@types/express-serve-static-core@5.1.3':
     resolution: {integrity: sha512-dPfW8NFiOF4wOHc7+N/QSxlY9cfSsenewGbAz8C8U/MULPd/YZ27LvJUIlzaXie7e6Ove9YunJGgC9tbHD2cKw==}
 
@@ -4151,9 +4145,9 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
-  etag@1.8.1:
-    resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
-    engines: {node: '>= 0.6'}
+  etag@2.0.0:
+    resolution: {integrity: sha512-VAAHisD+mLp44CUBFlxhXE2f/5wi3FA2N3fIrUVfln9I61JtBG3QtY/Zhd23ohEW4cfGlT/Fn6IpM/wmfP6IRA==}
+    engines: {node: '>=22'}
 
   event-emitter@0.3.5:
     resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
@@ -8115,10 +8109,6 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@types/etag@1.8.4':
-    dependencies:
-      '@types/node': 26.6.6
-
   '@types/express-serve-static-core@5.1.3':
     dependencies:
       '@types/node': 26.6.6
@@ -9246,7 +9236,7 @@ snapshots:
 
   esutils@2.0.3: {}
 
-  etag@1.8.1: {}
+  etag@2.0.0: {}
 
   event-emitter@0.3.5:
     dependencies:
