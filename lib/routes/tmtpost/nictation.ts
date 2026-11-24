@@ -27,16 +27,12 @@ export const route: Route = {
 };
 
 async function handler() {
-    const currentTime = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
-    const oneHourAgo = currentTime - 3600;
     const url = 'https://api.tmtpost.com/v1/word/list';
 
     const response = await got({
         method: 'get',
         url,
         searchParams: {
-            time_start: oneHourAgo,
-            time_end: currentTime,
             limit: 40,
             fields: ['share_description', 'share_image', 'word_comments', 'stock_list', 'is_important', 'duration', 'word_classify', 'share_link'].join(';'),
         },
