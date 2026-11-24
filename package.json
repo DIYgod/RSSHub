@@ -71,7 +71,7 @@
         "@bbob/preset-html5": "4.5.0",
         "@googleapis/youtube": "40.1.0",
         "@honeybadger-io/js": "6.17.2",
-        "@hono/node-server": "2.1.9",
+        "@hono/node-server": "2.1.11",
         "@hono/zod-openapi": "1.6.3",
         "@jocmp/mercury-parser": "3.1.2",
         "@notionhq/client": "5.31.1",
