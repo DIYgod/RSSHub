@@ -15,7 +15,7 @@ export interface RichTextMark {
     type?: string;
 }
 
-export interface ImgixImageFields {
+interface ImgixImageFields {
     src?: string;
 }
 
@@ -29,13 +29,13 @@ export interface MediaFields {
     };
 }
 
-export interface StockTickerFields {
+interface StockTickerFields {
     title?: string;
     name?: string;
     shortCode?: string;
 }
 
-export interface RichTextTarget {
+interface RichTextTarget {
     sys?: {
         type?: string;
         contentType?: {
@@ -47,7 +47,7 @@ export interface RichTextTarget {
     fields?: MediaFields & StockTickerFields;
 }
 
-export interface RichTextData {
+interface RichTextData {
     uri?: string;
     target?: RichTextTarget;
 }
@@ -60,7 +60,7 @@ export interface RichTextNode {
     content?: RichTextNode[];
 }
 
-export interface NewsletterSectionFields {
+interface NewsletterSectionFields {
     title?: string;
     body?: RichTextNode;
     fact?: RichTextNode;
@@ -84,7 +84,7 @@ export interface NewsletterSection {
     fields?: NewsletterSectionFields;
 }
 
-export interface ContentfulSys {
+interface ContentfulSys {
     id?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -95,7 +95,7 @@ export interface ContentfulSys {
     };
 }
 
-export interface TagLink {
+interface TagLink {
     sys?: {
         id?: string;
     };
@@ -118,13 +118,13 @@ export interface NewsletterEntry {
     };
 }
 
-export interface AuthorEntry {
+interface AuthorEntry {
     fields?: {
         name?: string;
     };
 }
 
-export interface CategoryEntry {
+interface CategoryEntry {
     fields?: {
         title?: string;
         slug?: string;
@@ -165,7 +165,7 @@ export interface FeedItemWrapper {
     entry?: PostEntry;
 }
 
-export interface SherwoodPageProps {
+interface SherwoodPageProps {
     newsletters?: NewsletterEntry[];
     newsletter?: NewsletterEntry;
     mostRecent?: PostEntry[];
@@ -186,7 +186,7 @@ interface SherwoodNextDataPayload {
     pageProps?: SherwoodPageProps;
 }
 
-export interface SherwoodPageResult {
+interface SherwoodPageResult {
     buildId?: string;
     pageProps: SherwoodPageProps;
 }
