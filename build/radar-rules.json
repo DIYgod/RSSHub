@@ -63602,6 +63602,31 @@
       }
     ]
   },
+  "sherwood.news": {
+    "_name": "Sherwood News",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/sherwood",
+        "source": [
+          "/",
+          "/:category",
+          "/:category/:slug"
+        ],
+        "target": "/sherwood/news"
+      },
+      {
+        "title": "Snacks",
+        "docs": "https://docs.rsshub.app/routes/sherwood",
+        "source": [
+          "/snacks",
+          "/snacks/newsletters",
+          "/snacks/newsletters/*"
+        ],
+        "target": "/sherwood/snacks"
+      }
+    ]
+  },
   "sobooks.net": {
     "_name": "SoBooks",
     ".": [
