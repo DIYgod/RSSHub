@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
+import { config } from '@/config';
 import { solveWafChallenge } from '@/routes/juejin/utils';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -53,7 +54,11 @@ export const getWafTokenId = () =>
     cache.tryGet(
         '36kr:_waftokenid',
         async () => {
-            const captchaResponse = await ofetch(rootUrl);
+            const captchaResponse = await ofetch(rootUrl, {
+                headers: {
+                    'User-Agent': config.ua,
+                },
+            });
 
             const $ = load(captchaResponse);
             const payload = $('script')
@@ -68,6 +73,7 @@ export const getWafTokenId = () =>
             const tokenIdResponse = await ofetch.raw(rootUrl, {
                 headers: {
                     Cookie: `_wafchallengeid=${response};`,
+                    'User-Agent': config.ua,
                 },
                 redirect: 'manual',
             });
