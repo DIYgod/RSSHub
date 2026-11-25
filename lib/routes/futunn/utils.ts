@@ -10,7 +10,7 @@ import ofetch from '@/utils/ofetch';
  * @param html - page containing the JWT
  * @returns `${jwt}@${number}@${hash}`
  */
-export const solveWafToken = (html: string) => {
+const solveWafToken = (html: string) => {
     const jwt = /"(eyJ[\w-]+\.[\w-]+\.[\w-]+)"/.exec(html)![1];
     const payload = new TextDecoder().decode(Uint8Array.fromBase64(jwt.split('.', 2)[1], { alphabet: 'base64url' }));
     const { Arr: arr, Value: value }: { Arr: number[]; Value: number } = JSON.parse(JSON.parse(payload).args);
