@@ -1,13 +1,14 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import playwright from '@/utils/playwright';
 
-import { baseUrl, getItem, parseList, playwrightFetch } from './utils';
+import { baseUrl, getItem, getList, parseList } from './utils';
 
 export const route: Route = {
     path: '/categories/:category',
     categories: ['multimedia'],
-    example: '/javtrailers/categories/50001755',
+    example: '/javtrailers/categories/hi-def',
     parameters: { category: 'Category name, can be found in the URL of the category page' },
     radar: [
         {
@@ -20,21 +21,25 @@ export const route: Route = {
     handler,
     features: {
         nsfw: true,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
     },
 };
 
 async function handler(ctx) {
     const { category } = ctx.req.param();
 
-    const context = await playwright();
-    const response = await playwrightFetch(`${baseUrl}/api/categories/${category}?page=0`, context);
+    const response = await getList(`${baseUrl}/categories/${category}`, 'category');
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, context))));
-
-    await context.close();
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...(await cache.tryGet(item.link, () => getItem(item))),
+            ...item,
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         title: `Watch ${response.category.name} Jav Online | Japanese Adult Video - JavTrailers.com`,

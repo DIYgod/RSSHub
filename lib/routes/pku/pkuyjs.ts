@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/admission/sszs',
@@ -41,10 +41,9 @@ async function handler() {
         item: list.toArray().map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('li a').text(),
-                description: $item.find('li a').text(),
+                title: $item.find('.zsxxCont_list_txt').text(),
                 link: $item.find('li a').attr('href'),
-                pubDate: parseDate($item.find('.zsxxCont_list_time').text()),
+                pubDate: parseDate(`${$item.find('.zsxxCont_list_time').text()}T00:00:00Z`),
             };
         }),
     };

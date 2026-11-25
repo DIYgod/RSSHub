@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://cs.xidian.edu.cn';
-
 const struct = {
     xyxw: {
         selector: {
@@ -58,7 +58,6 @@ const struct = {
         path: 'jyzhaop',
     },
 };
-
 export const route: Route = {
     path: '/cs/:category?',
     categories: ['university'],
@@ -91,14 +90,11 @@ export const route: Route = {
         },
     ],
 };
-
 async function handler(ctx) {
     const { category = 'xyxw' } = ctx.req.param();
     const url = `${baseUrl}/${struct[category].path}.htm`;
     const response = await got(url);
-
     const $ = load(response.data);
-
     let items = $(struct[category].selector.list)
         .toArray()
         .map((item): DataItem => {
@@ -109,23 +105,28 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('span').text()),
             };
         });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`xidian:cs:content:v2:${item.link}`, async () => {
                 const detailResponse = await got(item.link, {
                     headers: {
                         referer: url,
                     },
                 });
                 const content = load(detailResponse.data);
-                content('.content-sxt').remove();
-                item.description = content('[name="_newscontent_fromname"]').html();
-                return item;
-            })
-        )
+                const body = content('[name="_newscontent_fromname"] .v_news_content');
+                content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                    .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
+                    .each((_, attachment) => {
+                        body.append(content('<p/>').append(attachment));
+                    });
+                return { description: body.html() };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     return {
         title: $('title').text(),
         link: url,

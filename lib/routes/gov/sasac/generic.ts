@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}',
@@ -12,7 +13,7 @@ export const route: Route = {
     parameters: { path: '路径，可在 URL 找到' },
     radar: [
         {
-            source: ['www.sasac.gov.cn/*path/index.html', 'www.sasac.gov.cn/*path'],
+            source: ['www.sasac.gov.cn/*path/index.html'],
             target: '/:path',
         },
     ],
@@ -39,23 +40,25 @@ async function handler(ctx) {
         .filter((item) => !$(item).attr('style'))
         .map((item): DataItem => {
             const $item = $(item);
+            const dateText = $item.find('span').text().replace('[', '').replace(']', '');
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, url).href,
-                pubDate: parseDate($item.find('span').text().replace('[', '').replace(']', '')),
+                pubDate: dateText ? parseDate(dateText, 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 $('style, #qr_container, #div_div, [class^=jiathis]').remove();
                 item.description = $('.zsy_comain').html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

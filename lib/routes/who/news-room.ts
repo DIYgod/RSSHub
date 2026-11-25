@@ -1,10 +1,42 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
+type ArticleMetadata = {
+    headline: string;
+    datePublished: string;
+    author: {
+        name: string;
+    };
+};
+function getArticleMetadata(content: CheerioAPI): ArticleMetadata {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("Article")').text().trim().replace(/;$/, ''));
+}
+async function getArticleDetails(item) {
+    const detailResponse = await got({ method: 'get', url: item.link });
+    const content = load(detailResponse.data);
+    const tags = content('.sf-item-header-wrapper .sf-tags-list-item')
+        .toArray()
+        .map((element) => content(element).text());
+    const article = getArticleMetadata(content);
+    const body = content('.sf-detail-body-wrapper');
+    if (!body.length) {
+        throw new Error(`WHO article content not found: ${item.link}`);
+    }
+    return {
+        ...item,
+        title: article.headline,
+        author: article.author.name,
+        description: body.html(),
+        category: tags.length ? tags : undefined,
+        pubDate: parseDate(article.datePublished),
+    };
+}
 export const route: Route = {
     path: '/news-room/:category?/:language?',
     categories: ['government'],
@@ -40,71 +72,38 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'feature-stories';
     const language = ctx.req.param('language') ?? '';
-
     const rootUrl = 'https://www.who.int';
     const currentUrl = `${rootUrl}/${language ? `${language}/` : ''}news-room/${category}`;
-
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
-
     const $ = load(response.data);
-
     const $list = $('.list-view--item a');
     let list: any[];
-
     if ($list.length === 0) {
         const response = await got({
             method: 'get',
-            url: `${rootUrl}/api/hubs/${category.replaceAll('-', '')}?sf_culture=zh&$orderby=PublicationDateAndTime%20desc&$select=Title,PublicationDateAndTime,ItemDefaultUrl&$top=30`,
+            url: `${rootUrl}/api/hubs/${category.replaceAll('-', '')}?sf_culture=${language || 'en'}&$orderby=PublicationDateAndTime%20desc&$select=Title,PublicationDateAndTime,ItemDefaultUrl&$top=30`,
         });
-
         list = response.data.value.map((item) => ({
             title: item.Title,
-            link: `${currentUrl}/detail/${item.ItemDefaultUrl}`,
+            link: `${currentUrl}/detail/${item.ItemDefaultUrl.replace(/^\/+/, '')}`,
             pubDate: parseDate(item.PublicationDateAndTime),
         }));
     } else {
         list = $list.toArray().map((item) => {
             const $item = $(item);
             const link = $item.attr('href');
-
             return {
                 link: `${link!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
             };
         });
     }
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const matches = detailResponse.data.match(/"headline":"(.*)","description":"(.*)","datePublished":"(.*)","image"/);
-
-                if (matches) {
-                    item.title = matches[1];
-                    item.description = matches[2];
-                    item.pubDate = parseDate(matches[3]);
-                } else {
-                    const content = load(detailResponse.data);
-
-                    item.description = content('.sf-content-block').html();
-                }
-
-                return item;
-            })
-        )
-    );
-
+    const items = await pMap(list, (item) => cache.tryGet(item.link, () => getArticleDetails(item)), { concurrency: 3 });
     return {
         title: `${$('meta[property="og:title"]').attr('content')} - WHO`,
         link: currentUrl,

@@ -6,18 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-const parser = new Parser({
-    customFields: {
-        item: ['magnet'],
-    },
-    headers: {
-        'User-Agent': config.ua,
-    },
-    defaultRSS: 0.9,
-});
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cn/*',
@@ -36,28 +25,12 @@ export const route: Route = {
         {
             title: '中文版新闻',
             source: ['cn.nikkei.com/:category/:type', 'cn.nikkei.com/:category', 'cn.nikkei.com/'],
-            target: (params) => {
-                if (params.category && params.type) {
-                    return `/nikkei/cn/cn/${params.category}/${params.type.replace('.html', '')}`;
-                }
-                if (params.category && !params.type) {
-                    return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
-                }
-                return '/nikkei/cn/cn';
-            },
+            target: '/cn/cn/:category?/:type?',
         },
         {
             title: '中文版新聞',
             source: ['zh.cn.nikkei.com/:category/:type', 'zh.cn.nikkei.com/:category', 'zh.cn.nikkei.com/'],
-            target: (params) => {
-                if (params.category && params.type) {
-                    return `/nikkei/cn/zh/${params.category}/${params.type.replace('.html', '')}`;
-                }
-                if (params.category && !params.type) {
-                    return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
-                }
-                return '/nikkei/cn/zh';
-            },
+            target: '/cn/zh/:category?/:type?',
         },
     ],
 };
@@ -71,6 +44,9 @@ async function handler(ctx) {
         path = path.match(new RegExp(String.raw`\/cn\/` + language + '(.*)'))[1];
     } else {
         language = 'cn';
+        if (path === '/cn' || path === '/cn/') {
+            path = '/';
+        }
     }
 
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
@@ -85,6 +61,15 @@ async function handler(ctx) {
     let $;
 
     if (isOfficialRSS) {
+        const parser = new Parser({
+            customFields: {
+                item: ['magnet'],
+            },
+            headers: {
+                'User-Agent': config.ua,
+            },
+            defaultRSS: 0.9,
+        });
         officialFeed = await parser.parseURL(currentUrl);
         items = officialFeed.items.slice(0, limit).map((item) => ({
             title: item.title,
@@ -133,7 +118,7 @@ async function handler(ctx) {
                 divs.first().remove();
                 divs.last().remove();
 
-                item.pubDate = timezone(parseDate(item.link!.match(/\/\d+-(.*?)\.html/)![1], 'YYYY-MM-DD-HH-mm-ss'), 9);
+                item.pubDate = parseDate(item.link!.match(/\/\d+-(.*?)\.html/)![1], 'YYYY-MM-DD-HH-mm-ss', 9);
 
                 item.author = content('meta[name="author"]').attr('content');
                 item.title ??= content('meta[name="twitter:title"]').attr('content')!;

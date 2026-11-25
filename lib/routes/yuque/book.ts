@@ -4,7 +4,7 @@ import { CookieJar } from 'tough-cookie';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { card2Html } from './utils';
 
@@ -68,8 +68,9 @@ async function handler(ctx) {
     }));
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`yuque:article:details:${item.link}`, async () => {
                 const {
                     data: { data },
                 } = await got(`${baseUrl}/api/docs/${item.slug}`, {
@@ -96,26 +97,31 @@ async function handler(ctx) {
                     }
                 });
                 // obtain real video src
-                for await (const v of $('video').toArray()) {
-                    const $v = $(v);
-                    const src = $v.attr('src');
-                    if (src!.startsWith('inputs')) {
-                        const { data } = await got(`${baseUrl}/api/video`, {
-                            searchParams: {
-                                video_id: src,
-                            },
-                        });
-                        const { info } = data.data;
-                        $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
-                    }
-                }
+                await Promise.all(
+                    $('video')
+                        .toArray()
+                        .map(async (v) => {
+                            const $v = $(v);
+                            const src = $v.attr('src');
+                            if (!src?.startsWith('inputs')) {
+                                return;
+                            }
+                            const { data } = await got(`${baseUrl}/api/video`, {
+                                searchParams: {
+                                    video_id: src,
+                                },
+                            });
+                            const { info } = data.data;
+                            $v.replaceWith(`<video controls preload='metadata' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
+                        })
+                );
 
-                item.description = $.html();
-                item.author = data.contributors.map((c) => c.name).join(', ');
-
-                return item;
-            })
-        )
+                return {
+                    description: $.html(),
+                    author: data.contributors.map((c) => c.name).join(', '),
+                };
+            })),
+        }))
     );
 
     return {

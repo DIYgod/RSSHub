@@ -1,7 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.gz.gov.cn';
 
@@ -15,6 +18,9 @@ const urlMap = {
 export async function handler(ctx) {
     const channel = ctx.req.param('channel') ?? ctx.req.path.split('/', 4)[3];
     const category = ctx.req.param('category');
+    if (!Object.hasOwn(urlMap, category) || (channel === 'xw' ? category === 'zcjd' : channel !== 'zwgk' || category !== 'zcjd')) {
+        throw new InvalidParameterError('Invalid category. Use gzyw, jrtt or tzgg for news, or zcjd for policy interpretations.');
+    }
     const url = `${rootUrl}/${channel}/${urlMap[category]}/`;
     const response = await got(url);
     const $ = load(response.data);
@@ -27,13 +33,29 @@ export async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title')!,
                 link: href,
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
     return {
         title: `广州市人民政府 - ${$('.main_title').text()}`,
         link: url,
-        item: items,
+        item: await pMap(
+            items,
+            async (item) => {
+                const detail = await cache.tryGet(`${item.link}:article`, async () => {
+                    const { data } = await got(item.link!);
+                    const content = load(data);
+                    const dateText = content('meta[name="PubDate"]').attr('content');
+                    return {
+                        description: content('#zoomcon').html(),
+                        author: content('meta[name="ContentSource"]').attr('content'),
+                        pubDate: dateText ? parseDate(dateText, 8) : undefined,
+                    };
+                });
+                return { ...item, description: detail.description, pubDate: detail.pubDate ?? item.pubDate, author: detail.author };
+            },
+            { concurrency: 3 }
+        ),
     };
 }

@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -32,6 +33,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'history';
+    if (!['history', 'latest'].includes(type)) {
+        throw new InvalidParameterError('Invalid headline type. Use history or latest.');
+    }
     const urls = {
         history: {
             url: 'https://api.coolapk.com/v6/page/dataList?url=%23%2ffeed%2fheadlineV8List%3ftype%3d0%2c5%2c9%2c8%2c12%2c10%2c11%2c13%26title%3d%e5%8e%86%e5%8f%b2%e5%a4%b4%e6%9d%a1%26page%3d1',
@@ -47,12 +51,12 @@ async function handler(ctx) {
     });
     const data = response.data.data;
 
-    const out = await Promise.all(data.map((item) => utils.parseDynamic(item)));
+    const out = await Promise.all(utils.selectDynamics(data).map((item) => utils.parseDynamic(item)));
 
     return {
         title: urls[type].title,
         link: 'https://www.coolapk.com/',
         description: urls[type].title,
-        item: out,
+        item: out.filter(Boolean),
     };
 }

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yz.chsi.com.cn';
 
@@ -47,9 +47,11 @@ async function handler() {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
                     description = $('#article_dnull').html() ? $('#article_dnull').html()!.trim() : itemTitle;
-                    if ($('.news-time').text()) {
-                        itemDate = $('.news-time').text();
-                    }
+                    itemDate =
+                        $('.news-time').text() ||
+                        $('.news-msg')
+                            .text()
+                            .match(/\d{4}年\d{2}月\d{2}日/)?.[0];
                 } else {
                     description = itemTitle;
                 }
@@ -59,7 +61,7 @@ async function handler() {
                     description,
                 };
                 if (itemDate) {
-                    result.pubDate = parseDate(itemDate, 'YYYY年MM月DD日');
+                    result.pubDate = parseDate(itemDate, 'YYYY年MM月DD日', 8);
                 }
                 return result;
             });

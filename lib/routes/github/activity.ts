@@ -1,12 +1,11 @@
+import { decodeXML } from 'entities';
 import Parser from 'rss-parser';
 import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-const parser = new Parser();
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/activity/:user',
@@ -38,8 +37,9 @@ export const route: Route = {
         const response = await ofetch<Blob>(`https://github.com/${user}.atom`);
         const raw = await response.text();
         // <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/8266075?s=30&amp;v=4"/>
-        const image = raw.match(/<media:thumbnail height="30" width="30" url="(.+?)"/)?.[1];
-        const feed = await parser.parseString(raw);
+        const rawImage = raw.match(/<media:thumbnail height="30" width="30" url="(.+?)"/)?.[1];
+        const image = rawImage ? decodeXML(rawImage) : undefined;
+        const feed = await new Parser().parseString(raw);
         return {
             title: `${user}'s GitHub activities`,
             link: feed.link,
@@ -53,7 +53,6 @@ export const route: Route = {
                 guid: item.id,
                 image,
             })),
-            allowEmpty: true,
         };
     },
 };

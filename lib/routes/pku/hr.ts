@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hr/:category?',
@@ -28,59 +29,41 @@ export const route: Route = {
     handler,
     url: 'hr.pku.edu.cn/',
     description: `::: tip
-分类字段处填写的是对应北京大学人事处分类页网址中介于 **\`http://hr.pku.edu.cn/\`** 和 **/index.htm** 中间的一段，并将其中的 \`/\` 修改为 \`-\`。
+分类字段处填写的是对应北京大学人事处分类页网址中介于 **\`https://hr.pku.edu.cn/\`** 和 **/index.htm** 中间的一段，并将其中的 \`/\` 修改为 \`-\`。
 
-如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 \`https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm\` 其中介于 **\`http://hr.pku.edu.cn/\`** 和 **\`/index.ht\`** 中间的一段为 \`rczp/js/jxkyry\`。随后，并将其中的 \`/\` 修改为 \`-\`，可以得到 \`rczp-js-jxkyry\`。所以最终我们的路由为 [\`/pku/hr/rczp-js-jxkyry\`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
+如 [北京大学人事部 - 人才招聘 - 教学科研](https://hr.pku.edu.cn/rczp/jxky/index.htm) 的网址为 \`https://hr.pku.edu.cn/rczp/jxky/index.htm\` 其中介于 **\`https://hr.pku.edu.cn/\`** 和 **\`/index.htm\`** 中间的一段为 \`rczp/jxky\`。随后，并将其中的 \`/\` 修改为 \`-\`，可以得到 \`rczp-jxky\`。所以最终我们的路由为 [\`/pku/hr/rczp-jxky\`](https://rsshub.app/pku/hr/rczp-jxky)
 :::`,
 };
 
-async function handler(ctx) {
-    const category = ctx.req.param('category')?.replaceAll('-', '/') ?? 'zxgg';
+const rootUrl = 'https://hr.pku.edu.cn/';
 
-    const rootUrl = 'https://hr.pku.edu.cn/';
-    const currentUrl = `${rootUrl}/${category}/index.htm`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+async function getArticle(item: DataItem) {
+    const article = await cache.tryGet(`pku:hr:article:v2:${item.link}`, async () => {
+        const response = await got(item.link!);
+        const $ = load(response.data);
+        return {
+            description: $('.gp-article').html(),
+            pubDate: parseDate(`${$('meta[name="PubDate"]').attr('content')!.replace(' ', 'T')}+08:00`),
+        };
     });
+    return { ...item, ...article };
+}
 
+async function handler(ctx) {
+    const category = ctx.req.param('category')?.replaceAll('-', '/');
+    const currentUrl = category ? `${rootUrl}${category}/index.htm` : rootUrl;
+    const response = await got(currentUrl);
     const $ = load(response.data);
-
-    const list = $('.item-list li a')
+    const list = $(category ? 'ul.talentUl > li' : 'ul.mode1Ul > li')
         .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-
-            return {
-                title: $item.text().replace(/\d+、/, ''),
-                link: `${rootUrl}/${category}/${$item.attr('href')}`,
-            };
+        .map((element): DataItem => {
+            const $item = $(element);
+            return { title: $item.find('p').text(), link: new URL($item.find('a').attr('href')!, currentUrl).href };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('.title').remove();
-
-                item.description = content('.article').html();
-                item.pubDate = parseDate(content('#date').text());
-
-                return item;
-            })
-        )
-    );
-
     return {
-        title: `${$('h2').text()} - ${$('title').text()}`,
+        title: `${category ? $('h2').text() : '最新公告'} - ${$('title').text()}`,
         link: currentUrl,
-        item: items,
+        item: await pMap(list, getArticle, { concurrency: 3 }),
     };
 }

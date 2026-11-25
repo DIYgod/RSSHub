@@ -1,8 +1,9 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/torrents/:imdb_id',
@@ -21,24 +22,31 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { imdb_id } = ctx.req.param();
+    const imdbId = ctx.req.param('imdb_id');
+    if (!imdbId || !/^\d+$/.test(imdbId) || /^0+$/.test(imdbId)) {
+        throw new InvalidParameterError('imdb_id must be a positive numeric IMDb ID without the tt prefix, for example 6048596');
+    }
 
-    const response = await ofetch(`https://eztv.it/api/get-torrents?imdb_id=${imdb_id}`);
+    const rootUrl = 'https://eztvx.to';
+    const response = await ofetch(`${rootUrl}/api/get-torrents`, { query: { imdb_id: imdbId } });
 
     const torrents = response.torrents_count === 0 ? [] : response.torrents;
 
     return {
-        title: `EZTV's Torrents of IMDB ID: ${imdb_id}`,
-        link: 'https://eztv.it',
-        description: `EZTV's Torrents of IMDB ID: ${imdb_id}`,
-        allowEmpty: true,
+        title: `EZTV's Torrents of IMDB ID: ${imdbId}`,
+        link: rootUrl,
+        description: `EZTV's Torrents of IMDB ID: ${imdbId}`,
         item: torrents.map((item) => ({
             title: item.title,
             description: `<img src='https:${item.large_screenshot}' />`,
             enclosure_url: item.magnet_url,
             enclosure_type: 'application/x-bittorrent',
             pubDate: parseDate(item.date_released_unix, 'X'),
-            link: item.torrent_url,
+            link: `${rootUrl}/ep/${item.id}/${item.filename
+                .replace(/\.[^.]+$/, '')
+                .toLowerCase()
+                .replaceAll(/[^a-z\d]+/g, '-')
+                .replaceAll(/^-|-$/g, '')}/`,
         })),
     };
 }

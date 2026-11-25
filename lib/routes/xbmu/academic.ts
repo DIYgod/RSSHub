@@ -1,70 +1,71 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
-const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
+const baseUrl = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
+
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'author'>> {
+    const { data } = await got(link);
+    const $ = load(data);
+    const author = $('.infob > .titx')
+        .text()
+        .match(/作者[：:](.*?)(?=(?:编辑|审签|校审|发布时间)[：:]|$)/s)?.[1]
+        .trim();
+    return { description: $('#vsb_content > div').html(), author };
+}
 
 const handler: Route['handler'] = async () => {
     try {
         // Fetch the academic page
-        const { data: listResponse } = await got(BASE_URL);
+        const { data: listResponse } = await got(baseUrl);
         const $ = load(listResponse);
 
         // Select all list items containing academic information
-        const ITEM_SELECTOR = 'body > div.container.list-container.ny_mani > div > div.news_list > ul > li';
-        const listItems = $(ITEM_SELECTOR);
+        const itemSelector = 'body > div.container.list-container.ny_mani > div > div.news_list > ul > li';
+        const listItems = $(itemSelector);
 
         // Map through each list item to extract details
-        const academicLinkList = await Promise.all(
-            listItems.toArray().map((element) => {
-                const rawDate = $(element).find('span').text();
-                const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
-                const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
+        const academicLinkList = listItems.toArray().map((element) => {
+            const rawDate = $(element).find('span').text();
+            const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
+            const formattedDate = parseDateStrict(`${yearMonth}-${day.padStart(2, '0')}`, 'YYYY-MM-DD', 8);
 
-                const title = $(element).find('a').attr('title') || '学术信息';
-                const relativeHref = $(element).find('a').attr('href') || '';
-                const link = `https://www.xbmu.edu.cn/${relativeHref.replaceAll('../', '')}`;
+            const title = $(element).find('a').attr('title') || '学术信息';
+            const relativeHref = $(element).find('a').attr('href') || '';
+            const link = new URL(relativeHref, baseUrl).href;
 
-                return {
-                    date: formattedDate,
-                    title,
-                    link,
-                };
-            })
-        );
+            return {
+                date: formattedDate,
+                title,
+                link,
+            };
+        });
 
         return {
             title: '西北民族大学学术信息',
             description: '西北民族大学近日学术信息',
-            link: BASE_URL,
-            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-            item: (await Promise.all(
-                academicLinkList.map((item) =>
-                    cache.tryGet(item.link, async () => {
-                        const CONTENT_SELECTOR = '#vsb_content > div';
-                        const { data: contentResponse } = await got(item.link);
-                        const contentPage = load(contentResponse);
-                        const content = contentPage(CONTENT_SELECTOR).html() || '';
-                        return {
-                            title: item.title,
-                            pubDate: item.date,
-                            link: item.link,
-                            description: content,
-                            category: ['university'],
-                            guid: item.link,
-                            id: item.link,
-                            image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
-                            content,
-                            updated: item.date,
-                            language: 'zh-CN',
-                        };
-                    })
-                )
+            link: baseUrl,
+            item: (await pMap(
+                academicLinkList,
+                async (item) => {
+                    const detail = await cache.tryGet(`xbmu:detail:v3:${item.link}`, () => fetchDetail(item.link));
+                    return {
+                        title: item.title,
+                        pubDate: item.date,
+                        link: item.link,
+                        description: detail.description,
+                        author: detail.author,
+                        guid: item.link,
+                        id: item.link,
+                        language: 'zh-CN',
+                    };
+                },
+                { concurrency: 3, stopOnError: false }
             )) as DataItem[],
-            allowEmpty: true,
             language: 'zh-CN',
             feedLink: 'https://rsshub.app/xbmu/academic',
             id: 'https://rsshub.app/xbmu/academic',

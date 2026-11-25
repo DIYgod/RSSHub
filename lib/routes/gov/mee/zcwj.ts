@@ -1,0 +1,71 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
+
+const categories = {
+    zyygwj: '中央有关文件',
+    gwywj: '国务院有关文件',
+    bwj: '部文件',
+    bgtwj: '办公厅文件',
+    xzspwj: '行政审批文件',
+    haqjwj: '核安全局文件',
+    qt: '其他',
+};
+
+export const route: Route = {
+    path: '/zcwj/:category?',
+    categories: ['government'],
+    example: '/gov/mee/zcwj',
+    parameters: { category: '栏目路径：zyygwj、gwywj、bwj、bgtwj、xzspwj、haqjwj 或 qt，默认合并政策文件首页的各栏目' },
+    radar: [{ source: ['www.mee.gov.cn/zcwj/:category?'], target: '/zcwj/:category?' }],
+    name: '政策文件',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
+    const category = ctx.req.param('category');
+    const sourceLimit = getRouteLimit(ctx, 20);
+    const limit = ctx.req.query('sorted') === 'false' ? sourceLimit : Math.max(20, sourceLimit);
+    if (category && !Object.hasOwn(categories, category)) {
+        throw new InvalidParameterError(`Unknown policy category: ${category}. Use ${Object.keys(categories).join(', ')}.`);
+    }
+    const link = `https://www.mee.gov.cn/zcwj/${category ? `${category}/` : ''}`;
+    const response = await ofetch(link);
+    const $ = load(response);
+    const list = $('li:has(.date)')
+        .toArray()
+        .flatMap((element): DataItem[] => {
+            const row = $(element);
+            const anchor = row.find('a[href]');
+            const href = anchor.attr('href');
+            if (!href) {
+                return [];
+            }
+            return [{ title: anchor.text(), link: new URL(href, link).href, pubDate: parseDate(row.find('.date').text(), 8) }];
+        })
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
+        .slice(0, limit);
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                const date = content('meta[name="PubDate"]').attr('content');
+                return {
+                    ...item,
+                    ...(date && { pubDate: parseDate(date, 8) }),
+                    description: content('.TRS_Editor').html() || content('.content_body_box').html(),
+                };
+            }),
+        { concurrency: 3 }
+    );
+    return { title: `${category ? categories[category] : '政策文件'} - 中华人民共和国生态环境部`, link, language: 'zh-CN' as const, item: items };
+}

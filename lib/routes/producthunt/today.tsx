@@ -1,24 +1,36 @@
-import { load } from 'cheerio';
+import { decodeHTML } from 'entities/decode';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import { renderYoutube } from '@/routes/youtube/utils';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+import { fetchFeaturedPosts } from './api';
 
 export const route: Route = {
     path: '/today',
     categories: ['other'],
     example: '/producthunt/today',
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PRODUCTHUNT_ACCESS_TOKEN',
+                description: 'Optional API access token for the featured daily list when the website is unavailable. See [Product Hunt API documentation](https://api.producthunt.com/v2/docs).',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    description: 'Top products from the publisher’s Today list. The general Product Hunt feed is also available at `/producthunt/feed`.',
     radar: [
         {
             source: ['www.producthunt.com/'],
@@ -30,79 +42,75 @@ export const route: Route = {
     url: 'www.producthunt.com/',
 };
 
-async function handler() {
-    const response = await ofetch('https://www.producthunt.com/', {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+async function handler(): Promise<Data> {
+    const feed = { title: 'Product Hunt Today Popular', link: 'https://www.producthunt.com/', language: 'en' as const };
+    if (config.producthunt.accessToken) {
+        return { ...feed, sortItems: false, item: await fetchFeaturedPosts(config.producthunt.accessToken) };
+    }
 
-    const $ = load(response);
-    const match = $('script:contains("ApolloSSRDataTransport")')
-        .text()
-        .match(/"events":(\[.+\])\}\)/)?.[1]
-        ?.trim()
-        .replaceAll('undefined', 'null');
+    let response: string;
+    try {
+        response = await ofetch<string, 'text'>('https://www.producthunt.com/', { responseType: 'text', headers: { 'User-Agent': config.trueUA } });
+    } catch (error) {
+        throw new Error('Product Hunt’s Today list is unavailable. /producthunt/feed provides the general feed.', { cause: error });
+    }
 
-    const data = JSON.parse(match!);
-    const todayList = data.find((event) => event.type === 'next' && event.value.data.homefeed).value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0').node;
+    const data = parseTransport(response).flatMap((snapshot) => snapshot.events);
+    const todayList = data.find((event) => event.type === 'next' && event.value?.data?.homefeed)?.value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0')?.node;
+    if (!todayList) {
+        throw new Error('Product Hunt did not return the Today list. /producthunt/feed provides the general feed.');
+    }
     // 0: Top Products Launching Today
     // 1: Yesterday's Top Products
     // 2: Last Week's Top Products
     // 3: Last Month's Top Products
 
-    const list = todayList.items
+    const posts: FeaturedPost[] = todayList.items;
+    const list = posts
         .filter((i) => i.__typename === 'Post')
-        .map((item) => ({
+        .map((item): LaunchItem => ({
             title: item.name,
+            guid: item.id,
             link: `https://www.producthunt.com/products/${item.product.slug}`,
             postSlug: item.slug,
             description: item.tagline,
             pubDate: parseDate(item.createdAt),
             image: `https://ph-files.imgix.net/${item.thumbnailImageUuid}`,
-            categories: item.topics.edges.map((topic) => topic.node.name),
+            category: item.topics?.edges.map((topic) => topic.node.name),
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch('https://www.producthunt.com/frontend/graphql', {
-                    method: 'POST',
-                    headers: {
-                        'User-Agent': config.trueUA,
-                    },
-                    body: {
-                        operationName: 'PostPage',
-                        variables: {
-                            slug: item.postSlug,
-                        },
-                        extensions: {
-                            persistedQuery: {
-                                version: 1,
-                                sha256Hash: '488585149898ee974a51884b11e205c34ea8ad34ee01d47d7936a66a6db799ff',
-                            },
-                        },
-                    },
-                });
-                const post = response.data.post;
+    const items = await pMap(
+        list,
+        async ({ postSlug, ...item }) => {
+            try {
+                const details = await cache.tryGet(`producthunt:launch:v3:${postSlug}`, async () => {
+                    const response = await ofetch<string, 'text'>(`https://www.producthunt.com/posts/${postSlug}`, {
+                        responseType: 'text',
+                        headers: { 'User-Agent': config.trueUA },
+                    });
+                    const post = findPost(parseTransport(response), postSlug);
+                    if (!post) {
+                        throw new Error(`Product Hunt launch metadata was not found for ${postSlug}.`);
+                    }
 
-                item.author = post.user.name;
-                item.description = renderDescription({
-                    tagline: post.tagline,
-                    description: post.description,
-                    media: post.media,
+                    return {
+                        author: post.user.name,
+                        description: renderDescription({
+                            tagline: post.tagline,
+                            description: post.description,
+                            media: post.media,
+                        }),
+                    };
                 });
-
+                return { ...item, ...details };
+            } catch {
                 return item;
-            })
-        )
+            }
+        },
+        { concurrency: 3 }
     );
 
-    return {
-        title: 'Product Hunt Today Popular',
-        link: 'https://www.producthunt.com/',
-        item: items,
-    };
+    return { ...feed, sortItems: false, item: items };
 }
 
 type MediaItem = {
@@ -124,7 +132,7 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
     renderToString(
         <>
             {tagline ? <blockquote>{tagline}</blockquote> : null}
-            {description ? <div>{description}</div> : null}
+            {description ? <div>{decodeHTML(description)}</div> : null}
             {media?.map((item) => {
                 if (item.mediaType === 'image' && item.imageUuid) {
                     return (
@@ -136,21 +144,53 @@ const renderDescription = ({ tagline, description, media }: DescriptionProps): s
                 }
 
                 if (item.mediaType === 'video' && item.metadata?.platform === 'youtube' && item.metadata.videoId) {
-                    return (
-                        <iframe
-                            id="ytplayer"
-                            type="text/html"
-                            width="640"
-                            height="360"
-                            src={`https://www.youtube-nocookie.com/embed/${item.metadata.videoId}`}
-                            frameborder="0"
-                            allowfullscreen
-                            referrerpolicy="strict-origin-when-cross-origin"
-                        ></iframe>
-                    );
+                    return raw(renderYoutube(true, item.metadata.videoId));
                 }
 
                 return null;
             })}
         </>
     );
+
+function parseTransport(html: string) {
+    return (
+        html
+            .matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi)
+            .toArray()
+            .map((script) => script[1])
+            .filter((text) => text.includes('ApolloSSRDataTransport'))
+            .map((text) => text.match(/\.push\(([\s\S]+)\)\s*;?$/)?.[1])
+            .filter((json) => json !== undefined)
+            // The transport is JSON with occasional unquoted undefined values.
+            .map((json) => JSON.parse(json.replaceAll(/"(?:[^"\\]|\\.)*"|undefined/g, (token) => (token === 'undefined' ? 'null' : token))))
+    );
+}
+
+function findPost(value, slug: string): (DescriptionProps & { user: { name: string } }) | undefined {
+    if (!value || typeof value !== 'object') {
+        return;
+    }
+    if (value.__typename === 'Post' && value.slug === slug && typeof value.description === 'string') {
+        return value;
+    }
+    for (const child of Object.values(value)) {
+        const post = findPost(child, slug);
+        if (post) {
+            return post;
+        }
+    }
+}
+
+interface FeaturedPost {
+    id: string;
+    __typename: string;
+    name: string;
+    product: { slug: string };
+    slug: string;
+    tagline: string;
+    createdAt: string;
+    thumbnailImageUuid: string;
+    topics: { edges: Array<{ node: { name: string } }> };
+}
+
+type LaunchItem = DataItem & { link: string; postSlug: string };

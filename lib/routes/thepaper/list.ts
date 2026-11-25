@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -139,12 +140,12 @@ async function handler(ctx) {
     const pagePropsData = resp.data;
     const list = pagePropsData.list;
 
-    const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
+    const items = await pMap(list, (item) => utils.ProcessItem(item, ctx), { concurrency: 3 });
     return {
         title: `澎湃新闻栏目 - ${utils.ListIdToName(id, listUrlData)}`,
         link: listUrl,
         item: items,
         itunes_author: '澎湃新闻',
-        image: pagePropsData.nodeInfo?.pic ?? utils.ExtractLogo(listUrlResp),
+        image: pagePropsData.nodeInfo?.pic ?? utils.ExtractLogo($),
     };
 }

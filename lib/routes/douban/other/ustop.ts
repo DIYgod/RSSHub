@@ -1,5 +1,7 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/movie/ustop',
@@ -20,22 +22,23 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got({
-        method: 'get',
-        url: 'https://api.douban.com/v2/movie/us_box?apikey=0df993c66c0c636e29ecbb5344252a4a',
-    });
-    const movieList = response.data.subjects;
+    const link = 'https://movie.douban.com/chart';
+    const response = await ofetch(link);
+    const $ = load(response);
 
     return {
         title: '豆瓣电影北美票房榜',
-        link: 'https://movie.douban.com/chart',
-        item: movieList.map((item) => {
-            item = item.subject;
-            return {
-                title: item.title,
-                description: `标题：${item.title}<br> 影片类型：${item.genres.join(' | ')}  <br>评分：${item.rating.stars === '00' ? '无' : item.rating.average} <br/> <img src="${item.images.large}">`,
-                link: item.alt,
-            };
-        }),
+        link,
+        item: $('#listCont1 > li')
+            .toArray()
+            .map((element) => {
+                const item = $(element);
+                const movie = item.find('.box_chart a');
+                return {
+                    title: movie.text(),
+                    description: `票房：${item.find('.box_chart_num').text()} 美元`,
+                    link: movie.attr('href'),
+                };
+            }),
     };
 }

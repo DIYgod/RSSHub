@@ -44,7 +44,8 @@ async function handler(ctx) {
         },
     });
 
-    const out = response.payload.results.map((item): DataItem => {
+    const payload = response.payload.blackbirdSearchRoute ?? response.payload;
+    const out = payload.results.map((item): DataItem => {
         const {
             repo: { repository },
             hl_trunc_description,
@@ -59,7 +60,6 @@ async function handler(ctx) {
     });
 
     return {
-        allowEmpty: true,
         title: `${query}的搜索结果`,
         link,
         item: out,

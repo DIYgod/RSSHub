@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.lyu.edu.cn/';
 
@@ -28,7 +29,11 @@ async function handler(ctx: Context) {
         ['xxgg', { title: '信息公告', path: '8126' }],
     ]);
     const { type } = ctx.req.param();
-    const { title, path } = map.get(type)!;
+    const source = map.get(type);
+    if (!source) {
+        throw new InvalidParameterError('Invalid type. Use ldyw or xxgg.');
+    }
+    const { title, path } = source;
 
     const fullUrl = `${baseUrl}${path}/list.htm`;
     const response = await ofetch(fullUrl);
@@ -42,23 +47,24 @@ async function handler(ctx: Context) {
                 title: $item.find('.news_title a').text(),
                 link: new URL($item.find('.news_title a').attr('href')!, baseUrl).href,
                 author: '临沂大学',
-                pubDate: timezone(parseDate(`${$item.find('.news_days').text()}-${$item.find('.news_year').text()}`), 8),
+                pubDate: parseDate(`${$item.find('.news_days').text()}-${$item.find('.news_year').text()}`, 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            item.link.endsWith('.psp')
-                ? item
-                : cache.tryGet(item.link, async () => {
-                      const detailResponse = await ofetch(item.link);
-                      const $detail = load(detailResponse);
-                      return {
-                          ...item,
-                          description: $detail('.wp_articlecontent').html(),
-                      };
-                  })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (item.link.endsWith('.psp')) {
+                return item;
+            }
+            const description = await cache.tryGet(`lyu:article:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link);
+                const $detail = load(detailResponse);
+                return $detail('.wp_articlecontent').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

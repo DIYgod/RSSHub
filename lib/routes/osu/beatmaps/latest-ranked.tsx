@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const actualParametersDescTable = `
 | Name              | Default  | Description                                                                                                                                                                                                                                          |
@@ -229,7 +229,7 @@ async function handler(ctx): Promise<Data> {
 
     let upperLimit = 99; // Osu! will never have maps with 99+ star rating right?
     let lowerLimit = 0;
-    if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
+    if (difficultyLimits && difficultyLimits.length > 0) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
                 upperLimit = Number(dfLimit.slice(1));

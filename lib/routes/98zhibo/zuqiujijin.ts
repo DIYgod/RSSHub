@@ -4,8 +4,7 @@ import iconv from 'iconv-lite';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.98zhibo.com';
 
@@ -26,8 +25,8 @@ export const route: Route = {
 
 // Titles start with the publish date, e.g. 2026年9月9日 欧冠-贝蒂斯客场3-2逆转十人里尔 ...
 const parsePubDateFromTitle = (title: string) => {
-    const match = title.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日/);
-    return match ? timezone(parseDate(`${match[1]}-${match[2]}-${match[3]}`), 8) : undefined;
+    const match = /^(\d{4})年(\d{1,2})月(\d{1,2})日/.exec(title);
+    return match ? parseDate(`${match[1]}-${match[2]}-${match[3]}`, 8) : undefined;
 };
 
 async function handler(): Promise<Data> {
@@ -72,8 +71,8 @@ async function handler(): Promise<Data> {
                     .text()
                     .match(/比赛时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1];
 
-                // Drop inline scripts, HTML comments and the hidden raw data block, keep only the visible content
-                $body.find('script, div[style*="display:none"]').remove();
+                // Drop HTML comments and the hidden raw data block, keep only the visible content
+                $body.find('div[style*="display:none"]').remove();
                 $body
                     .contents()
                     .filter((_, node) => node.type === 'comment')

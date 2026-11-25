@@ -1,13 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
+    const limit = getRouteLimit(ctx, 5);
 
     const domain = 'moa.gov.cn';
     const rootFrameUrl = `http://www.${domain}`;
@@ -54,15 +56,16 @@ export const handler = async (ctx) => {
         },
     });
 
-    let items = response.result.table.slice(0, limit).map((item) => ({
+    let items: Array<DataItem & { link: string; guid: string }> = response.result.table.slice(0, limit).map((item): DataItem & { link: string; guid: string } => ({
         title: item.title,
         link: item.id,
         guid: `moa-zdscxx-${item.id}`,
-        pubDate: parseDate(item.date),
+        pubDate: parseDate(item.date, 8),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.guid, async () => {
                 const { data: detailResponse } = await got.post(apiDetailUrl, {
                     form: {
@@ -76,11 +79,11 @@ export const handler = async (ctx) => {
                 item.link = new URL(`nyb/pc/messageView.jsp?id=${item.link}`, rootUrl).href;
                 item.description = data.content;
                 item.author = data.source;
-                item.pubDate = parseDate(data.date);
+                item.pubDate = parseDate(data.date, 8);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const { data: frameResponse } = await got(frameUrl);
@@ -94,7 +97,6 @@ export const handler = async (ctx) => {
         description: '数据',
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image: $('h1.logo a img').prop('src'),
         author: title,
     };

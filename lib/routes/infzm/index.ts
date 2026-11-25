@@ -2,19 +2,13 @@ import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 
 import type { ContentsResponse } from './types';
-import { fetchArticles } from './utils';
+import { baseUrl, fetchArticles } from './utils';
 
 export const route: Route = {
     path: '/:id',
     parameters: { id: '南方周末频道 id, 可在该频道的 URL 中找到（即 https://www.infzm.com/contents?term_id=:id)' },
     categories: ['traditional-media'],
     example: '/infzm/1',
-    radar: [
-        {
-            source: ['infzm.com/contents'],
-            target: (_, url) => (url ? `/infzm/${url.match(/contents\?term_id=(\d*)/)?.[1]}` : ''),
-        },
-    ],
     name: '频道',
     maintainers: ['KarasuShin', 'ranpox', 'xyqfer'],
     handler,
@@ -24,8 +18,6 @@ export const route: Route = {
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |`,
 };
-
-export const baseUrl = 'https://www.infzm.com/contents';
 
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
@@ -37,7 +29,7 @@ async function handler(ctx): Promise<Data> {
             Referer: link,
         },
     });
-    const data = response.data as ContentsResponse;
+    const data: ContentsResponse = response.data;
 
     const resultItem = await fetchArticles(data.data.contents);
 

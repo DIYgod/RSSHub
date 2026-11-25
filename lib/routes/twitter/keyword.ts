@@ -56,6 +56,5 @@ async function handler(ctx) {
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-        allowEmpty: true,
     };
 }

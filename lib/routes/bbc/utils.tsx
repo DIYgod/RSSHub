@@ -1,10 +1,23 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates } from '@/utils/time';
+
+export const limitBbcItems = <T extends Pick<DataItem, 'pubDate'>>(items: T[], ctx: Context): T[] => {
+    const limit = getRouteLimit(ctx);
+    if (limit === undefined) {
+        return items;
+    }
+    const sortedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
+    return sortedItems.slice(0, limit);
+};
 
 type BlockAttribute = 'bold' | 'italic';
 
@@ -295,10 +308,11 @@ const renderEmbedImages = (block: Block, index: number): JSX.Element | null => {
         const rawImageBlock = findBlocksByType(imageBlock.model?.blocks ?? imageBlock.blocks ?? imageBlock.items, 'rawImage')[0];
         const width = rawImageBlock?.model?.width;
 
-        if (width && width > maxWidth) {
-            maxWidth = width;
-            largestImage = imageBlock;
+        if (!(width && width > maxWidth)) {
+            continue;
         }
+        maxWidth = width;
+        largestImage = imageBlock;
     }
 
     if (!largestImage) {
@@ -389,6 +403,8 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
 export const fetchBbcContent = async (link: string, item) => {
     const response = await ofetch.raw(link, {
         retryStatusCodes: [403],
+        // BBC may reject HTTP/2 requests that succeed over HTTP/1.1.
+        allowH2: false,
     });
     const $ = load(response._data);
     const { hostname, pathname } = new URL(response.url);
@@ -401,6 +417,8 @@ export const fetchBbcContent = async (link: string, item) => {
             return {
                 description: item.content ?? item.description ?? '',
             };
+        // Video pages (/zhongwen/watch/) carry the same page data as articles, with a video block
+        case pathname.startsWith('/zhongwen/watch/'):
         case pathname.startsWith('/zhongwen/articles/'): {
             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
             const pageData = nextData.props.pageProps.pageData;

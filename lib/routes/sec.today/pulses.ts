@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseRelativeDate } from '@/utils/time';
 
 const host = 'https://sec.today';
 
@@ -29,11 +30,22 @@ async function handler() {
             const $item = $(item);
             const author = $item.find('div.card-body small.card-subtitle').text().trim();
             const itemUrl = $item.find('h5.card-title > a').attr('href');
+            const date = $item
+                .find('p.card-text.my-1 cite small')
+                .text()
+                .replace(/^\s*•\s*/, '');
+            const description = $item.find('p.card-text.my-1');
+            description.find('cite').remove();
+            description
+                .contents()
+                .filter((_, node) => node.type === 'text' && node.data.trim() === '–')
+                .remove();
             return {
                 link: new URL(itemUrl!, host).href,
-                description: $item.find('p.card-text.my-1').html(),
+                description: description.html(),
                 title: $item.find('h5.card-title').text(),
                 author,
+                pubDate: parseRelativeDate(date),
             };
         });
 

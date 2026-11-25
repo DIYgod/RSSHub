@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/siren/news',
@@ -32,7 +32,7 @@ async function handler() {
         description: '塞壬唱片新闻',
         item: data.map((item) => ({
             title: item.title,
-            pubDate: parseDate(item.date),
+            pubDate: parseDate(item.date, 0),
             link: `https://monster-siren.hypergryph.com/info/${item.cid}`,
         })),
     };

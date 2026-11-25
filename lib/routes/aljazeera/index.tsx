@@ -2,19 +2,16 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const languages = {
     arabic: {
         rootUrl: 'https://www.aljazeera.net',
         rssUrl: 'rss',
-    },
-    chinese: {
-        rootUrl: 'https://chinese.aljazeera.net',
-        rssUrl: undefined,
     },
     english: {
         rootUrl: 'https://www.aljazeera.com',
@@ -44,14 +41,12 @@ export const route: Route = {
     },
     description: `Language
 
-| Arabic | Chinese | English |
-| ------ | ------- | ------- |
-| arabic | chinese | english |
+| Arabic | English |
+| ------ | ------- |
+| arabic | english |
 
 ::: tip
 If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is \`english\` and whose path is \`economy\`, you can get the route as [\`/aljazeera/english/economy\`](https://rsshub.app/aljazeera/english/economy)
-
-If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language \`chinese\` and path \`news/political\`, you can get the route as [\`/aljazeera/chinese/news/political\`](https://rsshub.app/aljazeera/chinese/news/political)
 :::`,
     radar: [
         {
@@ -61,10 +56,6 @@ If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.n
         {
             source: ['www.aljazeera.net/:category', 'www.aljazeera.net/'],
             target: '/arabic/:category',
-        },
-        {
-            source: ['chinese.aljazeera.net/:category', 'chinese.aljazeera.net/'],
-            target: '/chinese/:category',
         },
     ],
     name: 'News',
@@ -85,28 +76,29 @@ export async function handler(ctx) {
     const rootUrl = languages[language].rootUrl;
     const currentUrl = `${rootUrl}/${isRSS ? languages[language].rssUrl : params.join('/')}`;
 
-    const response = await ofetch(currentUrl);
-    const $ = load(response);
+    const response = await ofetch(currentUrl, { responseType: 'text' });
+    const $ = load(response, { xmlMode: Boolean(isRSS) });
 
-    let items = isRSS
-        ? response.data.match(new RegExp('<link>' + rootUrl + '/(.*?)</link>', 'g')).map((item) => ({
-              link: item.match(/<link>(.*?)<\/link>/)[1],
-          }))
+    let items: DataItem[] = isRSS
+        ? $('channel > item')
+              .toArray()
+              .map((item) => ({ title: $(item).find('title').text(), link: $(item).find('link').text() }))
         : $('.u-clickable-card__link')
               .toArray()
               .map((item) => {
                   const $item = $(item);
 
                   return {
+                      title: $item.text(),
                       link: `${rootUrl}${$item.attr('href')}`,
                   };
               });
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
     items = await Promise.all(
         items.slice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
 
                 const content = load(detailResponse);
 
@@ -127,7 +119,7 @@ export async function handler(ctx) {
                 item.title = content('h1').first().text();
                 item.author = content('.author').text();
                 item.pubDate = pubDate;
-                item.description = renderDescription(content('.article-featured-image').html(), content('.wysiwyg').html());
+                item.description = renderDescription(content('.article-featured-image').html(), content('.wysiwyg').html() || content('.article__subhead').first().toString());
 
                 return item;
             })
@@ -136,7 +128,8 @@ export async function handler(ctx) {
 
     return {
         title: $('title').first().text(),
-        link: currentUrl,
+        link: isRSS ? $('channel > link').text() : currentUrl,
+        language: (isRSS ? $('channel > language').text() : $('html').attr('lang')) as Language,
         item: items,
     };
 }

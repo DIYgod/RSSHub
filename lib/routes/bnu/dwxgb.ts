@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dwxgb/:category/:type',
@@ -46,7 +46,7 @@ async function handler(ctx) {
             const absoluteLink = new URL(link!, currentUrl).href;
             return {
                 title: $(item).find('a').text().trim(),
-                pubDate: parseDate($(item).find('span').text()),
+                pubDate: parseDate($(item).find('span').text(), 8),
                 link: absoluteLink,
             };
         });

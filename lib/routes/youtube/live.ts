@@ -1,79 +1,38 @@
-import { load } from 'cheerio';
-
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { ViewType } from '@/types';
 
-import { formatDescription, getChannelWithUsername, getLive, getThumbnail, renderYoutube } from './utils';
+import { getChannelIdByUsername, getStreamsByChannelId } from './api/youtubei';
+import { isYouTubeChannelId } from './utils';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
     categories: ['live'],
+    view: ViewType.Videos,
     example: '/youtube/live/@GawrGura',
-    parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
-    features: {
-        requireConfig: [
-            {
-                name: 'YOUTUBE_KEY',
-                description:
-                    'YouTube API Key (enable YouTube Data API v3), support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/), [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com)',
-            },
-        ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+    parameters: {
+        username: 'YouTube handle or channel id',
+        embed: 'Default to embed the video, set to any value to disable embedding',
     },
+    radar: [
+        {
+            source: ['www.youtube.com/:username/streams', 'www.youtube.com/channel/:username/streams'],
+            target: '/live/:username',
+        },
+    ],
     name: 'Live',
-    maintainers: ['sussurr127'],
+    maintainers: ['sussurr127', 'ouuan'],
     handler,
+    description: `::: tip
+Every stream is categorized as \`live\`, \`upcoming\` or \`completed\`, so a single state can be picked out with the \`filter_category\` and \`filterout_category\` [common parameters](https://docs.rsshub.app/guide/parameters#filtering). For example, \`/youtube/live/@GawrGura?filterout_category=completed\` only tracks streams that are live or about to start.
+:::`,
 };
 
 async function handler(ctx) {
-    if (!config.youtube || !config.youtube.key) {
-        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
-    }
     const username = ctx.req.param('username');
-    const embed = !ctx.req.param('embed');
+    const channelId = isYouTubeChannelId(username) ? username : await getChannelIdByUsername(username);
 
-    let channelName;
-    let channelId;
-
-    const link = `https://www.youtube.com/${username}`;
-    const response = await got(link);
-    const $ = load(response.data);
-    channelId = $('meta[itemprop="identifier"]').attr('content');
-    channelName = $('meta[itemprop="name"]').attr('content');
-
-    if (!channelId) {
-        const channelInfo = (await getChannelWithUsername(username, 'snippet', cache)).data.items[0];
-        channelId = channelInfo.id;
-        channelName = channelInfo.snippet.title;
-    }
-
-    const data = (await getLive(channelId, cache)).data.items;
-
-    return {
-        title: `${channelName || username}'s Live Status`,
-        link: `https://www.youtube.com/channel/${channelId}`,
-        description: `$${channelName || username}'s live streaming status`,
-        item: data.map((item) => {
-            const snippet = item.snippet;
-            const liveVideoId = item.id.videoId;
-            const img = getThumbnail(snippet.thumbnails);
-            return {
-                title: snippet.title,
-                description: renderYoutube(embed, liveVideoId, img, formatDescription(snippet.description)),
-                pubDate: parseDate(snippet.publishedAt),
-                guid: liveVideoId,
-                link: `https://www.youtube.com/watch?v=${liveVideoId}`,
-                image: img.url,
-            };
-        }),
-        allowEmpty: true,
-    };
+    return await getStreamsByChannelId({
+        channelId,
+        embed: !ctx.req.param('embed'),
+    });
 }

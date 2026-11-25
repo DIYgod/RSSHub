@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import getCookie from '../utils/pypasswaf';
 
@@ -63,21 +64,23 @@ async function handler(ctx) {
             return info;
         });
 
-    const out = await Promise.all(
-        list.map(async (info) => {
+    const out = await pMap(
+        list,
+        async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
             const itemUrl = new URL(info.link!, host).href;
-            let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+            let description: string | undefined;
 
             if (getDescription) {
-                description = await cache.tryGet(itemUrl, async () => {
+                description = await cache.tryGet(`nuaa:yjsy:article:body:${itemUrl}`, async () => {
                     const arr = itemUrl.split('.');
                     const pageType = arr.at(-1);
                     if (pageType === 'htm' || pageType === 'html') {
                         const response = await got(itemUrl, gotConfig);
                         const $ = load(response.data);
-                        return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+                        const content = $('.wp_articlecontent');
+                        return content.html() ?? undefined;
                     }
                     return '';
                 });
@@ -89,7 +92,8 @@ async function handler(ctx) {
                 description,
                 pubDate: parseDate(date),
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

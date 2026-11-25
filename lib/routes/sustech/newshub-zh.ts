@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newshub-zh',
@@ -40,26 +42,38 @@ async function handler() {
 
     const $ = load(data);
 
-    const list = $('.m-newslist ul li');
+    const list: Array<DataItem & { link: string }> = $('.m-newslist ul li')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            return { title: $item.find('.f-clamp').text(), link: `${baseUrl}${$item.find('a').attr('href')}`, pubDate: parseDate($item.find('.mobi').text(), 8) };
+        });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const content = load(response.data);
+                const body = content('.m-details-con .u-content');
+                const credits: string[] = [];
+                for (const element of body.children().toArray().toReversed()) {
+                    const text = content(element).text().trim();
+                    if (!text) {
+                        continue;
+                    }
+                    if (/^(?:供稿(?:单位)?|通讯员|主图|编辑|摄影|采写)[:：]/.test(text)) {
+                        credits.unshift(text);
+                        content(element).remove();
+                    } else {
+                        break;
+                    }
+                }
+                return { description: body.html(), author: credits.join(' ') };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
+    );
 
-    return {
-        title: '南方科技大学新闻网-中文',
-        link,
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                const itemPicUrl = $item
-                    .find('.u-pic div')
-                    .attr('style')!
-                    .match(/url\('(.+?)'\)/)![1];
-                const itemPubdate = $item.find('.mobi').text();
-                return {
-                    pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),
-                    title: $item.find('.f-clamp').text(),
-                    description: `<img src="${baseUrl}${itemPicUrl}"><br>${$item.find('.f-clamp4').text()}`,
-                    link: `${baseUrl}${$item.find('a').attr('href')}`,
-                };
-            }),
-    };
+    return { title: '南方科技大学新闻网-中文', link, item: items };
 }

@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -84,6 +85,10 @@ async function handler(ctx) {
 
     const { category = 'TopVideos', country } = ctx.req.param();
     const embed = !ctx.req.param('embed');
+
+    if (!Object.hasOwn(contentMap, category)) {
+        throw new InvalidParameterError('Invalid YouTube chart category. Choose from TopArtists, TopSongs, TopVideos, TrendingVideos.');
+    }
 
     const { content } = await cache.tryGet(
         `youtube:charts:${country ?? 'global'}`,

@@ -1,3 +1,5 @@
+import { renderYoutube } from '@/routes/youtube/utils';
+
 import { renderVideo } from './templates/video';
 
 const baseUrl = 'https://pikabu.ru';
@@ -16,16 +18,23 @@ const fixImage = (element) => {
 };
 
 const fixVideo = (element) => {
+    if (element.is('video')) {
+        element.attr('poster', element.attr('data-poster'));
+        element.attr('controls', '');
+        return;
+    }
+
     const preview = element
         .find('.player__preview')
         .attr('style')
-        .match(/url\((.+)\);/)[1];
+        ?.match(/url\((.+)\);/)?.[1];
     const dataType = element.attr('data-type');
     let videoHtml: string;
 
     if (dataType === 'video') {
-        const videoId = element.attr('data-source').match(/\/embed\/(.+)$/)[1];
-        videoHtml = renderVideo({ videoId });
+        const embedUrl = element.attr('data-source');
+        const youtubeEmbedUrl = 'https://www.youtube.com/embed/';
+        videoHtml = embedUrl.startsWith(youtubeEmbedUrl) ? renderYoutube(true, embedUrl.slice(youtubeEmbedUrl.length)) : renderVideo({ embedUrl });
     } else if (dataType === 'video-file') {
         const width = element.find('.player__svg-stretch').attr('width');
         const mp4 = `${element.attr('data-source')}.mp4`;

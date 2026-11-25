@@ -4,9 +4,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/youth/:category',
@@ -31,19 +30,21 @@ async function handler(ctx: Context) {
     const url = `https://youth.cqu.edu.cn/index/${category}.htm`;
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                ['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort();
-            });
+            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });
-    const cookies = await page.context().cookies();
-    const cookie = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
-    const response = await page.content();
-    await destroy();
+    let cookie: string;
+    let response: string;
+    try {
+        const cookies = await page.context().cookies();
+        cookie = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
-
     const links = $('.nwes_list a[target=_blank]')
         .toArray()
         .map((item) => ({
@@ -74,7 +75,7 @@ async function handler(ctx: Context) {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateText), 8),
+                    pubDate: parseDate(dateText, 8),
                     author: authorText?.startsWith('拟稿人：') ? authorText.slice(4) : undefined,
                     description: newsText.html() + $detail.html(attedText),
                 };

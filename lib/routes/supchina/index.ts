@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -14,15 +16,20 @@ export const route: Route = {
             source: ['supchina.com/feed', 'supchina.com/'],
             target: '',
         },
+        {
+            source: ['thechinaproject.com/feed', 'thechinaproject.com/'],
+            target: '',
+        },
     ],
     name: 'Feed',
     maintainers: ['nczitzk'],
     handler,
-    url: 'supchina.com/feed',
+    url: 'thechinaproject.com',
+    description: 'The China Project, formerly SupChina, closed in November 2023. This route provides its official news archive; the latest archived post is from December 2023.',
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://supchina.com';
+    const rootUrl = 'https://thechinaproject.com';
     const currentUrl = `${rootUrl}/feed/`;
 
     const response = await got({
@@ -30,10 +37,10 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const $ = load(response.data);
+    const $ = load(response.data, { xml: true });
 
     let items = $('item')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, getRouteLimit(ctx, 50))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -41,27 +48,20 @@ async function handler(ctx) {
             return {
                 guid: $item.find('guid').text(),
                 title: $item.find('title').text(),
-                link: $item.find('guid').text(),
-                author: $item
-                    .find(String.raw`dc\:creator`)
-                    .html()!
-                    .match(/CDATA\[(.*?)\]/)![1],
+                link: $item.find('link').text(),
+                author: $item.find(String.raw`dc\:creator`).text(),
                 category: $item
                     .find('category')
                     .toArray()
-                    .map(
-                        (c) =>
-                            $(c)
-                                .html()!
-                                .match(/CDATA\[(.*?)\]/)![1]
-                    ),
+                    .map((c) => $(c).text()),
                 pubDate: parseDate($item.find('pubDate').text()),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`supchina:news:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -69,13 +69,13 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('.aspect-spacer, .post-recs, .author-bio').remove();
+                content('.aspect-spacer, .post-recs, .author-bio, #js-reg-wrap').remove();
 
-                item.description = content('.post__main').html();
-
-                return item;
-            })
-        )
+                return { description: content('.post__main').html() };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

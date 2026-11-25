@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/music/latest/:area?',
@@ -76,12 +77,13 @@ async function handler(ctx) {
             item: res.data.subject_collection_items.map((item) => {
                 const title = `${item.title}-${item.info}`;
                 const link = `https://music.douban.com/subject/${item.id}/`;
+                const rating = item.rating ? `<strong>评分:</strong> ${item.rating.value.toFixed(1)}` : item.null_rating_reason;
                 const description = `
                     <img src="${item.cover.url}" /><br>
-                    ${item.recommend_comment}<br>
-                    <strong>评分:</strong> ${item.rating.value.toFixed(1)}
+                    ${item.recommend_comment || item.description || ''}<br>
+                    ${rating}
                 `;
-                const pubDate = new Date(item.pubdate[0]).toUTCString();
+                const pubDate = parseDate(item.pubdate[0], 0);
 
                 return {
                     title,

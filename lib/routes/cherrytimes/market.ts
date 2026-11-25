@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/market',
@@ -24,6 +25,7 @@ export const route: Route = {
                     link: a.attr('href'),
                     description: element.find('p.excerpt').text(),
                     category: element.find('a').last().text(),
+                    pubDate: parseDate(`${element.find('p.info').text()} GMT`),
                 };
             });
 

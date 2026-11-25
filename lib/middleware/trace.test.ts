@@ -1,4 +1,5 @@
-import { Context, type Next } from 'hono';
+import type { Next } from 'hono';
+import { Context } from 'hono';
 import { describe, expect, it } from 'vitest';
 
 import { config } from '@/config';

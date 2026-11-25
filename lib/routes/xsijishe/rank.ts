@@ -1,13 +1,15 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import playwright from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-import { playwrightGet } from './utils';
+import { baseUrl, browserResourceTypes, isBlockedRequest, toBrowserCookies } from './utils';
 
-const baseUrl = 'https://xsijishe.com';
+const rankSelector = '.nex_recon_lists';
 
 export const route: Route = {
     path: '/rank/:type',
@@ -23,16 +25,7 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: [
-            {
-                name: 'XSIJISHE_COOKIE',
-                description: '',
-            },
-            {
-                name: 'XSIJISHE_USER_AGENT',
-                description: '',
-            },
-        ],
+        requireConfig: false,
         requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
@@ -44,6 +37,46 @@ export const route: Route = {
     maintainers: ['akynazh', 'AiraNadih'],
     handler,
 };
+
+async function fetchPortal(url: string) {
+    const cookie = config.xsijishe.cookie;
+    try {
+        return await ofetch<string>(url, {
+            headers: {
+                ...(cookie && { Cookie: cookie }),
+            },
+        });
+    } catch (error) {
+        if (!isBlockedRequest(error)) {
+            throw error;
+        }
+    }
+
+    const { page, destroy } = await getPlaywrightPage(url, {
+        noGoto: true,
+        closeTimeout: 0,
+        onBeforeLoad: async (_page, context) => {
+            if (cookie) {
+                await context!.addCookies(toBrowserCookies(cookie));
+            }
+            await context!.route('**/*', (route) => (browserResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
+    });
+    try {
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        try {
+            await page.waitForSelector(rankSelector, { state: 'attached', timeout: 20000 });
+        } catch (error) {
+            if (error instanceof Error && error.name === 'TimeoutError') {
+                throw new CaptchaError('Xsijishe did not show its rank list in the browser. It may still be requesting browser verification; retry later.');
+            }
+            throw error;
+        }
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
 
 async function handler(ctx) {
     const rankType = ctx.req.param('type');
@@ -60,43 +93,35 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
 
-    const context = await playwright();
     const url = `${baseUrl}/portal.php`;
-    try {
-        const data = await playwrightGet(url, context, '.nex_recon_lists', {
-            cookie: config.xsijishe.cookie,
-            userAgent: config.xsijishe.userAgent,
-        });
-        const $ = load(data);
-        const items = $('.nex_recon_lists ul li')
-            .eq(index)
-            .find('.nex_recons_demens dl dd')
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const title = $item.find('h5').text().trim();
-                const link = $item.find('a').attr('href');
-                const description = $item.find('img').prop('outerHTML') ?? '';
+    const data = await fetchPortal(url);
+    const $ = load(data);
+    const items = $(`${rankSelector} ul li`)
+        .eq(index)
+        .find('.nex_recons_demens dl dd')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const title = $item.find('h5').text();
+            const link = $item.find('a').attr('href');
+            const description = $item.find('img').prop('outerHTML');
 
-                if (!title || !link) {
-                    return;
-                }
+            if (!title || !link) {
+                return;
+            }
 
-                return {
-                    title,
-                    link: new URL(link, `${baseUrl}/`).href,
-                    description,
-                };
-            })
-            .filter((item) => item !== undefined);
+            return {
+                title,
+                link: new URL(link, `${baseUrl}/`).href,
+                description,
+            };
+        })
+        .filter((item) => item !== undefined);
 
-        return {
-            title,
-            link: url,
-            description: title,
-            item: items,
-        };
-    } finally {
-        await context.close();
-    }
+    return {
+        title,
+        link: url,
+        description: title,
+        item: items,
+    };
 }

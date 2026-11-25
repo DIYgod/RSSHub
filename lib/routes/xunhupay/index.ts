@@ -1,6 +1,11 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import buildData from '@/utils/common-config';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.xunhupay.com';
 
@@ -19,18 +24,24 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.xunhupay.com/blog'],
+            source: ['www.xunhupay.com/blog', 'www.xunhupay.com/blog.html'],
         },
     ],
     name: '文章',
     maintainers: ['Joey'],
     handler,
-    url: 'www.xunhupay.com/blog',
+    url: 'www.xunhupay.com/blog.html',
 };
+
+async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'description'>> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return { description: $('.blogc-left > div.line24').html() };
+}
 
 async function handler() {
     const link = `${baseUrl}/blog.html`;
-    return await buildData({
+    const data = await buildData({
         link,
         url: link,
         title: '博客',
@@ -43,8 +54,17 @@ async function handler() {
             pubDate: ($) => parseDate($('.date').text(), 'YYYY-MM-DD'),
             guid: ($) => {
                 const href = $('a').attr('href');
-                return href ? Buffer.from(href).toString('base64') : undefined;
+                return href ? Buffer.from(href).toBase64() : undefined;
             },
         },
     });
+    const items = await pMap(
+        data.item,
+        async (item) => {
+            const details = await cache.tryGet(`xunhupay:article:${item.link}`, () => fetchArticleContent(item.link!));
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
+    );
+    return { ...data, item: items };
 }

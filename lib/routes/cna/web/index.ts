@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { getFullText } from '../utils';
 
@@ -37,14 +37,14 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('*:is(.pcBox .caItem, .mainList li a div) h2')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .toArray()
         .map((item) => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: new URL($item.parents('a').attr('href')!, 'https://www.cna.com.tw').href,
-                pubDate: timezone(parseDate($item.next().text()), 8),
+                pubDate: parseDate($item.next().text(), 8),
             };
         });
 

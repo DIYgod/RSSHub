@@ -46,7 +46,7 @@ async function handler() {
             const day = $link.find('.tm-1').text();
             const yearMonth = $link.find('.tm-2').text();
             return {
-                title: $link.find('.btt-4').text().trim(),
+                title: $link.find('.btt-4').text(),
                 link: new URL(href, pageUrl).href,
                 pubDate: parsePubDate(`${yearMonth}-${day}`),
             };

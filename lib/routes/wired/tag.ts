@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Item } from './types';
 
@@ -20,32 +21,43 @@ export const route: Route = {
     maintainers: ['Naiqus'],
     handler,
 };
-
 async function handler(ctx) {
     const baseUrl = 'https://www.wired.com';
     const tag = ctx.req.param('tag');
     const link = `${baseUrl}/tag/${tag}/`;
-
     const response = await ofetch(link);
     const $ = load(response);
-    const preloadedState = JSON.parse(
+    const preloadedState: {
+        transformed: {
+            tag: {
+                items: Item[];
+            };
+            'head.title': string;
+            'head.description': string;
+            logo: {
+                sources: {
+                    sm: {
+                        url: string;
+                    };
+                };
+            };
+        };
+    } = JSON.parse(
         $('script:contains("window.__PRELOADED_STATE__")')
             .text()
             .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
     );
-
-    const list = (preloadedState.transformed.tag.items as Item[]).map((item) => ({
+    const list = preloadedState.transformed.tag.items.map((item) => ({
         title: item.dangerousHed,
         description: item.dangerousDek,
         link: `${baseUrl}${item.url}`,
-        pubDate: parseDate(item.date),
         author: item.contributors.author.items.map((author) => author.name).join(', '),
         category: [item.rubric.name],
     }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wired:detail:v4:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 const preloadedState = JSON.parse(
@@ -53,7 +65,6 @@ async function handler(ctx) {
                         .text()
                         .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
                 );
-
                 const headerLeadAsset = $('div[data-testid*="ContentHeaderLeadAsset"]');
                 headerLeadAsset.find('button').remove();
                 // false postive: 'some' does not exist on type 'Cheerio<Element>'
@@ -64,7 +75,6 @@ async function handler(ctx) {
                     headerLeadAsset.find('video').attr('preload', 'metadata');
                     headerLeadAsset.find('video').removeAttr('autoplay');
                 }
-
                 const content = $('.body__inner-container')
                     .toArray()
                     .map((el) => {
@@ -73,20 +83,20 @@ async function handler(ctx) {
                             const $e = $(el);
                             $e.replaceWith($e.html() || '');
                         });
-
                         return $el.html();
                     })
                     .join('');
-
-                item.description = ($('div[class^=ContentHeaderDek]').prop('outerHTML') || '') + headerLeadAsset.prop('outerHTML') + content;
-
-                item.category = [...new Set([...item.category, ...preloadedState.transformed.article.tagCloud.tags.map((t: { tag: string }) => t.tag)])];
-
-                return item;
-            })
-        )
+                return {
+                    description: ($('div[class^=ContentHeaderDek]').prop('outerHTML') || '') + headerLeadAsset.prop('outerHTML') + content,
+                    tags: preloadedState.transformed.article.tagCloud.tags.map((t: { tag: string }) => t.tag),
+                    pubDate: parseDate(preloadedState.transformed.coreDataLayer.content.publishDate),
+                    updated: parseDate(preloadedState.transformed.coreDataLayer.content.modifiedDate),
+                };
+            });
+            return { ...item, pubDate: detail.pubDate, updated: detail.updated, description: detail.description, category: [...new Set([...item.category, ...detail.tags])] };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: preloadedState.transformed['head.title'],
         description: preloadedState.transformed['head.description'],

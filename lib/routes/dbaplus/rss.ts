@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -37,7 +37,7 @@ async function handler() {
                 title,
                 description,
                 link,
-                pubDate: parseDate(dateraw, 'YYYY年MM月DD日'),
+                pubDate: parseDate(dateraw, 'YYYY年MM月DD日', 8),
             };
         });
     return {

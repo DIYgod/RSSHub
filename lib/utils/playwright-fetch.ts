@@ -8,7 +8,7 @@ const pixivRetryPaths = new Set(['/v1/illust/ranking', '/v1/user/illusts', '/v1/
 const responseHeadersToRemove = new Set(['connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization', 'te', 'trailer', 'transfer-encoding', 'upgrade', 'content-encoding', 'content-length']);
 
 type PlaywrightPage = Awaited<ReturnType<typeof getPlaywrightPage>>;
-type PausedRequest = {
+export type PausedRequest = {
     requestId: string;
     request: { url: string };
     frameId: string;
@@ -32,7 +32,7 @@ async function abortable<T>(promise: Promise<T>, signal: AbortSignal): Promise<T
     }
 }
 
-async function discardBody(body: { cancel(): Promise<unknown> }) {
+async function discardBody(body: { cancel(): Promise<void> }) {
     try {
         await body.cancel();
     } catch {
@@ -167,7 +167,7 @@ async function replayRequest(request: Request, signal: AbortSignal, body?: Uint8
                     requestId: event.requestId,
                     method: request.method,
                     headers: Array.from(request.headers, ([name, value]) => ({ name, value })),
-                    ...(body && { postData: Buffer.from(body).toString('base64') }),
+                    ...(body && { postData: Buffer.from(body).toBase64() }),
                 });
             };
             void handleRequest().catch(() => controller.abort());

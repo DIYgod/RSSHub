@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -36,7 +39,7 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
+    const limit = getRouteLimit(ctx, 11);
 
     const rootUrl = 'https://www.logclub.com';
     const currentUrl = new URL(getSubPath(ctx), rootUrl).href;
@@ -48,7 +51,7 @@ export async function handler(ctx) {
     let items = $('li.layui-row, li.layui-timeline-item')
         .slice(0, limit)
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
@@ -68,9 +71,10 @@ export async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -94,9 +98,7 @@ export async function handler(ctx) {
                 item.title = content('h1, div.current_video_title').first().text();
 
                 item.enclosure_url = content('video#ref_video').prop('src');
-                if (item.enclosure_url) {
-                    item.enclosure_type = `video/${item.enclosure_url.split(/\./).pop()}`;
-                }
+                item.enclosure_type = item.enclosure_url ? getMimeType(new URL(item.enclosure_url, item.link).pathname) : undefined;
 
                 item.description += renderDescription({
                     video: {
@@ -137,8 +139,8 @@ export async function handler(ctx) {
                         : parseDate(content('span.aritlceIn-time').text().trim());
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;

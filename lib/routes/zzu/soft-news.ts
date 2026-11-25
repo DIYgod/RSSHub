@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/soft/news/:type?',
@@ -18,9 +19,7 @@ export const route: Route = {
 | -------- | -------- | -------- |
 | 参数     | xyxw     | tzgg     |`,
 };
-
 const baseUrl = 'https://www7.zzu.edu.cn/csai/';
-
 const config = {
     xyxw: {
         title: '学院动态',
@@ -31,14 +30,11 @@ const config = {
         url: `${baseUrl}tzgg.htm`,
     },
 };
-
 async function handler(ctx: Context) {
     const { type = 'xyxw' } = ctx.req.param();
     const { title, url } = config[type];
-
     const response = await ofetch(url);
     const $ = load(response);
-
     const list = $('.list li')
         .toArray()
         .map((v) => {
@@ -49,22 +45,26 @@ async function handler(ctx: Context) {
                 pubDate: parseDate($v.find('span').text()),
             };
         });
-
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
                 return {
                     ...item,
-                    author: '计算机与人工智能学院',
+                    author:
+                        $('.con-tit-p span:contains("信息来源：")')
+                            .text()
+                            .replace(/^\s*信息来源：/, '')
+                            .replaceAll(/\s+/g, ' ')
+                            .trim() || undefined,
                     description: $('.v_news_content').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
-
     return {
         title: `郑州大学计算机与人工智能学院 -- ${title}`,
         link: url,

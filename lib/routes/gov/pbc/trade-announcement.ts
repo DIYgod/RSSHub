@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/tradeAnnouncement',
@@ -13,7 +14,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -25,52 +26,35 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = 'http://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
-
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
-    const html = await page.evaluate(() => document.documentElement.getHTML());
-    const $ = load(html);
+    const link = 'https://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
+    const response = await ofetch(link);
+    const $ = load(response);
     const list = $('font.newslist_style')
         .toArray()
         .map((item): DataItem => {
-            const $item = $(item);
-            const a = $item.find('a[title]');
+            const a = $(item).find('a[title]');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailPage = await context.newPage();
-                await detailPage.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-                });
-                await detailPage.goto(item.link!, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const detailHtml = await detailPage.evaluate(() => document.documentElement.getHTML());
-                const content = load(detailHtml);
-                item.description = content('#zoom').html();
-                item.pubDate = timezone(parseDate(content('#shijian').text()), 8);
+    const items = await pMap(
+        list,
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'pbc.gov.cn')) {
                 return item;
-            })
-        )
+            }
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                item.description = content('#zoom').html();
+                item.pubDate = parseDate(content('#shijian').text(), 8);
+                return item;
+            });
+        },
+        { concurrency: 1 }
     );
-
-    await context.close();
-
     return {
         title: '中国人民银行 - 货币政策司公开市场交易公告',
         link,

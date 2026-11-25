@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const channels = {
     breakingnewslist: '軍情動態',
@@ -71,32 +72,35 @@ async function handler(ctx: Context) {
 
     const response = await ofetch(`${baseUrl}/ajax/${channel}/1`, { responseType: 'json' });
 
-    const list: DataItem[] = response.map((item) => ({
+    const list: DataItem[] = response.data.items.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: timezone(parseDate(item.createTime, 'YYYYMMDDHHmmss'), 8),
+        pubDate: parseDate(item.createTime, 'YYYYMMDDHHmmss', 8),
         image: item.url_b,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet('ltn:article:' + item.link, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const content = $('.whitecon:not(.template) div[data-desc="內文"]');
                 content.find('.before_ir, .after_ir, [id^="ad"], .appE1121').remove();
                 content.find('img[data-src]').each((_, img) => {
-                    $(img).attr('src', $(img).attr('data-src')!).removeAttr('data-src');
+                    $(img).attr('src', $(img).attr('data-src')).removeAttr('data-src');
                 });
                 content.find('iframe[src^="https://www.youtube.com/embed/"]').each((_, iframe) => {
-                    $(iframe).attr('referrerpolicy', 'strict-origin-when-cross-origin').removeAttr('allow');
+                    const videoId = new URL($(iframe).attr('src')!).pathname.split('/').pop();
+                    $(iframe).replaceWith(renderYoutube(true, videoId, undefined, undefined));
                 });
 
-                item.description = content.html()?.trim();
-                return item;
-            })
-        )
+                return content.html()?.trim();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

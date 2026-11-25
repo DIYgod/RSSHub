@@ -1,45 +1,67 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+
+export type PostPreview = {
+    mediumUrl: string;
+    title: string;
+    firstPublishedAt: number;
+    creator?: { name?: string };
+    extendedPreviewContent?: { subtitle?: string };
+};
+
+type Feed = { items: Array<{ post: PostPreview }> };
+
+const postPreviewFields = `
+    id
+    title
+    firstPublishedAt
+    creator { name }
+    extendedPreviewContent { isFullContent subtitle }
+`;
 
 async function graphqlRequest(body, cookie) {
-    const { data } = await got('https://medium.com/_/graphql', {
+    const headers = {
+        accept: '*/*',
+        'accept-language': 'en-US,en;q=0.9,zh;q=0.8,zh-CN;q=0.7',
+        'apollographql-client-name': 'lite',
+        'apollographql-client-version': 'main-20240329-011934-2370d8b72b',
+        'cache-control': 'no-cache',
+        'content-type': 'application/json',
+        'medium-frontend-app': 'lite/main-20240329-011934-2370d8b72b',
+        'medium-frontend-path': '/',
+        'medium-frontend-route': 'homepage',
+        'ot-tracer-sampled': 'true',
+        'ot-tracer-spanid': '26b843316dc9494d',
+        'ot-tracer-traceid': 'c84ea9154765033',
+        pragma: 'no-cache',
+        'sec-ch-ua': '"Chromium";v="123", "Not:A-Brand";v="8"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"macOS"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'graphql-operation': body.operationName,
+        cookie,
+    };
+
+    const data = await ofetch('https://medium.com/_/graphql', {
         method: 'POST',
-        headers: {
-            accept: '*/*',
-            'accept-language': 'en-US,en;q=0.9,zh;q=0.8,zh-CN;q=0.7',
-            'apollographql-client-name': 'lite',
-            'apollographql-client-version': 'main-20240329-011934-2370d8b72b',
-            'cache-control': 'no-cache',
-            'content-type': 'application/json',
-            'medium-frontend-app': 'lite/main-20240329-011934-2370d8b72b',
-            'medium-frontend-path': '/',
-            'medium-frontend-route': 'homepage',
-            'ot-tracer-sampled': 'true',
-            'ot-tracer-spanid': '26b843316dc9494d',
-            'ot-tracer-traceid': 'c84ea9154765033',
-            pragma: 'no-cache',
-            'sec-ch-ua': '"Chromium";v="123", "Not:A-Brand";v="8"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"macOS"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-origin',
-            'graphql-operation': body.operationName,
-            cookie,
-        },
+        redirect: 'manual',
+        headers,
         body: JSON.stringify([body]),
+        minVersion: 'TLSv1.3',
     });
     return data[0].data;
 }
 
-async function getFollowingFeedQuery(user, cookie, pagingLimit = 20) {
+async function getFollowingFeedQuery(user, cookie, pagingLimit = 20): Promise<Feed | undefined> {
     return (await graphqlRequest(newFollowingFeedQuery(pagingLimit), cookie))?.followingFeed;
 }
 
-async function getWebInlineRecommendedFeedQuery(user, cookie, pagingLimit = 20) {
+async function getWebInlineRecommendedFeedQuery(user, cookie, pagingLimit = 20): Promise<Feed | undefined> {
     return (await graphqlRequest(newWebInlineRecommendedFeedQuery(pagingLimit), cookie))?.webRecommendedFeed;
 }
 
-async function getWebInlineTopicFeedQuery(user, tagSlug, cookie, pagingLimit = 20) {
+async function getWebInlineTopicFeedQuery(user, tagSlug, cookie, pagingLimit = 20): Promise<Feed | undefined> {
     return (await graphqlRequest(newWebInlineTopicFeedQuery(tagSlug, pagingLimit), cookie))?.personalisedTagFeed;
 }
 
@@ -64,6 +86,7 @@ function newFollowingFeedQuery(pagingLimit = 5) {
                         feedId
                         post {
                             mediumUrl
+                            ${postPreviewFields}
                             __typename
                         }
                         __typename
@@ -101,6 +124,7 @@ function newWebInlineRecommendedFeedQuery(pagingLimit = 5) {
                         feedId
                         post {
                             mediumUrl
+                            ${postPreviewFields}
                             __typename
                         }
                         __typename
@@ -138,6 +162,7 @@ function newWebInlineTopicFeedQuery(tagSlug, pagingLimit = 5) {
                         feedId
                         post {
                             mediumUrl
+                            ${postPreviewFields}
                             __typename
                         }
                         __typename

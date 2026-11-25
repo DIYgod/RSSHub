@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cs/match',
@@ -38,22 +40,35 @@ async function handler() {
     const $ = load(res.data);
     const list = $('.listshow li a');
 
+    const items = list.toArray().map((item) => {
+        const $item = $(item);
+        const href = $item.attr('href');
+        return {
+            title: $item
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text(),
+            pubDate: parseDate($item.find('.r').text(), 8),
+            link: href ? new URL(href, baseUrl).href : undefined,
+        };
+    });
+    const detailedItems = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`scnu:cs:v1:${item.link}`, async () => {
+                const loadedSource1 = (await got(item.link, { allowH2: false })).data;
+                const article = load(loadedSource1);
+                return article('.article-content').html();
+            }),
+        }),
+        { concurrency: 3 }
+    );
+
     return {
         title: $('title').text(),
         link: url,
         description: '华南师范大学计算机学院 学科竞赛',
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                return {
-                    title: $item
-                        .contents()
-                        .filter((_, node) => node.type === 'text')
-                        .text(),
-                    pubDate: parseDate($item.find('.r').text()),
-                    link: $item.attr('href'),
-                };
-            }),
+        item: detailedItems,
     };
 }

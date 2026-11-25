@@ -72,11 +72,8 @@ export const parseJpy = (text: string | null): number | null => {
     if (/無償|なし|無し/.test(s)) {
         return 0;
     }
-    if (isUnknown(s)) {
-        return null;
-    }
     // Without 円 / 万 only a bare number is accepted ('3ヶ月' is not an amount).
-    if (!/[円万億]/.test(s) && !/^\d+(?:\.\d+)?$/.test(s)) {
+    if (isUnknown(s) || (!/[円万億]/.test(s) && !/^\d+(?:\.\d+)?$/.test(s))) {
         return null;
     }
     const oku = s.match(/^(\d+(?:\.\d+)?)億(?:(\d+(?:\.\d+)?)万)?/);
@@ -94,7 +91,7 @@ export const parseJpy = (text: string | null): number | null => {
 const round2 = (n: number): number => Math.round(n * 100) / 100;
 
 /** '21.42坪（70.84㎡）' / '70㎡' → { tsubo, area_m2 }, the missing side converted at 3.30579. */
-export const parseArea = (text: string | null): { tsubo: number | null; area_m2: number | null } => {
+export const parseArea = (text: string | null) => {
     if (text === null) {
         return { tsubo: null, area_m2: null };
     }

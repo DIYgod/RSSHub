@@ -1,11 +1,10 @@
-import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/article/:id?',
@@ -41,29 +40,35 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/api/article/articles?product=ssydt&terminal=Browser&pageSize=20&articleTypeId=${id}`;
     const response = await ofetch(currentUrl);
 
-    const list = response.results.map((item) => ({
-        guid: item.id,
+    const list: Array<DataItem & { link: string }> = response.results.map((item) => ({
+        guid: String(item.id),
         title: item.title,
+        category: [item.typeName],
         link: `${rootUrl}/article/${item.id}`,
-        pubDate: timezone(parseDate(item.gmtCreate), 8),
+        pubDate: parseDate(item.gmtCreate, 8),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
-                const content = load(detailResponse);
-
-                item.description = content('.article-content').html();
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`ssydt:article:detail:v3:${item.link}`, async () => {
+                const detailResponse = await ofetch<ArticleDetailResponse>(`${rootUrl}/api/article/webArticles/${item.guid}`);
+                return { description: detailResponse.results.ssArticleArticleText.content };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${titles.get(id || '0')} - 时事一点通`,
         link: `${rootUrl}/article?type=${id}`,
         item: items,
+    };
+}
+
+interface ArticleDetailResponse {
+    results: {
+        ssArticleArticleText: { content: string };
     };
 }

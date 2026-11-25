@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/servicesupport/analygarden/:program?',
@@ -59,7 +59,7 @@ async function handler(ctx) {
         },
         searchParams: {
             pageNo: 1,
-            pageSize: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
+            pageSize: getRouteLimit(ctx, 20),
             keyword: '',
             startTime: '',
             endTime: '',
@@ -74,7 +74,7 @@ async function handler(ctx) {
             title: item.docTitle,
             author: item.docAuthor,
             link,
-            pubDate: timezone(parseDate(item.operTime), 8),
+            pubDate: parseDate(item.operTime, 8),
             enclosure_url: link,
             enclosure_type: `application/${link.split('.').pop()}`,
         };

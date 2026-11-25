@@ -27,7 +27,7 @@ export default {
         clients.redisClient.on('end', () => {
             status.available = false;
         });
-        clients.redisClient.on('connect', () => {
+        clients.redisClient.on('ready', () => {
             status.available = true;
             logger.info('Redis connected.');
         });
@@ -35,18 +35,18 @@ export default {
     get: async (key: string, refresh = true) => {
         if (key && status.available && clients.redisClient) {
             const cacheTtlKey = getCacheTtlKey(key);
-            let [value, cacheTtl] = await clients.redisClient.mget(key, cacheTtlKey);
+            const [value, cacheTtlValue] = await clients.redisClient.mget(key, cacheTtlKey);
+            let cacheTtl = cacheTtlValue;
             if (value && refresh) {
                 if (cacheTtl) {
-                    clients.redisClient.expire(cacheTtlKey, cacheTtl);
+                    await clients.redisClient.expire(cacheTtlKey, cacheTtl);
                 } else {
                     // if cacheTtl is not set, that means the cache expire time is contentExpire
                     cacheTtl = config.cache.contentExpire + '';
                     // dont save cacheTtl to Redis, as it is the default value
                     // redisClient.set(cacheTtlKey, cacheTtl, 'EX', cacheTtl);
                 }
-                clients.redisClient.expire(key, cacheTtl);
-                value += '';
+                await clients.redisClient.expire(key, cacheTtl);
             }
             return value || '';
         }
@@ -59,18 +59,20 @@ export default {
         }
         return false;
     },
-    set: <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
+    set: async <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
         if (!status.available || !clients.redisClient) {
             return;
         }
         const stored = stringify(value);
-        if (key) {
-            if (maxAge !== config.cache.contentExpire) {
-                // intentionally store the cache ttl if it is not the default value
-                clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
-            }
-            return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
+        if (!key) {
+            return;
         }
+
+        if (maxAge !== config.cache.contentExpire) {
+            // intentionally store the cache ttl if it is not the default value
+            await clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
+        }
+        return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
     },
     clients,
     status,

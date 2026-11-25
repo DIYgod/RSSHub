@@ -1,14 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 /* 研究生院 */
 const host = 'https://yjszs.nudt.edu.cn';
+const collegeGot = got.extend({ allowH2: false });
 
 // 目前研究生院最近仍在更新的链接
 const yjszs = new Map([
@@ -66,43 +67,36 @@ async function handler(ctx) {
     }
     let link = `${host}/pubweb/homePageList`;
     link += keyId === '2' ? '/searchContent.view' : `/recruitStudents.view?keyId=${keyId}`;
-    const response = await got({
+    const response = await collegeGot({
         method: 'get',
         url: link,
     });
 
     const $ = load(response.data);
     const content = $('.news-list li');
-    const list = content.toArray().map((elem) => {
+    const list = content.toArray().map((elem): DataItem & { link: string } => {
         const $elem = $(elem);
         return {
             link: new URL($elem.find('a').attr('href')!, host).href,
             title: $elem.find('h3').text().trim(),
-            pubDate: timezone(parseDate($elem.find('.time').text(), 'YYYY-MM-DD'), -8),
+            pubDate: parseDate($elem.find('.time').text(), 'YYYY-MM-DD', 8),
         };
     });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`nudt:article:${item.link}`, async () => {
+                const detailResponse = await collegeGot({ method: 'get', url: item.link });
                 const content = load(detailResponse.data);
-
-                item.title = content('h1').text();
-                item.pubDate = timezone(parseDate(content('p.time').eq(0).text()), 8);
-
+                const pubDate = parseDate(content('p.time').first().text(), 8);
                 content('h1').remove();
                 content('div.time-browse').remove();
-
-                return {
-                    ...item,
-                    description: content('div.content').html(),
-                };
-            })
-        )
+                return { pubDate, description: content('div.content').html() };
+            });
+            return { ...item, ...article };
+        },
+        { concurrency: 3 }
     );
 
     return {

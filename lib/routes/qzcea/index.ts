@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:caty?',
@@ -32,28 +32,28 @@ async function handler(ctx: Context) {
     $('a.news-more').remove();
 
     const list = $('li.clearfix div.news-right a')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.next().text().replace('时间 ：', '')), 8),
+                pubDate: parseDate($item.next().text().replace('时间 ：', ''), 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`qzcea:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
-
-                item.description = content('div.newm').html()!;
-
-                return item;
-            })
-        )
+                return content('div.newm').html();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

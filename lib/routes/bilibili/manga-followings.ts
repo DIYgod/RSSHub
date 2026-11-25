@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -37,12 +38,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = String(ctx.req.param('uid'));
-    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
     const page_size = ctx.req.param('limits') || 10;
     const link = 'https://manga.bilibili.com/account-center';
     const response = await got({
@@ -65,7 +67,7 @@ async function handler(ctx) {
         item: comics.map((item) => ({
             title: `${item.title} ${item.latest_ep_short_title}`,
             description: `<img src='${item.vcover}'>`,
-            pubDate: new Date(item.last_ep_publish_time + ' +0800'),
+            pubDate: parseDate(item.last_ep_publish_time, 8),
             link: `https://manga.bilibili.com/detail/mc${item.comic_id}`,
         })),
     };

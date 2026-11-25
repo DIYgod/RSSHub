@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { html, raw } from 'hono/html';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -42,8 +43,9 @@ async function handler(ctx) {
 
     const items = posts.map((post) => ({
         title: post.title,
+        guid: post.postId,
         link: `https://book.qidian.com/info/${id}/`,
-        description: post.circleReviewDesc,
+        description: html`${raw(post.circleReviewDesc)}${post.postImage ? html`<img src="${post.postImage}" />` : ''}`.toString(),
         author: post.userName,
     }));
 

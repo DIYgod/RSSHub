@@ -1,7 +1,8 @@
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const nodes = {
     important_news: {
@@ -168,15 +169,22 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
 
     const type = nodes[category].type;
-    const rootUrl = 'http://www.bse.cn';
+    const rootUrl = 'https://www.bse.cn';
     const currentUrl = `${rootUrl}${type}.do`;
+
+    const challenge = await ofetch.raw(currentUrl, { method: 'POST', redirect: 'manual', ignoreResponseError: true });
+    const cookie = challenge.headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
 
     const response = await got({
         method: 'post',
         url: currentUrl,
+        headers: { cookie },
         form: {
             page: 0,
-            pageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50,
+            pageSize: getRouteLimit(ctx, 50),
             keywords: keyword,
             'nodeIds[]': type === '/info/listse' ? nodes[category].id : undefined,
             disclosureSubtype: type === '/info/listse' ? undefined : nodes[category].id,
@@ -194,7 +202,7 @@ async function handler(ctx) {
                 category: item.tags,
                 description: item.text,
                 link: `${rootUrl}${item.htmlUrl}`,
-                pubDate: timezone(parseDate(item.publishDate), 8),
+                pubDate: parseDate(item.publishDate, 8),
             }));
             break;
 

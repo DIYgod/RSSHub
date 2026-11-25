@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import { html } from 'hono/html';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const titles = {
     '5dd92265e4b0bf88dd8c1175': '热点',
@@ -93,32 +96,56 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    let items = response.data.stories.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
+    const limit = getRouteLimit(ctx, 50);
+    let items = response.data.stories.slice(0, Math.max(50, limit)).map((item) => ({
         title: item.title,
         author: item.author,
+        updated: parseDate(item.updated),
         link: item.jsonUrl,
         category: item.columnName,
         pubDate: parseDate(item.published),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    items = items.slice(0, limit);
+
+    items = await pMap(
+        items,
+        async (item: (typeof items)[number]) => {
+            const description = await cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
-                const content = load(detailResponse.data.content);
-
-                content('figure').last().remove();
-
-                item.description = content.html();
-                item.link = `${rootUrl}/content.html?jsonUrl=${item.link}`;
-
-                return item;
-            })
-        )
+                const data = detailResponse.data;
+                if (data.storyType === 'VIDEO') {
+                    const poster = data.coverImages[0].url;
+                    const summary = data.summary ? html`<p>${data.summary}</p>` : '';
+                    return String(html`<video controls preload="metadata" src="${data.mediaStream.url}" poster="${poster}"></video>${summary}`);
+                }
+                if (data.storyType === 'AUDIO') {
+                    const cover = html`<img src="${data.coverImages[0].url}" />`;
+                    const summary = data.summary ? html`<p>${data.summary}</p>` : '';
+                    return String(html`${cover}<audio controls preload="metadata" src="${data.mediaStream.url}"></audio>${summary}`);
+                }
+                if (data.storyType === 'HREF' && data.originUrl.startsWith('https://mp.weixin.qq.com/')) {
+                    const article = await got(data.originUrl);
+                    const $ = load(article.data);
+                    const main = $('#js_content');
+                    main.find('img[data-src]').each((_, image) => {
+                        $(image).attr('src', $(image).attr('data-src'));
+                    });
+                    return main.html() ?? undefined;
+                }
+                const content = load(data.content);
+                return content.html();
+            });
+            return { ...item, description, link: `${rootUrl}/content.html?jsonUrl=${item.link}` };
+        },
+        { concurrency: 3 }
     );
 
     return {

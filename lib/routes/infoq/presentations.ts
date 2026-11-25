@@ -1,21 +1,24 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { conference } = ctx.req.param();
     if (conference && !isValidHost(conference)) {
         throw new InvalidParameterError('Invalid conference');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
+    const limit = getRouteLimit(ctx, 12);
 
     const rootUrl = 'https://www.infoq.com';
     const currentUrl = new URL(`${conference ? `${conference}/` : ''}presentations/`, rootUrl).href;
@@ -34,7 +37,7 @@ export const handler = async (ctx) => {
 
             const a = $item.find('h3.card__title a');
 
-            const title = a.prop('title') || a.text().trim();
+            const title = a.prop('title') || a.text();
             const image = $item.find('img.card__image').prop('src');
             const description = renderDescription({
                 images: image
@@ -54,7 +57,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: parseDate($item.find('span.card__date span').text().trim()),
+                pubDate: parseDate($item.find('span.card__date span').text().trim(), 'MMM DD, YYYY', 0),
                 link,
                 category: $item
                     .find('div.card__topics')
@@ -63,7 +66,7 @@ export const handler = async (ctx) => {
                 author: $item
                     .find('div.card__authors a')
                     .toArray()
-                    .map((a) => $(a).text().trim())
+                    .map((a) => $(a).text())
                     .join('/'),
                 guid,
                 id: guid,
@@ -81,8 +84,9 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -94,9 +98,10 @@ export const handler = async (ctx) => {
                 const length = $$('div.player__actions span').text() || undefined;
 
                 const script = $$('script[type="text/javascript"]').text();
-                const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1] ?? undefined;
-                const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1] ?? undefined;
-                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replaceAll('\\', '') ?? undefined;
+                const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1];
+                const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1];
+                const topicsLiteral = script.match(/var\s+topicsInPage\s*=\s*JSON\.parse\(('(?:\\.|[^'\\])*')\)/)?.[1];
+                const topicsStr = topicsLiteral ? await evaluateScriptData<string>(`const topics = ${topicsLiteral};`, 'topics') : undefined;
 
                 if (videoSrc) {
                     $$('div.player').replaceWith(
@@ -112,11 +117,12 @@ export const handler = async (ctx) => {
                     );
                 }
 
-                const title = $$('meta[property="og:title"]').prop('content').trim();
+                const title = $$('meta[property="og:title"]').prop('content');
                 const image = $$('meta[property="twitter:image"]').prop('content') || $$('meta[property="og:image"]').prop('content');
 
                 item.title = title;
-                item.pubDate = parseDate($$('p.date').text());
+                const articleMetadata = JSON.parse($$('script[type="application/ld+json"]:contains("NewsArticle")').text());
+                item.pubDate = parseDate(articleMetadata.datePublished);
                 item.link = $$('meta[property="og:url"]').prop('content');
                 item.category = topicsStr ? JSON.parse(topicsStr).map((t) => t.name) : $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.author = $$('ul.authors a.author__link')
@@ -152,8 +158,8 @@ export const handler = async (ctx) => {
                 item.itunes_duration = length;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const title = $('title').text();
@@ -164,7 +170,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
         language,
@@ -195,12 +200,12 @@ If you subscribe to [InfoQ Live Jan 2024](https://www.infoq.com/infoq-live-jan-2
     },
     radar: [
         {
-            source: ['www.infoq.com/presentations', 'www.infoq.com/:conference/presentations'],
-            target: (params) => {
-                const conference = params.conference;
-
-                return `/presentations${conference ? `/${conference}` : ''}`;
-            },
+            source: ['www.infoq.com/presentations'],
+            target: '/presentations',
+        },
+        {
+            source: ['www.infoq.com/:conference/presentations'],
+            target: '/presentations/:conference',
         },
     ],
 };

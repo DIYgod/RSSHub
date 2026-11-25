@@ -1,5 +1,17 @@
+diff --git a/index.d.ts b/index.d.ts
+index 45b237a6cd1a9f07db9bc870f4b81a32b6c170db..d3dd5dd0a037de8d10c9ef2a4fdb675037e9e99c 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -15,6 +15,7 @@ declare namespace Parser {
+     readonly headers?: Record<string, string>;
+     readonly defaultRSS?: number;
+     readonly maxRedirects?: number;
++    readonly maxResponseSize?: number;
+     readonly customFields?: CustomFields<T, U>;
+     readonly timeout?: number;
+   }
 diff --git a/lib/parser.js b/lib/parser.js
-index 2852b5f9249a59adf8f51f3451181ac2c994bc54..e56d2c932b92424a0f43a77b57e575d90a634cc2 100644
+index 2852b5f9249a59adf8f51f3451181ac2c994bc54..11c2ee0de92ebd4e792cf1097a3ad49afe5b7b77 100644
 --- a/lib/parser.js
 +++ b/lib/parser.js
 @@ -3,6 +3,7 @@ const http = require('http');
@@ -10,7 +22,7 @@ index 2852b5f9249a59adf8f51f3451181ac2c994bc54..e56d2c932b92424a0f43a77b57e575d9
  
  const fields = require('./fields');
  const utils = require('./utils');
-@@ -88,14 +89,43 @@ class Parser {
+@@ -88,14 +89,53 @@ class Parser {
            return reject(new Error("Status code " + res.statusCode))
          }
          let encoding = utils.getEncodingFromContentType(res.headers['content-type']);
@@ -20,8 +32,6 @@ index 2852b5f9249a59adf8f51f3451181ac2c994bc54..e56d2c932b92424a0f43a77b57e575d9
 -        });
 -        res.on('end', () => {
 -          return this.parseString(xml).then(resolve, reject);
--        });
--      })
 +        const contentEncoding = (res.headers['content-encoding'] || '').toLowerCase();
 +        let decompressStream;
 +        switch (contentEncoding) {
@@ -40,6 +50,17 @@ index 2852b5f9249a59adf8f51f3451181ac2c994bc54..e56d2c932b92424a0f43a77b57e575d9
 +            }
 +            break;
 +        }
++        const body = decompressStream || res;
++        let size = 0;
++        body.on('data', (chunk) => {
++          size += Buffer.byteLength(chunk);
++          if (this.options.maxResponseSize && size > this.options.maxResponseSize) {
++            body.destroy();
++            req.destroy();
++            reject(new Error("Response body is larger than " + this.options.maxResponseSize + " bytes"));
++          }
+         });
+-      })
 +        if (decompressStream) {
 +          const chunks = [];
 +          decompressStream.on('data', (chunk) => chunks.push(chunk));

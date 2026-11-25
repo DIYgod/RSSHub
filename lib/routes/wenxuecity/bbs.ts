@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bbs/:cat/:elite?',
@@ -26,27 +27,26 @@ export const route: Route = {
     maintainers: ['changlan'],
     handler,
 };
-
 async function handler(ctx: Context) {
     const { cat, elite = 0 } = ctx.req.param();
     const baseUrl = `https://bbs.wenxuecity.com/${cat}/?elite=${elite}`;
     const response = await ofetch(baseUrl);
     const $ = load(response);
     const list = $('div.odd,div.even')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a.post').text(),
+                title: $item.find('a.post').first().text(),
                 link: new URL($item.find('a.post').attr('href')!, baseUrl).href,
-                author: $item.find('span.b > a.b').text(),
+                author: $item.find('span.b > a.b').first().text(),
             };
         });
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const out = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wenxuecity:article:${item.link}`, async () => {
                 const result = await ofetch(item.link, {
                     headers: {
                         Referer: baseUrl,
@@ -54,16 +54,15 @@ async function handler(ctx: Context) {
                 });
                 const content = load(result);
                 return {
-                    ...item,
-                    description: content('div#content').html(),
+                    description: content('#msgbodyContent').html(),
                     pubDate: parseDate(content('span.date').text()),
                 };
-            })
-        )
+            });
+            return { ...item, description: detail.description, pubDate: detail.pubDate };
+        },
+        { concurrency: 3 }
     );
-
     return {
-        allowEmpty: true,
         title: $('title').text(),
         link: baseUrl,
         item: out,

@@ -16,16 +16,18 @@ interface Logger {
 }
 
 const formatMessage = (level: string, message: string): string => {
-    const timestamp = new Date().toISOString();
+    const timestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
     return `[${timestamp}] ${level}: ${message}`;
 };
 
 // Match Winston's default npm logging levels.
-const levels: Record<string, number> = { error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6 };
+const levels = { error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6 };
+
+const isLevel = (level: string): level is keyof typeof levels => Object.hasOwn(levels, level);
 
 const writeLog = (level: string, method: 'error' | 'warn' | 'info' | 'debug' | 'log', message: string, ...meta: unknown[]) => {
     // Read config when logging so importing the logger does not depend on config initialization order.
-    if (!Object.hasOwn(levels, level) || !Object.hasOwn(levels, config.loggerLevel) || levels[level] > levels[config.loggerLevel]) {
+    if (!isLevel(level) || !isLevel(config.loggerLevel) || levels[level] > levels[config.loggerLevel]) {
         return;
     }
     // eslint-disable-next-line no-console

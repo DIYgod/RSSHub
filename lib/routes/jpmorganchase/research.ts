@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const base = 'https://www.jpmorganchase.com';
 const frontPageUrl = `${base}/institute/all-topics`;
@@ -69,7 +70,7 @@ async function fetchIndexEntires(): Promise<IndexEntry[]> {
 }
 
 function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
-    const url = `${base}${entry.link}`;
+    const url = new URL(entry.link, base).href;
 
     return cache.tryGet(url, async () => {
         let authors: string[] = [];
@@ -95,14 +96,14 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
             title: entry.title,
             description,
             link: url,
-            pubDate: parseDate(articleDate),
+            pubDate: parseDate(articleDate, 'MMMM D, YYYY'),
         } satisfies DataItem;
     });
 }
 
 async function handler(): Promise<Data> {
     const entires = await fetchIndexEntires();
-    const items = await Promise.all(entires.map((it) => fetchDataItem(it)));
+    const items = await pMap(entires, fetchDataItem, { concurrency: 3 });
 
     return {
         title: 'All Topics - JPMorganChase Institute',

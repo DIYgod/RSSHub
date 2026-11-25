@@ -1,14 +1,19 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/announce/:owner?/:province?/:office?',
     categories: ['government'],
     example: '/dol/announce',
-    parameters: { owner: 'Requester/former land owner', province: 'Province which the land is belongs to', office: 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])' },
+    parameters: {
+        owner: 'Requester/former land owner. Use _ to omit it when selecting a province or office.',
+        province: 'Province which the land belongs to. Use _ to omit it when selecting an office.',
+        office: 'DOL office name which the land belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -23,8 +28,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const baseUrl = 'https://announce.dol.go.th';
-    const { owner, province, office } = ctx.req.param();
+    const baseUrl = 'http://announce.dol.go.th';
+    const { owner: ownerParam, province: provinceParam, office: officeParam } = ctx.req.param();
+    const owner = ownerParam === '_' ? undefined : ownerParam;
+    const province = provinceParam === '_' ? undefined : provinceParam;
+    const office = officeParam === '_' ? undefined : officeParam;
     const queryParams = {
         searchprovince: '',
         searchoffice: '',
@@ -35,6 +43,7 @@ async function handler(ctx) {
     const result: Data = {
         title: `ประกาศสำนักงานที่ดิน${province ? 'จังหวัด' + province + ' ' : ''}${office ? 'สำนักงานที่ดิน' + office : ''}${owner ? 'ชื่อผู้ถือกรรมสิทธิ/ผู้ขอ ' + owner : ''}`,
         link: `${baseUrl}/index.php`,
+        language: 'th',
         item: [],
     };
 
@@ -44,20 +53,20 @@ async function handler(ctx) {
         const $ = load(response);
 
         if (province) {
-            const slcProvince = $(`select#searchprovince option:contains('${province}')`);
+            const slcProvince = $('select#searchprovince option').filter((_, option) => $(option).text().includes(province));
 
             if (!slcProvince.length) {
-                return result;
+                throw new InvalidParameterError(`Unknown province: ${province}. Use a province name listed on ${baseUrl}/index.php.`);
             }
 
             queryParams.searchprovince = slcProvince.attr('value')!;
         }
 
         if (office) {
-            const slcOffice = $(`select#searchoffice option:contains('${office}')`);
+            const slcOffice = $('select#searchoffice option').filter((_, option) => $(option).text().includes(office));
 
             if (!slcOffice.length) {
-                return result;
+                throw new InvalidParameterError(`Unknown office: ${office}. Use a land office name listed on ${baseUrl}/index.php.`);
             }
 
             queryParams.searchoffice = slcOffice.attr('value')!;
@@ -88,15 +97,7 @@ async function handler(ctx) {
                     ประกาศ ณ วันที่ ${anceBegDate.text()}
                 `,
                 link: `${baseUrl}/${anceFile.find('a').attr('href')}`,
-                pubDate: timezone(
-                    new Date(
-                        // The date is in Buddish year
-                        Number.parseInt(dateList[2]) - 543,
-                        Number.parseInt(dateList[1]) - 1,
-                        Number.parseInt(dateList[0])
-                    ),
-                    7
-                ),
+                pubDate: calendarToInstant({ calendar: 'buddhist', year: dateList[2], month: dateList[1], day: dateList[0] }, 7),
                 author: officeName.text(),
                 category: [reqType.text()],
             };

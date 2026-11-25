@@ -1,15 +1,16 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index',
     categories: ['new-media'],
     example: '/digitaling/index',
-    name: '数英网最新文章',
+    name: '最新文章',
     maintainers: ['occupy5'],
     handler,
 };
@@ -24,8 +25,9 @@ async function handler() {
         .toArray()
         .map((e) => $(e).attr('href')!);
 
-    const out = await Promise.all(
-        list.map((itemUrl) =>
+    const out = await pMap(
+        list,
+        (itemUrl) =>
             cache.tryGet(itemUrl, async () => {
                 const res = await ofetch(itemUrl);
                 const $ = load(res);
@@ -35,10 +37,10 @@ async function handler() {
                     author: $('#avatar_by').parent().find('h3 a').text(),
                     link: itemUrl,
                     description: $('#article_con').html(),
-                    pubDate: parseDate($('#edit_url').parent().children().last().text()),
+                    pubDate: parseDate($('#edit_url').parent().children().last().text(), 8),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

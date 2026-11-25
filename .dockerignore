@@ -1,7 +1,6 @@
 # folders
 .devcontainer
 .github
-.husky
 .idea
 .idx
 .vscode

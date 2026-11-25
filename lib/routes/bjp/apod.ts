@@ -4,8 +4,8 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/apod',
@@ -23,13 +23,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
+            source: ['www.bjp.org.cn/APOD/:id.shtml', 'www.bjp.org.cn/'],
+            target: '/apod',
         },
     ],
     name: '每日一图',
     maintainers: ['HenryQW'],
     handler,
-    url: 'bjp.org.cn/APOD/today.shtml',
+    url: 'www.bjp.org.cn/APOD/list.shtml',
 };
 
 async function handler(ctx) {
@@ -47,11 +48,11 @@ async function handler(ctx) {
             return {
                 title: $e.find('a').attr('title')!,
                 link: `${baseUrl}${$e.find('a').attr('href')}`,
-                pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD', 8),
             };
         })
-        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
+        .slice(0, getRouteLimit(ctx, 10));
 
     const items = await Promise.all(
         list.map((e) =>
@@ -59,7 +60,12 @@ async function handler(ctx) {
                 const { data } = await got.get(e.link);
                 const $ = load(data);
 
-                e.description = $('.juzhong').html();
+                const content = $('.juzhong');
+                content
+                    .find('p')
+                    .filter((_, paragraph) => $(paragraph).text() === e.title)
+                    .remove();
+                e.description = content.html();
 
                 return e;
             })

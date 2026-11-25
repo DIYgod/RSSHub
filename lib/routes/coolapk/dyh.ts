@@ -45,7 +45,7 @@ async function handler(ctx) {
     const data = response.data.data;
 
     let out = await Promise.all(
-        data.map((item) => {
+        utils.selectDynamics(data).map((item) => {
             if (!targetTitle) {
                 targetTitle = item.targetRow.title;
             }

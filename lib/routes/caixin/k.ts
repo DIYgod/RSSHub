@@ -1,10 +1,15 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/k',
     categories: ['traditional-media'],
+    radar: [
+        {
+            source: ['k.caixin.com/web', 'k.caixin.com/'],
+        },
+    ],
     example: '/caixin/k',
     parameters: {},
     features: {

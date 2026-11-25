@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/soft/:atype',
@@ -21,7 +21,8 @@ export const route: Route = {
     name: '资料',
     radar: [
         {
-            source: ['www.elecfans.com'],
+            source: ['www.elecfans.com/soft/:atype'],
+            target: '/soft/:atype',
         },
     ],
     maintainers: ['tian051011'],

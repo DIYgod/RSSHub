@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/links/:name',
@@ -60,7 +60,6 @@ async function handler(ctx) {
         title: `${name} - Curius`,
         link: `https://curius.app/${username}`,
         description: `${name} - Curius`,
-        allowEmpty: true,
         item: items,
     };
 }

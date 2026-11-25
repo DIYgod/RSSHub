@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/lm/:id?',
@@ -21,8 +21,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.cctv.com/:category'],
-            target: '/:category',
+            source: ['tv.cctv.com/lm/:id', 'tv.cctv.com/lm/:id/*'],
+            target: '/lm/:id',
+        },
+        {
+            source: ['tv.cctv.com/lm'],
+            target: '/lm',
         },
     ],
     name: '栏目',
@@ -65,12 +69,12 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const list = response.data.data.list.map((item) => ({
+    const list = response.data.data.list.slice(0, getRouteLimit(ctx)).map((item) => ({
         url: item.url,
         guid: item.guid,
         image: item.image,
         title: item.title,
-        pubDate: timezone(parseDate(item.time), 8),
+        pubDate: parseDate(item.time, 8),
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));

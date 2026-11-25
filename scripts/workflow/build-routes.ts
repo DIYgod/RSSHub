@@ -40,25 +40,10 @@ const allRoutePaths = new Set<string>();
 // Use all namespaces for both regular and Worker builds.
 for (const namespace in namespaces) {
     const namespaceData = namespaces[namespace];
-    let defaultCategory = namespaceData.categories?.[0];
-    if (!defaultCategory) {
-        for (const path in namespaceData.routes) {
-            if (!namespaceData.routes[path].categories) {
-                continue;
-            }
-
-            defaultCategory = namespaceData.routes[path].categories[0];
-            break;
-        }
-    }
-    if (!defaultCategory) {
-        defaultCategory = 'other';
-    }
     for (const path in namespaceData.routes) {
         const realPath = `/${namespace}${path}`;
         allRoutePaths.add(realPath);
         const data = namespaceData.routes[path];
-        const categories = data.categories || namespaceData.categories || [defaultCategory];
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
@@ -69,25 +54,26 @@ for (const namespace in namespaces) {
                 const parsedDomain = parse(new URL('https://' + radarItem.source[0]).hostname);
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
-                if (domain) {
-                    if (!Object.hasOwn(radar, domain)) {
-                        radar[domain] = {
-                            _name: namespaceData.name,
-                        };
-                    }
-                    if (!Object.hasOwn(radar[domain], subdomain)) {
-                        radar[domain][subdomain] = [];
-                    }
-                    radar[domain][subdomain].push({
-                        title: radarItem.title || data.name,
-                        docs: `https://docs.rsshub.app/routes/${categories[0]}`,
-                        source: radarItem.source.map((source) => {
-                            const sourceURL = new URL('https://' + source);
-                            return sourceURL.pathname + sourceURL.search + sourceURL.hash;
-                        }),
-                        target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
-                    });
+                if (!domain) {
+                    continue;
                 }
+                if (!Object.hasOwn(radar, domain)) {
+                    radar[domain] = {
+                        _name: namespaceData.name,
+                    };
+                }
+                if (!Object.hasOwn(radar[domain], subdomain)) {
+                    radar[domain][subdomain] = [];
+                }
+                radar[domain][subdomain].push({
+                    title: radarItem.title || data.name,
+                    docs: `https://docs.rsshub.app/routes/${namespace}`,
+                    source: radarItem.source.map((source) => {
+                        const sourceURL = new URL('https://' + source);
+                        return sourceURL.pathname + sourceURL.search + sourceURL.hash;
+                    }),
+                    target: typeof radarItem.target === 'string' && radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
+                });
             }
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;

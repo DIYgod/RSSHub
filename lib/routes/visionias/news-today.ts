@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
+import pMap from 'p-map';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
@@ -38,24 +38,24 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
 };
-
 async function handler(ctx): Promise<Data> {
     const filter = ctx.req.param('filter') ?? 'latest';
-    const currentYear = dayjs().year();
-    const currentMonth = dayjs().month() + 1;
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const currentYear = now.year;
+    const currentMonth = now.month;
     logger.debug(`Getting news for month ${currentMonth} and year ${currentYear}`);
-    const response = await ofetch(`${baseUrl}/current-affairs/news-today/getbymonth?year=${currentYear}&month=${currentMonth}`);
-
-    let items: any = [];
-    // let title = 'News Today';
-
+    const response = await ofetch<
+        Array<{
+            url: string;
+        }>
+    >(`${baseUrl}/current-affairs/news-today/getbymonth?year=${currentYear}&month=${currentMonth}`);
+    let items: DataItem[] = [];
     if (response.length !== 0) {
         if (filter === 'latest') {
             const currentUrl = response[0].url;
-            // title = response[0].formatted_published_at;
             items = await processCurrentNews(currentUrl);
         } else {
-            const results = await Promise.all(response.map((element) => processCurrentNews(element.url)));
+            const results = await pMap(response, (element) => processCurrentNews(element.url), { concurrency: 1, stopOnError: false });
             items.push(...results.flat());
         }
     }
@@ -68,24 +68,14 @@ async function handler(ctx): Promise<Data> {
         image: `${baseUrl}/current-affairs/images/news-today-logo.svg`,
         icon: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
         logo: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
-        allowEmpty: true,
     };
 }
-
-async function processCurrentNews(currentUrl) {
-    const response = await ofetch(`${baseUrl}${currentUrl}`);
+async function processCurrentNews(currentUrl: string) {
+    const response = await ofetch(new URL(currentUrl, baseUrl).href);
     const $ = load(response);
-    const items = $('#table-of-content > ul > li > a')
+    const links = $('#table-of-content > ul > li > a')
         .toArray()
-        .map((item) => {
-            const link = $(item).attr('href');
-            const title = $(item).children('span').remove().end().text().trim();
-            return {
-                title,
-                link: title === 'Also in News' ? link : `${baseUrl}${link}`,
-                guid: link,
-            };
-        });
-    const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
-    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
+        .map((item) => new URL(item.attribs.href, baseUrl).href);
+    const news = await pMap(links, (link) => extractNews(link), { concurrency: 3, stopOnError: false });
+    return news.flat();
 }

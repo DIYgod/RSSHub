@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/scit/:type',
@@ -32,6 +32,9 @@ async function handler(ctx) {
         tzgg: ['https://scit.nju.edu.cn/10916/list.htm', '通知公告'],
         kydt: ['https://scit.nju.edu.cn/11003/list.htm', '科研动态'],
     };
+    if (!Object.hasOwn(type_dict, type)) {
+        throw new InvalidParameterError('Unsupported type. Use tzgg or kydt.');
+    }
     const response = await got({
         method: 'get',
         url: type_dict[type][0],
@@ -50,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title')!,
                 link: 'https://scit.nju.edu.cn' + $item.find('a').attr('href'),
-                pubDate: timezone(parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD', 8),
             };
         }),
     };

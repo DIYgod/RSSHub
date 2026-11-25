@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import { fetchHacktivityEdges, parseItem } from './utils';
+import { fetchHacktivityEdges, parseItems } from './utils';
 
 export const route: Route = {
     path: '/hacktivity',
@@ -22,6 +22,6 @@ async function handler() {
     return {
         title: 'HackerOne Hacker Activity',
         link: 'https://hackerone.com/hacktivity',
-        item: edges.map((item) => parseItem(item)),
+        item: await parseItems(edges),
     };
 }

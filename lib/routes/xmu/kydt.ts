@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/kydt',
@@ -26,6 +28,12 @@ export const route: Route = {
     handler,
 };
 
+async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'description'>> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return { description: $('.v_news_content').html() };
+}
+
 async function handler() {
     const host = 'https://soe.xmu.edu.cn/kxyj/kydt.htm';
     const response = await ofetch(host);
@@ -43,25 +51,20 @@ async function handler() {
             return {
                 title,
                 link: fullUrl,
-                pubDate: time,
+                pubDate: parseDate(time, 'YYYY.MM.DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
-                const $ = load(response);
-
-                item.description = $('.v_news_content').html();
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, () => fetchArticleContent(item.link!));
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        allowEmpty: true,
         title: '厦门大学经济学院科研动态',
         link: host,
         item: items,

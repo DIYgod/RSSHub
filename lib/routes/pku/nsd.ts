@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { finishArticleItem } from '@/utils/wechat-mp';
+import { parseDate } from '@/utils/time';
+import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://nsd.pku.edu.cn/sylm/gd/';
 
@@ -56,36 +57,35 @@ async function handler() {
             const href = $(item).find('a').attr('href');
             const type = pageType(href);
             return {
-                title: $(item).find('a').text().trim(),
+                title: $(item).find('a').text(),
                 link: type === 'in-site' ? baseUrl + href : href,
-                pubDate: parseDate($(item).find('span').first().text(), 'YYYY-MM-DD'),
+                pubDate: parseDate(`${$(item).find('span').text()}T00:00:00Z`),
                 type,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             switch (item.type) {
                 case 'wechat-mp':
-                    return finishArticleItem(item);
+                    try {
+                        return await finishArticleItem(item);
+                    } catch (error) {
+                        if (error instanceof WeChatMpError && error.message.startsWith('wechat-mp: request blocked by WAF:')) {
+                            return item;
+                        }
+                        throw error;
+                    }
                 case 'pku-news':
-                    return cache.tryGet(item.link!, async () => {
-                        const detailResponse = await got(item.link);
-                        const content = load(detailResponse.data);
-                        item.description = content('div.pageArticle > div.col.lf').html();
-                        return item;
-                    });
+                    return getArticle(item, 'div.pageArticle > div.col.lf');
                 case 'in-site':
-                    return cache.tryGet(item.link!, async () => {
-                        const detailResponse = await got(item.link);
-                        const content = load(detailResponse.data);
-                        item.description = content('div.article').html();
-                        return item;
-                    });
+                    return getArticle(item, 'div.article');
                 default:
                     return item;
             }
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -93,4 +93,25 @@ async function handler() {
         link: baseUrl,
         item: items,
     };
+}
+
+async function getArticle(item: DataItem, selector: string) {
+    const article = await cache.tryGet(`pku:nsd:article:v6:${item.link}`, async () => {
+        const response = await got(item.link!);
+        const $ = load(response.data);
+        const content = $(selector);
+        if (selector !== 'div.article') {
+            return { description: content.html() };
+        }
+        const publishedAt = content
+            .children('h5')
+            .text()
+            .match(/发布日期：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)![1];
+        return {
+            title: content.children('.article-title').text(),
+            description: content.children('.article-section').html(),
+            pubDate: parseDate(`${publishedAt.replace(' ', 'T')}+08:00`),
+        };
+    });
+    return { ...item, ...article };
 }

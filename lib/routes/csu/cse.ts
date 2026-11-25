@@ -3,15 +3,21 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 async function fetch(address) {
     const res = await got(address);
     const $ = load(res.data);
+    const pubDate = $('.details-time')
+        .text()
+        .match(/时间：(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/)?.[1];
+    const content = $('[name="_newscontent_fromname"]');
+    content.children('h1, .details-time').remove();
     return {
-        description: $('[name="_newscontent_fromname"]').html(),
+        description: content.html(),
         link: address,
         guid: address,
+        pubDate: pubDate ? parseDate(pubDate, 'YYYY年MM月DD日 HH:mm', 8) : undefined,
     };
 }
 
@@ -54,7 +60,7 @@ async function handler(ctx) {
                 const single: DataItem = {
                     ...fetched,
                     title,
-                    pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
+                    pubDate: fetched.pubDate ?? parseDate(pubDate, 'YYYY-MM-DD', 8),
                 };
                 return single;
             });

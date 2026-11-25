@@ -1,10 +1,12 @@
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://job.xjtu.edu.cn';
 const arr = {
@@ -15,7 +17,20 @@ const arr = {
     cxcy: '创新创业',
     jysx: '就业实习',
 };
-
+interface Article {
+    id: string;
+    title: string;
+    url: string;
+    releaseDate: string;
+    updateDate: string;
+    publisher: string;
+    category: {
+        name: string;
+    };
+    articleData: {
+        content: string;
+    };
+}
 export const route: Route = {
     path: '/job/:subpath?',
     categories: ['university'],
@@ -38,59 +53,84 @@ export const route: Route = {
 | -------- | ------ | -------- | -------- | -------- | -------- |
 | zxgg     | xds    | zddw     | gjzz     | cxcy     | jysx     |`,
 };
-
 async function handler(ctx) {
     const subpath = ctx.req.param('subpath') ?? 'zxgg';
-    const getTzgg = await got.post(`${baseUrl}/xsfw/sys/jyxtgktapp/modules/jywzManage/getTzgg.do`, {
-        form: {
-            requestParamStr: '{"pageSize":7,"pageNumber":1}',
-        },
+    if (!Object.hasOwn(arr, subpath)) {
+        throw new InvalidParameterError('Unknown employment category. Please use zxgg, xds, zddw, gjzz, cxcy, or jysx.');
+    }
+    const sourceContent1 = await ofetch(baseUrl);
+    const $ = load(sourceContent1);
+    const categoryTemplate = load($(`script#${subpath}`).text());
+    const categoryHref = categoryTemplate('a.more_btn').attr('href');
+    if (!categoryHref) {
+        throw new Error('The employment website did not provide a public category link. Please check whether the source has changed.');
+    }
+    const listUrl = new URL(categoryHref, baseUrl);
+    const categoryId = listUrl.searchParams.get('id');
+    if (!categoryId) {
+        throw new Error('The employment website did not provide a category ID. Please check whether the source has changed.');
+    }
+    const response = await ofetch<{
+        state: number;
+        object?: Article[][];
+    }>(`${baseUrl}/f/ajaxHome/ajax_cmsListByIds`, {
+        method: 'POST',
+        body: new URLSearchParams({ categoryIds: `${categoryId},`, number: '4' }),
     });
-
-    const menuid = getTzgg.data.data.find((item) => item.menutitle === arr[subpath]).menuid;
-    const { data } = await got.post(`${baseUrl}/xsfw/sys/jyxtgktapp/modules/jywzManage/getMhcxWzData.do`, {
-        form: {
-            requestParamStr: `{"pageSize":4,"pageNumber":1,"LMDM":${menuid}}`,
-        },
-    });
-    const list = data.data.map((item) => ({
-        title: item.menutitle,
-        description: item.NR,
-        pubDate: timezone(parseDate(item.SBSJ), 8),
-        guid: item.menuid,
-        link: `${baseUrl}/xsfw/sys/emaphome/website/template/detail.html?menuid=${item.menuid}&msg=TZGG&msgChild=NRXQ`,
-    }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got.post(`${baseUrl}/xsfw/sys/jyxtgktapp/modules/jywzManage/getWzone.do`, {
-                    form: {
-                        requestParamStr: `{"WID":${item.guid}}`,
-                    },
-                });
-
-                let attachments = '';
-                if (response.data.data[0].FJ) {
-                    const attachmentData = await got(`${baseUrl}/xsfw/sys/emapcomponent/file/getUploadedAttachment.do?fileToken=${response.data.data[0].FJ}`);
-                    attachments = renderToString(<XjtuAttachments items={attachmentData.data.items} />);
-                }
-
-                item.author = response.data.data[0].CZZXM;
-                item.description = response.data.data[0].NR + attachments;
+    const list = response.object?.[0];
+    if (response.state !== 1 || !Array.isArray(list)) {
+        throw new Error('The employment website did not return a public article list. Please retry later.');
+    }
+    const items = await pMap(
+        list,
+        async (article) => {
+            const item: DataItem & {
+                link: string;
+            } = {
+                title: article.title,
+                link: new URL(article.url, baseUrl).href,
+                pubDate: parseDate(article.releaseDate, 8),
+                updated: parseDate(article.updateDate, 8),
+                author: article.publisher,
+                category: [article.category.name],
+            };
+            if (!item.link.startsWith(`${baseUrl}/`)) {
                 return item;
-            })
-        )
+            }
+            const detail = await cache.tryGet(`xjtu:job:content:v1:${item.link}`, async () => {
+                const detail = await ofetch<{
+                    object: {
+                        article: Article;
+                        fileMap?: Array<{
+                            fileUrl: string;
+                            fileName: string;
+                        }>;
+                    };
+                }>(`${baseUrl}/f/newsCenter/ajax_view`, {
+                    query: { id: article.id },
+                });
+                const content = detail.object.article.articleData.content;
+                const attachments = detail.object.fileMap?.map((file) => ({ fileUrl: new URL(file.fileUrl, baseUrl).href, name: file.fileName })) ?? [];
+                return { description: content + renderToString(<XjtuAttachments items={attachments} />) };
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     return {
         title: `西安交通大学学生就业创业信息网 - ${arr[subpath]}`,
-        link: baseUrl,
+        link: listUrl.href,
         item: items,
     };
 }
-
-const XjtuAttachments = ({ items }: { items: Array<{ fileUrl: string; name: string }> }) => (
+const XjtuAttachments = ({
+    items,
+}: {
+    items: Array<{
+        fileUrl: string;
+        name: string;
+    }>;
+}) => (
     <>
         {items.map((item) => (
             <>

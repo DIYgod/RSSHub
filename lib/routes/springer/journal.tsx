@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/journal/:journal',
@@ -13,14 +14,19 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['www.springer.com/journal/:journal/*'],
+            source: ['www.springer.com/journal/:journal', 'www.springer.com/journal/:journal/*'],
+            target: '/journal/:journal',
+        },
+        {
+            source: ['link.springer.com/journal/:journal', 'link.springer.com/journal/:journal/*'],
+            target: '/journal/:journal',
         },
     ],
     name: 'Journal',
@@ -33,118 +39,87 @@ async function handler(ctx) {
     const journal = ctx.req.param('journal');
     const jrnlUrl = `${host}/journal/${journal}/volumes-and-issues`;
 
-    const authorizeResponse = await ofetch.raw('https://idp.springer.com/authorize', {
-        query: {
-            response_type: 'cookie',
-            client_id: 'springerlink',
-            redirect_uri: jrnlUrl,
-        },
-        redirect: 'manual',
-    });
-    const authorizeCookie = authorizeResponse.headers
-        .getSetCookie()
-        .map((c) => c.split(';', 1)[0])
-        .join('; ');
-
-    await ofetch(authorizeResponse.headers.get('location')!, {
-        headers: {
-            cookie: authorizeCookie,
-        },
-        redirect: 'manual',
-    });
-
-    const response = await ofetch(jrnlUrl, {
-        headers: {
-            cookie: authorizeCookie,
-        },
-    });
+    const cookies = new Map<string, string>();
+    const response = await getHtml(jrnlUrl, cookies);
     const $ = load(response);
     const jrnlName = $('span.app-journal-masthead__title').text().trim();
-    const issueUrl = `${host}${$('li.c-list-group__item:first-of-type').find('a').attr('href')}`;
+    const issuePath = $('li.c-list-group__item a[href]').attr('href');
+    if (!issuePath) {
+        throw new Error('Springer returned no issues for this journal. Verify its journal code and public volumes page.');
+    }
+    const issueUrl = new URL(issuePath, host).href;
 
-    const response2 = await ofetch(issueUrl, {
-        headers: {
-            cookie: authorizeCookie,
-        },
-    });
+    const response2 = await getHtml(issueUrl, cookies);
     const $2 = load(response2);
-    const issue = $2('h2.app-journal-latest-issue__heading').text();
-    const list = $2('ol.u-list-reset > li')
+    const list = $2('main .app-card-open__heading a[href]')
         .toArray()
-        .map((item): DataItem & { doi: string; issue: string; img?: string; authors: string; abstract?: string } => {
-            const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
-            const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
-            const doi = link!.replace('https://link.springer.com/article/', '');
-            const img = $(item).find('img').attr('src');
-            const authors = $(item)
-                .find('li')
-                .toArray()
-                .map((item) => $(item).text().trim())
-                .join('; ');
+        .map((item): DataItem & { link: string } => {
+            const link = new URL($2(item).attr('href')!, host).href;
             return {
-                title,
-                link: link!.startsWith('http') ? link : `${host}${link}`,
-                doi,
-                issue,
-                img,
-                authors,
+                title: $2(item).text(),
+                link,
+                doi: new URL(link).pathname.replace('/article/', ''),
             };
         });
 
-    const renderDesc = (item) =>
-        renderToString(
-            <>
-                <p>
-                    <span>
-                        <big>{item.title}</big>
-                    </span>
-                    <br />
-                </p>
-                <p>
-                    <span>
-                        <small>
-                            <i>{item.authors}</i>
-                        </small>
-                    </span>
-                    <br />
-                    <span>
-                        <small>
-                            <i>https://doi.org/{item.doi}</i>
-                        </small>
-                    </span>
-                    <br />
-                    <span>
-                        <small>
-                            <i>{item.issue}</i>
-                        </small>
-                    </span>
-                    <br />
-                    <img src={item.img} />
-                </p>
-                <p>
-                    <span>{item.abstract}</span>
-                    <br />
-                </p>
-            </>
-        );
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response3 = await ofetch(item.link!, {
-                    headers: {
-                        cookie: authorizeCookie,
-                    },
-                });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`springer:article:v3:${item.link}`, async () => {
+                const response3 = await getHtml(item.link, cookies);
                 const $3 = load(response3);
-                item.abstract = $3('div#Abs1-content > p:first-of-type').text();
-                item.description = renderDesc(item);
-                return item;
-            })
-        )
+                const publicationDate = $3('meta[name="dc.date"]').attr('content');
+                return {
+                    description: $3(
+                        '#Abs1-section, .main-content > section[data-title], section[aria-labelledby="Bib1"], .c-article-body > section[data-title="Data availability"], .c-article-body > section[data-title="Abbreviations"], .c-article-body > section[data-title="Acknowledgements"], .c-article-body > section[data-title="Funding"], .c-article-body > section[data-title="Ethics declarations"], .c-article-body > section[data-title="Supplementary Information"], .c-article-body > section[data-title="Supplementary information"]'
+                    )
+                        .toArray()
+                        .map((section) => $3.html(section))
+                        .join(''),
+                    pubDate: publicationDate ? parseDate(publicationDate, 0) : undefined,
+                    author: $3('meta[name="citation_author"]')
+                        .toArray()
+                        .map((author) => $3(author).attr('content'))
+                        .filter(Boolean)
+                        .join(', '),
+                    category: $3('.c-article-subject-list li')
+                        .toArray()
+                        .map((subject) => $3(subject).text().trim())
+                        .filter(Boolean),
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3, stopOnError: false }
     );
     return {
         title: jrnlName,
         link: jrnlUrl,
         item: items,
     };
+}
+
+async function getHtml(url: string, cookies: Map<string, string>, redirects = 0): Promise<string> {
+    const response = await ofetch.raw<string, 'text'>(url, {
+        headers: { cookie: [...cookies].map(([name, value]) => `${name}=${value}`).join('; ') },
+        redirect: 'manual',
+        responseType: 'text',
+        minVersion: 'TLSv1.3',
+    });
+    for (const cookie of response.headers.getSetCookie()) {
+        const [name, value] = cookie.split(';', 1)[0].split('=', 2);
+        cookies.set(name, value);
+    }
+    const location = response.headers.get('location');
+    if (location) {
+        if (redirects >= 5) {
+            throw new Error(`Springer returned too many redirects for ${url}.`);
+        }
+        return getHtml(new URL(location, url).href, cookies, redirects + 1);
+    }
+    const html = response._data!;
+    if (html.includes('<title>Client Challenge</title>')) {
+        throw new Error('Springer returned a client challenge. Retry when the public page is available.');
+    }
+    return html;
 }

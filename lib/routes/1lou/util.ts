@@ -17,7 +17,7 @@ export const parseItems = async (items, language) =>
 
                 if (title) {
                     const description = $$('div.message.break-all').html();
-                    const image = new URL($$('img').first().prop('src')!, rootUrl).href;
+                    const image = new URL($$('img').prop('src')!, rootUrl).href;
 
                     item.title = title;
                     item.description = description;

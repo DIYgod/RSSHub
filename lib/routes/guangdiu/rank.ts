@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 const host = 'https://guangdiu.com';
 
@@ -22,13 +22,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['guangdiu.com/rank'],
+            source: ['guangdiu.com/rank.php'],
         },
     ],
     name: '一小时风云榜',
     maintainers: ['fatpandac'],
     handler,
-    url: 'guangdiu.com/rank',
+    url: 'guangdiu.com/rank.php',
 };
 
 async function handler() {
@@ -44,17 +44,19 @@ async function handler() {
         }));
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const article = await cache.tryGet(`guangdiu:rank:article:${item.link}`, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
-                item.pubDate = parseRelativeDate($('div.hourranktime').text());
+                const description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
+                const publishTime = $('.dinfoweibo').children(':not(.latesttime)').remove().end().text().trim();
+                const pubDate = publishTime ? parseRelativeDate(publishTime) : undefined;
 
-                return item;
-            })
-        )
+                return { description, pubDate };
+            });
+            return { ...item, ...article };
+        })
     );
 
     return {

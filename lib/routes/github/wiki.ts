@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://github.com';
 
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user/:repo/wiki/:page/_history', 'github.com/:user/:repo/wiki/:page', 'github.com/:user/:repo/wiki/_history', 'github.com/:user/:repo/wiki'],
-            target: '/wiki/:user/:repo/:page',
+            target: '/wiki/:user/:repo/:page?',
         },
     ],
     name: 'Wiki History',

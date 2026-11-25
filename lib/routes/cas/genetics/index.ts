@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://genetics.cas.cn';
 
@@ -41,9 +41,9 @@ async function handler(ctx) {
                 const a = $item.find('a').first();
                 const date = $item.find('.box-date');
                 return {
-                    title: a.text(),
+                    title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, currentUrl).href,
-                    pubDate: parseDate(date.text(), 'YYYY-MM-DD'),
+                    pubDate: parseDate(date.text(), 'YYYY-MM-DD', 8),
                 };
             });
     } else if (path.slice(0, 4) === 'dqyd') {
@@ -54,9 +54,9 @@ async function handler(ctx) {
                 const a = $item.find('a').first();
                 const date = $item.find('.right').first();
                 return {
-                    title: a.text(),
+                    title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, currentUrl).href,
-                    pubDate: parseDate(date.text(), 'YYYY-MM-DD'),
+                    pubDate: parseDate(date.text(), 'YYYY-MM-DD', 8),
                 };
             });
     } else {
@@ -67,9 +67,9 @@ async function handler(ctx) {
                 const a = $item.find('a').first();
                 const date = $item.find('.col-news-date');
                 return {
-                    title: a.text(),
+                    title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, currentUrl).href,
-                    pubDate: parseDate(date.text(), 'YYYY.MM.DD'),
+                    pubDate: parseDate(date.text(), 'YYYY.MM.DD', 8),
                 };
             });
     }

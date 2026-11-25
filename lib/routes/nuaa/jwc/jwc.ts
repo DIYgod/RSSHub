@@ -1,11 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-
-import getCookie from '../utils/pypasswaf';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://aao.nuaa.edu.cn/';
 
@@ -24,7 +23,7 @@ export const route: Route = {
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -38,19 +37,20 @@ export const route: Route = {
 | tzgg     | jxfw     | jxjs     | xspy     | jxzy     |`,
 };
 
+class ArticlePermissionError extends Error {}
+
+interface ArticleDetails {
+    description?: string;
+    author?: string;
+}
+
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const suffix = map.get(type)!.suffix;
     const getDescription = Boolean(ctx.req.param('getDescription'));
 
     const link = new URL(suffix, host).href;
-    const cookie = await getCookie(host);
-    const gotConfig = {
-        headers: {
-            cookie,
-        },
-    };
-    const response = await got(link, gotConfig);
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('#news_list .news_ul .p-list-item a')
@@ -65,33 +65,57 @@ async function handler(ctx) {
             return info;
         });
 
-    const out = await Promise.all(
-        list.map(async (info) => {
+    const out = await pMap(
+        list,
+        async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
             const itemUrl = new URL(info.link!, host).href;
-            let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+            let detail: ArticleDetails = {};
 
             if (getDescription) {
-                description = await cache.tryGet(itemUrl, async () => {
-                    const arr = itemUrl.split('.');
-                    const pageType = arr.at(-1);
-                    if (pageType === 'htm' || pageType === 'html') {
-                        const response = await got(itemUrl, gotConfig);
-                        const $ = load(response.data);
-                        return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
+                try {
+                    detail = await cache.tryGet<ArticleDetails>(`nuaa:jwc:article:byline:${itemUrl}`, async () => {
+                        const arr = itemUrl.split('.');
+                        const pageType = arr.at(-1);
+                        if (pageType === 'htm' || pageType === 'html') {
+                            const response = await got(itemUrl);
+                            const $ = load(response.data);
+                            const content = $('.wp_articlecontent');
+                            if (!content.length) {
+                                if ($('.wp_error_msg').text().includes('该信息仅允许校内地址访问')) {
+                                    throw new ArticlePermissionError('Article content is restricted to campus IP addresses: ' + itemUrl);
+                                }
+                                throw new Error('Article content was not found at ' + itemUrl);
+                            }
+                            const authorLabel = $('.infoA > span, .info > span')
+                                .toArray()
+                                .map((element) => $(element).text())
+                                .find((text) => /^作者\s*[:：]/.test(text));
+                            return {
+                                description: content.html() ?? undefined,
+                                author: authorLabel?.replace(/^作者\s*[:：]\s*/, '') || undefined,
+                            };
+                        }
+                        return {};
+                    });
+                } catch (error) {
+                    if (!(error instanceof ArticlePermissionError)) {
+                        throw error;
                     }
-                    return '';
-                });
+                    detail = {};
+                }
             }
 
             return {
                 title,
                 link: itemUrl,
-                description,
+                description: detail.description,
+                author: detail.author,
                 pubDate: parseDate(date),
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

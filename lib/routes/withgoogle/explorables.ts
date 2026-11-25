@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
-    name: 'PAIR - AI Exploreables',
+    name: 'PAIR - AI Explorables',
     url: 'pair.withgoogle.com/explorables',
     path: '/explorables',
     maintainers: ['cesaryuan'],
@@ -23,31 +25,37 @@ export const route: Route = {
             method: 'GET',
         });
         const $ = load(response);
-        const items = await Promise.all(
-            $('div.explorable-card')
-                .toArray()
-                .map(async (el) => {
-                    const title = $(el).find('h3').text();
-                    const image = $(el).find('img').attr('src');
-                    const link = baseUrl + $(el).find('a').attr('href');
-                    return await cache.tryGet(link, async (): Promise<DataItem> => {
-                        const response = await ofetch(link);
-                        const $item = load(response);
-                        let description = $item('body').html();
-                        if (!description || description.trim() === '') {
-                            description = $('p').text();
-                        }
-                        return {
-                            title,
-                            link,
-                            description,
-                            image,
-                        };
-                    });
-                })
+        const list = $('div.explorable-card').toArray();
+        const items = await pMap(
+            list,
+            async (el) => {
+                const title = $(el).find('h3').text();
+                const image = $(el).find('img').attr('src');
+                const link = baseUrl + $(el).find('a').attr('href');
+                const detail = await cache.tryGet(`withgoogle:detail:v3:${link}`, async (): Promise<Pick<DataItem, 'description' | 'author' | 'pubDate'>> => {
+                    const response = await ofetch(link);
+                    const $item = load(response);
+                    const author = $item('.byline .authors b')
+                        .toArray()
+                        .map((author) => $item(author).text().trim())
+                        .join(', ');
+                    const date = $item('.byline .date').text();
+                    $item('.header, h1.headline, .byline, #recirc, .recirc-feedback-form, link').remove();
+                    $item('h3')
+                        .filter((_, heading) => $item(heading).text() === 'More Explorables')
+                        .remove();
+                    return {
+                        description: $item('body').html(),
+                        author: author || undefined,
+                        pubDate: parseDate(date, 'MMMM YYYY'),
+                    };
+                });
+                return { title, link, image, ...detail };
+            },
+            { concurrency: 3 }
         );
         return {
-            title: 'PAIR - AI Exploreables',
+            title: 'PAIR - AI Explorables',
             link: 'https://pair.withgoogle.com/explorables',
             item: items,
         };

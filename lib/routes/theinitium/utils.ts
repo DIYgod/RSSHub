@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -7,7 +8,7 @@ import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 // Strip '-zh-hans' suffix from display names for cleanliness
 const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');
@@ -96,11 +97,8 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
         });
         const $ = load(response);
         const article = $('article');
-        if (article.length === 0) {
-            return null;
-        }
         // If paywall CTA present, cookie didn't work — fall back to Ghost preview
-        if (article.find('.gh-post-upgrade-cta').length > 0) {
+        if (article.length === 0 || article.find('.gh-post-upgrade-cta').length > 0) {
             return null;
         }
         return article.html();
@@ -164,8 +162,9 @@ function cleanGhostHtml(html: string): string {
 export async function postsToItems(posts: GhostPost[]) {
     const memberCookie = config.initium?.memberCookie;
 
-    const items = await Promise.all(
-        posts.map(async (post) => {
+    const items = await pMap(
+        posts,
+        async (post) => {
             const authors = post.authors?.map((a) => stripLangSuffix(a.name)) ?? [];
             const categories = post.tags?.filter((t) => t.visibility === 'public').map((t) => stripLangSuffix(t.name)) ?? [];
 
@@ -173,7 +172,7 @@ export async function postsToItems(posts: GhostPost[]) {
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
-                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie) as Promise<string>, config.cache.contentExpire)) as string | null;
+                const fullHtml = await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire);
                 if (fullHtml) {
                     description = cleanGhostHtml(fullHtml);
                 }
@@ -181,16 +180,17 @@ export async function postsToItems(posts: GhostPost[]) {
 
             return {
                 title: post.title,
-                author: authors.join(', ') || post.primary_author?.name || '',
+                author: authors.join(', ') || post.primary_author?.name,
                 category: categories,
                 description,
                 link: post.url,
                 pubDate: parseDate(post.published_at),
                 updated: parseDate(post.updated_at),
                 guid: post.uuid,
-                banner: post.feature_image ?? undefined,
+                banner: post.feature_image,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return items;
@@ -201,8 +201,8 @@ export const processFeed = async (model: string, ctx: Context): Promise<Data> =>
     const language = ctx.req.param('language') ?? '';
 
     let filter = '';
-    let listLink = '';
-    let feedName = '';
+    let listLink: string;
+    let feedName: string;
 
     switch (model) {
         case 'channel': {

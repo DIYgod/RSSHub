@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchFriends, getPlurk } from './utils';
 
@@ -37,7 +38,7 @@ async function handler(ctx) {
         searchParams: {
             topic,
             offset: 0,
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            limit: getRouteLimit(ctx, 30),
         },
     });
 
@@ -49,7 +50,7 @@ async function handler(ctx) {
     const userIds = Object.values<any>(apiResponse).map((item) => item.user_id);
     const names = await fetchFriends(userIds);
 
-    const items = await Promise.all(Object.values<any>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name)));
+    const items = Object.values<any>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name));
 
     return {
         title: $('head title').text(),

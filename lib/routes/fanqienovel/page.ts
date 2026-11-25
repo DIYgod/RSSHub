@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface Chapter {
     itemId: string;
@@ -79,7 +79,7 @@ async function handler(ctx: Context): Promise<Data> {
             .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*);/)?.[1] ?? '{}'
     );
 
-    const page = initialState.page as Page;
+    const page: Page = initialState.page;
     const items = page.chapterListWithVolume.flatMap((volume) =>
         volume.map((chapter) => ({
             title: chapter.title,

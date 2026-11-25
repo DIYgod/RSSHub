@@ -28,7 +28,9 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
 
     const link = new URL(`${baseUrl}/news/index.php`, baseUrl);
-    link.searchParams.append('type', type);
+    if (type) {
+        link.searchParams.append('type', type);
+    }
     const response = await ofetch(link.href);
     const $ = load(response);
 

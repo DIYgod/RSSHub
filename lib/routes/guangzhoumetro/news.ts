@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -45,7 +45,7 @@ async function handler() {
 
     return {
         title: '广州地铁新闻',
-        url: newsUrl,
+        link: newsUrl,
         description: '广州地铁新闻',
         item: list.map((item) => ({
             title: item.title,

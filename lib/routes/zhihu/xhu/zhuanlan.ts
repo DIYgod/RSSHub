@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import auth from './auth';
 
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zhuanlan.zhihu.com/:id'],
-            target: '/zhuanlan/:id',
+            target: '/xhu/zhuanlan/:id',
         },
     ],
     name: 'xhu- 专栏',

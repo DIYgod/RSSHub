@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
 
-import { baseUrl, getBuildId, parseItem, parseList } from './utils';
+import { baseUrl, getApi, getPoolSize, processList } from './utils';
 
 export const route: Route = {
     path: '/topic/:topicId/:lang?',
@@ -28,16 +27,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topicId, lang = 'en' } = ctx.req.param();
-    const { limit = 20 } = ctx.req.query();
+    const poolSize = getPoolSize(ctx, 20);
 
-    const buildId = await getBuildId();
-    const { data: response } = await got(`${baseUrl}/_next/data/${buildId}/${lang}/topic/${topicId}.json`);
-
-    const { queries } = response.pageProps.dehydratedState;
-    const { data: topicInfo } = queries.find((q) => q.queryKey[0] === '/topic/info').state;
-
-    const list = parseList(queries.find((q) => q.queryKey[0] === '/feed/list/topic').state.data.pages[0].list.slice(0, limit), lang, buildId);
-    const items = await Promise.all(list.map((item) => parseItem(item)));
+    const topicInfo = await getApi('/topic/info', lang, { id: Number(topicId) });
+    const response = await getApi('/feed/list/topic', lang, { id: Number(topicId), count: poolSize });
+    const items = await processList(response.list, lang, ctx, 20);
 
     return {
         title: `${topicInfo.title} - Followin`,

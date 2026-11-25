@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getNoticeContent } from './utils';
 
@@ -23,7 +22,7 @@ async function handler(): Promise<Data> {
             return {
                 title: $li.find('.newTitle').text(),
                 link: new URL($li.find('a').attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($li.find('.data1').text().trim(), '发布时间 : YYYY-MM-DD'), 8),
+                pubDate: parseDate($li.find('.data1').text().trim(), '发布时间 : YYYY-MM-DD', 8),
             };
         });
 

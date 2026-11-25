@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jyt/tzgg',
@@ -48,7 +47,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.attr('title') || $link.text();
             const link = $link.attr('href') || '';
             const dateText = $item.find('span').text().trim();
 
@@ -72,7 +71,7 @@ async function handler(ctx) {
                 return {
                     ...item,
                     author,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : item.pubDate,
                     description: $$('.trs_editor_view').html() || $$('.TRS_UEDITOR').html(),
                 };
             })

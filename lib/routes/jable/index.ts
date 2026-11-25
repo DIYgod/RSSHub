@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
+import { html } from 'hono/html';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/search/:query',
@@ -12,7 +13,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -25,7 +26,7 @@ export const route: Route = {
             target: '/search/:query',
         },
     ],
-    name: 'Jable 搜索结果',
+    name: '搜索结果',
     maintainers: ['eve2ptp'],
     handler,
 };
@@ -38,7 +39,19 @@ interface VideoThumb {
 }
 
 function renderDescription(video: VideoThumb): string {
-    return `<img src="${video.thumb}" alt="${video.title}" style="max-width:100%" />`.trim();
+    return html`<img src="${video.thumb}" alt="${video.title}" style="max-width:100%" />`.toString();
+}
+
+async function fetchSearch(apiUrl: string): Promise<string> {
+    const { page, destroy } = await getPlaywrightPage(apiUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
+        await page.goto(apiUrl, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('.video-img-box', { state: 'attached' });
+        return await page.content();
+    } finally {
+        await destroy();
+    }
 }
 
 async function handler(ctx) {
@@ -56,8 +69,8 @@ async function handler(ctx) {
     const baseUrl = `https://jable.tv/search/${encodedQuery}/`;
     const apiUrl = `${baseUrl}?${params.toString()}`;
 
-    const response = await got(apiUrl);
-    const $ = load(response.data);
+    const response = await fetchSearch(apiUrl);
+    const $ = load(response);
 
     const videos: VideoThumb[] = $('.video-img-box')
         .toArray()
@@ -67,7 +80,7 @@ async function handler(ctx) {
             const $img = $el.find('img');
 
             return {
-                title: $titleLink.text().trim(),
+                title: $titleLink.text(),
                 link: $titleLink.attr('href') ?? '',
                 thumb: $img.attr('data-src') ?? '',
                 preview: $img.attr('data-preview') ?? '',
@@ -80,12 +93,12 @@ async function handler(ctx) {
         author: query,
         description: renderDescription(video),
         media: {
-            content: {
-                url: video.preview || video.link,
-                type: 'video/mp4',
-            },
             thumbnail: {
                 url: video.thumb,
+            },
+            content: {
+                url: video.preview,
+                type: 'video/mp4',
             },
         },
     }));

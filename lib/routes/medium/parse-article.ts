@@ -1,15 +1,48 @@
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities/escape';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import { md5 } from '@/utils/hash';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
+
+import type { PostPreview } from './graphql';
+
+function isMediumChallenge(error: any) {
+    const body = error?.data ?? error?.response?._data;
+    const html = typeof body === 'string' ? body : body?.body;
+    return (error?.statusCode ?? error?.status ?? error?.response?.status) === 403 && typeof html === 'string' && /cf-chl|challenge-platform|Just a moment/i.test(html);
+}
+
+function isMediumUrl(url: URL) {
+    return url.protocol === 'https:' && (url.hostname === 'medium.com' || url.hostname.endsWith('.medium.com'));
+}
+
+async function fetchArticle(url: string, cookie: string, redirects = 0): Promise<string> {
+    // the session is only sent to Medium, and only a Medium host may keep it through a redirect
+    const sessionCookie = cookie && isMediumUrl(new URL(url)) ? cookie : '';
+    const response = await ofetch.raw<string>(url, {
+        headers: sessionCookie ? { cookie: sessionCookie } : {},
+        redirect: 'manual',
+        minVersion: 'TLSv1.3',
+    });
+    if (response.status >= 300 && response.status < 400) {
+        const location = response.headers.get('location');
+        if (!location || redirects >= 5) {
+            throw new Error('The Medium article source returned an invalid redirect.');
+        }
+        const next = new URL(location, url);
+        if (!['https:', 'http:'].includes(next.protocol)) {
+            throw new Error('The Medium article source returned an unsupported redirect.');
+        }
+        return fetchArticle(next.href, sessionCookie, redirects + 1);
+    }
+    return response._data ?? '';
+}
 
 async function parse(url, cookie = '') {
-    const { data } = await got(url, {
-        headers: {
-            cookie,
-        },
-    });
+    const data = await fetchArticle(url, cookie);
     const $ = load(data);
 
     const publishedTime = $('meta[property="article:published_time"]').attr('content');
@@ -28,12 +61,9 @@ async function parse(url, cookie = '') {
     // get subtitle and remove author actions
     const subtitle = article.find('.pw-subtitle-paragraph');
     const subtitleText = subtitle.text();
-    if (subtitle.length === 0) {
-        // no subtitle
-        article.find('.pw-post-body-paragraph').siblings().first().remove();
-    } else {
-        // preserve subtitle in html
-        subtitle.siblings().remove();
+
+    if (!titleText.trim() || !article.length || (!article.text().trim() && !article.find('img[src], video[src], audio[src], iframe[src]').length)) {
+        throw new Error('The Medium article source did not contain a usable article.');
     }
 
     return {
@@ -46,16 +76,32 @@ async function parse(url, cookie = '') {
     };
 }
 
-export default function parseArticle(ctx, url) {
-    return cache.tryGet(`medium:article:${url}`, async () => {
-        const { title, author, publishedTime, html } = await parse(url, config.medium.articleCookie);
+export default function parseArticle(ctx, url, options: { cookie?: string; post?: PostPreview } = {}) {
+    const sessionKey = md5(JSON.stringify([options.cookie ?? '', config.medium.articleCookie]));
+    return cache.tryGet(`medium:article:${sessionKey}:${url}`, async () => {
+        try {
+            const { title, author, publishedTime, html } = await parse(url, config.medium.articleCookie);
 
-        return {
-            title,
-            author,
-            link: url,
-            description: html,
-            pubDate: publishedTime,
-        };
+            return {
+                title,
+                author,
+                link: url,
+                description: html,
+                pubDate: publishedTime ? parseDate(publishedTime) : undefined,
+            };
+        } catch (error) {
+            const post = options.post;
+            const preview = post?.extendedPreviewContent?.subtitle;
+            if (!post || !isMediumChallenge(error) || post.mediumUrl !== url || !post.title?.trim() || !preview?.trim() || !(post.firstPublishedAt > 0)) {
+                throw error;
+            }
+            return {
+                title: post.title,
+                author: post.creator?.name,
+                link: url,
+                description: `<p>${escapeUTF8(preview)}</p>`,
+                pubDate: parseDate(post.firstPublishedAt),
+            };
+        }
     });
 }

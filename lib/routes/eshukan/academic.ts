@@ -1,16 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.eshukan.com';
     const currentUrl = new URL(`academic/index.aspx?cid=${id}`, rootUrl).href;
@@ -20,7 +21,6 @@ export const handler = async (ctx) => {
     const $ = load(response);
 
     let items = $('ul.article li')
-        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -42,7 +42,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
@@ -51,8 +51,12 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    // Detail dates can replace list dates, so retain the default candidate pool before sorting.
+    items = items.slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(limit, 10));
+
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -69,7 +73,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
+                item.pubDate = pubDate ? parseDate(pubDate, 8) : item.pubDate;
                 item.author = $$('div.author a').text();
                 item.content = {
                     html: description,
@@ -77,8 +81,8 @@ export const handler = async (ctx) => {
                 };
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const title = $('title').text();
@@ -89,7 +93,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: title.split(/_/).pop(),
     };
@@ -102,7 +105,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/eshukan/academic/1',
-    parameters: { category: '栏目 id，默认为 `1`，即期刊动态，可在对应栏目页 URL 中找到' },
+    parameters: { id: '栏目 id，默认为 `1`，即期刊动态，可在对应栏目页 URL 中找到' },
     description: `::: tip
 若订阅 [期刊动态](https://www.eshukan.com/academic/index.aspx?cid=1)，网址为 \`https://www.eshukan.com/academic/index.aspx?cid=1\`。截取 \`https://www.eshukan.com/academic/index.aspx?cid=\` 到末尾的部分 \`1\` 作为参数填入，此时路由为 [\`/eshukan/academic/1\`](https://rsshub.app/eshukan/academic/1)。
 :::`,
@@ -122,7 +125,7 @@ export const route: Route = {
             source: ['www.eshukan.com/academic/index.aspx'],
             target: (_, url) => {
                 const { searchParams } = new URL(url);
-                const id = searchParams.get('id');
+                const id = searchParams.get('cid');
 
                 return `/academic${id ? `/${id}` : ''}`;
             },

@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://www.gameres.com';
 
@@ -25,8 +26,9 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 if (item.link!.includes('/wl?')) {
                     return item;
@@ -43,13 +45,13 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
                 item.author = payload[article.author];
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
-        link: rootUrl,
+        link: currentUrl,
         item: items,
     };
 };

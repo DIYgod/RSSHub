@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // Get the lastest blog posts of https://konghq.com/
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'https://konghq.com';
 const BLOG_POSTS_URL = `${BASE_URL}/blog`;
@@ -41,12 +42,12 @@ async function handler() {
     const { data: response } = await got(url);
     const $ = load(response);
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
-    const posts = nextData.props.pageProps.cardsPaged.cards.map((item) => {
+    const posts: Array<DataItem & { link: string }> = nextData.props.pageProps.cardsPaged.cards.map((item) => {
         const title = item.title;
         const author = item.authors.map((author) => author.title).join(', ');
         const category = item.term.title;
 
-        const link = `${BASE_URL}${item.link.href}`;
+        const link = new URL(item.link.href, BASE_URL).href;
         const pubDate = parseDate(item.publishedAt);
         return {
             title,
@@ -58,17 +59,22 @@ async function handler() {
     });
 
     // Request each post to get the details content as "description"
-    const items = await Promise.all(
-        posts.map((item) =>
+    const items = await pMap(
+        posts,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 // Update the description to post's main content
-                item.description = $('section[class^="blog_sections"]').first().html();
+                $('.agent, .tt-none').remove();
+                item.description = $('.toc-body > section[id]')
+                    .toArray()
+                    .map((section) => $(section).html())
+                    .join('');
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

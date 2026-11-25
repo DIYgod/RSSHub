@@ -108,7 +108,7 @@ async function handler(ctx): Promise<Data> {
 
     // Reason: Reuse the same Ghost tag filter logic as processFeed's channel case
     const baseTag = CHANNEL_TAG_MAP[channelType] ?? channelType;
-    let filter = '';
+    let filter: string;
     if (baseTag === '') {
         // "latest" = no tag filter, just filter by language via internal tag
         filter = `tag:hash-${language}`;

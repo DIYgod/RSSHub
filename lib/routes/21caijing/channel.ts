@@ -7,8 +7,9 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseRelativeDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const processMenu = (data: any[]) => {
     const result = {};
@@ -17,7 +18,7 @@ const processMenu = (data: any[]) => {
         const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
         const currentUrl = item.url || parentUrl;
         const currentApiUrl = item.api || item.children?.[0]?.api;
-        const currentShort = parentShort || currentUrl.split('/channel/').pop();
+        const currentShort = parentShort || currentUrl?.split('/channel/').pop();
 
         if (currentUrl && currentApiUrl) {
             result[currentPath] = {
@@ -41,9 +42,9 @@ const processMenu = (data: any[]) => {
     return result;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const domain = 'm.21jingji.com';
     const baseUrl = `https://${domain}`;
@@ -60,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const currentChannel = menu[name];
 
     const apiUrl: string = new URL(currentChannel.apiUrl, baseUrl).href;
-    const targetUrl: string = new URL(`#/${currentChannel.url}`, baseUrl).href;
+    const targetUrl: string = new URL(`#${currentChannel.url}`, baseUrl).href;
     const authUrl: string = new URL('reader/cbhChannelAuth', baseUrl).href;
 
     const targetResponse = await ofetch(targetUrl);
@@ -101,7 +102,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDate ? timezone(parseRelativeDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseRelativeDate(pubDate, 8) : undefined,
                 link: linkUrl,
                 category: categories,
                 author: authors,
@@ -119,11 +120,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, '21jingji.com')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
@@ -141,13 +143,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                         category: categories,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 8) : item.updated,
                         language,
                     };
 
@@ -182,7 +184,7 @@ export const route: Route = {
     handler,
     example: '/21caijing/channel/热点',
     parameters: {
-        category: '分类，默认为热点，可在对应分类页 URL 中找到',
+        name: '频道名称，默认为热点，可在对应分类页 URL 中找到',
     },
     description: `::: tip
 若订阅 [热点](https://m.21jingji.com/#/)，请将 \`热点\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/热点\`](https://rsshub.app/21caijing/channel/热点)。

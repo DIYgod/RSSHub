@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { encodeXML } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -30,7 +31,7 @@ async function handler() {
             return {
                 title: titleNode.text(),
                 link: titleNode.attr('href'),
-                description: [`简介: ${desc}`, `<img src="${thumbnail}"/>`].join('<br/>'),
+                description: [`简介: ${encodeXML(desc)}`, thumbnail ? `<img src="${encodeXML(thumbnail)}"/>` : undefined].filter(Boolean).join('<br/>'),
                 author: infoNode.find('.user a').text(),
             };
         });

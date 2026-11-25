@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { defaultDomain, getRootUrl } from './utils';
 
@@ -51,41 +51,46 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('.title')
+    const list = $('.title')
         .toArray()
         .map((item): DataItem & { guid: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.parent().attr('href')}`,
+                link: new URL($item.parent().attr('href')!, rootUrl).href,
                 guid: `https://18comic.org${$item.parent().attr('href')}`,
             };
-        });
+        })
+        // only follow links on the site itself
+        .filter((item) => new URL(item.link!).origin === rootUrl);
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    const items = await Promise.all(
+        new Map(list.map((item) => [item.guid, item]))
+            .values()
+            .toArray()
+            .map((item) =>
+                cache.tryGet(`${item.guid}:${rootUrl}`, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
 
-                const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                item.pubDate = parseDate(content('.date').first().text());
+                    item.pubDate = parseDate(content('.date').first().text());
 
-                content('.d-flex').remove();
+                    content('.d-flex').remove();
 
-                item.author = content('.blog_name_id').first().text();
-                item.description = content('.blog_content').html();
-                item.category = content('.panel-heading dropdown-toggle')
-                    .toArray()
-                    .map((c) => $(c).text());
+                    item.author = content('.blog_name_id').first().text();
+                    item.description = content('.blog_content').html();
+                    item.category = content('.panel-heading dropdown-toggle')
+                        .toArray()
+                        .map((c) => $(c).text());
 
-                return item;
-            })
-        )
+                    return item;
+                })
+            )
     );
 
     return {

@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xuan/:type',
@@ -21,7 +23,7 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/xuan/'],
         },
     ],
-    name: '郑大党委宣传部',
+    name: '党委宣传部',
     maintainers: ['amandus1990'],
     handler,
     description: `| 工作动态 | 通知公告 |
@@ -45,13 +47,13 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('.list ul li')
-        .slice(0, 18)
+        .slice(0, Math.max(18, getRouteLimit(ctx, 18)))
         .toArray()
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();
             const link = new URL($link.attr('href')!, typeDict[type][1]).href;
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.attr('title') || $link.text();
 
             // 尝试获取发布时间
             const pubDateText = $element.find('i').text().trim();
@@ -59,7 +61,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: pubDateText || null,
+                pubDate: parseDate(pubDateText),
             };
         });
 

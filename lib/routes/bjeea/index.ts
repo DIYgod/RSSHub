@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type',
@@ -14,15 +16,15 @@ export const route: Route = {
     parameters: { type: '分类名' },
     radar: [
         {
-            source: ['www.bjeea.com/bjeeagg'],
+            source: ['www.bjeea.cn/html/bjeeagg/:path?', 'www.bjeea.cn/html/bjeeagg'],
             target: '/bjeeagg',
         },
         {
-            source: ['www.bjeea.com/zkzc'],
+            source: ['www.bjeea.cn/html/zkzc/:path?', 'www.bjeea.cn/html/zkzc'],
             target: '/zkzc',
         },
         {
-            source: ['www.bjeea.com/zkkd'],
+            source: ['www.bjeea.cn/html/zkkd/:path?', 'www.bjeea.cn/html/zkkd'],
             target: '/zkkd',
         },
     ],
@@ -43,8 +45,29 @@ const categoryMap = {
     zkkd: { title: '首页 / 自考快递', suffix: 'html/zkkd' },
 };
 
+async function getArticle(item: DataItem & { link: string }) {
+    if (!item.link.startsWith(baseUrl)) {
+        return item;
+    }
+    try {
+        const description = await cache.tryGet(`bjeea:article:${item.link}`, async () => {
+            const response = await ofetch(item.link);
+            return load(response)('div.info-txt').html();
+        });
+        return { ...item, description };
+    } catch (error) {
+        if (error instanceof FetchError) {
+            return item;
+        }
+        throw error;
+    }
+}
+
 async function handler(ctx: Context) {
     const { type = 'bjeeagg' } = ctx.req.param();
+    if (!Object.hasOwn(categoryMap, type)) {
+        throw new InvalidParameterError(`Unknown category: ${type}. Available categories: ${Object.keys(categoryMap).join(', ')}.`);
+    }
 
     const listPageUrl = baseUrl + categoryMap[type].suffix;
     const response = await ofetch(listPageUrl);
@@ -58,24 +81,13 @@ async function handler(ctx: Context) {
             const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return {
                 title,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link,
                 guid: link,
-                description: title,
             };
         });
 
-    const result = await Promise.all(
-        list.map((item) =>
-            item.link.startsWith(baseUrl)
-                ? cache.tryGet(item.link, async () => {
-                      const detailResponse = await ofetch(item.link);
-                      item.description = load(detailResponse)('div.info-txt').html();
-                      return item;
-                  })
-                : item
-        )
-    );
+    const result = await pMap(list, getArticle, { concurrency: 6, stopOnError: false });
 
     return {
         title: siteTitle + categoryMap[type].title,

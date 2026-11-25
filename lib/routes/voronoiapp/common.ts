@@ -1,9 +1,13 @@
+import { escapeAttribute } from 'entities';
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-import type { Post } from './types';
+import type { Post, PostCategory, SearchPost } from './types';
 
 export async function getPostItems(params: {
     feed?: string;
@@ -17,8 +21,12 @@ export async function getPostItems(params: {
     limit?: number;
     offset?: number;
 }): Promise<DataItem[]> {
-    const baseUrl = 'https://9oyi4rk426.execute-api.ca-central-1.amazonaws.com/production/post';
-    const url = new URL(baseUrl);
+    const baseUrl = 'https://api.voronoiapp.com';
+    const categories = await cache.tryGet('voronoiapp:categories', () => ofetch<PostCategory[]>(`${baseUrl}/post-category`));
+    if (params.search !== undefined) {
+        return getSearchItems(params.search, categories, params.limit ?? 20);
+    }
+    const url = new URL(`${baseUrl}/post`);
     const finalSearchParams = {
         limit: 20,
         offset: 0,
@@ -34,12 +42,17 @@ export async function getPostItems(params: {
             finalSearchParams.time_range = undefined;
         }
     }
-    if (finalSearchParams.category !== undefined && finalSearchParams.category !== null) {
-        const category = finalSearchParams.category;
-        finalSearchParams.category = CategoryParam.options.find((option) => option.value.toLowerCase() === category.toLowerCase())?.value;
-        if (finalSearchParams.category === undefined) {
+    let categoryId: number | undefined;
+    if (finalSearchParams.category) {
+        const category = categories.find((entry) => entry.title.toLowerCase() === finalSearchParams.category!.toLowerCase());
+        if (!category) {
             throw new Error(`Invalid category: ${finalSearchParams.category}`);
         }
+        categoryId = category.id;
+    }
+    delete finalSearchParams.category;
+    if (categoryId !== undefined) {
+        url.searchParams.set('categoryIds', String(categoryId));
     }
     if (finalSearchParams.tab !== undefined && finalSearchParams.tab !== null) {
         finalSearchParams.tab = finalSearchParams.tab.toUpperCase();
@@ -53,26 +66,59 @@ export async function getPostItems(params: {
         }
     }
     const data = await ofetch<Post[]>(url.href);
-    const items: DataItem[] = data.map((post) => ({
-        title: post.headline,
-        link: `https://www.voronoiapp.com/${post.category.split(' ').join('-').toLowerCase()}/${post.link}`,
-        pubDate: parseDate(post.published_at),
-        description: `<img src="https://cdn.voronoiapp.com/public/${post.webp_image}" />
-        ${post.description}`,
-        image: `https://cdn.voronoiapp.com/public/${post.webp_image}`,
-        author: post.author.first_name + ' ' + post.author.last_name,
-        updated: parseDate(post.updated_at),
-        category: [post.category],
-        enclosure_url: `https://cdn.voronoiapp.com/public/${post.dataset}`,
-        enclosure_type: 'text/csv',
-        enclosure_title: post.dataset,
-        upvotes: post.likes,
-        comments: post.commented,
-    }));
-
+    const items: DataItem[] = data.map((post) => {
+        const category = categories.find((entry) => entry.id === post.categoryId);
+        if (!category) {
+            throw new Error(`No public category found for Voronoi post ${post.pid}`);
+        }
+        return {
+            title: post.headline,
+            link: `https://www.voronoiapp.com/${category.slug}/${post.link}`,
+            pubDate: parseDate(post.published_at),
+            description: post.webp_images.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n') + '\n' + post.description,
+            image: cdnUrl + post.webp_images[0],
+            author: post.author.first_name + ' ' + post.author.last_name,
+            updated: parseDate(post.updated_at),
+            category: [category.title, ...post.tags],
+            enclosure_url: `https://cdn.voronoiapp.com/public/${post.dataset}`,
+            enclosure_type: 'text/csv',
+            enclosure_title: post.dataset,
+            upvotes: post.likes,
+            comments: post.commented,
+        };
+    });
     return items;
 }
-
+const cdnUrl = 'https://cdn.voronoiapp.com/public/';
+async function getSearchItems(keyword: string, categories: PostCategory[], limit: number): Promise<DataItem[]> {
+    const posts = await ofetch<SearchPost[]>('https://api.voronoiapp.com/search', {
+        query: { size: limit, page: 0, target: 'posts-data', q: keyword },
+    });
+    return pMap(posts, (post) => getSearchItem(post, categories), { concurrency: 3, stopOnError: false });
+}
+async function getSearchItem(post: SearchPost, categories: PostCategory[]): Promise<DataItem> {
+    const category = categories.find((entry) => entry.id === post.category_id);
+    if (!category) {
+        throw new Error(`No public category found for Voronoi post ${post.pid}`);
+    }
+    const link = `https://www.voronoiapp.com/${category.slug}/${post.link}`;
+    const detail = await cache.tryGet(`voronoiapp:post:${post.pid}`, () => ofetch<Post>('https://api.voronoiapp.com/post', { query: { pid: post.pid } }));
+    return {
+        title: post.headline,
+        link,
+        pubDate: parseDate(detail.published_at),
+        updated: parseDate(detail.updated_at),
+        description: `${detail.images.map((image) => `<img src="${escapeAttribute(cdnUrl + image)}" />`).join('\n')}\n${post.description}`,
+        image: cdnUrl + detail.images[0],
+        author: post.author.first_name + ' ' + post.author.last_name,
+        category: [category.title, ...detail.tags],
+        enclosure_url: detail.dataset ? cdnUrl + detail.dataset : undefined,
+        enclosure_type: detail.dataset ? 'text/csv' : undefined,
+        enclosure_title: detail.dataset,
+        upvotes: detail.likes,
+        comments: detail.commented,
+    };
+}
 export const CategoryParam = {
     description: 'The category of the post',
     default: '',
@@ -183,7 +229,6 @@ export const CategoryParam = {
         },
     ],
 };
-
 export const TimeRangeParam = {
     description: 'Time range between which the posts are popular.',
     default: 'MONTH',
@@ -206,13 +251,11 @@ export const TimeRangeParam = {
         },
     ],
 };
-
 export const TabMap = {
     'most-popular': 'POPULAR',
     'most-discussed': 'DISCUSSED',
     'most-viewed': 'VIEWED',
 };
-
 export const TabParam = {
     description: 'The tab to get the popular posts from.',
     default: 'most-popular',
@@ -231,17 +274,19 @@ export const TabParam = {
         },
     ],
 };
-
 export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers' | 'view'> = {
     url: 'voronoiapp.com',
     categories: ['picture'],
     view: ViewType.Pictures,
     maintainers: ['Cesaryuan'],
 };
-
-export const CommonDataProperties: Pick<Data, 'allowEmpty' | 'image'> | { logo: string; icon: string } = {
+export const CommonDataProperties:
+    | Pick<Data, 'image'>
+    | {
+          logo: string;
+          icon: string;
+      } = {
     logo: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
     image: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
     icon: 'https://about.voronoiapp.com/wp-content/uploads/2023/07/voronoi-icon.png',
-    allowEmpty: true,
 };

@@ -3,14 +3,13 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
     categories: ['other'],
     example: '/allbrightlaw',
-    name: '锦天城',
+    name: '专业文章',
     maintainers: ['snipersteve'],
     handler,
 };
@@ -25,10 +24,16 @@ async function handler() {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const title = $item.find('.news_txt h2').html() ?? '';
+            const heading = $item.find('.news_txt h2');
+            const author = heading
+                .find('span')
+                .text()
+                .replace(/^作者：\s*/, '');
+            heading.find('span').remove();
+            const title = heading.text();
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
-            const pubDate = timezone(parseDate(`${$item.find('.news_data span').text()}-${$item.find('.news_data p').text()}`), 8);
+            const pubDate = parseDate(`${$item.find('.news_data span').text()}-${$item.find('.news_data p').text()}`, 8);
 
             return cache.tryGet(itemUrl, async () => {
                 const response = await ofetch(itemUrl);
@@ -36,6 +41,7 @@ async function handler() {
 
                 return {
                     title,
+                    author,
                     link: itemUrl,
                     description: $d('.news_content_box .news_content').html(),
                     pubDate,

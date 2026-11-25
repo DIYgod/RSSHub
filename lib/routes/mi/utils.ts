@@ -1,0 +1,145 @@
+import type { z } from 'zod';
+
+import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
+import type { NewProduct } from '@/routes/mi/templates/newproduct';
+import ofetch from '@/utils/ofetch';
+
+import type { CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem } from './types';
+import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
+
+// Common
+
+/**
+ * Remove duplicate items by key, keeping the first occurrence of each key.
+ *
+ * @param {Item[]} items - Items to deduplicate.
+ * @param {Function} getKey - Key selector.
+ * @returns {Item[]} Deduplicated items.
+ */
+export const dedupeByKey = <Item, Key>(items: Item[], getKey: (item: Item) => Key): Item[] =>
+    Map.groupBy(items, (item) => getKey(item))
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+
+// Crowdfunding
+
+/**
+ * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
+ *
+ * @returns {Promise<CrowdfundingListItem[]>} The merged crowdfunding project list.
+ */
+const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
+    // oxlint-disable-next-line unicorn/consistent-function-scoping
+    const fetch = (query?: Record<string, number>) =>
+        ofetch<z.infer<typeof CrowdfundingListResponseSchema>>('https://m.mi.com/v1/crowd/crowd_home', {
+            method: 'POST',
+            query,
+            schema: CrowdfundingListResponseSchema,
+        });
+    const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
+    const items = [...response.data.list, ...historyResponse.data.list].flatMap((group) => group.items);
+    const list = dedupeByKey(items, (item) => item.project_id);
+    return list;
+};
+
+/**
+ * Fetch crowdfunding project details.
+ *
+ * @param {CrowdfundingListItem} item - Crowdfunding item.
+ * @returns {Promise<CrowdfundingDetailItem>} Crowdfunding item details.
+ */
+const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => {
+    const response = await ofetch<z.infer<typeof CrowdfundingDetailResponseSchema>>('https://m.mi.com/v1/crowd/crowd_detail', {
+        method: 'POST',
+        query: {
+            project_id: item.project_id,
+        },
+        schema: CrowdfundingDetailResponseSchema,
+    });
+    return response.data.crowd_funding_info;
+};
+
+// NewProduct
+
+/**
+ * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
+ *
+ * @returns {Promise<NewProductListItem[]>} The merged new product list.
+ */
+const getNewProductList = async (): Promise<NewProductListItem[]> => {
+    const response = await ofetch<z.infer<typeof NewProductListResponseSchema>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
+        method: 'POST',
+        schema: NewProductListResponseSchema,
+    });
+    const items = [...response.data.date_list.flatMap((group) => group.product_list), ...response.data.history_date_list.flatMap((group) => group.product_list), ...response.data.new_list];
+    const list = dedupeByKey(items, (item) => item.product_id);
+    return list;
+};
+
+/**
+ * Fetch new product details.
+ *
+ * @param {NewProductListItem} item - New product list item.
+ * @returns {Promise<NewProductDetailItem>} New product details.
+ */
+const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+    const response = await ofetch<z.infer<typeof NewProductDetailResponseSchema>>('https://m.mi.com/mtop/xiaomishop/product/info', {
+        body: [{}, { productId: item.product_id }],
+        method: 'POST',
+        schema: NewProductDetailResponseSchema,
+    });
+    return response.data;
+};
+
+// Conversion
+
+/**
+ * Convert CrowdfundingListItem + CrowdfundingDetailItem to Crowdfunding template props.
+ *
+ * @param {CrowdfundingListItem} listItem - Crowdfunding list item.
+ * @param {CrowdfundingDetailItem} detailItem - Crowdfunding detail item.
+ * @returns {Crowdfunding} Crowdfunding template props.
+ */
+const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
+    image: detailItem.big_image,
+    sellPoint: detailItem.project_desc,
+    price: detailItem.price,
+    marketPrice: listItem.product_market_price,
+    startTime: Temporal.Instant.fromEpochMilliseconds(detailItem.start_time * 1000),
+    endTime: Temporal.Instant.fromEpochMilliseconds(detailItem.end_time * 1000),
+    sendInfo: detailItem.send_info,
+    supportList: detailItem.support_list.map((support) => ({
+        image: support.goods_list[0]?.goods_image ?? '',
+        name: support.name,
+        price: support.price,
+        description: support.support_desc,
+    })),
+});
+
+/**
+ * Convert NewProductListItem + NewProductDetailItem to NewProduct template props.
+ *
+ * @param {NewProductListItem} listItem - New product list item.
+ * @param {NewProductDetailItem} detailItem - New product detail item.
+ * @returns {NewProduct} New product template props.
+ */
+const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
+    image: listItem.img,
+    sellPointList: detailItem.product.sellPointList,
+    goodsList: [...(detailItem.goodsInfo.goodsList ?? []), ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({
+        image: goods.imgUrl,
+        name: goods.name,
+        marketPrice: goods.marketPrice,
+        price: goods.price,
+    })),
+});
+
+export default {
+    getCrowdfundingList,
+    getCrowdfundingItem,
+    getNewProductList,
+    getNewProductItem,
+    toCrowdfunding,
+    toNewProduct,
+};

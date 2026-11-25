@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 export const route: Route = {
     path: '/:path{.+}',

@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -48,8 +48,8 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: `${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`,
-                pubDate: parseDate(a.text().match(/(\d{8})$/)![1], 'YYYYMMDD'),
-                description: renderToString(<ZyshowDescription date={$item.find('td').first().text()} subject={$item.find('td').eq(1).text()} guests={guests} link={`${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`} />),
+                pubDate: parseDateStrict(a.text().slice(-8), 'YYYYMMDD'),
+                description: renderToString(<ZyshowDescription subject={$item.find('td').eq(1).text()} />),
                 category: guests.split(/,|;/),
             };
         });
@@ -61,29 +61,4 @@ async function handler(ctx) {
     };
 }
 
-const ZyshowDescription = ({ link, date, subject, guests }: { link: string; date: string; subject: string; guests: string }) => (
-    <table>
-        <tbody>
-            <tr>
-                <td>播出日期：</td>
-                <td>
-                    <b>
-                        <a href={link}>{date}</a>
-                    </b>
-                </td>
-            </tr>
-            <tr>
-                <td>节目主题：</td>
-                <td>
-                    <b>{subject}</b>
-                </td>
-            </tr>
-            <tr>
-                <td>节目来宾：</td>
-                <td>
-                    <b>{guests}</b>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-);
+const ZyshowDescription = ({ subject }: { subject: string }) => <p>{subject}</p>;

@@ -1,11 +1,13 @@
 import zlib from 'node:zlib';
 
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { parseDate } from '@/utils/parse-date';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
+import type { DataItem } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const constants = {
     labelHot: '热门',
@@ -26,15 +28,13 @@ const imgRootUrl = 'https://img.foresightnews.pro';
 const icon = new URL('foresight.ico', rootUrl).href;
 const image = new URL('vertical_logo.png', imgRootUrl).href;
 
-const processItems = async (apiUrl, limit, ...parameters) => {
-    let searchParams = {
-        size: limit,
+const processItems = async (apiUrl, ctx: Context, ...parameters) => {
+    const limit = getRouteLimit(ctx, 50);
+    const searchParams = {
+        size: Math.max(50, limit),
     };
     for (const param of parameters) {
-        searchParams = {
-            ...searchParams,
-            ...param,
-        };
+        Object.assign(searchParams, param);
     }
 
     const info = {
@@ -46,28 +46,12 @@ const processItems = async (apiUrl, limit, ...parameters) => {
         requestUrl.searchParams.set(key, String(value));
     }
 
-    // Cloudflare fingerprints the HTTP client, so browser-like headers alone are insufficient.
-    let responsePromise: ReturnType<Page['waitForResponse']> | undefined;
-    const { destroy } = await getPlaywrightPage(requestUrl.href, {
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                route.request().resourceType() === 'document' ? route.continue() : route.abort();
-            });
-            responsePromise = page.waitForResponse(requestUrl.href);
-        },
-    });
-    let response;
-    try {
-        const apiResponse = await responsePromise!;
-        response = await apiResponse.json();
-    } finally {
-        await destroy();
-    }
+    const response = await ofetch(requestUrl.href);
 
     const buffer = Buffer.from(response.data?.list ?? response.data, 'base64');
-    let items = JSON.parse(String(zlib.inflateSync(buffer)));
+    const nativeItems = JSON.parse(String(zlib.inflateSync(buffer)));
 
-    items = (items?.list ?? items).slice(0, limit).map((item) => {
+    const items: DataItem[] = (nativeItems?.list ?? nativeItems).map((item) => {
         const sourceType = item.source_type ?? (item.source_link ? (item.column?.title ? 'article' : 'news') : item.event_type ? 'event' : constants.defaultType);
 
         item = item.source_type ? item[item.source_type] : item;
@@ -117,4 +101,4 @@ const processItems = async (apiUrl, limit, ...parameters) => {
     return { items, info };
 };
 
-export { apiRootUrl, icon, image, imgRootUrl, processItems, rootUrl };
+export { apiRootUrl, icon, image, processItems, rootUrl };

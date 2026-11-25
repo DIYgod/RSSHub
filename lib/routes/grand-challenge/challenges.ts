@@ -21,6 +21,7 @@ async function handler() {
     return {
         title: 'Grand-Challenge-challenges',
         link,
+        language: 'en' as const,
         item: $('.equal-height .card')
             .toArray()
             .map((item) => {

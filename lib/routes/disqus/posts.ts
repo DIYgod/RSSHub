@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/posts/:forum',
@@ -49,9 +49,10 @@ async function handler(ctx: Context) {
 
             return {
                 title: `${item.author.name}: ${item.raw_message}`,
-                description: `${item.author.name} 在《${thread.clean_title}》中发表评论: ${item.message}`,
-                pubDate: parseDate(item.createdAt),
-                link: `${thread.link}/#comment-${item.id}`,
+                description: item.message,
+                author: item.author.name,
+                pubDate: parseDate(`${item.createdAt}Z`),
+                link: new URL(`#comment-${item.id}`, thread.link).href,
             };
         }),
     };

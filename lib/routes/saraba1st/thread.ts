@@ -4,8 +4,7 @@ import queryString from 'query-string';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/thread/:tid',
@@ -50,8 +49,8 @@ async function handler(ctx) {
     const staticUrl = new URL('/image/common/none.gif', host);
     staticUrl.hostname = `static.${staticUrl.hostname.split('.').slice(-2).join('.')}`;
     const resultItems = list
-        .toArray()
         .slice(0, 20)
+        .toArray()
         .map((post) => {
             const each = $(post);
             const floor = each.find('td.plc .pi a > em').text();
@@ -75,7 +74,7 @@ async function handler(ctx) {
                 link: new URL(floorUrl!, `${host}/2b/`).href,
                 description: contentHtml.html(),
                 author: each.find('.authi .xw1').text(),
-                pubDate: timezone(parseDate(each.find('.authi em').text()), 8),
+                pubDate: parseDate(each.find('.authi em').text(), 'YYYY-M-D HH:mm', 8),
             };
         });
 

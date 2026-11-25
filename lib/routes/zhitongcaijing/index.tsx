@@ -1,12 +1,15 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import CaptchaError from '@/errors/types/captcha';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const ids = {
     recommend: {
@@ -67,6 +70,15 @@ const ids = {
     },
 };
 
+function isVerificationPage(data?: string) {
+    if (typeof data !== 'string') {
+        return false;
+    }
+
+    const $ = load(data);
+    return /^\s*check\(\)\s*;?$/.test($('body').attr('onload') ?? '') && $('input[name="parm_0"]').length > 0 && $('input[name="parm_1"]').length > 0;
+}
+
 export const route: Route = {
     path: '/:id?/:category?',
     categories: ['finance'],
@@ -117,40 +129,53 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.data.slice(0, limit).map((item) => ({
+    if (isVerificationPage(response.data)) {
+        throw new CaptchaError('Zhitong Caijing returned a browser verification page; article data is unavailable.');
+    }
+    const data = response.data;
+    if (data.status !== 'success') {
+        throw new TypeError('Zhitong Caijing did not return a successful article list.');
+    }
+
+    const list: Array<DataItem & { link: string }> = data.data.slice(0, limit).map((item) => ({
         title: item.title,
-        link: `${rootUrl}${item.url}`,
+        link: new URL(item.url, rootUrl).href,
         description: item.digest,
         author: item.author_info.author_name,
         pubDate: parseDate((item.create_time ?? Number.parseInt(item.original_time)) * 1000),
         category: [...(item.keywords?.split(',') ?? []), item.category_name ?? item.type_tag],
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
+    const items = await pMap(
+        list,
+        async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'zhitongcaijing.com')) {
+                return item;
+            }
+            const detail = await cache.tryGet(`zhitongcaijing:article:v1:${item.link}`, async () => {
+                const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 content('#subscribe-vip-box').remove();
                 content('#news-content').remove();
 
-                const digest = content('.digetst-box').html() || content('.telegram-origin-contentn').html();
-                const description = content('.news-body-content').html();
-                item.description = renderToString(
+                const main = content('.news-body-content');
+                const article = main.length ? main : content('.telegram-origin-contentn').first();
+                const digest = content('.digetst-box').html();
+                const description = article.html();
+                const body = renderToString(
                     <>
                         {digest ? raw(digest) : null}
                         {description ? raw(description) : null}
                     </>
                 );
 
-                return item;
-            })
-        )
+                return { description: body };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

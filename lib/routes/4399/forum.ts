@@ -6,8 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const baseUrl = 'https://my.4399.com';
 
@@ -41,7 +40,7 @@ async function handler(ctx: Context) {
         throw new ConfigNotFoundError('4399 forum RSS is disabled due to the lack of GAME_4399 config');
     }
 
-    const response = await ofetch(`${baseUrl}/forums/${mtag}`, {
+    const response = await ofetch(`${baseUrl}/forums/${encodeURIComponent(mtag)}`, {
         headers: { Cookie: cookie },
     });
     const $ = load(response);
@@ -53,10 +52,12 @@ async function handler(ctx: Context) {
             const $item = $(item).parent();
             return {
                 title: $item.find('div.title').text() + '    ---------------最后回复->' + $item.find('.rtime span').text() + ':' + $item.find('.rtime a').text().trim(),
-                link: baseUrl + $item.find('.thread_link').attr('href'),
+                link: new URL($item.find('.thread_link').attr('href')!, baseUrl).href,
                 author: $item.find('.author').text(),
             };
-        });
+        })
+        // the detail request carries the configured cookie, so it must not leave my.4399.com
+        .filter((item) => new URL(item.link).origin === baseUrl);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -74,7 +75,7 @@ async function handler(ctx: Context) {
                 return {
                     ...item,
                     description: content('div.host_content.j-thread-content').html(),
-                    pubDate: timeText && (timeText.endsWith('前') ? parseRelativeDate(timeText) : timezone(parseDate(timeText), 8)),
+                    pubDate: timeText && (timeText.endsWith('前') ? parseRelativeDate(timeText) : parseDate(timeText, 8)),
                 };
             })
         )

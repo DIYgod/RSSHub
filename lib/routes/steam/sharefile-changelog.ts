@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sharefile-changelog/:sharefileID/:routeParams?',
@@ -23,14 +23,18 @@ export const route: Route = {
 Helpful route parameters:
 
 - \`l=\` language parameter, change the language of description.
-- \`p=\` page parameter, change the results page. p=1 by default.`,
+- \`p=\` compatibility parameter; always requests the first page (p=1).`,
     name: 'Sharefile Changelog',
     maintainers: ['NyaaaDoge'],
 
     handler: async (ctx) => {
         const { sharefileID, routeParams } = ctx.req.param();
 
-        const url = `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}${routeParams ? `?${routeParams}` : ''}`;
+        const query = new URLSearchParams(routeParams);
+        if (query.has('p')) {
+            query.set('p', '1');
+        }
+        const url = `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}${query.size ? `?${query}` : ''}`;
         const response = await ofetch(url);
         const $ = load(response);
 
@@ -49,6 +53,7 @@ Helpful route parameters:
 
                 return {
                     title: changelogHeadline,
+                    guid: `${sharefileID}:${changelogTimestamp}`,
                     link: `https://steamcommunity.com/sharedfiles/filedetails/changelog/${sharefileID}`,
                     description: changeDetail,
                     pubDate: parseDate(changelogTimestamp!, 'X'),

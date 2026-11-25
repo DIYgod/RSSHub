@@ -2,7 +2,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 interface ArticleItem {
     code: string;
@@ -50,8 +51,7 @@ const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.binance.com';
     const rawType = ctx.req.param('type');
     const rawLang = ctx.req.param('lang');
-    const limit = Number(ctx.req.query('limit') ?? '20');
-    const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
+    const limit = getRouteLimit(ctx, 20);
 
     let type = rawType;
     let language = normalizeLanguage(rawLang);
@@ -78,7 +78,7 @@ const handler: Route['handler'] = async (ctx) => {
     const listUrl = new URL(`${baseUrl}/bapi/apex/v1/public/apex/cms/article/list/query`);
     listUrl.searchParams.set('type', '1');
     listUrl.searchParams.set('pageNo', '1');
-    listUrl.searchParams.set('pageSize', String(pageSize));
+    listUrl.searchParams.set('pageSize', String(limit));
     if (catalogId) {
         listUrl.searchParams.set('catalogId', String(catalogId));
     }
@@ -105,7 +105,7 @@ const handler: Route['handler'] = async (ctx) => {
 
     const item = itemsWithDate
         .toSorted((a, b) => b.releaseDate - a.releaseDate)
-        .slice(0, pageSize)
+        .slice(0, limit)
         .map(({ releaseDate: _releaseDate, ...rest }) => rest);
 
     const catalogName = catalogId ? catalogs.find((catalog) => catalog.catalogId === catalogId)?.catalogName : undefined;
@@ -127,7 +127,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.binance.com/:lang/messages/v2/group/announcement'],
-            target: '/binance/announcement/all/:lang',
+            target: '/announcement/all/:lang',
         },
     ],
     parameters: {

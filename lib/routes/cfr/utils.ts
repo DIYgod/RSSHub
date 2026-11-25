@@ -2,21 +2,26 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { LinkData, VideoSetup } from './types';
 
 export function getDataItem(href: string) {
     const origin = 'https://www.cfr.org';
-    const link = `${origin}${href}`;
+    const link = new URL(href, origin).href;
 
     return cache.tryGet(link, async () => {
-        const prefix = href?.split('/', 2)[1];
+        const prefix = new URL(link).pathname.split('/', 2)[1];
         const res = await ofetch(link);
         const $ = load(res);
+
+        if ($('#page-content').length) {
+            return { ...parseCurrentPage($), link };
+        }
 
         let dataItem: DataItem;
 
@@ -60,6 +65,37 @@ export function getDataItem(href: string) {
             link,
         };
     });
+}
+
+interface CurrentMetadata {
+    headline?: string;
+    name?: string;
+    datePublished?: string;
+    dateModified?: string;
+    uploadDate?: string;
+    embedUrl?: string;
+    author?: Array<{ name?: string }>;
+}
+
+function parseCurrentPage($: CheerioAPI): DataItem {
+    const metadata: CurrentMetadata = JSON.parse($('script[type="application/ld+json"]').text());
+    const published = metadata.datePublished ?? metadata.uploadDate;
+    const videoId = metadata.embedUrl?.match(/youtube\.com\/embed\/([^?]+)/)?.[1];
+    const video = videoId ? renderYoutube(true, videoId) : '';
+    const figure = $('[data-topper] figure');
+    const content = $('#page-content');
+    content.find('aside, nav').remove();
+    return {
+        title: metadata.headline ?? metadata.name ?? $('h1').text(),
+        pubDate: published ? parseDate(published) : undefined,
+        updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
+        author:
+            metadata.author
+                ?.map((author) => author.name)
+                .filter(Boolean)
+                .join(', ') || undefined,
+        description: `${figure.length ? `<figure>${figure.html()}</figure>` : ''}${video}${content.html()}`,
+    };
 }
 
 function parseArticle($: CheerioAPI): DataItem {
@@ -232,7 +268,8 @@ function parseDefault($): DataItem {
 
 function parseLinkData($: CheerioAPI) {
     try {
-        const data = (JSON.parse($('script[type="application/ld+json"]').text()) as LinkData)['@graph'][0];
+        const linkData: LinkData = JSON.parse($('script[type="application/ld+json"]').text());
+        const data = linkData['@graph'][0];
 
         return {
             title: data.name,
@@ -245,14 +282,18 @@ function parseLinkData($: CheerioAPI) {
 
 function getVideoIframe($ele: Cheerio<Element>) {
     const setup = $ele.find('video').data('setup') as VideoSetup;
-    if (setup) {
-        const youtubeSource = setup.sources.find((i) => i.type === 'video/youtube');
-        if (youtubeSource) {
-            const videoId = youtubeSource.src.match(/\?v=([^&]+)/)?.[1];
-            if (videoId) {
-                return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
-            }
-        }
+    if (!setup) {
+        return;
+    }
+
+    const youtubeSource = setup.sources.find((i) => i.type === 'video/youtube');
+    if (!youtubeSource) {
+        return;
+    }
+
+    const videoId = youtubeSource.src.match(/\?v=([^&]+)/)?.[1];
+    if (videoId) {
+        return renderYoutube(true, videoId);
     }
 }
 

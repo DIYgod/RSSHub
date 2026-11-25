@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/live/:id',
@@ -22,19 +22,21 @@ async function handler(ctx: Context) {
     const response = await ofetch(url);
 
     const $ = load(response);
-    const roomData = JSON.parse(response.match(/TT_ROOM_DATA = (.*?);/)[1]);
+    const roomDataJson = response.match(/TT_ROOM_DATA = (.*?);/)?.[1];
+    if (!roomDataJson) {
+        throw new Error(`Huya room ${id} did not provide public room data. Check that the room exists and the site is accessible.`);
+    }
+    const roomData = JSON.parse(roomDataJson);
 
-    let item;
+    const item: DataItem[] = [];
     if (roomData.isOn) {
-        item = [
-            {
-                title: roomData.introduction,
-                description: `<img src="${roomData.screenshot}">`,
-                guid: `${roomData.liveId}:${roomData.startTime}`,
-                pubDate: parseDate(roomData.startTime, 'X'),
-                link: url,
-            },
-        ];
+        item.push({
+            title: roomData.introduction,
+            description: `<img src="${roomData.screenshot}">`,
+            guid: `${roomData.liveId}:${roomData.startTime}`,
+            pubDate: parseDate(roomData.startTime, 'X'),
+            link: url,
+        });
     }
 
     return {

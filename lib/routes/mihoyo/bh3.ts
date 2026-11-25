@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const config = {
     latest: {
@@ -48,7 +48,7 @@ async function handler(ctx: Context) {
     if (!cfg) {
         throw new InvalidParameterError(`Bad type: ${type}`);
     }
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '10'));
+    const limit = getRouteLimit(ctx, 10);
 
     const response = await ofetch(`https://act-api-takumi-static.mihoyo.com/content_v2_user/app/b9d5f96cd69047eb/getContentList?iPageSize=${limit}&iPage=1&sLangKey=zh-cn&iChanId=${cfg.id}&isPreview=0`);
 
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
             title: item.sTitle,
             description: (banner ? `<img src="${banner}">` : '') + item.sContent,
             link: `https://bh3.mihoyo.com/news/${item.sChanId[0]}/${item.iInfoId}`,
-            pubDate: timezone(parseDate(item.dtStartTime), 8),
+            pubDate: parseDate(item.dtStartTime, 8),
             category: item.sCategoryName,
             image: ext[`${item.sChanId[0]}_0`]?.[0]?.url,
         };

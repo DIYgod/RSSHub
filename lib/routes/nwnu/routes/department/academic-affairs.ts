@@ -4,7 +4,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processEmbedPDF } from '../lib/embed-resource';
 
@@ -44,8 +44,8 @@ const handler: Route['handler'] = async (ctx) => {
 
     // Map through each list item to extract details
     const itemLinks = listItems.toArray().map((element) => {
-        const title = $(element).find('span.f > a').text()!;
-        const date = parseDate($(element).find('span.r').text()!);
+        const title = $(element).find('span.f > a').text();
+        const date = parseDate($(element).find('span.r').text());
         const relativeLink = $(element).find('span.f > a').attr('href')!;
         const link = new URL(relativeLink, BASE_URL).href;
         return {
@@ -86,7 +86,6 @@ const handler: Route['handler'] = async (ctx) => {
                 })
             )
         ),
-        allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/department/academic-affairs/${columnParam}`,
         id: `https://rsshub.app/nwnu/department/academic-affairs/${columnParam}`,

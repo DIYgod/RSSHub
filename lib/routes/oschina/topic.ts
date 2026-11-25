@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 async function loadContent(link) {
     const res = await got(link);
@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const $ = await loadContent(topicUrl);
     const topicName = $('.topic-info > .topic-header > h3').text();
-    const list = $('#questionList .question-item')
+    const list: Array<DataItem & { link: string }> = $('#questionList .question-item')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -49,25 +49,23 @@ async function handler(ctx) {
             return {
                 title: $item.find('.header').text(),
                 description: $item.find('.description').html(),
-                link: $item.find('.header').attr('href'),
+                link: new URL($item.find('.header').attr('href')!, topicUrl).href,
                 author: $item.find('.extra > .list > .item:nth-of-type(1)').text(),
-                pubDate: timezone(/\//.test(date) ? parseDate(date, ['YYYY/MM/DD HH:mm', 'MM/DD HH:mm']) : parseRelativeDate(date), 8),
+                pubDate: /\//.test(date) ? parseDate(date, ['YYYY/MM/DD HH:mm', 'MM/DD HH:mm'], 8) : parseRelativeDate(date, 8),
             };
         });
 
-    const resultItem = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const content = await loadContent(item.link);
-                    content('.ad-wrap').remove();
-                    item.description = content('#articleContent').html();
-                } catch {
-                    // 403
-                }
-                return item;
-            })
-        )
+    const resultItem = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`oschina:topic:body:${item.link}`, async () => {
+                const content = await loadContent(item.link);
+                content('.ad-wrap').remove();
+                return content('#articleContent').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

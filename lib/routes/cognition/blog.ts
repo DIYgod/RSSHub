@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -36,16 +36,24 @@ async function handler() {
     const html = await ofetch(targetUrl);
     const $ = load(html);
 
+    const posts = $('script[type="application/ld+json"]')
+        .toArray()
+        .map((script) => JSON.parse($(script).text()))
+        .find((data) => data['@type'] === 'Blog').blogPost;
+    const publishedDates = Object.fromEntries(posts.map((post) => [post.url, post.datePublished]));
+
     const items = $('section li a')
         .toArray()
         .map((item) => {
             const $item = $(item);
 
+            const link = new URL($item.attr('href')!, baseUrl).href;
+
             return {
                 title: $item.find('h2').text(),
-                link: new URL($item.attr('href')!, baseUrl).href,
+                link,
                 description: $item.find('p').text(),
-                pubDate: parseDate($item.find('span').text(), 'MM.DD.YY'),
+                pubDate: parseDate(publishedDates[link]),
             };
         });
 
@@ -53,7 +61,6 @@ async function handler() {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
-        allowEmpty: true,
         item: items,
         image: $('meta[property="og:image"]').attr('content'),
     };

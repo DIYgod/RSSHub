@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/repos/:user/:type?/:sort?',
@@ -43,7 +43,7 @@ async function handler(ctx) {
     }
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/users/${user}/repos`,
+        url: `https://api.github.com/users/${encodeURIComponent(user)}/repos`,
         searchParams: {
             type,
             sort,
@@ -87,7 +87,6 @@ async function handler(ctx) {
             };
         });
     return {
-        allowEmpty: true,
         title: `${user}'s GitHub repositories`,
         link: `https://github.com/${user}`,
         item,

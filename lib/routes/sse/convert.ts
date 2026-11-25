@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/convert/:query?',
@@ -40,7 +40,7 @@ async function handler(ctx) {
             isPagination: true,
             'pageHelp.pageSize': 20,
             flag: 0,
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
             ...queries,
         },
         headers: {
@@ -51,7 +51,7 @@ async function handler(ctx) {
     const items = response.data.result.map((item) => ({
         title: item.title,
         description: `${host}${item.URL}`,
-        pubDate: parseDate(item.ADDDATE),
+        pubDate: parseDate(item.ADDDATE, 8),
         link: `${host}${item.URL}`,
         author: item.security_Code,
     }));

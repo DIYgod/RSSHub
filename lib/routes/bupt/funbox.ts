@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/funbox',
@@ -30,6 +30,9 @@ export const route: Route = {
 
 async function handler() {
     const cookie = config.btbyr.cookies;
+    if (!cookie) {
+        throw new ConfigNotFoundError('BTBYR_COOKIE is required to access the BTBYR funbox.');
+    }
     const url = config.btbyr.host || 'https://bt.byr.cn/';
     const response = await ofetch(`${url}log.php?action=funbox`, {
         headers: {
@@ -44,7 +47,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const pubDate = timezone(parseDate($item.find('tr > td.rowfollow > span').attr('title')!), 8);
+            const pubDate = parseDate($item.find('tr > td.rowfollow > span').attr('title')!, 8);
             return {
                 title: $item.find('tr > td.rowfollow').eq(0).text(),
                 pubDate,
@@ -56,7 +59,7 @@ async function handler() {
                     .replaceAll(/onclick=.*findPosition\(this\)\[1\]-58\);"/g, '')
                     .replaceAll(/.thumb.jpg/g, ''),
                 link: `${url}log.php?action=funbox`,
-                guid: String(pubDate.getTime() / 1000),
+                guid: pubDate && String(pubDate.epochMilliseconds / 1000),
             };
         });
 

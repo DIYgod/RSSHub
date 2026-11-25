@@ -33,7 +33,7 @@ export type Category =
 export type DataItem = {
     title: string;
     description?: string | null;
-    pubDate?: number | string | Date | null;
+    pubDate?: Temporal.Instant | number | string | null;
     link?: string;
     category?: string[] | string;
     author?:
@@ -53,7 +53,7 @@ export type DataItem = {
     summary?: string;
     image?: string;
     banner?: string;
-    updated?: number | string | Date;
+    updated?: Temporal.Instant | number | string;
     language?: Language;
     enclosure_url?: string;
     enclosure_type?: string;
@@ -64,7 +64,10 @@ export type DataItem = {
     media?: Record<string, Record<string, string>>;
     upvotes?: number;
     downvotes?: number;
+    /** Comment count. */
     comments?: number;
+    /** URL of the item's comments page, rendered as the RSS 2.0 `<comments>` element. */
+    commentsUrl?: string;
     attachments?: Array<{
         url: string;
         mime_type: string;
@@ -72,7 +75,18 @@ export type DataItem = {
         size_in_bytes?: number;
         duration_in_seconds?: number;
     }>;
-
+    /**
+     * Additional links for this item, rendered as Atom <link> elements.
+     * `type` is a MIME type (e.g. `application/atom+xml`).
+     * RSS and JSON views ignore this field.
+     */
+    links?: Array<{
+        url: string;
+        rel: string;
+        type?: string;
+        title?: string;
+    }>;
+    // oxlint-disable-next-line quality/no-unsafe-dictionary-type
     _extra?: Record<string, any> & {
         links?: Array<{
             url: string;
@@ -88,6 +102,8 @@ export type Data = {
     link?: string;
     item?: DataItem[];
     allowEmpty?: boolean;
+    /** Default publication-date sorting preference; the common sorted parameter takes precedence. */
+    sortItems?: boolean;
     image?: string;
     author?: string;
     language?: Language;
@@ -174,6 +190,7 @@ export type Language =
     | 'hi'
     | 'hr'
     | 'hu'
+    | 'id'
     | 'in'
     | 'is'
     | 'it'
@@ -182,6 +199,7 @@ export type Language =
     | 'ja'
     | 'ko'
     | 'mk'
+    | 'mul'
     | 'ne'
     | 'nl'
     | 'nl-be'
@@ -204,8 +222,10 @@ export type Language =
     | 'sv'
     | 'sv-fi'
     | 'sv-se'
+    | 'th'
     | 'tr'
     | 'uk'
+    | 'vi'
     | 'zh'
     | 'zh-CN'
     | 'zh-HK'
@@ -399,7 +419,8 @@ export type RadarItem = {
      * Will use RouteItem.path if not specified
      * @see https://docs.rsshub.app/joinus/new-radar#target
      *
-     * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19
+     * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19,
+     * and the generated radar rules ignore it and use RouteItem.path instead
      * @see https://github.com/DIYgod/RSSHub-Radar/commit/5a97647f900bb2bca792787a322b2b1ca512e40b#diff-f84e3c1e16af314bc4ed7c706d7189844663cde9b5142463dc5c0db34c2e8d54L10
      * @see https://github.com/DIYgod/RSSHub-Radar/issues/692
      */

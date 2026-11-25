@@ -46,26 +46,26 @@ async function handler(ctx) {
         },
         json: {
             query: /* GraphQL */ `
-            {
-                repository(owner: "${user}", name: "${repo}") {
-                  stargazers(last: 10) {
-                    edges {
-                      node {
-                        login
-                        avatarUrl
-                      }
+                query ($user: String!, $repo: String!) {
+                    repository(owner: $user, name: $repo) {
+                        stargazers(last: 10) {
+                            edges {
+                                node {
+                                    login
+                                    avatarUrl
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             `,
+            variables: { user, repo },
         },
     });
 
     const data = response.data.data.repository.stargazers.edges.toReversed();
 
     return {
-        allowEmpty: true,
         title: `${user}/${repo}’s stargazers`,
         link: host,
         item: data.map((follower) => ({

@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const renderFanBox = (media): string =>
     renderToString(
@@ -69,12 +70,12 @@ export const route: Route = {
         {
             title: '即時新聞',
             source: ['news.mingpao.com/ins/:categoryName/section/:date/:category'],
-            target: '/mingpao/ins/:category',
+            target: '/ins/:category',
         },
         {
             title: '每日明報',
             source: ['news.mingpao.com/pns/:categoryName/section/:date/:category'],
-            target: '/mingpao/pns/:category',
+            target: '/pns/:category',
         },
     ],
     maintainers: ['TonyRL'],
@@ -114,11 +115,13 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? (type === 'ins' ? 'all' : 's00001');
     const link = `https://news.mingpao.com/rss/${type}/${category}.xml`;
 
-    const feed = await parser.parseURL(link);
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!, {
+    const feed = await parser.parseString(await ofetch(link));
+    const list = feed.items.map((item) => ({ ...item, link: item.link!.split(/[\s"\\]/, 1)[0] }));
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link, {
                     headers: {
                         Referer: 'https://news.mingpao.com/',
                     },
@@ -172,11 +175,11 @@ async function handler(ctx) {
                 delete item.isoDate;
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
-                item.guid = item.link!.includes('?') ? item.link : item.link!.slice(0, item.link!.lastIndexOf('/'));
+                item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return { ...item, pubDate: parseDate(item.pubDate!) };
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

@@ -1,9 +1,9 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hotComplete/:orderby?/:ascOrDesc?/:top?',
@@ -28,8 +28,9 @@ async function handler(ctx: Context) {
     const start = response.movieList.length;
     const movieIdsArr: number[][] = Array.from({ length: Math.ceil((movieIds.length - start) / 10) }, (_, i) => movieIds.slice(start + i * 10, start + (i + 1) * 10));
 
-    const dataArrs = await Promise.all(
-        movieIdsArr.map(async (idsTemp) => {
+    const dataArrs = await pMap(
+        movieIdsArr,
+        async (idsTemp) => {
             const responseTemp = await ofetch('https://m.maoyan.com/ajax/moreComingList', {
                 query: {
                     movieIds: idsTemp.toString(),
@@ -37,7 +38,8 @@ async function handler(ctx: Context) {
                 },
             });
             return responseTemp.coming?.length > 0 ? responseTemp.coming : [];
-        })
+        },
+        { concurrency: 3 }
     );
 
     let data = [...response.movieList, ...dataArrs.flat()];
@@ -45,14 +47,14 @@ async function handler(ctx: Context) {
     if (orderby) {
         data.sort((a, b) => {
             if (orderby === 'pubDate') {
-                return ascOrDesc === 'asc' ? new Date(a.rt).getTime() - new Date(b.rt).getTime() : new Date(b.rt).getTime() - new Date(a.rt).getTime();
+                return ascOrDesc === 'asc' ? compareDates(a.rt, b.rt) : compareDates(b.rt, a.rt);
             }
             return ascOrDesc === 'asc' ? a.sc - b.sc : b.sc - a.sc;
         });
     }
     const topCount = Number(top);
     if (topCount > 0 && topCount < data.length) {
-        data = data.slice(0, topCount - 1);
+        data = data.slice(0, topCount);
     }
 
     const items = data.map((item) => {
@@ -62,7 +64,7 @@ async function handler(ctx: Context) {
             title: `${item.nm} ${rating}`,
             description: `<img src="${item.img.replace('w.h', '1000.1000')}"> <br> ${rating} <br> 演员：${item.star} <br> 上映信息：${item.showInfo}`,
             link: `https://maoyan.com/films/${item.id}`,
-            pubDate: timezone(parseDate(item.rt), 8),
+            pubDate: parseDate(item.rt, 8),
         };
     });
 

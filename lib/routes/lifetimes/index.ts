@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -32,7 +33,7 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/${category.replace('-', '/')}`;
 
     let title;
-    let list;
+    let list: Array<{ link: string }>;
 
     const apiNode = nodes[category];
     if (apiNode) {
@@ -53,31 +54,33 @@ async function handler(ctx: Context) {
 
         list = $('.list-block ul li, .firstCon-r ul li')
             .find('a')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item) => ({
                 link: `https:${$(item).attr('href')}`,
             }));
     }
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await ofetch(item.link);
-                    const content = load(detailResponse);
+                const detailResponse = await ofetch(item.link);
+                const content = load(detailResponse);
 
-                    item.description = content('article').html();
-                    item.title = content('.container-title').text();
-                    item.author = content('.source').text().replace('来源：', '');
-                    item.pubDate = parseDate(Number.parseInt(detailResponse.match(/\\"ctime\\":(.*),\\"utime\\"/)[1]));
+                const pubDate = detailResponse.match(/\\"ctime\\":(\d+)/)?.[1];
+                const updated = detailResponse.match(/\\"utime\\":(\d+)/)?.[1];
 
-                    return item;
-                } catch {
-                    return '';
-                }
-            })
-        )
+                return {
+                    ...item,
+                    description: content('article').html(),
+                    title: content('.container-title').text(),
+                    author: content('.source').text().replace('来源：', ''),
+                    pubDate: parseDate(Number(pubDate)),
+                    updated: parseDate(Number(updated)),
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {

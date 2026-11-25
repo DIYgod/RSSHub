@@ -5,8 +5,9 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/',
@@ -38,7 +39,7 @@ export async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('.title .internalLink')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -47,14 +48,19 @@ export async function handler(ctx) {
 
             return {
                 title: $item.attr('data-title')!,
-                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-                pubDate: timezone(parseDate($item.text()), 8),
+                link: new URL(link!, currentUrl).href,
+                pubDate: parseDate($item.text(), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(`sinchew:article:v2:${item.link}`, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'sinchew.com.my')) {
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -76,7 +82,7 @@ export async function handler(ctx) {
                 });
 
                 item.description = content('.article-page-content').html();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!, 8);
 
                 return item;
             })

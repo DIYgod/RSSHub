@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category',
@@ -25,8 +25,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['www.scpta.com.cn/front/News/List/:category'],
+            target: '/news/:category',
+        },
+        {
             source: ['www.scpta.com.cn/front/News/List'],
-            target: '/news',
+            target: '/news/33',
         },
     ],
     name: '通知公告',

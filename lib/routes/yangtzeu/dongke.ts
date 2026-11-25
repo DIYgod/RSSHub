@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dongke/:path{.+}?',
@@ -21,8 +22,23 @@ export const route: Route = {
     handler,
 };
 
+async function fetchDetails(link: string) {
+    const { data: response } = await got(link);
+    const content = load(response);
+    const pubDate = content('p.content-info')
+        .text()
+        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+
+    return {
+        title: content('title').text(),
+        description: content('div.v_news_content').html(),
+        category: content('meta[name="keywords"]').prop('content')?.split(','),
+        pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
+    };
+}
+
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
     const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`;
@@ -38,29 +54,24 @@ async function handler(ctx): Promise<Data> {
             const $item = $(item);
 
             return {
-                title: $item.text(),
+                title: $item.attr('title') || $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const content = load(detailResponse);
-
-                item.title = content('title').text();
-                item.description = content('div.v_news_content').html();
-                item.category = content('meta[name="keywords"]').prop('content')?.split(',');
-                const pubDate = content('p.content-info')
-                    .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : undefined;
-
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`yangtzeu:dongke:article:v1:${item.link}`, () => fetchDetails(item.link!));
+            return {
+                title: details.title,
+                link: item.link,
+                description: details.description,
+                category: details.category,
+                pubDate: details.pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news_web_easy',
@@ -30,6 +30,13 @@ export const route: Route = {
     maintainers: ['Andiedie'],
     handler,
     url: 'news.web.nhk/news/easy/',
+};
+
+type EasyArticle = {
+    title: string;
+    news_web_image_uri: string;
+    news_id: string;
+    news_prearranged_time: string;
 };
 
 async function handler(ctx) {
@@ -66,50 +73,53 @@ async function handler(ctx) {
         .map((c) => c.split(';', 1)[0])
         .join('; ');
 
-    const data = await ofetch('https://news.web.nhk/news/easy/news-list.json', {
+    const data = await ofetch<Array<Record<string, EasyArticle[]>>>('https://news.web.nhk/news/easy/news-list.json', {
         headers: {
             cookie: buildAuthorizeCookie + '; ' + idpCookie,
         },
     });
-    const dates: Record<string, any[]> = data[0];
+    const dates = data[0];
 
-    let items: any[] = Object.values(dates).flatMap((articles) =>
+    let items = Object.values(dates).flatMap((articles) =>
         articles.map((article) => ({
             title: article.title,
             description: renderToString(
                 <>
-                    {article.title_with_ruby ? <h1>{raw(article.title_with_ruby)}</h1> : null}
                     {article.news_web_image_uri ? <img src={article.news_web_image_uri} /> : null}
                     <br />
                 </>
             ),
             guid: article.news_id,
-            pubDate: timezone(parseDate(article.news_prearranged_time), 9),
+            pubDate: parseDate(article.news_prearranged_time, 9),
             link: `https://news.web.nhk/news/easy/${article.news_id}/${article.news_id}.html`,
         }))
     );
 
-    items = items.toSorted((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
+    items = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, getRouteLimit(ctx, 30));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link, {
-                    headers: {
-                        cookie: buildAuthorizeCookie + '; ' + idpCookie,
-                    },
-                });
-                const $ = load(data);
-                item.description += $('.article-body').html();
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            description:
+                item.description +
+                (await cache.tryGet(`nhk:easy:body:v2:${item.link}`, async () => {
+                    const data = await ofetch(item.link, {
+                        headers: {
+                            cookie: buildAuthorizeCookie + '; ' + idpCookie,
+                        },
+                    });
+                    const $ = load(data);
+                    return $('.article-body').html();
+                })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
         title: 'NEWS WEB EASY',
         link: 'https://news.web.nhk/news/easy/',
-        description: 'NEWS WEB EASYは、小学生・中学生の皆さんや、日本に住んでいる外国人のみなさんに、わかりやすいことば　でニュースを伝えるウェブサイトです。',
+        description: 'NEWS WEB EASYは、小学生・中学生の皆さんや、日本に住んでいる外国人のみなさんに、わかりやすいことば\u{3000}でニュースを伝えるウェブサイトです。',
         item: items,
     };
 }

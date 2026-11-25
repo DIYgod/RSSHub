@@ -2,19 +2,20 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/tjrcgzw-notice/:cate/:subCate',
     categories: ['government'],
-    example: '/gov/tianjin/tjrcgzw-notice/rczc/sjrczc/',
+    example: '/gov/tianjin/tjrcgzw-notice/rczc/sjrczc',
     parameters: {
-        channelId: '公告分类id、详细信息点击源网站https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/请求中寻找',
+        cate: '栏目分类，可在源网站 URL 中找到，例如 rczc（人才政策）',
+        subCate: '子栏目分类，例如 sjrczc（市级人才政策）',
     },
     radar: [
         {
-            source: ['hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
-            target: '/tjrcgzw-notice/:cate/:subCate',
+            source: ['hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/rczc/sjrczc/'],
+            target: '/tjrcgzw-notice/rczc/sjrczc',
         },
     ],
     name: '人才工作网-公告',
@@ -32,11 +33,11 @@ export const route: Route = {
                 const title = $('a').text().trim();
                 const href = $('a').attr('href') || '';
                 const date = $('span').text().trim();
-                const link = href!.includes('http') ? href : new URL(href, url).href;
+                const link = href.includes('http') ? href : new URL(href, url).href;
                 return {
                     title: `天津人才工作网:${title}`,
                     link,
-                    pubDate: parseDate(date),
+                    pubDate: parseDateStrict(date, 'YYYY-MM-DD', 8),
                     author: '天津人才工作网',
                     description: `
                         <h4>${noticeCate}</h4>

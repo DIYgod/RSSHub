@@ -3,7 +3,6 @@ import os from 'node:os';
 import title from 'title';
 
 import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
 
 // convert a string into title case
 const toTitleCase = (str: string) => title(str);
@@ -17,17 +16,6 @@ const collapseWhitespace = (str?: string | null) => {
         return str.replaceAll(rAllWhitespace, ' ').trim();
     }
     return str;
-};
-
-const convertDateToISO8601 = (date?: string | Date | number | null) => {
-    if (!date) {
-        return date;
-    }
-    if (!(date instanceof Date)) {
-        // some routes may call `.toUTCString()` before passing the date to ctx...
-        date = parseDate(date);
-    }
-    return date.toISOString();
 };
 
 const getSubPath = (ctx) => {
@@ -48,4 +36,4 @@ const getLocalhostAddress = () => {
     return address;
 };
 
-export { collapseWhitespace, convertDateToISO8601, getLocalhostAddress, getSubPath, toTitleCase };
+export { collapseWhitespace, getLocalhostAddress, getSubPath, toTitleCase };

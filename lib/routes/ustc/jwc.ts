@@ -1,14 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const noticeUrl = 'https://www.teach.ustc.edu.cn/category/notice';
 const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchange: '交流' };
-
 export const route: Route = {
     path: '/jwc/:type?',
     categories: ['university'],
@@ -36,49 +35,60 @@ export const route: Route = {
 | ---- | -------- | ---- | -------- |
 | info | teaching | exam | exchange |`,
 };
-
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '';
-    // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
-
         /* headers: {
             'user-agent': UA,
         }, */
         url: `${noticeUrl}${type === '' ? '' : '-' + type}`,
     });
-
     const $ = load(response.data);
     let items = $(type === '' ? 'ul[class="article-list with-tag"] > li' : 'ul[class=article-list] > li')
         .toArray()
         .map((element) => {
             const child = $(element).children();
+
+            const href = type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href');
             const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
-                link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), 8),
+                link: href ? new URL(href, noticeUrl).href : undefined,
+                pubDate: parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD', 8),
             };
             return info;
         });
-
-    items = await Promise.all(
-        items
-            .filter((item) => item.link)
-            .map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    // www.teach ?? pms.cmet ?? news
-                    item.description = $('main[class=single]').html() ?? $('.card-footer').html() ?? $('.v_news_content').html();
-                    item.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
-                    return item;
-                })
-            )
+    items = await pMap(
+        items.filter((item) => item.link),
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'author' | 'category' | 'updated'>>(`ustc:jwc:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description' | 'pubDate' | 'author' | 'category' | 'updated'> = {};
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const modified = $('li.meta-last-modified').text();
+                details.updated = modified ? parseDate(modified, 'YYYY-MM-DD HH:mm', 8) : undefined;
+                const categories = $('li.meta-categories a')
+                    .toArray()
+                    .map((element) => $(element).text());
+                details.category = categories.length ? categories : undefined;
+                // www.teach ?? pms.cmet ?? news
+                const content = $('main[class=single]');
+                details.author =
+                    content
+                        .find('address.signature')
+                        .text()
+                        .replace(/\d{4}年\d{1,2}月\d{1,2}日\s*$/, '')
+                        .trim() || undefined;
+                content.find('address.signature').remove();
+                details.description = content.html() ?? $('.card-footer').html() ?? $('.v_news_content').html();
+                details.pubDate = $('li[class=meta-date]').text() ? parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm', 8) : undefined;
+                return details;
+            });
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
-
     const desc = type === '' ? '中国科学技术大学教务处 - 通知新闻' : `中国科学技术大学教务处 - ${noticeType[type]}类通知`;
-
     return {
         title: desc,
         description: desc,

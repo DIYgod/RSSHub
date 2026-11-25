@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -32,7 +32,7 @@ async function handler() {
     const link = 'https://grd.bit.edu.cn/zsgz/zsxx/index.htm';
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('.tongzhigonggao li');
+    const list = $('.page-list5 .block-list > li');
 
     return {
         title: '北京理工大学研究生院',
@@ -44,9 +44,9 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('a');
                 return {
-                    title: a.text(),
+                    title: a.find('.gpArticleTitle').text(),
                     link: new URL(a.attr('href')!, link).href,
-                    pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                    pubDate: parseDate($item.find('.gpArticleDate').text(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

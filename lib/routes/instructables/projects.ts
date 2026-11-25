@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/projects/:category?',
@@ -21,6 +21,10 @@ export const route: Route = {
         {
             source: ['instructables.com/projects'],
             target: '/projects',
+        },
+        {
+            source: ['instructables.com/circuits/projects'],
+            target: '/projects/circuits',
         },
     ],
     name: 'Projects',
@@ -75,10 +79,10 @@ async function handler(ctx) {
     });
 
     return {
-        title: 'Instructables Projects', // 项目的标题
-        link: `https://${siteDomain}/projects`, // 指向项目的链接
-        description: 'Instructables Projects', // 描述项目
-        language: 'en' as const, // 频道语言
+        title: 'Instructables Projects',
+        link: pageLink,
+        description: 'Instructables Projects',
+        language: 'en' as const,
         item: data.hits.map((item) => ({
             title: item.document.title,
             link: `https://${siteDomain}/${item.document.urlString}`,

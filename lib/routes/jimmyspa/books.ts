@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -59,9 +59,9 @@ async function handler(ctx) {
             const bookTitle = bookContent('p.tit').text();
             const bookImageRelative = bookContent('div.work_img img').prop('src') || '';
             const bookImageUrl = bookImageRelative ? baseUrl + bookImageRelative : '';
-            const bookDetailUrl = bookContent('li.work_block').prop('data-route');
+            const bookDetailUrl = new URL(bookContent('li.work_block').prop('data-route'), baseUrl).href;
 
-            const { renderedDescription, publishDate } = await cache.tryGet(bookDetailUrl, async () => {
+            const { processedDescription, publishDate } = await cache.tryGet(`${bookDetailUrl}:details`, async () => {
                 const detailResponse = await got(bookDetailUrl);
                 const detailPage = load(detailResponse.data);
                 const bookDescription = detailPage('article.intro_cont').html() || '';
@@ -75,24 +75,25 @@ async function handler(ctx) {
                 );
 
                 const publishDateMatch = bookInfoWrap.match(/<span>(首次出版|First Published|初版)<\/span>\s*<span class="num">([^<]+)<\/span>/);
-                const publishDate = publishDateMatch ? parseDate(publishDateMatch[2] + '-02') : '';
-
-                const renderedDescription = renderDescription({
-                    images: bookImageUrl
-                        ? [
-                              {
-                                  src: bookImageUrl,
-                                  alt: bookTitle,
-                              },
-                          ]
-                        : undefined,
-                    description: processedDescription,
-                });
+                const publicationDate = publishDateMatch?.[2];
+                const publishDate = publicationDate ? parseDate(`${publicationDate}T00:00:00+08:00`) : undefined;
 
                 return {
-                    renderedDescription,
+                    processedDescription,
                     publishDate,
                 };
+            });
+
+            const renderedDescription = renderDescription({
+                images: bookImageUrl
+                    ? [
+                          {
+                              src: bookImageUrl,
+                              alt: bookTitle,
+                          },
+                      ]
+                    : undefined,
+                description: processedDescription,
             });
 
             return {
@@ -102,7 +103,6 @@ async function handler(ctx) {
                 pubDate: publishDate,
                 content: {
                     html: renderedDescription,
-                    text: bookTitle,
                 },
             };
         });
@@ -110,7 +110,6 @@ async function handler(ctx) {
     return {
         title: `幾米 - 幾米創作(${language})`,
         link: `${baseUrl}/${language}/Books`,
-        allowEmpty: true,
         item: await Promise.all(bookItems),
     };
 }

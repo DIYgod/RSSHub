@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.shou.edu.cn';
 
@@ -38,27 +38,21 @@ async function handler(ctx: Context) {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const items = await Promise.all(
-        $('.col_news_item')
-            .slice(0, 10)
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const itemUrl = new URL($item.find('.col_news_title a').attr('href')!, host).href;
+    const items = await pMap(
+        $('.col_news_item').slice(0, 10).toArray(),
+        async (item) => {
+            const $item = $(item);
+            const itemUrl = new URL($item.find('.col_news_title a').attr('href')!, host).href;
 
-                return cache.tryGet(itemUrl, async () => {
-                    const detailResponse = await ofetch(itemUrl);
-                    const $detail = load(detailResponse);
+            const details = await cache.tryGet(`shou:body:v2:${itemUrl}`, async () => {
+                const detailResponse = await ofetch(itemUrl);
+                const $detail = load(detailResponse);
 
-                    return {
-                        title: $item.find('.col_news_title a').text(),
-                        link: itemUrl,
-                        guid: itemUrl,
-                        pubDate: timezone(parseDate($item.find('.col_news_date').text()), 8),
-                        description: $detail('.wp_articlecontent').text(),
-                    };
-                });
-            })
+                return { description: $detail('.wp_articlecontent').html() };
+            });
+            return { title: $item.find('.col_news_title a').text(), link: itemUrl, guid: itemUrl, pubDate: parseDate($item.find('.col_news_date').text(), 8), description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

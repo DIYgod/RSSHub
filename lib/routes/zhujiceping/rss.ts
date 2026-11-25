@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -18,12 +18,10 @@ export const route: Route = {
     handler,
     url: 'zhujiceping.com/',
 };
-
 async function handler() {
     const url = 'https://www.zhujiceping.com/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
-
     const list = $('article.excerpt')
         .toArray()
         .map((e) => {
@@ -32,15 +30,20 @@ async function handler() {
             const link = element.find('h2 > a').attr('href');
             const description = element.find('p.note').text();
             const dateraw = element.find('time').text();
-
+            element.find('.meta .cat i').remove();
             return {
                 title: title!,
                 description,
                 link,
+                image: element.find('a.focus img.thumb').attr('src'),
+                category: element
+                    .find('.meta .cat')
+                    .toArray()
+                    .map((category) => $(category).text())
+                    .filter(Boolean),
                 pubDate: parseDate(dateraw, 'YYYY-MM-DD'),
             };
         });
-
     return {
         title: '国外主机测评',
         link: url,

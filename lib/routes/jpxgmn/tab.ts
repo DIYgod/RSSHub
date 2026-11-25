@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getArticleDesc, getOriginUrl } from './utils';
 
@@ -15,7 +16,7 @@ export const route: Route = {
     radar: [
         {
             source: ['mei5.vip/:tab'],
-            target: '/:tab',
+            target: '/tab/:tab',
         },
     ],
     name: '分类',
@@ -50,13 +51,13 @@ async function handler(ctx) {
     return {
         title: `极品性感美女 - ${feedTitle}`,
         link: response.url,
-        item: await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    item.description = await getArticleDesc(item.link);
-                    return item;
-                })
-            )
+        item: await pMap(
+            items,
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet(`jpxgmn:article:${item.link}`, () => getArticleDesc(item.link)),
+            }),
+            { concurrency: 3 }
         ),
     };
 }

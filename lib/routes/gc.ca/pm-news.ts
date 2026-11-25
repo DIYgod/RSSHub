@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/pm/:language?',
@@ -23,11 +24,18 @@ export const route: Route = {
             source: ['pm.gc.ca', 'pm.gc.ca/:language', 'pm.gc.ca/:language/news', 'pm.gc.ca/:language/nouvelles'],
             target: '/pm/:language',
         },
+        {
+            source: ['pm.gc.ca'],
+            target: '/pm',
+        },
     ],
     name: 'News',
     maintainers: ['elibroftw'],
     handler: async (ctx: Context): Promise<Data> => {
         const { language = 'en' } = ctx.req.param();
+        if (language !== 'en' && language !== 'fr') {
+            throw new InvalidParameterError('language must be en or fr.');
+        }
 
         const ajaxURL = language === 'fr' ? 'https://www.pm.gc.ca/fr/views/ajax' : 'https://www.pm.gc.ca/views/ajax';
 
@@ -47,32 +55,27 @@ export const route: Route = {
         const $ = load(replaceItem.data);
         const items: DataItem[] = $('.news-row')
             .toArray()
-            .map((element): DataItem | null => {
+            .map((element): DataItem => {
                 const $element = $(element);
                 const $titleLink = $element.find('.title a');
                 const $category = $element.find('.category');
                 const $date = $element.find('.location-date time');
 
-                const title = $titleLink.text().trim();
-                const link = $titleLink.attr('href')!;
                 const category = $category.text().trim();
                 const date = $date.attr('datetime') || '';
 
-                if (title && link) {
-                    return {
-                        title,
-                        link,
-                        category: [category],
-                        pubDate: date ? parseDate(date) : undefined,
-                    };
-                }
-                return null;
-            })
-            .filter((item) => item !== null);
+                return {
+                    title: $titleLink.text(),
+                    link: $titleLink.attr('href'),
+                    category: [category],
+                    pubDate: date ? parseDate(date) : undefined,
+                };
+            });
 
         return {
             title: language === 'fr' ? 'Premier ministre du Canada | Nouvelles' : 'Prime Minister of Canada | News',
             link: `https://www.pm.gc.ca/${language}/news`,
+            language,
             item: items,
         };
     },

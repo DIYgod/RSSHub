@@ -3,6 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';
@@ -40,12 +41,13 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = String(ctx.req.param('uid'));
     const embed = !ctx.req.param('embed');
-    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',
@@ -71,7 +73,7 @@ async function handler(ctx) {
         return {
             title: card_data.title,
             description: utils.renderUGCDescription(embed, card_data.pic, card_data.desc, card_data.aid, undefined, card.desc.bvid),
-            pubDate: new Date(card_data.pubdate * 1000).toUTCString(),
+            pubDate: parseDate(card_data.pubdate * 1000),
             link: card_data.pubdate > utils.bvidTime && card.desc.bvid ? `https://www.bilibili.com/video/${card.desc.bvid}` : `https://www.bilibili.com/video/av${card_data.aid}`,
             author: card.desc.user_profile.info.uname,
         };

@@ -1,10 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
+
+const getArticle = async (link: string) => {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return { description: $('.newsD_con').html() };
+};
 
 export const route: Route = {
     path: '/news',
@@ -39,7 +47,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: parseDate(dateText),
+                    pubDate: parseDate(dateText, 8),
                 };
             });
 
@@ -47,7 +55,7 @@ export const route: Route = {
             title: `${museumName} - 最新公告`,
             link: listUrl,
             language: 'zh-CN',
-            item: list,
+            item: await pMap(list, async (item) => ({ ...item, ...(await cache.tryGet(item.link, () => getArticle(item.link))) }), { concurrency: 3 }),
         };
     },
 };

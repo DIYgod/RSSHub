@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -36,13 +36,14 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: timezone(parseDate($item.find('.wapnewsdate').text()), 8),
+                pubDate: parseDate($item.find('.wapnewsdate').text(), 8),
                 description: $item.find('.newslisttitlexx').text(),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             item.link!.startsWith('https://www.jlbtc.edu.cn/')
                 ? cache.tryGet(item.link!, async () => {
                       const detailResponse = await ofetch(item.link!);
@@ -52,8 +53,8 @@ async function handler(ctx: Context) {
 
                       return item;
                   })
-                : item
-        )
+                : item,
+        { concurrency: 3 }
     );
 
     return {

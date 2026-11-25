@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/amherst/ecenews',
@@ -11,13 +11,14 @@ export const route: Route = {
     radar: [{ source: ['www.umass.edu/engineering/news'] }],
     name: 'College of Engineering - News',
     maintainers: ['GammaPi'],
+    features: { antiCrawler: true },
     handler,
 };
 
 async function handler() {
     const baseUrl = 'https://www.umass.edu';
     const link = `${baseUrl}/engineering/news`;
-    const response = await ofetch(link);
+    const response = await ofetch(link, { minVersion: 'TLSv1.3' });
     const $ = load(response);
 
     const items = $('.views-row article.news')
@@ -26,10 +27,10 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('.news__title a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 description: $item.find('.news__summary').html(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: parseDate($item.find('.news__info .news__time').text()),
+                pubDate: parseDateStrict($item.find('.news__info .news__time').text(), 'MMMM D, YYYY'),
                 category: $item
                     .find('.news__category a')
                     .toArray()

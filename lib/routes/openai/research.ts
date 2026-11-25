@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { BASE_URL, fetchArticles } from './common';
 
@@ -23,7 +24,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const limit = Number.parseInt(ctx.req.query('limit') || '10');
+    const limit = getRouteLimit(ctx, 10);
     const link = new URL('/research/index', BASE_URL).href;
 
     return {

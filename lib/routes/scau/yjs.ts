@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yzb',
@@ -32,22 +34,31 @@ async function handler() {
     const link = 'https://yzb.scau.edu.cn/2136/list1.htm';
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('#wp_news_w25 tr');
+    const items = $('.news_list > li')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const anchor = $item.find('.news_title a');
+            return { title: anchor.attr('title') || anchor.text(), link: new URL(anchor.attr('href')!, link).href, pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 8) };
+        });
+
+    const detailedItems = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`scau:article:v1:${item.link}`, async () => {
+                const response = await got(item.link);
+                const article = load(response.data);
+                return article('.wp_articlecontent, .content-l > .detail').html();
+            }),
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         title: '华南农业大学研招办',
         link,
         description: '华农研讯',
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                const a = $item.find('a');
-                return {
-                    title: a.text(),
-                    link: a.attr('href'),
-                    pubDate: parseDate($item.find('td').eq(3).text(), 'YYYY/MM/DD'),
-                };
-            }),
+        item: detailedItems,
     };
 }

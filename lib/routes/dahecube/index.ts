@@ -1,7 +1,9 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -30,6 +32,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
+    if (!Object.hasOwn(TYPE, type)) {
+        throw new InvalidParameterError(`Invalid type. Supported types: ${Object.keys(TYPE).join(', ')}`);
+    }
     const params = JSON.stringify({
         channelid: TYPE[type].id,
         pno: 1,
@@ -47,13 +52,14 @@ async function handler(ctx) {
 
     const list = res.data.data.items.map((item) => ({
         title: item.title,
-        pubDate: parseDate(item.pubtime, 'YYYY-MM-DD HH:ss:mm'),
+        pubDate: parseDate(item.pubtime, 'YYYY-MM-DD HH:mm:ss', 8),
         author: item.source,
         id: item.recid,
     }));
+    const candidates = list.slice(0, getRouteLimit(ctx));
 
     const items = await Promise.all(
-        list.map((item) =>
+        candidates.map((item) =>
             cache.tryGet(item.id, async () => {
                 const detailResponse = await got({
                     method: 'post',

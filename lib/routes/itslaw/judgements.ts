@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/judgements/:conditions',
@@ -21,7 +21,7 @@ async function handler(ctx: Context) {
     const data = await ofetch(`https://www.itslaw.com/api/judgements?sortType=2&category=CASE&startIndex=0&countPerPage=20&conditions=${encodeURIComponent(conditions)}`);
 
     const items = data.data.searchResult.judgements.map((item) => {
-        const initialization = `{"category":"CASE","id":"${item.id}","anchor":null,"detailKeyWords":[""]}`;
+        const initialization = JSON.stringify({ category: 'CASE', id: String(item.id), anchor: null, detailKeyWords: [''] });
         return {
             title: item.title,
             description: item.courtOpinion,

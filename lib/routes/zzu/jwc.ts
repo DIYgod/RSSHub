@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -21,7 +23,7 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/jwc/'],
         },
     ],
-    name: '郑大教务部',
+    name: '教务部',
     maintainers: ['amandus1990'],
     handler,
     description: `| 新闻快递 | 通知公告 |
@@ -42,21 +44,21 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('ul.list li')
+        .slice(0, Math.max(15, getRouteLimit(ctx, 15)))
         .toArray()
-        .slice(0, 15)
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a.tit').first();
+            const $link = $element.find('a[href]');
             const link = new URL($link.attr('href')!, typeDict[type][1]).href;
-            const title = $link.text().trim();
+            const title = $link.find('h3').text();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').last().text().trim();
+            const pubDateText = $element.find('span').text();
 
             return {
                 title,
                 link,
-                pubDate: pubDateText || null,
+                pubDate: parseDate(pubDateText),
             };
         });
 

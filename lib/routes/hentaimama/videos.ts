@@ -2,13 +2,14 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/videos',
     categories: ['multimedia'],
     example: '/hentaimama/videos',
     name: 'Recent Videos',
+    features: { nsfw: true },
     maintainers: ['DrakeTDL'],
     handler,
 };
@@ -32,8 +33,7 @@ async function handler(): Promise<Data> {
                 return {
                     title: $item.find('img').attr('alt') ?? '',
                     description: `<img src="${$item.find('img').attr('data-src')}">`,
-                    pubDate: parseDate(date),
-                    guid: date,
+                    pubDate: date ? parseDate(date) : undefined,
                     link: $item.find('a').attr('href'),
                 };
             }),

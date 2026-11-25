@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/commercialpress/latest',
@@ -43,7 +44,7 @@ async function handler() {
         },
     });
 
-    // 这个有个重定向，需要获取到真实地址后添加排序参数后再请求一次
+    // Add the sort parameters to the redirected collection URL.
     const realUrl = `${newBookLandingPage.request.options.url.href}?sort=time&sub_type=`;
     const newBookPage = await got({
         method: 'get',
@@ -63,7 +64,7 @@ async function handler() {
                 title: $item.find('.title > a').text(),
                 link: $item.find('.title > a').attr('href'),
                 description: `<img src="${$item.find('.post img').attr('src')}" /><br>${$item.find('.abstract').html()}`,
-                pubDate: new Date($item.find('.time > span').attr('title')!).toUTCString(),
+                pubDate: parseDate($item.find('.time > span').attr('title')!),
             };
         });
 

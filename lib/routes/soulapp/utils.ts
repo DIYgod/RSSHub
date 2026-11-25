@@ -2,8 +2,8 @@ import { randomBytes, randomInt, randomUUID } from 'node:crypto';
 
 import sanitizeHtml from 'sanitize-html';
 
-import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
+import { md5 } from '@/utils/hash';
+import { parseDate } from '@/utils/time';
 
 export const apiRoot = 'https://api-h5.soulapp.cn';
 const shareRoot = 'https://w3.soulsmile.cn/activity/#/web/topic/detail';
@@ -13,9 +13,10 @@ const device = {
     aid: '10000001',
     av: '6.32.0',
     avc: '260813221000',
-    di: randomUUID().toUpperCase(),
-    sdi: randomBytes(16).toString('hex'),
 };
+
+let deviceId: { di: string; sdi: string };
+const getDeviceId = () => (deviceId ??= { di: randomUUID().toUpperCase(), sdi: randomBytes(16).toHex() });
 
 const sortByCodeUnit = (a: string, b: string) => {
     if (a < b) {
@@ -50,25 +51,25 @@ const signCs = (timestampSec: number, str1: string, str2: string) => {
         s[3 + 2 * i] = e1[i];
     }
 
-    const m2 = Buffer.from(md5(str1 + e2.toString('hex') + 'kG@yGB9'), 'hex');
+    const m2 = Buffer.from(md5(str1 + e2.toHex() + 'kG@yGB9'), 'hex');
     for (let i = 0; i < 4; i++) {
         s[12 + i] = m2[i];
     }
 
-    Buffer.from(s.subarray(0, 16).toString('hex'), 'latin1').copy(s, 0);
+    Buffer.from(s.subarray(0, 16).toHex(), 'latin1').copy(s, 0);
 
     s[20] = 0x30 + randomInt(0, 10);
     s[21] = 0x30 + randomInt(0, 10);
     s[22] = 0x30 + randomInt(0, 10);
     s[23] = s[22];
 
-    Buffer.from(randomBytes(2).toString('hex'), 'latin1').copy(s, 32);
+    Buffer.from(randomBytes(2).toHex(), 'latin1').copy(s, 32);
 
     return s.toString('latin1');
 };
 
 export const signedHeaders = (path: string, query: Record<string, string>) => {
-    const ms = Date.now();
+    const ms = Temporal.Now.instant().epochMilliseconds;
     const str1 = `${path}?${Object.keys(query)
         .toSorted(sortByCodeUnit)
         .map((k) => `${k}=${query[k]}`)
@@ -78,8 +79,7 @@ export const signedHeaders = (path: string, query: Record<string, string>) => {
         aid: device.aid,
         at: ms.toString(16),
         av: device.av,
-        di: device.di,
-        sdi: device.sdi,
+        ...getDeviceId(),
     };
     const str2 = Object.entries(headers)
         .toSorted(([a], [b]) => sortByCodeUnit(a, b))
@@ -107,7 +107,7 @@ export const parsePost = (item) => {
 
                 case 'VIDEO':
                     content += '<br />';
-                    content += `<video controls src="${attachment.fileUrl}" width="640" height="360"></video>`;
+                    content += `<video controls src="${attachment.fileUrl}"${attachment.videoCoverUrl ? ` poster="${attachment.videoCoverUrl}"` : ''} width="640" height="360"></video>`;
                     break;
 
                 case 'AUDIO':

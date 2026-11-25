@@ -39,7 +39,7 @@ async function handler(ctx) {
         game: '122020001',
         other: '125706031,125888001,125886001,123332001',
     };
-    const url = `https://izhongchou.taobao.com/dream/ajax/getProjectListNew.htm?_input_charset=utf-8&type=6&pageSize=20&page=1&sort=1&status=&projectType=${encodeURIComponent(map[type])}&_=${Date.now()}&callback=`;
+    const url = `https://izhongchou.taobao.com/dream/ajax/getProjectListNew.htm?_input_charset=utf-8&type=6&pageSize=20&page=1&sort=1&status=&projectType=${encodeURIComponent(map[type])}&_=${Temporal.Now.instant().epochMilliseconds}&callback=`;
     const response = await got({
         method: 'get',
         url,
@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const items = response.data.data.map((item) => {
         const title = item.name;
-        const link = `https://izhongchou.taobao.com/dreamdetail.htm?id=${item.id}`;
+        const link = new URL(item.link, 'https://izhongchou.taobao.com').href;
         const description = renderToString(
             <>
                 <img src={item.image} />

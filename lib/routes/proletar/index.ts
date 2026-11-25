@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type?/:id?',
@@ -29,8 +30,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list: DataItem[] = $('.archive-item-link')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {
@@ -39,19 +40,24 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`proletar:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.author = content('.post-author').text();
-                item.description = content('#content').html()!;
-                item.pubDate = parseDate(detailResponse.match(/"datePublished":"(.*)","dateModified"/)[1]);
-
-                return item;
-            })
-        )
+                const metadata = JSON.parse(content('script[type="application/ld+json"]').text());
+                return {
+                    author: content('.post-author').text(),
+                    description: content('#content').html()!,
+                    pubDate: parseDate(metadata.datePublished),
+                    updated: parseDate(metadata.dateModified),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

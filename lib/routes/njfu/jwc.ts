@@ -1,8 +1,9 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc.njfu.edu.cn/sy/';
 
@@ -28,6 +29,9 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { category = 'tzgg' } = ctx.req.param();
+    if (!Object.hasOwn(map, category)) {
+        throw new InvalidParameterError('Unsupported category. Use xjfw, tzgg, sjfw, or xzzq.');
+    }
     const link = category === 'xzzq' ? 'https://jwc.njfu.edu.cn/xzzq/' : `${baseUrl}${category}/`;
 
     const response = await ofetch(link);
@@ -39,7 +43,7 @@ async function handler(ctx: Context) {
         description: `南京林业大学教务处-${map[category]}`,
         item: infolist.map((info) => ({
             title: info.title,
-            description: info.summary || info.title,
+            description: info.summary,
             pubDate: parseDate(info.releasetime),
             link: new URL(info.url, link).href,
         })),

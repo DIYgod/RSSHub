@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type?/:category?',
@@ -91,7 +90,7 @@ async function handler(ctx) {
                 });
 
                 item.author = content('.jeg_meta_author').text().replace(/by/, '');
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/datePublished":"(.*)","dateModified/)[1]), 8);
+                item.pubDate = parseDate(detailResponse.data.match(/datePublished":"(.*)","dateModified/)[1], 8);
                 item.description = content('.thumbnail-container').html()! + content('.elementor-text-editor, .content-inner').html()!;
 
                 return item;

@@ -38,13 +38,13 @@ Examples:
         supportScihub: false,
     },
     name: 'User timeline',
-    maintainers: ['siygle', 'SnowAgar25', 'HanaokaYuzu'],
+    maintainers: ['siygle', 'Tsuyumi25', 'HanaokaYuzu'],
     handler,
 };
 
 async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
-    const [, pureUsername, site] = username.match(/@?(\w+)@(\w+\.\w+)/) || [];
+    const [, pureUsername, site] = username.match(/^@?(\w+)@((?:[a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z\d](?:[a-z\d-]*[a-z\d])?)$/i) || [];
     if (!pureUsername || !site) {
         throw new InvalidParameterError('Provide a valid Misskey username');
     }

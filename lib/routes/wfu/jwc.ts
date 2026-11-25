@@ -1,13 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-// 参考 whu/news 武汉大学页面写成
-
-const baseUrl = 'https://jwc.wfu.edu.cn/3742/list.htm';
+import { parseDate } from '@/utils/time';
+// Adapted from the university news route.
+const baseUrl = 'https://jwc.wfu.edu.cn/7448/list.htm';
 const sizeTitle = '潍坊学院教务处新闻';
-
 export const route: Route = {
     path: '/jwc',
     categories: ['university'],
@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.wfu.edu.cn/'],
+            source: ['jwc.wfu.edu.cn/', 'jwc.wfu.edu.cn/7448/list.htm'],
         },
     ],
     name: '教务处通知',
@@ -31,44 +31,53 @@ export const route: Route = {
     handler,
     url: 'jwc.wfu.edu.cn/',
 };
-
+async function getArticleDetail(link: string) {
+    const { data } = await got.get(link);
+    const $ = load(data);
+    const body = $('div.wp_articlecontent');
+    body.find('[pdfsrc]').each((_, element) => {
+        const pdfUrl = new URL($(element).attr('pdfsrc')!, link).href;
+        $(element).replaceWith($('<p></p>').append($('<a></a>').attr('href', pdfUrl).text('查看文档')));
+    });
+    return { description: body.html() };
+}
 async function handler() {
     const response = await got({
         method: 'get',
         url: baseUrl,
-        headers: {
-            Referer: 'https://jwc.wfu.edu.cn/',
-        },
     });
     const $ = load(response.data);
-
-    // 获取当前页面的 list
+    // Read the first-page article list.
     const list = $('ul.wp_article_list>li');
-
-    const result = await Promise.all(
-        // 遍历每一篇文章
-        list.toArray().map((item) => {
-            const $ = load(item); // 将列表项加载成 html
-            const $article_title = $('div.pr_fields>span.Article_Title>a');
-            const $item_url = 'https://jwc.wfu.edu.cn/' + $article_title.attr('href'); // 获取 每一项的url
-            const $title = $article_title.text(); // 获取每个的标题
-            const $description = $('div.pr_fields>span.Article_Title').html();
-
-            // 列表上提取到的信息
-            // 教务处通知为文件，直接提供下载链接
-            // 标题 链接
-            const single = {
-                title: $title,
-                link: $item_url,
-                guid: $item_url,
-                description: $description,
-            };
-
-            // 合并解析后的结果集作为该篇文章最终的输出结果
-            return single;
-        })
+    const items = list.toArray().map((item) => {
+        const $item = $(item);
+        const anchor = $item.find('div.pr_fields > span.Article_Title > a');
+        const link = new URL(anchor.attr('href')!, baseUrl).href;
+        return {
+            title: anchor.attr('title') || anchor.text(),
+            pubDate: parseDate($item.find('span.Article_PublishDate').text(), 0),
+            link,
+            guid: link,
+        };
+    });
+    const result = await pMap(
+        items,
+        async (item) => {
+            if (new URL(item.link).hostname !== 'jwc.wfu.edu.cn') {
+                return item;
+            }
+            try {
+                const detail = await cache.tryGet(`wfu:jwc:article:${item.link}`, () => getArticleDetail(item.link));
+                return { ...item, description: detail.description };
+            } catch (error) {
+                if (error instanceof Error && error.name === 'FetchError') {
+                    return item;
+                }
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: sizeTitle,
         link: baseUrl,

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
@@ -24,6 +25,14 @@ export const route: Route = {
             source: ['news.xmnn.cn/:category'],
             target: '/news/:category',
         },
+        {
+            source: ['www.xmnn.cn/news/:category/*path'],
+            target: '/news/:category',
+        },
+        {
+            source: ['news.xmnn.cn/:category/*path'],
+            target: '/news/:category',
+        },
     ],
     name: '新闻',
     maintainers: ['nczitzk'],
@@ -41,9 +50,15 @@ export const route: Route = {
 | 社会新闻     | shxw    |`,
 };
 
+async function fetchArticleDetail(link: string) {
+    const { data: detailResponse } = await got(link);
+    const content = load(detailResponse);
+    return content('div.TRS_Editor').html();
+}
+
 async function handler(ctx) {
     const { category = 'xmxw' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://news.xmnn.cn';
     const currentUrl = `${rootUrl}/${category}/`;
@@ -52,38 +67,31 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('div#sort_body ul li a')
+    const list = $('div#sort_body ul li a')
         .slice(0, limit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
-                title: $item.find('h1').text().trim(),
-                link: $item.prop('href')!,
+                title: $item.find('h1').text(),
+                link: new URL($item.prop('href')!, currentUrl).href,
                 description: $item.find('div.abstract').html(),
-                author: $item.find('div.source').text(),
-                pubDate: timezone(parseDate($item.find('div.time').text()), 8),
+                author: [{ name: $item.find('div.source').text().trim() }],
+                pubDate: parseDate($item.find('div.time').text().trim(), 8),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const content = load(detailResponse);
-
-                item.title = content('div.cont-h, div.tip h1').text().trim();
-                item.description = content('div.TRS_Editor').html();
-                item.author = content('span.cont-a-src a')
-                    .toArray()
-                    .map((a) => ({ name: content(a).text() }));
-                item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').contents().first().text().trim()), 8);
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`xmnn:article:${item.link}`, () => fetchArticleDetail(item.link));
+            return {
+                ...item,
+                description: description ?? item.description,
+            };
+        },
+        { concurrency: 3 }
     );
 
     const title = $('title').text();

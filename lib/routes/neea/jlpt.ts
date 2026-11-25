@@ -2,15 +2,17 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+const handler = async (ctx: Context): Promise<Data> => {
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://jlpt.neea.cn';
     const targetUrl: string = new URL('index.do', baseUrl).href;
@@ -26,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.text();
-            const pubDateStr: string | undefined = title.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+            const pubDateStr: string | undefined = /(\d{4}-\d{2}-\d{2})/.exec(title)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 
@@ -42,8 +44,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     items = (
-        await Promise.all(
-            items.map((item) => {
+        await pMap(
+            items,
+            (item) => {
                 if (!item.link) {
                     return item;
                 }
@@ -65,19 +68,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         ...processedItem,
                     };
                 });
-            })
+            },
+            { concurrency: 6 }
         )
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
-    const imageUrl: string | undefined = $('div.header img').attr('arc');
+    const imageUrl: string | undefined = $('div.header img').attr('src');
 
     return {
         title: `${title.split(/-/).pop()} - ${$('div.indexcontent h1').text()}`,
         description: title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: imageUrl ? new URL(imageUrl, baseUrl).href : undefined,
         author: title.split(/-/, 1)[0],
         language,

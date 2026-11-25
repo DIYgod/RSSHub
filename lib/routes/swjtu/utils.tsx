@@ -2,7 +2,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const renderDetail = (jobs) =>
     renderToString(
@@ -57,7 +57,7 @@ const descpPage = (link, cache) =>
 
         return {
             title: `${intro.dwmc}（${intro.xzyjmc}）`,
-            pubDate: parseDate(String(intro.fbrq)),
+            pubDate: parseDate(intro.fbrq, 'YYYY-MM-DD', 8),
             description: renderDesc(intro),
             link: String(link.replace('data', 'view')),
         };

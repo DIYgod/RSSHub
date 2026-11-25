@@ -4,7 +4,7 @@ import { config } from '@/config';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type NewsItem = {
     cid: string;
@@ -101,7 +101,7 @@ async function handler(ctx) {
                     if (!Array.isArray(parsed) || parsed[0] !== 1) {
                         continue;
                     }
-                    const chunk = parsed[1] as string;
+                    const chunk: string = parsed[1];
                     if (!tTypeHtml && chunk.trimStart().startsWith('<')) {
                         tTypeHtml = chunk;
                     }
@@ -121,7 +121,7 @@ async function handler(ctx) {
                         const colonIdx = line.indexOf(':');
                         if (colonIdx !== -1) {
                             try {
-                                const data = JSON.parse(line.slice(colonIdx + 1))?.[3]?.value?.bulletin?.data as string | undefined;
+                                const data: string | undefined = JSON.parse(line.slice(colonIdx + 1))?.[3]?.value?.bulletin?.data;
                                 if (data !== undefined) {
                                     item.description = data;
                                 }

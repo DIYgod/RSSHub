@@ -1,7 +1,7 @@
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const SUB_NAME_PREFIX = '8KCosplay';
 export const SUB_URL = 'https://www.8kcosplay.com';
@@ -18,7 +18,7 @@ export const getPosts = async (limit: number, options?: { categories?: number; t
         title: item.title.rendered,
         description: item.content.rendered,
         link: item.link,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: parseDate(`${item.date_gmt}Z`),
         author: item._embedded?.author?.map((a) => a.name).join(', '),
         category: item._embedded?.['wp:term']?.flatMap((terms) => terms.map((t) => t.name)),
     })) satisfies DataItem[];

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/post/:type?',
@@ -20,7 +20,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const link = 'https://bbs.loongarch.org/api/discussions';
+    const link = 'https://bbs.loongarch.org/';
 
     let title = '最新帖子';
     let sortValue = '-createdAt';

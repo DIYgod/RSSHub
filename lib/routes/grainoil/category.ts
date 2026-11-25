@@ -8,17 +8,18 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const { category, id } = ctx.req.param();
+const handler = async (ctx: Context): Promise<Data> => {
+    const { category, id: rawId } = ctx.req.param();
+    const id = rawId.endsWith('.jspx') ? rawId.slice(0, -5) : rawId;
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://load.grainoil.com.cn';
     const targetUrl: string = new URL(`${category}/${id}.jspx`, baseUrl).href;
@@ -36,13 +37,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('b').text();
             const pubDateStr: string | undefined = $el.find('span').text().trim();
             const linkUrl: string | undefined = $el.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
-                link: linkUrl,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 8) : undefined,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 language,
             };
 
@@ -61,7 +60,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.m_tit h2').text();
-                    const description = $$('div.TRS_Editor').html();
+                    const content = $$('div.TRS_Editor');
+                    const description = content.html();
                     const authors: DataItem['author'] = $$('div.m_tit h2 a').first().text();
 
                     const processedItem: DataItem = {
@@ -70,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         author: authors,
                         content: {
                             html: description,
-                            text: description,
+                            text: content.text(),
                         },
                         language,
                     };
@@ -91,7 +91,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[http-equiv="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('meta[http-equiv="keywords"]').attr('content'),
         language,
@@ -157,12 +156,7 @@ export const route: Route = {
     radar: [
         {
             source: ['load.grainoil.com.cn/:category/:id'],
-            target: (params) => {
-                const category: string = params.category;
-                const id: string = params.id;
-
-                return `/grainoil/${category}/${id}`;
-            },
+            target: '/:category/:id',
         },
         {
             title: '政务信息',

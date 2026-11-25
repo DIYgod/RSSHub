@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { apiUrl, baseUrl, ProcessFeed, processList } from './utils';
+import { apiUrl, baseUrl, processFeed, processList } from './utils';
 
 export const route: Route = {
     path: '/publication/:id',
@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     const list = processList(articles);
 
-    const items = await ProcessFeed(list);
+    const items = await processFeed(list);
 
     return {
         title: `${publicationData.title} - 文章列表｜方格子 vocus`,

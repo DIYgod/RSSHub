@@ -2,15 +2,17 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+const handler = async (ctx: Context): Promise<Data> => {
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.python.org';
     const targetUrl: string = new URL('downloads', baseUrl).href;
@@ -31,51 +33,57 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .text()
                 ?.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
             const linkUrl: string | undefined = $el.find('span.release-pep a').attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
-            if (!item.link) {
+    items = await pMap(
+        items,
+        async (item) => {
+            const link = item.link;
+            if (!link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link!);
+            const details = await cache.tryGet(`${link}:python-pep-body`, async (): Promise<DataItem> => {
+                const detailResponse = await ofetch(link);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.page-title').text();
-                const description: string | undefined = $$('section#pep-content').html() ?? undefined;
+                const body = $$('section#pep-content');
+                const author = body
+                    .find('dl.rfc2822 dt')
+                    .filter((_, element) => $$(element).text() === 'Author:')
+                    .next('dd')
+                    .text();
+                body.children('h1.page-title, dl.rfc2822, section#contents').remove();
+                const description = body.html();
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
 
                 const processedItem: DataItem = {
                     title,
                     description,
+                    author,
                     content: {
                         html: description,
-                        text: description,
+                        text: body.text(),
                     },
                     image,
                     banner: image,
-                    language,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -83,7 +91,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         language,
         id: $('meta[property="og:url"]').attr('content'),
@@ -92,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
 export const route: Route = {
     path: '/release',
-    name: 'Active Python Releases',
+    name: 'Active Releases',
     url: 'www.python.org',
     maintainers: ['nczitzk'],
     handler,

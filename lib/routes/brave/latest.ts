@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -39,7 +39,7 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const items = $('.box h3')
+    const items = $('.box h3[id*="-release-notes-"]')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -51,9 +51,13 @@ async function handler() {
 
             return {
                 title: `[${device}] ${title}`,
-                link: currentUrl,
+                link: `${currentUrl}#${$item.attr('id')}`,
                 guid: `${currentUrl}#${device}-${matchVersion?.[1] ?? title}`,
-                description: $item.next().html(),
+                description: $item
+                    .nextUntil('a')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join(''),
                 pubDate: parseDate(matchDate![1].replace(/(st|nd|rd|th)?,/, ''), ['MMMM D YYYY', 'MMM D YYYY']),
             };
         });

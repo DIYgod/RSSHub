@@ -1,18 +1,18 @@
 import crypto from 'node:crypto';
 
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
 // Generate a dynamic token using AES-256-ECB with a static key and timestamp
 function getToken() {
     const key = 'TYYY3OT3-TOCBW7OW-T33QMVJ3-2IUUVC22'.replaceAll('-', ''); // this key is used for AES-256-ECB encryption, and it is hardcoded in the original code in https://www.scmuseum.cn/js/index.2af39792.chunk.js
-    const t = (Math.random() + '').slice(-6) + Date.now();
+    const t = (Math.random() + '').slice(-6) + Temporal.Now.instant().epochMilliseconds;
     const cipher = crypto.createCipheriv('aes-256-ecb', Buffer.from(key, 'utf8'), null);
     cipher.setAutoPadding(true);
     let token = cipher.update(t, 'utf8', 'base64');
@@ -41,7 +41,11 @@ export const route: Route = {
             temp: { endpoint: 'queryExhibitionTempList', name: '临时展览', isBase: false },
         };
 
-        const fetchTypes = (typeParam ? [typeParam] : ['base', 'temp']) as Array<keyof typeof apiConfig>;
+        if (typeParam && !Object.hasOwn(apiConfig, typeParam)) {
+            throw new InvalidParameterError('Choose base or temp, or omit the type to include both exhibition types.');
+        }
+
+        const fetchTypes = (['base', 'temp'] as const).filter((t) => !typeParam || t === typeParam);
         const museumName = namespace.zh?.name || namespace.name;
         const titleTag = fetchTypes.length === 2 ? '' : apiConfig[fetchTypes[0]].name;
 
@@ -76,7 +80,6 @@ export const route: Route = {
                     const linkId = isBase ? item.exhibitionBaseId : item.exhibitionTempId;
                     const itemLink = isBase ? `https://www.scmuseum.cn/Visit/Exhibition/BaseExhibition/${linkId}` : `https://www.scmuseum.cn/Visit/Exhibition/ExhibitiomReview/${linkId}`;
 
-                    const pubDate = item.startTime ? timezone(parseDate(item.startTime), 8) : undefined;
                     const startDate = item.startTime ? item.startTime.split(' ', 1)[0] : '';
                     const endDate = item.endTime ? item.endTime.split(' ', 1)[0] : '';
                     const location = isBase ? item.basePlace : item.tempPlace;
@@ -84,6 +87,7 @@ export const route: Route = {
 
                     const description = renderToString(
                         <div>
+                            {raw(item.description)}
                             <img src={imgUrl} />
                             <br />
                             <p>
@@ -104,7 +108,6 @@ export const route: Route = {
                     return {
                         title,
                         link: itemLink,
-                        pubDate,
                         description,
                         // for further .ics process
                         _extra: {

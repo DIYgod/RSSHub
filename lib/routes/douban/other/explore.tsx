@@ -1,8 +1,8 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/explore',
@@ -22,55 +22,45 @@ export const route: Route = {
     handler,
 };
 
+interface ExploreTarget {
+    title?: string;
+    abstract?: string;
+    uri: string;
+    create_time: string;
+    owner?: { name: string; type: string };
+    author?: { name: string };
+    gallery_topic?: { name: string };
+    photos?: Array<{ large: { url: string } }>;
+}
+
 async function handler() {
-    const response = await got({
-        method: 'get',
-        url: 'https://www.douban.com/explore',
+    const link = 'https://www.douban.com/explore';
+    const response = await ofetch<{ items: Array<{ target: ExploreTarget }> }>('https://m.douban.com/rexxar/api/v2/popular_creator/records', {
+        query: { start: 0, count: 20 },
+        headers: { Referer: link },
     });
-
-    const data = response.data;
-
-    const $ = load(data);
-    const list = $('div.item');
 
     return {
         title: '豆瓣-浏览发现',
-        link: 'https://www.douban.com/explore',
-        item: list.toArray().map((item) => {
-            const $item = $(item);
-
-            const title = $item.find('.title a').first().text() ?? '#' + $item.find('.icon-topic').text();
-            const desc = $item.find('.content p').text();
-            const itemPic = $item.find('a.cover').attr('style')
-                ? $item
-                      .find('a.cover')
-                      .attr('style')!
-                      .match(/\('(.*?)'\)/)![1]
-                : '';
-            const author = $item.find('.usr-pic a').last().text();
-            const link = $item.find('.title a').attr('href') ?? $item.find('.icon-topic a').attr('href');
-
-            return {
-                title,
-                author,
-                description: renderDescription({
-                    author,
-                    desc,
-                    itemPic,
-                }),
-                link,
-            };
-        }),
+        link,
+        sortItems: false,
+        item: response.items.map(({ target }) => ({
+            title: target.title || target.abstract || '',
+            author: target.author?.name || (target.owner?.type === 'user' ? target.owner.name : undefined),
+            description: renderDescription(target),
+            pubDate: parseDate(target.create_time, 8),
+            category: target.gallery_topic?.name ? [target.gallery_topic.name] : undefined,
+            link: `https://www.douban.com/doubanapp/dispatch?uri=${encodeURIComponent(target.uri.replace('douban://douban.com', ''))}`,
+        })),
     };
 }
 
-const renderDescription = ({ author, desc, itemPic }: { author: string; desc: string; itemPic?: string }): string =>
+const renderDescription = ({ abstract, photos }: ExploreTarget): string =>
     renderToString(
         <>
-            作者：{author}
-            <br />
-            描述：{desc}
-            <br />
-            {itemPic ? <img src={itemPic} /> : null}
+            {abstract ? <p>{abstract}</p> : null}
+            {photos?.map((photo) => (
+                <img src={photo.large.url} />
+            ))}
         </>
     );

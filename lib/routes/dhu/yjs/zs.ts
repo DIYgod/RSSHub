@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://yjszs.dhu.edu.cn';
 
@@ -32,34 +35,39 @@ export const route: Route = {
 | doctor   | master   |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const type = ctx.req.param('type') || 'master';
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid notification type. Use doctor or master.');
+    }
     const link = `${baseUrl}${map[type]}`;
     const { data: response } = await got(link);
 
     const $ = load(response);
-    const list = $('.list_item')
+    const list = $('.list_item, .col_news_list .news_list > li')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string; pubDate: Temporal.Instant | undefined } => {
             const $item = $(item);
             const a = $item.find('a').first();
+            const date = $item.find('.Article_PublishDate').text() || `${$item.find('.news_year').text()}-${$item.find('.news_day').text()}`;
             return {
-                title: a.attr('title')!,
-                link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate($item.find('.Article_PublishDate').text()),
+                title: a.attr('title') || $item.find('.news_title').text(),
+                link: new URL(a.attr('href')!, baseUrl).href,
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         });
 
     // item content
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.wp_articlecontent').first().html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

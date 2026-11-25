@@ -2,17 +2,36 @@ import { load } from 'cheerio'; // HTML parser with jQuery-like API
 
 import type { Route } from '@/types';
 import got from '@/utils/got'; // Custom got instance
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ccst/xwzx/:category',
     categories: ['university'],
     example: '/jlu/ccst/xwzx/gsl',
+    parameters: { category: '栏目，可用 gsl（公示栏）、xstd（学生天地）、xytz（学院通知）、xyxw（学院新闻）、zsjy（招生就业）等对应列表文件名，不含 .htm。' },
     radar: [
         {
-            source: ['ccst.jlu.edu.cn/xwzx/gsl.htm', 'ccst.jlu.edu.cn/xwzx/xstd.htm', 'ccst.jlu.edu.cn/xwzx/xytz.htm', 'ccst.jlu.edu.cn/xwzx/xyxw.htm', 'ccst.jlu.edu.cn/xwzx/zsjy.htm'],
+            source: ['ccst.jlu.edu.cn/xwzx/gsl.htm'],
+            target: '/ccst/xwzx/gsl',
+        },
+        {
+            source: ['ccst.jlu.edu.cn/xwzx/xstd.htm'],
+            target: '/ccst/xwzx/xstd',
+        },
+        {
+            source: ['ccst.jlu.edu.cn/xwzx/xytz.htm'],
+            target: '/ccst/xwzx/xytz',
+        },
+        {
+            source: ['ccst.jlu.edu.cn/xwzx/xyxw.htm'],
+            target: '/ccst/xwzx/xyxw',
+        },
+        {
+            source: ['ccst.jlu.edu.cn/xwzx/zsjy.htm'],
+            target: '/ccst/xwzx/zsjy',
         },
     ],
-    name: '吉林大学计算机科学与技术学院 - 新闻中心',
+    name: '计算机科学与技术学院 - 新闻中心',
     maintainers: ['mayouxi'],
     handler,
     url: 'ccst.jlu.edu.cn',
@@ -48,16 +67,13 @@ async function handler(ctx: any) {
             const linkEl = el.find('a');
             const dateEl = el.find('.date');
             const dateStr = dateEl.text();
-            const title = linkEl.text().trim();
-            const rawLink = linkEl.attr('href')!.replaceAll('..', ''); // Replace all occurrences of '..'
-            const link = `${baseUrl}${encodeURI(rawLink)}`; // Encode the URL properly
-
-            const newsDate = new Date(dateStr);
+            const title = linkEl.text();
+            const link = new URL(linkEl.attr('href')!, url).href;
 
             return {
                 title,
                 link,
-                pubDate: newsDate,
+                pubDate: parseDate(dateStr, 'YYYY-MM-DD', 8),
             };
         }),
     };

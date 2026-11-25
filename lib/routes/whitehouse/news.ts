@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -21,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['whitehouse.gov/:category', 'whitehouse.gov/'],
-            target: '/news/:category',
+            target: '/news/:category?',
         },
     ],
     name: 'News',
@@ -31,24 +32,19 @@ export const route: Route = {
 | --- | -------- | ------------------------ | -------------------- | ------- |
 |     | articles | briefings-statements     | presidential-actions | remarks |`,
 };
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'news';
-
     const rootUrl = 'https://www.whitehouse.gov';
     const currentUrl = `${rootUrl}/${category}/`;
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
-
     const $ = load(response.data);
-
     const list = $('.post')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-
             const a = $item.find('a').first();
             return {
                 title: a.text(),
@@ -57,24 +53,22 @@ async function handler(ctx) {
                 category: [$item.find('a[rel^=tag]').first().text()],
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`whitehouse:news:article:${item.link}`, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
                 });
                 const $ = load(response.data);
-
                 $('.wp-block-whitehouse-topper').remove();
-                item.description = $('.entry-content').html();
-
-                return item;
-            })
-        )
+                return { description: $('.entry-content').html() };
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: $('title').text(),
         link: currentUrl,

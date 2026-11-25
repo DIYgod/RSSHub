@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/announcement',
@@ -37,7 +36,7 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const homeUrl = `${baseUrl}/jystz`;
     const response = await ofetch(homeUrl);
 
-    // 使用 Cheerio 选择器解析 HTML
+    // Parse the first page of announcements.
     const $ = load(response);
     const list = $('div.notice_list li')
         .toArray()
@@ -49,7 +48,7 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
             return {
                 title: titleEle.text().trim(),
                 link: `${baseUrl}${titleEle.attr('href')}`,
-                pubDate: timezone(parseDate(dateEle.text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(dateEle.text(), 'YYYY-MM-DD', 8),
             };
         });
 

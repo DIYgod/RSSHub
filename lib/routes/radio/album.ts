@@ -1,16 +1,9 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
+import { getAudioType } from './index';
 import { renderDescription } from './templates/description';
-
-const audio_types = {
-    m3u8: 'x-mpegURL',
-    mp3: 'mpeg',
-    mp4: 'mp4',
-    m4a: 'mp4',
-};
 
 export const route: Route = {
     path: '/album/:id',
@@ -55,7 +48,7 @@ async function handler(ctx) {
             productId: '1605403829833195520',
             providerCode: '25010',
             referer: 'https://ytweb.radio.cn/',
-            timestamp: String(Date.now()),
+            timestamp: String(Temporal.Now.instant().epochMilliseconds),
             version: '4.0.0',
         },
         body: new URLSearchParams({
@@ -75,15 +68,14 @@ async function handler(ctx) {
         let enclosure_url = item.playUrlHigh ?? item.playUrlMedium ?? item.playUrlLow ?? item.playUrl;
         enclosure_url = enclosure_url.endsWith('.m3u8') ? item.downloadUrl : enclosure_url;
 
-        const fileExt = new URL(enclosure_url).pathname.split('.').pop();
-        const enclosure_type = fileExt ? `audio/${audio_types[fileExt]}` : '';
+        const enclosure_type = getAudioType(enclosure_url);
 
         return {
             guid: item.id,
             title: item.name,
             link: `${rootUrl}/share/albumPlay?correlateId=${item.id}&columnId=${id}`,
             description: renderDescription({ enclosure_url, enclosure_type }),
-            pubDate: timezone(parseDate(item.createTime), 8),
+            pubDate: parseDate(item.createTime, 8),
             enclosure_url,
             enclosure_type,
             enclosure_length: item.fileSize,

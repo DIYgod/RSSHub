@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDirectDescription } from './templates/direct';
 
@@ -24,7 +24,7 @@ export const route: Route = {
             source: ['nintendo.com/nintendo-direct/archive', 'nintendo.com/'],
         },
     ],
-    name: 'Nintendo Direct',
+    name: 'Direct',
     maintainers: ['HFO4'],
     handler,
     url: 'nintendo.com/nintendo-direct/archive',

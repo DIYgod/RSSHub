@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newthread',
@@ -47,16 +47,16 @@ async function handler() {
 
                 const author = item.find('td.by cite a').text();
 
-                const pubDateText = item.find('td.by em a span').attr('title') || item.find('td.by em a').text();
-                const pubDate = parseDate(pubDateText);
-
                 return await cache.tryGet(threadLink, async () => {
                     try {
                         const threadResponse = await ofetch(threadLink);
                         const $thread = load(threadResponse);
 
-                        // 查找第一个帖子内容
+                        // Extract the first post, rather than the last reply shown in the thread list.
                         const content = $thread('.t_f').first().html()?.trim();
+                        const postDate = $thread('[id^="authorposton"]').first();
+                        const pubDateText = postDate.find('span').attr('title') || postDate.text().replace('发表于', '').trim();
+                        const pubDate = parseDate(pubDateText, 8);
 
                         return {
                             title,
@@ -70,7 +70,6 @@ async function handler() {
                             title,
                             link: threadLink,
                             description: '内容获取失败',
-                            pubDate,
                             author,
                         };
                     }

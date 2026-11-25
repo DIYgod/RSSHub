@@ -7,11 +7,14 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const parsePublicationDate = (value?: string) => (value ? parseDate(`${value.trim()}T00:00:00+08:00`) : undefined);
+
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'home/zxdt' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'https://www.investor.org.cn';
     const targetUrl = `${baseUrl}/${id.endsWith('/') ? id : `${id}/`}`;
@@ -29,13 +32,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('div.title').text();
             const pubDateStr: string | undefined = $el.find('div.date').text();
             const linkUrl: string | undefined = $el.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: parsePublicationDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
@@ -43,12 +44,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     items = await Promise.all(
-        items.map((item) => {
+        items.map(async (item) => {
             if (!item.link || item.link.endsWith('.pdf')) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet(`investor:article:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
@@ -67,25 +68,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           .pop()
                           ?.trim()
                     : undefined;
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: parsePublicationDate(pubDateStr),
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('div.trs_editor_view').text(),
                     },
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
                     language,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
         })
     );
 
@@ -97,7 +94,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title.split(/\|/, 1)?.[0],
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: imageSrc ? new URL(imageSrc, baseUrl).href : undefined,
         author: title.split(/\|/).pop(),
         language,
@@ -283,12 +279,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.investor.org.cn/:id'],
-            target: '/:id',
+            source: ['www.investor.org.cn/'],
+            target: '/home/zxdt',
         },
         {
             title: '最新动态',
-            source: ['https://www.investor.org.cn/home/zxdt/'],
+            source: ['www.investor.org.cn/home/zxdt/'],
             target: '/home/zxdt',
         },
         {

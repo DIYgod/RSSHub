@@ -2,15 +2,12 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
 const HOST = 'https://www.temponw.com';
-const DETAIL_CONCURRENCY = 2;
-const PAGES = 2; // 10 cards per page
 
 /** Tokyo 23 wards as the site's `cities[]` codes (101 千代田区 … 123 江戸川区). */
 const TOKYO_WARDS = Array.from({ length: 23 }, (_, i) => String(101 + i));
@@ -30,7 +27,6 @@ interface DetailFields {
     status: string | null; // 現況 '空'
     contract: string | null; // 契約形態 '普通借家'
     term: string | null; // 契約期間 '3年'
-    industry_blocks: string[][]; // [適用業種, 特長, 立地]
     notes: string[]; // 備考 '不可業態： 重飲食不可／24時間営業不可'
 }
 
@@ -47,10 +43,10 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el): ListCard | null => {
             const $el = $(el);
-            const source = $el.find('input[name="source_system_code"]').first().attr('value');
-            const itemNo = $el.find('input[name="item_no"]').first().attr('value');
-            const title = clean($el.find('.result-content-title span').text());
-            if (!source || !itemNo || !title) {
+            const source = $el.find('input[name="source_system_code"]').attr('value');
+            const itemNo = $el.find('input[name="item_no"]').attr('value');
+            const title = $el.find('.result-content-title span').text();
+            if (!source || !itemNo || !title.trim()) {
                 return null;
             }
             const row = (label: string) =>
@@ -84,7 +80,7 @@ const parseList = (html: string): ListCard[] => {
             const [line, station] = (raw.station?.normalize('NFKC') ?? '').split(' ', 2);
             const rentJpy = parseJpy(raw.rent);
             const { tsubo, area_m2 } = parseArea(raw.area);
-            const image = $el.find('.result-content-img img').first().attr('src');
+            const image = $el.find('.result-content-img img').attr('src');
 
             return {
                 title,
@@ -136,15 +132,6 @@ const parseDetail = (html: string): DetailFields => {
         status: field('現況'),
         contract: field('契約形態'),
         term: field('契約期間'),
-        industry_blocks: $('.applicable-industry-items')
-            .toArray()
-            .map((block) =>
-                $(block)
-                    .find('.grey-div p')
-                    .toArray()
-                    .map((p) => clean($(p).text()))
-                    .filter((t): t is string => t !== null)
-            ),
         notes: $('.detail-note li')
             .toArray()
             .map((li) => clean($(li).text()))
@@ -153,34 +140,28 @@ const parseDetail = (html: string): DetailFields => {
 };
 
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
-    const [applicable = [], features = [], location = []] = d.industry_blocks;
     const restriction = clean(d.notes.find((n) => n.includes('不可業態'))?.replace(/^不可業態[:：]\s*/, ''));
-    const limitParts = [applicable.length > 0 ? `可: ${applicable.join('、')}` : null, restriction === null ? null : `不可: ${restriction}`].filter((p): p is string => p !== null);
     return {
         ...base,
         walk_min: parseWalkMin(d.access),
         fixtures_transfer_jpy: parseJpy(d.fixtures),
-        condition: features.includes('スケルトン') ? 'skeleton' : base.condition,
-        heavy_food_ok: parseHeavyFood(restriction) ?? (applicable.length > 0 ? applicable.includes('重飲食') : null),
-        business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
-        tags: [...features, ...location],
+        // 現況 is a real field but is published as '-' throughout, so the PR blurb is the only place
+        // this site says 居抜き or スケルトン at all.
+        condition: parseCondition(d.status, base.raw.comment),
+        heavy_food_ok: parseHeavyFood(restriction),
+        business_limit: restriction === null ? null : `不可: ${restriction}`,
         raw: { ...base.raw, access: d.access, fixtures: d.fixtures, status: d.status, contract: d.contract, term: d.term, notes: d.notes.join(' / ') || null },
     };
 };
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`temponw: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const detail = await cache.tryGet(`temponw:detail-fields:v1:${card.link}`, async () => parseDetail(await ofetch(card.link)));
+    return mergeDetail(card.extra, detail);
 };
 
-const listUrlFor = (area: string | undefined, page: number): string => {
+const listUrlFor = (area: string | undefined): string => {
     if (area === undefined) {
-        return `${HOST}/result?sort=new&page=${page}`;
+        return `${HOST}/result?sort=new&page=1`;
     }
     // The site requires `cities[]`; all 23 wards are passed at once for Tokyo.
     const query = new URLSearchParams({ prefectures_code: '13', name_j: '東京都' });
@@ -188,40 +169,38 @@ const listUrlFor = (area: string | undefined, page: number): string => {
         query.append('cities[]', code);
     }
     query.set('sort', 'new');
-    query.set('page', String(page));
+    query.set('page', '1');
     return `${HOST}/area_search/result?${query.toString()}`;
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const area: string | undefined = ctx.req.param('area');
     if (area !== undefined && area !== 'tokyo') {
         throw new Error(`Unknown area "${area}", expected "tokyo" or none`);
     }
-    const pages = await Promise.all(Array.from({ length: PAGES }, (_, i) => ofetch(listUrlFor(area, i + 1))));
-    const seen = new Set<string>();
-    const cards = pages.flatMap((html) => parseList(html)).filter((card) => (seen.has(card.link) ? false : seen.add(card.link)));
+    const html = await ofetch(listUrlFor(area));
+    const cards = parseList(html);
 
     const items = await pMap(
         cards,
-        (card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    // The site does not publish listing dates; no pubDate is fabricated.
-                    description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                // The site does not publish listing dates; no pubDate is fabricated.
+                description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                _extra: extra,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `店舗ネットワーク 新着物件${area === 'tokyo' ? ' (東京23区)' : ''}`,
-        link: listUrlFor(area, 1),
+        link: listUrlFor(area),
         language: 'ja',
         item: items,
     };
@@ -240,7 +219,7 @@ export const route: Route = {
             options: [{ value: 'tokyo', label: '東京23区' }],
         },
     },
-    description: `Listings on 店舗ネットワーク sorted by 新着順 (first two pages, 20 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`; the same unit may be listed by several agencies under different ids.`,
+    description: `Listings on 店舗ネットワーク sorted by 新着順 (first page, 10 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`; the same unit may be listed by several agencies under different ids.`,
     categories: ['other'],
     features: {
         requireConfig: false,

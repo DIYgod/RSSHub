@@ -9,7 +9,7 @@ export type Result = {
     class?: Class[];
 };
 
-export type Class = {
+type Class = {
     type_id: number;
     type_pid: number;
     type_name: string;

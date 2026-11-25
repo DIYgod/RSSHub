@@ -8,6 +8,8 @@ export interface ApiResponse {
 export interface ListItem {
     title: string;
     description?: string;
+    hashtags?: string[] | null;
+    lang?: string;
     id: string;
     time_scheduled: number;
     channel: Channel;
@@ -15,16 +17,16 @@ export interface ListItem {
     image_auto_url?: string;
     video_url: string;
     text?: string;
-    media: Media[];
+    media?: Media[];
     watch_count?: number;
 }
-export interface Channel {
+interface Channel {
     icon: string;
     id: string;
     name: string;
 }
 
-export interface Media {
+interface Media {
     type: string;
     id: string;
     url: string;

@@ -1,9 +1,9 @@
-import MarkdownIt from 'markdown-it';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const md = MarkdownIt({
@@ -37,16 +37,41 @@ async function handler(ctx) {
     const rootUrl = 'https://mirror.xyz';
     const currentUrl = id.endsWith('.eth') ? `${rootUrl}/${id}` : `https://${id}.mirror.xyz`;
 
-    const response = await got(currentUrl);
+    const response = await ofetch.raw(currentUrl);
+    const redirectedUrl = new URL(response.url);
+    if (['paragraph.com', 'www.paragraph.com'].includes(redirectedUrl.hostname) && redirectedUrl.pathname.startsWith('/@')) {
+        const publication = redirectedUrl.pathname.split('/', 2)[1];
+        const rss = await ofetch(`https://paragraph.com/api/blogs/rss/${encodeURIComponent(publication)}`);
+        const feed = await parser.parseString(rss);
+        return {
+            title: `${feed.title} - Mirror`,
+            description: feed.description,
+            image: feed.image?.url,
+            link: feed.link,
+            item: feed.items.map((item) => ({
+                title: item.title!,
+                description: item['content:encoded'],
+                link: item.link,
+                guid: item.guid,
+                author: item.creator ?? item.author,
+                pubDate: parseDate(item.pubDate!),
+                category: item.categories,
+            })),
+        };
+    }
 
-    const data = JSON.parse(response.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)[1]);
+    const dataMatch = response._data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/);
+    if (!dataMatch) {
+        throw new Error('Mirror publication data was not found. Check whether the publication has moved to Paragraph.');
+    }
+    const data = JSON.parse(dataMatch[1]);
 
     const items = Object.keys(data.props.pageProps.__APOLLO_STATE__)
         .filter((key) => key.startsWith('entry:'))
         .map((key) => {
             const item = data.props.pageProps.__APOLLO_STATE__[key];
             return {
-                title: item.title,
+                title: item.title ?? '',
                 description: md.render(item.body),
                 link: `${currentUrl}/${item._id}`,
                 pubDate: parseDate(item.publishedAtTimestamp, 'X'),

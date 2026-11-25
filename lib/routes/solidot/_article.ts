@@ -1,13 +1,11 @@
 import { load } from 'cheerio'; // html parser
 
 import got from '@/utils/got'; // get web content
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export default async function get_article(url) {
-    const domain = 'https://www.solidot.org';
-
     if (/^\/.*$/.test(url)) {
+        const domain = 'https://www.solidot.org';
         url = domain + url;
     }
     const response = await got({
@@ -27,7 +25,6 @@ export default async function get_article(url) {
         .replaceAll('时', ':')
         .replaceAll(/[分日]/g, '');
 
-    const title = $('div.block_m > div.ct_tittle > div.bg_htit > h2').text();
     const category = $('div.icon_float > a').attr('title');
     const author = $('div.talk_time > b')
         .text()
@@ -42,8 +39,7 @@ export default async function get_article(url) {
         .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');
 
     const item = {
-        title,
-        pubDate: timezone(parseDate(date_str), 8),
+        pubDate: parseDate(date_str, 8),
         author,
         link: url,
         description,

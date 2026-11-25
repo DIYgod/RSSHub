@@ -1,8 +1,8 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
-import { parseDate } from '@/utils/parse-date';
+import { md5 } from '@/utils/hash';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/starred_repos/:user',
@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     const host = `https://github.com/${user}?tab=stars`;
 
-    const { data: response } = await got(`https://api.github.com/users/${user}/starred`, {
+    const { data: response } = await got(`https://api.github.com/users/${encodeURIComponent(user)}/starred`, {
         headers: {
             Accept: 'application/vnd.github.star+json',
             Authorization: config.github?.access_token ? `Bearer ${config.github.access_token}` : undefined,
@@ -53,7 +53,6 @@ async function handler(ctx) {
     }));
 
     return {
-        allowEmpty: true,
         title: `${user}'s starred repositories`,
         link: host,
         description: `${user}'s starred repositories`,

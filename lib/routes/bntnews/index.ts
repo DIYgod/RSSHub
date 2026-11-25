@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     bnt003000000: 'Beauty',
@@ -49,7 +48,6 @@ async function handler(ctx) {
             returnType: 'ajax',
         },
     });
-
     const articles = response.data.result?.items || [];
 
     const list = articles.map((article) => {
@@ -59,7 +57,7 @@ async function handler(ctx) {
             title: article.title,
             link,
             description: article.content,
-            pubDate: timezone(parseDate(article.firstPublishDate), 9),
+            pubDate: parseDate(article.firstPublishDate, 9),
             author: article.reporter?.[0]?.name || '',
         };
     });

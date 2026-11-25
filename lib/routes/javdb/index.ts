@@ -34,7 +34,8 @@ export const route: Route = {
 | 0    | 1      | 2      | 3      |`,
     features: {
         nsfw: true,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
+        antiCrawler: true,
     },
 };
 
@@ -43,7 +44,7 @@ async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? '2';
     const filter = ctx.req.param('filter') ?? '1';
 
-    const currentUrl = `${category === 'censored' ? '' : category}?vft=${filter}&vst=${sort}`;
+    const currentUrl = `${category === 'censored' ? '' : encodeURIComponent(category)}?vft=${encodeURIComponent(filter)}&vst=${encodeURIComponent(sort)}`;
 
     const categories = {
         censored: '有碼',

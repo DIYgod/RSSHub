@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://magazinelib.com';
 const renderImage = (imgUrl) =>
@@ -70,13 +71,13 @@ async function handler(ctx) {
 
     return {
         title: `MagazineLib - Latest Magazines${subtitle}`,
-        link: `${host}/?s=${query}`,
+        link: query === undefined ? host : `${host}/?s=${query}`,
         description: `MagazineLib - Latest Magazines${subtitle}`,
         item: items.map((item) => ({
             title: item.title,
             link: item.link,
             category: item.categories,
-            pubDate: new Date(item.pubDate).toUTCString(),
+            pubDate: parseDate(item.date, 0),
             description: item.description,
         })),
     };

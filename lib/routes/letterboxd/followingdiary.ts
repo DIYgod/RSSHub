@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -34,7 +35,7 @@ async function handler(ctx: Context) {
         .toArray()
         .map((user) => $(user).attr('href')!);
 
-    const usersResult = await Promise.all(users.map((user) => getData(user.replaceAll('/', ''), title)));
+    const usersResult = await pMap(users, (user) => getData(user.replaceAll('/', ''), title), { concurrency: 3 });
 
     return {
         title,

@@ -1,10 +1,11 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/programme/:id?/:limit?/:isFull?',
@@ -80,6 +81,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '1';
     const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 15;
+    const itemLimit = getRouteLimit(ctx, 100);
     const isFull = /t|y/i.test(ctx.req.param('isFull') ?? 'true');
 
     const rootUrl = 'https://www.sctv.com';
@@ -93,14 +95,15 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const array = response.data.data.programmeArray.slice(0, limit).map((list) => ({
+    const array: Array<{ guid: string; link: string }> = response.data.data.programmeArray.slice(0, Math.min(limit, itemLimit)).map((list) => ({
         guid: list.id,
         link: `${apiRootUrl}${list.programmeListUrl}`,
     }));
 
-    const itemsPerDate = await Promise.all(
-        array.map((list) =>
-            cache.tryGet(list.link, async () => {
+    const itemsPerDate = await pMap(
+        array,
+        (list) =>
+            cache.tryGet(`${list.link}:unfiltered-v2`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: list.link,
@@ -110,7 +113,7 @@ async function handler(ctx) {
                     guid: item.id,
                     title: item.programmeTitle,
                     link: item.programmeUrl,
-                    pubDate: timezone(parseDate(item.pubTime), 8),
+                    pubDate: parseDate(item.pubTime, 8),
                     description: renderToString(
                         <video poster={item.programmeImage} controls>
                             <source src={item.programmeUrl} type="video/mp4" />
@@ -118,14 +121,15 @@ async function handler(ctx) {
                     ),
                 }));
 
-                const currentFullItems = isFull ? currentItems.filter((item) => /（\d{4}(?:\.\d{2}){2}）/.test(item.title)) : [];
-
-                return currentFullItems.length === 0 ? currentItems : currentFullItems;
-            })
-        )
+                return currentItems;
+            }),
+        { concurrency: 3 }
     );
 
-    const items = itemsPerDate.flat();
+    const items = itemsPerDate.flatMap((currentItems) => {
+        const currentFullItems = isFull ? currentItems.filter((item) => /（\d{4}(?:\.\d{2}){2}）/.test(item.title)) : [];
+        return currentFullItems.length === 0 ? currentItems : currentFullItems;
+    });
 
     response = await got({
         method: 'get',
@@ -146,7 +150,7 @@ async function handler(ctx) {
     return {
         title: `四川广播电视台 - ${name}`,
         link: currentUrl,
-        item: items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100),
+        item: items.slice(0, itemLimit),
         image: cover,
     };
 }

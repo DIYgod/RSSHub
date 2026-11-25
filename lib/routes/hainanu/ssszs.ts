@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ssszs',
@@ -29,7 +29,7 @@ async function handler() {
                 return {
                     title: $item.find('a').text(),
                     link: new URL($item.find('a').attr('href')!, url).href,
-                    pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                    pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

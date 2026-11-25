@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/updates/:category?',
@@ -41,9 +42,10 @@ export const route: Route = {
             .toArray()
             .map((item) => $(item).attr('href')!);
 
-        const items = await Promise.all(
-            links.map((link) =>
-                cache.tryGet(link, async () => {
+        const items = await pMap(
+            links,
+            (link) =>
+                cache.tryGet(`maldita:article:v3:${link}`, async () => {
                     const response = await ofetch(link);
                     const $ = load(response);
 
@@ -56,11 +58,11 @@ export const route: Route = {
                         pubDate: parseDate($('time').attr('datetime')!),
                         itunes_item_image: $('#featuredImage img').attr('src'),
                         content: {
-                            html: $('#keys').html()! + $('#article-content').html()!,
+                            html: ($('#keys').html() ?? '') + $('#article-content').html()!,
                         },
                     };
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

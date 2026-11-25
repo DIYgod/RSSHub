@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const BASE_URL = 'http://yz.neu.edu.cn';
 const DOWNLOAD_ID = 5792;
@@ -22,9 +23,10 @@ const idMp = {
     phd2: PhD2_ID,
 };
 
-const parsePage = async (items, type) => {
-    const results = await Promise.all(
-        items.map(async (item) => {
+const parsePage = async (items: Element[], type) => {
+    const results = await pMap(
+        items,
+        async (item) => {
             const $ = load(item);
             const aTag = $('span.Article_Title > a');
             const title = aTag.attr('title') ?? '';
@@ -35,7 +37,7 @@ const parsePage = async (items, type) => {
                 description: '',
                 pubDate: (() => {
                     const sTag = $('span.Article_PublishDate');
-                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), 8) : undefined;
+                    const pubDate = sTag.text() ? parseDate(sTag.text(), 8) : undefined;
                     return pubDate;
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
@@ -47,11 +49,11 @@ const parsePage = async (items, type) => {
                     `;
                 return resultItem;
             }
-            return await cache.tryGet(url, async () => {
+            const details = await cache.tryGet(`${url}:article-body`, async () => {
                 const result = await got(url);
                 const $ = load(result.data);
                 const description = cleanEntryContent($);
-                resultItem.description = description;
+                const details: Partial<DataItem> = { description };
                 if (type !== DOWNLOAD_ID) {
                     const dateText = $('.arti_update')
                         .text()
@@ -61,12 +63,14 @@ const parsePage = async (items, type) => {
                         .text()
                         .match(/[:：]?\s*(.+)/);
                     const author = authorText ? authorText[1].trim() : '';
-                    resultItem.pubDate = timezone(parseDate(date), 8);
-                    resultItem.author = author;
+                    details.pubDate = parseDate(date, 8);
+                    details.author = author;
                 }
-                return resultItem;
+                return details;
             });
-        })
+            return { ...resultItem, ...details };
+        },
+        { concurrency: 3 }
     );
     return results;
 };
@@ -120,20 +124,22 @@ const cleanEntryContent = ($) => {
     entry.find('.wp_video_player').each((_, el) => {
         const div = $(el);
         const src = div.attr('sudy-wp-src');
-        if (src) {
-            const videoUrl = BASE_URL + src;
-            const widthMatch = div.attr('style')?.match(/width:\s*(\d+)px/);
-            const width = widthMatch && widthMatch[1] ? widthMatch[1] : '600';
-            const heightMatch = div.attr('style')?.match(/height:\s*(\d+)px/);
-            const height = heightMatch && heightMatch[1] ? heightMatch[1] : '400';
-            const videoTag = `
-                <video controls width="${width}" height="${height}" style="max-width: 100%;margin-left: auto;margin-right: auto;">
-                    <source src="${videoUrl}" type="video/mp4">
-                    您的浏览器不支持 video 标签。
-                </video>
-            `;
-            div.replaceWith(videoTag);
+        if (!src) {
+            return;
         }
+
+        const videoUrl = BASE_URL + src;
+        const widthMatch = div.attr('style')?.match(/width:\s*(\d+)px/);
+        const width = widthMatch && widthMatch[1] ? widthMatch[1] : '600';
+        const heightMatch = div.attr('style')?.match(/height:\s*(\d+)px/);
+        const height = heightMatch && heightMatch[1] ? heightMatch[1] : '400';
+        const videoTag = `
+            <video controls width="${width}" height="${height}" style="max-width: 100%;margin-left: auto;margin-right: auto;">
+                <source src="${videoUrl}" type="video/mp4">
+                您的浏览器不支持 video 标签。
+            </video>
+        `;
+        div.replaceWith(videoTag);
     });
     return entry.html();
 };

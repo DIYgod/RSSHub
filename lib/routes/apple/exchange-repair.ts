@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const host = 'https://support.apple.com/';
@@ -13,7 +13,7 @@ export const route: Route = {
     path: '/exchange_repair/:country?',
     categories: ['other'],
     example: '/apple/exchange_repair',
-    parameters: { country: 'country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`' },
+    parameters: { country: 'Apple Support locale, for example `zh-cn` or `en-us`. Country aliases `cn` and `us` are also supported. United States by default.' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -39,7 +39,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid country');
     }
 
-    const link = new URL(`${country}/service-programs`, host).href;
+    const language = country === 'cn' ? 'zh-cn' : country === 'us' ? 'en-us' : country;
+    const link = new URL(`${language}/service-programs`, host).href;
 
     const response = await got(link);
     const $ = load(response.data);

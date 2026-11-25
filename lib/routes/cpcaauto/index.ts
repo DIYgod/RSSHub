@@ -3,12 +3,12 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { type = 'news', id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'http://cpcaauto.com';
     const currentUrl = new URL(`news.php${type ? `?types=${type}${id ? `&anid=${id}` : ''}` : ''}`, rootUrl).href;
@@ -20,7 +20,6 @@ export const handler = async (ctx) => {
     const language = 'zh' as const satisfies Language;
 
     let items = $('div.list_d ul li.q')
-        .slice(0, limit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
@@ -31,6 +30,17 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
+
+    if (ctx.req.query('sorted') === 'false') {
+        items = items.slice(0, limit);
+    } else {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+        const boundaryDate = items[limit - 1]?.pubDate;
+        if (boundaryDate) {
+            // Details provide finer timestamps than the calendar dates on the list.
+            items = items.filter((item) => compareDates(item.pubDate, boundaryDate) >= 0);
+        }
+    }
 
     items = await Promise.all(
         items.map((item) =>
@@ -44,7 +54,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()!), 8);
+                item.pubDate = parseDate($$('div.view span').first().text().split(/：/).pop()!, 8);
                 item.content = {
                     html: description,
                     text: $$('div.text').text(),
@@ -56,7 +66,8 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
+    const imageUrl = $('meta[property="og:image"]').prop('content');
+    const image = imageUrl ? new URL(imageUrl, rootUrl).href : undefined;
 
     return {
         title: `${$('title').text()} - ${$('span.main_color')
@@ -66,7 +77,6 @@ export const handler = async (ctx) => {
         description: $('META[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
         language,
@@ -80,7 +90,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/cpcaauto/news/news',
-    parameters: { type: '分类，默认为 news，可在对应分类页 URL 中找到', id: 'id，默认为 news，可在对应分类页 URL 中找到' },
+    parameters: { type: '分类，默认为 news，可在对应分类页 URL 中找到', id: '子分类 ID，对应分类页 URL 中的 anid；不填时返回该分类下的全部内容' },
     description: `::: tip
 若订阅 [行业新闻 > 国内乘用车](http://cpcaauto.com/news.php?types=news\\&anid=10)，网址为 \`http://cpcaauto.com/news.php?types=news&anid=10\`。截取 \`types\` 和 \`anid\` 的部分 \\\`\\\` 作为参数填入，此时路由为 [\`/cpcaauto/news/news/10\`](https://rsshub.app/cpcaauto/news/news/10)。
 :::
@@ -131,14 +141,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cpcaauto.com/news.php'],
-            target: (_, url) => {
-                const { searchParams } = new URL(url);
-                const types = searchParams.get('types');
-                const id = searchParams.get('id');
-
-                return types ? `/${types}${id ? `/${id}` : ''}` : '';
-            },
+            source: ['cpcaauto.com/', 'cpcaauto.com/news.php'],
+            target: '/news/news',
         },
         {
             title: '行业新闻 - 国内乘用车',

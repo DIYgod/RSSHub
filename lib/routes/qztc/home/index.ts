@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.qztc.edu.cn/';
 
@@ -43,7 +43,8 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     // const type = Number.parseInt(ctx.req.param('type'));
-    const response = await ofetch(rootUrl + type + '/list.htm');
+    const currentUrl = `${rootUrl}${type === '2093' ? 'xw' : type}/list.htm`;
+    const response = await ofetch(currentUrl);
     const $ = load(response);
 
     const list = $('.news.clearfix')
@@ -52,49 +53,39 @@ async function handler(ctx) {
             const cheerioItem = $(item);
             const a = cheerioItem.find('a');
 
-            try {
-                const title = a.attr('title') || '';
-                let link = a.attr('href');
-                if (!link) {
-                    link = '';
-                } else if (!link.startsWith('http')) {
-                    link = rootUrl.slice(0, -1) + link;
-                }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
-
-                return {
-                    title,
-                    link,
-                    pubDate,
-                };
-            } catch {
-                return {
-                    title: '',
-                    link: '',
-                    pubDate: Date.now(),
-                };
+            const title = a.attr('title') || '';
+            let link = a.attr('href');
+            if (!link) {
+                link = '';
+            } else if (!link.startsWith('http')) {
+                link = rootUrl.slice(0, -1) + link;
             }
+            const pubDate = parseDate(cheerioItem.find('.news_meta').text(), 8);
+
+            return {
+                title,
+                link,
+                pubDate,
+            };
         })
         .filter((item) => item.title && item.link);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const newItem = {
-                    ...item,
-                    description: '',
-                };
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`qztc:home:article:v2:${item.link}`, async () => {
                 const response = await ofetch(item.link);
-                const $ = load(response);
-                newItem.description = $('.wp_articlecontent').html() || '';
-                return newItem;
-            })
-        )
+                const detail = load(response);
+                return detail('.wp_articlecontent').html();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('head > title').text() + ' - 泉州师范学院-首页',
-        link: rootUrl + type + '/list.htm',
+        link: currentUrl,
         item: items,
     } satisfies Data;
 }

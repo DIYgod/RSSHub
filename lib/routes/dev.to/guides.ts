@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/guides',
@@ -40,7 +40,7 @@ async function handler(): Promise<Data> {
         .map((element) => {
             const $element = $(element);
             return {
-                title: $element.text().trim(),
+                title: $element.text(),
                 link: baseUrl + $element.attr('href'),
             };
         });

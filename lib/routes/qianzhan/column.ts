@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/analyst/column/:type?',
@@ -41,18 +41,24 @@ async function handler(ctx) {
         rootUrl = rootUrl + 'list/' + type + '.html';
     }
 
-    const response = await got(rootUrl);
+    const response = await got(rootUrl, { allowH2: false });
     const $ = load(response.data);
-    const links = $('.ptb30.bb1e.clf .f22 a').map((_, item) => $(item).attr('href'));
+    const links = $('.ptb30.bb1e.clf .f22 a')
+        .toArray()
+        .flatMap((item) => {
+            const href = $(item).attr('href');
+            return href === undefined ? [] : href;
+        });
 
-    const items = await Promise.all(
-        links.map((_, item) =>
+    const items = await pMap(
+        links,
+        (item) =>
             cache.tryGet(item, async () => {
-                const detailResponse = await got(item);
+                const detailResponse = await got(item, { allowH2: false });
                 const $ = load(detailResponse.data);
                 const description = $('#divArtBody').html();
                 const title = $('#h_title').text();
-                const pubDate = timezone(parseDate($('#pubtime_baidu').text().split('• ', 2)[1], 'YYYY-MM-DD HH:mm:ss'), 8);
+                const pubDate = parseDate($('#pubtime_baidu').text().split('• ', 2)[1], 'YYYY-MM-DD HH:mm:ss', 8);
                 const author = $('.bljjxue').text().match(/\S+/)![0];
                 return {
                     title,
@@ -62,8 +68,8 @@ async function handler(ctx) {
                     author,
                     category: $('meta[name="Keywords"]').attr('content')!.split(','),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

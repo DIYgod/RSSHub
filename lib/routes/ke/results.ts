@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/researchResults',
@@ -17,34 +17,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.research.ke.com/researchResults'],
+            source: ['research.ke.com/ResearchResults'],
+            target: '/researchResults',
         },
     ],
     name: '研究成果',
     maintainers: ['shaomingbo'],
     handler,
-    url: 'www.research.ke.com/researchResults',
+    url: 'research.ke.com/ResearchResults',
 };
 
 async function handler() {
-    const response = await got({
-        method: 'post',
-        url: 'https://research.ke.com/apis/consumer-access/index/contents/page',
+    const response = await ofetch.raw('https://research.ke.com/apis/consumer-access/index/contents/page', {
+        method: 'POST',
         headers: {
             Referer: 'https://research.ke.com/ResearchResults',
         },
-        json: {
+        body: {
             pageIndex: 1,
             pageSize: 9,
         },
     });
-
-    const { status, statusMessage, data } = response;
-    if (status !== 200) {
-        throw new Error(statusMessage);
-    }
-
-    const { list } = data.data;
+    const list = response._data?.data?.list;
 
     return {
         title: '房地产行业研究报告',

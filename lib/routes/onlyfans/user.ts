@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 
 import type { Context } from 'hono';
 import sanitizeHtml from 'sanitize-html';
@@ -6,8 +6,10 @@ import sanitizeHtml from 'sanitize-html';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { sha1 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:username',
@@ -45,8 +47,8 @@ const browserId = cookie?.match(/(?:^|;\s*)fp=([^;\s]+)/)?.[1];
 
 const get = async (path: string) => {
     const rules = await cache.tryGet('onlyfans:rules', () => ofetch('https://raw.githubusercontent.com/rafa-9/dynamic-rules/main/rules.json', { responseType: 'json' }), config.cache.routeExpire, false);
-    const time = String(Date.now());
-    const hash = createHash('sha1').update([rules.static_param, time, path, authId].join('\n')).digest('hex');
+    const time = String(Temporal.Now.instant().epochMilliseconds);
+    const hash = sha1([rules.static_param, time, path, authId].join('\n'));
     const checksum = rules.checksum_indexes.reduce((sum: number, index: number) => sum + hash.codePointAt(index)!, rules.checksum_constant);
 
     return await ofetch(baseUrl + path, {
@@ -56,7 +58,7 @@ const get = async (path: string) => {
             ...(cookie && { cookie }),
             sign: `${rules.prefix}:${hash}:${Math.abs(checksum).toString(16)}:${rules.suffix}`,
             time,
-            'x-bc': browserId ?? randomBytes(20).toString('hex'),
+            'x-bc': browserId ?? randomBytes(20).toHex(),
         },
     });
 };
@@ -70,7 +72,7 @@ const renderMedia = (media) =>
 
 async function handler(ctx: Context) {
     const { username } = ctx.req.param();
-    const limit = ctx.req.query('limit') ?? '20';
+    const limit = getRouteLimit(ctx, 20);
 
     const user = await cache.tryGet(`onlyfans:user:${username}`, () => get(`/api2/v2/users/${username}`));
     const posts = await get(`/api2/v2/users/${user.id}/posts?limit=${limit}&order=publish_date_desc&skip_users=all&format=infinite&pinned=0`);

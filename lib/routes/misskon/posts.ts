@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import { ENDPOINT, getPosts } from './utils';
+import { getPosts } from './utils';
 
 export const route: Route = {
     path: '/posts/:routeParams?',
@@ -28,7 +28,7 @@ export const route: Route = {
         const { routeParams = '' } = ctx.req.param();
         return {
             title: `MissKON - ${routeParams || 'Posts'}`,
-            link: `${ENDPOINT}/posts` + (routeParams ? `?${routeParams}` : ''),
+            link: 'https://misskon.com/',
             item: await getPosts(routeParams),
         };
     },

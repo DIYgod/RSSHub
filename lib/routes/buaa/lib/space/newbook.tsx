@@ -1,12 +1,13 @@
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 interface Book {
     bibId: string;
@@ -105,7 +106,7 @@ export const route: Route = {
 
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportRadar: false,
         supportBT: false,
@@ -128,9 +129,24 @@ async function handler(ctx: Context): Promise<Data> {
     searchParams.set('page', '1');
     !dcpCode && !clsNo && searchParams.set('dcpCode', 'nolimit'); // No classification filter
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/new/100/${clsNo ? 'byclass' : 'bysubject'}?${searchParams.toString()}`;
-    const { data } = await got(url);
+    const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
+    try {
+        const allowedResourceTypes = new Set(['document', 'fetch']);
+        await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+        if (!response?.ok() || new URL(page.url()).origin !== 'https://space.lib.buaa.edu.cn') {
+            throw new Error('The BUAA library did not provide its public new-book API.');
+        }
+        const data = await response.json();
+        return await createFeed(data, page);
+    } finally {
+        await destroy();
+    }
+}
+
+async function createFeed(data: { data?: { dataList?: Book[] } }, page: Page): Promise<Data> {
     const list: Book[] = data?.data?.dataList || [];
-    const item = await Promise.all(list.map(async (item: Book) => await getItem(item)));
+    const item = await pMap(list, (item) => getItem(item, page), { concurrency: 3 });
     const res: Data = {
         title: '北航图书馆 - 新书速递',
         item,
@@ -144,9 +160,9 @@ async function handler(ctx: Context): Promise<Data> {
     return res;
 }
 
-async function getItem(item: Book): Promise<DataItem> {
+async function getItem(item: Book, page: Page): Promise<DataItem> {
     return await cache.tryGet(item.isbn, async (): Promise<DataItem> => {
-        const info = await getItemInfo(item.isbn);
+        const info = await getItemInfo(item.isbn, page);
         const holdings: Holding[] = JSON.parse(item.holdings);
         const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
         const content = renderToString(
@@ -158,10 +174,10 @@ async function getItem(item: Book): Promise<DataItem> {
                 ) : null}
                 <h2>书籍信息</h2>
                 <div>
-                    <span class="call-no" style="font-family: JetBrainsMono, monospace; font-style: italic; font-weight: 700; color: #458f57;">
+                    <span className="call-no" style="font-family: JetBrainsMono, monospace; font-style: italic; font-weight: 700; color: #458f57;">
                         {item.callno?.at(0) || '无'}
                     </span>{' '}
-                    / <span class="author">{item.author}</span> / <span class="publisher">{item.publisher}</span> / <span class="pub-year">{item.pub_year}</span>
+                    / <span className="author">{item.author}</span> / <span className="publisher">{item.publisher}</span> / <span className="pub-year">{item.pub_year}</span>
                 </div>
                 <h3>简介</h3>
                 <div itemprop="description">{info?.content}</div>
@@ -234,15 +250,21 @@ async function getItem(item: Book): Promise<DataItem> {
         return {
             language: item.language === 'eng' ? 'en' : 'zh-CN',
             title: item.title,
-            pubDate: item.onSelfDate ? timezone(parseDate(item.onSelfDate), 8) : undefined,
+            pubDate: item.onSelfDate ? parseDate(item.onSelfDate, 8) : undefined,
             description: content,
             link,
         };
     });
 }
 
-async function getItemInfo(isbn: string): Promise<Info | null> {
+async function getItemInfo(isbn: string, page: Page): Promise<Info | null> {
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/third_api/douban/${isbn}/info`;
-    const response = await got(url);
-    return JSON.parse(response.body).data;
+    return await page.evaluate(async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`The BUAA library book-info API returned HTTP ${response.status}.`);
+        }
+        const data = await response.json();
+        return data.data;
+    }, url);
 }

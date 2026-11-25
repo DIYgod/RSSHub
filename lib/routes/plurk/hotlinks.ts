@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getPlurk } from './utils';
 
@@ -31,7 +32,7 @@ async function handler(ctx) {
     const { data: apiResponse } = await got(`${baseUrl}/hotlinks/getLinks`, {
         searchParams: {
             offset: 0,
-            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            count: getRouteLimit(ctx, 30),
         },
     });
 

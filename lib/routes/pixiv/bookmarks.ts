@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import getBookmarks from './api/get-bookmarks';
 import getUserDetail from './api/get-user-detail';
@@ -14,7 +14,12 @@ export const route: Route = {
     example: '/pixiv/user/bookmarks/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: 'Pixiv refresh token required for accessing the app API.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

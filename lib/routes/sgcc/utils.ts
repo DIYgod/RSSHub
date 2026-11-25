@@ -5,7 +5,7 @@ import { sm2, sm3, sm4 } from 'sm-crypto-v2';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-export const baseUrl = 'https://www.95598.cn';
+const baseUrl = 'https://www.95598.cn';
 export const link = `${baseUrl}/osgweb/blackoutNotice`;
 
 const appKey = '7e5b5e84ddad4994b0ebc68dedca4962';
@@ -25,7 +25,7 @@ const sm4Encrypt = (payload: JsonObject, uuid: string) => {
         iv: sm4Iv(uuid),
         output: 'array',
     });
-    return Buffer.from(cipher).toString('base64');
+    return Buffer.from(cipher).toBase64();
 };
 
 const sm4Decrypt = (cipher: string, uuid: string) => {
@@ -38,9 +38,9 @@ const sm4Decrypt = (cipher: string, uuid: string) => {
 };
 
 const request = async (path: string, payload: JsonObject, uuid: string, publicKey: string, headers?: Record<string, string>) => {
-    const timestamp = Date.now();
+    const timestamp = Temporal.Now.instant().epochMilliseconds;
     const data = sm4Encrypt(payload, uuid);
-    const skey = sm2.doEncrypt(Buffer.from(uuid, 'utf8').toString('hex'), publicKey, 1);
+    const skey = sm2.doEncrypt(Buffer.from(uuid, 'utf8').toHex(), publicKey, 1);
     const response = await ofetch(`${baseUrl}/api${path}`, {
         method: 'POST',
         headers: {
@@ -61,11 +61,14 @@ const request = async (path: string, payload: JsonObject, uuid: string, publicKe
             timestamp: String(timestamp),
         },
     });
+    if (!response.encryptData) {
+        throw new Error(`The State Grid API returned no encrypted response for ${path} (code: ${response.code ?? 'unknown'}, message: ${response.message ?? 'unavailable'}). Check the official outage notice page and retry later.`);
+    }
     return sm4Decrypt(response.encryptData, uuid);
 };
 
 export async function createClient() {
-    const uuid = randomBytes(16).toString('hex');
+    const uuid = randomBytes(16).toHex();
     const session = await request(
         '/oauth2/outer/c02/f02',
         {

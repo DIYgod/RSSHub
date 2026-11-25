@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -26,6 +27,9 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const host = 'http://www.grs.ynu.edu.cn/';
     const { category } = ctx.req.param();
+    if (!/^[1-6]$/.test(category)) {
+        throw new InvalidParameterError('The category must be an integer from 1 to 6.');
+    }
     const dep = ['招生工作', '研究生培养', '质量管理', '学位工作', '综合办公室', '相关下载'];
 
     const response = await ofetch('http://www.grs.ynu.edu.cn/index.htm');

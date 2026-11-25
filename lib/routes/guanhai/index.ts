@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -44,28 +44,32 @@ async function handler() {
                 return {
                     title: $item.find('a').attr('title')!,
                     link: $item.find('a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
             }),
         ...recommand,
     ].filter((item) => item.link!.startsWith('http'));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`guanhai:article:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.author = $('.source').text();
-                item.description = $('.article-content').html() ?? $('.video-content').html();
-                item.pubDate ??= timezone(parseDate($('.date').text(), 'YYYY-MM-DD HH:mm'), 8);
-                return item;
-            })
-        )
+                return {
+                    author: $('.source').text(),
+                    description: $('.article-content').html() ?? $('.video-content').html() ?? $('.p-iframe').html(),
+                    pubDate: parseDate($('.date').text(), 'YYYY-MM-DD HH:mm', 8),
+                };
+            });
+            return { ...item, ...article, pubDate: item.pubDate ?? article.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: $('head title').text(),
-        description: $('head meta[name=description]').text(),
+        description: $('head meta[name=description]').attr('content'),
         image: 'https://www.guanhai.com.cn/favicon.ico',
         link: 'https://www.guanhai.com.cn',
         item: items,

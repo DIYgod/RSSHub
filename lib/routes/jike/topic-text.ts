@@ -1,6 +1,7 @@
-import dayjs from 'dayjs';
+import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { constructTopicEntry } from './utils';
 
@@ -38,17 +39,19 @@ async function handler(ctx) {
 
     const data = await constructTopicEntry(ctx, topicUrl);
 
-    if (data) {
-        const result = data.result;
-        result.item = data.posts.map((item) => {
-            const date = dayjs(item.createdAt);
-            return {
-                title: `${data.topic.content} ${date.format('MM月DD日')}`,
-                description: item.content.replaceAll('\n', '<br>'),
-                pubDate: date.toDate(),
-                link: `https://m.okjike.com/originalPosts/${item.id}`,
-            };
-        });
-        return result;
+    if (!data) {
+        return;
     }
+
+    const result = data.result;
+    result.item = data.posts.map((item) => {
+        const pubDate = parseDate(item.createdAt)!;
+        return {
+            title: `${data.topic.content} ${formatDate(pubDate, 'MM月DD日')}`,
+            description: escapeText(item.content).replaceAll('\n', '<br>'),
+            pubDate,
+            link: `https://m.okjike.com/originalPosts/${item.id}`,
+        };
+    });
+    return result;
 }

@@ -30,7 +30,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Creator Works',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {
@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
         throw new ConfigNotFoundError('Skeb works RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const url = `${baseUrl}/api/users/${username.replace('@', '')}/works`;
+    const url = `${baseUrl}/api/users/${encodeURIComponent(username.replace('@', ''))}/works`;
 
     await ensureRequestKey(url);
 
@@ -94,10 +94,10 @@ async function ensureRequestKey(url: string) {
         });
     } catch (error) {
         if (error instanceof FetchError && error.data) {
-            const newRequestKey = String(error.data).match(/request_key=(.*?);/)?.[1];
+            const newRequestKey = /request_key=(.*?);/.exec(String(error.data))?.[1];
             if (newRequestKey) {
                 cache.set('skeb:request_key', newRequestKey);
-                logger.debug(`Retrieved new request_key: ${newRequestKey}`);
+                logger.debug('Retrieved a new request key');
             } else {
                 logger.error('Failed to extract request_key from error response');
             }

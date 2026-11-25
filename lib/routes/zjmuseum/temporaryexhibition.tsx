@@ -1,9 +1,10 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { Agent } from 'undici';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -22,23 +23,37 @@ export const route = {
             target: '/exhibition/:type?',
         },
     ],
-    handler: async (ctx) => {
-        const baseUrl = 'https://www.zjmuseum.com.cn';
-        const apiUrl = `${baseUrl}/api/exhibition/page`;
+    handler,
+};
 
-        const apiConfig = {
-            ondisplay: { name: '正在展出', payload: { hasOpen: '1' } },
-            forecast: { name: '即将开始', payload: { hasOpen: '2' } },
-            review: { name: '展览回顾', payload: { hasOpen: '3' } },
-        };
+async function handler(ctx) {
+    const baseUrl = 'https://www.zjmuseum.com.cn';
+    const apiUrl = `${baseUrl}/api/exhibition/page`;
 
-        const typeParam = ctx.req.param('type');
-        const fetchTypes = typeParam ? [typeParam] : Object.keys(apiConfig);
+    const apiConfig = {
+        ondisplay: { name: '正在展出', payload: { hasOpen: '1' } },
+        forecast: { name: '即将开始', payload: { hasOpen: '2' } },
+        review: { name: '展览回顾', payload: { hasOpen: '3' } },
+    };
 
-        const museumName = namespace.zh?.name || namespace.name;
+    const typeParam = ctx.req.param('type');
+    if (typeParam && !Object.hasOwn(apiConfig, typeParam)) {
+        throw new InvalidParameterError('Invalid exhibition type. Use ondisplay, forecast or review.');
+    }
+    const fetchTypes = typeParam ? [typeParam] : Object.keys(apiConfig);
 
-        const titleTag = typeParam ? apiConfig[typeParam]?.name : '全部展览';
+    const museumName = namespace.zh?.name || namespace.name;
 
+    const titleTag = typeParam ? apiConfig[typeParam]?.name : '全部展览';
+
+    // The API server has an incompatible ECDHE implementation causing TLS handshake failures in Node 18+.
+    const dispatcher = new Agent({
+        connect: {
+            ecdhCurve: 'X25519:P-256:P-521:P-384',
+        },
+    });
+
+    try {
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
                 const config = apiConfig[t];
@@ -46,12 +61,7 @@ export const route = {
                 const response = await got({
                     method: 'post',
                     url: apiUrl,
-                    // The API server has an incompatible ECDHE implementation causing TLS handshake failures in Node 18+.
-                    dispatcher: new Agent({
-                        connect: {
-                            ecdhCurve: 'X25519:P-256:P-521:P-384',
-                        },
-                    }),
+                    dispatcher,
                     json: {
                         siteId: 22,
                         type: 2,
@@ -70,7 +80,7 @@ export const route = {
                 return list.map((item) => {
                     const title = item.title;
                     const itemLink = `${baseUrl}/cn/#/Exhibition/TemporaryExhibition/${item.content_id}`;
-                    const pubDate = timezone(parseDate(item.create_time), 8);
+                    const pubDate = parseDate(item.create_time, 8);
                     const startDate = item.start_time.split('T', 1)[0];
                     const endDate = item.end_time.split('T', 1)[0];
                     const location = [item.museum_area, item.address].filter(Boolean).join(' ');
@@ -93,6 +103,7 @@ export const route = {
                                 <b>闭展：</b>
                                 {endDate || '未定/常设'}
                             </p>
+                            {item.content ? raw(item.content) : null}
                         </div>
                     );
 
@@ -121,5 +132,7 @@ export const route = {
             language: 'zh-CN',
             item: items,
         };
-    },
-};
+    } finally {
+        await dispatcher.close();
+    }
+}

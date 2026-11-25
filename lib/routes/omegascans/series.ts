@@ -1,7 +1,7 @@
 import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface Chapter {
     id: number;
@@ -62,6 +62,7 @@ export const route: Route = {
 
         return {
             title: `Omega Scans - ${seriesTitle}`,
+            language: 'en' as const,
             link: seriesLink,
             image: 'https://omegascans.org/wetried_only.png',
             item: chapters.map((chapter) => ({

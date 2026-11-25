@@ -1,5 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -40,7 +40,7 @@ export const route = {
         const items = list.map((item) => ({
             title: item.title,
             link: item.out_url || `${baseUrl}/yxgw/notice/detail?id=${item.article_id}&cate=${cate}&pos=news`,
-            pubDate: parseDate(item.push_time_new),
+            pubDate: parseDate(item.push_time_new, 0),
         }));
 
         return {

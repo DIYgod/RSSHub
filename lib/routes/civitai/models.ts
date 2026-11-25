@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/models',
@@ -38,8 +38,8 @@ async function handler() {
     const items = data.items.map((item) => ({
         title: item.name,
         link: `https://civitai.com/models/${item.id}`,
-        description: `${item.modelVersions?.[0]?.images?.map((image) => `<image src="${image.url.replace(/width=\d+\//, () => `width=${image.width}/`)}">`).join('\n')}${item.description}`,
-        pubDate: parseDate(item.lastVersionAt),
+        description: `${item.modelVersions?.[0]?.images?.map((image) => `<image src="${image.url.replace(/width=\d+\//, () => `width=${image.width}/`)}">`).join('\n') ?? ''}${item.description}`,
+        pubDate: parseDate(item.modelVersions?.[0]?.publishedAt),
         author: item.creator?.username,
         category: item.tags,
     }));

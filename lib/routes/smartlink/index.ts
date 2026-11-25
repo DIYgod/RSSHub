@@ -48,7 +48,8 @@ export const route: Route = {
     parameters: { site: 'the site attached to smartlink.bio/' },
     radar: [
         {
-            source: ['smartlink.bio/'],
+            source: ['smartlink.bio/:site'],
+            target: '/:site',
         },
     ],
     features: {

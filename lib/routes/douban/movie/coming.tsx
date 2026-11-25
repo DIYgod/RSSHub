@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/movie/coming',
@@ -26,10 +27,18 @@ export const route: Route = {
     ],
     handler,
 };
+const getPubDate = (pubdate?: string[]): Temporal.Instant | undefined => {
+    const datePart = pubdate?.[0]?.split('(', 1)[0];
+    if (!datePart || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(datePart)) {
+        return undefined;
+    }
+    return parseDateStrict(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], 0);
+};
+
 const renderDescription = (info: { title?: string; cover_url?: string; pubdate?: string[]; intro?: string; directors?: string[]; actors?: string[]; genres: string[]; wish_count?: number | string }): string =>
     renderToString(
         <>
-            {info.cover_url && info.title ? <img src={info.cover_url} alt={info.title} referrerpolicy="no-referrer" /> : null}
+            {info.cover_url && info.title ? <img src={info.cover_url} alt={info.title} /> : null}
             <h2>电影信息</h2>
             <ul>
                 {info.directors?.length ? <li>导演：{info.directors.join(', ')}</li> : null}
@@ -59,10 +68,12 @@ async function handler(ctx) {
     ctx.set('json', { response });
 
     return {
+        sortItems: false,
         title: '豆瓣电影-即将上映',
         link: 'https://movie.douban.com/coming',
         item: response.data?.subjects?.map((item) => ({
             title: item?.title,
+            pubDate: getPubDate(item?.pubdate),
             link: item?.url,
             guid: item?.url,
             description: renderDescription({

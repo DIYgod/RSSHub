@@ -5,7 +5,7 @@ export interface BitgetResponse {
         hasNextPage: boolean;
         hasPrePage: boolean;
         items: Array<{
-            businessType?: number;
+            businessType: number;
             content?: string;
             id: string;
             imgUrl?: string;

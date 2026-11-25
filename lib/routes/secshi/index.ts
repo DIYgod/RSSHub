@@ -2,7 +2,22 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
+
+async function getBrowserContent(link: string) {
+    const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
+        await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        await page.waitForSelector('ul.hl-vod-list li.hl-list-item a.hl-item-thumb[href][title]', { state: 'attached', timeout: 15000 });
+        if (new URL(page.url()).origin !== new URL(link).origin) {
+            throw new Error('Secshi redirected away from the requested source.');
+        }
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
 
 export const route: Route = {
     path: '/:category?',
@@ -14,6 +29,7 @@ export const route: Route = {
 | 1    | 2      | 3    | 4    | 5    | 30   |`,
     features: {
         antiCrawler: true,
+        requirePuppeteer: true,
     },
     name: '分类',
     maintainers: ['8430177'],
@@ -26,15 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://www.secshi.com';
     const link = `${baseUrl}/go/${category}.html`;
 
-    const initResponse = await ofetch.raw<string>(link, {
-        ignoreResponseError: true,
-        redirect: 'manual',
-    });
-    const cookie = initResponse.headers
-        .getSetCookie()
-        .map((c) => c.split(';', 1)[0])
-        .join('; ');
-    const response = initResponse.ok ? initResponse._data! : await ofetch(link, { headers: { Cookie: cookie } });
+    const response = await getBrowserContent(link);
 
     const $ = load(response);
 

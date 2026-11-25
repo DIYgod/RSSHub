@@ -1,7 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import type { HomePostItem, HupuApiResponse, NewsDataItem } from './types';
 import { isHomePostItem } from './types';
@@ -31,8 +30,8 @@ const isCategory = (key: string): key is keyof typeof categories => Object.hasOw
 type PagePropsData = Partial<Record<(typeof categories)[keyof typeof categories]['data'], Array<HomePostItem | NewsDataItem>>>;
 
 export const route: Route = {
-    path: ['/dept/:category?', '/:category?'],
-    name: '手机虎扑网',
+    path: '/:category?',
+    name: '移动版',
     url: 'm.hupu.com',
     maintainers: ['nczitzk', 'hyoban'],
     example: '/hupu/nba',
@@ -51,10 +50,10 @@ export const route: Route = {
 :::`,
     categories: ['bbs'],
     radar: [
-        {
-            source: ['m.hupu.com/:category', 'm.hupu.com/'],
-            target: '/:category',
-        },
+        { source: ['m.hupu.com/'], target: '/' },
+        { source: ['m.hupu.com/nba'], target: '/nba' },
+        { source: ['m.hupu.com/cba'], target: '/cba' },
+        { source: ['m.hupu.com/soccer'], target: '/soccer' },
     ],
     handler: async (ctx): Promise<Data> => {
         const category = ctx.req.param('category') || '';
@@ -92,7 +91,7 @@ export const route: Route = {
                   } satisfies DataItem)
                 : ({
                       title: item.title,
-                      pubDate: timezone(parseDate(item.publishTime), 8),
+                      pubDate: parseDate(item.publishTime, 8),
                       link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
                       guid: item.tid,
                   } satisfies DataItem)

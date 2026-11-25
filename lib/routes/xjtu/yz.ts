@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yz/:category?',
@@ -38,8 +38,9 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'zsdt' } = ctx.req.param();
     const baseUrl = 'https://yz.xjtu.edu.cn';
+    const targetUrl = `${baseUrl}/index/${category}.htm`;
 
-    const response = await ofetch(`${baseUrl}/index/${category}.htm`);
+    const response = await ofetch(targetUrl);
     const $ = load(response);
     const list = $('div.list-con ul li')
         .toArray()
@@ -48,25 +49,37 @@ async function handler(ctx) {
             const a = item.find('a');
             const dataItem: DataItem = {
                 title: a.attr('title')!,
-                link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('span.date.fr').text()), 8),
+                link: new URL(a.attr('href')!, targetUrl).href,
+                pubDate: parseDate(item.find('span.date.fr').text(), 8),
             };
             return dataItem;
         });
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (new URL(item.link!).pathname.toLowerCase().endsWith('.pdf')) {
+                return {
+                    ...item,
+                    enclosure_url: item.link,
+                    enclosure_type: 'application/pdf',
+                };
+            }
+
+            try {
+                const detail = await cache.tryGet(`xjtu:yz:content:v1:${item.link}`, async () => {
                     const res = await ofetch(item.link!);
                     const content = load(res);
-                    item.description = content('#vsb_content').html()! + (content('form ul').length > 0 ? content('form ul').html() : '');
-                    return item;
-                } catch (error) {
-                    logger.error(`Fetch failed for ${item.link}:`, error);
-                    return item;
-                }
-            })
-        )
+                    return {
+                        description: content('#vsb_content').html()! + (content('form ul').length > 0 ? content('form ul').html() : ''),
+                    };
+                });
+                return { ...item, ...detail };
+            } catch (error) {
+                logger.error(`Fetch failed for ${item.link}:`, error);
+                return item;
+            }
+        },
+        { concurrency: 3, stopOnError: false }
     );
     return {
         title: '西安交通大学研究生招生信息网',

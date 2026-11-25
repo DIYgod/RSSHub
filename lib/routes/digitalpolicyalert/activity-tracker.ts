@@ -5,7 +5,8 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const createSearchParams = (queryString: string, limit: number = 30): URLSearchParams => {
     const params = new URLSearchParams(queryString);
@@ -14,9 +15,9 @@ const createSearchParams = (queryString: string, limit: number = 30): URLSearchP
     return params;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { filters } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
     const params: URLSearchParams = createSearchParams(filters, limit);
 
     const baseUrl = 'https://digitalpolicyalert.org';
@@ -38,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.results.map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.latest_event?.description;
         const pubDate: number | string = item.latest_event?.date;
@@ -49,7 +50,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 ...(item.implementers?.map((implementer) => implementer.name) ?? []),
                 ...(item.policies?.map((policy) => policy.name) ?? []),
                 item.status?.name,
-                item.type?.name,
+                item.intervention_type?.name,
             ]),
         ].filter(Boolean);
         const authors: DataItem['author'] = item.implementers?.map((author) => ({
@@ -57,12 +58,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             url: undefined,
             avatar: undefined,
         }));
-        const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            pubDate: pubDate ? parseDate(pubDate, 0) : undefined,
             link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
             category: categories,
             author: authors,
@@ -70,19 +70,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 html: description,
                 text: description,
             },
-            updated: updated ? parseDate(updated) : undefined,
             language,
         };
 
         return processedItem;
     });
+    items = items.slice(0, limit);
 
     return {
         title: $('title').text(),
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content') ? new URL($('meta[property="og:image"]').attr('content')!, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -98,7 +97,7 @@ export const route: Route = {
     handler,
     example: '/digitalpolicyalert/activity-tracker',
     parameters: {
-        filter: {
+        filters: {
             description: 'Filter, all by default',
         },
     },
@@ -117,13 +116,8 @@ To subscribe to [Activity Tracker - International trade](https://digitalpolicyal
     },
     radar: [
         {
-            source: ['digitalpolicyalert.org'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const filters: string = createSearchParams(urlObj.searchParams.toString()).toString();
-
-                return `/digitalpolicyalert/activity-tracker${filters ? `/${filters}` : ''}`;
-            },
+            source: ['digitalpolicyalert.org', 'digitalpolicyalert.org/activity-tracker', 'digitalpolicyalert.org/change/:slug'],
+            target: '/activity-tracker',
         },
     ],
     view: ViewType.Articles,

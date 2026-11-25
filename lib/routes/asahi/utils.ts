@@ -1,16 +1,15 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://www.asahi.com';
 
 export const buildFeed = async (ctx: Context, currentUrl: string) => {
-    const limit = Number(ctx.req.query('limit')) || 6;
+    const limit = getRouteLimit(ctx, 6);
 
     const response = await ofetch(currentUrl);
 
@@ -20,7 +19,7 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
 
     const slistVars = /slist_vars = (\{[^}]*\})/.exec(response)?.[1];
 
-    let list: Array<{ link: string; title?: string; pubDate?: Date }>;
+    let list: Array<{ link: string; title?: string; pubDate?: Temporal.Instant }>;
 
     if (slistVars) {
         const { theme, feature = '', pageper = '80' } = JSON.parse(slistVars.replaceAll(/([{,])\s*(\w+):/g, '$1"$2":'));
@@ -35,7 +34,7 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
         list = docs.slice(0, limit).map((doc) => ({
             link: doc.url,
             title: doc.title,
-            pubDate: timezone(parseDate(doc.date, 'YYYYMMDDHHmmss'), 9),
+            pubDate: parseDate(doc.date, 'YYYYMMDDHHmmss', 9),
         }));
     } else {
         const links = new Set(
@@ -52,7 +51,7 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
         list = [...links].slice(0, limit).map((link) => ({ link }));
     }
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
@@ -70,12 +69,12 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
                 };
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items,
+        item: items.filter((item): item is typeof item & { title: string } => item.title !== undefined),
         description: '朝日新聞社のニュースサイト、朝日新聞デジタルの社会ニュースについてのページです',
     };
 };

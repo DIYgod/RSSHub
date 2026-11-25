@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
+import { domain, parseCalendarDate } from '../util';
+
+class ArticleAccessError extends Error {}
 const gsIndexMap = new Map([
     [0, 'xwdt.htm'],
     [1, 'xs_ts.htm'],
@@ -16,7 +19,6 @@ const gsIndexMap = new Map([
     [7, 'tzgg/zlyzyxw.htm'],
     [8, 'tzgg/zh.htm'],
 ]);
-
 export const route: Route = {
     path: '/gs/:type?',
     categories: ['university'],
@@ -32,7 +34,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gs.whu.edu.cn/index.htm', 'gs.whu.edu.cn/'],
+            source: ['gs.whu.edu.cn/index.htm', 'gs.whu.edu.cn/', 'gs.whu.edu.cn/xwdt.htm'],
             target: '/gs',
         },
     ],
@@ -44,20 +46,17 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | ----------- | ----------- | ----------- | ----------- | --------------------- | ----------- |
 | 参数     | 0        | 1        | 2        | 3           | 4           | 5           | 6           | 7                     | 8           |`,
 };
-
 async function handler(ctx) {
     const host = 'https://gs.whu.edu.cn/';
     const paremType = ctx.req.param('type');
     const type = paremType ? Number.parseInt(paremType) : 0;
     const response = await got(host + gsIndexMap.get(type));
-
     const $ = load(response.data);
-    const feed_title = $('div.location a')
+    const feedTitle = $('div.location a')
         .slice(-2)
         .toArray()
         .map((element) => $(element).text())
         .join(' > ');
-
     let items = $('.list ul li')
         .toArray()
         .map((item): DataItem => {
@@ -66,50 +65,51 @@ async function handler(ctx) {
             return {
                 title: $item.find('p').text(),
                 link: link!.startsWith('http') ? link : new URL(link!, host).href,
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: parseCalendarDate($item.find('span').text()),
             };
         });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
+    items = await pMap(
+        items,
+        async (item) => {
+            const hostname = new URL(item.link!).hostname;
+            if (hostname !== domain && !hostname.endsWith(`.${domain}`)) {
+                return item;
+            }
+            try {
+                const detail = await cache.tryGet(`whu:gs:categorized-content:${item.link}`, async () => {
                     const detail = await got(item.link);
                     const content = load(detail.data);
-
-                    content('input').remove();
-                    content('h1').remove();
-                    content('h2').remove();
-                    content('div.arc-tit h2').remove();
-                    content('h4.information').remove();
-                    content('div.arc-info').remove();
-                    content('.con_xq').remove();
-
-                    content('form[name=_newscontent_fromname] img').each((_, i) => {
-                        const $i = $(i);
-                        if ($i.attr('src')!.startsWith('/')) {
-                            $i.attr('src', new URL($i.attr('src')!, host).href);
-                        }
-                    });
-                    content('form[name=_newscontent_fromname] ul li a').each((_, a) => {
-                        const $a = $(a);
-                        if ($a.attr('href')!.startsWith('/')) {
-                            $a.attr('href', new URL($a.attr('href')!, host).href);
-                        }
-                    });
-
-                    item.description = content('form[name=_newscontent_fromname]').html();
-                    return item;
-                } catch {
-                    item.description = 'NULL';
+                    if (content('title').text() === '用户验证' && content('body').text().includes('验证码')) {
+                        throw new ArticleAccessError(`Article access verification required at ${item.link}`);
+                    }
+                    if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
+                        throw new ArticleAccessError(`Article access permission required at ${item.link}`);
+                    }
+                    const body = content('.v_news_content');
+                    if (!body.length) {
+                        throw new Error(`Article main body not found at ${item.link}`);
+                    }
+                    body.find('style').remove();
+                    const downloads = content('form[name=_newscontent_fromname] a[href*="news.DownloadAttachUrl"]').filter((_, element) => content(element).parents('.v_news_content').length === 0);
+                    const attachments = downloads
+                        .toArray()
+                        .map((element) => `<li>${content.html(element)}</li>`)
+                        .join('');
+                    const category = content('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
+                    return { description: body.html()! + (downloads.length ? `\n<ul>${attachments}</ul>` : ''), category };
+                });
+                return { ...item, description: detail.description, category: detail.category };
+            } catch (error) {
+                if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
                     return item;
                 }
-            })
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
-
     return {
-        title: `武汉大学研究生院 - ${feed_title}`,
+        title: `武汉大学研究生院 - ${feedTitle}`,
         link: host + gsIndexMap.get(type),
         description: '武大研究生院',
         item: items,

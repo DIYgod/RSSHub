@@ -13,18 +13,7 @@ export const route: Route = {
     name: 'App store search',
     maintainers: ['PrintNow'],
     handler,
-    radar: [
-        {
-            source: ['apps.shopify.com/search'],
-            target: (_params, url) => {
-                const searchParams = new URL(url).searchParams;
-                if (!searchParams.has('q')) {
-                    return '';
-                }
-                return `/shopify/apps/search/${searchParams.get('q')}`;
-            },
-        },
-    ],
+    radar: [],
 };
 
 async function handler(ctx: Context): Promise<Data> {
@@ -41,7 +30,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
     });
 
-    const htmlContent = await response.data;
+    const htmlContent = response.data;
     const $ = load(htmlContent);
 
     const items = $('.search-results-component div[data-controller="app-card"]')
@@ -80,7 +69,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `Search results for "${q}" – Shopify App Store`,
         link: `https://apps.shopify.com/search?q=${q}`,
         // description: `Search results for "${q}" – Shopify App Store`,
-        allowEmpty: true,
         language: 'en-us',
         item: items,
     };

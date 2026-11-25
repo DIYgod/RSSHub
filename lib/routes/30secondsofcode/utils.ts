@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const rootUrl = 'https://www.30secondsofcode.org';
 
@@ -16,7 +16,7 @@ export async function processList(listElements) {
             return processItem({ link, date });
         })
     );
-    return items.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item' }));
+    return items.filter((item) => item.status === 'fulfilled').map((item) => item.value);
 }
 
 async function processItem({ link: articleLink, date }) {

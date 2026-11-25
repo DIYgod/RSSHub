@@ -1,6 +1,7 @@
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/post/:postid',
@@ -33,11 +34,17 @@ async function handler(ctx) {
         searchParams: {
             id: postid,
         },
+        headers: {
+            'user-agent': config.ua,
+        },
     });
 
     const { data: replies } = await got('https://www.v2ex.com/api/replies/show.json', {
         searchParams: {
             topic_id: postid,
+        },
+        headers: {
+            'user-agent': config.ua,
         },
     });
 

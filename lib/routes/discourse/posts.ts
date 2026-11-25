@@ -34,9 +34,8 @@ async function handler(ctx) {
     const feed = await RSSParser.parseString(
         (
             await got(`${link}/posts.rss`, {
-                headers: {
-                    'User-Api-Key': key,
-                },
+                headers: key ? { 'User-Api-Key': key } : {},
+                credentialHeaders: ['User-Api-Key'],
             })
         ).data
     );

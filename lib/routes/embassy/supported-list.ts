@@ -67,7 +67,7 @@ export default {
                 link: 'https://lyon.china-consulate.gov.cn/lsfw/zytz/',
                 list: 'ul.news-list > li.news-item > a.item-link',
                 title: '.view-title',
-                description: '.view-content .view_default',
+                description: '.view-content .view_default, .view-content .TRS_UEDITOR',
                 pubDate: '.view-date',
             },
         },

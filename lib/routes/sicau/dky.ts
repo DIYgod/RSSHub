@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dky/:category?',
@@ -52,15 +52,16 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.text(),
+                title: $item.attr('title') || $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.prev().text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.prev().text(), 'YYYY-MM-DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`sicau:dky:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -69,9 +70,11 @@ async function handler(ctx) {
 
                 item.description = content('.v_news_content').html();
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

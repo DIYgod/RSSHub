@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/version/:versionType?/:linkType?',
@@ -101,7 +102,7 @@ const linkFormatter: any = {
 };
 
 async function handler(ctx?: Context) {
-    const url = ctx?.req.query('mcmanifest') ?? 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
+    const url = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
 
     const response: any = await got({
         method: 'get',
@@ -128,7 +129,7 @@ async function handler(ctx?: Context) {
         item: data.map((item) => ({
             title: `${item.id} ${typeName[item.type] || ''}更新`,
             description: `${item.id} ${typeName[item.type] || ''}更新`,
-            pubDate: new Date(item.releaseTime).toUTCString(),
+            pubDate: parseDate(item.releaseTime),
             link: linker(item),
             guid: item.id + item.type,
         })),

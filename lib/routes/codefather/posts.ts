@@ -1,6 +1,10 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+const markdown = MarkdownIt({ breaks: true, linkify: true });
 
 const validCategories = new Set(['交流', '学习', '项目', '资源', '经验']);
 
@@ -20,6 +24,7 @@ interface PostListRequest {
 
 interface CodefatherPost {
     id: number;
+    title?: string;
     content?: string;
     pictureList?: string[];
     user?: {
@@ -45,7 +50,7 @@ export const route: Route = {
     categories: ['programming'],
     example: '/codefather/posts',
     parameters: {
-        category: '分类，可选 `交流`、`学习`、`项目`、`资源`、`经验`，默认为全部',
+        category: '分类，可选 `all`（全部）、`交流`、`学习`、`项目`、`资源`、`经验`，默认为全部',
         sort: '排序方式，可选 `new`（最新）、`hot`（热门）、`recommend`（推荐），默认为 `new`',
     },
     features: {
@@ -69,10 +74,18 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category');
+    const rawCategory = ctx.req.param('category');
+    const category = rawCategory === 'all' ? undefined : rawCategory;
     const sort = ctx.req.param('sort') || 'new';
 
-    const sortConfig = sortFieldMap[sort] || sortFieldMap.new;
+    if (category && !validCategories.has(category)) {
+        throw new InvalidParameterError('Invalid category. Use all, 交流, 学习, 项目, 资源 or 经验.');
+    }
+    if (!Object.hasOwn(sortFieldMap, sort)) {
+        throw new InvalidParameterError('Invalid sort. Use new, hot or recommend.');
+    }
+
+    const sortConfig = sortFieldMap[sort];
 
     const requestBody: PostListRequest = {
         current: 1,
@@ -105,7 +118,7 @@ async function handler(ctx) {
         const tags = item.tags || [];
 
         // Build description content
-        let description = `<p>${content.replaceAll('\n', '<br>')}</p>`;
+        let description = markdown.render(content);
 
         // Add images
         if (pictureList.length > 0) {
@@ -117,7 +130,7 @@ async function handler(ctx) {
         }
 
         return {
-            title: content.split('\n', 1)[0] || '无标题',
+            title: item.title || content.split('\n', 1)[0] || '无标题',
             link: `https://www.codefather.cn/post/${item.id}`,
             description,
             pubDate: parseDate(item.createTime),

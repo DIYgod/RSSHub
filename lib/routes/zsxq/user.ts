@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { TopicsResponse, UserInfoResponse } from './types';
 import { customFetch, generateTopicDataItem } from './utils';
@@ -34,21 +35,18 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const uid = ctx.req.param('id');
+    const uid = ctx.req.param('id')!;
     const accessToken = config.zsxq.accessToken;
 
     if (!accessToken) {
         throw new ConfigNotFoundError('该 RSS 源由于配置不正确而被禁用：令牌丢失。');
     }
 
-    let count = Number(ctx.req.query('limit')) || 20;
-    if (count > 30) {
-        count = 30;
-    }
+    const count = Math.min(getRouteLimit(ctx, 20), 30);
 
-    const userInfo = await customFetch<UserInfoResponse>(`/users/${uid}`);
+    const userInfo = await customFetch<UserInfoResponse>(`/users/${encodeURIComponent(uid)}`);
 
-    const { topics } = await customFetch<TopicsResponse>(`/users/${uid}/topics/footprint?count=${count}`);
+    const { topics } = await customFetch<TopicsResponse>(`/users/${encodeURIComponent(uid)}/topics/footprint?count=${count}`);
 
     return {
         title: `知识星球 - ${userInfo.user.name}`,

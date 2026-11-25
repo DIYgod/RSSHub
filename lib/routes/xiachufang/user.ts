@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 
@@ -40,13 +41,13 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const $link = $item.find('.name a');
             const title = $link.text();
-            const img = $item.find('.cover img').attr('data-src')!.replace(/\?.+/, '');
+            const img = $item.find('.cover img').attr('data-src')?.replace(/\?.+/, '');
             const desc = $item.find('.desc').text().trim() || $item.find('.stats').text().trim();
 
             return {
                 title,
-                link: `https://www.xiachufang.com${$link.attr('href')}`,
-                description: `<img src="${img}"><br>${desc}`,
+                link: new URL($link.attr('href')!, 'https://www.xiachufang.com').href,
+                description: html`<img src="${img}" /><br />${desc}`.toString(),
             };
         });
 

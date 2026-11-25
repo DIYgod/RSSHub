@@ -1,13 +1,13 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/interview/:jobId',
     categories: ['bbs'],
     example: '/nowcoder/interview/11200',
     parameters: {
-        jobId: '岗位 ID，如 11200（全部）、11002（Java）',
+        jobId: '岗位 ID，可从官网岗位列表获取，如 11200（后端开发）',
     },
     features: {
         requireConfig: false,
@@ -20,9 +20,10 @@ export const route: Route = {
     radar: [
         {
             source: ['www.nowcoder.com/interview/'],
+            target: '/interview/11200',
         },
     ],
-    name: '牛客面试经验',
+    name: '面试经验',
     description: '牛客面试经验',
     maintainers: ['xia0ne'],
     handler,
@@ -31,7 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const jobId = ctx.req.param('jobId');
 
-    const link = `https://gw-c.nowcoder.com/api/sparta/job-experience/experience/job/list?_=${Date.now()}`;
+    const link = `https://gw-c.nowcoder.com/api/sparta/job-experience/experience/job/list?_=${Temporal.Now.instant().epochMilliseconds}`;
     const payload = {
         jobId,
         level: 3,

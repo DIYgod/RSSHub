@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -16,7 +17,7 @@ export const route: Route = {
     handler,
 };
 
-const toHex = (s: string) => Buffer.from(s).toString('hex');
+const toHex = (s: string) => Buffer.from(s).toHex();
 
 const getCookie = async (url: string) => {
     const init = await ofetch.raw(url);
@@ -64,10 +65,15 @@ async function handler() {
                 const $ = load(response);
                 const content = $('article.article-content');
                 content.find('code-block').remove();
+                const pubDate = $('.article-meta li')
+                    .first()
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                 return {
                     title,
                     description: content.html(),
                     link,
+                    pubDate: pubDate ? parseDate(pubDate, 'YYYY-MM-DD', 8) : undefined,
                 };
             })
         )

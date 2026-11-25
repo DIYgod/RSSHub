@@ -1,9 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+
+interface WordpressPost {
+    title: { rendered: string };
+    link: string;
+    date_gmt: string;
+    _embedded?: { author?: Array<{ name: string }> };
+}
 
 const rootUrl = 'https://www.quantamagazine.org';
 
@@ -58,11 +67,11 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
     return processed;
 };
 
-export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+const handler = async (ctx) => {
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
 
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
-    const posts = await ofetch(apiUrl, {
+    const posts = await ofetch<WordpressPost[]>(apiUrl, {
         query: {
             per_page: limit,
             page: 1,
@@ -70,8 +79,9 @@ export const handler = async (ctx) => {
         },
     });
 
-    const items = await Promise.all(
-        posts.map((item) =>
+    const items = await pMap(
+        posts,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 // Get author name from embedded data
                 const authorName = item._embedded?.author?.[0]?.name || '';
@@ -97,10 +107,10 @@ export const handler = async (ctx) => {
                     description: contents,
                     link: item.link,
                     guid: item.link,
-                    pubDate: parseDate(item.date),
+                    pubDate: parseDate(item.date_gmt, 0),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

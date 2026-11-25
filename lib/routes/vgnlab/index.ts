@@ -1,7 +1,9 @@
+import pMap from 'p-map';
+
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -18,9 +20,9 @@ export const route: Route = {
     url: 'www.vgnlab.com.cn/web/news',
 };
 
-async function handler() {
-    const baseUrl = 'https://www.vgnlab.com.cn';
+const baseUrl = 'https://www.vgnlab.com.cn';
 
+async function handler() {
     const { data } = await ofetch(`${baseUrl}/api/news/list`, {
         method: 'POST',
         body: {
@@ -41,26 +43,24 @@ async function handler() {
             id: item.id,
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await ofetch(`${baseUrl}/api/news/detail`, {
-                    method: 'POST',
-                    body: {
-                        app_type: 'pc',
-                        app_type_name: 'PC',
-                        id: item.id,
-                    },
-                });
-                item.description = data.content;
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list, getArticle, { concurrency: 3, stopOnError: false });
 
     return {
         title: 'VGN官网 - 新闻中心',
         link: `${baseUrl}/web/news`,
         item: items,
     };
+}
+
+async function getArticle(item: DataItem & { link: string }): Promise<DataItem> {
+    const { description } = await cache.tryGet(item.link, () => fetchArticle(item.id));
+    return { ...item, description };
+}
+
+async function fetchArticle(id: DataItem['id']): Promise<Pick<DataItem, 'description'>> {
+    const { data } = await ofetch(`${baseUrl}/api/news/detail`, {
+        method: 'POST',
+        body: { app_type: 'pc', app_type_name: 'PC', id },
+    });
+    return { description: data.content };
 }

@@ -1,10 +1,26 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
+async function getArticleDetails(link: string) {
+    const detailResponse = await got({ method: 'get', url: link });
+    const content = load(detailResponse.data);
+    const tags = content('.sf-item-header-wrapper .sf-tags-list-item')
+        .toArray()
+        .map((element) => content(element).text());
+    const body = content('.sf-detail-body-wrapper');
+    if (!body.length) {
+        throw new Error(`WHO speech content not found: ${link}`);
+    }
+    return {
+        description: body.html(),
+        category: tags.length ? tags : undefined,
+    };
+}
 export const route: Route = {
     path: '/speeches/:language?',
     categories: ['government'],
@@ -20,56 +36,47 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['who.int/director-general/speeches'],
+            source: ['who.int/director-general/speeches', 'who.int/news-room/speeches'],
             target: '/speeches',
         },
     ],
     name: 'Speeches',
     maintainers: ['nczitzk'],
     handler,
-    url: 'who.int/director-general/speeches',
+    url: 'who.int/news-room/speeches',
     description: `Language
 
 | English | العربية | 中文 | Français | Русский | Español | Português |
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
-
 async function handler(ctx) {
     const language = ctx.req.param('language') || 'en';
-
     const rootUrl = 'https://www.who.int';
-    const currentUrl = `${rootUrl}/${language === 'en' ? '' : `${language}/`}director-general/speeches`;
+    const currentUrl = `${rootUrl}/${language === 'en' ? 'news-room/speeches' : `${language}/director-general/speeches`}`;
     const apiUrl = `${rootUrl}/api/hubs/speeches?sf_culture=${language}&$orderby=PublicationDateAndTime%20desc&$select=Title,PublicationDateAndTime,ItemDefaultUrl`;
-
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
-
-    const list = response.data.value.map((item) => ({
+    const list: Array<
+        DataItem & {
+            link: string;
+        }
+    > = response.data.value.map((item) => ({
         title: item.Title,
-        link: `${currentUrl}/detail/${item.ItemDefaultUrl}`,
+        link: `${currentUrl}/${language === 'en' ? 'item' : 'detail'}/${item.ItemDefaultUrl.replace(/^\/+/, '')}`,
         pubDate: parseDate(item.PublicationDateAndTime),
     }));
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                item.description = content('.sf-detail-body-wrapper').html();
-
-                return item;
-            })
-        )
+                const details = await getArticleDetails(item.link);
+                return { ...item, ...details };
+            }),
+        { concurrency: 3 }
     );
-
     return {
         title: 'Speeches - WHO',
         link: currentUrl,

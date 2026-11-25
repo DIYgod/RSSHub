@@ -1,10 +1,12 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?/:channel?/:subChannel?',
@@ -64,6 +66,17 @@ const renderElement = (element: any) => {
     }
 };
 
+const renderSpecialReport = ($: CheerioAPI) => {
+    const content = $('main#main, article#article');
+    content.find('h1, .byline, .dateline, .Theme-Byline, header.Theme-TitleSection, .Theme-CustomHtmlSection, .Theme-Footer, button, [aria-hidden="true"]').remove();
+    content.find('img[data-src], source[data-src]').each((_, element) => {
+        const image = $(element);
+        image.attr('src', image.attr('data-src'));
+        image.removeAttr('data-src');
+    });
+    return content.html();
+};
+
 async function handler(ctx: Context) {
     const { language = 'english', channel, subChannel } = ctx.req.param();
     const baseUrl = 'https://www.rfa.org';
@@ -84,7 +97,7 @@ async function handler(ctx: Context) {
             const website = Object.values<any>(story.websites)[0];
             return {
                 title: story.headlines.basic,
-                description: story.description.basic,
+                description: story.description?.basic,
                 link: new URL(website.website_url, baseUrl).href,
                 pubDate: parseDate(story.display_date),
                 author: story.credits?.by?.map((author) => author.name).join(', '),
@@ -93,22 +106,26 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`rfa:article:v3:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const globalContent = JSON.parse(response.match(/Fusion\.globalContent=(\{.*?\});Fusion\.globalContentConfig/)?.[1] ?? '{}');
-
-                if (globalContent.content_elements) {
-                    item.description = [globalContent.promo_items?.basic, ...globalContent.content_elements]
-                        .filter(Boolean)
-                        .map((element) => renderElement(element))
-                        .join('');
-                }
-                item.category = [...new Set([item.category, ...(globalContent.taxonomy?.sections?.map((section) => section.name) ?? []), ...(globalContent.taxonomy?.tags?.map((tag) => tag.text) ?? [])].filter(Boolean))];
-                return item;
-            })
-        )
+                const description = globalContent.content_elements
+                    ? [globalContent.promo_items?.basic, ...globalContent.content_elements]
+                          .filter(Boolean)
+                          .map((element) => renderElement(element))
+                          .join('')
+                    : globalContent.type === 'video'
+                      ? (globalContent.description?.basic ? `<p>${globalContent.description.basic}</p>` : '') + renderElement({ type: 'video', streams: globalContent.streams, promo_image: globalContent.promo_image })
+                      : renderSpecialReport(load(response));
+                const category = [...(globalContent.taxonomy?.sections?.map((section) => section.name) ?? []), ...(globalContent.taxonomy?.tags?.map((tag) => tag.text) ?? [])];
+                return { description, category };
+            });
+            return { ...item, description: details.description ?? item.description, category: [...new Set([item.category, ...details.category].filter(Boolean))] };
+        },
+        { concurrency: 3 }
     );
 
     return {

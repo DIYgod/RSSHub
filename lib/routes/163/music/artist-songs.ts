@@ -46,6 +46,7 @@ async function handler(ctx) {
     const items = data.songs.map((song) => ({
         title: `${song.name} - ${song.ar.map(({ name }) => name).join(' / ')}`,
         description: renderPlaylistDescription({
+            songId: song.id,
             singer: song.ar.map(({ name }) => name).join(' / '),
             album: song.al.name,
             picUrl: song.al.picUrl,

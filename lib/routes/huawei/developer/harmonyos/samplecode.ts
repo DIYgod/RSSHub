@@ -1,8 +1,7 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Data, Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -23,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['developer.huawei.com/consumer/cn/samples'],
-            target: '/huawei/developer/harmonyos/sample-code',
+            target: '/developer/harmonyos/sample-code',
         },
     ],
     name: 'HarmonyOS 示例代码',

@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -30,17 +29,22 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.attr('title');
+            if (title === undefined) {
+                return null;
+            }
             return {
-                title: $item.attr('title'),
+                title,
                 link: new URL($item.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('.sj .p2').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.sj .p2').text(), 'YYYY-MM-DD', 8),
             };
-        }) as DataItem[];
+        })
+        .filter((item) => item !== null);
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
                 return {

@@ -1,14 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const parsePublicationDate = (value: string) => parseDate(value, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm'], 8);
+
+const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://iehou.com';
     const currentUrl = new URL(category ? `page-${category}.htm` : '', rootUrl).href;
@@ -29,7 +32,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: timezone(parseDate($item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8),
+                pubDate: parsePublicationDate($item.parent().find('span').text()),
                 link: $item.find('a').prop('href'),
                 category: $item
                     .nextAll('a')
@@ -39,8 +42,9 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -52,7 +56,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = parsePublicationDate($$('i.icon-clock-o').parent().contents().last().text());
                 item.author = $$('img.avatar-1').parent().contents().last().text().trim();
                 item.content = {
                     html: description,
@@ -63,8 +67,8 @@ export const handler = async (ctx) => {
                 item.language = language;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -72,7 +76,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         author: $('h1').text(),
         language,
     };

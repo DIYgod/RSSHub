@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/idea',
@@ -29,8 +29,9 @@ async function handler() {
             link: $(item).attr('href')!,
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
@@ -39,10 +40,10 @@ async function handler() {
                     ...item,
                     title: content('.article-title').text(),
                     description: content('.article-content').html(),
-                    pubDate: timezone(parseDate(content('.date').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    pubDate: parseDate(content('.date').text(), 'YYYY-MM-DD HH:mm', 8),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

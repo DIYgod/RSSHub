@@ -6,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { apiBaseUrl, baseUrl, fileUrl, MIME_TYPE_MAP, thumbnailUrl } from './const';
 import type { PawchiveFile, PawchivePost } from './types';
@@ -21,16 +21,18 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
             return;
         }
 
-        const extension = src.replace(/.*\./, '').toLowerCase();
-        const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
+        const extension = new URL(src, baseUrl).pathname.replace(/.*\./, '').toLowerCase();
+        const mimeType = Object.entries(MIME_TYPE_MAP).find(([key]) => key === extension)?.[1];
 
-        if (mimeType) {
-            enclosureInfo = {
-                enclosure_url: src,
-                enclosure_type: mimeType,
-            };
-            return false;
+        if (!mimeType) {
+            return;
         }
+
+        enclosureInfo = {
+            enclosure_url: src,
+            enclosure_type: mimeType,
+        };
+        return false;
     });
 
     return enclosureInfo;
@@ -89,7 +91,7 @@ const render = (post: PawchivePost, files: PawchiveFile[]) =>
             {files.length > 0 && (
                 <ul>
                     {files.map((file) => {
-                        const extension = file.path.replace(/.*\./, '').toLowerCase();
+                        const extension = new URL(file.path, fileUrl).pathname.replace(/.*\./, '').toLowerCase();
 
                         let element;
                         if (['gif', 'jpg', 'jpeg', 'png', 'webp', 'jpeg', 'jfif'].includes(extension)) {
@@ -104,14 +106,14 @@ const render = (post: PawchivePost, files: PawchiveFile[]) =>
                         } else if (['m4a', 'mp3', 'ogg'].includes(extension)) {
                             element = (
                                 <audio controls preload="metadata">
-                                    <source src={`${fileUrl}${file.path}`} type={`audio/${extension}`} />
+                                    <source src={`${fileUrl}${file.path}`} type={MIME_TYPE_MAP[extension]} />
                                 </audio>
                             );
                         } else if (['mp4', 'webm'].includes(extension)) {
                             element = (
                                 <>
                                     <video controls preload="metadata">
-                                        <source src={`${fileUrl}${file.path}`} type={`video/${extension}`} />
+                                        <source src={`${fileUrl}${file.path}`} type={MIME_TYPE_MAP[extension]} />
                                     </video>
                                     <summary>{file.name}</summary>
                                 </>

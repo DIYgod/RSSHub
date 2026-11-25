@@ -3,7 +3,12 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+interface NewsArticle {
+    datePublished?: string;
+    dateModified?: string;
+}
 
 export const route: Route = {
     path: '/:channel',
@@ -52,19 +57,24 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const doc = load(res.data);
-                // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
                 const dateScript = doc('script[type="application/ld+json"]').first().text();
-                const re = /"datePublished": "(?<dateTimePub>.*)"/;
-                const dateStr = re.exec(dateScript)!.groups!.dateTimePub;
-                const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');
+                let article: NewsArticle = {};
+                if (dateScript) {
+                    try {
+                        const metadata = JSON.parse(dateScript);
+                        article = metadata['@graph']?.find((record) => record['@type'] === 'NewsArticle') ?? metadata;
+                    } catch {
+                        // Some pages omit or truncate their structured data; fall back to the listing date.
+                    }
+                }
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
-                    title: item.title!,
+                    title: item.title,
                     link: item.link,
                     description: item.description,
-                    // if we fail to get accurate publish date time, show date only from article link on index page.
-                    pubDate: pubDateTime ?? item.pubDate,
+                    pubDate: article.datePublished ? parseDate(article.datePublished) : item.pubDate,
+                    updated: article.dateModified ? parseDate(article.dateModified) : undefined,
                 };
             })
         )

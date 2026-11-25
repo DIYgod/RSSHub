@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjsy',
@@ -15,13 +15,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler(): Promise<Data> {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://yjsy.cpu.edu.cn';
     const url = `${baseUrl}/6335/list.htm`;
     const response = await ofetch(url);
     const $ = load(response);
 
-    const list: DataItem[] = $('ul.news_list li.news')
+    let list: DataItem[] = $('ul.news_list li.news')
         .slice(0, 10)
         .toArray()
         .map((item) => {
@@ -30,9 +30,17 @@ async function handler(): Promise<Data> {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 8),
             };
         });
+
+    const limit = getRouteLimit(ctx);
+    if (limit !== undefined) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+        }
+        list = list.slice(0, limit);
+    }
 
     const resultItem = await Promise.all(
         list.map((item) =>

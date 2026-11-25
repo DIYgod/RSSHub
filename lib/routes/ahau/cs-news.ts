@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cs_news/:type',
@@ -42,7 +41,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.attr('title') ?? a.text(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 

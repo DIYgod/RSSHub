@@ -1,13 +1,44 @@
 import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+interface MobileChinanewsResponse {
+    msgcode: number;
+    data: {
+        title: string;
+        content: string;
+        keywords: Array<{ keyword: string }>;
+    };
+}
+
+const fetchMobileChinanewsArticle = async (articleId: string) => {
+    const response = await ofetch<MobileChinanewsResponse>(`https://dw.chinanews.com/cns/app/v1/wapDetail/content/${articleId}.json`, {
+        query: { language: 'chs' },
+    });
+    if (response.msgcode !== 0) {
+        throw new Error(`China News did not return the content of article ${articleId}.`);
+    }
+    const $ = load(response.data.content, undefined, false);
+    $('.btpauthor, script, style').remove();
+    const description = $.root().html();
+    return {
+        title: response.data.title,
+        description,
+        category: response.data.keywords.map((k) => k.keyword),
+        content: { html: description, text: $.root().text() },
+    };
+};
+
+const handler = async (ctx) => {
     const { category = 'index/tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://www.hubu.edu.cn';
     const currentUrl = `${rootUrl}/${category}.htm`;
@@ -16,66 +47,74 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang') as Language;
+    const language: Language = 'zh-CN';
 
     let items = $('div.list ul li')
-        .slice(0, limit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('a').text(),
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const { data: detailResponse } = await got(item.link);
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    items = items.slice(0, limit);
 
-                    const $$ = load(detailResponse);
-
-                    const title = $$('div.dtl-tit h4').text();
-
-                    if (!title) {
-                        return item;
-                    }
-
-                    const description = $$('div.v_news_content').html();
-
-                    item.title = title;
-                    item.description = description;
-                    item.category = $$('META[Name="keywords"]')
-                        .toArray()
-                        .map((c) => $$(c).text());
-                    item.content = {
-                        html: description,
-                        text: $$('div.v_news_content').text(),
-                    };
-                    item.language = language;
-                } catch {
-                    // no-empty
+    items = await pMap(
+        items,
+        async (item) => {
+            const articleUrl = new URL(item.link);
+            const mobileChinanews = articleUrl.hostname === 'm.chinanews.com' && /^\/wap\/detail\/chs\/[^/]+\/(\d+)\.shtml$/.exec(articleUrl.pathname);
+            const detail = await cache.tryGet(`hubu:content:${mobileChinanews ? 'v3' : 'v2'}:${item.link}`, async () => {
+                if (mobileChinanews) {
+                    return fetchMobileChinanewsArticle(mobileChinanews[1]);
                 }
-
-                return item;
-            })
-        )
+                const { data: detailBuffer } = await got(item.link, { responseType: 'buffer' });
+                const charset = /charset=["']?([^"'\s>;]+)/i.exec(detailBuffer.toString('ascii'))?.[1] ?? 'utf-8';
+                const $$ = load(iconv.decode(detailBuffer, charset));
+                const hubeiChinanews = articleUrl.hostname === 'www.hb.chinanews.com.cn';
+                const title = $$('div.dtl-tit h4, div.con-tit h4').text() || (hubeiChinanews ? $$('.de_head .t1').text() : '');
+                if (!title) {
+                    return {};
+                }
+                const content = $$(hubeiChinanews ? '.de_article' : 'div.v_news_content');
+                if (hubeiChinanews) {
+                    content.find('#ad, .bianji, script, style').remove();
+                }
+                const description = content.html();
+                return {
+                    title,
+                    description,
+                    category: $$('META[Name="keywords"]')
+                        .toArray()
+                        .flatMap((c) => ($$(c).attr('content') ?? '').split(',')),
+                    content: {
+                        html: description,
+                        text: content.text(),
+                    },
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo a img').prop('src')!, rootUrl).href;
+    const imageSrc = $('div.logo a img').prop('src');
+    const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
 
     return {
         title,
         description: $('META[Name="keywords"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
         language,

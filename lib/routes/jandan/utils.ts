@@ -4,12 +4,12 @@ import sanitizeHtml from 'sanitize-html';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 /**
  * Extract page ID from script tags and title
  */
-export const extractPageMeta = (url: string) =>
+const extractPageMeta = (url: string) =>
     cache.tryGet(`jandan:pageMeta:${url}`, async () => {
         const response = await ofetch(url);
 

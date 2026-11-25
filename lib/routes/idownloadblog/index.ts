@@ -2,7 +2,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -16,17 +17,18 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const baseUrl = 'https://www.idownloadblog.com';
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const posts = await ofetch(`${baseUrl}/wp-json/wp/v2/posts`, {
         query: {
-            per_page: ctx.req.query('limit') === '10' ? undefined : ctx.req.query('limit'),
+            per_page: limit === 10 ? undefined : limit,
         },
     });
 
     const items = posts.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
-        updated: parseDate(item.modified_gmt),
+        pubDate: parseDate(`${item.date_gmt}Z`),
+        updated: parseDate(`${item.modified_gmt}Z`),
         link: item.link,
         author: item.yoast_head_json?.author,
     }));

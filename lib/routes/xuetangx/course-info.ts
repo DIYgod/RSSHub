@@ -1,9 +1,10 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toRFC822 } from '@/utils/time';
 
 export const route: Route = {
     path: '/course/:sign',
@@ -20,6 +21,22 @@ export const route: Route = {
     handler,
 };
 
+interface Classroom {
+    classroom_id: number;
+    classroom_name: string;
+    class_start?: number;
+    class_end?: number;
+    count: number;
+}
+
+async function fetchSkuInfo(sign: string, classroomId: number): Promise<string> {
+    const skuDetail = await ofetch('https://www.xuetangx.com/api/v1/lms/product/sku_pay_detail/', {
+        query: { cid: classroomId, sign },
+        headers: { xtbz: 'xt' },
+    });
+    return skuDetail.data.sku_info.map((sku) => `${sku.name}: ¥${sku.current_price}（${sku.leaf_count} 课时）`).join('<br>');
+}
+
 async function handler(ctx: Context) {
     const { sign } = ctx.req.param();
     const baseUrl = 'https://www.xuetangx.com';
@@ -27,7 +44,7 @@ async function handler(ctx: Context) {
 
     const [basicInfo, classroom] = await Promise.all([
         cache.tryGet(`xuetangx:course:info:${sign}`, () => ofetch(`${baseUrl}/api/v1/lms/product/get_product_basic_info/?sign=${sign}`, { headers })),
-        ofetch(`${baseUrl}/api/v1/lms/product/classroom/`, {
+        ofetch<{ data: { current: Classroom[] } }>(`${baseUrl}/api/v1/lms/product/classroom/`, {
             query: { sign },
             headers,
         }),
@@ -35,26 +52,30 @@ async function handler(ctx: Context) {
 
     const link = `${baseUrl}/course/${sign}`;
     const courseTitle = basicInfo.data.course_name;
+    const categories = [...new Set([...basicInfo.data.classifys, ...basicInfo.data.tags.map((tag) => tag.title)])];
+    const authors: Array<{ name: string }> = (basicInfo.data.teacher_list?.length ? basicInfo.data.teacher_list : basicInfo.data.teacher ? [basicInfo.data.teacher] : [])
+        .map((teacher) => teacher.name)
+        .filter(Boolean)
+        .map((name) => ({ name }));
 
-    const item = await Promise.all(
-        classroom.data.current.map(async (c) => {
-            const skuDetail = await ofetch(`${baseUrl}/api/v1/lms/product/sku_pay_detail/`, {
-                query: {
-                    cid: c.classroom_id,
-                    sign,
-                },
-                headers,
-            });
-            const skuInfo = skuDetail.data.sku_info.map((sku) => `${sku.name}: ¥${sku.current_price}（${sku.leaf_count} 课时）`).join('<br>');
-            const info = `班次: ${c.classroom_name}<br>开课时间: ${parseDate(c.class_start).toUTCString()}<br>结课时间: ${parseDate(c.class_end).toUTCString()}<br>${skuInfo}`;
+    const item = await pMap(
+        classroom.data.current,
+        async (c) => {
+            const skuInfo = await cache.tryGet(`xuetangx:course:sku:${sign}:${c.classroom_id}`, () => fetchSkuInfo(sign, c.classroom_id));
+            const classStart = c.class_start ? parseDate(c.class_start) : undefined;
+            const classEnd = c.class_end ? parseDate(c.class_end) : undefined;
+            const info = [`班次: ${c.classroom_name}`, ...(classStart ? [`开课时间: ${toRFC822(classStart)}`] : []), ...(classEnd ? [`结课时间: ${toRFC822(classEnd)}`] : []), skuInfo].join('<br>');
             return {
                 title: `${courseTitle} - ${c.classroom_name}`,
-                description: `${info}<br>报名人数: ${c.count}`,
+                description: `${basicInfo.data.long_intro || basicInfo.data.short_intro}<br>${info}<br>报名人数: ${c.count}`,
                 link: `${link}/${c.classroom_id}`,
-                guid: info,
-                pubDate: parseDate(c.class_start),
+                guid: `${link}/${c.classroom_id}`,
+                category: categories,
+                author: authors.length ? authors : undefined,
+                pubDate: classStart,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -63,6 +84,5 @@ async function handler(ctx: Context) {
         link,
         image: basicInfo.data.cover,
         item,
-        allowEmpty: true,
     };
 }

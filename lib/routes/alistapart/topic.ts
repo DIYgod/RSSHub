@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 
 import { getData, getList } from './utils';
@@ -80,6 +81,9 @@ async function handler(ctx) {
     const articleRoute = '/wp-json/wp/v2/article?categories=';
     const topic = ctx.req.param('topic');
     const id = (await getData(`${baseUrl}${searchRoute}${topic}`))[0]?.id;
+    if (!id) {
+        throw new InvalidParameterError(`Topic "${topic}" was not found. Choose a topic from https://alistapart.com/articles/.`);
+    }
     const data = await getData(`${baseUrl}${articleRoute}${id}&_embed`);
     const items = await getList(data);
 

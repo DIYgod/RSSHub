@@ -3,17 +3,17 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.78dm.net';
-    const currentUrl = new URL(category.includes('/') ? `${category}.html` : category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.includes('/') && !category.endsWith('.html') ? `${category}.html` : category}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), 8) : undefined,
+                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate, 'YYYY.MM.DD HH:mm', 8) : undefined,
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()!), 8);
+                item.pubDate = parseDate($$('p.push-time').text().split(/：/).pop()!, 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,
@@ -225,12 +225,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.78dm.net/:category?'],
-            target: (params) => {
-                const category = params.category?.replace(/\.html$/, '');
-
-                return `/78dm${category ? `/${category}` : ''}`;
-            },
+            source: ['www.78dm.net/*category', 'www.78dm.net/'],
+            target: '/:category?',
         },
         {
             title: '新品速递 - 全部',

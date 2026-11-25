@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id{.+}?',
@@ -68,11 +68,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'main/noticeannouncement/cfmmcnotice' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://www.cfmmc.com';
     const apiUrl = new URL('servlet/json', rootUrl).href;
-    const currentUrl = new URL(id.endsWith('/') ? id : `${id}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${id.endsWith('/') ? id : `${id}/`}`;
 
     const { data: currentResponse } = await got(currentUrl);
 
@@ -100,7 +100,7 @@ async function handler(ctx) {
         response.results?.[0].data.slice(0, limit).map((item) => ({
             title: item.title,
             link: new URL(item.url, rootUrl).href,
-            pubDate: timezone(parseDate(item.publish_date), 8),
+            pubDate: parseDate(item.publish_date, 8),
         })) ?? [];
 
     items = await Promise.all(

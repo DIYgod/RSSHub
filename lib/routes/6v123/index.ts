@@ -8,11 +8,40 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const getResolution = (text: string): number =>
+    Math.max(
+        0,
+        ...text
+            .matchAll(/(?:^|\D)(4320|2160|1440|1080|720|576|480)[pi]?(?!\d)/gi)
+            .toArray()
+            .map((match) => Number(match[1])),
+        /\b8k\b/i.test(text) ? 4320 : 0,
+        /\b4k\b/i.test(text) ? 2160 : 0
+    );
+
+const getBestMagnet = ($: CheerioAPI): Cheerio<Element> => {
+    const magnets = $('td a[href^="magnet"]');
+    let best: Element | undefined;
+    let bestResolution = 0;
+    for (const element of magnets.toArray()) {
+        const $element = $(element);
+        const fileName = new URL($element.attr('href')!).searchParams.get('dn') ?? '';
+        const resolution = getResolution(`${$element.text()} ${fileName}`);
+        if (resolution < bestResolution) {
+            continue;
+        }
+        best = element;
+        bestResolution = resolution;
+    }
+    return best ? $(best) : magnets;
+};
+
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '25');
+    const limit = getRouteLimit(ctx, 25);
 
     const encoding = 'gb2312';
 
@@ -76,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description = $$('div#endText').html();
                 const pubDateStr: string | undefined = item.link?.match(/\/(\d{4}-\d{2}-\d{2})\/\d+\.html/)?.[1];
                 const categoryEls: Element[] = $$('div#endText p a').toArray();
-                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()?.trim()).filter(Boolean))];
+                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                 const image: string | undefined = $$('div#endText p img').attr('src');
                 const upDatedStr: string | undefined = pubDateStr;
 
@@ -95,7 +124,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('td a[href^="magnet"]').last();
+                const $enclosureEl = getBestMagnet($$);
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {

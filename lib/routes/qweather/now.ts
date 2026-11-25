@@ -3,7 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 import type { NowItem } from './util';
 import { renderNowDescription } from './util';
@@ -62,18 +62,23 @@ async function handler(ctx) {
 
     const timeObj = parseDate(responseData.updateTime);
 
-    const time_show = timeObj.toLocaleString();
-
     return {
         title: ctx.req.param('location') + '实时天气',
         description: ctx.req.param('location') + '实时天气状况',
-        item: data.map((item: NowItem) => ({
-            title: '观测时间：' + time_show,
-            description: renderNowDescription(item),
-            pubDate: timeObj,
-            guid: '位置:' + ctx.req.param('location') + '--时间：' + time_show,
-            link: responseData.fxLink,
-        })),
+        item: data.map((item: NowItem) => {
+            const observationDate = parseDate(item.obsTime || responseData.updateTime);
+            if (!observationDate) {
+                throw new Error(`Invalid observation time: ${item.obsTime || responseData.updateTime}`);
+            }
+            const observationTime = toISOString(observationDate);
+            return {
+                title: '观测时间：' + observationTime,
+                description: renderNowDescription(item),
+                pubDate: timeObj,
+                guid: '位置:' + ctx.req.param('location') + '--时间：' + observationTime,
+                link: responseData.fxLink,
+            };
+        }),
         link: responseData.fxLink,
     };
 }

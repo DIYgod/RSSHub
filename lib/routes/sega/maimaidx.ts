@@ -1,11 +1,12 @@
 import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/maimaidx/news',
@@ -22,27 +23,28 @@ export const route: Route = {
     url: 'info-maimai.sega.jp/',
 };
 
+const parseContent = (htmlString: string, image: Cheerio<Element>) => {
+    const $ = load(htmlString);
+    const content = $('.maiMd');
+    content.prepend(image);
+    content.find('.hrLine').replaceWith('<hr/>');
+    return content.html();
+};
+
 async function handler() {
     const baseUrl = 'https://info-maimai.sega.jp/';
-
-    const parseContent = (htmlString: string, image: Cheerio<Element>) => {
-        const $ = load(htmlString);
-        const content = $('.maiMd');
-        content.prepend(image);
-        content.find('.hrLine').replaceWith('<hr/>');
-        return content.html();
-    };
 
     const response = await got(baseUrl);
     const $ = load(response.data);
     const list = $('.maiPager-content .newsBox');
 
-    const item = await Promise.all(
-        list.map(async (_, items) => {
+    const item = await pMap(
+        list.toArray(),
+        async (items) => {
             const i = $(items);
             const title = i.find('.newsLink').text();
             const pubDateStr = i.find('.newsDate').text().slice(0, 10);
-            const pubDate = parseDate(pubDateStr, 'YYYY.MM.DD');
+            const pubDate = parseDate(`${pubDateStr.replaceAll('.', '-')}T00:00:00Z`);
             const image = i.find('.newsImg');
             const link = i.find('a').attr('href')!;
             return await cache.tryGet(link, async () => {
@@ -55,7 +57,8 @@ async function handler() {
                     pubDate,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

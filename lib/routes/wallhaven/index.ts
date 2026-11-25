@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://wallhaven.cc';
 
@@ -38,44 +40,48 @@ The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wa
 
 async function handler(ctx) {
     const filter = ctx.req.param('filter') ?? 'latest';
-    const needDetails = /t|y/i.test(ctx.req.param('needDetails') ?? 'false');
+    const needDetails = /^(?:true|yes|t|y)$/i.test(ctx.req.param('needDetails') ?? 'false');
     const url = `${rootUrl}/${filter.indexOf('=') > 0 ? `search?${filter.replaceAll(/page=\d+/g, 'page=1')}` : filter}`;
 
     const response = await got.get(url);
     const $ = load(response.data);
 
     let items = $('li > figure.thumb')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
+        .slice(0, getRouteLimit(ctx, 24))
         .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('img.lazyload').attr('data-src')!.split('/').pop()!,
-            description: $(item)
-                .html()!
-                .match(/<img.*?>/)![0],
-            link: $(item).find('a.preview').attr('href'),
-        }));
+        .map((item): DataItem => {
+            const image = $(item).find('img.lazyload');
+            const imageUrl = image.attr('data-src');
+            image.attr('src', imageUrl);
+            return {
+                title: imageUrl?.split('/').pop() || '',
+                description: image.toString(),
+                link: $(item).find('a.preview').attr('href'),
+            };
+        });
     if (needDetails) {
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link!, async () => {
+        items = await pMap(
+            items,
+            async (item) => {
+                const details = await cache.tryGet<Pick<DataItem, 'title' | 'author' | 'pubDate' | 'category' | 'description'>>(`wallhaven:detail:${item.link}`, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
                     });
-
                     const content = load(detailResponse.data);
-
-                    item.title = content('meta[name="title"]').attr('content')!;
-                    item.author = content('.username').text();
-                    item.pubDate = parseDate(content('time').attr('datetime')!);
-                    item.category = content('.tagname')
-                        .toArray()
-                        .map((tag) => content(tag).text());
-                    item.description = content('div.scrollbox').html() ?? '';
-
-                    return item;
-                })
-            )
+                    return {
+                        title: content('meta[name="title"]').attr('content')!,
+                        author: content('.username').text(),
+                        pubDate: parseDate(content('time').attr('datetime')!),
+                        category: content('.tagname')
+                            .toArray()
+                            .map((tag) => content(tag).text()),
+                        description: content('div.scrollbox').html(),
+                    };
+                });
+                return { ...item, ...details };
+            },
+            { concurrency: 3 }
         );
     }
 

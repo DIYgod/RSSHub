@@ -15,7 +15,7 @@ export interface Profile {
     createdAt: string;
 }
 
-export interface BaseSubscription {
+interface BaseSubscription {
     feedId: string;
     isPrivate: boolean;
     title: string | null;

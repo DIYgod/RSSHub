@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/headline',
@@ -16,7 +17,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx: Context) {
     const currentUrl = 'https://news.creaders.net/headline/';
 
     const response = await ofetch(currentUrl, { responseType: 'arrayBuffer' });
@@ -32,12 +33,14 @@ async function handler() {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate($item.find('time').text()), 8),
+                pubDate: parseDate($item.find('time').text(), 8),
             };
         });
 
+    const limit = getRouteLimit(ctx, 10);
+    const selected = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
     const items = await Promise.all(
-        list.map((item) =>
+        selected.slice(0, limit).map((item) =>
             cache.tryGet(item.link!, async () => {
                 const res = await ofetch(item.link!, { responseType: 'arrayBuffer' });
                 const content = load(iconv.decode(Buffer.from(res), 'gbk'));

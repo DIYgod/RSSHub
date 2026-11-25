@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -28,25 +28,41 @@ async function handler() {
     const $ = load(JSON.parse(match[1].replaceAll(/[\r\n\t]/g, ' ')));
     const list = $('li').toArray();
 
-    const out = await Promise.all(
-        list.map((item) => {
+    const out = await pMap(
+        list,
+        async (item) => {
             const $item = $(item);
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
-            const pubDate = timezone(parseDate($item.find('.font_ts').text()), 8);
+            const pubDate = parseDate($item.find('.font_ts').text(), 8);
 
-            return cache.tryGet(itemUrl, async () => {
+            const article = await cache.tryGet(`tongshang:article:v2:${itemUrl}`, async () => {
                 const response = await ofetch(itemUrl);
                 const $d = load(response);
+                const body = $d('.lm_newsCont_part2 .left');
+                const authors = body
+                    .find('strong')
+                    .filter((_, element) => /^作者[：:]/.test($d(element).text()))
+                    .toArray();
+                const author = authors
+                    .map((element) =>
+                        $d(element)
+                            .text()
+                            .replace(/^作者[：:]\s*/, '')
+                    )
+                    .join(', ');
+                $d(authors).remove();
 
                 return {
                     title: $d('.lm_newsCont_part1 .txt').text(),
                     link: itemUrl,
-                    pubDate,
-                    description: $d('.lm_newsCont_part2 .left').html(),
+                    description: body.html(),
+                    author,
                 };
             });
-        })
+            return { ...article, pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

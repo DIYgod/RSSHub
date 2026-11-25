@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:routeParams?',
@@ -71,7 +70,7 @@ async function handler(ctx) {
             description,
             link: `${apiUrl}${item.ImageContent.BackstageUrl}`,
             author: item.ImageContent.Copyright,
-            pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), 0),
+            pubDate: parseDateStrict(ssd, ['YYYYMMDD_HHmm', 'YYYYMMDD'], 0),
         };
     });
     return {

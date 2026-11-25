@@ -1,6 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     latest: {
@@ -88,8 +90,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['genshin.hoyoverse.com/:location/news'],
-            target: '/ys/:location',
+            source: ['genshin.hoyoverse.com/zh-tw/news'],
+            target: '/ys/zh-tw',
+        },
+        {
+            source: ['ys.mihoyo.com/main/news'],
+            target: '/ys/main',
         },
     ],
     name: '原神',
@@ -105,7 +111,10 @@ export const route: Route = {
 async function handler(ctx) {
     const location = ctx.req.param('location') ?? 'main';
     const category = ctx.req.param('category') ?? 'latest';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    if (!categories[category]?.[location]?.id) {
+        throw new InvalidParameterError('Unknown location or category; use a documented combination.');
+    }
+    const limit = getRouteLimit(ctx, 50);
 
     const params = {
         main: `iPage=1&sLangKey=zh-cn&iChanId=${categories[category][location].id}&iPageSize=${limit}`,
@@ -127,7 +136,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${rootUrl}${currentUrls[location]}/detail/${item.iInfoId}`,
-        pubDate: parseDate(item.dtStartTime),
+        pubDate: parseDate(item.dtStartTime, 8),
         category: item.sCategoryName,
     }));
 

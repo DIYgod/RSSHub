@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseURL = 'https://www.ctbu.edu.cn/index/xxgg.htm';
 
@@ -40,7 +40,7 @@ async function handler() {
             return {
                 title: $item.find('a').attr('title')!,
                 description: $item.find('p').text(),
-                pubDate: parseDate($item.find('h6').text() + '-' + $item.find('em').text(), 'YYYY-MM-DD'),
+                pubDate: parseDate($item.find('h6').text() + '-' + $item.find('em').text(), 'YYYY.MM-DD', 8),
                 link: $item.find('a').attr('href'),
             };
         });

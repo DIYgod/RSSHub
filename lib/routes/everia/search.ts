@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
@@ -24,15 +25,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
     const keyword = ctx.req.param('keyword');
-    const url = `${SUB_URL}?s=${keyword}`;
+    const url = new URL(SUB_URL);
+    url.searchParams.set('s', keyword);
 
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?search=${keyword}&per_page=${limit}&_embed`);
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts`, { searchParams: { search: keyword, per_page: limit, _embed: '' } });
 
     return {
         title: `${SUB_NAME_PREFIX} - Search: ${keyword}`,
-        link: url,
+        link: url.href,
         item: posts.map((post) => loadArticle(post)),
     };
 }

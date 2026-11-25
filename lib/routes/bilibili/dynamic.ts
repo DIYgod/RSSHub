@@ -6,9 +6,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDuration } from '@/utils/helpers';
-import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate, parseDuration } from '@/utils/time';
 
 import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import cacheIn from './cache';
@@ -45,7 +44,7 @@ export const route: Route = {
 4.  视频和专栏，UP 主粉丝及关注只要求 \`SESSDATA\` 字段，动态需复制整段 Cookie`,
             },
         ],
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,

@@ -3,8 +3,11 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { isOnSite } from '@/utils/valid-host';
 
-import { csvRecords, decodeText, isoDate, type PermitExtra, type Row } from '../utils';
+import type { PermitExtra, Row } from '../utils';
+import { csvRecords, decodeText, isoDate } from '../utils';
 
 /**
  * 食品営業許可 facilities of 大阪市, from the CC BY 4.0 CSV linked on the city's 食品営業許可施設一覧 page
@@ -24,13 +27,10 @@ const permitKey = (no: string): [number, number] | null => {
     return m ? [Number(m[1]), Number(m[2])] : null;
 };
 
-const toNumber = (v: string | null | undefined): number | null => {
-    const n = v ? Number(v.trim()) : NaN;
-    return Number.isFinite(n) ? n : null;
-};
+const toNumber = (v: string | null | undefined): number | null => (v ? Number(v) : null);
 
 /** The publisher's 経度 / 緯度 columns have been swapped in past releases, so the pair is ordered by value (in Japan lon > lat). */
-const coords = (raw: Row): { lat: number | null; lon: number | null } => {
+const coords = (raw: Row) => {
     const a = toNumber(raw['緯度']);
     const b = toNumber(raw['経度']);
     if (a === null || b === null) {
@@ -40,24 +40,25 @@ const coords = (raw: Row): { lat: number | null; lon: number | null } => {
 };
 
 const fetchRows = async (): Promise<Row[]> => {
-    const html: string = await ofetch(PAGE, { responseType: 'text' });
+    const html: string = await ofetch(PAGE);
     const $ = load(html);
-    const href = $('a[href$=".csv"]')
+    const link = $('#mol_contents a[href$=".csv"]')
         .toArray()
-        .map((a) => $(a).attr('href')!)
-        .find((h) => h.includes('city.osaka.lg.jp'));
-    if (!href) {
+        .map((a) => new URL($(a).attr('href')!, PAGE).href)
+        // only follow links on the site itself
+        .find((h) => isOnSite(h, 'city.osaka.lg.jp'));
+    if (!link) {
         throw new Error('lg/osaka/food-permit: no CSV link on the 食品営業許可施設一覧 page');
     }
-    const buf: ArrayBuffer = await ofetch(new URL(href, PAGE).href, { responseType: 'arrayBuffer' });
+    const buf: ArrayBuffer = await ofetch(link, { responseType: 'arrayBuffer', maxResponseSize: 32 * 1024 * 1024 });
     return csvRecords(decodeText(buf));
 };
 
 const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
-    const permitNo = raw['指令番号']!.trim();
+    const permitNo = raw['指令番号']!;
     const name = raw['屋号']?.trim() || '(名称なし)';
-    const address = raw['営業所所在地']?.trim() || null;
-    const businessType = raw['業種分類']?.trim() || null;
+    const address = raw['営業所所在地'] || null;
+    const businessType = raw['業種分類'] || null;
     const ward = /^(\S+?区)/.exec(address ?? '')?.[1] ?? '大阪市';
     const { lat, lon } = coords(raw);
     return {
@@ -65,7 +66,7 @@ const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
         guid: `lg/osaka/food-permit:${permitNo}`,
         link: PAGE,
         description: [ward, address, businessType, `指令番号 ${permitNo}`, raw['許可満了日'] ? `許可満了日 ${raw['許可満了日']}` : null].filter(Boolean).join(' / '),
-        // 大阪市 publishes neither 町字 nor 初回許可日 nor 廃業日 — the snapshot only lists permits that are still valid.
+        // Osaka publishes neither 町字 nor 初回許可日 nor 廃業日 — the snapshot only lists permits that are still valid.
         _extra: {
             source: 'osaka',
             ward,
@@ -89,7 +90,7 @@ const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
 const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: PermitExtra }>> => {
     const rows = await fetchRows();
     return rows
-        .filter((r) => (r['指令番号'] ?? '').trim() !== '' && (r['申請区分'] ?? '新規') === '新規')
+        .filter((r) => (r['指令番号'] ?? '') !== '' && (r['申請区分'] ?? '新規') === '新規')
         .map((raw) => ({ raw, key: permitKey(raw['指令番号']!) }))
         .filter((r): r is { raw: Row; key: [number, number] } => r.key !== null)
         .toSorted((a, b) => b.key[0] - a.key[0] || b.key[1] - a.key[1])
@@ -97,9 +98,9 @@ const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: Per
         .map((r) => toItem(r.raw));
 };
 
-export const handler = async (ctx): Promise<Data> => {
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
-    const items = (await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit))) as Array<DataItem & { _extra: PermitExtra }>;
+const handler = async (ctx): Promise<Data> => {
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
+    const items = await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit));
     return {
         title: '大阪市 食品営業許可 新規',
         link: PAGE,

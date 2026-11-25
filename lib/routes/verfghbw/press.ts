@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://verfgh.baden-wuerttemberg.de';
 const listUrl = `${rootUrl}/presse-und-service/pressemitteilungen/`;
@@ -47,19 +48,30 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'category'>>(`verfghbw:article-details:v3:${item.link}`, async () => {
                 const detail = await got(item.link);
                 const $$ = load(detail.data);
 
                 return {
-                    ...item,
                     description: $$('.news-text-wrap').html(),
-                    pubDate: parseDate($$('.news-single time').attr('datetime')!),
+                    pubDate: parseDateStrict($$('.news-single time').prop('datetime'), 'YYYY-MM-DD', 0),
+                    category: $$('.news-list-category')
+                        .toArray()
+                        .map((element) => $$(element).text().trim()),
                 };
-            })
-        )
+            });
+
+            return {
+                ...item,
+                description: details.description,
+                pubDate: details.pubDate,
+                category: details.category,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

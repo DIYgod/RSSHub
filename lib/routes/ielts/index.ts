@@ -4,9 +4,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
 
@@ -22,6 +21,7 @@ export const route: Route = {
     ],
     name: '最新消息',
     maintainers: ['zenxds'],
+    features: { requirePuppeteer: true },
     handler,
     url: 'ielts.neea.cn/allnews',
 };
@@ -31,19 +31,20 @@ async function handler() {
         targetUrl,
         async () => {
             const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-            });
-            await page.goto(targetUrl, {
-                waitUntil: 'domcontentloaded',
-            });
-            await page.waitForSelector('div.container');
-
-            const html = await page.evaluate(() => document.documentElement.getHTML());
-            await context.close();
-            return html;
+            try {
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    return request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                });
+                await page.goto(targetUrl, {
+                    waitUntil: 'domcontentloaded',
+                });
+                await page.waitForSelector('div.container');
+                return await page.evaluate(() => document.documentElement.getHTML());
+            } finally {
+                await context.close();
+            }
         },
         config.cache.routeExpire,
         false
@@ -58,7 +59,7 @@ async function handler() {
             return {
                 title: $elem.find('a').text(),
                 link: $elem.find('a').attr('href'),
-                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim()), 8),
+                pubDate: parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), 8),
             };
         });
 

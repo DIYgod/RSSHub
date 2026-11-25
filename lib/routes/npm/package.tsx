@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
@@ -27,7 +28,7 @@ async function handler(ctx) {
     const downloadCountLastMonthRes = await ofetch(packageDownloadLastMonthAPI);
     const downloadCountLastWeekRes = await ofetch(packageDownloadLastWeekAPI);
     const downloadCountLastDayRes = await ofetch(packageDownloadLastDayAPI);
-    const packageVersionRes = await ofetch(packageVersionAPI);
+    const packageVersionRes = await ofetch(packageVersionAPI, { maxResponseSize: 64 * 1024 * 1024 }); // the full document lists every version, 42 MB for rsshub
 
     const packageVersion = packageVersionRes.time;
     const packageVersionList = Object.entries(packageVersion)
@@ -61,6 +62,7 @@ async function handler(ctx) {
                 ),
                 link: `https://www.npmjs.com/package/${name}`,
                 guid: `https://www.npmjs.com/package/${name}${packageVersion.modified}`,
+                pubDate: parseDate(packageVersion.modified),
             },
         ],
     };

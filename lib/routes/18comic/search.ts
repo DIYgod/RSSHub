@@ -1,9 +1,10 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
-import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
+import { apiMapCategory, defaultDomain, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/search/:option?/:category?/:keyword?/:time?/:order?',
@@ -52,12 +53,10 @@ async function handler(ctx) {
     // Without encoding, `+` is treated as space in query strings, breaking search logic.
     const encodedKeyword = encodeURIComponent(keyword);
     const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${encodedKeyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
-    let apiUrl = getApiUrl();
     order = time === 'a' ? order : `${order}_${time}`;
-    apiUrl += `/search?search_query=${encodedKeyword}&o=${order}`;
-    const apiResult = await processApiItems(apiUrl);
+    const apiResult = await processApiItems(`/search?search_query=${encodedKeyword}&o=${order}`);
     let filteredItemsByCategory = apiResult.content;
     // Filter items by category if not 'all'
     if (category !== 'all') {
@@ -66,16 +65,15 @@ async function handler(ctx) {
     filteredItemsByCategory = filteredItemsByCategory.slice(0, limit);
     const results = await Promise.all(
         filteredItemsByCategory.map((item) =>
-            cache.tryGet(`18comic:search:${item.id}`, async () => {
+            cache.tryGet(`18comic:search:${item.id}:${rootUrl}`, async () => {
                 const result: DataItem = {
                     title: item.name,
                     link: `${rootUrl}/album/${item.id}`,
                     guid: `18comic:/album/${item.id}`,
                     updated: parseDate(item.update_at),
                 };
-                const apiUrl = `${getApiUrl()}/album?id=${item.id}`;
-                const apiResult = await processApiItems(apiUrl);
-                result.pubDate = new Date(apiResult.addtime * 1000);
+                const apiResult = await processApiItems(`/album?id=${item.id}`);
+                result.pubDate = parseDate(apiResult.addtime, 'X');
                 const tags = apiResult.tags.map((tag) => tag);
                 result.category = tags;
                 result.author = apiResult.author.map((a) => a).join(', ');

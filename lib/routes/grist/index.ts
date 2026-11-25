@@ -26,7 +26,7 @@ async function handler(): Promise<Data> {
     const items = await getList(data);
 
     return {
-        title: 'Gist Latest Articles',
+        title: 'Grist Latest Articles',
         link: `${baseUrl}/articles`,
         item: items,
         description: 'Latest Articles on grist.org',

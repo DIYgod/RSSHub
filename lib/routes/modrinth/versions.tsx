@@ -1,13 +1,13 @@
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
 import type { Author, Project, Version } from '@/routes/modrinth/api';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import _ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const ofetch = _ofetch.create({
     headers: {
@@ -23,9 +23,6 @@ const md = MarkdownIt({
 const renderVersion = (version: Version & { changelog?: string }) =>
     renderToString(
         <>
-            <p>
-                {version.name} - {version.version_number}
-            </p>
             <p>
                 <b>Loaders: </b>
                 {version.loaders?.map((loader) => `${loader} `)}
@@ -108,6 +105,7 @@ async function handler(ctx: Context) {
             query: {
                 loaders: parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '',
                 game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
+                featured: parsedQuery.get('featured') ?? undefined,
             },
         });
         const authorIds = [...new Set(versions.map((it) => it.author_id))];
@@ -138,7 +136,7 @@ async function handler(ctx: Context) {
             })),
         };
     } catch (error: any) {
-        if (error?.response?.statusCode === 404) {
+        if (error?.response?.status === 404) {
             throw new Error(`${error.message}: Project ${id} not found`, { cause: error });
         }
         throw error;

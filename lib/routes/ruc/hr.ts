@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hr/:category?',
@@ -47,39 +48,35 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('a[title]')
+    let items = $('.newsList > li > a')
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): Array<DataItem & { link: string }> => {
             const $item = $(item);
-
-            const link = $item.attr('href');
-
-            return {
-                title: $item.text(),
-                link: `${rootUrl}${link!.startsWith('..') ? link!.replace(/^\.\./, '') : `/${category}/${link}`}`,
-            };
+            const href = $item.attr('href');
+            const title = $item.text();
+            return href ? [{ title, link: new URL(href, currentUrl).href }] : [];
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
 
-                    const content = load(detailResponse.data);
+                const content = load(detailResponse.data);
 
-                    item.description = content('.neirong').html();
-                    item.pubDate = parseDate(detailResponse.data.match(/日期：(\d{4}-\d{2}-\d{2})/)[1]);
-                } catch {
-                    item.description = 'Not Found';
-                }
-
-                return item;
-            })
-        )
+                const description = content('.article, .neirong').html();
+                const date = content('.articleAuthor')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                return { description, pubDate: date ? parseDate(date, 8) : undefined };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

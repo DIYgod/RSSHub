@@ -17,7 +17,7 @@ function rc4_encrypt(plaintext: string, key: string): string {
 
 // SM3 digest as a byte array; accepts a string or a byte array (for double hashing)
 function sm3Sum(message: string | number[]): number[] {
-    const hex = sm3(typeof message === 'string' ? message : Uint8Array.from(message));
+    const hex = sm3(Array.isArray(message) ? Uint8Array.from(message) : message);
     const bytes: number[] = [];
     for (let i = 0; i < hex.length; i += 2) {
         bytes.push(Number.parseInt(hex.slice(i, i + 2), 16));
@@ -90,7 +90,7 @@ function gener_random(random, option) {
 
 // ////////////////////////////////////////////
 function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suffix = 'cus', Arguments = [0, 1, 14]) {
-    const start_time = Date.now();
+    const start_time = Temporal.Now.instant().epochMilliseconds;
     /**
      * 进行3次加密处理
      * 1: url_search_params两次sm3之的结果
@@ -105,7 +105,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
     const ua_key = String.fromCodePoint(Math.floor(0.00390625), 1, 14);
     const ua = sm3Sum(result_encrypt(rc4_encrypt(user_agent, ua_key), 's3'));
     //
-    const end_time = Date.now();
+    const end_time = Temporal.Now.instant().epochMilliseconds;
     // b
     const b = {
         8: 3, // 固定

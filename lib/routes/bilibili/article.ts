@@ -1,11 +1,19 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cacheGeneral from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
+
+const getOpusPubDate = ($: CheerioAPI) => {
+    const prefix = 'window.__INITIAL_STATE__=';
+    const stateScript = $(`script:contains("${prefix}")`).text();
+    const state = JSON.parse(stateScript.slice(prefix.length, stateScript.lastIndexOf(';(function')));
+    return parseDate(state.detail.modules.find((module) => module.module_author).module_author.pub_ts, 'X');
+};
 
 export const route: Route = {
     path: '/user/article/:uid',
@@ -14,7 +22,7 @@ export const route: Route = {
     parameters: { uid: '用户 id, 可在 UP 主主页中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -47,36 +55,40 @@ async function handler(ctx) {
     const cookie = await cache.getCookie();
 
     const item = await Promise.all(
-        data.items.map(async (item) => {
-            const link = 'https:' + item.jump_url;
-            const data = await cacheGeneral.tryGet<string>(
-                link,
-                async () =>
-                    (
-                        await got({
-                            method: 'get',
-                            url: link,
-                            headers: {
-                                Referer: `https://space.bilibili.com/${uid}/article`,
-                                Cookie: cookie,
-                            },
-                        })
-                    ).data
-            );
+        data.items
+            .map((item) => {
+                const url = new URL(item.jump_url, 'https://www.bilibili.com');
+                // only send the cookie to bilibili.com hosts
+                return url.protocol === 'https:' && (url.hostname === 'bilibili.com' || url.hostname.endsWith('.bilibili.com')) ? { item, link: url.href } : undefined;
+            })
+            .filter((entry) => entry !== undefined)
+            .map(async ({ item, link }) => {
+                const data = await cacheGeneral.tryGet<string>(
+                    link,
+                    async () =>
+                        (
+                            await got({
+                                method: 'get',
+                                url: link,
+                                headers: {
+                                    Referer: `https://space.bilibili.com/${uid}/article`,
+                                    Cookie: cookie,
+                                },
+                            })
+                        ).data
+                );
 
-            const $ = load(data);
-            const description = $('.opus-module-content').html();
-            const pubDate = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
+                const $ = load(data);
+                const description = $('.opus-module-content').html();
 
-            const single = {
-                title: item.content,
-                link,
-                description: description || item.content,
-                // 2019年11月11日 08:50
-                pubDate: pubDate ? parseDate(pubDate, 'YYYY年MM月DD日 HH:mm') : undefined,
-            };
-            return single;
-        })
+                const single = {
+                    title: item.content,
+                    link,
+                    description: description || item.content,
+                    pubDate: getOpusPubDate($),
+                };
+                return single;
+            })
     );
     return {
         title,

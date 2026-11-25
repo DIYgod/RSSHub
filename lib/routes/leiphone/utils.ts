@@ -1,14 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const ProcessFeed = async (list, cache) => {
     const host = 'https://www.leiphone.com';
 
-    const items = await Promise.all(
-        list.map(async (e) => {
+    const items = await pMap(
+        list,
+        async (e: string) => {
             const link = new URL(e, host).href;
 
             const single = await cache.tryGet(link, async () => {
@@ -24,14 +25,15 @@ const ProcessFeed = async (list, cache) => {
                 return {
                     title: $('.headTit').text(),
                     description: description + $('.article-lead').text() + $('.lph-article-comView').html(),
-                    pubDate: timezone(parseDate($('.time').text()), 8),
+                    pubDate: parseDate($('.time').text(), 8),
                     author: $('.aut > a').text(),
                     link,
                 };
             });
 
             return single;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return items;

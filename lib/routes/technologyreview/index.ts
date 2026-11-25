@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiUrl, renderItem } from './utils';
 
@@ -21,7 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getRouteLimit(ctx, 10);
 
     const posts = await ofetch(`${apiUrl}/posts`, {
         query: {

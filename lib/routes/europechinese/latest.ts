@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -32,14 +34,17 @@ async function handler() {
     const url = 'https://europechinese.blogspot.com/';
     const { data: response } = await got(url);
     const $ = load(response);
-    const list = $('h3.post-title');
+    const list = $('h3.post-title')
+        .toArray()
+        .map((item) => ({
+            title: $(item).find('a').text(),
+            link: $(item).find('a').attr('href'),
+        }));
 
-    const out = await Promise.all(
-        list.map((_, item) => {
-            const title = $(item).find('a').text();
-            const link = $(item).find('a').attr('href');
-
-            return cache.tryGet(link!, async () => {
+    const out = await pMap(
+        list,
+        ({ title, link }) =>
+            cache.tryGet(link!, async () => {
                 const { data: response } = await got(link);
                 const $ = load(response);
                 $('div.widget-content').remove();
@@ -53,10 +58,10 @@ async function handler() {
                     link,
                     guid: link,
                     description: text,
-                    pubDate: time,
+                    pubDate: parseDate(time!),
                 };
-            });
-        })
+            }),
+        { concurrency: 3 }
     );
 
     return {

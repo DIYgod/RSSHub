@@ -6,7 +6,8 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -20,9 +21,9 @@ interface CbndataArticleDetail {
     thumbnail_url?: string;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const limit = getRouteLimit(ctx, 50);
 
     const baseUrl = 'https://www.cbndata.com';
     const targetUrl: string = new URL(`information?tag_id=${id}`, baseUrl).href;
@@ -36,6 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         query: {
             page: 1,
             per_page: limit,
+            tag_id: id === 'all' ? undefined : id,
         },
     });
 
@@ -219,15 +221,6 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['www.cbndata.com/information'],
-            target: (params, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('tag_id') ?? undefined;
-
-                return `/information${id ? `/${id}` : ''}`;
-            },
-        },
         {
             title: '全部',
             source: ['www.cbndata.com/information'],

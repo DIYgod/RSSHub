@@ -1,14 +1,15 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
     categories: ['other'],
-    example: '/aqara/en/category/press-release',
+    example: '/aqara/en/category/news',
     parameters: { path: '路径，默认为首页' },
     description: `路径处填写对应页面 URL 中 \`https://aqara.com/\` 后的字段，形如 \`:region/category/:id\` 或 \`:region/tag/:id\`。
 
@@ -21,16 +22,23 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+const categoryAliases = {
+    'press-release': 'news',
+    article: 'blog',
+};
 
-    const rootUrl = 'https://aqara.com';
+async function handler(ctx) {
+    const limit = getRouteLimit(ctx, 50);
+
+    const pageSize = Math.min(limit, 100);
+
+    const rootUrl = 'https://www.aqara.com';
     const apiSlug = 'wp-json/wp/v2';
 
     let filterName;
 
-    let currentUrl = rootUrl;
-    let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${limit}`, rootUrl).href;
+    let currentUrl = `${rootUrl}/en/`;
+    let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${pageSize}`, currentUrl).href;
 
     const filterMatches = (ctx.req.param('path') ?? '').match(/^([^/]*)\/([^/]*)\/(.*)$/);
 
@@ -38,17 +46,19 @@ async function handler(ctx) {
         const filterRegion = filterMatches[1];
         const filterType = filterMatches[2] === 'tag' ? 'tags' : filterMatches[2] === 'category' ? 'categories' : filterMatches[2];
         const filterKeyword = decodeURI(filterMatches[3].split('/').pop());
-        const filterApiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/${filterType}?search=${filterKeyword}`;
+        const filterSlug = filterType === 'categories' && Object.hasOwn(categoryAliases, filterKeyword) ? categoryAliases[filterKeyword] : filterKeyword;
+        const filterApiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/${filterType}?slug=${encodeURIComponent(filterSlug)}`;
 
         const { data: filterResponse } = await got(filterApiUrl);
 
-        const filter = filterResponse.pop();
-
-        if (filter?.id ?? undefined) {
-            filterName = filter.name ?? filterKeyword;
-            currentUrl = filter.link ?? currentUrl;
-            apiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${limit}&${filterType}=${filter.id}`;
+        const filter = filterResponse.find((term) => term.slug === filterSlug);
+        if (!filter?.id) {
+            throw new NotFoundError(`Aqara ${filterType} "${filterKeyword}" was not found in region "${filterRegion}". Use a category or tag from the current official website.`);
         }
+
+        filterName = filter.name ?? filterKeyword;
+        currentUrl = filter.link ?? currentUrl;
+        apiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${pageSize}&${filterType}=${filter.id}`;
     }
 
     const { data: response } = await got(apiUrl);
@@ -60,19 +70,12 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images.
 
-        content('figure').each((_, el) => {
-            const image = content(el).find('img');
-            const src = (image.prop('data-actualsrc') ?? image.prop('data-original') ?? image.prop('src')).replace(/(-\d+x\d+)/, '');
-            const width = image.prop('data-rawwidth') ?? image.prop('width');
-            const height = image.prop('data-rawheight') ?? image.prop('height');
-
-            content(el).replaceWith(
-                renderToString(
-                    <figure>
-                        <img src={src} width={width} height={height} />
-                    </figure>
-                )
-            );
+        content('figure img').each((_, el) => {
+            const image = content(el);
+            const imageSrc = image.prop('data-actualsrc') ?? image.prop('data-original') ?? image.prop('src');
+            image.attr('src', imageSrc.replace(/(-\d+x\d+)/, ''));
+            image.attr('width', image.prop('data-rawwidth') ?? image.prop('width'));
+            image.attr('height', image.prop('data-rawheight') ?? image.prop('height'));
         });
 
         return {
@@ -82,8 +85,8 @@ async function handler(ctx) {
             author: item._embedded.author.map((a) => a.name).join('/'),
             category: terminologies.flat().map((c) => c.name),
             guid: item.guid?.rendered ?? item.guid,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
         };
     });
 
@@ -91,7 +94,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = $('link[rel="apple-touch-icon"]').first().prop('href');
+    const icon = $('link[rel="apple-touch-icon"]').prop('href');
     const title = $('meta[property="og:site_name"]').prop('content') ?? 'Aqara';
 
     return {
@@ -99,7 +102,7 @@ async function handler(ctx) {
         title: `${title}${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:title"]').prop('content'),
-        language: $('meta[property="og:locale"]').prop('content') as Language,
+        language: $('meta[property="og:locale"]').prop('content')?.replace('_', '-') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

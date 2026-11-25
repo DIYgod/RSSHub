@@ -2,8 +2,9 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { ProcessItems, rootUrl } from './utils';
+import { processItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/vip/:id?',
@@ -21,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['yicai.com/vip/product/:id', 'yicai.com/'],
-            target: '/vip/:id',
+            target: '/vip/:id?',
         },
     ],
     name: 'VIP 频道',
@@ -33,7 +34,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id') ?? '428';
 
     const currentUrl = `${rootUrl}/vip/product/${id}`;
-    const apiUrl = `${rootUrl}/api/ajax/getlistbypid?id=${id}&type=3&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
+    const apiUrl = `${rootUrl}/api/ajax/getlistbypid?id=${id}&type=3&page=1&pagesize=${getRouteLimit(ctx, 30)}`;
 
     const response = await got({
         method: 'get',
@@ -42,7 +43,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = await ProcessItems(apiUrl);
+    const items = await processItems(apiUrl);
 
     return {
         title: `第一财经VIP频道 - ${$('title').text()}`,

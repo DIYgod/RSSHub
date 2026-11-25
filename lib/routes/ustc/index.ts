@@ -1,19 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-const notice_type = {
+const noticeType = {
     jx: { title: '中国科学技术大学 - 教学类通知', url: 'https://ustc.edu.cn/tzgg/jxltz.htm' },
     ky: { title: '中国科学技术大学 - 科研类通知', url: 'https://ustc.edu.cn/tzgg/kyltz.htm' },
     gl: { title: '中国科学技术大学 - 管理类通知', url: 'https://ustc.edu.cn/tzgg/glltz.htm' },
     fw: { title: '中国科学技术大学 - 服务类通知', url: 'https://ustc.edu.cn/tzgg/fwltz.htm' },
 };
-
-// 对防抓的措施
 // function getCookie(ctx) {
 //     const cache_key = `ustc-cookie-${new Date().toLocaleDateString()}`;
 //     return cache.tryGet(cache_key, async () => {
@@ -27,7 +25,6 @@ const notice_type = {
 //         return cookie;
 //     });
 // }
-
 export const route: Route = {
     path: '/news/:type?',
     categories: ['university'],
@@ -55,20 +52,16 @@ export const route: Route = {
 | ------ | ------ | ------ | ------ |
 | jx     | ky     | gl     | fw     |`,
 };
-
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'gl';
-    // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
-
         /* headers: {
             'user-agent': UA,
             cookie: await getCookie(ctx),
         }, */
-        url: notice_type[type].url,
+        url: noticeType[type].url,
     });
-
     const $ = load(response.data);
     let items = $('table[portletmode=simpleList] > tbody > tr.light')
         .toArray()
@@ -76,34 +69,46 @@ async function handler(ctx) {
             const child = $(element).children();
             const info: DataItem = {
                 title: $(child[1]).find('a').attr('title')!,
-                link: $(child[1]).find('a').attr('href')!.startsWith('../') ? new URL($(child[1]).find('a').attr('href')!, notice_type[type].url).href : $(child[1]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(child[2]).text(), 'YYYY-MM-DD'), 8),
+                link: $(child[1]).find('a').attr('href')!.startsWith('../') ? new URL($(child[1]).find('a').attr('href')!, noticeType[type].url).href : $(child[1]).find('a').attr('href'),
+                pubDate: parseDate($(child[2]).text(), 'YYYY-MM-DD', 8),
             };
             return info;
         });
-
-    items = await Promise.all(
-        items
-            .filter((item) => item.link)
-            .map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    try {
-                        const response = await got(item.link);
-                        const $ = load(response.data);
-
-                        item.description = $('div.v_news_content').html();
-                    } catch {
-                        // intranet contents
+    items = await pMap(
+        items.filter((item) => item.link),
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustc:index:detail:${item.link}`, async () => {
+                const details: Pick<DataItem, 'description'> = {};
+                try {
+                    const response = await got(item.link);
+                    const $ = load(response.data);
+                    const content = $('div.v_news_content');
+                    details.description = content.html();
+                    if (details.description) {
+                        const attachments = $('<ul>');
+                        $('ul a[href*="/system/_content/download.jsp"]').each((_, element) => {
+                            const attachmentWrapper1 = $('<li>');
+                            const attachmentAnchor1 = $('<a>').attr('href', $(element).attr('href')).text($(element).text());
+                            attachmentWrapper1.append(attachmentAnchor1);
+                            attachments.append(attachmentWrapper1);
+                        });
+                        if (attachments.children().length) {
+                            details.description += $.html(attachments);
+                        }
                     }
-                    return item;
-                })
-            )
+                } catch {
+                    // Retain the existing optional-detail fallback.
+                }
+                return details;
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
-
     return {
-        title: notice_type[type].title,
-        description: notice_type[type].title,
-        link: notice_type[type].url,
+        title: noticeType[type].title,
+        description: noticeType[type].title,
+        link: noticeType[type].url,
         item: items,
     };
 }

@@ -6,9 +6,9 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPlaywrightPage } from '@/utils/playwright';
-import { getCookies } from '@/utils/playwright-utils';
+import ofetch from '@/utils/ofetch';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 class RenewWeiboCookiesError extends Error {
     constructor(message: string) {
@@ -55,6 +55,34 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     return formattedHtml;
 };
 
+const needsCompletePictures = (status) => Number(status.pic_num) > Object.values(status.pics || {}).length || (status.retweeted_status && needsCompletePictures(status.retweeted_status));
+
+const mergeDesktopStatus = (status, desktopStatus) => {
+    const pictures = desktopStatus.pic_ids
+        ?.map((id) => desktopStatus.pic_infos?.[id])
+        .filter(Boolean)
+        .map((picture) => {
+            const large = picture.largest || picture.original || picture.large;
+            return {
+                ...picture,
+                pid: picture.pic_id,
+                url: picture.bmiddle?.url || large?.url,
+                large: large && { ...large, geo: { width: large.width, height: large.height } },
+            };
+        });
+
+    return {
+        ...desktopStatus,
+        ...status,
+        text: desktopStatus.text,
+        bid: desktopStatus.mblogid || status?.bid,
+        pics: pictures?.length ? pictures : status?.pics,
+        ...(desktopStatus.retweeted_status && {
+            retweeted_status: mergeDesktopStatus(status?.retweeted_status, desktopStatus.retweeted_status),
+        }),
+    };
+};
+
 const weiboUtils = {
     apiHeaders: {
         'MWeibo-Pwa': 1,
@@ -91,34 +119,25 @@ const weiboUtils = {
                 logger.info(`Fetching visitor Cookies from ${url}`);
             }
             visitorCookiesPromise = (async () => {
-                let times = 0;
-                const { page, destroy } = await getPlaywrightPage(url, {
-                    onBeforeLoad: async (page) => {
-                        const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
-                        await page.route('**/*', (route) => {
-                            const request = route.request();
-                            // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
-                            if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                route.abort();
-                                return;
-                            }
-                            if (request.url().startsWith(url)) {
-                                times++;
-                            }
-                            route.continue();
-                        });
-                    },
-                    gotoConfig: { waitUntil: 'networkidle' },
+                const headers = { 'User-Agent': weiboUtils.apiHeaders['User-Agent'] };
+                const visitorPage = await ofetch<string, 'text'>(url, { headers, responseType: 'text' });
+                const body = new URLSearchParams({
+                    cb: 'visitor_gray_callback',
+                    ver: visitorPage.match(/&ver=(\d+)/)![1],
+                    request_id: visitorPage.match(/request_id = "(\w+)"/)![1],
+                    tid: '',
+                    from: 'weibo',
+                    webdriver: 'false',
+                    rid: `${Temporal.Now.instant().epochMilliseconds}`,
+                    return_url: url,
                 });
-                let cookies: string;
-                try {
-                    cookies = await getCookies(page, 'weibo.cn');
-                    if (times < 2 || !cookies) {
-                        throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
-                    }
-                } finally {
-                    await destroy();
+                const response = await ofetch.raw('https://visitor.passport.weibo.cn/visitor/genvisitor2', { method: 'POST', headers, body });
+                const cookies = response.headers
+                    .getSetCookie()
+                    .map((cookie) => cookie.split(';', 1)[0])
+                    .join('; ');
+                if (!cookies) {
+                    throw new Error('Unable to fetch visitor cookies. Please set WEIBO_COOKIES.');
                 }
                 if (renew) {
                     await cache.set(cacheKey, cookies);
@@ -177,6 +196,7 @@ const weiboUtils = {
             }
         };
     })(),
+    parseCreatedAt: (value: Temporal.Instant | string) => (value instanceof Temporal.Instant ? value : (parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY'))),
     formatTitle: (html) =>
         html
             .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
@@ -375,7 +395,7 @@ const weiboUtils = {
                 html += `<br><small>原博：<a href="https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}" target="_blank" rel="noopener noreferrer">https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}</a></small>`;
             }
             if (showTimestampInDescription) {
-                html += '<br><small>' + new Date(status.retweeted_status.created_at).toLocaleString() + '</small>';
+                html += '<br><small>' + (weiboUtils.parseCreatedAt(status.retweeted_status.created_at)?.toLocaleString(undefined, { timeZone: 'UTC' }) ?? '') + '</small>';
             }
             if (readable) {
                 html += '<br clear="both" /><div style="clear: both"></div>';
@@ -425,13 +445,34 @@ const weiboUtils = {
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;
-        const itemResponse = await got.get(link, {
-            headers: {
-                Referer: `https://m.weibo.cn/u/${uid}`,
-                ...weiboUtils.apiHeaders,
-            },
+        return await weiboUtils.tryWithCookies(async (cookies, verifier) => {
+            const itemResponse = await got.get(link, {
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://m.weibo.cn/u/${uid}`,
+                    ...weiboUtils.apiHeaders,
+                },
+            });
+            verifier(itemResponse);
+            const status = itemResponse.data.data;
+            if (status?.text && !needsCompletePictures(status)) {
+                return status;
+            }
+
+            const desktopResponse = await got('https://weibo.com/ajax/statuses/show', {
+                searchParams: { id: bid, isGetLongText: true },
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://weibo.com/${uid}/${bid}`,
+                },
+            });
+            verifier(desktopResponse);
+            const desktopStatus = desktopResponse.data;
+            if (desktopStatus?.ok !== 1 || !desktopStatus.text) {
+                throw new Error('Unable to retrieve the Weibo post. Please verify that it is visible and update WEIBO_COOKIES if login is required.');
+            }
+            return mergeDesktopStatus(status, desktopStatus);
         });
-        return itemResponse.data.data;
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;
@@ -612,13 +653,14 @@ const weiboUtils = {
                             if (matches) {
                                 for (const match of matches) {
                                     const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
-                                    if (hrefMatch) {
-                                        // 获取并解码 href 中的图片 URL
-                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
-                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
-                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, () => imgTag);
+                                    if (!hrefMatch) {
+                                        continue;
                                     }
+                                    // 获取并解码 href 中的图片 URL
+                                    const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                    const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                    // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                    replyText = replyText.replaceAll(match, () => imgTag);
                                 }
                             }
                             replyText = formatDescriptionText(replyText, descriptionRenderParams);

@@ -1,8 +1,8 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 type ProductItem = {
-    short_description?: string;
-    original_price?: string;
+    shortDescription?: string;
+    originalPrice?: string;
     price?: string;
     image: string;
 };
@@ -10,15 +10,15 @@ type ProductItem = {
 export const renderProductDescription = (item: ProductItem): string =>
     renderToString(
         <div>
-            {item.short_description ? (
+            {item.shortDescription ? (
                 <>
-                    {item.short_description}
+                    {item.shortDescription}
                     <br />
                 </>
             ) : null}
-            {item.original_price ? (
+            {item.originalPrice ? (
                 <>
-                    Original Price: {item.original_price}
+                    Original Price: {item.originalPrice}
                     <br />
                 </>
             ) : null}

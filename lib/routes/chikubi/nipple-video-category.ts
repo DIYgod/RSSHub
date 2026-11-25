@@ -18,7 +18,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: '動画カテゴリー',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {
@@ -39,6 +39,7 @@ async function handler(ctx): Promise<Data> {
     const list = feed.items.map((item) => ({
         title: item.title,
         link: item.link,
+        pubDate: item.pubDate,
     }));
 
     const items = await processItems(list);

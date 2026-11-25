@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.grs.zju.edu.cn/';
 
@@ -49,7 +48,7 @@ async function handler(ctx) {
         const $item = $(item);
         return {
             title: $item.find('h3').attr('title')!,
-            pubDate: timezone(parseDate($item.find('.date').text().trim(), 'YY-MM-DD'), 8),
+            pubDate: parseDate($item.find('.date').text().trim(), 'YY-MM-DD', 8),
             link: `http://www.grs.zju.edu.cn${$item.find('a').eq(-1).attr('href')}`,
             description: $item.find('p').text(),
         };

@@ -1,14 +1,16 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+const handler = async (ctx) => {
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.kadokawa.com.tw';
     const currentUrl = new URL('blog/posts', rootUrl).href;
@@ -54,8 +56,9 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -66,7 +69,7 @@ export const handler = async (ctx) => {
                     $$(img).removeAttr('data-src');
                 });
 
-                const title = $$('h1.Post-title').text().trim();
+                const title = $$('h1.Post-title').text();
                 const description = renderDescription({
                     description: $$('div.Post-content').html() ?? undefined,
                 });
@@ -84,8 +87,8 @@ export const handler = async (ctx) => {
                 item.language = language;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
@@ -95,7 +98,6 @@ export const handler = async (ctx) => {
         description: $('meta[property="og:description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
         language,

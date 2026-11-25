@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:province/:city/:district?',
@@ -35,19 +36,37 @@ async function handler(ctx: Context) {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const items = $('.news-blocks ul li')
+    const list = $('.news-blocks ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const $aTag = $item.find('a');
 
             return {
-                title: $aTag.text(),
+                title: $aTag.find('.news-title').text(),
                 description: '停电通知',
                 link: `${HOME_PAGE}${$aTag.attr('href')}`,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         });
+
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`sttcq:notice:v3:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                const description = content('.content').html();
+                const publishedAt = content('.article-info .time').text().slice(5);
+                const editor = content('.article-info .form')
+                    .toArray()
+                    .map((element) => content(element).text())
+                    .find((text) => text.startsWith('编辑：'));
+                return { description, pubDate: parseDate(publishedAt, 8), author: editor?.slice(3) };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: $('.main-nav2.clearfix').text(),

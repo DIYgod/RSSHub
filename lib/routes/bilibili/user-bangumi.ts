@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -53,9 +54,9 @@ async function handler(ctx) {
             data.data &&
             data.data.list &&
             data.data.list.map((item) => ({
-                title: `[${item.new_ep.index_show}]${item.title}`,
+                title: item.new_ep.index_show ? `[${item.new_ep.index_show}]${item.title}` : item.title,
                 description: `${item.evaluate}<br><img src="${item.cover}">`,
-                pubDate: new Date(item.new_ep.pub_time ?? Date.now()).toUTCString(),
+                pubDate: item.new_ep.pub_time ? parseDate(item.new_ep.pub_time, 'YYYY-MM-DD HH:mm:ss', 8) : undefined,
                 link: 'https://www.bilibili.com/bangumi/play/' + (item.new_ep.id ? `ep${item.new_ep.id}` : `ss${item.season_id}`),
             })),
     };

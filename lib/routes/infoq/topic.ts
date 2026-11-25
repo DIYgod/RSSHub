@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import utils from './utils';
 
@@ -53,13 +54,13 @@ async function handler(ctx) {
         body: {
             id: infoData.id,
             ptype: 0,
-            size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            size: getRouteLimit(ctx, 30),
             type: 0,
         },
     });
 
     const data = resp.data;
-    const items = await utils.ProcessFeed(data, cache);
+    const items = await utils.processFeed(data, cache);
 
     return {
         title: `InfoQ 话题 - ${topicName}`,

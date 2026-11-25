@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sxy/:type',
@@ -21,7 +23,7 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/sxy/'],
         },
     ],
-    name: '郑大商学院',
+    name: '商学院',
     maintainers: ['amandus1990'],
     handler,
     description: `| 学院新闻 | 通知公告 | 教学科研 | 党工团学 | 讲座报告 | 学者观点 |
@@ -44,7 +46,7 @@ async function handler(ctx) {
     const response = await got(typeDict[type][1]);
     const $ = load(response.data);
 
-    const list = type === 'xyxw' ? parseXyxwList($, typeDict, type) : parseOtherList($, typeDict, type);
+    const list = type === 'xyxw' ? parseXyxwList($, typeDict, type, ctx) : parseOtherList($, typeDict, type, ctx);
 
     return {
         title: `郑大商学院-${typeDict[type][0]}`,
@@ -53,15 +55,15 @@ async function handler(ctx) {
     };
 }
 
-function parseXyxwList($, typeDict, type) {
+function parseXyxwList($, typeDict, type, ctx) {
     return $('section.n_titu ul li')
+        .slice(0, Math.max(6, getRouteLimit(ctx, 6)))
         .toArray()
-        .slice(0, 6)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a');
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.attr('title') || $link.text();
             const description = $element.find('.right .con p').text().trim();
 
             const monthDay = $element.find('.time_con h3').text();
@@ -71,16 +73,16 @@ function parseXyxwList($, typeDict, type) {
             return {
                 title,
                 link,
-                pubDate: pubDateText,
+                pubDate: parseDate(pubDateText),
                 description,
             };
         });
 }
 
-function parseOtherList($, typeDict, type) {
+function parseOtherList($, typeDict, type, ctx) {
     return $('.n_notice ul.ul li')
+        .slice(0, Math.max(16, getRouteLimit(ctx, 16)))
         .toArray()
-        .slice(0, 16)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a');
@@ -92,7 +94,7 @@ function parseOtherList($, typeDict, type) {
             return {
                 title,
                 link,
-                pubDate: pubDateText || null,
+                pubDate: parseDate(pubDateText),
             };
         });
 }

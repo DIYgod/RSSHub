@@ -4,16 +4,16 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 const rootUrl = 'https://www.safe.gov.cn';
 
 const zxfkCategoryApis = {
-    // 业务咨询 https://www.safe.gov.cn/<site>/ywzx/index.html
+    // Business inquiries https://www.safe.gov.cn/<site>/ywzx/index.html
     ywzx: 'www/busines/businessQuery?siteid=',
 
-    // 投诉建议 https://www.safe.gov.cn/<site>/tsjy/index.html
+    // Complaints and suggestions https://www.safe.gov.cn/<site>/tsjy/index.html
     tsjy: 'www/complaint/complaintQuery?siteid=',
 };
 
@@ -53,34 +53,21 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) 
                 title: `${message.author}: ${message.content}`,
                 link: currentUrl,
                 description: renderToString(
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>留言人</th>
-                                <th>留言内容</th>
-                                <th>留言时间</th>
-                            </tr>
-                            {message ? (
-                                <tr>
-                                    <td>{message.author}</td>
-                                    <td>{message.content}</td>
-                                    <td>{message.date}</td>
-                                </tr>
-                            ) : null}
-                            {reply ? (
-                                <tr style={{ color: '#0069ae' }}>
-                                    <td>{reply.author}</td>
-                                    <td>{reply.content}</td>
-                                    <td>{reply.date}</td>
-                                </tr>
-                            ) : null}
-                        </tbody>
-                    </table>
+                    <div>
+                        <p>
+                            <b>留言：</b>
+                            {message.content}
+                        </p>
+                        <p>
+                            <b>答复：</b>
+                            {reply.content}
+                        </p>
+                    </div>
                 ),
                 author: `${message.author}/${reply.author}`,
                 guid: `${currentUrl}#${message.author}(${message.date})/${reply.author}(${reply.date})`,
-                pubDate: parseDate(message.date),
-                updated: parseDate(reply.date),
+                pubDate: parseDate(message.date, 8),
+                updated: parseDate(reply.date, 8),
             };
         });
 
@@ -106,7 +93,6 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) 
         logo: icon,
         subtitle,
         author,
-        allowEmpty: true,
     };
 };
 

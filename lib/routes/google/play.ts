@@ -1,8 +1,9 @@
 import gPlay from 'google-play-scraper';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     name: 'Play Store Update',
@@ -22,7 +23,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -71,7 +72,10 @@ const keywords = {
 
 async function handler(ctx: Context) {
     const id = ctx.req.param('id');
-    const lang = ctx.req.param('lang') ?? 'en-us';
+    const lang = (ctx.req.param('lang') ?? 'en-us').toLowerCase();
+    if (!/^[a-z]{2,3}-(?:[a-z]{2}|\d{3})$/i.test(lang)) {
+        throw new InvalidParameterError('Google Play language must include a language and country, for example en-us or zh-cn.');
+    }
     const baseurl = 'https://play.google.com/store/apps';
     const hl = lang.split('-', 1)[0].toLowerCase();
     const gl = lang.split('-', 2)[1].toLowerCase();
@@ -90,7 +94,7 @@ async function handler(ctx: Context) {
     const whatsNew = appInfo.recentChanges;
 
     const feedContent = `
-            <h2>${keywords.whatsNew[lang]}</h2>
+            <h2>${keywords.whatsNew[lang] ?? keywords.whatsNew['en-us']}</h2>
             <p>${whatsNew ?? 'No release notes'}</p>
         `;
 
@@ -111,13 +115,13 @@ async function handler(ctx: Context) {
     };
 }
 
-function formatVersion(version: string, updatedDate: Date) {
+function formatVersion(version: string, updatedDate: Temporal.Instant | undefined) {
     // some apps show version as "VARY"
     // https://play.google.com/store/apps/details?id=com.adobe.reader&hl=en-us
     const isVersion = /^\d/.test(version);
-    return isVersion ? version : updatedDate.toISOString().slice(0, 10);
+    return isVersion || !updatedDate ? version : toISOString(updatedDate).slice(0, 10);
 }
 
-function formatGuid(version: string, updatedDate: Date) {
-    return updatedDate.getTime().toString() + '-' + version;
+function formatGuid(version: string, updatedDate: Temporal.Instant | undefined) {
+    return `${updatedDate?.epochMilliseconds}-${version}`;
 }

@@ -4,15 +4,15 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'zx' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://005.tv';
-    const currentUrl = new URL(category ? `${category}/` : '', rootUrl).href;
+    const currentUrl = `${rootUrl}/${category ? `${category}/` : ''}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -67,7 +67,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description ?? '';
-                item.pubDate = timezone(parseDate($$('.time').text()), 8);
+                item.pubDate = parseDate($$('.time').text(), 8);
                 item.category = $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.content = {
                     html: description ?? '',

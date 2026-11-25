@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
@@ -59,18 +61,33 @@ async function handler(ctx) {
     const statusValue = MercariStatus[status];
     const statusArray = statusValue ? [statusValue] : [];
     const searchItems = (await fetchSearchItems(MercariSort[sort], MercariOrder[order], statusArray, keyword)).items;
-    const items = await Promise.all(
-        searchItems.map((item) =>
+    const items = await pMap(
+        searchItems,
+        (item) =>
             cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => {
                 const detail = await fetchItemDetail(item.id, item.itemType);
                 return formatItemDetail(detail);
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
+
+    const link = new URL('https://jp.mercari.com/search');
+    link.searchParams.set('keyword', keyword);
+    const nativeSort = sort === 'default' ? undefined : MercariSort[sort];
+    if (nativeSort) {
+        link.searchParams.set('sort', sort === 'create_time' ? 'created_time' : sort === 'like' ? 'num_likes' : sort);
+    }
+    const nativeOrder = MercariOrder[order];
+    if (nativeOrder) {
+        link.searchParams.set('order', order);
+    }
+    if (status === 'onsale' || status === 'soldout') {
+        link.searchParams.set('status', status === 'onsale' ? 'on_sale' : 'sold_out|trading');
+    }
 
     return {
         title: `${keyword} の検索結果`,
-        link: `https://jp.mercari.com/search?sort=${MercariSort[sort]}&order=${MercariOrder[order]}&status=${MercariStatus[status]}&keyword=${encodeURIComponent(keyword)}`,
+        link: link.href,
         description: `Search results for keyword: ${keyword}`,
         item: items,
     };

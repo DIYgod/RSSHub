@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -42,34 +43,42 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('.news-block-title a');
             const link = a.attr('href');
+            if (!link) {
+                return null;
+            }
+            const datetime = $item.find('time[datetime]').attr('datetime');
             return {
                 title: a.text(),
-                link: link as string,
-                pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
+                link: new URL(link, baseUrl).href,
+                pubDate: datetime ? parseDate(datetime) : undefined,
                 category: $item
                     .find('.category-header-name a')
                     .toArray()
                     .map((elem) => $(elem).text()),
                 description: '',
             };
-        });
+        })
+        .filter((item) => item !== null);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`meritalk:body:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 const featuredImage = $('.single-featured-image').html() || '';
                 const fullContent = $('.single-body').html() || '';
-                item!.description = renderDescription({
-                    featuredImage,
-                    fullContent,
-                });
-
-                return item;
-            })
-        )
+                return {
+                    description: renderDescription({
+                        featuredImage,
+                        fullContent,
+                    }),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

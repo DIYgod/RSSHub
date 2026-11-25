@@ -1,8 +1,9 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/feed/:user',
@@ -24,7 +25,7 @@ export const route: Route = {
             target: '/feed/:user',
         },
     ],
-    name: 'Medium Feed',
+    name: 'Feed',
     maintainers: ['pseudoyu'],
     handler,
 };
@@ -36,7 +37,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid user');
     }
 
-    const feed = await parser.parseURL(`https://medium.com/feed/@${user}`);
+    const xml = await ofetch<string>(`https://medium.com/feed/@${user}`);
+    const feed = await parser.parseString(xml);
 
     return {
         title: feed.title ?? 'Medium',

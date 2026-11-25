@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog/:language?',
@@ -70,16 +71,18 @@ async function handler(ctx) {
             const href = $article('a[aria-label]').attr('href');
 
             return {
-                title: title!,
+                title,
                 link: `${rootUrl}${href}`,
                 author,
                 pubDate,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`nodejs:article-body:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -87,10 +90,16 @@ async function handler(ctx) {
 
                 const $content = load(detailResponse.data);
 
-                item.description = $content('main').html();
-                return item;
-            })
-        )
+                const $main = $content('main');
+                $main.children('h1, section').remove();
+                $main
+                    .children('div')
+                    .filter((_, element) => $content(element).children('[aria-hidden="true"], a[class*="crossLink"]').length > 0)
+                    .remove();
+                return $main.html();
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {

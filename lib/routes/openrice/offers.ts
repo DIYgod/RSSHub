@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     const resultList = data.map((item) => {
         const title = item.title ?? '';
-        const link = baseUrl + item.urlUI;
+        const link = new URL(item.urlUI, baseUrl).href;
         const coverImg = item.doorPhotoUI.urls.full ?? '';
         const descriptionText = item.couponType === 0 ? item.poiNameUI : `${item.desc} (${item.startTimeUI} - ${item.expireTimeUI}) [${item.multiplePoiDistrictName}]`;
         const description = renderDescription({

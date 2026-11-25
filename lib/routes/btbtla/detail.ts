@@ -1,8 +1,9 @@
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/detail/:name',
@@ -27,7 +28,7 @@ async function handler(ctx) {
 
     const idUrl = await getId(name);
     if (!idUrl) {
-        return null;
+        throw new NotFoundError(`BTBTLA has no matching title for "${name}".`);
     }
     const detailLink = 'https://www.btbtla.com' + idUrl;
     const detailResponse = await ofetch(detailLink);
@@ -46,7 +47,7 @@ async function handler(ctx) {
             const magnet = await cache.tryGet(`btbtla:magnet:${link}`, async () => {
                 if (link) {
                     const magnetLink = await getMagnet('https://www.btbtla.com' + link);
-                    return magnetLink as string;
+                    return magnetLink;
                 }
                 return '';
             });
@@ -80,10 +81,7 @@ async function getId(name: string) {
     return link;
 }
 
-async function getMagnet(link: string | undefined) {
-    if (!link) {
-        return null;
-    }
+async function getMagnet(link: string) {
     const response = await ofetch(link);
     const $ = load(response);
     const magnet = $('.btn-important').attr('href');

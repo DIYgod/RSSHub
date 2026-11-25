@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -32,22 +31,25 @@ async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://news.buaa.edu.cn';
     const type = ctx.req.param('type');
 
-    const { data: response, url: link } = await got(`${baseUrl}/${type}.htm`);
+    const link = `${baseUrl}/${type}.htm`;
+    const { data: response } = await got(link);
 
     const $ = load(response);
-    const title = $('.subnav span').text().trim();
-    const list: DataItem[] = $('.mainleft > .listlefttop > .listleftop1')
+    const title = $('.position-box a').last().text();
+    const list: DataItem[] = $('.twlist > ul > li')
         .toArray()
         .map((item_) => {
             const item = $(item_);
-            const title = item.find('h2 > a');
+            const title = item.find('.pub_info h3');
+            const link = item.find('a');
+            const yearMonth = item.find('.pub_date span').text();
+            const day = item.find('.pub_date b').text();
             return {
                 title: title.text(),
-                link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('h2 em').text(), '[YYYY-MM-DD]'), 8),
+                link: new URL(link.attr('href')!, baseUrl).href,
+                pubDate: parseDate(`${yearMonth.replace('.', '-')}-${day}`, 'YYYY-MM-DD', 8),
             };
         });
-
     const result = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {

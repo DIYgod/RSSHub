@@ -1,10 +1,11 @@
+import { escapeText } from 'entities';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { allowHost } from './common';
 
@@ -27,12 +28,13 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { namespace, project, host = 'gitlab.com' } = ctx.req.param();
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(new URL(`https://${host}/`).hostname)) {
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.has(host)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
     const encodedNamespace = encodeURIComponent(namespace);
-    const data = await ofetch(`https://${host}/api/v4/projects/${encodedNamespace}%2F${project}/repository/tags`);
+    const encodedProject = encodeURIComponent(project);
+    const data = await ofetch(`https://${host}/api/v4/projects/${encodedNamespace}%2F${encodedProject}/repository/tags`);
 
     return {
         title: `${project} - Tags - Gitlab`,
@@ -41,9 +43,9 @@ async function handler(ctx: Context) {
         item: data.map((item) => ({
             title: item.name,
             author: item.commit.author_name,
-            description: item.message,
-            pubDate: parseDate(item.commit.created_at),
-            link: item.commit.web_url,
+            description: item.message ? `<pre>${escapeText(item.message)}</pre>` : undefined,
+            pubDate: parseDate(item.created_at ?? item.commit.created_at),
+            link: `https://${host}/${namespace}/${project}/-/tags/${encodeURIComponent(item.name)}`,
         })),
     };
 }

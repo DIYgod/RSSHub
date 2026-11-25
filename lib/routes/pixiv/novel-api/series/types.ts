@@ -1,4 +1,4 @@
-export interface SeriesChapter {
+interface SeriesChapter {
     id: string;
     title: string;
     available: boolean;
@@ -62,18 +62,18 @@ export interface SeriesFeed {
         title: string;
         description: string;
         link: string;
-        pubDate?: Date;
+        pubDate?: Temporal.Instant;
         author?: string;
         category?: string[];
     }>;
 }
 
-export interface AppUser {
+interface AppUser {
     id: number;
     name: string;
 }
 
-export interface AppNovelSeriesDetail {
+interface AppNovelSeriesDetail {
     id: string;
     title: string;
     caption: string;
@@ -88,7 +88,7 @@ export interface AppNovelSeries {
     novels: Array<{
         id: string;
         title: string;
-        create_date: Date;
+        create_date: Temporal.Instant;
         user: AppUser;
     }>;
 }

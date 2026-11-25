@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -17,13 +18,12 @@ export const route: Route = {
     handler,
     url: 'ygkkk.blogspot.com/',
 };
-
 async function handler() {
     const currentUrl = 'https://ygkkk.blogspot.com';
     const response = await got(`${currentUrl}/feeds/posts/default?alt=rss`);
     const $ = load(response.data, { xmlMode: true });
-    const title_main = $('channel > title').text();
-    const description_main = $('channel > description').text();
+    const feedTitle = $('channel > title').text();
+    const feedDescription = $('channel > description').text();
     const items = $('channel > item')
         .toArray()
         .map((item) => {
@@ -32,17 +32,24 @@ async function handler() {
             const title = $item.find('title').text();
             const description = $item.find('description').text();
             const pubDate = $item.find('pubDate').text();
+            const author = $item.children('author').text();
+            const category = $item
+                .children('category')
+                .toArray()
+                .map((node) => $(node).text());
             return {
                 link,
-                pubDate, // no need to normalize because it's from a valid RSS feed
+                pubDate: parseDate(pubDate),
+                updated: parseDate($item.children(String.raw`atom\:updated`).text()),
                 title,
                 description,
+                author,
+                category,
             };
         });
-
     return {
-        title: title_main,
-        description: description_main,
+        title: feedTitle,
+        description: feedDescription,
         link: currentUrl,
         item: items,
     };

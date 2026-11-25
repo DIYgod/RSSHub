@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+
+import got from './utils';
 
 export const route: Route = {
     path: '/yjs/:path{.+}?',
@@ -67,7 +67,7 @@ async function handler(ctx) {
                     .match(/(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/);
 
                 item.description = content('.v_news_content').html();
-                item.pubDate = timeMatches ? timezone(parseDate(timeMatches[1], 'YYYY年MM月DD日 HH:mm'), 8) : item.pubDate;
+                item.pubDate = timeMatches ? parseDate(timeMatches[1], 'YYYY年MM月DD日 HH:mm', 8) : item.pubDate;
 
                 return item;
             })

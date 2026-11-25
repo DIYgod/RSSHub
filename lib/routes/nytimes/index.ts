@@ -1,11 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import playwright from '@/utils/playwright';
 import parser from '@/utils/rss-parser';
+import { isOnSite } from '@/utils/valid-host';
 
 import utils from './utils';
 
@@ -27,7 +30,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -81,85 +84,101 @@ async function handler(ctx) {
         // Do nothing
     }
 
-    const context = await playwright();
-    const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.splice(0, 10).map(async (item) => {
-            let link = item.link;
+    const context = lang === 'en' ? await playwright() : undefined;
+    try {
+        const xml = await ofetch(rssUrl);
+        const feed = await parser.parseString(xml);
+        const items = await pMap(
+            feed.items.slice(0, 10),
+            async (item) => {
+                let link = item.link;
 
-            let response,
-                hasEnVersion = false,
-                dual = false;
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'nytimes.com')) {
+                    return {
+                        title: item.title!,
+                        pubDate: item.pubDate,
+                        link,
+                        author: item['dc:creator'],
+                    };
+                }
 
-            if (lang === 'dual') {
-                link = link!.replace('/?utm_source=RSS', '') + '/dual';
+                let response,
+                    hasEnVersion = false,
+                    dual = false;
 
-                try {
-                    response = await cache.tryGet(`nyt: ${link}`, async () => {
-                        const response = await got(link);
+                if (lang === 'dual') {
+                    link = link!.replace('/?utm_source=RSS', '') + '/dual';
 
-                        return response.data;
-                    });
+                    try {
+                        response = await cache.tryGet(`nyt: ${link}`, async () => {
+                            const response = await got(link);
 
-                    dual = true;
-                } catch {
+                            return response.data;
+                        });
+
+                        dual = true;
+                    } catch {
+                        response = await cache.tryGet(`nyt: ${item.link}`, async () => {
+                            const response = await got(item.link);
+
+                            return response.data;
+                        });
+                    }
+                } else {
                     response = await cache.tryGet(`nyt: ${item.link}`, async () => {
                         const response = await got(item.link);
 
                         return response.data;
                     });
-                }
-            } else {
-                response = await cache.tryGet(`nyt: ${item.link}`, async () => {
-                    const response = await got(item.link);
 
-                    return response.data;
-                });
+                    if (lang === 'en') {
+                        const $ = load(response);
+                        const enLink = $('.dual-btn a').last().attr('href');
+                        // only follow links on the site itself
+                        if ($('.dual-btn').length > 0 && isOnSite(enLink, 'nytimes.com')) {
+                            hasEnVersion = true;
+                            link = enLink;
 
-                if (lang === 'en') {
-                    const $ = load(response);
-                    if ($('.dual-btn').length > 0) {
-                        hasEnVersion = true;
-                        link = $('.dual-btn a').last().attr()!.href;
-
-                        response = await utils.PuppeterGetter(ctx, context, link);
+                            response = await utils.PuppeterGetter(ctx, context, link);
+                        }
                     }
                 }
-            }
 
-            const single: DataItem = {
-                title: item.title!,
-                pubDate: item.pubDate,
-                link,
-                author: item['dc:creator'],
-            };
+                const single: DataItem = {
+                    title: item.title!,
+                    pubDate: item.pubDate,
+                    link,
+                    author: item['dc:creator'],
+                };
 
-            const result = utils.ProcessFeed(response, hasEnVersion);
+                const result = utils.ProcessFeed(response, hasEnVersion);
 
-            // Match 感谢|謝.*?cn.letters@nytimes.com。
-            const ending = /&#x611F;(&#x8C22|&#x8B1D);.*?cn\.letters@nytimes\.com&#x3002;/g;
+                // Match 感谢|謝.*?cn.letters@nytimes.com。
+                const ending = /&#x611F;(&#x8C22|&#x8B1D);.*?cn\.letters@nytimes\.com&#x3002;/g;
 
-            single.description = result.description?.replaceAll(ending, '');
+                single.description = result.description?.replaceAll(ending, '');
 
-            if (hasEnVersion) {
-                single.title = result.title;
-                single.author = result.author;
-            }
+                if (hasEnVersion) {
+                    single.title = result.title;
+                    single.author = result.author;
+                }
 
-            if (dual) {
-                single.title = `「中英」${single.title}`;
-            }
+                if (dual) {
+                    single.title = `「中英」${single.title}`;
+                }
 
-            return single;
-        })
-    );
-
-    await context.close();
-
-    return {
-        title,
-        link: 'https://cn.nytimes.com',
-        description: title,
-        item: items,
-    };
+                return single;
+            },
+            { concurrency: 3, stopOnError: false }
+        );
+        return {
+            title,
+            link: 'https://cn.nytimes.com',
+            description: title,
+            item: items,
+        };
+    } finally {
+        await context?.close();
+    }
 }

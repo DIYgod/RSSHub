@@ -305,9 +305,9 @@ const testAntiHotlinkExtra = async (path, expectObj, query?: Record<string, stri
     return parsed;
 };
 
-const expectImgOrigin = async (query?: Record<string, string>) => {
-    await testAntiHotlink('/test/complicated', expects.complicated.origin, query);
-    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.origin, query);
+const expectImgOrigin = async () => {
+    await testAntiHotlink('/test/complicated', expects.complicated.origin);
+    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.origin);
 };
 const expectImgProcessed = async (query?: Record<string, string>) => {
     await testAntiHotlink('/test/complicated', expects.complicated.processed, query);
@@ -484,5 +484,41 @@ describe('anti-hotlink edge cases', () => {
         await antiHotlink(ctx, async () => {});
 
         expect(data.image).toBe('https://example.com/img.jpg');
+    });
+});
+
+describe('image_hotlink_domains', () => {
+    it('rewrites only selected image domains and keeps multimedia rewriting independent', async () => {
+        process.env.ALLOW_USER_HOTLINK_TEMPLATE = 'true';
+        const { default: middleware } = await import('@/middleware/anti-hotlink');
+        const ctx = new Context(
+            new Request(
+                'http://localhost/feed?image_hotlink_template=https%3A%2F%2Fproxy.example%2F%24%7Bhostname%7D%24%7Bpathname%7D&image_hotlink_domains=images.example%2C%20CDN.EXAMPLE&multimedia_hotlink_template=https%3A%2F%2Fmedia.example%2F%24%7Bhostname%7D%24%7Bpathname%7D'
+            )
+        );
+        ctx.set('data', {
+            title: 'Feed',
+            image: 'https://other.example/logo.png',
+            item: [
+                {
+                    title: 'Post',
+                    image: 'https://images.example/cover.png',
+                    description:
+                        '<img src="https://images.example/a.png"><img src="https://other.example/a.png"><img src="https://cdn.example/b.png"><img src="https://sub.images.example/c.png"><video src="https://other.example/v.mp4" poster="https://other.example/poster.png"></video>',
+                    enclosure_url: 'https://other.example/audio.mp3',
+                    enclosure_type: 'audio/mpeg',
+                },
+            ],
+        });
+        await middleware(ctx, async () => {});
+        const data = ctx.get('data');
+        expect(data.image).toBe('https://other.example/logo.png');
+        expect(data.item[0].image).toBe('https://proxy.example/images.example/cover.png');
+        expect(data.item[0].description).toContain('https://proxy.example/images.example/a.png');
+        expect(data.item[0].description).toContain('https://proxy.example/cdn.example/b.png');
+        expect(data.item[0].description).toContain('https://other.example/a.png');
+        expect(data.item[0].description).toContain('https://sub.images.example/c.png');
+        expect(data.item[0].description).toContain('poster="https://other.example/poster.png"');
+        expect(data.item[0].enclosure_url).toBe('https://media.example/other.example/audio.mp3');
     });
 });

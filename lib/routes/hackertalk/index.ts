@@ -1,8 +1,8 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt();
 
@@ -23,9 +23,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ?? 25;
+    const limit = getRouteLimit(ctx, 25);
 
-    const response = await got(`https://api.hackertalk.net/v1/posts?limit=${limit}&orderBy=time`);
+    const response = await got(`https://api-beta.hackertalk.net/v1/posts?limit=${limit}&orderBy=time`);
 
     const data = response.data.data;
 
@@ -37,6 +37,7 @@ async function handler(ctx) {
             title: item.title,
             description: md.render(item.content),
             pubDate: parseDate(item.createdAt),
+            author: item.from.nickname,
             link: `https://hackertalk.net/posts/${item.id}`,
         })),
     };

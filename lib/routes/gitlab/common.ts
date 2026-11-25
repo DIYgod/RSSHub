@@ -1,1 +1,1 @@
-export const allowHost = ['gitlab.com'];
+export const allowHost = new Set(['gitlab.com']);

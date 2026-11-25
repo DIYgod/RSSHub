@@ -4,11 +4,11 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { fetchPhoto, fixDesc } from './utils';
 
@@ -59,6 +59,10 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { lang, category = 'a666dda1282180e0ee1b4427b0574ae7' } = ctx.req.param();
 
+    if (!['kp', 'en', 'cn', 'ru', 'es', 'jp'].includes(lang)) {
+        throw new InvalidParameterError(`Unknown kcna language: ${lang}. Use a documented language code.`);
+    }
+
     const rootUrl = 'http://www.kcna.kp';
     const pageUrl = `${rootUrl}/${lang}/article/list/${category}`;
 
@@ -78,9 +82,9 @@ async function handler(ctx: Context) {
                 .match(/\d+\.\d+\.\d+/)![0];
 
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(dateString, 'YYYY.M.D'), 9),
+                pubDate: parseDate(dateString, 'YYYY.M.D', 9),
             };
         });
 
@@ -89,8 +93,8 @@ async function handler(ctx: Context) {
     // verify that with `mtr www.kcna.kp -Tz`
     const items = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => {
+            const description = await cache.tryGet(`kcna:body:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
@@ -103,7 +107,7 @@ async function handler(ctx: Context) {
                 // add picture
                 const photo = gallery ? await fetchPhoto(new URL(gallery, rootUrl).href) : '';
 
-                item.description = renderToString(
+                return renderToString(
                     <>
                         {description ? raw(description) : null}
                         {photo ? (
@@ -114,9 +118,9 @@ async function handler(ctx: Context) {
                         ) : null}
                     </>
                 );
-
-                return item;
-            }),
+            });
+            return { ...item, description };
+        },
         { concurrency: 3 }
     );
 

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const config = {
     tzgg: {
@@ -66,7 +65,7 @@ async function handler(ctx) {
             return {
                 title: textOnly,
                 link: a.attr('href'),
-                pubDate: timezone(parseDate(date, 'YYYY-MM-DD'), 0),
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
             };
         });
 

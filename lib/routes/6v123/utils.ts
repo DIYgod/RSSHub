@@ -3,10 +3,9 @@ import iconv from 'iconv-lite';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-export async function loadDetailPage(link) {
+async function loadDetailPage(link) {
     const response = await got.get(link, {
         responseType: 'buffer',
     });
@@ -29,32 +28,22 @@ export async function loadDetailPage(link) {
     };
 }
 
-export async function processItems(ctx, baseURL, exclude) {
+export async function processItems(_context, baseURL, exclude) {
     const response = await got.get(baseURL, {
         responseType: 'buffer',
     });
     response.data = iconv.decode(response.data, 'gb2312');
 
     const $ = load(response.data);
-    const list = $('ul.list')[0].children;
+    const list = $('ul.list li')
+        .toArray()
+        .filter((item) => exclude.every((pattern) => !pattern.test($(item).find('a').text())));
 
     const process = await Promise.all(
         list.map((item) => {
             const link = $(item).find('a');
-            const href = link.attr('href');
-            const pubDate = timezone(parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD'), 8);
-            const text = link.text();
-
-            if (href === undefined) {
-                return;
-            }
-
-            if (exclude && exclude.some((e) => e.test(text))) {
-                // 过滤掉满足正则的标题条目
-                return;
-            }
-
-            const itemUrl = 'https://www.hao6v.cc' + link.attr('href');
+            const pubDate = parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD', 8);
+            const itemUrl = new URL(link.attr('href')!, baseURL).href;
 
             return cache.tryGet(itemUrl, async () => {
                 const detailInfo = await loadDetailPage(itemUrl);
@@ -83,5 +72,5 @@ export async function processItems(ctx, baseURL, exclude) {
         })
     );
 
-    return process.filter((item) => item !== undefined).flat();
+    return process.flat();
 }

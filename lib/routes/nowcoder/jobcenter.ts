@@ -66,18 +66,18 @@ async function handler(ctx) {
             const title = $item.find('a.reco-job-title');
             const company = $item.find('div.reco-job-com a');
             const time = $item.find('div.reco-job-detail span').eq(1).text();
-            const date = new Date();
+            let date = Temporal.Now.zonedDateTimeISO('UTC');
             if (time.includes('天')) {
                 const day = time.split('天', 1)[0];
-                date.setDate(date.getDate() - Number(day));
+                date = date.subtract({ days: Number(day) });
             } else if (time.includes('小时')) {
                 const hour = time.split('小时', 1)[0];
-                date.setHours(date.getHours() - Number(hour));
+                date = date.subtract({ hours: Number(hour) });
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
                 link: new URL(title.attr('href')!, rootUrl).href,
-                pubDate: date.toUTCString(),
+                pubDate: date.toInstant(),
             };
         });
 

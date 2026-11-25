@@ -3,9 +3,9 @@ import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
-import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { fetchArticle, removeDuplicateByKey } from './utils';
+import { fetchArticle, fetchPage, removeDuplicateByKey } from './utils';
 
 const HOME_PAGE = 'https://apnews.com';
 
@@ -43,12 +43,12 @@ async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
     const useNav = ctx.req.routePath === '/apnews/nav/:nav{.+}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
-    const response = await got(url);
-    const $ = load(response.data);
+    const response = await fetchPage(url);
+    const $ = load(response);
 
     const list = $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
+        .slice(0, getRouteLimit(ctx))
         .map((e) => ({
             title: $(e).find('span.PagePromoContentIcons-text').text(),
             link: $(e).find('a').attr('href'),
@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     return {
         title: $('title').text(),
-        description: $("meta[property='og:description']").text(),
+        description: $("meta[property='og:description']").attr('content'),
         link: url,
         item: removeDuplicateByKey(items, 'link') as DataItem[],
         language: $('html').attr('lang') as Language,

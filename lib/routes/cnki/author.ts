@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { ProcessItem } from './utils';
 
@@ -122,8 +122,8 @@ async function handler(ctx) {
     });
     const $ = load(response);
     const list = $('tr')
-        .toArray()
         .slice(1)
+        .toArray()
         .map((item) => {
             const title = $(item).find('a.fz14').text();
             const filename = $(item).find('a.icon-collect').attr('data-filename');
@@ -139,9 +139,8 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet<DataItem>(item.link, () => ProcessItem(item))));
 
     const processedItems = items.map((item) => ({
+        ...item,
         title: item.title || '',
-        link: item.link,
-        pubDate: item.pubDate,
     }));
 
     return {

@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -49,6 +49,22 @@ For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xm
 :::`,
 };
 
+async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'author' | 'description'>> {
+    const response = await got(link);
+    const $ = load(response.data);
+    const article = $('article.story-news');
+    article.find('.related-group').remove();
+    article.find('.writer-zone01').remove();
+
+    return {
+        author: $('.tit-name')
+            .toArray()
+            .map((item) => $(item).text())
+            .join(', '),
+        description: article.html(),
+    };
+}
+
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'ko';
     const channel = ctx.req.param('channel') ?? 'news';
@@ -67,30 +83,21 @@ async function handler(ctx) {
             break;
     }
 
-    const feed = await parser.parseURL(url);
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet<DataItem>(item.link!, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-                const article = $('article.story-news');
-                article.find('.related-group').remove();
-                article.find('.writer-zone01').remove();
-
-                return {
-                    title: item.title!,
-                    link: item.link,
-                    pubDate: lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9),
-                    author:
-                        item.creator ??
-                        $('.tit-name')
-                            .toArray()
-                            .map((c) => $(c).text())
-                            .join(', '),
-                    description: article.html(),
-                };
-            })
-        )
+    const response = await got(url);
+    const feed = await parser.parseString(response.data);
+    const items = await pMap(
+        feed.items,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'author' | 'description'>>(`yna:article:${item.link}`, () => fetchArticleDetails(item.link!));
+            return {
+                title: item.title!,
+                link: item.link,
+                pubDate: parseDate(item.pubDate!),
+                author: item.creator ?? details.author,
+                description: details.description,
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

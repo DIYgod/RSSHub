@@ -1,13 +1,10 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
-dayjs.extend(customParseFormat);
 const renderDesc = (content) =>
     renderToString(
         <>
@@ -57,16 +54,14 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const yesterdayDate = dayjs().subtract(1, 'day');
-    const dayBefore = yesterdayDate.subtract(1, 'day').format('YYYY-MM-DD');
-    const yesterday = yesterdayDate.format('YYYY-MM-DD');
+    const cacheDate = formatDate(Temporal.Now.zonedDateTimeISO('UTC').subtract({ days: 1 }), 'YYYY-MM-DD');
 
     const source = ctx.req.param('source').toUpperCase();
     const target = ctx.req.param('target').toUpperCase();
 
     const link = 'https://wise.com/tools/exchange-rate-alerts/';
-    const guid = `wise:rates:${ctx.req.param('source')}-${ctx.req.param('target')}-${yesterday}`;
-    const single = await cache.tryGet(guid, async () => {
+    const cacheKey = `wise:rates:v2:${ctx.req.param('source')}-${ctx.req.param('target')}-${cacheDate}`;
+    const single = await cache.tryGet(cacheKey, async () => {
         const { data } = await got('https://wise.com/rates/history', {
             searchParams: {
                 source,
@@ -84,13 +79,16 @@ async function handler(ctx) {
         const byDate = data.at(-2);
         const yRate = yData.value;
         const byRate = byDate.value;
-        const trend = yRate > byRate;
-        const diff = (yRate - byRate) / yRate;
+        const yesterday = formatDate(parseDate(yData.time)!, 'YYYY-MM-DD');
+        const dayBefore = formatDate(parseDate(byDate.time)!, 'YYYY-MM-DD');
+        const guid = `wise:rates:${ctx.req.param('source')}-${ctx.req.param('target')}-${yesterday}`;
+        const trend = yRate > byRate ? '📈' : yRate < byRate ? '📉' : '↔️';
+        const diff = (yRate - byRate) / byRate;
 
         const percent = (Math.abs(diff) * 100).toFixed(4);
 
         return {
-            title: `${source}/${target} ${trend ? '📈' : '📉'} @${yRate} ${diff > 0 ? '' : '-'}${percent}%`,
+            title: `${source}/${target} ${trend} @${yRate} ${diff < 0 ? '-' : ''}${percent}%`,
             description: renderDesc({
                 source,
                 target,

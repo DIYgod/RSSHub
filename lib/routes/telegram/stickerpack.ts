@@ -2,7 +2,6 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -12,7 +11,13 @@ export const route: Route = {
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TELEGRAM_TOKEN',
+                optional: false,
+                description: 'Telegram Bot API token',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -30,27 +35,26 @@ async function handler(ctx) {
     }
     const name = ctx.req.param('name');
     const token = config.telegram.token;
-    const response = await ofetch(`https://api.telegram.org/bot${token}/getStickerSet?name=${name}`);
-
-    const list = response.result.stickers.map((item) => ({
-        title: item.emoji,
-        description: item.file_id,
-        guid: item.file_id,
-    }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(`telegram:stickerpack:${item.guid}`, async () => {
-                const response = await ofetch(`https://api.telegram.org/bot${token}/getFile?file_id=${item.guid}`);
-                item.description = `<img src="https://api.telegram.org/file/bot${token}/${response.result.file_path}" />`;
-                return item;
-            })
-        )
-    );
+    let response;
+    try {
+        response = await ofetch(`https://api.telegram.org/bot${token}/getStickerSet`, { query: { name }, ignoreResponseError: true });
+    } catch (error) {
+        // ofetch quotes the request URL, token included, in its error message, which ends up on the error page
+        throw new Error(String(error instanceof Error ? error.message : error).replaceAll(token, '<TELEGRAM_TOKEN>'), { cause: error });
+    }
+    if (!response.ok) {
+        throw new Error(`Telegram Bot API getStickerSet failed: ${response.description}`);
+    }
 
     return {
         title: `${response.result.title} - Telegram Sticker Pack`,
         link: `https://t.me/addstickers/${name}`,
-        item: items,
+        // Bot API file URLs (https://api.telegram.org/file/bot<token>/<file_path>) contain the bot token
+        // and must never be written into the feed, so there is no image preview.
+        item: response.result.stickers.map((item) => ({
+            title: item.emoji,
+            description: item.file_id,
+            guid: item.file_id,
+        })),
     };
 }

@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/dw/rss/rss-en-all',
     parameters: {
-        category: 'RSS Feed Channel, see below, `rss-en-all` by default',
+        channel: 'RSS Feed Channel, see below, `rss-en-all` by default',
     },
     features: {
         requirePuppeteer: false,
@@ -45,7 +45,7 @@ async function handler(ctx) {
             item.id = item['dwsyn:contentID'];
             item.pubDate = item.isoDate;
             item.description = item.content;
-            const link = new URL(item.link!);
+            const link = new URL(item.link);
             link.search = '';
             item.link = link.href;
             item.type = link.pathname.slice(link.pathname.lastIndexOf('/') + 1).startsWith('live-') ? 'liveblog' : 'article'; // dw rss feed only includes liveblogs and articles

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const platformSlugs = {
     desktop: 'releasenotes',
@@ -33,6 +33,7 @@ async function handler(ctx) {
     const response = await got.get(link);
     const $ = load(response.data);
     const version = $('.c-release-version').text();
+    const itemLink = $('link[rel="canonical"]').attr('href');
     const pubDate = parseDate($('.c-release-date').text(), 'MMMM D, YYYY');
 
     return {
@@ -41,7 +42,7 @@ async function handler(ctx) {
         item: [
             {
                 title: `Firefox ${platform} ${version} release notes`,
-                link,
+                link: itemLink,
                 description: $('.c-release-notes').html(),
                 guid: `${platform} ${version}`,
                 pubDate,

@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -54,17 +54,18 @@ async function handler(ctx: Context): Promise<Data> {
                         title: $item.find('.notice-link-text').text(),
                         link: new URL($item.find('a.notice-link').attr('href')!, link).href,
                         author: date ? author : undefined,
-                        pubDate: timezone(parseDate(date ?? author), 8),
+                        pubDate: parseDate(date ?? author, 8),
                         category: [nameProps[category]],
                     };
                 });
         })
     );
 
-    const list: DataItem[] = lists.flat().toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    const list: DataItem[] = lists.flat().toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 if (!item.link!.startsWith(host)) {
                     return item;
@@ -79,12 +80,12 @@ async function handler(ctx: Context): Promise<Data> {
 
                 const time = content.text().match(/\d{4}年\d{1,2}月\d{1,2}日 \d{1,2}:\d{1,2}/);
                 if (time) {
-                    item.pubDate = timezone(parseDate(time[0], 'YYYY年M月D日 H:mm'), 8);
+                    item.pubDate = parseDate(time[0], 'YYYY年M月D日 H:mm', 8);
                 }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

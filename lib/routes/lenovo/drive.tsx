@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/drive/:selName',
@@ -30,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx): Promise<Data> {
+async function handler(ctx): Promise<Data> {
     const selName = ctx.req.param('selName');
     const link = `https://newsupport.lenovo.com.cn/api/drive/drive_listnew?searchKey=${selName}`;
 
@@ -46,18 +45,19 @@ export async function handler(ctx): Promise<Data> {
         title: `${item.DriverName} ${item.Version}`,
         link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
         description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
-        pubDate: timezone(parseDate(item.CreateTime), 8),
+        pubDate: parseDate(item.CreateTime, 8),
     }));
 
     return {
         title: `${response.data.driverSerious[0].NodeCode} 驱动`,
+        link: `https://newsupport.lenovo.com.cn/driveList.html?selName=${encodeURIComponent(selName)}`,
         item: items,
         language: 'zh-CN',
     };
 }
 
 const DriveDescription = ({ driveName, driveCode, driveVersion, downloadFileName, downloadFilePath }: { driveName: string; driveCode: string; driveVersion: string; downloadFileName: string; downloadFilePath: string }) => (
-    <div class="driver-info">
+    <div className="driver-info">
         <h2>驱动信息</h2>
         <ul>
             <li>

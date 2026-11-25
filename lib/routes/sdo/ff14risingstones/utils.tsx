@@ -4,13 +4,11 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getDutiesRecruitDetail, getFreeCompanyRecruitDetail, getNoviceNetworkRecruitDetail, getPostsDetail } from './api';
 import { DynamicSource, INDEX_URL, JOB, NoviceNetworkIdentity, PLAY_STYLE } from './constant';
-import type { BaseResponse, DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, UserDynamic, UserPost } from './types';
+import type { DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, UserDynamic, UserPost } from './types';
 
 const renderNoviceNetworkParty = ({ detail_mask, weekday_time, weekend_time, styles, target }) =>
     renderToString(
@@ -116,26 +114,6 @@ export function checkConfig() {
     }
 }
 
-export function request<T>(url: string, options?: RequestInit) {
-    return ofetch<T>(url, {
-        ...options,
-        headers: {
-            Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
-            'User-Agent': config.sdo.ua!,
-            ...options?.headers,
-        },
-    });
-}
-
-export async function requestAPI<T = any>(url: string, options?: RequestInit) {
-    const response = await request<BaseResponse<T>>(url, options);
-
-    if (response.code !== 10000) {
-        throw new Error(response.msg);
-    }
-    return response.data;
-}
-
 export async function generatePostFeeds(posts: UserPost[]) {
     return await Promise.all(
         posts.map(async (post) => {
@@ -144,8 +122,8 @@ export async function generatePostFeeds(posts: UserPost[]) {
                 title: `[${post.part_name}] ${post.title}`,
                 link: `${INDEX_URL}#/post/detail/${post.posts_id}`,
                 description: detail?.contentInfo.content,
-                pubDate: timezone(parseDate(post.created_at), 8),
-                updated: detail?.updated_at ? timezone(parseDate(detail.updated_at), 8) : undefined,
+                pubDate: parseDate(post.created_at, 8),
+                updated: detail?.updated_at ? parseDate(detail.updated_at, 8) : undefined,
                 guid: `sdo/ff14risingstones/posts:${post.posts_id}`,
                 author: `${post.character_name}@${post.group_name}`,
             } satisfies DataItem;
@@ -304,7 +282,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(dynamic.created_at), 8),
+                pubDate: parseDate(dynamic.created_at, 8),
                 guid: `sdo/ff14risingstones/dynamics:${dynamic.id}`,
                 author: `${dynamic.character_name}@${dynamic.group_name}`,
                 description,

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -45,7 +46,7 @@ export const route: Route = {
                     title: a.attr('title')!,
                 };
             });
-        const items = await Promise.all(list.map((elem) => getFeedItem(elem)));
+        const items = await pMap(list, getFeedItem, { concurrency: 3 });
         return {
             title: typeMap[type],
             link: url,

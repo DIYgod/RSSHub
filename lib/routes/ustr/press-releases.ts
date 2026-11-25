@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/press-releases',
@@ -14,40 +16,36 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
-
 async function handler(ctx: Context) {
     const rootUrl = 'https://ustr.gov';
     const currentUrl = `${rootUrl}/about-us/policy-offices/press-office/press-releases`;
     const response = await ofetch(currentUrl);
-
     const $ = load(response);
-
-    const list = $('.view-content .views-row')
+    const limit = getRouteLimit(ctx, 15);
+    const list = $('ul.listing > li')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15)
+        .slice(0, limit)
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('.views-field-title a');
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: `${rootUrl}${a.attr('href')}`,
-                pubDate: parseDate($item.find('time').attr('datetime')!),
+                pubDate: parseDate($item.contents().first().text().trim(), 0),
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const { description } = await cache.tryGet<Pick<DataItem, 'description'>>(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
-
-                item.description = content('.field--name-body').html() ?? undefined;
-
-                return item;
-            })
-        )
+                return { description: content('.field--name-body').html() };
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: $('title').text(),
         link: currentUrl,

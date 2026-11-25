@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 import { isYouTubeChannelId } from './utils';
 
@@ -17,7 +18,7 @@ const renderCommunityDescription = (runs, media) =>
                       if (url) {
                           return <a href={url.startsWith('https://') ? url : `https://www.youtube.com${url}`}>{run.text}</a>;
                       }
-                      return <>{raw((run?.text ?? '').replaceAll('\n', '<br>'))}</>;
+                      return <>{raw(escapeText(run?.text ?? '').replaceAll('\n', '<br>'))}</>;
                   })
                 : null}
             {media?.length ? (
@@ -76,7 +77,7 @@ async function handler(ctx) {
                 description: renderCommunityDescription(post.contentText.runs, media),
                 link: `https://www.youtube.com/post/${post.postId}`,
                 author: post.authorText.runs[0].text,
-                pubDate: parseRelativeDate(post.publishedTimeText.runs[0].text.split('(', 1)[0]),
+                pubDate: parseRelativeDate(post.publishedTimeText.runs[0].text.split('(', 1)[0].trim()),
             };
         });
 

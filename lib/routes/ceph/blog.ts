@@ -4,14 +4,14 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog/:topic?',
     categories: ['blog'],
     example: '/ceph/blog/a11y',
     parameters: {
-        category: 'filter blog post by category, return all posts if not specified',
+        topic: 'Blog topic slug; return all posts if not specified',
     },
     features: {
         requireConfig: false,
@@ -33,8 +33,8 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const { category } = ctx.req.param();
-    const url = category ? `https://ceph.io/en/news/blog/category/${category}/` : 'https://ceph.io/en/news/blog/';
+    const { topic } = ctx.req.param();
+    const url = topic ? `https://ceph.io/en/news/blog/category/${topic}/` : 'https://ceph.io/en/news/blog/';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);

@@ -1,9 +1,35 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import Parser from 'rss-parser';
 import { describe, expect, it } from 'vitest';
 
 import RSS from '@/views/rss';
 
 describe('RSS view', () => {
+    it.each(['audio/mpeg', 'audio/mp4', 'video/mp4'])('preserves the explicit %s enclosure for RSS consumers', async (mimeType) => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Feed',
+                    item: [
+                        {
+                            title: 'Media',
+                            image: 'https://example.com/thumbnail',
+                            enclosure_url: 'https://example.com/download?id=media',
+                            enclosure_length: 123,
+                            enclosure_type: mimeType,
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html).toContain(`<enclosure url="https://example.com/download?id=media" length="123" type="${mimeType}"`);
+        const feed = await new Parser().parseString(html);
+        expect(feed.items[0].enclosure).toEqual({ url: 'https://example.com/download?id=media', length: '123', type: mimeType });
+        expect(html.match(/<enclosure /g)).toHaveLength(1);
+    });
+
     it('renders itunes, media, and telegram image variants', () => {
         const html = renderToString(
             <RSS
@@ -53,6 +79,9 @@ describe('RSS view', () => {
 
         expect(html).toContain('xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"');
         expect(html).toContain('xmlns:media="http://search.yahoo.com/mrss/"');
+        expect(html).toContain('xmlns:dc="http://purl.org/dc/elements/1.1/"');
+        expect(html).toContain('<dc:creator>Host</dc:creator>');
+        expect(html).not.toContain('<author>');
         expect(html).toContain('<itunes:author>Podcast Author</itunes:author>');
         expect(html).toContain('itunes:category text="Tech"');
         expect(html).toContain('<itunes:explicit>true</itunes:explicit>');
@@ -63,5 +92,123 @@ describe('RSS view', () => {
         expect(html).toContain('<enclosure url="https://example.com/audio.mp3"');
         expect(html).toContain('<category>Podcast</category>');
         expect(html).toContain('<category>News</category>');
+    });
+
+    it.each([3723, 0])('renders the itunes duration %s in seconds', (duration) => {
+        const html = renderToString(<RSS data={{ title: 'Podcast', item: [{ title: 'Episode', itunes_duration: duration }] }} />);
+
+        expect(html).toContain('xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"');
+        expect(html).toContain(`<itunes:duration>${duration}</itunes:duration>`);
+    });
+
+    it('uses the first attachment when no explicit enclosure is provided', () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Attachments',
+                    item: [
+                        {
+                            title: 'Post',
+                            image: 'https://example.com/cover.png',
+                            attachments: [
+                                { url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg' },
+                                { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+                            ],
+                        },
+                    ],
+                }}
+            />
+        );
+        expect(html.match(/<enclosure /g)).toHaveLength(1);
+        expect(html).toContain('<enclosure url="https://example.com/audio.mp3" length="0" type="audio/mpeg"');
+        expect(html).not.toContain('xmlns:dc');
+    });
+
+    it('emits a single enclosure when the thumbnail is also an attachment', () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Image attachment',
+                    item: [
+                        {
+                            title: 'Post',
+                            image: 'https://example.com/cover.png',
+                            attachments: [{ url: 'https://example.com/cover.png', mime_type: 'image/png' }],
+                        },
+                    ],
+                }}
+            />
+        );
+        expect(html.match(/<enclosure /g)).toHaveLength(1);
+        expect(html).toContain('<enclosure url="https://example.com/cover.png" length="0" type="image/png"');
+    });
+
+    it('renders the comments element only for items with a comments URL', async () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Comments',
+                    item: [
+                        {
+                            title: 'Discussed',
+                            link: 'https://example.com/article',
+                            commentsUrl: 'https://example.com/item?id=1&p=2',
+                            comments: 12,
+                        },
+                        {
+                            title: 'Count only',
+                            link: 'https://example.com/other',
+                            comments: 3,
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html.match(/<comments>/g)).toHaveLength(1);
+        expect(html).toContain('<comments>https://example.com/item?id=1&amp;p=2</comments>');
+        const feed = await new Parser().parseString(html);
+        expect(feed.items[0].comments).toBe('https://example.com/item?id=1&p=2');
+        expect(feed.items[1].comments).toBeUndefined();
+    });
+
+    it('does not let hono hoist feed titles and links as document metadata', () => {
+        const html = String(
+            <probe>
+                {raw('</head>')}
+                <RSS data={{ title: 'Feed', item: [{ title: 'Item', link: 'https://example.com/item' }] }} />
+            </probe>
+        );
+
+        expect(html).toMatch(/^<probe><\/head><rss/);
+    });
+
+    it('renders only primitive media values as attributes', () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Feed',
+                    item: [
+                        {
+                            title: 'Item',
+                            link: 'https://example.com/item',
+                            media: {
+                                content: {
+                                    url: 'https://example.com/a.jpg',
+                                    width: 250,
+                                    children: 'child',
+                                    // oxlint-disable-next-line eslint-js/no-restricted-syntax - test
+                                    dangerouslySetInnerHTML: { __html: '<injected/>' },
+                                } as any,
+                            },
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html).toContain('<media:content url="https://example.com/a.jpg" width="250"></media:content>');
+        expect(html).not.toContain('<injected/>');
+        expect(html).not.toContain('child');
     });
 });

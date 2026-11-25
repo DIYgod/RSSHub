@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ai/blog',
@@ -33,7 +33,7 @@ async function handler(ctx) {
         },
     });
     const $ = load(res);
-    const script = $('script:contains("DTSGInitialData"):first').text();
+    const script = $('script:contains("DTSGInitialData")').text();
     const serverJs = JSON.parse(script.match(/\(new ServerJS\(\)\)\.handle\((\{[\s\S]*?\})\);/)?.[1] || '{}');
 
     type ServerData = {
@@ -54,7 +54,7 @@ async function handler(ctx) {
             hsi: '',
             __spin_r: 0,
             __spin_b: 'trunk',
-            __spin_t: Date.now(),
+            __spin_t: Temporal.Now.instant().epochMilliseconds,
         },
     };
 
@@ -64,7 +64,7 @@ async function handler(ctx) {
         server[key] = value;
     }
 
-    const spinT = String(server.SiteData.__spin_t || Date.now());
+    const spinT = String(server.SiteData.__spin_t || Temporal.Now.instant().epochMilliseconds);
 
     const data = await ofetch('https://ai.meta.com/api/graphql/', {
         method: 'POST',
@@ -94,7 +94,7 @@ async function handler(ctx) {
             lsd: server.LSD.token,
             // jazoest: '',
             __spin_r: String(server.SiteData.__spin_r || ''),
-            __spin_b: String(server.SiteData.__spin_b || 'trunk'),
+            __spin_b: server.SiteData.__spin_b || 'trunk',
             __spin_t: spinT,
             fb_api_caller_class: 'RelayModern',
             fb_api_req_friendly_name: 'MetaAIBlogRecentPostSearchQuery',
@@ -109,7 +109,7 @@ async function handler(ctx) {
         title: item.title,
         description: item.description,
         link: item.href,
-        pubDate: parseDate(item.date),
+        pubDate: parseDate(item.date, 'MMMM D, YYYY'),
         category: [item.research_area],
         image: item.image,
     }));

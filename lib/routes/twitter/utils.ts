@@ -1,6 +1,10 @@
-import { parseDate } from '@/utils/parse-date';
-import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { renderToString } from 'hono/jsx/dom/server';
 
+import { createElement } from '@/utils/jsx';
+import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import { parseDate, parseDateStrict } from '@/utils/time';
+
+const getPublicationDate = (value: string | number) => parseDate(value) ?? parseDateStrict(value, 'ddd MMM DD HH:mm:ss ZZ YYYY');
 const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
@@ -14,10 +18,7 @@ const getOriginalImg = (url) => {
     }
     if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
         const pars = getQueryParams(url);
-        if (!pars.format || !pars.name) {
-            return url;
-        }
-        if (pars.name === 'orig') {
+        if (!pars.format || !pars.name || pars.name === 'orig') {
             return url;
         }
         return m[1] + '?format=' + pars.format + '&name=orig';
@@ -53,6 +54,9 @@ interface ProcessFeedParams {
     showEmojiForRetweetAndReply?: boolean;
     showSymbolForRetweetAndReply?: boolean;
     showRetweetTextInTitle?: boolean;
+    useRetweetDate?: boolean;
+    showLikesCountInTitle?: boolean;
+    includeReplyContext?: boolean;
     addLinkForPics?: boolean;
     showTimestampInDescription?: boolean;
     showQuotedInTitle?: boolean;
@@ -65,6 +69,36 @@ interface ProcessFeedParams {
     showSymbolForSubscriberOnly?: boolean;
     showFullPrefixForSubscriberOnly?: boolean;
 }
+
+const renderReplyContext = (tweet) => {
+    const parents: any[] = [];
+    const seen = new Set([tweet.id_str]);
+    let parent = tweet.in_reply_to_status;
+    while (parent?.id_str && !seen.has(parent.id_str) && parents.length < 5) {
+        seen.add(parent.id_str);
+        parents.unshift(parent);
+        parent = parent.in_reply_to_status;
+    }
+    if (!parents.length) {
+        return '';
+    }
+    return renderToString(
+        createElement(
+            'div',
+            { className: 'rsshub-reply-context' },
+            ...parents.map((parent) =>
+                createElement(
+                    'blockquote',
+                    {},
+                    parent.user?.screen_name
+                        ? createElement('a', { href: `https://x.com/${encodeURIComponent(parent.user.screen_name)}/status/${encodeURIComponent(parent.id_str)}` }, parent.user.name || parent.user.screen_name)
+                        : undefined,
+                    createElement('p', { style: 'white-space: pre-wrap' }, parent.full_text || parent.text || '')
+                )
+            )
+        )
+    );
+};
 
 const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedParams = {}) => {
     // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
@@ -81,6 +115,9 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         showEmojiForRetweetAndReply: fallback(params.showEmojiForRetweetAndReply, queryToBoolean(routeParams.get('showEmojiForRetweetAndReply')), false),
         showSymbolForRetweetAndReply: fallback(params.showSymbolForRetweetAndReply, queryToBoolean(routeParams.get('showSymbolForRetweetAndReply')), true),
         showRetweetTextInTitle: fallback(params.showRetweetTextInTitle, queryToBoolean(routeParams.get('showRetweetTextInTitle')), true),
+        useRetweetDate: fallback(params.useRetweetDate, queryToBoolean(routeParams.get('useRetweetDate')), false),
+        showLikesCountInTitle: fallback(params.showLikesCountInTitle, queryToBoolean(routeParams.get('showLikesCountInTitle')), false),
+        includeReplyContext: fallback(params.includeReplyContext, queryToBoolean(routeParams.get('includeReplyContext')), false),
         addLinkForPics: fallback(params.addLinkForPics, queryToBoolean(routeParams.get('addLinkForPics')), false),
         showTimestampInDescription: fallback(params.showTimestampInDescription, queryToBoolean(routeParams.get('showTimestampInDescription')), false),
         showQuotedInTitle: fallback(params.showQuotedInTitle, queryToBoolean(routeParams.get('showQuotedInTitle')), false),
@@ -186,10 +223,11 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
 
                 img += content;
 
-                if (mediaNumber) {
-                    img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
-                    index++;
+                if (!mediaNumber) {
+                    continue;
                 }
+                img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                index++;
             }
         }
 
@@ -290,13 +328,13 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                 quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
-                if (readable) {
-                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str || quoteData.conversation_id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
+                if (author.screen_name && quoteData.id_str) {
+                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
                         author.screen_name
-                    }/status/${quoteData.id_str || quoteData.conversation_id_str}</a></small>`;
+                    }/status/${quoteData.id_str}</a></small>`;
                 }
                 if (showTimestampInDescription) {
-                    quote += '<br><small>' + parseDate(quoteData.created_at);
+                    quote += `<br><small>${getPublicationDate(quoteData.created_at)}`;
                     quote += '</small>';
                     if (readable) {
                         quote += `<br clear='both' /><div style='clear: both'></div>`;
@@ -311,7 +349,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         }
 
         // Make title
-        let title = '';
+        let title = mergedParams.showLikesCountInTitle ? `[${item.favorite_count}] ` : '';
         if (showAuthorInTitle) {
             title += originalItem.user?.name + ': ';
         }
@@ -411,7 +449,10 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
 
         description += item.full_text;
         // 从 description 提取 话题作为 category，放在此处是为了避免 匹配到 quote 中的 # 80808030 颜色字符
-        const category = description.match(/(\s)?(#[^\s;<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]) as string[] | undefined;
+        const category = description
+            .match(/(\s)?(#[^\s;<]+)/g)
+            ?.map((e) => e?.match(/#([^\s<]+)/)?.[1])
+            .filter((e) => e !== undefined);
         description += img;
         description += quote;
         if (readable) {
@@ -422,7 +463,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
             if (readable) {
                 description += '<hr>';
             }
-            description += `<small>${parseDate(item.created_at)}</small>`;
+            description += `<small>${getPublicationDate(item.created_at)}</small>`;
         }
 
         const link =
@@ -438,8 +479,8 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                     avatar: originalItem.user?.profile_image_url_https,
                 },
             ],
-            description,
-            pubDate: parseDate(item.created_at),
+            description: (mergedParams.includeReplyContext ? renderReplyContext(item) : '') + description,
+            pubDate: getPublicationDate(mergedParams.useRetweetDate ? (originalItem.created_at ?? item.created_at) : item.created_at),
             link,
             guid: link.replace('x.com', 'twitter.com'),
             category,
@@ -509,7 +550,7 @@ const parseRouteParams = (routeParams) => {
     return { count, include_replies, include_rts, force_web_api, only_media };
 };
 
-export const excludeRetweet = function (tweets) {
+const excludeRetweet = function (tweets) {
     const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
@@ -520,10 +561,13 @@ export const excludeRetweet = function (tweets) {
     return excluded;
 };
 
-export const keepOnlyMedia = function (tweets) {
+const keepOnlyMedia = function (tweets) {
     const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };
+
+// Profiles rarely change, and every timeline fetch looks one up first
+export const TWITTER_USER_CACHE_EXPIRE = 24 * 60 * 60;
 
 export const getTwitterUserCacheKey = (id: string, operationName: string, params: Record<string, string | number | boolean | undefined> | undefined) => `twitter:${id}:${operationName}:${JSON.stringify(params)}`;
 

@@ -2,34 +2,29 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-
-const baseUrl = 'https://www.ss.pku.edu.cn';
+import { parseDate } from '@/utils/time';
 
 const getSingleRecord = async (url) => {
     const res = await got(url);
 
     const $ = load(res.data);
-    const list = $('#info-list-ul').find('li');
+    const list = $('ul.tz-list > li');
 
     return list.toArray().map((item) => {
         const $item = $(item);
-        const date = $item.find('.time').text();
-        return {
-            title: $item.find('a').attr('title'),
-            pubDate: parseDate(date),
-            link: baseUrl + $item.find('a').attr('href'),
-        };
+        const anchor = $item.find('a');
+        return { title: anchor.find('h3').text(), pubDate: parseDate(`${$item.find('.date').text()}T00:00:00Z`), link: new URL(anchor.attr('href')!, url).href };
     });
 };
 
-const getArticle = (item) =>
-    cache.tryGet(item.link, async () => {
+const getArticle = async (item) => {
+    const article = await cache.tryGet(`pku:ss:article:v2:${item.link}`, async () => {
         const response = await got(item.link);
         const $ = load(response.data);
 
-        item.description = $('.article-content').html();
-        return item;
+        return { description: `${$('.gp-article').html()}${$('.attachment').toString()}` };
     });
+    return { ...item, ...article };
+};
 
-export { baseUrl, getArticle, getSingleRecord };
+export { getArticle, getSingleRecord };

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 async function getNoticeList(ctx, url, host, listSelector, titleSelector, contentSelector) {
     const response = await got(url);
@@ -12,30 +13,27 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
 
     const list = $(listSelector)
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
+                pubDate: parseDate($item.find('.news_meta').text(), 8),
                 title: $item.find(titleSelector).attr('title')!,
                 link: host + $item.find(titleSelector).attr('href'),
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await got(item.link);
-                if (response.redirectUrls.length) {
-                    item.link = response.redirectUrls[0];
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
-                } else {
-                    const $ = load(response.data);
-                    item.title = $(contentSelector.title).text();
-                    item.description = $(contentSelector.content).html()!.trim();
-                    item.pubDate = timezone(parseDate($(contentSelector.date).text()), 8);
-                }
+    const out = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch.raw(item.link);
+                item.link = response.url;
+                const $ = load(response._data);
+                item.title = $(contentSelector.title).text();
+                item.description = $(contentSelector.content).html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return out;

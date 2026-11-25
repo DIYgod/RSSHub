@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.zju.edu.cn/';
 export const route: Route = {
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const description = $('.right_content').html();
                 return {
-                    title: title!,
+                    title,
                     link: itemUrl,
                     description,
                     pubDate: parseDate(date),

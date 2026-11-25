@@ -1,16 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 // https://www.natgeomedia.com/article/
 
 async function loadContent(link) {
     const data = await ofetch(link);
     const $ = load(data);
-    const dtStr = $('.content-title-area').find('h6').first().text().replaceAll('&nbsp;', ' ');
+    const dtStr = $('.content-title-area').find('h6').text();
 
     $('.splide__arrows, .slide-control, [class^="ad-"], style').remove();
 
@@ -19,8 +20,8 @@ async function loadContent(link) {
         description = $('#content-album').html() + description;
     }
     return {
-        title: $('h1.content-title').text().trim(),
-        pubDate: parseDate(dtStr),
+        title: $('h1.content-title').text(),
+        pubDate: parseDateStrict(dtStr, 'MMM.\u{A0}DD\u{A0}YYYY', 8),
         description,
         category: $('.content-tag a')
             .toArray()
@@ -62,13 +63,13 @@ async function handler(ctx) {
 
     const urlList = $('.article-link-content h4')
         .toArray()
-        .filter((i) => $(i).closest('.article-link-right').length === 0) // 移除右側熱門精選
+        .filter((i) => $(i).closest('.article-link-right').length === 0) // Exclude the popular stories in the sidebar.
         .map((i) => ({
             link: $(i).find('a[href]').first().attr('href'),
         }))
         .filter((i) => i.link);
 
-    const out = await Promise.all(urlList.map((i) => cache.tryGet(i.link!, () => loadContent(i.link))));
+    const out = await pMap(urlList, (i) => cache.tryGet(`natgeomedia:article:v2:${i.link}`, () => loadContent(i.link)), { concurrency: 3 });
 
     return {
         title: $('title').text(),

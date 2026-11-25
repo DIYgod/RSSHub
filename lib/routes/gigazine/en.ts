@@ -1,18 +1,23 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const ROOT_URL = 'https://gigazine.net';
 const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
 const DEFAULT_LIMIT = 10;
 const DETAIL_FETCH_DELAY = 3000;
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) =>
+    new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 const getRequestOptions = (referer: string) => ({
     headers: {
         Referer: referer,
@@ -89,7 +94,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit')) || DEFAULT_LIMIT;
+    const limit = getRouteLimit(ctx, DEFAULT_LIMIT);
 
     const html = await ofetch(LIST_URL);
     const $ = load(html);

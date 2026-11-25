@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/random',
@@ -14,7 +14,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -48,15 +48,12 @@ async function handler() {
                         <br />
                     </>
                 ) : null}
-                {item.author ? (
-                    <>
-                        by <a href={`https://www.urbandictionary.com/author.php?author=${item.author}`}>{item.author}</a>
-                    </>
-                ) : null}
             </>
         ),
-        link: `${baseUrl}/define.php?term=${item.word}`,
+        link: item.permalink,
         guid: item.permalink,
+        enclosure_url: item.play_sound_url || undefined,
+        enclosure_type: item.play_sound_url ? 'audio/mpeg' : undefined,
         pubDate: parseDate(item.written_on),
         author: item.author,
     }));

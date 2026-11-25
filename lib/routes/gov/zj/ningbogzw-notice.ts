@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ningbogzw-notice/:colId?',
@@ -29,15 +29,16 @@ export const route: Route = {
         const { data: response } = await got(url);
         const noticeCate = load(response)('.List-topic .text-tag').text().trim();
         const reg = /<li><a href=".*" target="_blank">.*<\/li>/g;
-        const item = response.match(reg).map((line) => {
+        const item = (response.match(reg) ?? []).map((line) => {
             const $ = load(line);
             const title = $('a');
+            const href = title.attr('href');
+            const date = $('p').text().replaceAll(/\[|\]/g, '').trim();
             return {
                 title: `宁波市国资委-${noticeCate}:${title.text()}`,
-                link: `http://gzw.ningbo.gov.cn${title.attr('href')}`,
-                pubDate: parseDate($('p').text().replaceAll(/\[|\]/g, '')),
+                link: href ? new URL(href, url).href : undefined,
+                pubDate: date ? parseDate(date, 8) : undefined,
                 author: '宁波市国资委',
-                description: title.text(),
             };
         });
         return {

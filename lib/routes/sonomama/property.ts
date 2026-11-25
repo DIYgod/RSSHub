@@ -2,28 +2,29 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const HOST = 'https://www.sonomama.net';
 const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 20;
 
 /** `pref[]` values (JIS X 0401 codes without zero padding); any code 1–47 is passed through. */
-const PREFECTURES: Record<string, string> = {
-    tokyo: '13',
-    kanagawa: '14',
-    saitama: '11',
-    chiba: '12',
-    osaka: '27',
-    kyoto: '26',
-    hyogo: '28',
-    aichi: '23',
-    fukuoka: '40',
-};
+const PREFECTURES = new Map([
+    ['tokyo', '13'],
+    ['kanagawa', '14'],
+    ['saitama', '11'],
+    ['chiba', '12'],
+    ['osaka', '27'],
+    ['kyoto', '26'],
+    ['hyogo', '28'],
+    ['aichi', '23'],
+    ['fukuoka', '40'],
+]);
 
 /** Values that mean "not published" in the site's cells. */
 const isBlank = (text: string | null): boolean => text === null || /^[-−－]$/.test(text);
@@ -32,6 +33,7 @@ interface ListCard {
     title: string;
     link: string;
     image?: string;
+    category: string[];
     extra: ListingExtra;
 }
 
@@ -41,6 +43,7 @@ interface DetailFields {
     area: string | null; // 建坪数(店舗坪数) '14.97坪 （49.5平米）'
     key_money: string | null; // 礼金
     business_limit: string | null; // 業種制限
+    shop_status: string | null; // 店舗の状態（現況）; '−' on most listings
     description: string | null; // 出展タイトル / 物件説明
 }
 
@@ -58,8 +61,8 @@ const parseList = (html: string): ListCard[] => {
             const $el = $(el);
             const a = $el.find('.result4 .title a').last();
             const id = a.attr('href')?.match(/pid=(\d+)/)?.[1];
-            const title = clean(a.text());
-            if (!id || isBlank(title)) {
+            const title = a.text();
+            if (!id || isBlank(clean(title))) {
                 return null;
             }
             // '飲食店<br>レストラン' | 'スケルトン<br>重飲食可' → [大分類, 中分類]
@@ -88,7 +91,8 @@ const parseList = (html: string): ListCard[] => {
             const image = $el.find('img.list_image').attr('src');
 
             return {
-                title: title!,
+                title,
+                category: categoryParts,
                 link: `${HOST}/app/?action=public_property_detail&pid=${id}`,
                 image: image ? new URL(image, HOST).href : undefined,
                 extra: {
@@ -106,7 +110,10 @@ const parseList = (html: string): ListCard[] => {
                     deposit_jpy: /[万円]/.test(raw.bond ?? '') ? parseJpy(raw.bond) : null,
                     key_money_months: null,
                     fixtures_transfer_jpy: parseJpy(raw.fixtures),
-                    condition: isSkeleton ? 'skeleton' : 'inuki',
+                    // Only the site's own words count. 業態 '飲食店' or 'その他' says nothing about the
+                    // handover state, so anything but an explicit スケルトン is read off the title,
+                    // which is where this site writes 居抜き ('1階肉まん店居抜き物件☆').
+                    condition: isSkeleton ? 'skeleton' : parseCondition(title),
                     prev_business: isSkeleton ? null : (subCategory ?? null),
                     heavy_food_ok: isSkeleton ? parseHeavyFood(subCategory ?? null) : null,
                     business_limit: null,
@@ -137,7 +144,8 @@ const parseDetail = (html: string): DetailFields => {
         area: cell('建坪数(店舗坪数)'),
         key_money: cell('礼金'),
         business_limit: cell('業種制限'),
-        description: clean($('div.detail_body div.shop_text p').first().text()),
+        shop_status: cell('店舗の状態'),
+        description: clean($('div.detail_body div.shop_text p').text()),
     };
 };
 
@@ -148,52 +156,62 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
         area_m2: area_m2 ?? base.area_m2,
         line: clean(d.access?.split('(最寄駅)', 1)[0]?.replace('(沿線)', '')),
         walk_min: parseWalkMin(d.access),
+        key_money_months: parseMonths(d.key_money),
+        condition: base.condition ?? parseCondition(d.shop_status),
         business_limit: d.business_limit,
         address_hint: d.address ?? base.address_hint,
         ward: parseWard(d.address) ?? base.ward,
-        raw: { ...base.raw, address: d.address, access: d.access, area_detail: d.area, key_money: d.key_money, business_limit: d.business_limit, description: d.description },
+        raw: { ...base.raw, address: d.address, access: d.access, area_detail: d.area, key_money: d.key_money, business_limit: d.business_limit, shop_status: d.shop_status, description: d.description },
     };
 };
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
+/** A failed detail page keeps fresh list fields and remains eligible for retry. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
+        const detail = await cache.tryGet(`${card.link}:detail-v3`, async () => parseDetail(await ofetch(card.link)));
+        return mergeDetail(card.extra, detail);
     } catch (error) {
         logger.warn(`sonomama: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
     }
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string | undefined = ctx.req.param('pref');
-    const prefCode = pref === undefined ? undefined : (PREFECTURES[pref] ?? pref);
+    const prefCode = pref === undefined ? undefined : (PREFECTURES.get(pref) ?? pref);
     if (prefCode !== undefined && !/^(?:[1-9]|[1-3]\d|4[0-7])$/.test(prefCode)) {
-        throw new Error(`Unknown prefecture "${pref}", expected a slug (${Object.keys(PREFECTURES).join(', ')}) or a JIS X 0401 code`);
+        throw new Error(`Unknown prefecture "${pref}", expected a slug (${PREFECTURES.keys().toArray().join(', ')}) or a JIS X 0401 code`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // The prefecture filter is only honoured together with the submit-button parameters.
     const listUrl =
         prefCode === undefined
             ? `${HOST}/app/?action=public_property_list_search&view=1&page_index=0&page_num=${PAGE_SIZE}&sort_id=0&sort_type=1`
             : `${HOST}/app/?action=public_property_list_search&Btn_start.x=1&Btn_start.y=1&pref%5B%5D=${prefCode}`;
 
-    const cards = parseList(await ofetch(listUrl)).slice(0, limit);
+    const html: string = await ofetch(listUrl);
+    // The site takes itself down daily for maintenance (published as 03:00–06:30 JST) and redirects every
+    // page to a notice. Failing loudly matters here: an empty feed is indistinguishable from "no new
+    // listings", which would read as a genuine zero in anything counting 新着 over time.
+    if (/メンテナンス中/.test(html)) {
+        throw new Error('sonomama: the site is under maintenance (published daily 03:00–06:30 JST); no listings could be read');
+    }
+    const cards = parseList(html).slice(0, limit);
     const items = await pMap(
         cards,
-        (card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    // The site does not publish listing dates; no pubDate is fabricated.
-                    description: [extra.raw.description, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            }) as Promise<DataItem>,
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                // The site does not publish listing dates; no pubDate is fabricated.
+                description: [extra.raw.description, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                category: card.category,
+                _extra: extra,
+            };
+        },
         { concurrency: DETAIL_CONCURRENCY }
     );
 
@@ -213,7 +231,7 @@ export const route: Route = {
     handler,
     example: '/sonomama/property/tokyo',
     parameters: {
-        pref: `Prefecture slug (${Object.keys(PREFECTURES).join(', ')}) or JIS X 0401 code; omit for nationwide`,
+        pref: `Prefecture slug (${PREFECTURES.keys().toArray().join(', ')}) or JIS X 0401 code; omit for nationwide`,
     },
     description: `New listings on 店舗そのままオークション，newest first (first page, 20 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，敷金・保証金，造作価格，業態，業種制限，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`.
 

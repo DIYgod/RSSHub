@@ -25,11 +25,11 @@ async function handler() {
     return await buildData({
         link,
         url: link,
-        title: 'Jewish Museums - Exhibitions',
+        title: 'The Jewish Museum - Exhibitions',
         item: {
-            item: '#current article.exhibition, #upcoming article, #past article.exhibition',
-            title: ($) => $('h3').text(),
-            link: ($) => $('h3').parent().attr('href'),
+            item: '#hero-exhibitions a:has(.text-card-title)',
+            title: ($) => $('.text-card-title').text(),
+            link: ($) => $('.text-card-title').closest('a').attr('href'),
         },
     });
 }

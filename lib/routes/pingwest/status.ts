@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/status',
@@ -41,20 +41,21 @@ async function handler() {
         .toArray()
         .map((ele) => {
             const timestamp = ele.attribs['data-t'];
-            const $item = load(ele);
-            const rightNode = $item('.news-info');
+            const $item = $(ele);
+            const rightNode = $item.find('.news-info');
             const tag = rightNode.find('.item-tag-list').text();
             const title = rightNode.find('.title').text();
-            const link = rightNode.find('a').last().attr('href');
-            let description = rightNode.text();
-            const imgUrl = $item('.news-img img');
+            const link = rightNode.find('a').last().attr('href')!;
+            rightNode.find('.title, .item-tag-list').remove();
+            let description = rightNode.html() ?? '';
+            const imgUrl = $item.find('.news-img img');
             if (imgUrl.length) {
                 imgUrl.attr('src', imgUrl.attr('src')!.split('?x-', 1)[0]);
                 description += `<br>${imgUrl.parent().html()}`;
             }
             return {
                 title: title || tag,
-                link: link!.startsWith('http') ? link : `https:${link}`,
+                link: new URL(link, baseUrl).href,
                 description,
                 pubDate: parseDate(timestamp, 'X'),
                 category: tag,

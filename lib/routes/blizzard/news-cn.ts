@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news-cn/:category?',
@@ -20,16 +20,16 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ow.blizzard.cn'],
-            target: '/news-cn/',
+            source: ['ow.blizzard.cn/news', 'ow.blizzard.cn'],
+            target: '/news-cn/ow',
         },
         {
-            source: ['wow.blizzard.cn'],
-            target: '/news-cn/',
+            source: ['wow.blizzard.cn/news', 'wow.blizzard.cn'],
+            target: '/news-cn/wow',
         },
         {
-            source: ['hs.blizzard.cn'],
-            target: '/news-cn/',
+            source: ['hs.blizzard.cn/news', 'hs.blizzard.cn'],
+            target: '/news-cn/hs',
         },
     ],
     name: '暴雪游戏国服新闻',
@@ -46,7 +46,7 @@ const categoryNames = {
     wow: '魔兽世界',
 };
 
-/* 列表解析逻辑 */
+// List parsers.
 const parsers = {
     ow: ($) =>
         $('.list-data-container .list-item-container')
@@ -57,7 +57,7 @@ const parsers = {
                     title: $item.find('.content-title').text(),
                     link: $item.find('.fill-link').attr('href'),
                     description: $item.find('.content-intro').text(),
-                    pubDate: parseDate($item.find('.content-date').text()),
+                    pubDate: parseDate($item.find('.content-date').text(), 8),
                     image: $item.find('.item-pic').attr('src'),
                 };
             }),
@@ -70,7 +70,7 @@ const parsers = {
                     title: $item.find('.title').text(),
                     link: $item.attr('href'),
                     description: $item.find('.desc').text(),
-                    pubDate: parseDate($item.find('.date').attr('data-time')),
+                    pubDate: parseDate(Number($item.find('.date').attr('data-timestamp'))),
                     image: $item.find('.article-img img').attr('src'),
                 };
             }),
@@ -83,17 +83,17 @@ const parsers = {
                     title: $item.find('.list-title').text(),
                     link: $item.attr('href'),
                     description: $item.find('.list-desc').text(),
-                    pubDate: parseDate($item.find('.list-time').attr('data-time')),
+                    pubDate: parseDate(Number($item.find('.list-time').attr('data-timestamp'))),
                     image: $item.find('.img-box img').attr('src'),
                 };
             }),
 };
 
-// 详情页解析逻辑
+// Detail parsers.
 const detailParsers = {
-    ow: ($) => $('.deatil-content').first().html(),
-    hs: ($) => $('.article').first().html(),
-    wow: ($) => $('.detail').first().html(),
+    ow: ($) => $('.deatil-content').html(),
+    hs: ($) => $('.article-content').html(),
+    wow: ($) => $('.detail').html(),
 };
 
 function getList(category, $) {
@@ -101,17 +101,24 @@ function getList(category, $) {
 }
 
 async function fetchDetail(item, category) {
+    const url = new URL(item.link);
+    if (url.hostname !== `${category}.blizzard.cn` || !url.pathname.startsWith('/news/')) {
+        return item;
+    }
     return await cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
 
         const parseDetail = detailParsers[category];
         item.description = parseDetail($);
+        if (category === 'hs') {
+            item.author = $('.article-author').text();
+        }
         return item;
     });
 }
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') || 'ow';
     if (!Object.hasOwn(categoryNames, category)) {
         throw new Error('Invalid category');
@@ -132,6 +139,7 @@ async function handler(ctx) {
     return {
         title: `${categoryNames[category]}新闻`,
         link: rootUrl,
+        language: 'zh-CN',
         item: items,
     };
 }

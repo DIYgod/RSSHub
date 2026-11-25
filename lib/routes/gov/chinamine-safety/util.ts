@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.chinamine-safety.gov.cn';
 
@@ -38,7 +37,10 @@ const processItems = async (items) =>
                         ].filter(Boolean)
                     ),
                 ];
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
+                const pubDate = content('meta[name="PubDate"]').prop('content');
+                if (pubDate) {
+                    item.pubDate = parseDate(pubDate, 8);
+                }
 
                 return item;
             })

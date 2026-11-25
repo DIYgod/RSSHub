@@ -1,9 +1,8 @@
-import MarkdownIt from 'markdown-it';
-
 import { config } from '@/config';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -63,7 +62,7 @@ async function handler(ctx) {
     const labels = ctx.req.param('labels');
 
     const host = `https://github.com/${user}/${repo}/pulls`;
-    const url = `https://api.github.com/repos/${user}/${repo}/issues`; // every PR is also an issue
+    const url = `https://api.github.com/repos/${encodeURIComponent(user)}/${encodeURIComponent(repo)}/issues`; // every PR is also an issue
 
     const headers: HeadersInit =
         config.github && config.github.access_token
@@ -74,14 +73,14 @@ async function handler(ctx) {
             : {
                   Accept: 'application/vnd.github.v3+json',
               };
-    const limit = ctx.req.query('limit');
+    const limit = Math.max(100, Number.parseInt(ctx.req.query('limit') ?? '') || 100);
     const response = await ofetch(url, {
         query: {
             state,
             labels,
             sort: 'created',
             direction: 'desc',
-            per_page: limit ? Number.parseInt(limit) : 100,
+            per_page: limit,
         },
         headers,
     });

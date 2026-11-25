@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = Number.parseInt(ctx.req.query('limit')) || 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://www.hbooker.com';
 
@@ -55,7 +55,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const rawDate = $('div.read-hd p span').eq(2).text();
-                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), 8);
+                item.pubDate = parseDate(rawDate.replace('更新时间：', ''), 8);
 
                 return item;
             })

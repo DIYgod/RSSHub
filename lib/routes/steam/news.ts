@@ -6,7 +6,8 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:appid/:language?',
@@ -79,6 +80,7 @@ const langMap = {
     french: 'fr',
     italian: 'it',
     korean: 'ko',
+    koreana: 'ko',
     spanish: 'es',
     schinese: 'zh-Hans',
     tchinese: 'zh-Hant',
@@ -107,8 +109,7 @@ const langMap = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
-    const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number(limitQuery) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -162,7 +163,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: new URL(`app/${appid}/allnews/`, rootUrl).href,
         image: new URL(`store_item_assets/steam/apps/${appid}/hero_capsule.jpg`, sharedRootUrl).href,
         item: items,
-        language: langMap[language] || null,
+        language: langMap[language],
     };
 }
 
@@ -251,11 +252,11 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     previewyoutube: (node) => ({
         tag: 'iframe',
         attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[\w-]+/)?.[0]}`,
+            src: `https://www.youtube-nocookie.com/embed/${/[\w-]+/.exec(getUniqAttr(node.attrs) as string)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',
-            refererpolicy: 'strict-origin-when-cross-origin',
+            referrerpolicy: 'strict-origin-when-cross-origin',
         },
     }),
     video: (node, { render }) => ({

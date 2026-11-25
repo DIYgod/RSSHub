@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/wsjkw/yqtb',
@@ -20,6 +20,11 @@ export const route: Route = {
     radar: [
         {
             source: ['wsjkw.sh.gov.cn/'],
+            target: '/wsjkw/yqtb',
+        },
+        {
+            source: ['wsjkw.sh.gov.cn/yqtb/index.html'],
+            target: '/wsjkw/yqtb',
         },
     ],
     name: '卫健委 疫情通报',

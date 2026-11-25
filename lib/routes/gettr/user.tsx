@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const actionMap = {
     pub_pst: 'Published a post: ',
@@ -58,13 +58,15 @@ async function handler(ctx) {
     const userInfo = posts.result.aux.uinf[id];
 
     const items = posts.result.data.list.map((post) => {
-        const title = posts.result.aux.post[post.activity.pstid].txt;
-        const description = renderToString(<GettrPostDescription post={posts.result.aux.post[post.activity.pstid]} mediaHost={mediaHost} />);
+        const postData = posts.result.aux.post[post.activity.pstid];
+        const title = postData.txt;
+        const description = renderToString(<GettrPostDescription post={postData} mediaHost={mediaHost} />);
         return {
             title: `${actionMap[post.action]} ${title}`,
             description,
+            author: posts.result.aux.uinf[postData.uid].nickname,
             pubDate: parseDate(post.cdate),
-            updated: parseDate(post.udate),
+            updated: parseDate(postData.udate),
             link: `${baseUrl}/post/${post.activity.pstid}`,
         };
     });
@@ -87,7 +89,12 @@ const GettrPostDescription = ({ post, mediaHost }: { post: any; mediaHost: strin
                 <br />
             </>
         ) : null}
-        {post.previmg ? (
+        {post.vid ? (
+            <>
+                <video controls src={post.vid} poster={post.previmg} />
+                <br />
+            </>
+        ) : post.previmg ? (
             <>
                 <img src={post.previmg} />
                 <br />

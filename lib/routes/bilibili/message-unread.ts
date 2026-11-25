@@ -75,12 +75,13 @@ interface UnreadSessionResponse {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     // Fetch message unread counts
     const [msgUnread, sessionUnread] = await Promise.all([
@@ -111,12 +112,14 @@ async function handler(ctx) {
     if (msgUnread.code !== 0) {
         throw new Error(msgUnread.message ?? `Error code ${msgUnread.code}`);
     }
+    if (sessionUnread.code !== 0) {
+        throw new Error(sessionUnread.message || sessionUnread.msg || `Error code ${sessionUnread.code}`);
+    }
 
     const msgData = msgUnread.data;
     const sessionData = sessionUnread.data;
 
     const items: DataItem[] = [];
-    const now = new Date();
 
     // 回复我的
     if (msgData.recv_reply > 0 || msgData.reply > 0) {
@@ -125,7 +128,6 @@ async function handler(ctx) {
             title: `回复我的：${replyCount} 条未读`,
             description: `<p>你有 <strong>${replyCount}</strong> 条未读回复消息</p><p><a href="https://message.bilibili.com/#/reply">点击查看</a></p>`,
             link: 'https://message.bilibili.com/#/reply',
-            pubDate: now,
             guid: `bilibili-unread-reply-${uid}-${replyCount}`,
         });
     }
@@ -136,7 +138,6 @@ async function handler(ctx) {
             title: `@我的：${msgData.at} 条未读`,
             description: `<p>你有 <strong>${msgData.at}</strong> 条未读@消息</p><p><a href="https://message.bilibili.com/#/at">点击查看</a></p>`,
             link: 'https://message.bilibili.com/#/at',
-            pubDate: now,
             guid: `bilibili-unread-at-${uid}-${msgData.at}`,
         });
     }
@@ -148,7 +149,6 @@ async function handler(ctx) {
             title: `收到的赞：${likeCount} 条未读`,
             description: `<p>你有 <strong>${likeCount}</strong> 条未读点赞消息</p><p><a href="https://message.bilibili.com/#/love">点击查看</a></p>`,
             link: 'https://message.bilibili.com/#/love',
-            pubDate: now,
             guid: `bilibili-unread-like-${uid}-${likeCount}`,
         });
     }
@@ -159,7 +159,6 @@ async function handler(ctx) {
             title: `系统通知：${msgData.sys_msg} 条未读`,
             description: `<p>你有 <strong>${msgData.sys_msg}</strong> 条未读系统通知</p><p><a href="https://message.bilibili.com/#/system">点击查看</a></p>`,
             link: 'https://message.bilibili.com/#/system',
-            pubDate: now,
             guid: `bilibili-unread-system-${uid}-${msgData.sys_msg}`,
         });
     }
@@ -171,7 +170,6 @@ async function handler(ctx) {
             title: `私信：${privateUnread} 条未读`,
             description: `<p>你有 <strong>${privateUnread}</strong> 条未读私信（已关注: ${sessionData?.follow_unread || 0}，未关注: ${sessionData?.unfollow_unread || 0}）</p><p><a href="https://message.bilibili.com/#/whisper">点击查看</a></p>`,
             link: 'https://message.bilibili.com/#/whisper',
-            pubDate: now,
             guid: `bilibili-unread-session-${uid}-${privateUnread}`,
         });
     }
@@ -182,7 +180,6 @@ async function handler(ctx) {
             title: `收到的投币：${msgData.coin} 条未读`,
             description: `<p>你有 <strong>${msgData.coin}</strong> 条未读投币消息</p>`,
             link: 'https://message.bilibili.com/',
-            pubDate: now,
             guid: `bilibili-unread-coin-${uid}-${msgData.coin}`,
         });
     }
@@ -193,7 +190,6 @@ async function handler(ctx) {
             title: `收到的收藏：${msgData.favorite} 条未读`,
             description: `<p>你有 <strong>${msgData.favorite}</strong> 条未读收藏消息</p>`,
             link: 'https://message.bilibili.com/',
-            pubDate: now,
             guid: `bilibili-unread-favorite-${uid}-${msgData.favorite}`,
         });
     }
@@ -204,7 +200,6 @@ async function handler(ctx) {
             title: `UP主助手：${msgData.up} 条未读`,
             description: `<p>你有 <strong>${msgData.up}</strong> 条未读UP主助手消息</p>`,
             link: 'https://message.bilibili.com/',
-            pubDate: now,
             guid: `bilibili-unread-up-${uid}-${msgData.up}`,
         });
     }

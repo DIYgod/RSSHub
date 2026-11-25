@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://instant.1point3acres.com';
 const apiRootUrl = 'https://api.1point3acres.com';
@@ -85,7 +85,7 @@ const ProcessThreads = async (apiUrl, order) => {
                             };
                         },
                         url: (node) => {
-                            const link = Object.keys(node.attrs as Record<string, string>)[0];
+                            const link = Object.keys(node.attrs ?? {})[0];
                             if (link.startsWith('https://link.1p3a.com/?url=')) {
                                 const url = decodeURIComponent(link.replace('https://link.1p3a.com/?url=', ''));
                                 return {

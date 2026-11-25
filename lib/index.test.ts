@@ -1,54 +1,21 @@
+import cluster from 'node:cluster';
+import fs from 'node:fs';
+import os from 'node:os';
+
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 const serve = vi.fn<(...args: any[]) => any>(() => ({ close: vi.fn() }));
 const listen = vi.fn();
 const createAdaptorServer = vi.fn<(...args: any[]) => any>(() => ({ listen, close: vi.fn() }));
-const rmSync = vi.fn();
-const logger = {
-    info: vi.fn(),
-    warn: vi.fn(),
-    error: vi.fn(),
-    debug: vi.fn(),
-    http: vi.fn(),
-};
-const fork = vi.fn();
+const rmSync = vi.spyOn(fs, 'rmSync').mockImplementation(() => {});
+const fork = vi.spyOn(cluster, 'fork').mockImplementation(() => new cluster.Worker());
 const clusterState = { isPrimary: true };
-const clusterMock = {
-    get isPrimary() {
-        return clusterState.isPrimary;
-    },
-    fork,
-};
-const availableParallelism = vi.fn(() => 2);
+vi.spyOn(cluster, 'isPrimary', 'get').mockImplementation(() => clusterState.isPrimary);
+const availableParallelism = vi.spyOn(os, 'availableParallelism').mockReturnValue(2);
 
 vi.mock('@hono/node-server', () => ({
     serve,
     createAdaptorServer,
-}));
-vi.mock('node:fs', () => ({
-    __esModule: true,
-    default: {
-        rmSync,
-    },
-}));
-vi.mock('@/utils/logger', () => ({
-    default: logger,
-}));
-vi.mock('@/utils/common-utils', () => ({
-    getLocalhostAddress: () => ['192.0.2.1'],
-}));
-vi.mock('@/app', () => ({
-    default: { fetch: vi.fn() },
-}));
-vi.mock('node:cluster', () => ({
-    __esModule: true,
-    default: clusterMock,
-}));
-vi.mock('node:os', () => ({
-    __esModule: true,
-    default: {
-        availableParallelism,
-    },
 }));
 
 describe('index', () => {
@@ -61,7 +28,6 @@ describe('index', () => {
         rmSync.mockClear();
         fork.mockClear();
         availableParallelism.mockClear();
-        logger.info.mockClear();
         clusterState.isPrimary = true;
     });
 

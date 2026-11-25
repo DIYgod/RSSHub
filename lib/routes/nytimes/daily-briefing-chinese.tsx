@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/daily_briefing_chinese',
@@ -53,9 +54,10 @@ async function handler() {
         }
     }
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet<Partial<Pick<DataItem, 'title' | 'description' | 'author'>>>(`nytimes:daily:detail:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -63,10 +65,7 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                // to remove ads
-                content('.StoryBodyCompanionColumn').last().find('p').last().remove();
-
-                const images = detailResponse.data.match(/"url":"[^{}]+","name":"articleLarge"/g).map((e) => JSON.parse(`{${e}}`).url);
+                const images = (detailResponse.data.match(/"url":"[^{}]+","name":"articleLarge"/g) ?? []).map((e) => JSON.parse(`{${e}}`).url);
 
                 let i = 0;
                 content('figure').each((_, el) => {
@@ -79,13 +78,15 @@ async function handler() {
                     );
                 });
 
-                item.title = content('meta[property="og:title"]').attr('content');
-                item.author = content('meta[name="byl"]').attr('content')!.replace(/By /, '');
-                item.description = content('section[name="articleBody"]').html();
-
-                return item;
-            })
-        )
+                return {
+                    title: content('meta[property="og:title"]').attr('content'),
+                    author: content('meta[name="byl"]').attr('content')?.replace(/^By /, ''),
+                    description: content('section[name="articleBody"]').html() ?? undefined,
+                };
+            });
+            return { ...item, title: detail.title, author: detail.author, description: detail.description };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

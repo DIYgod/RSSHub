@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { isValidHost } from '@/utils/valid-host';
+import { parseDate } from '@/utils/time';
 
-const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eagle']);
+const cateList = new Set(['all', 'thoughts', 'guides', 'design-resources', 'inside-eagle', 'product-news', 'learn-design', 'why-eagle']);
+const languages = { cn: 'zh-CN', tw: 'zh-TW', en: 'en', jp: 'ja', kr: 'ko', es: 'es', de: 'de', ru: 'ru' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/blog/:cate?/:language?',
@@ -21,8 +22,13 @@ export const route: Route = {
                 { value: 'cn', label: 'cn' },
                 { value: 'tw', label: 'tw' },
                 { value: 'en', label: 'en' },
+                { value: 'jp', label: 'jp' },
+                { value: 'kr', label: 'kr' },
+                { value: 'es', label: 'es' },
+                { value: 'de', label: 'de' },
+                { value: 'ru', label: 'ru' },
             ],
-            default: 'en',
+            default: 'cn',
         },
     },
     features: {
@@ -38,6 +44,13 @@ export const route: Route = {
             source: ['cn.eagle.cool/blog'],
             target: '/blog',
         },
+        ...['cn', 'tw', 'en'].flatMap((language) => [
+            ...['thoughts', 'guides', 'design-resources', 'inside-eagle', 'product-news'].map((category) => ({
+                source: [`${language}.eagle.cool/blog/${category}`],
+                target: `/blog/${category}/${language}`,
+            })),
+            ...(language === 'cn' ? [] : [{ source: [`${language}.eagle.cool/blog`], target: `/blog/all/${language}` }]),
+        ]),
     ],
     name: 'Blog',
     maintainers: ['Fatpandac'],
@@ -45,15 +58,18 @@ export const route: Route = {
     url: 'cn.eagle.cool/blog',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     let cate = ctx.req.param('cate') ?? 'all';
     let language = ctx.req.param('language') ?? 'cn';
-    if (!isValidHost(cate) || !isValidHost(language)) {
-        throw new InvalidParameterError('Invalid host');
-    }
     if (!cateList.has(cate)) {
+        if (!Object.hasOwn(languages, cate)) {
+            throw new InvalidParameterError(`Invalid category or language: ${cate}. Categories: ${[...cateList].join(', ')}. Languages: ${Object.keys(languages).join(', ')}.`);
+        }
         language = cate;
         cate = 'all';
+    }
+    if (!Object.hasOwn(languages, language)) {
+        throw new InvalidParameterError(`Invalid language: ${language}. Choose from ${Object.keys(languages).join(', ')}.`);
     }
 
     const host = `https://${language}.eagle.cool`;
@@ -61,32 +77,33 @@ async function handler(ctx) {
 
     const response = await got(url);
     const $ = load(response.data);
-    const title = $('div.categories-list > div > div > div > ul > li.active').text();
-    const list = $('div.post-item')
+    const title = $('title').text();
+    const list = $('.post-card')
         .toArray()
         .map((item): DataItem & { link: string } => ({
-            title: $(item).find('div.title').text(),
+            title: $(item).find('.post-card__title').text(),
             link: new URL($(item).find('a').attr('href')!, host).href,
-            pubDate: parseDate($(item).find('div.metas > a > span').text().replace('・', '')),
+            category: [$(item).find('.post-card__tag').text()],
         }));
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);
-
-                item.description = content('div.post-html').html();
+                item.description = content('.article-content').html();
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        title: `eagle - ${title}`,
+        title,
         link: url,
+        language: languages[language],
         item: items,
     };
 }

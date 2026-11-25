@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-/* 研究生招生网通知公告*/
+// Graduate admissions notices.
 
 export const route: Route = {
     path: '/yz',
@@ -46,7 +46,7 @@ async function handler() {
         return {
             link: new URL(a.attr('href')!, host).href,
             title: a.attr('title')!,
-            pubDate: parseDate($elem.find('.news_meta').text(), 'YYYY-MM-DD'),
+            pubDate: parseDate($elem.find('.news_meta').text(), 'YYYY-MM-DD', 8),
         };
     });
 

@@ -5,27 +5,27 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 function isValidDate(dateString: string): boolean {
-    // 正则表达式检查格式：YYYY-MM-DD
+    // Validate the YYYY-MM-DD format.
     const regex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
     if (!regex.test(dateString)) {
         return false;
     }
 
-    // 解析日期并验证有效性（避免像 2025-02-30 这样的无效日期）
+    // Reject impossible calendar dates, such as 2025-02-30.
     const [year, month, day] = dateString.split('-').map(Number);
-    const date = new Date(year, month - 1, day); // 月份从 0 开始
+    const date = Temporal.PlainDate.from({ year, month, day });
 
-    // 检查解析后的日期是否与输入一致
-    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+    // Ensure that the parsed date matches the input.
+    return date.year === year && date.month === month && date.day === day;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const limit = getRouteLimit(ctx, 50);
     const query: string = ctx.req.param('query') ?? '';
     const queries = {
         stock: '',
@@ -48,7 +48,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             throw new Error('Invalid endDate format. Expected YYYY-MM-DD');
         }
     } else if (queries.beginDate) {
-        // 如果只提供了开始日期，则将结束日期设置为开始日期
+        // Use the start date as the end date when only the start is specified.
         queries.endDate = queries.beginDate;
     }
     const baseUrl = 'https://www.szse.cn';
@@ -82,12 +82,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             let processedItem: DataItem = {
                 title,
-                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 link: new URL(linkUrl, baseUrl).href,
                 category: categories,
                 guid,
                 id: guid,
-                updated: updated ? timezone(parseDate(updated), 8) : undefined,
+                updated: updated ? parseDate(updated, 8) : undefined,
                 language,
             };
 
@@ -114,7 +114,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('a.navbar-brand img').attr('src'),
         author: $('meta[name="author"]').attr('content'),
         language,

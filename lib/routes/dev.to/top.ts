@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, toISOString } from '@/utils/time';
 
 export const route: Route = {
     path: '/top/:period',
@@ -29,42 +31,57 @@ export const route: Route = {
     url: 'dev.to/top',
 };
 
+interface TopArticle {
+    title: string;
+    path: string;
+    published_at_int: number;
+    user: {
+        name: string;
+        username: string;
+        profile_image_90: string;
+    };
+    tag_list: string[];
+}
+
 async function handler(ctx): Promise<Data> {
     const period = ctx.req.param('period');
     const baseUrl = 'https://dev.to';
     const link = `${baseUrl}/top/${period}`;
 
     // Calculate date based on period
-    const date = new Date();
+    let date = Temporal.Now.zonedDateTimeISO('UTC');
 
     switch (period) {
         case 'week':
-            date.setDate(date.getDate() - 7);
+            date = date.subtract({ days: 7 });
             break;
         case 'month':
-            date.setMonth(date.getMonth() - 1);
+            date = date.subtract({ months: 1 });
             break;
         case 'year':
-            date.setFullYear(date.getFullYear() - 1);
+            date = date.subtract({ years: 1 });
             break;
         case 'infinity':
         default:
-            date.setFullYear(date.getFullYear() - 5);
+            date = date.subtract({ years: 5 });
             break;
     }
 
-    const publishedDate = date.toISOString();
-    const apiUrl = `https://dev.to/search/feed_content?per_page=15&sort_by=public_reactions_count&sort_direction=desc&approved=&class_name=Article&published_at%5Bgte%5D=${encodeURIComponent(publishedDate)}`;
+    const publishedDate = period === 'infinity' ? '' : `&published_at%5Bgte%5D=${encodeURIComponent(toISOString(date.toInstant()))}`;
+    const apiUrl = `https://dev.to/search/feed_content?per_page=15&sort_by=public_reactions_count&sort_direction=desc&approved=&class_name=Article${publishedDate}`;
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
 
     const data = response.data;
+    const entries: TopArticle[] = data.result.toSorted((a, b) => b.published_at_int - a.published_at_int);
+    const selected = entries.slice(0, getRouteLimit(ctx));
 
     // Fetch content for each article
-    const items = await Promise.all(
-        data.result.map((item) => {
+    const items = await pMap(
+        selected,
+        (item) => {
             const articleUrl = `${baseUrl}${item.path}`;
             return cache.tryGet(articleUrl, async (): Promise<DataItem> => {
                 const articleResponse = await got(articleUrl);
@@ -92,7 +109,8 @@ async function handler(ctx): Promise<Data> {
                     image: coverImage,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

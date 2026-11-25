@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/analytic',
@@ -54,8 +54,8 @@ async function handler() {
             const linkElement = $item.find('.w-list-link');
             const imgElement = $item.find('.w-listpic-in');
 
-            const title = titleElement.text() || '';
-            const dateText = dateElement.text() || '';
+            const title = titleElement.text();
+            const dateText = dateElement.text();
             const href = linkElement.attr('href') || '';
             const imgSrc = imgElement.attr('src') || '';
 
@@ -75,7 +75,6 @@ async function handler() {
     return {
         title: '智篆商业-消费报告',
         link: 'https://www.zhizhuan100.com.cn/analysis',
-        allowEmpty: true,
         item: items,
     };
 }

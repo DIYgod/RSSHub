@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gzc/:category?',
@@ -55,7 +55,7 @@ async function handler(ctx) {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span.Article_PublishDate').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
+            const pubDate = pubDateText ? parseDate(pubDateText, 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,
@@ -63,8 +63,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.startsWith(rootUrl)) {
                     item.description = '本文需跳转，请点击原文链接后阅读';
@@ -89,8 +90,8 @@ async function handler(ctx) {
                     pubDate: item.pubDate,
                     description: content.html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

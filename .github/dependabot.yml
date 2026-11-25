@@ -28,16 +28,20 @@ updates:
           cloudflare:
               patterns:
                   - '@cloudflare/*'
+                  - 'cf'
                   - 'wrangler'
           eslint:
               patterns:
                   - 'eslint'
-                  - '@eslint/*'
           hono:
               patterns:
                   - '@hono/*'
                   - '@scalar/hono-api-reference'
                   - 'hono'
+          msw:
+              patterns:
+                  - '@mswjs/*'
+                  - 'msw'
           opentelemetry:
               patterns:
                   - '@opentelemetry/*'
@@ -49,15 +53,12 @@ updates:
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-plugin-eslint'
-                  - 'oxlint-tsgolint'
+                  - 'tsrs'
           proxy-agent:
               patterns:
                   - 'https-proxy-agent'
                   - 'pac-proxy-agent'
                   - 'socks-proxy-agent'
-          typescript-eslint:
-              patterns:
-                  - '@typescript-eslint/*'
           vitest:
               patterns:
                   - 'vitest'

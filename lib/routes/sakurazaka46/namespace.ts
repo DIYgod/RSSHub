@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Sakamichi Series 坂道系列官网资讯',
+    name: '櫻坂46',
     url: 'sakurazaka46.com',
-    lang: 'zh-CN',
+    lang: 'ja',
 };

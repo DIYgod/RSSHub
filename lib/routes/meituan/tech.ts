@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://tech.meituan.com/';
 
@@ -34,22 +36,32 @@ export const route: Route = {
 
 async function handler() {
     const rssUrl = `${rootUrl}feed/`;
-    const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const rss = await ofetch(rssUrl);
+    const feed = await parser.parseString(rss);
+    const items = await pMap(
+        feed.items,
+        async (item) => {
+            const detail = await cache.tryGet(`meituan:tech:detail:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
-                const content = $('div.content').html();
+                const publishedDate = $('.vp-post-date').text().trim();
+                const author = $('.vp-post-department').text().trim();
+                $('.vp-post-header').remove();
                 return {
-                    title: item.title!,
-                    link: item.link,
-                    pubDate: item.pubDate,
-                    author: item.creator,
-                    description: content,
+                    author,
+                    description: $('.vp-page-content').html(),
+                    pubDate: parseDate(publishedDate, 'YYYY-MM-DD'),
                 };
-            })
-        )
+            });
+            return {
+                title: item.title!,
+                link: item.link,
+                pubDate: detail.pubDate,
+                author: detail.author,
+                description: detail.description,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

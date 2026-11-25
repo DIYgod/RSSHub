@@ -4,8 +4,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { ProcessItem } from './utils';
 
@@ -38,9 +38,8 @@ async function handler(ctx) {
     const name = ctx.req.param('name');
     const rssUrl = `https://rss.cnki.net/kns/rss.aspx?Journal=${name}&Virtual=knavi`;
 
-    const rssResponse = await got.get(rssUrl);
-
     try {
+        const rssResponse = await got.get(rssUrl);
         const feed = await parser.parseString(rssResponse.data);
 
         if (feed.items && feed.items.length !== 0) {
@@ -95,7 +94,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 
     return {
-        title: String(title),
+        title,
         link: journalUrl,
         item: items,
     };

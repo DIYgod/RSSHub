@@ -8,7 +8,7 @@ const allowedResources = new Set(['document', 'script', 'xhr', 'fetch']);
 
 const parseApiResponse = <T>(body: string): T => {
     try {
-        return JSON.parse(body) as T;
+        return JSON.parse(body);
     } catch {
         throw new Error('zhihu: browser API request did not return JSON');
     }

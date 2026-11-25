@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -36,6 +36,9 @@ const map = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError(`Invalid news type: ${type}. Supported types: ${Object.keys(map).join(', ')}.`);
+    }
     const link = map[type];
 
     const response = await ofetch(link);
@@ -56,7 +59,7 @@ async function handler(ctx: Context) {
                 return {
                     link: new URL($elem.attr('href')!, link).href,
                     title: $elem.find('h2, .tit').text().trim(),
-                    pubDate: timezone(parseDate(`${year}-${monthDay}`), 8),
+                    pubDate: parseDate(`${year}-${monthDay}`, 8),
                 };
             }),
     };

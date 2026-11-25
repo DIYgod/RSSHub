@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'http://rsj.taiyuan.gov.cn/';
 
@@ -11,7 +10,7 @@ export const route: Route = {
     path: '/rsj/:caty/:page?',
     categories: ['government'],
     example: '/gov/taiyuan/rsj/gggs',
-    parameters: { caty: '信息类别', page: '页码' },
+    parameters: { caty: '信息类别', page: '历史兼容参数，所有值均返回第 1 页，不翻页' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +21,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['rsj.taiyuan.gov.cn/*'],
+            source: ['rsj.taiyuan.gov.cn/zfxxgk/:caty/index.shtml'],
+            target: '/rsj/:caty',
         },
     ],
     name: '人力资源和社会保障局政府公开信息',
@@ -36,17 +36,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categoryID = ctx.req.param('caty');
-    const page = ctx.req.param('page') ?? '1';
-
-    const pageParam = Number.parseInt(page) > 1 ? `_${page}` : '';
-    const pagePath = `/zfxxgk/${categoryID}/index${pageParam}.shtml`;
+    const pagePath = `/zfxxgk/${categoryID}/index.shtml`;
 
     const currentURL = new URL(pagePath, rootURL);
     const response = await got(currentURL.href);
-
-    if (response.statusCode !== 200) {
-        throw new Error(response.statusMessage);
-    }
 
     const $ = load(response.data);
     const title = $('.tit').find('a:eq(2)').text();
@@ -58,7 +51,7 @@ async function handler(ctx) {
             return {
                 title: link.attr('title')!,
                 link: link.attr('href'),
-                pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(date.text(), 'YYYY-MM-DD', 8),
             };
         });
 

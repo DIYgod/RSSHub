@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/nic/:category?',
@@ -58,7 +58,7 @@ async function handler(ctx) {
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
 
             const pubDateText = element.find('span.news_meta').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
+            const pubDate = pubDateText ? parseDate(pubDateText, 8) : null;
             return {
                 title,
                 pubDate,
@@ -66,8 +66,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.startsWith(rootUrl)) {
                     item.description = '本文需跳转，请点击原文链接后阅读';
@@ -86,8 +87,8 @@ async function handler(ctx) {
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

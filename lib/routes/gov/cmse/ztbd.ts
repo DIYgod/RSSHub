@@ -11,7 +11,7 @@ export const route: Route = {
     },
     description: `| 新闻发布会 | 学术大会 | 标准 | 新闻专题 |
 | ---------- | -------- | ---- | -------- |
-| xwfdh      | xsdh     | bz   | xwzt     |`,
+| xwfbh      | xsdh     | bz   | xwzt     |`,
     radar: [
         {
             source: ['www.cmse.gov.cn/ztbd/:id'],

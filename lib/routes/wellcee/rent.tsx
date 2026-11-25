@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { District, House } from './types';
 import { baseUrl, getCitys, getDistricts } from './utils';
@@ -12,6 +12,7 @@ import { baseUrl, getCitys, getDistricts } from './utils';
 const render = (item: House) =>
     renderToString(
         <>
+            {item.personalDesc && <p>{item.personalDesc}</p>}
             租金: {item.rent}
             <br />
             {item.dailyRent ? (

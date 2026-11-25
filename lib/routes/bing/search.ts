@@ -1,13 +1,6 @@
-import 'dayjs/locale/zh-cn.js';
-
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-
 import type { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-
-dayjs.extend(localizedFormat);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -51,7 +44,7 @@ async function handler(ctx) {
         item: data.items.map((e) => ({
             ...e,
             description: e.content,
-            pubDate: parseDate(e.pubDate!, 'dddd, DD MMM YYYY HH:mm:ss [GMT]', 'zh-cn'),
+            pubDate: e.pubDate ? parseDate(e.pubDate, 'dddd, DD M[月] YYYY HH:mm:ss [GMT]', 0) : undefined,
         })) as DataItem[],
     };
 }

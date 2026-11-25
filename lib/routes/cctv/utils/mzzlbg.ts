@@ -1,8 +1,11 @@
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import type { Context } from 'hono';
 
-export const getMzzlbg = async () => {
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+
+export const getMzzlbg = async (ctx: Context) => {
     const url = 'https://api.cntv.cn/video/videolistById?serviceId=cbox&vsid=C10354&em=01&p=1&n=50';
 
     const response = await got({
@@ -11,19 +14,20 @@ export const getMzzlbg = async () => {
     });
 
     const data = response.data;
+    const videos = data.video.slice(0, getRouteLimit(ctx));
 
     const resultItem = await Promise.all(
-        data.video.map(async (video) => {
+        videos.map(async (video) => {
             const url = `https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=${video.vid}`;
             const item = {
                 title: video.t,
                 description: video.desc,
                 link: video.url,
-                pubDate: timezone(parseDate(video.ptime), 8),
+                pubDate: video.ptime ? parseDate(video.ptime, 8) : undefined,
             };
-            const { data: videoDetail } = await got({
-                method: 'get',
-                url,
+            const videoDetail = await cache.tryGet(url, async () => {
+                const { data } = await got(url);
+                return data;
             });
 
             item.description += `<br><video src="${videoDetail.hls_url}" controls="controls" poster="${video.img.replaceAll(/\?.+/g, '')}" style="width: 100%"></video>`;

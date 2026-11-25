@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cover',
@@ -62,7 +62,6 @@ async function handler() {
 
                 return {
                     title: `${publicationName} | Volume ${volume}, Issue ${number}`,
-                    author: '@y9c',
                     description: `<img src="${coverImg}" alt="${publicationName}">`,
                     link: address,
                     guid: `${address}#${volume}-${number}`,

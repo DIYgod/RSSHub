@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { keys as apiKey } from './api-key';
 import { handleDescription } from './utils';
@@ -41,7 +41,7 @@ async function handler(ctx) {
             title: `${item.episode_number} ${item.name}`,
             link: `https://www.themoviedb.org/tv/${tvShowDetails.id}/season/${item.season_number}/episode/${item.episode_number}`,
             description: handleDescription(item),
-            pubDate: item.air_date ? parseDate(item.air_date) : undefined,
+            pubDate: item.air_date ? parseDate(`${item.air_date}T00:00:00Z`) : undefined,
         })),
     };
 }

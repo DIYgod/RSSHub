@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -22,8 +23,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['sensortower.com/blog', 'sensortower.com/zh-CN/blog', 'sensortower.com/ja/blog', 'sensortower.com/ko/blog', 'sensortower.com/'],
+            source: ['sensortower.com/blog', 'sensortower.com/'],
             target: '/blog',
+        },
+        {
+            source: ['sensortower.com/zh-CN/blog'],
+            target: '/blog/zh-CN',
+        },
+        {
+            source: ['sensortower.com/ja/blog'],
+            target: '/blog/ja',
+        },
+        {
+            source: ['sensortower.com/ko/blog'],
+            target: '/blog/ko',
         },
     ],
     name: 'Blog',
@@ -46,14 +59,12 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const data = response.data.match(/"uri":"(\/blog\/.*?)"/g);
+    const data = JSON.parse(response.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)[1]).props.pageProps.pageData.page;
+    const list: Array<{ link: string }> = data.contents.flatMap((content) => content.collection.itemsConnection.items.map((item) => ({ link: new URL(item.link.href, currentUrl).href })));
 
-    let items = data.map((item) => ({
-        link: `${rootUrl}${language ? `/${language}` : ''}${item.match(/"(\/blog\/.*?)"/)[1]}`,
-    }));
-
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -61,30 +72,24 @@ async function handler(ctx) {
                 });
 
                 const content = load(detailResponse.data);
-                const detail = JSON.parse(`{${detailResponse.data.match(/("title":.*?),"body":/)[1]}}`);
+                const detail = JSON.parse(content('#__NEXT_DATA__').text()).props.pageProps.pageData.page;
 
-                content('h1').remove();
-                content('h5').parent().remove();
-                content('div[data-testid="Text-embedded-entry-block"]').remove();
+                const image = new URL(detail.featuredMedia.file.url, item.link).href;
 
-                content('img').each((_, el) => {
-                    const image = (content(el).attr('srcset') ?? content(el).attr('src'))!.split('?w=', 1)[0];
-
-                    content(el).replaceWith(renderDescription({ image }));
-                });
-
-                item.title = detail.title;
-                item.author = detail.author.name;
-                item.pubDate = parseDate(detail.pubDate, 'MMMM YYYY');
-                item.category = [...(detail.tags?.map((t) => t.title) ?? []), ...(detail.category?.map((c) => c.title) ?? [])];
-                item.description = renderDescription({
-                    header: content('header[data-csk-entry-type="blog"]').html() ?? undefined,
-                    description: content('div[data-csk-entry-type="blog"] div[data-testid="Text-root"]').html() ?? undefined,
-                });
-
-                return item;
-            })
-        )
+                return {
+                    ...item,
+                    image,
+                    title: detail.title,
+                    author: detail.author.name,
+                    pubDate: parseDate(detail.pubDateIso),
+                    category: [...(detail.tags?.map((tag) => tag.title) ?? []), ...detail.category.map((category) => category.title)],
+                    description: renderDescription({
+                        image,
+                        description: content('main [data-testid="Text-root"]').html() ?? undefined,
+                    }),
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,8 +1,11 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import type { RecommendListData, SpecialBoardDetail } from './types';
 import { generateNonce, getPost, phoneBaseUrl, sign, webBaseUrl } from './utils';
@@ -15,7 +18,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -27,13 +30,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const specialId = ctx.req.param('specialId');
-    const { limit = '10' } = ctx.req.query();
+    const limit = String(getRouteLimit(ctx, 10));
 
     const specialDetail = await cache.tryGet(`dxy:special:detail:${specialId}`, async () => {
         const detailParams = {
             specialId,
             requestType: 'h5',
-            timestamp: Date.now(),
+            timestamp: Temporal.Now.instant().epochMilliseconds,
             noncestr: generateNonce(8, 'number'),
         };
 
@@ -50,14 +53,14 @@ async function handler(ctx) {
     });
 
     const recommendList = await cache.tryGet(
-        `dxy:special:recommend-list-v3:${specialId}`,
+        `dxy:special:recommend-list-v3:${specialId}:${limit}`,
         async () => {
             const listParams = {
                 specialId,
                 requestType: 'h5',
                 pageNum: '1',
                 pageSize: limit,
-                timestamp: Date.now(),
+                timestamp: Temporal.Now.instant().epochMilliseconds,
                 noncestr: generateNonce(8, 'number'),
             };
 
@@ -89,7 +92,7 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(list.map((item) => getPost(item)));
+    const items = await pMap(list, (item) => getPost(item), { concurrency: 3 });
 
     return {
         title: specialDetail.name,

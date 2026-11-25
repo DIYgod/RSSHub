@@ -1,22 +1,36 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+
+export function extractForumThreadDates($: CheerioAPI): Map<string, Temporal.Instant> {
+    const prefix = 'window.$$data=';
+    const script = $('script:contains("window.$$data=")').text();
+    const dates = new Map<string, Temporal.Instant>();
+    if (!script) {
+        return dates;
+    }
+
+    const data = JSON.parse(script.slice(prefix.length)) as {
+        topic?: { threads?: { list?: Array<{ url: string; createdAt: number }> } };
+    };
+    const threads = data.topic?.threads?.list ?? [];
+    for (const thread of threads) {
+        dates.set(thread.url, parseDate(thread.createdAt)!);
+    }
+    return dates;
+}
 
 export function extractNextData<T = unknown>(html: string, url?: string): T {
-    const scriptMatch = html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+    const scriptMatch = /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/.exec(html);
     if (!scriptMatch || !scriptMatch[1]) {
         throw new Error(`Failed to find __NEXT_DATA__ script tag in page${url ? `: ${url}` : ''}`);
     }
 
-    try {
-        return JSON.parse(scriptMatch[1]) as T;
-    } catch (error) {
-        throw new Error(`Failed to parse __NEXT_DATA__ JSON: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
-    }
+    return JSON.parse(scriptMatch[1]);
 }
 
 interface ThreadNextData {
@@ -163,7 +177,7 @@ function generateTeamCompareItem(leftValue: number, rightValue: number, label: s
     return `<div class="team-compare"><div class="team-item-data"><span class="left">${leftValue}</span><span class="center">${label}</span><span class="right">${rightValue}</span></div><div class="compare-item"><div class="item left"><span class="" style="width: ${leftPercent.toFixed(4)}%; background-color: ${leftColor}"></span></div><div class="item right"><span class="gray" style="width: ${rightPercent.toFixed(4)}%"></span></div></div></div>`;
 }
 
-export function generateGameStatusHtml(result: GameStatusResult): string {
+function generateGameStatusHtml(result: GameStatusResult): string {
     const { playerStats, matchStats, teamStats } = result;
 
     // Player data section
@@ -190,7 +204,7 @@ export function generateGameStatusHtml(result: GameStatusResult): string {
     return `<div class="match-post">${playerDataHtml}${teamDataHtml}</div>`;
 }
 
-export async function getGameStatus(matchID: string): Promise<string | null> {
+async function getGameStatus(matchID: string): Promise<string | null> {
     const res = await got({
         method: 'get',
         url: 'https://games.mobileapi.hupu.com/1/7.4.4/basketballapi/matchCompletedAutoPostContent',
@@ -210,7 +224,7 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
     if (!item.link) {
         return Promise.resolve(item);
     }
-    return cache.tryGet(item.link!, async () => {
+    return cache.tryGet(item.link, async () => {
         try {
             const detailResponse = await got({
                 method: 'get',
@@ -234,23 +248,6 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
             }
 
             const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
-            const pubDateString = content('.second-line-user-info span:not([class])').text();
-            // Possible formats: 10:21, 45分钟前, 09-15 19:57
-            const currentYear = new Date().getFullYear();
-            const currentDate = new Date();
-            const monthDayTimePattern = /^\d{2}-\d{2} \d{2}:\d{2}$/;
-            const timeOnlyPattern = /^\d{1,2}:\d{2}$/;
-            let processedDateString = pubDateString;
-
-            if (monthDayTimePattern.test(pubDateString)) {
-                processedDateString = `${currentYear}-${pubDateString}`;
-            } else if (timeOnlyPattern.test(pubDateString)) {
-                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-                const day = String(currentDate.getDate()).padStart(2, '0');
-                processedDateString = `${currentYear}-${month}-${day} ${pubDateString}`;
-            }
-
-            const pubDate = [item.pubDate, timezone(parseDate(processedDateString), 8), timezone(parseRelativeDate(pubDateString), 8)].find((d) => d instanceof Date && !Number.isNaN(d.getTime()));
             const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                 .toArray()
                 .map((c) => content(c).text())
@@ -262,16 +259,16 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 content(el).parent().html(`<img src="${imgSrc}">`);
             });
 
-            // 分别获取内容元素
+            // Collect the content sections separately
             const descriptionParts: string[] = [];
 
-            // 获取主要内容
+            // Extract the main content
             const mainContent = content('#bbs-thread-content, .bbs-content-font').html();
             if (mainContent) {
                 descriptionParts.push(mainContent);
             }
 
-            // 单独处理视频部分
+            // Include videos from the separate wrapper
             const videoWrapper = content('.header-video-wrapper');
             if (videoWrapper.length > 0) {
                 const videoElement = videoWrapper.find('video');
@@ -285,7 +282,7 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
 
             let description = descriptionParts.length > 0 ? descriptionParts.join('') : undefined;
 
-            // 如果有 matchId，获取比赛数据
+            // Fetch match data when a matchId is available
             if (matchId) {
                 const gameStatusHtml = await getGameStatus(matchId);
                 if (gameStatusHtml) {
@@ -298,10 +295,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 author,
                 category: categories.length > 0 ? categories : item.category,
                 description,
-                pubDate,
             };
         } catch {
-            // no-empty
             return item;
         }
     });

@@ -3,10 +3,17 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant, parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.aac.moj.gov.tw';
+
+function parseListDate(value: string) {
+    const match = /(\d{3,4})-(\d{1,2})-(\d{1,2})/.exec(value);
+    if (!match) {
+        return;
+    }
+    return calendarToInstant({ calendar: match[1].length === 3 ? 'roc' : 'gregory', year: match[1], month: match[2], day: match[3] }, 8);
+}
 
 export const route: Route = {
     path: '/aac/news/:type?',
@@ -35,15 +42,17 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     $('.num').remove();
-    const list = $('.list ul li a')
+    const list = $('.lp .table_list tbody tr, .list ul li')
         .toArray()
         .map((item): DataItem & { isDownload?: boolean; link: string } => {
-            const $item = $(item);
-            const isDownload = /檔案下載/.test($item.attr('title')!);
-            const title = isDownload ? $item.text().trim() : $item.attr('title');
+            const $row = $(item);
+            const $item = $row.find('a').first();
+            const isDownload = /檔案下載/.test($item.attr('title') ?? '');
+            const title = isDownload ? $item.text() : $item.attr('title') || $item.text();
             return {
-                title: title!,
-                link: new URL($item.attr('href')!, baseUrl).href,
+                title,
+                link: new URL($item.attr('href')!, url).href,
+                pubDate: parseListDate($row.find('.date').text()),
                 isDownload,
             };
         });
@@ -55,7 +64,10 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.pubDate = timezone(parseDate($('.info time').attr('datetime')!, 'YYYY-MM-DD HH:mm:ss'), 8);
+                    const publishedTime = $('.info time').attr('datetime');
+                    if (publishedTime) {
+                        item.pubDate = parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss', 8);
+                    }
                     $('.info, button').remove();
                     item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');
                 }

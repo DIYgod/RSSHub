@@ -1,14 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootURL = 'https://gsee.swjtu.edu.cn';
 const urlAddr = `${rootURL}/xwzx/tzgg.htm`;
 
-const getItem = (item) => {
+const getItem = async (item) => {
     const newsInfo = item.find('dt');
     const newsDate = item
         .find('dd')
@@ -17,18 +18,16 @@ const getItem = (item) => {
 
     const infoTitle = newsInfo.text();
     const link = rootURL + newsInfo.find('a').last().attr('href').slice(2);
-    return cache.tryGet(link, async () => {
+    const details = await cache.tryGet(`swjtu:gsee:article:${link}`, async () => {
         const resp = await ofetch(link);
         const $$ = load(resp);
         const infoText = $$('.article').html();
 
         return {
-            title: infoTitle,
-            pubDate: parseDate(newsDate),
-            link,
             description: infoText,
         };
     });
+    return { title: infoTitle, pubDate: parseDate(newsDate, 'YYYY-MM-DD', 8), link, ...details };
 };
 
 export const route: Route = {
@@ -61,17 +60,18 @@ async function handler() {
 
     const list = $('dl');
 
-    const items = await Promise.all(
-        list.toArray().map((i) => {
+    const items = await pMap(
+        list.toArray(),
+        (i) => {
             const item = $(i);
             return getItem(item);
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: '西南交大地学学院-研究生通知',
         link: urlAddr,
         item: items,
-        allowEmpty: true,
     };
 }

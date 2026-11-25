@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -13,8 +13,12 @@ export const route: Route = {
     parameters: { path: '路径，默认为通知公告' },
     radar: [
         {
-            source: ['www.cnnic.net.cn/*path'],
-            target: '/:path',
+            source: ['www.cnnic.net.cn/11/:id/index.html', 'www.cnnic.net.cn/11/:id'],
+            target: '/11/:id',
+        },
+        {
+            source: ['www.cnnic.net.cn/'],
+            target: '/',
         },
     ],
     maintainers: ['nczitzk'],
@@ -42,7 +46,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('.p_news-box li')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 12)
+        .slice(0, getRouteLimit(ctx, 12))
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
@@ -66,8 +70,9 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
+                item.title = content('.content-text h1').text() || item.title;
                 item.description = content('.content-text .inner-text').html();
-                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), 8);
+                item.pubDate = parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm', 8);
 
                 return item;
             })

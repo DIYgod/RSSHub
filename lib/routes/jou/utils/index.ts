@@ -1,10 +1,11 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const FALLBACK_DESCRIPTION = '该通知无法直接预览，请点击原文链接↑查看';
 
@@ -19,14 +20,14 @@ interface DetailSelectors {
 }
 
 // Date formats vary across sites: 2026-03-30, 2026/05/06 or 2026年03月30日 14:37, often prefixed with a label such as "发布时间："
-export function parsePubDate(text?: string): Date | undefined {
+function parsePubDate(text?: string): Temporal.Instant | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
         return undefined;
     }
     const [, year, month, day] = match;
     const time = text?.match(/(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1];
-    return timezone(parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`), 8);
+    return parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`, 8);
 }
 
 export function parseNoticeList($: CheerioAPI, pageUrl: string, rowSelector: string, dateSelector: string): NoticeItem[] {
@@ -52,12 +53,17 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     const response = await ofetch(item.link);
     const $ = load(response);
 
-    // Pages whose body is an embedded PDF have no extractable content
-    if ($('script:contains("showVsbpdfIframe")').length > 0) {
+    const $content = $(selectors.content);
+    const pdfScript = $('script:contains("showVsbpdfIframe")').first().text();
+    const pdfSource = pdfScript.match(/showVsbpdfIframe\(\s*(["'])(.*?)\1/)?.[2];
+    if (pdfScript && !pdfSource) {
         return { ...item, description: FALLBACK_DESCRIPTION };
     }
-
-    const $content = $(selectors.content);
+    if (pdfSource) {
+        const pdfUrl = new URL(pdfSource, item.link).href;
+        $content.append($('<iframe>').attr('src', pdfUrl));
+        $content.append($('<p>').append($('<a>').attr('href', pdfUrl).text('Download PDF')));
+    }
 
     const title = $(selectors.title).text().trim();
     const pubDate = selectors.date ? parsePubDate($(selectors.date).text()) : undefined;
@@ -71,5 +77,5 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
 }
 
 export function resolveArticles(list: NoticeItem[], selectors: DetailSelectors): Promise<DataItem[]> {
-    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item, selectors))));
+    return pMap(list, (item) => cache.tryGet(item.link, () => fetchArticle(item, selectors)), { concurrency: 3 });
 }

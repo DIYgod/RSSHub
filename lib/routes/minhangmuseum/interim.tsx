@@ -1,21 +1,13 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateRange } from '@/utils/time';
 
 import { namespace } from './namespace';
-
-const parseExhibitionDuration = (duration?: string) => {
-    const [startDate, endDate] = duration?.match(/\d{4}年\d{1,2}月\d{1,2}日/g)?.map((d) => d.replace(/(\d{4})年(\d{1,2})月(\d{1,2})日/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`)) ?? [];
-
-    return {
-        startDate,
-        endDate,
-    };
-};
 
 export const route: Route = {
     path: '/interim',
@@ -59,9 +51,10 @@ export const route: Route = {
             })
             .filter((item): item is NonNullable<typeof item> => item !== null);
 
-        const items: DataItem[] = await Promise.all(
-            listItems.map((item) =>
-                cache.tryGet(item.itemLink, async () => {
+        const items: DataItem[] = await pMap(
+            listItems,
+            async (item) => {
+                const { location } = await cache.tryGet(`minhangmuseum:exhibition-details:v1:${item.itemLink}`, async () => {
                     const detailResponse = await ofetch(item.itemLink);
                     const $detail = load(detailResponse);
 
@@ -74,45 +67,47 @@ export const route: Route = {
                         }
                     });
 
-                    const { startDate, endDate } = parseExhibitionDuration(item.fullDuration);
-                    const pubDate = startDate ? parseDate(startDate) : undefined;
+                    return { location };
+                });
+                const { startDate, endDate } = parseDateRange(item.fullDuration);
+                const pubDate = startDate ? parseDate(startDate, 8) : undefined;
 
-                    const description = renderToString(
-                        <div>
-                            <img src={item.imgUrl} />
-                            <br />
-                            <p>
-                                <b>地点：</b>
-                                {location || '参考详情'}
-                            </p>
-                            <p>
-                                <b>开展：</b>
-                                {startDate || '未定/常设'}
-                            </p>
-                            <p>
-                                <b>闭展：</b>
-                                {endDate || '未定/常设'}
-                            </p>
-                            <p>
-                                <small>原始展期：{item.fullDuration}</small>
-                            </p>
-                        </div>
-                    );
+                const description = renderToString(
+                    <div>
+                        <img src={item.imgUrl} />
+                        <br />
+                        <p>
+                            <b>地点：</b>
+                            {location || '参考详情'}
+                        </p>
+                        <p>
+                            <b>开展：</b>
+                            {startDate || '未定/常设'}
+                        </p>
+                        <p>
+                            <b>闭展：</b>
+                            {endDate || '未定/常设'}
+                        </p>
+                        <p>
+                            <small>原始展期：{item.fullDuration}</small>
+                        </p>
+                    </div>
+                );
 
-                    return {
-                        title: item.title,
-                        link: item.itemLink,
-                        pubDate,
-                        description,
-                        _extra: {
-                            museumName,
-                            location,
-                            startDate,
-                            endDate,
-                        },
-                    };
-                })
-            )
+                return {
+                    title: item.title,
+                    link: item.itemLink,
+                    pubDate,
+                    description,
+                    _extra: {
+                        museumName,
+                        location,
+                        startDate,
+                        endDate,
+                    },
+                };
+            },
+            { concurrency: 3 }
         );
 
         return {

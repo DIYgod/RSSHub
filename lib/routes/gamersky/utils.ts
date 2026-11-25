@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 interface idNameMap {
     type: string;
@@ -53,7 +53,7 @@ export const parseArticleList = (response: string) => {
             const a = ele.find('.tt').length ? ele.find('.tt') : ele.find('a');
             const title = a.text();
             const link = a.attr('href');
-            const pubDate = timezone(parseDate(ele.find('.time').text()), 8);
+            const pubDate = parseDate(ele.find('.time').text(), 8);
             const description = ele.find('.txt').text();
             if (!link) {
                 return;
@@ -68,8 +68,8 @@ export const parseArticleList = (response: string) => {
         .filter((item) => item !== undefined) satisfies DataItem[];
 };
 
-export const getArticle = (item: DataItem) =>
-    cache.tryGet(item.link!, async (): Promise<DataItem> => {
+const getArticle = async (item: DataItem): Promise<DataItem> => {
+    const detail = await cache.tryGet(`${item.link}#article-body`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.Mid2L_con, .MidLcon');
@@ -82,7 +82,7 @@ export const getArticle = (item: DataItem) =>
         content.find('img').each((_, item) => {
             if (item.attribs.src === 'http://image.gamersky.com/webimg13/zhuanti/common/blank.png') {
                 item.attribs.src = item.attribs['data-origin'];
-            } else if (item.attribs.src.endsWith('_S.jpg')) {
+            } else if (item.attribs.src?.endsWith('_S.jpg')) {
                 item.attribs.src = item.attribs.src.replace('_S.jpg', '.jpg');
             }
         });
@@ -91,9 +91,12 @@ export const getArticle = (item: DataItem) =>
                 item.attribs.style = 'display: list-item;';
             }
         });
-        item.description = content.html() || item.description;
-        return item;
+        return { description: content.html() };
     });
+    return { ...item, description: detail.description || item.description };
+};
+
+export const getArticles = (list: DataItem[]): Promise<DataItem[]> => pMap(list, getArticle, { concurrency: 3 });
 
 export const getUserArticleList = async (userId: string) => {
     const response = await ofetch<UserArticleList>(
@@ -117,7 +120,7 @@ export const parseUserArticleList = (body: string) => {
         return {
             title: title.text(),
             link: title.attr('href'),
-            pubDate: parseDate(e.attr('data-time')!),
+            pubDate: parseDate(e.attr('data-time')!, 8),
             description: e.find('.qzcmt-content-txt span').text(),
         };
     });
@@ -128,13 +131,14 @@ export const parseUserArticleList = (body: string) => {
     };
 };
 
-export const getUserArticle = (item: DataItem) =>
-    cache.tryGet(item.link!, async () => {
+export const getUserArticle = async (item: DataItem): Promise<DataItem> => {
+    const detail = await cache.tryGet(`${item.link}#user-article-body`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
-        item.description = $('.qzcmt-content-txt').html() || item.description;
-        return item;
+        return { description: $('.qzcmt-content-txt').html() };
     });
+    return { ...item, description: detail.description || item.description };
+};
 
 export function mdTableBuilder(data: idNameMap[]) {
     const table = '|' + data.map((item) => `${item.type}|`).join('') + '\n|' + Array.from({ length: data.length }, () => '---|').join('') + '\n|' + data.map((item) => `${item.name}|`).join('') + '\n';

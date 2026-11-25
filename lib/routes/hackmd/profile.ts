@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/profile/:path',
@@ -36,7 +37,8 @@ async function handler(ctx) {
         item: data.notes.map((note) => ({
             title: note.title,
             description: `<pre>${note.content}</pre>`,
-            pubDate: new Date(note.publishedAt).toUTCString(),
+            pubDate: parseDate(note.publishedAt),
+            category: note.tags,
             link: `https://hackmd.io/@${path}/${note.permalink || note.shortId}`,
         })),
     };

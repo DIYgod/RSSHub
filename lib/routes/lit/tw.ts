@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tw/:name?',
@@ -40,12 +40,13 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, urla).href,
-                pubDate: timezone(parseDate($item.find('i, span').text() || `${$item.find('.rq p').text()}-${$item.find('.rq h2').text()}`), 8),
+                pubDate: parseDate($item.find('i, span').text() || `${$item.find('.rq p').text()}-${$item.find('.rq h2').text()}`, 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             item.link!.includes('xb2024info.jsp')
                 ? item
                 : cache.tryGet(item.link!, async () => {
@@ -60,8 +61,8 @@ async function handler(ctx: Context): Promise<Data> {
                       item.description = $('.v_news_content').html();
 
                       return item;
-                  })
-        )
+                  }),
+        { concurrency: 3 }
     );
 
     return {

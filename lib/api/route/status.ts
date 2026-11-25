@@ -1,10 +1,9 @@
 import type { RouteHandler } from '@hono/zod-openapi';
 import { createRoute, z } from '@hono/zod-openapi';
-import xxhash from 'xxhash-wasm';
 
+import { config } from '@/config';
 import cacheModule from '@/utils/cache/index';
-
-const { h64ToString } = await xxhash();
+import { routeCacheKey } from '@/utils/cache/route-key';
 
 const QuerySchema = z.object({
     requestPath: z.string().openapi({
@@ -64,7 +63,17 @@ const handler: RouteHandler<typeof route> = async (ctx) => {
     }
 
     const { requestPath } = ctx.req.valid('query');
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + ':rss');
+    // the cache key of a plain request for this path on the same host
+    const key =
+        'rsshub:koa-redis-cache:' +
+        routeCacheKey({
+            path: requestPath,
+            format: config.format,
+            filtered: false,
+            origin: new URL(ctx.req.url).origin,
+            prefix: ctx.req.header('x-forwarded-prefix') ?? '',
+            query: '',
+        });
     const cached = await cacheModule.globalCache.has(key);
 
     if (!cached) {

@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getPosts } from './api';
 import { INDEX_URL, LOGO_URL, POST_PART, POST_TYPE, REQUIRE_CONFIG } from './constant';
@@ -51,7 +52,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     checkConfig();
 
-    const limit = ctx.req.query('limit') || 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const pid =
         ctx.req

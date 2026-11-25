@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -32,7 +33,7 @@ export const route: Route = {
 
         const $ = load(response.data);
 
-        const items = $('.view-content .views-row')
+        const list = $('.view-content .views-row')
             .toArray()
             .map((el) => {
                 const $item = $(el);
@@ -45,9 +46,22 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateString!), 8),
+                    pubDate: dateString ? parseDate(dateString, 8) : undefined,
                 };
             });
+
+        const items = await pMap(
+            list,
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet(`hnmuseum:news-body:${item.link}`, async () => {
+                    const response = await got(item.link);
+                    const article = load(response.data);
+                    return article('.field-name-body .field-item').html();
+                }),
+            }),
+            { concurrency: 3 }
+        );
 
         return {
             title: `${museumName} - 湘博动态`,

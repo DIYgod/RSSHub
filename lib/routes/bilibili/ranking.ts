@@ -4,8 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
@@ -149,6 +149,9 @@ export const route: Route = {
     categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/ranking/all',
+    features: {
+        requirePuppeteer: true,
+    },
     parameters: {
         rid: {
             description: '排行榜分区代号或 rid，可在 URL 中找到',
@@ -173,9 +176,9 @@ export const route: Route = {
     handler,
 };
 
-function getAPI(isNumericRid: boolean, rid: string | number) {
+function getAPI(isNumericRid: boolean, rid: string) {
     if (isNumericRid) {
-        const zone = ridList[rid as number];
+        const zone = Object.entries(ridList).find(([key]) => key === rid)?.[1];
         return {
             apiBase: 'https://api.bilibili.com/x/web-interface/ranking/v2',
             apiParams: `rid=${rid}&type=all&web_location=333.934`,

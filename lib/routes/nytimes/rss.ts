@@ -1,10 +1,14 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
+
+const getCategory = (category: string | { _: string }) => (typeof category === 'string' ? category : category._);
 
 export const route: Route = {
     path: '/rss/:cat?',
@@ -14,6 +18,7 @@ export const route: Route = {
     parameters: {
         cat: {
             description: "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url.",
+            default: 'HomePage',
         },
     },
     features: {
@@ -38,26 +43,45 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const url = `https://rss.nytimes.com/services/xml/rss/nyt/${ctx.req.param('cat')}.xml`;
+    const url = `https://rss.nytimes.com/services/xml/rss/nyt/${ctx.req.param('cat') ?? 'HomePage'}.xml`;
 
-    const rss = await parser.parseURL(url);
+    const xml = await ofetch(url);
+    const rss = await parser.parseString(xml);
 
     return {
         ...rss,
-        item: await Promise.all(
-            rss.items.map((e) =>
-                cache.tryGet(e.link!, async () => {
-                    const res = await ofetch(e.link!, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' } });
+        item: await pMap(
+            rss.items,
+            async (e) => {
+                try {
+                    const detail = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`nytimes:rss:detail:v2:${e.link}`, async () => {
+                        const res = await ofetch(e.link!, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' } });
 
-                    const $ = load(res);
+                        const $ = load(res);
 
+                        return {
+                            description: $("[name='articleBody']").html(),
+                            author: $('meta[name="byl"]').attr('content'),
+                        };
+                    });
                     return {
                         ...e,
-                        description: $("[name='articleBody']").html(),
-                        author: $('meta[name="byl"]').attr('content'),
+                        description: detail.description,
+                        author: detail.author,
                     };
-                })
-            )
+                } catch (error) {
+                    if (error instanceof FetchError && error.status === 403) {
+                        return {
+                            ...e,
+                            description: e.content,
+                            author: e.creator,
+                            category: e.categories?.map(getCategory),
+                        };
+                    }
+                    throw error;
+                }
+            },
+            { concurrency: 3, stopOnError: false }
         ),
     } as Data;
 }

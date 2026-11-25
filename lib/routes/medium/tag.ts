@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
 import type { Route } from '@/types';
@@ -30,7 +32,9 @@ export const route: Route = {
 
 ::: warning
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-:::`,
+:::
+
+When Medium blocks article pages, their publicly visible previews may be returned.`,
 };
 
 async function handler(ctx) {
@@ -38,7 +42,7 @@ async function handler(ctx) {
     const tag = ctx.req.param('tag');
 
     const cookie = config.medium.cookies[user];
-    if (cookie === undefined) {
+    if (!cookie?.trim()) {
         throw new ConfigNotFoundError(`缺少 Medium 用户 ${user} 登录后的 Cookie 值`);
     }
 
@@ -50,9 +54,7 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
     }
 
-    const urls = posts.items.map((data) => data.post.mediumUrl);
-
-    const parsedArticles = await Promise.all(urls.map((url) => parseArticle(ctx, url)));
+    const parsedArticles = await pMap(posts.items, ({ post }) => parseArticle(ctx, post.mediumUrl, { cookie, post }), { concurrency: 3 });
 
     return {
         title: `${user} Medium Following Tag ${tag}`,

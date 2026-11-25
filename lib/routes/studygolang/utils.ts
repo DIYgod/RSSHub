@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -14,7 +14,7 @@ const md = MarkdownIt({
 
 const FetchGoItems = async (ctx, rewriteId?) => {
     const id = rewriteId || (ctx.req.param('id') ?? 'weekly');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = Number(ctx.req.query('limit') ?? 50);
 
     const rootUrl = 'https://studygolang.com';
     const currentUrl = `${rootUrl}/go/${id}`;
@@ -46,9 +46,10 @@ const FetchGoItems = async (ctx, rewriteId?) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`studygolang:article:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -56,17 +57,20 @@ const FetchGoItems = async (ctx, rewriteId?) => {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('.timeago').first().attr('title')!), 8);
+                const pubDate = parseDate(content('.timeago').attr('title')!, 8);
 
+                let description: string | undefined;
                 try {
-                    item.description = md.render(content('.content').html() ?? '');
+                    description = md.render(content('.content').text());
                 } catch {
                     // no-empty
                 }
 
-                return item;
-            })
-        )
+                return { pubDate, description };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

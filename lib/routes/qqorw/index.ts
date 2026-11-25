@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -40,7 +41,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://qqorw.cn';
     const currentUrl = new URL(category, rootUrl).href;
@@ -65,13 +66,14 @@ async function handler(ctx) {
                     .find('a.label')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate($item.find('p.auth-span span.muted').first().text().trim()), 8),
+                pubDate: parseDate($item.find('p.auth-span span.muted').first().text().trim(), 8),
                 upvotes: $item.find('span.count').text() ? Number($item.find('span.count').text()) : 0,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -80,7 +82,7 @@ async function handler(ctx) {
                 content('div.contenttxt').prev().nextAll().remove();
 
                 item.title = content('h1.article-title').text();
-                item.description = content('article.article-content').html() ?? '';
+                item.description = content('article.article-content').html();
                 item.author = content('i.fa-user').parent().text().trim();
                 item.category = content('#mute-category')
                     .toArray()
@@ -89,8 +91,8 @@ async function handler(ctx) {
                 item.upvotes = content('#Addlike span.count').text() ? Number(content('#Addlike span.count').text()) : item.upvotes;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const author = '早报网';

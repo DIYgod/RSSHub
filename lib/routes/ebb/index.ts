@@ -2,6 +2,7 @@ import LZString from 'lz-string';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -19,11 +20,12 @@ async function handler() {
             Referer: url,
         },
     });
-    const responseData = JSON.parse(LZString.decompressFromUTF16(response)!);
+    const responseData = JSON.parse(LZString.decompressFromUTF16(response));
     const result = responseData.map((item) => ({
         title: item.name_chi,
         link: `https://ebb.io/anime/${item.anime_id}x${item.season_id}`,
         description: `${item.season_title} - ${item.episode_title}`,
+        updated: parseDate(item.last_updated),
         guid: `${item.anime_id}-${item.season_id}-${item.episode_title}`,
     }));
 

@@ -5,7 +5,7 @@ import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { LiveRoomUserInfo } from './types';
 
@@ -122,10 +122,10 @@ async function handler(ctx) {
     const items = [
         {
             title,
-            pubDate: parseDate(liveRoom.startTime, 'X'),
+            pubDate: liveRoom.startTime ? parseDate(liveRoom.startTime, 'X') : undefined,
             author: userInfo.nickname,
             link,
-            guid: `${userInfo.roomId}:${liveRoom.streamId}:${liveRoom.status}`,
+            guid: `${userInfo.roomId || userInfo.uniqueId}:${liveRoom.streamId || liveRoom.startTime || ''}:${liveRoom.status}`,
         },
     ];
 

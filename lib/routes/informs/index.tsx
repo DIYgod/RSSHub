@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://pubsonline.informs.org';
 
@@ -36,12 +35,14 @@ async function handler(ctx) {
         cache.tryGet(cateUrl, async () => {
             const setCookiesUrl = `${cateUrl}?cookieSet=1`;
 
-            const response = await got.extend({ followRedirect: false }).get(setCookiesUrl, {
+            const response = await ofetch.raw(setCookiesUrl, {
                 headers: {
                     Referer: cateUrl,
                 },
+                redirect: 'manual',
             });
-            const cookie = response.headers['set-cookie']
+            const cookie = response.headers
+                .getSetCookie()
                 .slice(1)
                 .map((item) => item.split(';', 1)[0])
                 .join('; ');
@@ -76,7 +77,8 @@ async function handler(ctx) {
                     },
                 });
                 const detail = load(detailResponse.data);
-                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '');
+                item.author = detail('div.accordion-tabbed.loa-accordion').text();
+                item.description = detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html();
 
                 return item;
             })
@@ -89,12 +91,3 @@ async function handler(ctx) {
         item: items,
     };
 }
-
-const renderDescription = (author: string, content: string): string =>
-    renderToString(
-        <>
-            <strong> {author} </strong>
-            <br />
-            {raw(content)}
-        </>
-    );

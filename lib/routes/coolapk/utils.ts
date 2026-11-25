@@ -3,10 +3,10 @@ import crypto from 'node:crypto';
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
+import { md5 } from '@/utils/hash';
 import logger from '@/utils/logger';
-import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问', 11: '回答', 12: '图文', 15: '二手', 17: '观点', 20: '交易动态' };
 
@@ -14,11 +14,11 @@ const getRandomDEVICE_ID = () => crypto.randomUUID();
 
 const get_app_token = () => {
     const DEVICE_ID = getRandomDEVICE_ID();
-    const now = Math.round(Date.now() / 1000);
+    const now = Math.round(Temporal.Now.instant().epochMilliseconds / 1000);
     const hex_now = '0x' + now.toString(16);
     const md5_now = md5(now.toString());
     const s = 'token://com.coolapk.market/c67ef5943784d09750dcfbb31020f0ab?' + md5_now + '$' + DEVICE_ID + '&com.coolapk.market';
-    const md5_s = md5(Buffer.from(s).toString('base64'));
+    const md5_s = md5(Buffer.from(s).toBase64());
     const token = md5_s + DEVICE_ID + hex_now;
     return token;
 };
@@ -61,6 +61,8 @@ const parseTuwenFromRaw = (raw) =>
         }
     });
 
+const selectDynamics = (items) => items.filter((item) => item.entityType !== 'sponsorCard' && item.url);
+
 const parseDynamic = async (item) => {
     const pubDate = parseDate(item.dateline, 'X');
     if (item.entityType === 'sponsorCard' || !item.url) {
@@ -88,7 +90,10 @@ const parseDynamic = async (item) => {
                     const result = await ofetch(itemUrl, {
                         headers: getHeaders(),
                     });
-                    const message = '<p>' + result.data?.message.split('\n').join('<br>') + '</p>';
+                    if (!result.data) {
+                        return;
+                    }
+                    const message = '<p>' + result.data.message.split('\n').join('<br>') + '</p>';
                     const picArr = item.picArr.filter(Boolean).map((i) => `<img src="${i}">`); // 若无图片，item.picArr=[""]
                     return message + picArr.join('');
                 });
@@ -123,7 +128,7 @@ const parseDynamic = async (item) => {
                 });
 
                 if (!result.data) {
-                    return result.message;
+                    return;
                 }
 
                 const raw = JSON.parse(result.data.message_raw_output);
@@ -140,6 +145,10 @@ const parseDynamic = async (item) => {
             break;
     }
 
+    if (description === undefined) {
+        return;
+    }
+
     return {
         title,
         description,
@@ -147,7 +156,8 @@ const parseDynamic = async (item) => {
         link: `https://www.coolapk.com${item.url}`,
         // guid: itemUrl,
         author: item.username,
+        category: item.tags?.match(/#([^#]+)#/g)?.map((tag: string) => tag.slice(1, -1)),
     };
 };
 
-export default { get_app_token, base_url, getHeaders, parseDynamic, dynamicTpye };
+export default { get_app_token, base_url, getHeaders, parseDynamic, selectDynamics, dynamicTpye };

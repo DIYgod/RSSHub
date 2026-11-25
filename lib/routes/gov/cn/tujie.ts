@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xinwen/tujie/:caty',
@@ -29,10 +29,10 @@ const config = {
 
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
-    const cfg = config[caty];
-    if (!cfg) {
-        throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-tu-jie">docs</a>');
+    if (!Object.hasOwn(config, caty)) {
+        throw new InvalidParameterError('caty must be zhengce.');
     }
+    const cfg = config[caty];
 
     const currentUrl = cfg.link;
     const response = await ofetch(currentUrl);
@@ -56,7 +56,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse);
 
                 item.description = content('div.pages_content').html();
-                item.pubDate = timezone(parseDate(content('div.pages-date').text().split('来源：', 1)[0]), 8);
+                item.pubDate = parseDate(content('div.pages-date').text().split('来源：', 1)[0], 8);
 
                 return item;
             })

@@ -71,21 +71,4 @@ const viewThread = (id, page) => ({
         page,
     },
 });
-const countReplies = (id) => ({
-    operationName: 'ViewThread',
-    query: /* GraphQL */ `
-        query ViewThread($tid: Int!) {
-            thread(tid: $tid) {
-                ...threadComponent
-            }
-        }
-        fragment threadComponent on Thread {
-            replies
-        }
-    `,
-    variables: {
-        tid: Number.parseInt(id),
-    },
-});
-
-export { countReplies, viewForum, viewThread };
+export { viewForum, viewThread };

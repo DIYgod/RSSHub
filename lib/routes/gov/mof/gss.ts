@@ -4,8 +4,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const DOMAIN = 'gss.mof.gov.cn';
 
@@ -23,12 +22,15 @@ const handler = async (ctx: Context): Promise<Data | null> => {
         .map((li): DataItem & { link: string } => {
             const a = $(li).find('a');
             const pubDate = $(li).find('span').text();
-            const href = a.prop('href') as string;
+            const href = a.prop('href');
+            if (!href) {
+                throw new Error(`Missing link in list item on ${currentUrl}`);
+            }
             const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
             return {
-                title: a.prop('title') as string,
+                title: a.prop('title'),
                 link,
-                pubDate: timezone(parseDate(pubDate), 8),
+                pubDate: parseDate(pubDate, 8),
             };
         });
 
@@ -76,7 +78,7 @@ export const route: Route = {
 | zhengcefabu | zhengcejiedu |`,
     radar: [
         {
-            source: ['gss.mof.gov.cn/gzdt/:category/'],
+            source: ['gss.mof.gov.cn/gzdt/:category/', 'gss.mof.gov.cn/gzdt/:category/index.htm'],
             target: '/gss/:category',
         },
     ],

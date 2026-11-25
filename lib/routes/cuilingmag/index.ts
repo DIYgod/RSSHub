@@ -3,13 +3,14 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
+    const limit = getRouteLimit(ctx, 12);
 
     const rootUrl = 'https://www.cuilingmag.com';
     const currentUrl = new URL(category ? `category/${category}` : '', rootUrl).href;
@@ -26,7 +27,7 @@ export const handler = async (ctx) => {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const title = $item.find('h3.new-list-h3, h3.title-font').text().trim();
+            const title = $item.find('h3.new-list-h3, h3.title-font').text();
 
             const src = $item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;
@@ -63,7 +64,7 @@ export const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                const title = `${$$('p.title-font').text().trim()} ${$$('p.subtitle-font').text().trim()}`;
+                const title = `${$$('p.title-font').text()} ${$$('p.subtitle-font').text()}`;
 
                 const src = $$('div.banner img').first().prop('src');
                 const banner = src ? new URL(src, rootUrl).href : undefined;
@@ -84,7 +85,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('p.time').first().text());
+                item.pubDate = parseDate($$('p.time').first().text(), 8);
                 item.category = [
                     ...new Set([
                         ...$$('p.sort a')
@@ -114,7 +115,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const title = $('title').text().trim();
+    const title = $('title').text();
     const image = new URL($('div.nav-logo a img').prop('src')!, rootUrl).href;
 
     return {
@@ -122,7 +123,6 @@ export const handler = async (ctx) => {
         description: $('meta[property="og:description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
         language,
@@ -163,11 +163,7 @@ export const route: Route = {
     radar: [
         {
             source: ['cuilingmag.com/category/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/cuilingmag${category ? `/${category}` : ''}`;
-            },
+            target: '/:category',
         },
         {
             title: '全部',

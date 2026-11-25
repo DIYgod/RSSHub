@@ -4,7 +4,8 @@ import { parseToken } from '@/routes/xueqiu/cookies';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/today',
@@ -31,13 +32,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const size = ctx.req.query('limit') ?? '20';
+    const size = getRouteLimit(ctx, 20);
 
-    const rootUrl = 'https://xueqiu.com';
+    const rootUrl = 'https://www.xueqiu.com';
     const currentUrl = `${rootUrl}/today`;
     const apiUrl = `https://api.xueqiu.com/statuses/hot/listV2.json?since_id=-1&size=${size}`;
 
-    const token = await parseToken(currentUrl);
+    const token = await parseToken();
     const response = await got({
         method: 'get',
         url: apiUrl,
@@ -59,8 +60,9 @@ async function handler(ctx) {
     });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+        items.map(async (item) => ({
+            ...item,
+            description: await cache.tryGet(`xueqiu:today:description:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -68,14 +70,10 @@ async function handler(ctx) {
                         Cookie: token,
                     },
                 });
-
                 const content = load(detailResponse.data);
-
-                item.description = content('.article__bd__detail').html();
-
-                return item;
-            })
-        )
+                return content('.article__bd__detail').html();
+            }),
+        }))
     );
 
     return {

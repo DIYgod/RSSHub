@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dh/:language?',
@@ -36,6 +38,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'tc_chi';
+    const languageCodes = { english: 'en', chs: 'sc', tc_chi: 'tc' };
+    if (!Object.hasOwn(languageCodes, language)) {
+        throw new InvalidParameterError('Invalid language: expected english, chs, or tc_chi.');
+    }
 
     const rootUrl = 'https://www.dh.gov.hk';
     const currentUrl = `${rootUrl}/${language}/press/press.html`;
@@ -48,38 +54,31 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('td[headers="title"]')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
+    const languageCode = languageCodes[language];
+    const { data } = await got(`${rootUrl}/data_pr.json`);
+    const list = data
+        .map((item): DataItem => ({
+            title: item[`name_${languageCode}`],
+            link: new URL(item[`link_${languageCode}`], currentUrl).href,
+            pubDate: parseDate(item[`date_${languageCode}`], language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日', 8),
+        }))
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
-            return {
-                title: $item.text(),
-                link: $item.find('a').attr('href'),
-                pubDate: parseDate($item.next().text(), language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日'),
-            };
-        });
-
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await pMap(
+        list,
+        (item: DataItem) =>
             cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
+                const detailResponse = await got(item.link!);
                 const content = load(detailResponse.data);
-
-                item.description = content('#pressrelease').html();
-
-                return item;
-            })
-        )
+                return { ...item, description: content('#pressrelease').html() };
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
+        language: { english: 'en', chs: 'zh-CN', tc_chi: 'zh-HK' }[language] as Language,
     };
 }

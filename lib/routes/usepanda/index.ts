@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/feeds/:id',
@@ -25,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const feedId = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ?? 30; // 默认30条
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://api-panda.com/v4/';
     const apiUrl = `${rootUrl}articles?feeds=${feedId}&limit=${limit}&page=1&sort=popular`;

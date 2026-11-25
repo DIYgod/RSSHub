@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 // import cache from '@/utils/cache';
 // import ofetch from '@/utils/ofetch';
-// import { parseDate } from '@/utils/parse-date';
+// import { parseDate } from '@/utils/time';
 // import wait from '@/utils/wait';
 
 // import type { Post, Profile, Pull, Status, Story } from './types';
@@ -68,7 +68,9 @@ export const route: Route = {
 function handler(ctx) {
     // const baseUrl = 'https://picnob.info';
     const id = ctx.req.param('id');
-    return ctx.set('redirect', `/picnob/user/${id}`);
+    const query = new URL(ctx.req.url).search;
+    const type = ctx.req.param('type') === 'tagged' ? '/tagged' : '';
+    return ctx.set('redirect', `/picnob/user/${id}${type}${query}`);
     // const type = ctx.req.param('type') ?? 'posts';
     // const INSTALKER_BACK_API_KEY = '1263fd960207e2d481eff2c60feeae1541f6e90419283f7e674a36d8ac706462';
     // const { h64ToString } = await xxhash();

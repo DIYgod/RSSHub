@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 type WordpressPost = {
     id: number;
@@ -101,7 +101,7 @@ async function handler(ctx): Promise<Data> {
         title: post.title?.rendered,
         description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
         link: post.link,
-        pubDate: parseDate(post.date_gmt ?? post.date),
+        pubDate: post.date_gmt ? parseDate(post.date_gmt, 0) : parseDate(post.date),
         author: post._embedded?.author?.[0]?.name,
         category: Array.isArray(post._embedded?.['wp:term'])
             ? post._embedded['wp:term']

@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { parseDyArticle } from './utils';
 
@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ?? 30;
+    const limit = getRouteLimit(ctx, 30);
     const url = `https://www.163.com/dy/media/${id}.html`;
     const res = await got(url);
     const $ = load(res.data);
@@ -43,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('h4 a').text(),
                 link: $item.find('a').first().attr('href'),
-                pubDate: timezone(parseDate($item.find('.time').text()), 8),
+                pubDate: parseDate($item.find('.time').text(), 8),
                 imgsrc: itemImg.attr('src') ?? itemImg.attr('_src'),
             };
         });

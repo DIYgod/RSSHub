@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const handler = async () => {
     const url = 'http://rss.weather.gov.hk/rss/CurrentWeather.xml';
@@ -13,6 +13,7 @@ const handler = async () => {
         xmlMode: true,
     });
 
+    const pubDate = parseDate($('pubDate').text());
     const description = $('item').first().find('description');
 
     const $$ = load(description.text());
@@ -27,7 +28,7 @@ const handler = async () => {
             return {
                 title: area,
                 description: degree,
-                pubDate: parseDate($('pubDate').text()),
+                pubDate,
                 link: pageUrl,
                 guid: `${$('guid').text()}#${area}`,
             };

@@ -2,8 +2,11 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDateStrict } from '@/utils/time';
 
 const cateUrlMap = {
     lastupdate: 'https://www.wenku8.net/modules/article/toplist.php?sort=lastupdate',
@@ -46,12 +49,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'lastupdate';
+    if (!Object.hasOwn(cateUrlMap, category)) {
+        throw new InvalidParameterError(`Unknown category. Supported categories: ${Object.keys(cateUrlMap).join(', ')}.`);
+    }
+    if (!config.wenku8.cookie) {
+        throw new ConfigNotFoundError('WENKU8_COOKIE is required. Configure a logged-in Wenku8 cookie to access this category.');
+    }
     const response = await got({
         method: 'get',
         url: cateUrlMap[category],
         responseType: 'buffer',
         headers: {
-            UserAgent: config.ua,
+            'User-Agent': config.ua,
             cookie: config.wenku8.cookie,
         },
     });
@@ -61,11 +70,19 @@ async function handler(ctx) {
     const $ = load(responseHtml);
     const items = $('td > div')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('b > a').text(),
-            link: $(item).find('b > a').attr('href'),
-            description: $(item).find('img').html()! + $(item).find('div:nth-child(2)').remove('b').end().html()!,
-        }));
+        .map((item) => {
+            const sourceDate = $(item)
+                .find('p')
+                .text()
+                .match(/更新[:：]\s*(\d{4}-\d{2}-\d{2})/)?.[1];
+            const date = sourceDate ? parseDateStrict(sourceDate, 'YYYY-MM-DD', 8) : undefined;
+            return {
+                title: $(item).find('b > a').text(),
+                link: $(item).find('b > a').attr('href'),
+                description: $(item).find('img').html()! + $(item).find('div:nth-child(2)').remove('b').end().html()!,
+                pubDate: date,
+            };
+        });
 
     return {
         title: `轻小说文库 - ${cateTitleMap[category]}`,

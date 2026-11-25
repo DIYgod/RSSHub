@@ -2,8 +2,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/column/:id?',
@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '877';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const hostUrl = 'https://vod.m2oplus.nmtv.cn';
     const apiRootUrl = 'https://mapi.m2oplus.nmtv.cn';
@@ -43,27 +43,28 @@ async function handler(ctx) {
 
     const items = data.map((item) => {
         const enclosure_url = `${hostUrl}/${item.target_path}${item.target_filename}`;
-        const enclosure_type = `${item.type}/${enclosure_url.match(/\.(\w+)$/)![1]}`;
+        const extension = new URL(enclosure_url).pathname.split('.').pop()?.toLowerCase();
+        const enclosure_type = extension ? (item.type === 'audio' && extension === 'mp3' ? 'audio/mpeg' : `${item.type}/${extension}`) : undefined;
 
         return {
             title: item.title,
             link: item.content_url,
             author: item.column_name,
-            pubDate: timezone(parseDate(item.publish_time), 8),
+            pubDate: parseDate(item.publish_time, 8),
             description: renderToString(
                 item.type === 'audio' ? (
                     <audio controls>
-                        <source src={enclosure_url} type="audio/mp3" />
+                        <source src={enclosure_url} type={enclosure_type} />
                     </audio>
                 ) : item.type === 'video' ? (
                     <video controls poster={item.index_pic}>
-                        <source src={enclosure_url} type="video/mp4" />
+                        <source src={enclosure_url} type={enclosure_type} />
                     </video>
                 ) : null
             ),
             enclosure_url,
             enclosure_type,
-            itunes_duration: item.video.duration,
+            itunes_duration: item.video?.duration,
             itunes_item_image: item.index_pic,
         };
     });

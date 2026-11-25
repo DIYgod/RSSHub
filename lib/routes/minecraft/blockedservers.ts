@@ -43,7 +43,7 @@ async function handler() {
 
     return {
         title,
-        link: 'https://sessionserver.mojang.com/blockedservers',
+        link: 'https://www.minecraft.net/',
         description: title,
         item: data.map((item) => ({
             title: item,

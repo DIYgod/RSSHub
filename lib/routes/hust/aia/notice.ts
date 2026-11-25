@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: ['/aia/notice/:type?', '/auto/notice/:type?'],
@@ -41,10 +41,11 @@ async function handler(ctx) {
             list &&
             list.toArray().map((item) => {
                 const $item = $(item);
+                const pubDate = parseDateStrict(`${$item.find('.date3 div').text()}-${$item.find('.date3 p').text()}`, ['YYYY-MM-DD', 'YYYY-MM-D'], 8);
                 return {
                     title: $item.find('a h2').text(),
                     description: $item.find('a div').text() || title,
-                    pubDate: parseDate($item.find('.date3').text(), 'DDYYYY-MM'),
+                    pubDate,
                     link: new URL($item.find('a').attr('href')!, link).href,
                 };
             }),

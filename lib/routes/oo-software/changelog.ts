@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/changelog/:id',
@@ -30,6 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'shutup10';
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://www.oo-software.com';
     const currentUrl = `${rootUrl}/en/${id}/changelog`;
@@ -41,22 +43,31 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = $('.content h4')
+    const items = $('.changelog__content h4, .content h4')
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.text();
+            const publishedAt = title.match(/(?:released|published|posted|release date:)\s+(?:on\s+)?(\S+)$/i)?.[1];
 
             return {
                 title,
                 link: `${currentUrl}#${title.split(' – ', 1)[0]}`,
-                description: $item.next().html(),
-                pubDate: parseDate(title.match(/released (on )?(.*)$/)![2], 'MMMM DD, YYYY'),
+                description: $item
+                    .nextUntil('h4')
+                    .toArray()
+                    .map((element) => $(element).prop('outerHTML'))
+                    .join(''),
+                pubDate: publishedAt ? parseDate(publishedAt, /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(publishedAt) ? 'DD.MM.YYYY' : 'M/D/YYYY', 0) : undefined,
             };
         });
 
-    items[0].enclosure_url = $('.banner-inlay').find('a').attr('href');
+    const downloadLink = $('a[href*="/download/current/"]').attr('href');
+    if (items[0] && downloadLink) {
+        items[0].enclosure_url = new URL(downloadLink, rootUrl).href;
+    }
 
     return {
         title: $('title').text(),

@@ -1,9 +1,11 @@
-import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -26,7 +28,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.manus.im'],
+            source: ['manus.im/', 'manus.im/blog', 'manus.im/blog/:slug'],
+            target: '/blog',
+        },
+        {
+            source: ['www.manus.im/', 'www.manus.im/blog', 'www.manus.im/blog/:slug'],
             target: '/blog',
         },
     ],
@@ -44,7 +50,6 @@ async function handler() {
         headers: {
             RSC: '1',
         },
-        responseType: 'text',
     });
 
     let blogList;
@@ -69,44 +74,36 @@ async function handler() {
         throw new Error('Failed to parse blogList from RSC data');
     }
 
-    const list: Array<DataItem & { _contentUrl?: string }> = blogList.groups.flatMap(
+    const list: Array<DataItem & { _contentUrl: string }> = blogList.groups.flatMap(
         (group) =>
             group.blogs?.map((blog) => ({
                 title: blog.title,
                 link: `https://manus.im/blog/${blog.recordUid}`,
-                pubDate: new Date(blog.createdAt.seconds * 1000),
+                pubDate: parseDate(Number(blog.createdAt.seconds.slice(2)) * 1000 + Math.floor(blog.createdAt.nanos / 1_000_000)),
                 description: blog.desc,
                 category: [group.kindName],
                 _contentUrl: blog.contentUrl,
             })) ?? []
     );
 
-    const items: DataItem[] = await Promise.all(
-        list.map((item) =>
-            cache.tryGet<DataItem>(String(item.link), async () => {
-                const contentUrl = item._contentUrl;
-                let description = String(item.description);
-                if (contentUrl) {
-                    try {
-                        let contentText = await ofetch(contentUrl, { responseType: 'text' });
-                        // Fix video embeds: Manus uses ![type=manus_video](url) which markdown-it renders as <img>
-                        contentText = contentText.replaceAll(/!\[.*?\]\((.+?\.(mp4|mov|webm))\)/gi, '<video controls preload="metadata"><source src="$1"></video>');
-                        // Parse markdown to HTML
-                        description = md.render(contentText);
-                    } catch {
-                        // Fallback to description from list if fetch fails
-                    }
-                }
-
-                // Remove the temporary property to avoid pollution
-                delete item._contentUrl;
-
-                return {
-                    ...item,
-                    description,
-                };
-            })
-        )
+    const items: DataItem[] = await pMap(
+        list,
+        async ({ _contentUrl: contentUrl, ...item }) => {
+            let description = item.description;
+            try {
+                const body = await cache.tryGet<{ description: string }>(`manus:article-body:v2:${item.link}`, async () => {
+                    let contentText = await ofetch(contentUrl, { responseType: 'text' });
+                    // Manus video embeds need a video element instead of an image.
+                    contentText = contentText.replaceAll(/!\[.*?\]\((.+?\.(mp4|mov|webm))\)/gi, '<video controls preload="metadata"><source src="$1"></video>');
+                    return { description: md.render(contentText) };
+                });
+                description = body.description;
+            } catch {
+                // Keep the source's summary without caching a failed article request.
+            }
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 import { config } from '@/config';
+import { md5 } from '@/utils/hash';
 import logger from '@/utils/logger';
-import md5 from '@/utils/md5';
 
 import type CacheModule from './base';
 import { stringify } from './base';
@@ -10,6 +10,10 @@ import { stringify } from './base';
 const cacheHitSchema = z.object({
     hit: z.literal(true),
     value: z.string(),
+});
+
+const cacheMissSchema = z.object({
+    hit: z.literal(false),
 });
 
 const status = { available: false };
@@ -26,7 +30,7 @@ const cacheUrl = (key: string, refresh = false) => {
 
 const requestSignal = () => ('timeout' in AbortSignal ? AbortSignal.timeout(config.requestTimeout) : undefined);
 
-const request = async (url: string, init: Omit<RequestInit, 'headers'> = {}, headers: Record<string, string> = {}) => {
+const request = async (url: string, init: Omit<RequestInit, 'headers'>, headers: Record<string, string> = {}) => {
     if (!status.available || !apiToken) {
         return null;
     }
@@ -108,7 +112,7 @@ export default {
         if (response.status === 404) {
             try {
                 const data = await response.json();
-                if (data && typeof data === 'object' && 'hit' in data && data.hit === false) {
+                if (cacheMissSchema.safeParse(data).success) {
                     return '';
                 }
             } catch {

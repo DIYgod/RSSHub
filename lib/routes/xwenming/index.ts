@@ -5,9 +5,9 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '50');
 
@@ -58,12 +58,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
             })) ?? [];
         const guid: string = item.guid?.rendered ?? item.guid;
         const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
-        const updated: number | string = item.modified_gmt ?? pubDate;
+        const updated: number | string | undefined = item.modified_gmt;
 
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            pubDate: pubDate ? parseDate(`${pubDate}Z`) : undefined,
             link: linkUrl ?? guid,
             category: categories,
             author: authors,
@@ -71,11 +71,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             content: {
                 html: description,
-                text: description,
             },
             image,
             banner: image,
-            updated: updated ? parseDate(updated) : undefined,
+            updated: updated ? parseDate(`${updated}Z`) : undefined,
             language,
         };
 
@@ -87,7 +86,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[name="msapplication-TileImage"]').attr('content'),
         language,
         id: targetUrl,
@@ -129,16 +127,16 @@ export const route: Route = {
         },
     },
     description: `::: tip
-订阅 [科技前沿](https://www.xwenming.com/index.php/category/news)，其源网址为 \`https://www.xwenming.com/index.php/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/xwenming/category/news\`](https://rsshub.app/xwenming/category/news) 或 [\`/xwenming/category/科技前沿\`](https://rsshub.app/xwenming/category/科技前沿)。
+订阅 [科技前沿](https://www.xwenming.com/index.php/category/news)，其源网址为 \`https://www.xwenming.com/index.php/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/xwenming/news\`](https://rsshub.app/xwenming/news) 或 [\`/xwenming/科技前沿\`](https://rsshub.app/xwenming/科技前沿)。
 :::
 
-| 分类                                                                | ID                                                                  |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [全部](https://www.xwenming.com)                                    | [<空>](https://rsshub.app/xwenming)                                 |
-| [科技前沿](https://www.xwenming.com/index.php/category/news)        | [news](https://rsshub.app/xwenming/category/news)                   |
-| [疑难杂症](https://www.xwenming.com/index.php/category/solve)       | [solve](https://rsshub.app/xwenming/category/solve)                 |
-| [通知专栏](https://www.xwenming.com/index.php/category/notice)      | [notice](https://rsshub.app/xwenming/category/notice)               |
-| [未分类](https://www.xwenming.com/index.php/category/uncategorized) | [uncategorized](https://rsshub.app/xwenming/category/uncategorized) |`,
+| 分类                                                                | ID                                                         |
+| ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [全部](https://www.xwenming.com)                                    | [<空>](https://rsshub.app/xwenming)                        |
+| [科技前沿](https://www.xwenming.com/index.php/category/news)        | [news](https://rsshub.app/xwenming/news)                   |
+| [疑难杂症](https://www.xwenming.com/index.php/category/solve)       | [solve](https://rsshub.app/xwenming/solve)                 |
+| [通知专栏](https://www.xwenming.com/index.php/category/notice)      | [notice](https://rsshub.app/xwenming/notice)               |
+| [未分类](https://www.xwenming.com/index.php/category/uncategorized) | [uncategorized](https://rsshub.app/xwenming/uncategorized) |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -151,7 +149,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.xwenming.com', 'www.xwenming.com/index.php/category/:category'],
+            source: ['www.xwenming.com/index.php/category/:category'],
             target: '/:category',
         },
         {

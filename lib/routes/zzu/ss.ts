@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ss/:type',
@@ -21,7 +23,7 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/ss/'],
         },
     ],
-    name: '郑大社科院',
+    name: '社科院',
     maintainers: ['amandus1990'],
     handler,
     description: `| 新闻资讯 | 通知公告 |
@@ -42,32 +44,20 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('.list_notice > a')
+        .slice(0, Math.max(10, getRouteLimit(ctx, 10)))
         .toArray()
-        .slice(0, 10)
         .map((element) => {
             const $element = $(element);
             const link = new URL($element.attr('href')!, typeDict[type][1]).href;
-            const title = $element.find('h3').text().trim();
+            const title = $element.find('h3').text();
 
-            // 获取发布时间
-            // xwzx: 格式为 MM-DD，需要补全年份
-            // tzgg: 格式为 yyyy-mm-dd，直接使用
+            // A month/day label does not identify its publication year.
             const pubDateText = $element.find('time').text();
-            let pubDate: string | null = null;
-
-            if (pubDateText) {
-                if (type === 'xwzx') {
-                    const currentYear = new Date().getFullYear();
-                    pubDate = `${currentYear}-${pubDateText}`;
-                } else {
-                    pubDate = pubDateText;
-                }
-            }
 
             return {
                 title,
                 link,
-                pubDate,
+                pubDate: type === 'tzgg' ? parseDate(pubDateText) : undefined,
             };
         });
 

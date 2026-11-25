@@ -1,11 +1,20 @@
-import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-const md = MarkdownIt({ html: true });
+interface ArticleDetail {
+    content_html: string;
+}
+
+interface Article {
+    slug: string;
+    title: string;
+    tags: string[];
+    publish_date: string;
+}
 
 export const route: Route = {
     path: '/',
@@ -18,23 +27,28 @@ export const route: Route = {
 
 async function handler() {
     const url = 'https://www.yinwang.org';
-    const { posts } = await ofetch(`${url}/api/v1/posts`);
+    const { posts } = await ofetch<{ posts: Article[] }>(`${url}/api/v1/posts`);
 
-    const result = await Promise.all(
-        posts.map((post) => {
+    const result = await pMap(
+        posts,
+        async (post) => {
             const link = `${url}/posts/${post.slug}`;
-            return cache.tryGet(link, async () => {
-                const detail = await ofetch(`${url}/api/v1/posts/${post.slug}`);
+            const detail = await cache.tryGet(link, async () => {
+                const detail = await ofetch<ArticleDetail>(`${url}/api/v1/posts/${post.slug}`);
                 return {
-                    title: post.title,
-                    description: md.render(detail.content),
-                    link,
-                    author: '王垠',
-                    category: post.tags,
-                    pubDate: parseDate(post.publish_date),
+                    description: detail.content_html,
                 };
             });
-        })
+            return {
+                title: post.title,
+                description: detail.description,
+                link,
+                author: '王垠',
+                category: post.tags,
+                pubDate: parseDate(`${post.publish_date}T00:00:00Z`),
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

@@ -1,13 +1,15 @@
 import { load } from 'cheerio';
 
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { ProcessItems, rootUrl } from './utils';
 
 export async function handler(ctx) {
-    const { type, id } = ctx.req.param();
+    const type = getSubPath(ctx).split('/', 2)[1];
+    const id = ctx.req.param('id')?.replace(/\.htm$/, '');
 
     const currentUrl = type ? `${rootUrl}/${type}/${id}.htm` : rootUrl;
 
@@ -16,7 +18,7 @@ export async function handler(ctx) {
     const $ = load(response.data);
 
     const token = encodeURI($('meta[name="csrf-token"]').attr('content')!);
-    const apiUrl = `${rootUrl}/home/more?&type=${$('div[data-type]').data('type')}&page=1&_csrf=${token}&_=${Date.now()}`;
+    const apiUrl = `${rootUrl}/home/more?&type=${$('div[data-type]').data('type')}&page=1&_csrf=${token}&_=${Temporal.Now.instant().epochMilliseconds}`;
 
     response = await got(apiUrl);
 
@@ -25,7 +27,7 @@ export async function handler(ctx) {
               title: item.title,
               description: item.hometext,
               author: item.source.split('@http', 1)[0],
-              pubDate: timezone(parseDate(item.inputtime), 8),
+              pubDate: parseDate(item.inputtime, 8),
               link: item.url_show.startsWith('//') ? `https:${item.url_show}` : item.url_show.replace('http:', 'https:'),
               category: item.label.name,
           }))
@@ -38,6 +40,6 @@ export async function handler(ctx) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: await ProcessItems(items, ctx.req.query('limit')),
+        item: await ProcessItems(items, getRouteLimit(ctx, 60)),
     };
 }

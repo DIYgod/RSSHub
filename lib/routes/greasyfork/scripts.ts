@@ -2,13 +2,17 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: ['/:language/:domain?', '/scripts/sort/:sort/:language?'],
     categories: ['program-update'],
     example: '/greasyfork/en/google.com',
-    parameters: { language: "language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages", domain: "the script's target domain" },
+    parameters: {
+        language: "language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages",
+        domain: "the script's target domain",
+        sort: 'Sorting mode from the table below; defaults to updated',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

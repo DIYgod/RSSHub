@@ -1,8 +1,8 @@
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id',
@@ -38,26 +38,29 @@ async function handler(ctx) {
     }
 
     const out = works.map((work) => {
-        let Str = '';
-
-        for (const identifier of work.workExternalIdentifiers) {
-            Str += identifier.url
-                ? '<a href="' + identifier.url.value + '">' + identifier.externalIdentifierType.value + ': ' + identifier.externalIdentifierId.value + '</a><br>'
-                : identifier.externalIdentifierType.value + ': ' + identifier.externalIdentifierId.value + '<br>';
-        }
+        const { year, month, day } = work.publicationDate;
+        const publicationDate = [year, month, day].filter(Boolean).join('-');
+        const identifier = work.workExternalIdentifiers.find((entry) => entry.relationship.value === 'self' && entry.normalizedUrl?.value);
 
         const info = {
             title: work.title.value,
-            link: work.url,
+            link: identifier?.normalizedUrl.value,
+            pubDate: parseDate(publicationDate, month ? (day ? 'YYYY-MM-DD' : 'YYYY-MM') : 'YYYY', 0),
+            category: [work.workType.value],
             description: renderToString(
                 <>
-                    <h2>{work.title.value}</h2>
                     {work.journalTitle?.value ? <h3>{work.journalTitle.value}</h3> : null}
                     <span>
-                        {[work.publicationDate?.year, work.publicationDate?.month, work.publicationDate?.day].filter(Boolean).join('-')} | {work.workType.value}
+                        {work.workExternalIdentifiers.map((identifier) => {
+                            const label = `${identifier.externalIdentifierType.value}: ${identifier.externalIdentifierId.value}`;
+                            return (
+                                <>
+                                    {identifier.url ? <a href={identifier.url.value}>{label}</a> : label}
+                                    <br />
+                                </>
+                            );
+                        })}
                     </span>
-                    <br />
-                    <span>{raw(Str)}</span>
                     <span>Source: {work.sourceName}</span>
                 </>
             ),
@@ -68,7 +71,7 @@ async function handler(ctx) {
 
     return {
         title: 'ORCID Works List' + id,
-        link: currentUrl,
+        link: `${rootUrl}${id}`,
         item: out,
     };
 }

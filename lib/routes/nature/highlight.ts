@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -20,8 +21,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['nature.com/:journal/articles', 'nature.com/:journal', 'nature.com/'],
-            target: '/highlight/:journal',
+            source: ['nature.com/:journal/articles', 'nature.com/'],
+            target: '/highlight/:journal?',
         },
     ],
     name: 'Research Highlight',
@@ -41,10 +42,10 @@ async function handler(ctx) {
 
     let items = getArticleList($);
 
-    items = await Promise.all(items.map((item) => getArticle(item)));
+    items = await pMap(items, getArticle, { concurrency: 3 });
 
     return {
-        title: $('title').text().trim(),
+        title: $('title').text(),
         description: $('meta[name=description]').attr('content'),
         link: url,
         item: items,

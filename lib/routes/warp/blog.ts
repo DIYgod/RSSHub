@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -32,46 +33,48 @@ export const route: Route = {
     description: 'Provides a better reading experience (full articles) over the official ones.',
     view: ViewType.Notifications,
 };
-
 async function handler() {
     const feed = await parser.parseURL('https://www.warp.dev/blog/feed.xml');
-
-    const items = await Promise.all(
-        feed.items.map((item) => {
-            const { link, title } = item as { link: string; title: string };
-            return cache.tryGet(link, async (): Promise<DataItem> => {
+    if (!feed.title) {
+        throw new Error('Warp blog feed has no title');
+    }
+    const items = await pMap(
+        feed.items,
+        async (item) => {
+            const { link, title } = item;
+            if (!link || !title) {
+                throw new Error('Warp blog feed item has no link or title');
+            }
+            const { description } = await cache.tryGet<Pick<DataItem, 'description'>>(`warp:detail-with-metadata:${link}`, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
-
-                const main = $('main');
-
+                const article = $('main article');
+                const main = article.children('div');
+                main.prepend(article.children('header').children('[class^="aspect-"]').find('img'));
                 // clean HTML
                 main.find('style').remove();
                 main.find('[style]').removeAttr('style');
                 main.find('[class]').removeAttr('class');
                 main.find('[id]').removeAttr('id');
                 main.find('[preload]').removeAttr('preload');
-                main.find('figcaption').remove();
-
-                // remove title, time and button
-                main.find('section').first().find('div').first().remove();
-
-                return {
-                    title,
-                    link,
-                    description: main.html(),
-                    pubDate: item.pubDate,
-                    author: item.creator,
-                };
+                return { description: main.html() };
             });
-        })
+            return {
+                title,
+                link,
+                description,
+                pubDate: item.pubDate,
+                author: item.creator,
+                category: item.categories,
+            };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,
         language: 'en',
-    } as Data;
+    } satisfies Data;
 }

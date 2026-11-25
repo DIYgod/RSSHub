@@ -1,14 +1,7 @@
 name: npm Publish
 
 on:
-    push:
-        branches:
-            - master
-        paths:
-            - '.github/workflows/npm-publish.yml'
-            - 'tsdown-lib.config.ts'
-            - 'scripts/workflow/build-routes.ts'
-            - 'lib/**'
+    workflow_dispatch: {}
 
 permissions:
     id-token: write # Required for OIDC
@@ -16,15 +9,14 @@ permissions:
 jobs:
     build:
         name: npm publish
-        if: github.repository == 'DIYgod/RSSHub'
-        runs-on: ubuntu-slim
+        if: github.repository == 'DIYgod/RSSHub' && github.ref_type == 'tag'
+        # Not ubuntu-slim: its single CPU takes about twice as long to install and build, and it counts toward the same concurrent job limit
+        runs-on: ubuntu-latest
         timeout-minutes: 10
-        env:
-            HUSKY: 0
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-            - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+            - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+            - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
               with:
                   node-version: lts/*
                   cache: 'pnpm'
@@ -34,9 +26,6 @@ jobs:
             - name: Run postinstall script for dependencies
               run: pnpm rb
             - name: Release
-              run: |
-                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git config --local user.name "github-actions[bot]"
-                  pnpx version-from-git --allow-same-version --template 'master.short'
+              run: pnpm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --no-git-checks
             - name: Publish to npmjs
-              run: pnpm publish --access public --tag latest
+              run: pnpm publish --access public --tag latest --no-git-checks

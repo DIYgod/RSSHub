@@ -14,7 +14,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '豆瓣书店',
+    name: '书店',
     maintainers: ['xyqfer'],
     handler,
 };

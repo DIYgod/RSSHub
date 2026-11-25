@@ -1,6 +1,12 @@
 export const getProfileProjectsAndSelectionsQuery = /* GraphQL */ `
     query GetProfileProjectsAndSections($username: String, $after: String) {
         user(username: $username) {
+            ...OwnerFields
+            images {
+                size_50 {
+                    url
+                }
+            }
             hasPortfolio
             profileSections {
                 ...profileSectionFields
@@ -177,6 +183,12 @@ export const getProfileProjectsAndSelectionsQuery = /* GraphQL */ `
 export const getAppreciatedQuery = /* GraphQL */ `
     query GetAppreciatedProjects($username: String, $after: String) {
         user(username: $username) {
+            ...OwnerFields
+            images {
+                size_50 {
+                    url
+                }
+            }
             appreciatedProjects(first: 24, after: $after) {
                 nodes {
                     __typename
@@ -199,6 +211,7 @@ export const getAppreciatedQuery = /* GraphQL */ `
                     slug
                     id
                     name
+                    publishedOn
                     url
                     owners {
                         ...OwnerFields

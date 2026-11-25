@@ -1,15 +1,14 @@
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
-import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
-
-export type { PermitExtra } from '../utils';
+import type { PermitExtra, Row } from '../utils';
+import { csvRecords, decodeText, isoDate, warekiMonth } from '../utils';
 
 /**
  * 飲食店営業許可 (food business permits) newly granted in Tokyo wards, from each ward's CC BY open data.
@@ -43,7 +42,7 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
     },
     shinagawa: {
         label: '品川区',
-        link: 'https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html',
+        link: 'https://www.city.shinagawa.tokyo.jp/kenko/eisei/1003077/1003132.html',
     },
     setagaya: {
         label: '世田谷区',
@@ -54,6 +53,7 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
         link: 'https://data.bodik.jp/dataset/131105_food_business',
     },
 };
+const isSource = (s: string): s is Source => Object.hasOwn(SOURCES, s);
 const MEGURO_API = 'https://data.bodik.jp/api/3/action/package_show?id=131105_food_business';
 const MONTHS_BACK = 2;
 const SHIBUYA_QUERY = 'https://services3.arcgis.com/UtdeFTavkHfI94t2/arcgis/rest/services/131130_food_businesses_list/FeatureServer/0/query';
@@ -78,18 +78,12 @@ const pick = (row: Row, cols: readonly string[]): string | null => {
     return null;
 };
 
-const toNumber = (v: string | null): number | null => {
-    const n = v === null ? NaN : Number(v.trim());
-    return Number.isFinite(n) ? n : null;
-};
+const toNumber = (v: string | null): number | null => (v === null ? null : Number(v));
 
 /** 渋谷区 stores dates as text (`2026/8/7`), so the current and previous month (JST) are selected with LIKE and sorted locally. */
-const shibuyaQueryUrl = (now: Date): string => {
-    const jst = new Date(now.getTime() + 9 * 3600 * 1000);
-    const months = [0, 1].map((back) => {
-        const d = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth() - back, 1));
-        return `${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/`;
-    });
+const shibuyaQueryUrl = (now: Temporal.Instant): string => {
+    const jst = now.toZonedDateTimeISO('+09:00');
+    const months = [0, 1].map((back) => formatDate(jst.subtract({ months: back }), 'YYYY/M/'));
     const params = new URLSearchParams({
         where: months.map((m) => `${SHIBUYA_DATE} LIKE '${m}%'`).join(' OR '),
         outFields: '*',
@@ -100,13 +94,17 @@ const shibuyaQueryUrl = (now: Date): string => {
     return `${SHIBUYA_QUERY}?${params.toString()}`;
 };
 
+interface ArcgisFeature {
+    attributes: Record<string, string | number | null>;
+}
+
 const fetchShibuya = async (): Promise<Row[]> => {
-    const body = await ofetch(shibuyaQueryUrl(new Date()));
-    const features: Array<{ attributes: Record<string, unknown> }> = body?.features ?? [];
+    const body = await ofetch(shibuyaQueryUrl(Temporal.Now.instant()));
+    const features: ArcgisFeature[] = body?.features ?? [];
     return features.map((f) => Object.fromEntries(Object.entries(f.attributes).map(([k, v]) => [k, v === null || v === undefined ? null : String(v)])));
 };
 
-const fetchMinato = async (): Promise<Row[]> => csvRecords(await ofetch(MINATO_CSV, { responseType: 'text' }));
+const fetchMinato = async (): Promise<Row[]> => csvRecords(await ofetch(MINATO_CSV));
 
 const fetchCsv = async (url: string): Promise<Row[]> => {
     const buf: ArrayBuffer = await ofetch(url, { responseType: 'arrayBuffer' });
@@ -129,7 +127,7 @@ const newestLinks = ($: CheerioAPI, base: string, keyOf: (text: string, href: st
 
 /** 台東区: the 月別 table lists each month as 業種順 + 許可日順 (same rows); the file names are not regular (`2026-07-PER-CSV.csv`, `OPD08_PER.csv`), so rows are taken in table order. */
 const fetchTaito = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.taito.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.taito.link);
     const $ = load(html);
     const table = $('table').filter((_, t) => $(t).find('caption').text().includes('月別'));
     const urls = table
@@ -143,14 +141,14 @@ const fetchTaito = async (): Promise<Row[]> => {
 
 /** 品川区: `令和8年7月分許可施設一覧` links (the 令和6〜7年度 yearly file is skipped). */
 const fetchShinagawa = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.shinagawa.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.shinagawa.link);
     const $ = load(html);
     return fetchMonthly(newestLinks($, SOURCES.shinagawa.link, (text) => (text.includes('月分') ? warekiMonth(text) : null)));
 };
 
 /** 世田谷区: `例月新規許可施設一覧(R080831)` links, keyed by the R+YYMMDD code (the yearly 全件 file has none). */
 const fetchSetagaya = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.setagaya.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.setagaya.link);
     const $ = load(html);
     return fetchMonthly(newestLinks($, SOURCES.setagaya.link, (text) => /例月新規許可施設一覧\(R(\d{6})\)/.exec(text)?.[1] ?? null));
 };
@@ -194,54 +192,36 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
         title: `${name}（${businessType ?? '業種不明'}）`,
         guid: `lg/tokyo/food-permit:${source}:${permitNo}`,
         link: SOURCES[source].link,
-        pubDate: permitDate === null ? undefined : timezone(parseDate(permitDate, 'YYYY-MM-DD'), 9),
+        pubDate: permitDate === null ? undefined : parseDate(permitDate, 'YYYY-MM-DD', 9),
         description: [ward, address, businessType, permitDate, `許可番号 ${permitNo}`].filter(Boolean).join(' / '),
         _extra: { source, ward, permit_no: permitNo, name, address, town, permit_date: permitDate, first_permit_date: firstPermitDate, expires_at: expiresAt, closed_date: closedDate, business_type: businessType, lat, lon, raw },
     };
 };
 
-/** First item per 許可番号, order kept; called after the date-desc sort, so the surviving row is the one with the latest permit date. */
-const uniqueByPermitNo = <T extends { _extra: PermitExtra }>(items: T[]): T[] => {
-    const seen = new Set<string>();
-    return items.filter((it) => {
-        if (seen.has(it._extra.permit_no)) {
-            return false;
-        }
-        seen.add(it._extra.permit_no);
-        return true;
-    });
-};
-
-/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. Publishers may repeat a permit (a file linked twice, or a 変更 row re-listed), so 許可番号 is deduplicated. */
+/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. */
 const fetchSource = async (source: Source, limit: number): Promise<Array<DataItem & { _extra: PermitExtra }>> => {
-    try {
-        const rows = await FETCHERS[source]();
-        const items = rows
-            .filter((r) => (r['許可番号'] ?? '') !== '' && (r['許可あるいは届出'] ?? '許可') === '許可')
-            .map((raw) => toItem(source, raw))
-            .filter((it) => it._extra.permit_date !== null)
-            .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!));
-        return uniqueByPermitNo(items).slice(0, limit);
-    } catch (error) {
-        // One failing publisher must not take the whole feed down.
-        logger.warn(`lg/tokyo/food-permit: ${source} failed: ${String(error)}`);
-        return [];
-    }
+    const rows = await FETCHERS[source]();
+    const items = rows
+        .filter((r) => (r['許可番号'] ?? '') !== '' && (r['許可あるいは届出'] ?? '許可') === '許可')
+        .map((raw) => toItem(source, raw))
+        .filter((it) => it._extra.permit_date !== null)
+        .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!));
+    return items.slice(0, limit);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const ward: string | undefined = ctx.req.param('ward');
-    const sources: Source[] = ward === undefined ? (Object.keys(SOURCES) as Source[]) : Object.hasOwn(SOURCES, ward) ? [ward as Source] : [];
+    const sources: Source[] = ward === undefined ? Object.keys(SOURCES).filter((s) => isSource(s)) : isSource(ward) ? [ward] : [];
     if (sources.length === 0) {
         throw new Error(`Unknown ward "${ward}", expected one of ${Object.keys(SOURCES).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
 
-    const lists = await Promise.all(sources.map((s) => cache.tryGet(`lg/tokyo/food-permit:${s}:${limit}`, () => fetchSource(s, limit)) as Promise<Array<DataItem & { _extra: PermitExtra }>>));
+    const lists = await Promise.all(sources.map((s) => cache.tryGet(`lg/tokyo/food-permit:${s}:${limit}`, () => fetchSource(s, limit))));
     const items = lists.flat().toSorted((a, b) => (b._extra.permit_date ?? '').localeCompare(a._extra.permit_date ?? ''));
 
     return {
-        title: `東京都 飲食店営業許可 新規${ward ? ` (${SOURCES[ward as Source].label})` : ''}`,
+        title: `東京都 飲食店営業許可 新規${ward !== undefined && isSource(ward) ? ` (${SOURCES[ward].label})` : ''}`,
         link: 'https://catalog.data.metro.tokyo.lg.jp/',
         language: 'ja',
         item: items,
@@ -274,7 +254,7 @@ export const route: Route = {
 - 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month
 - 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first
 - 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)
-- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
+- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/kenko/eisei/1003077/1003132.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
 - 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)
 - 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)
 

@@ -1,7 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
+import { generateData } from './pin/utils';
 import { processImage, withZhihuClient } from './utils';
 
 export const route: Route = {
@@ -13,10 +14,10 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'ZHIHU_COOKIES',
-                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise Workers use a Playwright browser session; Docker and Vercel generate credentials with JSDOM.',
+                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise a Playwright browser session is required.',
             },
         ],
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -48,16 +49,19 @@ function handler(ctx) {
 
         const items = response.data.map(({ target: item }) => {
             const type = item.type;
-            let title = '';
+            let title: string;
             let description: string;
-            let link = '';
-            let pubDate: Date;
+            let link: string;
+            let pubDate: Temporal.Instant | undefined;
             let author = '';
 
             switch (type) {
+                case 'pin':
+                    return { ...generateData([item])[0], guid: item.id.toString() };
+
                 case 'answer':
                     title = `${item.question.title}-${item.author.name}的回答：${item.excerpt}`;
-                    description = `<strong>${item.question.title}</strong><br>${item.author.name}的回答<br/>${processImage(item.content)}`;
+                    description = processImage(item.content);
                     link = `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`;
                     pubDate = parseDate(item.updated_time * 1000);
                     author = item.author.name;
@@ -88,8 +92,7 @@ function handler(ctx) {
                     break;
 
                 default:
-                    description = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';
-                    pubDate = parseDate(Date.now());
+                    throw new Error(`Unknown topic item type: ${type}`);
             }
 
             return {

@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getContent } from './utils';
 
@@ -73,8 +72,8 @@ async function handler(ctx) {
         title: info.title,
         link: siteUrl,
         item: list.toArray().map((item) => ({
-            title: $(item).find('a').text().trim(),
-            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
+            title: $(item).find('a').text(),
+            pubDate: parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD', 8),
             link: $(item).find('a').attr('href'),
         })),
     };

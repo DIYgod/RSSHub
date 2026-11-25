@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/blog/:id',
@@ -42,10 +41,11 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
+            const dateString = $item.parent().find('.time').text().split('·', 1)[0].trim();
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://bgm.tv').href,
-                pubDate: timezone(parseDate($item.parent().find('small.time').text()), 0),
+                pubDate: parseDate(dateString, 8),
             };
         });
 

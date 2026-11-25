@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const renderDesc = (item) =>
     renderToString(
@@ -57,9 +56,13 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate($item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm'), 8),
+                pubDate: parseDate($item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm', 8),
             };
         });
+
+    if (!list.length) {
+        throw new Error('CZT no longer provides the Zhejiang News list at the legacy videos/zjxwlb page. Check whether the source page has moved or is blocked.');
+    }
 
     const out = {
         title: list[0].title,

@@ -36,8 +36,8 @@ async function handler(ctx: Context) {
 
             return {
                 title: titleEl.text(),
-                link: encodeURI(`${url}${titleEl.attr('href')}`),
-                description: each.find('.article-entry').text(),
+                link: new URL(titleEl.attr('href')!, url).href,
+                description: each.find('.article-entry').html(),
                 pubDate: each.find('time').attr('datetime'),
             };
         });

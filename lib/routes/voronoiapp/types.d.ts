@@ -1,11 +1,11 @@
-export interface Social {
+interface Social {
     website?: string;
     x?: string;
     linkedin?: string;
     instagram?: string;
 }
 
-export interface Author {
+interface Author {
     first_name: string;
     last_name: string;
     preferred_username: string;
@@ -42,11 +42,13 @@ export interface Post {
     headline: string;
     link: string;
     image: string;
+    images: string[];
     webp_image: string;
+    webp_images: string[];
     preview_image: string;
     cropper_data: string;
     description: string;
-    category: string;
+    categoryId: number;
     tags: string[];
     feeds?: string[];
     dataset: string;
@@ -75,4 +77,19 @@ export interface Post {
     sponsored: boolean;
     pinned: boolean;
     published_at: number;
+}
+
+export interface PostCategory {
+    id: number;
+    title: string;
+    slug: string;
+}
+
+export interface SearchPost {
+    pid: number;
+    headline: string;
+    description: string;
+    category_id: number;
+    link: string;
+    author: Pick<Author, 'first_name' | 'last_name'>;
 }

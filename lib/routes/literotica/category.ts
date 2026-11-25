@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+
+import { parseItems, parseList } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
@@ -38,37 +38,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = $('.b-slb-item')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-
-            const a = $item.find('h3 a');
-
-            return {
-                title: a.text(),
-                link: a.attr('href'),
-                author: $item.find('.b-user-info-name').text(),
-                pubDate: parseDate($item.find('.b-slib-date').text(), 'MM/DD/YY'),
-            };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                item.description = content('.aa_ht').html();
-
-                return item;
-            })
-        )
-    );
+    const items = await parseItems(parseList($, currentUrl));
 
     return {
         title: $('title').text(),

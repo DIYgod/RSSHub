@@ -2,7 +2,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -26,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const name = ctx.req.param('name') ?? 'i';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
+    const limit = getRouteLimit(ctx, 50);
     if (!isValidHost(name)) {
         throw new InvalidParameterError('Invalid name');
     }

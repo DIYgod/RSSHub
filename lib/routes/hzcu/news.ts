@@ -4,8 +4,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/latest',
@@ -38,10 +38,10 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('.txt h3').text(),
                 link: new URL($item.attr('href')!, link).href,
-                pubDate: timezone(parseDate(`${yearMonth}.${day}`, 'YYYY.MM.DD'), 8),
+                pubDate: parseDateStrict(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], 8),
             };
         })
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
+        .slice(0, getRouteLimit(ctx, 10));
 
     const items = await Promise.all(
         list.map((item) =>

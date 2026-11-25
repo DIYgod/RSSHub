@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -30,7 +31,7 @@ async function handler(ctx) {
     const baseUrl = 'https://wfdf.sport';
     const { data: response } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
-            per_page: ctx.req.query('limit') ?? 100,
+            per_page: Math.min(getRouteLimit(ctx, 100), 100),
             _embed: 1,
         },
     });
@@ -40,8 +41,9 @@ async function handler(ctx) {
         link: item.link,
         guid: item.guid.rendered,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: parseDate(item.date_gmt, 0),
         author: item._embedded.author[0].name,
+        category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));
 
     return {

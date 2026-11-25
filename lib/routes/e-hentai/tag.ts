@@ -16,7 +16,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['e-hentai.org/tag/:tag', 'e-hentai.org/'],
+            source: ['e-hentai.org/tag/:tag'],
             target: '/tag/:tag',
         },
     ],

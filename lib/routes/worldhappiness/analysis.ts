@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/analysis',
@@ -14,14 +16,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
-
 async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit');
+    const limit = getRouteLimit(ctx, 20);
     const rootUrl = 'https://www.worldhappiness.report';
     const currentUrl = `${rootUrl}/analysis/`;
     const response = await ofetch(currentUrl);
     const $ = load(response);
-
     const list = $('li.chapter')
         .toArray()
         .map((item) => {
@@ -34,25 +34,24 @@ async function handler(ctx: Context) {
                 category: $item.attr('data-tags')?.split(', '),
             };
         })
-        .slice(0, limit ? Number(limit) : 20);
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        .slice(0, limit);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`worldhappiness:analysis:detail:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
-
                 return {
-                    ...item,
                     author: content('.author')
                         .toArray()
                         .map((author) => ({ name: content(author).contents().first().text().trim() })),
                     description: content('.chapter-body').html(),
                 };
-            })
-        )
+            });
+            return { ...item, author: detail.author, description: detail.description };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: $('head title').text(),
         link: currentUrl,

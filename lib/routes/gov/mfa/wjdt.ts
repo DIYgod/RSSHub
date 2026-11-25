@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     gjldrhd: 'gjldrhd_674881',
@@ -77,7 +76,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#News_Body_Txt_A').html();
-                item.pubDate = timezone(parseDate(content('.time span').text()), 8);
+                item.pubDate = parseDate(content('.time span').text(), 8);
                 item.category = content('meta[name="Keywords"]').attr('content')?.split(';') ?? [];
 
                 return item;

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.br-klassik.de';
 
@@ -40,13 +39,13 @@ export const getArticle = ({ link, title, description }: DataItem) =>
         const $ = load(html);
 
         const authorDate = $('.br-authordate').text().trim();
-        const dateMatch = authorDate.match(/\d{2}\.\d{2}\.\d{4}/);
-        const pubDate = dateMatch ? timezone(parseDate(dateMatch[0], 'DD.MM.YYYY'), 1) : undefined;
+        const publishedTime = $('meta[property="article:published_time"]').attr('content');
+        const pubDate = publishedTime ? parseDate(publishedTime) : undefined;
         const authorMatch = authorDate.match(/von\s+(\S.*)$/);
-        const author = authorMatch ? authorMatch[1].trim() : undefined;
+        const author = authorMatch ? authorMatch[1] : undefined;
 
         const $article = $('.br-article');
-        $article.find('.br-head, .br-audio, .br-textbox, .br-social-footer, .br-comments, .br-footer, script, style, .br-info, .br-credits, .br-social, .br-author-links').remove();
+        $article.find('.br-head, .br-audio, .br-textbox, .br-social-footer, .br-comments, .br-footer, .br-info, .br-credits, .br-social, .br-author-links').remove();
         $article
             .find('p')
             .filter((_, elem) => {

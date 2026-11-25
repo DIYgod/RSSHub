@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.miit.gov.cn';
 const siteUrl = `${baseUrl}/zwgk/zcjd/index.html`;
@@ -62,7 +61,7 @@ async function handler() {
                 item.author = $('.cinfo')
                     .text()
                     .match(/来源：(.*)/)![1];
-                item.pubDate = timezone(parseDate($('#con_time').text(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = parseDate($('#con_time').text(), 'YYYY-MM-DD HH:mm', 8);
                 item.description = $('.ccontent').html();
 
                 return item;

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/seiee/:path/:catID?/:searchCatCode?',
@@ -63,7 +62,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.find('.name').text().trim(),
+                title: $item.find('.name').text(),
                 link: $item.find('a').attr('href'),
             };
         });
@@ -75,13 +74,11 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.description = content('.nr').html();
-                item.pubDate = timezone(
-                    parseDate(
-                        content('.jj')
-                            .text()
-                            .trim()
-                            .match(/日期：([\d-]+) /)![1]
-                    ),
+                item.pubDate = parseDate(
+                    content('.jj')
+                        .text()
+                        .trim()
+                        .match(/日期：([\d-]+) /)![1],
                     8
                 );
 
@@ -90,9 +87,13 @@ async function handler(ctx) {
         )
     );
 
-    const fallbackHtml = await ofetch(currentUrl);
+    let title = $('title').text();
+    if (!title) {
+        const pageSource = await ofetch(currentUrl);
+        title = load(pageSource)('title').text();
+    }
     return {
-        title: $('title').text() || load(fallbackHtml)('title').text(),
+        title,
         link: currentUrl,
         item: items,
     };

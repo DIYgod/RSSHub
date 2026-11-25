@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import { Cookie, CookieJar } from 'tough-cookie';
 
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 
 const cookieJar = new CookieJar();
@@ -10,22 +12,22 @@ const cookie = Cookie.fromJSON({
     domain: 'playno1.com',
     path: '/',
 });
-(async () => {
-    await cookieJar.setCookie(cookie!, 'http://www.playno1.com/');
-})();
+cookieJar.setCookieSync(cookie!, 'http://www.playno1.com/');
 
-const processArticle = (items, cache) =>
-    Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+const processArticle = (items: DataItem[], cache) =>
+    pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`playno1:article:v2:${item.link}`, async () => {
                 const detailResponse = await got(item.link, {
                     cookieJar,
                 });
                 const content = load(detailResponse.data);
-                item.description = content('#article_content').html();
-                return item;
-            })
-        )
+                return { description: content('#article_content').html() };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
 export { cookieJar, processArticle };

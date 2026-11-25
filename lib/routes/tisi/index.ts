@@ -1,11 +1,19 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.tisi.org';
+
+const getArticle = (url: string) =>
+    cache.tryGet(`tisi:article:${url}`, async () => {
+        const response = await got(url);
+        const $ = load(response.data);
+        return { description: $('div.article-content').html() ?? undefined };
+    });
 
 export const route: Route = {
     path: '/latest',
@@ -39,17 +47,7 @@ async function handler() {
             category: $(item).find('p.new-article-date > span:nth-child(1)').text(),
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
-                item.description = content('div.article-content').html();
-
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list, async (item): Promise<DataItem> => ({ ...item, ...(await getArticle(item.link!)) }), { concurrency: 3 });
 
     return {
         title: '腾讯研究院 - 最近更新',

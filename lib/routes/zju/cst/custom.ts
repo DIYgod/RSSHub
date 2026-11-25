@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 async function getPage(id) {
     const res = await got({
@@ -52,12 +53,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id').split('+');
-    const tasks = id.map((id) => getPage(id));
-    const results = await Promise.all(tasks);
-    let items: any[] = [];
-    for (const result of results) {
-        items = [...items, ...result];
-    }
+    const results = await pMap(id, (id) => getPage(id), { concurrency: 3 });
+    const items = results.flat();
 
     return {
         title: '浙江大学软件学院通知',

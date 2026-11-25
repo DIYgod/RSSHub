@@ -3,11 +3,11 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 6;
+const handler = async (ctx) => {
+    const limit = getRouteLimit(ctx, 6);
 
     const rootUrl = 'http://www.moa.gov.cn';
     const currentUrl = new URL('ztzl/szcpxx/zyzc/index.htm', rootUrl).href;
@@ -25,10 +25,11 @@ export const handler = async (ctx) => {
             const $item = $(item);
 
             const a = $item.find('a.content');
+            const pubDate = $item.find('div.pubTime').text().split(/：/).pop();
 
             return {
                 title: a.prop('title') ?? '',
-                pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
+                pubDate: pubDate ? parseDate(pubDate, 'YYYY.MM.DD', 8) : undefined,
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
@@ -36,18 +37,19 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(`gov:moa:szcpxx:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
                 const title = $$('h2.xxgk_title, h1.bjjMTitle').text();
-                const description = $$('div.gsj_htmlcon_bot, div.TRS_Editor').html();
+                const content = $$('div.gsj_htmlcon_bot').length ? $$('div.gsj_htmlcon_bot') : $$('div.TRS_Editor');
+                const description = content.html();
                 const guid = `moa-${$$('meta[name="contentid"]').prop('content')}`;
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), 8);
+                item.pubDate = parseDate($$('meta[name="PubDate"]').prop('content'), 8);
                 item.category = [
                     ...new Set([
                         $$('meta[name="SiteName"]').prop('content'),
@@ -62,7 +64,7 @@ export const handler = async (ctx) => {
                 item.id = guid;
                 item.content = {
                     html: description,
-                    text: $$('div.gsj_htmlcon_bot, div.TRS_Editor').text(),
+                    text: content.text(),
                 };
                 item.language = language;
 
@@ -79,7 +81,6 @@ export const handler = async (ctx) => {
         description: title,
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: '中华人民共和国农业农村部',
         language,

@@ -3,8 +3,16 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
+
+function parsePublicationDate(value: string) {
+    const date = value
+        .replace(/on\s\w+?day\s/, '')
+        .replace('@', '')
+        .replace(/(\d{2}:\d{2})(\w{2})$/, '$1 $2');
+    return parseDate(date, 'MMMM D, YYYY hh:mm A', 'America/New_York');
+}
 
 export const route: Route = {
     path: '/:section?',
@@ -67,14 +75,12 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 description: $item.find('.body').html(),
-                pubDate: parseDate(
-                    details
-                        .find('time')
-                        .attr('datetime')!
-                        .replace(/on\s\w+?day\s/, '')
-                        .replace('@', '')
-                        .replace(/(\d{2}:\d{2})(\w{2})$/, '$1 $2')
-                ),
+                author: details
+                    .find('.story-byline')
+                    .text()
+                    .replaceAll(/\s+/g, ' ')
+                    .match(/Posted by (.+?) on /)?.[1],
+                pubDate: parsePublicationDate(details.find('time').attr('datetime')!),
             };
         });
 

@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zx/xingnew',
@@ -41,7 +40,7 @@ export const route: Route = {
                 return {
                     title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn/zx/xingnew/').href,
-                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
+                    pubDate: parseDate(dateText, 'YYYY/MM/DD', 8),
                     // description: a.attr('title') || a.text(),
                 };
             });
@@ -52,22 +51,19 @@ export const route: Route = {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    // 选择类名为“comment-body”的第一个元素
-                    item.description = $('.cj_xw_cong').first().html();
-
-                    // 上面每个列表项的每个属性都在此重用，
-                    // 并增加了一个新属性“description”
+                    item.description = $('.content_main').html();
+                    const pubDate = $('meta[name="PubDate"]').attr('content');
+                    if (pubDate) {
+                        item.pubDate = parseDate(pubDate, 'YYYY-MM-DD HH:mm:ss', 8);
+                    }
                     return item;
                 })
             )
         );
 
         return {
-            // 源标题
             title: '中国国家博物馆资讯要闻',
-            // 源链接
             link: 'https://www.chnmuseum.cn/zx/xingnew/',
-            // 源文章
             item: items,
         };
     },

@@ -1,18 +1,14 @@
-// journals form AAAS publishing group
-//
-// science:        Science
-// sciadv:         Science Advances
-// sciimmunol:     Science Immunology
-// scirobotics:    Science Robotics
-// signaling:      Science Signaling
-// stm:            Science Translational Medicine
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
-import got from '@/utils/got';
-import playwright from '@/utils/playwright';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
-import { baseUrl, fetchDesc, getItem } from './utils';
+import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/current/:journal?',
@@ -21,8 +17,8 @@ export const route: Route = {
     parameters: { journal: 'Short name for a journal' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: true,
@@ -46,35 +42,85 @@ export const route: Route = {
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
 - Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
-- Leaving it empty (\`/science/current\`) to get update from Science.`,
+- Leaving it empty (\`/science/current\`) to get update from Science.
+- Abstracts are included when available from Crossref.`,
+};
+
+const abstractBatchSize = 40;
+
+async function fetchAbstracts(dois: string[]) {
+    const batches = Array.from({ length: Math.ceil(dois.length / abstractBatchSize) }, (_, index) => dois.slice(index * abstractBatchSize, (index + 1) * abstractBatchSize));
+    const results = await pMap(
+        batches,
+        async (batch) => {
+            try {
+                return await cache.tryGet(`science:abstracts:${batch.join(',')}`, async () => {
+                    const data = await ofetch<{ message: { items: Array<{ DOI: string; abstract?: string }> } }>('https://api.crossref.org/works', {
+                        query: { filter: batch.map((doi) => `doi:${doi}`).join(','), select: 'DOI,abstract', rows: batch.length },
+                        timeout: 8000,
+                        retry: 0,
+                    });
+                    return data.message.items;
+                });
+            } catch {
+                return [];
+            }
+        },
+        { concurrency: 2 }
+    );
+    return new Map(results.flat().map(({ DOI, abstract }) => [DOI.toLowerCase(), abstract]));
+}
+
+const renderAbstract = (abstract: string) => {
+    const $ = load(abstract);
+    return (
+        $('body')
+            .find('*')
+            .filter((_, element) => element.tagName === 'jats:p' || element.tagName === 'p')
+            .toArray()
+            .map((paragraph) => `<p>${$(paragraph).html()}</p>`)
+            .join('') || $('body').html()
+    );
 };
 
 async function handler(ctx) {
     const { journal = 'science' } = ctx.req.param();
-    const pageURL = `${baseUrl}/toc/${journal}/current`;
-
-    const { data: pageResponse } = await got(pageURL, {
-        headers: {
-            cookie: 'cookiePolicy=iaccept;',
-        },
+    if (!/^[a-z]+$/.test(journal)) {
+        throw new InvalidParameterError('Use the short name of a Science journal, for example science or sciadv.');
+    }
+    const feed = await parser.parseURL(`${baseUrl}/action/showFeed?type=etoc&feed=rss&jc=${journal}`);
+    const items = feed.items.flatMap((item) => {
+        if (!item.title || !item.link) {
+            return [];
+        }
+        const link = new URL(item.link, baseUrl);
+        const doi = link.pathname.match(/^\/doi\/(?:abs\/|full\/)?(10\.[^/]+\/.+)$/)?.[1];
+        if (doi) {
+            link.pathname = `/doi/${doi}`;
+            link.searchParams.delete('af');
+        }
+        const date = item.isoDate ?? item.pubDate;
+        return {
+            title: item.title,
+            link: link.href,
+            doi,
+            description: item['content:encoded'] ?? item.content ?? item.contentSnippet,
+            pubDate: date ? parseDate(date) : undefined,
+            author: item.creator ?? item.author,
+            category: item.categories,
+        };
     });
-    const $ = load(pageResponse);
-    const pageTitleName = $('head > title').text();
-
-    const list = $('.toc__section .card')
-        .toArray()
-        .map((item) => getItem(item, $));
-
-    const context = await playwright();
-    const items = await fetchDesc(list, context);
-    await context.close();
-
+    const dois = items.flatMap((item) => (item.doi ? [item.doi.toLowerCase()] : [])).toSorted();
+    const abstracts = await fetchAbstracts(dois);
     return {
-        title: `${pageTitleName} | Current Issue`,
-        description: `Current Issue of ${pageTitleName}`,
+        title: feed.title ?? `${journal} | Current Issue`,
+        description: feed.description,
         image: `${baseUrl}/apple-touch-icon.png`,
-        link: pageURL,
+        link: feed.link ?? `${baseUrl}/toc/${journal}/current`,
         language: 'en-us' as const satisfies Language,
-        item: items,
+        item: items.map((item) => {
+            const abstract = item.doi ? abstracts.get(item.doi.toLowerCase()) : undefined;
+            return abstract ? { ...item, description: [item.description, renderAbstract(abstract)].filter(Boolean).join('<br>') } : item;
+        }),
     };
 }

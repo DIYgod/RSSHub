@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import NotFoundError from '@/errors/types/not-found';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -38,7 +40,6 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 106      | 107      | 108      | 109      | 110      | 111      | 113      |`,
     categories: ['new-media'],
-
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -48,93 +49,72 @@ export const route: Route = {
         supportScihub: false,
     },
 };
-
-export async function handler(ctx) {
+const rootUrl = 'https://xd.x6d.com';
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category' | 'author' | 'content' | 'image' | 'banner'>> {
+    const { data: detailResponse } = await got(link);
+    const $ = load(detailResponse);
+    const description = $('div.article-content').html();
+    const imageSrc = $('div.article-content img').attr('src');
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
+    const rawDate = $('time').text();
+    return {
+        description,
+        pubDate: rawDate ? parseDateStrict(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], 8) : undefined,
+        category: $('b.bq-wg')
+            .toArray()
+            .map((element) => $(element).text()),
+        author: $('span.bq-zz').text(),
+        content: { html: description, text: $('div.article-content').text() },
+        image,
+        banner: image,
+    };
+}
+async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
-
-    const rootUrl = 'https://xd.x6d.com';
-
+    const limit = getRouteLimit(ctx, 22);
     let currentUrl = new URL(id === 'latest' ? '' : `html/${id}.html`, rootUrl).href;
-
     const { data: firstResponse } = await got(currentUrl);
-
     let $;
-
     if (/<meta\s/.test(firstResponse)) {
         $ = load(firstResponse);
     } else {
-        currentUrl = new URL(
-            id === 'latest'
-                ? ''
-                : firstResponse
-                      .match(/'([\w./=?]+)'/g)
-                      .toReversed()
-                      .join('')
-                      .replaceAll("'", ''),
-            rootUrl
-        ).href;
-
+        const redirectParts = id === 'latest' ? [] : firstResponse.match(/'([\w./=?]+)'/g);
+        if (!redirectParts) {
+            throw new NotFoundError('Could not resolve the category redirect from the source page');
+        }
+        currentUrl = new URL(id === 'latest' ? '' : redirectParts.toReversed().join('').replaceAll("'", ''), rootUrl).href;
         const { data: response } = await got(currentUrl);
-
         $ = load(response);
     }
-
     $('i.rj').remove();
-
     const language = 'zh' as const satisfies Language;
-
     const query = id === 'latest' ? $('#newslist ul').first().find('li').not('li.addd').find('a').slice(0, limit) : $('a.soft-title').slice(0, limit);
-
-    let items = query.toArray().map((item) => {
+    let items: Array<
+        DataItem & {
+            link: string;
+        }
+    > = query.toArray().map((item) => {
         const $item = $(item);
-
         return {
             title: $item.prop('title') ?? $item.text(),
             link: new URL($item.prop('href'), rootUrl).href,
             language,
         };
     });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const $$ = load(detailResponse);
-
-                const title = $$('h1.article-title').text();
-                const description = $$('div.article-content').html();
-                const image = new URL($$('div.article-content img').first().prop('src')!, rootUrl).href;
-
-                item.title = title;
-                item.description = description;
-                item.pubDate = timezone(parseDate($$('time').text()), 8);
-                item.category = $$('b.bq-wg')
-                    .toArray()
-                    .map((c) => $$(c).text());
-                item.author = $$('span.bq-zz').text();
-                item.content = {
-                    html: description,
-                    text: $$('div.article-content').text(),
-                };
-                item.image = image;
-                item.banner = image;
-                item.language = language;
-
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`x6d:detail:v4:${item.link}`, () => fetchDetail(item.link));
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     const image = new URL($('div.header-logo img').prop('src'), rootUrl).href;
-
     return {
         title: $('title').text().split(/\s-/, 1)[0],
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         language,
     };

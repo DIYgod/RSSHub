@@ -1,17 +1,18 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cn/:category',
     categories: ['shopping'],
     example: '/mcdonalds/cn/sales+event',
     parameters: { category: '分类名（可用 + 连接多个分类）' },
-    name: '麦当劳活动资讯',
+    name: '活动资讯',
     maintainers: ['huyyi'],
     description: `| 全部分类   | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
 | ---------- | -------------- | -------- | -------- | ----- | -------- | -------- |
@@ -24,20 +25,24 @@ async function handler(ctx: Context) {
     const categories = category.split('+');
     const baseUrl = 'https://www.mcdonalds.com.cn/news/';
 
-    const newsLists = await Promise.all(
-        categories.map(async (cate) => {
+    const newsLists = await pMap(
+        categories,
+        async (cate) => {
             const response = await ofetch(baseUrl + cate);
             const $ = load(response);
             return $('.news_list .box-container > div')
                 .slice(0, 10)
                 .toArray()
                 .map((item) => $(item).find('a[target]').attr('href'))
-                .filter((href) => href !== undefined);
-        })
+                .filter((href) => href !== undefined)
+                .map((href) => new URL(href, baseUrl).href);
+        },
+        { concurrency: 3 }
     );
 
-    const out = await Promise.all(
-        newsLists.flat().map((newsUrl) =>
+    const out = await pMap(
+        [...new Set(newsLists.flat())],
+        (newsUrl) =>
             cache.tryGet(newsUrl, async () => {
                 const result = await ofetch(newsUrl);
                 const $ = load(result);
@@ -45,11 +50,11 @@ async function handler(ctx: Context) {
                 return {
                     title: $('h3').text(),
                     link: newsUrl,
-                    pubDate: parseDate($('h3 ~ time').text()),
+                    pubDate: parseDate($('h3 ~ time').text().replaceAll('.', '-'), 8),
                     description: $('.cmsPage').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

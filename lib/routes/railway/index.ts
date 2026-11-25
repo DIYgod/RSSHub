@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog',
@@ -23,45 +24,43 @@ async function handler(ctx: Context) {
 
     return {
         title: 'Railway articles',
+        language: 'en' as const,
         link: 'https://blog.railway.com',
         item: items,
     };
 }
 
-export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
+const fetchArticles = async (limit: number): Promise<DataItem[]> => {
     const page = await ofetch('https://blog.railway.com/rss.xml', {
         responseType: 'text',
     });
 
     const $ = load(page, { xml: true });
 
-    return Promise.all(
-        $('item')
-            .toArray()
-            .slice(0, limit)
-            .map<Promise<DataItem>>((element) => {
-                const id = $(element).find('guid').text();
+    const elements = $('item').toArray().slice(0, limit);
+    return pMap(
+        elements,
+        async (element): Promise<DataItem> => {
+            const id = $(element).find('guid').text();
 
-                return cache.tryGet(`railway:blogs:${id}`, async (): Promise<DataItem> => {
-                    const title = $(element).find('title').text();
-                    const pubDate = $(element).find('pubDate').text();
-                    const link = $(element).find('link').text();
+            const title = $(element).find('title').text();
+            const pubDate = $(element).find('pubDate').text();
+            const link = $(element).find('link').text();
 
-                    const { content } = await fetchArticleDetails(link);
-
-                    return {
-                        guid: id,
-                        title,
-                        link,
-                        pubDate: parseDate(pubDate),
-                        description: content,
-                    };
-                });
-            })
+            const { content } = await cache.tryGet(`railway:blogs:v2:${id}`, () => fetchArticleDetails(link));
+            return {
+                guid: id,
+                title,
+                link,
+                pubDate: parseDate(pubDate),
+                description: content,
+            };
+        },
+        { concurrency: 3 }
     );
 };
 
-export const fetchArticleDetails = async (url: string) => {
+const fetchArticleDetails = async (url: string) => {
     const page = await ofetch(url);
     const $ = load(page);
 

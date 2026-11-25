@@ -21,7 +21,11 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const items = await getBoards();
+    const items = (await getBoards()).map((board) => ({
+        title: board.title,
+        description: board.description,
+        link: board.link,
+    }));
 
     return {
         title: 'Zuvio 校園話題列表 - 大學生論壇',

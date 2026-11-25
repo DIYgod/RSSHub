@@ -1,9 +1,10 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/user/:uid',
@@ -29,21 +30,18 @@ function sign(urlType: string, params: Record<string, string>) {
     const values = Object.entries(params)
         .filter(([key]) => !key.startsWith('sig'))
         .map(([, value]) => value)
-        // oxlint-disable-next-line unicorn-js/require-array-sort-compare sig requires plain code-unit order, not locale order
+        // sig requires plain code-unit order, not locale order
         .toSorted();
-    const hex = [...md5(`${urlType}${values.join('')}bdaefd747c7d594f${params.sigTime}Tw5AY783H@EU3#XC`)];
-    for (let i = 0; i < hex.length; i += 2) {
-        [hex[i], hex[i + 1]] = [hex[i + 1], hex[i]];
-    }
-    return hex.join('');
+    // swap each pair of hex digits
+    return md5(`${urlType}${values.join('')}bdaefd747c7d594f${params.sigTime}Tw5AY783H@EU3#XC`).replaceAll(/(.)(.)/g, '$2$1');
 }
 
 async function handler(ctx: Context) {
     const { uid } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const urlType = 'medias/user_timeline.json';
-    const now = String(Date.now());
+    const now = String(Temporal.Now.instant().epochMilliseconds);
     const params = {
         build: '16601',
         channel: '8888',
@@ -83,10 +81,10 @@ async function handler(ctx: Context) {
     });
 
     const item = response.map((media) => {
-        const caption = (media.caption ?? '').replaceAll(/#([^#]+)#/g, '').trim();
+        const caption = (media.caption ?? '').replaceAll(/#([^#]+)#/g, '');
         return {
-            title: caption || media.cover_title || media.recommend_caption,
-            description: `${caption}<br>${media.video ? `<video controls preload="metadata" poster="${media.cover_pic}"><source src="${media.video.replace('http:', 'https:')}" type="video/mp4"></video>` : `<img src="${media.cover_pic}">`}`,
+            title: caption.trim() ? caption : media.cover_title || media.recommend_caption,
+            description: media.video ? `<video controls preload="metadata" poster="${media.cover_pic}"><source src="${media.video.replace('http:', 'https:')}" type="video/mp4"></video>` : `<img src="${media.cover_pic}">`,
             link: `https://www.meipai.com/media/${media.id}`,
             pubDate: parseDate(media.created_at, 'X'),
             author: media.user.screen_name,

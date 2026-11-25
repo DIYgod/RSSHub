@@ -2,8 +2,9 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
-import { comic, indexComic, indexInterview, indexNovel, interview, novel, uncategorized } from './json2html';
+import { comic, indexComic, indexInterview, interview, novel, uncategorized } from './json2html';
 
 export const route: Route = {
     path: '/:language/:type',
@@ -31,30 +32,24 @@ Article types:
 **Note:** The index type includes all types of articles. Think twice before using it.`,
     handler,
 };
-
 const languageCodes = {
     cn: 'zh-cn',
     en: 'en',
     ko: 'ko',
     ja: 'ja',
 };
-
 async function handler(ctx: Context) {
     const { language, type } = ctx.req.param();
     if (!Object.keys(languageCodes).includes(language)) {
         throw new Error('Invalid language');
     }
-
     const baseUrl = language === 'ja' ? 'https://touhougarakuta.com' : `https://${language}.touhougarakuta.com`;
-
-    const response = await ofetch(`${baseUrl}/page-data/${type === 'interviews' ? 'tags/interviews' : type}/page-data.json`);
-
+    const response = await ofetch(`${baseUrl}/page-data/${type === 'interviews' ? 'tags/interviews' : type}/page-data.json`, { maxResponseSize: 64 * 1024 * 1024 }); // the news page lists every article with its full text, 23 MB now
     return {
         title: `東方我楽多叢誌 - ${type}`,
         link: `${baseUrl}/${type === 'index' ? '' : type}`,
         description: `東方我楽多叢誌 〜strange article of the outer world〜 - ${type}`,
         language: languageCodes[language],
-        allowEmpty: true,
         item: response.result.pageContext.articles.map((article: any, i: number) => {
             let description: string;
             try {
@@ -64,10 +59,8 @@ async function handler(ctx: Context) {
                         description = indexInterview(article, language);
                         break;
                     case 'index_comic':
-                        description = indexComic(article, language);
-                        break;
                     case 'index_novel':
-                        description = indexNovel(article, language);
+                        description = indexComic(article, language);
                         break;
                     case 'interview':
                     case 'report':
@@ -83,12 +76,14 @@ async function handler(ctx: Context) {
                         description = uncategorized(article, language);
                 }
             } catch (error) {
-                (error as Error).message += `(at article ${i}: ${article.title})`;
+                if (error instanceof Error) {
+                    error.message += `(at article ${i}: ${article.title})`;
+                }
                 throw error;
             }
             return {
                 title: article.title,
-                pubDate: article.date,
+                pubDate: parseDate(`${article.date}+09:00`),
                 link: `${baseUrl}/${article.type}/${article.slug}`,
                 description,
                 category: article.tags.nodes.map((tag) => tag.name),

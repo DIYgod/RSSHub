@@ -1,7 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -33,18 +36,35 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.listmod div a');
 
+    const items = list.toArray().map((item) => {
+        const $item = $(item);
+        const href = $item.attr('href');
+        return {
+            title: $item.text(),
+            link: href ? new URL(href, link).href : undefined,
+        };
+    });
+    const detailedItems = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`scnu:yjs:v3:${item.link}`, async () => {
+                const loadedSource1 = (await got(item.link)).data;
+                const article = load(loadedSource1);
+                const date = article('h1').next('p').find('span').first().text();
+                const category = article('.tag a')
+                    .toArray()
+                    .map((element) => article(element).text().trim());
+                return { description: article('.article').html(), ...(category.length && { category }), pubDate: parseDate(date, 'YYYY-MM-DD HH:mm:ss', 8) };
+            })),
+        }),
+        { concurrency: 3 }
+    );
+
     return {
         title: '华南师范大学研究生院',
         link,
         description: '华南师范大学研究生院通知公告',
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                return {
-                    title: $item.text(),
-                    link: $item.attr('href'),
-                };
-            }),
+        item: detailedItems,
     };
 }

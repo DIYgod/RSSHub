@@ -19,7 +19,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Manga',
-    maintainers: ['SnowAgar25'],
+    maintainers: ['Tsuyumi25'],
     handler,
     radar: [
         {
@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
     const url = `${baseUrl}?order=${order}`;
 
     const items = await cache.tryGet(
-        url,
+        `skebetter:titles:v3:${url}`,
         async () => {
             const data = await fetchData(url, true);
             return processItems(data, 'manga');

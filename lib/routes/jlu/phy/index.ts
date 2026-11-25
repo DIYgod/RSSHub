@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/phy/:category/:column/:subcolumn?',
@@ -22,7 +23,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['phy.jlu.edu.cn/:category/:column', 'phy.jlu.edu.cn/:category/:column/:subcolumn'],
+            source: ['phy.jlu.edu.cn/xzgz/:column'],
+            target: '/phy/xzgz/:column',
+        },
+        {
+            source: ['phy.jlu.edu.cn/xzgz/:column/:subcolumn'],
+            target: '/phy/xzgz/:column/:subcolumn',
+        },
+        {
+            source: ['phy.jlu.edu.cn/kxyj/:column'],
+            target: '/phy/kxyj/:column',
+        },
+        {
+            source: ['phy.jlu.edu.cn/kxyj/:column/:subcolumn'],
+            target: '/phy/kxyj/:column/:subcolumn',
+        },
+        {
+            source: ['phy.jlu.edu.cn/rcpy/:column'],
+            target: '/phy/rcpy/:column',
+        },
+        {
+            source: ['phy.jlu.edu.cn/rcpy/:column/:subcolumn'],
+            target: '/phy/rcpy/:column/:subcolumn',
         },
     ],
     name: '物理学院',
@@ -30,8 +52,9 @@ export const route: Route = {
     url: 'phy.jlu.edu.cn',
     handler: async (ctx) => {
         const { category, column, subcolumn } = ctx.req.param();
-        const query = subcolumn ? `${column}/${subcolumn}` : column;
-        const response = await got(`https://phy.jlu.edu.cn/${category}/${query}.htm`);
+        const query = (subcolumn ? `${column}/${subcolumn}` : column).replace(/\.htm$/, '');
+        const currentUrl = `https://phy.jlu.edu.cn/${category}/${query}.htm`;
+        const response = await got(currentUrl);
         const $ = load(response.body);
         const list = $('.tit-list ul li');
 
@@ -41,14 +64,14 @@ export const route: Route = {
             description: '吉林大学物理学院',
             item: list.toArray().map((item) => {
                 const element = $(item).find('a');
-                const title = element.find('.tl-top').find('h3').text().trim();
-                const link = element.attr('href')!.replaceAll('../', 'https://phy.jlu.edu.cn/');
+                const title = element.find('.tl-top').find('h3').text();
+                const link = new URL(element.attr('href')!, currentUrl).href;
                 const date = element.find('.tl-top').find('.tl-date');
                 const pubDate = date.find('span').text().replaceAll('/', '').trim() + '-' + date.find('b').text();
                 return {
                     title,
                     link,
-                    pubDate: new Date(pubDate),
+                    pubDate: parseDate(pubDate, 'YYYY-MM-DD', 8),
                 };
             }),
         };

@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 
 import { parseArticle, parseNewsList, rootUrl } from './utils';
@@ -33,7 +35,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}${pathname}`;
 
     const { list, title } = await parseNewsList(currentUrl, '.list_news_dl2 li', ctx);
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, (item) => parseArticle(item), { concurrency: 3 });
 
     return {
         title,

@@ -1,8 +1,8 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 type ReportListItem = {
     position: string | number;
@@ -136,6 +136,9 @@ async function handler(ctx) {
     let type = ctx.req.param('type') ?? 'tiobe';
 
     type = type === 'webserver' ? 'netcraft' : type === 'db' ? 'db-engines' : type;
+    if (!Object.hasOwn(types, type)) {
+        throw new InvalidParameterError(`Invalid report type: ${type}. Supported types: ${Object.keys(types).join(', ')}.`);
+    }
 
     const rootUrl = 'https://hellogithub.com';
     const currentUrl = `${rootUrl}/report/${type}`;
@@ -161,7 +164,6 @@ async function handler(ctx) {
             guid: `${type}:${data.year}${data.month}`,
             title: `${data.year}年${data.month}月${types[type]}排行榜`,
             link: currentUrl,
-            pubDate: parseDate(`${data.year}-${data.month}`, 'YYYY-M'),
             description: renderReport({
                 tiobeList: type === 'tiobe' ? data.list : undefined,
                 activeList: data.active_list,

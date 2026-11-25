@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -29,14 +30,16 @@ export const route: Route = {
 :::`,
 };
 
+function isForbiddenChallenge(error: unknown): error is FetchError {
+    if (!(error instanceof FetchError) || error.status !== 403 || typeof error.data?.body !== 'string') {
+        return false;
+    }
+
+    const $ = load(error.data.body);
+    return ['Security Verification', 'Just a moment...'].includes($('title').text().trim());
+}
+
 async function handler(ctx) {
-    const ProcessFeed = (content) => {
-        // clean up the article
-        content.find('div.o-share, aside, div.o-ads').remove();
-
-        return content.html();
-    };
-
     const link = `https://www.ft.com/myft/following/${ctx.req.param('key')}.rss`;
 
     const feed = await parser.parseURL(link);
@@ -44,17 +47,31 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                    headers: {
-                        Referer: 'https://www.facebook.com',
-                    },
-                });
+                let response;
+                try {
+                    response = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            Referer: 'https://www.facebook.com',
+                        },
+                    });
+                } catch (error) {
+                    if (!item.content || !isForbiddenChallenge(error)) {
+                        throw error;
+                    }
+
+                    return { ...item, description: item.content, category: item.categories };
+                }
 
                 const $ = load(response.data);
+                const content = $('article.js-article__content-body');
+                if (!content.html()?.trim() && item.content) {
+                    return { ...item, description: item.content, category: item.categories };
+                }
+                content.find('div.o-share, aside, div.o-ads').remove();
 
-                item.description = ProcessFeed($('article.js-article__content-body'));
+                item.description = content.html();
                 item.category = [
                     $('.n-content-tag--with-follow').text(),
                     ...$('.article__right-bottom a.concept-list__concept')
@@ -72,7 +89,7 @@ async function handler(ctx) {
 
     return {
         title: 'FT.com - myFT',
-        link,
+        link: 'https://www.ft.com/myft',
         description: 'FT.com - myFT',
         item: items as DataItem[],
     };

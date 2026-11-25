@@ -1,14 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+import type { Context } from 'hono';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-dayjs.extend(customParseFormat);
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:site/:category/:name',
@@ -38,6 +35,7 @@ export const route: Route = {
     radar: [
         {
             source: ['tv.cctv.com/lm/xwlb', 'tv.cctv.com/'],
+            target: '/tv/lm/xwlb',
         },
     ],
     name: '新闻联播',
@@ -49,30 +47,32 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { site, category, name } = ctx.req.param();
-    let responseData;
-    if (site === 'tv' && category === 'lm' && name === 'xwlb') {
-        responseData = await getXWLB();
+    if (site !== 'tv' || category !== 'lm' || name !== 'xwlb') {
+        throw new NotFoundError('Unsupported broadcast route. Use /cctv/tv/lm/xwlb.');
     }
-    return responseData;
+    return await getXWLB(ctx);
 }
 
-const getXWLB = async () => {
+const getXWLB = async (ctx: Context) => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
-    // 解析最新一期新闻联播的日期
-    const latestDate = dayjs($('.rilititle p').text(), 'YYYY-MM-DD');
-    const count: number[] = [];
-    for (let i = 0; i < 20; i++) {
-        count.push(i);
+    // Read the latest broadcast date from the native calendar.
+    const calendarDate = parseDate($('.rilititle p').text(), 'YYYY-MM-DD')?.toZonedDateTimeISO('UTC').toPlainDate();
+    if (!calendarDate) {
+        throw new Error('Unable to read the latest broadcast date from the calendar.');
     }
+    // The calendar can show the current day with an empty list before that day's broadcast is published.
+    const latestDate = $('#content li').length > 0 ? calendarDate : calendarDate.subtract({ days: 1 });
+    const limit = Number(ctx.req.query('limit'));
+    const count = Array.from({ length: limit > 0 ? Math.min(20, limit) : 20 }, (_, index) => index);
     const resultItems = await Promise.all(
         count.map(async (i) => {
-            const newsDate = latestDate.subtract(i, 'days').hour(19);
-            const url = `https://tv.cctv.com/lm/xwlb/day/${newsDate.format('YYYYMMDD')}.shtml`;
+            const newsDate = latestDate.subtract({ days: i });
+            const url = `https://tv.cctv.com/lm/xwlb/day/${newsDate.toString().replaceAll('-', '')}.shtml`;
             const item = {
-                title: `新闻联播 ${newsDate.format('YYYY/MM/DD')}`,
+                title: `新闻联播 ${newsDate.toString().replaceAll('-', '/')}`,
                 link: url,
-                pubDate: timezone(parseDate(newsDate.format()), 8),
+                pubDate: newsDate.toZonedDateTime({ timeZone: '+08:00', plainTime: '19:00' }).toInstant(),
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);

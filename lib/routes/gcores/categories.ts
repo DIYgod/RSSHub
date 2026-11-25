@@ -5,14 +5,12 @@ import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
-let viewType: ViewType = ViewType.Articles;
-
-export const handler = async (ctx: Context): Promise<Data> => {
-    const { id, tab } = ctx.req.param();
+export const handler = async (ctx: Context, tab = ctx.req.param('tab')): Promise<Data> => {
+    const { id } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`categories/${id}${tab ? `?tab=${tab}` : ''}`, baseUrl).href;
-    const apiUrl: string = new URL(`gapi/v1/categories/${id}/${tab ?? 'originals'}`, baseUrl).href;
+    const apiUrl: string = new URL(`gapi/v1/categories/${id}/${tab === 'news' ? 'articles' : (tab ?? 'originals')}`, baseUrl).href;
 
     const query = {
         'page[limit]': limit,
@@ -21,12 +19,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         'filter[list-all]': 1,
         'filter[is-news]': tab === 'news' ? 1 : 0,
     };
-
-    if (tab === 'radios') {
-        viewType = ViewType.Audios;
-    } else if (tab === 'videos') {
-        viewType = ViewType.Videos;
-    }
 
     return await processItems(limit, query, apiUrl, targetUrl);
 };
@@ -87,19 +79,9 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.gcores.com/categories/:id'],
-            target: (params, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string = params.id;
-                const tab: string | undefined = urlObj.searchParams.get('tab') ?? undefined;
-
-                return `/gcores/categories/${id}/${tab ? `/${tab}` : ''}`;
-            },
-        },
-        {
             title: '全部',
             source: ['www.gcores.com/categories/:id'],
-            target: '/gcores/categories/:id',
+            target: '/categories/:id',
         },
         {
             title: '播客',
@@ -122,5 +104,5 @@ export const route: Route = {
             target: '/categories/:id/videos',
         },
     ],
-    view: viewType,
+    view: ViewType.Articles,
 };

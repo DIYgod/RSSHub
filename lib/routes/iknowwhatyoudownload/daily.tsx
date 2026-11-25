@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { formatDate, parseDate } from '@/utils/time';
 
 interface TableData {
     key: string;
@@ -28,12 +29,13 @@ async function handler(ctx) {
     const { country } = ctx.req.param();
     const baseUrl = `https://iknowwhatyoudownload.com/en/stat/${country}/daily/q?statDate=`;
 
-    const dates = Array.from({ length: 7 }, (_, i) => dayjs().subtract(i, 'day'));
+    const dates = Array.from({ length: 7 }, (_, i) => Temporal.Now.zonedDateTimeISO('UTC').subtract({ days: i }));
 
     const items = (
-        await Promise.all(
-            dates.map((dateObj) => {
-                const dateFormatted = dateObj.format('YYYY-MM-DD');
+        await pMap(
+            dates,
+            (dateObj) => {
+                const dateFormatted = formatDate(dateObj, 'YYYY-MM-DD');
                 const url = `${baseUrl}${dateFormatted}`;
                 return cache.tryGet(url, async () => {
                     const response = await got({
@@ -87,7 +89,7 @@ async function handler(ctx) {
 
                     const content = renderToString(
                         <article>
-                            <div class="stats">
+                            <div className="stats">
                                 <h1>Torrent download statistics</h1>
                                 <ul>
                                     {numStats.map((stat) => (
@@ -97,7 +99,7 @@ async function handler(ctx) {
                                     ))}
                                 </ul>
                             </div>
-                            <div class="table-view">
+                            <div className="table-view">
                                 <h1>Table View</h1>
                                 {tableData ? (
                                     <table>
@@ -116,7 +118,7 @@ async function handler(ctx) {
                                     </table>
                                 ) : null}
                             </div>
-                            <div class="top-list">
+                            <div className="top-list">
                                 <h1>Top List</h1>
                                 {topList.map((entry) => (
                                     <>
@@ -132,12 +134,13 @@ async function handler(ctx) {
                         title: `Daily Torrents Statistics in ${country} for ${dateFormatted}`,
                         link: url,
                         description: content,
-                        pubDate: dateObj.toDate(),
+                        pubDate: parseDate(`${dateFormatted}T00:00:00Z`),
                     };
                 });
-            })
+            },
+            { concurrency: 3 }
         )
-    ).filter((item) => Object.keys(item).length > 0) as DataItem[];
+    ).filter((item) => item.title !== undefined);
 
     return {
         title: `Daily Torrents Statistics in ${country} - iknownwhatyoudownload`,

@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:caty?',
@@ -29,8 +29,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list: DataItem[] = $('h2[itemprop="headline"] a, .post-header .archive__article__title a')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {
@@ -48,7 +48,8 @@ async function handler(ctx: Context) {
                 content('.member-only').remove();
 
                 item.description = content('.post-entry-text').html();
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
+                const pubDate = content('meta[property="article:published_time"]').attr('content');
+                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
 
                 return item;
             })

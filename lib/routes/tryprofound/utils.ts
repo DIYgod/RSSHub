@@ -1,0 +1,140 @@
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import { escapeAttribute } from 'entities';
+
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+export const rootUrl = 'https://www.tryprofound.com';
+export const researchUrl = `${rootUrl}/research`;
+
+interface ResearchTag {
+    label: string;
+    slug: string;
+}
+
+interface ResearchAuthor {
+    fullName?: string;
+    avatar?: string;
+}
+
+// The Research Hub also lists LinkedIn posts (`researchSocialPost`) and e-books (`researchEbook`); only blog articles are used.
+export interface ResearchArticle {
+    _id: string;
+    _type: 'researchArticle';
+    title: string;
+    href?: string;
+    url?: string;
+    slug?: string;
+    publicationDate?: string;
+    authors?: ResearchAuthor[];
+    tags?: ResearchTag[];
+    coverImage?: string;
+}
+
+const flightChunkPattern = /self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g;
+
+const decodeFlightData = (html: string): string => Array.from(html.matchAll(flightChunkPattern), (match) => JSON.parse(match[1])).join('');
+
+// Returns the JSON array that follows `key`, skipping brackets inside string literals.
+const extractJsonArray = (text: string, key: string): string | undefined => {
+    const keyIndex = text.indexOf(key);
+    if (keyIndex === -1) {
+        return undefined;
+    }
+    const start = keyIndex + key.length - 1;
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    for (let index = start; index < text.length; index++) {
+        const char = text[index];
+        if (inString) {
+            if (escaped) {
+                escaped = false;
+            } else if (char === '\\') {
+                escaped = true;
+            } else if (char === '"') {
+                inString = false;
+            }
+            continue;
+        }
+        switch (char) {
+            case '"':
+                inString = true;
+                break;
+            case '[':
+            case '{':
+                depth++;
+                break;
+            case ']':
+            case '}':
+                depth--;
+                if (depth === 0) {
+                    return text.slice(start, index + 1);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return undefined;
+};
+
+export const fetchResearchArticles = async (): Promise<ResearchArticle[]> => {
+    const html = await ofetch(researchUrl);
+    const json = extractJsonArray(decodeFlightData(html), '"researchItems":[');
+    if (!json) {
+        throw new Error(`Could not find research items on ${researchUrl}. The page structure may have changed.`);
+    }
+    const items = JSON.parse(json) as Array<{ _type: string }>;
+    return items.filter((item): item is ResearchArticle => item._type === 'researchArticle');
+};
+
+// Decodes Cloudflare's email obfuscation (`/cdn-cgi/l/email-protection#<hex>`).
+const decodeCloudflareEmail = (encoded: string): string => {
+    const key = Number.parseInt(encoded.slice(0, 2), 16);
+    let email = '';
+    for (let index = 2; index < encoded.length; index += 2) {
+        email += String.fromCodePoint(Number.parseInt(encoded.slice(index, index + 2), 16) ^ key);
+    }
+    return email;
+};
+
+const unwrap = ($: CheerioAPI, element: Element) => {
+    $(element).replaceWith($(element).contents());
+};
+
+const cleanArticleContent = ($: CheerioAPI): string | undefined => {
+    const content = $('div.post-content');
+    if (content.length === 0) {
+        return undefined;
+    }
+
+    // Decorative elements: heading link icons and the animated duplicate of pull quotes.
+    content.find('[aria-hidden="true"], svg, button').remove();
+    // Heading self-anchors and image zoom wrappers
+    for (const element of content.find('a[href^="#"], div[data-rmiz], div[data-rmiz-content]').toArray()) {
+        unwrap($, element);
+    }
+    for (const element of content.find('a[href*="/cdn-cgi/l/email-protection#"]').toArray()) {
+        const encoded = $(element).attr('href')!.split('#', 2)[1];
+        $(element).attr('href', `mailto:${decodeCloudflareEmail(encoded)}`);
+    }
+    // Site styles target a dark theme and would render poorly in feed readers.
+    content.find('*').removeAttr('class').removeAttr('style').removeAttr('data-nimg').removeAttr('data-sanity-edit-target').removeAttr('loading').removeAttr('decoding');
+
+    return content.html() ?? undefined;
+};
+
+export const fetchArticleContent = (link: string): Promise<string> =>
+    cache.tryGet(`tryprofound:blog:${link}`, async () => {
+        const html = await ofetch(link);
+        const content = cleanArticleContent(load(html));
+        if (!content) {
+            throw new Error(`Could not find the article body (div.post-content) on ${link}. The page structure may have changed.`);
+        }
+        return content;
+    });
+
+export const renderImage = (src: string, alt: string) => `<figure><img src="${escapeAttribute(src)}" alt="${escapeAttribute(alt)}"></figure>`;

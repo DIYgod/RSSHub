@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://www.alwayscontrol.com.cn';
@@ -39,6 +39,7 @@ async function handler(): Promise<Data> {
     // 获取新闻列表页面
     const response = await got(listUrl);
     const $ = load(response.data);
+    const image = $('header img').attr('src');
 
     // 解析新闻列表
     const list = $('div.grid > a')
@@ -94,6 +95,6 @@ async function handler(): Promise<Data> {
         description: 'Always Control（旭衡电子）- 智能能源管理系统解决方案专家最新动态',
         language: 'zh-CN',
         item: items,
-        image: `${baseUrl}/logo.png`,
+        image: image ? new URL(image, baseUrl).href : undefined,
     };
 }

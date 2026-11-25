@@ -1,8 +1,7 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -24,7 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['gitcode.com/:owner/:repo/commits', 'gitcode.com/:owner/:repo/commits/:branch'],
-            target: (params) => `/gitcode/commits/${params.owner}/${params.repo}${params.branch ? `/${params.branch}` : ''}`,
+            target: '/commits/:owner/:repo/:branch?',
         },
     ],
     name: '仓库提交',

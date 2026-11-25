@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog/:id',
@@ -13,7 +14,7 @@ export const route: Route = {
     parameters: { id: '博客 ID, 可在 URL 中找到' },
     radar: [
         {
-            source: ['blog.wenxuecity.com/myblog/:id', 'blog.wenxuecity.com/myoverview/:id'],
+            source: ['blog.wenxuecity.com/myblog/:id', 'blog.wenxuecity.com/myoverview/:id', 'blog.wenxuecity.com/myblog/:id/all.html'],
             target: '/blog/:id',
         },
     ],
@@ -21,7 +22,6 @@ export const route: Route = {
     maintainers: ['changlan'],
     handler,
 };
-
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
     const baseUrl = `https://blog.wenxuecity.com/myblog/${id}/all.html`;
@@ -39,10 +39,10 @@ async function handler(ctx: Context) {
                 pubDate: parseDate($item.find('span.atc_tm.BLK_txtc').text()),
             };
         });
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const out = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wenxuecity:blog:article:${item.link}`, async () => {
                 const result = await ofetch(item.link, {
                     headers: {
                         Referer: baseUrl,
@@ -50,13 +50,13 @@ async function handler(ctx: Context) {
                 });
                 const content = load(result);
                 return {
-                    ...item,
                     description: content('div.articalContent').html(),
                 };
-            })
-        )
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: $('head > title').text(),
         link: baseUrl,

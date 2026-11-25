@@ -1,77 +1,54 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '100');
-
+const handler = async (ctx: Context): Promise<Data> => {
+    const limit = getRouteLimit(ctx, 100);
     const baseUrl = 'https://windsurf.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;
-
-    const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
+    const response = await ofetch.raw<string>(targetUrl);
+    const currentUrl = response.url;
+    const $: CheerioAPI = load(response._data!);
     const language = ($('html').attr('lang') ?? 'en') as Language;
-
     const title: string = $('title').text();
-    const author: string | undefined = title.split(/\|/).pop()?.trim();
-
-    const items: DataItem[] = $('div[aria-label="changelog-layout"]')
+    const currentEntries = $('div.update-container');
+    if (!currentEntries.length) {
+        throw new Error(`Changelog entries not found at ${currentUrl}`);
+    }
+    const items: DataItem[] = currentEntries
         .slice(0, limit)
         .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el).parent();
-
-            const version: string | undefined = $el.find('header div').first().text()?.trim();
-            const h1: string | undefined = $el.find('article h1').text()?.trim();
-
-            const title: string = [version, h1].filter(Boolean).join(' ');
-            const description = $el.find('article div').first()?.html();
-            const pubDateStr: string | undefined = $el.find('header div').last().text()?.trim();
-            const guid: string = version ? `windsurf-${version}` : '';
-            const image: string | undefined = $el.find('article img').attr('src');
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
-                title,
+        .map((element) => {
+            const entry = $(element);
+            const version = entry.find('[data-component-part=update-label]').text();
+            const description = entry.find('[data-component-part=update-content]').html();
+            const guid = `windsurf-${version}`;
+            return {
+                title: version,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: targetUrl,
-                author,
-                doi: $el.find('meta[name="citation_doi"]').attr('content'),
+                pubDate: parseDate(entry.find('[data-component-part=update-description]').text(), 'MMMM D, YYYY', 0),
+                link: `${currentUrl}#${entry.attr('id')}`,
                 guid,
                 id: guid,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                image,
-                banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
-
-            return processedItem;
         });
-
     return {
         title,
         description: $('meta[property="og:description"]').attr('content'),
-        link: targetUrl,
+        link: currentUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
-        author,
         language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };
-
 export const route: Route = {
     path: '/changelog',
     name: 'Changelog',
@@ -94,6 +71,10 @@ export const route: Route = {
     radar: [
         {
             source: ['windsurf.com/changelog'],
+            target: '/changelog',
+        },
+        {
+            source: ['docs.devin.ai/desktop/changelog'],
             target: '/changelog',
         },
     ],

@@ -1,9 +1,10 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-import { renderDescription } from '../templates/description';
+import type { ArticleSource } from './utils';
 import { parseArticle } from './utils';
 
 export const route: Route = {
@@ -34,7 +35,7 @@ export const route: Route = {
 async function handler(ctx) {
     const columnId = ctx.req.param('column') ?? 38;
 
-    const getColumnDetail = `https://api.nfapp.southcn.com/nanfang_if/getColumn?columnId=${columnId}`;
+    const getColumnDetail = `https://api.nfnews.com/nanfang_if/getColumn?columnId=${columnId}`;
     const { data: responseColumn } = await got(getColumnDetail);
     const columnName = responseColumn.columnName === '' ? '南方+' : `南方+ - ${responseColumn.columnName}`;
     const columnLink = responseColumn.linkUrl === '' ? `https://m.nfapp.southcn.com/${columnId}` : responseColumn.linkUrl;
@@ -45,23 +46,22 @@ async function handler(ctx) {
     3) But https://m.nfapp.southcn.com/${columnId} may still be invalid for some higher-level columns, e.g. 20.
     */
 
-    const getArticleList = `https://api.nfapp.southcn.com/nfplus-manuscript-web/article/list?columnId=${columnId}&nfhSubCount=1&pageNum=1&pageSize=20`; // this api only returns up to 20 articles
+    const getArticleList = `https://nfplusapi.nfnews.com/nfplus-manuscript-web/article/list?columnId=${columnId}&nfhSubCount=1&pageNum=1&pageSize=20`; // this api only returns up to 20 articles
     const { data: responseArticle } = await got(getArticleList);
-    const list = responseArticle.data.list
+    const list: ArticleSource[] = responseArticle.data.list
         .filter((i) => i.articleType === 0)
         .map((item) => ({
-            title: '【' + item.columnName + '】' + item.title,
-            description: renderDescription({
-                thumb: item.picMiddle,
-                description: item.summary === '详见内文' ? '' : item.summary,
-            }),
-            pubDate: timezone(parseDate(item.updateTime), 8),
-            link: `http://pc.nfapp.southcn.com/${item.columnId}/${item.articleId}.html`,
+            item: {
+                title: item.title,
+                category: [item.columnName],
+                pubDate: parseDate(item.releaseTime, 'YYYY-MM-DD HH:mm:ss', 8),
+                updated: parseDate(item.updateTime, 'YYYY-MM-DD HH:mm:ss', 8),
+                link: item.shareUrl,
+            },
             articleId: item.articleId,
-            shareUrl: item.shareUrl,
         }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, ({ item, articleId }) => parseArticle(item, articleId), { concurrency: 3 });
 
     return {
         title: columnName,

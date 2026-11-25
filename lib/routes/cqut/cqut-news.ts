@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -26,14 +25,18 @@ async function handler() {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
+                return ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const response = await page.content();
-    await destroy();
+    let response: string;
+    try {
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
 
@@ -50,7 +53,7 @@ async function handler() {
                     title: title.text(),
                     description: $item.find('.info').text().trim(),
                     link: new URL($item.find('a').attr('href')!, link).href,
-                    pubDate: timezone(parseDate(`${$item.find('.month').text()}-${$item.find('.day').text()}`, 'YYYY-MM-DD'), 8),
+                    pubDate: parseDate(`${$item.find('.month').text()}-${$item.find('.day').text()}`, 'YYYY-MM-DD', 8),
                 };
             }),
     };

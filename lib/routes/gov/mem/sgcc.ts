@@ -1,9 +1,20 @@
 import { load } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+
+const documentMimeTypes = {
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+};
 
 export const route: Route = {
     path: '/gk/sgcc/:category?',
@@ -34,7 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'sggpdbqk' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.mem.gov.cn';
     const currentUrl = new URL(`gk/sgcc/${category}`, rootUrl).href;
@@ -50,15 +61,19 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
-            const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
-            const link = new URL(`${category}/${$item.prop('href')!.replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
+            // plain string replacement: `category` comes from the request and must not be compiled into a RegExp
+            const link = new URL(`${category}/${$item.prop('href')!.replace(/\.\//, '')}`, currentUrl).href.replace(`/sgcc/${category}/...`, '');
+
+            const pathname = new URL(link).pathname;
+            const mimeType = (getMimeType(pathname) ?? getMimeType(pathname, documentMimeTypes))?.split(';', 1)[0];
+            const enclosureType = mimeType && mimeType !== 'text/html' && mimeType !== 'application/xhtml+xml' ? mimeType : undefined;
 
             return {
                 title: $item.contents().first().text(),
                 link,
-                pubDate: parseDate($item.find('span').text()),
-                enclosure_url: link,
-                enclosure_type: `application/${link.split(/\./).pop()}`,
+                pubDate: parseDate($item.find('span').text(), 8),
+                enclosure_url: enclosureType ? link : undefined,
+                enclosure_type: enclosureType,
             };
         });
 

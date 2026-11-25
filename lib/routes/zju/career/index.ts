@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'http://www.career.zju.edu.cn';
 const host = 'http://www.career.zju.edu.cn/jyxt/jygz/new/getContent.zf?minCount=0&maxCount=10&';
@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     return {
         title: map.get(type)!.title,
-        link: `${host}${id}`,
+        link: rootUrl,
         item: items,
     };
 }

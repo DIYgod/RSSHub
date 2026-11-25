@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
@@ -11,7 +10,7 @@ export function fetchArticle(item) {
         const $d = load(responses);
         // $d('img').each((i, e) => $(e).attr('referrerpolicy', 'no-referrer'));
 
-        item.pubDate = timezone(parseDate($d('.left-info .timer').text()), 8);
+        item.pubDate = parseDate($d('.left-info .timer').text(), 8);
         item.author = $d('.left-info .reporter').text();
         item.description = $d('#contentStr').html();
 

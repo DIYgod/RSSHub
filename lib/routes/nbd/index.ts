@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:id?',
@@ -57,24 +59,30 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                if (!detailResponse.url.startsWith(`${rootUrl}/`)) {
-                    return item;
-                }
-                const content = load(detailResponse.data);
-
-                item.description = content('.g-articl-text').html();
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/"pubDate": "(.*)"/)[1]), 8);
-
+    const items = await pMap(
+        list,
+        async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'nbd.com.cn')) {
                 return item;
-            })
-        )
+            }
+            const detail = await cache.tryGet(`nbd:article:v3:${item.link}`, async () => {
+                const detailResponse = await ofetch.raw(item.link!, { responseType: 'text' });
+                if (!detailResponse.url.startsWith(`${rootUrl}/`)) {
+                    return {};
+                }
+                const detailBody = detailResponse._data ?? '';
+                const content = load(detailBody);
+                const publishedAt = detailBody.match(/"pubDate": "(.*)"/)?.[1];
+
+                return {
+                    description: content('.g-articl-text').html(),
+                    pubDate: publishedAt ? parseDate(publishedAt, 8) : undefined,
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

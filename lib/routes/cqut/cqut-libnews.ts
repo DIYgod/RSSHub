@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/libnews',
@@ -24,10 +23,8 @@ async function handler() {
 
     const { page, destroy } = await getPlaywrightPage(link, { noGoto: true });
     try {
-        await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-        const responsePromise = page.waitForResponse((response) => response.url().includes('/type/more-datas'), { timeout: 3000 });
-        await page.goto(link, { waitUntil: 'domcontentloaded' });
-        const apiResponse = await responsePromise;
+        await page.route('**/*', (route) => (['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        const [apiResponse] = await Promise.all([page.waitForResponse((response) => response.url().includes('/type/more-datas'), { timeout: 30000 }), page.goto(link, { waitUntil: 'domcontentloaded' })]);
         const { data } = await apiResponse.json();
 
         return {
@@ -36,7 +33,7 @@ async function handler() {
             item: data.datas.datas.map((item) => ({
                 title: item['1'].value,
                 link: `${baseUrl}/engine2/d/${item.id}/${engineInstanceId}/0`,
-                pubDate: timezone(parseDate(item['6'].value), 8),
+                pubDate: parseDate(item['6'].value, 8),
             })),
         };
     } finally {

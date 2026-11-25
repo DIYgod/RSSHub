@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/video_codes/:code/:filter?',
     categories: ['multimedia'],
     example: '/javdb/video_codes/SIVR',
-    parameters: { id: '番号前缀', filter: '过滤，见下表，默认为 `全部`' },
+    parameters: { code: '番号前缀', filter: '过滤，见下表，默认为 `全部`' },
     features: {
         requireConfig: [
             {
@@ -41,7 +41,7 @@ async function handler(ctx) {
     const code = ctx.req.param('code');
     const filter = ctx.req.param('filter') ?? '';
 
-    const currentUrl = `/video_codes/${code}${filter ? `?f=${filter}` : ''}`;
+    const currentUrl = `/video_codes/${encodeURIComponent(code)}${filter ? `?f=${filter}` : ''}`;
 
     const filters = {
         '': '',

@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
-
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -36,15 +36,16 @@ export const route: Route = {
 async function handler(ctx) {
     const username = ctx.req.param('username');
 
-    const apiUrl = `https://gitee.com/api/v5/users/${username}/events/public`;
+    const apiUrl = `https://gitee.com/api/v5/users/${encodeURIComponent(username)}/events/public`;
+    const limit = getRouteLimit(ctx, 100);
     const response = await cache.tryGet(
-        apiUrl,
+        `${apiUrl}:${limit}`,
         async () =>
             (
                 await got(apiUrl, {
                     searchParams: {
                         access_token: config.gitee.access_token ?? undefined,
-                        limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100,
+                        limit,
                     },
                 })
             ).data
@@ -55,6 +56,7 @@ async function handler(ctx) {
         author: item.actor.login,
         pubDate: parseDate(item.created_at),
         guid: item.id,
+        link: `https://gitee.com/${item.repo.full_name}`,
         type: item.type,
         repo: item.repo,
         payload: item.payload,
@@ -77,12 +79,12 @@ async function handler(ctx) {
                 break;
             case 'IssueEvent':
                 item.title = `${item.payload.action} ${item.payload.title}`;
-                item.description = md.render(item.payload.body);
+                item.description = typeof item.payload.body === 'string' ? md.render(item.payload.body) : undefined;
                 item.link = item.payload.html_url;
                 break;
             case 'ProjectCommentEvent':
                 item.title = `commented on project ${item.repo.full_name}`;
-                item.description = md.render(item.payload.comment.body);
+                item.description = typeof item.payload.comment.body === 'string' ? md.render(item.payload.comment.body) : undefined;
                 item.link = item.payload.comment.html_url;
                 break;
             case 'PullRequestEvent':

@@ -14,15 +14,15 @@ const builtinNames = new Set(builtinModules.map((name) => name.replace(/^node:/,
 
 const workerEntryId = '\0virtual:playwright-worker-entry.mjs';
 
-type Metadata = Record<'package.json' | 'browsers.json', unknown>;
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type Metadata = Record<'package.json' | 'browsers.json', JsonValue>;
 
 export function inlinePackageMetadata(source: string, metadata: Metadata) {
-    const expressions = {
-        'package.json': /require\(import_path\d*\.default\.join\(packageRoot, "package\.json"\)\)/g,
-        'browsers.json': /require\(import_path\d*\.default\.join\(packageRoot, "browsers\.json"\)\)/g,
-    };
-    for (const filename of Object.keys(expressions) as Array<keyof Metadata>) {
-        const expression = expressions[filename];
+    const expressions = new Map<keyof Metadata, RegExp>([
+        ['package.json', /require\(import_path\d*\.default\.join\(packageRoot, "package\.json"\)\)/g],
+        ['browsers.json', /require\(import_path\d*\.default\.join\(packageRoot, "browsers\.json"\)\)/g],
+    ]);
+    for (const [filename, expression] of expressions) {
         if (source.matchAll(expression).toArray().length !== 1) {
             throw new Error(`Patchright Worker build expected exactly one metadata require: ${filename}`);
         }
@@ -37,15 +37,17 @@ export function addBuiltinRequireMap(source: string) {
         throw new Error('Playwright Worker build expected exactly one createRequire import');
     }
     source = source.replace(importLine, '');
-    const helperPattern = /^var __require = .*createRequire\(import\.meta\.url\).*;$/gm;
-    if (source.matchAll(helperPattern).toArray().length !== 1) {
+    // Rolldown renames the helper (e.g. __require$1) when the bundled code declares its own __require
+    const helperPattern = /^var (__require(?:\$\d+)?) = .*createRequire\(import\.meta\.url\).*;$/gm;
+    const helpers = source.matchAll(helperPattern).toArray();
+    if (helpers.length !== 1) {
         throw new Error('Playwright Worker build expected exactly one createRequire runtime helper');
     }
-    source = source.replace(helperPattern, 'var __require = (...args) => require(...args);');
+    source = source.replaceAll(helperPattern, () => `var ${helpers[0][1]} = (...args) => require(...args);`);
     const usedBuiltins = [
         ...new Set(
             source
-                .matchAll(/(?:__require|require)\(["']([^"'\n]+)["']\)/g)
+                .matchAll(/(?:__require(?:\$\d+)?|require)\(["']([^"'\n]+)["']\)/g)
                 .toArray()
                 .map((match) => match[1].replace(/^node:/, ''))
                 .filter((name) => builtinNames.has(name))

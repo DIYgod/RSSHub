@@ -1,3 +1,6 @@
+import { html } from 'hono/html';
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
@@ -28,48 +31,64 @@ export const route: Route = {
     handler,
 };
 
+interface Note {
+    type: string;
+    imageUrl: string;
+    videoUrl: string;
+    noteId: string;
+    title: string;
+    postTime: string | number;
+}
+
 async function handler(ctx) {
     if (!config.huitun || !config.huitun.cookie) {
         throw new ConfigNotFoundError('huitun RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const cookie = config.huitun.cookie;
     const uid = ctx.req.param('user_id');
-    const response_user = await got({
+    const userResponse = await got({
         method: 'get',
-        url: 'https://xhsapi.huitun.com/anchor/search/v2?keyword=' + uid,
+        url: 'https://xhsapi.huitun.com/anchor/search/v2',
+        searchParams: { keyword: uid },
         headers: {
             Cookie: cookie,
         },
     });
-    const user_data = JSON.parse(response_user.body);
-    const anchorId = user_data.extData.list[0].anchorId;
-    const name = user_data.extData.list[0].nick;
-    const response_note = await got({
+    const userData = JSON.parse(userResponse.body);
+    if (!Array.isArray(userData?.extData?.list)) {
+        throw new TypeError('Huitun did not return a user list. Check HUITUN_COOKIE and account access.');
+    }
+    if (!userData.extData.list[0]?.anchorId) {
+        throw new Error('Huitun returned no matching account. Verify user_id and HUITUN_COOKIE.');
+    }
+    const anchorId = userData.extData.list[0].anchorId;
+    const name = userData.extData.list[0].nick;
+    const notesResponse = await got({
         method: 'get',
-        url: 'https://xhsapi.huitun.com/anchor/detail/notesV2?sort=0&anchorId=' + anchorId,
+        url: 'https://xhsapi.huitun.com/anchor/detail/notesV2',
+        searchParams: { sort: 0, anchorId },
         headers: {
             Cookie: cookie,
         },
     });
-    const note_data = JSON.parse(response_note.body);
-    const notes = note_data.extData.list;
-    const items = await Promise.all(
-        notes.map(async (item) => {
+    const noteData = JSON.parse(notesResponse.body);
+    if (!Array.isArray(noteData?.extData?.list)) {
+        throw new TypeError('Huitun did not return a notes list. Check HUITUN_COOKIE and account access.');
+    }
+    const notes: Note[] = noteData.extData.list;
+    const items = await pMap(
+        notes,
+        async (item) => {
             let desc: string;
             switch (item.type) {
                 case 'normal':
-                    desc = `<p><img src="${item.imageUrl}"></p>`;
+                    desc = html`<p><img src="${item.imageUrl}" /></p>`.toString();
                     break;
                 case 'video':
-                    desc = `<p><video 
-                                controls 
-                                poster="${item.imageUrl}" 
-                                src="${item.videoUrl}" 
-                                style="width: 100%;"
-                            ></video></p>`;
+                    desc = html`<p><video controls poster="${item.imageUrl}" src="${item.videoUrl}" style="width: 100%;"></video></p>`.toString();
                     break;
                 default:
-                    desc = `未知类型: ${item.type}, 请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue`;
+                    throw new Error(`Unsupported Huitun note type: ${item.type}. Please report the source format to RSSHub.`);
             }
             const link = await getNoteLink(item.noteId, cookie);
             return {
@@ -78,7 +97,8 @@ async function handler(ctx) {
                 link,
                 pubDate: item.postTime,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -93,11 +113,16 @@ async function getNoteLink(noteId, cookie) {
     return await cache.tryGet(`huitun:notelink:${noteId}`, async () => {
         const response = await got({
             method: 'get',
-            url: 'https://xhsapi.huitun.com/note/noteUrl?noteId=' + noteId,
+            url: 'https://xhsapi.huitun.com/note/noteUrl',
+            searchParams: { noteId },
             headers: {
                 Cookie: cookie,
             },
         });
-        return JSON.parse(response.body).extData;
+        const link = JSON.parse(response.body)?.extData;
+        if (typeof link !== 'string' || !URL.canParse(link) || !['https:', 'http:'].includes(new URL(link).protocol)) {
+            throw new Error('Huitun did not return a valid note URL. Check HUITUN_COOKIE and account access.');
+        }
+        return link;
     });
 }

@@ -2,7 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const apiUrl = 'https://api.github.com';
 
@@ -60,15 +60,16 @@ async function handler(ctx) {
         };
     });
 
+    const resetTimestamp = Number.parseInt(response.headers.get('x-ratelimit-reset') ?? '');
     ctx.set('json', {
         title: 'Github Notifications',
         item: notifications,
         rateLimit: {
-            limit: Number.parseInt(response.headers['x-ratelimit-limit']),
-            remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
-            reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']), 'X'),
-            resoure: response.headers['x-ratelimit-resource'],
-            used: Number.parseInt(response.headers['x-ratelimit-used']),
+            limit: Number.parseInt(response.headers.get('x-ratelimit-limit') ?? ''),
+            remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining') ?? ''),
+            reset: parseDate(resetTimestamp, 'X'),
+            resoure: response.headers.get('x-ratelimit-resource'),
+            used: Number.parseInt(response.headers.get('x-ratelimit-used') ?? ''),
         },
     });
 
@@ -76,6 +77,5 @@ async function handler(ctx) {
         title: 'Github Notifications',
         link: 'https://github.com/notifications',
         item: items,
-        allowEmpty: true,
     };
 }

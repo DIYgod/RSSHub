@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/psy',
@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/ecnu/psy',
     radar: [
         {
-            source: ['psy.ecnu.edu.cn'],
+            source: ['psy.ecnu.edu.cn', 'psy.ecnu.edu.cn/tzgg/list.htm'],
             target: '/psy',
         },
     ],
@@ -26,20 +26,18 @@ export const route: Route = {
         const links = $('ul.wp_article_list > li')
             .toArray()
             .map((el): DataItem & { link: string } => ({
-                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), 8),
+                pubDate: parseDate($(el).find('.Article_PublishDate').text(), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').attr('title')!,
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data } = await got(item.link);
-                    const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
-                    item.description = $read.html()?.trim();
-                    return item;
-                })
-            )
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                const $read = $('div.wp_articlecontent');
+                item.description = $read.html()?.trim();
+                return item;
+            })
         );
 
         return {

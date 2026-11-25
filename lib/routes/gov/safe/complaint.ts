@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { processZxfkItems } from './util';
 
@@ -22,7 +23,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { site = 'beijing' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
+    const limit = Math.max(5, getRouteLimit(ctx, 5));
 
     return await processZxfkItems(site, 'tsjy', limit);
 }

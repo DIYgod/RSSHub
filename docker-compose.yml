@@ -11,7 +11,7 @@ services:
             NODE_ENV: production
             CACHE_TYPE: redis
             REDIS_URL: 'redis://redis:6379/'
-            PLAYWRIGHT_WS_ENDPOINT: 'ws://browserless:3000' # marked
+            PLAYWRIGHT_CDP_ENDPOINT: 'ws://browserless:3000?token=${BROWSERLESS_TOKEN:-rsshub}' # marked
         healthcheck:
             test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
             interval: 30s
@@ -22,14 +22,16 @@ services:
             - browserless # marked
 
     browserless: # marked
-        image: browserless/chrome # marked
+        image: ghcr.io/browserless/chromium # marked
         restart: always # marked
+        environment: # marked
+            TOKEN: '${BROWSERLESS_TOKEN:-rsshub}' # marked
         ulimits: # marked
             core: # marked
                 hard: 0 # marked
                 soft: 0 # marked
         healthcheck: # marked
-            test: ['CMD', 'curl', '-f', 'http://localhost:3000/pressure'] # marked
+            test: ['CMD-SHELL', 'curl -f "http://localhost:3000/pressure?token=$$TOKEN"'] # marked
             interval: 30s # marked
             timeout: 10s # marked
             retries: 3 # marked

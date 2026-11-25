@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -33,16 +34,23 @@ const cleanUpHTML = (data) => {
     $('em.vote__bar, div.vote__btn, div.vote__time').remove();
     $('p img').each((_, e) => {
         const $e = $(e);
-        if (($e.prop('src') ?? $e.prop('_src')) !== undefined) {
-            $e.parent().replaceWith(
+        const src = $e.prop('src');
+        if (src) {
+            const paragraph = $e.closest('p')[0];
+            if (paragraph && 'tagName' in paragraph) {
+                paragraph.tagName = 'div';
+            }
+            $e.replaceWith(
                 renderDescription({
                     image: {
-                        src: ($e.prop('src') ?? $e.prop('_src')).split(/\?/, 1)[0],
+                        src: src.split(/\?/, 1)[0],
                         width: $e.prop('data-w'),
                         height: $e.prop('data-h'),
                     },
                 })
             );
+        } else {
+            $e.remove();
         }
     });
     $('p, span').each((_, e) => {
@@ -90,7 +98,6 @@ const buildRouteData = ({ title, link, description, image, icon, subtitle, autho
     author,
     itunes_author: author,
     itunes_category: 'News',
-    allowEmpty: true,
 });
 
 const prefixValue = (value?: string, prefix?: string) => {
@@ -184,29 +191,31 @@ const extractBriefId = (link: string) => {
     return pathname.match(/^\/brief\/(\d+)\.html$/)?.[1];
 };
 
-const fetchArticleDetail = async (aid: string) => {
-    const apiUrl = new URL('web/article/detail', apiArticleRootUrl).href;
-    const { data: response } = await got.post(apiUrl, {
-        form: {
-            platform: 'www',
-            aid,
-        },
+const fetchArticleDetail = (aid: string) =>
+    cache.tryGet(`huxiu:article-detail:${aid}`, async () => {
+        const apiUrl = new URL('web/article/detail', apiArticleRootUrl).href;
+        const { data: response } = await got.post(apiUrl, {
+            form: {
+                platform: 'www',
+                aid,
+            },
+        });
+
+        return response.data;
     });
 
-    return response.data;
-};
+const fetchBriefDetail = (briefId: string) =>
+    cache.tryGet(`huxiu:brief-detail:${briefId}`, async () => {
+        const apiUrl = new URL('v1/brief/detail', apiClubRootUrl).href;
+        const { data: response } = await got.post(apiUrl, {
+            form: {
+                platform: 'www',
+                brief_id: briefId,
+            },
+        });
 
-const fetchBriefDetail = async (briefId: string) => {
-    const apiUrl = new URL('v1/brief/detail', apiClubRootUrl).href;
-    const { data: response } = await got.post(apiUrl, {
-        form: {
-            platform: 'www',
-            brief_id: briefId,
-        },
+        return response.data;
     });
-
-    return response.data;
-};
 
 const buildBriefCategories = (data) => [data.brief_column?.name, data.club_info?.name, ...(data.brief?.tags_info?.map((c) => c.name) ?? [])].filter(Boolean);
 
@@ -319,7 +328,7 @@ const fetchItem = async (item) => {
             video,
             audio,
             preface: preface ? cleanUpHTML(preface) : undefined,
-            summary: data.summary,
+            summary: content ? undefined : data.summary,
             description: content ? cleanUpHTML(content) : undefined,
         }),
         author: data.user_info?.username ?? item.author,
@@ -353,12 +362,11 @@ const generateNonce = () => {
  * @returns {string} signature - The calculated signature value.
  */
 const generateSignature = () => {
-    const timestamp = Math.round(Date.now() / 1000).toString();
+    const timestamp = Math.round(Temporal.Now.instant().epochMilliseconds / 1000).toString();
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
     // server-validated signature relies on JS default codepoint sort; localeCompare reorders mixed-case nonce vs lowercase appSecret
-    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,
@@ -367,7 +375,12 @@ const generateSignature = () => {
     };
 };
 
-const audioQualities = ['', 'low'];
+const audioQualities = [
+    { path: 'path', size: 'size' },
+    { path: 'audio_path', size: 'audio_size' },
+    { path: 'low_path', size: 'low_size' },
+    { path: 'audio_low_path', size: 'audio_low_size' },
+];
 
 /**
  * Processes the audio information and returns the processed data.
@@ -376,7 +389,7 @@ const audioQualities = ['', 'low'];
  * @returns {Object} - An object containing the processed audio data.
  */
 const processAudioInfo = (info) => {
-    const quality = info ? audioQualities.find((quality) => Object.hasOwn(info, `audio_${quality === '' ? '' : `${quality}_`}path`)) : undefined;
+    const quality = info ? audioQualities.find((quality) => info[quality.path]) : undefined;
 
     if (quality === undefined) {
         return {
@@ -385,14 +398,14 @@ const processAudioInfo = (info) => {
         };
     }
 
-    const linkKey = `audio_${quality}path`;
-    const sizeKey = `audio_${quality}size`;
+    const linkKey = quality.path;
+    const sizeKey = quality.size;
 
     const processed = {
         duration: info.format_length_new ?? info.format_length,
         size: Object.hasOwn(info, sizeKey) ? info[sizeKey] : undefined,
         src: info[linkKey],
-        type: `audio/${info[linkKey].split(/\./).pop()}`,
+        type: getMimeType(new URL(info[linkKey], rootUrl).pathname)?.split(';', 1)[0],
     };
 
     const processedItem = {
@@ -524,18 +537,12 @@ const processItems = async (items, limit) => {
         .slice(0, limit);
 
     return await Promise.all(
-        processedItems.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
-                const isMoment = item.guid.startsWith('huxiu-moment');
+        processedItems.map((item) => {
+            const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
+            const isMoment = item.guid.startsWith('huxiu-moment');
 
-                if (isExternalLink || isMoment) {
-                    return item;
-                }
-
-                return await fetchItem(item);
-            })
-        )
+            return isExternalLink || isMoment ? item : fetchItem(item);
+        })
     );
 };
 
@@ -565,7 +572,7 @@ const processVideoInfo = (info) => {
         poster: info.cover ?? info.custom_cover_path ?? info.gif_path,
         size: Object.hasOwn(info, sizeKey) ? info[sizeKey] : undefined,
         src: info[linkKey],
-        type: `video/${info[linkKey].split(/\./).pop()}`,
+        type: getMimeType(new URL(info[linkKey], rootUrl).pathname)?.split(';', 1)[0],
     };
 
     const processedItem = {

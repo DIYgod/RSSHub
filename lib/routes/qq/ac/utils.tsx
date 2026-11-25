@@ -1,13 +1,42 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://ac.qq.com';
 const mobileRootUrl = 'https://m.ac.qq.com';
+export const parseComicPage = ($: CheerioAPI) => {
+    const desktop = $('.chapter-page-all a').length > 0;
+    const chapterLinks = desktop ? $('.chapter-page-all a') : $('.reverse .bottom-chapter-item .chapter-link');
+    const chapters = chapterLinks.toArray().flatMap((chapter) => {
+        const $chapter = $(chapter);
+        const href = $chapter.attr('href');
+        if (!href) {
+            return [];
+        }
+        return {
+            link: new URL(href.replace(/chapter/, 'ComicView'), rootUrl).href,
+            title: desktop ? $chapter.text() : $chapter.find('.comic-title').text() || $chapter.text(),
+            image: $chapter.find('.cover-image').attr('src'),
+        };
+    });
+    return {
+        author: $('.works-author-name, .author-wr')
+            .toArray()
+            .map((a) => $(a).text())
+            .join(', '),
+        image: $('.works-cover img, .head-cover').attr('src'),
+        description: $('.works-intro-short, .head-info-desc').text(),
+        chapters: desktop ? chapters.toReversed() : chapters,
+    };
+};
 const ProcessItems = async (ctx, currentUrl, time, title) => {
+    const limit = getRouteLimit(ctx, 30);
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -16,7 +45,7 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
     const $ = load(response.data);
 
     let items = $(`${time ? `.${time}-month-data ` : ''}.text-overflow`)
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem & { guid: string } => {
             const $item = $(item);
@@ -28,8 +57,9 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.guid, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -39,27 +69,13 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
                 const content = load(detailResponse.data);
 
                 item.link = item.guid;
-                item.author = content('.author-wr')
-                    .toArray()
-                    .map((a) => $(a).text().trim())
-                    .join(', ');
-                item.description = renderToString(
-                    <QqAcDescription
-                        image={content('.head-cover')?.attr('src') ?? ''}
-                        description={content('.head-info-desc')?.text() ?? ''}
-                        chapters={content('.reverse .bottom-chapter-item .chapter-link')
-                            .toArray()
-                            .map((chapter) => ({
-                                link: content(chapter).attr('href'),
-                                title: content(chapter).find('.comic-title')?.text() ?? '',
-                                image: content(chapter).find('.cover-image')?.attr('src') ?? '',
-                            }))}
-                    />
-                );
+                const info = parseComicPage(content);
+                item.author = info.author;
+                item.description = renderToString(<QqAcDescription {...info} />);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -71,13 +87,13 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
 
 export { mobileRootUrl, ProcessItems, rootUrl };
 
-const QqAcDescription = ({ image, description, chapters }: { image: string; description: string; chapters: Array<{ link?: string; title?: string; image?: string }> }) => (
+const QqAcDescription = ({ image, description, chapters }: { image?: string; description: string; chapters: Array<{ link?: string; title?: string; image?: string }> }) => (
     <>
-        {image === '' ? null : <img src={image} />}
+        <img src={image} />
         {description === '' ? null : <p>{description}</p>}
         {chapters.map((chapter) => (
             <div>
-                <img src={chapter.image} />
+                {chapter.image ? <img src={chapter.image} /> : null}
                 <a href={chapter.link}>{chapter.title}</a>
             </div>
         ))}

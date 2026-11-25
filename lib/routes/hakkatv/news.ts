@@ -1,8 +1,10 @@
+import { escape } from 'entities';
+
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const typeMap = ['hakka', 'political', 'medical', 'local', 'international'];
 const baseUrl = 'https://www.hakkatv.org.tw';
@@ -69,22 +71,24 @@ async function handler(ctx) {
         .filter((item, index, arr) => arr.findIndex((i) => i.id === item.id) === index)
         .map((item) => ({
             title: item.title,
-            pubDate: timezone(parseDate(item.created_at), 8),
+            pubDate: parseDate(item.created_at, 8),
             author: item.author,
             link: `${baseUrl}/news-detail/${item.id}`,
             id: item.id,
         }));
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(`${apiUrl}/api/news/read/${item.id}`);
-                item.category = data.tag.map((t) => t.tag);
-                item.description = data.content.replaceAll('\n', '<br>');
-                delete item.id;
-                return item;
-            })
-        )
+        list.map(async ({ id, ...item }) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
+                const data = await ofetch(`${apiUrl}/api/news/read/${id}`);
+                return {
+                    category: data.tag.map((t) => t.tag),
+                    updated: parseDate(data.updated_at, 8),
+                    description: escape(data.content).replaceAll('\n', '<br>') + getVideoEmbed(data.video?.youtube_url),
+                };
+            })),
+        }))
     );
 
     return {
@@ -94,4 +98,8 @@ async function handler(ctx) {
         language: 'zh-TW' as const satisfies Language,
         item: items,
     };
+}
+
+function getVideoEmbed(videoUrl?: string) {
+    return videoUrl ? renderYoutube(true, new URL(videoUrl).pathname.slice(1)) : '';
 }

@@ -1,16 +1,16 @@
 import { config } from '@/config';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topic/:id',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/jin10/topic/396',
+    example: '/jin10/topic/397',
     parameters: { id: 'N' },
     features: {
         requireConfig: false,
@@ -42,6 +42,9 @@ async function handler(ctx) {
                     'x-version': '1.0.1',
                 },
             });
+            if (!Array.isArray(response.data?.list)) {
+                throw new NotFoundError(`Jin10 topic ${id} is unavailable: ${response.message || 'the source returned no article list'}`);
+            }
             return response.data;
         },
         config.cache.routeExpire,
@@ -62,7 +65,7 @@ async function handler(ctx) {
                     title: item.title,
                     description: response.data.content,
                     author: item.author.nick,
-                    pubDate: timezone(parseDate(item.display_datetime), 8),
+                    pubDate: parseDate(item.display_datetime, 8),
                     link: `https://xnews.jin10.com/details/${item.id}`,
                 };
             })

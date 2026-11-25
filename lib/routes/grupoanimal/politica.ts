@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     name: 'Política',
@@ -11,7 +11,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.grupoanimal.mx/politica'],
-            target: '/grupoanimal/politica',
+            target: '/politica',
         },
     ],
     handler: async () => {
@@ -81,6 +81,7 @@ export const route: Route = {
                     title
                     slug
                     date
+                    dateGmt
                     databaseId
                     notasGlobales {
                         ...NotasGlobalesFields
@@ -110,13 +111,14 @@ export const route: Route = {
             title: item.title,
             link: `https://grupoanimal.mx/politica/${item.slug}`,
             author: item.notasGlobales.informacionDeLaNota.autor,
-            pubDate: parseDate(item.date),
+            pubDate: parseDate(`${item.dateGmt}Z`),
             category: item.tags.nodes.map((label) => label.name),
             description: item.notasGlobales.contenido,
         }));
 
         return {
             title: 'Grupo Animal - Política',
+            language: 'es-mx',
             link: 'https://grupoanimal.mx/politica',
             item: items,
         };

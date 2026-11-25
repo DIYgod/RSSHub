@@ -2,18 +2,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionData = {
     thumb?: string;
-    description?: string;
+    videoUrl: string;
 };
 
-const SouthcnDescription = ({ thumb, description }: DescriptionData) => (
-    <>
-        {thumb ? <img src={thumb} /> : null}
-        {description ? (
-            <blockquote>
-                <p>{description}</p>
-            </blockquote>
-        ) : null}
-    </>
-);
+const SouthcnDescription = ({ thumb, videoUrl }: DescriptionData) => <video controls src={videoUrl} poster={thumb} />;
 
 export const renderDescription = (data: DescriptionData) => renderToString(<SouthcnDescription {...data} />);

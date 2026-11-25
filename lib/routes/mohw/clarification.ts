@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/clarification',
@@ -40,20 +41,21 @@ async function handler() {
 
     const $ = load(response.data);
 
-    let items = $('.list01 a[title]')
+    let items = $('section.list a[title]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                title: $item.text(),
-                link: $item.attr('href'),
+                title: $item.attr('title')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:details`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -61,12 +63,14 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('article').html();
-                item.pubDate = parseDate(content('meta[name="DC.Date"]').attr('datetime')!);
+                const description = content('article.cpArticle').html();
+                const pubDate = parseDate(content('meta[name="DC.Date"]').attr('content')!, 8);
 
-                return item;
-            })
-        )
+                return { description, pubDate };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

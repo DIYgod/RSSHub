@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 const defaultRootUrl = 'https://www.setn.com';
 
@@ -82,12 +84,13 @@ export const route: Route = {
 };
 
 type NewsArticleLd = {
-    author?: { name?: string };
+    articleSection?: string;
+    author?: Array<{ name?: string }> | { name?: string };
 };
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '即時';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 42;
+    const limit = getRouteLimit(ctx, 42);
 
     const currentUrl = getCurrentUrl(category);
 
@@ -98,25 +101,32 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('#NewsList, .newsList, .hotNewsList')
-        .find('.newsItems, .st-news, .all_three_list, div.title-word')
+    let items = $('#NewsList, .newsList, .hotNewsList, .news_list_area')
+        .find('.newsItems, .st-news, .all_three_list, div.title-word, .news_list_item')
         .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
-            const a = $item.find('a').last();
+            const desktopTitle = $item.find('.title_pc a');
+            const a = desktopTitle.length ? desktopTitle : $item.find('a').last();
             const link = a.attr('href')!.replaceAll(/(\?|&)utm_campaign=.*/g, '');
 
             return {
                 title: a.text(),
-                link: link.startsWith('http') ? link : `${Object.hasOwn(rootUrls, category) ? rootUrls[category] : defaultRootUrl}${link}`,
+                link: new URL(link, currentUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(`setn:category-v5:${item.link}`, async () => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'setn.com')) {
+                    return item;
+                }
+
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -124,24 +134,33 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                let head: NewsArticleLd;
-                try {
-                    head = JSON.parse(content('script[type="application/ld+json"]').first().text());
-                } catch {
-                    head = {};
-                }
+                const ldJson = content('script[type="application/ld+json"]:contains("NewsArticle")').text();
+                const head: NewsArticleLd | undefined = ldJson ? JSON.parse(ldJson) : undefined;
+                const authors = Array.isArray(head?.author) ? head.author : head?.author ? [head.author] : [];
 
                 content('#gad_setn_innity_oop_1x1').remove();
 
-                item.title = content('h1').text();
-                item.author = head?.author?.name || content('meta[name="author"]').attr('content');
-                item.category = [content('meta[property="article:section"]').attr('content')!, ...content('meta[name="news_keywords"]').attr('content')!.split(',')];
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
-                item.description = content('article, .content-p').html();
+                item.title = content('h1').text() || content('[itemprop="headline"]').text();
+                item.author =
+                    authors
+                        .map((author) => author.name)
+                        .filter(Boolean)
+                        .join(', ') || content('meta[name="author"]').attr('content');
+                item.category = [head?.articleSection ?? content('meta[property="article:section"]').attr('content'), ...(content('meta[name="news_keywords"]').attr('content')?.split(',') ?? [])].filter(
+                    (value): value is string => typeof value === 'string' && value.length > 0
+                );
+                const clock = content('.article_time_box, .pageDate')
+                    .text()
+                    .match(/\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}(?::\d{2})?/)?.[0];
+                const publishedTime = clock ?? content('meta[property="article:published_time"]').attr('content');
+                if (publishedTime) {
+                    item.pubDate = clock ? parseDate(clock, ['YYYY/MM/DD HH:mm:ss', 'YYYY/MM/DD HH:mm'], 8) : parseDate(publishedTime);
+                }
+                item.description = content('.article_content_area').html() ?? content('.content-p, article').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,8 +1,9 @@
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import logger from '@/utils/logger';
+import { queryToBoolean } from '@/utils/readable-social';
 
-import api from './api';
+import api, { credentialsApi, hasCredentials } from './api';
 import utils from './utils';
 
 export const route: Route = {
@@ -32,6 +33,7 @@ export const route: Route = {
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
+                optional: true,
             },
             {
                 name: 'TWITTER_THIRD_PARTY_API',
@@ -41,10 +43,12 @@ export const route: Route = {
             {
                 name: 'TWITTER_CONSUMER_KEY',
                 description: 'Please see above for details.',
+                optional: true,
             },
             {
                 name: 'TWITTER_CONSUMER_SECRET',
                 description: 'Please see above for details.',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -66,21 +70,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    const routeParams = ctx.req.param('routeParams');
 
     // For compatibility
-    const { count, include_replies, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_replies, include_rts } = utils.parseRouteParams(routeParams);
     const params = count ? { count } : {};
+    // The pages x.com shows logged-out visitors only have the latest original posts. Replies, a count, and reposts
+    // asked for explicitly (by default they are only included when the configured API serves the feed) need credentials
+    const needsCredentials = include_replies || Boolean(count) || queryToBoolean(new URLSearchParams(routeParams).get('includeRts')) === true;
+    if (needsCredentials && !hasCredentials) {
+        throw new ConfigNotFoundError('includeReplies, includeRts and count need Twitter credentials, such as TWITTER_AUTH_TOKEN. Remove them to read the posts that x.com shows logged-out visitors.');
+    }
+    const source = needsCredentials ? credentialsApi : api;
 
-    await api.init();
-    const userInfo = await api.getUser(id);
-    let data;
-    try {
-        data = await (include_replies ? api.getUserTweetsAndReplies(id, params) : api.getUserTweets(id, params));
-        if (!include_rts) {
-            data = utils.excludeRetweet(data);
-        }
-    } catch (error) {
-        logger.error(error);
+    await source.init();
+    const userInfo = await source.getUser(id);
+    let data = await (include_replies ? source.getUserTweetsAndReplies(id, params) : source.getUserTweets(id, params));
+    const sourceCount = data.length;
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
@@ -88,13 +96,13 @@ async function handler(ctx) {
     return {
         title: `Twitter @${userInfo?.name}`,
         link: `https://x.com/${userInfo?.screen_name}`,
-        image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
+        image: profileImageUrl?.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item:
             data &&
             utils.ProcessFeed(ctx, {
                 data,
             }),
-        allowEmpty: true,
+        allowEmpty: !include_rts && sourceCount > 0 && data.length === 0,
     };
 }

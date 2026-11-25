@@ -5,7 +5,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/newbook/:count?',
@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
                     }
                 }
                 if (titleSub !== '') {
-                    title += '　——　' + titleSub;
+                    title += '\u{3000}——\u{3000}' + titleSub;
                 }
 
                 const pubDateRaw = $detail('table[summary="底本データ"] > tbody > tr:nth-child(3) > td:nth-child(2)').text();

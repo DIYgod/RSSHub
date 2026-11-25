@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/search/:keyword?/:filter?/:sort?',
     categories: ['multimedia'],
     example: '/javdb/search/巨乳',
-    parameters: { keyword: '关键字，默认为空', filter: '过滤，见下表，默认为 `可播放`', sort: '排序，见下表，默认为 `按相关度排序`' },
+    parameters: { keyword: '关键字，默认为空', filter: '过滤，见下表，默认为 `全部`', sort: '排序，见下表，默认为 `按相关度排序`' },
     features: {
         requireConfig: [
             {
@@ -50,7 +50,12 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
     const sort = ctx.req.param('sort') ?? '0';
 
-    const currentUrl = `/search?q=${keyword}${filter && filter !== 'none' ? `&f=${filter}` : ''}&sb=${sort}`;
+    const query = new URLSearchParams({ q: keyword });
+    if (filter && filter !== 'none') {
+        query.set('f', filter);
+    }
+    query.set('sb', sort);
+    const currentUrl = `/search?${query.toString()}`;
 
     const filters = {
         '': '',

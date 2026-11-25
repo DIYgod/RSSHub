@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'http://www.maonan.gov.cn';
 
@@ -115,10 +114,10 @@ async function handler(ctx) {
             const url = new URL($item.attr('href')!);
             const link = url.href;
 
-            const pubDate = timezone(parseDate($('a[href="' + link + '"] ~ .time').text()), 8);
+            const pubDate = parseDate($('a[href="' + link + '"] ~ .time').text(), 8);
 
             return cache.tryGet(link, async () => {
-                // 获取网页
+                // Fetch the article page.
                 const { data: res } = await got(link);
                 const content = load(res);
 

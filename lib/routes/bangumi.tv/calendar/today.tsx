@@ -1,6 +1,7 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { parseDate } from '@/utils/time';
 
 import { getData } from './_base';
 
@@ -51,10 +52,7 @@ async function handler() {
     const [list, data] = await getData();
     const siteMeta = data.siteMeta;
 
-    const today = new Date(Date.now());
-    // 将 UTC 时间向前移动9小时，即可在数值上表示东京时间
-    today.setUTCHours(today.getUTCHours() + 9);
-    const day = today.getUTCDay();
+    const day = Temporal.Now.zonedDateTimeISO('Asia/Tokyo').dayOfWeek % 7;
 
     const todayList = list.find((l) => l.weekday.id % 7 === day);
     const todayBgmId = new Set(todayList.items.map((t) => t.id.toString()));
@@ -71,15 +69,12 @@ async function handler() {
         title: 'bangumi 每日放送',
         link: 'https://bgm.tv/calendar',
         item: todayBgm.map((bgm) => {
-            const updated = new Date(Date.now());
-            updated.setSeconds(0);
-            const begin = new Date(bgm.begin || updated);
-            updated.setHours(begin.getHours());
-            updated.setMinutes(begin.getMinutes());
-            updated.setSeconds(begin.getSeconds());
+            const now = Temporal.Now.zonedDateTimeISO('UTC').with({ second: 0 });
+            const begin = (bgm.begin && parseDate(bgm.begin)?.toZonedDateTimeISO('UTC')) || now;
+            const updated = now.with({ hour: begin.hour, minute: begin.minute, second: begin.second });
 
             const link = `https://bangumi.tv/subject/${bgm.bgmId}`;
-            const id = `${link}#${new Intl.DateTimeFormat('zh-CN').format(updated)}`;
+            const id = `${link}#${updated.toPlainDate().toLocaleString('zh-CN')}`;
 
             const html = renderTodayDescription(bgm, siteMeta);
 
@@ -94,8 +89,8 @@ async function handler() {
                 ]
                     .filter(Boolean) // don't join if empty
                     .join('｜'),
-                updated: updated.toISOString(),
-                pubDate: updated.toUTCString(),
+                updated: updated.toInstant(),
+                pubDate: updated.toInstant(),
                 link,
                 description: html,
                 content: { html },

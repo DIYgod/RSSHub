@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/podcasts',
@@ -15,73 +18,90 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
         {
             source: ['supchina.com/podcasts', 'supchina.com/'],
         },
+        {
+            source: ['thechinaproject.com/podcasts', 'thechinaproject.com/'],
+            target: '/podcasts',
+        },
     ],
     name: 'Podcasts',
     maintainers: ['nczitzk'],
     handler,
-    url: 'supchina.com/podcasts',
+    url: 'thechinaproject.com/podcasts',
+    description: 'The China Project, formerly SupChina, closed in November 2023. This route provides its official podcast archive. Some archived episodes are no longer available from the audio host.',
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://supchina.com';
-    const currentUrl = `${rootUrl}/feed/podcast`;
+    const rootUrl = 'https://thechinaproject.com';
+    const currentUrl = `${rootUrl}/feed/podcast/`;
 
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
 
-    const $ = load(response.data);
+    const $ = load(response.data, { xml: true });
 
     let items = $('item')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, getRouteLimit(ctx, 50))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                link: $item.find('guid').text(),
+                guid: $item.find('guid').text(),
+                link: $item.find('link').text(),
                 author: $item.find(String.raw`itunes\:author`).text(),
-                title: '',
+                title: $item.children('title').text(),
+                pubDate: parseDate($item.find('pubDate').text()),
+                enclosure_url: $item.find('enclosure').attr('url'),
+                enclosure_type: $item.find('enclosure').attr('type'),
+                itunes_item_image: $item.find(String.raw`itunes\:image`).attr('href'),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`supchina:podcasts:v3:${item.link}`, async (): Promise<Pick<DataItem, 'title' | 'description' | 'itunes_item_image' | 'itunes_duration' | 'enclosure_url' | 'enclosure_type'>> => {
+                try {
+                    const episodeResponse = await got({
+                        method: 'get',
+                        url: item.enclosure_url?.replace(/\.mp3$/, ''),
+                        headers: {
+                            accept: 'application/json',
+                        },
+                    });
 
-                const episodeResponse = await got({
-                    method: 'get',
-                    url: `https://rss.art19.com/episodes/${detailResponse.data.match(/data-episode-id="(.*?)"/)[1]}`,
-                    headers: {
-                        accept: 'application/json',
-                    },
-                });
+                    const data = episodeResponse.data;
 
-                const data = episodeResponse.data;
-
-                item.title = data.content.episode_title;
-                item.itunes_item_image = data.content.cover_image;
-                item.itunes_duration = data.content.duration;
-                item.enclosure_url = data.content.media.mp3.url;
-                item.enclosure_type = data.content.media.mp3.content_type;
-                item.description = data.content.episode_description;
-                item.pubDate = parseDate(data.performed_at);
-
-                return item;
-            })
-        )
+                    return {
+                        title: data.content.episode_title,
+                        itunes_item_image: data.content.cover_image,
+                        itunes_duration: data.content.duration,
+                        enclosure_url: data.content.media.mp3.url,
+                        enclosure_type: data.content.media.mp3.content_type,
+                        description: data.content.episode_description,
+                    };
+                } catch (error) {
+                    if (!(error instanceof FetchError) || error.response?.status !== 404) {
+                        throw error;
+                    }
+                    const detailResponse = await got(item.link!);
+                    const content = load(detailResponse.data);
+                    content('.aspect-spacer, .post-recs, .author-bio, #js-reg-wrap').remove();
+                    return { title: item.title, description: content('.post__main').html() };
+                }
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

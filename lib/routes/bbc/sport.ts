@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { extractInitialData, fetchBbcContent } from './utils';
 
@@ -28,7 +28,7 @@ async function handler(ctx) {
     const { sport } = ctx.req.param();
     const link = `https://www.bbc.com/sport/${sport}`;
 
-    const response = await ofetch(link);
+    const response = await ofetch(link, { allowH2: false });
     const $ = load(response);
 
     const initialData = extractInitialData($);

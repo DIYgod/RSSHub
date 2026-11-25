@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -22,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.warhammer-community.com';
-    const limit = Number(ctx.req.query('limit') || '16');
+    const limit = getRouteLimit(ctx, 16);
 
     const response = await ofetch(`${baseUrl}/api/search/news/`, {
         method: 'POST',
@@ -39,29 +41,28 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.news.map((item) => ({
+    const list: DataItem[] = response.news.map((item) => ({
         title: item.title,
         link: `${baseUrl}/en-gb${item.uri}/`,
         description: item.excerpt,
         image: `https://assets.warhammer-community.com/${item.image.path}`,
-        pubDate: parseDate(item.date),
+        pubDate: parseDateStrict(item.date_universal, 'YYYY-MM-DD', 0),
         category: item.topics.map((topic) => topic.title),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`warhammer-community:detail:${item.link}`, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
-
                 const content = $('.article-content');
                 content.find('button').remove();
-
-                item.description = content.html() || item.description;
-
-                return item;
-            })
-        )
+                return { description: content.html() };
+            });
+            return { ...item, description: details.description || item.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

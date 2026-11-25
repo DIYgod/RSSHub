@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -39,12 +41,25 @@ export const route: Route = {
     handler,
 };
 
+const videoMimeTypes = {
+    mp4: 'video/mp4',
+    webm: 'video/webm',
+    ogv: 'video/ogg',
+    m3u8: 'application/vnd.apple.mpegurl',
+} satisfies Record<string, string>;
+const isVideoExtension = (key: string): key is keyof typeof videoMimeTypes => Object.hasOwn(videoMimeTypes, key);
+
+function getVideoMimeType(url?: string) {
+    const extension = url ? new URL(url, 'http://v.iqilu.com').pathname.split('.').pop()!.toLowerCase() : undefined;
+    return extension && isVideoExtension(extension) ? videoMimeTypes[extension] : undefined;
+}
+
 async function handler(ctx) {
     const { category = 'sdws/sdxwlb' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://v.iqilu.com';
-    const currentUrl = `${rootUrl}/${category}`;
+    const currentUrl = `${rootUrl}/${category.replace(/\/?$/, '/')}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -56,10 +71,15 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const a = $item.find('a').first();
-            const image = $item.find('img').first();
+            const a = $item.find('a');
+            const image = $item.find('img');
 
             $item.find('dd').last().remove();
+            const date = $item
+                .find('dd')
+                .last()
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/)![0];
 
             return {
                 title: a.prop('title') ?? '',
@@ -70,19 +90,14 @@ async function handler(ctx) {
                         alt: image.prop('alt'),
                     },
                 }),
-                pubDate: parseDate(
-                    $item
-                        .find('dd')
-                        .last()
-                        .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)![1]
-                ),
+                pubDate: parseDate(date, 'YYYY-MM-DD', 8),
                 itunes_item_image: image.prop('src'),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -90,7 +105,7 @@ async function handler(ctx) {
 
                 item.title = content('div.vtitle').text();
                 item.enclosure_url = content('#copy_mp4text').prop('value');
-                item.enclosure_type = item.enclosure_url ? `video/${item.enclosure_url.split(/\./).pop()}` : undefined;
+                item.enclosure_type = getVideoMimeType(item.enclosure_url);
 
                 item.description = renderDescription({
                     image: {
@@ -101,12 +116,11 @@ async function handler(ctx) {
                         src: item.enclosure_url,
                         type: item.enclosure_type,
                     },
-                    description: content('div.vinfo').text().trim(),
                 });
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
@@ -120,14 +134,12 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language: 'zh-CN' as const,
         image: $('div.s_logo img').prop('src'),
         icon,
         logo: icon,
-        subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         itunes_author: author,
         itunes_category: 'News',
-        allowEmpty: true,
     };
 }

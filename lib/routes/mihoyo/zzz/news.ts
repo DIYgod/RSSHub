@@ -1,7 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     'zh-cn': {
@@ -44,7 +45,7 @@ const categories = {
         },
         title: '絕區零',
         link: 'https://zenless.hoyoverse.com/zh-tw/news',
-        apiRootUrl: 'https://api-os-takumi-static.hoyoverse.com/content_v2_user/app/3e9196a4b9274bd7/getContentList',
+        apiRootUrl: 'https://sg-public-api-static.hoyoverse.com/content_v2_user/app/3e9196a4b9274bd7/getContentList',
     },
 };
 
@@ -68,7 +69,7 @@ export const route: Route = {
         },
     ],
     name: '绝区零',
-    maintainers: ['Yeye-0426'],
+    maintainers: ['Coxwtwo'],
     handler,
     url: 'zzz.mihoyo.com/news',
     description: `#### 新闻 {#mi-ha-you-jue-qu-ling-xin-wen}
@@ -81,11 +82,14 @@ export const route: Route = {
 async function handler(ctx) {
     // location 地区 category 类型
     const { location = 'zh-cn', category = 'news-all' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    if (!categories[location]?.[category]?.id) {
+        throw new InvalidParameterError('Unknown location or category; use a documented combination.');
+    }
+    const limit = getRouteLimit(ctx, 50);
 
     const params = {
         'zh-cn': `iPageSize=${limit}&iPage=1&sLangKey=zh-cn&isPreview=0&iChanId=${categories[location][category].id}`,
-        'zh-tw': `iPageSize=${limit}&iPage=1&sLangKey=zh-tw&isPreview=0&iChanId=${categories[location][category].id}`,
+        'zh-tw': `iPageSize=${limit}&iPage=1&sLangKey=zh-tw&iChanId=${categories[location][category].id}`,
     };
 
     const apiUrl = `${categories[location].apiRootUrl}?${params[location]}`;
@@ -95,7 +99,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${categories[location].link}/${item.iInfoId}`,
-        pubDate: timezone(parseDate(item.dtStartTime), 8), // 使用 timezone 工具指定时区 (+8是北京时间)
+        pubDate: parseDate(item.dtStartTime, 8), // 使用 timezone 工具指定时区 (+8是北京时间)
         category: item.sCategoryName,
     }));
 

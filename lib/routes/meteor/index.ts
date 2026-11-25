@@ -1,6 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, getBoards, renderDesc } from './utils';
 
@@ -29,6 +31,9 @@ async function handler(ctx) {
     let boardInfo;
     if (board !== 'all') {
         boardInfo = boards.find((b) => b.id === board || b.alias === board);
+        if (!boardInfo) {
+            throw new InvalidParameterError(`Unknown board: ${board}. Use /meteor/boards to find a board ID or alias.`);
+        }
         board = boardInfo.id;
     }
 
@@ -38,7 +43,7 @@ async function handler(ctx) {
             boardId: board,
             isCollege: false,
             page: 0,
-            pageSize: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            pageSize: getRouteLimit(ctx, 30),
         },
     });
 
@@ -55,8 +60,8 @@ async function handler(ctx) {
 
     return {
         title: `${board === 'all' ? '全部看板' : boardInfo.title} | Meteor 學生社群`,
-        description: board === 'all' ? null : boardInfo.feedDescription,
-        image: board === 'all' || boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
+        description: board === 'all' ? undefined : boardInfo.feedDescription,
+        image: board === 'all' || boardInfo.imgUrl === 'not_set' ? undefined : boardInfo.imgUrl,
         link: `${board === 'all' ? `${baseUrl}/board/all` : boardInfo.link}/new`,
         item: items,
     };

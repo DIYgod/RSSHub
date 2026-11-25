@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import data from '../data';
 import extractor from '../extractor';
@@ -33,7 +33,7 @@ export const route: Route = {
 type ExtractedArticle = {
     description?: string | null;
     author?: string;
-    exactDate?: Date;
+    exactDate?: Temporal.Instant;
 };
 
 async function handler(ctx) {
@@ -42,8 +42,9 @@ async function handler(ctx) {
     const response = await got(baseUrl + data.wh.jwc.columns[column].url);
     const $ = load(response.data);
     const items = $('.articleul li');
-    const out = await Promise.all(
-        items.map(async (index, item) => {
+    const out = await pMap(
+        items.toArray(),
+        async (item) => {
             const $item = $(item);
             const anchor = $item.find('a');
             const dateElement = $item.find('div:last-of-type');
@@ -54,7 +55,7 @@ async function handler(ctx) {
             const title = $item.text();
             const { description, author: exactAuthor, exactDate } = await cache.tryGet<ExtractedArticle>(link!, () => extractor(link));
             const author = exactAuthor ?? '教务处';
-            const pubDate = exactDate ?? timezone(parseDate(dateText.slice(1, -1), 'YYYY-MM-DD'), 8);
+            const pubDate = exactDate ?? parseDate(dateText.slice(1, -1), 'YYYY-MM-DD', 8);
             return {
                 title,
                 link,
@@ -62,7 +63,8 @@ async function handler(ctx) {
                 pubDate,
                 author,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

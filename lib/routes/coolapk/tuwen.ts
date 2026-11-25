@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -32,6 +33,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'hot';
+    if (!['hot', 'latest'].includes(type)) {
+        throw new InvalidParameterError('Invalid article type. Use hot or latest.');
+    }
     let feedTitle;
     const fullUrl = new URL('/v6/page/dataList', utils.base_url);
     if (type === 'latest') {
@@ -54,12 +58,12 @@ async function handler(ctx) {
     });
     const data = response.data.data;
 
-    const out = await Promise.all(data.map((item) => utils.parseDynamic(item)));
+    const out = await Promise.all(utils.selectDynamics(data).map((item) => utils.parseDynamic(item)));
 
     return {
         title: feedTitle,
         link: 'https://www.coolapk.com/',
         description: feedTitle,
-        item: out,
+        item: out.filter(Boolean),
     };
 }

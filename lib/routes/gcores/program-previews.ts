@@ -5,7 +5,7 @@ import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL('radios/preview', baseUrl).href;
@@ -41,7 +41,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gcores.com/radios/preview'],
-            target: '/gcores/radios/preview',
+            target: '/radios/preview',
         },
     ],
     view: ViewType.Notifications,

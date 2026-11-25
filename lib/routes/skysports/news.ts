@@ -1,9 +1,27 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities/escape';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+interface ArticleSchema {
+    '@type'?: string;
+    datePublished?: string;
+    liveBlogUpdate?: Array<{ articleBody: string }>;
+    author?: { name?: string };
+}
+
+function getLiveBlogDescription(schema?: ArticleSchema) {
+    return schema?.liveBlogUpdate?.flatMap((update) => (update.articleBody.trim() ? `<p>${escapeUTF8(update.articleBody)}</p>` : [])).join('');
+}
+
+function getArticleSchema(content: CheerioAPI): ArticleSchema {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle"), script[type="application/ld+json"]:contains("LiveBlogPosting")').text());
+}
 
 export const route: Route = {
     path: '/news/:team',
@@ -36,36 +54,47 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('.news-list__headline-link')
+    let items = $('.news-list__headline-link, .sdc-site-tile__headline-link')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
-                link: $item.attr('href'),
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`skysports:article:v5:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
                 const content = load(detailResponse.data);
+                const schema = getArticleSchema(content);
 
-                content('.roadblock').remove();
-                content('.sdc-article-widget, .sdc-site-layout-sticky-region').remove();
+                content('.sdc-site-layout-sticky-region, .ui-vendor-checkd, .sdc-article-related-stories, .sdc-article-strapline').remove();
+                content('.sdc-site-video').each((_, element) => {
+                    const video = content(element);
+                    const poster = video.find('.sdc-site-video__poster img');
+                    const caption = video.find('.sdc-site-video__caption');
+                    video.empty();
+                    video.append(poster, caption);
+                });
 
-                item.description = content('.sdc-article-body, .polaris-tile-group-separator').html();
-                item.pubDate = parseDate(detailResponse.data.match(/"datePublished": ?"(.*)","dateModified"/)[1]);
+                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').html() ?? getLiveBlogDescription(schema);
+                const pubDate = schema?.datePublished ? parseDate(schema.datePublished) : undefined;
+                const author = schema?.author?.name;
 
-                return item;
-            })
-        )
+                return { description, pubDate, author };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

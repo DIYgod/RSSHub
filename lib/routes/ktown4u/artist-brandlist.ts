@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/artistBrandlist/:grpNo/:grpNo2?',
@@ -35,10 +35,10 @@ export const route: Route = {
         });
         const items = data.map((item) => ({
             title: item.GOODS_NM,
-            url: item.IMG_PATH,
+            image: item.IMG_PATH,
             link: `https://cn.ktown4u.com/iteminfo?goods_no=${item.GOODS_NO}`,
             description: desc(item),
-            pubDate: parseDate(item.RELEASE_DT),
+            pubDate: parseDate(`${item.RELEASE_DT}T00:00:00Z`),
         }));
 
         return {
@@ -57,5 +57,5 @@ const desc = (item) => {
     if (item.DISP_PRICE !== item.DISP_DC_PRICE) {
         price = `${item.CURR_F_CD}${item.DISP_DC_PRICE} / 原价：${price}`;
     }
-    return `${saleState} ${price} <br> <img src=${item.IMG_PATH}> <br> ${item.GOODS_NM}`;
+    return `${saleState} ${price} <br> <img src=${item.IMG_PATH}>`;
 };

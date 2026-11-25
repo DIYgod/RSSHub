@@ -1,8 +1,9 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/whale/rank/:type/:rule',
@@ -27,6 +28,9 @@ rule
 
 async function handler(ctx: Context) {
     const { type, rule } = ctx.req.param();
+    if (!['download', 'like'].includes(type) || !['day', 'week', 'month', 'amount'].includes(rule)) {
+        throw new InvalidParameterError('Invalid ranking parameters. Use download or like, and day, week, month, or amount.');
+    }
 
     const stype = {
         download: '下载',
@@ -46,7 +50,8 @@ async function handler(ctx: Context) {
 
     const items = response.items.map((item) => ({
         title: item.content,
-        pubDate: parseDate(item.updated_at * 1000),
+        pubDate: parseDate(item.created_at, 'X'),
+        updated: parseDate(item.updated_at, 'X'),
         author: item.author.username,
         description: `<img src=${item.attachment.pic_url.split('?', 1)[0]} />`,
         link: item.attachment.pic_url.split('?', 1)[0],

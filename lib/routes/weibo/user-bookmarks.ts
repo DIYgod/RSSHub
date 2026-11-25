@@ -5,9 +5,8 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { md5 } from '@/utils/hash';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
 
 import weiboUtils from './utils';
 
@@ -20,7 +19,6 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'WEIBO_COOKIES',
-                optional: true,
                 description: '',
             },
         ],
@@ -69,7 +67,7 @@ async function handler(ctx) {
     }
 
     const uid = await cache.tryGet(
-        'weibo:user_bookmarks:login-user',
+        `weibo:user_bookmarks:login-user:${md5(config.weibo.cookies)}`,
         async () => {
             const _r = await got({
                 method: 'get',
@@ -85,6 +83,10 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
+
+    if (String(uid) !== ctx.req.param('uid')) {
+        throw new Error('The requested user does not match the configured Weibo Cookie account. Only the logged-in user can access their own bookmarks.');
+    }
 
     const containerData = await cache.tryGet(
         `weibo:user_bookmarks:index:${uid}`,
@@ -137,13 +139,13 @@ async function handler(ctx) {
 
                 if (data?.text) {
                     item.mblog.text = data.text;
-                    item.mblog.created_at = parseDate(data.created_at);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(data.created_at);
                     item.mblog.pics = data.pics;
                     if (item.mblog.retweeted_status && data.retweeted_status) {
                         item.mblog.retweeted_status.created_at = data.retweeted_status.created_at;
                     }
                 } else {
-                    item.mblog.created_at = timezone(item.mblog.created_at, 8);
+                    item.mblog.created_at = weiboUtils.parseCreatedAt(item.mblog.created_at);
                 }
 
                 // 转发的长微博处理

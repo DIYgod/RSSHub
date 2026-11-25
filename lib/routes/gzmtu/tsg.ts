@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tsg',
@@ -34,20 +34,22 @@ async function handler(): Promise<Data> {
             return {
                 title: a.attr('title') ?? a.text(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('.list_time').text(), 'YYYY年MM月DD日'), 8),
+                pubDate: parseDate($item.find('.list_time').text(), 'YYYY年MM月DD日', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const body = await cache.tryGet(`gzmtu:tsg:body:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                item.description = $('div[id^=vsb_content]').html();
-                return item;
-            })
-        )
+                return { description: $('div[id^=vsb_content]').html() };
+            });
+            return { ...item, ...body };
+        },
+        { concurrency: 3 }
     );
 
     return {

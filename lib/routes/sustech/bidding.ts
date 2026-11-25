@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/bidding',
@@ -39,22 +41,25 @@ async function handler() {
 
     const $ = load(data);
 
-    const list = $('.index-wrap.index-2 ul li');
+    const list: Array<DataItem & { link: string }> = $('.index-wrap.index-2 ul li')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const a = $item.find('li > a');
+            return { pubDate: parseDate($item.find('li > span').text(), 8), title: a.text(), link: `${link}${a.attr('href')}` };
+        });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const content = load(response.data);
+                return { description: content('.detail-wrap .text-wrap').html() };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
+    );
 
-    return {
-        title: '南方科技大学采购与招标管理部',
-        link,
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                const itemPubdate = $item.find('li > span').text();
-                const a = $item.find('li > a');
-                return {
-                    pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),
-                    title: a.text(),
-                    link: a.attr('href'),
-                };
-            }),
-    };
+    return { title: '南方科技大学采购与招标管理部', link, item: items };
 }

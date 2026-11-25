@@ -1,11 +1,12 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { formatDate, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/mcr/product/*',
     categories: ['program-update'],
     example: '/microsoft/mcr/product/dotnet/framework/runtime',
-    parameters: { product: 'repository path in mcr.microsoft.com' },
+    description: 'Append the repository path after `/mcr/product/`, including nested repository segments.',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -16,7 +17,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://mcr.microsoft.com/en-us/product/:product/tags'],
+            source: ['mcr.microsoft.com/en-us/product/*product/tags'],
+            target: '/mcr/product/:product',
         },
     ],
     name: 'Product tags in mcr.microsoft.com',
@@ -41,7 +43,8 @@ async function handler(ctx) {
         image: `https://mcr.microsoft.com${details.imagePath}`,
         link: `https://mcr.microsoft.com/en-us/product/${product}`,
         item: tags.map((tag: any) => {
-            const descriptionItems = [`Digest: \`${tag.digest}\``, `Last modified date: ${new Date(tag.lastModifiedDate).toDateString()}`];
+            const lastModifiedDate = parseDate(tag.lastModifiedDate);
+            const descriptionItems = [`Digest: \`${tag.digest}\``, `Last modified date: ${lastModifiedDate ? formatDate(lastModifiedDate, 'ddd MMM DD YYYY') : 'Invalid Date'}`];
 
             if (tag.architecture) {
                 descriptionItems.push(`Architecture: ${tag.architecture}`);
@@ -54,7 +57,7 @@ async function handler(ctx) {
                 title: `${details.name} - ${tag.name}`,
                 author: details.publisher,
                 description: descriptionItems.join('<br />'),
-                pubDate: new Date(tag.lastModifiedDate),
+                pubDate: lastModifiedDate,
                 guid: `mcr::${product}::${tag.name}::${tag.digest}`,
                 link: `https://mcr.microsoft.com/en-us/product/${product}/tags?name=${tag.name}&digest=${tag.digest}`,
             };

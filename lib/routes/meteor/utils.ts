@@ -32,7 +32,7 @@ const renderDesc = (desc) => {
     const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be.*(?:v=|v\/|\/)([\w-]+)&?/g;
     const matchYouTube = desc.match(youTube);
     const matchImgur = desc.match(/https:\/\/i.imgur.com\/\w*.(jpg|png|gif|jpeg)/g);
-    const matchImage = desc.match(/https:\/\/storage\.meteor\.today\/image\/[\da-f]{24}\.(jpg|png)/g);
+    const matchImage = desc.match(/https:\/\/storage\.meteor\.today\/image\/[\da-f]{24}\.(jpe?g|png|gif|webp)/g);
     const matchVideo = desc.match(/(https:\/\/storage\.meteor\.today\/video\/[\da-f]{24}\.)(mp4|mov|avi|flv|wmv|mpeg|mkv)/gi);
     const matchSticker = desc.match(/assets\/images\/stickers\/(duck|ep2|ep1)\/\w*.(jpg|png|gif|jpeg)/g);
     const matchEmoji = desc.match(/assets\/images\/emoji\/\w*.(jpg|png|gif|jpeg)/g);

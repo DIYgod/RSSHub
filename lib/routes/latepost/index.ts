@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseRelativeDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 /**
  * Convert an array into a dictionary object.
@@ -13,15 +15,9 @@ import timezone from '@/utils/timezone';
  * @param {Array} arr - The array to be converted.
  * @returns {Object} - The converted dictionary object.
  */
-const arrayToDictionary = (arr) =>
-    Object.fromEntries(
-        arr.map(({ id, ...rest }) => [
-            id,
-            {
-                ...rest,
-            },
-        ])
-    );
+const arrayToDictionary = (arr) => Object.fromEntries(arr.map(({ id, ...rest }) => [id, rest]));
+
+const requestData = (url: string, form?: Record<string, string | number>) => ofetch(url, form ? { method: 'POST', body: new URLSearchParams(Object.entries(form).map(([key, value]) => [key, String(value)])) } : undefined);
 
 export const route: Route = {
     path: '/:proma?',
@@ -46,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const proma = ctx.req.param('proma');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
+    const limit = getRouteLimit(ctx, 5);
 
     const title = '晚点';
     const defaultTitle = '最新报道';
@@ -59,63 +55,91 @@ async function handler(ctx): Promise<Data> {
     const apiCommentUrl = new URL('news/get-comment', rootUrl).href;
     const apiUrl = new URL(proma ? 'news/get-news-data' : 'site/index', rootUrl).href;
 
-    const { data: columnResponse } = await got(apiColumnUrl);
+    const columnResponse = await requestData(apiColumnUrl);
     const columns = arrayToDictionary(columnResponse?.data ?? []);
 
-    const { data: response } = await got.post(apiUrl, {
-        form: {
-            page: 1,
-            limit,
-            programa: Number(proma),
-        },
+    const response = await requestData(apiUrl, {
+        page: 1,
+        limit,
+        programa: Number(proma),
     });
 
-    let items = response.data.slice(0, limit).map((item) => ({
+    const list: Array<{
+        title: string;
+        link: string;
+        category: Array<string | undefined>;
+        guid: string | number;
+    }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.detail_url, rootUrl).href,
-        category: [item.is_dj ? exclusiveCategory : undefined, item.programa ? columns[item.programa]?.title : undefined, ...item.label.map((c) => c.label)],
+        category: [Number(item.is_dj) === 1 ? exclusiveCategory : undefined, item.programa ? columns[item.programa]?.title : undefined, ...item.label.map((c) => c.label)],
         guid: item.id,
-        pubDate: parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日']),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const category = item.category.filter((category): category is string => Boolean(category));
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'latepost.com')) {
+                return { ...item, category, guid: `latepost-${item.guid}` };
+            }
+            const article = await cache.tryGet(`latepost:article:${item.link}`, async () => {
+                const detailResponse = await requestData(item.link);
 
-                const { data: commentResponse } = await got.post(apiCommentUrl, {
+                const commentResponse = await requestData(apiCommentUrl, {
                     news_id: item.guid,
                     page: 1,
-                    limit: Infinity,
+                    limit: 1,
                     sort: 1,
                     delete_num: 0,
                 });
 
                 const content = load(detailResponse);
 
-                item.title ??= content('div.article-header-title').text();
-                item.description = content('#select-main').html()!.replaceAll('<p><br></p>', '');
-                item.author = content('div.article-header-author div.author-link a.label').first().text();
-                item.category = item.category.filter(Boolean);
-                item.guid = `latepost-${item.guid}`;
+                const title = content('div.article-header-title').text();
 
-                const pubDate = content('div.article-header-date').text();
-
-                if (pubDate) {
-                    item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
+                // The cover image lives outside of the article body (#select-main), in either the
+                // `.abstract` block (exclusives / long reads) or `.interview-pic` (interviews).
+                // Fall back to the share image embedded in the page script, which covers both layouts.
+                let cover = content('#abstract_img').attr('src') || content('img.interview-pic').attr('src');
+                if (!cover) {
+                    cover = /var\s+imgUrl\s*=\s*'([^']+)'/.exec(detailResponse)?.[1];
                 }
+                // The site serves the cover over plain http, which readers may refuse to load.
+                const coverHtml = cover ? `<img src="${new URL(cover, rootUrl).href.replace(/^http:/, 'https:')}">` : '';
 
-                item.pubDate = timezone(item.pubDate, 8);
-                item.comments = commentResponse.data?.length() ?? 0;
+                const abstract = content('div.abstract-pic-left').html();
+                const abstractHtml = abstract ? `<blockquote>${abstract}</blockquote>` : '';
 
-                return item;
-            })
-        )
+                const description = coverHtml + abstractHtml + content('#select-main').html()!.replaceAll('<p><br></p>', '');
+                const author = content('div.article-header-author div.author-link a.label').first().text();
+                const date = content('div.article-header-date').text();
+                const pubDate = /\d+月\d+日/.test(date)
+                    ? parseDate(date, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm'], 8)
+                    : /ago|^(?:just\s*now|刚刚|剛剛)$|(?:[秒天周月年]|分[钟鍾]?|小[时時]|星期)\s*[前后後]/.test(date)
+                      ? parseRelativeDate(date)
+                      : parseRelativeDate(date, 8);
+
+                return { title, description, author, pubDate, comments: Number(commentResponse.count) };
+            });
+            return {
+                ...item,
+                title: item.title ?? article.title,
+                description: article.description,
+                author: article.author,
+                category,
+                guid: `latepost-${item.guid}`,
+                pubDate: article.pubDate,
+                comments: article.comments,
+            };
+        },
+        { concurrency: 3 }
     );
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await requestData(currentUrl);
 
     const $ = load(currentResponse);
 

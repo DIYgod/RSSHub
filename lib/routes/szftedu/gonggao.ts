@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+
+import { getArticleContent, getArticlePubDate } from './utils';
 
 const host = 'https://ylxx.szftedu.cn/xx_5828/xygg_5832/';
 
@@ -27,6 +29,21 @@ export const route: Route = {
     description: '',
 };
 
+async function getArticle(link: string): Promise<Partial<DataItem>> {
+    const trueLink = link.startsWith('http') ? link : host + link.slice(1);
+    const response = await got(trueLink);
+    const $ = load(response.data);
+    const item: Partial<DataItem> = { description: link.startsWith('http') ? await getArticleContent($, trueLink) : $('div.TRS_Editor').html() };
+    const articleDate = getArticlePubDate(response.data);
+    const date = $('.item').first().text().replace('发布时间：', '').trim();
+    if (articleDate) {
+        item.pubDate = articleDate;
+    } else if (date) {
+        item.pubDate = parseDate(date, 8);
+    }
+    return item;
+}
+
 async function handler() {
     const link = host;
     const response = await got(link);
@@ -37,22 +54,10 @@ async function handler() {
         .map((el): DataItem => ({
             title: $('a', el).text(),
             link: $('a', el).attr('href'),
-            pubDate: timezone(parseDate($('span[class=canedit]', el).text()), 8),
+            pubDate: parseDate($('span[class=canedit]', el).text(), 'YYYY.MM.DD', 8),
         }));
 
-    const items = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const thisUrl = item.link;
-                const trueLink = thisUrl!.includes('http') ? thisUrl : host + thisUrl!.slice(1);
-                const response = await got(trueLink);
-                const $ = load(response.data);
-                item.description = thisUrl!.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
-                item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
-                return item;
-            })
-        )
-    );
+    const items = await pMap(lists, async (item) => ({ ...item, ...(await cache.tryGet(`szftedu:gonggao:article:${item.link}`, () => getArticle(item.link!))) }), { concurrency: 3 });
 
     return {
         title: '园岭小学公告',

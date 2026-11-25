@@ -7,52 +7,46 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '1');
+    const limit = getRouteLimit(ctx, 1);
 
     const rootUrl = 'https://www.ali213.net';
-    const apiRootUrl = 'https://mp.ali213.net';
     const targetUrl: string = new URL(`/news/zl/${category ? (category.endsWith('/') ? category : `${category}/`) : ''}`, rootUrl).href;
-    const apiUrl: string = new URL('ajax/newslist', apiRootUrl).href;
-
-    const response = await ofetch(apiUrl, {
-        query: {
-            type: 'new',
-        },
-    });
-
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = ($('html').prop('lang') ?? 'zh') as Language;
 
-    let items: DataItem[] = JSON.parse(response.replace(/^\((.*)\)$/, '$1'))
-        .data.slice(0, limit)
-        .map((item): DataItem => {
-            const title: string = item.Title;
-            const description: string = renderDescription({
-                intro: item.GuideRead ?? '',
-            });
-            const guid = `ali213-zl-${item.ID}`;
-            const image: string | undefined = item.PicPath ? `https:${item.PicPath}` : undefined;
-
-            const author: DataItem['author'] = item.xiaobian;
+    let items: DataItem[] = $('.subscribe-list .subscribe-li')
+        .slice(0, limit)
+        .toArray()
+        .map((element): DataItem => {
+            const item = $(element);
+            const article = item.find('a.a-title');
+            const href = article.attr('href');
+            const imageSrc = item.find('a.a-img img').attr('src');
+            const title = article.text();
+            const description = renderDescription({ intro: item.find('p').text() });
+            const link = href ? new URL(href, targetUrl).href : undefined;
+            const articleId = link?.match(/\/(\d+)\.html$/)?.[1];
+            const guid = articleId ? `ali213-zl-${articleId}` : link;
+            const image = imageSrc ? new URL(imageSrc, targetUrl).href : undefined;
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.addtime * 1000),
-                link: item.url ? `https:${item.url}` : undefined,
-                author,
+                link,
+                author: item.find('.subscribe-name').text(),
                 guid,
                 id: guid,
                 content: {
                     html: description,
-                    text: item.GuideRead ?? '',
+                    text: item.find('p').text(),
                 },
                 image,
                 banner: image,
@@ -115,9 +109,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         .filter((_): _ is { url: string; type: string; content_html: string } => true);
 
                     return {
+                        ...item,
                         title,
                         description,
-                        pubDate: item.pubDate,
+                        pubDate: parseDate($$('div.newstag_l').text().slice(0, 19), 'YYYY-MM-DD HH:mm:ss', 8),
                         category: $$('.category')
                             .toArray()
                             .map((c) => $$(c).text()),
@@ -149,7 +144,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').prop('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: feedImage,
         author: title.split(/_/).pop(),
         language,
@@ -187,11 +181,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.ali213.net/news/zl/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/ali213/zl${category ? `/${category}` : ''}`;
-            },
+            target: '/zl/:category?',
         },
         {
             title: '首页',

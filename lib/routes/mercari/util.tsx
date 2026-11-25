@@ -7,7 +7,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { ItemDetail, SearchResponse, ShopItemDetail } from './types';
 
@@ -103,7 +103,7 @@ const renderShopItemDescription = (detail: ShopItemDetail) =>
                     <td>カテゴリー</td>
                     <td>
                         {' '}
-                        {[...detail.productDetail.categories]
+                        {detail.productDetail.categories
                             .toReversed()
                             .map((item) => item.displayName)
                             .join(' > ')}{' '}
@@ -139,7 +139,7 @@ const renderShopItemDescription = (detail: ShopItemDetail) =>
     );
 
 function bytesToBase64URL(b: Buffer): string {
-    return b.toString('base64').replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+    return b.toBase64({ alphabet: 'base64url', omitPadding: true });
 }
 
 function strToBase64URL(s: string): string {
@@ -204,8 +204,8 @@ function derDecode(der: Buffer): DerSignature {
     }
 
     return {
-        r: fixBufferLength(r, 32),
-        s: fixBufferLength(s, 32),
+        r: fixBufferLength(r),
+        s: fixBufferLength(s),
     };
 }
 
@@ -226,7 +226,8 @@ function readDerLength(buf: Buffer, offset: number): DerLength {
     return { length, bytesRead: 1 + bytesCount };
 }
 
-function fixBufferLength(buffer: Buffer, length: number): Buffer {
+function fixBufferLength(buffer: Buffer): Buffer {
+    const length = 32;
     if (buffer.length > length) {
         const start = buffer.length - length;
         return buffer.subarray(start);
@@ -245,7 +246,7 @@ function generateDPOP({ uuid, method, url }: { uuid: string; method: string; url
 
     // Create JWT payload
     const payload = {
-        iat: Math.floor(Date.now() / 1000),
+        iat: Math.floor(Temporal.Now.instant().epochMilliseconds / 1000),
         jti: uuid,
         htu: url,
         htm: method.toUpperCase(),

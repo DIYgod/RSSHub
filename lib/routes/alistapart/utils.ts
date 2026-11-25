@@ -1,6 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const getData = (url) => ofetch(url);
 
@@ -14,8 +13,8 @@ const getList = (data) =>
             link,
             category: _embedded['wp:term'][0].map((v) => v.name),
             author: _embedded.author.map((v) => v.name).join(', '),
-            pubDate: timezone(parseDate(date_gmt), 0),
-            updated: timezone(parseDate(modified_gmt), 0),
+            pubDate: parseDate(date_gmt, 0),
+            updated: parseDate(modified_gmt, 0),
         };
     });
 

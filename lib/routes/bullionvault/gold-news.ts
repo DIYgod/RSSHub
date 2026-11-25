@@ -7,11 +7,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://bullionvault.com';
     const targetUrl: string = new URL(`gold-news${category ? `/${category}` : ''}`, baseUrl).href;
@@ -40,14 +42,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     avatar: undefined,
                 };
             });
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'DD MMM YY') : undefined,
                 link: linkUrl,
                 author: authors,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
@@ -57,17 +57,27 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'bullionvault.com')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
+                    const metadata = $$('script[type="application/ld+json"]')
+                        .toArray()
+                        .map((el) => {
+                            try {
+                                return JSON.parse($$(el).text());
+                            } catch {
+                                return;
+                            }
+                        })
+                        .find((entry) => entry?.['@type'] === 'NewsArticle');
 
                     const title: string = $$('article.article h1').text();
                     const description = $$('div.content').html();
-                    const pubDateStr: string | undefined = $$('div.submitted').text().split(/,/).pop();
                     const categories: string[] = $$('meta[name="news_keywords"]').attr('content')?.split(/,/) ?? [];
                     const authorEls: Element[] = $$('div.view-author-bio').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
@@ -79,19 +89,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             avatar: $$authorEl.find('img').attr('src'),
                         };
                     });
-                    const upDatedStr: string | undefined = pubDateStr;
 
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                        pubDate: parseDate(metadata.datePublished),
                         category: categories,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                        updated: parseDate(metadata.dateModified),
                         language,
                     };
 

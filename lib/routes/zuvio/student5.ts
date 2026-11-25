@@ -1,8 +1,10 @@
-import type { Data, Language, Route } from '@/types';
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { apiUrl, getBoards, renderDesc, rootUrl, token } from './utils';
 
@@ -26,7 +28,11 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { board = '' } = ctx.req.param();
-    const title = board ? (await getBoards()).find((i) => i.boardId === board).title : '全部';
+    const selectedBoard = board ? (await getBoards()).find((item) => item.boardId === board) : undefined;
+    if (board && !selectedBoard) {
+        throw new InvalidParameterError(`Unknown board '${board}'. Find available board IDs at /zuvio/student5/boards.`);
+    }
+    const title = selectedBoard?.title ?? '全部';
 
     const { data } = await got(`${apiUrl}/article`, {
         searchParams: {
@@ -40,20 +46,22 @@ async function handler(ctx): Promise<Data> {
         },
     });
 
-    const items = data.articles.map((item) => ({
+    let items = data.articles.map((item) => ({
         title: item.title,
         description: item.abstract,
-        pubDate: timezone(parseDate(item.created_at), 8),
+        pubDate: parseDate(item.created_at, 8),
         link: `${rootUrl}/article/${item.id}`,
         api: `${apiUrl}/article/${item.id}`,
         author: `${item.university} ${item.user_name}`,
         category: item.board_name,
     }));
 
-    await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await got(item.api, {
+    items = await pMap(
+        items,
+        async (item: (typeof items)[number]) => {
+            const { api, ...metadata } = item;
+            const detail = await cache.tryGet<Pick<DataItem, 'description'>>(`zuvio:detail:v5:${item.link}`, async () => {
+                const { data } = await got(api, {
                     searchParams: {
                         api_token: token,
                         user_id: '0',
@@ -61,11 +69,11 @@ async function handler(ctx): Promise<Data> {
                         ref: '',
                     },
                 });
-                item.description = renderDesc(data);
-                delete item.api;
-                return item;
-            })
-        )
+                return { description: renderDesc(data) };
+            });
+            return { ...metadata, description: detail.description };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

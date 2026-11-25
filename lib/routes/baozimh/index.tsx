@@ -1,9 +1,13 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { isOnSite } from '@/utils/valid-host';
+
+import { getGatekeeperHeaders } from './gatekeeper';
 
 const rootUrl = 'https://www.baozimh.com';
 
@@ -30,12 +34,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/comic/${name}`;
 
-    const response = await got(url);
-    const $ = load(response.data);
+    const headers = await getGatekeeperHeaders();
+    const response = await ofetch(url, { headers });
+    const $ = load(response);
     const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
     const list = $('#chapter-items')
         .first()
@@ -43,7 +48,7 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const title = $(item).find('span').text();
-            const link = rootUrl + $(item).find('a').attr('href');
+            const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
 
             return {
                 title,
@@ -58,22 +63,25 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const title = $(item).find('span').text();
-            const link = rootUrl + $(item).find('a').attr('href');
+            const link = new URL($(item).find('a').attr('href')!, rootUrl).href;
 
             return {
                 title,
                 link,
             };
         });
+    const combinedList = [...list, ...otherList].toReversed();
 
-    const combinedList = [...list, ...otherList];
-    combinedList.reverse();
-
-    const items = await Promise.all(
-        combinedList.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got(item.link);
-                const $ = load(detailResponse.data);
+    const items = await pMap(
+        combinedList,
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'baozimh.com')) {
+                return item;
+            }
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, { headers });
+                const $ = load(detailResponse);
                 item.description = renderToString(
                     <>
                         {$('.comic-contain')
@@ -86,14 +94,16 @@ async function handler(ctx) {
                 );
 
                 return item;
-            })
-        )
+            });
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `包子漫画-${comicTitle}`,
         description: $('.comics-detail__desc').text(),
         link: url,
+        language: 'zh-TW',
         item: items,
     };
 }

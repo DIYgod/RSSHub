@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/depth',
@@ -27,22 +27,22 @@ async function handler() {
             const $elem = $(elem);
             return {
                 title: $elem.find('h5 > a').text(),
-                pubDate: parseRelativeDate($elem.find('div.inner_depth_list_tags > p').first().text()),
+                author: $elem.find('div.inner_depth_list_tags > p.pull-left a[title]').attr('title'),
+                pubDate: parseRelativeDate($elem.find('div.inner_depth_list_tags > p').first().text(), 'YYYY/MM/DD'),
                 link: new URL($elem.find('h5 > a').attr('href')!, base).href,
             };
         });
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const detail = await cache.tryGet(`${item.link}:detail`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const detailCapture = load(detailResponse);
 
-                item.description = detailCapture('.main div.inner_content').html();
-
-                return item;
-            })
-        )
+                return { description: detailCapture('.main div.inner_content').html() };
+            });
+            return { ...item, ...detail };
+        })
     );
 
     return {

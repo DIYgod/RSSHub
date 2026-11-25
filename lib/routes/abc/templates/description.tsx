@@ -14,7 +14,8 @@ type DescriptionData = {
 };
 
 const AbcDescription = ({ image, enclosure, description }: DescriptionData) => {
-    const enclosureTag = enclosure?.type?.split('/', 1)[0] as 'audio' | 'video' | undefined;
+    const mediaType = enclosure?.type?.split('/', 1)[0];
+    const enclosureTag = mediaType === 'audio' || mediaType === 'video' ? mediaType : undefined;
 
     return (
         <>

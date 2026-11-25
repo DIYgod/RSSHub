@@ -1,4 +1,5 @@
-import { getEntities, getPlainText, type Status } from 'fanfou-sdk';
+import type { Status } from 'fanfou-sdk';
+import { getEntities, getPlainText } from 'fanfou-sdk';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
@@ -48,7 +49,7 @@ async function handler(ctx: Context) {
         };
     });
 
-    const authorName = result[0].author;
+    const authorName = result[0]?.author ?? uid;
 
     return {
         title: `${authorName}的饭否`,

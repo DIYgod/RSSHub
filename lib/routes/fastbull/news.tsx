@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -44,8 +45,17 @@ async function handler() {
 
     const $ = load(response.data);
 
+    const seenLinks = new Set<string>();
     let items = $('.trending_type')
         .toArray()
+        .filter((item) => {
+            const link = $(item).attr('href')!;
+            if (seenLinks.has(link)) {
+                return false;
+            }
+            seenLinks.add(link);
+            return true;
+        })
         .map((item) => {
             const $item = $(item);
 
@@ -58,8 +68,9 @@ async function handler() {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -81,8 +92,8 @@ async function handler() {
                 );
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

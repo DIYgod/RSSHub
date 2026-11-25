@@ -11,7 +11,7 @@ import ofetch from '@/utils/ofetch';
  * @returns `${jwt}@${number}@${hash}`
  */
 export const solveWafToken = (html: string) => {
-    const jwt = html.match(/"(eyJ[\w-]+\.[\w-]+\.[\w-]+)"/)![1];
+    const jwt = /"(eyJ[\w-]+\.[\w-]+\.[\w-]+)"/.exec(html)![1];
     const payload = Buffer.from(jwt.split('.', 2)[1], 'base64url').toString();
     const { Arr: arr, Value: value }: { Arr: number[]; Value: number } = JSON.parse(JSON.parse(payload).args);
 

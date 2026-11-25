@@ -1,14 +1,13 @@
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
-export const route = {
+export const route: Route = {
     path: '/information',
     categories: ['travel'],
     example: '/lnmuseum/information',
-    params: {},
     name: 'Information',
     maintainers: ['magazian'],
     radar: [
@@ -28,7 +27,7 @@ export const route = {
             searchParams: {
                 currentPage: 1,
                 size: 10,
-                _t: Date.now(),
+                _t: Temporal.Now.instant().epochMilliseconds,
             },
         });
 
@@ -39,7 +38,7 @@ export const route = {
 
             return {
                 title: item.title,
-                pubDate: timezone(parseDate(item.createTime), 8),
+                pubDate: parseDate(item.createTime, 8),
                 link: itemLink,
             };
         });

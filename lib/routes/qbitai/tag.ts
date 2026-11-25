@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+
+import { getItems } from './category';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -30,21 +31,9 @@ async function handler(ctx) {
     const link = encodeURI(`https://www.qbitai.com/tag/${tag}/feed`);
     const feed = await parser.parseURL(link);
 
-    const items = feed.items.map((item) => ({
-        title: item.title!,
-        pubDate: parseDate(item.pubDate!),
-        link: item.link,
-        author: '量子位',
-        category: item.categories,
-        description: item['content:encoded'],
-    }));
-
     return {
-        // 源标题
         title: `量子位-${tag}`,
-        // 源链接
         link: `https://www.qbitai.com/tag/${tag}`,
-        // 源文章
-        item: items,
+        item: await getItems(feed),
     };
 }

@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:lang/:category/:name/:id',
@@ -15,16 +15,6 @@ export const route: Route = {
     maintainers: ['machsix'],
     handler,
     description: 'For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894`, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.',
-};
-
-const dP = (html: string, lang: string) => {
-    if (lang === 'zh-cn' || lang === 'zh-hant') {
-        return parseDate(html, 'DD MMMM YYYY HH:mm:ss', lang);
-    }
-    if (lang === 'en') {
-        return parseDate(html, 'DD MMM YYYY HH:mm:ss');
-    }
-    return html;
 };
 
 const domain = 'https://www.webtoons.com';
@@ -43,9 +33,9 @@ async function handler(ctx: Context) {
             description: body.description,
             item: body.items.map((x) => ({
                 title: x.title,
-                pubDate: x.pubDate ? dP(x.pubDate, lang) : undefined,
+                pubDate: x.pubDate ? parseDate(x.pubDate) : undefined,
                 link: x.link,
-                description: `<a href=${x.link} target="_blank">${x.title}</a>`,
+                description: x.content,
             })),
         };
     } catch {
@@ -57,12 +47,15 @@ async function handler(ctx: Context) {
             description: $('p.summary').text(),
             item: $('#_listUl > li > a')
                 .toArray()
-                .map((ep) => ({
-                    title: $('.subj > span', ep).text(),
-                    pubDate: lang === 'zh-cn' || lang === 'zh-hant' ? parseDate($('.date', ep).text(), 'YYYY年M月D日') : parseDate($('.date', ep).text()),
-                    link: $(ep).attr('href'),
-                    description: `<a href=${$(ep).attr('href')} target="_blank">${$('.subj > span', ep).text()}</a>`,
-                })),
+                .map((ep) => {
+                    const dateText = $('.date', ep).text();
+                    return {
+                        title: $('.subj > span', ep).text(),
+                        pubDate: lang === 'zh-cn' || lang === 'zh-hant' ? parseDate(dateText, 'YYYY年M月D日') : parseDate(dateText),
+                        link: $(ep).attr('href'),
+                        description: $('.thmb', ep).html(),
+                    };
+                }),
         };
     }
 

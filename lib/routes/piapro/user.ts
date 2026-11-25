@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -19,7 +20,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { pid } = ctx.req.param();
 
     const url = `${base}/${pid}/content_list/all/1`;
@@ -33,21 +34,23 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item) => base + $(item).attr('href'));
 
-    const items = await Promise.all(
-        list.slice(0, 10).map((link) =>
+    const items = await pMap(
+        list.slice(0, 10),
+        (link) =>
             cache.tryGet(link, async () => {
                 const response = await ofetch(link);
                 return {
                     ...parseContent(response),
                     link,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: `piapro - ${username}の投稿作品`,
         link: url,
         item: items,
+        language: 'ja',
     };
 }

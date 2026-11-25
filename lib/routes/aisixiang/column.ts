@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { ossUrl, ProcessFeed, rootUrl } from './utils';
 
@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const currentUrl = new URL(`/data/search?column=${id}`, rootUrl).href;
 
@@ -49,7 +49,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
                 author: a.text().split('：', 1)[0],
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 

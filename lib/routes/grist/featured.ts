@@ -39,16 +39,14 @@ async function handler(): Promise<Data> {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const link = $item.find('.small-tease__link').attr('href')!.split('/').at(-2);
-            return {
-                link,
-            };
+            const slug = new URL($item.find('.small-tease__link').attr('href')!, baseUrl).pathname.split('/').findLast(Boolean)!;
+            return `https://grist.org/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`;
         });
-    const itemData = await Promise.all(listItems.map((item) => cache.tryGet(item.link!, async () => (await getData(`https://grist.org/wp-json/wp/v2/posts?slug='${item.link}'&_embed`))[0])));
+    const itemData = await Promise.all(listItems.map((url) => cache.tryGet(url, async () => (await getData(url))[0])));
     const items = await getList(itemData);
 
     return {
-        title: 'Gist Featured Articles',
+        title: 'Grist Featured Articles',
         link: baseUrl,
         item: items,
         description: 'Featured Articles on Grist.org',

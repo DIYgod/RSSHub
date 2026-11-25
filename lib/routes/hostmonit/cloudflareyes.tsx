@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate, toISOString } from '@/utils/time';
 
 const renderTitle = ({ line, latency, loss, speed, node, ip }) =>
     renderToString(
@@ -74,7 +75,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'v4' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    if (!['v4', 'v6'].includes(type)) {
+        throw new InvalidParameterError('Invalid type: expected v4 or v6.');
+    }
+    const limit = getRouteLimit(ctx, 30);
 
     const domain = 'hostmonit.com';
     const title = `CloudFlareYes${type === 'v6' ? type.toUpperCase() : ''}`;
@@ -95,14 +99,14 @@ async function handler(ctx) {
         },
     });
 
-    const items = response.info.slice(0, limit).map((item) => {
+    const items = response.info.map((item) => {
         const ip = item.ip;
         const latency = item.latency === undefined ? undefined : `${item.latency}ms`;
         const line = item.line === undefined ? undefined : Object.hasOwn(lines, item.line) ? lines[item.line] : item.line;
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;
-        const pubDate = timezone(parseDate(item.time), 8);
+        const pubDate = parseDate(item.time, 8);
 
         return {
             title: renderTitle({
@@ -124,10 +128,13 @@ async function handler(ctx) {
             }),
             author: node,
             category: [line, latency, loss, node].filter(Boolean),
-            guid: `${domain}-${title}-${ip}#${pubDate.toISOString()}`,
+            guid: `${domain}-${title}-${ip}-${item.line}-${node}-${item.colo}#${toISOString(pubDate!)}`,
             pubDate,
         };
     });
+
+    const orderedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
+    const selectedItems = orderedItems.slice(0, limit);
 
     const { data: currentResponse } = await got(currentUrl);
 
@@ -136,7 +143,7 @@ async function handler(ctx) {
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
-        item: items,
+        item: selectedItems,
         title: $('title')
             .text()
             .replace(/- .*$/, () => `- ${title}`),
@@ -147,6 +154,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: title,
         author: $('title').text().split(/\s-/, 1)[0],
-        allowEmpty: true,
     };
 }

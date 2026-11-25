@@ -1,9 +1,25 @@
+import { escapeAttribute, escapeText } from 'entities';
 import queryString from 'query-string';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
+function renderSource(source: string) {
+    if (URL.canParse(source) && ['http:', 'https:'].includes(new URL(source).protocol)) {
+        return `<a href="${escapeAttribute(source)}">Source</a>`;
+    }
+    return `<p>Source: ${escapeText(source)}</p>`;
+}
+function renderDescription(post) {
+    return [
+        `<img src="${post.sample_url}" />`,
+        `<p>Rating:${post.rating}</p> <p>Score:${post.score}</p>`,
+        post.source ? renderSource(post.source) : '',
+        post.parent_id ? `<a href="https://yande.re/post/show/${post.parent_id}">Parent</a>` : '',
+    ].join('');
+}
 export const route: Route = {
     path: '/post/popular_recent/:period?',
     categories: ['picture'],
@@ -36,53 +52,38 @@ export const route: Route = {
         nsfw: true,
     },
 };
-
 async function handler(ctx) {
     const { period = '1d' } = ctx.req.param();
-
     const response = await got({
         url: 'https://yande.re/post/popular_recent.json',
         searchParams: queryString.stringify({
             period,
         }),
     });
-
     const posts = response.data;
-
     const titles = {
         '1d': 'Last 24 hours',
         '1w': 'Last week',
         '1m': 'Last month',
         '1y': 'Last year',
     };
-
     const mime = {
         jpg: 'jpeg',
         png: 'png',
     };
-
     const title = titles[period];
-
     return {
         title: `${title} - yande.re`,
         link: `https://yande.re/post/popular_recent?period=${period}`,
         item: posts.map((post) => ({
             title: post.tags,
-            id: `${ctx.path}#${post.id}`,
-            guid: `${ctx.path}#${post.id}`,
+            id: `https://yande.re/post/show/${post.id}`,
+            guid: `https://yande.re/post/show/${post.id}`,
             link: `https://yande.re/post/show/${post.id}`,
             author: post.author,
-            pubDate: new Date(post.created_at * 1e3).toUTCString(),
-            description: (() => {
-                const result = [`<img src="${post.sample_url}" />`, `<p>Rating:${post.rating}</p> <p>Score:${post.score}</p>`];
-                if (post.source) {
-                    result.push(`<a href="${post.source}">Source</a>`);
-                }
-                if (post.parent_id) {
-                    result.push(`<a href="https://yande.re/post/show/${post.parent_id}">Parent</a>`);
-                }
-                return result.join('');
-            })(),
+            pubDate: parseDate(post.created_at * 1000),
+            updated: parseDate(post.updated_at * 1000),
+            description: renderDescription(post),
             media: {
                 content: {
                     url: post.file_url,

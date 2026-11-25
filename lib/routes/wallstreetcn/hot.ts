@@ -1,7 +1,9 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/hot/:period?',
@@ -13,7 +15,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -45,31 +47,39 @@ async function handler(ctx) {
         pubDate: parseDate(item.display_time * 1000),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: `${apiRootUrl}/apiv1/content/articles/${item.guid}?extract=0`,
-                });
+    items = await pMap<DataItem, DataItem>(
+        items,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'>>(
+                `wallstreetcn:hot:detail-with-author:${item.link}`,
+                async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: `${apiRootUrl}/apiv1/content/articles/${item.guid}?extract=0`,
+                    });
 
-                const data = detailResponse.data.data;
+                    const data = detailResponse.data.data;
 
-                item.title = data.title || data.content_text;
-                item.author = data.source_name ?? data.author.display_name;
-                item.description = data.content + (data.content_more ?? '');
-                item.category = data.asset_tags?.map((t) => t.name) ?? [];
+                    const details: Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> = {
+                        title: data.title || data.content_text,
+                        author: data.source_name || data.author.display_name,
+                        description: data.content + (data.content_more ?? ''),
+                        category: data.asset_tags?.map((tag) => tag.name) ?? [],
+                    };
 
-                if (data.audio_uri) {
-                    item.enclosure_type = 'audio/mpeg';
-                    item.enclosure_url = data.audio_uri;
-                    item.itunes_item_image = data.image?.uri ?? '';
-                    item.itunes_duration = data.audio_info?.duration ?? '';
+                    if (data.audio_uri) {
+                        details.enclosure_type = 'audio/mpeg';
+                        details.enclosure_url = data.audio_uri;
+                        details.itunes_item_image = data.image?.uri ?? '';
+                        details.itunes_duration = data.audio_info?.duration ?? '';
+                    }
+
+                    return details;
                 }
-
-                return item;
-            })
-        )
+            );
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -4,40 +4,49 @@ import type { Context } from 'hono';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const baseUrl = 'https://lancedb.com';
-    const url = category ? `${baseUrl}/blog/category/${category}` : `${baseUrl}/blog`;
-    const response = await ofetch(url);
-    const $ = load(response);
+    const url = category ? `${baseUrl}/blog/category/${encodeURIComponent(category)}` : `${baseUrl}/blog`;
+    const response = await ofetch.raw(url);
+    const currentUrl = response.url;
+    const $ = load(response._data);
 
-    const items = $('article')
+    const items = $('.blog_item-big, .blog_item')
         .toArray()
-        .map((el) => {
+        .flatMap((el) => {
             const $el = $(el);
-            const title = $el.find('h2 a').text().trim();
-            const link = $el.find('h2 a').attr('href');
-
-            const description = $el.find('p.post-description').text().trim();
-            const meta = $el.find('.post-meta').text().trim().replaceAll(/\s+/g, ' ');
-            const [cat, author, dateStr] = meta.split(' / ', 3);
-            const pubDate = dateStr ? parseDate(dateStr) : undefined;
+            const href = $el.find('.blog_item-link').attr('href');
+            const title = $el.find('.blog-item-title').text();
+            if (!href) {
+                return [];
+            }
+            const link = new URL(href, currentUrl).href;
+            const dateStr = $el.find('.blog_author-and-date > div').last().text();
 
             return {
                 title,
                 link,
-                description,
-                pubDate,
-                author,
-                category: cat ? [cat] : [],
+                description: $el.find('.blog_item-description').text(),
+                pubDate: parseDate(dateStr, 'MMMM D, YYYY'),
+                author: $el
+                    .find('.blog-item-author')
+                    .toArray()
+                    .map((author) => $(author).text())
+                    .join(', '),
+                category: $el
+                    .find('.blog-category-tag')
+                    .toArray()
+                    .map((tag) => $(tag).text())
+                    .filter(Boolean),
             };
         });
 
     return {
         title: `LanceDB Blog${category ? ` - ${category}` : ''}`,
-        link: url,
+        link: currentUrl,
         item: items,
     };
 };
@@ -45,7 +54,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 export const route: Route = {
     path: '/blog/:category?',
     name: 'Blog',
-    url: 'lancedb.com/blog',
+    url: 'www.lancedb.com/blog',
     maintainers: ['HUSTERGS'],
     example: '/lancedb/blog',
     parameters: {
@@ -64,7 +73,11 @@ export const route: Route = {
     radar: [
         {
             source: ['lancedb.com/blog', 'lancedb.com/blog/category/:category'],
-            target: '/blog/:category',
+            target: '/blog/:category?',
+        },
+        {
+            source: ['www.lancedb.com/blog', 'www.lancedb.com/category/:category'],
+            target: '/blog/:category?',
         },
     ],
     view: ViewType.Articles,

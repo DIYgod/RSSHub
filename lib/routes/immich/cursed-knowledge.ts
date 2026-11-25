@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cursed-knowledge',
@@ -24,14 +24,15 @@ const ghType = {
 };
 
 const parseGithubLink = (arg: string) => {
-    const number = arg.match(/(?:number: )?([\d_]+)/)?.[1].replaceAll('_', '');
-    const type = arg.match(/type: '(\w+)'/)?.[1] ?? 'pr';
+    const number = /(?:number: )?([\d_]+)/.exec(arg)?.[1].replaceAll('_', '');
+    const type = /type: '(\w+)'/.exec(arg)?.[1] ?? 'pr';
     return `https://github.com/immich-app/immich/${ghType[type]}/${number}`;
 };
 
 const matchString = (entry: string, key: string) => {
-    const m = entry.match(new RegExp(`${key}:\\s*(?:'((?:[^'\\\\]|\\\\.)*)'|"((?:[^"\\\\]|\\\\.)*)")`));
-    return (m?.[1] ?? m?.[2])?.replaceAll(/\\(.)/g, '$1');
+    const m = entry.match(new RegExp(`${key}:\\s*(?:'((?:[^'\\\\]|\\\\.)*)'|"((?:[^"\\\\]|\\\\.)*)"|\`((?:[^\`\\\\]|\\\\.)*)\`)`));
+    // Resolve the source's numeric formatting without executing remote JavaScript.
+    return (m?.[1] ?? m?.[2] ?? m?.[3])?.replaceAll(/\\(.)/g, '$1').replaceAll(/\$\{\(([\d_]+)\)\.toLocaleString\(\)\}/g, (_, number) => Number(number.replaceAll('_', '')).toLocaleString('en-US'));
 };
 
 async function handler() {
@@ -39,7 +40,7 @@ async function handler() {
     const link = `${baseUrl}/cursed-knowledge/`;
 
     const [source, feed] = await Promise.all([
-        ofetch('https://raw.githubusercontent.com/immich-app/static-pages/main/apps/root.immich.app/src/routes/cursed-knowledge/+page.svelte'),
+        ofetch('https://raw.githubusercontent.com/immich-app/static-pages/main/apps/root.immich.app/src/routes/(shell)/cursed-knowledge/+page.svelte'),
         ofetch(`${baseUrl}/blog/feed.json`, { responseType: 'json' }),
     ]);
 
@@ -60,7 +61,7 @@ async function handler() {
             description: matchString(entry, 'description'),
             link: (gh ? parseGithubLink(gh[1]) : undefined) ?? entry.match(/href: '([^']+)'/)?.[1] ?? blogPost?.url,
             guid: `${link}#${title}`,
-            pubDate: date ? parseDate(`${date[1]}-${Number(date[2]) + 1}-${date[3]}`, 'YYYY-M-D') : blogPost ? parseDate(blogPost.date_published) : undefined,
+            pubDate: date ? parseDate(`${date[1]}-${Number(date[2]) + 1}-${date[3]} +0000`, 'YYYY-M-D ZZ') : blogPost ? parseDate(blogPost.date_published) : undefined,
         };
     });
 

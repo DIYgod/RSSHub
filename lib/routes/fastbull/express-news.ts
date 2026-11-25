@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/express-news',
@@ -40,6 +40,7 @@ async function handler() {
     });
 
     const $ = load(response.data);
+    const seenLinks = new Set<string>();
 
     const items = $('.news-list')
         .toArray()
@@ -49,8 +50,15 @@ async function handler() {
             return {
                 title: $item.find('.title_name').text(),
                 pubDate: parseDate(Number.parseInt($item.attr('data-date')!)),
-                link: `${rootUrl}${$item.find('.title_name').attr('href')}`,
+                link: new URL($item.find('[data-href]').attr('data-href')!, rootUrl).href,
             };
+        })
+        .filter((item) => {
+            if (seenLinks.has(item.link)) {
+                return false;
+            }
+            seenLinks.add(item.link);
+            return true;
         });
 
     return {

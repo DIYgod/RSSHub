@@ -4,28 +4,30 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { language = 'CN', category = 'paper' } = ctx.req.param();
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 6;
+    const limit = getRouteLimit(ctx, 6);
 
     const rootUrl = 'https://www.dehenglaw.com';
-    const currentUrl = new URL(`${language}/${category}/0008/000901.aspx`, rootUrl).href;
+    const pageId = { paper: '000902', publish: '000903', luntan: '000901' }[category] ?? '000901';
+    const currentUrl = new URL(`${language}/${category}/0008/${pageId}.aspx`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
     let items = $('div.news_box ul li')
-        .slice(0, limit)
+        .slice(0, Math.max(6, limit))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -38,10 +40,15 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: parseDate($item.find('span').text(), 'YYYY/M/D'),
+                pubDate: parseDate($item.find('span').text(), 'YYYY/M/D', 8),
                 link: $item.find('a').prop('href'),
             };
         });
+
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    items = items.slice(0, limit);
 
     items = await Promise.all(
         items.map((item) =>
@@ -80,7 +87,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="Description"]').prop('content'),
     };

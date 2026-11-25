@@ -81,8 +81,13 @@ describe('Worker Integration Tests', () => {
 
             const unfiltered = await worker.fetch('/test/1?format=json');
             expect(unfiltered.status).toBe(200);
-            expect(unfiltered.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(unfiltered.headers.get('RSSHub-Cache-Status')).toBeNull();
             expect(((await unfiltered.json()) as JsonFeed).items).toHaveLength(5);
+
+            const cachedUnfiltered = await worker.fetch('/test/1?format=json');
+            expect(cachedUnfiltered.status).toBe(200);
+            expect(cachedUnfiltered.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(((await cachedUnfiltered.json()) as JsonFeed).items).toHaveLength(5);
 
             const limited = await worker.fetch('/test/1?format=json&limit=1');
             expect(limited.status).toBe(200);
@@ -96,6 +101,14 @@ describe('Worker Integration Tests', () => {
             expect(items[0].content_html).toContain('src="https://mock.com/DIYgod/RSSHub.jpg"');
             expect(items[0].content_html).not.toContain('<script>');
             expect(items[0].content_html).not.toContain('onclick=');
+        });
+
+        it('should convert Chinese variants with opencc', async () => {
+            const response = await worker.fetch('/test/opencc?format=json&opencc=t2s');
+            expect(response.status).toBe(200);
+            const { items } = (await response.json()) as JsonFeed;
+            expect(items[0].title).toBe('小可爱');
+            expect(items[0].content_html).toBe('宇宙无敌');
         });
 
         it('should apply image hotlink templates', async () => {
@@ -133,6 +146,24 @@ describe('Worker Integration Tests', () => {
             expect(response.status).toBe(200);
             expect(await response.json()).toHaveProperty(['paths', '/api/namespace']);
         });
+    });
+
+    describe('Bundle', () => {
+        it('should not call import.meta.resolve, which Workers do not have', () => {
+            const files = fs.readdirSync('./dist-worker', { recursive: true, encoding: 'utf8' }).filter((file) => /\.m?js$/.test(file));
+            const offenders = files.filter((file) => fs.readFileSync(`./dist-worker/${file}`, 'utf8').includes('import.meta.resolve('));
+            expect(offenders).toEqual([]);
+        });
+
+        it('should load routes that import the proxy utilities', async () => {
+            // Without Twitter credentials the route fails in its handler, which it only reaches if its modules load.
+            // Not /twitter/user, which reads the pages x.com shows logged-out visitors before it needs credentials
+            const response = await worker.fetch('/twitter/keyword/x');
+            expect(response.status).toBeGreaterThanOrEqual(400);
+            const text = await response.text();
+            expect(text).toContain('Twitter API is not configured');
+            expect(text).not.toContain('is not a function');
+        }, 30000);
     });
 
     describe('Error Handling', () => {

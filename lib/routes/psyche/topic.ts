@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { getData } from './utils';
+import { getHtmlData } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
@@ -11,9 +11,9 @@ export const route: Route = {
     example: '/psyche/topic/therapeia',
     parameters: { topic: 'Topic' },
     radar: [
-        {
-            source: ['psyche.co/:topic'],
-        },
+        { source: ['psyche.co/therapeia'], target: '/topic/therapeia' },
+        { source: ['psyche.co/eudaimonia'], target: '/topic/eudaimonia' },
+        { source: ['psyche.co/poiesis'], target: '/topic/poiesis' },
     ],
     name: 'Topics',
     maintainers: ['emdoe'],
@@ -26,23 +26,10 @@ async function handler(ctx) {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text());
-    const articles = data.props.pageProps.articles;
-    const prefix = `https://psyche.co/_next/data/${data.buildId}`;
-    const list = Object.keys(articles).flatMap((type) =>
-        articles[type].edges.map((item) => ({
-            title: item.node.title,
-            link: `https://psyche.co/${type}/${item.node.slug}`,
-            json: `${prefix}/${type}/${item.node.slug}.json`,
-        }))
-    );
-
-    const items = await getData(list);
-
     return {
-        title: `Psyche | ${data.props.pageProps.section.title}`,
-        link: url,
-        description: data.props.pageProps.section.metaDescription,
-        item: items,
+        title: $('head title').text(),
+        link: $('link[rel="canonical"]').attr('href'),
+        description: $('meta[name="description"]').attr('content'),
+        item: await getHtmlData($),
     };
 }

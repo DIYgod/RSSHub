@@ -2,7 +2,8 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 interface OriginalPost {
     id: string;
@@ -76,7 +77,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const html = await ofetch<string>('https://forwardfuture.com/originals');
 
@@ -102,7 +103,7 @@ async function handler(ctx: Context): Promise<Data> {
         throw new Error('Failed to extract posts from the Next.js RSC payload');
     }
 
-    const items: DataItem[] = posts.slice(0, limit).map((post) => ({
+    let items: DataItem[] = posts.map((post) => ({
         title: post.title,
         description: post.summary || undefined,
         link: post.url,
@@ -111,6 +112,7 @@ async function handler(ctx: Context): Promise<Data> {
         image: post.thumbnail,
         category: post.categories.length > 0 ? post.categories : post.category === 'General' ? undefined : [post.category],
     }));
+    items = ctx.req.query('sorted') === 'false' ? items.slice(0, limit) : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit);
 
     return {
         title: 'Forward Future - Originals',

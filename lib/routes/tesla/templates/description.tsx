@@ -37,11 +37,10 @@ type DescriptionParams = {
     data?: DataPayload;
     image?: ImagePayload;
     description?: string;
-    categoryToUrl?: (category: string) => string;
     mediaToUrl?: (media: string) => string;
 };
 
-export const renderDescription = ({ data, image, description, categoryToUrl, mediaToUrl }: DescriptionParams) =>
+export const renderDescription = ({ data, image, description, mediaToUrl }: DescriptionParams) =>
     renderToString(
         <>
             {data ? (
@@ -51,13 +50,6 @@ export const renderDescription = ({ data, image, description, categoryToUrl, med
                               <figure key={media}>
                                   <img src={mediaToUrl ? mediaToUrl(media) : media} />
                               </figure>
-                          ))
-                        : null}
-                    {data.categories?.length
-                        ? data.categories.map((category) => (
-                              <a href={categoryToUrl ? categoryToUrl(category) : category} key={category}>
-                                  {category}
-                              </a>
                           ))
                         : null}
                     {data.description ? <p>{data.description}</p> : null}

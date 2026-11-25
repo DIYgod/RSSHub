@@ -1,3 +1,5 @@
+import { calendarToInstant, formatDate } from '@/utils/time';
+
 /** Minimal RFC 4180 CSV parser: quoted fields, `""` escapes, newlines inside quotes, CRLF. */
 const parseCsv = (text: string): string[][] => {
     const rows: string[][] = [];
@@ -46,14 +48,13 @@ const parseCsv = (text: string): string[][] => {
     return rows;
 };
 
-/** CSV text → records keyed by the (trimmed) header row; a missing cell is `null`. */
+/** CSV text → records keyed by the header row; a missing cell is `null`. */
 export const csvRecords = (text: string): Array<Record<string, string | null>> => {
     const [header, ...rows] = parseCsv(text);
     if (!header) {
         return [];
     }
-    const keys = header.map((h) => h.trim());
-    return rows.filter((r) => r.length > 1).map((r) => Object.fromEntries(keys.map((k, i) => [k, r[i] ?? null])));
+    return rows.filter((r) => r.length > 1).map((r) => Object.fromEntries(header.map((k, i) => [k, r[i] ?? null])));
 };
 
 export type Row = Record<string, string | null>;
@@ -76,24 +77,26 @@ export interface PermitExtra {
     raw: Row;
 }
 
-const ERA_BASE: Record<string, number> = { 令和: 2018, 平成: 1988, 昭和: 1925 };
+const ERAS = { 令和: 'reiwa', 平成: 'heisei', 昭和: 'showa' } as const;
+type Era = keyof typeof ERAS;
+const isEra = (s: string): s is Era => Object.hasOwn(ERAS, s);
 
 /** `2024-04-08` / `2026/8/7` / `令和8年8月7日` → `YYYY-MM-DD`; anything else → null. */
 export const isoDate = (raw: string | null): string | null => {
     if (raw === null) {
         return null;
     }
-    const s = raw.normalize('NFKC').trim();
+    const s = raw.normalize('NFKC');
     const m = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/.exec(s);
     if (m) {
         return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
     }
     const w = /^(令和|平成|昭和)(元|\d{1,2})年(\d{1,2})月(\d{1,2})日/.exec(s);
-    if (!w) {
+    if (!w || !isEra(w[1])) {
         return null;
     }
-    const year = ERA_BASE[w[1]] + (w[2] === '元' ? 1 : Number(w[2]));
-    return `${year}-${w[3].padStart(2, '0')}-${w[4].padStart(2, '0')}`;
+    const date = calendarToInstant({ calendar: 'japanese', era: ERAS[w[1]], year: w[2] === '元' ? 1 : w[2], month: w[3], day: w[4] });
+    return date ? formatDate(date, 'YYYY-MM-DD') : null;
 };
 
 /** Ward sites serve CSV as UTF-8 (with BOM) one month and Shift_JIS the next, so sniff: strict UTF-8 first, else Shift_JIS. */
@@ -108,5 +111,6 @@ export const decodeText = (buf: ArrayBuffer): string => {
 /** Sort key for `令和8年7月分`-style labels (full-width digits allowed): `2026-07`; null when absent. */
 export const warekiMonth = (label: string): string | null => {
     const m = /(令和|平成)(元|\d{1,2})年(\d{1,2})月/.exec(label.normalize('NFKC'));
-    return m ? `${ERA_BASE[m[1]] + (m[2] === '元' ? 1 : Number(m[2]))}-${m[3].padStart(2, '0')}` : null;
+    const date = m && isEra(m[1]) ? calendarToInstant({ calendar: 'japanese', era: ERAS[m[1]], year: m[2] === '元' ? 1 : m[2], month: m[3], day: 1 }) : undefined;
+    return date ? formatDate(date, 'YYYY-MM') : null;
 };

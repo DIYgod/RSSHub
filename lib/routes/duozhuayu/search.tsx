@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:wd',
@@ -57,11 +57,11 @@ async function handler(ctx) {
     // token获取见 https://github.com/wong2/userscripts/blob/master/duozhuayu.user.js
     const encrypt = (text) => {
         const cipher = crypto.createCipheriv('aes-128-cfb8', 'DkOliWvFNR7C4WvR', 'GQWKUE2CVGOOBKXU');
-        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toString('hex');
+        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toHex();
     };
 
     const getCustomRequestHeaders = () => {
-        const timestamp = Date.now();
+        const timestamp = Temporal.Now.instant().epochMilliseconds;
         const userId = 0;
         const securityKey = Math.floor(1e8 * Math.random());
         const token = encrypt([timestamp, userId, securityKey].join(':'));

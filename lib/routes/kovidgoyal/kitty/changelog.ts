@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/kitty/changelog',
@@ -68,7 +68,7 @@ async function handler(): Promise<Data> {
                 title: `Kitty ${version}`,
                 description,
                 link: `${url}#${$section.attr('id')}`,
-                pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                pubDate: parseDate(`${dateStr}T00:00:00Z`),
                 guid: `kitty-${version}`,
             };
         })

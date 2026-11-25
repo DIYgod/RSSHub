@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -20,8 +20,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ccf.org.cn/:category', 'ccf.org.cn/'],
+            source: ['ccf.org.cn/:category'],
             target: '/news/:category',
+        },
+        {
+            source: ['ccf.org.cn/'],
+            target: '/news',
         },
     ],
     name: '新闻',
@@ -60,7 +64,7 @@ async function handler(ctx) {
                 content('.new_info .num').remove();
 
                 item.description = content('.txt').html();
-                item.pubDate = parseDate(content('.new_info span').text());
+                item.pubDate = parseDate(content('.new_info span').text(), 8);
 
                 return item;
             })

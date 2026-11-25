@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { renderArticle } from './templates/article';
 
@@ -23,13 +22,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['k.caixin.com/web', 'k.caixin.com/'],
+            source: ['database.caixin.com/news/', 'database.caixin.com/'],
         },
     ],
     name: '财新数据通',
     maintainers: ['nczitzk'],
     handler,
-    url: 'k.caixin.com/web',
+    url: 'database.caixin.com/news/',
 };
 
 async function handler() {
@@ -55,7 +54,7 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), 8);
+                item.pubDate = parseDate(content('#pubtime_baidu').text(), 8);
                 item.description = renderArticle({
                     item,
                     $: content,

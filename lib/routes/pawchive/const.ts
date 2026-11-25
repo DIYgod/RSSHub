@@ -7,4 +7,6 @@ export const MIME_TYPE_MAP = {
     m4a: 'audio/mp4',
     mp3: 'audio/mpeg',
     mp4: 'video/mp4',
-} as const;
+    ogg: 'audio/ogg',
+    webm: 'video/webm',
+} satisfies Record<string, string>;

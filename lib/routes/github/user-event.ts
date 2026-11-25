@@ -125,7 +125,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/users/${username}/events` + (isAuthenticated ? '' : '/public'),
+        url: `https://api.github.com/users/${encodeURIComponent(username)}/events` + (isAuthenticated ? '' : '/public'),
         headers,
         searchParams: {
             per_page: 100,

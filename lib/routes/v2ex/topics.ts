@@ -1,7 +1,8 @@
+import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topics/:type',
@@ -40,7 +41,11 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
 
-    const { data } = await got(`https://www.v2ex.com/api/topics/${type}.json`);
+    const { data } = await got(`https://www.v2ex.com/api/topics/${type}.json`, {
+        headers: {
+            'user-agent': config.ua,
+        },
+    });
 
     let title;
     if (type === 'hot') {
@@ -55,7 +60,7 @@ async function handler(ctx) {
         description: `V2EX-${title}`,
         item: data.map((item) => ({
             title: item.title,
-            description: `${item.member.username}: ${item.content_rendered}`,
+            description: item.content_rendered,
             content: { text: item.content, html: item.content_rendered },
             pubDate: parseDate(item.created, 'X'),
             link: item.url,

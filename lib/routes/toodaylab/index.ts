@@ -1,11 +1,13 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/posts',
@@ -22,9 +24,41 @@ export const route: Route = {
     handler,
 };
 
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+
+    const calendar = value.match(/^(今天|昨天|前天)\s+(\d{1,2}:\d{2})$/);
+    if (calendar) {
+        const sourceDay = Temporal.Now.plainDateISO('+08:00')
+            .subtract({ days: calendar[1] === '昨天' ? 1 : calendar[1] === '前天' ? 2 : 0 })
+            .toString();
+        return parseDate(`${sourceDay} ${calendar[2]} +08:00`, 'YYYY-MM-DD HH:mm Z');
+    }
+    if (/[年日月]/.test(value)) {
+        const sourceDate = value.includes('年') ? value : `${Temporal.Now.plainDateISO('+08:00').year}年${value}`;
+        return parseDate(`${sourceDate} +08:00`, 'YYYY年M月D日 HH:mm Z');
+    }
+    return parseRelativeDate(value);
+}
+
+function getDescription(content: CheerioAPI) {
+    const article = content('div.post-content');
+    if (article.length) {
+        return article.html();
+    }
+    const special = content('body > div.excerpt').nextUntil('div.function-block').filter('div, section, main').not('.wechat-dialog');
+    if (special.length) {
+        special.find('script, style').remove();
+        return content.html(special);
+    }
+    return;
+}
+
 export async function handler(ctx) {
     const path = getSubPath(ctx);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const isHot = path === '/hot';
 
@@ -36,7 +70,9 @@ export async function handler(ctx) {
     const $ = load(response);
 
     let items = isHot
-        ? $('div.hot-list a')
+        ? $('div.hot-list')
+              .first()
+              .find('a')
               .slice(0, limit)
               .toArray()
               .map((item): DataItem => {
@@ -67,13 +103,14 @@ export async function handler(ctx) {
                       link: new URL(a.prop('href')!, rootUrl).href,
                       description: $item.find('p.excerpt').html(),
                       author: $item.find('div.left-infos p a').text().trim(),
-                      pubDate: timezone(/[年日月]/.test(pubDate!) ? parseDate(pubDate!, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate!), 8),
+                      pubDate: parsePubDate(pubDate),
                   };
               });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`toodaylab:detail:v4:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -84,20 +121,30 @@ export async function handler(ctx) {
                     .split(/\/\/\s/)
                     .pop();
 
-                item.title = content('h1').text() || item.title;
-                item.description = content('div.post-content').html() ?? item.description;
-                item.author = content('div.left-infos p a').text().trim() ?? item.author;
-                item.category = content('div.right-infos a')
-                    .slice(1)
-                    .toArray()
-                    .map((c) => content(c).text().replace(/#/, ''));
-                item.pubDate ??= timezone(/[年日月]/.test(pubDate!) ? parseDate(pubDate!, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate!), 8);
-                item.upvotes = content('#like_count').text() ? Number(content('#like_count').text()) : 0;
-                item.comments = Number(content('div.right-infos a').first().text()) || 0;
+                return {
+                    title: content('h1').text(),
+                    description: getDescription(content),
+                    author: content('div.left-infos p a').text().trim() || undefined,
+                    category: content('div.right-infos a')
+                        .slice(1)
+                        .toArray()
+                        .map((c) => content(c).text().replace(/#/, '')),
+                    pubDate: parsePubDate(pubDate),
+                    upvotes: content('#like_count').text() ? Number(content('#like_count').text()) : 0,
+                    comments: Number(content('div.right-infos a').first().text()) || 0,
+                };
+            });
 
-                return item;
-            })
-        )
+            return {
+                ...item,
+                ...detail,
+                title: detail.title || item.title,
+                description: detail.description ?? item.description,
+                pubDate: item.pubDate ?? detail.pubDate,
+                author: detail.author ?? item.author,
+            };
+        },
+        { concurrency: 3 }
     );
 
     const title = $('title').text().split(/\s-/, 1)[0];

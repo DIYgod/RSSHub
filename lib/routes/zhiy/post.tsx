@@ -1,35 +1,37 @@
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { baseUrl, fetchUserDate } from './utils';
 
-const renderDescription = (postMeta, postDate, posts) =>
+const renderDescription = (posts) =>
     renderToString(
         <>
-            {postMeta.visit_amount}阅读 {postMeta.note_amount}条笔记 创建于{postDate}
-            <br />
-            {posts.map((post) => (
-                <>
-                    {(post.struct?.items ?? []).map((item) => {
-                        if (item.type === 'text' || item.type === 'link') {
-                            return <span>{raw((item.content ?? '').replaceAll('\n', '<br>'))}</span>;
-                        }
-                        if (item.type === 'url') {
-                            return <a href={item.url}>{item.content}</a>;
-                        }
-                        return null;
-                    })}
-                    <br />
-                    {dayjs(post.publish_time_timestamp, 'X').format('YYYY-MM-DD HH:mm:ss')}
-                    <hr />
-                </>
-            ))}
+            {posts.map((post) => {
+                const publishTime = parseDate(post.publish_time_timestamp, 'X');
+                return (
+                    <>
+                        {(post.struct?.items ?? []).map((item) => {
+                            if (item.type === 'text' || item.type === 'link') {
+                                return <span>{raw((item.content ?? '').replaceAll('\n', '<br>'))}</span>;
+                            }
+                            if (item.type === 'url') {
+                                return <a href={item.url}>{item.content}</a>;
+                            }
+                            return null;
+                        })}
+                        <br />
+                        {publishTime && formatDate(publishTime, 'YYYY-MM-DD HH:mm:ss')}
+                        <hr />
+                    </>
+                );
+            })}
         </>
     );
 
@@ -59,19 +61,18 @@ export const route: Route = {
 async function handler(ctx) {
     const author = ctx.req.param('author');
 
-    const userData = await fetchUserDate(author);
-    const { author_id: authorId, author_name: authorName, author_signature: authorSignature, author_avatar_url: authorAvatarUrl } = userData;
+    const { author_id: authorId, author_name: authorName, author_signature: authorSignature, author_avatar_url: authorAvatarUrl } = await fetchUserDate(author);
 
     const {
         data: { result: posts },
     } = await got(`${baseUrl}/api/app/share/garden/users/${authorId}/posts`, {
         searchParams: {
             page: 1,
-            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
+            limit: getRouteLimit(ctx, 100),
         },
     });
 
-    const list = posts.map((item) => ({
+    const list: Array<DataItem & { link: string; postId: number; shareMD5: string }> = posts.map((item) => ({
         title: item.title,
         pubDate: parseDate(item.create_time, 'X'),
         link: `${baseUrl}/b${item.share_md5}`,
@@ -80,9 +81,10 @@ async function handler(ctx) {
         shareMD5: item.share_md5,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async (): Promise<Pick<DataItem, 'description' | 'author'>> => {
                 const { data: postMeta } = await got(`${baseUrl}/api/app/share/posts/${item.shareMD5}`);
 
                 const {
@@ -94,11 +96,15 @@ async function handler(ctx) {
                     },
                 });
 
-                item.description = renderDescription(postMeta, dayjs(postMeta.create_time, 'X').format('YYYY-MM-DD HH:mm:ss'), posts);
+                return {
+                    description: renderDescription(posts),
+                    author: postMeta.creator_name,
+                };
+            });
 
-                return item;
-            })
-        )
+            return { title: item.title, pubDate: item.pubDate, link: item.link, guid: item.guid, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

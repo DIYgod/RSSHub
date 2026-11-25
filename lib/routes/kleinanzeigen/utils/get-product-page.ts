@@ -4,6 +4,7 @@ import sanitize from 'sanitize-html';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 /**
  * Parse item infos about a product page
@@ -58,8 +59,8 @@ export const getProductPage = (url: string): Promise<DataItem> =>
 
         const category = [
             ...$('.breadcrump .breadcrump-link')
-                .toArray()
                 .slice(1)
+                .toArray()
                 .map((x) => $(x).text().trim()),
             product
                 .find('.addetailslist--detail')
@@ -71,6 +72,7 @@ export const getProductPage = (url: string): Promise<DataItem> =>
 
         return {
             title,
+            pubDate: parseDate(product.find('#viewad-extra-info .icon-calendar-gray-simple + span').text(), 'DD.MM.YYYY', 0),
             link: url,
             description: `${price}<br>${address}<br><br>${description}<br>${imagesHtml}<br>`,
             author: [

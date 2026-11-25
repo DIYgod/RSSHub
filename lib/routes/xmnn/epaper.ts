@@ -1,10 +1,12 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/epaper/:id?',
@@ -24,6 +26,10 @@ export const route: Route = {
             source: ['epaper.xmnn.cn/:id'],
             target: '/epaper/:id',
         },
+        {
+            source: ['epaper.xmrb.com/xmrb/*path', 'epaper.xmrb.com/xmrb/'],
+            target: '/epaper/xmrb',
+        },
     ],
     name: '数字媒体',
     maintainers: ['nczitzk'],
@@ -32,84 +38,59 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- |
 | xmrb     | xmwb     | hxcb     | csjb     |`,
 };
-
+const getPage = async (url: string) => {
+    const response = await ofetch.raw(url);
+    return { data: response._data, url: response.url };
+};
+const getArticles = ($: CheerioAPI, url: string) =>
+    $('#articlelist > li > a[href]')
+        .toArray()
+        .map((element) => ({ title: $(element).text(), link: new URL($(element).attr('href')!, url).href }));
+const getArticleDetails = async (url: string) => {
+    const page = await getPage(url);
+    const $ = load(page.data);
+    return {
+        title: [$('#PreTitle').text(), $('#Title').text(), $('#SubTitle').text()].filter(Boolean).join(' '),
+        author: $('#Author').text() || undefined,
+        description: $('#ozoom').html(),
+        pubDate: parseDate($('#paperdate').text(), 8),
+        category: [$('#layout .font-weight').text()],
+    };
+};
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'xmrb';
-
+    const limit = getRouteLimit(ctx, 80);
     const rootUrl = 'https://epaper.xmnn.cn';
-    let currentUrl = `${rootUrl}/${id === 'hxcb' ? '/hxcb/epaper/paperindex.htm' : `${id}/`}`;
-
-    let response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    let $ = load(response.data);
-
+    const rootPage = await getPage(`${rootUrl}/${id === 'hxcb' ? '/hxcb/epaper/paperindex.htm' : `${id}/`}`);
+    let $ = load(rootPage.data);
     const title = id === 'hxcb' ? '海西晨报电子版_厦门网' : $('title').text();
-
-    let matches = response.data.match(/window\.location\.href = "(.*?)";/);
-
-    if (!matches) {
-        matches = response.data.match(/setTimeout\("javascript:location\.href='(.*?)'", 3000\);/);
-
-        if (!matches) {
-            matches = response.data.match(/<meta http-equiv="refresh".*?content=".*?url=(.*?)">/i);
-        }
+    const redirect = rootPage.data.match(/location\.href="([^"]*\/pc\/col\/index\.html)"/);
+    if (!redirect) {
+        throw new Error(`Cannot find the desktop edition link on ${rootPage.url}`);
     }
-
-    currentUrl = new URL(matches[1], currentUrl).href;
-
-    response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    $ = load(response.data);
-
-    $('#pdfsrc').remove();
-    $('.bigImg, .smallImg').remove();
-
-    $('a img').each((_, el) => {
-        $(el).parent().remove();
-    });
-
-    let items = $('.br1, .br2, .titss')
-        .find('a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 80)
+    const overview = await getPage(new URL(redirect[1], rootPage.url).href);
+    const currentUrl = overview.url;
+    $ = load(overview.data);
+    const layoutLinks = $('#list > li > a[href]')
         .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-
-            return {
-                title: $item.text(),
-                link: new URL($item.attr('href')!, currentUrl).href,
-            };
-        });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('#qw').remove();
-
-                item.description = content('.cont-b, content').html();
-                item.pubDate = timezone(parseDate(content('.time').text() || content('.today').text(), ['YYYY-MM-DD HH:mm', 'YYYY年MM月DD日']), 8);
-
-                return item;
-            })
-        )
+        .map((element) => new URL($(element).attr('href')!, currentUrl).href);
+    const editions = await pMap(
+        layoutLinks,
+        (url) =>
+            cache.tryGet(url, async () => {
+                const page = await getPage(url);
+                return getArticles(load(page.data), page.url);
+            }),
+        { concurrency: 3 }
     );
-
-    return {
-        title,
-        link: currentUrl,
-        item: items,
-    };
+    const links = editions.flat().slice(0, limit);
+    const items = await pMap(
+        links,
+        async (item): Promise<DataItem> => {
+            const details = await cache.tryGet(item.link, () => getArticleDetails(item.link));
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
+    );
+    return { title, link: currentUrl, item: items };
 }

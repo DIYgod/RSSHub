@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { unzip } from './utils';
 
@@ -45,7 +44,7 @@ async function handler() {
             return {
                 title: $item.find('a').text(),
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
-                pubDate: timezone(parseDate($item.find('.span4').text()), 8),
+                pubDate: parseDate($item.find('.span4').text(), 8),
             };
         });
 
@@ -55,12 +54,13 @@ async function handler() {
                 const { data: response } = await got(item.link);
                 let $ = load(response);
 
-                const zipped = $('script[type="text/javascript"]')
-                    .text()
-                    .match(/Base64\.decode\(unzip\("(.*)"\)\./)![1];
-                const { slice1, slice2 } = $('script[type="text/javascript"]')
-                    .text()
-                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups!;
+                const script = $('script[type="text/javascript"]').text();
+                const zipped = script.match(/Base64\.decode\(unzip\("(.*)"\)\./)?.[1];
+                const slices = script.match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)?.groups;
+                if (!zipped || !slices) {
+                    throw new Error(`The recruitment article does not contain the expected compressed content: ${item.link}. The source may have returned a verification page or changed its format.`);
+                }
+                const { slice1, slice2 } = slices;
                 const unzipped = Buffer.from(unzip(zipped).slice(Number(slice1)), 'base64')
                     .toString()
                     .slice(Number(slice2));

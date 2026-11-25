@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const parseContent = (htmlString: string) => {
     const $ = load(htmlString);
@@ -12,7 +11,7 @@ export const parseContent = (htmlString: string) => {
         .text()
         .match(/\d+\/\d+\/\d+ \d+:\d+:\d+/)![0];
 
-    const audioUrl = htmlString.match(/"url":\s*"(https:\/\/cdn\.piapro\.jp\/mp3_a\/[^"]+)"/)?.[1];
+    const audioUrl = /"url":\s*"(https:\/\/cdn\.piapro\.jp\/mp3_a\/[^"]+)"/.exec(htmlString)?.[1];
 
     const description =
         ($('.contents_illust_img').html() ?? '') +
@@ -23,7 +22,10 @@ export const parseContent = (htmlString: string) => {
     return {
         title: title.text(),
         author: author.text(),
+        category: $('.contents_taglist .tag, .contents_info_item a[href*="categoryId="]')
+            .toArray()
+            .map((element) => $(element).text().replace(/^#/, '')),
         description,
-        pubDate: timezone(parseDate(time), 9),
+        pubDate: parseDate(time, 9),
     };
 };

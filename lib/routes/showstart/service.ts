@@ -1,5 +1,28 @@
+import pMap from 'p-map';
+
+import cache from '@/utils/cache';
+import { evaluateScriptData } from '@/utils/evaluate-script';
+import ofetch from '@/utils/ofetch';
+
 import { HOST } from './const';
 import { getAccessToken, post, sortBy, uniqBy } from './utils';
+
+interface Activity {
+    id: number | string;
+    title: string;
+    poster?: string;
+    showTime?: string;
+    cityName?: string;
+    siteName?: string;
+    performers?: string;
+    price?: string;
+}
+
+interface ActivityDetail {
+    content: string;
+    picture?: string[];
+    styles: string;
+}
 
 async function fetchActivityList(
     params: Partial<{
@@ -27,21 +50,38 @@ async function fetchActivityList(
     params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/activity/list', accessToken, params);
-    return resp.result.result.map((item) => formatActivity(item));
+    return formatActivities(resp.result.result);
 }
 
-const image = (src: string) => (src ? `<img src="${src}" />` : '');
-const time = (time: string) => (time ? `<p>演出时间：${time}</p>` : '');
-const address = (cityName: string, siteName: string) => (cityName || siteName ? `<p>地址：${[cityName, siteName].join(' - ')}</p>` : '');
-const performers = (name: string) => (name ? `<p>艺人：${name}</p>` : '');
-const price = (price: string) => (price ? `<p>票价：${price}</p>` : '');
+const image = (src?: string) => (src ? `<img src="${src}" />` : '');
+const time = (time?: string) => (time ? `<p>演出时间：${time}</p>` : '');
+const address = (cityName?: string, siteName?: string) => (cityName || siteName ? `<p>地址：${[cityName, siteName].join(' - ')}</p>` : '');
+const performers = (name?: string) => (name ? `<p>艺人：${name}</p>` : '');
+const price = (price?: string) => (price ? `<p>票价：${price}</p>` : '');
 
-function formatActivity(item) {
+async function formatActivity(item: Activity) {
+    const link = `${HOST}/event/${item.id}`;
+    const detail = await cache.tryGet(`showstart:details:v2:${link}`, async () => {
+        const pageSource1 = await ofetch(link);
+        const script = pageSource1.match(/<script>(window\.__NUXT__=[\s\S]*?)<\/script>/)?.[1];
+        if (!script) {
+            throw new Error('ShowStart event page is missing its public detail data');
+        }
+        const data = await evaluateScriptData<{ data: Array<{ detail: ActivityDetail }> }>(script, '__NUXT__');
+        const { detail } = data.data[0];
+        return { content: detail.content, picture: detail.picture, styles: detail.styles };
+    });
+    const gallery = (detail.picture || []).filter((src) => src !== item.poster && !detail.content.includes(src));
     return {
         title: item.title,
-        link: `${HOST}/event/${item.id}`,
-        description: [image(item.poster), time(item.showTime), address(item.cityName, item.siteName), performers(item.performers), price(item.price)].join(''),
+        link,
+        category: detail.styles.split(','),
+        description: [image(item.poster), time(item.showTime), address(item.cityName, item.siteName), performers(item.performers), price(item.price), detail.content, ...gallery.map((src) => image(src))].join(''),
     };
+}
+
+function formatActivities(items: Activity[]) {
+    return pMap(items, formatActivity, { concurrency: 3 });
 }
 
 async function fetchPerformerList(
@@ -73,7 +113,7 @@ async function fetchPerformerInfo(params: { performerId: string }) {
         avatar: resp.result.avatar,
         poster: resp.result.poster,
         styles: resp.result.styles,
-        activityList: resp.result.activities.map((item) => formatActivity(item)),
+        activityList: await formatActivities(resp.result.activities),
     };
 }
 
@@ -86,7 +126,7 @@ async function fetchBrandInfo(params: { brandId: string }) {
         content: resp.result.content,
         avatar: resp.result.avatar,
         poster: resp.result.poster,
-        activityList: resp.result.activities.map((item) => formatActivity(item)),
+        activityList: await formatActivities(resp.result.activities),
     };
 }
 
@@ -177,15 +217,15 @@ async function fetchStyleList(keyword = '') {
         }));
 }
 
-async function fetchDictionary(cityCode: string, showStyle: string) {
+async function fetchDictionary(cityCode: string, showStyle?: string) {
     const resp = await fetchParams();
-    const target = resp.result.find((item) => String(item.cityCode) === cityCode);
+    const target = resp.result.find((item) => item.cityCode === cityCode);
     if (!target) {
         return {};
     }
     return {
         cityName: target.cityName,
-        showName: target.styles.find((item) => String(item.key) === showStyle)?.showName,
+        showName: target.styles.find((item) => item.key === showStyle)?.showName,
     };
 }
 

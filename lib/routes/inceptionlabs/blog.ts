@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const ROOT_URL = 'https://www.inceptionlabs.ai';
 
@@ -75,20 +76,18 @@ async function handler() {
             const categoryEl = $el.find('[data-framer-name="Category"]');
             const category = categoryEl.length > 0 ? categoryEl.first().text() : (dateBlocks[0] ?? '');
 
-            // Date: featured cards have a single Date block (the date itself); standard cards have it at index 1
-            const pubDate = dateBlocks.length >= 2 ? dateBlocks[1] : (dateBlocks[0] ?? '');
-
             return {
                 title,
                 link,
                 category: category ? [category] : [],
-                pubDate,
+                pubDate: parseDate($el.find('[data-framer-name="Date"] time[datetime]').attr('datetime')!),
             };
         })
         .filter((post) => post !== null);
 
-    const items = await Promise.all(
-        posts.map((post) =>
+    const items = await pMap(
+        posts,
+        (post) =>
             cache.tryGet(post.link, async () => {
                 const postHtml = await ofetch(post.link);
                 const $post = load(postHtml);
@@ -103,10 +102,9 @@ async function handler() {
                     ...post,
                     description: contentHtml,
                     author,
-                    pubDate: parseDate(post.pubDate),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

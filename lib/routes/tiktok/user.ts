@@ -5,8 +5,8 @@ import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import { renderUserEmbed } from './templates/user';
 import type { EmbedUser, EmbedVideo, Profile } from './types';

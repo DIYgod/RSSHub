@@ -1,26 +1,18 @@
-import 'dayjs/locale/zh-cn.js';
-
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
+import pMap from 'p-map';
 
+import type sharedCache from '@/utils/cache';
 import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { formatDate, parseDate } from '@/utils/time';
 
 import { renderEshopCnDescription } from './templates/eshop-cn';
-
-dayjs.extend(localizedFormat);
 
 async function nuxtReader(data) {
     let nuxt;
     try {
         const $ = load(data);
-        const script = $('script')
-            .toArray()
-            .map((element) => $(element).text())
-            .find((source) => /\b__NUXT__\s*=/.test(source));
-        nuxt = (await evaluateScriptData<{ data: any[] }>(script ?? '', '__NUXT__')).data[0];
+        nuxt = (await evaluateScriptData<{ data: any[] }>($('script:contains("__NUXT__")').text(), '__NUXT__')).data[0];
     } catch {
         throw new Error('Nuxt 框架信息提取失败，请报告这个问题');
     }
@@ -132,29 +124,35 @@ const ProcessNews = (list, caches) =>
     }
 }
 */
-const ProcessItemChina = (list, cache) =>
-    Promise.all(
-        list.map(async (item) => {
+type ChineseItem = { link: string; description: string };
+
+const ProcessItemChina = <T extends ChineseItem>(list: T[], cache: typeof sharedCache) =>
+    pMap(
+        list,
+        async (item) => {
             if (!item.link.startsWith('https://www.nintendoswitch.com.cn/software/')) {
                 return item;
             }
             const n = await cache.tryGet(item.link, async () => nuxtReader((await got(item.link)).data));
             const software = n.data;
+            const release = parseDate(software.releaseDatetime);
             return {
                 ...item,
                 category: [...software.supportLanguages, ...software.genre, ...software.playMode],
                 description: renderEshopCnDescription({
                     item,
                     software,
-                    releaseDatetime: dayjs(software.releaseDatetime).locale('zh-cn').format('lll'),
+                    releaseDatetime: release && formatDate(release, 'YYYY年M月D日 HH:mm'),
                 }),
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
-const ProcessNewsChina = (list, cache) =>
-    Promise.all(
-        list.map(async (item) => {
+const ProcessNewsChina = <T extends ChineseItem>(list: T[], cache: typeof sharedCache) =>
+    pMap(
+        list,
+        async (item) => {
             const n = await cache.tryGet(item.link, async () => nuxtReader((await got(item.link)).data));
             return {
                 ...item,
@@ -162,7 +160,8 @@ const ProcessNewsChina = (list, cache) =>
                 category: n.newsData.category,
                 pubDate: parseDate(n.newsData.releaseTime, 'x'),
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
 export default { ProcessItem, ProcessNews, ProcessNewsChina, ProcessItemChina, nuxtReader, generateImageLink };

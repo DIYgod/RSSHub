@@ -2,6 +2,7 @@ import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getBuildId, getData, getList } from './utils';
 
@@ -139,7 +140,12 @@ export const route: Route = {
     example: '/daily/user/kramer',
     radar: [
         {
-            source: ['app.daily.dev/:userId/posts', 'app.daily.dev/:userId'],
+            source: ['daily.dev/:userId/posts'],
+            target: '/user/:userId',
+        },
+        {
+            source: ['app.daily.dev/:userId/posts'],
+            target: '/user/:userId',
         },
     ],
     name: 'User Posts',
@@ -157,11 +163,12 @@ interface UserProfile {
 
 async function handler(ctx): Promise<Data> {
     const userId = ctx.req.param('userId');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 7;
+    const requestedLimit = getRouteLimit(ctx, 7);
+    const limit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(7, requestedLimit);
     const buildId = await getBuildId();
 
     const userData = await cache.tryGet(`daily:user:${userId}`, async () => {
-        const response = await ofetch<{ pageProps: { user: UserProfile } }>(`${baseUrl}/_next/data/${buildId}/en/${userId}.json`, {
+        const response = await ofetch<{ pageProps: { user: UserProfile } }>(`${baseUrl}/_next/data/${buildId}/${userId}.json`, {
             query: {
                 userId,
             },
@@ -171,7 +178,7 @@ async function handler(ctx): Promise<Data> {
     const user = userData.user;
 
     const items = await cache.tryGet(
-        `daily:user:${userId}:posts`,
+        `daily:user:${userId}:posts:${limit}`,
         async () => {
             const edges = await getData({
                 query: userPostQuery,
@@ -181,7 +188,7 @@ async function handler(ctx): Promise<Data> {
                     loggedIn: false,
                 },
             });
-            return getList(edges, true);
+            return getList(edges);
         },
         config.cache.routeExpire,
         false

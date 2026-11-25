@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/time';
 
 const host = 'https://guangdiu.com';
 
@@ -33,28 +33,30 @@ async function handler(ctx) {
     const list = $('#mainleft > div.zkcontent > div.gooditem')
         .toArray()
         .map((item): DataItem => ({
-            title: $(item).find('a.goodname').text().trim(),
+            title: $(item).find('a.goodname').text(),
             link: `${host}/${$(item).find('a.goodname').attr('href')}`,
         }));
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const article = await cache.tryGet(`guangdiu:search:article:${item.link}`, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
-                item.pubDate = parseRelativeDate($('span.latesttime').text());
+                const description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
+                const publishTime = $('.dinfoweibo').children(':not(.latesttime)').remove().end().text().trim();
+                const pubDate = /^\d{4}-\d{2}-\d{2}/.test(publishTime) ? parseDate(publishTime, 8) : publishTime && !/^\d{1,2}-\d{1,2}\s/.test(publishTime) ? parseRelativeDate(publishTime) : undefined;
 
-                return item;
-            })
-        )
+                return { description, pubDate };
+            });
+            return { ...item, ...article };
+        })
     );
 
-    const match = /q=(.+)/.exec(query);
+    const keyword = new URLSearchParams(query).get('q');
 
     return {
-        title: `逛丢 - ${match![1]}`,
+        title: keyword ? `逛丢 - ${keyword}` : '逛丢',
         link: url,
         item: items,
     };

@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jobs',
@@ -58,7 +58,7 @@ async function handler() {
 
     return {
         title: '招聘 | 电鸭社区',
-        link: 'https://eleduck.com/category/5',
+        link: 'https://eleduck.com/categories/5',
         item: out,
     };
 }

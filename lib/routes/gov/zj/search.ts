@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
-    path: '/search/:websiteid?/:word/:cateid?',
+    path: '/search/:websiteid?/:word?/:cateid?/:sortType?',
     categories: ['government'],
     example: '/gov/zj/search',
     parameters: {
@@ -15,12 +14,6 @@ export const route: Route = {
         cateid: '信息分类-默认：658（全部）',
         sortType: '排序类型-默认：2（按时间）',
     },
-    radar: [
-        {
-            source: ['search.zj.gov.cn/jsearchfront/search.do'],
-            target: '/search/:websiteid?/:word/:cateid?',
-        },
-    ],
     name: '全省政府网站统一搜索',
     url: 'search.zj.gov.cn/jsearchfront/search.do',
     maintainers: ['HaoyuLee'],
@@ -34,6 +27,7 @@ export const route: Route = {
 | 按时间   | 2        |`,
     async handler(ctx) {
         const { websiteid = '330201000000000', word = '人才', cateid = 658, sortType = 2 } = ctx.req.param();
+        const today = Temporal.Now.plainDateISO('UTC');
         const {
             data: { result: list },
         } = await got.post('https://search.zj.gov.cn/jsearchfront/interfaces/cateSearch.do', {
@@ -46,8 +40,8 @@ export const route: Route = {
                 checkError: 1,
                 isContains: 0,
                 q: word,
-                begin: dayjs().subtract(1, 'week').format('YYYYMMDD'),
-                end: dayjs().format('YYYYMMDD'),
+                begin: today.subtract({ weeks: 1 }).toString().replaceAll('-', ''),
+                end: today.toString().replaceAll('-', ''),
                 timetype: 2,
                 pos: 'title,content,keyword',
                 sortType,
@@ -58,10 +52,11 @@ export const route: Route = {
                 const $ = load(item);
                 const title = $('.titleWrapper>a');
                 const footer = $('.sourceTime>span');
+                const date = footer.eq(1).text().replace('时间:', '').trim();
                 return {
                     title: title.text().trim(),
                     link: title.attr('href') || '',
-                    pubDate: parseDate(footer.eq(1).text().replace('时间:', '')) || '',
+                    pubDate: date ? parseDate(date, 8) : undefined,
                     author: footer.eq(0).text().trim().replace('来源:', ''),
                     description: $('.newsDescribe>a').text(),
                 };

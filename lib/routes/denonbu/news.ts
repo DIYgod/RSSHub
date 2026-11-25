@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     url: 'denonbu.jp',
@@ -117,16 +116,15 @@ async function getToken(): Promise<string> {
         return cacheToken;
     }
 
-    const payload = (
+    const { token, expires } = (
         await ofetch(new URL('auths/token/get', BASE_URL).href, {
             headers: COMMON_HEADERS,
         })
     ).payload;
-    const { token, expires } = payload;
     if (!token) {
         throw new Error('Failed to get token');
     }
-    cache.set(CACHE_TOKEN_KEY, token, expires ? expires - Number(Date.now()) / 1000 - 1 : 3600);
+    cache.set(CACHE_TOKEN_KEY, token, expires ? expires - Temporal.Now.instant().epochMilliseconds / 1000 - 1 : 3600);
     return token;
 }
 
@@ -191,14 +189,11 @@ async function handler(ctx: Context): Promise<Data> {
         const result: DataItem = {
             title: title ?? body.split('\n', 1)[0],
             description: body,
-            pubDate: timezone(parseDate(post_date), 9),
+            pubDate: parseDate(post_date, 9),
             category: category.map((x) => x.name),
             link: link ?? undefined,
+            image: media?.[0],
         };
-
-        if (media?.[0]) {
-            result.image = media[0];
-        }
 
         return result;
     });

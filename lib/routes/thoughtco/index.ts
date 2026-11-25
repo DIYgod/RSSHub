@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -329,7 +331,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.thoughtco.com';
     const currentUrl = new URL(category, rootUrl).href;
@@ -350,8 +352,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -395,8 +398,8 @@ async function handler(ctx) {
                 item.updated = parseDate(detailResponse.match(/"dateModified": "(.*?)"/)[1]);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const author = $('meta[property="og:site_name"]').prop('content');

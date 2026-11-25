@@ -1,9 +1,9 @@
 import queryString from 'query-string';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jw/:type',
@@ -49,6 +49,9 @@ async function handler(ctx) {
             'https://jw.nju.edu.cn/_s414/24774/list.psp',
         ],
     };
+    if (!Object.hasOwn(type_dict, type)) {
+        throw new InvalidParameterError('Unsupported type. Use ggtz or jxdt.');
+    }
     const { data } = await got({
         method: 'post',
         url: 'https://jw.nju.edu.cn/_wp3services/generalQuery?queryObj=articles',
@@ -77,7 +80,7 @@ async function handler(ctx) {
                 const ret: DataItem = {
                     title: item.title,
                     author: item.publisher,
-                    pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss', 8),
                     link: item.url,
                 };
                 if (type === 'ggtz') {

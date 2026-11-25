@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.acfun.cn';
 
@@ -12,8 +12,8 @@ export const route: Route = {
     path: '/user/article/:uid',
     radar: [
         {
-            source: ['www.acfun.cn/u/:id'],
-            target: '/user/article/:id',
+            source: ['www.acfun.cn/u/:uid'],
+            target: '/user/article/:uid',
         },
     ],
     name: '用户文章',
@@ -65,7 +65,7 @@ async function handler(ctx) {
                     },
                 });
                 const $article = load(articlePage);
-                const articleInfo = $article('.main script')
+                const articleInfo = $article('.main script:contains("window.articleInfo")')
                     .text()
                     .match(/window\.articleInfo = (.*);\n\s*window.likeDomain/)![1];
                 const data = JSON.parse(articleInfo);

@@ -66,7 +66,7 @@ async function handler(ctx) {
             link,
             doilink,
             id,
-            authors,
+            author: authors,
             img,
             doi,
             description,

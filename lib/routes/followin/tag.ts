@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 
-import { apiUrl, baseUrl, getBParam, getBuildId, getGToken, parseItem, parseList } from './utils';
+import { baseUrl, getApi, getPoolSize, processList } from './utils';
 
 export const route: Route = {
     path: '/tag/:tagId/:lang?',
@@ -29,35 +28,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { tagId, lang = 'en' } = ctx.req.param();
-    const { limit = 20 } = ctx.req.query();
+    const poolSize = getPoolSize(ctx, 20);
 
-    const buildId = await getBuildId();
-    const tagInfo = await cache.tryGet(`followin:tag:${tagId}:${lang}`, async () => {
-        const { data: response } = await got(`${baseUrl}/_next/data/${buildId}/${lang}/tag/${tagId}.json`);
-        const { queries } = response.pageProps.dehydratedState;
-        const { base_info: tagInfo } = queries.find((q) => q.queryKey[0] === '/tag/info/v2').state.data;
-        return tagInfo;
+    const tagInfo = await cache.tryGet(`followin:api-tag:${tagId}:${lang}`, async () => {
+        const response = await getApi('/tag/info/v2', lang, { id: Number(tagId) });
+        return response.base_info;
     });
-
-    const gToken = await getGToken();
-    const bParam = getBParam(lang);
-    const { data: tagResponse } = await got.post(`${apiUrl}/feed/list/tag`, {
-        headers: {
-            'x-bparam': JSON.stringify(bParam),
-            'x-gtoken': gToken,
-        },
-        json: {
-            count: limit,
-            id: Number.parseInt(tagId),
-            type: 'tag_discussion_feed',
-        },
+    const response = await getApi('/feed/list/tag', lang, {
+        count: poolSize,
+        id: Number(tagId),
+        type: 'tag_discussion_feed',
     });
-    if (tagResponse.code !== 2000) {
-        throw new Error(tagResponse.msg);
-    }
-
-    const list = parseList(tagResponse.data.list.slice(0, limit), lang, buildId);
-    const items = await Promise.all(list.map((item) => parseItem(item)));
+    const items = await processList(response.list, lang, ctx, 20);
 
     return {
         title: `${tagInfo.name} - Followin`,

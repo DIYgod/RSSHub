@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/sei',
@@ -12,7 +12,11 @@ export const route: Route = {
     example: '/ecnu/sei',
     radar: [
         {
-            source: ['sei.ecnu.edu.cn'],
+            source: ['sei.ecnu.edu.cn', 'sei.ecnu.edu.cn/33171/list.htm'],
+            target: '/sei',
+        },
+        {
+            source: ['www.sei.ecnu.edu.cn/33171/list.htm'],
             target: '/sei',
         },
     ],
@@ -26,20 +30,18 @@ export const route: Route = {
         const links = $('ul.data-list > li')
             .toArray()
             .map((el): DataItem & { link: string } => ({
-                pubDate: timezone(parseDate($(el).find('.data-list-time').text()), 8),
+                pubDate: parseDate($(el).find('.data-list-time').text(), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data } = await got(item.link);
-                    const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
-                    item.description = $read.html();
-                    return item;
-                })
-            )
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                const $read = $('div.wp_articlecontent');
+                item.description = $read.html();
+                return item;
+            })
         );
 
         return {

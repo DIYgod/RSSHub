@@ -2,13 +2,14 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const defaultCategory = 'news';
 const defaultId = '2121t76';
@@ -27,24 +28,40 @@ async function getFinalContentAndUrl(url: string, redirects: number = 0, maxRedi
     if (nextUrl) {
         const newRedirects = redirects + 1;
 
-        return getFinalContentAndUrl(nextUrl, newRedirects, maxRedirects);
+        return getFinalContentAndUrl(new URL(nextUrl, url).href, newRedirects, maxRedirects);
     }
     return [responseContent, url];
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+type ArticleDetails = Pick<DataItem, 'title' | 'description' | 'author' | 'pubDate' | 'updated' | 'content'> & { link: string };
+
+async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
+    const [detailResponse, finalUrl] = await getFinalContentAndUrl(link);
+    const $ = load(detailResponse);
+    const description = $('div#articleBox').html();
+    const pubDate = parseDate(`${$('span.yearMsg').text()} ${$('span.timeMsg').text()}`, 8);
+    return {
+        title: $('div.articleTitle h1').text(),
+        link: finalUrl,
+        description,
+        pubDate,
+        updated: pubDate,
+        author: $('spna.sourceMsg').text(),
+        content: { html: description, text: $('div#articleBox').text() },
+    };
+}
+
+const handler = async (ctx: Context): Promise<Data> => {
     const params = ctx.req.param();
     let category: string;
     let id: string;
 
-    const paramKeys = Object.keys(params);
-
-    if (paramKeys.length === 2) {
-        category = params[paramKeys[0]];
-        id = params[paramKeys[1]];
-    } else if (paramKeys.length === 1) {
+    if (params.category !== undefined && params.id !== undefined) {
+        category = params.category;
+        id = params.id;
+    } else if (params.category !== undefined || params.id !== undefined) {
         category = '';
-        id = params[paramKeys[0]];
+        id = params.id ?? params.category;
     } else {
         category = defaultCategory;
         id = defaultId;
@@ -52,7 +69,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     category = category.replaceAll(/[^a-z0-9-]/gi, '');
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = `https://${category ? `${category}.` : ''}ynet.com`;
     const targetUrl: string = new URL(`list/${id}.html`, baseUrl).href;
@@ -75,53 +92,25 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                pubDate: parseDate(pubDateStr, 8),
                 link: linkUrl,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                updated: parseDate(upDatedStr, 8),
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
-            if (!item.link) {
-                return item;
-            }
-
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const [detailResponse, finalUrl] = await getFinalContentAndUrl(item.link!);
-
-                const $$: CheerioAPI = load(detailResponse);
-
-                item.link = finalUrl;
-
-                const title: string = $$('div.articleTitle h1').text();
-                const description = $$('div#articleBox').html();
-                const pubDateStr: string | undefined = $$('span.yearMsg').text() && $$('span.timeMsg').text() ? `${$$('span.yearMsg').text()} ${$$('span.timeMsg').text()}` : undefined;
-                const authors: DataItem['author'] = $$('spna.sourceMsg').text();
-                const upDatedStr: string | undefined = pubDateStr;
-
-                const processedItem: DataItem = {
-                    title,
-                    description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                    author: authors,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
-                };
-            });
-        })
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet<ArticleDetails>(`ynet:article:v3:${item.link}`, () => fetchArticleDetails(item.link!));
+            return {
+                ...item,
+                ...details,
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
@@ -129,8 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
-        image: $('div.cul_logo img').attr('src') ? `https:${$('div.cul_logo img').attr('src')}` : undefined,
+        image: `https:${$('div.cul_logo img').attr('src')}`,
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
         id: targetUrl,
@@ -168,24 +156,11 @@ export const route: Route = {
     radar: [
         {
             source: ['ynet.com'],
-            target: (_, url) => {
-                const urlObj = new URL(url);
-
-                const domainParts = urlObj.hostname.split('.');
-                let category = '';
-
-                if (domainParts.length > 2) {
-                    const subdomains = domainParts.slice(0, -2).filter((part) => part !== 'www');
-                    if (subdomains.length > 0) {
-                        category = subdomains[0];
-                    }
-                }
-
-                const idMatch = urlObj.pathname.match(/\/list\/(.+)\.html/);
-                const id = idMatch ? idMatch[1] : '';
-
-                return `/ynet/list${category ? `/${category}` : ''}${id ? `/${id}` : ''}`;
-            },
+            target: '/list',
+        },
+        {
+            source: ['news.ynet.com/list/2121t76.html'],
+            target: '/list/news/2121t76',
         },
     ],
     view: ViewType.Articles,

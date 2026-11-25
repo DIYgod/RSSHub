@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import type { DataItem } from '@/types';
 
@@ -103,22 +102,6 @@ function parseJobSearch(data) {
     return jobs;
 }
 
-/**
- * Parse job detail page
- * Example page: https://www.linkedin.com/jobs/view/software-engineer-backend-junior-at-genies-3429649821?trk=public_jobs_topcard-title
- *
- * @param {String} data HTML string of job detail page
- * @returns Job details
- */
-function parseJobDetail(data) {
-    const $ = load(data);
-
-    return {
-        recruiter: $('a.message-the-recruiter__cta').attr('href'),
-        description: $('div.description__text description__text--rich').text(),
-    };
-}
-
 const parseRouteParam = (searchParam: string | null): string => {
     if (!searchParam) {
         return 'all';
@@ -149,7 +132,7 @@ function parseCompanyPosts($) {
             }
 
             const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
-            const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
+            const date = parseRelativeShorthandDate(elemHtml.find('time').first().text().trim());
 
             return { link, text, date };
         });
@@ -169,41 +152,30 @@ function parseCompanyName($) {
 }
 
 /**
- * Parse relative date shorthand string into a Date object
+ * Parse relative date shorthand string into a Temporal.Instant
  *
  * @param {String} shorthand The shorthand string representing the date
- * @returns {Date|null} The parsed date or null if the format is invalid
+ * @returns {Temporal.Instant|null} The parsed date or null if the format is invalid
  */
 function parseRelativeShorthandDate(shorthand) {
-    const match = shorthand.match(/^(\d+)([wdmyh])$/);
+    const match = /^(\d+)(mo|[wdmyh])\b/.exec(shorthand);
     if (!match) {
         return null;
     }
 
     const [, amount, unit] = match;
     const unitMap = {
-        w: 'week',
-        d: 'day',
-        m: 'month',
-        y: 'year',
-        h: 'hour',
+        w: 'weeks',
+        d: 'days',
+        mo: 'months',
+        m: 'minutes',
+        y: 'years',
+        h: 'hours',
     };
 
-    return dayjs().subtract(Number.parseInt(amount), unitMap[unit]);
+    return Temporal.Now.zonedDateTimeISO('UTC')
+        .subtract({ [unitMap[unit]]: Number.parseInt(amount) })
+        .toInstant();
 }
 
-export {
-    BASE_URL,
-    EXP_LEVELS,
-    EXP_LEVELS_QUERY_KEY,
-    JOB_TYPES,
-    JOB_TYPES_QUERY_KEY,
-    KEYWORDS_QUERY_KEY,
-    parseCompanyName,
-    parseCompanyPosts,
-    parseJobDetail,
-    parseJobSearch,
-    parseParamsToSearchParams,
-    parseParamsToString,
-    parseRouteParam,
-};
+export { BASE_URL, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseCompanyName, parseCompanyPosts, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam };

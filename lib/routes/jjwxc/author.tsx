@@ -2,10 +2,11 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -27,6 +28,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    if (!id || !/^[1-9]\d*$/.test(id)) {
+        throw new InvalidParameterError('A positive numeric author ID is required.');
+    }
 
     const rootUrl = 'https://www.jjwxc.net';
     const currentUrl = new URL(`oneauthor.php?authorid=${id}`, rootUrl).href;
@@ -38,6 +42,9 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const bookEl = $('font a').first();
+    if (!bookEl.prop('href')) {
+        throw new NotFoundError('No recent public work is listed for this author.');
+    }
     const bookInfoEl = bookEl.parent();
 
     const bookName = bookEl.text();
@@ -89,7 +96,7 @@ async function handler(ctx) {
             author,
             category: [bookStatus],
             guid: `jjwxc-${id}-${bookId}#${bookWords}`,
-            pubDate: timezone(parseDate(bookUpdatedTime), 8),
+            pubDate: parseDate(bookUpdatedTime, 8),
         },
     ];
 
@@ -106,7 +113,6 @@ async function handler(ctx) {
         image,
         icon,
         logo: icon,
-        subtitle: $('meta[name="Description"]').prop('content'),
         author,
     };
 }

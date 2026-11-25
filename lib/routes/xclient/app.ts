@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/app/:name',
@@ -33,8 +33,8 @@ async function handler(ctx: Context) {
                 const td = $(item).find('td');
                 return {
                     title: td.eq(0).text(),
-                    description: `版本号：${td.eq(0).text()}<br>更新日期：${td.eq(2).text()}<br>文件大小：${td.eq(3).text()}`,
-                    pubDate: parseDate(td.eq(2).text()),
+                    description: `文件大小：${td.eq(3).text()}`,
+                    pubDate: parseDateStrict(td.eq(2).text(), 'YYYY-MM-DD', 8),
                     link,
                     guid: td.eq(0).text(),
                 };

@@ -1,5 +1,5 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processImage, withZhihuClient } from './utils';
 
@@ -12,11 +12,11 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'ZHIHU_COOKIES',
-                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise Workers use a Playwright browser session; Docker and Vercel generate credentials with JSDOM.',
+                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise a Playwright browser session is required.',
                 optional: true,
             },
         ],
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -57,7 +57,7 @@ function handler(ctx) {
             link: `https://www.zhihu.com/question/${questionId}`,
             item: listRes.map((item) => {
                 const title = `${item.author.name}的回答：${item.excerpt}`;
-                const description = `${item.author.name}的回答<br/><br/>${processImage(item.content)}`;
+                const description = processImage(item.content);
 
                 return {
                     title,

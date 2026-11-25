@@ -3,15 +3,15 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'sy/gzdt_210283' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://81rc.81.cn';
-    const currentUrl = new URL(category?.endsWith('/') ? `${category}/` : category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category?.endsWith('/') ? `${category}/` : category}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('a').text(),
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: $item.find('a').prop('href'),
                 language,
             };
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('h2').text();
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.time span').last().text()), 8);
+                item.pubDate = parseDate($$('div.time span').last().text(), 8);
                 item.author = $$('div.time span').first().text();
                 item.content = {
                     html: description,
@@ -96,12 +96,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['81rc.81.cn/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/81/81rc/${category ? `/${category}` : ''}`;
-            },
+            source: ['81rc.81.cn/*category', '81rc.81.cn/'],
+            target: '/81rc/:category?',
         },
     ],
 };

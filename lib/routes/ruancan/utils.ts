@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const fetchFeed = async (ctx, currentUrl) => {
     const rootUrl = 'https://www.ruancan.com';
@@ -16,8 +18,10 @@ export const fetchFeed = async (ctx, currentUrl) => {
 
     const $ = load(response.data);
 
-    let items = $('.item-title a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
+    const limit = getRouteLimit(ctx, 15);
+    const list = $('.item-title a');
+    let items = (list.length ? list : $('.post-loop-list > .item > a'))
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -28,9 +32,10 @@ export const fetchFeed = async (ctx, currentUrl) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -46,19 +51,17 @@ export const fetchFeed = async (ctx, currentUrl) => {
                     }
                 });
 
-                content('figure').each((_, el) => {
-                    content(el).html(`<img src="${content(el).find('a').attr('href')}">`);
-                });
-
-                item.description = content('.entry-content').html();
-                item.category = content('.entry-info a[rel="category tag"]')
+                const description = content('.entry-content').html();
+                const category = content('.entry-info a[rel~="category"]')
                     .toArray()
                     .map((c) => content(c).text());
-                item.pubDate = parseDate(content('.entry-info .entry-date').attr('datetime')!);
-
-                return item;
-            })
-        )
+                const pubDate = parseDate(content('.entry-info .entry-date').attr('datetime')!);
+                const author = content('.entry-info .vcard a').text();
+                return { description, category, pubDate, author };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

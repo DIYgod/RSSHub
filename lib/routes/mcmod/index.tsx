@@ -1,16 +1,16 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const render = (mod) =>
     renderToString(
         <>
-            <img src={mod.pic} referrerpolicy="no-referrer" />
+            <img src={mod.pic} />
             {mod.label.map((label) => (
                 <p>{label}</p>
             ))}
@@ -67,17 +67,18 @@ export const route: Route = {
                     title: each.find('div > .name > a').text(),
                     image: each.find('img').attr('src')?.split('@', 1)[0],
                     link: each.children('a').attr('href'),
-                    pubDate: time.attr('title') && timezone(parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss'), 8),
+                    pubDate: time.attr('title') && parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss', 8),
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`mcmod:details:${item.link}`, async () => {
                     const response = await $get(item.link!);
                     const $ = load(response);
 
-                    item.author = $('.author li')
+                    const author = $('.author li')
                         .toArray()
                         .map((item) => {
                             const each = $(item);
@@ -89,7 +90,12 @@ export const route: Route = {
                             };
                         });
 
-                    const html = $('.common-text[data-id="1"]').html()!;
+                    const content = $('.common-text[data-id="1"]');
+                    content.find('[data-src]').each((_, element) => {
+                        const media = $(element);
+                        media.attr('src', media.attr('data-src')).removeAttr('data-src');
+                    });
+                    const html = content.html()!;
                     const support = $('.mcver > ul > ul')
                         .toArray()
                         .map((e) => {
@@ -103,17 +109,22 @@ export const route: Route = {
                             return { label, versions };
                         });
 
-                    item.description =
-                        render({
-                            pic: 'https:' + item.image,
-                            label: $('.class-info  li.col-lg-4')
-                                .toArray()
-                                .map((e) => $(e).text()),
-                            support,
-                        }) + html.replaceAll(/\ssrc=".+?"/g, '').replaceAll('data-src', 'src');
-                    return item;
-                })
-            )
+                    return {
+                        author,
+                        html,
+                        label: $('.class-info  li.col-lg-4')
+                            .toArray()
+                            .map((e) => $(e).text()),
+                        support,
+                    };
+                });
+                return {
+                    ...item,
+                    author: detail.author,
+                    description: render({ pic: 'https:' + item.image, label: detail.label, support: detail.support }) + detail.html,
+                };
+            },
+            { concurrency: 3 }
         );
 
         return {

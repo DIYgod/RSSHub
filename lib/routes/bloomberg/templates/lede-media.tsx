@@ -28,8 +28,8 @@ export const renderLedeMedia = (media: LedeMedia) => {
                 <img src={media.src} alt={media.description} loading="lazy" style="display:block; margin-left:auto; margin-right:auto; width:100%;" />
                 {media.caption ? (
                     <figcaption>
-                        <div class="caption">{raw(media.caption)}</div>
-                        <div class="credit">{media.credit ? raw(media.credit) : null}</div>
+                        <div className="caption">{raw(media.caption)}</div>
+                        <div className="credit">{media.credit ? raw(media.credit) : null}</div>
                     </figcaption>
                 ) : null}
             </figure>

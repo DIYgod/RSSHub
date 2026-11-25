@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rail/:category?/:topic?',
@@ -42,7 +42,7 @@ async function handler(ctx) {
     const response = await got.get(pageUrl);
     const $ = load(response.data);
     let title = '';
-    const titleLinks = $('.container .regsiter a').toArray().slice(1); // what a typo... drop "首页"
+    const titleLinks = $('.container .regsiter a').slice(1).toArray(); // what a typo... drop "首页"
     for (const link of titleLinks) {
         const linkText = $(link).text();
         title = title ? `${title} - ${linkText}` : linkText;
@@ -77,17 +77,14 @@ async function handler(ctx) {
             return {
                 title,
                 link: url.startsWith('/') ? `${rootUrl}${url}` : url,
-                pubDate: timezone(parseDate(`${urlMatch[1]}${urlMatch[2]}`), 8),
+                pubDate: parseDate(`${urlMatch[1]}${urlMatch[2]}`, 8),
             };
         })
         .filter((item) => item !== null);
-    const uniqueItems: DataItem[] = [];
-    for (const item of items) {
-        if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
-            uniqueItems.push(item!);
-        }
-    }
-    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, ctx.req.query('limit') || 20);
+    items = items
+        .filter((item, index, all) => all.findIndex((other) => other.link === item.link) === index)
+        .toSorted((a, b) => compareDates(b.pubDate, a.pubDate))
+        .slice(0, getRouteLimit(ctx, 20));
 
     items = await Promise.all(
         items.map((item) =>
@@ -115,7 +112,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html() ?? '';
+                    description = $('div.content div').html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

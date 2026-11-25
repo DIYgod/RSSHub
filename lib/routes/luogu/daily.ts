@@ -1,8 +1,14 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
+
+import type { LuoguArticle } from './utils';
+import { getArticleDescription, getPageData } from './utils';
+
+const md = MarkdownIt();
 
 export const route: Route = {
     path: '/daily/:id?',
@@ -32,30 +38,33 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 47327;
     const link = `https://www.luogu.com.cn/discuss/${id}`;
-    const response = await got(link);
-    const $ = load(response.data);
-    const title = $('head title').text();
-
-    const injectionScript = $('head script:contains("window._feInjection")').text();
-    const jsonRaw = injectionScript.match(/window\._feInjection = JSON\.parse\(decodeURIComponent\("(.*?)"\)\);/)![1];
-    const jsonDecode = JSON.parse(decodeURIComponent(jsonRaw));
-
-    const mdRaw = jsonDecode.currentData.post.content;
-
-    const dailyLink = mdRaw.match(/<([^>]*)>/)[1];
-    const { data: dailyResponse } = await got(dailyLink);
-    const $daily = load(dailyResponse);
-    const issueHeading = $daily('.am-article-title').first().text().trim();
-    const item = [
-        {
-            title,
-            description: $daily('#article-content').html(),
-            link,
-            author: jsonDecode.currentData.post.author.name,
-            guid: `${link}#${issueHeading}`,
-            pubDate: parseDate(jsonDecode.currentData.post.time),
+    const response = await ofetch(link);
+    const { post } = getPageData<{ post: { content: string } }>(response);
+    const dailyLink = post.content.match(/<(https?:[^>]+)>/)?.[1];
+    if (!dailyLink) {
+        throw new Error('The Luogu daily index does not contain an article or collection link. Check the discussion ID.');
+    }
+    // the link is taken from a user-written post
+    const dailyResponse = await ofetch(dailyLink, { publicOnly: true });
+    const data = getPageData<{ articles?: { result: LuoguArticle[] }; article?: LuoguArticle }>(dailyResponse);
+    const articles = data.articles?.result ?? (data.article ? [data.article] : undefined);
+    if (!articles) {
+        throw new Error('The Luogu daily index link is not an article or collection. Check the discussion ID.');
+    }
+    const item = await pMap(
+        articles,
+        async (article) => {
+            const link = `https://www.luogu.com/article/${article.lid}`;
+            return {
+                title: article.title,
+                link,
+                author: article.author.name,
+                pubDate: parseDate(article.time, 'X'),
+                description: data.article ? md.render(article.content) : await getArticleDescription(link),
+            };
         },
-    ];
+        { concurrency: 3 }
+    );
 
     return {
         title: '洛谷日报',

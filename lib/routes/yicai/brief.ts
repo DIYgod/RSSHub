@@ -1,8 +1,9 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
+import { renderDescription } from './templates/description';
 import { rootUrl } from './utils';
 
 export const route: Route = {
@@ -31,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const currentUrl = `${rootUrl}/brief`;
-    const apiUrl = `${rootUrl}/api/ajax/getbrieflist?type=0&page=1&pagesize=${ctx.req.query('limit') ?? 50}`;
+    const apiUrl = `${rootUrl}/api/ajax/getbrieflist?type=0&page=1&pagesize=${getRouteLimit(ctx, 50)}`;
 
     const response = await got({
         method: 'get',
@@ -41,8 +42,11 @@ async function handler(ctx) {
     const items = response.data.map((item) => ({
         title: item.indexTitle,
         link: `${rootUrl}${item.url}`,
-        description: item.newcontent,
-        pubDate: timezone(parseDate(`${item.datekey} ${item.hm}`, 'YYYY.MM.DD HH:mm'), 8),
+        description: renderDescription({
+            intro: item.LiveContent,
+            image: { src: item.LiveImages },
+        }),
+        pubDate: parseDate(item.CreateDate, 8),
     }));
 
     return {

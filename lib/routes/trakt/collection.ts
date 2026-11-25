@@ -3,7 +3,8 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/collection/:username',
@@ -16,14 +17,14 @@ export const route: Route = {
             target: '/collection/:username',
         },
     ],
-    name: 'User Collection',
+    name: 'User favorites',
     maintainers: ['hoilc'],
     handler,
 };
 
 async function handler(ctx: Context) {
     const { username } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const headers = {
         'trakt-api-key': '201dc70c5ec6af530f12f079ea1922733f6e1085ad7b02f36d8e011b75bcea7d',

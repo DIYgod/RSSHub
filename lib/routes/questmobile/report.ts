@@ -1,31 +1,21 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.
  * @param {Array} tree - The tree to parse.
- * @param {Array} result - The result array to store the parsed key-value pairs. Default is an empty array.
  *
  * @returns {Array} - An array of objects containing the key-value pairs.
  */
-const parseTree = (tree, result: Array<{ key: any; value: any }> = []) => {
-    for (const obj of tree) {
-        const { key, value, children } = obj;
-        result.push({ key, value });
-
-        if (children && children.length > 0) {
-            parseTree(children, result);
-        }
-    }
-
-    return result;
-};
+const parseTree = (tree): Array<{ key: any; value: any }> => tree.flatMap(({ key, value, children }) => [{ key, value }, ...(children && children.length > 0 ? parseTree(children) : [])]);
 
 export const route: Route = {
     path: '/report/:industry?/:label?',
@@ -158,7 +148,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { industry, label } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.questmobile.com.cn';
     const apiUrl = new URL('api/v2/report/article-list', rootUrl).href;
@@ -190,7 +180,7 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.data.slice(0, limit).map((item) => ({
+    let items: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`research/report/${item.id}`, rootUrl).href,
         description: renderDescription({
@@ -203,11 +193,12 @@ async function handler(ctx) {
         }),
         category: [...(item.industryList ?? []), ...(item.labelList ?? [])],
         guid: `questmobile-report#${item.id}`,
-        pubDate: parseDate(item.publishTime),
+        pubDate: parseDate(item.publishTime, 8),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -226,11 +217,10 @@ async function handler(ctx) {
                     .find('span')
                     .toArray()
                     .map((c) => content(c).text());
-                item.pubDate = parseDate(content('div.data span').prop('datetime'));
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const { data: currentResponse } = await got(currentUrl);
@@ -253,6 +243,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
-        allowEmpty: true,
     };
 }

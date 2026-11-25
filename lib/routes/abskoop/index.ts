@@ -1,9 +1,7 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -25,39 +23,21 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const response = await got({
-        method: 'get',
-        url: 'https://www.ahhhhfs.com/wp-json/wp/v2/posts',
-        searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10,
-            _embed: '',
-        },
-    });
-    const list = response.data.map((item) => ({
-        title: item.title.rendered,
-        link: item.link,
-        pubDate: parseDate(item.date_gmt),
-        updated: parseDate(item.modified_gmt),
-        author: item._embedded.author[0].name,
-        category: [...new Set(item._embedded['wp:term'].flatMap((i) => i.map((j) => j.name)))],
-    }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({ method: 'get', url: item.link });
-                const $detail = load(detailResponse.data);
-                $detail('article.post-content').find('.lwptoc').remove();
-                $detail('article.post-content').find('#related_posts').remove();
-                $detail('article.post-content').find('.entry-copyright').remove();
-                $detail('article.post-content img').each((_, el) => {
-                    $detail(el).replaceWith(`<img src=https:${$detail(el).attr('src')}>`);
-                });
-                item.description = $detail('article.post-content').html();
-                return item;
-            })
-        )
-    );
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
+    const feed = await parser.parseURL('https://www.ahhhhfs.com/feed/');
+    const items = feed.items
+        .slice(0, limit)
+        .map((item) => ({
+            title: item.title ?? '',
+            link: item.link,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            updated: item.isoDate ? parseDate(item.isoDate) : undefined,
+            author: item.creator ?? item.author,
+            category: item.categories,
+            description: item.content ?? item.contentSnippet,
+        }))
+        .filter((item) => item.title);
 
     return {
         title: 'ahhhhfs-A姐分享',

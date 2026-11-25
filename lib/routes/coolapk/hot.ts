@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -106,6 +107,12 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'jrrm';
     const period = ctx.req.param('period') || 'daily';
+    if (!['jrrm', 'dzb', 'scb', 'plb', 'ktb'].includes(type)) {
+        throw new InvalidParameterError('Invalid ranking type. Use jrrm, dzb, scb, plb, or ktb.');
+    }
+    if (!['daily', 'weekly'].includes(period)) {
+        throw new InvalidParameterError('Invalid ranking period. Use daily or weekly.');
+    }
     const { link, title } = getLinkAndTitle(type, period);
     const r = await got(link, {
         headers: utils.getHeaders(),
@@ -122,7 +129,7 @@ async function handler(ctx) {
         }
     }
 
-    const out = await Promise.all(t.map((item) => utils.parseDynamic(item)));
+    const out = await Promise.all(utils.selectDynamics(t).map((item) => utils.parseDynamic(item)));
 
     return {
         title,

@@ -1,10 +1,13 @@
+import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -109,6 +112,35 @@ async function handler(ctx) {
     const link = `https://www.malaysiakini.com/rss/${lang}/${category}.rss`;
     const feed = await parser.parseURL(link);
 
+    if (!cookie) {
+        const items = await pMap(
+            feed.items,
+            async (item): Promise<DataItem> => {
+                const link = item.link;
+                if (!link || !item.title) {
+                    throw new Error('Malaysiakini RSS did not provide an article title or link.');
+                }
+                const details = await cache.tryGet(`malaysiakini:public-article:v1:${link}`, () => getPublicArticleDetails(link));
+                return {
+                    title: item.title,
+                    link,
+                    description: details.description,
+                    author: details.author,
+                    category: item.categories,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                };
+            },
+            { concurrency: 3 }
+        );
+        return {
+            title: feed.title!,
+            link: feed.link,
+            description: feed.description,
+            language: lang,
+            item: items,
+        };
+    }
+
     if (cookie) {
         // Testing the cookie with the first item of the feed
         try {
@@ -173,5 +205,22 @@ async function handler(ctx) {
         description: feed.description,
         language: lang,
         item: items as DataItem[],
+    };
+}
+
+async function getPublicArticleDetails(link: string) {
+    const { data } = await got(link);
+    const $ = load(data);
+    const teaser = $('.article-paywall');
+    const content = teaser.text() ? teaser : $('article.article-content .details');
+    const body = content.html();
+    if (!body || !content.text()) {
+        throw new Error(`Cannot find the public article content on ${link}.`);
+    }
+    const image = $('#main-article-image img').attr('src');
+    const article = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
+    return {
+        description: `<img src="${image}">${body}`,
+        author: article.author.map((author) => author.name).join(', '),
     };
 }

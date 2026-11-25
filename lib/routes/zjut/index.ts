@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.zjut.edu.cn';
 
@@ -20,7 +20,7 @@ export const route: Route = {
             target: '/:type',
         },
     ],
-    name: '浙江工业大学',
+    name: '首页',
     maintainers: ['junbaor'],
     handler,
     url: 'www.zjut.edu.cn',
@@ -45,24 +45,26 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
-                pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             if (!item.link.startsWith(`${host}/`)) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async () => {
+            const description = await cache.tryGet(`zjut:index:details:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('.wp_articlecontent').html();
-                return item;
+                return $('.wp_articlecontent').html();
             });
-        })
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

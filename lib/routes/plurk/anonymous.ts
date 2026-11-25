@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getPlurk } from './utils';
 
@@ -31,14 +32,14 @@ async function handler(ctx) {
     const { data: apiResponse } = await got(`${baseUrl}/Stats/getAnonymousPlurks`, {
         searchParams: {
             offset: 0,
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 200,
+            limit: getRouteLimit(ctx, 200),
         },
     });
 
     delete apiResponse.pids;
     delete apiResponse.count;
 
-    const items = await Promise.all(Object.values<{ plurk_id: number }>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ')));
+    const items = Object.values<{ plurk_id: number }>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ'));
 
     return {
         title: 'Anonymous - Plurk',

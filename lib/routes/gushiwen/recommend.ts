@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -23,40 +24,41 @@ export const route: Route = {
 const idPattern = /230427\('\w+','(\w+)'\)/;
 
 function getContent(onclick: string, annotation: string) {
-    const id = onclick.match(idPattern)![1];
-    return ofetch(`https://www.gushiwen.cn/nocdn/ajaxshiwenDetailCont.aspx?id=${id}&value=${annotation}`, { headers: { cookie: 'login=flase' } });
+    const id = idPattern.exec(onclick)![1];
+    return ofetch(`https://www.guwendao.net/nocdn/ajaxshiwenDetailCont.aspx?id=${id}&value=${annotation}`, { headers: { cookie: 'login=flase' } });
 }
 
 async function handler(ctx: Context) {
-    const url = 'https://www.gushiwen.cn/';
+    const url = 'https://www.guwendao.net/';
     const res = await ofetch(url);
     const { annotation } = ctx.req.param();
     const $ = load(res);
 
-    const out = await Promise.all(
-        $('div.sons:has(div.contson)')
-            .slice(0, 10)
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const href = $item.find('p a').attr('href');
-                const link = href ? new URL(href, url).href : undefined;
+    const out = await pMap(
+        $('div.sons:has(div.contson)').slice(0, 10).toArray(),
+        (item) => {
+            const $item = $(item);
+            const href = $item.find('p a').attr('href');
+            const link = href ? new URL(href, url).href : undefined;
 
-                return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
-                    let description = $item.find('div.contson').html();
-                    const onclick = $item.find('img[onclick]').attr('onclick');
-                    if (annotation && onclick) {
-                        description = await getContent(onclick, annotation);
-                    }
+            return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
+                let description = $item.find('div.contson').html();
+                const onclick = $item.find('img[onclick]').attr('onclick');
+                if (annotation && onclick) {
+                    const annotationHtml = await getContent(onclick, annotation);
+                    const annotationContent = load(annotationHtml);
+                    description = annotationContent('.contson').html();
+                }
 
-                    return {
-                        title: $item.find('b').text(),
-                        link,
-                        description,
-                        author: $item.find('p.source').text(),
-                    };
-                });
-            })
+                return {
+                    title: $item.find('b').text(),
+                    link,
+                    description,
+                    author: $item.find('p.source').text(),
+                };
+            });
+        },
+        { concurrency: 2 }
     );
 
     return {

@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { rootUrl } from './utils';
 
@@ -24,58 +24,53 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gitpod.io/blog', 'gitpod.io/'],
+            source: ['ona.com/stories', 'ona.com/', 'gitpod.io/blog', 'gitpod.io/'],
         },
     ],
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,
-    url: 'gitpod.io/blog',
+    url: 'ona.com/stories',
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
-    const response = await got(rootUrl + '/blog');
-    const $ = load(response.data);
-    let items = $('div[class^="flex justify-center"]')
-        .slice(0, limit)
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            return {
-                title: $item.find('h2').text(),
-                link: rootUrl + $item.find('a').attr('href'),
-                pubDate: parseDate($item.find('span[class^=date]').text()),
-            };
-        });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
-
-                const headerImg = content('img[class^=max-h]');
-                const contentHtml = content('div[class^=content-blog]').html();
-                item.description = renderToString(
-                    <>
-                        <img src={headerImg.attr('src')} alt={headerImg.attr('alt')} />
-                        {contentHtml ? raw(contentHtml) : null}
-                    </>
-                );
-                item.author = content('span.avatars a')
-                    .toArray()
-                    .map((e) => content(e).text().trim())
-                    .join(', ');
-                return item;
-            })
-        )
+    const limit = getRouteLimit(ctx, 10);
+    const feed = await parser.parseString(await ofetch(`${rootUrl}/stories/feed`, { responseType: 'text' }));
+    const datedItems = feed.items.map((item) => ({ item, date: item.pubDate ? parseDate(item.pubDate) : undefined }));
+    if (ctx.req.query('sorted') !== 'false') {
+        datedItems.sort((a, b) => compareDates(b.date, a.date));
+    }
+    const selectedItems = datedItems.slice(0, limit);
+    const items = await Promise.all(
+        selectedItems.map(async ({ item, date }): Promise<DataItem> => ({
+            title: item.title!,
+            link: item.link,
+            guid: item.guid,
+            pubDate: date,
+            ...(await cache.tryGet(`gitpod:story:${item.link}`, async () => {
+                const html = await ofetch(item.link!);
+                const $ = load(html);
+                const article = JSON.parse($('script[type="application/ld+json"]:contains("Article")').text());
+                const content = $('section[class^="mdx-content"]');
+                if (!content.length) {
+                    throw new Error(`Ona story content was not found: ${item.link}`);
+                }
+                return {
+                    description: content.html(),
+                    author: $('section:has(h1) img[alt]')
+                        .toArray()
+                        .map((e) => $(e).attr('alt'))
+                        .join(', '),
+                    image: article.image ? new URL(article.image, item.link).href : undefined,
+                };
+            })),
+        }))
     );
 
     const ret = {
-        title: $('title').text(),
-        link: rootUrl + '/blog',
-        description: $('meta[name="description"]').attr('content'),
+        title: feed.title!,
+        link: feed.link,
+        description: feed.description,
         language: 'en-us' as const satisfies Language,
         item: items,
     };

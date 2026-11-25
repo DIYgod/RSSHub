@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/column/:cid',
@@ -22,12 +22,20 @@ async function handler(ctx: Context) {
         method: 'POST',
         body: { product_id: Number(columnId) },
     });
+    if (introResponse.code !== 0 || !introResponse.data?.title) {
+        throw new Error(`Failed to load Geekbang column ${columnId}: ${introResponse.error?.msg ?? 'Check that the column exists and is publicly accessible.'} (code ${introResponse.error?.code ?? introResponse.code ?? 'unknown'}).`);
+    }
 
     // Get latest articles
     const latestResponse = await ofetch('https://time.geekbang.org/serv/v1/column/articles', {
         method: 'POST',
         body: { cid: columnId, size: 500, prev: 0, order: 'latest', sample: false },
     });
+    if (latestResponse.code !== 0) {
+        throw new Error(
+            `Failed to load articles for Geekbang column ${columnId}: ${latestResponse.error?.msg ?? 'The article list is unavailable. Try again later.'} (code ${latestResponse.error?.code ?? latestResponse.code ?? 'unknown'}).`
+        );
+    }
 
     const out = latestResponse.data.list.map((item) => ({
         title: item.article_title,

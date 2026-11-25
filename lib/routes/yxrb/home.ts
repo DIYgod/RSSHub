@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://news.yxrb.net';
 
@@ -53,32 +52,30 @@ async function handler(ctx) {
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const article = await cache.tryGet(`yxrb:article:details:${item.link}`, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.author ??= $('.author-info .name a').text().split('作者 : ', 2)[1];
-                item.pubDate = timezone(
-                    parseDate(
-                        $('.publish-time')
-                            .first()
-                            .contents()
-                            .filter((_, e) => e.nodeType === 3)
-                            .text()
-                            .trim(),
-                        'YYYY-MM-DD HH:mm:ss'
-                    ),
+                const author = $('.author-info .name a').text().split('作者 : ', 2)[1];
+                const pubDate = parseDate(
+                    $('.publish-time')
+                        .first()
+                        .contents()
+                        .filter((_, e) => e.nodeType === 3)
+                        .text(),
+                    'YYYY-MM-DD HH:mm:ss',
                     8
                 );
-                item.description = $('article').html();
-                item.category = $('.tags a')
+                const description = $('article').html();
+                const category = $('.tags a')
                     .toArray()
                     .map((item) => $(item).text());
 
-                return item;
-            })
-        )
+                return { author, pubDate, description, category };
+            });
+            return { ...item, ...article, author: item.author ?? article.author };
+        })
     );
 
     return {

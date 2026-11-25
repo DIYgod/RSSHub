@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/course/list/:classify?/:status?/:sellingType?',
@@ -76,15 +76,22 @@ async function handler(ctx: Context) {
         },
     });
 
-    const item = response.data.product_list.map((product) => ({
-        title: product.name,
-        link: `${baseUrl}/course/${product.sign}`,
-        description: `${product.short_intro}<br>
-        ${product.org.name} / ${product.teacher.map((teacher) => teacher.name).join('、')}<br>
-        ${product.sell_type_name} / ${product.classify_name.join('、')} / 报名人数: ${product.count}<br>
+    const item = response.data.product_list.map((product) => {
+        const authors: Array<{ name: string }> = product.teacher.map((teacher) => ({ name: teacher.name }));
+        const categories = [...new Set([...product.classify_name, ...product.tag_titles])];
+        return {
+            title: product.name,
+            link: `${baseUrl}/course/${product.sign}`,
+            description: `${product.short_intro}<br>
+        ${product.org.name}<br>
+        ${product.sell_type_name} / 报名人数: ${product.count}<br>
         <img src="${product.cover}">`,
-        pubDate: parseDate(product._ut || product.created),
-    }));
+            author: authors.length ? authors : undefined,
+            category: categories,
+            pubDate: parseDate(product.created),
+            updated: parseDate(product.modified),
+        };
+    });
 
     return {
         title: '学堂在线 - 课程列表',

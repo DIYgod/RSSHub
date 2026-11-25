@@ -1,36 +1,58 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-const BASE_URL = 'https://www.txks.org.cn/index/work.html';
+const baseUrl = 'https://www.txks.org.cn/index/work.html';
 
-const removeFontPresetting = (html: string = ''): string => {
-    const $ = load(html);
-    $('[style]').each((_, element) => {
+function removeFontPresetting($: CheerioAPI): string | null {
+    const content = $('#contentTxt');
+    content.find('[style]').each((_, element) => {
         const style = $(element).attr('style') || '';
         const cleanedStyle = style.replaceAll(/font-family:[^;]*;?/gi, '').trim();
-        $(element).attr('style', cleanedStyle || null);
+        if (cleanedStyle) {
+            $(element).attr('style', cleanedStyle);
+        } else {
+            $(element).removeAttr('style');
+        }
     });
-    $('style').each((_, styleElement) => {
+    content.find('style').each((_, styleElement) => {
         const cssText = $(styleElement).html() || '';
-        const cleanedCssText = cssText.replaceAll(/font-family:[^;]*;?/gi, '');
-        $(styleElement).html(cleanedCssText);
+        $(styleElement).html(cssText.replaceAll(/font-family:[^;]*;?/gi, ''));
     });
+    return content.html();
+}
 
-    return $.html();
-};
+async function getArticleItem(item: { date?: Temporal.Instant; title: string; link: string }): Promise<DataItem> {
+    const detail = await cache.tryGet<Pick<DataItem, 'description' | 'content'>>(`txks:article:${item.link}`, async () => {
+        const { data: contentResponse } = await got(item.link);
+        const content = removeFontPresetting(load(contentResponse));
+        return { description: content, content: { html: content } };
+    });
+    return {
+        title: item.title,
+        pubDate: item.date,
+        link: item.link,
+        description: detail.description,
+        guid: item.link,
+        id: item.link,
+        content: detail.content,
+        language: 'zh-CN',
+    };
+}
 
 const handler: Route['handler'] = async () => {
     // Fetch the index page
-    const { data: listResponse } = await got(BASE_URL);
+    const { data: listResponse } = await got(baseUrl);
     const $ = load(listResponse);
 
     // Select all list items containing news information
-    const ITEM_SELECTOR = 'ul[class*="newsList"] > li';
-    const listItems = $(ITEM_SELECTOR);
+    const itemSelector = 'ul[class^="newsList"] > li';
+    const listItems = $(itemSelector);
 
     // Map through each list item to extract details
     const contentLinkList = listItems.toArray().map((element) => {
@@ -38,7 +60,7 @@ const handler: Route['handler'] = async () => {
         const title = $(element).find('a').attr('title')!;
         const link = $(element).find('a').attr('href')!;
 
-        const formattedDate = parseDate(date);
+        const formattedDate = parseDate(`${date}T00:00:00Z`);
         return {
             date: formattedDate,
             title,
@@ -49,32 +71,9 @@ const handler: Route['handler'] = async () => {
     return {
         title: '全国通信专业技术人员职业水平考试',
         description: '全国通信专业技术人员职业水平考试网站最新动态和消息推送',
-        link: BASE_URL,
+        link: baseUrl,
         image: 'https://www.txks.org.cn/asset/image/logo/logo.png',
-        item: await Promise.all(
-            contentLinkList.map((item) =>
-                cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const CONTENT_SELECTOR = '#contentTxt';
-                    const { data: contentResponse } = await got(item.link);
-                    const contentPage = load(contentResponse);
-                    const content = removeFontPresetting(contentPage(CONTENT_SELECTOR).html() || '');
-                    return {
-                        title: item.title,
-                        pubDate: item.date,
-                        link: item.link,
-                        description: content,
-                        category: ['study'],
-                        guid: item.link,
-                        id: item.link,
-                        image: 'https://www.txks.org.cn/asset/image/logo/logo.png',
-                        content: { html: content },
-                        updated: item.date,
-                        language: 'zh-CN',
-                    };
-                })
-            )
-        ),
-        allowEmpty: true,
+        item: await pMap(contentLinkList, getArticleItem, { concurrency: 3 }),
         language: 'zh-CN',
         feedLink: 'https://rsshub.app/txks/news',
         id: 'https://rsshub.app/txks/news',
@@ -100,7 +99,7 @@ export const route: Route = {
     radar: [
         {
             title: '全国通信专业技术人员职业水平考试动态',
-            source: ['www.txks.org.cn/index/work', 'www.txks.org.cn'],
+            source: ['www.txks.org.cn/index/work', 'www.txks.org.cn', 'www.txks.org.cn/index/work.html'],
             target: '/news',
         },
     ],

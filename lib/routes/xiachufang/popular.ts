@@ -54,7 +54,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     return {
-        title: `下厨房-${mapper[timeframe]}`,
+        title: `下厨房-${mapper[timeframe] ?? mapper['']}`,
         link: url,
         item: generateItems($, timeframe),
     };

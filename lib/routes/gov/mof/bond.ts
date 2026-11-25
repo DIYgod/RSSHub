@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const domain = 'gks.mof.gov.cn';
 const theme = 'guozaiguanli';
@@ -51,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: a.prop('title') ?? '',
                 link,
-                pubDate: timezone(parseDate(pubDate), 8),
+                pubDate: parseDate(pubDate, 8),
             };
         });
 

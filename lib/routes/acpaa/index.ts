@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?/:name?',
@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '1', name = '重要通知' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://www.acpaa.cn';
     const currentUrl = new URL(`article/taglist.jhtml?tagIds=${id}&tagname=${name}`, rootUrl).href;
@@ -42,9 +42,9 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.prop('title')!,
+                title: $item.prop('title'),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: timezone(parseDate($item.find('span[title]').prop('title')), 8),
+                pubDate: parseDate($item.find('span[title]').prop('title'), 8),
             };
         });
 

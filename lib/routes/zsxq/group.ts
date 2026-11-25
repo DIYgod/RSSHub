@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { GroupInfoResponse, TopicsResponse } from './types';
 import { customFetch, generateTopicDataItem } from './utils';
@@ -38,7 +39,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const groupId = ctx.req.param('id');
+    const groupId = ctx.req.param('id')!;
     const scope = ctx.req.param('scope') ?? 'all';
     const accessToken = config.zsxq.accessToken;
 
@@ -46,14 +47,11 @@ async function handler(ctx: Context): Promise<Data> {
         throw new ConfigNotFoundError('该 RSS 源由于配置不正确而被禁用：令牌丢失。');
     }
 
-    let count = Number(ctx.req.query('limit')) || 20;
-    if (count > 30) {
-        count = 30;
-    }
+    const count = Math.min(getRouteLimit(ctx, 20), 30);
 
-    const { group } = await customFetch<GroupInfoResponse>(`/groups/${groupId}`);
+    const { group } = await customFetch<GroupInfoResponse>(`/groups/${encodeURIComponent(groupId)}`);
 
-    const { topics } = await customFetch<TopicsResponse>(`/groups/${groupId}/topics?scope=${scope}&count=${count}`);
+    const { topics } = await customFetch<TopicsResponse>(`/groups/${encodeURIComponent(groupId)}/topics?scope=${scope}&count=${count}`);
 
     return {
         title: `知识星球 - ${group.name}`,

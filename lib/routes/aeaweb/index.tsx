@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id',
@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     id = $('input[name="journal"]').attr('value');
 
-    const title = $('.page-title').text();
+    const title = $('.journal-title-url h1').text();
     const description = $('.intro-copy').text();
     const searchUrl = `${rootUrl}/journals/search-results?journal=${id}&ArticleSearch[current]=1`;
 

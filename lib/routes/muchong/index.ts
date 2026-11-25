@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id/:type?/:sort?',
@@ -16,6 +16,7 @@ export const route: Route = {
         type: '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部',
         sort: '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序',
     },
+    features: { antiCrawler: true },
     name: '分类',
     maintainers: ['nczitzk'],
     description: `::: tip
@@ -43,21 +44,24 @@ async function handler(ctx: Context) {
                 author: $item.find('.by cite a').text(),
                 link: `${rootUrl}${$item.find('.a_subject').attr('href')}`,
                 title: $item.find('.thread-name span').eq(0).text() + $item.find('.a_subject').text(),
-                pubDate: timezone(parseDate(sort === '' ? $item.find('.by cite nobr').text() : $item.find('.by .xmc_b9').eq(0).text()), 8),
+                pubDate: parseDate(sort === '' ? $item.find('.by cite nobr').text() : $item.find('.by .xmc_b9').eq(0).text(), 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, { responseType: 'arrayBuffer' });
                 const content = load(decoder.decode(detailResponse));
 
-                item.description = content('#pid1').find('.t_fsz').html();
+                const description = content('#pid1').find('.t_fsz').html();
 
-                return item;
-            })
-        )
+                return { description };
+            });
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

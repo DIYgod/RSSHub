@@ -2,16 +2,17 @@ import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const getRequestToken = () => {
     const e = 'sgn51n6r6q97o6g3';
     const t = 'jzhotdata';
-    return CryptoJS.DES.encrypt(`${Date.now().toString()}-${e}`, t).toString();
+    return CryptoJS.DES.encrypt(`${Temporal.Now.instant().epochMilliseconds.toString()}-${e}`, t).toString();
 };
 
 const baseUrl = 'https://vp.fact.qq.com';
@@ -52,7 +53,7 @@ async function handler() {
         },
     });
 
-    const list = response.data.list.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.list.map((item) => ({
         title: `【${item.explain}】${item.title}`,
         description: `<img src="${item.cover}"><br>${item.abstract}`,
         pubDate: parseDate(item.date, 'YYYY-MM-DD'),
@@ -61,8 +62,9 @@ async function handler() {
         link: `${baseUrl}/article?id=${item.id}`,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
@@ -74,8 +76,8 @@ async function handler() {
                 item.pubDate = parseDate(initialState.createdAt);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -91,7 +93,7 @@ const QqFactDescription = ({ data }: { data: any }) => {
     return (
         <>
             {cover ? <img src={cover} /> : null}
-            {data.rumor ? <div class="saying">流传说法：{data.rumor}</div> : null}
+            {data.rumor ? <div className="saying">流传说法：{data.rumor}</div> : null}
             {data.abstract ? (
                 <>
                     查证要点：

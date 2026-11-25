@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/history',
@@ -34,7 +34,7 @@ async function handler() {
                 title: version,
                 author: 'Cent Browser',
                 description: $update.html(),
-                link: `${url}#${date}`,
+                link: `${url}#${encodeURIComponent(version)}`,
                 pubDate: parseDate(date),
             };
         });

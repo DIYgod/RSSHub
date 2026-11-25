@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id?',
@@ -28,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '16';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://www.cste.org.cn';
     const currentUrl = `${rootUrl}/site/term/${id}.html`;
@@ -48,8 +49,8 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h5').text(),
-                link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: parseDate($item.find('small').text()),
+                link: new URL($item.attr('href')!, rootUrl).href,
+                pubDate: parseDate($item.find('small').text(), 8),
             };
         });
 

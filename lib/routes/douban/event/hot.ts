@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/event/hot/:locationId',
@@ -32,9 +33,10 @@ async function handler(ctx) {
     });
 
     return {
+        sortItems: false,
         title: `豆瓣同城-热门活动-${locationId}`,
         link: referer,
-        item: response.data.subject_collection_items.map(({ title, url, cover, subtype, info, price_range }) => {
+        item: response.data.subject_collection_items.map(({ title, url, cover, subtype, info, price_range, date }) => {
             const description = `<img src="${cover.url}"><br>
               ${info}/${subtype}/${price_range}
             `;
@@ -42,6 +44,7 @@ async function handler(ctx) {
             return {
                 title,
                 description,
+                pubDate: parseDate(date, 0),
                 link: url,
             };
         }),

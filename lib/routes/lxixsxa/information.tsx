@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { parseJSONP } from './jsonp-helper';
 
@@ -62,14 +62,10 @@ async function handler() {
             // the article title
             title: item.title,
             // the article content
-            description: renderToString(
-                <>
-                    {item.category ? <span>Category: {item.category}</span> : null}
-                    {raw(item.description.replaceAll('\n', '<br>'))}
-                </>
-            ),
+            description: renderToString(<>{raw(item.description.replaceAll('\n', '<br>'))}</>),
+            category: item.category,
             // the article publish time
-            pubDate: parseDate(item.date),
+            pubDate: parseDate(item.date.replaceAll('.', '-'), 0),
             // the article link
             link: `${url}/${item.id}`,
         })),

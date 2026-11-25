@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -24,6 +26,9 @@ const parseFlightData = (buf: Buffer) => {
             end = buf.indexOf(0x0a, colon);
             value = buf.toString('utf8', colon + 1, end);
         }
+        if (end < i) {
+            throw new Error('Unterminated row in flight payload');
+        }
         rows.set(id, value);
         i = end + 1;
     }
@@ -32,7 +37,7 @@ const parseFlightData = (buf: Buffer) => {
 
 async function handler(ctx: Context) {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 16;
+    const limit = getRouteLimit(ctx, 16);
 
     const rootUrl = 'https://www.deeplearning.ai';
     const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}`, rootUrl).href;
@@ -51,7 +56,7 @@ async function handler(ctx: Context) {
                 .match(/^self\.__next_f\.push\(\[1,(".*")\]\)$/s)
         )
         .filter(Boolean)
-        .map((m) => JSON.parse(m![1]) as string)
+        .map((m): string => JSON.parse(m![1]))
         .join('');
 
     const cardsRow = flight.split('\n').find((row) => row.includes('"cards":['));
@@ -60,7 +65,9 @@ async function handler(ctx: Context) {
     }
     const { cards } = JSON.parse(cardsRow.replace(/^[0-9a-f]+:/, ''))[3];
 
-    let items = cards.slice(0, limit).map((card) => {
+    const pool = cards.slice(0, Math.max(16, limit));
+    const candidates = ctx.req.query('sorted') === 'false' ? pool.slice(0, limit) : pool;
+    let items: Array<DataItem & { link: string }> = candidates.map((card) => {
         const title = card.title;
         const description = renderDescription({
             images: card.image?.src
@@ -92,8 +99,9 @@ async function handler(ctx: Context) {
         };
     });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, {
                     headers: { rsc: '1' },
@@ -127,7 +135,7 @@ async function handler(ctx: Context) {
 
                 const metaProps = JSON.parse(rows.values().find((row) => row.includes('"og:title"'))!)
                     .filter((element) => element[1] === 'meta')
-                    .map((element) => element[3] as Record<string, string>);
+                    .map((element): Record<string, string> => element[3]);
                 const meta = (property: string) => metaProps.find((props) => props.property === property)?.content;
 
                 const title = meta('og:title')!;
@@ -147,20 +155,20 @@ async function handler(ctx: Context) {
                 });
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate(meta('article:published_time')!);
+                item.pubDate = parseDate(meta('article:published_time'));
                 item.category = metaProps.filter((props) => props.property === 'article:tag').map((props) => props.content);
                 item.author = meta('article:author');
                 item.content = {
                     html: description,
-                    text: intro,
+                    text: [intro, $$.text()].filter(Boolean).join('\n\n'),
                 };
                 item.image = image;
                 item.banner = image;
-                item.updated = parseDate(meta('article:modified_time')!);
+                item.updated = parseDate(meta('article:modified_time'));
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -168,7 +176,6 @@ async function handler(ctx: Context) {
         description: $('meta[property="og:description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image: `${rootUrl}/favicon.ico`,
         author: $('meta[property="og:site_name"]').prop('content'),
         language,
@@ -227,12 +234,8 @@ If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data
     },
     radar: [
         {
-            source: ['www.deeplearning.ai/the-batch', 'www.deeplearning.ai/the-batch/tag/:tag/'],
-            target: (params) => {
-                const tag = params.tag;
-
-                return `/the-batch${tag ? `/${tag}` : ''}`;
-            },
+            source: ['www.deeplearning.ai/the-batch/tag/:tag/'],
+            target: '/the-batch/:tag',
         },
         {
             title: 'Weekly Issues',

@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Articles } from './types';
 import { processImage, withZhihuClient } from './utils';
@@ -9,16 +9,16 @@ export const route: Route = {
     path: '/posts/:usertype/:id',
     categories: ['social-media'],
     example: '/zhihu/posts/people/frederchen',
-    parameters: { usertype: '作者 id，可在用户主页 URL 中找到', id: '用户类型usertype，参考用户主页的URL。目前有两种，见下表' },
+    parameters: { usertype: '用户类型usertype，参考用户主页的URL。目前有两种，见下表', id: '作者 id，可在用户主页 URL 中找到' },
     features: {
         requireConfig: [
             {
                 name: 'ZHIHU_COOKIES',
-                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise Workers use a Playwright browser session; Docker and Vercel generate credentials with JSDOM.',
+                description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise a Playwright browser session is required.',
                 optional: true,
             },
         ],
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,

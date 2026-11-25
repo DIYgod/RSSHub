@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/comments/:id',
@@ -43,6 +43,7 @@ async function handler(ctx: Context) {
     });
 
     return {
+        language: 'en' as const,
         title: `${name} - Comments`,
         link: `https://patchwork.kernel.org/patch/${id}/`,
         item: data.map((item) => ({

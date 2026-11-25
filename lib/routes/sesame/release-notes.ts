@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/release_notes',
@@ -12,7 +13,7 @@ export const route: Route = {
 
 async function handler() {
     const rootUrl = 'https://sesame.ninja/release_notes.txt';
-    const response = await ofetch(rootUrl, { responseType: 'text' });
+    const response = await ofetch(rootUrl);
 
     const items = response
         .split('\r\n\r\n')
@@ -20,12 +21,14 @@ async function handler() {
         .map((item) => {
             const splits = item.split('\r\n - ');
             const title = splits.shift()!.replace(':', '');
+            const date = title.match(/\((\d{4}-\d{2}-\d{2}),/)?.[1];
 
             return {
                 title,
+                guid: title,
                 link: rootUrl,
-                pubDate: title.match(/\((.*),/)![1],
-                description: `<ul><li>${splits.join('</li><li>')}</ul>`,
+                pubDate: parseDate(`${date}T00:00:00Z`),
+                description: `<ul><li>${splits.join('</li><li>')}</li></ul>`,
             };
         });
 

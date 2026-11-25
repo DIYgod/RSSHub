@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { sha256 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -40,14 +42,17 @@ export const route: Route = {
 :::`,
 };
 
+const siteHosts = new Set(['www.jumeili.cn', 'jumeili.cn']);
+
 async function handler(ctx) {
     const baseUrl = 'https://www.jumeili.cn';
     const column = ctx.req.param('column') ?? 0;
 
-    const link = `${baseUrl}/ws/AjaxService.ashx?act=index_article&page=1&pageSize=20&column=${column}`;
+    const requestUrl = new URL('/ws/AjaxService.ashx', baseUrl);
+    requestUrl.search = new URLSearchParams({ act: 'index_article', page: '1', pageSize: '20', column: String(column) }).toString();
 
     const cookie = config.jumeili.cookie;
-    const response = await ofetch<string>(link, {
+    const response = await ofetch(requestUrl.href, {
         headers: {
             'user-agent': config.trueUA,
             accept: 'application/json, text/javascript, */*; q=0.01',
@@ -55,44 +60,51 @@ async function handler(ctx) {
         },
     });
 
-    const body = response.trimStart().startsWith('"') ? JSON.parse(response) : response;
-    const data = JSON.parse(body);
+    const data = JSON.parse(JSON.parse(response));
 
-    let items = data.items.map((item) => ({
+    let items: Array<DataItem & { link: string }> = data.items.map((item) => ({
         title: item.title,
-        link: baseUrl + item.url,
-        description: item.subject, // 预览内容
+        link: new URL(item.url, baseUrl).href,
+        description: item.subject, // Article preview.
         image: item.imgurl,
         author: item.author,
         // pubDate: parseDate(item.pubTime),
     }));
 
     if (cookie) {
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const article = await ofetch(item.link, {
-                        headers: {
-                            'user-agent': config.trueUA,
-                            accept: 'application/json, text/javascript, */*; q=0.01',
-                            cookie,
-                        },
-                    });
-                    const $ = load(article);
-
-                    const content = $('#Cnt-Main-Article-JML').html();
-                    if (content) {
-                        item.description = content; // 替换为完整正文
-                    }
-
+        const cookieHash = sha256(cookie);
+        items = await pMap(
+            items,
+            async (item) => {
+                const { protocol, hostname } = new URL(item.link);
+                // only send the cookie to the site itself; other links keep the preview
+                if (protocol !== 'https:' || !siteHosts.has(hostname)) {
                     return item;
-                })
-            )
+                }
+                return {
+                    ...item,
+                    description:
+                        (await cache.tryGet(`jumeili:article:${cookieHash}:${item.link}`, async () => {
+                            const article = await ofetch(item.link, {
+                                headers: {
+                                    'user-agent': config.trueUA,
+                                    accept: 'application/json, text/javascript, */*; q=0.01',
+                                    cookie,
+                                },
+                            });
+                            const $ = load(article);
+
+                            return $('#Cnt-Main-Article-JML').html() ?? '';
+                        })) || item.description,
+                };
+            },
+            { concurrency: 3 }
         );
     }
 
     return {
         title: '聚美丽 - 首页资讯',
+        link: baseUrl,
         item: items,
     };
 }

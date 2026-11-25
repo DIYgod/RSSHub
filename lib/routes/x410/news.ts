@@ -2,140 +2,129 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const baseUrl = 'https://x410.dev';
+function getDate(value?: string) {
+    return value ? parseDate(value) : undefined;
+}
+async function fetchDetail(link: string) {
+    const detailResponse = await ofetch(link);
+    const $$: CheerioAPI = load(detailResponse);
+    $$('img').each((_, imgEl) => {
+        const $$imgEl: Cheerio<Element> = $$(imgEl);
+        const src: string | undefined = $$imgEl.attr('data-orig-src');
+        if (src && src.startsWith('/')) {
+            $$imgEl.attr('src', new URL(src, baseUrl).href);
+        }
+    });
+    const description: string | undefined = renderDescription({
+        description: $$('div#cookbook, div#news').first().html() ?? undefined,
+    });
+    const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
+    const categoryEls: Element[] = $$('div.post-header-text-cat p a').toArray();
+    const categories: string[] = categoryEls.map((el) => $$(el).text()).filter(Boolean);
+    const authorEls: Element[] = $$('meta[name="author"]').toArray();
+    const authors: DataItem['author'] = authorEls.map((authorEl) => {
+        const $$authorEl: Cheerio<Element> = $$(authorEl);
+        return {
+            name: $$authorEl.attr('content') || '',
+            url: undefined,
+            avatar: undefined,
+        };
+    });
+    const image: string | undefined = $$('meta[property="og:image"]').attr('content');
+    const updatedStr = $$('meta[property="article:modified_time"]').attr('content');
+    const processedItem: Pick<DataItem, 'description' | 'pubDate' | 'category' | 'author' | 'content' | 'image' | 'banner' | 'updated'> = {
+        description,
+        pubDate: getDate(pubDateStr),
+        category: categories,
+        author: authors,
+        content: {
+            html: description,
+            text: $$('div#cookbook, div#news').first().prop('innerText'),
+        },
+        image,
+        banner: image,
+        updated: getDate(updatedStr),
+    };
+    return processedItem;
+}
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '30');
-
-    const baseUrl = 'https://x410.dev';
     const targetUrl: string = new URL('news', baseUrl).href;
-
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
-
     let items: DataItem[] = $('article.post')
         .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('h4 a');
-
             const title: string = $aEl.text();
             const description: string | undefined = renderDescription({
                 description: $el.find('div#cookbook').html() ?? undefined,
             });
-            const pubDateStr: string | undefined = $el.find('span.updated').text();
+            const updatedStr = $el.find('span.updated').first().text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const image: string | undefined = $el
                 .find('ul.slides li a img')
                 .attr('src')
                 ?.replace(/-\d+x\d+/, '');
-            const upDatedStr: string | undefined = pubDateStr;
-
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('div#cookbook').prop('innerText'),
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: parseDate(updatedStr),
                 language,
             };
-
             return processedItem;
         });
-
-    items = await Promise.all(
-        items.map((item) => {
-            if (!item.link) {
-                return item;
-            }
-
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link!);
-                const $$: CheerioAPI = load(detailResponse);
-
-                $$('img').each((_, imgEl) => {
-                    const $$imgEl: Cheerio<Element> = $$(imgEl);
-                    const src: string | undefined = $$imgEl.attr('data-orig-src');
-
-                    if (src && src.startsWith('/')) {
-                        $$imgEl.attr('src', new URL(src, baseUrl).href);
-                    }
-                });
-
-                const title: string = $$('.title').text();
-                const description: string | undefined = renderDescription({
-                    description: $$('div#cookbook').html() ?? undefined,
-                });
-                const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
-                const categoryEls: Element[] = $$('div.post-header-text-cat p a').toArray();
-                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                const authorEls: Element[] = $$('meta[name="author"]').toArray();
-                const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                    const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                    return {
-                        name: $$authorEl.attr('content') || '',
-                        url: undefined,
-                        avatar: undefined,
-                    };
-                });
-                const image: string | undefined = $$('meta[property="og:image"]').attr('content');
-                const upDatedStr: string | undefined = $$('.time').text() || pubDateStr;
-
-                const processedItem: DataItem = {
-                    title,
-                    description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                    category: categories,
-                    author: authors,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
-                    image,
-                    banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
-                };
-            });
-        })
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`x410:news:detail:v5:${item.link}`, () => fetchDetail(item.link!));
+            return {
+                ...item,
+                description: detail.description,
+                pubDate: detail.pubDate,
+                category: detail.category,
+                author: detail.author,
+                content: detail.content,
+                image: detail.image,
+                banner: detail.banner,
+                updated: detail.updated ?? item.updated,
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     const tileImage: string | undefined = $('meta[name="msapplication-TileImage"]').attr('content');
-
     return {
         title: $('title').text(),
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: tileImage ? new URL(tileImage, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
         id: targetUrl,
     };
 };
-
 export const route: Route = {
     path: '/news',
     name: 'News',

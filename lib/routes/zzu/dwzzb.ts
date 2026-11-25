@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dwzzb/:type',
@@ -19,7 +21,7 @@ export const route: Route = {
             source: ['dwzzb.v.zzu.edu.cn/'],
         },
     ],
-    name: '郑大党委组织部',
+    name: '党委组织部',
     maintainers: ['amandus1990'],
     handler,
     description: `| 党建工作 | 干部工作 | 人才工作 | 乡村振兴工作 |
@@ -42,19 +44,19 @@ async function handler(ctx) {
     const response = await got(apiUrl);
     const data = response.data.data;
 
-    const items = data.slice(0, 20).map((item) => {
+    const items = data.slice(0, Math.max(20, getRouteLimit(ctx, 20))).map((item) => {
         const link = item.articleUrl || `article.jsp?catalogArticleId=${item.catalogArticleId}`;
         return {
             title: item.articleTitle,
             link: new URL(link, 'https://dwzzb.v.zzu.edu.cn').href,
-            pubDate: item.publishTime,
+            pubDate: parseDate(item.publishTime),
             description: item.articleSummary,
         };
     });
 
     return {
         title: `郑大党委组织部-${typeDict[type][0]}`,
-        link: apiUrl,
+        link: 'https://dwzzb.v.zzu.edu.cn/',
         item: items,
     };
 }

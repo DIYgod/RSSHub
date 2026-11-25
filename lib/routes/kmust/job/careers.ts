@@ -32,7 +32,7 @@ const baseUrl = 'http://job.kmust.edu.cn';
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'inner' } = ctx.req.param();
     const title = `${type === 'inner' ? '校内宣讲会' : '校外宣讲会'}-昆明理工大学就业网`;
-    const pageUrl = `${baseUrl}/module/getcareers?start_page=1&keyword=&type=${type}&day=&count=20&start=1&_=${Date.now()}`;
+    const pageUrl = `${baseUrl}/module/getcareers?start_page=1&keyword=&type=${type}&day=&count=20&start=1&_=${Temporal.Now.instant().epochMilliseconds}`;
     const data = await ofetch<{ data: Career[] }>(pageUrl);
 
     return {

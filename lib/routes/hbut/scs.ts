@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/scs/:type',
@@ -45,6 +46,9 @@ const map = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError(`Invalid college type: ${type}. Supported types: ${Object.keys(map).join(', ')}.`);
+    }
     const link = `${baseUrl}${map[type]}`;
 
     const response = await ofetch(link, {
@@ -55,16 +59,18 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    return {
-        link,
-        title: $('title').text(),
-        item: $('dl.nesw_list>dt')
-            .slice(0, 10)
-            .toArray()
-            .map((elem) => ({
+    const items = $('dl.nesw_list>dt')
+        .toArray()
+        .map((elem) => {
+            const date = $('font:nth-child(3)', elem).text();
+            return {
                 link: new URL($('a', elem).attr('href')!, link).href,
                 title: $('a', elem).text(),
-                pubDate: timezone(parseDate($('font:nth-child(3)', elem).text()), 8),
-            })),
-    };
+                pubDate: parseDate(date, 8),
+            };
+        });
+    const limit = getRouteLimit(ctx, 10);
+    const selectedItems = items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit);
+
+    return { link, title: $('title').text(), item: selectedItems };
 }

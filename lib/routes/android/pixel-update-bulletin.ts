@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/pixel-update-bulletin',
@@ -40,7 +40,7 @@ async function handler() {
                 title: `Pixel Update Bulletin ${a.text()}`,
                 description: $item.find('td:nth-child(2)').html()?.trim(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: parseDate($item.find('td:nth-child(3)').text()),
+                pubDate: parseDate($item.find('td:nth-child(3)').text(), 'MMMM D, YYYY'),
             };
         });
 

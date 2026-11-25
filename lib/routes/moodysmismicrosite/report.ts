@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/report/:industry?',
@@ -65,7 +65,7 @@ async function handler(ctx) {
 
     const industryId = industry
         .split('&')
-        .map((name) => reversedIndustry[name.trim()])
+        .map((name) => (Object.hasOwn(industryMap, name.trim()) ? name.trim() : reversedIndustry[name.trim()]))
         .filter((key) => key !== undefined)
         .join(',');
 
@@ -76,7 +76,6 @@ async function handler(ctx) {
     return {
         title: `穆迪评级(${industry})`,
         link: 'https://www.moodysmismicrosite.com/report',
-        allowEmpty: true,
         item: items.map((x) => ({
             title: x.title,
             pubDate: parseRelativeDate(x.release_time),

@@ -5,8 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -36,7 +36,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://www.auto-stats.org.cn';
     const currentUrl = new URL(`${category}.asp`, rootUrl).href;
@@ -54,12 +54,12 @@ async function handler(ctx) {
             const $item = $(item);
 
             const title = $item.text();
-            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1] ?? undefined;
+            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1];
 
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
                 link: new URL($item.parent().prop('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(pubDate!, 'YYYY/M/D H:mm:ss'), 8),
+                pubDate: parseDate(pubDate!, 'YYYY/M/D H:mm:ss', 8),
             };
         });
 
@@ -79,10 +79,7 @@ async function handler(ctx) {
         )
     );
 
-    const subtitle = $('title')
-        .text()
-        .split(/——/)
-        .pop();
+    const subtitle = $('title').text().split(/——/).pop();
     const image = new URL('images/logo.jpg', rootUrl).href;
 
     return {

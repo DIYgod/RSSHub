@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://jwc.nchu.edu.cn';
 
@@ -38,6 +38,9 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'notice' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid type. Use notice or news.');
+    }
     const link = `${host}/xwzx/${map[type]}`;
 
     const response = await ofetch(link);
@@ -52,7 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
                 title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 description: $item.find('.intro').text().trim(),
-                pubDate: timezone(parseDate($item.find('.date').text().replace('发表时间：', '')), 8),
+                pubDate: parseDate($item.find('.date').text().replace('发表时间：', ''), 8),
             };
         });
 

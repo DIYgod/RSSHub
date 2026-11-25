@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -39,11 +40,16 @@ async function handler() {
             return {
                 title: $item.find('.title').text(),
                 link: `${rootUrl}/${$item.children('a').attr('href')}`,
+                category: $item
+                    .find('.tags .tag')
+                    .toArray()
+                    .map((tag) => $(tag).text()),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -55,24 +61,24 @@ async function handler() {
                 content('d-contents').remove();
 
                 content('img').each((_, el) => {
-                    content(el).attr('src', `${item.link}/${content(el).attr('src')}`);
+                    const image = content(el);
+                    const src = image.attr('src');
+                    if (src) {
+                        image.attr('src', new URL(src, `${item.link}/`).href);
+                    }
                 });
 
                 item.doi = content('meta[name="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published"]').attr('content')!);
-                item.description = content('d-article')
-                    .children()
-                    .toArray()
-                    .map((c) => content(c).html())
-                    .join('');
+                item.pubDate = parseDate(`${content('meta[property="article:published"]').attr('content')}T00:00:00Z`);
+                item.description = content('d-article').html();
                 item.author = content('meta[property="article:author"]')
                     .toArray()
                     .map((author) => content(author).attr('content'))
                     .join(', ');
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

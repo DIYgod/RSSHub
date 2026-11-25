@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { md5 } from '@/utils/hash';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import weiboUtils from './utils';
@@ -24,7 +24,7 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const data = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
-            `weibo:keyword-statuses:${keyword}`,
+            `weibo:keyword-statuses:${keyword}:${md5(cookies)}`,
             async () => {
                 const _r = await got({
                     method: 'get',
@@ -53,9 +53,6 @@ async function handler(ctx) {
                 });
                 verifier(_r);
                 const cards = _r.data?.data?.cards;
-                if (!Array.isArray(cards)) {
-                    throw new TypeError(_r.data?.msg || 'Weibo keyword search returned an invalid response.');
-                }
                 const statuses = cards.filter((card) => card.mblog).map((card) => card.mblog);
                 if (!statuses.length) {
                     const message = 'Weibo keyword search returned no posts. Please retry later or check the keyword on Weibo.';
@@ -81,10 +78,10 @@ async function handler(ctx) {
         item: data.map((status) => {
             const item = structuredClone(status);
             if (item.created_at) {
-                item.created_at = parseDate(item.created_at);
+                item.created_at = weiboUtils.parseCreatedAt(item.created_at);
             }
             if (item.retweeted_status?.created_at) {
-                item.retweeted_status.created_at = parseDate(item.retweeted_status.created_at);
+                item.retweeted_status.created_at = weiboUtils.parseCreatedAt(item.retweeted_status.created_at);
             }
             return weiboUtils.formatExtended(ctx, item, undefined, {
                 showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),

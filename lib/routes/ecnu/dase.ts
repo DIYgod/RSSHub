@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/dase',
@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/ecnu/dase',
     radar: [
         {
-            source: ['dase.ecnu.edu.cn'],
+            source: ['dase.ecnu.edu.cn', 'dase.ecnu.edu.cn/41465/list.htm'],
             target: '/dase',
         },
     ],
@@ -26,20 +26,18 @@ export const route: Route = {
         const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el): DataItem & { link: string } => ({
-                pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
+                pubDate: parseDate($(el).find('.news_meta').text(), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data } = await got(item.link);
-                    const $ = load(data);
-                    const $read = $('div.read');
-                    item.description = $read.html()?.trim();
-                    return item;
-                })
-            )
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                const $read = $('div.read');
+                item.description = $read.html()?.trim();
+                return item;
+            })
         );
 
         return {

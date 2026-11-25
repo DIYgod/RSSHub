@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const getCategories = () =>
     cache.tryGet('4gamers:categories', async () => {
@@ -46,6 +46,8 @@ const parseItem = async (item) => {
                         return '';
                     case 'RawHtmlSection':
                         return section.html;
+                    case 'EmbedPollSection':
+                        return section.rawHtml;
                     case 'ImageGroupSection':
                         return renderImages(section.items);
                     default:
@@ -78,4 +80,4 @@ const renderImages = (images) =>
         </>
     );
 
-export { getCategories, parseItem, parseList, renderDescription, renderImages };
+export { getCategories, parseItem, parseList };

@@ -2,10 +2,10 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
-import { domain, getMeta, processItems, processMeta } from './util';
+import { domain, getMeta, parseCalendarDate, processItems, processMeta } from './util';
 
 export const route: Route = {
     path: '/news/:category{.+}?',
@@ -37,7 +37,7 @@ const parseCategory = (category: string) => {
 
 async function handler(ctx) {
     let { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     category = parseCategory(category);
 
@@ -49,10 +49,10 @@ async function handler(ctx) {
     const $ = load(response);
 
     // The elements where the information is located vary with the category.
-    // 武大资讯 https://news.whu.edu.cn/wdzx/wdyw.htm => ul.wdzxList li a[title]
-    // 学术动态 https://news.whu.edu.cn/kydt.htm      => ul.xsdtList li a
-    // 珞珈影像 https://news.whu.edu.cn/stkj/ljyx.htm => div.topPic a[title], ul.nypicList li a[title]
-    // 武大视频 https://news.whu.edu.cn/stkj/wdsp.htm => div.topVid a[title], ul.nyvidList li a[title]
+    // University news: https://news.whu.edu.cn/wdzx/wdyw.htm => ul.wdzxList li a[title]
+    // Academic updates: https://news.whu.edu.cn/kydt.htm => ul.xsdtList li a
+    // Photo stories: https://news.whu.edu.cn/stkj/ljyx.htm => div.topPic a[title], ul.nypicList li a[title]
+    // University videos: https://news.whu.edu.cn/stkj/wdsp.htm => div.topVid a[title], ul.nyvidList li a[title]
     let items = $('ul.wdzxList li a[title], ul.xsdtList li a, div.topPic a[title], ul.nypicList li a[title], div.topVid a[title], ul.nyvidList li a[title]')
         .slice(0, limit)
         .toArray()
@@ -64,7 +64,7 @@ async function handler(ctx) {
             return {
                 title: $item.prop('title') ?? $item.find('h4.eclips').text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: parseDate($item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
+                pubDate: parseCalendarDate($item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
                 description: renderDescription({
                     description: $item.find('div.txt p').html() ?? undefined,
                     image: image.prop('src')
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
     items = await processItems(items, rootUrl);
 
-    const meta = processMeta(response);
+    const meta = processMeta($);
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 
@@ -98,6 +98,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: columnName,
         author: siteName,
-        allowEmpty: true,
     };
 }

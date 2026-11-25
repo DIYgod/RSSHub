@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/kjj/:caty',
@@ -14,7 +14,7 @@ export const route: Route = {
     parameters: {
         caty: '类别',
     },
-    name: '武汉市科学技术局 - 新闻中心',
+    name: '市科学技术局 - 新闻中心',
     maintainers: ['tudou027'],
     handler,
     description: `| 通知公告 | 公示信息 |
@@ -55,7 +55,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                pubDate: parseDateStrict($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 
@@ -66,6 +66,7 @@ async function handler(ctx: Context) {
                 const content = load(res);
 
                 item.description = content('div.art_content').html();
+                item.pubDate = parseDateStrict(content('meta[name="PubDate"]').prop('content'), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
                 return item;
             })
         )

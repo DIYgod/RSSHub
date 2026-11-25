@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { encodeXML } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -23,12 +24,15 @@ async function handler() {
             const $item = $(ele);
             const thumbnail = $item.find('.top > img').attr('src');
             const deadline = $item.find('.top > .time').text();
+            const titleNode = $item.find('.bottom > h2');
+            const title = titleNode.text();
+            titleNode.remove();
             const otherInfoArr = $item.find('.bottom').text().trim().split('\n');
 
             return {
-                title: otherInfoArr[0],
+                title,
                 link: $item.attr('href'),
-                description: [deadline, ...otherInfoArr, `<img src="${thumbnail}"/>`].filter((str) => !!str.trim()).join('<br/>'),
+                description: [...[deadline, ...otherInfoArr].filter((str) => str.trim()).map((str) => encodeXML(str)), thumbnail ? `<img src="${encodeXML(thumbnail)}"/>` : undefined].filter(Boolean).join('<br/>'),
             };
         });
 

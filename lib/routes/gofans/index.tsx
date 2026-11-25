@@ -1,9 +1,10 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:kind?',
@@ -25,6 +26,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { kind = '' } = ctx.req.param();
+    if (!['', 'macos', 'ios'].includes(kind)) {
+        throw new InvalidParameterError('kind must be macos or ios, or omitted for both platforms.');
+    }
     const baseUrl = 'https://gofans.cn';
 
     const { data: response } = await got('https://api.gofans.cn/v1/web/app_records', {
@@ -38,13 +42,15 @@ async function handler(ctx) {
         },
     });
 
-    const items = response.data.map((item) => ({
-        title: `「${item.price === '0.00' ? '免费' : '降价'}」-「${item.kind === 1 ? 'macOS' : 'iOS'}」${item.name}`,
-        description: renderToString(<GofansDescription icon={item.icon} originalPrice={item.original_price} price={item.price} kind={item.kind} description={item.description.replaceAll('\n', '<br>')} />),
-        pubDate: parseDate(item.updated_at, 'X'),
-        link: new URL(`/app/${item.uuid}`, baseUrl).href,
-        category: item.primary_genre_name,
-    }));
+    const items = response.data
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.uuid === item.uuid) === index)
+        .map((item) => ({
+            title: `「${item.price === '0.00' ? '免费' : '降价'}」-「${item.kind === 1 ? 'macOS' : 'iOS'}」${item.name}`,
+            description: renderToString(<GofansDescription icon={item.icon} originalPrice={item.original_price} price={item.price} kind={item.kind} description={item.description.replaceAll('\n', '<br>')} />),
+            pubDate: parseDate(item.updated_at, 'X'),
+            link: new URL(`/app/${item.uuid}`, baseUrl).href,
+            category: item.primary_genre_name,
+        }));
 
     return {
         title: '最新限免 / 促销应用',

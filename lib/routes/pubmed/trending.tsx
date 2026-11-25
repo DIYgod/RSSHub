@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -5,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/trending/:filters?',
@@ -35,40 +36,64 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('a[data-article-id]')
+    const list = $('a[data-article-id]')
         .toArray()
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
-
-            return {
-                title: $item.text(),
-                link: `${rootUrl}/${$item.attr('data-article-id')}`,
-            };
+        .map((element) => {
+            const anchor = $(element);
+            const id = anchor.attr('data-article-id');
+            return { title: anchor.text(), link: `${rootUrl}/${id}`, id };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    let articles: Promise<CheerioAPI> | undefined;
+    const getArticles = () => (articles ??= fetchArticleXml(list.map((item) => item.id).join(',')));
 
-                const content = load(detailResponse.data);
-
-                item.doi = content('meta[name="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="citation_date"]').attr('content')!);
-                item.description = renderToString(
-                    <>
-                        {content('.authors-list').html() ? raw(content('.authors-list').html()) : null}
-                        <br />
-                        {content('#enc-abstract').html() ? raw(content('#enc-abstract').html()) : null}
-                    </>
-                );
-
-                return item;
-            })
-        )
+    const items = await Promise.all(
+        list.map(async ({ id, ...item }): Promise<DataItem> => {
+            const details = await cache.tryGet(`${item.link}:pubmed-xml:v2`, async () => {
+                const content = await getArticles();
+                const article = content('PubmedArticle').filter((_, element) => content(element).find('MedlineCitation > PMID').text() === id);
+                const electronicDate = article.find('ArticleDate[DateType="Electronic"]');
+                const publicationDate = electronicDate.length ? electronicDate : article.find('JournalIssue > PubDate');
+                const date =
+                    publicationDate.find('MedlineDate').text() ||
+                    publicationDate
+                        .find('Year, Month, Day')
+                        .toArray()
+                        .map((element) => content(element).text())
+                        .join(' ');
+                return {
+                    title: article.find('ArticleTitle').text(),
+                    doi: article.find('ArticleId[IdType="doi"]').first().text(),
+                    pubDate: parseDate(date, ['YYYY M D', 'YYYY MMM D', 'YYYY MMMM D', 'YYYY M', 'YYYY MMM', 'YYYY MMMM', 'YYYY']),
+                    author: article
+                        .find('AuthorList > Author')
+                        .toArray()
+                        .map((element) => {
+                            const author = content(element);
+                            return {
+                                name: author.find('CollectiveName').text() || `${author.find('ForeName').text()} ${author.find('LastName').text()}`,
+                            };
+                        }),
+                    description: renderToString(
+                        <>
+                            {article
+                                .find('Abstract > AbstractText')
+                                .toArray()
+                                .map((element) => {
+                                    const abstract = content(element);
+                                    return (
+                                        <>
+                                            {abstract.attr('Label') ? <h3>{abstract.attr('Label')}</h3> : null}
+                                            <p>{raw(abstract.html())}</p>
+                                        </>
+                                    );
+                                })}
+                        </>
+                    ),
+                };
+            });
+            return { ...item, ...details };
+        })
     );
 
     return {
@@ -76,4 +101,11 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
+}
+
+async function fetchArticleXml(ids: string) {
+    const response = await got('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi', {
+        searchParams: { db: 'pubmed', id: ids, retmode: 'xml' },
+    });
+    return load(response.data, { xmlMode: true });
 }

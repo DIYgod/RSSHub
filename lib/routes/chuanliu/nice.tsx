@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import MarkdownIt from 'markdown-it';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import MarkdownIt from '@/utils/markdown-it';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -36,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://chuanliu.org';
     const apiRootUrl = 'https://s.chuanliu.org';
@@ -60,9 +61,7 @@ async function handler(ctx) {
         const author = contents?.[3] ?? undefined;
         const isStar = (contents?.[5] && contents[5] === 'star') ?? false;
 
-        if (isStar) {
-            contents.splice(5, 1);
-        }
+        const body = isStar ? contents.toSpliced(5, 1) : contents;
 
         return {
             title: `${isStar ? '[STAR] ' : ''}${title}`,
@@ -70,7 +69,7 @@ async function handler(ctx) {
             description: renderToString(
                 <>
                     {item.resourceList.map((resource) => (resource.externalLink ? <figure>{resource.filename ? <img src={resource.externalLink} alt={resource.filename} /> : <img src={resource.externalLink} />}</figure> : null))}
-                    {raw(md.render(contents?.join('\n\n') ?? ''))}
+                    {raw(md.render(body.join('\n\n')))}
                 </>
             ),
             author,

@@ -7,13 +7,14 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+const handler = async (ctx: Context): Promise<Data> => {
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.adquan.com';
     const targetUrl: string = baseUrl;
@@ -60,11 +61,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link) {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'adquan.com')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
@@ -72,7 +74,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const description: string | undefined = renderDescription({
                         description: $$('div.articleContent').html() ?? undefined,
                     });
-                    const pubDateStr: string | undefined = $$('p.time').text().split(/：/).pop();
+                    const pubDateStr: string | undefined = $$('p.time')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?/)?.[0];
                     const categoryEls: Element[] = $$('span.article_5').toArray();
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authors: DataItem['author'] = $$('div.infoTitle_right span').text();
@@ -81,14 +85,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 8) : item.pubDate,
                         category: categories,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 8) : item.updated,
                         language,
                     };
 

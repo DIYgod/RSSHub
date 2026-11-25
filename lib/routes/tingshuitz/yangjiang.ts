@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yangjiang',
@@ -43,8 +43,7 @@ async function handler() {
 
             const id = item.find('a').attr('href')!.slice(17, -1);
             return {
-                title: item.find('span').text().trim(),
-                description: item.find('span').text().trim(),
+                title: item.find('span').text(),
                 link: 'http://www.yjsswjt.com/list.jsp?id=' + id,
                 pubDate: parseDate(item.find('.datetime').text(), 'YYYY.MM.DD'),
             };

@@ -3,15 +3,16 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem } from '@/types';
+import type { Data, DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.jiemian.com';
 
 export const handler = async (ctx): Promise<Data> => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const category = ctx.req.path.replace(/^\/jiemian\//, '');
     const currentUrl = new URL(category ? `${category}.html` : '', rootUrl).href;
@@ -32,7 +33,7 @@ export const handler = async (ctx): Promise<Data> => {
     for (const el of links) {
         const item = $(el);
         const href = item.prop('href');
-        const link = href ? (href.startsWith('/') ? new URL(href, rootUrl).href : href) : undefined;
+        const link = href ? new URL(href, rootUrl).href : undefined;
 
         if (link && /\/(?:article|video)\/\w+\.html/.test(link)) {
             items.set(link, {
@@ -71,8 +72,17 @@ export const parseCardList = (html: string) => {
         });
 };
 
-export const fetchArticle = (item) =>
-    cache.tryGet(item.link, async () => {
+// only follow links on the site itself
+const isSiteLink = (link: string) => {
+    const { protocol, hostname } = new URL(link, rootUrl);
+    return ['http:', 'https:'].includes(protocol) && (hostname === 'jiemian.com' || hostname.endsWith('.jiemian.com'));
+};
+
+export const fetchArticle = async (item) => {
+    if (!item.link || !isSiteLink(item.link)) {
+        return item;
+    }
+    const details = await cache.tryGet(`${item.link}:article`, async () => {
         const detailResponse = await ofetch(item.link);
 
         const content = load(detailResponse);
@@ -80,12 +90,12 @@ export const fetchArticle = (item) =>
         const video = content('#video-player').first();
         content('p.report-view').remove();
 
-        item.title = content('div.article-header h1').eq(0).text();
-        item.description = renderDescription({
+        const title = content('div.article-header h1').eq(0).text();
+        const description = renderDescription({
             image: image
                 ? {
                       src: image.prop('src'),
-                      alt: image.next('p').text() || item.title,
+                      alt: image.next('p').text() || title,
                   }
                 : undefined,
             video: video
@@ -99,33 +109,36 @@ export const fetchArticle = (item) =>
             intro: content('div.article-header p').text(),
             description: content('div.article-content').html() ?? undefined,
         });
-        item.author = content('span.author')
+        const author = content('span.author')
             .first()
             .find('a')
             .toArray()
             .map((a) => content(a).text())
             .join('/');
-        item.category = content('meta.meta-container a')
+        const category = content('div.meta-container a')
             .toArray()
             .map((c) => content(c).text());
         // article: div.article-info, video: div.article-header__info
-        item.pubDate = parseDate(content('div.article-info, div.article-header__info').find('span[data-article-publish-time]').first().prop('data-article-publish-time'), 'X');
-        item.upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
-        item.comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
+        const pubDate = parseDate(content('div.article-info, div.article-header__info').find('span[data-article-publish-time]').prop('data-article-publish-time'), 'X');
+        const upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
+        const comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
 
-        return item;
+        return { title, description, author, category, pubDate, upvotes, comments };
     });
+    return { ...item, ...details };
+};
 
 export const feedMeta = ($: CheerioAPI, currentUrl: string) => {
     const title = $('title').text();
     const titleSplits = title.split(/_/);
-    const image = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+    const iconHref = $('link[rel="icon"]').prop('href');
+    const image = iconHref ? new URL(iconHref, rootUrl).href : undefined;
 
     return {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Data['language'],
+        language: $('html').prop('lang') as Language,
         image,
         icon: image,
         logo: image,

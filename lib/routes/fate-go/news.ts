@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -25,12 +26,13 @@ async function handler() {
             return {
                 title: $item.find('p.title').text(),
                 link: new URL($item.find('a').attr('href')!, newsUrl).href,
-                pubDate: parseDate($item.find('p.date').text()),
+                pubDate: parseDate(`${$item.find('p.date').text().replaceAll('.', '-')}T00:00:00Z`),
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const candidates = list;
+    const items = await pMap(
+        candidates,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const res = await ofetch(item.link);
                 const content = load(res);
@@ -39,8 +41,8 @@ async function handler() {
                     ...item,
                     description: content('div.article').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

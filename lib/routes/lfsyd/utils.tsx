@@ -1,16 +1,19 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 
 const rootUrl = 'https://www.iyingdi.com';
 const infoUrL = 'https://api.iyingdi.com/web/post/info';
 
 const ProcessFeed = async (cache, articleList) => {
-    const items = await Promise.all(
-        articleList.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        articleList,
+        async (item: DataItem & { link: string; postId: number }) => {
+            const detail = await cache.tryGet(item.link, async () => {
                 const infoForm = {
                     post_id: item.postId,
                     timestamp: '',
@@ -27,10 +30,11 @@ const ProcessFeed = async (cache, articleList) => {
                     },
                     form: ProcessForm(infoForm),
                 });
-                item.description = cleanHtml(JSON.parse(body).post.content);
-                return item;
-            })
-        )
+                return { description: cleanHtml(JSON.parse(body).post.content) };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return items;
@@ -39,7 +43,7 @@ const ProcessFeed = async (cache, articleList) => {
 const ProcessForm = (form, type?) => {
     const key = type ? '8a11ed3712b699e749185674f1dc20b4' : 'b8d5b38577b8bb382b0c783b474b95f9';
     form.key = key;
-    form.timestamp = Math.floor(Date.now() / 1000);
+    form.timestamp = Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
     form.sign = md5(new URLSearchParams(form).toString());
     delete form.key;
     return form;
@@ -78,26 +82,28 @@ const cleanHtml = (htmlString) => {
         const bvid = $(e)
             .attr('src')!
             .match(/bvid=(.*?)&/)![1];
-        if (bvid) {
-            const url = `https://www.bilibili.com/video/${bvid}`;
-            $(e).after(
-                renderToString(
-                    <p>
-                        <a href={url}>{url}</a>
-                    </p>
-                )
-            );
+        if (!bvid) {
+            return;
         }
+
+        const url = `https://www.bilibili.com/video/${bvid}`;
+        $(e).after(
+            renderToString(
+                <p>
+                    <a href={url}>{url}</a>
+                </p>
+            )
+        );
     });
 
-    // 用户头像
+    // Remove author avatar cards.
     $('.yingdi-card.user').each((i, e) => {
         $(e).prev('p').remove();
         $(e).remove();
     });
-    // 套牌代码复制
+    // Remove deck copy controls.
     $('.action-button').remove();
-    // 投票
+    // Remove voting controls.
     $('.yingdi-ballot').remove();
     $('hr').remove();
     return $.html();

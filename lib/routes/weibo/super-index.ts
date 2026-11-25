@@ -1,9 +1,10 @@
-import queryString from 'query-string';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import { md5 } from '@/utils/hash';
+import ofetch from '@/utils/ofetch';
 
 import weiboUtils from './utils';
 
@@ -20,7 +21,7 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -45,69 +46,58 @@ export const route: Route = {
 | feed       | 最新评论         |`,
 };
 
-interface Card {
-    card_group?: Card[];
-}
-
 type ContainerData = {
-    cards?: Card[];
-    pageInfo?: {
-        page_title: string;
-    };
+    items: Array<{ category: string; data: { mblogid: string; user: { id: number } } }>;
+    header: { data: { page_title: string } };
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
+    const link = `https://weibo.com/p/${id}/super_index`;
 
     const containerData = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet<ContainerData>(
-            `weibo:super_index:container:${id}:${type}`,
+            `weibo:super_index:container:${id}:${type}:${md5(cookies)}`,
             async () => {
-                const _r = await got('https://m.weibo.cn/api/container/getIndex', {
-                    searchParams: queryString.stringify({
-                        containerid: `${id}_-_${type}`,
-                        luicode: '10000011',
-                        lfid: `${id}_-_main`,
-                    }),
+                const page = await ofetch.raw(link, { headers: { Cookie: cookies } });
+                const xsrfCookie = page.headers.getSetCookie().find((cookie) => cookie.startsWith('XSRF-TOKEN='));
+                if (!xsrfCookie) {
+                    throw new weiboUtils.RenewWeiboCookiesError('The super topic page did not set XSRF-TOKEN');
+                }
+                const xsrfToken = xsrfCookie.split(';', 1)[0].split('=', 2)[1];
+                const data = await ofetch('https://weibo.com/ajax_proxy/chaohua/page', {
+                    query: { flowId: `${id}_-_${type}` },
                     headers: {
-                        Referer: `https://m.weibo.cn/p/index?containerid=${id}_-_soul&luicode=10000011&lfid=${id}_-_main`,
-                        Cookie: cookies,
-                        ...weiboUtils.apiHeaders,
+                        Referer: link,
+                        Cookie: `${cookies}; XSRF-TOKEN=${xsrfToken}`,
+                        'X-XSRF-TOKEN': xsrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
                     },
                 });
-                verifier(_r);
-                return _r.data.data;
+                verifier({ data });
+                return data;
             },
             config.cache.routeExpire,
             false
         )
     );
 
-    const resultItems = [];
+    const items = await pMap(
+        containerData.items.filter((item) => item.category === 'feed'),
+        async ({ data }) => {
+            const status = await cache.tryGet(`weibo:super_index:complete:${data.mblogid}`, () => weiboUtils.getShowData(data.user.id, data.mblogid));
+            status.created_at = weiboUtils.parseCreatedAt(status.created_at);
+            return weiboUtils.formatExtended(ctx, status, undefined);
+        },
+        { concurrency: 3 }
+    );
 
-    function handleCard(ctx, card, resultItems) {
-        if (card.card_type !== '9' || !('mblog' in card)) {
-            return;
-        }
-        const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
-        resultItems.push(formatExtended);
-    }
-    const cards = containerData?.cards ?? [];
-    for (const card of cards) {
-        handleCard(ctx, card, resultItems);
-        if (!('card_group' in card)) {
-            continue;
-        }
-        for (const mblogCard of card.card_group!) {
-            handleCard(ctx, mblogCard, resultItems);
-        }
-    }
-
+    const pageTitle = containerData.header.data.page_title;
     return weiboUtils.sinaimgTvax({
-        title: `微博超话 - ${containerData?.pageInfo?.page_title}`,
-        link: `https://weibo.com/p/${id}/super_index`,
-        description: `#${containerData?.pageInfo?.page_title}# 的超话`,
-        item: resultItems,
+        title: `微博超话 - ${pageTitle}`,
+        link,
+        description: `#${pageTitle}# 的超话`,
+        item: items,
     });
 }

@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.thecover.cn';
 
@@ -62,8 +62,9 @@ async function handler(ctx): Promise<Data> {
             link: rootUrl + $(item).attr('href'),
             title: '',
         }));
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -72,12 +73,12 @@ async function handler(ctx): Promise<Data> {
                 const content = load(detailResponse.data);
                 item.title = content('h1', '.main-article').text();
                 item.description = content('section.article-content').html();
-                const info = content('span', '.props-of-title');
+                const info = content('span', '.props-of-title').not('#original-tag');
                 item.author = info.eq(0).text();
-                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm', 8);
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
 
 /**
@@ -26,7 +26,6 @@ type TiebaClientParams = {
 };
 
 const computeSign = (params: Partial<TiebaClientParams> & Record<string, string>): string => {
-    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const sortedKeys = Object.keys(params).toSorted();
     const raw = sortedKeys.map((key) => `${key}=${params[key]}`).join('') + TIEBA_CLIENT_SECRET;
     return md5(raw);
@@ -35,7 +34,7 @@ const computeSign = (params: Partial<TiebaClientParams> & Record<string, string>
 export const tiebaClientRequest = async (path: string, params: Partial<TiebaClientParams> & Record<string, string>) => {
     const bduss = config.baidu.cookie?.match(/BDUSS=([^;]+)/)?.[1];
     const apiParams: Partial<TiebaClientParams> & Record<string, string> = {
-        _client_id: `wappc_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+        _client_id: `wappc_${Temporal.Now.instant().epochMilliseconds}_${Math.floor(Math.random() * 1000)}`,
         _client_type: '2',
         _client_version: '12.20.1.0',
         _phone_imei: '000000000000000',
@@ -75,7 +74,7 @@ export const renderContent = (items: any[] = []) =>
                 case 3:
                     return `<img src="${item.origin_src || item.src}">`;
                 default:
-                    return item.text ?? '';
+                    return item.text;
             }
         })
         .join('');

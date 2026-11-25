@@ -4,7 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { formatDescription, getChannelWithId, getPlaylistItems, getSubscriptions, getThumbnail, renderYoutube } from './utils';
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
     const ret = {
         title: 'Subscriptions - YouTube',
         description: 'YouTube Subscriptions',
-        link: 'www.youtube.com/feed/subscriptions',
+        link: 'https://www.youtube.com/feed/subscriptions',
         item: items,
     };
 

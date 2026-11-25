@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.miit.gov.cn';
 
@@ -34,9 +34,8 @@ async function handler(ctx) {
     const ministry = ctx.req.param('ministry');
     const url = `${rootUrl}/jgsj/${ministry}/wjfb/index.html`;
 
-    const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
-    const indexContent = load(cookieResponse.data);
+    const indexResponse = await got(url);
+    const indexContent = load(indexResponse.data);
     const title = indexContent('div.dqwz > a:nth-child(4)').text();
     const dataRequestUrl = indexContent('div.lmy_main_rb > script:nth-child(2)')
         .toArray()
@@ -51,9 +50,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: dataUrl,
-        headers: {
-            Cookie: cookie,
-        },
     });
     const $ = load(response.data.data.html);
     const list = $('ul > li')
@@ -61,7 +57,7 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-            pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD'),
+            pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD', 8),
         }));
 
     const items = await Promise.all(
@@ -71,6 +67,10 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#con_con').html();
+                const pubDate = content('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = parseDate(pubDate, 8);
+                }
 
                 return item;
             })

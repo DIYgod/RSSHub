@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 
 import { fetchCategory, fetchNewsItems } from './utils';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug = ctx.req.param('slug');
 
     const { id, name } = await fetchCategory(slug);
@@ -43,6 +43,10 @@ export const route: Route = {
     radar: [
         {
             source: ['www.landiannews.com/:slug'],
+            target: '/category/:slug',
+        },
+        {
+            source: ['www.landian.news/:slug'],
             target: '/category/:slug',
         },
     ],

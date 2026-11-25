@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
@@ -26,34 +27,47 @@ const acw_sc__v2 = (link) =>
         false
     );
 
-const parseList = (data) =>
-    data.map((item) => ({
-        title: item.title,
-        link: new URL(item.url, host).href,
-        author: item.user.name,
-        pubDate: parseDate(item.created || item.modified, 'X'),
-        description: item.excerpt,
-    }));
+interface SourceArticle {
+    title: string;
+    url: string;
+    user: { name: string };
+    created?: number;
+    modified?: number;
+    excerpt?: string;
+}
 
-const parseItems = (cookie, item) =>
-    cache.tryGet(item.link, async () => {
-        try {
-            const response = await ofetch(item.link, {
-                headers: {
-                    cookie: `acw_sc__v2=${cookie};`,
-                },
-            });
-            const content = load(response);
+interface ArticleItem extends DataItem {
+    link: string;
+}
 
-            item.description = content('article').html();
-            item.category = content('.badge-tag')
-                .toArray()
-                .map((item) => content(item).text());
-        } catch {
-            // ignore
-        }
-
-        return item;
+const parseList = (data: SourceArticle[]): ArticleItem[] =>
+    data.map((item) => {
+        const timestamp = item.created || item.modified;
+        return {
+            title: item.title,
+            link: new URL(item.url, host).href,
+            author: item.user.name,
+            pubDate: timestamp ? parseDate(timestamp, 'X') : undefined,
+            description: item.excerpt,
+        };
     });
+
+const parseItems = async (cookie: string, item: ArticleItem) => {
+    const details = await cache.tryGet(`${item.link}:details`, async () => {
+        const response = await ofetch(item.link, {
+            headers: {
+                cookie: `acw_sc__v2=${cookie};`,
+            },
+        });
+        const content = load(response);
+        return {
+            description: content('article').html(),
+            category: content('.badge-tag')
+                .toArray()
+                .map((item) => content(item).text()),
+        };
+    });
+    return { ...item, ...details };
+};
 
 export { acw_sc__v2, host, parseItems, parseList };

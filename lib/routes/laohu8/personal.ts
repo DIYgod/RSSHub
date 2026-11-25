@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.laohu8.com';
 
@@ -42,6 +42,7 @@ async function handler(ctx) {
 
     const items = data.map((item) => ({
         title: item.title,
+        author: item.author.name,
         description: String(item.htmlText).replaceAll('\n', '<br><br>'),
         link: `${rootUrl}/post/${item.id}`,
         pubDate: parseDate(item.gmtCreate),

@@ -1,7 +1,6 @@
-import dayjs from 'dayjs';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { formatDate } from '@/utils/time';
 
 import { baseUrl, getPlurk } from './utils';
 
@@ -25,11 +24,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
     const { data: apiResponse } = await got.post(`${baseUrl}/Search/search2`, {
         searchParams: {
             query: keyword,
-            start_date: dayjs().subtract(1, 'year').format('YYYY/MM'),
-            end_date: dayjs().format('YYYY/MM'),
+            start_date: formatDate(now.subtract({ years: 1 }), 'YYYY/MM'),
+            end_date: formatDate(now, 'YYYY/MM'),
         },
     });
 

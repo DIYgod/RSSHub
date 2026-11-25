@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 interface AuthorData {
     fullname?: string;
@@ -50,9 +51,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
-
-    const { allBlogs } = response;
+    const { allBlogs } = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
 
     const lists = allBlogs.map((blog) => ({
         title: blog.title,
@@ -66,18 +65,21 @@ async function handler() {
         category: blog.tags,
     }));
 
-    const items: DataItem[] = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items: DataItem[] = await pMap(
+        lists,
+        async (item) => {
+            const details = await cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                $('.mb-4, .mb-6, .not-prose, h1').remove();
+                const content = $('.blog-content > .relative.overflow-clip');
+                content.find('.absolute.not-prose').remove();
                 return {
-                    ...item,
-                    description: $('.blog-content').html(),
+                    description: content.html(),
                 };
-            })
-        )
+            });
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

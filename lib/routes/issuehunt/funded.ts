@@ -1,7 +1,7 @@
-import MarkdownIt from 'markdown-it';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import MarkdownIt from '@/utils/markdown-it';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/funded/:username/:repo',
@@ -23,7 +23,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { username, repo } = ctx.req.param();
-    const response = await got(`https://issuehunt.io/apis/pages/repos/show?repositoryOwnerName=${username}&repositoryName=${repo}`);
+    const response = await got({
+        url: 'https://oss.issuehunt.io/apis/pages/repos/show',
+        searchParams: { repositoryOwnerName: username, repositoryName: repo },
+    });
 
     const { issues } = response.data;
     if (issues === undefined) {
@@ -40,7 +43,7 @@ async function handler(ctx) {
         item: issues.map((item) => ({
             title: item.title,
             description: md.render(item.body),
-            pubDate: item.fundedAt,
+            pubDate: parseDate(item.fundedAt),
             link: `https://issuehunt.io/r/${username}/${repo}/issues/${item.number}`,
             author: item.userName,
         })),

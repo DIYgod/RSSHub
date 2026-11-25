@@ -2,8 +2,9 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { ProcessItems, rootUrl } from './utils';
+import { processItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/author/:id?',
@@ -21,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['yicai.com/author/:id', 'yicai.com/author'],
-            target: '/author/:id',
+            target: '/author/:id?',
         },
     ],
     name: '一财号',
@@ -30,10 +31,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '100005663';
+    const id = (ctx.req.param('id') ?? '100005663').replace(/\.html$/, '');
 
     const currentUrl = `${rootUrl}/author/${id}.html`;
-    const apiUrl = `${rootUrl}/api/ajax/getlistbysid?id=${id}&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
+    const apiUrl = `${rootUrl}/api/ajax/getlistbysid?id=${id}&page=1&pagesize=${getRouteLimit(ctx, 30)}`;
 
     const response = await got({
         method: 'get',
@@ -42,7 +43,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = await ProcessItems(apiUrl);
+    const items = await processItems(apiUrl);
 
     return {
         title: `第一财经一财号 - ${$('title').text()}`,

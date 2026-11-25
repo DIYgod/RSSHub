@@ -28,7 +28,7 @@ export interface SeasonResult {
     section: SectionResult[];
 }
 
-export interface SectionResult {
+interface SectionResult {
     episodes: EpisodeResult[];
 }
 

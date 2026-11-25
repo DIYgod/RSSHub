@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiRootUrl, processItems, rootUrl } from './util';
 
@@ -30,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
+    const limit = getRouteLimit(ctx, 11);
 
     const currentUrl = new URL('daily', apiRootUrl).href;
     const infoUrl = new URL('daily', rootUrl).href;

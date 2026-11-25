@@ -4,7 +4,8 @@ import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { csvRecords, type Row } from '../utils';
+import type { Row } from '../utils';
+import { csvRecords } from '../utils';
 
 /**
  * 駅別乗降車人員 from the 東京都統計年鑑 (CC BY 4.0), which restates the figures 私鉄各社 and the subway
@@ -27,6 +28,7 @@ const TABLES = {
 } as const;
 
 type Table = keyof typeof TABLES;
+const isTable = (s: string): s is Table => Object.hasOwn(TABLES, s);
 
 interface Resource {
     name: string;
@@ -52,19 +54,19 @@ const resolveCsv = async (table: Table): Promise<string> => {
  * (マーク cannot be used to tell them apart — ◎ marks a transfer station and ※ a station inside the 23 区,
  * and both appear on station rows as well.)
  */
-const stationRows = (rows: Row[]): Row[] => rows.filter((r) => (r['駅'] ?? '').trim() !== '' && (r['会社名'] ?? '').trim() !== '総数');
+const stationRows = (rows: Row[]): Row[] => rows.filter((r) => (r['駅'] ?? '') !== '' && (r['会社名'] ?? '') !== '総数');
 
 const toItem = (row: Row, table: Table) => {
-    const station = (row['駅'] ?? '').trim();
-    const operator = (row['会社名'] ?? '').trim();
-    const line = (row['系統'] ?? '').trim() || null;
+    const station = row['駅'] ?? '';
+    const operator = row['会社名'] ?? '';
+    const line = row['系統'] || null;
     const raw = Object.fromEntries(Object.entries(row).map(([k, v]) => [k, v ?? '']));
     const extra: RidershipExtra = {
         source: 'toukei-tokyo',
         operator,
         station,
         line,
-        fiscal_year: Number((row['Fiscal year'] ?? '').trim()),
+        fiscal_year: Number(row['Fiscal year'] ?? ''),
         daily_average: null,
         annual_total: parseCount(row[BOARDING] ?? ''),
         unit: '千人/年',
@@ -78,18 +80,19 @@ const toItem = (row: Row, table: Table) => {
     return ridershipItem(extra, `${LANDING}#${table}`);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const table: string = ctx.req.param('table') ?? 'private';
-    if (!Object.hasOwn(TABLES, table)) {
+    if (!isTable(table)) {
         throw new Error(`Unknown table "${table}", expected one of ${Object.keys(TABLES).join(', ')}`);
     }
-    const items = (await cache.tryGet(`lg/tokyo/rail-ridership:${table}`, async () => {
-        const csv: string = await ofetch(await resolveCsv(table as Table), { responseType: 'text' });
-        return stationRows(csvRecords(csv.replace(/^\u{FEFF}/u, ''))).map((row) => toItem(row, table as Table));
-    })) as Array<ReturnType<typeof toItem>>;
+    const items = await cache.tryGet(`lg/tokyo/rail-ridership:${table}`, async () => {
+        const csvUrl = await resolveCsv(table);
+        const csv: string = await ofetch(csvUrl);
+        return stationRows(csvRecords(csv.replace(/^\u{FEFF}/u, ''))).map((row) => toItem(row, table));
+    });
 
     return {
-        title: `東京都統計年鑑 ${TABLES[table as Table].label}の駅別乗降車人員`,
+        title: `東京都統計年鑑 ${TABLES[table].label}の駅別乗降車人員`,
         link: LANDING,
         language: 'ja',
         item: items,

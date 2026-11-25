@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yjs',
@@ -19,21 +19,21 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['zs.gs.upc.edu.cn/sszs/list.htm', 'zs.gs.upc.edu.cn/'],
+            source: ['yz.upc.edu.cn/sszs/list.htm', 'yz.upc.edu.cn/'],
         },
     ],
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,
-    url: 'zs.gs.upc.edu.cn/sszs/list.htm',
+    url: 'yz.upc.edu.cn/sszs/list.htm',
 };
 
 async function handler() {
-    const baseUrl = 'http://zs.gs.upc.edu.cn';
+    const baseUrl = 'https://yz.upc.edu.cn';
     const link = `${baseUrl}/sszs/list.htm`;
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('.list tr');
+    const list = $('.news_list li.news2');
 
     return {
         title: '中国石油大学研究生院',
@@ -45,9 +45,9 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('a');
                 return {
-                    title: a.attr('title')!,
-                    link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: parseDate($item.find('div[style]').text()),
+                    title: a.attr('title') ?? a.text(),
+                    link: new URL(a.attr('href')!, baseUrl).href,
+                    pubDate: parseDate($item.find('.news_meta, div[style]').text(), 'YYYY-MM-DD', 8),
                 };
             }),
     };

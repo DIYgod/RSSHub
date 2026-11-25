@@ -1,12 +1,23 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://career.cic.tsinghua.edu.cn/';
 const path = 'xsglxt/f/jyxt/anony/xxfb';
+
+async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'description'>> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    const main = $('div.sideleft.left');
+
+    return {
+        description: (main.length ? main : $('div.content.teacher')).html(),
+    };
+}
 
 export const route: Route = {
     path: '/career',
@@ -34,22 +45,18 @@ async function handler() {
             return {
                 title: a.text(),
                 link: new URL(a.attr('ahref')!, baseUrl).href,
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: parseDate($item.find('span').text(), 'YYYY.MM.DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
-                const $detail = load(detailResponse);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link, () => fetchArticleDetails(item.link));
 
-                return {
-                    ...item,
-                    description: $detail('div.sideleft.left, div.content.teacher').html(),
-                };
-            })
-        )
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

@@ -1,26 +1,49 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const baseUrl = 'http://www.qstheory.cn';
 
-export const getItem = async (item) => {
-    const response = await ofetch(item.link);
+export const getItem = async (item: DataItem, useArticleTitle = false): Promise<DataItem> => {
+    const response = await ofetch(item.link!);
     const $ = load(response);
 
-    $('.fs-text, .fs-pinglun, .hidden-xs').remove();
+    const author = $('.appellation')
+        .toArray()
+        .map((el) =>
+            $(el)
+                .text()
+                .match(/作者[：:]\s*(.+)/)?.[1]
+                .replaceAll(/\s+/g, ' ')
+        )
+        .find(Boolean);
+    item.author = author;
 
-    item.author = $('.appellation').text();
+    if (useArticleTitle) {
+        // Article header: the title and the optional subtitle right after it
+        const $title = $('.inner > h1');
+        const title = [$title.text(), $title.next('h2').text()].filter((text) => /\S/.test(text)).join(' ');
+        if (title) {
+            item.title = title;
+        }
+    }
+
+    $('.fs-text, .fs-pinglun, .hidden-xs').remove();
     item.description = $('.highlight, .text').html() || $('.content').html();
-    item.pubDate = parseDate(
+
+    const dateStr =
         $('.puttime_mobi, .pubtime, .headtitle span')
             .text()
             .trim()
             .replace('发表于', '')
             .replaceAll(/(年|月)/g, '-')
-            .replace('日', '')
-    );
+            .replace('日', '') || $('meta[name="publishdate"]').attr('content');
+
+    if (dateStr) {
+        item.pubDate = parseDate(dateStr, 8);
+    }
 
     return item;
 };

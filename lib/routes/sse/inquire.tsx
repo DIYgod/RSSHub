@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/inquire',
@@ -45,7 +45,7 @@ async function handler() {
             stockcode: '',
             extWTFL: '',
             order: 'createTime|desc,stockcode|asc',
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Referer: refererUrl,
@@ -53,11 +53,11 @@ async function handler() {
     });
 
     const items = response.data.result.map((item) => ({
-        title: item.extGSJC,
+        title: item.docTitle,
         description: renderToString(<SseInquireDescription item={item} />),
-        pubDate: parseDate(item.createTime),
+        pubDate: parseDate(item.createTime, 8),
         link: `https://${item.docURL}`,
-        author: item.extGSJC,
+        category: [item.extWTFL],
     }));
 
     return {
@@ -68,28 +68,12 @@ async function handler() {
 }
 
 const SseInquireDescription = ({ item }: { item: any }) => (
-    <table border={1}>
-        <tr>
-            <td> 公司代码 : </td>
-            <td>{item.stockcode}</td>
-        </tr>
-        <tr>
-            <td> 公司简称 : </td>
-            <td>{item.extGSJC}</td>
-        </tr>
-        <tr>
-            <td> 发函日期 : </td>
-            <td>{item.createTime}</td>
-        </tr>
-        <tr>
-            <td> 监管问询类型 : </td>
-            <td>{item.extWTFL}</td>
-        </tr>
-        <tr>
-            <td> 标题 : </td>
-            <td>
-                <a href={`https://${item.docURL}`}>{item.docTitle}</a>
-            </td>
-        </tr>
-    </table>
+    <>
+        <p>
+            公司：{item.extGSJC}（{item.stockcode}）
+        </p>
+        <p>
+            <a href={`https://${item.docURL}`}>下载问询文件</a>
+        </p>
+    </>
 );

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 import { getCategories, signHeaders, zfcgBaseUrl } from './utils';
 
@@ -23,7 +24,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { code = '110-600268' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit')) || 15;
+    const limit = getRouteLimit(ctx);
+    const pageSize = Math.max(15, getRouteLimit(ctx, 15));
 
     const categories = await getCategories();
     const name = categories.find((category) => category.code === code)?.name ?? code;
@@ -31,11 +33,11 @@ async function handler(ctx: Context) {
     const path = '/portal/category';
     const body = JSON.stringify({
         pageNo: 1,
-        pageSize: limit,
+        pageSize,
         categoryCode: code,
         isGov: true,
         excludeDistrictPrefix: ['90', '006011', 'H0', '001111'],
-        _t: Date.now(),
+        _t: Temporal.Now.instant().epochMilliseconds,
     });
     const { result } = await ofetch(`${zfcgBaseUrl}${path}`, {
         method: 'POST',
@@ -43,7 +45,7 @@ async function handler(ctx: Context) {
         body,
     });
 
-    const list = result.data.data.map((article) => ({
+    let list: Array<DataItem & { link: string; articleId: string }> = result.data.data.map((article) => ({
         title: article.title,
         link: `${zfcgBaseUrl}/site/detail?categoryCode=${code}&articleId=${encodeURIComponent(article.articleId)}`,
         pubDate: parseDate(article.publishDate),
@@ -52,10 +54,15 @@ async function handler(ctx: Context) {
         articleId: article.articleId,
     }));
 
+    if (ctx.req.query('sorted') !== 'false') {
+        list.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    list = list.slice(0, limit);
+
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const path = `/portal/detail?articleId=${encodeURIComponent(item.articleId)}&timestamp=${Math.floor(Date.now() / 1000)}`;
+                const path = `/portal/detail?articleId=${encodeURIComponent(item.articleId)}&timestamp=${Math.floor(Temporal.Now.instant().epochMilliseconds / 1000)}`;
                 const { result } = await ofetch(`${zfcgBaseUrl}${path}`, {
                     headers: signHeaders('GET', path),
                 });
@@ -66,7 +73,7 @@ async function handler(ctx: Context) {
                 $('.ann-block [class], .ann-block [style]').removeAttr('class').removeAttr('style');
                 return {
                     ...item,
-                    description: $('.ann-block').html(),
+                    description: $('.ann-block').length ? $('.ann-block').html() : $.root().html(),
                     category: [...new Set([item.category, data.projectName, ...data.categoryNames])],
                 };
             })

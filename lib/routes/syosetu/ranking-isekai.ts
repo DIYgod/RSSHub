@@ -6,10 +6,11 @@ import type { Data } from '@/types';
 
 import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
+import { getNovelDates } from './utils';
 
 type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
-export function parseIsekaiRankingType(type: string) {
+function parseIsekaiRankingType(type: string) {
     const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
 
     const period = Object.values(RankingPeriod).find((value) => value === periodStr);
@@ -74,8 +75,9 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
         .toSorted((a, b) => (b[pointField] || 0) - (a[pointField] || 0))
         .map((novel, index) => ({
             title: `#${index + 1} ${novel.title}`,
-            link: `https://ncode.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+            link: `https://ncode.syosetu.com/${novel.ncode.toLowerCase()}`,
             description: renderDescription({ novel }),
+            ...getNovelDates(novel),
             author: novel.writer,
             category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
         }));
@@ -84,6 +86,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
         title: `小説家になろう - ${rankingTitle}`,
         link: rankingUrl,
         item: items.slice(0, limit),
+        sortItems: false,
         language: 'ja',
     };
 }

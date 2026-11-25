@@ -8,6 +8,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 import utils from './utils';
@@ -62,11 +63,12 @@ async function handler(ctx) {
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
-    const name = await cache.getUsernameFromUID(uid);
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',
@@ -204,7 +206,7 @@ async function handler(ctx) {
 
                     return `${description}${originName}${getIframe(data)}${getIframe(origin)}${imgHTMLSource}${videoHTMLSource}`;
                 })(),
-                pubDate: new Date(item.desc?.timestamp * 1000).toUTCString(),
+                pubDate: parseDate(item.desc?.timestamp * 1000),
                 link,
             };
         })

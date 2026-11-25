@@ -80,7 +80,7 @@ const LIST_BY_SECTION = /* GraphQL */ `
 
 async function handler(ctx) {
     const category = ctx.req.param('category').toLowerCase();
-    const url = `https://aeon.co/category/${category}`;
+    const url = `https://aeon.co/${category}`;
     const response = await ofetch(ENDPOINT, {
         method: 'POST',
         body: {

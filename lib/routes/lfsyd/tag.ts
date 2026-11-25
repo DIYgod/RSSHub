@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { ProcessFeed, ProcessForm } from './utils';
 
@@ -77,7 +77,7 @@ async function handler(ctx) {
         title: item.feed.title,
         pubDate: parseDate(item.feed.show_time * 1000),
         link: `${rootUrl}/tz/post/${item.feed.source_id}`,
-        guid: item.feed.title,
+        guid: `${rootUrl}/tz/post/${item.feed.source_id}`,
         postId: item.feed.source_id,
     }));
 

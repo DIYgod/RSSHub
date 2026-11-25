@@ -1,6 +1,8 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getUserArticle, getUserArticleList, parseUserArticleList } from './utils';
 
@@ -30,8 +32,9 @@ async function handler(ctx: Context) {
 
     const body = await getUserArticleList(userId);
     const articles = parseUserArticleList(body);
+    articles.list = articles.list.slice(0, getRouteLimit(ctx));
     if (detail) {
-        articles.list = await Promise.all(articles.list.map((item) => getUserArticle(item)));
+        articles.list = await pMap(articles.list, getUserArticle, { concurrency: 3 });
     }
     return {
         title: `${articles.uname}的动态 - 游民星空`,

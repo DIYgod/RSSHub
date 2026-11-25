@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/posts',
@@ -36,24 +36,24 @@ async function handler() {
     const response = await got(currentUrl);
     const $ = load(response.data);
     const items = await pMap(
-        $('article-item').toArray(),
+        $('a:has(h2)[href*="/post/view/"]').toArray(),
         (item) => {
             const $item = $(item);
-            const link = $item.attr('url');
+            const link = $item.attr('href');
             return cache.tryGet(link!, async () => {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);
-                const article = $('.left article .htmlview');
+                const article = $('article.htmlview');
                 article.find('d-image').each((_, el) => {
                     $(el).replaceWith(`<img src="${$(el).attr('lg')}">`);
                 });
 
                 return {
-                    title: $('.left article .top_info h1').text(),
-                    author: $('meta[name="my:author"]').attr('content'),
+                    title: $('h1').text(),
+                    author: $('meta[property="my:author"]').attr('content'),
                     description: article.html(),
-                    category: $('meta[name="my:category"]').attr('content'),
-                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')!),
+                    category: [...JSON.parse($('meta[name="my:category"]').attr('content')!), ...JSON.parse($('meta[name="my:tags"]').attr('content')!)].map((tag: { name?: string; slug: string }) => tag.name || tag.slug),
+                    pubDate: parseDate($('meta[property="my:publish_date"]').attr('content')!),
                     link,
                 };
             });

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/novel/chapter/:id',
@@ -21,7 +22,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['book.sfacg.com/Novel/:id/*'],
+            source: ['book.sfacg.com/Novel/:id', 'book.sfacg.com/Novel/:id/*'],
         },
     ],
     name: '章节',
@@ -31,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'https://book.sfacg.com';
 
@@ -48,20 +49,23 @@ async function handler(ctx) {
                 link: `${baseUrl}${$item.attr('href')}`,
             };
         });
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sfacg:chapter-v2:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 item.description = $('div.article-content').html();
 
                 const rawDate = $('div.article-desc span').eq(1).text();
-                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), 8);
+                item.pubDate = parseDate(rawDate.replace('更新时间：', ''), 8);
 
-                return item;
-            })
-        )
+                return { description: item.description, pubDate: item.pubDate };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     const { data: intro } = await got(`${baseUrl}/Novel/${id}/`);

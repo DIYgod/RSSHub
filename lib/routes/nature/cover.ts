@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
@@ -19,7 +20,7 @@ import cache from '@/utils/cache';
 // natastron:        Nature Astronomy
 // nphys             Nature Physics
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, journalMap } from './utils';
 
@@ -60,9 +61,10 @@ async function handler() {
             link: `${baseUrl}/${j.title}/current-issue`,
         }));
 
-    const out = await Promise.all(
-        journals.map((journal) =>
-            cache.tryGet(journal.link, async () => {
+    const out = await pMap(
+        journals,
+        (journal) =>
+            cache.tryGet(`nature:cover:v2:${journal.link}`, async () => {
                 const { id, name, link } = journal;
 
                 const response = await got(link, { cookieJar });
@@ -81,11 +83,11 @@ async function handler() {
                 return {
                     title: `${name} | Volume ${volume} Issue ${issue}`,
                     description: contents + issueDescription,
-                    link: response.url,
-                    pubDate: parseDate(date, 'MMMM YYYY'),
+                    link: ogUrl,
+                    pubDate: parseDate(date, ['D MMMM YYYY', 'MMMM YYYY'], 0),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

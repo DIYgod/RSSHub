@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/comic/:id',
@@ -29,7 +30,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id } = ctx.req.param();
-    const { limit = 0 } = ctx.req.query();
     const baseUrl = 'https://komiic.com';
 
     const { data: comicInfo } = await got.post(`${baseUrl}/api/query`, {
@@ -67,9 +67,9 @@ async function handler(ctx) {
         },
     });
 
-    const sortedChapters = chapterData.data.chaptersByComicId.toSorted((a, b) => Date.parse(b.dateUpdated) - Date.parse(a.dateUpdated));
+    const sortedChapters = chapterData.data.chaptersByComicId.toSorted((a, b) => compareDates(b.dateUpdated, a.dateUpdated));
 
-    const chapterLimit = Number(limit) || sortedChapters.length;
+    const chapterLimit = getRouteLimit(ctx) ?? sortedChapters.length;
     const filteredChapters = sortedChapters.slice(0, chapterLimit);
 
     const generateChapterDescription = (chapter) =>

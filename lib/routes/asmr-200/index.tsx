@@ -3,8 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Result, Work } from '@/routes/asmr-200/type';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const render = (work: Work, link: string) =>
     renderToString(
@@ -12,13 +11,6 @@ const render = (work: Work, link: string) =>
             <a href={link} title="点击进入官网查看">
                 <img src={work.mainCoverUrl} alt={work.title} />
             </a>
-            <h1>
-                {work.title} <span style="font-size: 0.6em; color: darkred;">{work.source_id}</span>
-            </h1>
-            <p>
-                <b>发布者：</b>
-                {work.name}
-            </p>
             <p>
                 <b>评分：</b>
                 {work.rate_average_2dp} | <b>评论数：</b>
@@ -30,10 +22,6 @@ const render = (work: Work, link: string) =>
                 <b>价格：</b>
                 <span style="color: #f44336">{work.price} JPY</span> | <b>销量：</b>
                 {work.dl_count}
-            </p>
-            <p>
-                <b>分类：</b>
-                {work.category}
             </p>
             <p>
                 <b>声优：</b>
@@ -63,7 +51,7 @@ export const route: Route = {
     radar: [
         {
             source: ['asmr-200.com'],
-            target: 'asmr-200/works',
+            target: '/works',
         },
     ],
     name: '最新收录',
@@ -85,7 +73,7 @@ export const route: Route = {
                 image: each.mainCoverUrl,
                 author: each.name,
                 link: `https://asmr-200.com/work/${each.source_id}`,
-                pubDate: timezone(parseDate(each.release, 'YYYY-MM-DD'), 8),
+                pubDate: parseDate(each.release, 'YYYY-MM-DD', 8),
                 category,
                 description: render(each, `https://asmr-200.com/work/${each.source_id}`),
             };

@@ -1,21 +1,19 @@
 import crypto from 'node:crypto';
 
 import { load } from 'cheerio';
+import { html } from 'hono/html';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Category, Collection, Tag } from './types';
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
-const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');
-const s256 = (s1: Uint8Array, s2: string) => {
-    const sha = crypto.createHash('sha256');
-    sha.update(s1);
-    sha.update(s2);
-    return sha.digest('hex');
-};
+const b64tohex = (str) => Buffer.from(str, 'base64').toHex();
+const s256 = (s1: Uint8Array, s2: string) => crypto.hash('sha256', Buffer.concat([s1, Buffer.from(s2)]));
 
 /**
  * Solve _wafchallengeid
@@ -39,19 +37,14 @@ export const solveWafChallenge = (cs: string) => {
     for (let i = 0; i < 1_000_000; i++) {
         const hash = s256(prefix, i.toString());
         if (hash === expect) {
-            c.d = Buffer.from(i.toString()).toString('base64');
+            c.d = Buffer.from(i.toString()).toBase64();
             break;
         }
     }
-    return Buffer.from(JSON.stringify(c)).toString('base64');
+    return Buffer.from(JSON.stringify(c)).toBase64();
 };
 
-export const generateUuid = () => {
-    const e = (t?) => (t ? (t ^ ((16 * 0.5) >> (t / 4))).toString(10) : '10000000-1000-4000-8000-100000000000'.replaceAll(/[018]/g, (c) => e(c)));
-    return e().replaceAll('-', '').slice(0, 19);
-};
-
-export const getArticle = async (link) => {
+const getArticle = async (link) => {
     let response = await ofetch(link);
     let $ = load(response);
     if ($('script').text().includes('_wafchallengeid')) {
@@ -72,6 +65,8 @@ export const getArticle = async (link) => {
     return $('.article-viewer').html();
 };
 
+export const getShortMsgDescription = (msg, content = msg.content) => html`${content.split('\n').map((line) => html`${line}<br />`)}${msg.pic_list.map((url) => html`<img src="${url}" />`)}`.toString();
+
 export const parseList = (data) =>
     data.map((item) => {
         const isArticle = !!item.article_info;
@@ -80,12 +75,12 @@ export const parseList = (data) =>
             const msg = item.msg_Info;
             const contentMatches = msg.content.match(/\[(.*?)\]\s+(.*)/);
             return {
-                title: contentMatches?.[1],
-                description: contentMatches?.[2]?.trim(),
+                title: contentMatches?.[1] ?? msg.content,
+                description: getShortMsgDescription(msg, contentMatches?.[2] ?? msg.content),
                 pubDate: parseDate(msg.ctime, 'X'),
                 author: item.author_user_info.user_name,
-                link: `https://juejin.cn/pin/7548882523352186915${item.msg_id}`,
-                category: [item.topic.title],
+                link: `https://juejin.cn/pin/${item.msg_id}`,
+                category: item.topic?.title ? [item.topic.title] : undefined,
                 isShortMsg: true,
             };
         }
@@ -100,15 +95,14 @@ export const parseList = (data) =>
         };
     });
 
-export const ProcessFeed = (list) =>
-    Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                item.description = item.isShortMsg ? item.description : (await getArticle(item.link)) || item.description;
-
-                return item;
-            })
-        )
+export const ProcessFeed = (list: Array<DataItem & { link: string; isShortMsg?: boolean }>) =>
+    pMap(
+        list,
+        async ({ isShortMsg, ...item }) => ({
+            ...item,
+            description: isShortMsg ? item.description : (await cache.tryGet(`juejin:article:${item.link}`, () => getArticle(item.link))) || item.description,
+        }),
+        { concurrency: 3 }
     );
 
 export const getCategoryBrief = () =>
@@ -119,12 +113,15 @@ export const getCategoryBrief = () =>
 
 export const getCollection = (collectionId) =>
     cache.tryGet(`juejin:collectionId:${collectionId}`, async () => {
-        const response = await ofetch<{ data: Collection }>('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
+        const response = await ofetch<{ data: Collection | null; err_msg?: string }>('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
             query: {
                 tag_id: collectionId,
                 cursor: 0,
             },
         });
+        if (!response.data) {
+            throw new Error(`Collection ${collectionId} is unavailable: ${response.err_msg ?? 'no data returned'}. Check that it exists and is public.`);
+        }
         return response.data;
     });
 

@@ -40,6 +40,5 @@ async function handler() {
         link: 'https://fanfou.com/q/',
         description: '饭否热门话题',
         item: result,
-        allowEmpty: true,
     };
 }

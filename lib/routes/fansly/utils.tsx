@@ -133,7 +133,7 @@ const renderMedia = (media) => {
         case 'image/png':
         case 'video/mp4':
         case 'audio/mp4':
-            return renderToString(<FanslyMedia poster={media.mimetype === 'video/mp4' ? media.variants[0].locations[0] : null} src={media.locations[0]} />);
+            return renderToString(<FanslyMedia mimetype={media.mimetype} poster={media.mimetype === 'video/mp4' ? media.variants?.[0]?.locations?.[0] : undefined} src={media.locations?.[0]} />);
         default:
             throw new Error(`Unhandled media type: ${media.mimetype}`);
     }
@@ -148,14 +148,18 @@ const renderTipGoal = (tipGoalId, tipGoals) => {
     return renderToString(<FanslyTipGoal label={goal.label} currentPercentage={goal.currentPercentage} currentAmount={goal.currentAmount} goalAmount={goal.goalAmount} />);
 };
 
-export { baseUrl, findAccountById, getAccountByUsername, getTagId, getTagSuggestion, getTimelineByAccountId, icon, parseAttachments, parseDescription, parseMedia, renderMedia, renderPoll, renderTipGoal };
+export { baseUrl, findAccountById, getAccountByUsername, getTagId, getTagSuggestion, getTimelineByAccountId, icon, parseDescription };
 
-const FanslyMedia = ({ poster, src }: { poster?: { location?: string } | null; src?: { location?: string } }) => (
+const FanslyMedia = ({ mimetype, poster, src }: { mimetype: string; poster?: { location?: string }; src?: { location?: string } }) => (
     <>
-        {poster && src ? (
-            <video controls preload="metadata" poster={poster.location}>
+        {src && mimetype === 'video/mp4' ? (
+            <video controls preload="metadata" poster={poster?.location}>
                 <source src={src.location} type="video/mp4" />
             </video>
+        ) : src && mimetype === 'audio/mp4' ? (
+            <audio controls preload="metadata">
+                <source src={src.location} type="audio/mp4" />
+            </audio>
         ) : src ? (
             <img src={src.location} />
         ) : null}

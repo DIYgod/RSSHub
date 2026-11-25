@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jules/changelog',
@@ -33,7 +33,7 @@ async function handler() {
             const article = $(el);
             const h2 = article.find('h2');
             const id = h2.attr('id') || article.attr('id');
-            const title = h2.text().trim();
+            const title = h2.text();
             const anchor = id ? `${url}#${id}` : url;
             // Date appears as a span text node after h2 (no <time> tag)
             const pubDateText = h2.next('span').text().trim();
@@ -51,7 +51,7 @@ async function handler() {
                 title,
                 description: article.html(),
                 link: anchor,
-                pubDate: pubDateText ? parseDate(pubDateText) : undefined,
+                pubDate: pubDateText ? parseDate(pubDateText, 'MMMM D, YYYY') : undefined,
                 image,
             };
         });

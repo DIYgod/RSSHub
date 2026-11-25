@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/beta',
@@ -30,7 +30,7 @@ async function handler() {
                 title: version,
                 description: $('.beta__release-notes').html(),
                 link,
-                pubDate: parseDate(released, 'D MMMM YYYY'),
+                pubDate: parseDate(`${released} +0000`, 'D MMMM YYYY ZZ'),
                 guid: version,
             },
         ],

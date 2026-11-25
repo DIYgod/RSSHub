@@ -7,16 +7,14 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const renderDescription = (img) =>
     renderToString(
         <>
             <img src={img?.src} alt={img?.altText} />
             <br />
-            <h3>{img?.ttl ? raw(img.ttl) : null}</h3>
             <p>{img?.dsc ? raw(img.dsc) : null}</p>
-            <p>{img?.crdt ? raw(img.crdt) : null}</p>
         </>
     );
 
@@ -58,7 +56,7 @@ async function handler() {
         title: item.meta.title,
         description: renderDescription(item.img),
         link: rootUrl + item.locator,
-        pubDate: parseDate(item.caption.preHeading),
+        pubDate: parseDate(item.caption.title.split(' | ', 1)[0], 'MMMM D, YYYY', 0),
         author: item.img.crdt,
     }));
 

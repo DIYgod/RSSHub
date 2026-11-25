@@ -1,10 +1,12 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/live',
@@ -15,7 +17,7 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportBT: true,
+        supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
@@ -30,8 +32,21 @@ export const route: Route = {
     url: 'live.kepu.net.cn/replay/index',
 };
 
+type ReplayMedia = { url?: string; mimeType?: string };
+type ReplayDetail = { enclosureUrl?: string };
+
+type ReplayItem = DataItem & { guid: string; link: string; description: string; itunes_item_image: string };
+
+function getReplayMedia(url?: string): ReplayMedia {
+    if (!url) {
+        return {};
+    }
+    const extension = new URL(url).pathname.split('.').at(-1)?.toLowerCase();
+    return { url, mimeType: extension === 'mp4' ? 'video/mp4' : extension === 'webm' ? 'video/webm' : undefined };
+}
+
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://live.kepu.net.cn';
     const apiRootUrl = 'https://live.kepu.net.cn:8089';
@@ -46,59 +61,68 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.data.data.slice(0, limit).map((item) => ({
+    let items: ReplayItem[] = response.data.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`live/index?id=${item.id}`, rootUrl).href,
         description: item.desc,
         author: item.company,
         guid: item.id,
-        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), 8),
-        updated: timezone(parseDate(item.live_end_time ?? item.end_time), 8),
+        pubDate: parseDate(item.live_start_time ?? item.start_time, 8),
+        updated: parseDate(item.live_end_time ?? item.end_time, 8),
         itunes_item_image: new URL(item.cover, apiRootUrl).href,
         comments: item.display_comment ?? 0,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const apiReplayUrl = new URL('index.php/front/live/replay_url', apiRootUrl).href;
+    items = await pMap(
+        items,
+        async (item) => {
+            let detail: ReplayDetail = {};
+            try {
+                detail = await cache.tryGet<ReplayDetail>(`kepu:replay:${item.link}`, async () => {
+                    const apiReplayUrl = new URL('index.php/front/live/replay_url', apiRootUrl).href;
 
-                const { data: detailResponse } = await got.post(apiReplayUrl, {
-                    form: {
-                        id: item.guid,
-                    },
+                    const { data: detailResponse } = await got.post(apiReplayUrl, {
+                        form: {
+                            id: item.guid,
+                        },
+                    });
+
+                    // A replay without recorded media gets a plain-text error such as InvalidEndTime.Mismatch instead of JSON
+                    return { enclosureUrl: detailResponse.data?.RecordIndexInfoList?.RecordIndexInfo.at(-1)?.RecordUrl };
                 });
-
-                item.guid = `kepu-live#${item.guid}`;
-                item.enclosure_url = detailResponse.data.RecordIndexInfoList.RecordIndexInfo.pop()?.RecordUrl;
-
-                if (item.enclosure_url) {
-                    item.enclosure_type = `video/${item.enclosure_url.split(/\./).pop()}`;
+            } catch (error) {
+                if (!(error instanceof FetchError) || error.statusCode !== 500) {
+                    throw error;
                 }
-
-                const poster = item.itunes_item_image;
-                item.description = renderToString(
+                // Retain the public replay card when its media endpoint is unavailable.
+            }
+            const media = getReplayMedia(detail.enclosureUrl);
+            return {
+                ...item,
+                guid: `kepu-live#${item.guid}`,
+                enclosure_url: media.mimeType ? media.url : undefined,
+                enclosure_type: media.mimeType,
+                description: renderToString(
                     <>
-                        {item.itunes_item_image ? (
+                        {item.itunes_item_image && !media.url ? (
                             <figure>
                                 <img src={item.itunes_item_image} alt={item.title} />
                             </figure>
                         ) : null}
-                        {item.enclosure_url ? (
-                            <video poster={poster} controls>
-                                <source src={item.enclosure_url} type={item.enclosure_type} />
-                                <object data={item.enclosure_url}>
-                                    <embed src={item.enclosure_url} />
+                        {media.url ? (
+                            <video poster={item.itunes_item_image} controls>
+                                <source src={media.url} type={media.mimeType} />
+                                <object data={media.url}>
+                                    <embed src={media.url} />
                                 </object>
                             </video>
                         ) : null}
                         {item.description ? <p>{item.description}</p> : null}
                     </>
-                );
-
-                return item;
-            })
-        )
+                ),
+            };
+        },
+        { concurrency: 3 }
     );
 
     const icon = new URL('favicon.ico', rootUrl).href;
@@ -110,7 +134,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: '科学直播(live.kepu.net.cn)',
-        language: 'zh' as Language,
+        language: 'zh' as const,
         icon,
         logo: icon,
         subtitle,

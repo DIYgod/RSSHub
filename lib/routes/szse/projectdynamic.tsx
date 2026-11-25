@@ -1,10 +1,10 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/projectdynamic/:type?/:stage?/:status?',
@@ -110,13 +110,14 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.data.map((item) => ({
-        title: item.prjid,
+    let items: Array<DataItem & { title: string; link: string }> = response.data.data.map((item) => ({
+        title: String(item.prjid),
         link: `${rootUrl}/api/ras/projectrends/details?id=${item.prjid}`,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -131,11 +132,11 @@ async function handler(ctx) {
 
                 item.description = renderDescription(data, current);
 
-                item.pubDate = timezone(parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.pubDate = parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss', 8);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -155,64 +156,64 @@ const renderDescription = (data, current): string =>
             <table>
                 <tbody>
                     <tr>
-                        <td class="title">公司全称</td>
-                        <td class="info">{data.cmpnm}</td>
-                        <td class="title">公司简称</td>
-                        <td class="info">{data.cmpsnm}</td>
+                        <td className="title">公司全称</td>
+                        <td className="info">{data.cmpnm}</td>
+                        <td className="title">公司简称</td>
+                        <td className="info">{data.cmpsnm}</td>
                     </tr>
                     <tr>
-                        <td class="title">受理日期</td>
-                        <td class="info">{data.acptdt}</td>
-                        <td class="title">更新日期</td>
-                        <td class="info">{data.updtdt}</td>
+                        <td className="title">受理日期</td>
+                        <td className="info">{data.acptdt}</td>
+                        <td className="title">更新日期</td>
+                        <td className="info">{data.updtdt}</td>
                     </tr>
                     <tr>
-                        <td class="title">审核状态</td>
-                        <td class="info">{data.prjst}</td>
-                        <td class="title">预计融资金额(亿元)</td>
-                        <td class="info">{data.maramt}</td>
+                        <td className="title">审核状态</td>
+                        <td className="info">{data.prjst}</td>
+                        <td className="title">预计融资金额(亿元)</td>
+                        <td className="info">{data.maramt}</td>
                     </tr>
                     <tr>
-                        <td class="title">保荐机构</td>
-                        <td class="info">
+                        <td className="title">保荐机构</td>
+                        <td className="info">
                             <a target="_blank" href={`/projectdynamic/ipo/index.html?keywords=${data.sprinst}`}>
                                 {data.sprinst}
                             </a>
                         </td>
-                        <td class="title">保荐代表人</td>
-                        <td class="info">
+                        <td className="title">保荐代表人</td>
+                        <td className="info">
                             <span>{data.sprrep}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="title">会计师事务所</td>
-                        <td class="info">
+                        <td className="title">会计师事务所</td>
+                        <td className="info">
                             <a target="_blank" href={`/projectdynamic/ipo/index.html?keywords=${data.acctfm}`}>
                                 {data.acctfm}
                             </a>
                         </td>
-                        <td class="title">签字会计师</td>
-                        <td class="info">{data.acctsgnt}</td>
+                        <td className="title">签字会计师</td>
+                        <td className="info">{data.acctsgnt}</td>
                     </tr>
                     <tr>
-                        <td class="title">律师事务所</td>
-                        <td class="info">
+                        <td className="title">律师事务所</td>
+                        <td className="info">
                             <a target="_blank" href={`/projectdynamic/ipo/index.html?keywords=${data.lawfm}`}>
                                 {data.lawfm}
                             </a>
                         </td>
-                        <td class="title">签字律师</td>
-                        <td class="info">{data.lglsgnt}</td>
+                        <td className="title">签字律师</td>
+                        <td className="info">{data.lglsgnt}</td>
                     </tr>
                     <tr>
-                        <td class="title">评估机构</td>
-                        <td class="info">{data.evalinst}</td>
-                        <td class="title">签字评估师</td>
-                        <td class="info">{data.evalsgnt}</td>
+                        <td className="title">评估机构</td>
+                        <td className="info">{data.evalinst}</td>
+                        <td className="title">签字评估师</td>
+                        <td className="info">{data.evalsgnt}</td>
                     </tr>
                     <tr>
-                        <td class="title">最近一期审计基准日</td>
-                        <td class="info" colspan={3}>
+                        <td className="title">最近一期审计基准日</td>
+                        <td className="info" colspan={3}>
                             {data.lastestAuditEndDate}
                         </td>
                     </tr>

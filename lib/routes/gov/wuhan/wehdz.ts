@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/wehdz/:caty',
@@ -13,7 +13,7 @@ export const route: Route = {
     parameters: {
         caty: '类别',
     },
-    name: '武汉东湖新技术开发区 - 光谷新闻',
+    name: '东湖新技术开发区 - 光谷新闻',
     maintainers: ['tudou027'],
     handler,
     description: `|  通知公告 |   光谷要闻  |   产业动态  |
@@ -39,7 +39,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                pubDate: parseDateStrict($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 
@@ -50,6 +50,7 @@ async function handler(ctx: Context) {
                 const content = load(res);
 
                 item.description = content('div.content_article').html();
+                item.pubDate = parseDateStrict(content('meta[name="PubDate"]').prop('content'), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], 8);
                 return item;
             })
         )

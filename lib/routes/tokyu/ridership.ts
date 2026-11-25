@@ -15,7 +15,7 @@ const OPERATOR = '東急電鉄';
  *   駅名＼種別 | 定期(人) | 定期外(人) | 計(人) | 前年比(％) | <previous year>年度
  * Columns are located by header text. 世田谷線 only has a 全線 row (no per-station figures), which is skipped.
  */
-const parsePage = (html: string, link: string): { fiscalYear: number; items: Array<ReturnType<typeof ridershipItem>> } => {
+const parsePage = (html: string, link: string) => {
     const $ = load(html);
     const fiscalYear = parseFiscalYear($('title').text());
     if (fiscalYear === null) {
@@ -31,7 +31,7 @@ const parsePage = (html: string, link: string): { fiscalYear: number; items: Arr
                 .toArray()
                 .map((th) => cellText($(th).text()));
             const col = (re: RegExp): number => headers.findIndex((h) => re.test(h));
-            const [iCommuter, iOther, iTotal, iYoy, iPrev] = [/^定期\(/, /^定期外/, /^計/, /^前年比/, /年度$/].map(col);
+            const [iCommuter, iOther, iTotal, iYoy, iPrev] = [/^定期\(/, /^定期外/, /^計/, /^前年比/, /年度$/].map((re) => col(re));
             if (iTotal < 0) {
                 return [];
             }
@@ -39,7 +39,7 @@ const parsePage = (html: string, link: string): { fiscalYear: number; items: Arr
                 .find('tbody tr')
                 .toArray()
                 .map((tr) => {
-                    const station = cellText($(tr).find('th').first().text());
+                    const station = cellText($(tr).find('th').text());
                     const tds = $(tr)
                         .find('td')
                         .toArray()
@@ -83,22 +83,23 @@ const latestYear = async (): Promise<number> => {
     const $ = load(html);
     const years = $('a[href*="/passengers/"]')
         .toArray()
-        .map((a) => Number(($(a).attr('href') ?? '').match(/\/passengers\/(\d{4})\/?$/)?.[1]))
-        .filter((y) => Number.isSafeInteger(y));
+        .map((a) => ($(a).attr('href') ?? '').match(/\/passengers\/(\d{4})\/?$/)?.[1])
+        .filter((y) => y !== undefined)
+        .map(Number);
     if (years.length === 0) {
         throw new Error('tokyu: no fiscal-year pages linked from the index');
     }
     return Math.max(...years);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const year: string | undefined = ctx.req.param('year');
-    const fy = year === undefined ? ((await cache.tryGet('tokyu/ridership:latest', latestYear)) as number) : Number(year);
-    if (!Number.isSafeInteger(fy)) {
+    if (year !== undefined && !/^\d{4}$/.test(year)) {
         throw new TypeError(`tokyu: invalid year "${year}"`);
     }
+    const fy = year ?? (await cache.tryGet('tokyu/ridership:latest', latestYear));
     const link = `${BASE}${fy}/`;
-    const page = (await cache.tryGet(link, async () => parsePage(await ofetch(link), link))) as ReturnType<typeof parsePage>;
+    const page = await cache.tryGet(link, async () => parsePage(await ofetch(link), link));
 
     return {
         title: `東急電鉄 ${page.fiscalYear}年度 駅別乗降人員`,
@@ -130,8 +131,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.tokyu.co.jp/railway/company/business/passengers/:year', 'www.tokyu.co.jp/railway/company/business/passengers/'],
+            source: ['www.tokyu.co.jp/railway/company/business/passengers/:year'],
             target: '/ridership/:year',
+        },
+        {
+            source: ['www.tokyu.co.jp/railway/company/business/passengers/'],
+            target: '/ridership',
         },
     ],
 };

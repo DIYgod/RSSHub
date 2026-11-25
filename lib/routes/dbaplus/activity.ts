@@ -3,8 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/activity/:type?',
@@ -37,7 +36,7 @@ async function handler(ctx: Context) {
                 title: item.find('.media-heading').text(),
                 link: item.find('.pull-left').attr('href'),
                 description: `<img src="${item.find('.media-object').attr('src')}">`,
-                pubDate: timezone(parseDate(item.find('.time').text().replace('时间：', '')), 8),
+                pubDate: parseDate(item.find('.time').text().replace('时间：', ''), 8),
             };
         });
 

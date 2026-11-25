@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.sony.com';
 
@@ -64,7 +65,7 @@ async function handler(ctx) {
         } else if (url.startsWith('//')) {
             absoluteUrl = 'https:' + url;
         }
-        return { title: item.title, pubDate: item.publicationDate, url: absoluteUrl };
+        return { title: item.title, pubDate: parseDate(item.publicationDate), url: absoluteUrl };
     });
     return {
         title: `Sony - ${productId.toUpperCase()}`,

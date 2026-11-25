@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 const courseDesc = (picurl, desc) =>
@@ -5,7 +6,7 @@ const courseDesc = (picurl, desc) =>
         <>
             <img src={picurl} />
             <br />
-            {desc}
+            {raw(desc)}
         </>
     );
 

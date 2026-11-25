@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'https://gr.uestc.edu.cn/';
 const detailUrl = 'https://gr.uestc.edu.cn/';
@@ -69,30 +69,30 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(indexContent);
     const entries = $('div.title').toArray();
 
-    const items = entries.map(async (entry) => {
-        const element = $(entry);
-        const newsTitle = element.find('a').text();
-        const newsLink = detailUrl + element.find('a').attr('href');
+    const out = await pMap(
+        entries,
+        async (entry) => {
+            const element = $(entry);
+            const newsTitle = element.find('a').text();
+            const newsLink = detailUrl + element.find('a').attr('href');
 
-        const newsDetail = await cache.tryGet(newsLink, async () => {
-            const newsContent = await ofetch(newsLink);
-            const content = load(newsContent);
+            const newsDetail = await cache.tryGet(`uestc:gr:v3:${newsLink}`, async () => {
+                const newsContent = await ofetch(newsLink);
+                const content = load(newsContent);
 
-            const basicInfo = content('div.topic_detail_header').find('div.info').text();
-            const match = dateTimeRegex.exec(basicInfo);
+                const basicInfo = content('div.topic_detail_header').find('div.info').text();
+                const match = dateTimeRegex.exec(basicInfo);
 
-            return {
-                title: newsTitle,
-                link: newsLink,
-                pubDate: match ? timezone(parseDate(match[1]), 8) : null,
-                description: content('div.content').html(),
-            };
-        });
+                return {
+                    pubDate: match ? parseDateStrict(match[1], 'YYYY-MM-DD HH:mm', 8) : undefined,
+                    description: content('div.content').html(),
+                };
+            });
 
-        return newsDetail;
-    });
-
-    const out = await Promise.all(items);
+            return { title: newsTitle, link: newsLink, ...newsDetail };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: `研究生院通知（${typeName}）`,

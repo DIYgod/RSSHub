@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+
+import { parseSourceDate } from './utils';
 
 export const route: Route = {
     path: '/user/:pphId',
@@ -141,27 +143,31 @@ async function handler(ctx) {
     const list = response.data.list.map((item): DataItem & { contId: string } => ({
         title: item.name,
         link: `https://www.thepaper.cn/newsDetail_forward_${item.contId}`,
-        pubDate: parseDate(item.pubTimeLong),
+        pubDate: parseSourceDate(item.pubTimeLong),
         author: item.authorInfo.sname,
         contId: item.contId,
         image: item.pic,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(`https://m.thepaper.cn/_next/data/${mobileBuildId}/detail/${item.contId}.json`, {
                     query: {
                         id: item.contId,
                     },
                 });
 
-                item.description = response.pageProps.detailData.contentDetail.content;
-                item.updated = parseDate(response.pageProps.detailData.contentDetail.updateTime);
-
-                return item;
-            })
-        )
+                const contentDetail = response.pageProps.detailData.contentDetail;
+                return {
+                    description: contentDetail.content,
+                    updated: parseSourceDate(contentDetail.updateTime),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

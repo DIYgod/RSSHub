@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -32,13 +31,12 @@ async function handler() {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const dateSplit = $item.find('.date').text().split('.');
-            dateSplit[0] = (Number.parseInt(dateSplit[0]) + 1911).toString();
+            const [year, month, day] = $item.find('.date').text().split('.', 3);
 
             return {
                 title: $item.find('.title').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(dateSplit.join('-')), 8),
+                pubDate: calendarToInstant({ calendar: 'roc', year, month, day }, 8),
                 category: [$item.find('.category').text()],
             };
         });

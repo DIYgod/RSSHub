@@ -38,7 +38,7 @@ const getImgEncrypted = async (pageId, quality) => {
         },
         responseType: 'buffer',
     });
-    return Buffer.from(res).toString('base64');
+    return Buffer.from(res).toBase64();
 };
 
 const getImgKey = (pageId, uuid) =>
@@ -84,4 +84,4 @@ const getRealKey = (imgKey, token = DEFAULT_TOKEN) => {
     };
 };
 
-export { apiHost, decrypt, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getRealKey, getUuid, token2Key };
+export { apiHost, decrypt, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getRealKey, getUuid };

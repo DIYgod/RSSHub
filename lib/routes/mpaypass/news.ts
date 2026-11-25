@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -38,29 +38,30 @@ async function handler(): Promise<Data> {
         title: '新闻 - 移动支付网',
         link,
         language: 'zh-CN',
-        item: await Promise.all(
-            $list('.Newslist-li')
-                .toArray()
-                .map((el) => {
-                    const $el = $list(el);
-                    const $a = $el.find('.Newslist-title a');
-                    const href = $a.attr('href');
-                    const title = $a.text();
-                    const date = $el.find('.Newslist-time span').text();
+        item: await pMap(
+            $list('.Newslist-li').toArray(),
+            async (el) => {
+                const $el = $list(el);
+                const $a = $el.find('.Newslist-title a');
+                const href = $a.attr('href');
+                const title = $a.text();
+                const date = $el.find('.Newslist-time span').text();
 
-                    return cache.tryGet(href!, async () => {
-                        const contentData = await got.get(href);
-                        const $content = load(contentData.data);
-                        const description = $content('.newslist-body').html();
+                const details = await cache.tryGet(href!, async () => {
+                    const contentData = await got.get(href);
+                    const $content = load(contentData.data);
+                    const description = $content('.newslist-body').html();
 
-                        return {
-                            title,
-                            description,
-                            link: href,
-                            pubDate: timezone(parseDate(date), 8),
-                        };
-                    });
-                })
+                    return {
+                        title,
+                        description,
+                        link: href,
+                        pubDate: parseDate(date, 8),
+                    };
+                });
+                return { ...details, title, link: href, pubDate: parseDate(date, 8) };
+            },
+            { concurrency: 3 }
         ),
     };
 }

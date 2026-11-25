@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/element/:id',
@@ -35,7 +35,8 @@ async function handler(ctx: Context) {
             title: item.title,
             author: item.user.name,
             description: item.content,
-            pubDate: parseDate(item.update_time * 1000),
+            pubDate: parseDate(item.publish_time * 1000),
+            updated: parseDate(item.update_time * 1000),
             link: `https://cowlevel.net/article/${item.id}`,
         })),
     };

@@ -1,6 +1,10 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
+
+const markdown = MarkdownIt({ breaks: true, linkify: true });
 
 interface QaUser {
     userName?: string;
@@ -61,6 +65,10 @@ export const route: Route = {
 async function handler(ctx) {
     const sort = ctx.req.param('sort') || 'new';
 
+    if (sort !== 'new' && sort !== 'hot') {
+        throw new InvalidParameterError('Invalid sort. Use new or hot.');
+    }
+
     const sortConfig = sort === 'hot' ? { field: 'favourNum', name: '热门' } : { field: 'createTime', name: '最新' };
 
     const response = await ofetch<QaResponse>('https://api.codefather.cn/api/qa/list/page/vo', {
@@ -89,7 +97,7 @@ async function handler(ctx) {
         const bestComment = item.bestComment;
 
         // Build description content
-        let description = `<div>${content.replaceAll('\n', '<br>')}</div>`;
+        let description = markdown.render(content);
 
         // Add best answer
         if (bestComment) {

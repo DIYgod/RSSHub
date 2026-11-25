@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/shxyj/:year?/:issue?',
@@ -26,8 +25,8 @@ async function handler(ctx) {
     let { year, issue } = ctx.req.param();
 
     if (!year) {
-        const response = await got('https://shxyj.ajcass.com/');
-        const $ = load(response.body);
+        const response = await ofetch('https://shxyj.ajcass.com/');
+        const $ = load(response);
         const latestIssueText = $('p.hod.pop').first().text();
 
         const match = latestIssueText.match(/(\d{4}) Vol\.(\d+):/);
@@ -40,18 +39,17 @@ async function handler(ctx) {
     }
 
     const url = `https://shxyj.ajcass.com/Magazine/?Year=${year}&Issue=${issue}`;
-    const response = await got(url);
-    const $ = load(response.body);
+    const response = await ofetch(url);
+    const $ = load(response);
 
     const items = $('#tab tr')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const articleTitle = $item.find('a').first().text().trim();
-            const articleLink = $item.find('a').first().attr('href');
-            const summary = $item.find('li').eq(1).text().replace('[摘要]', '').trim();
-            const authors = $item.find('li').eq(2).text().replace('作者：', '').trim();
-            const pubDate = parseDate(`${year}-${Number.parseInt(issue) * 2}`);
+            const articleTitle = $item.find('a').first().text();
+            const articleLink = $item.find('a').attr('href');
+            const summary = $item.find('li').eq(1).text().replace('[摘要]', '');
+            const authors = $item.find('li').eq(2).text().replace('作者：', '');
 
             if (articleTitle && articleLink) {
                 return {
@@ -59,7 +57,6 @@ async function handler(ctx) {
                     link: `https://shxyj.ajcass.com${articleLink}`,
                     description: summary,
                     author: authors,
-                    pubDate,
                 };
             }
             return null;

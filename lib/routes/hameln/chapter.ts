@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = Number.parseInt(ctx.req.query('limit')) || 5;
+    const limit = getRouteLimit(ctx, 5);
     const link = `https://syosetu.org/novel/${id}`;
     const html = await get(link);
     const $ = load(html);
@@ -40,22 +40,21 @@ async function handler(ctx) {
     const title = $('span[itemprop="name"]').text();
     const description = $('div.ss:nth-child(2)').text();
 
-    const chapter_list = $('tr[bgcolor]')
+    const chapterList = $('tr[bgcolor]')
         .toArray()
         .map((chapter): DataItem => {
-            const $_chapter = $(chapter);
-            const chapter_link = $_chapter.find('a');
+            const $chapter = $(chapter);
+            const chapterLink = $chapter.find('a');
             return {
-                title: chapter_link.text(),
-                link: chapter_link.attr('href'),
-                pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
+                title: chapterLink.text(),
+                link: chapterLink.attr('href'),
+                pubDate: parseDate($chapter.find('nobr').text(), 'YYYYMMDD HH:mm', 9),
             };
-        })
-        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
-        .slice(0, limit);
+        });
+    const candidates = (ctx.req.query('sorted') === 'false' ? chapterList : chapterList.toSorted((a, b) => compareDates(b.pubDate, a.pubDate))).slice(0, limit);
 
-    const item_list = await Promise.all(
-        chapter_list.map((chapter) => {
+    const itemList = await Promise.all(
+        candidates.map((chapter) => {
             chapter.link = `${link}/${chapter.link}`;
             return cache.tryGet(chapter.link, async () => {
                 const html = await get(chapter.link);
@@ -71,7 +70,7 @@ async function handler(ctx) {
         description,
         link,
         language: 'ja' as const satisfies Language,
-        item: item_list,
+        item: itemList,
     };
 }
 

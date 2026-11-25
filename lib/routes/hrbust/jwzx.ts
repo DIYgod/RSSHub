@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwzx/:type?/:page?',
@@ -46,7 +47,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'http://jwzx.hrbust.edu.cn/homepage/';
-    const { type = 354, page = 12 } = ctx.req.param();
+    const { type = '354', page = '12' } = ctx.req.param();
+    if (!/^0*[1-9]\d*$/.test(type) || !/^0*[1-9]\d*$/.test(page)) {
+        throw new InvalidParameterError('Invalid type or page: column ID and article count must be positive integers.');
+    }
     const columnUrl = rootUrl + 'infoArticleList.do?columnId=' + type + '&pagingNumberPer=' + page;
     const response = await ofetch(columnUrl);
     const $ = load(response);
@@ -60,7 +64,7 @@ async function handler(ctx) {
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const title = element.find('a').text().trim();
             const pubDateText = element.find('span').text();
-            const pubDate = timezone(parseDate(pubDateText), 8);
+            const pubDate = parseDate(pubDateText, 8);
             return {
                 title,
                 link,
@@ -68,8 +72,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.startsWith(rootUrl)) {
                     item.description = '本文需跳转，请点击原文链接后阅读';
@@ -91,8 +96,8 @@ async function handler(ctx) {
                     item.description = '解析正文失败';
                 }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

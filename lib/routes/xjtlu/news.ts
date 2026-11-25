@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const categories = {
     all: {
@@ -44,43 +45,36 @@ const categories = {
         zh: { name: '招生专区', path: 'news_category/topictopic4683' },
     },
 };
-
-const handler = async (ctx) => {
+const handler = async (ctx): Promise<Data> => {
     const lang = ctx.req.param('lang') ?? 'en';
     const category = ctx.req.param('category') ?? 'all';
-
     // Validate language parameter
     if (lang !== 'en' && lang !== 'zh') {
         throw new InvalidParameterError('Invalid language parameter. Use "en" or "zh".');
     }
-
     // Validate category parameter
     if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
     }
-
     // Build the list URL based on category
     const baseUrl = `https://www.xjtlu.edu.cn/${lang}`;
     const categoryPath = categories[category][lang].path;
     const listUrl = `${baseUrl}/${categoryPath}`;
-
     // Fetch the news list page
     const response = await ofetch(listUrl);
     const $ = load(response);
-
     // Extract article cards from the page
     const list = $('.card-group-3 .card.up-down-card, .content .card.up-down-card')
         .toArray()
         .map((item) => {
             const $item = $(item);
             const link = $item.find('.a-links-block').attr('href');
-            const title = $item.find('.card-title').text().trim();
+            const title = $item.find('.card-title').text();
             const categoryTags = $item
                 .find('.tag-group .tag')
                 .toArray()
                 .map((tag) => $(tag).text().trim())
                 .filter((text) => text.length > 0);
-
             return {
                 title,
                 link,
@@ -88,39 +82,29 @@ const handler = async (ctx) => {
             };
         })
         .filter((item) => item.link);
-
     // Fetch full article content for each item
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`xjtlu:news:detail:v4:${item.link}`, async () => {
                 const articleResponse = await ofetch(item.link!);
                 const $article = load(articleResponse);
-
-                const fullContent = $article('.post_content').html();
                 const articleDate = $article('.edited-view .date, p.date').text();
-
-                // Parse date based on language
-                // English: "21 Jan 2026" with 'en' locale for month name recognition
-                // Chinese: "2026年01月20日" - numeric format, no locale needed
-                let pubDate: Date | undefined;
-                if (articleDate) {
-                    pubDate = lang === 'en' ? parseDate(articleDate, 'DD MMM YYYY', 'en') : parseDate(articleDate, 'YYYY年MM月DD日');
-                }
-
+                const modified = $article('meta[property="article:modified_time"]').attr('content');
                 return {
-                    title: item.title,
-                    link: item.link!,
-                    category: item.category,
-                    description: fullContent,
-                    pubDate,
+                    description: $article('.post_content').html(),
+                    // English: "21 Jan 2026" with 'en' locale for month name recognition
+                    // Chinese: "2026年01月20日" - numeric format, no locale needed
+                    pubDate: lang === 'en' ? parseDate(articleDate, 'DD MMM YYYY') : parseDate(articleDate, 'YYYY年MM月DD日'),
+                    updated: modified ? parseDate(modified) : undefined,
                 };
-            })
-        )
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     const categoryTitle = categories[category][lang].name;
     const iconUrl = 'https://www.xjtlu.edu.cn/favicon.ico';
-
     return {
         title: `XJTLU ${categoryTitle}${lang === 'en' ? ' News' : '新闻'}`,
         link: listUrl,
@@ -129,10 +113,9 @@ const handler = async (ctx) => {
         icon: iconUrl,
         logo: iconUrl,
         item: items,
-        lang: lang === 'en' ? 'en' : 'zh-CN',
+        language: lang === 'en' ? 'en' : 'zh-CN',
     };
 };
-
 export const route: Route = {
     path: '/news/:lang?/:category?',
     categories: ['university'],

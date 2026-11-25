@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:type?',
@@ -49,7 +48,7 @@ async function handler(ctx) {
             };
         });
 
-    await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got({
@@ -61,7 +60,7 @@ async function handler(ctx) {
                     .text()
                     .match(/作者：(\S*)\s+发布于：(\S*\s+.*?)\s/);
                 item.author = info![1];
-                item.pubDate = timezone(parseDate(info![2], 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.pubDate = parseDate(info![2], 'YYYY-MM-DD HH:mm:ss', 8);
                 item.description = content('div#con').html()!.replaceAll('\n', '');
                 return item;
             })
@@ -71,6 +70,6 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link,
-        item: list,
+        item: items,
     };
 }

@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { BoardsFeedResource, UserActivityPinsResource, UserProfile } from './types';
 
@@ -22,8 +22,16 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pinterest.com/:id/:type?', 'www.pinterest.com/:id'],
-            target: '/user/:id/:type?',
+            source: ['www.pinterest.com/:username/_created'],
+            target: '/user/:username/_created',
+        },
+        {
+            source: ['www.pinterest.com/:username/_saved'],
+            target: '/user/:username/_saved',
+        },
+        {
+            source: ['www.pinterest.com/:username'],
+            target: '/user/:username',
         },
     ],
     name: 'User',
@@ -81,7 +89,7 @@ const getUserResource = (username: string) =>
             query: {
                 source_url: `/${username}/_created`,
                 data: JSON.stringify({ options: { username, field_set_key: 'unauth_profile' }, context: {} }),
-                _: Date.now(),
+                _: Temporal.Now.instant().epochMilliseconds,
             },
         });
 
@@ -96,7 +104,7 @@ const getUserActivityPinsResource = async (username: string, userId: string) => 
         query: {
             source_url: `/${username}/_created`,
             data: JSON.stringify({ options: { exclude_add_pin_rep: true, field_set_key: 'grid_item', is_own_profile_pins: false, user_id: userId, username }, context: {} }),
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
     });
 
@@ -111,7 +119,7 @@ const getBoardsFeedResource = async (username: string) => {
         query: {
             source_url: `/${username}/_saved`,
             data: JSON.stringify({ options: { field_set_key: 'profile_grid_item', filter_stories: false, sort: 'last_pinned_to', username }, context: {} }),
-            _: Date.now(),
+            _: Temporal.Now.instant().epochMilliseconds,
         },
     });
 

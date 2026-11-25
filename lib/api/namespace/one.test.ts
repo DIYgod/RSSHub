@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { assert, describe, expect, it } from 'vitest';
 
 import api from '@/api';
 import { namespaces } from '@/registry';
 
 describe('api/namespace/one', () => {
-    const nestedKey = Object.keys(namespaces).find((key) => key.includes('/')) as string;
+    const nestedKey = Object.keys(namespaces).find((key) => key.includes('/'));
 
     it('serves a single namespace over HTTP', async () => {
         expect(namespaces.github).toBeDefined();
@@ -15,7 +15,7 @@ describe('api/namespace/one', () => {
     });
 
     it('serves a nested namespace over HTTP', async () => {
-        expect(nestedKey).toBeDefined();
+        assert(nestedKey);
         const response = await api.request(`/namespace/${nestedKey}`);
         expect(response.status).toBe(200);
         const data = await response.json();

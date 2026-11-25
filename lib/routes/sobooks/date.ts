@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { formatDate } from '@/utils/time';
 
 import { utils } from './utils';
 
@@ -15,19 +16,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['sobooks.net/:category'],
-            target: '/:category',
-        },
-    ],
     name: '归档',
     maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const date = ctx.req.param('date') ?? `${new Date().getFullYear()}/${new Date().getMonth()}`;
+export async function handler(ctx) {
+    const { date, year, month } = ctx.req.param();
+    const archiveDate = year && month ? `${year}/${month}` : (date ?? formatDate(Temporal.Now.instant(), 'YYYY/M'));
 
-    return await utils(ctx, `books/date/${date.replace('-', '/')}`);
+    return await utils(ctx, `books/date/${archiveDate.replace('-', '/')}`);
 }

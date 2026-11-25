@@ -1,6 +1,7 @@
 import type { Language, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -8,17 +9,18 @@ const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { keyword = 'query/Detection' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 150;
+    const limit = getRouteLimit(ctx, 150);
 
     const rootUrl = 'https://papers.cool';
-    const currentUrl = new URL(`arxiv/search?highlight=1&query=${keyword}&sort=0`, rootUrl).href;
-    const feedUrl = new URL(`arxiv/search/feed?query=${keyword}`, rootUrl).href;
+    const currentUrl = new URL('arxiv/search?highlight=1&query=&sort=0', rootUrl);
+    currentUrl.searchParams.set('query', keyword);
+    const feedUrl = new URL('arxiv/search/feed', rootUrl);
+    feedUrl.searchParams.set('query', keyword);
 
-    const site = keyword.split(/\//, 1)[0];
-    const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
-    const feed = await parser.parseURL(feedUrl);
+    const site = feedUrl.pathname.split('/', 2)[1];
+    const feed = await parser.parseURL(feedUrl.href);
 
     const language: Language = 'en';
 
@@ -27,7 +29,7 @@ export const handler = async (ctx) => {
         const guid = item.guid;
 
         const id = item.link?.split(/\//).pop() ?? '';
-        const kimiUrl = new URL(id, apiKimiUrl).href;
+        const kimiUrl = item.link;
         const pdfUrl = Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
 
         const authorString = item.author;
@@ -44,12 +46,11 @@ export const handler = async (ctx) => {
             link: item.link,
             category: item.categories,
             author: authorString,
-            doi: `${site}${id}`,
             guid,
             id: guid,
             content: {
                 html: description,
-                text: item.content,
+                text: item.summary,
             },
             language,
             enclosure_url: pdfUrl,
@@ -61,9 +62,8 @@ export const handler = async (ctx) => {
     return {
         title: feed.title!,
         description: feed.description,
-        link: currentUrl,
+        link: currentUrl.href,
         item: items,
-        allowEmpty: true,
         image: feed.image?.url,
         language: feed.language,
     };
@@ -100,7 +100,7 @@ If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/
         {
             title: 'arXiv Paper queryed by Keyword',
             source: ['papers.cool/arxiv/search?highlight=1&query=*&sort=0'],
-            target: '/papers/query/:keyword',
+            target: '/query/:keyword',
         },
     ],
 };

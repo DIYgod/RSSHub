@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -32,8 +32,9 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const result = await ofetch(item.link!);
                 const $ = load(result);
@@ -42,12 +43,12 @@ async function handler(): Promise<Data> {
 
                 item.title = $('.content-title span:first-child').text();
                 item.description = $('.v_news_content').html();
-                item.pubDate = timezone(parseDate(meta.match(/时间：(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/)?.[1] ?? '', 'YYYY年MM月DD日 HH:mm'), 8);
+                item.pubDate = parseDate(meta.match(/时间：(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/)?.[1] ?? '', 'YYYY年MM月DD日 HH:mm', 8);
                 item.author = meta.match(/作者：(\S+)/)?.[1];
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

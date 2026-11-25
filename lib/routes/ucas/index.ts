@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'https://zhaopin.ucas.ac.cn';
 
@@ -34,6 +36,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        { source: ['zhaopin.ucas.ac.cn/gjob/login.do'], title: '博士后', target: '/job/bsh' },
+        { source: ['zhaopin.ucas.ac.cn/gjob/login.do'], title: '课题项目聘用', target: '/job/ktxmpy' },
+        { source: ['zhaopin.ucas.ac.cn/gjob/login.do'], title: '管理支撑人才', target: '/job/glzcrc' },
+        { source: ['zhaopin.ucas.ac.cn/gjob/login.do'], title: '教学科研人才', target: '/job/jxkyrc' },
+    ],
     name: '招聘信息',
     maintainers: ['Fatpandac'],
     handler,
@@ -44,17 +52,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'bsh';
+    if (!Object.hasOwn(idMap, type)) {
+        throw new InvalidParameterError('Invalid recruitment type. Use jxkyrc, glzcrc, ktxmpy, or bsh.');
+    }
     const url = `${rootUrl}/gjob/login.do?method=contentList&t=zhaopin&c=${idMap[type]}`;
     const response = await got.get(url);
 
     const $ = load(response.data);
     const list = $('#col1_content > div.list > ul > li').toArray();
 
-    const items = await Promise.all(
-        list.map(async (item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             const title = $(item).find('a').attr('title');
             const link = rootUrl + $(item).find('a').attr('href');
-            const pubDate = parseDate($(item).find('span').text());
+            const pubDate = parseDateStrict($(item).find('span').text(), 'YYYY.MM.DD', 8);
 
             const desc = await cache.tryGet(link, async () => {
                 const response = await got.get(link);
@@ -72,7 +84,8 @@ async function handler(ctx) {
                 pubDate,
                 description: desc,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

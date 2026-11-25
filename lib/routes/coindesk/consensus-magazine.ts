@@ -38,7 +38,7 @@ async function handler() {
     const response = await ofetch(`${rootUrl}/${channel}`);
     const $ = load(response);
 
-    const list = $('div h2')
+    const list = $('a.content-card-title h2')
         .toArray()
         .map((item) => {
             const $item = $(item);

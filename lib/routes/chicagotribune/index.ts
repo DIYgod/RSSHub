@@ -3,12 +3,12 @@ import type { Context } from 'hono';
 
 import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category/:subcategory?',
     categories: ['traditional-media'],
-    example: '/chicagotribune/news/nation',
+    example: '/chicagotribune/news/national',
     parameters: { category: 'Category', subcategory: 'Subcategory' },
     radar: [{ source: ['www.chicagotribune.com/:category/:subcategory?'] }],
     name: 'News',
@@ -43,7 +43,7 @@ async function handler(ctx: Context) {
         description: post.content.rendered,
         link: post.link,
         guid: post.guid.rendered,
-        pubDate: parseDate(post.date_gmt),
+        pubDate: parseDate(`${post.date_gmt}Z`),
         author: post.authors?.map((author) => author.display_name).join(', '),
         category: post._embedded?.['wp:term']
             ?.flat()

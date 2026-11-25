@@ -1,15 +1,18 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { isOnSite } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/journal/:type?',
     categories: ['bbs'],
     example: '/muchong/journal',
     parameters: { type: '类型，见下表' },
+    features: { antiCrawler: true },
     name: '期刊点评',
     maintainers: ['nczitzk'],
     description: `| SCI 期刊 | 中文期刊 |
@@ -28,6 +31,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl, { responseType: 'arrayBuffer' });
     const $ = load(decoder.decode(response));
 
+    const seenLinks = new Set<string>();
     const list = $('.jname a, .journal_list a')
         .slice(0, 15)
         .toArray()
@@ -36,21 +40,35 @@ async function handler(ctx: Context) {
             const link = $item.attr('href')!;
             return {
                 title: $item.text(),
-                link: link.includes('http') ? link : `${rootUrl}/bbs/${link}`,
+                link: new URL(link, `${rootUrl}/bbs/`).href,
             };
+        })
+        .filter((item) => {
+            if (seenLinks.has(item.link)) {
+                return false;
+            }
+            seenLinks.add(item.link);
+            return true;
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'muchong.com')) {
+                return item;
+            }
+            const details = await cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, { responseType: 'arrayBuffer' });
                 const content = load(decoder.decode(detailResponse));
 
-                item.description = content('.forum_explan dl table').eq(1).html();
+                const description = content('.forum_explan dl table').eq(1).html();
 
-                return item;
-            })
-        )
+                return { description };
+            });
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

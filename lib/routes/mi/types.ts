@@ -1,85 +1,133 @@
-export interface DataResponse<Data> {
-    data: Data;
-}
+import { z } from 'zod';
 
-export interface CrowdfundingData {
-    list: CrowdfundingList[];
-}
+// Response schemas mirror the upstream JSON shape, which nests deeper than the lint limit allows.
+// oxlint-disable unicorn/max-nested-calls
 
-interface CrowdfundingList {
-    items: CrowdfundingItem[];
-}
+const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
 
-export interface CrowdfundingItem {
-    img_url: string;
-    product_market_price: string;
-    product_name: string;
-    project_id: number;
-}
+/**
+ * Parse entries one by one and skip the ones that do not match, so an unexpected entry never breaks the whole list.
+ *
+ * @param {unknown[]} items - Raw entries.
+ * @param {z.ZodType} schema - Entry schema.
+ * @returns {Array} Parsed entries that match the schema.
+ */
+export const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
+    items.flatMap((item) => {
+        const result = schema.safeParse(item);
+        return result.success ? [result.data] : [];
+    });
 
-export interface CrowdfundingDetailData {
-    crowd_funding_info: CrowdfundingDetailInfo;
-}
+// Crowdfunding
 
-export interface CrowdfundingDetailInfo {
-    big_image: string;
-    end_time: number;
-    price: string;
-    project_desc: string;
-    send_info: string;
-    start_time: number;
-    support_list: CrowdfundingDetailSupportList[];
-}
+// List
 
-interface CrowdfundingDetailSupportList {
-    goods_list: CrowdfundingGoods[];
-    name: string;
-    price: string;
-    support_desc: string;
-}
+const CrowdfundingListItemSchema = z.object({
+    img_url_small: z.string(),
+    product_market_price: z.string(),
+    product_name: z.string(),
+    project_id: z.number(),
+});
 
-interface CrowdfundingGoods {
-    goods_image: string;
-}
+export type CrowdfundingListItem = z.infer<typeof CrowdfundingListItemSchema>;
 
-export interface NewProductListData {
-    date_list: NewProductDateGroup[];
-    history_date_list: NewProductDateGroup[];
-    new_list: NewProductItem[];
-}
+export const CrowdfundingListResponseSchema = DataResponseSchema(
+    z.object({
+        list: z.array(
+            z.object({
+                items: z.array(CrowdfundingListItemSchema),
+            })
+        ),
+    })
+);
 
-interface NewProductDateGroup {
-    product_list: NewProductItem[];
-}
+// Detail
 
-export interface NewProductItem {
-    img: string;
-    product_id: number;
-    product_name: string;
-    start_time: number;
-}
+const CrowdfundingDetailItemSchema = z.object({
+    big_image: z.string(),
+    end_time: z.number(),
+    price: z.string(),
+    project_desc: z.string(),
+    send_info: z.string(),
+    start_time: z.number(),
+    support_list: z.array(
+        z.object({
+            goods_list: z.array(
+                z.object({
+                    goods_image: z.string(),
+                })
+            ),
+            name: z.string(),
+            price: z.string(),
+            support_desc: z.string(),
+        })
+    ),
+});
 
-export interface NewProductDetailData {
-    goodsInfo: {
-        goodsList: NewProductGoods[];
-    };
-    product: NewProductDetail;
-    relationBatchedInfo?: {
-        relationBatchedList: NewProductRelationBatched[];
-    };
-}
+export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema>;
 
-interface NewProductDetail {
-    sellPointList: string[];
-}
+export const CrowdfundingDetailResponseSchema = DataResponseSchema(
+    z.object({
+        crowd_funding_info: CrowdfundingDetailItemSchema,
+    })
+);
 
-interface NewProductGoods {
-    imgUrl: string;
-    marketPrice: string;
-    name: string;
-    price: string;
-}
+// NewProduct
 
-interface NewProductRelationBatched {
-    goodsInfo: NewProductGoods[];
-}
+// List
+
+const NewProductListItemSchema = z.object({
+    img: z.string(),
+    product_id: z.number(),
+    product_name: z.string(),
+    start_time: z.number(),
+});
+
+export type NewProductListItem = z.infer<typeof NewProductListItemSchema>;
+
+export const NewProductListResponseSchema = DataResponseSchema(
+    z.object({
+        date_list: z.array(
+            z.object({
+                product_list: z.array(NewProductListItemSchema),
+            })
+        ),
+        history_date_list: z.array(
+            z.object({
+                product_list: z.array(NewProductListItemSchema),
+            })
+        ),
+        new_list: z.array(NewProductListItemSchema),
+    })
+);
+
+// Detail
+
+const NewProductGoodsSchema = z.object({
+    imgUrl: z.string(),
+    marketPrice: z.string(),
+    name: z.string(),
+    price: z.string(),
+});
+
+const NewProductDetailItemSchema = z.object({
+    goodsInfo: z.object({
+        goodsList: z.array(NewProductGoodsSchema).optional(),
+    }),
+    product: z.object({
+        sellPointList: z.array(z.string()),
+    }),
+    relationBatchedInfo: z
+        .object({
+            relationBatchedList: z.array(
+                z.object({
+                    goodsInfo: z.array(NewProductGoodsSchema),
+                })
+            ),
+        })
+        .optional(),
+});
+
+export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
+
+export const NewProductDetailResponseSchema = DataResponseSchema(NewProductDetailItemSchema);

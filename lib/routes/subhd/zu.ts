@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { category: '字幕组，见下表，默认为 YYeTs字幕组' },
     radar: [
         {
-            source: ['subhd.tv/zu/:category', 'subhd.tv/'],
+            source: ['subhd.tv/zu/:category', 'subhd.tv/zu/:category/l', 'subhd.tv/'],
             target: '/zu/:category?',
         },
     ],

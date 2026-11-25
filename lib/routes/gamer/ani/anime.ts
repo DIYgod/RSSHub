@@ -16,12 +16,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['ani.gamer.com.tw/'],
-            target: '/anime/:sn',
-        },
-    ],
     name: '動畫瘋 - 動畫',
     maintainers: ['maple3142', 'pseudoyu'],
     handler,

@@ -1,13 +1,15 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 import type { BrowserContext } from 'patchright';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { parseRelativeDate } from '@/utils/parse-date';
 import type { Page } from '@/utils/playwright';
+import { parseDate, parseRelativeDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
 export const BASE_URL = 'https://www.dailypush.dev';
 
@@ -15,7 +17,7 @@ export interface ArticleItem {
     title: string;
     link: string;
     author: DataItem['author'];
-    pubDate?: Date;
+    pubDate?: Temporal.Instant;
     category?: string[];
     description?: string;
     articleUrl: string;
@@ -25,14 +27,14 @@ export interface ArticleItem {
 const allowedRequestTypes = new Set(['document']);
 
 async function preparePage(page: Page) {
-    await page.route('**/*', (route) => {
+    await page.route('**/*', async (route) => {
         const request = route.request();
         if (allowedRequestTypes.has(request.resourceType())) {
-            route.continue();
+            await route.continue();
             return;
         }
 
-        route.abort();
+        await route.abort();
     });
 }
 
@@ -57,10 +59,9 @@ export async function fetchPageHtml(context: BrowserContext, url: string, waitFo
 /**
  * Try to parse text as a date. Returns the Date if parsing succeeds and is valid, undefined otherwise.
  */
-function tryParseAsDate(text: string): Date | undefined {
+function tryParseAsDate(text: string): Temporal.Instant | undefined {
     try {
-        const date = parseRelativeDate(text);
-        return Number.isNaN(date.getTime()) ? undefined : date;
+        return parseRelativeDate(text);
     } catch {
         return undefined;
     }
@@ -92,12 +93,6 @@ function extractAuthor(article: Cheerio<Element>): DataItem['author'] {
     switch (contentSpans.length) {
         case 3:
             // Structure: author, date, reading time
-            if (contentSpans[0].includes(',')) {
-                const authors: DataItem['author'] = contentSpans[0].split(',').map((author) => ({
-                    name: author.trim(),
-                }));
-                return authors;
-            }
             return contentSpans[0];
         case 2: {
             // Two cases:
@@ -156,7 +151,7 @@ function extractCategories(article: Cheerio<Element>, $: CheerioAPI): string[] {
 /**
  * Extract publication date from article element
  */
-function extractPubDate(article: Cheerio<Element>): Date | undefined {
+function extractPubDate(article: Cheerio<Element>): Temporal.Instant | undefined {
     const container = article.find('.flex.items-center.gap-3').first();
     if (container.length === 0) {
         return undefined;
@@ -229,7 +224,7 @@ function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string)
 
     const footer = article.find('.flex.items-center.justify-between.gap-4.flex-wrap');
     const summaryLink = footer.find('a[href*="/article/"]').attr('href');
-    const dailyPushUrl = summaryLink ? `${baseUrl}${summaryLink}` : undefined;
+    const dailyPushUrl = summaryLink ? new URL(summaryLink, baseUrl).href : undefined;
 
     const pubDate = extractPubDate(article);
 
@@ -250,26 +245,38 @@ function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string)
  * Parse all articles from the page
  */
 export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
+    const metadata = JSON.parse($('script[type="application/ld+json"]:contains("ItemList")').text());
+    const publishedDates = new Map<string, string>(metadata.itemListElement.map(({ item }) => [item.url, item.datePublished]));
+
     return $('article')
         .toArray()
         .map((articleEl) => {
             const article = $(articleEl);
             return parseArticle(article, $, baseUrl);
         })
-        .filter((parsed): parsed is ArticleItem => parsed !== null);
+        .filter((parsed): parsed is ArticleItem => parsed !== null)
+        .map((item) => {
+            const published = publishedDates.get(item.link);
+            return published ? { ...item, pubDate: parseDate(published) } : item;
+        });
 }
 
 /**
  * Enhance items with full summaries from dailypush article pages.
- * Uses the provided context; opens a new tab per URL (document requests only). Caller must close the context.
+ * Uses the provided context; opens a new tab per URL (document requests only), a few at a time. Caller must close the context.
  */
 export async function enhanceItemsWithSummaries(context: BrowserContext, items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems = await Promise.all(
-        itemsWithUrl.map((item) =>
-            cache.tryGet(item.dailyPushUrl!, async () => {
+    const enhancedItems = await pMap(
+        itemsWithUrl,
+        (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.dailyPushUrl, 'dailypush.dev')) {
+                return item;
+            }
+            return cache.tryGet(item.dailyPushUrl!, async () => {
                 try {
                     const html = await fetchPageHtml(context, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
                     const $ = load(html);
@@ -282,8 +289,9 @@ export async function enhanceItemsWithSummaries(context: BrowserContext, items: 
                 }
 
                 return item;
-            })
-        )
+            });
+        },
+        { concurrency: 5 }
     );
 
     return [...enhancedItems, ...itemsWithoutUrl];

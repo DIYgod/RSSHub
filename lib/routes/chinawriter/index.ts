@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:id{.+}?',
@@ -144,20 +144,20 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
+    const limit = getRouteLimit(ctx, 40);
 
     const rootUrl = 'http://www.chinawriter.com.cn';
-    const currentUrl = `${new URL(id ?? '', rootUrl).href}/`;
+    const currentUrl = `${rootUrl}/${id ?? ''}/`;
 
     const { data: response } = await got(currentUrl);
 
     const $ = load(response);
+    const seenLinks = new Set<string>();
 
     let items = ($('main div.inner').find('a').length === 0 ? $('body') : $('main div.inner'))
         .find('a')
         .toArray()
         .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')!))
-        .slice(0, limit)
         .map((item): DataItem => {
             const $item = $(item);
 
@@ -165,9 +165,23 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
+                link: new URL(link!, rootUrl).href,
             };
-        });
+        })
+        .filter((item) => {
+            // only follow links on the site itself
+            const { protocol, hostname } = new URL(item.link!);
+            return ['http:', 'https:'].includes(protocol) && (hostname === 'chinawriter.com.cn' || hostname.endsWith('.chinawriter.com.cn'));
+        })
+        .filter((item) => {
+            const link = item.link!.replace(/^https?:/, '');
+            if (seenLinks.has(link)) {
+                return false;
+            }
+            seenLinks.add(link);
+            return true;
+        })
+        .slice(0, limit);
 
     items = await Promise.all(
         items.map((item) =>
@@ -200,7 +214,7 @@ async function handler(ctx) {
                             ].filter((c): c is string => Boolean(c))
                         ),
                     ];
-                    item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
+                    item.pubDate = content('div.end_info em').text() ? parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm', 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
                 } catch {
                     //
                 }
@@ -222,6 +236,5 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
-        allowEmpty: true,
     };
 }

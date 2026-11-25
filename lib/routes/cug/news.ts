@@ -1,14 +1,12 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-dayjs.extend(utc);
+import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
+import { fixArticleContent } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/news',
@@ -25,9 +23,9 @@ export const route: Route = {
     url: 'esearch.cug.edu.cn',
 };
 
-async function handler() {
+async function handler(ctx) {
     const host = 'https://esearch.cug.edu.cn';
-    const now = dayjs().utcOffset(8);
+    const now = Temporal.Now.zonedDateTimeISO('+08:00');
 
     const responses = await Promise.all(
         [0, 1].map((day) =>
@@ -49,8 +47,8 @@ async function handler() {
                     fragmentSize: 40,
                     rangeFilter: [
                         {
-                            start: now.subtract(day + 1, 'day').format('YYYY-MM-DD HH:mm:ss'),
-                            end: now.subtract(day, 'day').format('YYYY-MM-DD HH:mm:ss'),
+                            start: formatDate(now.subtract({ days: day + 1 }), 'YYYY-MM-DD HH:mm:ss'),
+                            end: formatDate(now.subtract({ days: day }), 'YYYY-MM-DD HH:mm:ss'),
                             fieldName: 'publishTime',
                         },
                     ],
@@ -64,17 +62,28 @@ async function handler() {
         .map((item) => ({
             title: item.title,
             link: item.url.replace('http:', 'https:'),
-            pubDate: timezone(parseDate(item.publishTime), 8),
+            pubDate: parseDate(item.publishTime, 8),
             author: item.seedInfo?.seedName,
             description: item.html,
         }));
 
+    const articles = ctx.req.query('sorted') === 'false' ? results : [...results].sort((a, b) => (b.pubDate?.epochMilliseconds ?? NaN) - (a.pubDate?.epochMilliseconds ?? NaN));
+    const limit = getRouteLimit(ctx);
     const out = await Promise.all(
-        results.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('.v_news_content').html() ?? item.description;
+        articles.slice(0, limit).map((item) =>
+            cache.tryGet(`cug:news:article:v2:${item.link}`, async () => {
+                try {
+                    const response = await ofetch(item.link);
+                    const $ = load(response);
+                    const hostname = new URL(item.link).hostname;
+                    const contentSelector = hostname === 't.m.youth.cn' ? '#content' : '.v_news_content';
+                    item.description = hostname === 'mp.weixin.qq.com' ? fixArticleContent($('#js_content')) || item.description : ($(contentSelector).html() ?? item.description);
+                } catch (error) {
+                    if (!(error instanceof Error) || !('statusCode' in error) || error.statusCode !== 404) {
+                        throw error;
+                    }
+                    logger.warn(`Failed to fetch ${item.link}: ${error}`);
+                }
                 return item;
             })
         )

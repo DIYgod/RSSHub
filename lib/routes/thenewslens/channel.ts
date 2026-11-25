@@ -6,10 +6,10 @@ export const route: Route = {
     path: '/channel/:id/:sort{.+}?',
     categories: ['new-media'],
     example: '/thenewslens/channel/hk',
-    parameters: { id: '标签 id，可在对应标签页 URL 中找到', sort: '排序方式，同上表，可在对应排序页 URL 中找到' },
+    parameters: { id: '频道 id，可在对应频道页 URL 中找到', sort: '排序方式，同上表，可在对应排序页 URL 中找到' },
     radar: [
         {
-            source: ['thenewslens.com/channel/:id/:sort?', 'thenewslens.com/'],
+            source: ['thenewslens.com/channel/:id/*sort', 'thenewslens.com/channel/:id', 'thenewslens.com/'],
             target: '/channel/:id/:sort?',
         },
     ],

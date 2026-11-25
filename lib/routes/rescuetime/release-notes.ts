@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/release-notes/:os?',
@@ -34,12 +34,13 @@ async function handler(ctx: Context) {
 
             const title = $item.find('h2').text();
             $item.find('h2').remove();
+            const date = title.match(/(\d{4}(?:\/\d{2}){2})/)?.[1];
 
             return {
                 title,
-                link: currentUrl,
+                link: `${currentUrl}#${encodeURIComponent(title)}`,
                 description: $item.html(),
-                pubDate: parseDate(title.match(/(\d{4}(?:\/\d{2}){2})/)![1], 'YYYY/MM/DD'),
+                pubDate: parseDate(`${date} +0000`, 'YYYY/MM/DD ZZ'),
             };
         });
 

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 import utils from './utils';
 
@@ -43,7 +44,7 @@ async function handler(ctx) {
             list.map((item) => ({
                 title: item.title,
                 description: utils.renderUGCDescription(embed, item.pic, item.desc, item.aid, undefined, item.bvid),
-                pubDate: new Date(item.pubdate * 1000).toUTCString(),
+                pubDate: parseDate(item.pubdate * 1000),
                 link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,
             })),

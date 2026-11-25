@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -34,7 +34,7 @@ async function handler(ctx: Context) {
         link: `${host}/search/full?address=/page/review/screenPage&dataType=2&pageSize=10`,
         item: data.resultList.map((item) => ({
             title: item.title,
-            description: `<img src="${item.videoThumbnail}"><br>开庭法院：${item.courtName}<br>案号：${item.caseNo}<br>案由：${item.caseCause}<br>${item.judge}`,
+            description: `<img src="${item.videoThumbnail}"><br>案号：${item.caseNo}<br>${item.judge}`,
             pubDate: parseDate(item.beginTime),
             link: `${host}/live/${item.caseId}`,
             author: item.courtName,

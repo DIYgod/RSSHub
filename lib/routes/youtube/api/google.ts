@@ -1,72 +1,13 @@
-import { auth as googleAuth, youtube as googleYoutube } from '@googleapis/youtube';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration.js';
 
-import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
 import type { Data } from '@/types';
 import cache from '@/utils/cache';
-import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { formatDescription, getChannelWithId, getChannelWithUsername, getPlaylist, getPlaylistItems, getPlaylistWithShortsFilter, getThumbnail, getVideos, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
-
-const { OAuth2 } = googleAuth;
-const workerFetch: typeof fetch = (input, init) => fetch(input, init);
-const transportOptions = isWorker ? { fetchImplementation: workerFetch } : {};
-
-dayjs.extend(duration);
-
-let count = 0;
-const youtube = {};
-if (config.youtube && config.youtube.key) {
-    const keys = config.youtube.key.split(',');
-
-    for (const [index, key] of keys.entries()) {
-        if (!key) {
-            continue;
-        }
-
-        youtube[index] = googleYoutube({
-            version: 'v3',
-            auth: key,
-            ...transportOptions,
-        });
-        count = index + 1;
-    }
-}
-
-let index = -1;
-const exec = async (func) => {
-    let result;
-    for (let i = 0; i < count; i++) {
-        index++;
-        try {
-            // eslint-disable-next-line no-await-in-loop
-            result = await func(youtube[index % count]);
-            break;
-        } catch {
-            // console.error(error);
-        }
-    }
-    return result;
-};
-
-let youtubeOAuth2Client;
-if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && config.youtube.refreshToken) {
-    youtubeOAuth2Client = new OAuth2({
-        clientId: config.youtube.clientId,
-        clientSecret: config.youtube.clientSecret,
-        redirectUri: 'https://developers.google.com/oauthplayground',
-        transporterOptions: transportOptions,
-    });
-    youtubeOAuth2Client.setCredentials({ refresh_token: config.youtube.refreshToken });
-}
-
-export { exec, youtubeOAuth2Client };
 
 export const getDataByUsername = async ({ username, embed, filterShorts, isJsonFeed }: { username: string; embed: boolean; filterShorts: boolean; isJsonFeed: boolean }): Promise<Data> => {
     let userHandleData;
@@ -149,7 +90,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
                         {
                             url: getVideoUrl(videoId),
                             mime_type: 'text/html',
-                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                            duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                         },
                         ...srtAttachments,
                     ],
@@ -194,7 +135,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts, isJso
                         {
                             url: getVideoUrl(videoId),
                             mime_type: 'text/html',
-                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                            duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                         },
                         ...srtAttachments,
                     ],
@@ -233,7 +174,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed, isJsonFeed }: { p
                     {
                         url: getVideoUrl(videoId),
                         mime_type: 'text/html',
-                        duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                        duration_in_seconds: detail?.contentDetails.duration ? Temporal.Duration.from(detail.contentDetails.duration).total('seconds') : undefined,
                     },
                     ...srtAttachments,
                 ],

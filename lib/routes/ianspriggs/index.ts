@@ -4,7 +4,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -30,13 +31,15 @@ export const route: Route = {
 | portraits    | characters |`,
 };
 
+const parseYear = (value: string) => parseDateStrict(`${value}-01-01`, 'YYYY-MM-DD');
+
 async function handler(ctx) {
     const { category = 'portraits' } = ctx.req.param();
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const author = 'Ian Spriggs';
     const rootUrl = 'https://ianspriggs.com';
@@ -52,13 +55,13 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
 
-            const image = $item.find('img').first();
+            const image = $item.find('img');
 
             return {
                 title: $item.find('div.work-info').text(),
                 link: $item.find('a').prop('href'),
                 description: renderDescription({
-                    images: image?.prop('src')
+                    images: image.prop('src')
                         ? [
                               {
                                   src: image.prop('src')!.replace(/_thumbnail\./, '.'),
@@ -68,9 +71,9 @@ async function handler(ctx) {
                         : undefined,
                 }),
                 author,
-                pubDate: parseDate($item.find('div.work-info p').last().text(), 'YYYY'),
-                enclosure_url: image?.prop('src') ?? undefined,
-                enclosure_type: image?.prop('src') ? 'image/jpeg' : undefined,
+                pubDate: parseYear($item.find('div.work-info p').text()),
+                enclosure_url: image.prop('src'),
+                enclosure_type: image.prop('src') ? 'image/jpeg' : undefined,
             };
         });
 
@@ -97,7 +100,7 @@ async function handler(ctx) {
                     images,
                     description: content('div.nectar-fancy-ul').html() ?? undefined,
                 });
-                item.pubDate = parseDate(content('span.subheader').last().text(), 'YYYY');
+                item.pubDate = parseYear(content('span.subheader').text());
 
                 return item;
             })

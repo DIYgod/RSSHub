@@ -32,6 +32,18 @@ if (patchrightCoreFile) {
         console.log('Manually included patchright-core asset:', browsersJson);
     }
 }
+// oxc-parser loads its raw-transfer deserializers with a template-literal require through createRequire(import.meta.url),
+// which @vercel/nft does not expand.
+// https://github.com/oxc-project/oxc/blob/crates_v0.151.0/napi/parser/src-js/raw-transfer/eager.js#L75-L77
+const oxcEagerFile = fileList.find((file) => file.endsWith('/oxc-parser/src-js/raw-transfer/eager.js'));
+if (oxcEagerFile) {
+    const deserializeDir = oxcEagerFile.replace(/raw-transfer\/eager\.js$/, 'generated/deserialize');
+    if (await fs.pathExists(path.join(projectRoot, deserializeDir))) {
+        fileList.push(deserializeDir);
+        console.log('Manually included oxc-parser asset:', deserializeDir);
+    }
+}
+
 console.log('Total files need to be copied (touchable files in node_modules/):', fileList.length);
 console.log('Start copying files, destination:', resultFolder);
 try {

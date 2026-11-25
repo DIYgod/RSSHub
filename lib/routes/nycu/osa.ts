@@ -2,15 +2,17 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
-function ROCDate(dateStr: string | Date): Date {
-    const date = new Date(dateStr);
-    date.setFullYear(date.getFullYear() + 1911);
-
-    return timezone(date, 8);
+function parseRocDate(dateStr: string): Temporal.Instant | undefined {
+    const match = /^(\d{2,4})-(\d{2})-(\d{2})$/.exec(dateStr);
+    if (!match) {
+        return;
+    }
+    return calendarToInstant({ calendar: match[1].length < 4 ? 'roc' : 'gregory', year: match[1], month: match[2], day: match[3] }, 8);
 }
 
 const data = new Map(
@@ -61,7 +63,11 @@ const data = new Map(
 async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id') ?? '2844';
 
-    const { module, name } = data.get(id)!;
+    const category = data.get(id);
+    if (!category) {
+        throw new InvalidParameterError('Unknown Student Affairs category; use an id from the route documentation.');
+    }
+    const { module, name } = category;
 
     const url = `https://osa.nycu.edu.tw/osa/ch/app/data/list?module=${module}&id=${id}`;
 
@@ -73,8 +79,8 @@ async function handler(ctx: Context): Promise<Data> {
         .toArray()
         .map((e) => ({
             title: $('a', e).attr('title') || '',
-            link: $('a', e).attr('href') || '',
-            pubDate: ROCDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
+            link: new URL($('a', e).attr('href') || '', url).href,
+            pubDate: parseRocDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
             category: [$('div p:nth-child(2)', e).text().replace('分類：', '')],
             author: $('div p:nth-child(3)', e).text().replace('發布單位：', ''),
         }));

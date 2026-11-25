@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/it',
@@ -34,22 +34,25 @@ async function handler() {
             return {
                 title: $item.find('.list-item-title').text(),
                 link: new URL($item.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('.m-item-date').text(), 'YYYY年MM月DD日'), 8),
+                pubDate: parseDate($item.find('.m-item-date').text(), 'YYYY年MM月DD日', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sctu-it:article-v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
 
                 const $ = load(detailResponse);
 
                 item.description = $('.article-content').html() ?? undefined;
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

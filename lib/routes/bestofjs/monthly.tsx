@@ -38,7 +38,7 @@ export const route: Route = {
                 return getMonthlyRankings(year, month);
             })
         );
-        const items = allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
+        const items = allNeededMonthlyRankings.map((oneMonthlyRankings, i) => {
             const [year, month] = targetMonths[i].split('-', 2);
             const description = renderToString(
                 <ul>
@@ -112,9 +112,9 @@ export const route: Route = {
 };
 
 const getLastSixMonths = (): string[] => {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1; // 0-based to 1-based
+    const now = Temporal.Now.zonedDateTimeISO('UTC');
+    const currentYear = now.year;
+    const currentMonth = now.month;
     return Array.from({ length: 6 }, (_, i) => {
         let month = currentMonth - (i + 1);
         let year = currentYear;
@@ -153,7 +153,7 @@ const getMonthlyRankings = (year: string, month: string): Promise<RankingItem[]>
                         .attr('src')
                         ?.replace(/.dark./, '.') || '';
                 // Project name and link
-                const projectLink = $tr.find('td:nth-child(2) a[href^="/projects/"]').first();
+                const projectLink = $tr.find('td:nth-child(2) a[href^="/projects/"]');
                 const projectName = projectLink.text().trim();
                 // GitHub and homepage links
                 const githubLink = $tr.find('td:nth-child(2) a[href*="github.com"]').attr('href') || '';
@@ -170,8 +170,8 @@ const getMonthlyRankings = (year: string, month: string): Promise<RankingItem[]>
                 // Additional info (contributors, created date)
                 const additionalInfo = $tr
                     .find('td:nth-child(3) > div')
-                    .toArray()
                     .slice(1)
+                    .toArray()
                     .map((el) => $(el).text().trim())
                     .join('; ');
                 return {

@@ -23,4 +23,3 @@ const noopTracer: Tracer = {
 };
 
 export const tracer = noopTracer;
-export const mainSpan = noopSpan;

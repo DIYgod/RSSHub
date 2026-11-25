@@ -22,7 +22,7 @@ export const route: Route = {
         return {
             ...CommonDataProperties,
             title: `Voronoi Editor's Pick Posts${category ? ` - ${category}` : ''}`,
-            link: 'https://www.voronoiapp.com/editors-pick',
+            link: 'https://www.voronoiapp.com/posts/editors-pick',
             item: items,
         };
     },

@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/latest',
@@ -43,27 +44,7 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
-                const $ = load(response);
-
-                const content = $('.newsentry');
-
-                item.category = content
-                    .find('.newsentry__tags a')
-                    .toArray()
-                    .map((tag) => $(tag).text().trim());
-
-                content.find('.newsentry__date, .newsentry__title, .lazyimage-placeholder, .newsentry__tags, .newsentry__share, .newsentry__comments, .newsentry__write-comment').remove();
-
-                item.description = content.html() ?? '';
-
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list, getArticle, { concurrency: 3, stopOnError: false });
 
     return {
         title: 'News Archive | Vertikal.net',
@@ -71,4 +52,22 @@ async function handler() {
         image: `${baseUrl}/apple-touch-icon-152x152.png`,
         item: items,
     };
+}
+
+async function getArticle(item: DataItem): Promise<DataItem> {
+    const { description, category, pubDate } = await cache.tryGet(`vertikal:detail:v2:${item.link}`, () => fetchArticle(item.link!));
+    return { ...item, description, category, pubDate };
+}
+
+async function fetchArticle(link: string): Promise<Pick<DataItem, 'description' | 'category' | 'pubDate'>> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    const content = $('.newsentry');
+    const category = content
+        .find('.newsentry__tags a')
+        .toArray()
+        .map((tag) => $(tag).text().trim());
+    content.find('.newsentry__date, .newsentry__title, .lazyimage-placeholder, .newsentry__tags, .newsentry__share, .newsentry__comments, .newsentry__write-comment').remove();
+    const publishedTime = JSON.parse($('script[type="application/ld+json"]').text())['@graph'].find((entry) => entry['@type'] === 'Article').datePublished;
+    return { description: content.html(), category, pubDate: parseDate(publishedTime) };
 }

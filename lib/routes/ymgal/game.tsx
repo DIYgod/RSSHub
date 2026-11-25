@@ -3,12 +3,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.ymgal.games';
-
-const date = new Date();
-const year = date.getFullYear();
-const month = date.getMonth() + 1;
 
 export const route: Route = {
     path: '/game/release',
@@ -36,6 +33,10 @@ export const route: Route = {
 };
 
 async function handler() {
+    const date = Temporal.Now.zonedDateTimeISO('UTC');
+    const year = date.year;
+    const month = date.month;
+
     const response = await got({
         method: 'get',
         url: `${host}/release-list/${year}/${month}`,
@@ -48,13 +49,15 @@ async function handler() {
         list &&
         list.map((item) => {
             const $item = $(item);
-            const itemPicUrl = $item.find('.lazy').first().attr('data-original');
+            const itemPicUrl = $item.find('.lazy').attr('data-original');
             const tags = $item.find('.tag-info-list').children();
-            const taginfo = tags.toArray().map((elem) => $(elem).text());
+            const tagInfo = tags.toArray().map((elem) => ({ text: $(elem).text(), date: getReleaseDate($(elem).text()) }));
             return {
                 title: $item.attr('title')!,
                 link: `${host}${$item.attr('href')}`,
-                description: renderDescription(itemPicUrl, taginfo),
+                description: renderDescription(itemPicUrl),
+                category: tagInfo.filter((tag) => !tag.date).map((tag) => tag.text),
+                pubDate: tagInfo.find((tag) => tag.date)?.date,
             };
         });
 
@@ -66,13 +69,19 @@ async function handler() {
     };
 }
 
-const renderDescription = (itemPicUrl: string | undefined, taginfo: string[]): string =>
+const renderDescription = (itemPicUrl: string | undefined): string =>
     renderToString(
         <>
             {itemPicUrl ? <img src={itemPicUrl} /> : null}
             <br />
-            {taginfo.map((tag, index) => (
-                <li key={`${tag}-${index}`}>{tag}</li>
-            ))}
         </>
     );
+
+function getReleaseDate(value: string): Temporal.Instant | undefined {
+    const date = /^(\d{4}-\d{2}-\d{2})发行$/.exec(value)?.[1];
+    if (!date) {
+        return;
+    }
+    // The source provides a calendar day; midnight only serializes that day.
+    return parseDate(`${date}T00:00:00Z`);
+}

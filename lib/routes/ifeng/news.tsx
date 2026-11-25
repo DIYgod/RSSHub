@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:path{.+}?',
@@ -29,10 +30,12 @@ type ContentAttachment = {
     playUrl?: string;
 };
 
+type ListedNews = Omit<DataItem, 'description'> & { link: string; description?: { url: string; height?: number; width?: number } };
+
 const isParagraph = (entry: string | ContentAttachment): entry is string => String(entry) === entry;
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const path = ctx.req.param('path');
     const rootUrl = 'https://news.ifeng.com';
@@ -47,27 +50,24 @@ async function handler(ctx) {
 
     const newsStream = JSON.parse(response.data.match(/"newsstream":(\[.*?\]),"cooperation"/)[1]);
 
-    let items = newsStream.slice(0, limit).map((item) => ({
+    const list: ListedNews[] = newsStream.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: timezone(parseDate(item.newsTime), 8),
+        pubDate: parseDate(item.newsTime, 8),
         description: item.thumbnails.image.pop(),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                item.author = detailResponse.data.match(/"editorName":"(.*?)",/)[1];
-                item.category = detailResponse.data.match(/\},"keywords":"(.*?)",/)[1].split(',');
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`ifeng:news:${item.link}`, async () => {
+                const { data: response } = await got(item.link);
+                const author = response.match(/"editorName":"(.*?)",/)[1];
+                const category = response.match(/\},"keywords":"(.*?)",/)[1].split(',');
                 const image = item.description;
-                const contentList = JSON.parse(detailResponse.data.match(/"contentList":(\[.*?\]),/)[1]) as Array<{ data: string | ContentAttachment }>;
+                const contentList: Array<{ data: string | ContentAttachment }> = JSON.parse(response.match(/"contentList":(\[.*?\]),/)[1]);
                 const description = contentList.map((content) => content.data);
-                item.description = renderToString(
+                const content = renderToString(
                     <>
                         {image ? (
                             <figure>
@@ -87,9 +87,11 @@ async function handler(ctx) {
                             : null}
                     </>
                 );
-                return item;
-            })
-        )
+                return { author, category, description: content };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

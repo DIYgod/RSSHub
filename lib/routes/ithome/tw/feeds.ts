@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tw/feeds/:category',
@@ -38,24 +38,25 @@ async function handler(ctx) {
     const response = await got(currentUrl);
     const $ = load(response.data);
     const name = $('a.active-trail').text();
-    const items = await Promise.all(
-        $('.title a')
-            .toArray()
-            .map((item) => {
-                const link = baseUrl + $(item).attr('href');
-                return cache.tryGet(link, async () => {
-                    const response = await got(link);
-                    const $ = load(response.data);
-                    return {
-                        title: $('.page-header').text(),
-                        author: $('.author a').text(),
-                        description: $('article').eq(0).html(),
-                        pubDate: timezone(parseDate($('.created').text(), 'YYYY-MM-DD'), 8),
-                        category: name,
-                        link,
-                    };
-                });
-            })
+    const items = await pMap(
+        $('.title a').toArray(),
+        async (item) => {
+            const link = baseUrl + $(item).attr('href');
+            const details = await cache.tryGet(`ithome:tw-article:${link}`, async () => {
+                const response = await got(link);
+                const $ = load(response.data);
+                const date = $('.submitted .created').text();
+                return {
+                    title: $('.page-header').text(),
+                    author: $('.author a').text(),
+                    description: $('article').eq(0).html(),
+                    pubDate: parseDate(date, 8),
+                    link,
+                };
+            });
+            return { ...details, category: name };
+        },
+        { concurrency: 3 }
     );
 
     return {

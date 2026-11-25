@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const HOME_PAGE = 'http://www.jlwater.com/';
 
@@ -46,10 +46,9 @@ async function handler() {
             const title = $item.find('a span').text();
             const link = $item.find('a').attr('href');
             const listTime = $item.find('.list-time').text();
-            const pubDate = parseDate(listTime);
+            const pubDate = listTime.trim() ? parseDate(listTime) : undefined;
             return {
-                title: `${title} ${listTime}`,
-                description: '南京市停水通知',
+                title,
                 link: `${HOME_PAGE}${link}`,
                 pubDate,
             };

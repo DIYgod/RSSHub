@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:category?',
@@ -23,8 +23,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.sctu.edu.cn/jwc/wenzhangg/:category.htm'],
-            target: '/jwc/:category',
+            source: ['www.sctu.edu.cn/jwc/wenzhangg/tzgg.htm'],
+            target: '/jwc/tzgg',
+        },
+        {
+            source: ['www.sctu.edu.cn/jwc/wenzhangg/xwdt.htm'],
+            target: '/jwc/xwdt',
         },
     ],
     name: '教务处',
@@ -35,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { category = 'tzgg' } = ctx.req.param();
-    const link = `https://www.sctu.edu.cn/jwc/wenzhangg/${category}.htm`;
+    const link = `http://www.sctu.edu.cn/jwc/wenzhangg/${category}.htm`;
 
     const response = await ofetch(link);
     const $ = load(response);
@@ -48,21 +52,23 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sctu-jwc:article-v2:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 return {
-                    ...item,
                     description: $('.v_news_content').html(),
                 };
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

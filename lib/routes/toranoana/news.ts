@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -48,11 +50,18 @@ export const route: Route = {
 [\`https://news.toranoana.jp/category/media\`](https://news.toranoana.jp/category/media)→\`/toranoana/news/media\`
 :::`,
 };
-
+function getCategories(content: string) {
+    const $ = load(content);
+    return $('h2')
+        .filter((_, heading) => ['この記事のカテゴリー', 'この記事のタグ'].includes($(heading).text()))
+        .next('div')
+        .find('a')
+        .toArray()
+        .map((link) => $(link).text());
+}
 async function handler(ctx): Promise<Data> {
     const { category = '' } = ctx.req.param();
     let apiUrl = 'https://news.toranoana.jp/wp-json/wp/v2/posts';
-
     if (category) {
         const categoryResponse = await ofetch(`https://news.toranoana.jp/wp-json/wp/v2/categories?slug=${category}`);
         if (categoryResponse && categoryResponse.length > 0) {
@@ -62,44 +71,54 @@ async function handler(ctx): Promise<Data> {
         // exclude category-joshi to get result of general
         apiUrl += '?categories_exclude=1598';
     }
-
-    const posts = await ofetch(apiUrl, {
+    const posts = await ofetch<
+        Array<{
+            title: {
+                rendered: string;
+            };
+            content: {
+                rendered: string;
+            };
+            link: string;
+            date_gmt: string;
+            _embedded: {
+                author: Array<{
+                    name: string;
+                }>;
+            };
+        }>
+    >(apiUrl, {
         query: {
             per_page: 20,
-            _embed: 'wp:featuredmedia',
+            _embed: 'author',
         },
     });
-
     if (!posts || !posts.length) {
         throw new Error('No posts found');
     }
-
-    const items = posts.map((post) => {
-        const $ = load(post.content.rendered);
-
-        // remove unnecessary title
-        $('h1').remove();
-        $('h2').first().remove();
-
-        let thumbnail = '';
-        if (post._embedded && post._embedded['wp:featuredmedia'][0].source_url) {
-            thumbnail = post._embedded['wp:featuredmedia'][0].source_url;
-        }
-
-        if (thumbnail) {
-            $('body').prepend(`<img src="${thumbnail}" alt="${post.title.rendered}" />`);
-        }
-
-        return {
+    const items = await pMap(
+        posts,
+        async (post) => ({
             title: post.title.rendered,
             link: post.link,
-            description: $.html(),
-            pubDate: parseDate(post.date_gmt),
+            description: await cache.tryGet(`toranoana:body:${post.link}`, async () => {
+                const response = await ofetch(post.link);
+                const $ = load(response);
+                const content = $('.post-contents');
+                content.prepend($.html($('.post-main-img img')));
+                content.find('img[data-src]').each((_, image) => {
+                    const element = $(image);
+                    element.attr('src', element.attr('data-src'));
+                });
+                return $.html(content);
+            }),
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            category: getCategories(post.content.rendered),
             guid: post.link,
-            author: 'とらのあな',
-        };
-    });
-
+            author: post._embedded.author.map((author) => author.name).join(', '),
+        }),
+        { concurrency: 3 }
+    );
     return {
         title: category ? `とらのあな総合インフォメーション - ${category}` : 'とらのあな総合インフォメーション',
         link: category ? `https://news.toranoana.jp/category/${category}` : 'https://news.toranoana.jp/',

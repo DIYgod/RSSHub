@@ -1,0 +1,70 @@
+import { load } from 'cheerio';
+import { raw } from 'hono/html';
+import { renderToString } from 'hono/jsx/dom/server';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+const lists = {
+    free: ['Free ebooks and deals', '.block-views-blockblock-ebook-feature-homepage-todays-free-ebooks'],
+    editor: ["Editor's choice", '.block-views-blockbooks-block-editor-choice'],
+    trending: ['Trending books', '.block-views-blockbooks-block-trending-books'],
+    classics: ['Popular classics', '.block-views-blockbooks-block-popular-classics'],
+};
+
+export const route: Route = {
+    path: '/books/:list?',
+    categories: ['reading'],
+    example: '/manybooks/books/trending',
+    parameters: {
+        list: {
+            description: 'Homepage book list.',
+            default: 'free',
+            options: Object.entries(lists).map(([value, [label]]) => ({ value, label })),
+        },
+    },
+    name: 'Book lists',
+    maintainers: ['DIYgod'],
+    description: 'For the ManyBooks blog, use the native feed at <https://manybooks.net/rss.xml>.',
+    radar: [{ source: ['manybooks.net'], target: '/books' }],
+    handler,
+};
+
+export async function getBooks(link: string, selector: string) {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return $(selector)
+        .find('article')
+        .toArray()
+        .map((element) => {
+            const book = $(element);
+            const title = book.find('.field--name-field-title a, .block-field-blocknodeebook-featuretitle a').first();
+            const image = book.find('img');
+            const imageUrl = image.attr('src');
+            return {
+                title: title.text(),
+                link: new URL(title.attr('href')!, link).href,
+                author: book.find('.field--name-field-author-er, .field--name-field-af-name').text(),
+                category: book
+                    .find('.field--name-field-eb-genre a')
+                    .toArray()
+                    .map((tag) => $(tag).text()),
+                description: renderToString(
+                    <>
+                        <img src={imageUrl} alt="" />
+                        <div>{raw(book.find('.field--name-body').html() ?? '')}</div>
+                    </>
+                ),
+            };
+        });
+}
+
+async function handler(ctx) {
+    const list = ctx.req.param('list') ?? 'free';
+    if (!Object.hasOwn(lists, list)) {
+        throw new InvalidParameterError(`Unknown book list. Supported: ${Object.keys(lists).join(', ')}.`);
+    }
+    const link = 'https://manybooks.net/';
+    return { title: `ManyBooks - ${lists[list][0]}`, link, item: await getBooks(link, lists[list][1]) };
+}

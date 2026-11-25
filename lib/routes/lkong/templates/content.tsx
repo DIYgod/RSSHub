@@ -10,13 +10,16 @@ type ContentChild = {
 
 type ContentParagraph = {
     type?: string;
+    url?: string;
     children?: ContentChild[];
 };
 
 const LkongContent = ({ content }: { content: ContentParagraph[] }) => (
     <>
         {content?.map((paragraph) =>
-            paragraph.type === 'paragraph' ? (
+            paragraph.type === 'image' ? (
+                <img src={paragraph.url} />
+            ) : paragraph.type === 'paragraph' ? (
                 <p>
                     {paragraph.children?.map((child) => {
                         if (child.text) {

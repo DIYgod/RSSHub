@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const decoder = new TextDecoder('gbk');
 
@@ -37,20 +38,17 @@ async function handler() {
             const link = a.attr('href')?.replace('http://', 'https://') || '';
             const title = a.text();
 
-            const timeSpan = element.find('span');
-            const dateText = timeSpan.text().slice(1, timeSpan.text().length - 1);
-            const pubDate = parseDate(dateText, 'MM/DD HH:mm');
-
             return {
                 title,
                 link,
-                pubDate,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item: (typeof list)[number]) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
@@ -59,11 +57,13 @@ async function handler() {
 
                 const $ = load(decoder.decode(response.data));
 
-                item.description = $('.art_contextBox').html();
-
-                return item;
-            })
-        )
+                return {
+                    description: $('.art_contextBox').html(),
+                    pubDate: parseDate($('meta[property="bytedance:published_time"]').attr('content')!),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

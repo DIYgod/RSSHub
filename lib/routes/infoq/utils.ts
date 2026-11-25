@@ -1,7 +1,9 @@
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { escapeAttribute, escapeText } from 'entities';
 
-const ProcessFeed = async (list, cache) => {
+import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
+
+const processFeed = async (list, cache) => {
     const detailUrl = 'https://www.infoq.cn/public/v1/article/getDetail';
 
     const items = await Promise.all(
@@ -49,7 +51,7 @@ const parseToSimpleTexts = (content) =>
                 parseToSimpleTexts(i.content)
                     .map((v) => `<p>${v}</p>`)
                     .join(''),
-            text: () => i.text,
+            text: () => escapeText(i.text),
             heading: () => {
                 if (i.content) {
                     const level = i.attrs.level;
@@ -66,21 +68,21 @@ const parseToSimpleTexts = (content) =>
                 return '';
             },
             image: () => {
-                const img = i.attrs.src;
+                const img = escapeAttribute(i.attrs.src);
                 return `<img src="${img}"></img>`;
             },
             codeblock: () => {
                 if (i.content) {
-                    const lang = i.attrs.lang;
+                    const lang = escapeAttribute(i.attrs.lang ?? '');
                     const code = parseToSimpleText(i.content);
                     return `<code lang="${lang}">${code}</code>`;
                 }
                 return '';
             },
             link: () => {
-                const href = i.attrs.href;
+                const href = escapeAttribute(i.attrs.href);
                 const text = i.content ? parseToSimpleText(i.content) : '';
-                return `<a href="${href}">${text}</a>"`;
+                return `<a href="${href}">${text}</a>`;
             },
         };
 
@@ -96,7 +98,7 @@ const parseToSimpleTexts = (content) =>
     });
 
 function addCoverToDescription(content, cover) {
-    return `<p><img src="${cover}"></p>${content}`;
+    return cover ? `<p><img src="${escapeAttribute(cover)}"></p>${content}` : content;
 }
 
 function parseContent(content) {
@@ -108,4 +110,4 @@ function parseContent(content) {
     return parseToSimpleText([JSON.parse(content)]);
 }
 
-export default { ProcessFeed };
+export default { processFeed };

@@ -2,15 +2,14 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 30;
 
 /** `pa` codes of the site; East Japan is served by tenant-shop.com, 愛知 and westward by tenant-shop.jp (data is not mirrored). */
@@ -76,14 +75,14 @@ const parseList = (html: string, host: string): ListCard[] => {
         .toArray()
         .map((el): ListCard | null => {
             const $el = $(el);
-            const a = $el.find('div.estatename a').first();
+            const a = $el.find('div.estatename a');
             const href = a.attr('href');
-            const title = clean(a.text());
+            const title = a.text();
             const id = href?.match(/\/detail\/e-(\d+)/)?.[1];
             if (!href || !title || !id) {
                 return null;
             }
-            const iconRow = (icon: string): string | null => clean($el.find(`div.add img[src$="/${icon}.png"]`).first().parent().text());
+            const iconRow = (icon: string): string | null => clean($el.find(`div.add img[src$="/${icon}.png"]`).parent().text());
             const raw: ListingExtra['raw'] = {
                 type: clean($el.find('div.esttype').text()),
                 rent: clean($el.find('div.price').text()),
@@ -110,7 +109,7 @@ const parseList = (html: string, host: string): ListCard[] => {
             const deposits = [raw.guarantee, raw.security];
             const depositMonths = deposits.every((d) => d === null) ? null : sumKnown(parseMonths(raw.guarantee), parseMonths(raw.security));
             const depositYen = deposits.filter((d): d is string => d !== null && /[万円]/.test(d));
-            const image = $el.find('div.photo img').first().attr('src');
+            const image = $el.find('div.photo img').attr('src');
 
             return {
                 title,
@@ -169,7 +168,9 @@ const parseDetail = (html: string): DetailFields => {
 
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     ...base,
-    condition: d.facilities.includes('居抜き') ? 'inuki' : base.condition,
+    // The 居抜き facility tag is set on only some listings; for the rest the PR blurb and 備考 are
+    // where the site says 居抜き or スケルトン.
+    condition: d.facilities.includes('居抜き') ? 'inuki' : parseCondition(base.raw.comment, d.remarks),
     listed_at: parseYmd(d.registered_at),
     tags: [...base.tags, ...d.facilities],
     raw: { ...base.raw, status: d.status, registered_at: d.registered_at, updated_at: d.updated_at, remarks: d.remarks },
@@ -178,14 +179,15 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
 /** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
+        const detail = await cache.tryGet(`tenant-shop:detail-fields:v1:${card.link}`, async () => parseDetail(await ofetch(card.link)));
+        return mergeDetail(card.extra, detail);
     } catch (error) {
         logger.warn(`tenant-shop: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
     }
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref') ?? 'tokyo';
     const prefecture = PREFECTURES.find((p) => p.slug === pref || p.code === pref);
     if (!prefecture) {
@@ -196,27 +198,26 @@ export const handler = async (ctx): Promise<Data> => {
     if (typeSlug !== undefined && !type) {
         throw new Error(`Unknown type "${typeSlug}", expected one of ${TYPES.map((t) => t.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // shin-1 selects 新着物件; the page is ordered by 登録日 desc.
     const listUrl = `${prefecture.host}/chintai_biz/pa-${prefecture.code}/${type ? `${type.code}-1/` : ''}shin-1/`;
 
     const cards = parseList(await ofetch(listUrl), prefecture.host).slice(0, limit);
     const items = await pMap(
         cards,
-        (card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
-                    description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                pubDate: extra.listed_at === null ? undefined : parseDate(extra.listed_at, 'YYYY-MM-DD', 9),
+                description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                _extra: extra,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -257,14 +258,18 @@ export const route: Route = {
         antiCrawler: false,
         supportRadar: true,
     },
-    radar: [
-        {
-            source: ['www.tenant-shop.com/chintai_biz/pa-:pa/shin-1', 'www.tenant-shop.com/chintai_biz/pa-:pa'],
-            target: '/chintai/:pa',
-        },
-        {
-            source: ['www.tenant-shop.jp/chintai_biz/pa-:pa/shin-1', 'www.tenant-shop.jp/chintai_biz/pa-:pa'],
-            target: '/chintai/:pa',
-        },
-    ],
+    radar: PREFECTURES.flatMap((prefecture) => {
+        const source = `${new URL(prefecture.host).hostname}/chintai_biz/pa-${prefecture.code}`;
+        const target = `/chintai/${prefecture.slug}`;
+        return [
+            {
+                source: [source, `${source}/shin-1`],
+                target,
+            },
+            ...TYPES.map((type) => ({
+                source: [`${source}/${type.code}-1`, `${source}/${type.code}-1/shin-1`],
+                target: `${target}/${type.slug}`,
+            })),
+        ];
+    }),
 };

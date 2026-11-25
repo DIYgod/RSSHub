@@ -39,6 +39,70 @@ describe('serialized script data', () => {
         await expect(evaluateScriptData(source, '__DATA__')).resolves.toEqual({ value: 2 });
     });
 
+    it('reads bounded Nuxt sparse-array arguments without calling the host Array constructor', async () => {
+        const source = 'window.__NUXT__=(function(a){a[1]={title:"News"};return {data:a}})(Array(3));';
+        const value = await evaluateScriptData<{ data: unknown[] }>(source, '__NUXT__');
+        expect(value.data).toHaveLength(3);
+        expect(0 in value.data).toBe(false);
+        expect(value.data[1]).toEqual({ title: 'News' });
+        expect(2 in value.data).toBe(false);
+    });
+
+    it.each([
+        'window.__DATA__=Array(-1);',
+        'window.__DATA__=Array(1.5);',
+        'window.__DATA__=Array(10000);',
+        'window.__DATA__=Array("3");',
+        'window.__DATA__=Array(1,2);',
+        'var Array=undefined;window.__DATA__=Array(3);',
+        'window.__DATA__=(function(Array){return Array(3)})(undefined);',
+        'window.__DATA__=(function(){var a=Array(3);var Array;return a})();',
+        'window.__DATA__=Array(3);function Array(){return ["shadowed"]}',
+        'window.__DATA__=(function Array(){return Array(3)})();',
+        'window.__DATA__=(function(){return Array(3);function Array(){return ["shadowed"]}})();',
+        'window.__DATA__=Array(3);if(false){var Array;}',
+        'window.__DATA__=Array(3);class Array {}',
+        'window.__DATA__=Array(3);var {constructorAlias:Array}={};',
+        'window.__DATA__=Array(3);var [Array]=[];',
+        'window.__DATA__=Array(3);var {nested:{Array=undefined}}={};',
+        'window.__DATA__=Array(3);var {...Array}={};',
+        'window.__DATA__=Array(3);if(false){var [Array]=[];}',
+        'window.__DATA__=(function(){return Array(3);try{}catch(error){var Array}})();',
+    ])('rejects invalid or shadowed array constructors: %s', async (source) => {
+        await expect(evaluateScriptData(source, '__DATA__')).rejects.toThrow(/bounded|Shadowed|Unsupported|simple variable names/);
+    });
+
+    it('does not hoist bindings from nested functions or unrelated lexical blocks', async () => {
+        const source = 'window.__DATA__=Array(3);function unrelated(){var Array;}if(false){let Array;class Other{}}';
+        const value = await evaluateScriptData<unknown[]>(source, '__DATA__');
+        expect(value).toHaveLength(3);
+        expect(0 in value).toBe(false);
+    });
+
+    it('enforces a total complexity budget across multiple sparse arrays', async () => {
+        await expect(evaluateScriptData('window.__DATA__=[Array(6000),Array(6000)];', '__DATA__')).rejects.toThrow('complexity limit');
+    });
+
+    it('accepts a larger complexity budget from the caller', async () => {
+        const source = `window.__DATA__=[${'0,'.repeat(6000)}];`;
+        await expect(evaluateScriptData(source, '__DATA__')).rejects.toThrow('complexity limit');
+        await expect(evaluateScriptData<number[]>(source, '__DATA__', 20000)).resolves.toHaveLength(6000);
+        await expect(evaluateScriptData(source, '__DATA__', 12000)).rejects.toThrow('complexity limit');
+    });
+
+    it('reads seroval cross-referenced output and rejects code in its place', async () => {
+        const source =
+            ';0x000000c4;((self.$R=self.$R||{})["server-fn:0"]=[],($R=>$R[0]={code:"OK",data:$R[1]=[$R[2]={title:"Post",pinned:!0,author:$R[3]={name:"A"}},$R[4]={title:"Next",pinned:!1,author:$R[3]}]})($R["server-fn:0"]))';
+        await expect(evaluateScriptData(source, '$R["server-fn:0"][0]')).resolves.toEqual({
+            code: 'OK',
+            data: [
+                { title: 'Post', pinned: true, author: { name: 'A' } },
+                { title: 'Next', pinned: false, author: { name: 'A' } },
+            ],
+        });
+        await expect(evaluateScriptData(source.replace('"Next"', 'Buffer.call.call(Buffer)'), '$R["server-fn:0"][0]')).rejects.toThrow('Unsupported script data expression');
+    });
+
     it('does not call unrelated application code or access the host global object', async () => {
         const fetchSpy = vi.fn();
         vi.stubGlobal('fetch', fetchSpy);
@@ -126,7 +190,6 @@ describe('serialized callback data', () => {
         vi.stubGlobal('fetch', fetchSpy);
         await expect(evaluateScriptCallback('unrelated();', 'dwr.engine._remoteHandleCallback')).rejects.toThrow('callback was not found');
         await expect(evaluateScriptCallback('dwr.engine._remoteHandleCallback("0","0",fetch("https://example.invalid/"));', 'dwr.engine._remoteHandleCallback')).rejects.toThrow();
-        await expect(evaluateScriptCallback('', 'callback', -1)).rejects.toThrow('non-negative integer');
         await expect(evaluateScriptCallback('dwr["engine._remoteHandleCallback"]("0","0",[]);', 'dwr.engine._remoteHandleCallback')).rejects.toThrow('callback was not found');
         expect(fetchSpy).not.toHaveBeenCalled();
     });

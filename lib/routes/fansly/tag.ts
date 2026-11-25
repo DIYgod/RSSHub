@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, findAccountById, getTagId, getTagSuggestion, icon, parseDescription } from './utils';
 
@@ -38,7 +38,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = suggestion.aggregationData?.posts.map((post) => {
         const account = findAccountById(post.accountId, suggestion.aggregationData.accounts);
         return {
-            title: post.content.split('\n', 1)[0],
+            title: post.content,
             description: parseDescription(post, suggestion.aggregationData),
             pubDate: parseDate(post.createdAt, 'X'),
             link: `${baseUrl}/post/${post.id}`,

@@ -2,7 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import cache from './cache';
 
@@ -91,12 +91,13 @@ interface LikeResponse {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await ofetch<LikeResponse>('https://api.bilibili.com/x/msgfeed/like', {
         query: {

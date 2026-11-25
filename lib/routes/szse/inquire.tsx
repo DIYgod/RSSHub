@@ -1,9 +1,10 @@
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/inquire/:category?/:select?/:keyword?',
@@ -55,17 +56,28 @@ async function handler(ctx) {
 
     const data = response.data[category];
 
-    const items = data.data.map((item) => {
-        item.ck = item.ck.match(/encode-open='\/(.*)'>详细内容/)[1];
-        item.hfck = item.hfck.replace(/encode-open='\//, "encode-open='http://reportdocs.static.szse.cn/");
+    const inquiries = Map.groupBy(data.data, (item: any) => item.ck.match(/encode-open='\/(.*)'>详细内容/)[1]);
 
-        return {
-            title: `[${item.gsdm}] ${item.gsjc} (${item.hjlb})`,
-            link: `http://reportdocs.static.szse.cn/${item.ck}`,
-            pubDate: parseDate(item.fhrq),
-            description: renderInquireDescription(item),
-        };
-    });
+    const items = inquiries
+        .entries()
+        .toArray()
+        .map(([documentPath, rows]) => {
+            const item = { ...rows[0], ck: documentPath };
+            const reply = load(rows.map((row) => row.hfck).join(''), null, false);
+            reply('a[encode-open]').each((_, element) => {
+                const anchor = reply(element);
+                anchor.attr('href', new URL(anchor.attr('encode-open')!, 'http://reportdocs.static.szse.cn').href);
+                anchor.removeAttr('encode-open');
+            });
+            item.hfck = reply.html();
+
+            return {
+                title: `[${item.gsdm}] ${item.gsjc} (${item.hjlb})`,
+                link: `http://reportdocs.static.szse.cn/${item.ck}`,
+                pubDate: parseDate(item.fhrq, 'YYYY-MM-DD', 8),
+                description: renderInquireDescription(item),
+            };
+        });
 
     return {
         title: `深圳证券交易所 - 问询函件 - ${data.metadata.name}`,

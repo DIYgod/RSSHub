@@ -1,7 +1,8 @@
 interface KemonoPost {
     id: string;
     title: string;
-    content: string;
+    content?: string;
+    substring?: string;
     published: string;
     service: string;
     user: string;

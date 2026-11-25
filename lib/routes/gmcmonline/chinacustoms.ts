@@ -3,10 +3,11 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+const handler = async (ctx) => {
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://chinacustoms.gmcmonline.com';
     const magRootUrl = 'http://manager.gmcmonline.com';
@@ -30,7 +31,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: parseDate(title, 'YYYY年MM期'),
+                pubDate: parseDate(title, 'YYYY年MM期', 8),
                 author,
                 image,
                 banner: image,
@@ -48,7 +49,7 @@ export const handler = async (ctx) => {
                 $$('ol.breadcrumb li a').first().remove();
 
                 const current = $$('ol.breadcrumb li a').first().text();
-                const pubDate = parseDate($$('div.title').text(), 'YYYY年MM月DD日');
+                const pubDate = parseDate($$('div.title').text(), 'YYYY年MM月DD日', 8);
                 const image = new URL($$('div.coverline img').prop('src')!, rootUrl).href;
 
                 return $$('a.txt')
@@ -56,7 +57,7 @@ export const handler = async (ctx) => {
                     .map((i) => {
                         const $i = $(i);
 
-                        const id = $i.prop('href')!.match(/c\/(\d+)\.shtml/)?.[1] ?? undefined;
+                        const id = $i.prop('href')!.match(/c\/(\d+)\.shtml/)?.[1];
 
                         if (!id) {
                             return;
@@ -69,14 +70,7 @@ export const handler = async (ctx) => {
                             title,
                             pubDate,
                             link: new URL($i.prop('href')!, item.link).href,
-                            category: [
-                                current,
-                                $i
-                                    .closest('div.class-box')
-                                    .find('div.title-box span')
-                                    .text()
-                                    .replaceAll(/【|】/g, '') || undefined,
-                            ].filter((c): c is string => Boolean(c)),
+                            category: [current, $i.closest('div.class-box').find('div.title-box span').text().replaceAll(/【|】/g, '')].filter((c): c is string => Boolean(c)),
                             author,
                             guid,
                             id: guid,
@@ -101,7 +95,6 @@ export const handler = async (ctx) => {
         description: title,
         link: rootUrl,
         item: items.flat(),
-        allowEmpty: true,
         image,
         author: title,
         language,

@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 import { baseUrl, parseContent } from './utils';
 
@@ -20,14 +19,9 @@ function parseItems(tid: string, $: CheerioAPI) {
             const pid = footer.find('.tipad a[title]').attr('id')?.slice(2);
 
             return {
-                title: content!.split('<br>', 1)[0],
+                title: $('head title').text(),
                 description: content,
-                author: $item
-                    .find('b')
-                    .contents()
-                    .filter((_, ele) => ele.type === 'text')
-                    .text()
-                    .trim(),
+                author: $item.find('b .s3').text() || $item.find('b').first().text(),
                 pubDate: parseDate(String(footer.find('span[data-timestamp]').data('timestamp')), 'X'),
                 link: `${baseUrl}/read.php?tid=${tid}${pid ? `&pid=${pid}` : ''}`,
             };
@@ -60,41 +54,11 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { tid } = ctx.req.param();
-    const { data: response } = await got(`${baseUrl}/read.php?tid=${tid}`);
-    // 跟踪重定向
-    let $ = load(response);
-    const redirect = $('a:last-child').attr('href');
-    if (!redirect) {
-        throw new Error('Cannot get the redirect link');
-    }
+    const response = await ofetch.raw(`${baseUrl}/read.php?tid=${tid}`);
+    const link = response.url;
+    const $ = load(response._data);
 
-    const { data: redirectedResponse, url: link } = await got(new URL(redirect, baseUrl).href);
-    $ = load(redirectedResponse);
-
-    const firstPage = parseItems(tid, $);
-
-    const pageSize = $('.w70 input').eq(0).attr('value')?.split('/', 2)[1];
-    let pageUrls: string[] = [];
-    if (pageSize) {
-        const length = Number.parseInt(pageSize);
-        pageUrls = Array.from({ length }, (_, i) => `${baseUrl}/read.php?tid=${tid}&page=${i + 1}`).slice(1);
-    }
-
-    // 请求帖子
-    const nextPages = pageSize
-        ? await Promise.all(
-              pageUrls.map((url) =>
-                  cache.tryGet(url, async () => {
-                      const { data: res } = await got(url);
-                      const $ = load(res);
-
-                      return parseItems(tid, $);
-                  })
-              )
-          )
-        : [];
-
-    const items = [...firstPage, ...nextPages.flat()];
+    const items = parseItems(tid, $);
 
     return {
         title: $('head title').text(),

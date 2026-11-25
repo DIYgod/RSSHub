@@ -14,7 +14,7 @@ export const REQUIRE_CONFIG: NonNullable<Route['features']>['requireConfig'] = [
 
 export const API_URL = 'https://apiff14risingstones.web.sdo.com/api';
 
-export const ORIGIN = 'https://ff14risingstones.web.sdo.com';
+const ORIGIN = 'https://ff14risingstones.web.sdo.com';
 export const INDEX_URL = `${ORIGIN}/pc/index.html`;
 
 export const LOGO_URL = `${ORIGIN}/pc/favicon.ico`;

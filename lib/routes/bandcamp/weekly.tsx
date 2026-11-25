@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/weekly',
@@ -34,6 +34,7 @@ async function handler() {
     const response = await got({
         method: 'get',
         url: apiUrl,
+        minVersion: 'TLSv1.3',
     });
 
     const items = response.data.results.slice(0, 50).map((item) => ({

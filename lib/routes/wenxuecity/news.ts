@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -14,16 +14,14 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
-
 async function handler() {
     const rootUrl = 'https://www.wenxuecity.com';
     const currentUrl = `${rootUrl}/news/`;
     const response = await ofetch(currentUrl);
     const $ = load(response);
-
     const list = $('div.mainwrap div.block div.wrapper ul li a')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {
@@ -31,25 +29,26 @@ async function handler() {
                 link: `${rootUrl}${$item.attr('href')}`,
             };
         });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wenxuecity:news:article:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!, {
                     headers: {
                         Referer: currentUrl,
                     },
                 });
                 const content = load(detailResponse);
-
-                item.description = content('#articleContent').html() ?? undefined;
-                item.pubDate = timezone(parseDate(content('time[itemprop="datePublished"]').text()), 8);
-
-                return item;
-            })
-        )
+                return {
+                    description: content('#articleContent').html(),
+                    author: content('[itemprop=author]').text(),
+                    pubDate: parseDate(content('time[itemprop="datePublished"]').text(), 8),
+                };
+            });
+            return { ...item, description: detail.description, author: detail.author, pubDate: detail.pubDate };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: '焦点新闻 - 文学城',
         link: currentUrl,

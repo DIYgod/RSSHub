@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwnews',
@@ -18,12 +20,12 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const items = $('.list3 li')
-        .toArray()
-        .map((item) => {
+    const items = await pMap(
+        $('.list3 li').toArray(),
+        async (item) => {
             const itemLink = new URL($('a', item).attr('href')!, link).href;
 
-            return cache.tryGet(itemLink, async () => {
+            const article = await cache.tryGet(itemLink, async () => {
                 const result = await ofetch(itemLink);
                 const $article = load(result);
 
@@ -31,7 +33,7 @@ async function handler() {
                 $article('style').remove();
 
                 return {
-                    title: $article('title').text().split('-', 1)[0],
+                    title: $article('meta[name="pageTitle"]').attr('content') || $('a', item).attr('title') || $article('title').text(),
                     description: $article('.v_news_content')
                         .html()!
                         .replaceAll(/(<span[^>]*>|<\/span>)/g, ''),
@@ -39,11 +41,17 @@ async function handler() {
                     author: '辽宁工程技术大学教务处',
                 };
             });
-        });
+            return {
+                ...article,
+                pubDate: parseDate($(item).find('p.date').text(), 8),
+            };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: '辽宁工程技术大学教务公告',
         link,
-        item: await Promise.all(items),
+        item: items,
     };
 }

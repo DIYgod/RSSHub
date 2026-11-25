@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/platform-tools-releases',
@@ -51,6 +51,7 @@ async function handler() {
             const $item = $(item);
 
             const title = $item.attr('data-text');
+            const date = title?.match(/\((.*)\)/)?.[1];
 
             let description = '';
             $item.nextUntil('h4').each((_, el) => {
@@ -61,7 +62,7 @@ async function handler() {
                 title: title!,
                 description,
                 link: `${currentUrl}#${$item.attr('id')}`,
-                pubDate: parseDate(title!.match(/\((.*)\)/)![1], 'MMMM YYYY'),
+                pubDate: date ? parseDate(date, ['MMMM D, YYYY', 'MMM D, YYYY', 'MMMM YYYY', 'MMM YYYY']) : undefined,
             };
         });
 

@@ -1,18 +1,19 @@
 import type { Context } from 'hono';
-import MarkdownIt from 'markdown-it';
 
 import type { DataItem, Language, Route } from '@/types';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:language?',
     categories: ['picture'],
     example: '/getdailyart/en',
     parameters: {
-        language: 'Support en, es, fr, de, it, zh, jp, etc. English by default.',
+        language: 'Support en, es, fr, de, it, zh, ja, etc. `jp` is accepted as an alias for Japanese. English by default.',
     },
-    name: 'DailyArt',
+    name: 'Artwork of the day',
     maintainers: ['zphw'],
     handler,
 };
@@ -37,16 +38,16 @@ interface Artwork {
 
 async function handler(ctx: Context) {
     const { language = 'en' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
     const apiUrl = 'https://api.getdailyart.com/api';
 
-    const headers = { lang: language, timezone: 'UTC' };
+    const headers = { lang: language === 'jp' ? 'ja' : language, timezone: 'UTC' };
     const [daily, archival] = await Promise.all([ofetch(`${apiUrl}/artworks/daily`, { query: { inches: 0 }, headers }), ofetch(`${apiUrl}/artworks/archival`, { query: { inches: 0, limit: limit - 1, page: 1 }, headers })]);
 
     return {
         title: 'DailyArt',
         link: 'https://www.getdailyart.com/',
-        language: language as Language,
+        language: (language === 'jp' ? 'ja' : language) as Language,
         item: [daily, ...archival.data].slice(0, limit).map((artwork: Artwork): DataItem => ({
             title: artwork.name,
             description: `<img src="${artwork.image}"><p>${[artwork.date, artwork.size, artwork.technique, artwork.museum?.name, artwork.copyrights].filter(Boolean).join(' · ')}</p>${md.render(artwork.description)}`,

@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/trophy/:id',
@@ -16,7 +17,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'PlayStation Network user trophy',
+    name: 'Network user trophy',
     maintainers: ['DIYgod'],
     handler,
 };
@@ -56,9 +57,10 @@ async function handler(ctx) {
                     Silver: '银',
                     Bronze: '铜',
                 };
+                const image = $item.find('.trophy source').attr('srcset')?.split(',', 1)[0].trim().split(/\s+/, 1)[0] ?? $item.find('.trophy img').attr('src');
                 return {
                     title: $item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
-                    description: `<img src="${$item.find('.trophy source').attr('srcset')!.split(' ', 2)[1]}"><br>${$item
+                    description: `${image ? `<img src="${image}">` : ''}<br>${$item
                         .find('.title')
                         .parent()
                         .contents()
@@ -66,29 +68,24 @@ async function handler(ctx) {
                         .text()
                         .trim()}<br>等级：${classMap[$item.find('td').eq(5).find('img').attr('title')!]}<br>珍贵度：${$item.find('.hover-show .typo-top').text()}`,
                     link: 'https://psnprofiles.com' + $item.find('.title').attr('href'),
-                    pubDate: new Date(
-                        +new Date(
-                            $item
-                                .find('.typo-top-date nobr')
-                                .contents()
-                                .filter((_, element) => element.nodeType === 3)
-                                .text() +
-                                ' ' +
-                                $item.find('.typo-bottom-date').text()
-                        ) +
-                            8 * 60 * 60 * 1000
-                    ).toUTCString(),
+                    pubDate: parseDate(
+                        $item
+                            .find('.typo-top-date nobr')
+                            .contents()
+                            .filter((_, element) => element.nodeType === 3)
+                            .text() +
+                            ' ' +
+                            $item.find('.typo-bottom-date').text(),
+                        -8
+                    ),
                 };
             });
 
             return items;
         })
     );
-    let result: any[] = [];
-    for (const item of items) {
-        result = [...result, ...item];
-    }
-    result = result.toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+    let result: any[] = items.flat();
+    result = result.toSorted((a, b) => compareDates(b.pubDate, a.pubDate));
 
     return {
         title: `${id} 的 PSN 奖杯`,

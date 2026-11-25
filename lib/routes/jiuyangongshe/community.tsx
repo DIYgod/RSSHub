@@ -3,10 +3,10 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 interface User {
     follow_type: number;
@@ -121,7 +121,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const link = 'https://www.jiuyangongshe.com';
 
-    const time = String(Date.now());
+    const time = String(Temporal.Now.instant().epochMilliseconds);
     const response = await ofetch<Community>('https://app.jiuyangongshe.com/jystock-app/api/v2/article/community', {
         method: 'POST',
         headers: {
@@ -131,7 +131,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         body: {
             category_id: '',
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            limit: getRouteLimit(ctx, 30),
             order: 0,
             start: 1,
             type: 0,
@@ -143,7 +143,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: item.title,
         description: render({ cover: item.cover, content: item.content }),
         link: `${link}/a/${item.article_id}`,
-        pubDate: timezone(parseDate(item.create_time, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseDate(item.create_time, 'YYYY-MM-DD HH:mm:ss', 8),
         author: item.user.nickname,
         category: item.stock_list.map((stock) => stock.name),
     }));

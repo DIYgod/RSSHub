@@ -8,11 +8,12 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newly' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.199it.com';
     const targetUrl = `${baseUrl}/${category}`;
@@ -112,7 +113,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     $$('ul.related_post').parent().remove();
 
-                    const description: string | undefined = $$('div.entry-content').html() ?? undefined;
+                    const description = $$('div.entry-content').html();
 
                     processedItem = {
                         ...processedItem,

@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.alicesoft.com';
 
@@ -26,7 +28,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.alicesoft.com/information', 'www.alicesoft.com/information/:category', 'www.alicesoft.com/information/:category/:game'],
-            target: '/information/:category/:game',
+            target: '/information/:category?/:game?',
         },
     ],
     name: 'ニュース',
@@ -36,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category, game } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     let url = `${baseUrl}/information`;
     if (category) {
@@ -57,9 +59,10 @@ async function handler(ctx) {
             return {
                 title: $item.find('p.txt').text(),
                 link: $item.find('a').attr('href'),
-                pubDate: new Date($item.find('time').attr('datetime')!),
+                pubDate: parseDate($item.find('time').attr('datetime') ?? ''),
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     items = await Promise.all(
         items.map((item) => {

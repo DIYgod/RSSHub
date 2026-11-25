@@ -1,17 +1,18 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { calendarToInstant } from '@/utils/time';
 
 import { namespace } from './namespace';
 
 const baseUrl = `https://${namespace.url}`;
 
-function parseRocDate(rocDate: string | undefined): Date | undefined {
+function parseRocDate(rocDate: string | undefined): Temporal.Instant | undefined {
     if (!rocDate) {
         return undefined;
     }
@@ -20,11 +21,8 @@ function parseRocDate(rocDate: string | undefined): Date | undefined {
     if (parts.length !== 3) {
         return undefined;
     }
-    const [rocYearStr, monthStr, dayStr] = parts;
-    const rocYear = Number(rocYearStr);
-
-    const year = rocYear + 1911;
-    return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD');
+    const [year, month, day] = parts;
+    return calendarToInstant({ calendar: 'roc', year, month, day }, 8);
 }
 
 export const route: Route = {
@@ -55,7 +53,7 @@ async function handler(): Promise<Data> {
     const html = await ofetch(currentUrl);
     const $ = load(html);
 
-    const language = ($('html').attr('lang') || 'zh-TW') as Language;
+    const language = ($('html').attr('lang') ?? 'zh-TW') as Language;
     const articleNodes = $('div.kf-diagramtext-list > div.kf-diagramtext-col').toArray();
 
     const items: DataItem[] = articleNodes
@@ -66,11 +64,10 @@ async function handler(): Promise<Data> {
             const linkPath = anchor.attr('href');
             const link = linkPath ? new URL(linkPath, baseUrl).href : undefined;
 
-            const title = node.find('div.kf-title').text().trim();
+            const title = node.find('div.kf-title').text();
 
             const dateText = node.find('div.kf-date > span').text().trim();
-            const parsedDate = parseRocDate(dateText);
-            const pubDate = parsedDate ? timezone(parsedDate, 8) : undefined;
+            const pubDate = parseRocDate(dateText);
 
             const imagePath = node.find('img').attr('src');
             const image = imagePath ? new URL(imagePath, baseUrl).href : undefined;
@@ -98,10 +95,44 @@ async function handler(): Promise<Data> {
         })
         .filter(Boolean);
 
+    const detailedItems = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'category'>>(`scitechvista:article:v3:${item.link}`, async () => {
+                const pageSource1 = await ofetch(item.link!);
+                const article = load(pageSource1);
+                const category = article('.DetailContent a.badge-LightGray')
+                    .toArray()
+                    .map((element) =>
+                        article(element)
+                            .text()
+                            .replace(/\(\d+\)$/, '')
+                    )
+                    .filter(Boolean);
+                article('.DetailContent .Stv-Sticker').remove();
+                const description = article('.DetailContent')
+                    .toArray()
+                    .filter((element) => !article(element).find('h2.kf-det-title').length)
+                    .map((element) => article(element).html())
+                    .join('');
+                const author = article('.Article-AuthorRow')
+                    .first()
+                    .find('.Author')
+                    .toArray()
+                    .map((element) => article(element).text())
+                    .filter(Boolean)
+                    .join(', ');
+                return { description, author, category };
+            })),
+        }),
+        { concurrency: 3 }
+    );
+
     return {
         title: `${namespace.name} - 最新文章`,
         link: currentUrl,
         language,
-        item: items,
+        item: detailedItems,
     };
 }

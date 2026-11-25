@@ -24,7 +24,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '豆瓣招聘',
+    name: '招聘',
     maintainers: ['Fatpandac'],
     handler,
     description: `| 社会招聘 | 校园招聘 | 实习生招聘 |

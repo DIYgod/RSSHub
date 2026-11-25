@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import getIllustFollows from './api/get-illust-follows';
 import { getToken } from './token';

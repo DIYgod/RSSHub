@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://comicat.org';
 
@@ -41,7 +41,7 @@ async function handler(ctx) {
             title: $(item).find('td:nth-child(3)').text().trim(),
             link: `${baseUrl}/${$(item).find('td:nth-child(3) a').attr('href')}`,
             category: $(item).find('td:nth-child(2)').text(),
-            author: $(item).find('td:nth-child(8)').text().trim(),
+            author: $(item).find('td:last-child').text(),
         }));
 
     const items = await Promise.all(
@@ -50,7 +50,7 @@ async function handler(ctx) {
                 const { data: response } = await got(item.link, { headers });
                 const $ = load(response);
 
-                item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ', 2)[1]);
+                item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ', 2)[1], 8);
                 const marginLink = `magnet:?xt=urn:btih:${$('#text_hash_id').text().split('，特征码：', 2)[1]}`;
                 item.enclosure_url = marginLink;
                 item.enclosure_type = 'application/x-bittorrent';

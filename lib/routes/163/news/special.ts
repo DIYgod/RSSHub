@@ -4,7 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     1: '轻松一刻',
@@ -46,9 +46,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!ctx.req.param('type')) {
-        throw new InvalidParameterError('Bad parameter. See <a href="https://docs.rsshub.app/routes/game#wang-yi-da-shen">https://docs.rsshub.app/routes/game#wang-yi-da-shen</a>');
+        throw new InvalidParameterError('Please specify a column ID between 1 and 15.');
     }
-    const selectedType = Number.parseInt(ctx.req.param('type'));
+    const selectedType = Number(ctx.req.param('type'));
+    if (!Object.hasOwn(typeMap, selectedType)) {
+        throw new InvalidParameterError('Invalid column ID. Use a value between 1 and 15.');
+    }
     let type;
     switch (selectedType) {
         case 1:
@@ -123,7 +126,7 @@ async function handler(ctx) {
 
                 article.link = url;
                 article.description = $('.article-body').html() || $('div[class="video"]').html();
-                article.pubDate = parseDate(article.ptime);
+                article.pubDate = parseDate(article.ptime, 'YYYY-MM-DDHH:mm:ss');
 
                 return article;
             });

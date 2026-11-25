@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -10,9 +11,12 @@ const getGameInfoList = () =>
 const getI18nGameInfo = async (gid, language) => {
     const gameNameList = await getGameInfoList();
     const game = gameNameList.find((item) => item.game_id === Number(gid));
+    if (!game) {
+        throw new InvalidParameterError(`Invalid game ID: ${gid} is not included in HoYoLAB's current game configuration.`);
+    }
     return {
-        name: game?.game_name_list.find((item) => item.locale === language)?.raw_name ?? game?.game_name_list.find((item) => item.locale === 'en-us')?.raw_name,
-        icon: game?.game_icon,
+        name: game.game_name_list.find((item) => item.locale === language)?.raw_name ?? game.game_name_list.find((item) => item.locale === 'en-us')?.raw_name,
+        icon: game.game_icon,
     };
 };
 

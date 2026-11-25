@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/tags/:workspace/:repo_slug',
@@ -23,20 +23,21 @@ export const route: Route = {
     handler,
 };
 
+type RequestHeaders = { Accept: string; Authorization?: string };
+
 async function handler(ctx) {
     const workspace = ctx.req.param('workspace');
     const repo_slug = ctx.req.param('repo_slug');
 
-    const headers = {
+    const headers: RequestHeaders = {
         Accept: 'application/json',
     };
-    let auth = '';
     if (config.bitbucket && config.bitbucket.username && config.bitbucket.password) {
-        auth = config.bitbucket.username + ':' + config.bitbucket.password + '@';
+        headers.Authorization = `Basic ${Buffer.from(`${config.bitbucket.username}:${config.bitbucket.password}`).toBase64()}`;
     }
     const response = await got({
         method: 'get',
-        url: `https://${auth}api.bitbucket.org/2.0/repositories/${workspace}/${repo_slug}/refs/tags/`,
+        url: `https://api.bitbucket.org/2.0/repositories/${encodeURIComponent(workspace)}/${encodeURIComponent(repo_slug)}/refs/tags/`,
         searchParams: queryString.stringify({
             sort: '-target.date',
         }),
@@ -51,9 +52,9 @@ async function handler(ctx) {
             data &&
             data.map((item) => ({
                 title: item.name,
-                author: item.tagger.raw,
+                author: item.tagger?.raw,
                 description: item.message || 'No description',
-                pubDate: parseDate(item.date),
+                pubDate: item.date ? parseDate(item.date) : undefined,
                 link: item.links.html.href,
             })),
     };

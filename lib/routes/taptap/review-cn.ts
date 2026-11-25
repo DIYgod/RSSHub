@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: {
         id: '游戏 ID，游戏主页 URL 中获取',
         order: '排序方式，空为综合，可选如下',
-        lang: '语言，`zh-CN` 或 `zh-TW`，默认为 `zh-CN`',
+        lang: '语言，`zh_CN` 或 `zh_TW`，默认为 `zh_CN`',
     },
     features: {
         requireConfig: false,

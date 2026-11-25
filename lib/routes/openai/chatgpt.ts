@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDateStrict } from '@/utils/time';
 
 export const route: Route = {
     path: '/chatgpt/release-notes',
@@ -27,9 +27,9 @@ async function handler() {
     const articleUrl = 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes';
 
     const cacheIn = await cache.tryGet(
-        articleUrl,
+        `openai:chatgpt:release-notes:v4:${articleUrl}`,
         async () => {
-            const response = await ofetch(articleUrl);
+            const response = await ofetch(articleUrl, { allowH2: false });
 
             const $ = load(response);
             const articleContent = $('.article-content');
@@ -47,14 +47,11 @@ async function handler() {
                     const $h1 = $(element);
                     const text = $h1.text().trim();
 
-                    const dateMatch = text.match(/(\w+\s+\d+[stndrh]*,\s+\d{4})/i);
-                    let pubDate: Date | undefined;
+                    const dateMatch = text.match(/(\w+\s+\d+(?:st|nd|rd|th)?,?\s+\d{4})/i);
+                    let pubDate: Temporal.Instant | undefined;
                     if (dateMatch) {
-                        const dateStr = dateMatch[1];
-                        const parsedDate = dayjs(dateStr, ['MMMM Do, YYYY', 'MMMM D, YYYY'], 'en');
-                        if (parsedDate.isValid()) {
-                            pubDate = parsedDate.toDate();
-                        }
+                        const dateStr = dateMatch[1].replaceAll(/(\d)(st|nd|rd|th)\b/gi, '$1').replace(/,\s*/, ' ');
+                        pubDate = parseDateStrict(dateStr, ['MMMM D YYYY', 'MMM D YYYY'], 0);
                     }
 
                     const $nextSiblings = $h1.nextUntil('h1');
@@ -64,13 +61,14 @@ async function handler() {
                     const title = firstH2Text || text;
 
                     const content = $nextSiblings
+                        .not($firstH2)
                         .toArray()
                         .map((el) => $(el).prop('outerHTML'))
                         .join('');
                     const description = content;
 
                     return {
-                        guid: `${articleUrl}#${pubDate ? pubDate.getTime() : text}`,
+                        guid: `${articleUrl}#${pubDate ? pubDate.epochMilliseconds : text}`,
                         title,
                         link: articleUrl,
                         pubDate,

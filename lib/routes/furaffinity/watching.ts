@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import { getWatchList } from './utils';
 
 export const route: Route = {
     path: '/watching/:username',
@@ -29,29 +30,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { username } = ctx.req.param();
-    const url = `https://faexport.spangle.org.uk/user/${username}/watching.json`;
-    const data = await ofetch(url, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
+    const { users, count } = await getWatchList(username, 'by');
 
-    const urlUserInfo = `https://faexport.spangle.org.uk/user/${username}.json`;
-    const dataUserInfo = await ofetch(urlUserInfo, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
-    const watchingCount = dataUserInfo.watching.count;
-
-    const items = data.map((item) => ({
-        title: item,
-        link: `https://www.furaffinity.net/user/${item}`,
-        guid: item,
-        description: `${username} is watching ${item} <br> Total: ${watchingCount}`,
-        author: item,
+    const items = users.map((item) => ({
+        title: item.name,
+        link: item.link,
+        guid: item.guid,
+        description: `${username} is watching ${item.name}${count === undefined ? '' : ` <br> Total: ${count}`}`,
+        author: item.name,
     }));
 
     return {

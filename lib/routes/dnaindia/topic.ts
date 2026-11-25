@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/topic/:topic',
     example: '/dnaindia/topic/dna-verified',
     parameters: {
-        category: 'Find it in the URL',
+        topic: 'Find it in the URL',
     },
     radar: [
         {

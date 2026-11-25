@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
@@ -45,7 +47,7 @@ export const route: Route = {
             target: '/group/:groupid',
         },
     ],
-    name: '豆瓣小组',
+    name: '小组',
     maintainers: ['DIYgod'],
     handler,
 };
@@ -63,8 +65,9 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.olt tr:not(.th)').slice(0, 30).toArray();
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        (item) => {
             const $1 = $(item);
             const result: DataItem = {
                 title: $1.find('.title a').attr('title')!,
@@ -72,21 +75,18 @@ async function handler(ctx) {
                 link: $1.find('.title a').attr('href'),
             };
             return cache.tryGet(result.link!, async () => {
-                try {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: result.link,
-                    });
-                    const $ = load(detailResponse.data);
+                const detailResponse = await got({
+                    method: 'get',
+                    url: result.link,
+                });
+                const $ = load(detailResponse.data);
 
-                    result.pubDate = $('.create-time').text();
-                    result.description = $('.rich-content').html();
-                    return result;
-                } catch {
-                    return result;
-                }
+                result.pubDate = parseDate($('.create-time').text(), 8);
+                result.description = $('.rich-content').html();
+                return result;
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

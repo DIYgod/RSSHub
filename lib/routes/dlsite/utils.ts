@@ -1,12 +1,10 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
-import { renderDescription } from './templates/description';
+import { formatDate, renderDescription } from './templates/description';
 
 const rootUrl = 'https://www.dlsite.com';
 
@@ -23,14 +21,6 @@ const addFilters = (url, filters) => {
     return `${newUrl}${/=/.test(newUrl) ? '' : '/='}${filterStr}`;
 };
 
-const getPubDate = (raw) => {
-    const dateMatches = raw.match(/(\d{4}).*(\d{2}).*(\d{2})/);
-    if (dateMatches) {
-        return parseDate(`${dateMatches[1]}-${dateMatches[2]}-${dateMatches[3]}`, 'YYYY-MM-DD');
-    }
-    return parseDate(raw.split(':').pop().trim(), 'MMM/DD/YYYY');
-};
-
 const getDetails = async (works) => {
     const apiUrl = `${rootUrl}/home-touch/product/info/ajax?product_id=${works}`;
 
@@ -45,8 +35,6 @@ const getDetails = async (works) => {
 const ProcessItems = async (ctx) => {
     const subPath = getSubPath(ctx) === '/' ? '/home/new' : getSubPath(ctx);
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
-
     const currentUrl = `${rootUrl}${addFilters(subPath, defaultFilters)}`;
 
     const response = await got({
@@ -56,21 +44,23 @@ const ProcessItems = async (ctx) => {
 
     const $ = load(response.data);
 
-    const works = $('dt.work_name').slice(0, limit);
-    const updatedDate = $('.work_update').length === 0 ? undefined : getPubDate($('.work_update').text());
+    // The single batch supplies dates and descriptions for common sorting and filtering.
+    const works = $('dt.work_name').slice(0, defaultFilters.per_page);
 
-    const details = await getDetails(
-        works
-            .toArray()
-            .map(
-                (item) =>
-                    $(item)
-                        .find('a')
-                        .attr('href')!
-                        .match(/_id\/(.*?)\.html/)![1]
-            )
-            .join(',')
-    );
+    const details = works.length
+        ? await getDetails(
+              works
+                  .toArray()
+                  .map(
+                      (item) =>
+                          $(item)
+                              .find('a')
+                              .attr('href')!
+                              .match(/_id\/(.*?)\.html/)![1]
+                  )
+                  .join(',')
+          )
+        : {};
 
     const items = works.toArray().map((item) => {
         const $item = $(item).parentsUntil('tbody, ul');
@@ -127,13 +117,13 @@ const ProcessItems = async (ctx) => {
 
         const detail = details[guid];
 
-        const pubDate = timezone(parseDate(detail.regist_date), 9);
+        const pubDate = parseDate(detail.regist_date, 9);
         const discountRate = detail.discount_rate;
-        const discountEndDate = detail.discount_end_date ? timezone(parseDate(detail.discount_end_date, 'MM/DD HH:mm'), 9) : undefined;
+        const discountEndDate = detail.discount_end_date ? parseDate(detail.discount_end_date, 'MM/DD HH:mm', 9) : undefined;
         images = images.length === 0 ? [detail.work_image] : images;
 
         return {
-            title: `${discountRate ? `${discountRate}% OFF ${discountEndDate ? `${dayjs(discountEndDate).format('YYYY-MM-DD HH:mm')} まで` : ''}` : ' '}${title}`,
+            title: `${discountRate ? `${discountRate}% OFF ${discountEndDate ? `${formatDate(discountEndDate)} まで` : ''}` : ' '}${title}`,
             link,
             pubDate,
             author: authors.map((a) => a.name).join(' / '),
@@ -142,13 +132,8 @@ const ProcessItems = async (ctx) => {
             description: renderDescription({
                 detail,
                 images,
-                authors,
                 discountRate,
                 discountEndDate,
-                updatedDate,
-                pubDate,
-                workCategories,
-                searchTags,
                 description,
             }),
         };
@@ -158,8 +143,8 @@ const ProcessItems = async (ctx) => {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
+        language: 'ja' as const,
         item: items,
-        allowEmpty: true,
     };
 };
 

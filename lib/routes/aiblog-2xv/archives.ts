@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/archives',
@@ -29,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx) {
     const baseUrl = 'https://aiblog-2xv.pages.dev';
     const response = await ofetch(`${baseUrl}/archives`);
     const $ = load(response);
@@ -51,7 +52,7 @@ async function handler() {
                         title: $title.text(),
                         link: $link.attr('href') || '',
                         // 解析发布时间和更新时间（根据页面结构调整选择器，若存在则启用）
-                        pubDate: parseDate($dateMeta.eq(0).attr('title') || ''),
+                        pubDate: parseDate($dateMeta.eq(0).attr('title') || '', 'YYYY-MM-DD HH:mm:ss ZZ'),
                         author: $post.find('.archive-meta span').last().text(),
                         description: '',
                     };
@@ -59,7 +60,7 @@ async function handler() {
         );
 
     const items = await Promise.all(
-        list.map((item) =>
+        list.slice(0, getRouteLimit(ctx, 20)).map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);

@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/computer',
@@ -32,9 +31,8 @@ async function handler() {
 
             return {
                 title,
-                description: title,
-                pubDate: timezone(parseDate(date), 8),
-                link: base + $item.find('a').attr('href'),
+                pubDate: parseDate(date, 8),
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 

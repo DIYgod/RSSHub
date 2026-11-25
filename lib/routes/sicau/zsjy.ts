@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/zsjy/:category?',
@@ -36,7 +37,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'bkszs';
 
     const rootUrl = 'https://dky.sicau.edu.cn';
-    const currentUrl = `${rootUrl}/zsjy/${category}.htm`;
+    const currentUrl = `${rootUrl}/${category === 'bkszs' ? 'zsxx' : 'zsjy'}/${category}.htm`;
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -51,14 +52,15 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                pubDate: parseDate($item.prev().text()),
-                link: `${rootUrl}${$item.attr('href')!.replace(/^\.\./, '/')}`,
+                pubDate: parseDate($item.prev().text(), 8),
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`sicau:zsjy:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -66,13 +68,16 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('.v_news_content p').slice(0, 2).remove();
-
+                content('.v_news_content script[vurl]').each((_, element) => {
+                    content(element).replaceWith(content('<video controls></video>').attr('src', element.attribs.vurl));
+                });
                 item.description = content('.v_news_content').html();
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

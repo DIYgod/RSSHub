@@ -1,13 +1,13 @@
-import crypto from 'node:crypto';
-
 import type { Route } from '@/types';
+import { md5 } from '@/utils/hash';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { formatDate, parseDate } from '@/utils/time';
 
 const PERMUTAION_MAP = [24, 13, 4, 19, 6, 0, 8, 21, 25, 7, 28, 1, 15, 31, 10, 9, 17, 18, 22, 11, 27, 23, 2, 26, 12, 5, 29, 14, 20, 30, 16, 3];
 
 const getNonce = (params: Record<string, string | number>) => {
-    const m = new Date().toISOString().slice(0, 10).replaceAll('-', '');
+    const m = formatDate(Temporal.Now.instant(), 'YYYYMMDD');
 
     const sortedKeys = Object.keys(params).toSorted((a, b) => a.localeCompare(b));
     const queryParts = sortedKeys.map((k) => `${k}=${params[k]}`);
@@ -15,7 +15,7 @@ const getNonce = (params: Record<string, string | number>) => {
 
     const hashInput = `${queryStr}evst${m}`;
 
-    const md5Hex = crypto.createHash('md5').update(hashInput).digest('hex');
+    const md5Hex = md5(hashInput);
 
     const n = PERMUTAION_MAP.map((idx) => md5Hex[idx]).join('');
 
@@ -66,8 +66,7 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
         }
 
         const chData = channelData.data;
-        const limitQuery = ctx.req.query('limit');
-        const limit = limitQuery ? Number(limitQuery) : 50;
+        const limit = getRouteLimit(ctx, 50);
 
         const epParams = { cid, limit, r: 1, raw: 1, web: 1 };
         const { m: em, n: en, queryStr: eQuery } = getNonce(epParams);
@@ -81,11 +80,11 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
         const episodes = epData.data.episode_list;
 
         const items = episodes.map((ep: any) => {
-            let enclosure_type = 'audio/mpeg';
+            let enclosureType = 'audio/mpeg';
             if (ep.video === 1 || ep.url?.includes('.mp4')) {
-                enclosure_type = 'video/mp4';
+                enclosureType = 'video/mp4';
             } else if (ep.url?.includes('.m4a')) {
-                enclosure_type = 'audio/mp4';
+                enclosureType = 'audio/mp4';
             }
 
             return {
@@ -94,7 +93,7 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
                 pubDate: parseDate(ep.release_date),
                 link: `https://castbox.fm/episode/${encodeURIComponent(ep.title)}-id${cid}-id${ep.eid}`,
                 enclosure_url: ep.url,
-                enclosure_type,
+                enclosure_type: enclosureType,
                 enclosure_length: ep.size,
                 itunes_item_image: ep.big_cover_url || ep.cover_url,
                 itunes_duration: ep.duration ? Math.round(ep.duration / 1000) : undefined,

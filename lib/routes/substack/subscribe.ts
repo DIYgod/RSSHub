@@ -2,8 +2,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -20,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Substack Subscription',
+    name: 'Subscription',
     maintainers: ['pseudoyu'],
     handler,
 };
@@ -47,6 +47,7 @@ async function handler(ctx) {
             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             guid: item.guid ?? '',
             author: item.creator ?? user,
+            image: item.enclosure?.type?.startsWith('image/') ? item.enclosure.url : undefined,
         })),
     };
 }

@@ -22,15 +22,7 @@ async function handler() {
             item: '#tb_sale tr',
             title: ($) => $('.news_sale_detail .sale_btn').text() + '：' + $('.news_sale_title a').text(),
             link: ($) => host + $('.news_sale_title a').attr('href'),
-            description: ($) =>
-                $('.news_sale_detail .sale_btn').text() +
-                '：' +
-                $('.news_sale_title a').text() +
-                '<br>' +
-                $('.news_sale_detail .sale_time_end').first().text() +
-                '<br>' +
-                '发布时间：' +
-                $('.news_sale_detail .sale_time_end.inline_right').text(),
+            description: ($) => $('.news_sale_detail .sale_time_end').not('.inline_right').text(),
         },
     });
 }

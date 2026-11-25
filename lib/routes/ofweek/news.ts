@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -33,20 +33,21 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const res = await ofetch(item.link!, { responseType: 'arrayBuffer' });
                 const content = load(iconv.decode(Buffer.from(res), 'gbk'));
                 const artical = content('div.artical');
 
                 item.description = artical.find('#articleC').html();
-                item.author = artical.find('div.source-name').text();
-                item.pubDate = timezone(parseDate(artical.find('div.time.fl').text()), 8);
+                item.author = artical.find('div.source-name').text() || undefined;
+                item.pubDate = parseDate(artical.find('div.time.fl').text(), 8);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,9 +1,9 @@
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     focus: {
@@ -44,6 +44,14 @@ const titles = {
     },
 };
 
+function renderImage(image: { big: string }) {
+    return <img src={image.big} />;
+}
+
+function renderParagraph(text: string) {
+    return <p>{text}</p>;
+}
+
 export const route: Route = {
     path: '/news/:category?/:language?',
     categories: ['traditional-media'],
@@ -59,7 +67,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tvb.com/:language/:category', 'tvb.com/'],
+            source: ['news.tvb.com/'],
+            target: '/news',
+        },
+        {
+            source: ['news.tvb.com/:language/:category'],
+            target: '/news/:category/:language',
         },
     ],
     name: '新闻',
@@ -85,7 +98,7 @@ async function handler(ctx) {
     const rootUrl = 'https://inews-api.tvb.com';
     const linkRootUrl = 'https://news.tvb.com';
     const apiUrl = `${rootUrl}/news/entry/category`;
-    const currentUrl = `${rootUrl}/${language}/${category}`;
+    const currentUrl = `${linkRootUrl}/${language}/${category}`;
 
     const response = await got({
         method: 'get',
@@ -94,10 +107,14 @@ async function handler(ctx) {
             id: category,
             lang: language,
             page: 1,
-            limit: ctx.req.query('limit') ?? 50,
+            limit: getRouteLimit(ctx, 50),
             country: 'HK',
         },
     });
+
+    if (response.data.meta.status === 'failed') {
+        throw new Error(`TVB could not retrieve ${category} news (${response.data.meta.error || 'unknown source error'}). Please try again later.`);
+    }
 
     const items = response.data.content.map((item) => ({
         title: item.title,
@@ -106,8 +123,8 @@ async function handler(ctx) {
         category: [...item.category.map((c) => c.title), ...item.tags],
         description: renderToString(
             <>
-                {item.desc ? raw(item.desc) : null}
-                {item.media.image?.map((image) => <img src={image.thumbnail.replace(/_\\d+x\\d+\\./, '.')} />) ?? null}
+                {item.desc ? item.desc.split('\n').map((text) => renderParagraph(text)) : null}
+                {item.media.image?.map((image) => renderImage(image)) ?? null}
             </>
         ),
     }));

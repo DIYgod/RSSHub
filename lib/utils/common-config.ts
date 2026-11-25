@@ -1,4 +1,5 @@
-import { type Cheerio, load } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 import iconv from 'iconv-lite';
 
@@ -16,8 +17,12 @@ type BuildDataConfig = Pick<Data, 'link' | 'author' | 'allowEmpty'> & {
     item: { item: string } & { [Key in keyof ItemFields]: Value<ItemFields[Key]> };
 };
 
+function isSelectorCallback<T>(value: Value<T>): value is (select: Selector) => T {
+    return typeof value === 'function';
+}
+
 function resolveValue<T>(value: Value<T>, select: Selector): T {
-    return typeof value === 'function' ? (value as (select: Selector) => T)(select) : value;
+    return isSelectorCallback(value) ? value(select) : value;
 }
 
 export default async function buildData(data: BuildDataConfig) {

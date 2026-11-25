@@ -1,9 +1,12 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate, toISOString } from '@/utils/time';
 
 // https://github.com/streamlink/streamlink/blob/master/src/streamlink/plugins/twitch.py#L286
 const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
+const streamScheduleQuery =
+    'query StreamSchedule($login: String!, $startAt: Time!, $endAt: Time!, $startingWeekday: String, $utcOffsetMinutes: Int) { currentUser { id login } user(login: $login) { id primaryColorHex lastBroadcast { id startedAt } broadcastSettings { id title } stream { id createdAt viewersCount previewImageURL(width: 320, height: 180) verticalPreviewImageURL: previewImageURL(height: 320, width: 180) height width isDualFormat game { id slug name } } videos(first: 30, type: ARCHIVE, sort: TIME, options: { searchRangeStartAt: $startAt, searchRangeEndAt: $endAt }) { edges { node { id title createdAt lengthSeconds viewCount previewThumbnailURL(width: 320, height: 180) game { id slug name } } } } channel { id schedule { id nextSegment { id startAt } interruption { startAt endAt reason } segments(startingWeekday: $startingWeekday, utcOffsetMinutes: $utcOffsetMinutes, relativeDate: $startAt) { id baseSegmentID title startAt endAt isCancelled cancelledUntil hasReminder repeatEndsAfterCount categories { id slug name boxArtURL(width: 144, height: 192) } } } } } }';
 
 export const route: Route = {
     path: '/schedule/:login',
@@ -31,8 +34,8 @@ export const route: Route = {
 async function handler(ctx) {
     const login = ctx.req.param('login');
 
-    const today = new Date();
-    const oneWeekLater = new Date(today.getTime() + 86_400_000 * 7);
+    const today = Temporal.Now.instant();
+    const oneWeekLater = today.add({ hours: 24 * 7 });
     const response = await got({
         method: 'post',
         url: 'https://gql.twitch.tv/gql',
@@ -60,35 +63,35 @@ async function handler(ctx) {
                     login,
                     startingWeekday: 'MONDAY',
                     utcOffsetMinutes: 480,
-                    startAt: today.toISOString(),
-                    endAt: oneWeekLater.toISOString(),
+                    startAt: toISOString(today),
+                    endAt: toISOString(oneWeekLater),
                 },
-                extensions: {
-                    persistedQuery: {
-                        version: 1,
-                        sha256Hash: '01925339777a81111ffac469430bc4ea4773c18a3c1642f1b231e61e2278ea41',
-                    },
-                },
+                query: streamScheduleQuery,
             },
         ],
     });
 
+    const errors = response.data.flatMap((item) => item.errors ?? []);
+    if (errors.length) {
+        throw new Error(`Twitch schedule API returned an error: ${errors.map((error) => error.message).join('; ')}`);
+    }
     const channelShellData = response.data[0].data;
     const streamScheduleData = response.data[1].data;
 
-    if (!streamScheduleData.user.id) {
+    if (!streamScheduleData.user?.id) {
         throw new InvalidParameterError('Username does not exist');
     }
 
     const displayName = channelShellData.userOrError.displayName;
 
     // schedule segments may be null
-    const out = streamScheduleData.user.channel.schedule.segments?.map((item) => ({
+    const out = (streamScheduleData.user.channel.schedule?.segments ?? []).map((item) => ({
         title: item.title,
         guid: item.id,
         link: `https://www.twitch.tv/${login}`,
         author: displayName,
-        description: `StartAt: ${item.startAt}</br>EndAt: ${item.endAt}`,
+        description: `EndAt: ${item.endAt}`,
+        pubDate: parseDate(item.startAt),
         category: item.categories.map((item) => item.name),
     }));
 

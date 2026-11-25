@@ -1,8 +1,10 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiUrl, renderItem } from './utils';
 
@@ -46,7 +48,10 @@ async function handler(ctx: Context): Promise<Data> {
             query: { slug: categoryName },
         })
     );
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getRouteLimit(ctx, 10);
+    if (categories.length === 0) {
+        throw new InvalidParameterError(`Unknown topic "${categoryName}". Choose a topic from https://www.technologyreview.com/.`);
+    }
 
     const posts = await ofetch(`${apiUrl}/posts`, {
         query: {

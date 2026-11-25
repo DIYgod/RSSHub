@@ -1,11 +1,22 @@
 import crypto from 'node:crypto';
 
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+
+interface Program {
+    id: number;
+    title: string;
+    cover: string;
+    duration: number;
+    update_time: string;
+    isfree: boolean;
+}
 
 const qingtingId = config.qingting.id ?? '';
 
@@ -35,15 +46,15 @@ export const route: Route = {
     description: '获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。',
 };
 
-function getMediaUrl(channelId: string, mediaId: string) {
-    const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Date.now()}`;
-    const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex').toString();
+function getMediaUrl(channelId: string, mediaId: number) {
+    const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Temporal.Now.instant().epochMilliseconds}`;
+    const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex');
     return `https://audio.qingting.fm${path}&sign=${sign}`;
 }
 
 async function handler(ctx) {
     const channelId = ctx.req.param('id');
-    const pageSize = Number(ctx.req.query('limit')) || 30;
+    const pageSize = getRouteLimit(ctx, 30);
 
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${channelId}`;
     const response = await ofetch(channelUrl, {
@@ -60,7 +71,7 @@ async function handler(ctx) {
 
     const {
         data: { programs },
-    } = await ofetch(programUrl, {
+    } = await ofetch<{ data: { programs: Program[] } }>(programUrl, {
         headers: {
             Referer: 'https://www.qingting.fm/',
         },
@@ -72,12 +83,13 @@ async function handler(ctx) {
 
     const isPaid = channelInfo.user_relevance?.sale_status === 'paid';
 
-    const resultItems = await Promise.all(
-        programs.map(async (item) => {
+    const resultItems = await pMap(
+        programs,
+        async (item) => {
             const data = await cache.tryGet(`qingting:podcast:${channelId}:${item.id}`, async (): Promise<DataItem> => {
                 const link = `https://www.qingting.fm/channels/${channelId}/programs/${item.id}/`;
 
-                const detailRes = await ofetch(link);
+                const detailRes = await ofetch(link, { allowH2: false });
 
                 const detail = JSON.parse(detailRes.match(/\},"program":(.*?),"plist":/)[1]);
 
@@ -86,7 +98,7 @@ async function handler(ctx) {
                     link,
                     itunes_item_image: item.cover,
                     itunes_duration: item.duration,
-                    pubDate: timezone(parseDate(item.update_time), 8),
+                    pubDate: parseDate(item.update_time, 8),
                     description: detail.richtext,
                 };
 
@@ -95,11 +107,12 @@ async function handler(ctx) {
 
             if (!isCharged || isPaid || item.isfree) {
                 data.enclosure_url = getMediaUrl(channelId, item.id);
-                data.enclosure_type = 'audio/x-m4a';
+                data.enclosure_type = 'audio/mpeg';
             }
 
             return data;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

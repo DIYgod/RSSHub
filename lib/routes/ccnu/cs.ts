@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/cs',
@@ -47,7 +47,7 @@ async function handler() {
                     title: a.attr('title')!,
                     description: $item.find('.overfloat-dot-2').text(),
                     link: new URL(a.attr('href')!, link).href,
-                    pubDate: parseDate($item.find('.time').text(), 'DDYYYY-MM'),
+                    pubDate: parseDate($item.find('.time').text(), 'DDYYYY-MM', 8),
                 };
             }),
     };

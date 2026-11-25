@@ -5,8 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/blog/:type?/:time?/:sort?',
@@ -47,6 +47,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const time = ctx.req.param('time') ?? '5';
     const sort = ctx.req.param('sort') ?? '1';
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'http://blog.sciencenet.cn';
     const currentUrl = `${rootUrl}/blog.php?mod=${type}&type=list&op=${time}&ord=${sort}`;
@@ -60,7 +61,7 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response.data, 'gbk'));
 
     let items = $('tr td a[title]')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -68,15 +69,16 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
-                pubDate: new Date($item.next().text()).toUTCString(),
+                pubDate: parseDate($item.next().text()),
             };
         });
 
     // Bound simultaneous downloads and decoding of potentially large GBK pages.
     items = await pMap(
         items,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sciencenet:article:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -85,12 +87,9 @@ async function handler(ctx) {
 
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
-                item.author = content('.xs2').text();
-                item.description = content('#blog_article').html();
-                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), 8);
-
-                return item;
-            }),
+                return { author: content('.xs2').text(), description: content('#blog_article').html(), pubDate: parseDate(content('.xg1').eq(5).text(), 8) };
+            })),
+        }),
         { concurrency: 3 }
     );
 

@@ -5,7 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -22,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['thegadgetflow.com/categories/:category'],
+            source: ['thegadgetflow.com/categories/:category', 'thegadgetflow.com/collections/:category'],
             target: '/:category',
         },
     ],
@@ -33,15 +34,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://thegadgetflow.com';
-    const categoryApiPath = '/wp-json/wp/v2/categories';
+    const categoryApiPath = '/wp-json/wp/v2/collection';
     const postApiPath = '/wp-json/wp/v2/posts';
 
     // get category number
     const categorySlug = ctx.req.param('category') || '';
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
 
     let category;
     if (categorySlug) {
-        category = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
+        category = await cache.tryGet(`${baseUrl}${categoryApiPath}:${categorySlug}`, async () => {
             const { data } = await got(`${baseUrl}${categoryApiPath}`, {
                 searchParams: { slug: categorySlug },
             });
@@ -60,9 +62,9 @@ async function handler(ctx) {
     const postsUrl = `${baseUrl}${postApiPath}`;
     const postsResponse = await got(postsUrl, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10,
+            per_page: limit,
             _embed: '',
-            ...(categoryId && { categories: categoryId }),
+            ...(categoryId && { collection: categoryId }),
         },
     });
 
@@ -89,10 +91,15 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
             // image,
-            author: item._embedded.author[0].name,
+            author:
+                item._embedded.author
+                    .map((author) => author.name)
+                    .filter(Boolean)
+                    .join(', ') || undefined,
+            category: item._embedded['wp:term'].flat().map((term) => term.name),
         };
         return single;
     });

@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/grs',
@@ -30,13 +30,13 @@ export const route: Route = {
     url: 'graduate.bjfu.edu.cn/',
 };
 
-async function handler() {
+async function handler(ctx) {
     const url = 'http://graduate.bjfu.edu.cn/pygl/pydt/index.html';
     const response = await got.get(url);
     const data = response.data;
     const $ = load(data);
     const list = $('.itemList li')
-        .slice(0, 11)
+        .slice(0, getRouteLimit(ctx, 11))
         .toArray()
         .map((e): DataItem => {
             const element = $(e);
@@ -46,7 +46,7 @@ async function handler() {
                 .find('li a')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date?.[0] ?? ''), 8);
+            const pubDate = parseDate(date?.[0] ?? '', 8);
 
             return {
                 title: title!,

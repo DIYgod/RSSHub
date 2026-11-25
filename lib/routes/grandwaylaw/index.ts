@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -33,7 +32,7 @@ async function handler(): Promise<Data> {
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = a.find('span');
-            const pubDate = timezone(parseDate(date.text(), 'YYYY.MM.DD'), 8);
+            const pubDate = parseDate(date.text(), 'YYYY.MM.DD', 8);
             date.remove();
             return {
                 title: a.text(),

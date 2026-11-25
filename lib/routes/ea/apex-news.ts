@@ -1,11 +1,15 @@
-import MarkdownIt from 'markdown-it';
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { DataItem, Route } from '@/types';
+import { renderYoutube } from '@/routes/youtube/utils';
+import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import MarkdownIt from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const md = MarkdownIt({
     html: true,
@@ -15,50 +19,116 @@ const md = MarkdownIt({
 const langEnum = new Set(['zh-hant', 'en']);
 const typeEnum = new Set(['latest', 'game-updates', 'news-article']);
 
-async function handler(ctx) {
-    const { lang = 'en', type = 'latest' } = ctx.req.param();
-    const apiParams = new URLSearchParams({
-        limit: '13',
-        gameSlug: 'apex-legends',
-        offset: '0',
+function renderBody(body: string) {
+    const $ = load(md.render(body), null, false);
+    $('h1, h2, h3, h4, h5, h6').each((_, heading) => {
+        const $heading = $(heading);
+        const marker = $heading.text().match(/\{#([\w-]+)\}/);
+        if (!marker) {
+            return;
+        }
+        $heading.attr('id', marker[1]);
+        $heading
+            .find('*')
+            .addBack()
+            .contents()
+            .each((_, node) => {
+                if (node.type === 'text') {
+                    node.data = node.data.replace(marker[0], '');
+                }
+            });
     });
+    $('img').each((_, image) => {
+        const $image = $(image);
+        const src = $image.attr('src');
+        if (!src) {
+            return;
+        }
+        const url = new URL(src, 'https://www.ea.com');
+        const parent = $image.parent('a');
+        let media;
+        if (url.pathname.endsWith('.mp4')) {
+            media = $('<video controls></video>').attr('src', src);
+            const poster = parent.attr('href');
+            if (poster) {
+                media.attr('poster', poster);
+            }
+        } else if (['www.youtube.com', 'youtube.com', 'youtu.be'].includes(url.hostname)) {
+            const id = url.searchParams.get('v') ?? url.pathname.split('/').at(-1);
+            if (!id || !/^[\w-]{11}$/.test(id)) {
+                return;
+            }
+            media = renderYoutube(true, id);
+        } else {
+            return;
+        }
+        const target = parent.length ? parent : $image;
+        const caption = target[0].nextSibling;
+        if (caption?.type === 'text') {
+            caption.data = caption.data.replace(/^\((?:Mp4|Youtube)\)/, '');
+        }
+        target.replaceWith(media);
+    });
+    return $.html();
+}
+
+interface NewsArticle {
+    title: string;
+    summary: string;
+    slug: string;
+    publishingDate: string;
+}
+
+async function getPageData<T>(url: string): Promise<T> {
+    const response = await ofetch(url);
+    const data = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1];
+    if (!data) {
+        throw new Error('The EA page no longer contains its public news data. Please check the original page.');
+    }
+    return JSON.parse(data).props.pageProps as T;
+}
+
+async function handler(ctx): Promise<Data> {
+    const { lang = 'en', type = 'latest' } = ctx.req.param();
     if (!langEnum.has(lang)) {
         throw new InvalidParameterError(`Invalid language: ${lang}`);
     }
     if (!typeEnum.has(type)) {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
-    if (type !== 'latest') {
-        apiParams.append('typeSlug', type);
-    }
-    if (lang !== 'en') {
-        apiParams.append('locale', lang);
-    }
-    const apiUrl = `https://drop-api.ea.com/news-articles/pagination?${apiParams}`;
-    const newsItems = await ofetch(apiUrl);
+    const rootUrl = `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news`;
+    const currentUrl = `${rootUrl}${type === 'latest' ? '' : `?type=${type}`}`;
+    const { initialNewsData: newsItems } = await getPageData<{ initialNewsData: { featured?: NewsArticle; items: NewsArticle[] } }>(currentUrl);
 
     type NewsItem = DataItem & {
         slug: string;
     };
-    const allItems: NewsItem[] = [newsItems.featured, ...newsItems.items].filter(Boolean).map((item) => ({
-        title: item.title,
-        description: item.summary,
-        link: `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news/${item.slug}`,
-        pubDate: parseDate(item.publishingDate),
-        slug: item.slug,
-    }));
-    const items = await Promise.all(
-        allItems.map((item) =>
+    const allItems: NewsItem[] = [newsItems.featured, ...newsItems.items]
+        .filter((item): item is NewsArticle => Boolean(item))
+        .map((item) => ({
+            title: item.title,
+            description: item.summary,
+            link: `${rootUrl}/${item.slug}`,
+            pubDate: parseDate(item.publishingDate),
+            slug: item.slug,
+        }));
+    if (ctx.req.query('sorted') !== 'false') {
+        allItems.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    const items = await pMap(
+        allItems.slice(0, getRouteLimit(ctx)),
+        (item) =>
             cache.tryGet(item.link ?? '', async () => {
-                const response = await ofetch(`https://drop-api.ea.com/news-articles/${item.slug}${lang === 'en' ? '' : '?locale=' + lang}`);
-                item.description = md.render(response.body);
+                const { articleDetailsFallback: article } = await getPageData<{ articleDetailsFallback: NewsArticle & { body: string } }>(item.link!);
+                item.description = renderBody(article.body);
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: `Apex Legends 官网资讯${type === 'latest' ? '' : `（${type === 'news-article' ? '最新消息' : '游戏更新'}）`}`,
-        link: `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news${type === 'latest' ? '' : `?type=${type}`}`,
+        link: currentUrl,
+        language: lang === 'zh-hant' ? 'zh-TW' : 'en',
         item: items.map((item) => ({
             title: item.title,
             description: item.description,

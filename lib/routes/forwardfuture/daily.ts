@@ -2,7 +2,8 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 interface NewsletterPost {
     title: string;
@@ -34,12 +35,10 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const response = await ofetch<NewsletterResponse>('https://forwardfuture.com/api/newsletter');
-    const posts = response.posts.slice(0, limit);
-
-    const items: DataItem[] = posts.map((post) => ({
+    let items: DataItem[] = response.posts.map((post) => ({
         title: post.title,
         description: post.summary,
         link: `https://forwardfuture.com${post.url}`,
@@ -47,6 +46,7 @@ async function handler(ctx: Context): Promise<Data> {
         author: post.author,
         image: post.thumbnail,
     }));
+    items = ctx.req.query('sorted') === 'false' ? items.slice(0, limit) : items.toSorted((a, b) => compareDates(b.pubDate, a.pubDate)).slice(0, limit);
 
     return {
         title: 'Forward Future - Daily Newsletter',

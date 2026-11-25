@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/index',
@@ -26,7 +26,7 @@ async function handler() {
                 title: data.title,
                 link: videoUrl,
                 author: data.author.name,
-                description: `${data.description}<br/><img src="${data.cover.feed}" /><br/><video src="${videoUrl}" controls="controls"></video>`,
+                description: `${data.description}<br/><video src="${videoUrl}" poster="${data.cover.feed}" controls="controls"></video>`,
                 pubDate: parseDate(item.data.header.time),
             };
         });

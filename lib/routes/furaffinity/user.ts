@@ -1,12 +1,16 @@
+import { FetchError } from 'ofetch';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import { getPublicUser } from './utils';
 
 export const route: Route = {
     path: '/user/:username',
     name: 'Userpage',
     url: 'furaffinity.net',
     categories: ['social-media'],
-    example: '/furaffinity/user/fender/nsfw',
+    example: '/furaffinity/user/fender',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: { username: 'Username, can find in userpage' },
     features: {
@@ -31,78 +35,93 @@ async function handler(ctx) {
     const { username } = ctx.req.param();
     const url = `https://faexport.spangle.org.uk/user/${username}.json`;
 
-    const data = await ofetch(url, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
+    let data;
+    try {
+        data = await ofetch(url, {
+            method: 'GET',
+            headers: {
+                Referer: 'https://faexport.spangle.org.uk/',
+            },
+        });
+    } catch (error) {
+        if (!(error instanceof FetchError) || !error.statusCode || error.statusCode < 500) {
+            throw error;
+        }
+        const profile = await getPublicUser(username);
+        const link = `https://www.furaffinity.net/user/${username}`;
+        return {
+            title: `Fur Affinity | Userpage of ${profile.name}`,
+            link,
+            description: `Fur Affinity User Profile of ${profile.name}`,
+            item: [{ title: `${profile.name}'s User Profile`, link, description: profile.description }],
+        };
+    }
 
-    // 收集传入的数据
+    // Collect the source profile fields.
     const name = data.name;
     const profile = data.profile;
-    const account_type = data.profile;
+    const accountType = data.account_type;
     const avatar = `<img src="${data.avatar}">`;
-    const full_name = data.full_name;
-    const artist_type = data.artist_type;
-    const user_title = data.user_title;
-    const registered_since = data.registered_since;
-    const current_mood = data.current_mood;
-    const artist_profile = data.artist_profile;
+    const fullName = data.full_name;
+    const artistType = data.artist_type;
+    const userTitle = data.user_title;
+    const registeredSince = data.registered_since;
+    const currentMood = data.current_mood;
+    const artistProfile = data.artist_profile;
     const pageviews = data.pageviews;
     const submissions = data.submissions;
-    const comments_received = data.comments_received;
-    const comments_given = data.comments_given;
+    const commentsReceived = data.comments_received;
+    const commentsGiven = data.comments_given;
     const journals = data.journals;
     const favorite = data.favorites;
-    const watchers_count = data.watchers.count;
-    const watching_count = data.watching.count;
+    const watchersCount = data.watchers.count;
+    const watchingCount = data.watching.count;
 
-    const artist_information = data.artist_information;
-    const species = artist_information.Species;
-    const personal_quote = artist_information['Personal Quote'];
-    const music_type_genre = artist_information['Music Type/Genre'];
-    const favorites_movie = artist_information['Favorite Movie'];
-    const favorites_game = artist_information['Favorite Game'];
-    const favorites_game_platform = artist_information['Favorite Game Platform'];
-    const favorites_artist = artist_information['Favorite Artist'];
-    const favorites_animal = artist_information['Favorite Animal'];
-    const favorites_website = artist_information['Favorite Website'];
-    const favorites_food = artist_information['Favorite Food'];
+    const artistInformation = data.artist_information;
+    const species = artistInformation.Species;
+    const personalQuote = artistInformation['Personal Quote'];
+    const musicTypeGenre = artistInformation['Music Type/Genre'];
+    const favoritesMovie = artistInformation['Favorite Movie'];
+    const favoritesGame = artistInformation['Favorite Game'];
+    const favoritesGamePlatform = artistInformation['Favorite Game Platform'];
+    const favoritesArtist = artistInformation['Favorite Artist'];
+    const favoritesAnimal = artistInformation['Favorite Animal'];
+    const favoritesWebsite = artistInformation['Favorite Website'];
+    const favoritesFood = artistInformation['Favorite Food'];
 
-    const contact_information = data.contact_information;
-    let contact_result = 'none <br> <br> ';
-    // 对一个或多个用户联系方式进行遍历
-    if (contact_information) {
-        contact_result = '';
-        for (const element of contact_information) {
+    const contactInformation = data.contact_information;
+    let contactResult = 'none <br> <br> ';
+    // Render each source contact record.
+    if (contactInformation) {
+        contactResult = '';
+        for (const element of contactInformation) {
             for (const x in element) {
                 switch (x) {
                     case 'title':
-                        contact_result += `Title: ${element[x]} <br> `;
+                        contactResult += `Title: ${element[x]} <br> `;
                         break;
                     case 'name':
-                        contact_result += `Name: ${element[x]} <br> `;
+                        contactResult += `Name: ${element[x]} <br> `;
                         break;
                     case 'link':
-                        contact_result += `Link: ${element[x]} <br> `;
+                        contactResult += `Link: ${element[x]} <br> `;
                         break;
                     default:
                         throw new Error(`Unknown type: ${x}`);
                 }
             }
-            contact_result += '<br> ';
+            contactResult += '<br> ';
         }
     }
 
-    const description = `Name: ${name} <br> Profile: ${profile} <br> Account Type: ${account_type} <br>
-    Avatar: ${avatar} <br> Full Name: ${full_name} <br> Artist Type: ${artist_type} <br> User Title: ${user_title} <br>
-    Registered Since: ${registered_since} <br> Current Mood: ${current_mood} <br> <br> Artist Profile: <br> ${artist_profile} <br> <br>
-    Pageviews: ${pageviews} <br> Submissions: ${submissions} <br> Comments_Received: ${comments_received} <br> Comments Given: ${comments_given} <br>
-    Journals: ${journals} <br> Favorite: ${favorite} <br> <br> Artist Information: <br> Species: ${species} <br> Personal Quote: ${personal_quote} <br> Music Type/Genre: ${music_type_genre} <br>
-    Favorite Movie: ${favorites_movie} <br> Favorite Game: ${favorites_game} <br> Favorite Game Platform: ${favorites_game_platform} <br> Favorite Artist: ${favorites_artist} <br>
-    Favorite Animal: ${favorites_animal} <br> Favorite Website: ${favorites_website} <br> Favorite Food: ${favorites_food} <br> <br> Contact Information: <br> ${contact_result}
-    Watchers Count: ${watchers_count} <br> Watching Count: ${watching_count} `;
+    const description = `Name: ${name} <br> Profile: ${profile} <br> Account Type: ${accountType} <br>
+    Avatar: ${avatar} <br> Full Name: ${fullName} <br> Artist Type: ${artistType} <br> User Title: ${userTitle} <br>
+    Registered Since: ${registeredSince} <br> Current Mood: ${currentMood} <br> <br> Artist Profile: <br> ${artistProfile} <br> <br>
+    Pageviews: ${pageviews} <br> Submissions: ${submissions} <br> Comments_Received: ${commentsReceived} <br> Comments Given: ${commentsGiven} <br>
+    Journals: ${journals} <br> Favorite: ${favorite} <br> <br> Artist Information: <br> Species: ${species} <br> Personal Quote: ${personalQuote} <br> Music Type/Genre: ${musicTypeGenre} <br>
+    Favorite Movie: ${favoritesMovie} <br> Favorite Game: ${favoritesGame} <br> Favorite Game Platform: ${favoritesGamePlatform} <br> Favorite Artist: ${favoritesArtist} <br>
+    Favorite Animal: ${favoritesAnimal} <br> Favorite Website: ${favoritesWebsite} <br> Favorite Food: ${favoritesFood} <br> <br> Contact Information: <br> ${contactResult}
+    Watchers Count: ${watchersCount} <br> Watching Count: ${watchingCount} `;
 
     const items: Array<{ title: string; link: string; description: string }> = [
         {

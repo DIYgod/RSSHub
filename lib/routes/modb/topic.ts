@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities/escape';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -27,9 +27,18 @@ export const route: Route = {
 
 interface TopicDoc {
     title?: DataItem['title'];
+    brief?: string;
+    imageUrl?: string;
     createdByName?: string;
     tags?: string[];
 }
+
+const getArticleDescription = (link: string) =>
+    cache.tryGet(`modb:topic:article-body:v1:${link}`, async () => {
+        const response = await ofetch(link);
+        const $ = load(response);
+        return { description: $('div.editor-content-styl.article-style').html() };
+    });
 
 async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
@@ -41,40 +50,30 @@ async function handler(ctx) {
             columnId: topicId,
         },
     });
-    const list = response.list.map((item) => {
-        let doc: TopicDoc = {};
-        let baseLink = {};
-        switch (item.type) {
-            case 0:
-                doc = item.knowledge;
-                baseLink = `${baseUrl}/db`;
-                break;
-            case 1:
-                doc = item.dbDoc;
-                baseLink = `${baseUrl}/doc`;
-                break;
-            default:
-                logger.error(`unknown type ${item.type}`);
-        }
+    const list: Array<DataItem & { link: string }> = response.list.map((item) => {
+        const doc: TopicDoc = item.type === 0 ? item.knowledge : item.dbDoc;
+        const baseLink = `${baseUrl}/${item.type === 0 ? 'db' : 'doc'}`;
 
         return {
             title: doc.title,
             link: `${baseLink}/${item.rid}`,
-            pubDate: timezone(parseDate(item.createdTime), 8),
+            pubDate: parseDate(item.createdTime, 8),
             author: doc.createdByName,
             category: doc.tags,
+            description: item.type === 1 ? `${doc.imageUrl ? `<img src="${escapeUTF8(doc.imageUrl)}">` : ''}${doc.brief ? `<p>${escapeUTF8(doc.brief).replaceAll('\n', '<br>')}</p>` : ''}` : undefined,
         };
     });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('div.editor-content-styl.article-style').first().html();
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (item.description !== undefined) {
                 return item;
-            })
-        )
+            }
+            const details = await getArticleDescription(item.link);
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

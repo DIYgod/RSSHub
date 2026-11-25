@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/gzw/:category{.+}?',
@@ -19,8 +19,20 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['gzw.cq.gov.cn/*category'],
-            target: '/gzw/*category',
+            source: ['gzw.cq.gov.cn/tzgg_191/', 'gzw.cq.gov.cn/tzgg_191/*'],
+            target: '/gzw/tzgg_191',
+        },
+        {
+            source: ['gzw.cq.gov.cn/gqdj/', 'gzw.cq.gov.cn/gqdj/*'],
+            target: '/gzw/gqdj',
+        },
+        {
+            source: ['gzw.cq.gov.cn/gqjj/', 'gzw.cq.gov.cn/gqjj/*'],
+            target: '/gzw/gqjj',
+        },
+        {
+            source: ['gzw.cq.gov.cn/gqzp/', 'gzw.cq.gov.cn/gqzp/*'],
+            target: '/gzw/gqzp',
         },
     ],
     description: `| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |
@@ -30,7 +42,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'tzgg_191' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
+    // Detail timestamps can refine the calendar dates on the list page.
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit);
 
     const rootUrl = 'https://gzw.cq.gov.cn';
     const currentUrl = `${rootUrl}/${category}`;
@@ -40,7 +54,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('ul.tab-item li.clearfix')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -53,7 +67,7 @@ async function handler(ctx) {
                     a.prop('href')!.replace(/^\./, () => category),
                     rootUrl
                 ).href,
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
@@ -68,7 +82,7 @@ async function handler(ctx) {
                 item.description = content('div.trs_paper_default').html();
                 item.author = content('meta[name="ContentSource"]').prop('content');
                 item.category = content('meta[name="Keywords"]').prop('content').split(/;/).filter(Boolean);
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
+                item.pubDate = parseDate(content('meta[name="PubDate"]').prop('content'), 8);
 
                 return item;
             })
@@ -90,6 +104,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="ColumnKeywords"]').prop('content'),
         author: $('meta[name="SiteName"]').prop('content'),
-        allowEmpty: true,
     };
 }

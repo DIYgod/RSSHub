@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/detail/:id',
@@ -20,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.zongheng.org/detail/:id'],
+            source: ['www.zongheng.com/detail/:id'],
         },
     ],
     name: '章节更新',
@@ -60,7 +59,7 @@ async function handler(ctx) {
         list.chapterViewList.map((chapter) => ({
             title: `${list.tome.tomeName ? `${list.tome.tomeName} - ` : ''}${chapter.chapterName}`,
             link: `https://read.zongheng.com/chapter/${id}/${chapter.chapterId}.html`,
-            pubDate: timezone(parseDate(chapter.createTime), 8),
+            pubDate: parseDate(chapter.createTime, 8),
             guid: `zongheng:${id}:${list.tome.tomeId}:${chapter.chapterId}`,
             author,
             category,
@@ -71,7 +70,6 @@ async function handler(ctx) {
         title: `${$('.book-info--title span').text()}（${author}）- 纵横中文网`,
         description: `${$('.book-info--nums').text()} ${description}`,
         link,
-        allowEmpty: true,
         image: $('.book-info--coverImage-img').attr('src'),
         item: items,
     };

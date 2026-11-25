@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 import { isValidHost } from '@/utils/valid-host';
 
 interface ChannelNode {
@@ -69,35 +71,44 @@ async function handler(ctx) {
     const nodes = getKeysRecursive(resp.data.children, 'node', [])
         .map((x) => `"${x}"`)
         .join(',');
+    const limit = getRouteLimit(ctx, 20);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);
     const req = await got({
         method: 'get',
-        url: `${host}/api/list?node=${nodes}&offset=0&limit=${ctx.req.query('limit') ?? 20}`,
+        url: `${host}/api/list?node=${nodes}&offset=0&limit=${candidateLimit}`,
     });
 
-    let items = req.data.list
+    const list: Array<DataItem & { link: string }> = req.data.list
         .filter((item) => item.aid)
         .map((item) => ({
             link: `${host}/article/${item.aid}`,
             title: item.title,
         }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
                 const content = load(detailResponse.data);
 
-                item.description = content('textarea.article-content').text();
-                item.author = content('span', '.source').text();
-                item.pubDate = parseDate(Number.parseInt(content('textarea.article-time').text()));
-                item.category = content('meta[name="keywords"]').attr('content')!.split(',');
-
-                return item;
-            })
-        )
+                return {
+                    description: content('textarea.article-content').text(),
+                    author:
+                        content('textarea.article-author')
+                            .text()
+                            .replace(/^作者[：:]\s*/, '')
+                            .trim() || content('span', '.source').text(),
+                    pubDate: parseDate(Number(content('textarea.article-time').text())),
+                    category: content('meta[name="keywords"]').attr('content')?.split(','),
+                };
+            });
+            return { ...item, description: detail.description, author: detail.author, pubDate: detail.pubDate, category: detail.category };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,6 +1,6 @@
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://web.stockedge.com/share/';
 const getData = (url) =>
@@ -25,11 +25,11 @@ const getList = (data): NewsItem[] =>
         return {
             id: ID,
             title: `${title}  [${sectors.join(', ')}]`,
-            description: title,
+            description: value.Details,
             securityID,
             link: NewsitemSecurities?.length === 0 ? '' : `${baseUrl}${securitySlug}/${securityID}?section=news`,
-            guid: NewsitemSecurities?.length === 0 ? ID : `${baseUrl}${securitySlug}/${securityID}`,
-            pubDate: parseDate(createdOn),
+            guid: String(ID),
+            pubDate: parseDate(/^\d{4}-\d{2}-\d{2}T00:00:00$/.test(createdOn) ? `${createdOn}Z` : createdOn),
             category: [...industries, ...sectors],
         };
     });

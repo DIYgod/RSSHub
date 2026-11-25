@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const typeMap = {
     tzgg: { name: 'tzgg', url: 'https://news.hfut.edu.cn/tzgg2.htm', root: 'https://news.hfut.edu.cn', title: '合肥工业大学 - 通知公告' },
@@ -13,6 +15,9 @@ const typeMap = {
 const commLink = 'https://news.hfut.edu.cn/';
 
 const parseList = async (ctx, type) => {
+    if (!Object.hasOwn(typeMap, type)) {
+        throw new InvalidParameterError('Unknown notice type. Use one of the documented types for this campus.');
+    }
     const link = typeMap[type].url;
     const title = typeMap[type].title;
 
@@ -40,11 +45,8 @@ async function parseArticle(type, $) {
     const items = data.map((item) => {
         const $item = $(item);
         const oriLink = $item.find('a').attr('href');
-        let linkRes = oriLink;
-        if (!oriLink.startsWith('http')) {
-            linkRes = commLink + $item.find('a').attr('href');
-        }
-        const pubDate = parseDate($item.find('i').text(), 'YYYY-MM-DD');
+        const linkRes = new URL(oriLink, commLink).href;
+        const pubDate = parseDate($item.find('i').text(), 'YYYY-MM-DD', 8);
 
         return {
             title: $item.find('p').text(),
@@ -53,26 +55,18 @@ async function parseArticle(type, $) {
         };
     });
 
-    const resultItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                let description;
-                try {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    description = $('.wp_articlecontent').html() ?? $('.v_news_content').html() ?? item.link;
-                } catch {
-                    description = item.link;
-                }
-
-                return {
-                    title: item.title,
-                    link: item.link,
-                    description,
-                    pubDate: item.pubDate,
-                };
-            })
-        )
+    const resultItems = await pMap(
+        items,
+        async (item: (typeof items)[number]) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const description = $('.wp_articlecontent').html() ?? $('.v_news_content').html() ?? undefined;
+                return { description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return resultItems;

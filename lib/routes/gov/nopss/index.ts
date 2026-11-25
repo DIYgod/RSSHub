@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -13,8 +14,8 @@ export const route: Route = {
     parameters: { path: '路径，默认为通知公告' },
     radar: [
         {
-            source: ['www.nopss.gov.cn/*path/index.html', 'www.nopss.gov.cn/*path'],
-            target: '/:path',
+            source: ['www.nopss.gov.cn/GB/*path'],
+            target: '/GB/:path',
         },
     ],
     maintainers: ['nczitzk'],
@@ -41,21 +42,22 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('.p2j_list_con .clearfix li a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 40)
+    let items = $('.p2j_list_con .clearfix li a, .list_con_2j ul.clearfix li a')
+        .slice(0, getRouteLimit(ctx, 40))
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.next().text(), '[YYYY-MM-DD HH:mm]'), 8),
+                link: new URL($item.attr('href')!, currentUrl).href,
+                pubDate: parseDate($item.next().text(), '[YYYY-MM-DD HH:mm]', 8),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -67,8 +69,8 @@ async function handler(ctx) {
                 item.description = content('.text_con').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

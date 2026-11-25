@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://jwc.ecust.edu.cn';
 const categoryMap = {
@@ -13,7 +14,7 @@ const categoryMap = {
     mpt: { link: '/3940', name: '实践教学管理' },
     fai: { link: '/3941', name: '学院教务信息' },
 };
-const get_from_link = async (link) => {
+const getFromLink = async (link) => {
     const { data: response } = await got(link);
     const $ = load(response);
     const articleList = $('div#wp_news_w2 table[width="100%"]')
@@ -26,11 +27,14 @@ const get_from_link = async (link) => {
             if (!articleLink!.startsWith('http')) {
                 articleLink = `${baseUrl}${articleLink}`;
             }
-            articleLink = articleLink!.replace(/^https:\/\/(\w+)-ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://$1.ecust.edu.cn').replace(/^https:\/\/ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://ecust.edu.cn');
+            articleLink = articleLink!
+                .replace(/^https:\/\/(\w+)-ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://$1.ecust.edu.cn')
+                .replace(/^https:\/\/ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://ecust.edu.cn')
+                .replace(/^https:\/\/mp-weixin-qq-com-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://mp.weixin.qq.com');
             return {
                 title: a.text(),
                 link: articleLink,
-                pubDate: parseDate(date.text()),
+                pubDate: parseDate(date.text(), 8),
             };
         });
     return articleList;
@@ -58,30 +62,31 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
-    const categoryItem = categoryMap[category] || null; // all -> null
+    const categoryItem = Object.hasOwn(categoryMap, category) ? categoryMap[category] : undefined;
     const pageUrl = categoryItem ? [`${baseUrl}${categoryItem.link}/list.htm`] : Object.values(categoryMap).map((item) => `${baseUrl}${item.link}/list.htm`);
-    const items = (await Promise.all(pageUrl.map((link) => get_from_link(link)))).flat();
-    const result = await Promise.all(
-        items.map((item) =>
+    const items = (await pMap(pageUrl, getFromLink, { concurrency: 3 })).flat();
+    const result = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const content = load(response);
-                // remove all attrs and empty objects
-                content('div.wp_articlecontent *').each((_, el) => {
-                    if (!content(el).text().trim()) {
-                        content(el).remove();
-                        return;
-                    }
-                    for (const attr in el.attribs) {
-                        content(el).removeAttr(attr);
+                const article = content('div.wp_articlecontent, #js_content');
+                article.find('style').remove();
+                article.find('[pdfsrc]').each((_, element) => {
+                    const pdfUrl = content(element).attr('pdfsrc');
+                    if (pdfUrl) {
+                        content(element).replaceWith(content('<a>').attr('href', pdfUrl).text('PDF'));
                     }
                 });
-                const description = content('div.wp_articlecontent').html();
-                // merge same objects, replace two times instead of replace recursively
-                description && (item.description = description.replaceAll(/<\/(p|span|strong)>\s*<\1>/g, '').replaceAll(/<\/(p|span|strong)>\s*<\1>/g, ''));
+                article.find('img[data-src]').each((_, element) => {
+                    content(element).attr('src', content(element).attr('data-src')).removeAttr('data-src');
+                });
+                article.find('[style]').removeAttr('style');
+                item.description = article.html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: `华理教务处 - ${categoryItem ? categoryItem.name : '全部'}`,

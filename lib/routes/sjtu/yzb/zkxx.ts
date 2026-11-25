@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 const baseTitle = '上海交通大学研究生招生网招考信息';
-const baseUrl = 'https://yzb.sjtu.edu.cn/index/zkxx/';
+const baseUrl = 'https://yzb.sjtu.edu.cn/zkxx/';
 
 export const route: Route = {
     path: '/yzb/zkxx/:type',
@@ -31,45 +32,53 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageUrl = `${baseUrl}${ctx.req.param('type')}.htm`;
+    const pageUrl = `${baseUrl}${ctx.req.param('type')}`;
 
     const response = await ofetch(pageUrl);
 
     const $ = load(response);
 
-    const list = $('li[id^="line"] a')
+    const list = $('.announcement-list > a.item')
         .toArray()
-        .map((elem): DataItem & { link: string } => ({
-            link: new URL(elem.attribs.href, pageUrl).href,
-            title: $(elem).text(),
-            pubDate: parseDate(
-                $(elem.next?.next ?? undefined)
-                    .text()
-                    .trim()
-            ),
-        }));
+        .map((elem): DataItem & { link: string } => {
+            const $item = $(elem);
+            const month = $item.find('.month').text();
+            const day = $item.find('.day').text().trim();
+            return {
+                link: new URL(elem.attribs.href, pageUrl).href,
+                title: $item.find('.title').text(),
+                pubDate: parseDate(`${month}.${day} +0000`, 'YYYY.MM.DD ZZ'),
+            };
+        });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`sjtu:yzb:v2:${item.link}`, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     return await fetchArticle(item.link);
                 }
                 if (new URL(item.link).hostname === 'www.shmeea.edu.cn') {
                     const detailResponse = await ofetch(item.link.replace('http://', 'https://'));
                     const content = load(detailResponse);
-                    item.description = content('.Article_content').html();
-                    return item;
+                    return { description: content('.Article_content').html() };
                 }
                 if (new URL(item.link).hostname === 'yzb.sjtu.edu.cn') {
                     const detailResponse = await ofetch(item.link);
                     const content = load(detailResponse);
-                    item.description = content('[id^=vsb_content]').html();
-                    return item;
+                    const published = content('.article-otherBase')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                    return {
+                        description: content('.mce-content-body').html(),
+                        pubDate: published ? parseDate(`${published} +0000`, 'YYYY-MM-DD ZZ') : undefined,
+                    };
                 }
-                return item;
-            })
-        )
+                return {};
+            });
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

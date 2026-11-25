@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getContent } from './utils';
 
@@ -54,8 +53,8 @@ async function handler(ctx) {
         title: info.title,
         link: siteUrl,
         item: list.toArray().map((item) => ({
-            title: $(item).find('a').attr('title')!.trim(),
-            pubDate: timezone(parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD'), 8),
+            title: $(item).find('a').attr('title') || $(item).find('a').text(),
+            pubDate: parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD', 8),
             link: $(item).find('a').attr('href'),
         })),
     };

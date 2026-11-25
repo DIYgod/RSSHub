@@ -1,8 +1,9 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/libNews',
@@ -40,18 +41,21 @@ async function handler() {
     const list = response.data.datas.datas.map((item) => ({
         title: item['1'].value,
         link: `${host}/engine2/d/${item.id}/${engineInstanceId}/0?t=${typeId}&p=${pageId}`,
-        pubDate: timezone(parseDate(item['6'].value), 8),
-        image: `${host}${item['0'].value}`,
+        pubDate: parseDate(item['6'].value, 8),
+        image: item['0'].value ? new URL(item['0'].value, host).href : undefined,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item: (typeof list)[number]) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const detail = await ofetch(item.link);
-                item.description = JSON.parse(detail.match(/^\s*data: (\{"engineInstanceId":.*\}),$/m)![1]).content;
-                return item;
-            })
-        )
+                const description = JSON.parse(detail.match(/^\s*data: (\{"engineInstanceId":.*\}),$/m)![1]).content;
+                return { description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

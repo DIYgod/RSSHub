@@ -1,7 +1,9 @@
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/prime/community',
@@ -31,20 +33,11 @@ export const route: Route = {
     handler,
 };
 
-const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyNzU3NiIsInR5cGUiOiJ1c2VyIiwiZXhwIjoxNzQ4NTI2MDEzfQ.di8RB-lxHI_JMBQHFd2xhcpk6Zd_3bvfQlAti6HAuZA';
-
 async function handler() {
-    let token;
-    const cacheIn = await cache.get('sspai:token');
-
-    if (cacheIn) {
-        token = cacheIn;
-    } else if (config.sspai.bearertoken) {
-        token = config.sspai.bearertoken;
-        cache.set('sspai:token', config.sspai.bearertoken);
-    } else {
-        token = TOKEN;
+    if (!config.sspai.bearertoken) {
+        throw new ConfigNotFoundError('Configure SSPAI_BEARERTOKEN to access your authorized member community.');
     }
+    const token = config.sspai.bearertoken;
 
     const feedEndpoint = 'https://sspai.com/api/v1/community/page/get';
     const headers = {
@@ -55,7 +48,7 @@ async function handler() {
     const list = response.data.map((item) => ({
         title: item.title,
         link: `https://sspai.com/t/${item.id_hash}`,
-        pubDate: new Date(item.created_at * 1000),
+        pubDate: parseDate(item.created_at, 'X'),
         author: item.author.nickname,
         category: item.channel.title,
         id_hash: item.id_hash,

@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/fields-medal',
@@ -33,9 +32,9 @@ async function handler() {
 
             return {
                 title: year,
+                guid: `fields-medal:${year}`,
                 link: detailUrl ? new URL(detailUrl, rootUrl).href : currentUrl,
                 description: `<ul>${$item.html()}</ul>`,
-                pubDate: parseDate(`${year}-12-31`),
             };
         });
 

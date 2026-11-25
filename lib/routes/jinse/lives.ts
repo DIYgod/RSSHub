@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
@@ -46,7 +47,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://jinse.com.cn';
     const rootApiUrl = 'https://api.jinse.com.cn';
@@ -99,7 +100,8 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
+    const iconHref = $('link[rel="favicon"]').prop('href');
+    const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
 
     return {
         item: items,
@@ -112,6 +114,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
-        allowEmpty: true,
     };
 }

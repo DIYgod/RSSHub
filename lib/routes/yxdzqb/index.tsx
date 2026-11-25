@@ -49,16 +49,16 @@ async function handler(ctx) {
     const response = await got.get(link);
 
     const $ = load(response.data);
-    const title = $('.btn-primary b').text() || $('.btn-danger b').text() || $('.btn-info b').text();
-    const list = $('tr.bg-none');
+    const title = $('h1').text();
+    const list = $('.games .game');
 
     const out = list.toArray().map((item) => {
         const $item = $(item);
 
-        const title = $item.find('div table:nth-child(1) tr td:nth-child(1)').text();
-        const description = renderToString(<YxdzqbDescription src={$item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src')} description={$item.find('div.collapse').html() ?? undefined} />);
-        const link = $item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
-        const guid = link + $item.find('div.cell_price span:nth-child(2)').text();
+        const title = $item.find('.game-title').text();
+        const description = renderToString(<YxdzqbDescription src={$item.find('.game-art img').attr('src')} description={($item.find('.game-price').html() ?? '') + ($item.find('.facts').prop('outerHTML') ?? '')} />);
+        const link = $item.find('.game-title a').attr('href');
+        const guid = link + $item.find('.game-price .now').text();
 
         const single = {
             title,

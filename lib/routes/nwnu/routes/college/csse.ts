@@ -4,7 +4,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { processEmbedPDF } from '../lib/embed-resource';
 
@@ -56,7 +56,7 @@ const handler: Route['handler'] = async (ctx) => {
 
     // Map through each list item to extract details
     const itemLinks = listItems.toArray().map((element) => {
-        const title = $(element).find('div.right_list_text > p.p1 > a').text()!;
+        const title = $(element).find('div.right_list_text > p.p1 > a').text();
         const imgRelativeLink = $(element).find('div.right_list_img > a > img').attr('src') || WEBSITE_LOGO;
         const img = new URL(imgRelativeLink, BASE_URL).href;
         const relativeHref = $(element).find('div.right_list_text > p.p1 > a').attr('href')!;
@@ -102,7 +102,6 @@ const handler: Route['handler'] = async (ctx) => {
                 })
             )
         ),
-        allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/college/csse/${columnParam}`,
         id: `https://rsshub.app/nwnu/college/csse/${columnParam}`,
@@ -126,7 +125,7 @@ export const route: Route = {
     example: '/nwnu/college/csse/2435',
     radar: [
         {
-            source: ['jsj.nwnu.edu.cn/:column/list'],
+            source: ['jsj.nwnu.edu.cn/:column/list.htm'],
             target: '/college/csse/:column',
         },
     ],

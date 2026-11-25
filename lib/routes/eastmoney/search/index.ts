@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -44,7 +45,7 @@ async function handler(ctx) {
             },
         },
     };
-    const cb = `jQuery${('3.5.1' + Math.random()).replaceAll(/\D/g, '')}_${Date.now()}`;
+    const cb = `jQuery${('3.5.1' + Math.random()).replaceAll(/\D/g, '')}_${Temporal.Now.instant().epochMilliseconds}`;
 
     const url = 'https://search-api-web.eastmoney.com/search/jsonp';
 
@@ -62,9 +63,9 @@ async function handler(ctx) {
     const arr = obj.result.cmsArticleWebOld;
 
     const items = arr.map((item) => ({
-        title: item.title,
+        title: load(item.title).text(),
         description: item.content,
-        pubDate: timezone(parseDate(item.date), 8),
+        pubDate: parseDate(item.date, 8),
         link: item.url,
         author: item.mediaName,
     }));

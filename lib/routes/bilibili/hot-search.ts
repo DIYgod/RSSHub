@@ -11,7 +11,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -44,7 +44,7 @@ async function handler() {
     const list = trending?.list || [];
     return {
         title,
-        link: url,
+        link: 'https://www.bilibili.com/',
         description: 'bilibili热搜',
         item: list.map((item) => ({
             title: item.keyword,

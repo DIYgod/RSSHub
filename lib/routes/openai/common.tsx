@@ -1,24 +1,25 @@
 import { load } from 'cheerio';
-import { Agent } from 'undici';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const BASE_URL = new URL('https://openai.com');
 
-// OpenAI article pages return Cloudflare 403 challenges when Undici negotiates HTTP/2.
-const articleDispatcher = new Agent({ allowH2: false });
-
 /** Fetch the details of an article. */
-export const fetchArticleDetails = async (url: string) => {
+const fetchArticleDetails = async (url: string) => {
     // Ensure trailing slash to avoid 301 redirect
-    const normalizedUrl = url.endsWith('/') ? url : `${url}/`;
+    const articleUrl = new URL(url);
+    if (!articleUrl.pathname.endsWith('/')) {
+        articleUrl.pathname += '/';
+    }
+    const normalizedUrl = articleUrl.href;
     const html = await ofetch(normalizedUrl, {
-        dispatcher: articleDispatcher,
-        responseType: 'text',
+        // OpenAI article pages return Cloudflare 403 challenges when Undici negotiates HTTP/2.
+        allowH2: false,
     });
     const $ = load(html);
 
@@ -65,27 +66,25 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
         items = items.filter((element) => $(element).find('category').text() === category);
     }
 
-    return Promise.all(
-        items.slice(0, limit).map<Promise<DataItem>>((element) => {
+    return pMap(
+        items.slice(0, limit),
+        async (element): Promise<DataItem> => {
             const id = $(element).find('guid').text();
+            const title = $(element).find('title').text();
+            const pubDate = parseDate($(element).find('pubDate').text());
+            const link = $(element).find('link').text();
+            const { content, categories, author, link: articleLink } = await cache.tryGet(`openai:news:detail:v2:${id}`, () => fetchArticleDetails(link));
 
-            return cache.tryGet(`openai:news:${id}`, async (): Promise<DataItem> => {
-                const title = $(element).find('title').text();
-                const pubDate = parseDate($(element).find('pubDate').text());
-                const link = $(element).find('link').text();
-
-                const { content, categories, author, link: articleLink } = await fetchArticleDetails(link);
-
-                return {
-                    guid: id,
-                    title,
-                    link: articleLink,
-                    pubDate,
-                    description: content,
-                    category: categories,
-                    author,
-                };
-            });
-        })
+            return {
+                guid: id,
+                title,
+                link: articleLink,
+                pubDate,
+                description: content,
+                category: categories,
+                author,
+            };
+        },
+        { concurrency: 3 }
     );
 };

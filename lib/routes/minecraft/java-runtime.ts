@@ -1,7 +1,9 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/java-runtime/:arch?/:javaType?',
@@ -62,7 +64,7 @@ function generateJava(arch: string, javaType: string, data: RuntimeInManifest): 
     return {
         title: `${arch} ${javaType} 更新了 ${data.version.name}`,
         description: `${arch} ${javaType} 更新了 ${data.version.name}`,
-        pubDate: new Date(data.version.released).toUTCString(),
+        pubDate: parseDate(data.version.released),
         link: data.manifest.url,
         guid: arch + javaType + data.version.name,
     };
@@ -73,19 +75,7 @@ function generateJavas(arch: string, javaType: string, data: RuntimeInManifest[]
 }
 
 function generateArch(arch: string, data: any, javaType: string): DataItem[] {
-    let items: DataItem[] = [];
-
-    if (javaType === 'all') {
-        for (const k in data) {
-            if (!Object.hasOwn(data, k)) {
-                continue;
-            }
-            items = [...items, ...generateJavas(arch, k, data[k])];
-        }
-    } else {
-        items = [...items, ...generateJavas(arch, javaType, data[javaType])];
-    }
-    return items;
+    return javaType === 'all' ? Object.keys(data).flatMap((k) => generateJavas(arch, k, data[k])) : generateJavas(arch, javaType, data[javaType]);
 }
 
 async function handler(ctx: Context) {
@@ -101,19 +91,14 @@ async function handler(ctx: Context) {
 
     const arch = ctx.req.param('arch') ?? 'all';
     const javaType = ctx.req.param('javaType') ?? 'all';
-
-    let items: DataItem[] = [];
-
-    if (arch === 'all') {
-        for (const k in data) {
-            if (!Object.hasOwn(data, k)) {
-                continue;
-            }
-            items = [...items, ...generateArch(k, data[k], javaType)];
-        }
-    } else {
-        items = [...items, ...generateArch(arch, data[arch], javaType)];
+    if (arch !== 'all' && !Object.hasOwn(data, arch)) {
+        throw new InvalidParameterError('Unknown architecture; use an architecture listed in the runtime manifest.');
     }
+    if (javaType !== 'all' && Object.values<Record<string, RuntimeInManifest[]>>(data).every((runtimes) => !Object.hasOwn(runtimes, javaType))) {
+        throw new InvalidParameterError('Unknown Java runtime type; use a type listed in the runtime manifest.');
+    }
+
+    const items = arch === 'all' ? Object.keys(data).flatMap((k) => generateArch(k, data[k], javaType)) : generateArch(arch, data[arch], javaType);
 
     const title = 'Minecraft Java运行时';
 

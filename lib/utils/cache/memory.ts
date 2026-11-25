@@ -18,11 +18,7 @@ export default {
     },
     get: (key: string, refresh = true) => {
         if (key && status.available && clients.memoryCache) {
-            let value = clients.memoryCache.get(key, { updateAgeOnGet: refresh });
-            if (value) {
-                value += '';
-            }
-            return value ?? null;
+            return clients.memoryCache.get(key, { updateAgeOnGet: refresh }) ?? null;
         }
         return null;
     },

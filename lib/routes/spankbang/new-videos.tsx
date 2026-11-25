@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const render = ({ preview, cover }) =>
     renderToString(
@@ -22,52 +22,60 @@ const handler = async (): Promise<Data> => {
     const baseUrl = 'https://spankbang.com';
     const link = `${baseUrl}/new_videos/`;
 
-    const context = await playwright();
-
     const data = await cache.tryGet(
         link,
         async () => {
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
+            const { page, destroy } = await getPlaywrightPage(link, {
+                noGoto: true,
+                closeTimeout: 0,
+                javaScriptEnabled: false,
+                onBeforeLoad: async (page) => {
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        const hostname = new URL(request.url()).hostname;
+                        return request.resourceType() === 'document' && (hostname === 'spankbang.com' || hostname.endsWith('.spankbang.com')) ? route.continue() : route.abort();
+                    });
+                },
             });
-            logger.http(`Requesting ${link}`);
-            await page.goto(link, {
-                waitUntil: 'domcontentloaded',
-            });
-
-            const response = await page.content();
-            const $ = load(response);
-
-            const items = $('.video-item')
-                .toArray()
-                .map((item) => {
-                    const $item = $(item);
-                    const thumb = $item.find('.thumb');
-                    const cover = $item.find('img.cover');
-
-                    return {
-                        title: thumb.attr('title')!,
-                        link: new URL(thumb.attr('href')!, baseUrl).href,
-                        description: render({
-                            cover: cover.data('src'),
-                            preview: cover.data('preview'),
-                        }),
-                    };
+            try {
+                logger.http(`Requesting ${link}`);
+                await page.goto(link, {
+                    waitUntil: 'domcontentloaded',
+                    timeout: 30000,
                 });
 
-            return {
-                title: $('head title').text(),
-                description: $('head meta[name="description"]').attr('content'),
-                item: items,
-            };
+                const response = await page.content();
+                const $ = load(response);
+
+                const items = $('.video-item')
+                    .toArray()
+                    .map((item) => {
+                        const $item = $(item);
+                        const thumb = $item.find('.thumb');
+                        const cover = $item.find('img.cover');
+
+                        return {
+                            title: thumb.attr('title')!,
+                            link: new URL(thumb.attr('href')!, baseUrl).href,
+                            description: render({
+                                cover: cover.data('src'),
+                                preview: cover.data('preview'),
+                            }),
+                        };
+                    });
+
+                return {
+                    title: $('head title').text(),
+                    description: $('head meta[name="description"]').attr('content'),
+                    item: items,
+                };
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false
     );
-
-    await context.close();
 
     return {
         title: data.title,

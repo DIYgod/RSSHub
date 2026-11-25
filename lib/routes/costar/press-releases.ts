@@ -7,11 +7,13 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://www.costar.com';
     const targetUrl: string = new URL(`products/benchmark/resources/press-releases${filter ? `?${filter}` : ''}`, baseUrl).href;
@@ -28,24 +30,24 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('a.coh-link').first();
 
             const title: string = $aEl.text();
-            const description = $el.find('div.coh-container').eq(3).html();
-            const pubDateStr: string | undefined = $el.find('div.coh-container').eq(4).text();
+            const description = $el.find('div.coh-container').eq(4).html();
+            const pubDateStr: string | undefined = $el.find('div.coh-container').eq(3).text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.coh-style-tags a').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'DD MMMM YYYY', 0) : undefined,
                 link: linkUrl,
                 category: categories,
                 content: {
                     html: description,
-                    text: description,
+                    text: $('<div>')
+                        .html(description ?? '')
+                        .text(),
                 },
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
@@ -54,11 +56,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     items = await Promise.all(
         items.map((item) => {
-            if (!item.link) {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'costar.com')) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
@@ -73,9 +76,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('<div>')
+                            .html(description ?? '')
+                            .text(),
                     },
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                    updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                     language,
                 };
 
@@ -92,7 +97,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:title"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
         id: targetUrl,
@@ -126,12 +130,8 @@ To subscribe to [Press Releases - Asia Pacific - Preliminary](https://www.costar
     },
     radar: [
         {
-            source: ['www.costar.com'],
-            target: (_, url) => {
-                const filter: string = new URL(url).search?.replace(/\?/, '');
-
-                return `/costar/press-releases${filter ? `/${filter}` : ''}`;
-            },
+            source: ['www.costar.com/', 'www.costar.com/products/benchmark/resources/press-releases'],
+            target: '/press-releases',
         },
     ],
     view: ViewType.Articles,

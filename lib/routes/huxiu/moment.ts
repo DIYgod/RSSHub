@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiMomentRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, processItems, rootUrl } from './util';
 
@@ -28,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const apiUrl = new URL('web-v3/moment/feed', apiMomentRootUrl).href;
     const currentUrl = new URL('moment', rootUrl).href;

@@ -2,16 +2,19 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'cardgame' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '18');
+    const limit = getRouteLimit(ctx, 18);
 
     const baseUrl = 'https://app.mycard520.com.tw';
     const targetUrl: string = new URL(`category/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
@@ -39,15 +42,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
+                pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY.MM.DD') : undefined,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 content: {
                     html: description,
                     text: description,
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: upDatedStr ? parseDate(upDatedStr, 'YYYY.MM.DD') : undefined,
                 language,
             };
 
@@ -55,13 +58,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
+        await pMap(
+            items,
+            (item) => {
+                // only follow links on the site itself
+                if (!isOnSite(item.link, 'mycard520.com.tw')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                return cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
                     const $$pageBox: Cheerio<Element> = $$('div.page_box');
@@ -77,12 +82,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                        pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY.MM.DD') : item.pubDate,
                         content: {
                             html: description ?? '',
                             text: description ?? '',
                         },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                        updated: upDatedStr ? parseDate(upDatedStr, 'YYYY.MM.DD') : item.updated,
                         language,
                     };
 
@@ -91,7 +96,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         ...processedItem,
                     };
                 });
-            })
+            },
+            { concurrency: 6 }
         )
     ).filter((_): _ is DataItem => true);
 
@@ -100,7 +106,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="keywords"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('div.logo img').attr('src'),
         author: $('title').text().split(/-/).pop()?.trim(),
         language,
@@ -162,11 +167,7 @@ export const route: Route = {
     radar: [
         {
             source: ['app.mycard520.com.tw/category/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/mycard520${category ? `/${category}` : ''}`;
-            },
+            target: '/category/:category',
         },
         {
             title: '最新遊戲',

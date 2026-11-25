@@ -1,7 +1,8 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -23,17 +24,20 @@ export const route = {
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type');
         const exhibitionType = Number(typeParam);
+        if (![1, 2, 3].includes(exhibitionType)) {
+            throw new InvalidParameterError('Invalid exhibition type: use 1, 2, or 3');
+        }
 
         const baseUrl = 'https://www.yinxubwg.cn';
         const apiBaseUrl = 'https://guc.yinxubwg.cn';
         const museumName = namespace.zh?.name || namespace.name;
 
-        const typeName: Record<number, string> = {
-            1: '常设展览',
-            2: '临时展览',
-            3: '展览回眸',
-        };
-        const feedTitle = typeName[exhibitionType];
+        const typeName = new Map([
+            [1, '常设展览'],
+            [2, '临时展览'],
+            [3, '展览回眸'],
+        ]);
+        const feedTitle = typeName.get(exhibitionType);
 
         const response = await ofetch(`${apiBaseUrl}/gwebapi/exhibition/list`, {
             query: {
@@ -52,6 +56,7 @@ export const route = {
             place: string;
             start_date_format: string;
             end_date_format: string;
+            intro: string;
         }> = response.data?.list ?? [];
 
         const items = list.map((item) => {
@@ -77,13 +82,14 @@ export const route = {
                         <b>闭展：</b>
                         {endDate || '未定/常设'}
                     </p>
+                    {item.intro ? <p style={{ whiteSpace: 'pre-wrap' }}>{item.intro}</p> : undefined}
                 </div>
             );
 
             return {
                 title: item.exhibition_name,
                 link,
-                pubDate: startDate ? parseDate(startDate) : undefined,
+                pubDate: startDate ? parseDate(startDate, 0) : undefined,
                 description,
                 _extra: {
                     museumName,

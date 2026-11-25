@@ -4,8 +4,7 @@ import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.dora-world.com';
 
@@ -59,8 +58,8 @@ async function handler(ctx): Promise<Data> {
     const list = contents.map((item) => ({
         title: item.title,
         link: item.page_url.startsWith('http') ? item.page_url : `${baseUrl}${item.page_url}`,
-        description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
-        pubDate: timezone(parseDate(item.publish_at), 9),
+        description: item.page_url.startsWith('/contents/') ? '' : `<img src="${item.image_url}" alt="">`,
+        pubDate: parseDate(item.publish_at, 9),
         category: item.tags.map((tag) => tag.name),
         guid: item.id,
     }));

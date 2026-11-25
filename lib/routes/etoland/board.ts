@@ -7,7 +7,8 @@ import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:bo_table',
@@ -32,13 +33,12 @@ export const route: Route = {
 
 const baseUrl = 'https://etoland.co.kr';
 
-const getWafToken = (url: string) =>
+const wafChallengePattern = /atob\('([\d+/=A-Za-z]{80,})'\)/;
+
+const getWafToken = (url: string, challenge: string) =>
     cache.tryGet<string>(
         'etoland:_waftokenid',
         async () => {
-            const challengePage: string = await ofetch(url);
-            const challenge = /atob\('([\d+/=A-Za-z]{80,})'\)/.exec(challengePage)![1];
-
             const response = await ofetch.raw(url, {
                 headers: { cookie: `_wafchallengeid=${solveWafChallenge(challenge)};` },
                 redirect: 'manual',
@@ -86,11 +86,16 @@ async function handler(ctx: Context): Promise<Data> {
     const { bo_table } = ctx.req.param();
     const link = `${baseUrl}/b/${bo_table}/list`;
 
-    const cookie = await getWafToken(link);
-    const response = await ofetch(link, { headers: { cookie } });
+    let response = await ofetch<string>(link);
+    const challenge = wafChallengePattern.exec(response)?.[1];
+    if (challenge) {
+        const cookie = await getWafToken(link, challenge);
+        response = await ofetch(link, { headers: { cookie } });
+    }
 
     const articles = extractArticleList(load(response));
-    const items = articles.slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25).map((article) => ({
+    const limit = getRouteLimit(ctx, 25);
+    const items = articles.map((article) => ({
         title: article.subject,
         link: `${baseUrl}/b/${article.boTable}/view/${encodeURIComponent(article.slug)}`,
         author: article.member.nickname,
@@ -99,10 +104,14 @@ async function handler(ctx: Context): Promise<Data> {
         comments: article.commentCount,
     }));
 
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+
     return {
         title: `eTOLAND - ${articles[0].boTableName}`,
         link,
         language: 'ko',
-        item: items,
+        item: items.slice(0, limit),
     };
 }

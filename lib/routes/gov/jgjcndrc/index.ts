@@ -3,12 +3,14 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { columnId = '1832739866673426433', subColumnId } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
+    // Article timestamps can refine the dates on the first list page.
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
     const rootUrl = 'https://www.jgjcndrc.org.cn';
     const currentUrl = new URL(`list?clmId=${columnId}${subColumnId ? `&sclmId=${subColumnId}` : ''}`, rootUrl).href;
@@ -23,16 +25,16 @@ export const handler = async (ctx) => {
     const { data: response } = await got(apiColumnUrl, {
         searchParams: {
             pageNum: 1,
-            pageSize: limit,
+            pageSize: candidateLimit,
         },
     });
 
-    let items = response.data.slice(0, limit).map((item) => {
+    let items = response.data.slice(0, candidateLimit).map((item) => {
         const guid = `jgjcndrc-${item.articleId}`;
 
         return {
             title: item.articleTitle,
-            pubDate: parseDate(item.pubDate),
+            pubDate: parseDate(item.pubDate, 8),
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
@@ -53,14 +55,14 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate(data.pubDate), 8);
+                item.pubDate = parseDate(data.pubDate, 8);
                 item.link = data.linkUrl || new URL(data.articleUrl, rootUrl).href;
                 item.category = data.parentColumns.map((c) => c.columnName);
                 item.guid = guid;
                 item.id = guid;
                 item.content = {
                     html: description,
-                    text: description,
+                    text: description ? load(description).text() : undefined,
                 };
                 item.language = language;
 
@@ -76,7 +78,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('header h1').text(),
         language,
@@ -85,7 +86,7 @@ export const handler = async (ctx) => {
 
 export const route: Route = {
     path: '/:columnId?/:subColumnId?',
-    name: '中华人民共和国国家发展和改革委员会价格监测中心',
+    name: '通用',
     url: 'www.jgjcndrc.org.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -118,7 +119,7 @@ export const route: Route = {
                 const columnId = searchParams.get('clmId');
                 const subColumnId = searchParams.get('sclmId');
 
-                return `/jgjcndrc${columnId ? `/${columnId}${subColumnId ? `/${subColumnId}` : ''}` : ''}`;
+                return columnId ? `/${columnId}${subColumnId ? `/${subColumnId}` : ''}` : '/';
             },
         },
     ],

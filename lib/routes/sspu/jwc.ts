@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc/:listId',
@@ -13,7 +14,8 @@ export const route: Route = {
     parameters: { listId: '专栏 ID，见下表' },
     radar: [
         {
-            source: ['jwc.sspu.edu.cn/jwc/:listId/list.htm'],
+            source: ['jwc.sspu.edu.cn/:listId/list.htm'],
+            target: '/jwc/:listId',
         },
     ],
     name: '教务处',
@@ -32,7 +34,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     const list = $('.news_list .news')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
+        .slice(0, getRouteLimit(ctx, 15))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -43,18 +45,21 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`sspu:jwc:detail:v2:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description = $('.wp_articlecontent').html();
-                item.pubDate = timezone(parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss'), 8);
-
-                return item;
-            })
-        )
+                return {
+                    description: $('.wp_articlecontent').html(),
+                    pubDate: parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss', 8),
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -4,7 +4,7 @@ import iconv from 'iconv-lite';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'http://wlwz.changsha.gov.cn';
 
@@ -47,7 +47,7 @@ async function handler() {
 
             return {
                 title: $tr.find('td[title]').attr('title')!,
-                link: baseUrl + $tr.find('td[title] > a').attr('href'),
+                link: new URL($tr.find('td[title] > a').attr('href')!, `${baseUrl}/webapp/cs2020/email/index.jsp`).href,
                 author: $tr.find('td:last').text(),
             };
         });
@@ -61,10 +61,11 @@ async function handler() {
                 postPage.data = iconv.decode(postPage.data, 'gbk');
                 const $ = load(postPage.data);
 
+                const pubDate = $('.letter-details div:first table tr:nth-child(2) > .td_label2').text().trim();
                 const data = {
-                    title: item.title!,
+                    title: item.title,
                     description: $('.letter-details').html()!.trim(),
-                    pubDate: parseDate($('.letter-details div:first table tr:nth-child(2) > .td_label2').text() + ' +0800', 'YYYY-MM-DD HH:mm:ss ZZ'),
+                    pubDate: pubDate ? parseDate(`${pubDate} +0800`, 'YYYY-MM-DD HH:mm:ss ZZ') : undefined,
                     link: item.link,
                     author: item.author,
                 };

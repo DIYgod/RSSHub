@@ -1,4 +1,8 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -36,15 +40,22 @@ async function handler(ctx) {
         url: rootUrl,
     });
 
-    const jsUrl = `${rootUrl}${response.data.match(/crossorigin src="(\/assets\/index-\w+\.js)">/)[1]}`;
+    const scriptPath = response.data.match(/crossorigin src="(\/assets\/index-\w+\.js)">/)?.[1];
+    if (!scriptPath) {
+        throw new NotFoundError('The source page does not expose its index script.');
+    }
+    const jsUrl = `${rootUrl}${scriptPath}`;
 
     response = await got({
         method: 'get',
         url: jsUrl,
     });
 
-    const sites = response.data
-        .match(/label:"(.*?)",value:"(.*?)",order/g)
+    const siteMatches = response.data.match(/label:"(.*?)",value:"(.*?)",order/g);
+    if (!siteMatches?.length) {
+        throw new NotFoundError('The source index script does not expose any supported sites.');
+    }
+    const sites: Array<{ label: string; value: string }> = siteMatches
         .map((a) => {
             const matches = a.match(/label:"(.*?)",value:"(.*?)"/);
             return {
@@ -53,13 +64,15 @@ async function handler(ctx) {
             };
         })
         .filter((a) => (site ? a.label === site || a.value === site : true));
+    if (!sites.length) {
+        throw new InvalidParameterError('Unsupported source site. Use a label or value exposed by the source site list.');
+    }
 
     const currentUrl = `${rootUrl}${site ? `/#/list?type=${sites[0].value}` : ''}`;
 
-    const items: any[] = [];
-
-    await Promise.all(
-        sites.map(async (a) => {
+    const siteItems = await pMap(
+        sites,
+        async (a): Promise<DataItem[]> => {
             const detailResponse = await got({
                 method: 'get',
                 url: `${apiRootUrl}/${a.value}`,
@@ -68,21 +81,18 @@ async function handler(ctx) {
                 },
             });
 
-            for (const d of detailResponse.data.data) {
-                items.push({
-                    link: d.url,
-                    title: d.title,
-                    description: d.desc,
-                });
-            }
-
-            return;
-        })
+            return detailResponse.data.data.map((d) => ({
+                link: d.url,
+                title: d.title,
+                description: d.desc,
+            }));
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `今日热榜${site ? ` - ${sites[0].label}` : ''}`,
         link: currentUrl,
-        item: items,
+        item: siteItems.flat(),
     };
 }

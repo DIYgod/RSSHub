@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { parseToken } from '@/routes/xueqiu/cookies';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/stock_info/:id/:type?',
@@ -55,7 +55,7 @@ async function handler(ctx) {
     const { source, label, endpoint } = typeMap[type];
 
     const link = `https://xueqiu.com/S/${id}`;
-    const cookie = await parseToken(link);
+    const cookie = await parseToken();
 
     // Fetch the stock name from the lightweight quote API (the name is rendered
     // client-side on the page, so it cannot be scraped from the static HTML)

@@ -1,5 +1,6 @@
-// Warning: The author still knows nothing about javascript!
+import pMap from 'p-map';
 
+// Warning: The author still knows nothing about javascript!
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 
@@ -28,7 +29,7 @@ export const route: Route = {
 async function handler() {
     // feed the data to rss
     const items = await getNotifList();
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getArticle(item))));
+    const itemsWithContent = await pMap(items, async (item) => ({ ...item, ...(await cache.tryGet(`scu-scupi:article-v2:${item.link}`, () => getArticle(item.link))) }), { concurrency: 3 });
 
     return {
         title: '四川大学匹兹堡学院',

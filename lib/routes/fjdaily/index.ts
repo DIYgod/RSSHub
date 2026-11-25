@@ -1,12 +1,12 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const ROOT_URL = 'https://fjrb.fjdaily.com';
 
@@ -122,7 +122,7 @@ export const route: Route = {
     path: '/:date?',
     categories: ['traditional-media'],
     example: '/fjdaily/20260316',
-    parameters: { date: '日期，格式为 `YYYYMMDD`，留空时抓取当天全部版面，例如 `20260316`' },
+    parameters: { date: '日期，格式为 `YYYYMMDD`，留空时抓取最新一期全部版面，例如 `20260316`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -183,8 +183,9 @@ async function handler(ctx) {
         throw new Error(`No articles were found for ${yearMonth}${day}.`);
     }
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link!);
                 const detail = load(detailResponse.data);
@@ -196,15 +197,16 @@ async function handler(ctx) {
                     ...item,
                     author: author || undefined,
                     description: description || undefined,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                    pubDate: pubDate ? parseDate(pubDate, 8) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: `福建日报 - ${yearMonth.slice(0, 4)}-${yearMonth.slice(4, 6)}-${day}`,
         link: pageUrl,
+        language: 'zh-CN' as const,
         item: items,
     };
 }

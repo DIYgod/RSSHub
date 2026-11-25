@@ -1,13 +1,16 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'index/tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://zhxy.hubu.edu.cn';
     const currentUrl = `${rootUrl}/${category}.htm`;
@@ -19,63 +22,64 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     let items = $('div.box h1 a')
-        .slice(0, limit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.contents().first().text(),
-                pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
+                pubDate: parseDate($item.find('span').text(), 8),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 language,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const { data: detailResponse } = await got(item.link);
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => compareDates(b.pubDate, a.pubDate));
+    }
+    items = items.slice(0, limit);
 
-                    const $$ = load(detailResponse);
-
-                    const title = $$('div.ar_title h1').text();
-
-                    if (!title) {
-                        return item;
-                    }
-
-                    const description = $$('div.v_news_content').html();
-
-                    item.title = title;
-                    item.description = description;
-                    item.category = $$('META[Name="keywords"]')
+    items = await pMap(
+        items,
+        async (item) => {
+            // only follow links on the site itself
+            if (!isOnSite(item.link, 'hubu.edu.cn')) {
+                return item;
+            }
+            const detail = await cache.tryGet(`hubu:content:${item.link}`, async () => {
+                const { data: detailResponse } = await got(item.link);
+                const $$ = load(detailResponse);
+                const title = $$('div.ar_title h1').text();
+                if (!title) {
+                    return {};
+                }
+                const description = $$('div.v_news_content').html();
+                return {
+                    title,
+                    description,
+                    category: $$('META[Name="keywords"]')
                         .toArray()
-                        .map((c) => $$(c).text());
-                    item.content = {
+                        .flatMap((c) => ($$(c).attr('content') ?? '').split(',')),
+                    content: {
                         html: description,
                         text: $$('div.v_news_content').text(),
-                    };
-                    item.language = language;
-                } catch {
-                    // no-empty
-                }
-
-                return item;
-            })
-        )
+                    },
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo a img').prop('src')!, currentUrl).href;
+    const imageSrc = $('div.logo a img').prop('src');
+    const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
 
     return {
         title,
         description: $('META[Name="keywords"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
         language,

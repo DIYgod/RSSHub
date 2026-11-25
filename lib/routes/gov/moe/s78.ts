@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/s78/:column',
@@ -44,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD', 8),
             };
         });
 
@@ -56,6 +55,10 @@ async function handler(ctx) {
 
                 $('#moe-detail-page-set, #moeCode, .moe-detail-shuxing, h1').remove();
                 item.description = $('.moe-detail-box').html();
+                const pubDate = $('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = parseDate(pubDate, 8);
+                }
 
                 return item;
             })

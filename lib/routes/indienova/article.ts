@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -26,6 +27,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
+    if (type !== 'article' && type !== 'development') {
+        throw new Error('Invalid article type. Supported values: article, development.');
+    }
     let link = 'https://indienova.com/indie-game-news/';
     if (type === 'development') {
         link = 'https://indienova.com/indie-game-development/';
@@ -33,9 +37,9 @@ async function handler(ctx) {
     const response = await got(link);
 
     const $ = load(response.data);
-    const list = parseList($);
+    const list: Array<DataItem & { link: string }> = parseList($);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
+    const items = await pMap(list, (item) => cache.tryGet(item.link, () => parseItem(item)), { concurrency: 3 });
 
     return {
         title: $('head title').text(),

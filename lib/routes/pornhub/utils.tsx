@@ -1,7 +1,6 @@
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 const defaultDomain = 'https://www.pornhub.com';
 
@@ -27,7 +26,7 @@ const extractDateFromImageUrl = (imageUrl) => {
 };
 
 const parseItems = (e, showImages = false) => ({
-    title: e.find('span.title a').text().trim(),
+    title: e.find('span.title a').text(),
     link: defaultDomain + e.find('span.title a').attr('href'),
     description: renderDescription(
         {
@@ -37,7 +36,7 @@ const parseItems = (e, showImages = false) => ({
         showImages
     ),
     author: e.find('.usernameWrap a').text(),
-    pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))).toDate() || parseRelativeDate(e.find('.added').text()),
+    pubDate: parseDateStrict(extractDateFromImageUrl(e.find('img').data('mediumthumb')), 'YYYYMMDD'),
 });
 
 const getRadarDomin = (path: string) => [

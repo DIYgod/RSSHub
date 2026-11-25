@@ -1,6 +1,8 @@
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 import { categories, getInfo, processItems, rootRSSUrl, rootUrl, title } from './util';
 
@@ -201,14 +203,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const queryString = id ? `?cid=${id}` : '';
     const currentUrl = new URL(id ? `newsclass.aspx${queryString}` : '', rootUrl).href;
 
     const rssUrl = new URL(`rss.aspx${queryString}`, rootRSSUrl).href;
 
-    const feed = await parser.parseURL(rssUrl);
+    const { data: response } = await got(rssUrl);
+    const feed = await parser.parseString(response);
 
     let items = feed.items.slice(0, limit).map((item) => ({
         title: item.title!,

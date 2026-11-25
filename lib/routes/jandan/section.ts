@@ -68,12 +68,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['i.jandan.net/:category'],
-            target: '/jandan/:category?',
-        },
-    ],
+    radar: ['top', 'qa', 'treehole', 'ooxx', 'beauty', 'pic', 'bbs'].map((category) => ({
+        source: [`i.jandan.net/${category}`],
+        target: `/${category}`,
+    })),
     handler,
 };
 

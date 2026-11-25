@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news/:type',
@@ -23,16 +24,32 @@ export const route: Route = {
     handler,
 };
 
+async function getArticleContent(link: string): Promise<Pick<DataItem, 'description'>> {
+    const { data } = await got(link);
+    const $ = load(data);
+    if (link.startsWith('https://tonglinv.pixnet.net/')) {
+        return { description: $('.article-content-inner').html() };
+    }
+    if (/^https?:\/\/blog\.xuite\.net\//.test(link)) {
+        return { description: $('#content_all').html() };
+    }
+    if (/TNews_View\.aspx/.test(link)) {
+        return { description: $('#ContentPlaceHolder1_TNewsContent').html() };
+    }
+    return { description: '' };
+}
+
 async function handler(ctx) {
     const { type } = ctx.req.param();
     const baseURL = 'https://www.tongli.com.tw/';
     const url = `${baseURL}TNews_List.aspx`;
-    const { data: res, url: link } = await got(url, {
-        searchParams: {
-            Type: type,
-            Page: 1,
-        },
+    const searchParams = { Type: type, Page: 1 };
+    const { data: res } = await got(url, {
+        searchParams,
     });
+    const link = new URL(url);
+    link.searchParams.set('Type', type);
+    link.searchParams.set('Page', '1');
     const $ = load(res);
 
     const list = $('.news_list ul li')
@@ -43,34 +60,22 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href')!.startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
-                pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD'),
+                pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD', 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const { data: res } = await got(item.link);
-                const $ = load(res);
-
-                if (item.link!.startsWith('https://tonglinv.pixnet.net/')) {
-                    item.description = $('.article-content-inner').html();
-                } else if (/^https?:\/\/blog\.xuite\.net\//.test(item.link!)) {
-                    item.description = $('#content_all').html();
-                } else if (/TNews_View\.aspx/.test(item.link!)) {
-                    item.description = $('#ContentPlaceHolder1_TNewsContent').html();
-                } else {
-                    item.description = '';
-                }
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`tongli:article:${item.link}`, () => getArticleContent(item.link!));
+            return { ...item, description: article.description };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: $('.entry_title .n1').text(),
-        link,
+        link: link.href,
         item: items,
     };
 }

@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import type { Value } from './types';
 
@@ -35,9 +35,11 @@ async function handler(ctx: Context) {
         },
     });
 
+    const authors = new Map(response.value.bundle.users.map((user) => [user.id, user.profile.name]));
     const items = response.value.bundle.channelMessages.map((message) => ({
-        title: message.excerpt.split('\n', 1)[0],
+        title: message.excerpt,
         description: message.content,
+        author: authors.get(message.author),
         pubDate: parseDate(message.publishedAt),
         category: message.tags,
         link: `${baseUrl}/channel/${response.value.channel}/${message.id}`,

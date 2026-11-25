@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/jwc',
@@ -35,7 +36,7 @@ async function handler() {
         .not('#wp_paging_w66 li')
         .toArray()
         .map((item): DataItem => ({
-            pubDate: $(item).find('span').text(),
+            pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD', 8),
             title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }));

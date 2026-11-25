@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/news',
@@ -40,7 +40,6 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('a').text(),
-            description: $(item).find('a').text(),
             link: $(item).find('a').attr('href'),
             pubDate: parseDate($(item).find('i.text-helper-color.mr-4').text().trim()),
         }));

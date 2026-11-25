@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/rss',
@@ -28,9 +30,18 @@ async function handler() {
 
     const feed = await parser.parseURL(link);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const list: DataItem[] = feed.items.map((item) => ({
+        title: item.title || '',
+        link: item.link,
+        guid: item.guid,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        author: item.creator,
+        category: item.categories,
+    }));
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`foreignaffairs:article-body:${item.link}`, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
@@ -40,17 +51,16 @@ async function handler() {
 
                 $('.paywall').remove();
                 $('.loading-indicator').remove();
-                item.description = $('.article-dropcap').html();
-                item.author = item.creator;
-
-                return item;
-            })
-        )
+                return $('.article-dropcap').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: 'Foreign Affairs - RSS',
-        link,
-        item: items as DataItem[],
+        link: feed.link,
+        item: items,
     };
 }

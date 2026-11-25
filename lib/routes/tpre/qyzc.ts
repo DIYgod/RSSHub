@@ -2,8 +2,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/qyzc',
@@ -15,13 +15,21 @@ export const route: Route = {
     url: 'trade.tpre.cn/transaction-view/enterprise-assets-view',
 };
 
+function parsePubDate(value?: string, format = 'YYYY-MM-DD') {
+    if (!value) {
+        return;
+    }
+    return parseDate(`${value} +08:00`, `${format} Z`);
+}
+
 async function handler(ctx: Context) {
+    const limit = getRouteLimit(ctx, 12);
     const response = await ofetch('https://trade.tpre.cn/up/biz/project/anmuas/enterprise-assets/page', {
         query: {
             projectInformation: '',
             current: 1,
-            size: ctx.req.query('limit') ?? 12,
-            _unique: Date.now(),
+            size: limit,
+            _unique: Temporal.Now.instant().epochMilliseconds,
         },
         headers: {
             Accept: 'application/json, text/plain, */*',
@@ -34,7 +42,7 @@ async function handler(ctx: Context) {
     const items = response.data.records.map((item) => ({
         title: item.title,
         link: item.projectLink,
-        pubDate: timezone(parseDate(item.startTime, 'YYYY-MM-DD'), 8),
+        pubDate: parsePubDate(item.startTime),
         category: [item.bizTypeName],
         description: [
             `项目编号：${item.projectCode}`,

@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:category?',
@@ -49,7 +50,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('.title a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);

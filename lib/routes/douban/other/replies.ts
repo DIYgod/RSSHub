@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/replies/:uid',
@@ -49,7 +50,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, (async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem | undefined> => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -63,7 +64,7 @@ async function handler(ctx) {
                         return {
                             link: item.link,
                             title: `${c.author.name} 于 ${c.create_time} 的回应`,
-                            pubDate: new Date(c.create_time + ' GMT+8').toUTCString(),
+                            pubDate: parseDate(c.create_time, 8),
                             description: c.text,
                             author: c.author.name,
                         };
@@ -72,13 +73,13 @@ async function handler(ctx) {
                         comments.push(...c.replies);
                     }
                 }
-            }) as () => Promise<DataItem>)
+            })
         )
     );
 
     return {
         title: $('title').text() + ' - 最新回应',
         link: currentUrl,
-        item: items,
+        item: items.filter((item) => item !== undefined),
     };
 }

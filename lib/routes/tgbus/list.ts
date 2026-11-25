@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { parseArticle } from './utils';
 
@@ -53,11 +53,11 @@ async function handler(ctx) {
                 title: element.find('div.title').text(),
                 link: `https://www.tgbus.com${a.attr('href')}`,
                 description: element.find('div.content').text(),
-                pubDate: timezone(parseDate(element.find('div.info span:nth-child(3)').text().trim()), 8),
+                pubDate: parseDate(element.find('div.info span:nth-child(3)').text(), 8),
             };
         });
 
-    const out = await Promise.all(list.map((item) => parseArticle(item)));
+    const out = await pMap(list, parseArticle, { concurrency: 3, stopOnError: false });
 
     return {
         title: `${categories[category]} - 电玩巴士`,

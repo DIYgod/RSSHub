@@ -1,10 +1,11 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
+import { isOnSite } from '@/utils/valid-host';
+
+import { getPage } from './utils';
 
 export const route: Route = {
     path: '/province-news',
@@ -12,24 +13,29 @@ export const route: Route = {
     example: '/noi/province-news',
     name: '各省新闻',
     maintainers: ['WenryXu'],
+    features: { antiCrawler: true },
     handler,
 };
 
 async function handler() {
-    const response = await ofetch('https://www.noi.cn/gs/xw/index.shtml');
-    const $ = load(response);
+    const $ = await getPage('https://www.noi.cn/gs/xw/index.shtml');
     const postList = $('.news-all .news-item').toArray();
 
-    const result = await Promise.all(
-        postList.map((item) => {
+    const result = await pMap(
+        postList,
+        (item) => {
             const $item = $(item);
             const title = $item.find('a').text();
-            const link = 'https://www.noi.cn' + $item.find('a').attr('href');
-            const pubDate = timezone(parseDate($item.find('small').text().slice(-19)), 8);
+            const link = new URL($item.find('a').attr('href')!, 'https://www.noi.cn').href;
+            const pubDate = parseDate($item.find('small').text().slice(-19), 8);
+
+            // only follow links on the site itself
+            if (!isOnSite(link, 'noi.cn')) {
+                return { title, link, guid: link, pubDate };
+            }
 
             return cache.tryGet(link, async () => {
-                const detail = await ofetch(link);
-                const $detail = load(detail);
+                const $detail = await getPage(link);
 
                 return {
                     title,
@@ -39,7 +45,8 @@ async function handler() {
                     description: $detail('.news-cont').html(),
                 };
             });
-        })
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

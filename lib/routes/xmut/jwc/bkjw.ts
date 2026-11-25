@@ -1,12 +1,13 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseDateStrict } from '@/utils/time';
 
 const xmut = 'https://jwc.xmut.edu.cn';
-
 export const route: Route = {
     path: '/jwc/bkjw/:category?',
     categories: ['university'],
@@ -19,7 +20,34 @@ export const route: Route = {
 | :------: | :------: | :------: | :------: | :------: |
 |   jxyx   |   zhsw   |   xwgl   |   sjjx   |   jyjg   |`,
 };
-
+function parseArticleContent($: CheerioAPI, link: string) {
+    const body = $('.v_news_content, #vsb_content_6');
+    const description = body.html();
+    if (!description) {
+        return description;
+    }
+    const attachments = $('<ul class="rsshub-attachments"></ul>');
+    $('a[href*="/system/_content/download.jsp"]').each((_, element) => {
+        const anchor = $(element);
+        const url = new URL(anchor.attr('href')!, link);
+        const attachmentWrapper1 = $('<li></li>');
+        const attachmentAnchor1 = $('<a></a>').attr('href', url.href).text(anchor.text());
+        attachmentWrapper1.append(attachmentAnchor1);
+        attachments.append(attachmentWrapper1);
+    });
+    return description + (attachments.children().length ? $.html(attachments) : '');
+}
+async function fetchArticleContent(link: string): Promise<Pick<DataItem, 'description' | 'pubDate'>> {
+    const res = await got(link, { headers: { referer: xmut } });
+    const $ = load(res.data);
+    const published = $('div[align="center"]')
+        .filter((_, element) => $(element).text().startsWith('文章来源：'))
+        .text()
+        .match(/时间：\s*(\d{4}年\d{2}月\d{2}日\s+\d{2}:\d{2})/)?.[1];
+    // The source clock has no offset; use a fixed +08 calendar representation.
+    const pubDate = published ? parseDateStrict(published, 'YYYY年MM月DD日 HH:mm', 8) : undefined;
+    return { description: parseArticleContent($, link) ?? undefined, pubDate };
+}
 async function handler(ctx) {
     const { category = 'jwxt' } = ctx.req.param();
     const url = `${xmut}/index/tzgg/${category}.htm`;
@@ -39,27 +67,20 @@ async function handler(ctx) {
                 link = resLink;
             }
             const title = $('a', res).attr('title');
-            const pubDate = parseDate(resDate.text());
+            const pubDate = parseDate(resDate.text(), 8);
             return {
                 title: title!,
                 link,
                 pubDate,
             };
         });
-    const items = await Promise.all(
-        itemsArray.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const res = await got(item.link, {
-                    headers: {
-                        referer: xmut,
-                    },
-                });
-                const $item = load(res.data);
-                const content = $item('table #result #content form div #vsb_content_6').html();
-                item.description = content;
-                return item;
-            })
-        )
+    const items = await pMap(
+        itemsArray,
+        async (item) => {
+            const detail = await cache.tryGet(`xmut:bkjw:detail:${item.link}`, () => fetchArticleContent(item.link!));
+            return { ...item, description: detail.description, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
     return {
         title: $('title').text(),

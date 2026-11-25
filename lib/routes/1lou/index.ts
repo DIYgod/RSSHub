@@ -3,18 +3,20 @@ import type { Context } from 'hono';
 
 import type { DataItem, Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { parseItems } from './util';
 
 const rootUrl = 'https://www.1lou.me';
 
-export const handler = async (ctx: Context) => {
+const handler = async (ctx: Context) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const queryString = Object.entries(ctx.req.query())
+        // access-control credentials must not reach the upstream site or the cached feed
+        .filter(([key]) => key !== 'key' && key !== 'code')
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
         .join('&');
 
@@ -36,7 +38,7 @@ export const handler = async (ctx: Context) => {
 
             return {
                 title: subjectEl.text(),
-                pubDate: timezone(parseDate($item.find('span.date').text()), 8),
+                pubDate: parseDate($item.find('span.date').text(), 8),
                 link: new URL(subjectEl.prop('href')!, rootUrl).href,
                 category: [
                     $item.find('a.text-secondary').text().replaceAll('[]', ''),

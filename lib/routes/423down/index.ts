@@ -3,13 +3,14 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
+    const limit = getRouteLimit(ctx, 18);
 
     const domain = '423down.com';
     const rootUrl = `https://www.${domain}`;
@@ -21,7 +22,7 @@ export const handler = async (ctx) => {
 
     const language = $('html').prop('lang') as Language;
 
-    let items = $('ul.excerpt li')
+    let items = $('div.content ul.excerpt li')
         .toArray()
         .filter((item) => {
             const $item = $(item);

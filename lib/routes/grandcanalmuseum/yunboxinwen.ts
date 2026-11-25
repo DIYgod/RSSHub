@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
 
@@ -30,8 +30,7 @@ export const route: Route = {
                 const $a = $(el);
                 const $li = $a.find('li');
                 const title = $li.find('.title').text();
-                const dateText = $li.find('.time').text();
-                const pubDate = parseDate(dateText, 'YYYY-MM-DD');
+                const pubDate = parseDate($li.find('.time').text(), 'YYYY-M-D', 0);
                 const href = $a.attr('href')!;
                 const link = new URL(href, baseUrl).href;
 

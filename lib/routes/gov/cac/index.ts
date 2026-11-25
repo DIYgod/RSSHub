@@ -4,8 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:path{.+}',
@@ -28,8 +27,7 @@ async function handler(ctx) {
     const path = `/${ctx.req.param('path')}`;
     const host = 'https://www.cac.gov.cn';
     const homepage = `${host}/index.htm`;
-    // 在首页查找出所有的目录完整路径，比如https://www.cac.gov.cn/wxzw/xxh/A093706index_1.htm
-    // xxh --> {"path": "/xxh", "completeUrl": "https://www.cac.gov.cn/wxzw/xxh/A093706index_1.htm"}
+    // Discover the current column URLs from the official homepage.
     const pathList = await cache.tryGet(
         'gov:cac:pathList',
         async () => {
@@ -68,17 +66,29 @@ async function handler(ctx) {
             const a = c.find('a');
             const articleHref = a.attr('href');
             const title = a.text();
-            const date = parseDate(c.find('.times').text());
             return {
-                link: articleHref,
-                pubDate: timezone(date),
+                link: new URL(articleHref!, completeUrl).href,
                 title,
-                description: title,
             };
         });
     return {
         title: $1('head title').text(),
         link: completeUrl,
-        item: items,
+        item: await Promise.all(
+            items.map(async (item) => {
+                const article = await cache.tryGet(`gov:cac:article:${item.link}`, async () => {
+                    const { data: response } = await got(item.link);
+                    const content = load(response);
+                    return {
+                        description: content('.main-content').html(),
+                        pubDate: parseDate(content('#pubtime').text().trim(), 'YYYY年MM月DD日 HH:mm', 8),
+                    };
+                });
+                return {
+                    ...item,
+                    ...article,
+                };
+            })
+        ),
     };
 }

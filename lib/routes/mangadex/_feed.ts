@@ -1,7 +1,10 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import { md5 } from '@/utils/hash';
+import { parseDate } from '@/utils/time';
 
 import constants from './_constants';
 import { getFilteredLanguages } from './_profile';
@@ -50,7 +53,7 @@ const toLanguageArray = (lang?: string | string[]): string[] => [lang ?? []].fla
 const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string | string[]) => {
     const includes = needCover ? ['cover_art'] : [];
 
-    const rawMangaMeta: MangaMeta = await cache.tryGet(`mangadex:manga-meta:${id}`, async () => {
+    const rawMangaMeta: MangaMeta = await cache.tryGet(`mangadex:manga-meta:v2:${id}:${needCover}`, async () => {
         const { data } = await got.get(
             `${constants.API.MANGA_META}${id}${toQueryString({
                 includes,
@@ -85,15 +88,14 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
         return { title, description };
     }
 
-    const coverFilename = `${relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName}.512.jpg`;
-    const cover = `${constants.API.COVER_IMAGE}${id}/${coverFilename}`;
+    const coverFilename = relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName;
+    const cover = coverFilename ? `${constants.API.COVER_IMAGE}${id}/${coverFilename}.512.jpg` : undefined;
 
     return { title, description, cover };
 };
 
 /**
  * Retrieves the title, description, and cover of multiple manga.
- * TODO: Retrieve page by page to avoid meeting the length limit of URL.
  *
  * @param ids manga ids
  * @param needCover whether to fetch cover
@@ -103,10 +105,16 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
  */
 export async function getMangaMetaByIds(ids: string[], needCover: boolean = true, lang?: string | string[]): Promise<Map<string, { id: string; title: string; description: string; cover?: string }>> {
     const deDuplidatedIds = [...new Set(ids)].toSorted((a, b) => a.localeCompare(b));
+    if (deDuplidatedIds.length > 100) {
+        const batches = Array.from({ length: Math.ceil(deDuplidatedIds.length / 100) }, (_, index) => deDuplidatedIds.slice(index * 100, (index + 1) * 100));
+        const batchMetadata = await pMap(batches, (batch) => getMangaMetaByIds(batch, needCover, lang), { concurrency: 3 });
+        return new Map(batchMetadata.flatMap((metadata) => [...metadata]));
+    }
+
     const includes = needCover ? ['cover_art'] : [];
 
     const rawMangaMetas: MangaMeta[] = await cache.tryGet(
-        `mangadex:manga-meta:${md5(deDuplidatedIds.join(''))}`, // shorten the key
+        `mangadex:manga-meta:v2:${md5(deDuplidatedIds.join(''))}:${needCover}`, // shorten the key
         async () => {
             const { data } = await got.get(
                 constants.API.MANGA_META.slice(0, -1) +
@@ -175,7 +183,7 @@ const getMangaChapters = async (id: string, lang?: string | string[], limit?: nu
     })}`;
 
     const chapters: MangaChapter[] | undefined = await cache.tryGet(
-        `mangadex:manga-chapters:${id}`,
+        `mangadex:manga-chapters:v2:${url}`,
         async () => {
             const { data } = await got.get(url);
 
@@ -196,7 +204,7 @@ const getMangaChapters = async (id: string, lang?: string | string[], limit?: nu
     return chapters.map((chapter) => ({
         title: [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' '),
         link: `${constants.API.MANGA_CHAPTERS}${chapter.id}`,
-        pubDate: new Date(chapter.attributes.publishAt),
+        pubDate: parseDate(chapter.attributes.publishAt),
     }));
 };
 
@@ -213,4 +221,4 @@ const getMangaDetails = async (id: string, needCover: boolean = true, lang?: str
     return { ...meta, chapters };
 };
 
-export { getMangaChapters, getMangaDetails, getMangaMeta };
+export { getMangaChapters, getMangaDetails };

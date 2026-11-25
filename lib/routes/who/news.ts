@@ -1,8 +1,37 @@
-import type { Route } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
+type ArticleMetadata = {
+    author: {
+        name: string;
+    };
+};
+function getArticleMetadata(content: CheerioAPI): ArticleMetadata {
+    return JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text().trim().replace(/;$/, ''));
+}
+async function getArticleDetails(link: string) {
+    const detailResponse = await got({ method: 'get', url: link });
+    const content = load(detailResponse.data);
+    const tags = content('.sf-item-header-wrapper .sf-tags-list-item')
+        .toArray()
+        .map((element) => content(element).text());
+    const article = getArticleMetadata(content);
+    const body = content('.sf-detail-body-wrapper');
+    if (!body.length) {
+        throw new Error(`WHO article content not found: ${link}`);
+    }
+    return {
+        description: body.html(),
+        category: tags.length ? tags : undefined,
+        author: article.author.name,
+    };
+}
 export const route: Route = {
     path: '/news/:language?',
     categories: ['government'],
@@ -32,40 +61,33 @@ export const route: Route = {
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
-
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
-
     const rootUrl = 'https://www.who.int';
     const currentUrl = `${rootUrl}/${language === 'en' ? '' : `${language}/`}news`;
     const apiUrl = `${rootUrl}/api/news/newsitems?sf_culture=${language}&$orderby=PublicationDateAndTime%20desc&$select=Title,PublicationDateAndTime,ItemDefaultUrl`;
-
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
-
-    const list = response.data.value.map((item) => ({
+    const list: Array<
+        DataItem & {
+            link: string;
+        }
+    > = response.data.value.map((item) => ({
         title: item.Title,
-        link: `${currentUrl}/item/${item.ItemDefaultUrl}`,
+        link: `${currentUrl}/item/${item.ItemDefaultUrl.replace(/^\/+/, '')}`,
         pubDate: parseDate(item.PublicationDateAndTime),
     }));
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                item.description = detailResponse.data.match(/"description":"(.*)","datePublished"/)[1];
-
-                return item;
-            })
-        )
+                const details = await getArticleDetails(item.link);
+                return { ...item, ...details };
+            }),
+        { concurrency: 3 }
     );
-
     return {
         title: 'News - WHO',
         link: currentUrl,

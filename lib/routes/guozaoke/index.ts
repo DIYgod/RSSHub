@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/default',
@@ -20,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '过早客',
+    name: '首页',
     maintainers: ['xiaoshame'],
     handler,
     url: 'guozaoke.com/',
@@ -46,29 +47,33 @@ async function handler() {
         .map((item): DataItem | undefined => {
             const $item = $(item);
             const title = $item.find('h3.title a').text();
-            const url = $item.find('h3.title a').attr('href');
+            const href = $item.find('h3.title a').attr('href');
             const author = $item.find('span.username a').text();
-            const lastTouched = $item.find('span.last-touched').text();
-            const pubDate = parseRelativeDate(lastTouched);
-            const link = url ? url.split('#', 1)[0] : undefined;
-            return link ? { title, link, author, pubDate } : undefined;
+            const updated = parseRelativeDate($item.find('span.last-touched').text());
+            const link = href ? new URL(href.split('#', 1)[0], url) : undefined;
+            // the article request carries the configured cookie, so it must not leave www.guozaoke.com
+            return link && link.origin === new URL(url).origin ? { title, link: link.href, author, updated } : undefined;
         })
         .filter((item) => item !== undefined);
 
     const out = await pMap(
         items,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
-                const url = `https://www.guozaoke.com${item.link}`;
+        async (item) => {
+            const article = await cache.tryGet(`guozaoke:article:${item.link}`, async () => {
                 const res = await got({
                     method: 'get',
-                    url,
+                    url: item.link,
                     headers: {
                         Cookie: config.guozaoke.cookies,
                     },
                 });
 
                 const $ = load(res.data);
+                const createdTime = $('.topic-detail > .ui-header .created-time')
+                    .first()
+                    .text()
+                    .replace(/^发表于\s*/, '');
+                const pubDate = createdTime ? parseRelativeDate(createdTime) : undefined;
                 let content = $('div.ui-content').html();
                 content = content ? content.trim() : '';
                 const comments = $('.reply-item').map((i, el) => {
@@ -82,12 +87,13 @@ async function handler() {
                 });
                 if (comments && comments.length > 0) {
                     for (const item of comments) {
-                        content += '<br>' + item.author + ': ' + item.comment;
+                        content += '<br>' + escapeText(item.author) + ': ' + escapeText(item.comment);
                     }
                 }
-                item.description = content;
-                return item;
-            }),
+                return { description: content, pubDate };
+            });
+            return { ...item, ...article };
+        },
         { concurrency: 2 }
     );
 

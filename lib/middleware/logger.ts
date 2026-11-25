@@ -32,14 +32,14 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     logger.info(`${LogPrefix.Incoming} ${method} ${path}`);
 
-    const start = Date.now();
+    const start = performance.now();
 
     await next();
 
     const status = ctx.res.status;
 
     logger.info(`${LogPrefix.Outgoing} ${method} ${path} ${colorStatus(status)} ${time(start)}`);
-    requestMetric.success(Date.now() - start, { path: routePath, method, status });
+    requestMetric.success(performance.now() - start, { path: routePath, method, status });
 };
 
 export default middleware;

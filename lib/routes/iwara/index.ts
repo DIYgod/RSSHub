@@ -1,8 +1,9 @@
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
@@ -28,9 +29,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { username, type = 'video' } = ctx.req.param();
+    if (!Object.hasOwn(apiUrlMap, type)) {
+        throw new InvalidParameterError('Invalid content type. Use video or image.');
+    }
 
-    const profile = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => {
-        const response = await ofetch(`${apiRootUrl}/profile/${username}`, {
+    const profileUrl = `${apiRootUrl}/profile/${encodeURIComponent(username)}`;
+    const profile = await cache.tryGet(profileUrl, async () => {
+        const response = await ofetch(profileUrl, {
             headers: {
                 'user-agent': config.trueUA,
             },
@@ -56,7 +61,7 @@ async function handler(ctx) {
     const items = list.map((item) => ({
         title: item.title,
         author: username,
-        link: `${rootUrl}/${type}/${item.id}/${item.slug}`,
+        link: `${rootUrl}/${type}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
         category: item.tags.map((i) => i.id),
         description: parseThumbnail(type, item),
         pubDate: parseDate(item.createdAt),
@@ -64,7 +69,7 @@ async function handler(ctx) {
 
     return {
         title: `${username}'s iwara - ${typeMap[type]}`,
-        link: `${rootUrl}/users/${username}`,
+        link: `${rootUrl}/users/${encodeURIComponent(username)}`,
         item: items,
     };
 }

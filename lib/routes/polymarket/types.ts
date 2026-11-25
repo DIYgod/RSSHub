@@ -1,6 +1,6 @@
 // API Constants
 export const GAMMA_API = 'https://gamma-api.polymarket.com';
-export const DATA_API = 'https://data-api.polymarket.com';
+export const DATA_API = 'https://data-api.polymarket.com/v2';
 
 // Common Interfaces
 
@@ -55,49 +55,51 @@ export interface PublicProfile {
 }
 
 export interface Position {
-    conditionId: string;
-    size: number;
-    avgPrice: number;
-    currentValue: number;
-    cashPnl: number;
-    percentPnl: number;
-    curPrice: number;
+    token_id: string;
+    condition_id: string;
+    current_size: number;
+    avg_price: number;
+    current_value: number;
+    unrealized_pnl: number;
+    percent_pnl: number;
+    current_price: number;
     title?: string;
     slug?: string;
-    eventSlug?: string;
+    event_slug?: string;
     outcome?: string;
-    outcomeIndex?: number;
+    outcome_index?: number;
     icon: string;
-    endDate?: string;
+    end_date?: string;
 }
 
 export interface Activity {
+    token_id?: string;
     timestamp: number;
     type: 'TRADE' | 'SPLIT' | 'MERGE' | 'REDEEM' | 'REWARD' | 'CONVERSION' | 'MAKER_REBATE';
     size?: number;
-    usdcSize?: number;
+    usdc_size?: number;
     price?: number;
     side?: 'BUY' | 'SELL';
-    outcomeIndex?: number;
+    outcome_index?: number;
     title?: string;
     slug?: string;
-    eventSlug?: string;
+    event_slug?: string;
     outcome?: string;
     icon?: string;
-    transactionHash?: string;
+    transaction_hash?: string;
     name?: string;
     pseudonym?: string;
 }
 
 export interface LeaderboardEntry {
-    rank: string;
-    proxyWallet: string;
-    userName?: string;
-    vol: number;
+    rank: number;
+    user_id: string;
+    user_name?: string;
+    volume: number;
     pnl: number;
-    profileImage?: string;
-    xUsername?: string;
-    verifiedBadge?: boolean;
+    profile_image?: string;
+    x_username?: string;
+    verified?: boolean;
 }
 
 export interface EventsPagination {

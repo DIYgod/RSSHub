@@ -35,9 +35,9 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const newsUrl = `${baseUrl}/${type}/list.htm`;
-    const listName = 'li.list_item';
-    const artiContent = '.read';
-    const listDate = '.Article_PublishDate';
+    const listName = 'li.news_c_list, li.list_item';
+    const artiContent = '.wp_articlecontent, .read';
+    const listDate = '.time, .Article_PublishDate';
     const webPageName = '.col_title';
 
     const items = await util.ProcessList(newsUrl, baseUrl, listName, listDate, webPageName);

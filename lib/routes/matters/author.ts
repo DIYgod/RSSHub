@@ -1,16 +1,17 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, gqlEndpoint, parseItem } from './utils';
 
 const handler = async (ctx) => {
-    const { uid } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const uid = ctx.req.param('uid').replace(/^@/, '');
+    const limit = getRouteLimit(ctx, 20);
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
             query: /* GraphQL */ `{
-                user(input: {userName: "${uid}"}) {
+                user(input: {userName: ${JSON.stringify(uid)}}) {
                   displayName
                   avatar
                   info {
@@ -58,7 +59,7 @@ export const route: Route = {
     radar: [
         {
             source: ['matters.town/:uid'],
-            target: (params) => `/matters/author/${params.uid.slice(1)}`,
+            target: '/author/:uid',
         },
     ],
 };

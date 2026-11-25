@@ -1,14 +1,14 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 
 const rootUrl = 'http://www.ulapia.com';
-
 const researchList = ['stock_research', 'industry_research', 'strategy_research', 'macro_research', 'ipo_research'];
-
 export const route: Route = {
     path: '/research/latest',
     categories: ['finance'],
@@ -32,31 +32,31 @@ export const route: Route = {
     handler,
     url: 'www.ulapia.com/',
 };
-
-async function handler() {
-    const items = await Promise.all(
-        researchList.map((item) => {
+async function handler(ctx: Context) {
+    const items = await pMap(
+        researchList,
+        async (item) => {
             const url = `${rootUrl}/reports/${item}`;
-
-            return cache.tryGet(url, async () => {
-                const response = await got.get(url);
-                const $ = load(response.data);
-                const items = $('div.row > div.col-md-6')
-                    .slice(0, 6)
-                    .toArray()
-                    .map((item) => ({
+            const response = await got.get(url);
+            const $ = load(response.data);
+            const items = $('div.row > div.col-md-6')
+                .filter((_, item) => !!$(item).find('img').attr('src'))
+                .slice(0, getRouteLimit(ctx, 6))
+                .toArray()
+                .map((item) => {
+                    const date = $(item).find('div.mb-0.text-muted').last().text().split(':', 2)[1];
+                    return {
                         title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
                         author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
                         link: $(item).find('h5.mb-1 > a').attr('href'),
                         description: `<img src="${$(item).find('img').attr('src')!.split('!', 1)[0]}">`,
-                        pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':', 2)[1], 'YYYY-MM-DD'),
-                    }));
-
-                return items;
-            });
-        })
+                        pubDate: parseDateStrict(date, 'YYYY-MM-DD', 8),
+                    };
+                });
+            return items;
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: 'Ulapia - 最新研报',
         link: rootUrl,

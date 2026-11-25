@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { extractDoc, renderVideo } from './utils';
 
@@ -51,36 +51,34 @@ async function handler(ctx) {
     const { data: contentData } = JSON.parse(contentResponse.match(/getListData\((.*)\)/)[1]);
     const { weMediaName: mediaName, honorDesc, description, logo } = allData;
 
-    const list = contentData.map((item) => ({
+    const list: Array<DataItem & { link: string }> = contentData.map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.newsTime), 8),
+        pubDate: parseDate(item.newsTime, 8),
         author: mediaName,
-        link: `https:${item.url}`,
+        link: new URL(item.url, 'https://ishare.ifeng.com').href,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`ifeng:feng:${type}:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-
-                const _allData = JSON.parse(
+                const articleData = JSON.parse(
                     $('script')
                         .text()
                         .match(/var allData = (\{.*?\});/)![1]
                 );
-                if (type === 'doc') {
-                    item.description = extractDoc(_allData.docData.contentData.contentList);
-                } else if (type === 'video') {
-                    item.description = renderVideo(_allData.videoInfo);
-                }
-
-                item.category = _allData.keywords.split(',');
-                item.author = _allData.docData?.editorName ?? item.author;
-
-                return item;
-            })
-        )
+                const description = type === 'doc' ? extractDoc(articleData.docData.contentData.contentList) : type === 'video' ? renderVideo(articleData.videoInfo) : undefined;
+                return {
+                    description,
+                    category: articleData.keywords.split(','),
+                    author: articleData.docData?.editorName ?? item.author,
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

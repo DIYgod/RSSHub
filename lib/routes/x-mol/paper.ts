@@ -4,10 +4,22 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
+
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'author' | 'doi'>> {
+    const response = await got(link);
+    const $ = load(response.data);
+    const description = $('.maga-content');
+    const doi = description.find('.itsmblue').eq(1).text().trim();
+    description.find('.itgaryfirst').remove();
+    description.find('span').eq(0).remove();
+    const author = description.find('span').eq(0).text().trim();
+    description.find('span').eq(0).remove();
+    return { doi, author, description: description.html() };
+}
 
 export const route: Route = {
     path: '/paper/:type/:magazine',
@@ -41,49 +53,34 @@ async function handler(ctx) {
 
     const newsItem = $('.magazine-model-content-new li')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
+        .filter((item) => $(item).find('.magazine-model-btn a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const rawDate = $item
+                .find('.magazine-text-atten')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+            const pubDate = rawDate ? parseDateStrict(rawDate, 'YYYY-MM-DD', 8) : undefined;
             return {
-                title: $item.find('.magazine-text-title a').text().trim(),
-                link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
-                pubDate: timezone(
-                    parseDate(
-                        $item
-                            .find('.magazine-text-atten')
-                            .text()
-                            .match(/\d{4}-\d{2}-\d{2}/)![0]
-                    ),
-                    8
-                ),
+                title: $item.find('.magazine-text-title a').text(),
+                link: new URL($item.find('.magazine-model-btn a').attr('href')!, utils.host).href,
+                pubDate,
             };
         });
 
     const item = await pMap(
         newsItem,
-        (element) =>
-            cache.tryGet(element.link, async () => {
-                const response = await got(element.link);
-                const $ = load(response.data);
-
-                const description = $('.maga-content');
-                element.doi = description.find('.itsmblue').eq(1).text().trim();
-
-                description.find('.itgaryfirst').remove();
-                description.find('span').eq(0).remove();
-                element.author = description.find('span').eq(0).text().trim();
-                description.find('span').eq(0).remove();
-
-                element.description = description.html();
-
-                return element;
-            }),
-        { concurrency: 2 }
+        async (element) => {
+            const detail = await cache.tryGet(`xmol:paper:detail:v1:${element.link}`, () => fetchDetail(element.link));
+            return { ...element, doi: detail.doi, author: detail.author, description: detail.description };
+        },
+        { concurrency: 2, stopOnError: false }
     );
 
     return {
         title: $('title').text(),
-        link: response.url,
+        link,
         description: $('meta[name="description"]').attr('content'),
         item,
     };

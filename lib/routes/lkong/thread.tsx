@@ -3,9 +3,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
-import { countReplies, viewThread } from './query';
+import { viewThread } from './query';
 import { renderContent } from './templates/content';
 
 export const route: Route = {
@@ -32,21 +32,15 @@ async function handler(ctx) {
     const apiUrl = 'https://api.lkong.com/api';
     const currentUrl = `${rootUrl}/thread/${id}`;
 
-    const countResponse = await got({
-        method: 'post',
-        url: apiUrl,
-        json: countReplies(id),
-    });
-
-    if (countResponse.data.errors) {
-        throw new Error(countResponse.data.errors[0].message);
-    }
-
     const response = await got({
         method: 'post',
         url: apiUrl,
-        json: viewThread(id, Math.ceil(countResponse.data.data.thread.replies / 20)),
+        json: viewThread(id, 1),
     });
+
+    if (response.data.errors) {
+        throw new Error(response.data.errors[0].message);
+    }
 
     const items = response.data.data.posts.map((item) => ({
         guid: item.pid,
@@ -85,9 +79,9 @@ const quoteStyles = `
 
 const LkongQuote = ({ target, author, content }: { target: string; author: string; content: string }) => (
     <>
-        <div class="quote">
-            <a href={target} class="quote-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13.16" height="12" viewBox="0 0 13.16 12" class="css-1f5j0lz">
+        <div className="quote">
+            <a href={target} className="quote-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13.16" height="12" viewBox="0 0 13.16 12" className="css-1f5j0lz">
                     <path d="M5.71,0,0,5l5.71,5V6.57S13.63,4,12,12c0,0,5.11-9.71-6.42-9L5.71,0Z"></path>
                 </svg>
                 {author}

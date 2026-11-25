@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { ProcessFeed, ProcessForm } from './utils';
 
@@ -53,13 +53,15 @@ async function handler(ctx) {
     const { data } = response.data;
     const { nickname } = data[0].author;
 
-    const articleList = data.map((item) => ({
-        title: item.event_data.title,
-        pubDate: parseDate(item.event_data.show_time * 1000),
-        link: `${rootUrl}/tz/post/${item.event_data.post_id}`,
-        guid: item.event_data.title,
-        postId: item.event_data.post_id,
-    }));
+    const articleList = data
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.event_data.post_id === item.event_data.post_id) === index)
+        .map((item) => ({
+            title: item.event_data.title,
+            pubDate: parseDate(item.event_data.show_time * 1000),
+            link: `${rootUrl}/tz/post/${item.event_data.post_id}`,
+            guid: `${rootUrl}/tz/post/${item.event_data.post_id}`,
+            postId: item.event_data.post_id,
+        }));
 
     const items = await ProcessFeed(cache, articleList);
 

@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/yzb/:type?',
@@ -32,13 +32,13 @@ export const route: Route = {
 | 5509     | 2552     | 2562                 |`,
     url: 'yzb.nankai.edu.cn',
     handler: async (ctx) => {
-        // 从 URL 参数中获取通知分类
+        // Read the notice category from the route path.
         const { type = '5509' } = ctx.req.param();
         const baseUrl = 'https://yzb.nankai.edu.cn';
         const { data: response } = await got(`${baseUrl}/${type}/list.htm`);
         const $ = load(response);
 
-        // 先转换为数组，再使用原生JavaScript的map
+        // Map the notice elements into feed items.
         const dateList = $('#wp_news_w9')
             .find('span.col_news_date')
             .toArray()
@@ -49,26 +49,25 @@ export const route: Route = {
             .toArray()
             .map((element, index): DataItem => {
                 const $a = $(element);
-                let linkStr = $a.attr('href') || '';
-
-                // 使用三元表达式处理链接
-                linkStr = linkStr.startsWith('http://') ? linkStr.replace('http://', 'https://') : `${baseUrl}${linkStr}`;
+                const href = $a.attr('href');
+                const link = href ? new URL(href, `${baseUrl}/${type}/list.htm`).href : undefined;
 
                 return {
                     title: $a.text(),
-                    link: linkStr,
-                    pubDate: timezone(parseDate(dateList[index]), 8),
+                    link,
+                    pubDate: parseDate(dateList[index], 8),
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!.toString(), async () => {
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`nankai:yzb:article:v2:${item.link}`, async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    item.description = $('.read').html();
+                    let description = $('.read').html();
 
-                    // 提取PDF链接，先转换为数组再使用map
+                    // Extract the PDF links from each player.
                     const pdfLinks = $('div[pdfsrc$=".pdf"]')
                         .toArray()
                         .map((el) => {
@@ -81,12 +80,14 @@ export const route: Route = {
                         .join('<br>');
 
                     if (pdfLinks) {
-                        item.description += `<h4>相关附件：</h4>${pdfLinks}`;
+                        description = `${description ?? ''}<h4>相关附件：</h4>${pdfLinks}`;
                     }
 
-                    return item;
-                })
-            )
+                    return { description };
+                });
+                return { ...item, ...detail };
+            },
+            { concurrency: 3 }
         );
 
         return {

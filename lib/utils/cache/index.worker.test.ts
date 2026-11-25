@@ -51,12 +51,39 @@ describe('worker cache with KV binding', () => {
         expect(getValue).toHaveBeenCalledTimes(1);
     });
 
+    it.each([
+        { key: 'snowflake', value: '1234567890123456789' },
+        { key: 'false', value: false },
+        { key: 'zero', value: 0 },
+        { key: 'null', value: null },
+        { key: 'empty-string', value: '' },
+    ])('tryGet preserves $key values on cache hits', async ({ key, value }) => {
+        const getValue = vi.fn().mockResolvedValue(value);
+
+        const miss = await cache.tryGet(`worker:${key}`, getValue);
+        expect(miss).toBe(value);
+
+        const hit = await cache.tryGet(`worker:${key}`, getValue);
+        expect(hit).toBeTypeOf(typeof value);
+        expect(hit).toBe(value);
+        expect(getValue).toHaveBeenCalledTimes(1);
+    });
+
     it('stores a ttl sidecar key for non-default expiry', async () => {
         await kv.set('worker:custom-ttl', 'v', 120);
         expect(await env.CACHE.get('rsshub:cacheTtl:worker:custom-ttl')).toBe('120');
 
         await kv.set('worker:default-ttl', 'v');
         expect(await env.CACHE.get('rsshub:cacheTtl:worker:default-ttl')).toBeNull();
+    });
+
+    it('accepts expiry below the KV minimum of 60 seconds', async () => {
+        await kv.set('worker:short-ttl', 'v', 1);
+        expect(await kv.get('worker:short-ttl')).toBe('v');
+        expect(await env.CACHE.get('rsshub:cacheTtl:worker:short-ttl')).toBe('1');
+
+        await cache.globalCache.set('worker:global-short-ttl', 'v', 1);
+        expect(await cache.globalCache.get('worker:global-short-ttl')).toBe('v');
     });
 
     it('rejects keys using the reserved ttl prefix', async () => {

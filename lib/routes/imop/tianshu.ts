@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,18 +33,19 @@ async function handler() {
             const href: string = $item.find('a').attr('href')!;
             return {
                 title: $item.find('a').text(),
-                link: href.startsWith('http') ? href : `${baseUrl}${href}`,
+                link: new URL(href, `${baseUrl}/list/0-1.htm`).href,
             };
         });
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, { responseType: 'buffer' });
                 const $ = load(iconv.decode(response, 'gbk'));
                 item.description = $('.right .right_top .right_bot .articlebox').html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

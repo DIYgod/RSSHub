@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/xinwenlianbo',
@@ -23,17 +22,18 @@ async function handler() {
 
     const $ = load(response);
     const list = $('article.news-card')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             const a = $item.find('h2.news-title a');
             const title = a.text().trim();
+            const date = /(\d{4}-\d+-\d+)/.exec(title)?.[1];
             return {
                 title,
                 link: new URL(a.attr('href')!, rootUrl).href,
                 description: $item.find('ul').html(),
-                pubDate: timezone(parseDate(`${/(\d{4}-\d+-\d+)/.exec(title)![1]} 19:00`), 8),
+                pubDate: date ? parseDate(`${date} 19:00`, 8) : undefined,
             };
         });
 

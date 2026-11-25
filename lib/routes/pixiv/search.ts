@@ -2,7 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import searchIllust from './api/search-illust';
 import searchPopularIllust from './api/search-popular-illust';
@@ -64,7 +64,12 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'PIXIV_REFRESHTOKEN',
+                description: 'Pixiv refresh token required for accessing the app API.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,

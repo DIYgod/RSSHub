@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateStrict } from '@/utils/time';
 
 import utils from './utils';
 
@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Press Releases',
-    maintainers: ['linbuxiao, TonyRL'],
+    maintainers: ['linbuxiao', 'TonyRL'],
     handler,
 };
 
@@ -36,13 +36,13 @@ async function handler(ctx) {
     const res = await got.get(`${BASE_WITH_LANG}/press/index.html`);
     const $ = load(res.data);
 
-    const list = $('.pressItem.clearfix')
+    const list = $('.pressItem')
         .toArray()
         .map((e): DataItem => {
-            const c = load(e);
+            const c = $(e);
             return {
-                title: c('.hd a').text(),
-                link: `${utils.BASE_URL}${c('.hd a').attr('href')}`,
+                title: c.find('.hd').text(),
+                link: new URL(c.find('a').attr('href')!, utils.BASE_URL).href,
             };
         });
     const items = await Promise.all(
@@ -56,9 +56,9 @@ async function handler(ctx) {
                 const c = load(detailResponse.data);
                 c('.btn_download').remove();
                 c('.col-3-wrap.clearfix.pressPhoto div').removeAttr('class');
-                const des = c('.pressContent.full').html();
-                const thumbs = c('.col-3-wrap.clearfix.pressPhoto').html() ?? '';
-                item.pubDate = parseDate(decodeURI(c('.date').text().trim()), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日'], true);
+                const des = c('.pressContent').html();
+                const thumbs = c('.pressPhoto, .lightGallery').html() ?? '';
+                item.pubDate = parseDateStrict(c('h3').text(), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日', 'YYYY-MM-DD', 'YYYY-MM-D', 'YYYY-M-DD', 'YYYY-M-D'], 8);
                 item.description = des + thumbs;
                 return item;
             })

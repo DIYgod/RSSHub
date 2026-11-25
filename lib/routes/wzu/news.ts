@@ -1,18 +1,11 @@
-import { type CheerioOptions, load } from 'cheerio';
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-
-/* 新闻列表
-温大新闻 http://www.wzu.edu.cn/index/wdxw.htm
-媒体温大 http://www.wzu.edu.cn/index/mtwd.htm
-学术温大 http://www.wzu.edu.cn/index/xswd.htm
-通知公告 http://www.wzu.edu.cn/index/tzgg.htm
-招标信息 http://www.wzu.edu.cn/index/zbxx.htm
-学术公告 http://www.wzu.edu.cn/index/xsgg.htm
-*/
+import { parseDateStrict } from '@/utils/time';
 
 const baseUrl = 'http://www.wzu.edu.cn/index/';
 
@@ -25,29 +18,22 @@ const newsType = {
     xsgg: '学术公告',
 };
 
-/**
- * @description: 抓取文章内容
- * @param {*} link
- * @return {*} description
- */
-async function loadContent(link) {
-    let videoUrl = '';
-    // 请求文章页面
+async function loadContent(link: string): Promise<Pick<DataItem, 'description' | 'author'>> {
     const newsResp = await got.get(link);
-    // 加载文章内容
-    const $ = load(newsResp.data, { decodeEntities: false } as CheerioOptions);
-    // 图片相对链接处理
-    $('img').attr('src', (n, v) => new URL(v, baseUrl).href);
-    // 视频相对链接处理，替换原有播放方法 showVsbVideo
+    const $ = load(newsResp.data);
+    const author = $('.ny-content-title > span')
+        .text()
+        .match(/作者[：:](.*?)(?=(?:浏览次数|发布时间)[：:]|$)/s)?.[1]
+        .trim();
+    // Replace the source video player with a video element.
     $('.vsbcontent_video').each((_, el) => {
-        const u1 = $(el).find('script').attr('vurl');
-        videoUrl = new URL(u1!, baseUrl).href;
-        $(el)
-            .html('<video width="100%" src="' + videoUrl + '"></video>')
-            .html();
+        const src = $(el).find('script').attr('vurl');
+        $(el).html(src ? `<video width="100%" src="${new URL(src, link).href}"></video>` : '');
     });
-    // 返回解析的结果
-    return $('div[id^=vsb_content]').html() ?? '';
+    return {
+        description: $('div[id^=vsb_content]').html(),
+        author: author || undefined,
+    };
 }
 
 export const route: Route = {
@@ -64,11 +50,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // 获取路由 Tag
     const routeTag = Number.parseInt(ctx.req.param('type')) || 0;
-    // 设定新闻标题及 Url
     const newsArr = Object.entries(newsType);
-    const [k1, newsTitle] = newsArr[routeTag];
+    const selected = newsArr[routeTag];
+    if (!selected) {
+        throw new NotFoundError(`Unsupported news type: ${routeTag}`);
+    }
+    const [k1, newsTitle] = selected;
     const newsLink = new URL(k1 + '.htm', baseUrl).href;
 
     const response = await got.get(newsLink);
@@ -79,19 +67,23 @@ async function handler(ctx) {
         title: newsTitle,
         link: newsLink,
         description: `温州大学 - ${newsTitle}`,
-        item: await Promise.all(
-            list.toArray().map(async (item): Promise<DataItem> => {
-                const $ = load(item);
-                const $a1 = $('li>a');
+        item: await pMap(
+            list.toArray(),
+            async (item): Promise<DataItem> => {
+                const $item = $(item);
+                const $a1 = $item.children('a');
                 const $originUrl = $a1.attr('href');
                 const $itemUrl = new URL($originUrl!, baseUrl).href;
+                const detail = await cache.tryGet(`wzu:detail:v3:${$itemUrl}`, () => loadContent($itemUrl));
                 return {
                     title: $a1.attr('title') ?? '',
-                    description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),
-                    pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
+                    description: detail.description,
+                    author: detail.author,
+                    pubDate: parseDateStrict($item.children('samp').text(), 'YYYY-MM-DD', 8),
                     link: $itemUrl,
                 };
-            })
+            },
+            { concurrency: 3, stopOnError: false }
         ),
     };
 }

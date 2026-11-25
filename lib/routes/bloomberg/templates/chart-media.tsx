@@ -36,7 +36,7 @@ export const renderChartMedia = ({ chart }: { chart: ChartData }) =>
             ></iframe>
             {chart.source ? (
                 <figcaption>
-                    <div class="source">{raw(chart.source)}</div>
+                    <div className="source">{raw(chart.source)}</div>
                     {chart.footnote ? <p>{chart.footnote}</p> : null}
                 </figcaption>
             ) : null}

@@ -3,7 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const titles = {
     global: '要闻',
@@ -47,9 +48,9 @@ async function handler(ctx) {
     const score = ctx.req.param('score') ?? 1;
 
     const rootUrl = 'https://wallstreetcn.com';
-    const apiRootUrl = 'https://api-one.wallstcn.com';
+    const apiRootUrl = 'https://api-one-wscn.awtmt.com';
     const currentUrl = `${rootUrl}/live/${category}`;
-    const apiUrl = `${apiRootUrl}/apiv1/content/lives?channel=${category}-channel&limit=${ctx.req.query('limit') ?? 100}`;
+    const apiUrl = `${apiRootUrl}/apiv1/content/lives?channel=${category}-channel&limit=${getRouteLimit(ctx, 100)}`;
 
     const response = await got({
         method: 'get',

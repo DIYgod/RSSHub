@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/byt/:time?',
@@ -22,6 +22,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { time = 'shishidashiku' } = ctx.req.param();
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://www.banyuetan.org';
     const currentUrl = `${rootUrl}/byt/${time}/index.html`;
@@ -30,15 +31,20 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.byt_mian_image_list_con ul li a')
-        .slice(0, 10)
+        .slice(0, limit)
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.attr('title');
+            if (title === undefined) {
+                return null;
+            }
             return {
                 link: new URL($item.attr('href')!, rootUrl).href,
-                title: $item.attr('title'),
+                title,
             };
-        }) as Array<DataItem & { link: string }>;
+        })
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -50,7 +56,7 @@ async function handler(ctx: Context) {
                     ...item,
                     description: content('#detail_content').html(),
                     author: content('.detail_tit_source').text().replace('来源：', ''),
-                    pubDate: timezone(parseDate(content('meta[property="og:release_date"]').attr('content')!), 8),
+                    pubDate: parseDate(content('meta[property="og:release_date"]').attr('content')!, 8),
                 };
             })
         )

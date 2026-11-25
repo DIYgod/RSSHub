@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/ee/jzxx/:category?',
@@ -37,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') ?? ''; // 默认是首页
+    const category = ctx.req.param('category') ?? ''; // Default to the homepage
     const baseUrl = 'https://ee.xjtu.edu.cn';
 
     const rootUrl = ['bks', 'yjs', 'kyxs', 'cgzb', 'zpjy', 'xzbg'].includes(category) ? `${baseUrl}/jzxx/${category}.htm` : `${baseUrl}/jzxx.htm`;
@@ -53,7 +53,7 @@ async function handler(ctx) {
             const title = a.text();
             const href = a.attr('href');
             if (!href) {
-                return null; // 过滤无效链接
+                return null; // Skip invalid links
             }
 
             return {
@@ -63,18 +63,19 @@ async function handler(ctx) {
         })
         .filter((item): item is { title: string; link: string } => item !== null);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(`xjtu:ee:jzxx:content:v2:${item.link}`, async () => {
                 const res = await got(item.link);
                 const content = load(res.data);
 
                 const infoDiv = content('div.art-tit.cont-tit');
                 const dateText = infoDiv.find('p span:nth-child(1)').text().replace('发布时间：', '');
-                const pubDate = timezone(parseDate(dateText), 8);
+                const pubDate = parseDate(dateText, 8);
 
                 const description = content('div.art-body.wow.fadeInUp')
-                    .find('ul li') // 定位到附件列表项
+                    .find('ul li') // Select attachment list items
                     .each((_, el) => {
                         const $li = $(el);
                         const newText = $li.html()?.replaceAll(/已下载[\s\S]*?<\/span>次/g, '') ?? '';
@@ -90,8 +91,8 @@ async function handler(ctx) {
                     guid: item.link,
                     description,
                 };
-            })
-        )
+            }),
+        { concurrency: 3, stopOnError: false }
     );
     const categoryMap = {
         bks: '本科生',
@@ -103,7 +104,7 @@ async function handler(ctx) {
     };
 
     return {
-        title: `西安交通大学电气学院通知 - ${categoryMap[category] || '通知首页'}`, // 使用对象查找配合默认值
+        title: `西安交通大学电气学院通知 - ${categoryMap[category] || '通知首页'}`, // Use the category label with a default fallback
         link: rootUrl,
         item: items,
     };

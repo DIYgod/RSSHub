@@ -5,7 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://nautil.us';
 const apiUrl = 'https://lede-admin.nautil.us';
@@ -51,7 +52,7 @@ async function handler(ctx) {
     const { data: list } = await got(`${apiUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             categories: categoryIdMap.find((item) => item.slug === ctx.req.param('tid').toLowerCase()).id,
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+            per_page: Math.min(getRouteLimit(ctx, 20), 100),
         },
     });
 
@@ -59,14 +60,7 @@ async function handler(ctx) {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
         $('.primis-ad, .article-ad, .editorskit-no-mobile').remove();
-        // lazyload images
-        $('img').each((_, e) => {
-            const $e = $(e);
-            $e.attr('src', $e.attr('data-src') ?? $e.attr('srcset'));
-            $e.attr('src', $e.attr('src')!.split('?', 1)[0]);
-            $e.removeAttr('data-src');
-            $e.removeAttr('srcset');
-        });
+        $('img').removeAttr('srcset');
         return {
             title: item.title.rendered,
             author: item.yoast_head_json.author,
@@ -77,7 +71,7 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
         };
     });
 

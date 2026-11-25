@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/releases',
@@ -19,16 +19,18 @@ async function handler() {
 
     const $ = load(response);
 
-    const items = $('.col-md-4')
+    const items = $('article.rln-item')
         .slice(0, 10)
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.attr('data-version')!;
+            const dateText = $item.attr('data-date');
             return {
-                link: rootUrl,
-                title: $item.find('h2').text(),
-                description: $item.next().html(),
-                pubDate: parseDate($item.find('p').text().replace('Release date - ', '')),
+                link: `${rootUrl}#:~:text=${encodeURIComponent(title).replaceAll('-', '%2D')}`,
+                title,
+                description: $item.find('.rln-body').html(),
+                pubDate: parseDate(dateText!, 'MMMM D, YYYY'),
             };
         });
 

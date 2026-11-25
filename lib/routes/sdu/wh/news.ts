@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import data from '../data';
 import extractor from '../extractor';
@@ -32,7 +33,7 @@ export const route: Route = {
 type ExtractedArticle = {
     description?: string | null;
     author?: string;
-    exactDate?: Date;
+    exactDate?: Temporal.Instant;
 };
 
 async function handler(ctx) {
@@ -41,16 +42,17 @@ async function handler(ctx) {
     const response = await got(baseUrl + data.wh.news.columns[column].url);
     const $ = load(response.data);
     const items = $('.n_newslist li');
-    const out = await Promise.all(
-        items.map(async (index, item) => {
+    const out = await pMap(
+        items.toArray(),
+        async (item) => {
             const $item = $(item);
             const anchor = $item.find('a');
             const title = anchor.attr('title');
             const href = anchor.attr('href');
             const link = href!.startsWith('http') ? href : baseUrl + href;
-            const { description, author, exactDate } = await cache.tryGet<ExtractedArticle>(link!, () => extractor(link));
+            const { description, author, exactDate } = await cache.tryGet<ExtractedArticle>(`sdu:wh-news:article-v3:${link}`, () => extractor(link));
             const span = $item.find('span');
-            const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD');
+            const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD', 8);
             return {
                 title: title!,
                 link,
@@ -58,7 +60,8 @@ async function handler(ctx) {
                 pubDate,
                 author,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

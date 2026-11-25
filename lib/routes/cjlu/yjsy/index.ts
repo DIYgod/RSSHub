@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
 
@@ -67,24 +68,31 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    if (!titleMap.has(cate)) {
+        throw new InvalidParameterError('Unsupported notice category. Use yjstz for postgraduate notices or jstz for teacher notices.');
+    }
+    const limit = getRouteLimit(ctx, 10);
     const url = `${host}index/${cate}.htm`;
 
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
-                allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
+                return allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const cookies = await page.context().cookies();
-    const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
-
-    const response = await page.content();
-    await destroy();
+    let cookieString: string;
+    let response: string;
+    try {
+        const cookies = await page.context().cookies();
+        cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
 
@@ -103,7 +111,7 @@ async function handler(ctx) {
 
             return {
                 title: a.attr('title') ?? titleMap.get(cate) ?? '中量大研究生院通知',
-                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), 8),
+                pubDate: parseDate(timeStr, 'YYYY/MM/DD', 8),
                 link: `${host}${route}`,
                 description: '',
             };

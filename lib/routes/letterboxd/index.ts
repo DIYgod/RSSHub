@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -41,8 +42,9 @@ async function handler(ctx: Context) {
 
     const wrappers = $('div.react-component[data-component-class*="LazyPoster"]').toArray();
 
-    const items = await Promise.all(
-        wrappers.map(async (el) => {
+    const items = await pMap(
+        wrappers,
+        async (el) => {
             const wrapper = $(el);
             const linkPath = wrapper.attr('data-item-link') || wrapper.attr('data-target-link') || '';
             const link = linkPath ? new URL(linkPath, baseUrl).href : undefined;
@@ -60,7 +62,8 @@ async function handler(ctx: Context) {
                 link,
                 image,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

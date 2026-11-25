@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -63,7 +62,7 @@ async function handler(ctx) {
         title,
         description: $('.postTopic .topic_content').html(),
         author: $('.postTopic .inner strong a').text(),
-        pubDate: timezone(parseDate($('.postTopic .re_info small').text().slice(5)), 8),
+        pubDate: parseDate($('.postTopic .re_info small').text().slice(5), 8),
         link,
     };
 
@@ -74,7 +73,7 @@ async function handler(ctx) {
             ...finalLatestReplies.map((c) => ({
                 title: `${c.author} 回复了小组话题《${title}》`,
                 description: c.content,
-                pubDate: timezone(parseDate(c.date), 8),
+                pubDate: parseDate(c.date, 8),
                 author: c.author,
                 link: `${link}#${c.id}`,
             })),

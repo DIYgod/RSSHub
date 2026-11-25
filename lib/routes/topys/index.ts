@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/:keyword?',
@@ -32,6 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
+    const limit = getRouteLimit(ctx, 16);
 
     const rootUrl = 'https://www.topys.cn';
     const currentUrl = `${rootUrl}${keyword ? `/search/${keyword}` : '/api/web/article/get_article_list'}`;
@@ -46,11 +49,11 @@ async function handler(ctx) {
               url: currentUrl,
               json: {
                   istop_time: 0,
-                  size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 16,
+                  size: limit,
               },
           });
 
-    let items = keyword
+    let items: DataItem[] = keyword
         ? response.data.match(/id:(\d+),title:"(.*?)",keyword:"(.*?)",istop_time:(\d+),thumb/g).map((item) => {
               const matches = item.match(/id:(\d+),title:"(.*)",keyword:"(.*)",istop_time:(\d+),thumb/);
               return {
@@ -68,9 +71,10 @@ async function handler(ctx) {
               pubDate: parseDate(item.istop_time * 1000),
           }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`topys:detail:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -78,12 +82,19 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('.article-content').html();
-                item.author ??= content('.author-name p').first().text();
+                return {
+                    description: content('.article-content').html(),
+                    author: content('.author-name p').first().text(),
+                };
+            });
 
-                return item;
-            })
-        )
+            return {
+                ...item,
+                description: detail.description,
+                author: item.author ?? detail.author,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

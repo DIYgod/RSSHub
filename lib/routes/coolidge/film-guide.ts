@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 import { renderDescription } from './templates/description';
 
-const handler = async () => {
+const handler: Route['handler'] = async () => {
     const link = 'https://coolidge.org/film-guide';
     const html = await ofetch(link);
     const $ = load(html);
@@ -13,8 +13,9 @@ const handler = async () => {
     const container = $('#block-coolidge-content > article > div.node__content > div').first();
 
     const cover = container.find('p').eq(0).find('img').first().attr('src');
-    const title = container.find('p').eq(1).text().trim();
-    const description = container.find('p').eq(2).text().trim();
+    const heading = container.find('h3').first();
+    const title = heading.text();
+    const description = heading.nextAll('p').first().text();
     const linkEl = container.find('a').first();
     const itemLink = linkEl.attr('href');
 
@@ -30,6 +31,7 @@ const handler = async () => {
         title: 'Coolidge Corner Theatre - Film Guide',
         link,
         description: 'Film Guide',
+        language: 'en',
         item: [
             {
                 title,

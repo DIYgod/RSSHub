@@ -34,6 +34,7 @@ async function handler() {
         description: '快递100 所支持的快递列表及其查询名称',
         item: ls.map((item) => ({
             title: item.name,
+            guid: item.number,
             description: item.number,
             category: item.comTypeName,
             link: item.siteUrl,

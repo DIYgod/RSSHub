@@ -1,14 +1,24 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 const oaa_base_url = 'http://oaa.tju.edu.cn/';
-const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
+
+const getArticle = async (link: string) => {
+    try {
+        const response = await got(link);
+        const $ = load(response.data);
+        return { description: $('.v_news_content').html() };
+    } catch {
+        // Keep the source listing when an article detail is unavailable.
+        return {};
+    }
+};
 
 const pageType = (href) => {
     if (!href.startsWith('http')) {
@@ -62,32 +72,7 @@ async function handler(ctx) {
             subtitle = '新闻动态';
             path = 'xwdt.htm';
     }
-    let response: any = null;
-    try {
-        response = await got(oaa_base_url + path, {
-            headers: {
-                Referer: oaa_base_url,
-            },
-        });
-    } catch {
-        // ignore error handler
-        // console.log(e);
-    }
-
-    if (response === null) {
-        return {
-            title: '天津大学教务处 - ' + subtitle,
-            link: oaa_base_url + path,
-            description: '链接失效' + oaa_base_url + path,
-            item: [
-                {
-                    title: '提示信息',
-                    link: repo_url,
-                    description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
-                },
-            ],
-        };
-    }
+    const response = await got(oaa_base_url + path);
     const $ = load(response.data);
     const list = $('.notice_l > ul > li > dl > dt')
         .toArray()
@@ -97,32 +82,25 @@ async function handler(ctx) {
             return {
                 title: $('h2', item).text(),
                 link: type === 'in-site' ? oaa_base_url + href : href,
-                pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), 8),
+                pubDate: parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM', 8),
                 type,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             switch (item.type) {
                 case 'wechat-mp':
                     return finishArticleItem(item);
                 case 'tju-oaa':
                 case 'in-site':
-                    return cache.tryGet(item.link!, async () => {
-                        try {
-                            const detailResponse = await got(item.link);
-                            const content = load(detailResponse.data);
-                            item.description = content('.v_news_content').html();
-                        } catch {
-                            // ignore error handler
-                        }
-                        return item;
-                    });
+                    return { ...item, ...(await cache.tryGet(`tju:oaa:article:${item.link}`, () => getArticle(item.link!))) };
                 default:
                     return item;
             }
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

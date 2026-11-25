@@ -1,7 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/post';
 
@@ -38,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
-    const limit = ctx.req.query('limit') ?? 7;
+    const limit = Math.min(getRouteLimit(ctx, 7), 100);
 
     const cateUrl = `${cateAPIUrl}?slug=${cate}`;
     const category = await cache.tryGet(cateUrl, async () => {
@@ -60,7 +61,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link,
             description,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
             author: item._embedded.author[0].name,
         };
     });

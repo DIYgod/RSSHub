@@ -7,20 +7,56 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const audioTypes = {
+    aac: 'audio/aac',
+    flac: 'audio/flac',
+    m4a: 'audio/mp4',
+    mp3: 'audio/mpeg',
+    ogg: 'audio/ogg',
+    wav: 'audio/vnd.wave',
+} satisfies Record<string, string>;
+const isAudioExtension = (key: string): key is keyof typeof audioTypes => Object.hasOwn(audioTypes, key);
+
+function djb2(value: string) {
+    let hash = 5381;
+    for (const byte of Buffer.from(value)) {
+        hash = ((hash << 5) + hash + byte) >>> 0;
+    }
+    return hash.toString(16);
+}
+
+async function fetchList(url: string) {
+    const response = await ofetch<string>(url);
+    const challenge = response.match(/var n="(.*?)",M="(.*?)"/);
+    if (!challenge) {
+        return response;
+    }
+
+    const [, n, m] = challenge;
+    const target = new URL(url);
+    const verify = await ofetch.raw(`${target.origin}/__mzverify?n=${encodeURIComponent(n)}&t=${djb2(n + m)}&r=${encodeURIComponent(target.pathname + target.search)}`, { redirect: 'manual' });
+    const cookie = verify.headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
+    return ofetch<string>(url, { headers: { cookie } });
+}
+
+const handler = async (ctx: Context): Promise<Data> => {
     const { language = '' } = ctx.req.param();
     if (language && !isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://musify.club';
     const targetUrl: string = new URL(language, baseUrl).href;
 
-    const response = await ofetch(targetUrl);
+    const response = await fetchList(targetUrl);
     const $: CheerioAPI = load(response);
 
     const items: DataItem[] = $('div.playlist__item')
@@ -33,8 +69,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const name: string | undefined = $el.attr('data-name');
 
             const title: string = [artist, name].filter(Boolean).join(' - ');
-            const linkUrl: string | undefined = $el.find('a.strong').attr('href');
-            const authorEls: Element[] = $el.find('div.playlist__heading a').toArray();
+            const linkUrl: string | undefined = $el.find('a.strong, .tracklist__title a').attr('href');
+            const authorEls: Element[] = $el.find('div.playlist__heading a, .tracklist__artist a').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {
                 const $authorEl: Cheerio<Element> = $(authorEl);
                 const authorHref: string | undefined = $authorEl.attr('href');
@@ -53,13 +89,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
             };
 
             const $enclosureEl: Cheerio<Element> = $el.find('div.playlist__control');
-            const enclosureUrl: string | undefined = $enclosureEl.attr('data-play-url');
+            const enclosureUrl: string | undefined = $enclosureEl.attr('data-play-url') ?? $el.find('[data-player-row-play]').attr('data-url');
 
             if (enclosureUrl) {
+                const enclosure = new URL(enclosureUrl, baseUrl);
+                const extension = enclosure.pathname.split('.').pop()?.toLowerCase() ?? '';
                 processedItem = {
                     ...processedItem,
-                    enclosure_url: new URL(enclosureUrl, baseUrl).href,
-                    enclosure_type: `audio/${enclosureUrl.split(/\./).pop()}`,
+                    enclosure_url: enclosure.href,
+                    enclosure_type: isAudioExtension(extension) ? audioTypes[extension] : undefined,
                     enclosure_title: title,
                     enclosure_length: undefined,
                     itunes_duration: undefined,
@@ -75,7 +113,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         id: $('meta[property="og:url"]').attr('content'),
@@ -90,7 +127,7 @@ export const route: Route = {
     handler,
     example: '/musify/en',
     parameters: {
-        category: {
+        language: {
             description: 'Language, Russian by default',
             options: [
                 {
@@ -111,7 +148,7 @@ To subscribe to [Latest](https://musify.club/en), where the source URL is \`http
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -128,7 +165,7 @@ To subscribe to [Latest](https://musify.club/en), where the source URL is \`http
             target: '/en',
         },
         {
-            title: '​​Последняя',
+            title: 'Последняя',
             source: ['musify.club'],
             target: '/',
         },

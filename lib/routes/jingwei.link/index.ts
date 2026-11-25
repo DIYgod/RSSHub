@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -31,7 +31,7 @@ async function handler() {
                     .find('a.post-tag')
                     .toArray()
                     .map((tag) => $(tag).text()),
-                pubDate: parseDate($(elem).find('time.post-date').attr('datetime')!, 'YY-MM-DD'),
+                pubDate: parseDate($(elem).find('time.post-date').attr('datetime')!, 'YY-MM-DD', 0),
             };
         });
 

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from '../templates/description';
 import cache from './cache';
@@ -24,11 +25,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const page_size = ctx.req.query('limit') || '20';
     const searchParams = {
         gids: 2,
         uid,
-        page_size,
+        page_size: getRouteLimit(ctx, 20),
     };
     const link = `https://www.miyoushe.com/ys/accountCenter/followList?id=${uid}`;
     const url = 'https://bbs-api.miyoushe.com/user/wapi/following';

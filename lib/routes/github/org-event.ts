@@ -125,7 +125,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/orgs/${org}/events`,
+        url: `https://api.github.com/orgs/${encodeURIComponent(org)}/events`,
         headers,
         searchParams: {
             per_page: 100,

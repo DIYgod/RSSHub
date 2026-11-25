@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+import { compareDates, parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.cugb.edu.cn';
 
@@ -38,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const channel = ctx.req.param('channel') ?? 'bdxw';
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const listUrl = `${rootUrl}/${channel}.jhtml`;
 
     const { data: response } = await got(listUrl);
@@ -46,7 +46,6 @@ async function handler(ctx): Promise<Data> {
 
     const list: DataItem[] = $('li a.con')
         .toArray()
-        .slice(0, limit)
         .map((el) => {
             const item = $(el);
             const [date, author] = item
@@ -57,13 +56,15 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: item.find('h3.tit').text(),
                 link: new URL(item.attr('href')!, rootUrl).href,
-                pubDate: timezone(parseDate(date), 8),
+                pubDate: parseDate(date, 8),
                 author,
             };
         });
 
+    const uniqueItems = new Map(list.map((item) => [item.link, item])).values().toArray();
+    const articles = ctx.req.query('sorted') === 'false' ? uniqueItems : [...uniqueItems].sort((a, b) => compareDates(b.pubDate, a.pubDate));
     const items = await Promise.all(
-        list.map((item) =>
+        articles.slice(0, limit).map((item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link!);
                 const content = load(detailResponse);

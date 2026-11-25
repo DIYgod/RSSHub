@@ -3,8 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const baseUrl = 'https://www.cnca.gov.cn';
 
@@ -30,7 +29,7 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                pubDate: parseDate($item.find('span').text(), 8),
             };
         });
 
@@ -44,7 +43,8 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
                 const $ = load(response);
                 item.description = $('.detail_messge').html();
                 item.author = $('#source').text();
-                item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8);
+                const dateText = $('meta[name="PubDate"]').attr('content');
+                item.pubDate = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm', 8) : item.pubDate;
 
                 return item;
             });

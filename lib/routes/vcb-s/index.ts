@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/post';
 
@@ -24,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ?? 7;
+    const limit = Math.min(getRouteLimit(ctx, 7), 100);
     const url = `${postsAPIUrl}?per_page=${limit}&_embed`;
 
     const response = await got.get(url);
@@ -40,7 +41,7 @@ async function handler(ctx) {
             title: item.title.rendered,
             link: item.link,
             description,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
             author: item._embedded.author[0].name,
         };
     });

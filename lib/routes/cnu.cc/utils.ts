@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
@@ -39,6 +38,6 @@ export const parseContent = (htmlString: string) => {
     return {
         author: author.text().trim(),
         description: content.html(),
-        pubDate: timezone(parseDate(time.text()), 8),
+        pubDate: parseDate(time.text(), 8),
     };
 };

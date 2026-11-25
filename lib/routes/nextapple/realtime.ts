@@ -4,7 +4,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/realtime/:category?',
@@ -45,8 +45,8 @@ async function handler(ctx) {
     const items = await pMap(
         $('article.infScroll').toArray(),
         (item) => {
-            const link = $(item).find('.post-title').attr('href');
-            return cache.tryGet(link!, async () => {
+            const link = new URL($(item).find('.post-title').attr('href')!, currentUrl).href;
+            return cache.tryGet(`${link}:article-content`, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
                 const mainContent = $('#main-content');
@@ -54,14 +54,24 @@ async function handler(ctx) {
                 const title = titleElement.text();
                 titleElement.remove();
                 const postMetaElement = mainContent.find('.post-meta');
-                const category = postMetaElement.find('.category').text();
-                const pubDate = parseDate(postMetaElement.find('time').attr('datetime')!);
+                const category = mainContent.find('header .breadcrumb li').last().text();
+                const publishedAt = $('meta[property="article:published_time"]').attr('content');
+                const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
                 postMetaElement.remove();
-                $('.post-comments').remove();
+                const article = $('.article-body');
+                const introduction = article
+                    .children('header')
+                    .children('blockquote, figure, video, iframe, div:has(video), div:has(iframe)')
+                    .not('.post-meta, .post-title')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join('');
+                const description = introduction + (article.children('.post-content').html() || '');
 
                 return {
                     title,
-                    description: mainContent.html(),
+                    author: $('meta[name="author"]').attr('content'),
+                    description,
                     category,
                     pubDate,
                     link,

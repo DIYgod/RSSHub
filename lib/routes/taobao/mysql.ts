@@ -2,15 +2,16 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+const handler = async (ctx: Context): Promise<Data> => {
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://mysql.taobao.org';
     const targetUrl: string = new URL('monthly/', baseUrl).href;
@@ -19,101 +20,49 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
-    let count = 0;
+    const monthlyItems: DataItem[] = await collectMonthlyItems($('h3 a.main').toArray(), baseUrl, limit, language);
 
-    const monthlyItems = await Promise.all(
-        $('h3 a.main')
-            .toArray()
-            .map(async (monthlyEl): Promise<DataItem[] | undefined> => {
-                const $monthlyEl: Cheerio<Element> = $(monthlyEl);
+    const items: DataItem[] = await pMap(
+        monthlyItems.slice(0, limit),
+        (item) =>
+            cache.tryGet(`${item.link}:publication-v2`, async (): Promise<DataItem> => {
+                const detailResponse = await ofetch(item.link!);
+                const $$: CheerioAPI = load(detailResponse);
 
-                const href = $monthlyEl.attr('href');
-
-                if (!href) {
-                    return undefined;
-                }
-
-                const monthlyUrl: string = new URL(href, baseUrl).href;
-
-                const monthlyResponse = await ofetch(monthlyUrl);
-
-                const $$: CheerioAPI = load(monthlyResponse);
-
-                return $$('h3 a.main')
-                    .toArray()
-                    .map((el) => {
-                        if (count < limit) {
-                            const $$el: Cheerio<Element> = $$(el);
-
-                            const title: string = $$el.text();
-                            const linkUrl: string | undefined = $$el.attr('href');
-                            const pubDateStr: string | undefined = linkUrl?.split(/monthly\//).pop();
-                            const upDatedStr: string | undefined = pubDateStr;
-
-                            const processedItem: DataItem = {
-                                title,
-                                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
-                                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                                language,
-                            };
-                            count++;
-                            return processedItem;
-                        }
-                        return;
-                    })
-                    .filter((processedItem) => processedItem !== undefined);
-            })
-    );
-
-    const items: DataItem[] = await Promise.all(
-        monthlyItems
-            .filter((monthlyItem) => monthlyItem !== undefined)
-            .flat()
-            .slice(0, limit)
-            .map((item) => {
-                if (!item.link) {
-                    return item;
-                }
-
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
-
-                    const title: string = $$('h2').first().text()?.trim() || item.title;
-                    const description = $$('div.content').html();
-                    const pubDateStr: string | undefined = item.link!.split(/monthly\//).pop();
-                    const authorEls: Element[] = $$('div.block p').toArray();
-                    const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                        const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                        return {
-                            name: $$authorEl.text().split(/:/).pop()?.trim() ?? '',
-                            url: undefined,
-                            avatar: undefined,
-                        };
-                    });
-                    const upDatedStr: string | undefined = pubDateStr;
-
-                    const processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                        author: authors,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
-                    };
+                const title: string = $$('h2').first().text() || item.title;
+                const description = $$('div.content').html();
+                const issue = $$('h1')
+                    .text()
+                    .match(/\d{4}\s*\/\s*\d{2}/)?.[0]
+                    .replaceAll(/\s/g, '');
+                const authorEls: Element[] = $$('div.block p').toArray();
+                const authors: DataItem['author'] = authorEls.map((authorEl) => {
+                    const $$authorEl: Cheerio<Element> = $$(authorEl);
 
                     return {
-                        ...item,
-                        ...processedItem,
+                        name: $$authorEl.text().split(/:/).pop()?.trim() ?? '',
+                        url: undefined,
+                        avatar: undefined,
                     };
                 });
-            })
+                const processedItem: DataItem = {
+                    title,
+                    description,
+                    category: issue ? [issue] : undefined,
+                    author: authors,
+                    content: {
+                        html: description,
+                        text: $$('div.content').text(),
+                    },
+                    language,
+                };
+
+                return {
+                    ...item,
+                    ...processedItem,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     const title: string = $('title').text();
@@ -123,7 +72,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: title,
         language,
         id: targetUrl,
@@ -157,3 +105,17 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
+
+async function collectMonthlyItems(elements: Element[], baseUrl: string, limit: number, language: Language, index = 0, items: DataItem[] = []): Promise<DataItem[]> {
+    if (index >= elements.length || items.length >= limit) {
+        return items;
+    }
+    const monthlyUrl = new URL(elements[index].attribs.href, baseUrl).href;
+    const monthlyResponse = await ofetch(monthlyUrl);
+    const $$ = load(monthlyResponse);
+    const monthItems = $$('h3 a.main')
+        .toArray()
+        .slice(0, limit - items.length)
+        .map((el) => ({ title: $$(el).text(), link: new URL(el.attribs.href, baseUrl).href, language }));
+    return collectMonthlyItems(elements, baseUrl, limit, language, index + 1, [...items, ...monthItems]);
+}

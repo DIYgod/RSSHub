@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 function deserializeAstroProps(val: any): any {
     if (Array.isArray(val)) {
@@ -31,11 +32,11 @@ interface Package {
     authors: string[];
     license: string;
     description: string;
-    keywords: string[];
+    keywords?: string[];
     updatedAt: number;
     releasedAt: number;
     hasRepo: boolean;
-    categories: string[];
+    categories?: string[];
     template: string | undefined;
 }
 
@@ -64,9 +65,9 @@ export const route: Route = {
         const pkgs = searchResults.packages.map((item) => ({
             title: `${item.name} (${item.version}) | ${item.description}`,
             link: `https://typst.app/universe/package/${item.name}`,
-            description: item.description,
+            description: escapeText(item.description),
             pubDate: parseDate(item.updatedAt, 'X'),
-            category: item.keywords,
+            category: [...new Set([...(item.keywords ?? []), ...(item.categories ?? [])])],
             author: item.authors.join(', '),
         }));
 

@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/time';
 
 const host = 'https://www.qlu.edu.cn';
 
@@ -39,32 +39,33 @@ async function handler() {
     });
 
     const $ = load(response.data);
-    const list = $('ul.news_list.list2').children();
+    const list = $('ul.news_list.list2').children().toArray();
 
-    const items = await Promise.all(
-        list.map((i, item) => {
+    const items = await pMap(
+        list,
+        (item) => {
             const $item = $(item);
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
-            const path = $item.find('.news_title').children().attr('href');
-            const itemUrl = path!.startsWith('https') ? path : host + path;
-            return cache.tryGet(itemUrl!, async () => {
+            const itemUrl = new URL($item.find('.news_title > a').attr('href')!, `${host}/tzggsh/list1.htm`).href;
+            return cache.tryGet(itemUrl, async () => {
                 let description: string;
-                if (path!.startsWith('https')) {
-                    description = itemTitle;
-                } else {
+                if (new URL(itemUrl).origin === host) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
                     description = $('.read').html() ?? '';
+                } else {
+                    description = itemTitle;
                 }
                 return {
                     title: itemTitle,
                     link: itemUrl,
-                    pubDate: timezone(parseDate(itemDate), 8),
+                    pubDate: parseDate(itemDate, 'YYYYMM/DD', 8),
                     description,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

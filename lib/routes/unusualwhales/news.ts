@@ -1,6 +1,6 @@
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const apiBase = 'https://phx.unusualwhales.com';
 
@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['unusualwhales.com/news', 'unusualwhales.com/'],
+            source: ['unusualwhales.com/news', 'unusualwhales.com/news-feed', 'unusualwhales.com/'],
         },
     ],
     name: 'News Feed',

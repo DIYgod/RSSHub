@@ -2,12 +2,13 @@ import { promisify } from 'node:util';
 import { gunzip as gunzipCallback } from 'node:zlib';
 
 import { load } from 'cheerio';
-import markdownit from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import markdownit from '@/utils/markdown-it';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const gunzip = promisify(gunzipCallback);
 
@@ -35,8 +36,9 @@ async function handler() {
     const baseUrl = 'https://www.typeless.com';
     const platforms = ['macos', 'windows', 'ios', 'android'];
 
-    const decompressedData = await Promise.all(
-        platforms.map(async (platform) => {
+    const decompressedData = await pMap(
+        platforms,
+        async (platform) => {
             const link = `${baseUrl}/help/release-notes/${platform}`;
 
             const response = await ofetch(link);
@@ -57,7 +59,8 @@ async function handler() {
                     decompressedData: Object.values<any>(changelogData),
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const items = decompressedData.flatMap((platform) =>
@@ -66,8 +69,8 @@ async function handler() {
             return {
                 title: features.title,
                 description: md.render(features.content),
-                pubDate: parseDate(item.date),
-                link: features.learnMore ? `${baseUrl}${features.learnMore}` : undefined,
+                pubDate: parseDate(`${item.date}T00:00:00Z`),
+                link: new URL(features.learnMore || `/help/release-notes/${platform.appPlatform}#${item.date}`, baseUrl).href,
                 category: [platform.appPlatform],
                 guid: `typeless:${platform.appPlatform}:${item.version}`,
             };

@@ -1,4 +1,5 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
@@ -7,10 +8,10 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 import { generate_a_bogus } from './a-bogus';
-import type { Feed, UserInfoCell32, UserInfoCell49 } from './types';
+import type { Feed } from './types';
 
 const renderVideo = (url, poster) =>
     renderToString(
@@ -18,6 +19,11 @@ const renderVideo = (url, poster) =>
             <source src={url} type="video/mp4" />
         </video>
     );
+
+const getImageMimeType = (image: string) => {
+    const mimeType = getMimeType(new URL(image).pathname);
+    return mimeType?.startsWith('image/') ? mimeType : undefined;
+};
 
 export const route: Route = {
     path: '/user/token/:token',
@@ -49,7 +55,7 @@ async function handler(ctx) {
             const userAgent = headers['user-agent'];
 
             const data = await ofetch<{ data: Feed[] }>(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
-                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+                headers,
             });
 
             return data.data;
@@ -70,7 +76,7 @@ async function handler(ctx) {
             case 0:
             case 49: {
                 const video = item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0];
-                const user = item.user as UserInfoCell49 | undefined;
+                const user = item.user && 'info' in item.user ? item.user : undefined;
                 return {
                     title: item.title,
                     description: renderVideo(item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0], item.video.origin_cover.url_list[0]),
@@ -90,15 +96,16 @@ async function handler(ctx) {
             // text w/o title
             case 32: {
                 const enclosure = item.large_image_list?.pop();
-                const user = item.user as UserInfoCell32 | undefined;
+                const enclosureType = enclosure?.url ? getImageMimeType(enclosure.url) : undefined;
+                const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
-                    title: item.content?.split('\n', 1)[0],
-                    description: item.rich_content,
+                    title: item.content,
+                    description: enclosure?.url && !enclosureType ? item.rich_content + renderToString(<img src={enclosure.url} />) : item.rich_content,
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
                     author: user?.name,
-                    enclosure_url: enclosure?.url,
-                    enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
+                    enclosure_url: enclosureType ? enclosure?.url : undefined,
+                    enclosure_type: enclosureType,
                     user: {
                         name: user?.name,
                         avatar: user?.avatar_url,

@@ -1,8 +1,17 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { parseDate } from '@/utils/time';
 
 import { renderDescription } from './templates/description';
+
+const types = { mp3: 'audio/mpeg', mp4: 'audio/mp4', m4a: 'audio/mp4', m3u8: 'application/vnd.apple.mpegurl' } satisfies Record<string, string>;
+const isAudioExtension = (key: string): key is keyof typeof types => Object.hasOwn(types, key);
+
+export const getAudioType = (url: string) => {
+    const extension = new URL(url).pathname.split('.').pop()?.toLowerCase() ?? '';
+    return isAudioExtension(extension) ? types[extension] : undefined;
+};
 
 export const route: Route = {
     path: '/:id',
@@ -33,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const size = ctx.req.query('limit') ?? '100';
+    const size = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://www.radio.cn';
     const apiRootUrl = 'http://tacc.radio.cn';
@@ -53,7 +62,7 @@ async function handler(ctx) {
 
     const items = data.program.map((item) => {
         const enclosure_url = item.streams[0].url;
-        const enclosure_type = `audio/${enclosure_url.match(/\.(\w+)$/)[1]}`;
+        const enclosure_type = getAudioType(enclosure_url);
 
         return {
             guid: item.id,

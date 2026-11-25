@@ -1,0 +1,83 @@
+import type { z } from 'zod';
+
+import type { NewProduct } from '@/routes/mi/templates/newproduct';
+import { dedupeByKey } from '@/routes/mi/utils';
+import ofetch from '@/utils/ofetch';
+
+import type { NewProductDetailItem, NewProductListItem } from './types';
+import { NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
+
+// NewProduct
+
+/**
+ * Fetch the list of new products, extracting goods from every `car_product_list_new` floor.
+ *
+ * @returns {Promise<NewProductListItem[]>} The new product list.
+ */
+const getNewProductList = async (): Promise<NewProductListItem[]> => {
+    const response = await ofetch<z.infer<typeof NewProductListResponseSchema>>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index/v2', {
+        body: [
+            {
+                isPreview: false,
+                pageId: '19573',
+                vehicleSeries: 'ALL',
+            },
+        ],
+        method: 'POST',
+        schema: NewProductListResponseSchema,
+    });
+    const items = response.data.floors.flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
+    const list = dedupeByKey(items, (item) => item.itemId);
+    return list;
+};
+
+/**
+ * Fetch new product details.
+ *
+ * @param {NewProductListItem} item - New product list item.
+ * @returns {Promise<NewProductDetailItem>} New product details.
+ */
+const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+    const response = await ofetch<z.infer<typeof NewProductDetailResponseSchema>>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info/v2', {
+        body: [
+            {},
+            {
+                configVersion: 1,
+                productId: item.itemId,
+                servicePackageVersion: 2,
+            },
+        ],
+        headers: {
+            'X-User-Agent': 'channel/car platform/carlife.ios',
+        },
+        method: 'POST',
+        schema: NewProductDetailResponseSchema,
+    });
+    return response.data;
+};
+
+// Conversion
+
+/**
+ * Convert xiaomiev NewProductListItem + NewProductDetailItem to NewProduct template props.
+ *
+ * @param {NewProductListItem} listItem - New product list item.
+ * @param {NewProductDetailItem} detailItem - New product detail item.
+ * @returns {NewProduct} New product template props.
+ */
+const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
+    image: listItem.img800s,
+    sellPointList: detailItem.product.sellPointList,
+    goodsList: [...detailItem.goodsInfo.goodsList, ...detailItem.batchedSsuList, ...Object.values(detailItem.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => ({
+        image: goods.imgUrl,
+        name: goods.name,
+        marketPrice: goods.marketPrice,
+        price: goods.price,
+    })),
+});
+
+export default {
+    getNewProductList,
+    getNewProductItem,
+    toNewProduct,
+};

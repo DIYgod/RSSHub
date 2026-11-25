@@ -108,6 +108,9 @@ export default async function identify({ github, context, core }, body, number, 
             return;
         }
         if (issue.state === 'closed') {
+            if (issue.closed_by?.login !== 'github-actions[bot]') {
+                return;
+            }
             await updatePrState('open');
         }
         if (issue.labels.some((e) => e.name === criticalFailure || e.name === routeTestFailed)) {
@@ -147,7 +150,7 @@ export default async function identify({ github, context, core }, body, number, 
         let searchStart = 0;
         let searchEnd = ast.children.length;
 
-        if (isPR) {
+        if (isPR && !hasWriteAccess) {
             /** @param {string} text */
             const findHeading = (text) => ast.children.findIndex((node) => node.type === 'heading' && node.depth === 2 && node.children?.some((child) => child.type === 'text' && child.value.trim() === text));
 

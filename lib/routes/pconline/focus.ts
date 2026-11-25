@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/time';
 
 const rootUrl = 'https://www.pconline.com.cn';
 interface Item {
@@ -49,7 +51,7 @@ const categories = {
     },
 };
 
-const getContent = (item) =>
+const getContent = (item: DataItem & { link: string }) =>
     cache.tryGet(item.link, async () => {
         const detailResponse = await got({
             method: 'get',
@@ -64,7 +66,7 @@ const getContent = (item) =>
         return item;
     });
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'all' } = ctx.req.param();
     const cate = categories[category] || categories.all;
     const currentUrl = `${rootUrl}/3g/other/focus/${cate.path}index.html`;
@@ -74,17 +76,8 @@ export const handler = async (ctx) => {
         url: currentUrl,
     });
 
-    const resString = response.data
-        .replace(/Module\.callback\((.*)\)/s, '$1')
-        .split('\n')
-        .filter((e) => e.indexOf('"tags":') !== 0)
-        .join('\n')
-        .replaceAll("'", '"');
-    const tinyData = resString.replaceAll(/[\n\r]/g, '');
-    const dataString = tinyData.replaceAll(',}', '}');
-    const data = JSON.parse(dataString || '');
-    const { articleList } = data;
-    const list = articleList.map((item: Item) => ({
+    const { articleList } = await evaluateScriptCallback<{ articleList: Item[] }>(response.data, 'Module.callback', 0);
+    const list: Array<DataItem & { link: string }> = articleList.map((item: Item) => ({
         id: item.id,
         title: item.title,
         author: [
@@ -93,18 +86,18 @@ export const handler = async (ctx) => {
                 avatar: item.authorImg,
             },
         ],
-        pubDate: parseDate(item.pc_pubDate),
+        pubDate: parseDate(item.pc_pubDate, 8),
         link: item.url,
         description: item.summary,
         category: item.channelName,
         image: item.cover,
     }));
 
-    const items = await Promise.all(list.map((item) => getContent(item)));
+    const items = await pMap(list, getContent, { concurrency: 3 });
 
     return {
         title: `太平洋科技-${cate.title}`,
-        link: currentUrl,
+        link: `${rootUrl}/focus/`,
         item: items,
     };
 };

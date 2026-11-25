@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -20,21 +21,24 @@ async function handler() {
     const list = $('.news_listul li').toArray();
 
     const out = await Promise.all(
-        list.map((item) => {
+        list.map(async (item) => {
             const $item = $(item);
             const title = $item.find('a .newstit').text();
             const itemUrl = 'http://www.glo.com.cn/' + $item.find('a').attr('href');
 
-            return cache.tryGet(itemUrl, async () => {
+            const description = await cache.tryGet(`glo:${itemUrl}:body`, async () => {
                 const response = await ofetch(itemUrl);
                 const $d = load(response);
-
-                return {
-                    title,
-                    link: itemUrl,
-                    description: $d('.editor_con').html(),
-                };
+                return $d('.editor_con').html();
             });
+            const year = $item.find('.newstime span').text();
+            const day = $item.find('.newstime i').text();
+            const pubDate = parseDate(`${year}/${day}`, 'YYYY/MM/DD', 8);
+            const author = $item
+                .find('.hqpl_author')
+                .text()
+                .replace(/^作者：\s*/, '');
+            return { title, link: itemUrl, description, pubDate, author };
         })
     );
 
