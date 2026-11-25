@@ -33,7 +33,6 @@ updates:
           eslint:
               patterns:
                   - 'eslint'
-                  - '@eslint/*'
           hono:
               patterns:
                   - '@hono/*'
@@ -60,9 +59,6 @@ updates:
                   - 'https-proxy-agent'
                   - 'pac-proxy-agent'
                   - 'socks-proxy-agent'
-          typescript-eslint:
-              patterns:
-                  - '@typescript-eslint/*'
           vitest:
               patterns:
                   - 'vitest'

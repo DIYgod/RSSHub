@@ -8,14 +8,14 @@ repos:
             files: \.(ts|tsx|js|cjs|mjs)$
           - id: oxlint
             name: oxlint
-            entry: pnpm exec oxlint --type-aware --fix
+            entry: pnpm exec oxlint --type-aware --fix --no-error-on-unmatched-pattern
             language: system
             files: \.(ts|tsx|js|cjs|mjs)$
           - id: eslint
             name: eslint
             entry: pnpm exec eslint --cache --fix --concurrency auto
             language: system
-            files: \.(ts|tsx|js|cjs|mjs|ya?ml)$
+            files: \.ya?ml$
           - id: oxfmt
             name: oxfmt
             entry: pnpm exec oxfmt --no-error-on-unmatched-pattern
