@@ -68,7 +68,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.title = collapseWhitespace(item.title) || '';
                     // trim title length
                     for (let length = 0, i = 0; i < item.title.length; i++) {
-                        length += Buffer.from(item.title[i]).length === 1 ? 1 : 2;
+                        length += item.title.codePointAt(i)! < 0x80 ? 1 : 2;
                         if (length > config.titleLengthLimit) {
                             item.title = `${item.title.slice(0, i)}...`;
                             break;
