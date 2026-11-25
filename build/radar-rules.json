@@ -22974,71 +22974,6 @@
       }
     ]
   },
-  "futunn.com": {
-    "_name": "Futubull 富途牛牛",
-    "news": [
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/main/live"
-        ],
-        "target": "/futunn/live"
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/hk/main/live"
-        ],
-        "target": "/futunn/live/Cantonese"
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/en/main/live"
-        ],
-        "target": "/futunn/live/English"
-      },
-      {
-        "title": "视频",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/main/video-list",
-          "/:lang/main/video-list"
-        ],
-        "target": "/futunn/video"
-      },
-      {
-        "title": "要闻",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/main",
-          "/:lang/main"
-        ],
-        "target": "/futunn/main"
-      },
-      {
-        "title": "要闻",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/main",
-          "/:lang/main"
-        ],
-        "target": "/futunn/main"
-      },
-      {
-        "title": "专题",
-        "docs": "https://docs.rsshub.app/routes/futunn",
-        "source": [
-          "/news-topics/:id/*",
-          "/:lang/news-topics/:id/*"
-        ],
-        "target": "/futunn/topic/:id"
-      }
-    ]
-  },
   "fx57.cn": {
     "_name": "枫叶网",
     ".": [
@@ -54697,6 +54632,62 @@
           "/watchlist/by/:username"
         ],
         "target": "/furaffinity/watching/:username"
+      }
+    ]
+  },
+  "futunn.com": {
+    "_name": "Futubull 富途牛牛",
+    "news": [
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/main/live"
+        ],
+        "target": "/futunn/live"
+      },
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/hk/main/live"
+        ],
+        "target": "/futunn/live/Cantonese"
+      },
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/en/main/live"
+        ],
+        "target": "/futunn/live/English"
+      },
+      {
+        "title": "视频",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/main/video-list",
+          "/:lang/main/video-list"
+        ],
+        "target": "/futunn/video"
+      },
+      {
+        "title": "要闻",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/main",
+          "/:lang/main"
+        ],
+        "target": "/futunn/main"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/futunn",
+        "source": [
+          "/news-topics/:id/*",
+          "/:lang/news-topics/:id/*"
+        ],
+        "target": "/futunn/topic/:id"
       }
     ]
   },

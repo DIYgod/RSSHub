@@ -62727,184 +62727,6 @@ export default {
     ],
     "lang": "zh-CN"
   },
-  "futunn": {
-    "routes": {
-      "/live/:lang?": {
-        "path": "/live/:lang?",
-        "categories": [
-          "finance"
-        ],
-        "example": "/futunn/live",
-        "parameters": {
-          "lang": {
-            "description": "通知语言",
-            "default": "Mandarin",
-            "options": [
-              {
-                "label": "国语",
-                "value": "Mandarin"
-              },
-              {
-                "label": "粵語",
-                "value": "Cantonese"
-              },
-              {
-                "label": "English",
-                "value": "English"
-              }
-            ]
-          }
-        },
-        "features": {
-          "supportRadar": true,
-          "supportPodcast": true
-        },
-        "radar": [
-          {
-            "source": [
-              "news.futunn.com/main/live"
-            ],
-            "target": "/live"
-          },
-          {
-            "source": [
-              "news.futunn.com/hk/main/live"
-            ],
-            "target": "/live/Cantonese"
-          },
-          {
-            "source": [
-              "news.futunn.com/en/main/live"
-            ],
-            "target": "/live/English"
-          }
-        ],
-        "name": "快讯",
-        "maintainers": [
-          "kennyfong19931"
-        ],
-        "location": "live.ts",
-        "module": () => import('@/routes/futunn/live.ts')
-      },
-      "/video": {
-        "path": "/video",
-        "categories": [
-          "finance"
-        ],
-        "example": "/futunn/video",
-        "features": {
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "news.futunn.com/main/video-list",
-              "news.futunn.com/:lang/main/video-list"
-            ],
-            "target": "/video"
-          }
-        ],
-        "name": "视频",
-        "maintainers": [
-          "kennyfong19931"
-        ],
-        "location": "video.ts",
-        "module": () => import('@/routes/futunn/video.ts')
-      },
-      "/main": {
-        "path": [
-          "/main",
-          "/"
-        ],
-        "categories": [
-          "finance"
-        ],
-        "example": "/futunn/main",
-        "features": {
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "news.futunn.com/main",
-              "news.futunn.com/:lang/main"
-            ],
-            "target": "/main"
-          }
-        ],
-        "name": "要闻",
-        "maintainers": [
-          "Wsine",
-          "nczitzk",
-          "kennyfong19931"
-        ],
-        "location": "main.ts",
-        "module": () => import('@/routes/futunn/main.ts')
-      },
-      "/": {
-        "path": [
-          "/main",
-          "/"
-        ],
-        "categories": [
-          "finance"
-        ],
-        "example": "/futunn/main",
-        "features": {
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "news.futunn.com/main",
-              "news.futunn.com/:lang/main"
-            ],
-            "target": "/main"
-          }
-        ],
-        "name": "要闻",
-        "maintainers": [
-          "Wsine",
-          "nczitzk",
-          "kennyfong19931"
-        ],
-        "location": "main.ts",
-        "module": () => import('@/routes/futunn/main.ts')
-      },
-      "/topic/:id": {
-        "path": "/topic/:id",
-        "categories": [
-          "finance"
-        ],
-        "example": "/futunn/topic/1267",
-        "parameters": {
-          "id": "Topic ID, can be found in URL"
-        },
-        "features": {
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "news.futunn.com/news-topics/:id/*",
-              "news.futunn.com/:lang/news-topics/:id/*"
-            ],
-            "target": "/topic/:id"
-          }
-        ],
-        "name": "专题",
-        "maintainers": [
-          "kennyfong19931"
-        ],
-        "location": "topic.ts",
-        "module": () => import('@/routes/futunn/topic.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Futubull 富途牛牛",
-    "url": "news.futunn.com",
-    "lang": "zh-CN"
-  },
   "fx-markets": {
     "routes": {
       "/:channel": {
@@ -145932,6 +145754,151 @@ export default {
     "name": "Furaffinity",
     "url": "furaffinity.net",
     "lang": "en"
+  },
+  "futunn": {
+    "routes": {
+      "/live/:lang?": {
+        "path": "/live/:lang?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/live",
+        "parameters": {
+          "lang": {
+            "description": "通知语言",
+            "default": "Mandarin",
+            "options": [
+              {
+                "label": "国语",
+                "value": "Mandarin"
+              },
+              {
+                "label": "粵語",
+                "value": "Cantonese"
+              },
+              {
+                "label": "English",
+                "value": "English"
+              }
+            ]
+          }
+        },
+        "features": {
+          "supportRadar": true,
+          "supportPodcast": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main/live"
+            ],
+            "target": "/live"
+          },
+          {
+            "source": [
+              "news.futunn.com/hk/main/live"
+            ],
+            "target": "/live/Cantonese"
+          },
+          {
+            "source": [
+              "news.futunn.com/en/main/live"
+            ],
+            "target": "/live/English"
+          }
+        ],
+        "name": "快讯",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "live.ts",
+        "module": () => import('@/routes/futunn/live.ts')
+      },
+      "/video": {
+        "path": "/video",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/video",
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main/video-list",
+              "news.futunn.com/:lang/main/video-list"
+            ],
+            "target": "/video"
+          }
+        ],
+        "name": "视频",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "video.ts",
+        "module": () => import('@/routes/futunn/video.ts')
+      },
+      "/main": {
+        "path": "/main",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/main",
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/main",
+              "news.futunn.com/:lang/main"
+            ],
+            "target": "/main"
+          }
+        ],
+        "name": "要闻",
+        "maintainers": [
+          "Wsine",
+          "nczitzk",
+          "kennyfong19931"
+        ],
+        "location": "main.ts",
+        "module": () => import('@/routes/futunn/main.ts')
+      },
+      "/topic/:id": {
+        "path": "/topic/:id",
+        "categories": [
+          "finance"
+        ],
+        "example": "/futunn/topic/1267",
+        "parameters": {
+          "id": "Topic ID, can be found in URL"
+        },
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "news.futunn.com/news-topics/:id/*",
+              "news.futunn.com/:lang/news-topics/:id/*"
+            ],
+            "target": "/topic/:id"
+          }
+        ],
+        "name": "专题",
+        "maintainers": [
+          "kennyfong19931"
+        ],
+        "location": "topic.ts",
+        "module": () => import('@/routes/futunn/topic.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Futubull 富途牛牛",
+    "url": "news.futunn.com",
+    "lang": "zh-CN"
   },
   "gamer": {
     "routes": {
