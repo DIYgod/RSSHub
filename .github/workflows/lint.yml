@@ -49,18 +49,26 @@ jobs:
                   - name: Typecheck
                     run: pnpm typecheck
                   - name: Knip
-                    run: pnpm knip --reporter github-actions
+                    run: pnpm knip --reporter github-actions --reporter sarif --output-file sarif=knip-results.sarif
                   - name: Lint
                     run: pnpm exec oxlint --type-aware --config=oxlint.ci.config.ts
                         --format=json | oxlint-json-to-sarif > oxlint-results.sarif
                     continue-on-error: true
             - parallel:
-                  - name: Upload analysis results to GitHub
+                  - name: Upload Knip results to GitHub
+                    if: ${{ !cancelled() }}
+                    uses: github/codeql-action/upload-sarif@v4
+                    with:
+                        sarif_file: knip-results.sarif
+                        wait-for-processing: true
+                  - name: Upload Lint results to GitHub
+                    if: ${{ !cancelled() }}
                     uses: github/codeql-action/upload-sarif@v4
                     with:
                         sarif_file: oxlint-results.sarif
                         wait-for-processing: true
                   - name: Upload Artifact
+                    if: ${{ !cancelled() }}
                     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
                     with:
                         path: oxlint-results.sarif
