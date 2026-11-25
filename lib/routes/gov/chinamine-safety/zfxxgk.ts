@@ -170,31 +170,31 @@ export const route: Route = {
 
 #### 法定主动公开内容
 
-| 分类         | id                    |
-| ------------ | --------------------- |
-| 通知公告     | fdzdgknr/tzgg         |
-| 征求意见     | fdzdgknr/zqyj\\_01     |
-| 政策法规     | fdzdgknr/zcfg         |
-| 规划计划     | fdzdgknr/ghjh         |
-| 政策解读     | fdzdgknr/zcjd         |
-| 安全许可     | fdzdgknr/anqxk        |
-| 事故查处     | fdzdgknr/sgcc         |
-| 人事信息     | fdzdgknr/rsxx         |
-| 财务信息     | fdzdgknr/cwxx         |
-| 建议提案办理 | fdzdgknr/jytabl\\_4823 |
+| 分类         | id                   |
+| ------------ | -------------------- |
+| 通知公告     | fdzdgknr/tzgg        |
+| 征求意见     | fdzdgknr/zqyj_01     |
+| 政策法规     | fdzdgknr/zcfg        |
+| 规划计划     | fdzdgknr/ghjh        |
+| 政策解读     | fdzdgknr/zcjd        |
+| 安全许可     | fdzdgknr/anqxk       |
+| 事故查处     | fdzdgknr/sgcc        |
+| 人事信息     | fdzdgknr/rsxx        |
+| 财务信息     | fdzdgknr/cwxx        |
+| 建议提案办理 | fdzdgknr/jytabl_4823 |
 
 #### 法定主动公开内容 > 政策法规
 
-| 分类             | id                           |
-| ---------------- | ---------------------------- |
-| 法律             | fdzdgknr/zcfg/fl\\_01         |
-| 行政法规         | fdzdgknr/zcfg/xzfg           |
-| 部门规章         | fdzdgknr/zcfg/bmgz\\_01       |
-| 部门规章煤矿安监 | fdzdgknr/zcfg/bmgz\\_01/mkanj |
-| 部门规章非煤矿山 | fdzdgknr/zcfg/bmgz\\_01/fmks  |
-| 行业标准         | fdzdgknr/zcfg/hybz\\_01       |
-| 行业标准煤矿安监 | fdzdgknr/zcfg/hybz\\_01/mkanj |
-| 行业标准非煤矿山 | fdzdgknr/zcfg/hybz\\_01/fmks  |
+| 分类             | id                          |
+| ---------------- | --------------------------- |
+| 法律             | fdzdgknr/zcfg/fl_01         |
+| 行政法规         | fdzdgknr/zcfg/xzfg          |
+| 部门规章         | fdzdgknr/zcfg/bmgz_01       |
+| 部门规章煤矿安监 | fdzdgknr/zcfg/bmgz_01/mkanj |
+| 部门规章非煤矿山 | fdzdgknr/zcfg/bmgz_01/fmks  |
+| 行业标准         | fdzdgknr/zcfg/hybz_01       |
+| 行业标准煤矿安监 | fdzdgknr/zcfg/hybz_01/mkanj |
+| 行业标准非煤矿山 | fdzdgknr/zcfg/hybz_01/fmks  |
 
 #### 法定主动公开内容 > 事故查处
 

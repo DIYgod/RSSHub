@@ -36,14 +36,14 @@ export const route: Route = {
     name: '超话',
     maintainers: ['zengxs', 'Rongronggg9'],
     handler,
-    description: `| type       | 备注             |
-| ---------- | ---------------- |
-| soul       | 精华             |
-| video      | 视频（暂不支持） |
-| album      | 相册（暂不支持） |
-| hot\\_sort  | 热门             |
-| sort\\_time | 最新帖子         |
-| feed       | 最新评论         |`,
+    description: `| type      | 备注             |
+| --------- | ---------------- |
+| soul      | 精华             |
+| video     | 视频（暂不支持） |
+| album     | 相册（暂不支持） |
+| hot_sort  | 热门             |
+| sort_time | 最新帖子         |
+| feed      | 最新评论         |`,
 };
 
 type ContainerData = {

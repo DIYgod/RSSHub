@@ -16,9 +16,9 @@ export const route: Route = {
     name: '东湖新技术开发区 - 光谷新闻',
     maintainers: ['tudou027'],
     handler,
-    description: `|  通知公告 |   光谷要闻  |   产业动态  |
-| :-------: | :---------: | :---------: |
-| tz\\_68628 | ggxw\\_68629 | cydt\\_68630 |`,
+    description: `| 通知公告 |  光谷要闻  |  产业动态  |
+| :------: | :--------: | :--------: |
+| tz_68628 | ggxw_68629 | cydt_68630 |`,
 };
 
 const rootUrl = 'https://www.wehdz.gov.cn';

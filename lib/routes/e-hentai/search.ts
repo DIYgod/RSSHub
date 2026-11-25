@@ -19,7 +19,7 @@ export const route: Route = {
     description: `::: tip
 参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
 
-选择浏览 [f\\_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay)，并指定 **携带种子文件**，且 **显示大图**。由于 [f\\_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay) 的 URL \`https://e-hentai.org/?f_search=cosplay\` 中对应关键字字段为 \`?\` 后的 \`f_search=cosplay\`，所以对应路由为 [\`/e-hentai/search/f_search=cosplay/y/y\`](https://rsshub.app/e-hentai/search/f_search=cosplay/y/y)
+选择浏览 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay)，并指定 **携带种子文件**，且 **显示大图**。由于 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay) 的 URL \`https://e-hentai.org/?f_search=cosplay\` 中对应关键字字段为 \`?\` 后的 \`f_search=cosplay\`，所以对应路由为 [\`/e-hentai/search/f_search=cosplay/y/y\`](https://rsshub.app/e-hentai/search/f_search=cosplay/y/y)
 :::`,
     handler,
 };

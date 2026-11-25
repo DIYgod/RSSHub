@@ -27,9 +27,9 @@ export const route: Route = {
     name: '新闻中心',
     maintainers: ['zhboner', 'lyqluis'],
     handler,
-    description: `| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
-| -------- | -------- | -------- | -------- | ----------- |
-|          | game     | acg      | next     | news\\_36\\_1 |`,
+    description: `| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点  |
+| -------- | -------- | -------- | -------- | --------- |
+|          | game     | acg      | next     | news_36_1 |`,
 };
 
 async function handler(ctx) {

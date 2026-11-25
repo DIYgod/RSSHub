@@ -19,15 +19,15 @@ export const route: Route = {
     maintainers: ['LogicJake', 'hillerliao', 'laampui', 'nczitzk'],
     description: `column 为 szse 或 sse 时可选的 category:
 
-| 全部 | 年报                 | 半年报                | 一季报                | 三季报                | 业绩预告                | 权益分派                 | 董事会                | 监事会                | 股东大会             | 日常经营             | 公司治理             | 中介报告           | 首发               | 增发               | 股权激励             | 配股               | 解禁               | 公司债               | 可转债               | 其他融资             | 股权变动             | 补充更正             | 澄清致歉             | 风险提示             | 特别处理和退市         | 退市整理期            |
-| ---- | -------------------- | --------------------- | --------------------- | --------------------- | ----------------------- | ------------------------ | --------------------- | --------------------- | -------------------- | -------------------- | -------------------- | ------------------ | ------------------ | ------------------ | -------------------- | ------------------ | ------------------ | -------------------- | -------------------- | -------------------- | -------------------- | -------------------- | -------------------- | -------------------- | ---------------------- | --------------------- |
-| all  | category\\_ndbg\\_szsh | category\\_bndbg\\_szsh | category\\_yjdbg\\_szsh | category\\_sjdbg\\_szsh | category\\_yjygjxz\\_szsh | category\\_qyfpxzcs\\_szsh | category\\_dshgg\\_szsh | category\\_jshgg\\_szsh | category\\_gddh\\_szsh | category\\_rcjy\\_szsh | category\\_gszl\\_szsh | category\\_zj\\_szsh | category\\_sf\\_szsh | category\\_zf\\_szsh | category\\_gqjl\\_szsh | category\\_pg\\_szsh | category\\_jj\\_szsh | category\\_gszq\\_szsh | category\\_kzzq\\_szsh | category\\_qtrz\\_szsh | category\\_gqbd\\_szsh | category\\_bcgz\\_szsh | category\\_cqdq\\_szsh | category\\_fxts\\_szsh | category\\_tbclts\\_szsh | category\\_tszlq\\_szsh |
+| 全部 | 年报               | 半年报              | 一季报              | 三季报              | 业绩预告              | 权益分派               | 董事会              | 监事会              | 股东大会           | 日常经营           | 公司治理           | 中介报告         | 首发             | 增发             | 股权激励           | 配股             | 解禁             | 公司债             | 可转债             | 其他融资           | 股权变动           | 补充更正           | 澄清致歉           | 风险提示           | 特别处理和退市       | 退市整理期          |
+| ---- | ------------------ | ------------------- | ------------------- | ------------------- | --------------------- | ---------------------- | ------------------- | ------------------- | ------------------ | ------------------ | ------------------ | ---------------- | ---------------- | ---------------- | ------------------ | ---------------- | ---------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | -------------------- | ------------------- |
+| all  | category_ndbg_szsh | category_bndbg_szsh | category_yjdbg_szsh | category_sjdbg_szsh | category_yjygjxz_szsh | category_qyfpxzcs_szsh | category_dshgg_szsh | category_jshgg_szsh | category_gddh_szsh | category_rcjy_szsh | category_gszl_szsh | category_zj_szsh | category_sf_szsh | category_zf_szsh | category_gqjl_szsh | category_pg_szsh | category_jj_szsh | category_gszq_szsh | category_kzzq_szsh | category_qtrz_szsh | category_gqbd_szsh | category_bcgz_szsh | category_cqdq_szsh | category_fxts_szsh | category_tbclts_szsh | category_tszlq_szsh |
 
 column 为 third 时可选的 category:
 
-| 全部 | 临时公告       | 定期公告       | 中介机构公告   | 持续信息披露   | 首次信息披露   |
-| ---- | -------------- | -------------- | -------------- | -------------- | -------------- |
-| all  | category\\_lsgg | category\\_dqgg | category\\_zjjg | category\\_cxpl | category\\_scpl |
+| 全部 | 临时公告      | 定期公告      | 中介机构公告  | 持续信息披露  | 首次信息披露  |
+| ---- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| all  | category_lsgg | category_dqgg | category_zjjg | category_cxpl | category_scpl |
 
 ::: tip
 需要筛选多个 category 时，应使用 \`;\` 将多个字段连接起来。

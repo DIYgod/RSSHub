@@ -127,9 +127,9 @@ export const route: Route = {
 
 #### [人才培养](https://mse.hust.edu.cn/rcpy.htm)
 
-| [本科生教育](https://mse.hust.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://mse.hust.edu.cn/rcpy/yjsjy.htm) | [学生工作](https://mse.hust.edu.cn/rcpy/xsg_z.htm)    | [机械创新基地](https://mse.hust.edu.cn/rcpy/jxcxjd.htm) | [常用下载](https://mse.hust.edu.cn/rcpy/cyxz.htm)  |
-| ---------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
-| [rcpy/bksjy](https://rsshub.app/hust/mse/rcpy/bksjy) | [rcpy/yjsjy](https://rsshub.app/hust/mse/rcpy/yjsjy) | [rcpy/xsg\\_z](https://rsshub.app/hust/mse/rcpy/xsg_z) | [rcpy/jxcxjd](https://rsshub.app/hust/mse/rcpy/jxcxjd)  | [rcpy/cyxz](https://rsshub.app/hust/mse/rcpy/cyxz) |
+| [本科生教育](https://mse.hust.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://mse.hust.edu.cn/rcpy/yjsjy.htm) | [学生工作](https://mse.hust.edu.cn/rcpy/xsg_z.htm)   | [机械创新基地](https://mse.hust.edu.cn/rcpy/jxcxjd.htm) | [常用下载](https://mse.hust.edu.cn/rcpy/cyxz.htm)  |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| [rcpy/bksjy](https://rsshub.app/hust/mse/rcpy/bksjy) | [rcpy/yjsjy](https://rsshub.app/hust/mse/rcpy/yjsjy) | [rcpy/xsg_z](https://rsshub.app/hust/mse/rcpy/xsg_z) | [rcpy/jxcxjd](https://rsshub.app/hust/mse/rcpy/jxcxjd)  | [rcpy/cyxz](https://rsshub.app/hust/mse/rcpy/cyxz) |
 
 #### [科学研究](https://mse.hust.edu.cn/kxyj.htm)
 
@@ -169,9 +169,9 @@ export const route: Route = {
 
 #### [人才培养](https://mse.hust.edu.cn/sylm/xyxw.htm#)
 
-| [本科生教育](https://mse.hust.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://mse.hust.edu.cn/rcpy/yjsjy.htm) | [学生工作](https://mse.hust.edu.cn/rcpy/xsg_z.htm)    | [机械创新基地](https://mse.hust.edu.cn/rcpy/jxcxjd.htm) | [常用下载](https://mse.hust.edu.cn/rcpy/cyxz.htm)  |
-| ---------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
-| [rcpy/bksjy](https://rsshub.app/hust/mse/rcpy/bksjy) | [rcpy/yjsjy](https://rsshub.app/hust/mse/rcpy/yjsjy) | [rcpy/xsg\\_z](https://rsshub.app/hust/mse/rcpy/xsg_z) | [rcpy/jxcxjd](https://rsshub.app/hust/mse/rcpy/jxcxjd)  | [rcpy/cyxz](https://rsshub.app/hust/mse/rcpy/cyxz) |
+| [本科生教育](https://mse.hust.edu.cn/rcpy/bksjy.htm) | [研究生教育](https://mse.hust.edu.cn/rcpy/yjsjy.htm) | [学生工作](https://mse.hust.edu.cn/rcpy/xsg_z.htm)   | [机械创新基地](https://mse.hust.edu.cn/rcpy/jxcxjd.htm) | [常用下载](https://mse.hust.edu.cn/rcpy/cyxz.htm)  |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| [rcpy/bksjy](https://rsshub.app/hust/mse/rcpy/bksjy) | [rcpy/yjsjy](https://rsshub.app/hust/mse/rcpy/yjsjy) | [rcpy/xsg_z](https://rsshub.app/hust/mse/rcpy/xsg_z) | [rcpy/jxcxjd](https://rsshub.app/hust/mse/rcpy/jxcxjd)  | [rcpy/cyxz](https://rsshub.app/hust/mse/rcpy/cyxz) |
 
 #### [科学研究](https://mse.hust.edu.cn/sylm/xyxw.htm#)
 

@@ -82,15 +82,15 @@ export const route: Route = {
     url: 'www.chp.gov.hk/',
     description: `Category
 
-| Important Topics | Press Releases     | Response Level | Periodicals & Publications | Health Notice |
-| ---------------- | ------------------ | -------------- | -------------------------- | ------------- |
-| important\\_ft    | press\\_data\\_index | ResponseLevel  | publication                | HealthAlert   |
+| Important Topics | Press Releases   | Response Level | Periodicals & Publications | Health Notice |
+| ---------------- | ---------------- | -------------- | -------------------------- | ------------- |
+| important_ft     | press_data_index | ResponseLevel  | publication                | HealthAlert   |
 
 Language
 
 | English | 中文简体 | 中文繁體 |
 | ------- | -------- | -------- |
-| en      | zh\\_cn   | zh\\_tw   |`,
+| en      | zh_cn    | zh_tw    |`,
 };
 
 async function handler(ctx) {

@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: {
         locale: 'Blog posts in a specified language, only the following options are supported. Default `zh_CN`',
     },
-    description: `| zh\\_CN  | en\\_US  | fr\\_FR | de\\_DE | ja\\_JP   | ko\\_KR | pt\\_BR     | es\\_ES  | ru\\_RU  | id\\_ID     | tr\\_TR  |
+    description: `| zh_CN   | en_US   | fr_FR  | de_DE  | ja_JP    | ko_KR  | pt_BR      | es_ES   | ru_RU   | id_ID      | tr_TR   |
 | ------- | ------- | ------ | ------ | -------- | ------ | ---------- | ------- | ------- | ---------- | ------- |
 | Chinese | English | French | German | Japanese | Korean | Portuguese | Spanish | Russian | Indonesian | Turkish |`,
     name: 'AWS Blogs',

@@ -14,18 +14,18 @@ export const route: Route = {
     description: `::: tip
 Parameter
 
-| Name            | Description                                                               | Default       |
-| --------------- | ------------------------------------------------------------------------- | ------------- |
-| query           | Search Query                                                              | undefined     |
-| category        | Category (as named on Kleinanzeigen)                                      | undefined     |
-| categoryId      | Category ID (advanced)                                                    | undefined     |
-| location        | Location (as named on Kleinanzeigen)                                      | undefined     |
-| locationId      | Location ID (advanced)                                                    | undefined     |
-| radius          | Radius in KM around the Location                                          | 0             |
-| sortingField    | Order of the Products (SORTING\\_DATE, PRICE\\_AMOUNT, PRICE\\_AMOUNT\\_DESC) | SORTING\\_DATE |
-| minPrice        | minimal Price                                                             | undefined     |
-| maxPrice        | maximal Price                                                             | undefined     |
-| shippingCarrier | Shipping Carrier (e.g. DHL, HERMES)                                       | undefined     |
+| Name            | Description                                                           | Default      |
+| --------------- | --------------------------------------------------------------------- | ------------ |
+| query           | Search Query                                                          | undefined    |
+| category        | Category (as named on Kleinanzeigen)                                  | undefined    |
+| categoryId      | Category ID (advanced)                                                | undefined    |
+| location        | Location (as named on Kleinanzeigen)                                  | undefined    |
+| locationId      | Location ID (advanced)                                                | undefined    |
+| radius          | Radius in KM around the Location                                      | 0            |
+| sortingField    | Order of the Products (SORTING_DATE, PRICE_AMOUNT, PRICE_AMOUNT_DESC) | SORTING_DATE |
+| minPrice        | minimal Price                                                         | undefined    |
+| maxPrice        | maximal Price                                                         | undefined    |
+| shippingCarrier | Shipping Carrier (e.g. DHL, HERMES)                                   | undefined    |
 
 :::`,
     features: {

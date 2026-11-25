@@ -33,9 +33,9 @@ export const route: Route = {
     name: '首页',
     maintainers: ['TonyRL'],
     handler,
-    description: `| 推荐            | 股票  | 基金 | 新股       | 研报     |
-| --------------- | ----- | ---- | ---------- | -------- |
-| web\\_home\\_page | stock | fund | new\\_stock | research |`,
+    description: `| 推荐          | 股票  | 基金 | 新股      | 研报     |
+| ------------- | ----- | ---- | --------- | -------- |
+| web_home_page | stock | fund | new_stock | research |`,
 };
 
 async function handler(ctx) {

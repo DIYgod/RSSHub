@@ -60,7 +60,7 @@ export const route: Route = {
     description: `::: warning
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
-自部署需要申请并配置微博 key，具体见部署文档。开启 ACCESS\\_KEY 时，先使用有效 key/code 打开订阅地址发起授权；回调使用十分钟内有效的一次性 state，要求可用的 memory 或 Redis 缓存。
+自部署需要申请并配置微博 key，具体见部署文档。开启 ACCESS_KEY 时，先使用有效 key/code 打开订阅地址发起授权；回调使用十分钟内有效的一次性 state，要求可用的 memory 或 Redis 缓存。
 :::`,
 };
 

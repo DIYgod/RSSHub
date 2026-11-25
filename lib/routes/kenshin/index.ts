@@ -20,13 +20,13 @@ export const route: Route = {
 
 藝能新聞 jnews
 
-| 日劇新聞    | 日影新聞    | 日樂新聞    | 日藝新聞            |
-| ----------- | ----------- | ----------- | ------------------- |
-| news\\_drama | news\\_movie | news\\_music | news\\_entertainment |
+| 日劇新聞   | 日影新聞   | 日樂新聞   | 日藝新聞           |
+| ---------- | ---------- | ---------- | ------------------ |
+| news_drama | news_movie | news_music | news_entertainment |
 
-| 動漫新聞  | 藝人美照     | 清涼寫真   | 日本廣告 | 其他日聞     |
-| --------- | ------------ | ---------- | -------- | ------------ |
-| news\\_acg | artist-photo | photoalbum | jpcm     | news\\_others |
+| 動漫新聞 | 藝人美照     | 清涼寫真   | 日本廣告 | 其他日聞    |
+| -------- | ------------ | ---------- | -------- | ----------- |
+| news_acg | artist-photo | photoalbum | jpcm     | news_others |
 
 旅遊情報 jpnews
 
@@ -44,13 +44,13 @@ export const route: Route = {
 
 日劇世界 jdrama
 
-| 每周劇評              | 日劇總評             | 資料情報    |
-| --------------------- | -------------------- | ----------- |
-| drama\\_review\\_weekly | drama\\_review\\_final | drama\\_data |
+| 每周劇評            | 日劇總評           | 資料情報   |
+| ------------------- | ------------------ | ---------- |
+| drama_review_weekly | drama_review_final | drama_data |
 
-| 深度日劇    | 收視報告      | 日劇專欄      | 劇迷互動           |
-| ----------- | ------------- | ------------- | ------------------ |
-| drama\\_deep | drama\\_rating | drama\\_column | drama\\_interactive |`,
+| 深度日劇   | 收視報告     | 日劇專欄     | 劇迷互動          |
+| ---------- | ------------ | ------------ | ----------------- |
+| drama_deep | drama_rating | drama_column | drama_interactive |`,
     handler,
 };
 
