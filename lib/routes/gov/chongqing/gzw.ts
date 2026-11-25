@@ -35,9 +35,9 @@ export const route: Route = {
             target: '/gzw/gqzp',
         },
     ],
-    description: `| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |
-| --------- | -------- | -------- | -------- |
-| tzgg\\_191 | gqdj     | gqjj     | gqzp     |`,
+    description: `| 通知公告 | 国企资讯 | 国企简介 | 国企招聘 |
+| -------- | -------- | -------- | -------- |
+| tzgg_191 | gqdj     | gqjj     | gqzp     |`,
 };
 
 async function handler(ctx) {

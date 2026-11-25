@@ -18,7 +18,7 @@ export const route: Route = {
     description: `::: tip
 \`category\` is the text after \`publish/\` in the URL.
 
-eg. The URL for [Monitoring\\_CMA-RA\\_2m-Temperature\\_6-hour](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html) is <http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html>. The \`category\` for route can be represented as [\`/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html\`](https://rsshub.app/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html).
+eg. The URL for [Monitoring_CMA-RA_2m-Temperature_6-hour](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html) is <http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html>. The \`category\` for route can be represented as [\`/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html\`](https://rsshub.app/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html).
 :::`,
 };
 

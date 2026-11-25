@@ -20,7 +20,7 @@ export const route: Route = {
     description: `::: tip
 路径处填写对应页面 URL 中 \`https://news.ifeng.com/\` 后的字段。下面是一个例子。
 
-若订阅 [大湾区\\_资讯\\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL \`https://news.ifeng.com/shanklist/3-305565-\` 中 \`https://news.ifeng.com/\` 后的字段 \`shanklist/3-305565-\` 作为路径填入。此时路由为 [\`/ifeng/news/shanklist/3-305565-\`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
+若订阅 [大湾区_资讯_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL \`https://news.ifeng.com/shanklist/3-305565-\` 中 \`https://news.ifeng.com/\` 后的字段 \`shanklist/3-305565-\` 作为路径填入。此时路由为 [\`/ifeng/news/shanklist/3-305565-\`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
 :::`,
 };
 

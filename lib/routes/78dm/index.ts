@@ -174,42 +174,42 @@ export const route: Route = {
 
 #### [精彩评测](https://www.78dm.net/eval_list)
 
-| 分类                                                      | ID                                                                  |
-| --------------------------------------------------------- | ------------------------------------------------------------------- |
-| [全部](https://www.78dm.net/eval_list/0/0/0/1.html)       | [eval\\_list/0/0/0/1](https://rsshub.app/78dm/eval_list/0/0/0/1)     |
-| [变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html) | [eval\\_list/109/0/0/1](https://rsshub.app/78dm/eval_list/109/0/0/1) |
-| [高达](https://www.78dm.net/eval_list/110/0/0/1.html)     | [eval\\_list/110/0/0/1](https://rsshub.app/78dm/eval_list/110/0/0/1) |
-| [圣斗士](https://www.78dm.net/eval_list/111/0/0/1.html)   | [eval\\_list/111/0/0/1](https://rsshub.app/78dm/eval_list/111/0/0/1) |
-| [海贼王](https://www.78dm.net/eval_list/112/0/0/1.html)   | [eval\\_list/112/0/0/1](https://rsshub.app/78dm/eval_list/112/0/0/1) |
-| [PVC 手办](https://www.78dm.net/eval_list/115/0/0/1.html) | [eval\\_list/115/0/0/1](https://rsshub.app/78dm/eval_list/115/0/0/1) |
-| [拼装模型](https://www.78dm.net/eval_list/113/0/0/1.html) | [eval\\_list/113/0/0/1](https://rsshub.app/78dm/eval_list/113/0/0/1) |
-| [机甲成品](https://www.78dm.net/eval_list/114/0/0/1.html) | [eval\\_list/114/0/0/1](https://rsshub.app/78dm/eval_list/114/0/0/1) |
-| [特摄](https://www.78dm.net/eval_list/116/0/0/1.html)     | [eval\\_list/116/0/0/1](https://rsshub.app/78dm/eval_list/116/0/0/1) |
-| [美系](https://www.78dm.net/eval_list/117/0/0/1.html)     | [eval\\_list/117/0/0/1](https://rsshub.app/78dm/eval_list/117/0/0/1) |
-| [GK](https://www.78dm.net/eval_list/118/0/0/1.html)       | [eval\\_list/118/0/0/1](https://rsshub.app/78dm/eval_list/118/0/0/1) |
-| [综合](https://www.78dm.net/eval_list/120/0/0/1.html)     | [eval\\_list/120/0/0/1](https://rsshub.app/78dm/eval_list/120/0/0/1) |
+| 分类                                                      | ID                                                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------------ |
+| [全部](https://www.78dm.net/eval_list/0/0/0/1.html)       | [eval_list/0/0/0/1](https://rsshub.app/78dm/eval_list/0/0/0/1)     |
+| [变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html) | [eval_list/109/0/0/1](https://rsshub.app/78dm/eval_list/109/0/0/1) |
+| [高达](https://www.78dm.net/eval_list/110/0/0/1.html)     | [eval_list/110/0/0/1](https://rsshub.app/78dm/eval_list/110/0/0/1) |
+| [圣斗士](https://www.78dm.net/eval_list/111/0/0/1.html)   | [eval_list/111/0/0/1](https://rsshub.app/78dm/eval_list/111/0/0/1) |
+| [海贼王](https://www.78dm.net/eval_list/112/0/0/1.html)   | [eval_list/112/0/0/1](https://rsshub.app/78dm/eval_list/112/0/0/1) |
+| [PVC 手办](https://www.78dm.net/eval_list/115/0/0/1.html) | [eval_list/115/0/0/1](https://rsshub.app/78dm/eval_list/115/0/0/1) |
+| [拼装模型](https://www.78dm.net/eval_list/113/0/0/1.html) | [eval_list/113/0/0/1](https://rsshub.app/78dm/eval_list/113/0/0/1) |
+| [机甲成品](https://www.78dm.net/eval_list/114/0/0/1.html) | [eval_list/114/0/0/1](https://rsshub.app/78dm/eval_list/114/0/0/1) |
+| [特摄](https://www.78dm.net/eval_list/116/0/0/1.html)     | [eval_list/116/0/0/1](https://rsshub.app/78dm/eval_list/116/0/0/1) |
+| [美系](https://www.78dm.net/eval_list/117/0/0/1.html)     | [eval_list/117/0/0/1](https://rsshub.app/78dm/eval_list/117/0/0/1) |
+| [GK](https://www.78dm.net/eval_list/118/0/0/1.html)       | [eval_list/118/0/0/1](https://rsshub.app/78dm/eval_list/118/0/0/1) |
+| [综合](https://www.78dm.net/eval_list/120/0/0/1.html)     | [eval_list/120/0/0/1](https://rsshub.app/78dm/eval_list/120/0/0/1) |
 
 #### [好贴推荐](https://www.78dm.net/ht_list)
 
-| 分类                                                    | ID                                                              |
-| ------------------------------------------------------- | --------------------------------------------------------------- |
-| [全部](https://www.78dm.net/ht_list/0/0/0/1.html)       | [ht\\_list/0/0/0/1](https://rsshub.app/78dm/ht_list/0/0/0/1)     |
-| [变形金刚](https://www.78dm.net/ht_list/95/0/0/1.html)  | [ht\\_list/95/0/0/1](https://rsshub.app/78dm/ht_list/95/0/0/1)   |
-| [高达](https://www.78dm.net/ht_list/96/0/0/1.html)      | [ht\\_list/96/0/0/1](https://rsshub.app/78dm/ht_list/96/0/0/1)   |
-| [圣斗士](https://www.78dm.net/ht_list/98/0/0/1.html)    | [ht\\_list/98/0/0/1](https://rsshub.app/78dm/ht_list/98/0/0/1)   |
-| [海贼王](https://www.78dm.net/ht_list/99/0/0/1.html)    | [ht\\_list/99/0/0/1](https://rsshub.app/78dm/ht_list/99/0/0/1)   |
-| [PVC 手办](https://www.78dm.net/ht_list/100/0/0/1.html) | [ht\\_list/100/0/0/1](https://rsshub.app/78dm/ht_list/100/0/0/1) |
-| [拼装模型](https://www.78dm.net/ht_list/101/0/0/1.html) | [ht\\_list/101/0/0/1](https://rsshub.app/78dm/ht_list/101/0/0/1) |
-| [机甲成品](https://www.78dm.net/ht_list/102/0/0/1.html) | [ht\\_list/102/0/0/1](https://rsshub.app/78dm/ht_list/102/0/0/1) |
-| [特摄](https://www.78dm.net/ht_list/103/0/0/1.html)     | [ht\\_list/103/0/0/1](https://rsshub.app/78dm/ht_list/103/0/0/1) |
-| [美系](https://www.78dm.net/ht_list/104/0/0/1.html)     | [ht\\_list/104/0/0/1](https://rsshub.app/78dm/ht_list/104/0/0/1) |
-| [GK](https://www.78dm.net/ht_list/105/0/0/1.html)       | [ht\\_list/105/0/0/1](https://rsshub.app/78dm/ht_list/105/0/0/1) |
-| [综合](https://www.78dm.net/ht_list/107/0/0/1.html)     | [ht\\_list/107/0/0/1](https://rsshub.app/78dm/ht_list/107/0/0/1) |
-| [装甲战车](https://www.78dm.net/ht_list/131/0/0/1.html) | [ht\\_list/131/0/0/1](https://rsshub.app/78dm/ht_list/131/0/0/1) |
-| [舰船模型](https://www.78dm.net/ht_list/132/0/0/1.html) | [ht\\_list/132/0/0/1](https://rsshub.app/78dm/ht_list/132/0/0/1) |
-| [飞机模型](https://www.78dm.net/ht_list/133/0/0/1.html) | [ht\\_list/133/0/0/1](https://rsshub.app/78dm/ht_list/133/0/0/1) |
-| [民用模型](https://www.78dm.net/ht_list/134/0/0/1.html) | [ht\\_list/134/0/0/1](https://rsshub.app/78dm/ht_list/134/0/0/1) |
-| [兵人模型](https://www.78dm.net/ht_list/135/0/0/1.html) | [ht\\_list/135/0/0/1](https://rsshub.app/78dm/ht_list/135/0/0/1) |
+| 分类                                                    | ID                                                             |
+| ------------------------------------------------------- | -------------------------------------------------------------- |
+| [全部](https://www.78dm.net/ht_list/0/0/0/1.html)       | [ht_list/0/0/0/1](https://rsshub.app/78dm/ht_list/0/0/0/1)     |
+| [变形金刚](https://www.78dm.net/ht_list/95/0/0/1.html)  | [ht_list/95/0/0/1](https://rsshub.app/78dm/ht_list/95/0/0/1)   |
+| [高达](https://www.78dm.net/ht_list/96/0/0/1.html)      | [ht_list/96/0/0/1](https://rsshub.app/78dm/ht_list/96/0/0/1)   |
+| [圣斗士](https://www.78dm.net/ht_list/98/0/0/1.html)    | [ht_list/98/0/0/1](https://rsshub.app/78dm/ht_list/98/0/0/1)   |
+| [海贼王](https://www.78dm.net/ht_list/99/0/0/1.html)    | [ht_list/99/0/0/1](https://rsshub.app/78dm/ht_list/99/0/0/1)   |
+| [PVC 手办](https://www.78dm.net/ht_list/100/0/0/1.html) | [ht_list/100/0/0/1](https://rsshub.app/78dm/ht_list/100/0/0/1) |
+| [拼装模型](https://www.78dm.net/ht_list/101/0/0/1.html) | [ht_list/101/0/0/1](https://rsshub.app/78dm/ht_list/101/0/0/1) |
+| [机甲成品](https://www.78dm.net/ht_list/102/0/0/1.html) | [ht_list/102/0/0/1](https://rsshub.app/78dm/ht_list/102/0/0/1) |
+| [特摄](https://www.78dm.net/ht_list/103/0/0/1.html)     | [ht_list/103/0/0/1](https://rsshub.app/78dm/ht_list/103/0/0/1) |
+| [美系](https://www.78dm.net/ht_list/104/0/0/1.html)     | [ht_list/104/0/0/1](https://rsshub.app/78dm/ht_list/104/0/0/1) |
+| [GK](https://www.78dm.net/ht_list/105/0/0/1.html)       | [ht_list/105/0/0/1](https://rsshub.app/78dm/ht_list/105/0/0/1) |
+| [综合](https://www.78dm.net/ht_list/107/0/0/1.html)     | [ht_list/107/0/0/1](https://rsshub.app/78dm/ht_list/107/0/0/1) |
+| [装甲战车](https://www.78dm.net/ht_list/131/0/0/1.html) | [ht_list/131/0/0/1](https://rsshub.app/78dm/ht_list/131/0/0/1) |
+| [舰船模型](https://www.78dm.net/ht_list/132/0/0/1.html) | [ht_list/132/0/0/1](https://rsshub.app/78dm/ht_list/132/0/0/1) |
+| [飞机模型](https://www.78dm.net/ht_list/133/0/0/1.html) | [ht_list/133/0/0/1](https://rsshub.app/78dm/ht_list/133/0/0/1) |
+| [民用模型](https://www.78dm.net/ht_list/134/0/0/1.html) | [ht_list/134/0/0/1](https://rsshub.app/78dm/ht_list/134/0/0/1) |
+| [兵人模型](https://www.78dm.net/ht_list/135/0/0/1.html) | [ht_list/135/0/0/1](https://rsshub.app/78dm/ht_list/135/0/0/1) |
 
 </details>`,
     categories: ['new-media'],

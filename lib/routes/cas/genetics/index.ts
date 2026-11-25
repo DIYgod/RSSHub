@@ -14,13 +14,13 @@ export const route: Route = {
     name: '遗传与发育生物学研究所',
     maintainers: ['panyq357'],
     handler,
-    description: `| 路径                   | 栏目       |
-| :--------------------- | :--------- |
-| jixs/yg                | 学术预告   |
-| dtxw/kyjz              | 科研进展   |
-| edu/zsxx/ssszs\\_187556 | 硕士生招生 |
-| edu/zsxx/bsszs\\_187557 | 博士生招生 |
-| dqyd/djgz/dwyw         | 党委要闻   |`,
+    description: `| 路径                  | 栏目       |
+| :-------------------- | :--------- |
+| jixs/yg               | 学术预告   |
+| dtxw/kyjz             | 科研进展   |
+| edu/zsxx/ssszs_187556 | 硕士生招生 |
+| edu/zsxx/bsszs_187557 | 博士生招生 |
+| dqyd/djgz/dwyw        | 党委要闻   |`,
 };
 
 async function handler(ctx) {

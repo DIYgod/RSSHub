@@ -25,9 +25,9 @@ Article types:
 | ----- | ------ | ---------- | ------ | ------ | ---- |
 | index | series | interviews | novels | comics | news |
 
-| Music review  | Game review  | Book review  | Where are you   |
-| ------------- | ------------ | ------------ | --------------- |
-| music\\_review | game\\_review | book\\_review | where\\_are\\_you |
+| Music review | Game review | Book review | Where are you |
+| ------------ | ----------- | ----------- | ------------- |
+| music_review | game_review | book_review | where_are_you |
 
 **Note:** The index type includes all types of articles. Think twice before using it.`,
     handler,

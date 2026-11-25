@@ -30,7 +30,7 @@ export const route: Route = {
 | xwdt     | tzgg     | jxxx     | kydt     | djhd     |
 
 ::: warning
-scs.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE\\_TLS\\_REJECT\\_UNAUTHORIZED = 0
+scs.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 :::`,
 };
 

@@ -19,9 +19,9 @@ export const route: Route = {
     name: '一周口碑榜',
     maintainers: ['umm233', 'nczitzk'],
     handler,
-    description: `| 一周口碑电影榜      | 华语口碑剧集榜            |
-| ------------------- | ------------------------- |
-| movie\\_weekly\\_best | tv\\_chinese\\_best\\_weekly |`,
+    description: `| 一周口碑电影榜    | 华语口碑剧集榜         |
+| ----------------- | ---------------------- |
+| movie_weekly_best | tv_chinese_best_weekly |`,
 };
 
 async function handler(ctx) {

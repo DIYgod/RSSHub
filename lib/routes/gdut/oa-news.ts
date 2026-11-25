@@ -74,14 +74,14 @@ export const route: Route = {
     url: 'oas.gdut.edu.cn/seeyon',
     description: `学校可能会因为 IP 来源非学校而做出一定的限制，建议在校内网络环境下使用 RSS 阅读器订阅。
 
-| 类型     | 参数           | 可能需要校内访问 |
-| -------- | -------------- | ---------------- |
-| 部处简讯 | department     | 是               |
-| 学院简讯 | academy        | 是               |
-| 校内通知 | notice         | 是               |
-| 公示公告 | announcement   | 是               |
-| 招标结果 | tender\\_result | 否               |
-| 招标公告 | tender\\_invite | 否               |`,
+| 类型     | 参数          | 可能需要校内访问 |
+| -------- | ------------- | ---------------- |
+| 部处简讯 | department    | 是               |
+| 学院简讯 | academy       | 是               |
+| 校内通知 | notice        | 是               |
+| 公示公告 | announcement  | 是               |
+| 招标结果 | tender_result | 否               |
+| 招标公告 | tender_invite | 否               |`,
 };
 
 async function handler(ctx) {

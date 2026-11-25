@@ -33,9 +33,9 @@ export const route: Route = {
 
 排序
 
-| 最新上线  | 金额最高   | 评论最多     |
-| --------- | ---------- | ------------ |
-| top\\_time | top\\_money | top\\_comment |
+| 最新上线 | 金额最高  | 评论最多    |
+| -------- | --------- | ----------- |
+| top_time | top_money | top_comment |
 
 状态
 

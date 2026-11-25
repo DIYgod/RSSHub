@@ -45,7 +45,7 @@ Category for hk.news.yahoo.com (hongkong)
 | ------- | --------- | -------- | -------- | ------------- | ------ | ------ | --------- | ---------- |
 | (empty) | hong-kong | world    | business | entertainment | sports | health | parenting | supplement |
 
-Category for tw\\.news.yahoo.com (taiwan)
+Category for tw.news.yahoo.com (taiwan)
 
 | 全部    | 政治     | 財經    | 娛樂          | 運動   | 社會地方 | 國際  | 生活      | 健康   | 科技       |
 | ------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- |
@@ -65,7 +65,7 @@ To give another example, since uk.news.yahoo.com/rss/ukoriginal is accessible an
 
 For Yahoo Hong Kong and Yahoo Taiwan, please use another "news source" route.
 
-For other Yahoo News, this route's RSS provides the author field. You can use RSSHub's built-in "content filtering" feature. For example, /yahoo/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget can filter out news with authors containing Yahoo Tech or Engadget from Yahoo Taiwan's technology news, which is the Chinese version of Engadget.`,
+For other Yahoo News, this route's RSS provides the author field. You can use RSSHub's built-in "content filtering" feature. For example, /yahoo/news/tw/technology?filter_author=Yahoo%20Tech|Engadget can filter out news with authors containing Yahoo Tech or Engadget from Yahoo Taiwan's technology news, which is the Chinese version of Engadget.`,
 
     zh: {
         name: '新闻',
@@ -83,7 +83,7 @@ hk.news.yahoo.com (香港) 所支持的分类
 | -------- | --------- | -------- | -------- | ------------- | ------ | ------ | --------- | ---------- |
 | （留空） | hong-kong | world    | business | entertainment | sports | health | parenting | supplement |
 
-tw\\.news.yahoo.com (台湾) 所支持的分类
+tw.news.yahoo.com (台湾) 所支持的分类
 
 | 全部     | 政治     | 財經    | 娛樂          | 運動   | 社會地方 | 國際  | 生活      | 健康   | 科技       |
 | -------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- |
@@ -103,7 +103,7 @@ news.yahoo.com (美国) 所支持的分类
 
 对于香港和台湾雅虎，请使用另一个 "新聞來源" 路由。
 
-对于其他雅虎新闻，本路由的 RSS 中提供了 author 字段，可使用 RSSHub 的内置 "内容过滤" 功能，例如 /yahoo/news/tw/technology?filter\\_author=Yahoo%20Tech|Engadget 可从台湾雅虎的科技新闻中过滤出作者名称中包含 Yahoo Tech 或者 Engadget 的新闻，即瘾科技中文版。`,
+对于其他雅虎新闻，本路由的 RSS 中提供了 author 字段，可使用 RSSHub 的内置 "内容过滤" 功能，例如 /yahoo/news/tw/technology?filter_author=Yahoo%20Tech|Engadget 可从台湾雅虎的科技新闻中过滤出作者名称中包含 Yahoo Tech 或者 Engadget 的新闻，即瘾科技中文版。`,
     },
 };
 

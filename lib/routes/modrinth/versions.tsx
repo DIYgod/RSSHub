@@ -79,11 +79,11 @@ export const route: Route = {
     name: 'Project versions',
     maintainers: ['SettingDust'],
     handler,
-    description: `| Name           | Example                                      |
-| -------------- | -------------------------------------------- |
-| loaders        | loaders=fabric\\&loaders=quilt\\&loaders=forge |
-| game\\_versions | game\\_versions=1.20.1\\&game\\_versions=1.20.2 |
-| featured       | featured=true                                |`,
+    description: `| Name          | Example                                      |
+| ------------- | -------------------------------------------- |
+| loaders       | loaders=fabric\\&loaders=quilt\\&loaders=forge |
+| game_versions | game_versions=1.20.1\\&game_versions=1.20.2   |
+| featured      | featured=true                                |`,
 };
 
 async function handler(ctx: Context) {

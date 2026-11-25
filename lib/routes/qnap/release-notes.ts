@@ -14,9 +14,9 @@ export const route: Route = {
     parameters: { id: 'OS id, see below' },
     name: 'Release Notes',
     maintainers: ['nczitzk'],
-    description: `| QTS | QuTS hero  | QuTScloud | QSS | QuWAN Orchestrator  | QES | QVP | QuRouter | TAS | AfoBot |
-| --- | ---------- | --------- | --- | ------------------- | --- | --- | -------- | --- | ------ |
-| qts | quts\\_hero | qutscloud | qss | quwan\\_orchestrator | qes | qvp | qurouter | tas | afobot |`,
+    description: `| QTS | QuTS hero | QuTScloud | QSS | QuWAN Orchestrator | QES | QVP | QuRouter | TAS | AfoBot |
+| --- | --------- | --------- | --- | ------------------ | --- | --- | -------- | --- | ------ |
+| qts | quts_hero | qutscloud | qss | quwan_orchestrator | qes | qvp | qurouter | tas | afobot |`,
     handler,
 };
 

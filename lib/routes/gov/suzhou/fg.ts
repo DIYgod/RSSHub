@@ -24,9 +24,9 @@ export const route: Route = {
     ],
     maintainers: ['nczitzk'],
     handler,
-    description: `| 通知公告            | 发改要闻             |
-| ------------------- | -------------------- |
-| szfgw/ggl/nav\\_list | szfgw/gzdt/nav\\_list |`,
+    description: `| 通知公告           | 发改要闻            |
+| ------------------ | ------------------- |
+| szfgw/ggl/nav_list | szfgw/gzdt/nav_list |`,
 };
 
 async function handler(ctx) {

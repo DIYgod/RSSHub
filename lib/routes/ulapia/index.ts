@@ -41,9 +41,9 @@ export const route: Route = {
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,
-    description: `|     个股研报    |      行业研报      |      策略研报      |     宏观研报    |    新股研报   | 券商晨报（今日晨报） |
-| :-------------: | :----------------: | :----------------: | :-------------: | :-----------: | :------------------: |
-| stock\\_research | industry\\_research | strategy\\_research | macro\\_research | ipo\\_research |    brokerage\\_news   |`,
+    description: `|    个股研报    |      行业研报     |      策略研报     |    宏观研报    |   新股研报   | 券商晨报（今日晨报） |
+| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------------: |
+| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |`,
 };
 
 async function handler(ctx) {

@@ -15,13 +15,13 @@ export const route: Route = {
     maintainers: ['ahonn'],
     description: `未登录状态下抓取页面非实时更新
 
-| 主题类型 | type        |
-| -------- | ----------- |
-| 精华贴   | excellent   |
-| 优质帖子 | popular     |
-| 无人问津 | no\\_reply   |
-| 最新回复 | last\\_reply |
-| 最新发布 | last        |`,
+| 主题类型 | type       |
+| -------- | ---------- |
+| 精华贴   | excellent  |
+| 优质帖子 | popular    |
+| 无人问津 | no_reply   |
+| 最新回复 | last_reply |
+| 最新发布 | last       |`,
     handler,
 };
 

@@ -32,7 +32,7 @@ export const route: Route = {
     description: `| 合作媒體 (\`HK\`) | \`:listId\`                              |
 | --------------- | -------------------------------------- |
 | 東方日報        | \`33ddd580-0ab3-11e8-bfe1-4b555fb1e429\` |
-| now\\.com        | \`01b4d760-0ab4-11e8-af3a-54037d3dced3\` |
+| now.com         | \`01b4d760-0ab4-11e8-af3a-54037d3dced3\` |
 | am730           | \`c4842090-0ab2-11e8-af7f-041a72ce7398\` |
 | BBC             | \`4d3fc9a0-fac8-11e9-87f2-564ca250983e\` |
 | 信報財經新聞    | \`5a8a0aa0-0ab3-11e8-b3dc-d990c79d6cb1\` |
