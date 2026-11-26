@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/time';
 
 import { renderArticleDescription } from './templates/description';
 import type { SupabaseArticleContent, SupabaseFeedCandidate } from './utils';
-import { BLOG_URL, DETAIL_CONCURRENCY, extractFeedCandidates, fetchText, parseArticleDetail, RSS_URL } from './utils';
+import { BLOG_URL, DETAIL_CONCURRENCY, extractFeedCandidates, fetchOptionalMarkdown, fetchText, parseArticleDetail, RSS_URL } from './utils';
 
 const DEFAULT_LIMIT = 15;
 const MAX_LIMIT = 100;
@@ -76,8 +76,8 @@ const fetchArticleItem = async (candidate: SupabaseFeedCandidate): Promise<DataI
         const detail = await cache.tryGet<SupabaseArticleContent>(
             `supabase:blog:${candidate.link}`,
             async () => {
-                const html = await fetchText(candidate.link);
-                const parsed = parseArticleDetail(html, candidate);
+                const [html, markdown] = await Promise.all([fetchText(candidate.link), fetchOptionalMarkdown(candidate.link)]);
+                const parsed = parseArticleDetail(html, candidate, markdown);
                 if (!parsed.bodyHtml.trim()) {
                     throw new Error('Missing article body');
                 }
