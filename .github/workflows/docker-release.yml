@@ -29,8 +29,6 @@ jobs:
                       runner: ubuntu-26.04-arm
         permissions:
             packages: write
-            id-token: write
-            attestations: write
         steps:
             - name: Enable ZRAM
               id: zram
@@ -82,7 +80,6 @@ jobs:
               uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
-                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
                       ghcr.io/${{ github.repository }}
                   tags: |
                       type=raw,value=latest,enable=true
@@ -111,14 +108,6 @@ jobs:
                   cache-to: type=gha,mode=max,scope=docker-release-${{ env.PLATFORM_PAIR }}
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
-            - name: Attest (ordinary version)
-              uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
-              with:
-                  subject-name: |
-                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
-                      ghcr.io/${{ github.repository }}
-                  subject-digest: ${{ steps.build-and-push.outputs.digest }}
-
             - name: Export digest (ordinary version)
               run: |
                   mkdir -p ${{ runner.temp }}/digests/ordinary
@@ -138,7 +127,6 @@ jobs:
               uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
-                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
                       ghcr.io/${{ github.repository }}
                   tags: |
                       type=raw,value=chromium-bundled,enable=true
@@ -166,14 +154,6 @@ jobs:
                   cache-to: type=inline,ref=${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}:chromium-bundled # inline cache is enough
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
-            - name: Attest (Chromium-bundled version)
-              uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
-              with:
-                  subject-name: |
-                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
-                      ghcr.io/${{ github.repository }}
-                  subject-digest: ${{ steps.build-and-push-chromium.outputs.digest }}
-
             - name: Export digest (Chromium-bundled version)
               run: |
                   mkdir -p ${{ runner.temp }}/digests/chromium
@@ -196,6 +176,7 @@ jobs:
         permissions:
             packages: write
             id-token: write
+            attestations: write
         steps:
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@594f3bf4285d9ea8dc53c9a0c9c4092420091003 # v4.4.0
@@ -237,7 +218,7 @@ jobs:
               working-directory: ${{ runner.temp }}/digests/ordinary
               run: |
                   docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-                      $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
+                      $(printf "ghcr.io/${GITHUB_REPOSITORY,,}@sha256:%s " *)
 
             - name: Download digests (Chromium-bundled version)
               uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
@@ -263,7 +244,23 @@ jobs:
               working-directory: ${{ runner.temp }}/digests/chromium
               run: |
                   docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-                      $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
+                      $(printf "ghcr.io/${GITHUB_REPOSITORY,,}@sha256:%s " *)
+
+            - name: Collect manifest list digests
+              env:
+                  DOCKERHUB_IMAGE: ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
+              run: |
+                  image="ghcr.io/${GITHUB_REPOSITORY,,}"
+                  for tag in "$GITHUB_SHA" "chromium-bundled-$GITHUB_SHA"; do
+                      digest=$(docker buildx imagetools inspect "$image:$tag" --format '{{json .Manifest}}' | jq -r '.digest')
+                      printf '%s  %s\n' "${digest#sha256:}" "$image" "${digest#sha256:}" "$DOCKERHUB_IMAGE"
+                  done > "$RUNNER_TEMP/subjects.txt"
+                  cat "$RUNNER_TEMP/subjects.txt"
+
+            - name: Attest
+              uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+              with:
+                  subject-checksums: ${{ runner.temp }}/subjects.txt
 
     github-release:
         runs-on: ubuntu-slim
