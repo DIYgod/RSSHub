@@ -183,7 +183,7 @@
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.1",
         "js-beautify": "2.0.3",
-        "knip": "6.47.0",
+        "knip": "6.48.0",
         "msw": "3.0.7",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.79.0",
