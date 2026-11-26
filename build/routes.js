@@ -143070,7 +143070,55 @@ export default {
         ],
         "example": "/dapenti/subject/184",
         "parameters": {
-          "id": "主题 id"
+          "id": {
+            "description": "栏目，可在栏目页 URL 的 `channel` 参数中找到",
+            "options": [
+              {
+                "value": "agile",
+                "label": "乐活"
+              },
+              {
+                "value": "aieverything",
+                "label": "AI Everything"
+              },
+              {
+                "value": "caijing",
+                "label": "财经风云"
+              },
+              {
+                "value": "changyuedu",
+                "label": "长阅读"
+              },
+              {
+                "value": "dianying",
+                "label": "乐影"
+              },
+              {
+                "value": "fushihui",
+                "label": "浮世汇"
+              },
+              {
+                "value": "piaoquan",
+                "label": "铂程的票圈"
+              },
+              {
+                "value": "shijieguan",
+                "label": "世界观"
+              },
+              {
+                "value": "tugua",
+                "label": "喷嚏图卦"
+              },
+              {
+                "value": "xilei",
+                "label": "铂程斋"
+              },
+              {
+                "value": "youxuan",
+                "label": "喷嚏优选"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
