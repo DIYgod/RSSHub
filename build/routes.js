@@ -165798,6 +165798,54 @@ export default {
     "url": "subhd.tv",
     "lang": "zh-CN"
   },
+  "supabase": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "supabase.com/blog",
+        "example": "/supabase/blog",
+        "categories": [
+          "programming"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Latest full-text articles from the official Supabase Blog (`supabase.com/blog`), enriching the excerpt-only official RSS feed with complete article content, normalized code blocks, categories, authors, and media.",
+        "zh": {
+          "name": "博客",
+          "description": "获取 Supabase 官方博客（`supabase.com/blog`）最新全文文章，在官方摘要 RSS 基础上补全完整正文、格式化代码块、分类标签、作者与媒体内容。"
+        },
+        "radar": [
+          {
+            "source": [
+              "supabase.com/blog",
+              "supabase.com/blog/*"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "blog.ts",
+        "module": () => import('@/routes/supabase/blog.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Supabase",
+    "url": "supabase.com",
+    "lang": "en",
+    "zh": {
+      "name": "Supabase"
+    }
+  },
   "suumo": {
     "routes": {
       "/chintai/:pref/:city/:page?": {

@@ -3302,6 +3302,7 @@ export type RoutePath =
   | `/subhd/sub/:category?`
   | `/subhd/zu/:category?`
   | `/substack/subscribe/:user`
+  | `/supabase/blog`
   | `/supchina/`
   | `/supchina/podcasts`
   | `/supercell/:game/blog/:locale?`

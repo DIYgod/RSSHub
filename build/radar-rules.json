@@ -61680,6 +61680,20 @@
       }
     ]
   },
+  "supabase.com": {
+    "_name": "Supabase",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/supabase",
+        "source": [
+          "/blog",
+          "/blog/*"
+        ],
+        "target": "/supabase/blog"
+      }
+    ]
+  },
   "suumo.jp": {
     "_name": "SUUMO",
     ".": [
