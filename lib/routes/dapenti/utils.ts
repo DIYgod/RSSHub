@@ -7,7 +7,9 @@ import { parseDate } from '@/utils/time';
 
 export default {
     parseFeed: async ({ subjectid: subjectId }) => {
-        const url = `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectId}`;
+        const isTugua = subjectId.toString() === '70';
+        // The tugua subject list page no longer loads, so its latest entries are read from the blog index.
+        const url = isTugua ? 'https://www.dapenti.com/blog/index.asp' : `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectId}`;
         const listRes = await got({
             method: 'get',
             url,
@@ -19,8 +21,14 @@ export default {
         });
         const data = iconv.decode(listRes.data, 'gb2312');
         const $ = load(data);
+        const entries = isTugua
+            ? $('.title')
+                  .filter((_, element) => $(element).text().trim() === '喷嚏图卦')
+                  .next('.title_down')
+                  .find('li')
+            : $('li', 'ul');
         // Fetch the latest three entries with their full public content.
-        const list = $('li', 'ul').slice(0, 3).toArray();
+        const list = entries.slice(0, 3).toArray();
 
         const items = await Promise.all(
             list.map((item) =>
@@ -41,7 +49,7 @@ export default {
                     const pubInfo = description.find('span span.oblog_text').text().split('发布于');
                     const bodyStart = description.children('p[style="margin:2px 2px 2px 2px;"]').first();
                     bodyStart.prevAll().remove();
-                    if (subjectId.toString() === '70') {
+                    if (isTugua) {
                         const dailyStart = description
                             .children()
                             .filter((_, element) => $article(element).text().trim() === '每天一图卦，让我们更清楚地了解这个世界')
@@ -56,7 +64,7 @@ export default {
                     footer.remove();
                     description.find('style, .adsbygoogle').remove();
                     const single = {
-                        title: el.text(),
+                        title: el.text().trim(),
                         author: pubInfo[0].trim(),
                         description: description.html(),
                         pubDate: parseDate(pubInfo[1].trim(), 8),
