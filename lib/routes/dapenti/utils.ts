@@ -64,7 +64,7 @@ export default {
                     footer.remove();
                     description.find('style, .adsbygoogle').remove();
                     const single = {
-                        title: el.text().trim(),
+                        title: el.text(),
                         author: pubInfo[0].trim(),
                         description: description.html(),
                         pubDate: parseDate(pubInfo[1].trim(), 8),
