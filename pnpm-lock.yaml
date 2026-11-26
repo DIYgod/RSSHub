@@ -391,8 +391,8 @@ importers:
         specifier: 10.1.0
         version: 10.1.0(supports-color@10.2.2)
       teleproto:
-        specifier: 1.233.0
-        version: 1.233.0
+        specifier: 1.234.0
+        version: 1.234.0
       title:
         specifier: 4.0.1
         version: 4.0.1
@@ -5564,8 +5564,8 @@ packages:
     resolution: {integrity: sha512-lkukzdoGngZHJZXxW4S/E4Fp9ghTDlyZXrQGRNoJ/LXvDKcXUTq2sg5yQe74po7Voea6n/IN09+wE/QvJMiifA==}
     engines: {node: '>=18'}
 
-  teleproto@1.233.0:
-    resolution: {integrity: sha512-7Ck4Jou40a1agacJWZkK7sTsXnyWzLUAMHwktlnqpBT4mmBzHsLwXskEEDeuTuEz6lMygw9FjYyD1m0MlgoS0A==}
+  teleproto@1.234.0:
+    resolution: {integrity: sha512-teKjZmnoj9VsG7L4XuS0MboyGsRinSYTcwpKxmHcunmkTHhNDvPIHKUwMv/nC9uOYsckk8tkXcJfaynNJSdLig==}
     engines: {node: '>=18'}
 
   text-hex@1.0.0:
@@ -10857,7 +10857,7 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teleproto@1.233.0:
+  teleproto@1.234.0:
     dependencies:
       big-integer: 1.6.52
       buffer: 6.0.3
