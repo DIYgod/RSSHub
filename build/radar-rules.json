@@ -4262,6 +4262,67 @@
       }
     ]
   },
+  "jandan.net": {
+    "_name": "煎蛋",
+    ".": [
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/top"
+        ],
+        "target": "/jandan/top"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/treehole"
+        ],
+        "target": "/jandan/treehole"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/ooxx"
+        ],
+        "target": "/jandan/ooxx"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/beauty"
+        ],
+        "target": "/jandan/beauty"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/pic"
+        ],
+        "target": "/jandan/pic"
+      },
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/forum"
+        ],
+        "target": "/jandan/bbs"
+      },
+      {
+        "title": "Feed",
+        "docs": "https://docs.rsshub.app/routes/jandan",
+        "source": [
+          "/"
+        ],
+        "target": "/jandan/"
+      }
+    ]
+  },
   "jin10.com": {
     "_name": "金十数据",
     ".": [
@@ -59361,75 +59422,6 @@
           "/tag/:slug"
         ],
         "target": "/iplaysoft/tag/:slug"
-      }
-    ]
-  },
-  "jandan.net": {
-    "_name": "煎蛋",
-    "i": [
-      {
-        "title": "Feed",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/"
-        ],
-        "target": "/jandan/"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/top"
-        ],
-        "target": "/jandan/top"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/qa"
-        ],
-        "target": "/jandan/qa"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/treehole"
-        ],
-        "target": "/jandan/treehole"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/ooxx"
-        ],
-        "target": "/jandan/ooxx"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/beauty"
-        ],
-        "target": "/jandan/beauty"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/pic"
-        ],
-        "target": "/jandan/pic"
-      },
-      {
-        "title": "Section",
-        "docs": "https://docs.rsshub.app/routes/jandan",
-        "source": [
-          "/bbs"
-        ],
-        "target": "/jandan/bbs"
       }
     ]
   },

@@ -1327,6 +1327,20 @@
     "Fatpandac",
     "pseudoyu"
   ],
+  "/jandan/:category/:type?": [
+    "kobemtl",
+    "Xuanwo",
+    "xyqfer",
+    "9uanhuo",
+    "nczitzk",
+    "pseudoyu"
+  ],
+  "/jandan/": [
+    "lonelykid",
+    "nczitzk",
+    "bigfei",
+    "pseudoyu"
+  ],
   "/jin10/category/:id": [
     "laampui"
   ],
@@ -11407,20 +11421,6 @@
   ],
   "/iplaysoft/tag/:slug": [
     "cscnk52"
-  ],
-  "/jandan/": [
-    "lonelykid",
-    "nczitzk",
-    "bigfei",
-    "pseudoyu"
-  ],
-  "/jandan/:category/:type?": [
-    "kobemtl",
-    "Xuanwo",
-    "xyqfer",
-    "9uanhuo",
-    "nczitzk",
-    "pseudoyu"
   ],
   "/japanpost/track/:reqCode/:locale?": [
     "tuzi3040"
