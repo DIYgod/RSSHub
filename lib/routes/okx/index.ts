@@ -93,9 +93,8 @@ async function handler(ctx: Context) {
     section = section.replace(/^announcements-/, '');
 
     const data = await ofetch(`${baseUrl}/zh-hans/help/section/announcements-${section}`);
-    const $ = load(data);
 
-    const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
+    const ssrData = JSON.parse(JSON.parse(data.match(/appContext = parseData\((".*?"), 'appState'/)![1]));
     const itemsTemp: Array<{ title: string; link: string; pubDate: Temporal.Instant | undefined }> =
         ssrData?.appContext?.initialProps?.sectionData?.articleList?.list?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
@@ -109,7 +108,7 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                const content = $('div[class^="index_richTextContent"]').html();
+                const content = $('div[class^="richTextContent-"]').html();
 
                 return {
                     ...item,
