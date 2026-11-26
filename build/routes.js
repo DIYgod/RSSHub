@@ -164030,6 +164030,55 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "restofworld": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "name": "Latest",
+        "url": "restofworld.org/latest",
+        "example": "/restofworld/latest",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Latest full-text articles from Rest of World (`restofworld.org/latest/`), enriching the excerpt-only official RSS feed with complete story bodies, Datawrapper chart embeds, and image credits.",
+        "zh": {
+          "name": "最新资讯",
+          "description": "获取 Rest of World 最新全文报道（`restofworld.org/latest/`），在官方仅含摘要的 RSS 基础上补全完整文章正文、Datawrapper 图表与图片来源署名。"
+        },
+        "radar": [
+          {
+            "source": [
+              "restofworld.org",
+              "restofworld.org/latest",
+              "restofworld.org/latest/*"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "latest.ts",
+        "module": () => import('@/routes/restofworld/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Rest of World",
+    "url": "restofworld.org",
+    "lang": "en",
+    "zh": {
+      "name": "Rest of World"
+    }
+  },
   "ruancan": {
     "routes": {
       "/category/:category?": {

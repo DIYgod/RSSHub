@@ -61006,6 +61006,21 @@
       }
     ]
   },
+  "restofworld.org": {
+    "_name": "Rest of World",
+    ".": [
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/restofworld",
+        "source": [
+          "/",
+          "/latest",
+          "/latest/*"
+        ],
+        "target": "/restofworld/latest"
+      }
+    ]
+  },
   "ruancan.com": {
     "_name": "软餐",
     ".": [

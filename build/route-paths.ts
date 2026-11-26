@@ -2955,6 +2955,7 @@ export type RoutePath =
   | `/researchgate/publications/:id`
   | `/resetera/thread/:id`
   | `/resonac/products`
+  | `/restofworld/latest`
   | `/reuters/:category/:topic?`
   | `/reuters/investigates`
   | `/reuters/my-news`
