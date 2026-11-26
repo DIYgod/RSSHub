@@ -167262,6 +167262,27 @@
         "location": "bks.ts",
         "module": "() => import('@/routes/tongji/bks.ts')"
       },
+      "/cs": {
+        "path": "/cs",
+        "name": "计算机科学与技术学院通知公告",
+        "example": "/tongji/cs",
+        "categories": [
+          "university"
+        ],
+        "maintainers": [
+          "MXH814"
+        ],
+        "url": "cs.tongji.edu.cn/index/tzgg.htm",
+        "radar": [
+          {
+            "source": [
+              "cs.tongji.edu.cn/index/tzgg.htm"
+            ]
+          }
+        ],
+        "location": "cs.ts",
+        "module": "() => import('@/routes/tongji/cs.ts')"
+      },
       "/gs": {
         "path": "/gs",
         "categories": [

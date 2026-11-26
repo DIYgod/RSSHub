@@ -3492,6 +3492,7 @@ export type RoutePath =
   | `/tokyometro/ridership/:year?`
   | `/tokyu/ridership/:year?`
   | `/tongji/bks`
+  | `/tongji/cs`
   | `/tongji/gs`
   | `/tongji/sem/:type?`
   | `/tongji/sse/:type?`
