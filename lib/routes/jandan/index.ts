@@ -1,11 +1,9 @@
-import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/time';
 
 export const route: Route = {
     path: '/',
@@ -23,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['i.jandan.net'],
+            source: ['jandan.net/'],
             target: '/',
         },
     ],
@@ -35,34 +33,34 @@ async function handler(): Promise<{
     link: string;
     item: DataItem[];
 }> {
-    const rootUrl = 'https://i.jandan.net';
-    const feed = await parser.parseString(await ofetch<string, 'text'>(`${rootUrl}/?feed=rss2`, { responseType: 'text', headers: { 'User-Agent': config.ua } }));
+    const rootUrl = 'https://jandan.net';
+    const timeline = await ofetch(`${rootUrl}/api/post/timeline?page=1&limit=10`);
+    const posts: Array<{ id: number; title: string; date: string }> = timeline.data.flatMap((day) => day.posts);
     const items = await pMap(
-        feed.items,
-        async (item): Promise<DataItem | undefined> => {
-            const link = item.link;
-            if (!link) {
-                return;
-            }
-            const description = await cache.tryGet(`jandan:rss-article:${link}`, async () => {
-                const response = await ofetch(link);
-                const $ = load(response);
-                $('.wechat-hide').prev().nextAll().remove();
-                $('img').replaceWith((i, e) => {
-                    const src = $(e).attr('src');
-                    const alt = $(e).attr('alt');
-                    const newSrc = src?.replace(/https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn');
-                    return `<img src="${newSrc}" alt="${alt}">`;
-                });
-                return $('.post-content').html();
+        posts,
+        async (post): Promise<DataItem> => {
+            const link = `${rootUrl}/p/${post.id}`;
+            const detail = await cache.tryGet(`jandan:post:${post.id}`, async () => {
+                const { data } = await ofetch(`${rootUrl}/api/post/${post.id}`);
+                return {
+                    author: data.author?.display_name,
+                    category: data.tags?.map((tag) => tag.name),
+                    // The content is stored with blank lines between paragraphs, as WordPress does
+                    description: data.content
+                        .split(/(?:\r?\n){2,}/)
+                        .map((block) => block.trim())
+                        .filter(Boolean)
+                        .map((block) => (block.startsWith('<blockquote') ? block : `<p>${block.replaceAll(/\r?\n/g, '<br>')}</p>`))
+                        .join(''),
+                };
             });
             return {
-                title: item.title || '',
-                description,
-                pubDate: item.pubDate,
-                link: item.link,
-                author: item['dc:creator'],
-                category: item.categories,
+                title: post.title,
+                description: detail.description,
+                pubDate: parseDate(post.date),
+                link,
+                author: detail.author,
+                category: detail.category,
             };
         },
         { concurrency: 3 }
@@ -71,6 +69,6 @@ async function handler(): Promise<{
     return {
         title: '煎蛋',
         link: rootUrl,
-        item: items.filter((item): item is DataItem => item !== undefined),
+        item: items,
     };
 }

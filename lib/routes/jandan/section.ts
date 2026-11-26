@@ -16,10 +16,6 @@ export const route: Route = {
                     value: 'top',
                 },
                 {
-                    label: '问答',
-                    value: 'qa',
-                },
-                {
                     label: '树洞',
                     value: 'treehole',
                 },
@@ -68,10 +64,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: ['top', 'qa', 'treehole', 'ooxx', 'beauty', 'pic', 'bbs'].map((category) => ({
-        source: [`i.jandan.net/${category}`],
-        target: `/${category}`,
-    })),
+    radar: [
+        ...['top', 'treehole', 'ooxx', 'beauty', 'pic'].map((category) => ({
+            source: [`jandan.net/${category}`],
+            target: `/${category}`,
+        })),
+        {
+            source: ['jandan.net/forum'],
+            target: '/bbs',
+        },
+    ],
     handler,
 };
 
@@ -84,7 +86,7 @@ async function handler(ctx): Promise<{
     category = category.replace(/#.*$/, '');
 
     const type = ctx.req.param('type') ?? '4hr';
-    const rootUrl = 'https://i.jandan.net';
+    const rootUrl = 'https://jandan.net';
     const currentUrl = `${rootUrl}/${category}`;
 
     let result: { title: string; items: DataItem[]; link?: string };

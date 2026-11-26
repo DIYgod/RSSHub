@@ -1,35 +1,27 @@
-import { load } from 'cheerio';
 import sanitizeHtml from 'sanitize-html';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
-/**
- * Extract page ID from script tags and title
- */
-const extractPageMeta = (url: string) =>
-    cache.tryGet(`jandan:pageMeta:${url}`, async () => {
-        const response = await ofetch(url);
+// Fixed post IDs of the comment sections, as defined by the site itself
+const sections = {
+    pic: { postId: 26402, title: '无聊图' },
+    treehole: { postId: 102312, title: '树洞' },
+    beauty: { postId: 108629, title: '女装' },
+    ooxx: { postId: 21183, title: '随手拍' },
+};
 
-        const $ = load(response);
-
-        return {
-            pageId:
-                $('script:contains("PAGE")')
-                    .text()
-                    .match(/PAGE\s*=\s*\{\s*id\s*:\s*(\d+)\s*\}/)?.[1] ?? '',
-            title: $('title').text().trim(),
-        };
-    });
+// The top and comment APIs return `data: null` unless the request comes from the site
+const apiHeaders = (rootUrl: string) => ({ Referer: `${rootUrl}/` });
 
 /**
  * Handle the top section (热榜)
  */
 export const handleTopSection = async (rootUrl: string, type: string): Promise<{ title: string; items: DataItem[] }> => {
     const apiUrl = `${rootUrl}/api/top/${type}`;
-    const response = await ofetch(apiUrl);
+    const response = await ofetch(apiUrl, { headers: apiHeaders(rootUrl) });
 
     let title = '热榜';
     switch (type) {
@@ -44,7 +36,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
             break;
     }
 
-    if (response.code !== 0) {
+    if (response.code !== 0 || !response.data) {
         throw new Error(`未能获取热榜数据: ${title}`);
     }
 
@@ -68,7 +60,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
  */
 export const handleForumSection = async (rootUrl: string): Promise<{ title: string; items: DataItem[]; link: string }> => {
     const title = '煎蛋 - 鱼塘';
-    const currentUrl = `${rootUrl}/new/forum`;
+    const currentUrl = `${rootUrl}/forum`;
 
     const forumId = 112928;
     const apiUrl = `${rootUrl}/api/forum/posts/${forumId}?page=1`;
@@ -83,7 +75,7 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
         title: post.title,
         pubDate: parseDate(post.create_time),
         updated: parseDate(post.update_time),
-        link: `${rootUrl}/new/forum/topic/${post.post_id}`,
+        link: `${rootUrl}/forum/topic/${post.post_id}`,
         category: post.reply_count > 0 ? [`${post.reply_count}条回复`] : undefined,
     }));
 
@@ -91,22 +83,21 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
 };
 
 /**
- * Handle other sections (问答, 树洞, 随手拍, 女装, 无聊图)
+ * Handle other sections (树洞, 随手拍, 女装, 无聊图)
  */
 export const handleCommentSection = async (rootUrl: string, category: string): Promise<{ title: string; items: DataItem[] }> => {
-    const currentUrl = `${rootUrl}/${category}`;
+    const section = sections[category];
 
-    const { pageId, title: pageTitle } = await extractPageMeta(currentUrl);
-    const title = pageTitle || `煎蛋 - ${category}`;
-
-    if (!pageId) {
-        throw new Error('无法从页面中获取到帖子ID，可能网站结构已变更');
+    if (!section) {
+        throw new InvalidParameterError(`未知板块: ${category}`);
     }
 
-    const apiUrl = `${rootUrl}/api/comment/post/${pageId}?order=desc&page=0`;
-    const commentsData = await ofetch(apiUrl);
+    const title = `煎蛋 - ${section.title}`;
 
-    if (commentsData.code !== 0) {
+    const apiUrl = `${rootUrl}/api/comment/post/${section.postId}?order=desc&page=0`;
+    const commentsData = await ofetch(apiUrl, { headers: apiHeaders(rootUrl) });
+
+    if (commentsData.code !== 0 || !commentsData.data) {
         throw new Error('没有获取到内容，可能需要更新解析规则');
     }
 
