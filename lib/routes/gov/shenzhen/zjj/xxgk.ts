@@ -76,7 +76,7 @@ export const route: Route = {
             source: ['zjj.sz.gov.cn/xxgk/:caty'],
         },
     ],
-    name: '住房和建设局',
+    name: '住房和建设局 - 信息公开',
     maintainers: ['lonn', 'nuomi1'],
     handler,
     description: `| caty         | 信息类别                  |
