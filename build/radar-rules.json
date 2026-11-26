@@ -58318,6 +58318,24 @@
   },
   "sz.gov.cn": {
     "_name": "深圳市人民政府",
+    "zjj": [
+      {
+        "title": "住房和建设局 - 公开目录平台",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/gkmlpt/index"
+        ],
+        "target": "/gov/shenzhen/zjj/gkmlpt/:caty?"
+      },
+      {
+        "title": "住房和建设局 - 信息公开",
+        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
+        "source": [
+          "/xxgk/:caty"
+        ],
+        "target": "/gov/shenzhen/zjj/xxgk/:caty"
+      }
+    ],
     "hrss": [
       {
         "title": "考试院",
@@ -58326,16 +58344,6 @@
           "/szksy/zwgk/:caty/index.html"
         ],
         "target": "/gov/shenzhen/hrss/szksy/:caty"
-      }
-    ],
-    "zjj": [
-      {
-        "title": "住房和建设局",
-        "docs": "https://docs.rsshub.app/routes/gov/shenzhen",
-        "source": [
-          "/xxgk/:caty"
-        ],
-        "target": "/gov/shenzhen/zjj/xxgk/:caty"
       }
     ],
     "www.zzb": [

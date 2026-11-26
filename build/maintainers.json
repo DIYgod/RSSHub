@@ -11136,6 +11136,9 @@
   "/gov/shenzhen/yantian/ytjsj/:caty?": [
     "nuomi1"
   ],
+  "/gov/shenzhen/zjj/gkmlpt/:caty?": [
+    "nuomi1"
+  ],
   "/gov/shenzhen/hrss/szksy/:caty/:page?": [
     "zlasd"
   ],

@@ -153772,6 +153772,99 @@
         "location": "yantian/ytjsj/index.ts",
         "module": "() => import('@/routes/gov/shenzhen/yantian/ytjsj/index.ts')"
       },
+      "/zjj/gkmlpt/:caty?": {
+        "path": "/zjj/gkmlpt/:caty?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/shenzhen/zjj/gkmlpt/2037",
+        "parameters": {
+          "caty": {
+            "description": "信息类别",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "1996",
+                "label": "规划计划"
+              },
+              {
+                "value": "1998",
+                "label": "数据发布"
+              },
+              {
+                "value": "2030",
+                "label": "数据发布 - 数据统计"
+              },
+              {
+                "value": "2031",
+                "label": "数据发布 - 数据解读"
+              },
+              {
+                "value": "1999",
+                "label": "资金信息"
+              },
+              {
+                "value": "2033",
+                "label": "资金信息 - 财政预决算"
+              },
+              {
+                "value": "2034",
+                "label": "资金信息 - 其他资金信息"
+              },
+              {
+                "value": "2000",
+                "label": "其他"
+              },
+              {
+                "value": "2036",
+                "label": "其他 - 工作动态"
+              },
+              {
+                "value": "2037",
+                "label": "其他 - 通知公告"
+              },
+              {
+                "value": "2038",
+                "label": "其他 - 人事信息"
+              },
+              {
+                "value": "2039",
+                "label": "其他 - 专题专栏"
+              },
+              {
+                "value": "2001",
+                "label": "政府网站工作年度报表"
+              }
+            ],
+            "default": "0"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "zjj.sz.gov.cn/gkmlpt/index"
+            ]
+          }
+        ],
+        "name": "住房和建设局 - 公开目录平台",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "description": "| caty | 信息类别                |\n| ---- | ----------------------- |\n| 0    | 全部                    |\n| 1996 | 规划计划                |\n| 1998 | 数据发布                |\n| 2030 | 数据发布 - 数据统计     |\n| 2031 | 数据发布 - 数据解读     |\n| 1999 | 资金信息                |\n| 2033 | 资金信息 - 财政预决算   |\n| 2034 | 资金信息 - 其他资金信息 |\n| 2000 | 其他                    |\n| 2036 | 其他 - 工作动态         |\n| 2037 | 其他 - 通知公告         |\n| 2038 | 其他 - 人事信息         |\n| 2039 | 其他 - 专题专栏         |\n| 2001 | 政府网站工作年度报表    |",
+        "location": "zjj/gkmlpt.ts",
+        "module": "() => import('@/routes/gov/shenzhen/zjj/gkmlpt.ts')"
+      },
       "/hrss/szksy/:caty/:page?": {
         "path": "/hrss/szksy/:caty/:page?",
         "categories": [
@@ -153968,14 +154061,14 @@
             ]
           }
         ],
-        "name": "住房和建设局",
+        "name": "住房和建设局 - 信息公开",
         "maintainers": [
           "lonn",
           "nuomi1"
         ],
         "description": "| caty         | 信息类别                  |\n| ------------ | ------------------------- |\n| zcfgs-zcfg   | 政策法规及解读 - 政策法规 |\n| zcfgs-zcjd   | 政策法规及解读 - 政策解读 |\n| ghjh         | 规划计划                  |\n| tjsj         | 统计信息                  |\n| zjxx-czyjs   | 资金信息 - 财政预决算     |\n| zjxx-qt      | 资金信息 - 其他资金信息   |\n| zjxx-sgjfcsc | 资金信息 - 三公经费       |\n| rsxx5        | 人事信息                  |\n| tzgg         | 通知公告                  |\n| zscd-zy      | 政声传递 - 国家           |\n| zscd-gd      | 政声传递 - 广东省         |\n| zscd-sz      | 政声传递 - 深圳市         |\n| gzdt         | 工作动态                  |\n| csyjgx       | 城市有机更新              |\n| video        | 视频集锦                  |\n| zfws         | 执法文书                  |\n| rd           | 人大建议政协提案          |\n| ndbg         | 年度信息公开报告          |\n| wzgznd       | 政府网站工作年度报表      |",
-        "location": "zjj/index.ts",
-        "module": "() => import('@/routes/gov/shenzhen/zjj/index.ts')"
+        "location": "zjj/xxgk.ts",
+        "module": "() => import('@/routes/gov/shenzhen/zjj/xxgk.ts')"
       },
       "/zzb/:caty/:page?": {
         "path": "/zzb/:caty/:page?",
