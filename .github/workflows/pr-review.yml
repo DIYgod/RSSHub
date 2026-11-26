@@ -96,6 +96,7 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   display_report: 'true'
                   allowed_non_write_users: '*'
+                  allow_fork_prs: 'true'
                   claude_args: |
                       --model ${{ vars.OPENCODE_MODEL }}
                       ${{ vars.CLAUDE_EFFORT && format('--effort {0}', vars.CLAUDE_EFFORT) || '' }}
