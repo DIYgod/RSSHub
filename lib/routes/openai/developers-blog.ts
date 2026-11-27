@@ -130,25 +130,31 @@ const pickCoverImage = ($: CheerioAPI, $header: Cheerio<Element>, articleUrl: st
 
 const CODE_ATTRS_TO_REMOVE = ['style', 'class', 'data-1p-ignore', 'data-copy-ignore', 'data-syntax-highlighter-id', 'data-language', 'data-wrap-long-lines'];
 
+const extractCodeLanguage = ($el: Cheerio<Element>): string | undefined => $el.attr('data-language') || $el.attr('class')?.match(/\blanguage-([\w-]+)/i)?.[1];
+
+const stripCodeAttrs = ($el: Cheerio<Element>) => {
+    for (const attr of CODE_ATTRS_TO_REMOVE) {
+        $el.removeAttr(attr);
+    }
+};
+
 const stripCodeBloat = ($body: Cheerio<Element>, $: CheerioAPI) => {
-    // Astro serializes large duplicate code payloads into <astro-island props="...">; keep rendered children only.
-    for (const el of $body.find('astro-island').toArray().toReversed()) {
+    // Unwrap <astro-island> wrappers (serialized duplicate code payloads) and per-token Shiki <span> elements inside <pre>.
+    for (const el of $body.find('astro-island, pre span').toArray().toReversed()) {
         const $el = $(el);
         $el.replaceWith($el.contents());
     }
-    // Unwrap per-token Shiki <span> elements inside <pre> so long multi-snippet posts stay well under 512 KB.
-    for (const el of $body.find('pre span').toArray().toReversed()) {
-        const $el = $(el);
-        $el.replaceWith($el.contents());
-    }
-    for (const el of $body.find('pre, code').toArray()) {
-        const $el = $(el);
-        const lang = $el.attr('data-language') || $el.attr('class')?.match(/\blanguage-([\w-]+)/i)?.[1];
-        for (const attr of CODE_ATTRS_TO_REMOVE) {
-            $el.removeAttr(attr);
-        }
-        if (el.tagName === 'code' && lang) {
-            $el.addClass(`language-${lang}`);
+    for (const preEl of $body.find('pre').toArray()) {
+        const $pre = $(preEl);
+        const preLang = extractCodeLanguage($pre);
+        stripCodeAttrs($pre);
+        for (const codeEl of $pre.find('code').toArray()) {
+            const $code = $(codeEl);
+            const lang = extractCodeLanguage($code) || preLang;
+            stripCodeAttrs($code);
+            if (lang) {
+                $code.addClass(`language-${lang}`);
+            }
         }
     }
 };

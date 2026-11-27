@@ -13,6 +13,21 @@ import { renderMediaFallbackDescription } from './templates/description';
 
 export const BASE_URL = new URL('https://openai.com');
 
+const parseSafeHttpUrl = (rawUrl: string | undefined, baseUrl?: string): string | undefined => {
+    if (!rawUrl) {
+        return undefined;
+    }
+    try {
+        const parsed = baseUrl ? new URL(rawUrl, baseUrl) : new URL(rawUrl);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return undefined;
+        }
+        return parsed.href;
+    } catch {
+        return undefined;
+    }
+};
+
 const isHostMatch = (host: string, domain: string): boolean => host === domain || host.endsWith(`.${domain}`);
 
 const isAllowedVideoPath = (host: string, parsed: URL): boolean => {
@@ -28,21 +43,36 @@ const isAllowedVideoPath = (host: string, parsed: URL): boolean => {
     return false;
 };
 
-const isAllowedVideoUrl = (rawUrl: string): string | undefined => {
-    try {
-        const parsed = new URL(rawUrl);
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-            return undefined;
-        }
-        return isAllowedVideoPath(parsed.hostname.toLowerCase(), parsed) ? parsed.href : undefined;
-    } catch {
+const parseAllowedVideoUrl = (rawUrl: string): string | undefined => {
+    const cleaned = rawUrl
+        .replaceAll('&amp;', '&')
+        .replaceAll(String.raw`\u0026`, '&')
+        .replace(/[),.\];}]+$/, '');
+    const safeUrl = parseSafeHttpUrl(cleaned);
+    if (!safeUrl) {
         return undefined;
     }
+    const parsed = new URL(safeUrl);
+    return isAllowedVideoPath(parsed.hostname.toLowerCase(), parsed) ? parsed.href : undefined;
 };
 
-const extractVideoUrl = (html: string): string | undefined => {
-    for (const match of html.matchAll(/https?:\/\/[^"'\\\s<>]+/gi)) {
-        const valid = isAllowedVideoUrl(match[0]);
+const extractDomVideoUrl = ($: CheerioAPI, $article: Cheerio<Element>): string | undefined => {
+    for (const el of $article.find('iframe[src], video[src], video source[src]').toArray()) {
+        const valid = parseAllowedVideoUrl($(el).attr('src') ?? '');
+        if (valid) {
+            return valid;
+        }
+    }
+    return undefined;
+};
+
+const extractVideoUrl = ($: CheerioAPI, $article: Cheerio<Element>, html: string): string | undefined => {
+    const domUrl = extractDomVideoUrl($, $article);
+    if (domUrl) {
+        return domUrl;
+    }
+    for (const match of html.matchAll(/\\?"videoEmbedUrl\\?"\s*:\s*\\?"(https?:\/\/[^"\\]+(?:\\u0026[^"\\]*)*)/gi)) {
+        const valid = parseAllowedVideoUrl(match[1]);
         if (valid) {
             return valid;
         }
@@ -116,13 +146,13 @@ const fetchArticleDetails = async (url: string, title: string, rssDescription?: 
         .toArray()
         .map((element) => $(element).text());
 
-    const image = $('meta[property="og:image"]').attr('content');
+    const image = parseSafeHttpUrl($('meta[property="og:image"]').attr('content'), normalizedUrl);
     const subhead = $('[data-article-hero-copy-region="subhead"]').first().text().trim();
     const metaDescription = $('meta[name="description"]').attr('content')?.trim();
 
     cleanArticleDom($, $article);
 
-    const content = hasReadableBody($article) ? $article.html() : renderMediaFallbackDescription(subhead || rssDescription || metaDescription, normalizedUrl, title, image, extractVideoUrl(html));
+    const content = hasReadableBody($article) ? $article.html() : renderMediaFallbackDescription(subhead || rssDescription || metaDescription, normalizedUrl, title, image, extractVideoUrl($, $article, html));
 
     return {
         content,
