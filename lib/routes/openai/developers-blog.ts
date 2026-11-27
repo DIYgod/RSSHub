@@ -128,6 +128,37 @@ const pickCoverImage = ($: CheerioAPI, $header: Cheerio<Element>, articleUrl: st
     return heroImage ?? listImage ?? ogImage;
 };
 
+const CODE_ATTRS_TO_REMOVE = ['style', 'class', 'data-1p-ignore', 'data-copy-ignore', 'data-syntax-highlighter-id', 'data-language', 'data-wrap-long-lines'];
+
+const extractCodeLanguage = ($el: Cheerio<Element>): string | undefined => $el.attr('data-language') || $el.attr('class')?.match(/\blanguage-([\w-]+)/i)?.[1];
+
+const stripCodeAttrs = ($el: Cheerio<Element>) => {
+    for (const attr of CODE_ATTRS_TO_REMOVE) {
+        $el.removeAttr(attr);
+    }
+};
+
+const stripCodeBloat = ($body: Cheerio<Element>, $: CheerioAPI) => {
+    // Unwrap <astro-island> wrappers (serialized duplicate code payloads) and per-token Shiki <span> elements inside <pre>.
+    for (const el of $body.find('astro-island, pre span').toArray().toReversed()) {
+        const $el = $(el);
+        $el.replaceWith($el.contents());
+    }
+    for (const preEl of $body.find('pre').toArray()) {
+        const $pre = $(preEl);
+        const preLang = extractCodeLanguage($pre);
+        stripCodeAttrs($pre);
+        for (const codeEl of $pre.find('code').toArray()) {
+            const $code = $(codeEl);
+            const lang = extractCodeLanguage($code) || preLang;
+            stripCodeAttrs($code);
+            if (lang) {
+                $code.addClass(`language-${lang}`);
+            }
+        }
+    }
+};
+
 const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI) => {
     if ($body.length === 0) {
         return '';
@@ -137,6 +168,7 @@ const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI) => {
     $body.find('[hidden]').removeAttr('hidden');
     $body.find('.code-block.hidden').removeClass('hidden');
     $body.find('[data-panel], [role="tabpanel"], [role="region"]').removeAttr('inert').removeAttr('aria-hidden');
+    stripCodeBloat($body, $);
     $body.find('video').each((_, el) => {
         const $video = $(el);
         if ($video.attr('controls') === undefined) {
@@ -189,7 +221,7 @@ const extractArticleDetails = ($: CheerioAPI, entry: BlogEntry) => {
 };
 
 const fetchArticleDetail = (entry: BlogEntry) =>
-    cache.tryGet(`openai:developers:blog:${entry.link}`, async () => {
+    cache.tryGet(`openai:developers:blog:v2:${entry.link}`, async () => {
         const html = await ofetch<string>(entry.link);
         const $ = load(html);
         const details = extractArticleDetails($, entry);
