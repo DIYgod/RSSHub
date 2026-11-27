@@ -91,7 +91,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
+                link: new URL($item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, ''), rootUrl).href,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
             };
         });
