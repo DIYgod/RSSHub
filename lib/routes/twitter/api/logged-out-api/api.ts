@@ -5,6 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 import { TWITTER_USER_CACHE_EXPIRE } from '../../utils';
 import type { ApiParams } from '../web-api/utils';
+import type { SerovalValue } from './seroval';
 import { readSeroval } from './seroval';
 
 /*
@@ -16,10 +17,107 @@ import { readSeroval } from './seroval';
  * are converted to the legacy shape that ProcessFeed reads.
  */
 
-type Data = Record<string, any>;
+interface User {
+    rest_id?: string;
+    core?: { name?: string; screen_name?: string };
+    avatar?: { image_url?: string };
+    profile_bio?: { description?: string };
+}
+
+interface Media {
+    indices?: number[];
+    original_info?: { width?: number; height?: number };
+}
+
+interface Tweet {
+    __typename?: string;
+    rest_id: string;
+    tweet?: Tweet;
+    details?: {
+        full_text?: string;
+        display_text_range?: number[];
+        created_at_ms?: number;
+        hashtag_entities?: object[];
+        cashtag_entities?: object[];
+    };
+    url_entities?: object[];
+    mention_entities?: object[];
+    media_entities2?: Media[];
+    note_tweet?: { note_tweet_results?: { result?: { text?: string; entity_set?: Partial<Entities> } } };
+    core?: { user_results?: { result?: User } };
+    quoted_tweet_results?: { result?: Tweet };
+    legacy?: { lang?: string; possibly_sensitive?: boolean };
+    counts?: {
+        favorite_count?: number;
+        retweet_count?: number;
+        reply_count?: number;
+        quote_count?: number;
+        bookmark_count?: number;
+    };
+    reply_to_results?: { rest_id?: string };
+    reply_to_user_results?: { rest_id?: string; result?: User };
+}
+
+interface TweetContent {
+    tweet_results?: { result?: Tweet };
+}
+
+interface Entry {
+    entry_id?: string;
+    content?: { items?: Array<{ item?: { content?: TweetContent } }>; content?: TweetContent };
+}
+
+interface Instruction {
+    __typename?: string;
+    entry?: Entry;
+    entries?: Entry[];
+}
+
+interface PageNode {
+    timeline?: { instructions?: Instruction[] };
+    instructions?: Instruction[];
+}
+
+interface Entities {
+    hashtags: object[];
+    symbols: object[];
+    urls: object[];
+    user_mentions: object[];
+}
+
+interface LegacyUser {
+    id_str: string | undefined;
+    name: string | undefined;
+    screen_name: string;
+    profile_image_url_https: string | undefined;
+}
+
+interface LegacyTweet {
+    id_str: string;
+    full_text: string;
+    display_text_range: number[] | undefined;
+    created_at: string | undefined;
+    lang: string | undefined;
+    possibly_sensitive: boolean | undefined;
+    user: LegacyUser | undefined;
+    user_id_str: string | undefined;
+    entities: Entities;
+    extended_entities: { media: Media[] } | undefined;
+    favorite_count: number | undefined;
+    retweet_count: number | undefined;
+    reply_count: number | undefined;
+    quote_count: number | undefined;
+    bookmark_count: number | undefined;
+    in_reply_to_status_id_str: string | undefined;
+    in_reply_to_user_id_str: string | undefined;
+    in_reply_to_screen_name: string | undefined;
+    in_reply_to_status?: LegacyTweet;
+    is_quote_status: boolean;
+    quoted_status: LegacyTweet | undefined;
+}
 
 const baseUrl = 'https://x.com';
-const SCRIPT = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
+const SCRIPT = /<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi;
 const STREAM_MESSAGE = /^\(\$R=>\$R\[\d+\]\.next\(/;
 
 const parseJson = (text: string) => {
@@ -49,7 +147,7 @@ const fetchPage = async (path: string) => {
 
 /** The data messages that x.com streams into a page */
 const readPageData = (html: string) => {
-    const messages: unknown[] = [];
+    const messages: SerovalValue[] = [];
     for (const [, script] of html.matchAll(SCRIPT)) {
         const start = STREAM_MESSAGE.exec(script);
         if (!start || !script.includes('Result.Ok')) {
@@ -64,20 +162,22 @@ const readPageData = (html: string) => {
     return messages;
 };
 
-/** The first object in `node`, depth first, that `match` accepts. GraphQL responses sent as JSON strings are decoded on the way */
-const find = (node: unknown, match: (object: Data) => boolean, depth = 0): Data | undefined => {
+/** The first value that `pick` returns for an object in `node`, depth first. GraphQL responses sent as JSON strings are decoded on the way */
+const find = <T>(node: SerovalValue, pick: (object: PageNode) => T | undefined, depth = 0): T | undefined => {
     if (!node || typeof node !== 'object' || depth > 64) {
         return;
     }
-    const object = node as Data;
-    if (object.kind === 'Result.Ok' && typeof object.value === 'string') {
-        object.value = parseJson(object.value);
+    if (!Array.isArray(node)) {
+        if (node.kind === 'Result.Ok' && typeof node.value === 'string') {
+            node.value = parseJson(node.value);
+        }
+        const picked = pick(node);
+        if (picked) {
+            return picked;
+        }
     }
-    if (!Array.isArray(object) && match(object)) {
-        return object;
-    }
-    for (const value of Object.values(object)) {
-        const found = find(value, match, depth + 1);
+    for (const value of Object.values(node)) {
+        const found = find(value, pick, depth + 1);
         if (found) {
             return found;
         }
@@ -86,22 +186,22 @@ const find = (node: unknown, match: (object: Data) => boolean, depth = 0): Data 
 };
 
 /** Timeline entries, pinned ones first as the web API returns them */
-const getEntries = (instructions: Data[]): Data[] => [
-    ...instructions.filter((instruction) => instruction?.__typename === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry),
+const getEntries = (instructions: Instruction[]): Entry[] => [
+    ...instructions.flatMap((instruction) => (instruction?.__typename === 'TimelinePinEntry' && instruction.entry ? [instruction.entry] : [])),
     ...instructions.flatMap((instruction) => instruction?.entries ?? []),
 ];
 
-const unwrapTweet = (result: Data | undefined): Data | undefined => {
+const unwrapTweet = (result: Tweet | undefined) => {
     const tweet = result?.__typename === 'TweetWithVisibilityResults' ? result.tweet : result;
     return tweet?.__typename === 'Tweet' && tweet.rest_id ? tweet : undefined;
 };
 
 /** The posts of entries: one for an item, several for a module such as a conversation thread */
-const getTweets = (entries: Data[]) => {
-    const tweets = new Map<string, Data>();
+const getTweets = (entries: Entry[]) => {
+    const tweets = new Map<string, Tweet>();
     for (const entry of entries) {
         const content = entry?.content;
-        const results = Array.isArray(content?.items) ? content.items.map((item: Data) => item?.item?.content?.tweet_results?.result) : [content?.content?.tweet_results?.result];
+        const results = Array.isArray(content?.items) ? content.items.map((item) => item?.item?.content?.tweet_results?.result) : [content?.content?.tweet_results?.result];
         for (const result of results) {
             const tweet = unwrapTweet(result);
             if (tweet && !tweets.has(tweet.rest_id)) {
@@ -112,7 +212,7 @@ const getTweets = (entries: Data[]) => {
     return tweets.values().toArray();
 };
 
-const toLegacyUser = (user: Data | undefined) =>
+const toLegacyUser = (user: User | undefined): LegacyUser | undefined =>
     user?.core?.screen_name
         ? {
               id_str: user.rest_id,
@@ -123,7 +223,7 @@ const toLegacyUser = (user: Data | undefined) =>
         : undefined;
 
 /** The t.co link that a media item adds to the end of the text, so that ProcessFeed can remove it */
-const getMediaLink = (text: string[], indices: unknown) => {
+const getMediaLink = (text: string[], indices: Media['indices']) => {
     if (!Array.isArray(indices) || typeof indices[0] !== 'number' || typeof indices[1] !== 'number') {
         return '';
     }
@@ -133,37 +233,38 @@ const getMediaLink = (text: string[], indices: unknown) => {
 };
 
 /** Converts a post to the legacy shape that ProcessFeed reads */
-const toLegacyTweet = (tweet: Data, withQuote = true): Data => {
+const toLegacyTweet = (tweet: Tweet, withQuote = true): LegacyTweet => {
     const details = tweet.details ?? {};
     const text = typeof details.full_text === 'string' ? details.full_text : '';
+    // oxlint-disable-next-line typescript/no-misused-spread -- the indices of x.com count code points
     const codePoints = [...text];
-    const media = (tweet.media_entities2 ?? []).map((item: Data) => ({
+    const media = (tweet.media_entities2 ?? []).map((item) => ({
         ...item,
         url: getMediaLink(codePoints, item.indices),
         sizes: { large: { w: item.original_info?.width, h: item.original_info?.height } },
     }));
     // Long posts carry their full text separately, with entities of their own
     const note = tweet.note_tweet?.note_tweet_results?.result;
-    const noteEntities = typeof note?.text === 'string' ? note.entity_set : undefined;
+    const longPost = typeof note?.text === 'string' && note.entity_set ? { text: note.text, entities: note.entity_set } : undefined;
     const user = toLegacyUser(tweet.core?.user_results?.result);
     const quoted = withQuote ? unwrapTweet(tweet.quoted_tweet_results?.result) : undefined;
     const createdAt = details.created_at_ms;
 
     return {
         id_str: tweet.rest_id,
-        full_text: noteEntities ? note.text : text,
+        full_text: longPost?.text ?? text,
         display_text_range: details.display_text_range,
         created_at: typeof createdAt === 'number' ? Temporal.Instant.fromEpochMilliseconds(createdAt).toString() : undefined,
         lang: tweet.legacy?.lang,
         possibly_sensitive: tweet.legacy?.possibly_sensitive,
         user,
         user_id_str: user?.id_str,
-        entities: noteEntities
+        entities: longPost
             ? {
-                  hashtags: noteEntities.hashtags ?? [],
-                  symbols: noteEntities.symbols ?? [],
-                  urls: noteEntities.urls ?? [],
-                  user_mentions: noteEntities.user_mentions ?? [],
+                  hashtags: longPost.entities.hashtags ?? [],
+                  symbols: longPost.entities.symbols ?? [],
+                  urls: longPost.entities.urls ?? [],
+                  user_mentions: longPost.entities.user_mentions ?? [],
               }
             : {
                   hashtags: details.hashtag_entities ?? [],
@@ -185,18 +286,13 @@ const toLegacyTweet = (tweet: Data, withQuote = true): Data => {
     };
 };
 
-interface ProfilePage {
-    user?: Data;
-    tweets?: Data[];
-}
-
-const parseProfilePage = (html: string): ProfilePage => {
+const parseProfilePage = (html: string) => {
     for (const message of readPageData(html)) {
-        const holder = find(message, (object) => Array.isArray(object.timeline?.instructions));
-        if (!holder) {
+        const instructions = find(message, (object) => (Array.isArray(object.timeline?.instructions) ? object.timeline.instructions : undefined));
+        if (!instructions) {
             continue;
         }
-        const tweets = getTweets(getEntries(holder.timeline.instructions).filter((entry) => entry?.entry_id?.startsWith('tweet-')));
+        const tweets = getTweets(getEntries(instructions).filter((entry) => entry?.entry_id?.startsWith('tweet-')));
         // The page has no profile of its own: the posts carry it
         const author = tweets[0]?.core?.user_results?.result;
         return {
@@ -218,9 +314,9 @@ const parseProfilePage = (html: string): ProfilePage => {
 const parseStatusPage = (html: string, status: string) => {
     const focalEntryId = `tweet-${status}`;
     for (const message of readPageData(html)) {
-        const conversation = find(message, (object) => Array.isArray(object.instructions) && getEntries(object.instructions).some((entry) => entry?.entry_id === focalEntryId));
-        if (conversation) {
-            const entries = getEntries(conversation.instructions).filter((entry) => entry?.entry_id === focalEntryId || entry?.entry_id?.startsWith('conversationthread-'));
+        const instructions = find(message, (object) => (Array.isArray(object.instructions) && getEntries(object.instructions).some((entry) => entry?.entry_id === focalEntryId) ? object.instructions : undefined));
+        if (instructions) {
+            const entries = getEntries(instructions).filter((entry) => entry?.entry_id === focalEntryId || entry?.entry_id?.startsWith('conversationthread-'));
             return getTweets(entries).map((tweet) => toLegacyTweet(tweet));
         }
     }
@@ -262,7 +358,7 @@ const getUserTweet = async (_id: string, params?: ApiParams) => {
     // Replies point to the posts they answer, for includeReplyContext
     const tweetsById = new Map(tweets.map((tweet) => [tweet.id_str, tweet]));
     for (const tweet of tweets) {
-        const parent = tweetsById.get(tweet.in_reply_to_status_id_str);
+        const parent = tweet.in_reply_to_status_id_str ? tweetsById.get(tweet.in_reply_to_status_id_str) : undefined;
         if (parent && parent !== tweet) {
             tweet.in_reply_to_status = parent;
         }
