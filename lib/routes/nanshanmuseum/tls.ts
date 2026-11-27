@@ -6,35 +6,20 @@ import { Agent } from 'undici';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-const host = 'www.nanshanmuseum.com';
+// www.nanshanmuseum.com omits its intermediate CA (CNSSL DV TLS G2 R36 CA, signed by Certum Trusted Root CA, valid until 2036)
+// during the TLS handshake, causing UNABLE_TO_VERIFY_LEAF_SIGNATURE in Node.js.
+const intermediateCaUrl = 'http://cnssldvtlsg2r36ca.repository.certum.pl/cnssldvtlsg2r36ca.cer';
 const agentOptions = { allowH2: false, maxRequestsPerClient: 1, maxCachedSessions: 0 };
 
 let dispatcherPromise: Promise<Agent> | undefined;
 
-const getLeafCert = (): Promise<X509Certificate | undefined> =>
-    new Promise((resolve, reject) => {
-        const socket = tls.connect({ host, port: 443, servername: host, rejectUnauthorized: false, timeout: 10000 }, () => {
-            const peer = socket.getPeerCertificate(false);
-            const cert = !socket.authorized && peer?.raw ? new X509Certificate(peer.raw) : undefined;
-            socket.destroy();
-            resolve(cert);
-        });
-        socket.on('timeout', () => socket.destroy(new Error(`TLS probe timed out for ${host}`)));
-        socket.on('error', reject);
-    });
-
 const buildDispatcher = async (): Promise<Agent> => {
     try {
-        const cert = await getLeafCert();
-        const aiaUrl = cert?.infoAccess?.match(/CA Issuers - URI:(https?:\/\/\S+)/i)?.[1];
-        const ca = aiaUrl
-            ? await cache.tryGet(`nanshanmuseum:aia:${aiaUrl}`, async () => {
-                  const buf = await ofetch<ArrayBuffer, 'arrayBuffer'>(aiaUrl, { responseType: 'arrayBuffer' });
-                  return new X509Certificate(Buffer.from(buf)).toString();
-              })
-            : undefined;
-
-        return new Agent(ca ? { ...agentOptions, connect: { ca: [...tls.rootCertificates, ca] } } : agentOptions);
+        const ca = await cache.tryGet(`nanshanmuseum:aia:${intermediateCaUrl}`, async () => {
+            const buf = await ofetch<ArrayBuffer, 'arrayBuffer'>(intermediateCaUrl, { responseType: 'arrayBuffer' });
+            return new X509Certificate(Buffer.from(buf)).toString();
+        });
+        return new Agent({ ...agentOptions, connect: { ca: [...tls.rootCertificates, ca] } });
     } catch (error) {
         dispatcherPromise = undefined;
         throw error;
