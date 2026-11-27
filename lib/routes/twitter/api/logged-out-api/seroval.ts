@@ -17,7 +17,13 @@ const NUMBER = /-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/iy;
 const KEY = /[a-z_$][\w$]*|\d+/iy;
 const HEX = /^[\da-f]+$/i;
 
-const WORDS: Array<[string, unknown]> = [
+export interface SerovalObject {
+    [key: string]: SerovalValue;
+}
+
+export type SerovalValue = string | number | boolean | null | undefined | SerovalValue[] | SerovalObject;
+
+const WORDS: Array<[string, SerovalValue]> = [
     ['!0', true],
     ['!1', false],
     ['true', true],
@@ -30,34 +36,34 @@ const WORDS: Array<[string, unknown]> = [
     ['-Infinity', -Infinity],
 ];
 
-const ESCAPES: Record<string, string> = {
-    n: '\n',
-    r: '\r',
-    t: '\t',
-    b: '\b',
-    f: '\f',
-    v: '\v',
-    '0': '\0',
-};
+const ESCAPES = new Map([
+    ['n', '\n'],
+    ['r', '\r'],
+    ['t', '\t'],
+    ['b', '\b'],
+    ['f', '\f'],
+    ['v', '\v'],
+    ['0', '\0'],
+]);
 
 /** Number of hex digits after `\x` and `\u` */
-const HEX_ESCAPES: Record<string, number> = {
-    x: 2,
-    u: 4,
-};
+const HEX_ESCAPES = new Map([
+    ['x', 2],
+    ['u', 4],
+]);
 
 class SerovalReader {
     private readonly source: string;
     private position: number;
     private depth = 0;
-    private readonly references = new Map<number, unknown>();
+    private readonly references = new Map<number, SerovalValue>();
 
     constructor(source: string, position: number) {
         this.source = source;
         this.position = position;
     }
 
-    private value(): unknown {
+    private value(): SerovalValue {
         this.skipSpace();
         const label = this.match(LABEL);
         if (label) {
@@ -94,7 +100,7 @@ class SerovalReader {
 
     private object() {
         this.position++;
-        const object: Record<string, unknown> = {};
+        const object: SerovalObject = {};
         this.skipSpace();
         if (this.source[this.position] === '}') {
             this.position++;
@@ -137,7 +143,7 @@ class SerovalReader {
 
     private array() {
         this.position++;
-        const array: unknown[] = [];
+        const array: SerovalValue[] = [];
         for (;;) {
             this.skipSpace();
             const next = this.source[this.position];
@@ -180,9 +186,9 @@ class SerovalReader {
             if (escape === undefined) {
                 throw this.error('Unterminated string');
             }
-            const hexLength = HEX_ESCAPES[escape];
+            const hexLength = HEX_ESCAPES.get(escape);
             // \" \\ \/ \' and other escapes without a meaning of their own stand for the character itself
-            result += hexLength ? this.hex(hexLength) : (ESCAPES[escape] ?? escape);
+            result += hexLength ? this.hex(hexLength) : (ESCAPES.get(escape) ?? escape);
             start = this.position;
         }
     }
@@ -231,4 +237,4 @@ class SerovalReader {
 }
 
 /** Decodes the seroval literal that starts at `position` in `source` */
-export const readSeroval = (source: string, position = 0): unknown => new SerovalReader(source, position).read();
+export const readSeroval = (source: string, position = 0): SerovalValue => new SerovalReader(source, position).read();
