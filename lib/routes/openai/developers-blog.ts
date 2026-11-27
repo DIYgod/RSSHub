@@ -128,6 +128,31 @@ const pickCoverImage = ($: CheerioAPI, $header: Cheerio<Element>, articleUrl: st
     return heroImage ?? listImage ?? ogImage;
 };
 
+const CODE_ATTRS_TO_REMOVE = ['style', 'class', 'data-1p-ignore', 'data-copy-ignore', 'data-syntax-highlighter-id', 'data-language', 'data-wrap-long-lines'];
+
+const stripCodeBloat = ($body: Cheerio<Element>, $: CheerioAPI) => {
+    // Astro serializes large duplicate code payloads into <astro-island props="...">; keep rendered children only.
+    for (const el of $body.find('astro-island').toArray().toReversed()) {
+        const $el = $(el);
+        $el.replaceWith($el.contents());
+    }
+    // Unwrap per-token Shiki <span> elements inside <pre> so long multi-snippet posts stay well under 512 KB.
+    for (const el of $body.find('pre span').toArray().toReversed()) {
+        const $el = $(el);
+        $el.replaceWith($el.contents());
+    }
+    for (const el of $body.find('pre, code').toArray()) {
+        const $el = $(el);
+        const lang = $el.attr('data-language') || $el.attr('class')?.match(/\blanguage-([\w-]+)/i)?.[1];
+        for (const attr of CODE_ATTRS_TO_REMOVE) {
+            $el.removeAttr(attr);
+        }
+        if (el.tagName === 'code' && lang) {
+            $el.addClass(`language-${lang}`);
+        }
+    }
+};
+
 const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI) => {
     if ($body.length === 0) {
         return '';
@@ -137,6 +162,7 @@ const cleanArticleBody = ($body: Cheerio<Element>, $: CheerioAPI) => {
     $body.find('[hidden]').removeAttr('hidden');
     $body.find('.code-block.hidden').removeClass('hidden');
     $body.find('[data-panel], [role="tabpanel"], [role="region"]').removeAttr('inert').removeAttr('aria-hidden');
+    stripCodeBloat($body, $);
     $body.find('video').each((_, el) => {
         const $video = $(el);
         if ($video.attr('controls') === undefined) {
@@ -189,7 +215,7 @@ const extractArticleDetails = ($: CheerioAPI, entry: BlogEntry) => {
 };
 
 const fetchArticleDetail = (entry: BlogEntry) =>
-    cache.tryGet(`openai:developers:blog:${entry.link}`, async () => {
+    cache.tryGet(`openai:developers:blog:v2:${entry.link}`, async () => {
         const html = await ofetch<string>(entry.link);
         const $ = load(html);
         const details = extractArticleDetails($, entry);

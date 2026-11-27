@@ -1,4 +1,6 @@
+import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -7,10 +9,89 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
+import { renderMediaFallbackDescription } from './templates/description';
+
 export const BASE_URL = new URL('https://openai.com');
 
+const isHostMatch = (host: string, domain: string): boolean => host === domain || host.endsWith(`.${domain}`);
+
+const isAllowedVideoPath = (host: string, parsed: URL): boolean => {
+    if (isHostMatch(host, 'vimeo.com')) {
+        return parsed.pathname.startsWith('/video/');
+    }
+    if (isHostMatch(host, 'youtube.com') || isHostMatch(host, 'youtube-nocookie.com')) {
+        return parsed.pathname.startsWith('/embed/') || (parsed.pathname === '/watch' && parsed.searchParams.has('v'));
+    }
+    if (host === 'youtu.be') {
+        return parsed.pathname.length > 1;
+    }
+    return false;
+};
+
+const isAllowedVideoUrl = (rawUrl: string): string | undefined => {
+    try {
+        const parsed = new URL(rawUrl);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return undefined;
+        }
+        return isAllowedVideoPath(parsed.hostname.toLowerCase(), parsed) ? parsed.href : undefined;
+    } catch {
+        return undefined;
+    }
+};
+
+const extractVideoUrl = (html: string): string | undefined => {
+    for (const match of html.matchAll(/https?:\/\/[^"'\\\s<>]+/gi)) {
+        const valid = isAllowedVideoUrl(match[0]);
+        if (valid) {
+            return valid;
+        }
+    }
+    return undefined;
+};
+
+const hasReadableBody = ($article: Cheerio<Element>): boolean => {
+    if ($article.length === 0) {
+        return false;
+    }
+    return Boolean($article.text().trim()) || $article.find('img, video, audio, iframe, table, pre, blockquote').length > 0;
+};
+
+const stripEmptyDivs = ($: CheerioAPI, $article: Cheerio<Element>) => {
+    for (const el of $article.find('div').toArray().toReversed()) {
+        const $el = $(el);
+        const hasText = Boolean($el.text().replaceAll('\u{A0}', '').trim());
+        if (!hasText && $el.find('img, video, audio, iframe, table, pre, blockquote, a[href]').length === 0) {
+            $el.remove();
+        }
+    }
+};
+
+const cleanArticleDom = ($: CheerioAPI, $article: Cheerio<Element>) => {
+    // Remove action chrome (Share button, read-aloud player, mobile sticky TOC) before evaluating body content.
+    $article.find('[data-article-hero-actions], [data-read-aloud-ui], nav[data-show-toc], script, style, noscript, template').remove();
+
+    // Article header (title, sub title and categories); guard against detaching an ancestor above $article.
+    const articleNode = $article.get(0);
+    const heroHeader = $article.find('h1').parents().get(4);
+    if (articleNode && heroHeader && $.contains(articleNode, heroHeader)) {
+        $(heroHeader).remove();
+    }
+    $article.find('h1, [data-article-hero-copy-region]').remove();
+
+    // Remove the trailing "Keep reading" shelf without dropping footnotes or standalone video containers.
+    $article
+        .children()
+        .filter((_, el) => $(el).find('h2').first().text().trim() === 'Keep reading')
+        .remove();
+
+    // Article authors and citations
+    $article.find('#citations, [data-testid="author-list"]').remove();
+    stripEmptyDivs($, $article);
+};
+
 /** Fetch the details of an article. */
-const fetchArticleDetails = async (url: string) => {
+const fetchArticleDetails = async (url: string, title: string, rssDescription?: string) => {
     // Ensure trailing slash to avoid 301 redirect
     const articleUrl = new URL(url);
     if (!articleUrl.pathname.endsWith('/')) {
@@ -35,18 +116,19 @@ const fetchArticleDetails = async (url: string) => {
         .toArray()
         .map((element) => $(element).text());
 
-    // Article header (title, sub title and categories)
-    $($article.find('h1').parents().get(4)).remove();
-    // Related articles (can be the #citations section in some cases, so the last child needs to be removed first)
-    $article.children().last().remove();
-    // Article authors and tags
-    $article.find('#citations').remove();
+    const image = $('meta[property="og:image"]').attr('content');
+    const subhead = $('[data-article-hero-copy-region="subhead"]').first().text().trim();
+    const metaDescription = $('meta[name="description"]').attr('content')?.trim();
+
+    cleanArticleDom($, $article);
+
+    const content = hasReadableBody($article) ? $article.html() : renderMediaFallbackDescription(subhead || rssDescription || metaDescription, normalizedUrl, title, image, extractVideoUrl(html));
 
     return {
-        content: $article.html(),
+        content,
         // Categories can be found on https://openai.com/news/ and https://openai.com/research/index/
         categories,
-        image: $('meta[property="og:image"]').attr('content'),
+        image,
         author: authors.join(', '),
         link: normalizedUrl,
     };
@@ -71,9 +153,10 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
         async (element): Promise<DataItem> => {
             const id = $(element).find('guid').text();
             const title = $(element).find('title').text();
+            const rssDescription = $(element).find('description').text().trim();
             const pubDate = parseDate($(element).find('pubDate').text());
             const link = $(element).find('link').text();
-            const { content, categories, author, link: articleLink } = await cache.tryGet(`openai:news:detail:v2:${id}`, () => fetchArticleDetails(link));
+            const { content, categories, author, link: articleLink } = await cache.tryGet(`openai:news:detail:v3:${id}`, () => fetchArticleDetails(link, title, rssDescription));
 
             return {
                 guid: id,
