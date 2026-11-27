@@ -1,12 +1,12 @@
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
-import { Agent } from 'undici';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { formatDate, parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
+import { getDispatcher } from './tls';
 
 interface ExhibitionItem {
     resId: string;
@@ -33,15 +33,6 @@ const apiHeaders = {
     'Platform-device': '1',
 };
 
-const dispatcher = new Agent({
-    allowH2: false,
-    maxRequestsPerClient: 1,
-    maxCachedSessions: 0,
-    connect: {
-        rejectUnauthorized: false,
-    },
-});
-
 export const route: Route = {
     path: '/exhibition/topicList/:type',
     categories: ['travel'],
@@ -64,7 +55,7 @@ export const route: Route = {
         const listUrl = `${baseUrl}/exhibition/topicList?scrollTop=0&id=${code}`;
 
         const response = await ofetch<{ data?: { list?: ExhibitionItem[] } }>(`${baseUrl}/api/exhibition`, {
-            dispatcher,
+            dispatcher: await getDispatcher(),
             query: {
                 code,
                 hallId: '',

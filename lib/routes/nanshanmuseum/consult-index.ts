@@ -1,11 +1,11 @@
 import type { Context } from 'hono';
-import { Agent } from 'undici';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
 
 import { namespace } from './namespace';
+import { getDispatcher } from './tls';
 
 interface InformationListItem {
     resId: string;
@@ -29,15 +29,6 @@ const apiHeaders = {
     'Platform-device': '1',
 };
 
-const dispatcher = new Agent({
-    allowH2: false,
-    maxRequestsPerClient: 1,
-    maxCachedSessions: 0,
-    connect: {
-        rejectUnauthorized: false,
-    },
-});
-
 export const route: Route = {
     path: '/consultIndex/:type',
     categories: ['travel'],
@@ -60,7 +51,7 @@ export const route: Route = {
         const listUrl = `${baseUrl}/consultIndex?id=${code}`;
 
         const response = await ofetch<{ data?: { list?: InformationListItem[] } }>(`${baseUrl}/api/information`, {
-            dispatcher,
+            dispatcher: await getDispatcher(),
             query: {
                 code,
                 pageNum: 1,
