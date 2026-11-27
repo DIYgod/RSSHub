@@ -42,7 +42,10 @@ async function handler(ctx: Context) {
     const apiUrl = 'https://api.getdailyart.com/api';
 
     const headers = { lang: language === 'jp' ? 'ja' : language, timezone: 'UTC' };
-    const [daily, archival] = await Promise.all([ofetch(`${apiUrl}/artworks/daily`, { query: { inches: 0 }, headers }), ofetch(`${apiUrl}/artworks/archival`, { query: { inches: 0, limit: limit - 1, page: 1 }, headers })]);
+    const [daily, archival] = await Promise.all([
+        ofetch(`${apiUrl}/artworks/daily`, { query: { inches: 0 }, headers }),
+        limit > 1 ? ofetch(`${apiUrl}/artworks/archival`, { query: { inches: 0, limit: limit - 1, page: 1 }, headers }) : { data: [] },
+    ]);
 
     return {
         title: 'DailyArt',
