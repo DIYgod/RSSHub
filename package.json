@@ -152,10 +152,10 @@
         "@actions/github": "9.1.1",
         "@bbob/types": "4.5.0",
         "@cloudflare/containers": "0.3.7",
-        "@cloudflare/oxlint-config": "0.1.0",
+        "@cloudflare/oxlint-config": "0.2.0",
         "@cloudflare/playwright": "1.4.0",
-        "@cloudflare/vitest-plugin": "1.9.0",
-        "@cloudflare/workers-types": "5.20261123.1",
+        "@cloudflare/vitest-plugin": "1.9.1",
+        "@cloudflare/workers-types": "5.20261124.1",
         "@j178/prek": "0.5.11",
         "@mswjs/interceptors": "0.45.12",
         "@oxlint/plugins": "1.94.0",
@@ -171,7 +171,7 @@
         "@types/sanitize-html": "2.16.2",
         "@vercel/nft": "1.11.12",
         "@vitest/coverage-v8": "5.1.1",
-        "cf": "1.0.0-rc.2",
+        "cf": "1.0.0-rc.4",
         "discord-api-types": "0.38.60",
         "domhandler": "6.0.1",
         "eslint": "10.15.0",
@@ -202,7 +202,7 @@
         "unrun": "0.3.1",
         "vite-tsconfig-paths": "7.0.0-alpha.3",
         "vitest": "5.1.1",
-        "wrangler": "4.166.0"
+        "wrangler": "4.167.0"
     },
     "engines": {
         "node": "^26.13.0"
