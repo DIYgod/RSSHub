@@ -17,7 +17,7 @@ const NUMBER = /-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/iy;
 const KEY = /[a-z_$][\w$]*|\d+/iy;
 const HEX = /^[\da-f]+$/i;
 
-export interface SerovalObject {
+interface SerovalObject {
     [key: string]: SerovalValue;
 }
 
