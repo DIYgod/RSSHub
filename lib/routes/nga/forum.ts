@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     const forumname = homePage.data.forumname;
 
-    const list = homePage.data.result.data.filter(({ tid }) => tid);
+    const list = new Map(homePage.data.result.data.filter(({ tid }) => tid).map((thread) => [thread.tid, thread])).values().toArray();
 
     const resultItem = await pMap(
         list,
