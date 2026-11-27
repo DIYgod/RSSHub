@@ -104,7 +104,7 @@
         "https-proxy-agent": "9.1.0",
         "iconv-lite": "0.7.3",
         "imapflow": "2.12.2",
-        "ioredis": "6.0.0",
+        "ioredis": "6.1.0",
         "ip-regex": "5.0.0",
         "jsdom": "31.0.1",
         "json-bigint": "1.0.0",
