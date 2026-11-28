@@ -31,8 +31,12 @@ async function handler() {
     const items = await Promise.all(
         list.map((itemUrl) =>
             cache.tryGet(itemUrl, async () => {
-                const response = await ofetch(itemUrl);
-                const $ = load(response);
+                const response = await ofetch.raw(itemUrl);
+                // A new episode has no transcript yet, so its transcript page redirects to the episode
+                if (response.url !== itemUrl) {
+                    return null;
+                }
+                const $ = load(response._data);
 
                 return {
                     title: $('article header h1').text(),
@@ -48,6 +52,6 @@ async function handler() {
     return {
         title: '99% Invisible Transcript',
         link,
-        item: items,
+        item: items.filter((item) => item !== null),
     };
 }
