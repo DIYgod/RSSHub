@@ -35,22 +35,6 @@ const parseFlightData = (buf: Buffer) => {
     return rows;
 };
 
-const extractArticleBody = (rows: Map<string, string>) => {
-    // The body is what a `dangerouslySetInnerHTML` prop points at. It is either an inline HTML
-    // string, or a `$<chunk>` reference to another row. JSON-LD uses the same prop but points at
-    // a JSON object, so requiring the value to start with `<` picks the body without depending
-    // on the Tailwind `prose` class name (which the site has changed) or on a fixed chunk id.
-    for (const row of rows.values()) {
-        for (const [, raw] of row.matchAll(/"dangerouslySetInnerHTML":\{"__html":("[\s\S]*?")\}\}/g)) {
-            const value = JSON.parse(raw) as string;
-            const html = value.startsWith('$') ? rows.get(value.slice(1)) : value;
-            if (html?.trimStart().startsWith('<')) {
-                return html;
-            }
-        }
-    }
-};
-
 async function handler(ctx: Context) {
     const { tag } = ctx.req.param();
     const limit = getRouteLimit(ctx, 16);
@@ -126,11 +110,16 @@ async function handler(ctx: Context) {
 
                 const rows = parseFlightData(Buffer.from(detailResponse));
 
-                const bodyHtml = extractArticleBody(rows);
-                if (!bodyHtml) {
+                const bodyLiteral = rows
+                    .values()
+                    .find((row) => /"className":"[^"]*\bprose\b/.test(row))
+                    ?.match(/"__html":("(?:[^"\\]|\\.)*")/)?.[1];
+                const bodyValue: string | undefined = bodyLiteral && JSON.parse(bodyLiteral);
+                const body = bodyValue?.startsWith('$') ? rows.get(bodyValue.slice(1)) : bodyValue;
+                if (!body) {
                     throw new Error('No article body found in flight payload');
                 }
-                const $$ = load(bodyHtml);
+                const $$ = load(body);
 
                 $$('#elevenlabs-audionative-widget').remove();
 
@@ -216,7 +205,6 @@ If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data
 | [ML Research](https://www.deeplearning.ai/the-batch/tag/research/)     | [research](https://rsshub.app/deeplearning/the-batch/research)       |
 | [Business](https://www.deeplearning.ai/the-batch/tag/business/)        | [business](https://rsshub.app/deeplearning/the-batch/business)       |
 | [Science](https://www.deeplearning.ai/the-batch/tag/science/)          | [science](https://rsshub.app/deeplearning/the-batch/science)         |
-| [AI & Society](https://www.deeplearning.ai/the-batch/tag/ai-society/)  | [ai-society](https://rsshub.app/deeplearning/the-batch/ai-society)   |
 | [Culture](https://www.deeplearning.ai/the-batch/tag/culture/)          | [culture](https://rsshub.app/deeplearning/the-batch/culture)         |
 | [Hardware](https://www.deeplearning.ai/the-batch/tag/hardware/)        | [hardware](https://rsshub.app/deeplearning/the-batch/hardware)       |
 | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)    | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)   |
