@@ -32279,6 +32279,20 @@
       }
     ]
   },
+  "lmsys.org": {
+    "_name": "LMSYS Org",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/lmsys",
+        "source": [
+          "/blog",
+          "/blog"
+        ],
+        "target": "/lmsys/blog"
+      }
+    ]
+  },
   "logrocket.com": {
     "_name": "logrocket blog",
     "blog": [

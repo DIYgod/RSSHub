@@ -84141,6 +84141,42 @@
     "url": "liveuamap.com",
     "lang": "en"
   },
+  "lmsys": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/lmsys/blog",
+        "radar": [
+          {
+            "source": [
+              "lmsys.org/blog",
+              "www.lmsys.org/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "name": "Blog",
+        "description": "Full articles on open-source AI infrastructure, model serving, and inference optimization.",
+        "zh": {
+          "name": "博客",
+          "description": "开源 AI 基础设施、模型服务和推理优化博客全文。"
+        },
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "url": "lmsys.org/blog",
+        "location": "blog.ts",
+        "module": "() => import('@/routes/lmsys/blog.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "LMSYS Org",
+    "url": "lmsys.org",
+    "lang": "en"
+  },
   "lntu": {
     "routes": {
       "/jwnews": {

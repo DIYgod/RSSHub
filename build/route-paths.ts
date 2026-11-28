@@ -2180,6 +2180,7 @@ export type RoutePath =
   | `/lizhi/user/:id`
   | `/lkong/forum/:id?/:digest?`
   | `/lkong/thread/:id`
+  | `/lmsys/blog`
   | `/lmu/jobs`
   | `/lnmuseum/exhibition/temporary/:type?`
   | `/lnmuseum/information`
