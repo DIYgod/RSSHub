@@ -10,6 +10,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
+import wait from '@/utils/wait';
 
 import { getClientTransactionId } from './client-transaction-id';
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
@@ -239,7 +240,7 @@ export const twitterGot = async (
     return responseData;
 };
 
-export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: ApiParams, path?: string[]) => {
+export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: ApiParams, path?: string[], expectTweets = false, retried = false) => {
     const params = {
         variables: JSON.stringify({ ...variables, userId }),
         features: JSON.stringify(gqlFeatures[endpoint]),
@@ -247,17 +248,15 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
 
     const fetchData = async () => {
         if (config.twitter.thirdPartyApi && thirdPartySupportedAPI.includes(endpoint)) {
-            const { data } = await ofetch(`${config.twitter.thirdPartyApi}${gqlMap[endpoint]}`, {
+            return await ofetch(`${config.twitter.thirdPartyApi}${gqlMap[endpoint]}`, {
                 method: 'GET',
                 params,
                 headers: {
                     'accept-encoding': 'gzip',
                 },
             });
-            return data;
         }
-        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params);
-        return data;
+        return await twitterGot(baseUrl + gqlMap[endpoint], params);
     };
 
     const getInstructions = (data: any) => {
@@ -278,10 +277,28 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
         return instructions;
     };
 
-    const data = await fetchData();
+    const retryOrThrow = async (reason: string) => {
+        if (!retried) {
+            logger.debug(`twitter debug: ${endpoint} incomplete (${reason}), retrying once`);
+            await wait(500);
+            return paginationTweets(endpoint, userId, variables, path, expectTweets, true);
+        }
+        throw new Error(reason);
+    };
+
+    const response = await fetchData();
+    const data = response?.data;
+    const errors = Array.isArray(response?.errors) && response.errors.length > 0 ? response.errors : undefined;
     const instructions = getInstructions(data);
     if (!instructions) {
-        return [];
+        if ((path && !errors) || (!path && !errors && data?.user?.result?.__typename === 'UserUnavailable')) {
+            return [];
+        }
+        if (!path && JSON.stringify(data) === '{"user":{}}') {
+            throw new Error('Twitter API rate limit exceeded');
+        }
+        const codes = errors?.map((e) => e?.code ?? e?.name).filter((value) => value !== undefined);
+        return retryOrThrow(codes?.length ? `Twitter API error (${[...new Set(codes)].join(', ')})` : 'Twitter API returned no timeline instructions');
     }
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
@@ -289,6 +306,15 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
     const pinnedEntries = instructions.filter((instruction) => instruction.type === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry);
+    if (!path && endpoint === 'UserTweetsAndReplies') {
+        const hasTweets = pinnedEntries.length > 0 || Boolean(gridEntries?.length) || Boolean(moduleItems?.length) || entries.some((e) => e.entryId?.startsWith('tweet-') || e.entryId?.startsWith('profile-conversation-'));
+        const missingAddEntries = instructions.every((i) => i.type !== 'TimelineAddEntries') && !hasTweets;
+        const missingExpectedTweets = expectTweets && !hasTweets && entries.every((e) => !e.entryId?.startsWith('cursor-') && e.content?.entryType !== 'TimelineTimelineCursor');
+        if (missingAddEntries || missingExpectedTweets) {
+            return retryOrThrow('Twitter API returned an incomplete timeline response');
+        }
+    }
+
     return new Map([...pinnedEntries, ...(gridEntries || moduleItems || entries)].map((entry) => [entry.entryId, entry])).values().toArray();
 };
 

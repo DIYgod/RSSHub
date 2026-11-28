@@ -84,7 +84,7 @@ const getUserData = async (id: string) => {
 
 const cacheTryGet = async (_id, params, operationName, func) => {
     const user = await getUserData(_id);
-    return cache.tryGet(getTwitterUserCacheKey(user.rest_id, operationName, params), () => func(user.rest_id, params), config.cache.routeExpire, false);
+    return cache.tryGet(getTwitterUserCacheKey(user.rest_id, operationName, params), () => func(user.rest_id, params, user), config.cache.routeExpire, false);
 };
 
 const getUserTweets = (id: string, params?: ApiParams) =>
@@ -106,16 +106,22 @@ const getUserTweets = (id: string, params?: ApiParams) =>
     });
 
 const getUserTweetsAndReplies = (id: string, params?: ApiParams) =>
-    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params: ApiParams = {}) =>
+    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params: ApiParams = {}, user?: any) =>
         gatherLegacyFromData(
-            await paginationTweets('UserTweetsAndReplies', id, {
-                ...params,
-                count: params.count ?? 20,
-                includePromotedContent: true,
-                withCommunity: true,
-                withVoice: true,
-                withV2Timeline: true,
-            }),
+            await paginationTweets(
+                'UserTweetsAndReplies',
+                id,
+                {
+                    ...params,
+                    count: params.count ?? 20,
+                    includePromotedContent: true,
+                    withCommunity: true,
+                    withVoice: true,
+                    withV2Timeline: true,
+                },
+                undefined,
+                !user?.privacy?.protected && (user?.tweet_counts?.tweets ?? user?.legacy?.statuses_count ?? 0) > 0
+            ),
             ['profile-conversation-'],
             id
         )
