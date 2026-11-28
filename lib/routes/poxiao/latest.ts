@@ -40,7 +40,7 @@ async function handler(ctx) {
     const { data: response } = await got(baseUrl, { responseType: 'buffer' });
     const $ = load(iconv.decode(response, 'gbk'));
     const limit = getRouteLimit(ctx, 20);
-    const items = $('li:has(.date)')
+    const items = $('li:has(.date):has(a:not([href=""]))')
         .toArray()
         .map((element) => {
             const anchor = $(element).find('a[href]').last();
