@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { formatDate, parseDate } from '@/utils/time';
@@ -50,6 +51,9 @@ export const route: Route = {
     ],
     handler: async (ctx: Context) => {
         const exhibitionType = ctx.req.param('type') as ExhibitionType;
+        if (!Object.hasOwn(typeConfig, exhibitionType)) {
+            throw new InvalidParameterError('Invalid type. Use topic, permanent or virtual.');
+        }
         const { code, title: typeTitle } = typeConfig[exhibitionType];
         const museumName = namespace.zh?.name || namespace.name;
         const listUrl = `${baseUrl}/exhibition/topicList?scrollTop=0&id=${code}`;

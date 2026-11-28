@@ -13,12 +13,25 @@ const agentOptions = { allowH2: false, maxRequestsPerClient: 1, maxCachedSession
 
 let dispatcherPromise: Promise<Agent> | undefined;
 
+// The intermediate is fetched over plain HTTP, so only trust it if it is a CA certificate signed by a root Node.js already trusts.
+const assertTrustedIntermediate = (pem: string) => {
+    const cert = new X509Certificate(pem);
+    const issuedByTrustedRoot = tls.rootCertificates.some((rootPem) => {
+        const root = new X509Certificate(rootPem);
+        return cert.checkIssued(root) && cert.verify(root.publicKey);
+    });
+    if (!cert.ca || !issuedByTrustedRoot) {
+        throw new Error(`Untrusted intermediate CA from ${intermediateCaUrl}`);
+    }
+};
+
 const buildDispatcher = async (): Promise<Agent> => {
     try {
         const ca = await cache.tryGet(`nanshanmuseum:aia:${intermediateCaUrl}`, async () => {
             const buf = await ofetch<ArrayBuffer, 'arrayBuffer'>(intermediateCaUrl, { responseType: 'arrayBuffer' });
             return new X509Certificate(Buffer.from(buf)).toString();
         });
+        assertTrustedIntermediate(ca);
         return new Agent({ ...agentOptions, connect: { ca: [...tls.rootCertificates, ca] } });
     } catch (error) {
         dispatcherPromise = undefined;

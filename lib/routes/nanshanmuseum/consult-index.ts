@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/time';
@@ -46,6 +47,9 @@ export const route: Route = {
     ],
     handler: async (ctx: Context) => {
         const newsType = ctx.req.param('type') as NewsType;
+        if (!Object.hasOwn(typeConfig, newsType)) {
+            throw new InvalidParameterError('Invalid type. Use news, notice, procurement or affairs.');
+        }
         const { code, title: typeTitle } = typeConfig[newsType];
         const museumName = namespace.zh?.name || namespace.name;
         const listUrl = `${baseUrl}/consultIndex?id=${code}`;
