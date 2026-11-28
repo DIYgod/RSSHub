@@ -24465,6 +24465,64 @@
     "url": "myfans.jp",
     "lang": "ja"
   },
+  "nanshanmuseum": {
+    "routes": {
+      "/consultIndex/:type": {
+        "path": "/consultIndex/:type",
+        "categories": [
+          "travel"
+        ],
+        "example": "/nanshanmuseum/consultIndex/news",
+        "parameters": {
+          "type": "News type, supported values: news（南博动态）、notice（通知公告）、procurement（政采信息）、affairs（馆务公开）"
+        },
+        "name": "News",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.nanshanmuseum.com/consultIndex"
+            ],
+            "target": "/consultIndex/news"
+          }
+        ],
+        "location": "consult-index.ts",
+        "module": "() => import('@/routes/nanshanmuseum/consult-index.ts')"
+      },
+      "/exhibition/topicList/:type": {
+        "path": "/exhibition/topicList/:type",
+        "categories": [
+          "travel"
+        ],
+        "example": "/nanshanmuseum/exhibition/topicList/topic",
+        "parameters": {
+          "type": "Exhibition type, supported values: topic（专题展览）、permanent（常设展览）、virtual（虚拟展厅）"
+        },
+        "name": "Exhibitions",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.nanshanmuseum.com/exhibition/topicList"
+            ],
+            "target": "/exhibition/topicList/topic"
+          }
+        ],
+        "location": "topic-list.tsx",
+        "module": "() => import('@/routes/nanshanmuseum/topic-list.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Nanshan Museum",
+    "url": "www.nanshanmuseum.com",
+    "zh": {
+      "name": "南山博物馆"
+    }
+  },
   "nicovideo": {
     "routes": {
       "/mylist/:id": {

@@ -2036,6 +2036,12 @@
   "/myfans/user/:username": [
     "TonyRL"
   ],
+  "/nanshanmuseum/consultIndex/:type": [
+    "magazian"
+  ],
+  "/nanshanmuseum/exhibition/topicList/:type": [
+    "magazian"
+  ],
   "/nicovideo/mylist/:id": [
     "esperecyan"
   ],

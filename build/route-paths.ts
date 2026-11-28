@@ -2424,6 +2424,8 @@ export type RoutePath =
   | `/nankai/jwc`
   | `/nankai/notice`
   | `/nankai/yzb/:type?`
+  | `/nanshanmuseum/consultIndex/:type`
+  | `/nanshanmuseum/exhibition/topicList/:type`
   | `/nasa/apod`
   | `/nasa/apod-cn`
   | `/nasa/apod-ncku`
