@@ -5,22 +5,24 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
 
 import { renderDescription } from './templates/description';
 
 const baseUrl = 'https://www.gq.com.tw';
 
-const categoryTitleMap: Record<string, string> = {
+const categoryTitleMap = {
     life: 'LIFE',
     fashion: 'FASHION',
     entertainment: 'ENTERTAINMENT',
     gadget: 'GADGET',
     bettermen: 'BETTER MEN',
-};
+} satisfies Record<string, string>;
 
-const subcategoryTitleMaps: Record<string, Record<string, string>> = {
+type Category = keyof typeof categoryTitleMap;
+
+const subcategoryTitleMaps: Record<Category, Record<string, string>> = {
     life: {
         food: '美食',
         wine: '微醺',
@@ -60,6 +62,8 @@ const subcategoryTitleMaps: Record<string, Record<string, string>> = {
     },
 };
 
+const isCategory = (category: string): category is Category => Object.hasOwn(categoryTitleMap, category);
+
 export const route: Route = {
     path: '/tw/:category/:subcategory?', // category required because https://www.gq.com.tw/feed/rss already exists
     categories: ['new-media'],
@@ -71,8 +75,8 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -94,15 +98,13 @@ async function handler(ctx: Context): Promise<Data> {
     const category = ctx.req.param('category')!;
     const subcategory = ctx.req.param('subcategory') ?? '';
 
-    if (!Object.hasOwn(categoryTitleMap, category)) {
+    if (!isCategory(category)) {
         throw new Error(`Unsupported category: ${category}`);
     }
 
-    if (subcategory) {
-        const allowedSubMap = subcategoryTitleMaps[category] ?? {};
-        if (!Object.hasOwn(allowedSubMap, subcategory)) {
-            throw new Error(`Unsupported subcategory: ${subcategory}`);
-        }
+    const allowedSubMap = subcategoryTitleMaps[category];
+    if (subcategory && !Object.hasOwn(allowedSubMap, subcategory)) {
+        throw new Error(`Unsupported subcategory: ${subcategory}`);
     }
 
     const listUrl = `${baseUrl}/${category}${subcategory ? '/' + subcategory : ''}`;
@@ -110,7 +112,7 @@ async function handler(ctx: Context): Promise<Data> {
     logger.debug(`[gq/tw] fetched ${items.length} items from ${listUrl}`);
 
     const categoryTitle = categoryTitleMap[category];
-    const subcategoryTitle = subcategory ? subcategoryTitleMaps[category][subcategory] : undefined;
+    const subcategoryTitle = subcategory ? allowedSubMap[subcategory] : undefined;
     const fallbackTitle = subcategory ? `${subcategoryTitle} | GQ Taiwan` : `${categoryTitle} | GQ Taiwan`;
     const title = headTitle || fallbackTitle;
     return {
@@ -152,35 +154,15 @@ type PreloadedState = {
     };
 };
 
-/**
- * Fetch the page HTML with a real browser.
- * gq.com.tw sits behind a Cloudflare managed challenge that rejects non-browser clients with 403,
- * so the page has to be loaded in Chromium and the challenge allowed to clear first.
- */
-async function fetchPageHtml(url: string): Promise<string> {
-    const context = await playwright();
-    const page = await context.newPage();
-    try {
-        // only allow the document request, abort everything else to avoid wasting resources
-        await page.route('**/*', (route) => {
-            if (route.request().resourceType() === 'document') {
-                void route.continue();
-            } else {
-                void route.abort();
-            }
-        });
-        await page.goto(url, { waitUntil: 'domcontentloaded' });
-        // the Cloudflare challenge page does not contain the preloaded state; wait until the real page is served
-        await page.waitForFunction(() => document.documentElement.getHTML().includes('__PRELOADED_STATE__'), null, { timeout: 30000 });
-        return await page.content();
-    } finally {
-        await page.close();
-        await context.close();
-    }
-}
-
 async function parseWebpage(url: string): Promise<PageParseResult> {
-    const html = await fetchPageHtml(url);
+    // www.gq.com.tw sits behind Cloudflare bot management, which rejects the default undici
+    // handshake with a 403 managed challenge. Offering a TLSv1.3-only handshake passes most
+    // requests, but the challenge is still served probabilistically, so include 403 in the
+    // retried status codes.
+    const html = await ofetch(url, {
+        minVersion: 'TLSv1.3',
+        retryStatusCodes: [400, 403, 408, 409, 425, 429, 500, 502, 503, 504],
+    });
     const $ = load(html);
 
     const stateObj = extractPreloadedStateObject($);
