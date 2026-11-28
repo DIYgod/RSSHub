@@ -240,6 +240,28 @@ export const twitterGot = async (
     return responseData;
 };
 
+// A response without timeline instructions is an empty timeline (returns nothing), a rate limit (throws) or a failure to retry (returns the reason).
+const getMissingInstructionsReason = (data: any, errors: any[] | undefined, path?: string[]) => {
+    if ((path && !errors) || (!path && !errors && data?.user?.result?.__typename === 'UserUnavailable')) {
+        return;
+    }
+    if (!path && JSON.stringify(data) === '{"user":{}}') {
+        throw new Error('Twitter API rate limit exceeded');
+    }
+    const codes = errors?.map((e) => e?.code ?? e?.name).filter((value) => value !== undefined);
+    return codes?.length ? `Twitter API error (${[...new Set(codes)].join(', ')})` : 'Twitter API returned no timeline instructions';
+};
+
+const hasTimelineTweets = (pinnedEntries: any[], gridEntries: any[] | undefined, moduleItems: any[] | undefined, entries: any[]) =>
+    pinnedEntries.length > 0 || Boolean(gridEntries?.length) || Boolean(moduleItems?.length) || entries.some((e) => e.entryId?.startsWith('tweet-') || e.entryId?.startsWith('profile-conversation-'));
+
+// X sometimes answers UserTweetsAndReplies without the timeline entries, or with neither tweets nor cursors for a profile that has tweets.
+const isIncompleteTimeline = (instructions: any[], entries: any[], hasTweets: boolean, expectTweets: boolean) => {
+    const missingAddEntries = instructions.every((i) => i.type !== 'TimelineAddEntries') && !hasTweets;
+    const missingExpectedTweets = expectTweets && !hasTweets && entries.every((e) => !e.entryId?.startsWith('cursor-') && e.content?.entryType !== 'TimelineTimelineCursor');
+    return missingAddEntries || missingExpectedTweets;
+};
+
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: ApiParams, path?: string[], expectTweets = false, retried = false) => {
     const params = {
         variables: JSON.stringify({ ...variables, userId }),
@@ -291,14 +313,8 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     const errors = Array.isArray(response?.errors) && response.errors.length > 0 ? response.errors : undefined;
     const instructions = getInstructions(data);
     if (!instructions) {
-        if ((path && !errors) || (!path && !errors && data?.user?.result?.__typename === 'UserUnavailable')) {
-            return [];
-        }
-        if (!path && JSON.stringify(data) === '{"user":{}}') {
-            throw new Error('Twitter API rate limit exceeded');
-        }
-        const codes = errors?.map((e) => e?.code ?? e?.name).filter((value) => value !== undefined);
-        return retryOrThrow(codes?.length ? `Twitter API error (${[...new Set(codes)].join(', ')})` : 'Twitter API returned no timeline instructions');
+        const reason = getMissingInstructionsReason(data, errors, path);
+        return reason ? retryOrThrow(reason) : [];
     }
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
@@ -307,10 +323,8 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
 
     const pinnedEntries = instructions.filter((instruction) => instruction.type === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry);
     if (!path && endpoint === 'UserTweetsAndReplies') {
-        const hasTweets = pinnedEntries.length > 0 || Boolean(gridEntries?.length) || Boolean(moduleItems?.length) || entries.some((e) => e.entryId?.startsWith('tweet-') || e.entryId?.startsWith('profile-conversation-'));
-        const missingAddEntries = instructions.every((i) => i.type !== 'TimelineAddEntries') && !hasTweets;
-        const missingExpectedTweets = expectTweets && !hasTweets && entries.every((e) => !e.entryId?.startsWith('cursor-') && e.content?.entryType !== 'TimelineTimelineCursor');
-        if (missingAddEntries || missingExpectedTweets) {
+        const hasTweets = hasTimelineTweets(pinnedEntries, gridEntries, moduleItems, entries);
+        if (isIncompleteTimeline(instructions, entries, hasTweets, expectTweets)) {
             return retryOrThrow('Twitter API returned an incomplete timeline response');
         }
     }
